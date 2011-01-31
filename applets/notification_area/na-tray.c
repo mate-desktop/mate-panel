@@ -89,27 +89,6 @@ static TraysScreen *trays_screens = NULL;
 
 static void icon_tip_show_next (IconTip *icontip);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-/* NaBox, an instantiable GtkBox */
-
-typedef GtkBox      NaBox;
-typedef GtkBoxClass NaBoxClass;
-
-static GType na_box_get_type (void);
-
-G_DEFINE_TYPE (NaBox, na_box, GTK_TYPE_BOX)
-
-static void
-na_box_init (NaBox *box)
-{
-}
-
-static void
-na_box_class_init (NaBoxClass *klass)
-{
-}
-#endif
-
 /* NaTray */
 
 G_DEFINE_TYPE (NaTray, na_tray, GTK_TYPE_BIN)
@@ -545,7 +524,7 @@ na_tray_expose_icon (GtkWidget *widget,
 #endif
 		     gpointer   data)
 {
-  cairo_t *cr = data;
+  cairo_t *cr = (cairo_t *) data;
 
   if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
     {
