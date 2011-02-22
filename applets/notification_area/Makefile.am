@@ -26,7 +26,7 @@ libtray_la_SOURCES =		\
 	na-tray-manager.c	\
 	na-tray-manager.h
 
-NOTIFICATION_AREA_SOURCES = main.c
+NOTIFICATION_AREA_SOURCES = main.c main.h
 
 NOTIFICATION_AREA_LDADD =				\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
