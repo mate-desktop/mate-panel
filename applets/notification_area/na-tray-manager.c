@@ -97,6 +97,25 @@ na_tray_manager_init (NaTrayManager *manager)
 {
   manager->invisible = NULL;
   manager->socket_table = g_hash_table_new (NULL, NULL);
+
+  manager->padding = 0;
+  manager->icon_size = 0;
+
+  manager->fg.red = 0;
+  manager->fg.green = 0;
+  manager->fg.blue = 0;
+
+  manager->error.red = 0xffff;
+  manager->error.green = 0;
+  manager->error.blue = 0;
+
+  manager->warning.red = 0xffff;
+  manager->warning.green = 0xffff;
+  manager->warning.blue = 0;
+
+  manager->success.red = 0;
+  manager->success.green = 0xffff;
+  manager->success.blue = 0;
 }
 
 static void
@@ -298,8 +317,8 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
   if (!gtk_socket_get_plug_window (GTK_SOCKET (child)))
     {
       /* Embedding failed, we won't get a plug-removed signal */
+      /* This signal destroys the socket */
       g_signal_emit (manager, manager_signals[TRAY_ICON_REMOVED], 0, child);
-      gtk_widget_destroy (child);
       return;
     }
 
@@ -413,8 +432,6 @@ na_tray_manager_handle_begin_message (NaTrayManager       *manager,
 	  break;
 	}
     }
-
-
 
   if (len == 0)
     {
@@ -631,11 +648,9 @@ na_tray_manager_set_orientation_property (NaTrayManager *manager)
   Atom        orientation_atom;
   gulong      data[1];
 
-  if (!manager->invisible)
-    return;
+  g_return_if_fail (manager->invisible != NULL);
   window = gtk_widget_get_window (manager->invisible);
-  if (!window)
-    return;
+  g_return_if_fail (window != NULL);
 
   display = gtk_widget_get_display (manager->invisible);
   orientation_atom = gdk_x11_get_xatom_by_name_for_display (display,
@@ -664,11 +679,9 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
   Atom        visual_atom;
   gulong      data[1];
 
-  if (!manager->invisible)
-    return;
+  g_return_if_fail (manager->invisible != NULL);
   window = gtk_widget_get_window (manager->invisible);
-  if (!window)
-    return;
+  g_return_if_fail (window != NULL);
 
   /* The visual property is a hint to the tray icons as to what visual they
    * should use for their windows. If the X server has RGBA colormaps, then
@@ -711,6 +724,101 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
                    XA_VISUALID, 32,
                    PropModeReplace,
                    (guchar *) &data, 1);
+#endif
+}
+
+static void
+na_tray_manager_set_padding_property (NaTrayManager *manager)
+{
+#ifdef GDK_WINDOWING_X11
+  GdkWindow  *window;
+  GdkDisplay *display;
+  Atom        atom;
+  gulong      data[1];
+
+  g_return_if_fail (manager->invisible != NULL);
+  window = gtk_widget_get_window (manager->invisible);
+  g_return_if_fail (window != NULL);
+
+  display = gtk_widget_get_display (manager->invisible);
+  atom = gdk_x11_get_xatom_by_name_for_display (display,
+                                                "_NET_SYSTEM_TRAY_PADDING");
+
+  data[0] = manager->padding;
+
+  XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
+                   GDK_WINDOW_XID (window),
+                   atom,
+                   XA_CARDINAL, 32,
+                   PropModeReplace,
+                   (guchar *) &data, 1);
+#endif
+}
+
+static void
+na_tray_manager_set_icon_size_property (NaTrayManager *manager)
+{
+#ifdef GDK_WINDOWING_X11
+  GdkWindow  *window;
+  GdkDisplay *display;
+  Atom        atom;
+  gulong      data[1];
+
+  g_return_if_fail (manager->invisible != NULL);
+  window = gtk_widget_get_window (manager->invisible);
+  g_return_if_fail (window != NULL);
+
+  display = gtk_widget_get_display (manager->invisible);
+  atom = gdk_x11_get_xatom_by_name_for_display (display,
+                                                "_NET_SYSTEM_TRAY_ICON_SIZE");
+
+  data[0] = manager->icon_size;
+
+  XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
+                   GDK_WINDOW_XID (window),
+                   atom,
+                   XA_CARDINAL, 32,
+                   PropModeReplace,
+                   (guchar *) &data, 1);
+#endif
+}
+
+static void
+na_tray_manager_set_colors_property (NaTrayManager *manager)
+{
+#ifdef GDK_WINDOWING_X11
+  GdkWindow  *window;
+  GdkDisplay *display;
+  Atom        atom;
+  gulong      data[12];
+
+  g_return_if_fail (manager->invisible != NULL);
+  window = gtk_widget_get_window (manager->invisible);
+  g_return_if_fail (window != NULL);
+
+  display = gtk_widget_get_display (manager->invisible);
+  atom = gdk_x11_get_xatom_by_name_for_display (display,
+                                                "_NET_SYSTEM_TRAY_COLORS");
+
+  data[0] = manager->fg.red;
+  data[1] = manager->fg.green;
+  data[2] = manager->fg.blue;
+  data[3] = manager->error.red;
+  data[4] = manager->error.green;
+  data[5] = manager->error.blue;
+  data[6] = manager->warning.red;
+  data[7] = manager->warning.green;
+  data[8] = manager->warning.blue;
+  data[9] = manager->success.red;
+  data[10] = manager->success.green;
+  data[11] = manager->success.blue;
+
+  XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
+                   GDK_WINDOW_XID (window),
+                   atom,
+                   XA_CARDINAL, 32,
+                   PropModeReplace,
+                   (guchar *) &data, 12);
 #endif
 }
 
@@ -759,7 +867,10 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
 
   na_tray_manager_set_orientation_property (manager);
   na_tray_manager_set_visual_property (manager);
-
+  na_tray_manager_set_padding_property (manager);
+  na_tray_manager_set_icon_size_property (manager);
+  na_tray_manager_set_colors_property (manager);
+  
   window = gtk_widget_get_window (invisible);
 
   timestamp = gdk_x11_get_server_time (window);
@@ -905,6 +1016,57 @@ na_tray_manager_set_orientation (NaTrayManager  *manager,
       na_tray_manager_set_orientation_property (manager);
 
       g_object_notify (G_OBJECT (manager), "orientation");
+    }
+}
+
+void
+na_tray_manager_set_padding (NaTrayManager *manager,
+                             gint           padding)
+{
+  g_return_if_fail (NA_IS_TRAY_MANAGER (manager));
+
+  if (manager->padding != padding)
+    {
+      manager->padding = padding;
+
+      na_tray_manager_set_padding_property (manager);
+    }
+}
+
+void
+na_tray_manager_set_icon_size (NaTrayManager *manager,
+                               gint           icon_size)
+{
+  g_return_if_fail (NA_IS_TRAY_MANAGER (manager));
+
+  if (manager->icon_size != icon_size)
+    {
+      manager->icon_size = icon_size;
+
+      na_tray_manager_set_icon_size_property (manager);
+    }
+}
+
+void
+na_tray_manager_set_colors (NaTrayManager *manager,
+                            GdkColor      *fg,
+                            GdkColor      *error,
+                            GdkColor      *warning,
+                            GdkColor      *success)
+{
+  g_return_if_fail (NA_IS_TRAY_MANAGER (manager));
+
+  if (!gdk_color_equal (&manager->fg, fg) ||
+      !gdk_color_equal (&manager->error, error) ||
+      !gdk_color_equal (&manager->warning, warning) ||
+      !gdk_color_equal (&manager->success, success))
+    {
+      manager->fg = *fg;
+      manager->error = *error;
+      manager->warning = *warning;
+      manager->success = *success;
+
+      na_tray_manager_set_colors_property (manager);
     }
 }
 

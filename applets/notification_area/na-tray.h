@@ -29,9 +29,7 @@
 #endif
 #include <gtk/gtk.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
 #define NA_TYPE_TRAY			(na_tray_get_type ())
 #define NA_TRAY(obj)			(G_TYPE_CHECK_INSTANCE_CAST ((obj), NA_TYPE_TRAY, NaTray))
@@ -62,10 +60,17 @@ NaTray         *na_tray_new_for_screen  (GdkScreen     *screen,
 void            na_tray_set_orientation	(NaTray        *tray,
 					 GtkOrientation orientation);
 GtkOrientation  na_tray_get_orientation (NaTray        *tray);
+void            na_tray_set_padding     (NaTray        *tray,
+					 gint           padding);
+void            na_tray_set_icon_size   (NaTray        *tray,
+					 gint           icon_size);
+void            na_tray_set_colors      (NaTray        *tray,
+					 GdkColor      *fg,
+					 GdkColor      *error,
+					 GdkColor      *warning,
+					 GdkColor      *success);
 void		na_tray_force_redraw	(NaTray        *tray);
 
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* __NA_TRAY_H__ */

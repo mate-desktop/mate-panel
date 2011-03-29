@@ -31,9 +31,7 @@
 
 #include "na-tray-child.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
 #define NA_TYPE_TRAY_MANAGER			(na_tray_manager_get_type ())
 #define NA_TRAY_MANAGER(obj)			(G_TYPE_CHECK_INSTANCE_CAST ((obj), NA_TYPE_TRAY_MANAGER, NaTrayManager))
@@ -60,6 +58,12 @@ struct _NaTrayManager
   GtkWidget *invisible;
   GdkScreen *screen;
   GtkOrientation orientation;
+  gint padding;
+  gint icon_size;
+  GdkColor fg;
+  GdkColor error;
+  GdkColor warning;
+  GdkColor success;
 
   GList *messages;
   GHashTable *socket_table;
@@ -96,9 +100,17 @@ gboolean        na_tray_manager_manage_screen   (NaTrayManager      *manager,
 void            na_tray_manager_set_orientation (NaTrayManager      *manager,
 						 GtkOrientation      orientation);
 GtkOrientation  na_tray_manager_get_orientation (NaTrayManager      *manager);
+void            na_tray_manager_set_padding     (NaTrayManager      *manager,
+						 gint                padding);
+void            na_tray_manager_set_icon_size   (NaTrayManager      *manager,
+						 gint                padding);
+void            na_tray_manager_set_colors      (NaTrayManager      *manager,
+						 GdkColor           *fg,
+						 GdkColor           *error,
+						 GdkColor           *warning,
+						 GdkColor           *success);
 
-#ifdef __cplusplus
-}
-#endif
+
+G_END_DECLS
 
 #endif /* __NA_TRAY_MANAGER_H__ */

@@ -123,6 +123,7 @@ na_tray_applet_style_updated (GtkWidget *widget)
   GdkColor         warning;
   GdkColor         success;
   gint             padding;
+  gint             icon_size;
 
   GTK_WIDGET_CLASS (na_tray_applet_parent_class)->style_updated (widget);
 
@@ -146,8 +147,10 @@ na_tray_applet_style_updated (GtkWidget *widget)
   na_tray_set_colors (applet->priv->tray, &fg, &error, &warning, &success);
 
   gtk_widget_style_get (widget, "icon-padding", &padding, NULL);
-
   na_tray_set_padding (applet->priv->tray, padding);
+
+  gtk_widget_style_get (widget, "icon-size", &icon_size, NULL);
+  na_tray_set_icon_size (applet->priv->tray, icon_size);
 }
 
 static void
@@ -222,6 +225,14 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
           g_param_spec_int ("icon-padding",
                             "Padding around icons",
                             "Padding that should be put around icons, in pixels",
+                            0, G_MAXINT, 0,
+                            G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+
+  gtk_widget_class_install_style_property (
+          widget_class,
+          g_param_spec_int ("icon-size",
+                            "Icon size",
+                            "If non-zero, hardcodes the size of the icons in pixels",
                             0, G_MAXINT, 0,
                             G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
