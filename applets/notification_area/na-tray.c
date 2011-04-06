@@ -240,6 +240,7 @@ tray_removed (NaTrayManager *manager,
     return;
 
   priv = tray->priv;
+
   g_assert (tray->priv->trays_screen == trays_screen);
 
   gtk_container_remove (GTK_CONTAINER (priv->box), icon);
@@ -872,6 +873,39 @@ idle_redraw_cb (NaTray *tray)
   priv->idle_redraw_id = 0;
 
   return FALSE;
+}
+
+void
+na_tray_set_padding (NaTray *tray,
+                     gint    padding)
+{
+  NaTrayPrivate *priv = tray->priv;
+
+  if (get_tray (priv->trays_screen) == tray)
+    na_tray_manager_set_padding (priv->trays_screen->tray_manager, padding);
+}
+
+void
+na_tray_set_icon_size (NaTray *tray,
+                       gint    size)
+{
+  NaTrayPrivate *priv = tray->priv;
+
+  if (get_tray (priv->trays_screen) == tray)
+    na_tray_manager_set_icon_size (priv->trays_screen->tray_manager, size);
+}
+
+void
+na_tray_set_colors (NaTray   *tray,
+                    GdkColor *fg,
+                    GdkColor *error,
+                    GdkColor *warning,
+                    GdkColor *success)
+{
+  NaTrayPrivate *priv = tray->priv;
+
+  if (get_tray (priv->trays_screen) == tray)
+    na_tray_manager_set_colors (priv->trays_screen->tray_manager, fg, error, warning, success);
 }
 
 void
