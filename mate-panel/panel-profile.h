@@ -1,0 +1,188 @@
+/*
+ * panel-profile.h:
+ *
+ * Copyright (C) 2003 Sun Microsystems, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * Authors:
+ *	Mark McLoughlin <mark@skynet.ie>
+ */
+
+#ifndef __PANEL_PROFILE_H__
+#define __PANEL_PROFILE_H__
+
+#include <glib.h>
+#include <gdk/gdk.h>
+#include <mateconf/mateconf-client.h>
+
+#include "panel-toplevel.h"
+#include "panel-enums.h"
+#include "panel-types.h"
+#include "applet.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void panel_profile_load (void);
+
+const char    *panel_profile_get_toplevel_id    (PanelToplevel     *toplevel);
+PanelToplevel *panel_profile_get_toplevel_by_id (const char        *toplevel_id);
+char          *panel_profile_find_new_id        (PanelMateConfKeyType  type);
+
+
+gboolean    panel_profile_get_show_program_list   (void);
+void        panel_profile_set_show_program_list   (gboolean show_program_list);
+gboolean    panel_profile_is_writable_show_program_list (void);
+gboolean    panel_profile_get_enable_program_list (void);
+gboolean    panel_profile_get_enable_autocompletion (void);
+
+
+void           panel_profile_add_to_list            (PanelMateConfKeyType  type,
+						     const char        *id);
+void           panel_profile_remove_from_list       (PanelMateConfKeyType  type,
+						     const char        *id);
+gboolean       panel_profile_id_lists_are_writable  (void);
+void           panel_profile_create_toplevel        (GdkScreen         *screen);
+PanelToplevel *panel_profile_load_toplevel          (MateConfClient       *client,
+						     const char        *profile_dir,
+						     PanelMateConfKeyType  type,
+						     const char        *toplevel_id);
+void           panel_profile_delete_toplevel        (PanelToplevel     *toplevel);
+char          *panel_profile_prepare_object         (PanelObjectType    object_type,
+						     PanelToplevel     *toplevel,
+						     int                position,
+						     gboolean           right_stick);
+char          *panel_profile_prepare_object_with_id (PanelObjectType    object_type,
+						     const char        *toplevel_id,
+						     int                position,
+						     gboolean           right_stick);
+void           panel_profile_delete_object          (AppletInfo        *applet_info);
+
+
+void        panel_profile_set_toplevel_name           (PanelToplevel *toplevel,
+						       const char    *name);
+char       *panel_profile_get_toplevel_name           (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_name   (PanelToplevel *toplevel);
+
+void        panel_profile_set_toplevel_orientation    (PanelToplevel *toplevel,
+						       PanelOrientation orientation);
+PanelOrientation
+            panel_profile_get_toplevel_orientation    (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_orientation (PanelToplevel *toplevel);
+
+void        panel_profile_set_toplevel_size           (PanelToplevel *toplevel,
+						       int            size);
+int         panel_profile_get_toplevel_size           (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_size   (PanelToplevel *toplevel);
+
+void        panel_profile_set_toplevel_expand         (PanelToplevel *toplevel,
+						       gboolean       expand);
+gboolean    panel_profile_get_toplevel_expand         (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_expand (PanelToplevel *toplevel);
+
+void        panel_profile_set_toplevel_auto_hide      (PanelToplevel *toplevel,
+						       gboolean       auto_hide);
+gboolean    panel_profile_get_toplevel_auto_hide      (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_auto_hide (PanelToplevel *toplevel);
+
+void        panel_profile_set_toplevel_enable_buttons (PanelToplevel *toplevel,
+						       gboolean       enable_buttons);
+gboolean    panel_profile_get_toplevel_enable_buttons (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_enable_buttons (PanelToplevel *toplevel);
+
+void        panel_profile_set_toplevel_enable_arrows  (PanelToplevel *toplevel,
+						       gboolean       enable_arrows);
+gboolean    panel_profile_get_toplevel_enable_arrows  (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_enable_arrows (PanelToplevel *toplevel);
+
+/* We don't set this in the panel, so there is no set accessor */
+void        panel_profile_set_background_type         (PanelToplevel       *toplevel,
+						       PanelBackgroundType  background_type);
+PanelBackgroundType
+	    panel_profile_get_background_type         (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_type (PanelToplevel       *toplevel);
+
+void        panel_profile_set_background_color        (PanelToplevel       *toplevel,
+						       PanelColor          *color);
+void        panel_profile_get_background_color        (PanelToplevel       *toplevel,
+						       PanelColor          *color);
+gboolean    panel_profile_is_writable_background_color (PanelToplevel       *toplevel);
+
+void        panel_profile_set_background_gdk_color    (PanelToplevel       *toplevel,
+						       GdkColor            *gdk_color);
+void        panel_profile_get_background_gdk_color    (PanelToplevel       *toplevel,
+						       GdkColor            *gdk_color);
+
+void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
+						       guint16              opacity);
+guint16     panel_profile_get_background_opacity      (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_opacity (PanelToplevel       *toplevel);
+
+void        panel_profile_set_background_image        (PanelToplevel       *toplevel,
+						       const char          *image);
+char       *panel_profile_get_background_image        (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_image (PanelToplevel       *toplevel);
+
+void        panel_profile_set_background_fit          (PanelToplevel       *toplevel,
+						       gboolean             fit);
+gboolean    panel_profile_get_background_fit          (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_fit  (PanelToplevel *toplevel);
+
+void        panel_profile_set_background_stretch      (PanelToplevel       *toplevel,
+						       gboolean             stretch);
+gboolean    panel_profile_get_background_stretch      (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_stretch (PanelToplevel *toplevel);
+
+void        panel_profile_set_background_rotate       (PanelToplevel       *toplevel,
+						       gboolean             rotate);
+gboolean    panel_profile_get_background_rotate       (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_rotate (PanelToplevel *toplevel);
+
+void        panel_profile_set_attached_custom_icon    (PanelToplevel        *toplevel,
+						       const char           *custom_icon);
+char       *panel_profile_get_attached_custom_icon    (PanelToplevel        *toplevel);
+gboolean    panel_profile_is_writable_attached_custom_icon (PanelToplevel        *toplevel);
+void        panel_profile_set_attached_tooltip        (PanelToplevel        *toplevel,
+						       const char           *custom_icon);
+char       *panel_profile_get_attached_tooltip        (PanelToplevel        *toplevel);
+gboolean    panel_profile_is_writable_attached_tooltip (PanelToplevel        *toplevel);
+
+guint       panel_profile_toplevel_notify_add         (PanelToplevel         *toplevel,
+						       const char            *key,
+						       MateConfClientNotifyFunc  func,
+						       gpointer               data);
+
+const char *panel_profile_map_orientation             (PanelOrientation       orientation);
+const char *panel_profile_map_background_type         (PanelBackgroundType    background_type);
+gboolean    panel_profile_map_orientation_string      (const char            *str,
+						       PanelOrientation      *orientation);
+gboolean    panel_profile_map_speed_string            (const char            *str,
+						       PanelAnimationSpeed   *speed);
+gboolean    panel_profile_map_background_type_string  (const char            *str,
+						       PanelBackgroundType   *background_type);
+gboolean    panel_profile_map_object_type_string      (const char            *str,
+						       PanelObjectType       *object_type);
+
+/* all keys relevant to moving are writable */
+gboolean    panel_profile_can_be_moved_freely         (PanelToplevel *toplevel);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __PANEL_PROFILE_H__ */

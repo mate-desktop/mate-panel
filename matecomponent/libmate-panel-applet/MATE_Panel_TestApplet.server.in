@@ -1,0 +1,31 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:MATE_Panel_TestMateComponentApplet_Factory"
+	    type="exe"
+	    location="test-matecomponent-applet">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:MateComponent/GenericFactory:1.0"/>
+		<item value="IDL:MateComponent/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Test MateComponent Applet Factory"/>
+	<oaf_attribute name="description" type="string" _value="Test MateComponent Applet Factory"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:MATE_Panel_TestMateComponentApplet"
+	    type="factory"
+	    location="OAFIID:MATE_Panel_TestMateComponentApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:MATE/Vertigo/MatePanelAppletShell:1.0"/>
+		<item value="IDL:MateComponent/Control:1.0"/>
+		<item value="IDL:MateComponent/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Test MateComponent Applet"/>
+	<oaf_attribute name="description" type="string" _value="A simple applet for testing the MATE-2.0 panel"/>
+	<oaf_attribute name="panel:icon" type="string" value="mate-gegl.png"/>
+
+</oaf_server>
+
+</oaf_info>

@@ -1,0 +1,39 @@
+pkgname=mate-panel
+pkgver=2011.11.16
+pkgrel=1
+pkgdesc="The MATE Panel"
+arch=('i686' 'x86_64')
+license=('GPL')
+depends=('libwnck' 'mate-conf' 'mate-menus' 'mate-desktop' 'librsvg' 'hicolor-icon-theme' 'libcanberra' 'libmatecomponentui' 'libmateweather') # 'evolution-data-server'
+makedepends=('mate-doc-utils' 'pkgconfig' 'intltool' 'networkmanager')
+options=('!emptydirs' '!libtool')
+install=mate-panel.install
+source=(http://sourceforge.net/projects/matede/files/${pkgver}/${pkgname}.tar.gz/download)
+sha256sums=('fb23f4173a5106acf11e38c98ca34af9e5d21f3a09b4210cc1cd323b725efb13')
+url="http://matsusoft.com.ar/projects"
+groups=('mate')
+
+build() {
+    cd "${srcdir}/${pkgname}"
+
+    PYTHON=/usr/bin/python2 ./autogen.sh \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --disable-static \
+        --libexecdir=/usr/lib/mate-panel \
+        --disable-scrollkeeper \
+        --enable-introspection \
+        --enable-matecomponent || return 1
+    make || return 1
+}
+
+package() {
+    cd "${srcdir}/${pkgname}"
+
+    make MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR="${pkgdir}" install || return 1
+
+    install -m755 -d "${pkgdir}/usr/share/mateconf/schemas"
+    mateconf-merge-schema "${pkgdir}/usr/share/mateconf/schemas/${pkgname}.schemas" --domain ${pkgname} ${pkgdir}/etc/mateconf/schemas/*.schemas || return 1
+    rm -f ${pkgdir}/etc/mateconf/schemas/*.schemas
+}

@@ -1,0 +1,77 @@
+<mateconfschemafile>
+    <schemalist>
+
+      <schema>
+        <key>/schemas/apps/window_list_applet/prefs/display_all_workspaces</key>
+        <owner>window-list-applet</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short>Show windows from all workspaces</short>
+          <long>
+            If true, the window list will show windows from all workspaces.
+            Otherwise it will only display windows from the current workspace.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/window_list_applet/prefs/group_windows</key>
+        <owner>window-list-applet</owner>
+        <type>string</type>
+        <default>never</default>
+        <locale name="C">
+          <short>When to group windows</short>
+          <long>
+            Decides when to group windows from the same application on the
+            window list. Possible values are "never", "auto" and "always".
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/window_list_applet/prefs/move_unminimized_windows</key>
+        <owner>window-list-applet</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>Move windows to current workspace when unminimized</short>
+          <long>
+            If true, then when unminimizing a window, move it to the
+            current workspace. Otherwise, switch to the workspace of
+            the window.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/window_list_applet/prefs/minimum_size</key>
+        <owner>window-list-applet</owner>
+        <type>int</type>
+        <default>50</default>
+        <locale name="C">
+          <short>Minimum window list size</short>
+          <long>
+	    The use of this key was deprecated in MATE 2.20. The schema is
+	    retained for compatibility with older versions.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/window_list_applet/prefs/maximum_size</key>
+        <owner>window-list-applet</owner>
+        <type>int</type>
+        <default>4096</default>
+        <locale name="C">
+          <short>Maximum window list size</short>
+          <long>
+	    The use of this key was deprecated in MATE 2.20. The schema is
+	    retained for compatibility with older versions.
+         </long>
+        </locale>
+      </schema>
+
+    </schemalist>
+
+</mateconfschemafile>

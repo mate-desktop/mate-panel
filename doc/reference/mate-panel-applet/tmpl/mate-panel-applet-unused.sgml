@@ -1,0 +1,109 @@
+<!-- ##### MACRO MATE_PANEL_APPLET_MATECOMPONENT_FACTORY ##### -->
+<para>
+Defines a 'main' routine for the applet factory.
+</para>
+
+@iid: The matecomponent-activation iid of the factory.
+@type: The #GType to instantiate.
+@name: The applet ID string.
+@version: The applet version string.
+@callback: The factory callback.
+@data: The factory user data pointer.
+
+<!-- ##### MACRO MATE_PANEL_APPLET_MATECOMPONENT_SHLIB_FACTORY ##### -->
+<para>
+Defines a MateComponent Activation shared library plugin and associated
+factory callback.
+</para>
+
+@iid: The matecomponent-activation iid of the factory.
+@type: The #GType to instantiate.
+@descr: A description of the applet.
+@callback: The factory callback.
+@data: The factory user data pointer.
+
+<!-- ##### MACRO MATE_PANEL_APPLET_ORIENT_DOWN ##### -->
+<para>
+The applet is orientated down (i.e. the panel is at the top of the screen).
+</para>
+
+
+<!-- ##### MACRO MATE_PANEL_APPLET_ORIENT_LEFT ##### -->
+<para>
+The applet is orientated left (i.e. the panel is at the right hand side of the screen).
+</para>
+
+
+<!-- ##### MACRO MATE_PANEL_APPLET_ORIENT_RIGHT ##### -->
+<para>
+The applet is orientated right (i.e. the panel is at the left hand side of the screen).
+</para>
+
+
+<!-- ##### MACRO MATE_PANEL_APPLET_ORIENT_UP ##### -->
+<para>
+The applet is orientated up (i.e. the panel is at the bottom of the screen).
+</para>
+
+
+<!-- ##### FUNCTION mate_panel_applet_factory_main_closure ##### -->
+<para>
+A generic 'main' routine for applets. This should not normally be
+used directly because it is invoked by #MATE_PANEL_APPLET_MATECOMPONENT_FACTORY.
+</para>
+
+@iid: The matecomponent-activation iid of the factory.
+@applet_type: The #GType to instantiate.
+@closure: The factory callback closure.
+@Returns: 0 on success, 1 on failure.
+
+<!-- ##### FUNCTION mate_panel_applet_get_control ##### -->
+<para>
+Retrieves the #MateComponentControl associated with @applet.
+</para>
+
+@applet: The #MatePanelApplet.
+@Returns: A #MateComponentControl.
+
+<!-- ##### FUNCTION mate_panel_applet_get_popup_component ##### -->
+<para>
+Retrieves the #MateComponentUIComponent used for popup menus associated
+with @applet.
+</para>
+
+@applet: The #MatePanelApplet.
+@Returns: A #MateComponentUIComponent.
+
+<!-- ##### FUNCTION mate_panel_applet_shlib_factory ##### -->
+<para>
+A generic shared library factory routine for applets. This should not
+normally be used directly as it is invoked by #MATE_PANEL_APPLET_MATECOMPONENT_SHLIB_FACTORY.
+</para>
+
+@iid: The matecomponent-activation iid of the factory.
+@applet_type: The #GType to instantiate.
+@poa: The #PortableServer_POA passed to the shlib factory
+callback.
+@impl_ptr: The #gpointer passed to the shlib factory callback.
+@callback: The applet factory callback.
+@user_data: The factory user data pointer.
+@ev: The $CORBA_Environment passed to the shlib factory callback.
+@Returns: A #MateComponent_Unknown to return from the shlib factory
+callback.
+
+<!-- ##### FUNCTION mate_panel_applet_shlib_factory_closure ##### -->
+<para>
+A generic shared library factory routine for applets. This should not
+normally be used directly as it is invoked by #MATE_PANEL_APPLET_MATECOMPONENT_SHLIB_FACTORY.
+</para>
+
+@iid: The matecomponent-activation iid of the factory.
+@applet_type: The #GType to instantiate.
+@poa: The #PortableServer_POA passed to the shlib factory
+callback.
+@impl_ptr: The #gpointer passed to the shlib factory callback.
+@closure: The applet factory closure.
+@ev: The $CORBA_Environment passed to the shlib factory callback.
+@Returns: A #MateComponent_Unknown to return from the shlib factory
+callback.
+

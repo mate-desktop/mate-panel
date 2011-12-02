@@ -1,0 +1,50 @@
+[Applet Factory]
+Id=WnckletFactory
+InProcess=@IN_PROCESS@
+Location=@LOCATION@
+_Name=Window Navigation Applet Factory
+_Description=Factory for the window navigation related applets
+
+[WindowMenuApplet]
+_Name=Window Selector
+_Description=Switch between open windows using a menu
+Icon=mate-panel-window-menu
+MateComponentId=OAFIID:MATE_WindowMenuApplet;
+X-MATE-Bugzilla-Bugzilla=MATE
+X-MATE-Bugzilla-Product=mate-panel
+X-MATE-Bugzilla-Component=window selector
+X-MATE-Bugzilla-Version=@VERSION@
+X-MATE-Bugzilla-OtherBinaries=wnck-applet
+
+[WorkspaceSwitcherApplet]
+_Name=Workspace Switcher
+_Description=Switch between workspaces
+Icon=mate-panel-workspace-switcher
+MateComponentId=OAFIID:MATE_WorkspaceSwitcherApplet;OAFIID:MATE_PagerApplet;
+X-MATE-Bugzilla-Bugzilla=MATE
+X-MATE-Bugzilla-Product=mate-panel
+X-MATE-Bugzilla-Component=workspace switcher
+X-MATE-Bugzilla-Version=@VERSION@
+X-MATE-Bugzilla-OtherBinaries=wnck-applet
+
+[WindowListApplet]
+_Name=Window List
+_Description=Switch between open windows using buttons
+Icon=mate-panel-window-list
+MateComponentId=OAFIID:MATE_TasklistApplet;OAFIID:MATE_WindowListApplet;
+X-MATE-Bugzilla-Bugzilla=MATE
+X-MATE-Bugzilla-Product=mate-panel
+X-MATE-Bugzilla-Component=window list
+X-MATE-Bugzilla-Version=@VERSION@
+X-MATE-Bugzilla-OtherBinaries=wnck-applet
+
+[ShowDesktopApplet]
+_Name=Show Desktop
+_Description=Hide application windows and show the desktop
+Icon=user-desktop
+MateComponentId=OAFIID:MATE_ShowDesktopApplet;
+X-MATE-Bugzilla-Bugzilla=MATE
+X-MATE-Bugzilla-Product=mate-panel
+X-MATE-Bugzilla-Component=Show Desktop Button
+X-MATE-Bugzilla-Version=@VERSION@
+X-MATE-Bugzilla-OtherBinaries=wnck-applet

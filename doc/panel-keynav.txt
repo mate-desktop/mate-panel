@@ -1,0 +1,84 @@
+This note describes areas where implementation of keynav for panels was 
+difficult.
+
+- PanelWidget and objects on the panel such as launchers and applets need to
+be focusable
+
+Both the PanelWidget and objects on the panel need to be focusable in order
+to invoke the context menu using only the keyboard. In the normal course of
+things, GTK+ does not support a widget and its children be focusable.
+
+Instead of requiring the PanelWidget be focusable we have introduced a key 
+binding Ctrl+F10 which pops up the panel's context menu. So a PanelWidget 
+is focusable only when it does not have any children. There is, therefore,
+no need for the key binding Ctrl+Tab to move the focus to the PanelWidget from
+an applet or a launcher.
+
+The function panel_widget_real_focus is PanelWidget's default signal
+handler for focus signal. This function is called when either PanelWidget 
+or a child has focus and Tab or arrow keys are used to move focus. If the 
+PanelWidget has focus and the PanelWidget has children the GTK_CAN_FOCUS flag 
+is unset so that a child can receive focus.
+
+- An applet with a tooltip receives focus
+
+If an applet has a tooltip, the applet will receive focus so that the tooltip
+can be displayed, even if the applet contains focusable widgets. The
+focusable widgets in the applet can be traversed using the arrow keys.
+
+
+- Tab should move focus from within an applet to the next object on the panel
+
+This is implemented by defining an action signal "move_focus_out_of_applet"
+on MatePanelApplet and binding Tab  and Shift+Tab to this action. 
+
+When focus is in an applet the event is passed to the focus widget then its 
+children until a toplevel is reached unless the event is handled. This is 
+done in gtk_window_key_press_event(). The original implemementation  for 
+"move_focus_out_of_applet" had the action signal defined on MatePanelAppletFrame 
+but as a GtkSocket always reports a key press event as being handled when 
+the GtkPlug is in a different process, the event has not passed to the 
+MatePanelAppletFrame.
+
+The implementation for "moving_focus_out_of_applet" sets a flag 
+moving_focus_out so that the function mate_panel_applet_focus() which is 
+MatePanelApplet's default signal handler for focus signal will not attempt to
+move the focus within the applet if this flag is set.
+
+
+- Implementing key bindings
+
+If focus is in an applet which is in another process, the GtkSocket will 
+report the key stroke as having been handled. This means that key bindings
+will not be activated. The workaround for this is to handle those key
+strokes in panel_event() a signal handler for the event signal in panel.c.
+However, we only want to handle some keybindings, for example we do not want 
+to handle Shift+F10, which displays the context menu, and Ctrl+F1, which 
+displays the tooltip, but we do want to handle Ctrl+F10 which displays the 
+panel's context menu.
+
+
+- Focus indication
+
+We need a mechanism that will make visible which panel has focus. We also
+need to do this without impacting current behaviour.
+
+We set the state of a PanelWidget to GTK_STATE_SELECTED whan focus is in a
+PanelWidget. We provide a default panel rc file mate-panelrc, which is 
+installed in $(datadir). This rc file sets the default default color for
+SELECTED for any widget which is a descended from a PanelWidget or
+MatePanelApplet to be the same as the NORMAL colour. 
+
+If there is a requirement to make panel focus indication visible, the 
+following lines added to ~/.gtkrc-2.0 will make a selected panel prelight 
+color.
+
+style "prelight-selected"
+{
+  fg[SELECTED] = { 0, 0, 0 }
+  bg[SELECTED] = { 0xea60, 0xea60, 0xea60 }
+}
+
+widget_class "*PanelWidget*" style "prelight-selected"
+widget_class "*MatePanelApplet*" style "prelight-selected"
+

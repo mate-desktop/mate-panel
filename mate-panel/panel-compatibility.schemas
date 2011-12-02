@@ -1,0 +1,546 @@
+<?xml version="1.0"?>
+<mateconfschemafile>
+
+<!--
+   Schemas to maintain compatibility with the 2.0/2.2 configurations.
+
+   The problem being addressed here is that because the 2.0/2.2 panel
+   applies schemas to keys at runtime, existing user configurations
+   will end up with dangling references to the old schemas unless we
+   install these old schemas.
+
+   For example, a 2.0/2.2 panel will apply the medium/general/panel_id_list
+   schema to profiles/default/general/panel_id_list. This association
+   is in the user's configuration, not in the system MateConf database.
+   If the user never changes panel_id_list and logs into a machine without
+   this schema, then panel_id_list will be empty.
+ -->
+
+    <schemalist>    
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/general/panel_id_list</key>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[00000001,00000002]</default>
+	<locale name="C"/>
+      </schema>     
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/general/applet_id_list</key>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[00000001,00000002,00000003,00000004,show_desktop_button]</default>
+	<locale name="C"/>
+      </schema>     
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/general/object_id_list</key>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[00000001,00000002]</default>
+	<locale name="C"/>
+      </schema>     
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>edge-panel</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_size</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>panel-size-x-small</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_hide_mode</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_hide_state</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/screen</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/monitor</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/screen_edge</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>panel-edge-bottom</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/hide_buttons_enabled</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/hide_button_pixmaps_enabled</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>no-background</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default></default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap_fit</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap_stretch</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap_rotate</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_color</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>#ffffff</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_color_alpha</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>65535</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>launcher-object</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/launcher_location</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>applications:///caja.desktop</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000002</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>20</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>launcher-object</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/launcher_location</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>applications:///System/mate-terminal.desktop</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000002</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>25</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/panel_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>matecomponent-applet</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000001</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/matecomponent_iid</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>OAFIID:MATE_ShowDesktopApplet</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>matecomponent-applet</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000001</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>1</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/matecomponent_iid</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>OAFIID:MATE_TasklistApplet</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>matecomponent-applet</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000001</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/matecomponent_iid</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>OAFIID:MATE_PagerApplet</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000003/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>matecomponent-applet</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000003/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000002</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000003/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>-1</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000003/matecomponent_iid</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>OAFIID:MATE_MixerApplet</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000003/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+	<locale name="C"/>
+      </schema>
+ 
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>matecomponent-applet</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000002</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>-1</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/matecomponent_iid</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>OAFIID:MATE_ClockApplet</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>menu-panel</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_size</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>panel-size-x-small</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/screen</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/monitor</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>no-background</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default> </default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_fit</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_stretch</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_rotate</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+	<locale name="C"/>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_color</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>#000000</default>
+	<locale name="C"/>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/clock_format</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>%I:%M %p</default>
+	<locale name="C"/>
+      </schema>
+
+  </schemalist>
+  
+</mateconfschemafile>

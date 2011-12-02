@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<mateconfschemafile>
+
+  <schemalist>    
+
+    <schema>
+      <key>/schemas/apps/panel/general/enable_program_list</key>
+      <applyto>/apps/panel/general/enable_program_list</applyto>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Enable program list in "Run Application" dialog</short>
+        <long>
+          If true, the "Known Applications" listing in the "Run
+          Application" dialog is made available. Whether or not
+          the listing is expanded when the dialog is shown is
+          controlled by the show_program_list key.
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/general/show_program_list</key>
+      <applyto>/apps/panel/general/show_program_list</applyto>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Expand program list in "Run Application" dialog</short>
+        <long>
+          If true, the "Known Applications" listing in the "Run
+          Application" dialog is expanded when the dialog is opened.
+          This key is only relevant if the enable_program_list key
+          is true.
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/general/enable_autocompletion</key>
+      <applyto>/apps/panel/general/enable_autocompletion</applyto>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Enable autocompletion in "Run Application" dialog</short>
+        <long>
+          If true, autocompletion in the "Run Application" dialog is
+          made available.
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/general/toplevel_id_list</key>
+      <applyto>/apps/panel/general/toplevel_id_list</applyto>
+      <owner>panel</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <default>[]</default>
+      <locale name="C">
+        <short>Panel ID list</short>
+        <long>
+          A list of panel IDs. Each ID identifies an individual
+          toplevel panel. The settings for each of these panels are
+          stored in /apps/panel/toplevels/$(id).
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/general/applet_id_list</key>
+      <applyto>/apps/panel/general/applet_id_list</applyto>
+      <owner>panel</owner>
+      <list_type>string</list_type>
+      <type>list</type>
+      <default>[]</default>
+      <locale name="C">
+        <short>Panel applet ID list</short>
+        <long>
+          A list of panel applet IDs. Each ID identifies an
+          individual panel applet. The settings for each of
+          these applets are stored in
+          /apps/panel/applets/$(id).
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/general/object_id_list</key>
+      <applyto>/apps/panel/general/object_id_list</applyto>
+      <owner>panel</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <default>[]</default>
+      <locale name="C">
+        <short>Panel object ID list</short>
+        <long>
+          A list of panel object IDs. Each ID identifies an individual
+          panel object (e.g. a launcher, action button or menu
+          button/bar). The settings for each of these objects are
+          stored in
+          /apps/panel/objects/$(id).
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/general/profiles_migrated</key>
+      <applyto>/apps/panel/general/profiles_migrated</applyto>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Old profiles configuration migrated</short>
+        <long>
+          A boolean flag to indicate whether the user's previous
+          configuration in /apps/panel/profiles/default has been
+          copied to the new location in /apps/panel.
+        </long>
+      </locale>
+    </schema>
+
+  </schemalist>
+  
+</mateconfschemafile>

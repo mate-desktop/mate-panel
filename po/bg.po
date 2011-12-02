@@ -1,0 +1,3289 @@
+# Bulgarian translation of mate-panel po-file.
+# Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+# Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+# Peter Slavov <pslavov@i-space.org>, 2004.
+# Rostislav Raykov <zbrox@i-space.org>, 2004.
+# Vladimir Petkov <kaladan@gmail.com>, 2004, 2005, 2006, 2007.
+# Alexander Shopov <ash@kambanaria.org>, 2006, 2007, 2008, 2009, 2010.
+# Yavor Doganov <yavor@gnu.org>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mate-panel master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-23 13:40+0300\n"
+"PO-Revision-Date: 2010-08-23 13:40+0300\n"
+"Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:444
+#: ../applets/clock/clock-location-tile.c:520
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/clock-location-tile.c:527
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:314
+msgid "%b %d"
+msgstr "%d %b"
+
+#: ../applets/clock/calendar-window.c:847
+msgid "Tasks"
+msgstr "Задачи"
+
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
+msgid "Edit"
+msgstr "Редактиране"
+
+#: ../applets/clock/calendar-window.c:968
+msgid "All Day"
+msgstr "Целият ден"
+
+#: ../applets/clock/calendar-window.c:1106
+msgid "Appointments"
+msgstr "Срещи"
+
+#: ../applets/clock/calendar-window.c:1131
+msgid "Birthdays and Anniversaries"
+msgstr "Рождени дни и годишнини"
+
+#: ../applets/clock/calendar-window.c:1156
+msgid "Weather Information"
+msgstr "Информация за времето"
+
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
+msgid "Locations"
+msgstr "Местоположения"
+
+#: ../applets/clock/calendar-window.c:1937
+msgid "Calendar"
+msgstr "Календар"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:444
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:449 ../applets/clock/clock.c:1585
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:460
+msgid "%a %b %e"
+msgstr "%b %d, %a"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:467
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%2$s\n"
+"%1$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:475
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%2$s, %1$s"
+
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:648
+msgid "%A %B %d (%%s)"
+msgstr "%A, %d %B (%%s)"
+
+#: ../applets/clock/clock.c:678
+msgid "Click to hide your appointments and tasks"
+msgstr "Натиснете, за да скриете вашите срещи и задачи"
+
+#: ../applets/clock/clock.c:681
+msgid "Click to view your appointments and tasks"
+msgstr "Натиснете, за да видите вашите срещи и задачи"
+
+#: ../applets/clock/clock.c:685
+msgid "Click to hide month calendar"
+msgstr "Натиснете, за да скриете месечния календар"
+
+#: ../applets/clock/clock.c:688
+msgid "Click to view month calendar"
+msgstr "Натиснете, за да видите месечния календар"
+
+#: ../applets/clock/clock.c:1423
+msgid "Computer Clock"
+msgstr "Компютърен часовник"
+
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1570
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1578
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1624
+msgid "%A, %B %d %Y"
+msgstr "%B %d %Y, %A"
+
+#: ../applets/clock/clock.c:1655
+msgid "Set System Time..."
+msgstr "Задаване на системно време…"
+
+#: ../applets/clock/clock.c:1656
+msgid "Set System Time"
+msgstr "Задаване на системно време"
+
+#: ../applets/clock/clock.c:1671
+msgid "Failed to set the system time"
+msgstr "Неуспех при задаването на системно време"
+
+#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1836
+#: ../applets/wncklet/window-list.c:192
+#: ../applets/wncklet/workspace-switcher.c:339
+msgid "_Preferences"
+msgstr "_Настройки"
+
+#: ../applets/clock/clock.c:1872 ../applets/fish/fish.c:1839
+#: ../applets/notification_area/main.c:171
+#: ../applets/wncklet/showdesktop.c:228 ../applets/wncklet/window-list.c:195
+#: ../applets/wncklet/window-menu.c:95
+#: ../applets/wncklet/workspace-switcher.c:342 ../mate-panel/drawer.c:601
+#: ../mate-panel/panel-action-button.c:710
+#: ../mate-panel/panel-context-menu.c:285 ../mate-panel/panel-menu-bar.c:350
+#: ../mate-panel/panel-menu-button.c:665
+msgid "_Help"
+msgstr "Помо_щ"
+
+#: ../applets/clock/clock.c:1875 ../applets/fish/fish.c:1842
+#: ../applets/notification_area/main.c:174
+#: ../applets/wncklet/showdesktop.c:231 ../applets/wncklet/window-list.c:198
+#: ../applets/wncklet/window-menu.c:98
+#: ../applets/wncklet/workspace-switcher.c:345
+msgid "_About"
+msgstr "_Относно"
+
+#: ../applets/clock/clock.c:1878
+msgid "Copy _Time"
+msgstr "Копиране на _времето"
+
+#: ../applets/clock/clock.c:1881
+msgid "Copy _Date"
+msgstr "Копиране на _датата"
+
+#: ../applets/clock/clock.c:1884
+msgid "Ad_just Date & Time"
+msgstr "За_даване на час и дата"
+
+#: ../applets/clock/clock.c:2720
+msgid "Custom format"
+msgstr "Личен формат"
+
+#: ../applets/clock/clock.c:3207
+msgid "Choose Location"
+msgstr "Избор на местоположение"
+
+#: ../applets/clock/clock.c:3286
+msgid "Edit Location"
+msgstr "Редактиране на местоположение"
+
+#: ../applets/clock/clock.c:3432
+msgid "City Name"
+msgstr "Град"
+
+#: ../applets/clock/clock.c:3436
+msgid "City Time Zone"
+msgstr "Часови пояс"
+
+#: ../applets/clock/clock.c:3621
+msgid "24 hour"
+msgstr "24-часов"
+
+#: ../applets/clock/clock.c:3622
+msgid "UNIX time"
+msgstr "Време във формат UNIX"
+
+#: ../applets/clock/clock.c:3623
+msgid "Internet time"
+msgstr "Време във формат Интернет"
+
+#: ../applets/clock/clock.c:3631
+msgid "Custom _format:"
+msgstr "_Личен формат:"
+
+#: ../applets/clock/clock.c:3721
+msgid "Clock"
+msgstr "Часовник"
+
+#: ../applets/clock/clock.c:3724
+msgid "The Clock displays the current time and date"
+msgstr "Часовникът показва текущото време и дата"
+
+#. Translator credits
+#: ../applets/clock/clock.c:3727 ../applets/fish/fish.c:621
+#: ../applets/notification_area/main.c:153
+#: ../applets/wncklet/showdesktop.c:540 ../applets/wncklet/window-list.c:609
+#: ../applets/wncklet/window-menu.c:77
+#: ../applets/wncklet/workspace-switcher.c:619
+#: ../mate-panel/panel-context-menu.c:138
+msgid "translator-credits"
+msgstr ""
+"Владимир „Kaladan“ Петков <vpetkov@i-space.org>\n"
+"Ростислав „zbrox“ Райков <zbrox@i-space.org>\n"
+"Александър Шопов <ash@contact.bg>\n"
+"\n"
+"Проектът за превод на MATE има нужда от подкрепа.\n"
+"Научете повече за нас на http://mate.cult.bg\n"
+"Докладвайте за грешки на http://mate.cult.bg/bugs"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "<i>(optional)</i>"
+msgstr "<i>(по избор)</i>"
+
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:3
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Въведете град, област или държава и слeд това изберете подходящото "
+"географско място от предложенията.</i></small>"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "Clock Format"
+msgstr "Формат на часовника"
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Clock Preferences"
+msgstr "Настройки на часовника"
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Current Time:"
+msgstr "Текущо време:"
+
+#: ../applets/clock/clock.ui.h:7
+msgid "Display"
+msgstr "Изглед"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "East"
+msgstr "Изток"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:9
+msgid "General"
+msgstr "Общи настройки"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "L_atitude:"
+msgstr "_Широчина:"
+
+#: ../applets/clock/clock.ui.h:11
+msgid "L_ongitude:"
+msgstr "_Дължина:"
+
+#: ../applets/clock/clock.ui.h:13
+msgid "North"
+msgstr "Север"
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Panel Display"
+msgstr "Изглед на панела"
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show _temperature"
+msgstr "Показване на _температурата"
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show _weather"
+msgstr "Показване на в_ремето"
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show seco_nds"
+msgstr "Показване на _секундите"
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show the _date"
+msgstr "Показване на _датата"
+
+#: ../applets/clock/clock.ui.h:19
+msgid "South"
+msgstr "Юг"
+
+#: ../applets/clock/clock.ui.h:20
+msgid "Time & Date"
+msgstr "Време и дата"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "Time _Settings"
+msgstr "Настройки на _времето"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "Weather"
+msgstr "Време"
+
+#: ../applets/clock/clock.ui.h:23
+msgid "West"
+msgstr "Запад"
+
+#: ../applets/clock/clock.ui.h:24
+msgid "_12 hour format"
+msgstr "12-_часов формат"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_24 hour format"
+msgstr "24-ч_асов формат"
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Location Name:"
+msgstr "_Местоположение:"
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Pressure unit:"
+msgstr "_Единица за налягане:"
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Set System Time"
+msgstr "_Задаване на системно време"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "_Temperature unit:"
+msgstr "Единица за _температура:"
+
+#: ../applets/clock/clock.ui.h:30
+msgid "_Time:"
+msgstr "_Време:"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "_Timezone:"
+msgstr "_Часови пояс:"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "_Visibility unit:"
+msgstr "Единица за _видимост:"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "_Wind speed unit:"
+msgstr "Единица за _скорост на вятъра:"
+
+#. Translators:
+#. This controls whether the MATE panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: ../applets/clock/clock.schemas.in.h:11
+msgid "24-hour"
+msgstr "24-hour"
+
+#: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "Списък с местоположения за изобразяване в прозореца на календара."
+
+#: ../applets/clock/clock.schemas.in.h:13
+msgid "Custom format of the clock"
+msgstr "Личен формат на времето"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "Разширяване на списъка със срещите"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "Разширяване на списъка с рождените дни"
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Разширяване на списъка с местоположения"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr "Разширяване на списъка със задачите"
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "Разширяване на списъка с информацията за времето"
+
+#: ../applets/clock/clock.schemas.in.h:19
+msgid "Hour format"
+msgstr "Формат на часа"
+
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Ако е истина, показва се икона за времето."
+
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Ако е истина, датата в часовника се показва заедно с времето."
+
+#: ../applets/clock/clock.schemas.in.h:22
+msgid "If true, display seconds in time."
+msgstr "Ако е истина, секундите се показват."
+
+#: ../applets/clock/clock.schemas.in.h:23
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Ако е истина, списъкът със срещите е разширен в календара."
+
+#: ../applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Ако е истина, списъкът с рождените дни е разширен в календара."
+
+#: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Ако е истина, списъкът с местоположения е разширен в календара."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Ако е истина, списъкът със задачи е разширен в календара."
+
+#: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Ако е истина, списъкът с информация за времето е разширен в календара."
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"Ако е истина, датата се показва в подсказката, когато мишката е върху "
+"часовника."
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Ако е истина, температурата се показва до иконата за времето."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show week numbers in the calendar."
+msgstr "Ако е истина, номерата на седмиците се показват в календара."
+
+#: ../applets/clock/clock.schemas.in.h:31
+msgid "List of locations"
+msgstr "Списък с местоположения"
+
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "Show date in clock"
+msgstr "Показване на датата в часовника"
+
+#: ../applets/clock/clock.schemas.in.h:33
+msgid "Show date in tooltip"
+msgstr "Показване на датата в подсказка"
+
+#: ../applets/clock/clock.schemas.in.h:34
+msgid "Show temperature in clock"
+msgstr "Показване на температурата в часовника"
+
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show time with seconds"
+msgstr "Показване на секундите във времето"
+
+#: ../applets/clock/clock.schemas.in.h:36
+msgid "Show weather in clock"
+msgstr "Показване на метеорологичната обстановка в часовника"
+
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show week numbers in calendar"
+msgstr "Показване на номерата на седмиците в календара"
+
+#: ../applets/clock/clock.schemas.in.h:38
+msgid "Speed unit"
+msgstr "Единица за скорост"
+
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Temperature unit"
+msgstr "Единица за температура"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "The unit to use when showing temperatures."
+msgstr "Мерната единица за температура."
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing wind speed."
+msgstr "Мерната единица за скорост на вятъра."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid ""
+"The use of this key was deprecated in MATE 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Използването на този ключ беше махнато в MATE 2.22. Вместо това се използва "
+"вътрешна програма за настройването на времето. Схемата е запазена заради "
+"съвместимост с по-стари версии."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in MATE 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Използването на този ключ беше махнато в MATE 2.28. То беше заменено от "
+"часовите зони. Схемата е запазена заради съвместимост с по-стари версии."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
+"The use of this key was deprecated in MATE 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"Използването на този ключ беше махнато в MATE 2.6. Той беше заменен от "
+"ключа „format“ (за формат). Схемата е запазена заради съвместимост с по-"
+"стари версии."
+
+#: ../applets/clock/clock.schemas.in.h:45
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"Този ключ определя формата използван от аплета часовник, когато ключът за "
+"формата е настроен на „custom“ (личен). Може да използвате форматиращите "
+"знаци ползвани от strftime(), за да получите определен формат. За повече "
+"информация погледнете страницата от ръководството за strftime()."
+
+#: ../applets/clock/clock.schemas.in.h:46
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"Този ключ определя формата на часа използван от аплета часовник. Възможните "
+"стойности са „12-hour“, „24-hour“, „internet“, „unix“, „custom“. Ако е "
+"настроен на „internet“, часовникът ще показва времето по Интернет. Системата "
+"за времето по Интернет разделя деня на 1000 такта. Няма часови пояси в тази "
+"система, така че времето е еднакво по целия свят. Ако е настроен на „unix“, "
+"часовникът ще показва времето от епохата, примерно: 1970-01-01. Ако е "
+"настроен на „custom“, часовникът ще показва времето според формата определен "
+"в ключа custom_format."
+
+#: ../applets/clock/clock.schemas.in.h:47
+msgid "Time configuration tool"
+msgstr "Инструмент за настройка на времето"
+
+#: ../applets/clock/clock.schemas.in.h:48
+msgid "Use Internet time"
+msgstr "Използване на време по Интернет"
+
+#: ../applets/clock/clock.schemas.in.h:49
+msgid "Use UNIX time"
+msgstr "Използване на време по UNIX"
+
+#: ../applets/clock/clock.schemas.in.h:50
+msgid "Use UTC"
+msgstr "Използване на време по Гринуич"
+
+#: ../applets/clock/clock-location-tile.c:183
+msgid "Failed to set the system timezone"
+msgstr "Неуспех при задаването на часови пояс на системата"
+
+#: ../applets/clock/clock-location-tile.c:244
+msgid "<small>Set...</small>"
+msgstr "<small>Задаване…</small>"
+
+#: ../applets/clock/clock-location-tile.c:245
+msgid "<small>Set</small>"
+msgstr "<small>Задаване</small>"
+
+#: ../applets/clock/clock-location-tile.c:321
+msgid "Set location as current location and use its timezone for this computer"
+msgstr ""
+"Задаване на местоположението като текущо и ползване на неговия часови пояс "
+"за този компютър"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:457
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:465
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:474
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:613
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libmateweather.
+#: ../applets/clock/clock-location-tile.c:625
+#: ../applets/clock/clock-location-tile.c:634
+msgid "Unknown"
+msgstr "Неизвестно"
+
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:627
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, усещане като %s"
+
+#: ../applets/clock/clock-location-tile.c:650
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Изгрев: %s / Залез: %s"
+
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:93 ../applets/wncklet/wncklet.c:123
+#: ../mate-panel/libpanel-util/panel-show.c:235
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Документът с помощта „%s “ не може да бъде показан"
+
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:152
+msgid "Error displaying help document"
+msgstr "Грешка при показване на документа с помощта"
+
+#: ../applets/fish/fish.c:274
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"Предупреждение: Командата всъщност изглежда полезна и\n"
+"понеже това е безполезен аплет, не ви е позволено да я ползвате.\n"
+"Съветваме ви да не ползвате %s за нищо, което би\n"
+"превърнало аплета в нещо практично или полезно."
+
+#: ../applets/fish/fish.c:471
+msgid "Images"
+msgstr "Изображения"
+
+#: ../applets/fish/fish.c:583 ../applets/fish/fish.c:649
+#: ../applets/fish/fish.c:765
+#, no-c-format
+msgid "%s the Fish"
+msgstr "Рибата %s"
+
+#: ../applets/fish/fish.c:584
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr ""
+"%s не върши абсолютно никаква работа. Само заема дисково пространство и губи "
+"време за компилация. Ако го заредите, ще отнема и ценно пространство на "
+"панела и памет. Ако познавате някой, който използва този аплет, трябва "
+"веднага да го заведете на психиатричен преглед."
+
+#: ../applets/fish/fish.c:608
+msgid "(with minor help from George)"
+msgstr "(с малко помощ от George)"
+
+#: ../applets/fish/fish.c:615
+msgid "Fish"
+msgstr "Риба"
+
+#: ../applets/fish/fish.c:650
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "Рибата %s — един съвременен оракул"
+
+#: ../applets/fish/fish.c:721
+msgid "Unable to locate the command to execute"
+msgstr "Командата за изпълнение не може да бъде открита"
+
+#: ../applets/fish/fish.c:770
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "Тъй рече рибата %s:"
+
+#: ../applets/fish/fish.c:839
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Не може да се прочете изхода от командата:\n"
+"\n"
+"Подробности: %s"
+
+#: ../applets/fish/fish.c:905
+msgid "_Speak again"
+msgstr "_Повтаряне"
+
+#: ../applets/fish/fish.c:989
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "Зададената команда не работи и е заменена с: %s"
+
+#: ../applets/fish/fish.c:1012
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Невъзможно е да се изпълни „%s“\n"
+"\n"
+"Подробности: %s"
+
+#: ../applets/fish/fish.c:1028
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Невъзможно е да се чете от „%s“\n"
+"\n"
+"Подробности: %s"
+
+#: ../applets/fish/fish.c:1679
+msgid "The water needs changing"
+msgstr "Водата трябва да се смени"
+
+#: ../applets/fish/fish.c:1681
+msgid "Look at today's date!"
+msgstr "Виж коя дата сме!"
+
+#: ../applets/fish/fish.c:1774
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "Рибата-оракул %s"
+
+#: ../applets/fish/fish.ui.h:1 ../mate-panel/panel-properties-dialog.ui.h:1
+msgid "    "
+msgstr "    "
+
+#: ../applets/fish/fish.ui.h:2
+msgid "Animation"
+msgstr "Анимация"
+
+#: ../applets/fish/fish.ui.h:3
+msgid "Co_mmand to run when clicked:"
+msgstr "Ко_манда, която да се изпълни при натискане:"
+
+#: ../applets/fish/fish.ui.h:4
+msgid "Fish Preferences"
+msgstr "Настройки на рибата"
+
+#: ../applets/fish/fish.ui.h:6
+msgid "Select an animation"
+msgstr "Избор на анимация"
+
+#: ../applets/fish/fish.ui.h:7
+msgid "_File:"
+msgstr "_Файл:"
+
+#: ../applets/fish/fish.ui.h:8
+msgid "_Name of fish:"
+msgstr "_Име на рибата:"
+
+#: ../applets/fish/fish.ui.h:9
+msgid "_Pause per frame:"
+msgstr "_Пауза на кадър:"
+
+#: ../applets/fish/fish.ui.h:10
+msgid "_Rotate on vertical panels"
+msgstr "_Завъртане при вертикалните панели"
+
+#: ../applets/fish/fish.ui.h:11
+msgid "_Total frames in animation:"
+msgstr "Кадри в _анимацията:"
+
+#: ../applets/fish/fish.ui.h:12
+msgid "frames"
+msgstr "кадри"
+
+#: ../applets/fish/fish.ui.h:13
+msgid "seconds"
+msgstr "секунди"
+
+#: ../applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr ""
+"Риба без име е много скучна. Вдъхнете ѝ малко живот като ѝ изберете име."
+
+#: ../applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "Команда за изпълнение при натискане"
+
+#: ../applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "Броят на кадрите в анимацията на рибата"
+
+#: ../applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Ако е истина, анимацията на рибата да се изобрази завъртяна във вертикалните "
+"панели."
+
+#: ../applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "Пауза на кадър"
+
+#: ../applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "Завъртане при вертикални панели"
+
+#: ../applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "Картинка с анимацията на рибата"
+
+#: ../applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "Името на рибата"
+
+#: ../applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr ""
+"Този клавиш определя командата, която да се изпълни при натискане върху "
+"рибата."
+
+#: ../applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"Тук се задава името на файла за картинката, която ще се използва за "
+"анимацията в аплета на рибата. Името е относително спрямо папката за "
+"изображения."
+
+#: ../applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr ""
+"Този клавиш определя броя на кадрите, които ще се изобразят при анимацията "
+"на рибата."
+
+#: ../applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "Тук се задава за колко секунди ще се изобразява всеки кадър."
+
+#: ../applets/notification_area/main.c:148
+msgid "Notification Area"
+msgstr "Област за уведомяване"
+
+#: ../applets/notification_area/main.c:306
+msgid "Panel Notification Area"
+msgstr "Област за уведомяване"
+
+#: ../applets/wncklet/showdesktop.c:182
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "Неуспешно зареждане на %s: %s\n"
+
+#: ../applets/wncklet/showdesktop.c:183
+msgid "Icon not found"
+msgstr "Иконата не e намерена"
+
+#: ../applets/wncklet/showdesktop.c:245
+msgid "Click here to restore hidden windows."
+msgstr "Натиснете тук, за да се възстановят скритите прозорци."
+
+#: ../applets/wncklet/showdesktop.c:247
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+"Натиснете тук, за да се скрият всички прозорци и да се покаже работния плот."
+
+#: ../applets/wncklet/showdesktop.c:459 ../applets/wncklet/showdesktop.c:543
+msgid "Show Desktop Button"
+msgstr "Бутон за показване на работния плот"
+
+#: ../applets/wncklet/showdesktop.c:545
+msgid "This button lets you hide all windows and show the desktop."
+msgstr ""
+"Този бутон позволява да скриете всички прозорци и да видите работния плот."
+
+#: ../applets/wncklet/showdesktop.c:575
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"Вашият мениджър на прозорци не поддържа бутона за показване на работния плот "
+"или не сте стартирали никакъв мениджър на прозорец."
+
+#: ../applets/wncklet/window-list.c:612
+msgid "Window List"
+msgstr "Списък с прозорците"
+
+#: ../applets/wncklet/window-list.c:614
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr ""
+"Списъкът с прозорци показва всички прозорци и ви позволява да ги разглеждате."
+
+#: ../applets/wncklet/window-list.ui.h:1
+msgid "Group windows when _space is limited"
+msgstr "При _ограничено място"
+
+#: ../applets/wncklet/window-list.ui.h:2
+msgid "Restore to current _workspace"
+msgstr "Възстановяване към теку_щия работен плот"
+
+#: ../applets/wncklet/window-list.ui.h:3
+msgid "Restore to na_tive workspace"
+msgstr "Възстановяване към _първоначалния работен плот"
+
+#: ../applets/wncklet/window-list.ui.h:4
+msgid "Restoring Minimized Windows"
+msgstr "Възстановяване на минимизираните прозорци"
+
+#: ../applets/wncklet/window-list.ui.h:5
+msgid "Sh_ow windows from current workspace"
+msgstr "Прозорците от _текущия работен плот"
+
+#: ../applets/wncklet/window-list.ui.h:6
+msgid "Show windows from a_ll workspaces"
+msgstr "Прозорците от вси_чки работни плотове"
+
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Grouping"
+msgstr "Обединяване в групи"
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Window List Content"
+msgstr "Съдържание на списъка с прозорци"
+
+#: ../applets/wncklet/window-list.ui.h:9
+msgid "Window List Preferences"
+msgstr "Настройки на списъка с прозорци"
+
+#: ../applets/wncklet/window-list.ui.h:10
+msgid "_Always group windows"
+msgstr "_Винаги да се обединяват в групи"
+
+#: ../applets/wncklet/window-list.ui.h:11
+msgid "_Never group windows"
+msgstr "_Никога да не се обединяват в групи"
+
+#: ../applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Определя дали прозорците на една и съща програма да се обединяват в групи в "
+"списъка с прозорци. Валидни стойности са „never“ (никога), "
+"„auto“ (автоматично) и „always“ (винаги)."
+
+#: ../applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Ако е истина, списъкът с прозорци показва прозорците от всички работни "
+"места. В противен случай — само прозорците от текущото работно място."
+
+#: ../applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Ако е истина, възстановеният минимизиран прозорец ще се появи на текущия "
+"работен плот. В противен случай — на работния плот където е бил преди да е "
+"минимизирането."
+
+#: ../applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "Максимален размер на списъка с прозорци"
+
+#: ../applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "Минимален размер на списъка с прозорци"
+
+#: ../applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr ""
+"Преместване на прозорците на текущия работен плот при възстановяване от "
+"минимизирано състояние"
+
+#: ../applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Показване на прозорците от всички работни плотове."
+
+#: ../applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"The use of this key was deprecated in MATE 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"Използването на този ключ беше махнато в MATE 2.20. Схемата е запазена "
+"заради съвместимост с по-стари версии."
+
+#: ../applets/wncklet/window-list.schemas.in.h:9
+msgid "When to group windows"
+msgstr "Кога да се групират прозорците"
+
+#: ../applets/wncklet/window-menu.c:80 ../applets/wncklet/window-menu.c:247
+msgid "Window Selector"
+msgstr "Избор на прозорци"
+
+#: ../applets/wncklet/window-menu.c:84
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr ""
+"Списъкът с прозорци показва всички прозорци и ви позволява да ги разглеждате."
+
+#: ../applets/wncklet/workspace-switcher.c:211
+#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.ui.h:10
+msgid "rows"
+msgstr "реда"
+
+#: ../applets/wncklet/workspace-switcher.c:211
+#: ../applets/wncklet/workspace-switcher.c:974
+msgid "columns"
+msgstr "колони"
+
+#: ../applets/wncklet/workspace-switcher.c:492
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"Грешка при зареждане на стойността на num_rows (броя на редовете) за "
+"превключвателя на работни плотове: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:503
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Грешка при зареждане на стойността на display_workspace_names (показване на "
+"имената на работните плотове) за превключвателя на работни плотове: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:518
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Грешка при зареждане на стойността на display_all_workspaces (показване на "
+"всички работни плотове) за превключвателя на работни плотове: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:622
+msgid "Workspace Switcher"
+msgstr "Превключвател на работни места"
+
+#: ../applets/wncklet/workspace-switcher.c:624
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Превключвателя на работни места показва работните плотове в умален вид и "
+"позволява да управлявате прозорците."
+
+#: ../applets/wncklet/workspace-switcher.ui.h:1
+msgid "Number of _workspaces:"
+msgstr "_Брой работни плота:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:2
+msgid "Show _all workspaces in:"
+msgstr "Показване на _всички работни плотове в:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+msgid "Show _only the current workspace"
+msgstr "Показване само на _текущия работен плот"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:4
+msgid "Show workspace _names in switcher"
+msgstr "Показване на _имената на работните плотове"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:5
+msgid "Switcher"
+msgstr "Превключвател"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:6
+msgid "Workspace Names"
+msgstr "Имена на работните плотове"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:7
+msgid "Workspace Switcher Preferences"
+msgstr "Настройки на превключвателя на работните плотове"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:8
+msgid "Workspace na_mes:"
+msgstr "Имена на _работните плотове:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:9
+msgid "Workspaces"
+msgstr "Работни плотове"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "Показване на всички работни плотове"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "Показване на имената на работните плотове"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"Ако е истина, превключвателят на работни плотове ще показва всички работни "
+"плотове, ако е лъжа — само текущия"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Marco."
+msgstr ""
+"Ако е истина, превключвателят ще показва имената на работните плотове, ако е "
+"лъжа — съдържанието им. Тази ключ важи, само когато мениджърът на прозорци е "
+"Matacity."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "Редове на превключвателя на работни плотове"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"Ключът определя на колко реда (при хоризонтално разположение) или колони "
+"(при вертикално положение) превключвателят ще показва работните места. Тази "
+"ключ важи, само ако display_all_workspaces е истина."
+
+#: ../matecomponent/libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the MATE-2.0 panel"
+msgstr "Прост аплет за тестването на панела на MATE 2.0"
+
+#: ../matecomponent/libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:2
+msgid "Test MateComponent Applet"
+msgstr "Аплет за тестване на MateComponent"
+
+#: ../matecomponent/libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:3
+msgid "Test MateComponent Applet Factory"
+msgstr "Фабрика за аплети за тестване на MateComponent"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:34
+#: ../mate-panel/panel-test-applets.c:36
+msgid "Specify an applet IID to load"
+msgstr "Указване на име на профила, който да се зареди"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:35
+#: ../mate-panel/panel-test-applets.c:37
+msgid ""
+"Specify a mateconf location in which the applet preferences should be stored"
+msgstr ""
+"Указване на местоположението на mateconf, в което да се запазят настройките"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:36
+#: ../mate-panel/panel-test-applets.c:38
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr ""
+"Указване на началния размер на аплета („xx-small“ (много малък), "
+"„medium“ (среден), „large“ (голям) и т.н.)"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:37
+#: ../mate-panel/panel-test-applets.c:39
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr ""
+"Указване на началната ориентация на аплета („top“ (отгоре), "
+"„bottom“ (отдолу), „left“ (отляво) или „right“ (отдясно))"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:53
+#: ../mate-panel/panel-properties-dialog.c:123
+#: ../mate-panel/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Отгоре"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:54
+#: ../mate-panel/panel-properties-dialog.c:124
+#: ../mate-panel/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Отдолу"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:55
+#: ../mate-panel/panel-properties-dialog.c:125
+#: ../mate-panel/panel-test-applets.c:57
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Отляво"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:56
+#: ../mate-panel/panel-properties-dialog.c:126
+#: ../mate-panel/panel-test-applets.c:58
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Отдясно"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:61
+#: ../mate-panel/panel-test-applets.c:63
+msgctxt "Size"
+msgid "XX Small"
+msgstr "Най-малък"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:62
+#: ../mate-panel/panel-test-applets.c:64
+msgctxt "Size"
+msgid "X Small"
+msgstr "По-малък"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:63
+#: ../mate-panel/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Small"
+msgstr "Малък"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:64
+#: ../mate-panel/panel-test-applets.c:66
+msgctxt "Size"
+msgid "Medium"
+msgstr "Среден"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:65
+#: ../mate-panel/panel-test-applets.c:67
+msgctxt "Size"
+msgid "Large"
+msgstr "Голям"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:66
+#: ../mate-panel/panel-test-applets.c:68
+msgctxt "Size"
+msgid "X Large"
+msgstr "По-голям"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:67
+#: ../mate-panel/panel-test-applets.c:69
+msgctxt "Size"
+msgid "XX Large"
+msgstr "Най-голям"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:129
+#: ../mate-panel/panel-test-applets.c:127
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "Неуспех при зареждането на аплета „%s“"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:249
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "заявката върна изключение %s\n"
+
+#. This is an utility to easily test various applets
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:2
+#: ../mate-panel/panel-test-applets.ui.h:2
+msgid "Test applet utility"
+msgstr "Тестов аплет"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Applet:"
+msgstr "_Аплет:"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "_Ориентация:"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:5
+#: ../mate-panel/panel-test-applets.ui.h:5
+msgid "_Prefs Dir:"
+msgstr "_Папка с предпочитания:"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:6
+#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "_Размери:"
+
+#: ../matecomponent/panel-module/MATE_Panel_Popup.xml.h:1
+#: ../mate-panel/applet.c:554 ../libmate-panel-applet/mate-panel-applet.c:145
+msgid "Loc_k To Panel"
+msgstr "_Заключване към панела"
+
+#: ../matecomponent/panel-module/MATE_Panel_Popup.xml.h:2
+#: ../mate-panel/applet.c:537 ../libmate-panel-applet/mate-panel-applet.c:139
+msgid "_Move"
+msgstr "П_реместване"
+
+#: ../matecomponent/panel-module/MATE_Panel_Popup.xml.h:3
+#: ../mate-panel/applet.c:526 ../libmate-panel-applet/mate-panel-applet.c:136
+msgid "_Remove From Panel"
+msgstr "_Премахване от панела"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Файлът не е във формат .desktop"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Непозната версия на файла: %s"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "Стартиране на %s"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Програмата не приема документи през командния ред"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Непозната опция при стартиране „%d“"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "В обекти от вида „Type=Link“ не може да се подават адреси на документи"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Не е обект за стартиране"
+
+#: ../mate-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Изключване на връзката с управлението на сесиите"
+
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Указване на файла със запазените настройки"
+
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "ФАЙЛ"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Указване на идентификатор за управлението на сесиите"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "ИДЕНТИФИКАТОР"
+
+#: ../mate-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Настройки на управлението на сесии:"
+
+#: ../mate-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Показване на настройките за управлението на сесиите"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../mate-panel/libpanel-util/panel-error.c:82
+#: ../mate-panel/mate-panel-applet-frame.c:745
+#: ../mate-panel/mate-panel-applet-frame.c:915
+msgid "Error"
+msgstr "Грешка"
+
+#: ../mate-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Избор на икона"
+
+#: ../mate-panel/libpanel-util/panel-launch.c:45
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "„%s“ не може да бъде изпълнено"
+
+#: ../mate-panel/libpanel-util/panel-launch.c:48
+#: ../mate-panel/launcher.c:161
+msgid "Could not launch application"
+msgstr "Неуспех при стартирането на програмата"
+
+#: ../mate-panel/libpanel-util/panel-show.c:44
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "Местоположението „%s“ не може да бъде отворено"
+
+#: ../mate-panel/libpanel-util/panel-show.c:162
+msgid "No application to handle search folders is installed."
+msgstr "Не е инсталирана програма за обработката на папки за търсене."
+
+#: ../mate-panel/applet.c:447
+msgid "???"
+msgstr "???"
+
+#: ../mate-panel/applet.c:1346
+msgid "Cannot find an empty spot"
+msgstr "Неуспех при намирането на празно място"
+
+#: ../mate-panel/drawer.c:350 ../mate-panel/panel-addto.c:174
+#: ../mate-panel/panel-toplevel.c:1626
+msgid "Drawer"
+msgstr "Шкаф"
+
+#: ../mate-panel/drawer.c:589
+msgid "_Add to Drawer..."
+msgstr "_Добавяне към шкаф…"
+
+#: ../mate-panel/drawer.c:595 ../mate-panel/launcher.c:807
+#: ../mate-panel/panel-action-button.c:141
+#: ../mate-panel/panel-context-menu.c:216
+msgid "_Properties"
+msgstr "_Настройки"
+
+#: ../mate-panel/mate-desktop-item-edit.c:29
+msgid "Create new file in the given directory"
+msgstr "Създаване на нов файл в посочената папка"
+
+#: ../mate-panel/mate-desktop-item-edit.c:30
+msgid "[FILE...]"
+msgstr "[ФАЙЛ…]"
+
+#: ../mate-panel/mate-desktop-item-edit.c:108
+msgid "- Edit .desktop files"
+msgstr "— редактиране на файлове .desktop"
+
+#: ../mate-panel/mate-desktop-item-edit.c:146
+#: ../mate-panel/mate-desktop-item-edit.c:200 ../mate-panel/launcher.c:897
+msgid "Create Launcher"
+msgstr "Създаване на стартер"
+
+#: ../mate-panel/mate-desktop-item-edit.c:171
+#: ../mate-panel/mate-desktop-item-edit.c:194
+msgid "Directory Properties"
+msgstr "Настройки на папката"
+
+#: ../mate-panel/mate-desktop-item-edit.c:177 ../mate-panel/launcher.c:735
+msgid "Launcher Properties"
+msgstr "Настройки на стартера"
+
+#: ../mate-panel/mate-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Служи за стартиране на други приложения и предоставяне на различни "
+"инструменти за управление на прозорци, показване на времето и др."
+
+#: ../mate-panel/mate-panel.desktop.in.in.h:2 ../mate-panel/main.c:93
+msgid "Panel"
+msgstr "Панел"
+
+#: ../mate-panel/launcher.c:118
+msgid "Could not show this URL"
+msgstr "Този адрес не може да бъде показан"
+
+#: ../mate-panel/launcher.c:119
+msgid "No URL was specified."
+msgstr "Не е указан адрес."
+
+#: ../mate-panel/launcher.c:227
+msgid "Could not use dropped item"
+msgstr "Обектът не може да бъде използван"
+
+#: ../mate-panel/launcher.c:423
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Не е зададен адрес за файл на средата за панелен стартер\n"
+
+#: ../mate-panel/launcher.c:462
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr ""
+"Неуспех при отварянето на файла на средата %s за стартера в панела %s%s\n"
+
+#: ../mate-panel/launcher.c:801
+msgid "_Launch"
+msgstr "_Стартиране"
+
+#: ../mate-panel/launcher.c:840
+#, c-format
+msgid "Key %s is not set, cannot load launcher\n"
+msgstr "Ключът %s не е зададен, неуспех при зареждането на стартера\n"
+
+#: ../mate-panel/launcher.c:966 ../mate-panel/panel-ditem-editor.c:1361
+#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/panel-ditem-editor.c:1426
+msgid "Could not save launcher"
+msgstr "Стартерът не може да бъде запазен"
+
+#: ../mate-panel/main.c:45
+msgid "Replace a currently running panel"
+msgstr "Замяна на текущ панел"
+
+#: ../mate-panel/menu.c:916
+msgid "Add this launcher to _panel"
+msgstr "Добавяне на този стартер към _панела"
+
+#: ../mate-panel/menu.c:923
+msgid "Add this launcher to _desktop"
+msgstr "Добавяне на този стартер към _работния плот"
+
+#: ../mate-panel/menu.c:935
+msgid "_Entire menu"
+msgstr "_Цялото меню"
+
+#: ../mate-panel/menu.c:940
+msgid "Add this as _drawer to panel"
+msgstr "Добавяне на това като _шкаф към панела"
+
+#: ../mate-panel/menu.c:947
+msgid "Add this as _menu to panel"
+msgstr "Добавяне на това като _меню към панела"
+
+#: ../mate-panel/nothing.cP:609
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr "<b>ИГРАТА СВЪРШИ</b> на ниво %d!"
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../mate-panel/nothing.cP:616
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s   %2$s   %3$s"
+
+#: ../mate-panel/nothing.cP:617
+msgid "Press 'q' to quit"
+msgstr "Натиснете „q“ за спиране"
+
+#: ../mate-panel/nothing.cP:622
+msgid "Paused"
+msgstr "На пауза"
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../mate-panel/nothing.cP:625 ../mate-panel/nothing.cP:636
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr "%1$s\t%2$s"
+
+#: ../mate-panel/nothing.cP:626
+msgid "Press 'p' to unpause"
+msgstr "Натиснете „p“ за продължаване"
+
+#: ../mate-panel/nothing.cP:632
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr "Ниво: %s,  животи: %s"
+
+#: ../mate-panel/nothing.cP:637
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+"Ляво/дясно за местене. Стреля се с интервал. „p“ е за пауза, „q“ — за спиране"
+
+#: ../mate-panel/nothing.cP:1385
+msgid "Killer GEGLs from Outer Space"
+msgstr "Гегли-убийци от дълбокия космос"
+
+#: ../mate-panel/panel-action-button.c:129
+msgid "_Activate Screensaver"
+msgstr "_Активиране на предпазителя на екрана"
+
+#: ../mate-panel/panel-action-button.c:135
+msgid "_Lock Screen"
+msgstr "_Заключване на екрана"
+
+#: ../mate-panel/panel-action-button.c:254
+msgid "Could not connect to server"
+msgstr "Неуспех при свързването към сървъра"
+
+#: ../mate-panel/panel-action-button.c:285
+msgid "Lock Screen"
+msgstr "Заключване на екрана"
+
+#: ../mate-panel/panel-action-button.c:286
+msgid "Protect your computer from unauthorized use"
+msgstr "Защита на компютъра от непозволен достъп"
+
+#. when changing one of those two strings, don't forget to
+#. * update the ones in panel-menu-items.c (look for
+#. * "1" (msgctxt: "panel:showusername"))
+#: ../mate-panel/panel-action-button.c:300
+msgid "Log Out..."
+msgstr "Изход…"
+
+#: ../mate-panel/panel-action-button.c:301
+msgid "Log out of this session to log in as a different user"
+msgstr "Излизане от тази сесия, за да влезете като различен потребител"
+
+#: ../mate-panel/panel-action-button.c:310
+msgid "Run Application..."
+msgstr "Стартиране на програма…"
+
+#: ../mate-panel/panel-action-button.c:311
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Стартиране на програма, чрез въвеждане на команда или избор от списък"
+
+#: ../mate-panel/panel-action-button.c:320
+msgid "Search for Files..."
+msgstr "Търсене за файлове…"
+
+#: ../mate-panel/panel-action-button.c:321
+msgid "Locate documents and folders on this computer by name or content"
+msgstr "Търсене за документи и папки на този компютър по име или съдържание"
+
+#: ../mate-panel/panel-action-button.c:329
+#: ../mate-panel/panel-force-quit.c:224
+msgid "Force Quit"
+msgstr "Принудително спиране"
+
+#: ../mate-panel/panel-action-button.c:330
+msgid "Force a misbehaving application to quit"
+msgstr "Заставяне на блокирала програма да спре"
+
+#. FIXME icon
+#: ../mate-panel/panel-action-button.c:339
+msgid "Connect to Server..."
+msgstr "Свързване към сървър…"
+
+#: ../mate-panel/panel-action-button.c:340
+msgid "Connect to a remote computer or shared disk"
+msgstr "Свързване към отдалечен сървър или споделен диск"
+
+#: ../mate-panel/panel-action-button.c:348
+msgid "Shut Down..."
+msgstr "Изключване на компютъра…"
+
+#: ../mate-panel/panel-action-button.c:349
+msgid "Shut down the computer"
+msgstr "Изключване на компютъра"
+
+#: ../mate-panel/panel-addto.c:115
+msgid "Custom Application Launcher"
+msgstr "Пускане на избрана програма"
+
+#: ../mate-panel/panel-addto.c:116
+msgid "Create a new launcher"
+msgstr "Създаване на нов стартер"
+
+#: ../mate-panel/panel-addto.c:126
+msgid "Application Launcher..."
+msgstr "Стартер за програма…"
+
+#: ../mate-panel/panel-addto.c:127
+msgid "Copy a launcher from the applications menu"
+msgstr "Копиране на стартер от менюто „Програми“"
+
+#: ../mate-panel/panel-addto.c:141 ../mate-panel/panel-menu-button.c:1091
+msgid "Main Menu"
+msgstr "Основно меню"
+
+#: ../mate-panel/panel-addto.c:142
+msgid "The main MATE menu"
+msgstr "Основното меню на MATE"
+
+#: ../mate-panel/panel-addto.c:152
+msgid "Menu Bar"
+msgstr "Меню"
+
+#: ../mate-panel/panel-addto.c:153
+msgid "A custom menu bar"
+msgstr "Меню, създадено от потребителя"
+
+#: ../mate-panel/panel-addto.c:163
+msgid "Separator"
+msgstr "Разделител"
+
+#: ../mate-panel/panel-addto.c:164
+msgid "A separator to organize the panel items"
+msgstr "Разделител, с който да организирате обектите върху панела"
+
+#: ../mate-panel/panel-addto.c:175
+msgid "A pop out drawer to store other items in"
+msgstr "Изскачащ шкаф, в който да се пазят други обекти"
+
+#: ../mate-panel/panel-addto.c:256
+msgid "(empty)"
+msgstr "(празно)"
+
+#: ../mate-panel/panel-addto.c:1026
+#, c-format
+msgid "Find an _item to add to \"%s\":"
+msgstr "Избор на _обект за добавяне към „%s“:"
+
+#: ../mate-panel/panel-addto.c:1030
+#, c-format
+msgid "Add to Drawer"
+msgstr "Добавяне към шкаф"
+
+#: ../mate-panel/panel-addto.c:1032
+msgid "Find an _item to add to the drawer:"
+msgstr "Избор на _обект за добавяне към шкафа:"
+
+#: ../mate-panel/panel-addto.c:1034
+#, c-format
+msgid "Add to Panel"
+msgstr "Добавяне към панела"
+
+#: ../mate-panel/panel-addto.c:1036
+msgid "Find an _item to add to the panel:"
+msgstr "Избор на _обект за добавяне към панела:"
+
+#: ../mate-panel/mate-panel-applet-frame.c:714
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr "„%s“ спря неочаквано"
+
+#: ../mate-panel/mate-panel-applet-frame.c:716
+msgid "Panel object has quit unexpectedly"
+msgstr "Обект от панела спря неочаквано"
+
+#: ../mate-panel/mate-panel-applet-frame.c:723
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr ""
+"Ако презаредите обект на панела, той ще бъде добавен автоматично към панела."
+
+#: ../mate-panel/mate-panel-applet-frame.c:729
+msgid "_Don't Reload"
+msgstr "Да _не се презарежда"
+
+#: ../mate-panel/mate-panel-applet-frame.c:730
+msgid "_Reload"
+msgstr "_Презареждане"
+
+#: ../mate-panel/mate-panel-applet-frame.c:878
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "Панелът срещна трудности при зареждането на „%s“."
+
+#: ../mate-panel/mate-panel-applet-frame.c:894
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "Искате ли да изтриете аплета от вашите настройки?"
+
+#: ../mate-panel/panel-context-menu.c:104
+msgid "And many, many others..."
+msgstr "И много, много други…"
+
+#: ../mate-panel/panel-context-menu.c:130
+msgid "The MATE Panel"
+msgstr "Панелът на MATE"
+
+#: ../mate-panel/panel-context-menu.c:133
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
+msgstr ""
+"Тази програма отговаря за стартирането на други програми и предоставя "
+"полезни инструменти."
+
+#: ../mate-panel/panel-context-menu.c:137
+msgid "About the MATE Panel"
+msgstr "Относно панела на MATE"
+
+#: ../mate-panel/panel-context-menu.c:171
+msgid "Cannot delete this panel"
+msgstr "Този панел не може да бъде премахнат"
+
+#: ../mate-panel/panel-context-menu.c:172
+msgid "You must always have at least one panel."
+msgstr "Винаги трябва да имате поне един панел."
+
+#: ../mate-panel/panel-context-menu.c:205
+msgid "_Add to Panel..."
+msgstr "_Добавяне към панела…"
+
+#: ../mate-panel/panel-context-menu.c:226
+msgid "_Delete This Panel"
+msgstr "_Премахване на този панел"
+
+#: ../mate-panel/panel-context-menu.c:241
+msgid "_New Panel"
+msgstr "_Нов панел"
+
+#: ../mate-panel/panel-context-menu.c:293
+msgid "A_bout Panels"
+msgstr "_Относно панелите"
+
+#: ../mate-panel/panel-ditem-editor.c:114
+msgid "Application"
+msgstr "Програма"
+
+#: ../mate-panel/panel-ditem-editor.c:116
+msgid "Application in Terminal"
+msgstr "Програма в терминал"
+
+#: ../mate-panel/panel-ditem-editor.c:118
+msgid "Location"
+msgstr "Местоположение"
+
+#. Type
+#: ../mate-panel/panel-ditem-editor.c:622
+msgid "_Type:"
+msgstr "_Вид:"
+
+#. Name
+#: ../mate-panel/panel-ditem-editor.c:629
+msgid "_Name:"
+msgstr "_Име:"
+
+#: ../mate-panel/panel-ditem-editor.c:656
+msgid "_Browse..."
+msgstr "_Преглед…"
+
+#. Comment
+#: ../mate-panel/panel-ditem-editor.c:663
+msgid "Co_mment:"
+msgstr "Ко_ментар:"
+
+#: ../mate-panel/panel-ditem-editor.c:1012
+msgid "Choose an application..."
+msgstr "Избор на програма…"
+
+#: ../mate-panel/panel-ditem-editor.c:1016
+msgid "Choose a file..."
+msgstr "Избор на файл…"
+
+#: ../mate-panel/panel-ditem-editor.c:1181
+#: ../mate-panel/panel-ditem-editor.c:1190
+msgid "Comm_and:"
+msgstr "_Команда:"
+
+#: ../mate-panel/panel-ditem-editor.c:1199
+msgid "_Location:"
+msgstr "Местопо_ложение:"
+
+#: ../mate-panel/panel-ditem-editor.c:1362
+msgid "The name of the launcher is not set."
+msgstr "Стартерът няма име."
+
+#: ../mate-panel/panel-ditem-editor.c:1366
+msgid "Could not save directory properties"
+msgstr "Настройките на папката не могат да бъдат запазени"
+
+#: ../mate-panel/panel-ditem-editor.c:1367
+msgid "The name of the directory is not set."
+msgstr "Името на папката не е зададено."
+
+#: ../mate-panel/panel-ditem-editor.c:1383
+msgid "The command of the launcher is not set."
+msgstr "Не е зададена команда."
+
+#: ../mate-panel/panel-ditem-editor.c:1386
+msgid "The location of the launcher is not set."
+msgstr "Стартерът няма зададено местоположение."
+
+#: ../mate-panel/panel-ditem-editor.c:1463
+msgid "Could not display help document"
+msgstr "Документът с помощта не може да бъде показан"
+
+#: ../mate-panel/panel-force-quit.c:77
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Натиснете върху прозорец, за да го затворите принудително. За да се "
+"откажете, натиснете „ESC“."
+
+#: ../mate-panel/panel-force-quit.c:207
+msgid "Force this application to exit?"
+msgstr "Да бъде ли тази програма принудена да спре?"
+
+#: ../mate-panel/panel-force-quit.c:210
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Ако затворите програма принудително, незапазените промени в отворените от "
+"нея документи могат да бъдат загубени."
+
+#: ../mate-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"Булев флаг, който показва дали предишната конфигурация на потребителя в /"
+"apps/panel/profiles/default е била копирана на новото място — /apps/panel."
+
+#: ../mate-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"Списък от идентификатори за панела. Всеки определя основен панел. "
+"Настройките за всеки от тези панели са запазени в /apps/panel/toplevels/"
+"$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"Списък от идентификатори за аплетите на панела. Всеки определя аплет от "
+"панела. Настройките за всеки от тези аплети са запазени в /apps/panel/"
+"applets/$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"Списък от идентификатори за обектите в панела. Всеки определя обект от "
+"панела ( т.е. стартер, бутон или меню). Настройките за всеки от тези обекти "
+"са запазени в /apps/panel/objects/$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:5
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "Автоматично дописване на командите в диалога „Стартиране на програма“"
+
+#: ../mate-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr ""
+"Включване на списъка с програми в диалоговия прозорец „Стартиране на "
+"програма“"
+
+#: ../mate-panel/panel-general.schemas.in.h:7
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Включване списъка с програми в „Стартиране на програма“"
+
+#: ../mate-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+"Ако е истина, се използва автоматично дописване в диалога „Стартиране на "
+"програма“."
+
+#: ../mate-panel/panel-general.schemas.in.h:9
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Ако е истина, списъкът с „Налични програми“ в прозореца „Стартиране на "
+"програма“ се разширява при отварянето му. Това е валидно, само ако "
+"enable_program_list е истина."
+
+#: ../mate-panel/panel-general.schemas.in.h:10
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Ако е истина, списъкът с „Налични програми“ се появява в прозореца "
+"„Стартиране на програма“. Дали списъкът е разширен или не, когато прозорецът "
+"се показва, зависи от ключа show_program_list."
+
+#: ../mate-panel/panel-general.schemas.in.h:11
+msgid "Old profiles configuration migrated"
+msgstr "Настройките на старите профили са мигрирани"
+
+#: ../mate-panel/panel-general.schemas.in.h:12
+msgid "Panel ID list"
+msgstr "Списък с идентификатори на панела"
+
+#: ../mate-panel/panel-general.schemas.in.h:13
+msgid "Panel applet ID list"
+msgstr "Списък с идентификатори на аплети в панела"
+
+#: ../mate-panel/panel-general.schemas.in.h:14
+msgid "Panel object ID list"
+msgstr "Списък с идентификатори на обекти в панела"
+
+#: ../mate-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"Списък с идентификатори (IID) на аплети, които панелът ще игнорира. Така ще "
+"забраните на определени аплети да се зареждат или показват в менюто. "
+"Примерно, за да забраните аплета за пускане на програми, добавете „OAFIID: "
+"MATE_MiniCommanderApplet“ към списъка. Панелът трябва да бъде рестартиран, "
+"за да влезнат промените в действие."
+
+#: ../mate-panel/panel-global.schemas.in.h:2
+msgid "Applet IIDs to disable from loading"
+msgstr "Идентификатори на аплети, които да се забранят за зареждане"
+
+#: ../mate-panel/panel-global.schemas.in.h:3
+msgid "Autoclose drawer"
+msgstr "Автоматично затваряне на шкафа"
+
+#: ../mate-panel/panel-global.schemas.in.h:4
+msgid "Complete panel lockdown"
+msgstr "Пълно заключване на панела"
+
+#: ../mate-panel/panel-global.schemas.in.h:5
+msgid "Confirm panel removal"
+msgstr "Потвърждение за премахването на панела"
+
+#: ../mate-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr "Остаряло, да не се използва"
+
+#: ../mate-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "Премахване на принудителното спиране"
+
+#: ../mate-panel/panel-global.schemas.in.h:8
+msgid "Disable Logging Out"
+msgstr "Забраняване на излизането"
+
+#: ../mate-panel/panel-global.schemas.in.h:9
+#: ../mate-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "Позволяване на анимации"
+
+#: ../mate-panel/panel-global.schemas.in.h:10
+msgid "Enable tooltips"
+msgstr "Позволяване на подсказки"
+
+#: ../mate-panel/panel-global.schemas.in.h:11
+msgid "Highlight launchers on mouseover"
+msgstr "Осветяване на бутоните при преминаване с мишката върху тях"
+
+#: ../mate-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Ако е истина, се отваря прозорец и потребителят бива запитан за "
+"потвърждение, когато потребителят иска да премахне панел."
+
+#: ../mate-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"Ако е истина, чекмеджето автоматично ще се затвори, когато потребител "
+"натисне стартер в него."
+
+#: ../mate-panel/panel-global.schemas.in.h:14
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"Ако е истина, стартерите ще се осветят, когато потребител премести "
+"показалеца върху тях."
+
+#: ../mate-panel/panel-global.schemas.in.h:15
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Ако е истина, панелът няма да разрешава на потребителя да принуждава "
+"програма да се затвори като премахне достъпа до бутона за принудително "
+"затваряне."
+
+#: ../mate-panel/panel-global.schemas.in.h:16
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"Ако е истина, панелът няма да разреши на потребителя да излиза от сесията, "
+"като премахне достъпа до менютата за изход."
+
+#: ../mate-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"Ако е истина, панелът няма да позволи да се правят промени по неговите "
+"настройки. Отделните аплети, обаче може да се наложи да бъдат заключени "
+"индивидуално. Панелът трябва да бъде рестартиран, за да се включи тази опция."
+
+#: ../mate-panel/panel-global.schemas.in.h:18
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "Ако е истина, да се показват подсказки за обектите в панелите."
+
+#: ../mate-panel/panel-global.schemas.in.h:19
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/mate/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"Използването на този ключ беше махнато, защото не позволява правилно "
+"заключване. Вместо него се използва „/desktop/mate/lockdown/"
+"disable_lock_screen“."
+
+#: ../mate-panel/panel-menu-bar.c:106
+msgid "Browse and run installed applications"
+msgstr "Преглед и стартиране на инсталираните програми"
+
+#: ../mate-panel/panel-menu-bar.c:108
+msgid "Access documents, folders and network places"
+msgstr "Достъп до документи, папки и мрежови ресурси"
+
+#: ../mate-panel/panel-menu-bar.c:110
+msgid "Change desktop appearance and behavior, get help, or log out"
+msgstr ""
+"Промяна на изгледа и поведението на работната среда, помощ и изход от "
+"системата"
+
+#: ../mate-panel/panel-menu-bar.c:147
+msgid "Applications"
+msgstr "Програми"
+
+#: ../mate-panel/panel-menu-bar.c:358 ../mate-panel/panel-menu-button.c:670
+msgid "_Edit Menus"
+msgstr "_Редактиране на менютата"
+
+#: ../mate-panel/panel-menu-items.c:472
+msgid "Bookmarks"
+msgstr "Отметки"
+
+#. Translators: %s is a URI
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:541
+#, c-format
+msgid "Open '%s'"
+msgstr "Отваряне на „%s“"
+
+#: ../mate-panel/panel-menu-items.c:566
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Неуспех при проверката на %s за промени в носителя"
+
+#: ../mate-panel/panel-menu-items.c:609
+#, c-format
+msgid "Rescan %s"
+msgstr "Проверяване на %s"
+
+#: ../mate-panel/panel-menu-items.c:646
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Неуспех при монтирането на %s"
+
+#: ../mate-panel/panel-menu-items.c:709
+#, c-format
+msgid "Mount %s"
+msgstr "Монтиране на %s"
+
+#: ../mate-panel/panel-menu-items.c:917
+msgid "Removable Media"
+msgstr "Преносими носители"
+
+#: ../mate-panel/panel-menu-items.c:1004
+msgid "Network Places"
+msgstr "Мрежови места"
+
+#: ../mate-panel/panel-menu-items.c:1043
+msgid "Open your personal folder"
+msgstr "Отваряне на личната ви папка"
+
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment).
+#: ../mate-panel/panel-menu-items.c:1062
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Папка на работното място"
+
+#: ../mate-panel/panel-menu-items.c:1063
+msgid "Open the contents of your desktop in a folder"
+msgstr "Отваряне на работния плот като папка"
+
+#: ../mate-panel/panel-menu-items.c:1454
+msgid "Places"
+msgstr "Места"
+
+#: ../mate-panel/panel-menu-items.c:1483
+msgid "System"
+msgstr "Система"
+
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
+#. * but "1" if "Log Out %s" doesn't make any sense in your
+#. * language (where %s is a username).
+#.
+#: ../mate-panel/panel-menu-items.c:1564
+msgctxt "panel:showusername"
+msgid "1"
+msgstr "1"
+
+#. keep those strings in sync with the ones in
+#. * panel-action-button.c
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1576
+#, c-format
+msgid "Log Out %s..."
+msgstr "Изход на „%s“…"
+
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1580
+#, c-format
+msgid "Log out %s of this session to log in as a different user"
+msgstr "Излизане от тази сесия на „%s“, за да влезете като различен потребител"
+
+#: ../mate-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "Вид действие на бутона"
+
+#: ../mate-panel/panel-object.schemas.in.h:2
+msgid "Applet MateComponent IID"
+msgstr "Идентификатор по MateComponent на аплет"
+
+#: ../mate-panel/panel-object.schemas.in.h:3
+msgid "Applet IID"
+msgstr "Идентификатор на аплет"
+
+#: ../mate-panel/panel-object.schemas.in.h:4
+msgid "Icon used for object's button"
+msgstr "Икона за бутона на обекта"
+
+#: ../mate-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"Ако е истина, ключът custom_icon се използва като икона за бутона. Ако не е "
+"истина , custom_icon се игнорира. Този ключ важи, само ако object_type е "
+"„menu-object“ или „drawer-object“."
+
+#: ../mate-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"Ако е истина, ключът menu_path се използва като път за генериране на "
+"съдържанието на менюто. Ако не е истина, menu_path се игнорира. Тази ключ "
+"важи, само ако object_type е „menu-object“."
+
+#: ../mate-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Ако е истина, позицията на обекта се интерпретира спрямо десния ръб на "
+"панела (или долния, ако панелът е вертикален)."
+
+#: ../mate-panel/panel-object.schemas.in.h:8
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"Ако е истина, потребителят няма да може да мърда аплета, без първо да "
+"отключи обекта използвайки „Отключване“ от менюто."
+
+#: ../mate-panel/panel-object.schemas.in.h:9
+msgid "Interpret position relative to bottom/right edge"
+msgstr "Интерпретиране на позицията спрямо долния/десния ръб"
+
+#: ../mate-panel/panel-object.schemas.in.h:10
+msgid "Launcher location"
+msgstr "Местоположение на стартера"
+
+#: ../mate-panel/panel-object.schemas.in.h:11
+msgid "Lock the object to the panel"
+msgstr "Заключване на обекта към панела"
+
+#: ../mate-panel/panel-object.schemas.in.h:12
+msgid "Menu content path"
+msgstr "Път към съдържанието на менюто"
+
+#: ../mate-panel/panel-object.schemas.in.h:13
+msgid "Object's position on the panel"
+msgstr "Място на обекта върху панела"
+
+#: ../mate-panel/panel-object.schemas.in.h:14
+msgid "Panel attached to drawer"
+msgstr "Панел прикрепен към шкаф"
+
+#: ../mate-panel/panel-object.schemas.in.h:15
+msgid "Panel object type"
+msgstr "Вид на обектите в панела"
+
+#: ../mate-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"Вид действие за този бутон. Възможните стойности са „lock“, „logout“, „run“, "
+"„search“ и „screenshot“. Ключът важи, само ако object_type е „action-"
+"applet“. "
+
+#: ../mate-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"Идентификаторът на панела прикрепен към шкафа. Ключът важи, само ако "
+"object_type е „drawer-object“."
+
+#: ../mate-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "Идентификаторът на основния панел, съдържащ този обект."
+
+#: ../mate-panel/panel-object.schemas.in.h:19
+msgid ""
+"The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
+"\". This key is only relevant if the object_type key is \"matecomponent-applet\"."
+msgstr ""
+"Идентификаторът на аплета — напр. „ClockAppletFactory::ClockApplet“. Ключът "
+"важи, само ако object_type е „matecomponent-applet“."
+
+#: ../mate-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"Местоположението на файла от работното място, описващ стартера. Ключът важи, "
+"само ако object_type е „launcher-object“."
+
+#: ../mate-panel/panel-object.schemas.in.h:21
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"Местоположението на файла на изображението което се използва бутона на "
+"обекта. Ключът важи, само ако видът на обекта е „drawer-object“ или „menu-"
+"object“ и use_custom_icon е истина."
+
+#: ../mate-panel/panel-object.schemas.in.h:22
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"Пътят, от който се генерира съдържанието на менюто. Ключът важи, само ако "
+"use_menu_path е истина и object_type е „menu-object“."
+
+#: ../mate-panel/panel-object.schemas.in.h:23
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"Местоположението на този обект от панела. То се задава в брой пиксели от "
+"левия ръб на панела (или горния ръб, ако панелът е вертикален) ."
+
+#: ../mate-panel/panel-object.schemas.in.h:24
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"Текстът, който се изобразява в подсказка за това меню или шкаф. Този ключ "
+"важи, само ако object_type е „drawer-object“ или „menu-object“."
+
+#: ../mate-panel/panel-object.schemas.in.h:25
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"matecomponent-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"Видът на обекта от панела. Възможни стойности са „drawer-object“, „menu-"
+"object“, „launcher-object“, „matecomponent-applet“, „action-applet“ и „menu-bar“."
+
+#: ../mate-panel/panel-object.schemas.in.h:26
+msgid ""
+"This key is deprecated, following the migration to a new library for "
+"applets. The MateComponent implementation ID of the applet - e.g. \"OAFIID:"
+"MATE_ClockApplet\". This key is only relevant if the object_type key is "
+"\"matecomponent-applet\"."
+msgstr ""
+"Този ключ е остарял след мигрирането към новата библиотека за аплетите. "
+"Идентификаторът по MateComponent на аплета — напр. „OAFIID:MATE_ClockApplet“. "
+"Ключът важи, само ако object_type е „matecomponent-applet“."
+
+#: ../mate-panel/panel-object.schemas.in.h:27
+msgid "Tooltip displayed for drawer or menu"
+msgstr "Подсказка показвана за чекмедже или меню"
+
+#: ../mate-panel/panel-object.schemas.in.h:28
+msgid "Toplevel panel containing object"
+msgstr "Основен панел, съдържащ обект"
+
+#: ../mate-panel/panel-object.schemas.in.h:29
+msgid "Use custom icon for object's button"
+msgstr "Желаната стандартна икона за бутона на обект"
+
+#: ../mate-panel/panel-object.schemas.in.h:30
+msgid "Use custom path for menu contents"
+msgstr "Използване на обичайния път за съдържанието на менюто"
+
+#: ../mate-panel/panel-profile.c:772 ../mate-panel/panel-profile.c:799
+#: ../mate-panel/panel-profile.c:835 ../mate-panel/panel-profile.c:1700
+#, c-format
+msgid "Error reading MateConf string value '%s': %s"
+msgstr "Грешка при четенето на стойността на низа „%s“ от MateConf: %s"
+
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../mate-panel/panel-profile.c:814 ../mate-panel/panel-profile.c:1596
+#: ../mate-panel/panel-profile.c:1669 ../mate-panel/panel-profile.c:1751
+#, c-format
+msgid "Error reading MateConf integer value '%s': %s"
+msgstr "Грешка при четенето на целочислената стойност „%s“ от MateConf: %s"
+
+#: ../mate-panel/panel-profile.c:1606
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+"Панелът „%s“ е зададен за изобразяване на екрана %d, който не е достъпен в "
+"момента. Този панел няма да бъде зареден."
+
+#: ../mate-panel/panel-profile.c:1684
+#, c-format
+msgid "Error reading MateConf boolean value '%s': %s"
+msgstr "Грешка при четенето на булевата стойност „%s“ от MateConf: %s"
+
+#: ../mate-panel/panel-properties-dialog.c:866
+msgid "Drawer Properties"
+msgstr "Настройки на шкафа"
+
+#: ../mate-panel/panel-properties-dialog.c:981
+#: ../mate-panel/panel-run-dialog.c:2022
+#, c-format
+msgid "Unable to load file '%s': %s."
+msgstr "Файлът „%s“ не може да бъде зареден: %s."
+
+#: ../mate-panel/panel-properties-dialog.c:987
+msgid "Could not display properties dialog"
+msgstr "Прозорецът за настройки не може да бъде показан"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+msgid "<small>Opaque</small>"
+msgstr "<small>Непрозрачност</small>"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+msgid "<small>Transparent</small>"
+msgstr "<small>Прозрачност</small>"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:4
+msgid "Arro_ws on hide buttons"
+msgstr "Показване на ст_релки на бутоните за скриване"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:5
+msgid "Background"
+msgstr "Фон"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:6
+msgid "Background _image:"
+msgstr "Фоново _изображение:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+msgid "Co_lor:"
+msgstr "_Цвят:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+msgid "E_xpand"
+msgstr "Раз_ширяващ се панел"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:10
+msgid "Image Background Details"
+msgstr "Детайли за фоновото изображение"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:11
+msgid "Panel Properties"
+msgstr "Настройки на панела"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:12
+msgid "Pick a color"
+msgstr "Избор на цвят"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "Rotate image when panel is _vertical"
+msgstr "Завъртане на изображението при _вертикални панели"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:14
+msgid "S_tyle:"
+msgstr "С_тил:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:15
+msgid "Select background"
+msgstr "Избор на фон"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:16
+msgid "Show hide _buttons"
+msgstr "Показване на _бутоните за скриване"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:17
+msgid "Solid c_olor"
+msgstr "Плътен ц_вят"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:18
+msgid "Some of these properties are locked down"
+msgstr "Някой от тези настройки са заключени"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:19
+msgid "St_retch"
+msgstr "_Разтегляне"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:20
+msgid "_Autohide"
+msgstr "_Автоматично скриване на панела"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:21
+msgid "_Icon:"
+msgstr "_Икона:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:22
+msgid "_None (use system theme)"
+msgstr "_Без (използване на стандартната тема)"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:24
+msgid "_Scale"
+msgstr "_Мащабиране"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:26
+msgid "_Tile"
+msgstr "За_главие"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:27
+msgid "pixels"
+msgstr "пиксела"
+
+#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#, c-format
+msgid "Could not open recently used document \"%s\""
+msgstr "Неуспех при отварянето на документа „%s“"
+
+#: ../mate-panel/panel-recent.c:90
+#, c-format
+msgid "An unknown error occurred while trying to open \"%s\"."
+msgstr "Неизвестна грешка при опита за отваряне на „%s“"
+
+#: ../mate-panel/panel-recent.c:147
+msgid "Clear the Recent Documents list?"
+msgstr "Да бъде ли изчистен списъка със скоро отваряните документи?"
+
+#: ../mate-panel/panel-recent.c:149
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"Ако изчистите „Списъка със скоро отваряните документи“, ще изчистите "
+"следното:\n"
+"\n"
+"• Всички обекти в менюто „Места“ → „Скоро отваряни документи“.\n"
+"• Всички записи за последните отваряни документи в програмите."
+
+#: ../mate-panel/panel-recent.c:161
+msgid "Clear Recent Documents"
+msgstr "Изчистване на списъка със скоро отваряните документи"
+
+#: ../mate-panel/panel-recent.c:196
+msgid "Recent Documents"
+msgstr "Скоро отваряни документи"
+
+#: ../mate-panel/panel-recent.c:235
+msgid "Clear Recent Documents..."
+msgstr "Изчистване на списъка със скоро отваряните документи…"
+
+#: ../mate-panel/panel-recent.c:237
+msgid "Clear all items from the recent documents list"
+msgstr "Да бъде ли изчистен списъкът със скоро отваряните документи?"
+
+#: ../mate-panel/panel-run-dialog.c:391
+#, c-format
+msgid "Could not run command '%s'"
+msgstr "Командата „%s“ не може да бъде изпълнена"
+
+#: ../mate-panel/panel-run-dialog.c:444
+#, c-format
+msgid "Could not convert '%s' from UTF-8"
+msgstr "„%s“ не може да бъде преобразуван от UTF-8"
+
+#: ../mate-panel/panel-run-dialog.c:1259
+msgid "Choose a file to append to the command..."
+msgstr "Избор на файл, към който да се приложи командата…"
+
+#: ../mate-panel/panel-run-dialog.c:1637
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Select an application to view its description."
+msgstr "Избор на програма за преглед на нейното описание."
+
+#: ../mate-panel/panel-run-dialog.c:1675
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "Ще се изпълни командата: „%s“"
+
+#: ../mate-panel/panel-run-dialog.c:1708
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr ""
+"Списъкът с адреси, който е бил пуснат на диалога за стартиране, е с "
+"неправилен формат (%d) или дължина (%d)\n"
+
+#: ../mate-panel/panel-run-dialog.c:2027
+msgid "Could not display run dialog"
+msgstr "Неуспех при стартирането на прозореца за стартиране на програма"
+
+#: ../mate-panel/panel-run-dialog.ui.h:1
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Натиснете бутона, за да изберете файла чието име да се добави към командата."
+
+#: ../mate-panel/panel-run-dialog.ui.h:2
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Натиснете бутона, за да стартирате избраната програма или командата в полето "
+"за въвеждане на команда."
+
+#: ../mate-panel/panel-run-dialog.ui.h:3
+msgid "Command icon"
+msgstr "Икона за командата"
+
+#: ../mate-panel/panel-run-dialog.ui.h:4
+msgid "List of known applications"
+msgstr "Списък с познатите програми"
+
+#: ../mate-panel/panel-run-dialog.ui.h:5
+msgid "Run Application"
+msgstr "Стартиране на програма"
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Run in _terminal"
+msgstr "Стартиране в _терминал"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "Run with _file..."
+msgstr "Стартиране с _файл…"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr ""
+"Изберете тази настройка, за да стартирате командата в прозорец на терминала."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Show list of known _applications"
+msgstr "Списък с позн_атите програми"
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid "The icon of the command to be run."
+msgstr "Неуспех при намирането командата."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-stock-icons.c:90
+msgid "_Run"
+msgstr "_Стартиране"
+
+#: ../mate-panel/panel-stock-icons.c:91
+msgid "_Force quit"
+msgstr "_Принудително спиране"
+
+#: ../mate-panel/panel-stock-icons.c:92
+msgid "C_lear"
+msgstr "Из_чистване"
+
+#: ../mate-panel/panel-stock-icons.c:93
+msgid "D_on't Delete"
+msgstr "_Без изтриване"
+
+#: ../mate-panel/panel-toplevel.c:1190
+msgid "Hide Panel"
+msgstr "Скриване на панела"
+
+#. translators: these string will be shown in MetaCity's switch window
+#. * popup when you pass the focus to a panel
+#: ../mate-panel/panel-toplevel.c:1597
+msgid "Top Expanded Edge Panel"
+msgstr "Горен разширен ъглов панел"
+
+#: ../mate-panel/panel-toplevel.c:1598
+msgid "Top Centered Panel"
+msgstr "Горен, центриран панел"
+
+#: ../mate-panel/panel-toplevel.c:1599
+msgid "Top Floating Panel"
+msgstr "Горен, плаващ панел"
+
+#: ../mate-panel/panel-toplevel.c:1600
+msgid "Top Edge Panel"
+msgstr "Горен, ъглов панел"
+
+#: ../mate-panel/panel-toplevel.c:1604
+msgid "Bottom Expanded Edge Panel"
+msgstr "Долен, разширен, ъглов панел"
+
+#: ../mate-panel/panel-toplevel.c:1605
+msgid "Bottom Centered Panel"
+msgstr "Долен, центриран панел"
+
+#: ../mate-panel/panel-toplevel.c:1606
+msgid "Bottom Floating Panel"
+msgstr "Долен, плаващ панел"
+
+#: ../mate-panel/panel-toplevel.c:1607
+msgid "Bottom Edge Panel"
+msgstr "Долен, ъглов панел"
+
+#: ../mate-panel/panel-toplevel.c:1611
+msgid "Left Expanded Edge Panel"
+msgstr "Ляв, разширен, ъглов панел"
+
+#: ../mate-panel/panel-toplevel.c:1612
+msgid "Left Centered Panel"
+msgstr "Ляв, центриран панел"
+
+#: ../mate-panel/panel-toplevel.c:1613
+msgid "Left Floating Panel"
+msgstr "Ляв, плаващ панел"
+
+#: ../mate-panel/panel-toplevel.c:1614
+msgid "Left Edge Panel"
+msgstr "Ляв, ъглов панел"
+
+#: ../mate-panel/panel-toplevel.c:1618
+msgid "Right Expanded Edge Panel"
+msgstr "Десен, разширен, ъглов панел"
+
+#: ../mate-panel/panel-toplevel.c:1619
+msgid "Right Centered Panel"
+msgstr "Десен, центриран панел"
+
+#: ../mate-panel/panel-toplevel.c:1620
+msgid "Right Floating Panel"
+msgstr "Десен, плаващ панел"
+
+#: ../mate-panel/panel-toplevel.c:1621
+msgid "Right Edge Panel"
+msgstr "Десен, ъглов панел"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Скорост на анимацията"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "Автоматично скриване на панела в ъгъла"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Фонов цвят"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:4
+msgid "Background color opacity"
+msgstr "Прозрачност на цвета сложен за фон"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:5
+msgid "Background image"
+msgstr "Фоново изображение"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:6
+msgid "Background type"
+msgstr "Вид на фона"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:7
+msgid "Center panel on x-axis"
+msgstr "Центриране на панела по абсцисата"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:8
+msgid "Center panel on y-axis"
+msgstr "Центрира панела по ординатата"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:10
+msgid "Enable arrows on hide buttons"
+msgstr "Показване на ст_релки в бутоните за скриване"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:11
+msgid "Enable hide buttons"
+msgstr "Показване на бутоните за скриване"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:12
+msgid "Expand to occupy entire screen width"
+msgstr "Разширяване, за да покрие цялата ширина на екрана"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:13
+msgid "Fit image to panel"
+msgstr "Нагласяне на изображението към панела"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"Ако е истина, на бутоните за скриване ще се сложат стрелки. Тази ключ важи, "
+"само ако enable_buttons е истина."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"Ако е истина, бутони ще се поставят на всяка страна на панела, където могат "
+"да се използват за преместването му до ръба на екрана, оставяйки да се "
+"виждат само те."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"Ако е истина, скриването и показването на този панел ще се анимира вместо да "
+"става моментално."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Ако е истина, фоновото изображение ще бъде завъртяно, когато панелът е "
+"ориентиран вертикално."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"Ако е истина, изображението ще бъде мащабирано (като пропорцията на страните "
+"се запазва) до височината на панела (ако е хоризонтален)."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Ако е истина, изображението ще бъде мащабирано до размерите на панела. "
+"Пропорцията на страните изображението няма да се запази."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Ако е истина, панелът автоматично се скрива в ъгъл на екрана, когато "
+"показалецът напусне областта на панела. Като преместите показалеца над този "
+"ръб, ще накарате панела отново да се покаже."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"Ако е истина, панелът ще се постави по цялата широчина на екрана (височина, "
+"ако е вертикален панел). В този режим панелът може да се постави само на "
+"ръба на екрана. Ако е лъжа, панелът ще е с големина колкото да побере "
+"аплетите, стартерите и бутоните на панела."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"Ако е истина, ключовете x и x_right се игнорират и панелът се поставя в "
+"центъра по хоризонталната ос на екрана. Ако панелът се преоразмери, ще "
+"остане в тази позиция — т.е. панелът ще расте и от двете страни. Ако e лъжа, "
+"ключовете x и x_right задават местоположението на панела."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"Ако е истина, ключовете y и y_bottom се игнорират и панелът се поставя в "
+"центъра по вертикалната ос на екрана. Ако панелът се преоразмери, ще остане "
+"в тази позиция — т.е. панелът ще расте и от двете страни. Ако е лъжа, "
+"ключовете y и y_bottom задават местоположението на панела."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:24
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"В настройките за режим със Xinerama, може да имате панели на всеки от "
+"индивидуалните монитори. Този ключ указва на кой монитор да се показва "
+"панела."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "Име на панела. Служи за идентификация"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "Забавяне на скриването [ms]"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "Интервал на автоматичното скриване"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientation"
+msgstr "Ориентация на панела"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "Размер на панела"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "Завъртане на изображението при вертикални панели"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:31
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "Определя фоновия цвят за панела във формат RGB."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:32
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"Определя файл, който ще се използва за фоново изображение. Ако изображението "
+"съдържа алфа-канал, то ще бъде наложено върху фоновото изображение на "
+"работния плот."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:33
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Определя колко милисекунди ще се забави показването на панела, след като "
+"показалеца застане над панела. Тази ключ важи, само ако auto_hide е истина."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Определя колко милисекунди ще се забави скриването на панела, след като "
+"показалецът излезе от района на панела. Този ключ важи, само ако auto_hide е "
+"истина."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:35
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"Определя броят пиксели, които се виждат, когато панелът е скрит автоматично "
+"в ръба на екрана. Тази ключ важи, само ако auto_hide е истина."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:36
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"Определя колко ще е прозрачен фоновия цвят. Ако цветът не е напълно "
+"непрозрачен (стойност по малка от 65535), цветът ще е насложен върху "
+"фоновото изображение."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:37
+msgid "Stretch image to panel"
+msgstr "Разтягане на изображението по панела"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:38
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"Височината (широчината, ако е вертикален) на панела. Панелът ще определи "
+"минималния размер на базата на размера на шрифта и други индикатори. "
+"Максималният размер е фиксиран на една четвърт от височината на екрана (или "
+"широчината)."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Местоположението на панела по хоризонталната ос, като се брои от дясната "
+"част на екрана. Ако е -1, стойността на ключа се игнорира и се използва тази "
+"на ключа x. Ако стойността е над 0, стойността на ключа x се пренебрегва. "
+"Този ключ важи само в неразширен режим. В разширен режим тази настройка се "
+"игнорира и панелът се слага на ръба на екрана определен от настройката за "
+"ориентация."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Местоположението на панела по хоризонталната ос. Тази ключ важи само в "
+"неразширен режим. В разширен режим тази настройка се игнорира и панелът се "
+"слага на ръба на екрана определен от настройката за ориентация."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Местоположението на панела по вертикалната ос, като се брои от долната част "
+"на екрана. Ако е -1, стойността на ключа се игнорира и се използва тази на "
+"ключа y. Ако стойността е над 0, стойността на ключа y се пренебрегва. Този "
+"ключ важи само в неразширен режим. В разширен режим тази настройка се "
+"игнорира и панелът се слага на ръба на екрана определен от настройката за "
+"ориентация."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:42
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Местоположението на панела по вертикалната ос. Този ключ се използва само "
+"при неразширен режим. В разширен режим, този ключ се игнорира и панелът се "
+"поставя на края на екрана обозначен от ключа за ориентация."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"Ориентация на панела. Възможни стойности са „top“, „bottom“, „left“, "
+"„right“. В разширен режим ключът указва на кой ръб на екрана ще е панела. В "
+"неразширен режим разликата между „top“ и „bottom“ не е важна и двете "
+"покажат, че е хоризонтален панел — но е полезна подсказка за това как някои "
+"обекти от панела трябва да се държат. Например — на горен панел бутонът-меню "
+"ще се разширява надолу от панела, докато на долен панел се разширява нагоре."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:44
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"Скоростта, с която ще се случи анимацията на панела. Възможни стойности са "
+"„slow“, „medium“ и „fast“. Тази ключ важи, само ако enable_animations е "
+"истина."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"Това е лесно разбираемо от човек име, с което може да идентифицирате панел. "
+"Неговата главна цел е да седи на прозореца на панела като заглавие, което е "
+"полезно, когато се местите между панелите."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:46
+msgid "Visible pixels when hidden"
+msgstr "Видими пиксели, когато е скрит"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:47
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Кой вид фон трябва да се използва за панелите. Възможните стойности са „gtk“ "
+"— цветът за фон на графичните обекти GTK по подразбиране, „color“ — "
+"настройката за цвят или „image“ — изображението зададено в настройката за "
+"изображение ще се използва за фон."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:48
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"С многоекранни настройки, може да имате панели на всеки индивидуален екран. "
+"Тази ключ важи само за текущия екран, на който е изобразен панела."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:49
+msgid "X co-ordinate of panel"
+msgstr "Абсциса на панела"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "Координата по X на панела, като се брои от дясната част на екрана"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:51
+msgid "X screen where the panel is displayed"
+msgstr "Екранът на X, където панелът е изобразен"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:52
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "Мониторът на Xinerama, където е изобразен панела"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:53
+msgid "Y co-ordinate of panel"
+msgstr "Ордината на панела"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "Координата по Y на панела, като се брои от долната част на екрана"
+
+#: ../mate-panel/panel-util.c:315
+#, c-format
+msgid "Icon '%s' not found"
+msgstr "Иконата „%s“ не е намерена"
+
+#: ../mate-panel/panel-util.c:418
+#, c-format
+msgid "Could not execute '%s'"
+msgstr "„%s“ не може да бъде стартиран"
+
+#: ../mate-panel/panel-util.c:654
+msgid "file"
+msgstr "файл"
+
+#: ../mate-panel/panel-util.c:831
+msgid "Home Folder"
+msgstr "Домашна папка"
+
+#. Translators: this is the same string as the one found in
+#. * caja
+#: ../mate-panel/panel-util.c:843
+msgid "File System"
+msgstr "Файлова система"
+
+#: ../mate-panel/panel-util.c:1016
+msgid "Search"
+msgstr "Търсене"
+
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../mate-panel/panel-util.c:1062
+#, c-format
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: ../mate-panel/panel.c:474
+#, c-format
+msgid "Open URL: %s"
+msgstr "Отваряне на адрес: %s"
+
+#: ../mate-panel/panel.c:1323
+msgid "Delete this drawer?"
+msgstr "Премахване на този шкаф?"
+
+#: ../mate-panel/panel.c:1324
+msgid ""
+"When a drawer is deleted, the drawer and its\n"
+"settings are lost."
+msgstr ""
+"Когато един шкаф бъде премахнат,\n"
+"настройките му се губят."
+
+#: ../mate-panel/panel.c:1327
+msgid "Delete this panel?"
+msgstr "Премахване на този панел?"
+
+#: ../mate-panel/panel.c:1328
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"Когато един панел бъде премахнат,\n"
+"настройките му се губят."

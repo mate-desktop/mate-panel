@@ -1,0 +1,657 @@
+<mateconfentryfile>
+
+  <entrylist base="/apps/panel/default_setup">
+
+    <!-- List of toplevels -->
+
+    <entry>
+      <key>general/toplevel_id_list</key>
+      <schema_key>/schemas/apps/panel/general/toplevel_id_list</schema_key>
+      <value>
+        <list type="string">
+          <value>
+            <string>top_panel</string>
+          </value>
+          <value>
+            <string>bottom_panel</string>
+          </value>
+        </list>
+      </value>
+    </entry>
+
+    <!-- List of objects -->
+
+    <entry>
+      <key>general/object_id_list</key>
+      <schema_key>/schemas/apps/panel/general/object_id_list</schema_key>
+      <value>
+        <list type="string">
+          <value>
+            <string>menu_bar</string>
+          </value>
+          <value>
+            <string>browser_launcher</string>
+          </value>
+          <value>
+            <string>email_launcher</string>
+          </value>
+        </list>
+      </value>
+    </entry>
+
+    <!-- List of applets -->
+
+    <entry>
+      <key>general/applet_id_list</key>
+      <schema_key>/schemas/apps/panel/general/applet_id_list</schema_key>
+      <value>
+        <list type="string">
+          <value>
+            <string>window_menu</string>
+          </value>
+          <value>
+            <string>clock</string>
+          </value>
+          <value>
+            <string>notification_area</string>
+          </value>
+          <value>
+            <string>show_desktop_button</string>
+          </value>
+          <value>
+            <string>window_list</string>
+          </value>
+          <value>
+            <string>workspace_switcher</string>
+          </value>
+        </list>
+      </value>
+    </entry>
+
+  <!-- Top Panel -->
+
+    <entry>
+      <key>toplevels/top_panel/expand</key>
+      <schema_key>/schemas/apps/panel/toplevels/expand</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevels/top_panel/orientation</key>
+      <schema_key>/schemas/apps/panel/toplevels/orientation</schema_key>
+      <value>
+        <string>top</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevels/top_panel/size</key>
+      <schema_key>/schemas/apps/panel/toplevels/size</schema_key>
+      <value>
+        <int>24</int>
+      </value>
+    </entry>
+
+    <entry><key>toplevels/top_panel/name</key><schema_key>/schemas/apps/panel/toplevels/name</schema_key></entry>
+    <entry><key>toplevels/top_panel/screen</key><schema_key>/schemas/apps/panel/toplevels/screen</schema_key></entry>
+    <entry><key>toplevels/top_panel/monitor</key><schema_key>/schemas/apps/panel/toplevels/monitor</schema_key></entry>
+    <entry><key>toplevels/top_panel/x</key><schema_key>/schemas/apps/panel/toplevels/x</schema_key></entry>
+    <entry><key>toplevels/top_panel/y</key><schema_key>/schemas/apps/panel/toplevels/y</schema_key></entry>
+    <entry><key>toplevels/top_panel/x_right</key><schema_key>/schemas/apps/panel/toplevels/x_right</schema_key></entry>
+    <entry><key>toplevels/top_panel/y_bottom</key><schema_key>/schemas/apps/panel/toplevels/y_bottom</schema_key></entry>
+    <entry><key>toplevels/top_panel/x_centered</key><schema_key>/schemas/apps/panel/toplevels/x_centered</schema_key></entry>
+    <entry><key>toplevels/top_panel/y_centered</key><schema_key>/schemas/apps/panel/toplevels/y_centered</schema_key></entry>
+    <entry><key>toplevels/top_panel/auto_hide</key><schema_key>/schemas/apps/panel/toplevels/auto_hide</schema_key></entry>
+    <entry><key>toplevels/top_panel/enable_animations</key><schema_key>/schemas/apps/panel/toplevels/enable_animations</schema_key></entry>
+    <entry><key>toplevels/top_panel/enable_buttons</key><schema_key>/schemas/apps/panel/toplevels/enable_buttons</schema_key></entry>
+    <entry><key>toplevels/top_panel/enable_arrows</key><schema_key>/schemas/apps/panel/toplevels/enable_arrows</schema_key></entry>
+    <entry><key>toplevels/top_panel/hide_delay</key><schema_key>/schemas/apps/panel/toplevels/hide_delay</schema_key></entry>
+    <entry><key>toplevels/top_panel/unhide_delay</key><schema_key>/schemas/apps/panel/toplevels/unhide_delay</schema_key></entry>
+    <entry><key>toplevels/top_panel/auto_hide_size</key><schema_key>/schemas/apps/panel/toplevels/auto_hide_size</schema_key></entry>
+    <entry><key>toplevels/top_panel/animation_speed</key><schema_key>/schemas/apps/panel/toplevels/animation_speed</schema_key></entry>
+    <entry><key>toplevels/top_panel/background/type</key><schema_key>/schemas/apps/panel/toplevels/background/type</schema_key></entry>
+    <entry><key>toplevels/top_panel/background/color</key><schema_key>/schemas/apps/panel/toplevels/background/color</schema_key></entry>
+    <entry><key>toplevels/top_panel/background/opacity</key><schema_key>/schemas/apps/panel/toplevels/background/opacity</schema_key></entry>
+    <entry><key>toplevels/top_panel/background/image</key><schema_key>/schemas/apps/panel/toplevels/background/image</schema_key></entry>
+    <entry><key>toplevels/top_panel/background/fit</key><schema_key>/schemas/apps/panel/toplevels/background/fit</schema_key></entry>
+    <entry><key>toplevels/top_panel/background/stretch</key><schema_key>/schemas/apps/panel/toplevels/background/stretch</schema_key></entry>
+    <entry><key>toplevels/top_panel/background/rotate</key><schema_key>/schemas/apps/panel/toplevels/background/rotate</schema_key></entry>
+
+  <!-- Bottom Panel -->
+
+    <entry>
+      <key>toplevels/bottom_panel/expand</key>
+      <schema_key>/schemas/apps/panel/toplevels/expand</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevels/bottom_panel/orientation</key>
+      <schema_key>/schemas/apps/panel/toplevels/orientation</schema_key>
+      <value>
+        <string>bottom</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevels/bottom_panel/size</key>
+      <schema_key>/schemas/apps/panel/toplevels/size</schema_key>
+      <value>
+        <int>24</int>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevels/bottom_panel/y_bottom</key>
+      <schema_key>/schemas/apps/panel/toplevels/y_bottom</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+
+    <entry><key>toplevels/bottom_panel/name</key><schema_key>/schemas/apps/panel/toplevels/name</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/screen</key><schema_key>/schemas/apps/panel/toplevels/screen</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/monitor</key><schema_key>/schemas/apps/panel/toplevels/monitor</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/x</key><schema_key>/schemas/apps/panel/toplevels/x</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/y</key><schema_key>/schemas/apps/panel/toplevels/y</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/x_right</key><schema_key>/schemas/apps/panel/toplevels/x_right</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/x_centered</key><schema_key>/schemas/apps/panel/toplevels/x_centered</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/y_centered</key><schema_key>/schemas/apps/panel/toplevels/y_centered</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/auto_hide</key><schema_key>/schemas/apps/panel/toplevels/auto_hide</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/enable_animations</key><schema_key>/schemas/apps/panel/toplevels/enable_animations</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/enable_buttons</key><schema_key>/schemas/apps/panel/toplevels/enable_buttons</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/enable_arrows</key><schema_key>/schemas/apps/panel/toplevels/enable_arrows</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/hide_delay</key><schema_key>/schemas/apps/panel/toplevels/hide_delay</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/unhide_delay</key><schema_key>/schemas/apps/panel/toplevels/unhide_delay</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/auto_hide_size</key><schema_key>/schemas/apps/panel/toplevels/auto_hide_size</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/animation_speed</key><schema_key>/schemas/apps/panel/toplevels/animation_speed</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/background/type</key><schema_key>/schemas/apps/panel/toplevels/background/type</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/background/color</key><schema_key>/schemas/apps/panel/toplevels/background/color</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/background/opacity</key><schema_key>/schemas/apps/panel/toplevels/background/opacity</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/background/image</key><schema_key>/schemas/apps/panel/toplevels/background/image</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/background/fit</key><schema_key>/schemas/apps/panel/toplevels/background/fit</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/background/stretch</key><schema_key>/schemas/apps/panel/toplevels/background/stretch</schema_key></entry>
+    <entry><key>toplevels/bottom_panel/background/rotate</key><schema_key>/schemas/apps/panel/toplevels/background/rotate</schema_key></entry>
+
+  <!-- Menu Bar -->
+
+    <entry>
+      <key>objects/menu_bar/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>menu-bar</string>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/menu_bar/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/menu_bar/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/menu_bar/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/menu_bar/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+
+    <entry><key>objects/menu_bar/applet_iid</key><schema_key>/schemas/apps/panel/objects/applet_iid</schema_key></entry>
+    <entry><key>objects/menu_bar/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>objects/menu_bar/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>objects/menu_bar/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>objects/menu_bar/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>objects/menu_bar/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>objects/menu_bar/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>objects/menu_bar/launcher_location</key><schema_key>/schemas/apps/panel/objects/launcher_location</schema_key></entry>
+    <entry><key>objects/menu_bar/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Browser Launcher -->
+
+    <entry>
+      <key>objects/browser_launcher/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>launcher-object</string>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/browser_launcher/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/browser_launcher/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>1</int>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/browser_launcher/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/browser_launcher/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/browser_launcher/launcher_location</key>
+      <schema_key>/schemas/apps/panel/objects/launcher_location</schema_key>
+      <value>
+        <string>firefox.desktop</string>
+      </value>
+    </entry>
+
+    <entry><key>objects/browser_launcher/applet_iid</key><schema_key>/schemas/apps/panel/objects/applet_iid</schema_key></entry>
+    <entry><key>objects/browser_launcher/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>objects/browser_launcher/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>objects/browser_launcher/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>objects/browser_launcher/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>objects/browser_launcher/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>objects/browser_launcher/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>objects/browser_launcher/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Email Launcher -->
+
+    <entry>
+      <key>objects/email_launcher/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>launcher-object</string>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/email_launcher/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/email_launcher/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>2</int>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/email_launcher/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/email_launcher/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>objects/email_launcher/launcher_location</key>
+      <schema_key>/schemas/apps/panel/objects/launcher_location</schema_key>
+      <value>
+        <string>thunderbird.desktop</string>
+      </value>
+    </entry>
+
+    <entry><key>objects/email_launcher/applet_iid</key><schema_key>/schemas/apps/panel/objects/applet_iid</schema_key></entry>
+    <entry><key>objects/email_launcher/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>objects/email_launcher/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>objects/email_launcher/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>objects/email_launcher/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>objects/email_launcher/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>objects/email_launcher/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>objects/email_launcher/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Window Menu Applet -->
+
+    <entry>
+      <key>applets/window_menu/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>matecomponent-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_menu/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_menu/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_menu/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_menu/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_menu/applet_iid</key>
+      <schema_key>/schemas/apps/panel/objects/applet_iid</schema_key>
+      <value>
+        <string>WnckletFactory::WindowMenuApplet</string>
+      </value>
+    </entry>
+
+    <entry><key>applets/window_menu/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>applets/window_menu/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>applets/window_menu/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>applets/window_menu/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>applets/window_menu/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>applets/window_menu/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>applets/window_menu/launcher_location</key><schema_key>/schemas/apps/panel/objects/launcher_location</schema_key></entry>
+    <entry><key>applets/window_menu/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Clock Applet -->
+
+    <entry>
+      <key>applets/clock/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>matecomponent-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/clock/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/clock/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>2</int>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/clock/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/clock/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/clock/applet_iid</key>
+      <schema_key>/schemas/apps/panel/objects/applet_iid</schema_key>
+      <value>
+        <string>ClockAppletFactory::ClockApplet</string>
+      </value>
+    </entry>
+
+    <entry><key>applets/clock/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>applets/clock/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>applets/clock/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>applets/clock/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>applets/clock/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>applets/clock/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>applets/clock/launcher_location</key><schema_key>/schemas/apps/panel/objects/launcher_location</schema_key></entry>
+    <entry><key>applets/clock/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Notification Area Applet -->
+
+    <entry>
+      <key>applets/notification_area/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>matecomponent-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/notification_area/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/notification_area/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>3</int>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/notification_area/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/notification_area/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/notification_area/applet_iid</key>
+      <schema_key>/schemas/apps/panel/objects/applet_iid</schema_key>
+      <value>
+        <string>NotificationAreaAppletFactory::NotificationArea</string>
+      </value>
+    </entry>
+
+    <entry><key>applets/notification_area/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>applets/notification_area/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>applets/notification_area/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>applets/notification_area/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>applets/notification_area/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>applets/notification_area/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>applets/notification_area/launcher_location</key><schema_key>/schemas/apps/panel/objects/launcher_location</schema_key></entry>
+    <entry><key>applets/notification_area/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Show Desktop Applet -->
+
+    <entry>
+      <key>applets/show_desktop_button/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>matecomponent-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/show_desktop_button/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>bottom_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/show_desktop_button/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/show_desktop_button/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/show_desktop_button/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/show_desktop_button/applet_iid</key>
+      <schema_key>/schemas/apps/panel/objects/applet_iid</schema_key>
+      <value>
+        <string>WnckletFactory::ShowDesktopApplet</string>
+      </value>
+    </entry>
+
+    <entry><key>applets/show_desktop_button/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>applets/show_desktop_button/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>applets/show_desktop_button/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>applets/show_desktop_button/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>applets/show_desktop_button/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>applets/show_desktop_button/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>applets/show_desktop_button/launcher_location</key><schema_key>/schemas/apps/panel/objects/launcher_location</schema_key></entry>
+    <entry><key>applets/show_desktop_button/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Window List Applet -->
+
+    <entry>
+      <key>applets/window_list/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>matecomponent-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_list/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>bottom_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_list/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>1</int>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_list/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_list/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/window_list/applet_iid</key>
+      <schema_key>/schemas/apps/panel/objects/applet_iid</schema_key>
+      <value>
+        <string>WnckletFactory::WindowListApplet</string>
+      </value>
+    </entry>
+
+    <entry><key>applets/window_list/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>applets/window_list/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>applets/window_list/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>applets/window_list/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>applets/window_list/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>applets/window_list/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>applets/window_list/launcher_location</key><schema_key>/schemas/apps/panel/objects/launcher_location</schema_key></entry>
+    <entry><key>applets/window_list/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  <!-- Workspace Switcher Applet -->
+
+    <entry>
+      <key>applets/workspace_switcher/object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>matecomponent-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/workspace_switcher/toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>bottom_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/workspace_switcher/position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/workspace_switcher/panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/workspace_switcher/locked</key>
+      <schema_key>/schemas/apps/panel/objects/locked</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>applets/workspace_switcher/applet_iid</key>
+      <schema_key>/schemas/apps/panel/objects/applet_iid</schema_key>
+      <value>
+        <string>WnckletFactory::WorkspaceSwitcherApplet</string>
+      </value>
+    </entry>
+
+    <entry><key>applets/workspace_switcher/attached_toplevel_id</key><schema_key>/schemas/apps/panel/objects/attached_toplevel_id</schema_key> </entry>
+    <entry><key>applets/workspace_switcher/tooltip</key><schema_key>/schemas/apps/panel/objects/tooltip</schema_key></entry>
+    <entry><key>applets/workspace_switcher/use_custom_icon</key><schema_key>/schemas/apps/panel/objects/use_custom_icon</schema_key></entry>
+    <entry><key>applets/workspace_switcher/custom_icon</key><schema_key>/schemas/apps/panel/objects/custom_icon</schema_key></entry>
+    <entry><key>applets/workspace_switcher/use_menu_path</key><schema_key>/schemas/apps/panel/objects/use_menu_path</schema_key></entry>
+    <entry><key>applets/workspace_switcher/menu_path</key><schema_key>/schemas/apps/panel/objects/menu_path</schema_key></entry>
+    <entry><key>applets/workspace_switcher/launcher_location</key><schema_key>/schemas/apps/panel/objects/launcher_location</schema_key></entry>
+    <entry><key>applets/workspace_switcher/action_type</key><schema_key>/schemas/apps/panel/objects/action_type</schema_key></entry>
+
+  </entrylist>
+
+</mateconfentryfile>

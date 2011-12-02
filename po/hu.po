@@ -1,0 +1,3293 @@
+# Hungarian translation of mate-panel.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the mate-panel package.
+#
+# Szabolcs Ban <shooby at mate dot hu>, 1998, 1999, 2000, 2001.
+# Emese Kovacs <emese at mate dot hu>, 2000, 2001, 2002.
+# Tamas Vamosi <tvamosi at suselinux dot hu>, 2002.
+# Andras Timar <timar at mate dot hu>, 2001, 2002, 2003.
+# Gabor Sari <saga at mate dot hu>, 2003.
+# Laszlo Dvornik <dvornik at mate dot hu>, 2004.
+# Gabor Kelemen <kelemeng at mate dot hu>, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
+# Mate ORY <orymate at gmail d0t com>, 2006.
+# Nyitrai István <sianis at gmail dot com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: mate-panel master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-29 12:03+0200\n"
+"PO-Revision-Date: 2010-08-29 12:02+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at mate dot hu>\n"
+"Language-Team: Hungarian <mate at fsf dot hu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:444
+#: ../applets/clock/clock-location-tile.c:520
+msgid "%l:%M %p"
+msgstr "%p %l.%M"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/clock-location-tile.c:527
+msgid "%H:%M"
+msgstr "%H.%M"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:314
+msgid "%b %d"
+msgstr "%b. %e."
+
+#: ../applets/clock/calendar-window.c:847
+msgid "Tasks"
+msgstr "Feladatok"
+
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: ../applets/clock/calendar-window.c:968
+msgid "All Day"
+msgstr "Egész nap"
+
+#: ../applets/clock/calendar-window.c:1106
+msgid "Appointments"
+msgstr "Találkozók"
+
+#: ../applets/clock/calendar-window.c:1131
+msgid "Birthdays and Anniversaries"
+msgstr "Születésnapok és évfordulók"
+
+#: ../applets/clock/calendar-window.c:1156
+msgid "Weather Information"
+msgstr "Időjárási információk"
+
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
+msgid "Locations"
+msgstr "Helyek"
+
+#: ../applets/clock/calendar-window.c:1937
+msgid "Calendar"
+msgstr "Naptár"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:444
+msgid "%l:%M:%S %p"
+msgstr "%p %l.%M.%S"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:449 ../applets/clock/clock.c:1585
+msgid "%H:%M:%S"
+msgstr "%H.%M.%S"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:460
+msgid "%a %b %e"
+msgstr "%b. %e., %a"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:467
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:475
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:648
+msgid "%A %B %d (%%s)"
+msgstr "%B %e., %A (%%s)"
+
+#: ../applets/clock/clock.c:678
+msgid "Click to hide your appointments and tasks"
+msgstr "Kattintson a találkozói és feladatai elrejtéséhez"
+
+#: ../applets/clock/clock.c:681
+msgid "Click to view your appointments and tasks"
+msgstr "Kattintson a találkozói és feladatai megjelenítéséhez"
+
+#: ../applets/clock/clock.c:685
+msgid "Click to hide month calendar"
+msgstr "Kattintson a havi naptár elrejtéséhez"
+
+#: ../applets/clock/clock.c:688
+msgid "Click to view month calendar"
+msgstr "Kattintson a havi naptár megjelenítéséhez"
+
+#: ../applets/clock/clock.c:1423
+msgid "Computer Clock"
+msgstr "Számítógép óra"
+
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1570
+msgid "%I:%M:%S %p"
+msgstr "%p %l.%M.%S"
+
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1578
+msgid "%I:%M %p"
+msgstr "%p %l.%M"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1624
+msgid "%A, %B %d %Y"
+msgstr "%Y. %B %e., %A"
+
+#: ../applets/clock/clock.c:1655
+msgid "Set System Time..."
+msgstr "Rendszeridő beállítása…"
+
+#: ../applets/clock/clock.c:1656
+msgid "Set System Time"
+msgstr "Rendszeridő beállítása"
+
+#: ../applets/clock/clock.c:1671
+msgid "Failed to set the system time"
+msgstr "A rendszeridő beállítása meghiúsult"
+
+#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1836
+#: ../applets/wncklet/window-list.c:192
+#: ../applets/wncklet/workspace-switcher.c:339
+msgid "_Preferences"
+msgstr "_Beállítások"
+
+#: ../applets/clock/clock.c:1872 ../applets/fish/fish.c:1839
+#: ../applets/notification_area/main.c:171
+#: ../applets/wncklet/showdesktop.c:228 ../applets/wncklet/window-list.c:195
+#: ../applets/wncklet/window-menu.c:95
+#: ../applets/wncklet/workspace-switcher.c:342 ../mate-panel/drawer.c:601
+#: ../mate-panel/panel-action-button.c:710
+#: ../mate-panel/panel-context-menu.c:285 ../mate-panel/panel-menu-bar.c:350
+#: ../mate-panel/panel-menu-button.c:665
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../applets/clock/clock.c:1875 ../applets/fish/fish.c:1842
+#: ../applets/notification_area/main.c:174
+#: ../applets/wncklet/showdesktop.c:231 ../applets/wncklet/window-list.c:198
+#: ../applets/wncklet/window-menu.c:98
+#: ../applets/wncklet/workspace-switcher.c:345
+msgid "_About"
+msgstr "_Névjegy"
+
+#: ../applets/clock/clock.c:1878
+msgid "Copy _Time"
+msgstr "_Időpont másolása"
+
+#: ../applets/clock/clock.c:1881
+msgid "Copy _Date"
+msgstr "_Dátum másolása"
+
+#: ../applets/clock/clock.c:1884
+msgid "Ad_just Date & Time"
+msgstr "Dátum és idő _beállítása"
+
+#: ../applets/clock/clock.c:2720
+msgid "Custom format"
+msgstr "Egyéni formátum"
+
+#: ../applets/clock/clock.c:3207
+msgid "Choose Location"
+msgstr "Válasszon helyet"
+
+#: ../applets/clock/clock.c:3286
+msgid "Edit Location"
+msgstr "Hely szerkesztése"
+
+#: ../applets/clock/clock.c:3432
+msgid "City Name"
+msgstr "Város neve"
+
+#: ../applets/clock/clock.c:3436
+msgid "City Time Zone"
+msgstr "Város időzónája"
+
+#: ../applets/clock/clock.c:3621
+msgid "24 hour"
+msgstr "24 órás"
+
+#: ../applets/clock/clock.c:3622
+msgid "UNIX time"
+msgstr "UNIX idő"
+
+#: ../applets/clock/clock.c:3623
+msgid "Internet time"
+msgstr "Internet idő"
+
+#: ../applets/clock/clock.c:3631
+msgid "Custom _format:"
+msgstr "Egyéni _formátum:"
+
+#: ../applets/clock/clock.c:3721
+msgid "Clock"
+msgstr "Óra"
+
+#: ../applets/clock/clock.c:3724
+msgid "The Clock displays the current time and date"
+msgstr "Az óra a jelenlegi időt és dátumot mutatja"
+
+#. Translator credits
+#: ../applets/clock/clock.c:3727 ../applets/fish/fish.c:621
+#: ../applets/notification_area/main.c:153
+#: ../applets/wncklet/showdesktop.c:540 ../applets/wncklet/window-list.c:609
+#: ../applets/wncklet/window-menu.c:77
+#: ../applets/wncklet/workspace-switcher.c:619
+#: ../mate-panel/panel-context-menu.c:138
+msgid "translator-credits"
+msgstr ""
+"Bán Szabolcs <shooby at mate dot hu>\n"
+"Dvornik László <dvornik at mate dot hu>\n"
+"Kelemen Gábor <kelemeng at mate dot hu>\n"
+"Kovács Emese <emese at mate dot hu>\n"
+"Nyitrai István <sianis at gmail dot com>\n"
+"Sári Gábor <saga at mate dot hu>\n"
+"Tímár András <timar at mate dot hu>\n"
+"Vámosi Tamás <tvamosi at suselinux dot hu>"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "<i>(optional)</i>"
+msgstr "<i>(elhagyható)</i>"
+
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:3
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Írja be egy város, terület vagy ország nevét és válasszon egy "
+"találatot a felbukkanó ablakból</i></small>"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "Clock Format"
+msgstr "Óraformátum"
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Clock Preferences"
+msgstr "Óra beállításai"
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Current Time:"
+msgstr "Jelenlegi idő:"
+
+#: ../applets/clock/clock.ui.h:7
+msgid "Display"
+msgstr "Megjelenítés"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "East"
+msgstr "Kelet"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:9
+msgid "General"
+msgstr "Általános"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "L_atitude:"
+msgstr "S_zélesség:"
+
+#: ../applets/clock/clock.ui.h:11
+msgid "L_ongitude:"
+msgstr "_Hosszúság:"
+
+#: ../applets/clock/clock.ui.h:13
+msgid "North"
+msgstr "Észak"
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Panel Display"
+msgstr "Panel megjelenítése"
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show _temperature"
+msgstr "_Hőmérséklet megjelenítése"
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show _weather"
+msgstr "_Időjárás megjelenítése"
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show seco_nds"
+msgstr "_Másodpercek megjelenítése"
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show the _date"
+msgstr "Dát_um megjelenítése"
+
+#: ../applets/clock/clock.ui.h:19
+msgid "South"
+msgstr "Dél"
+
+#: ../applets/clock/clock.ui.h:20
+msgid "Time & Date"
+msgstr "Dátum és idő"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "Time _Settings"
+msgstr "I_dő beállításai"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "Weather"
+msgstr "Időjárás"
+
+#: ../applets/clock/clock.ui.h:23
+msgid "West"
+msgstr "Nyugat"
+
+#: ../applets/clock/clock.ui.h:24
+msgid "_12 hour format"
+msgstr "_12 órás formátum"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_24 hour format"
+msgstr "2_4 órás formátum"
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Location Name:"
+msgstr "_Hely neve:"
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Pressure unit:"
+msgstr "_Légnyomás egysége:"
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Set System Time"
+msgstr "_Rendszeridő beállítása"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "_Temperature unit:"
+msgstr "_Hőmérséklet egysége:"
+
+#: ../applets/clock/clock.ui.h:30
+msgid "_Time:"
+msgstr "_Idő:"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "_Timezone:"
+msgstr "Idő_zóna:"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "_Visibility unit:"
+msgstr "Látótá_volság egysége:"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "_Wind speed unit:"
+msgstr "S_zélsebesség egysége:"
+
+# megjegyzés: ez 24-hour legyen!
+#. Translators:
+#. This controls whether the MATE panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: ../applets/clock/clock.schemas.in.h:11
+msgid "24-hour"
+msgstr "24-hour"
+
+#: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "A naptár ablakban megjelenítendő helyek listája."
+
+#: ../applets/clock/clock.schemas.in.h:13
+msgid "Custom format of the clock"
+msgstr "Egyéni óraformátum"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "A találkozók listájának kibontása"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "A születésnapok listájának kibontása"
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Helyek listájának kibontása"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr "A feladatok listájának kibontása"
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "Az időjárási információk listájának kibontása"
+
+#: ../applets/clock/clock.schemas.in.h:19
+msgid "Hour format"
+msgstr "Óraformátum"
+
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Ha be van állítva, megjelenik az időjárás ikon."
+
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Az idő mellett a dátumot is jelenítse meg."
+
+#: ../applets/clock/clock.schemas.in.h:22
+msgid "If true, display seconds in time."
+msgstr "A másodperceket is megjeleníti."
+
+#: ../applets/clock/clock.schemas.in.h:23
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr ""
+"Ha be van állítva, a naptár ablakban megjeleníti a találkozók listáját."
+
+#: ../applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr ""
+"Ha be van állítva, a naptár ablakban megjeleníti a születésnapok listáját."
+
+#: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Ha be van állítva, a naptár ablakban megjeleníti a helyek listáját."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Ha be van állítva, a naptár ablakban megjeleníti a feladatok listáját."
+
+#: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr ""
+"Ha be van állítva, a naptár ablakban megjeleníti az időjárási információkat."
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"A dátum egy buboréksúgóban jelenik meg, ha az egérmutató az Óra felett van."
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "If true, show the temperature next to the weather icon."
+msgstr ""
+"Ha be van állítva, az időjárás ikon mellett megjeleníti a hőmérsékletet."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show week numbers in the calendar."
+msgstr "Ha be van állítva, a naptárban megjeleníti a hetek számát."
+
+#: ../applets/clock/clock.schemas.in.h:31
+msgid "List of locations"
+msgstr "A helyek listája"
+
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "Show date in clock"
+msgstr "Dátum megjelenítése az Óra kisalkalmazásban"
+
+#: ../applets/clock/clock.schemas.in.h:33
+msgid "Show date in tooltip"
+msgstr "Dátum megjelenítése a buboréksúgóban"
+
+#: ../applets/clock/clock.schemas.in.h:34
+msgid "Show temperature in clock"
+msgstr "Hőmérséklet megjelenítése az Óra kisalkalmazásban"
+
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show time with seconds"
+msgstr "Másodpercek megjelenítése"
+
+#: ../applets/clock/clock.schemas.in.h:36
+msgid "Show weather in clock"
+msgstr "Időjárás megjelenítése az Óra kisalkalmazásban"
+
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show week numbers in calendar"
+msgstr "Hetek számának megjelenítése a naptárban"
+
+#: ../applets/clock/clock.schemas.in.h:38
+msgid "Speed unit"
+msgstr "Sebességegység"
+
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Temperature unit"
+msgstr "Hőmérsékletegység"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "The unit to use when showing temperatures."
+msgstr "A hőmérséklet kijelzésekor használandó egység."
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing wind speed."
+msgstr "A szélsebesség kijelzésekor használandó egység."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid ""
+"The use of this key was deprecated in MATE 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Ez a kulcs a MATE 2.26-ban már elavult, a belső időbeállító eszköz "
+"használata miatt. A séma a régebbi verziókkal való kompatibilitás miatt "
+"maradt meg."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in MATE 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Ez a kulcs a MATE 2.28-ban már elavult, az időzónák támogatottak. A séma a "
+"régebbi verziókkal való kompatibilitás miatt maradt meg."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
+"The use of this key was deprecated in MATE 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"Ez a kulcs a MATE 2.6-ban már elavult, a „format” kulcs támogatott. A séma "
+"a régebbi verziókkal való kompatibilitás miatt maradt meg."
+
+#: ../applets/clock/clock.schemas.in.h:45
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"Ez a kulcs megadja az óra kisalkalmazás által használt formátumot ha a "
+"format kulcs értéke „custom”. Használhat a strftime() által értelmezhető "
+"konverziós előírásokat speciális formátumok előállításához. További "
+"információkért tekintse meg az strftime() kézikönyvét."
+
+#: ../applets/clock/clock.schemas.in.h:46
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"Ez a kulcs megadja az óra kisalkalmazás által használt időformátumot. "
+"Lehetséges értékek: „12-hour” (12 órás), „24-hour” (24 órás), „internet”, "
+"„unix” és „custom” (egyéni). Ha az érték „internet”, az óra internet időt "
+"fog mutatni. Az internet időrendszer a napot 1000 „.egységre” osztja. Ebben "
+"a rendszerben nincsenek időzónák, így az idő az egész világon ugyanannyi. Ha "
+"az érték „unix”, az óra az 1970-01-01 óta eltelt időt mutatja "
+"másodpercekben. Ha az érték „custom”, az óra a custom_format kulcsban "
+"megadott formátumnak megfelelően fogja az időt mutatni."
+
+#: ../applets/clock/clock.schemas.in.h:47
+msgid "Time configuration tool"
+msgstr "Időbeállító eszköz"
+
+#: ../applets/clock/clock.schemas.in.h:48
+msgid "Use Internet time"
+msgstr "Internet idő használata"
+
+#: ../applets/clock/clock.schemas.in.h:49
+msgid "Use UNIX time"
+msgstr "UNIX idő használata"
+
+#: ../applets/clock/clock.schemas.in.h:50
+msgid "Use UTC"
+msgstr "UTC használata"
+
+#: ../applets/clock/clock-location-tile.c:183
+msgid "Failed to set the system timezone"
+msgstr "A rendszer időzónájának beállítása meghiúsult"
+
+#: ../applets/clock/clock-location-tile.c:244
+msgid "<small>Set...</small>"
+msgstr "<small>Beállítás…</small>"
+
+#: ../applets/clock/clock-location-tile.c:245
+msgid "<small>Set</small>"
+msgstr "<small>Beállítás</small>"
+
+#: ../applets/clock/clock-location-tile.c:321
+msgid "Set location as current location and use its timezone for this computer"
+msgstr ""
+"A hely beállítása aktuálisként és időzónájának használata időzónaként ezen a "
+"gépen"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:457
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "<small>%p</small> %l.%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:465
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%k:%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:474
+msgid "%l:%M <small>%p</small>"
+msgstr "<small>%p</small> %l.%M"
+
+#: ../applets/clock/clock-location-tile.c:613
+#, c-format
+msgid "%s, %s"
+msgstr "%s - %s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libmateweather.
+#: ../applets/clock/clock-location-tile.c:625
+#: ../applets/clock/clock-location-tile.c:634
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:627
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, hőérzet: %s"
+
+#: ../applets/clock/clock-location-tile.c:650
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Napkelte: %s / Napnyugta: %s"
+
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:93 ../applets/wncklet/wncklet.c:123
+#: ../mate-panel/libpanel-util/panel-show.c:235
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "A súgódokumentum nem jeleníthető meg: „%s”"
+
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:152
+msgid "Error displaying help document"
+msgstr "Hiba a súgódokumentum megjelenítésekor"
+
+#: ../applets/fish/fish.c:274
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"Figyelmeztetés: Úgy tűnik, hogy ez a parancs ténylegesen jó valamire.\n"
+"Mivel ez egy tökéletesen haszontalan kisalkalmazás, gondolja át még "
+"egyszer.\n"
+"Azt tanácsoljuk, hogy ne használja a(z) %s kisalkalmazást semmire, amit\n"
+"hasznosnak vagy értelmesnek gondol."
+
+#: ../applets/fish/fish.c:471
+msgid "Images"
+msgstr "Képek"
+
+#: ../applets/fish/fish.c:583 ../applets/fish/fish.c:649
+#: ../applets/fish/fish.c:765
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s a hal"
+
+#: ../applets/fish/fish.c:584
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr ""
+"A(z) %s kisalkalmazás csak az idejét rabolja, a lemezterületet pocsékolja, "
+"valamint a fordítási időt növeli. Elindítva a panelen helyet foglal, és "
+"memóriát pazarol. Ha valakit meglát, hogy ezt a kisalkalmazást használja, "
+"hívja a mentőket, hogy zárják diliházba."
+
+#: ../applets/fish/fish.c:608
+msgid "(with minor help from George)"
+msgstr "(George kis segítségével)"
+
+#: ../applets/fish/fish.c:615
+msgid "Fish"
+msgstr "Hal"
+
+#: ../applets/fish/fish.c:650
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "%s a hal, korunk jövendőmondója"
+
+#: ../applets/fish/fish.c:721
+msgid "Unable to locate the command to execute"
+msgstr "A végrehajtandó parancs nem található"
+
+#: ../applets/fish/fish.c:770
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "%s a hal ezt mondja:"
+
+#: ../applets/fish/fish.c:839
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Nem olvasható a parancs kimenete\n"
+"\n"
+"Részletek: %s"
+
+#: ../applets/fish/fish.c:905
+msgid "_Speak again"
+msgstr "Be_szélj újra"
+
+#: ../applets/fish/fish.c:989
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "A beállított parancs nem működik és le lett cserélve erre: %s"
+
+#: ../applets/fish/fish.c:1012
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"„%s” végrehajtása sikertelen\n"
+"\n"
+"Részletek: %s"
+
+#: ../applets/fish/fish.c:1028
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Nem lehet olvasni a következőtől: „%s”\n"
+"\n"
+"Részletek: %s"
+
+#: ../applets/fish/fish.c:1679
+msgid "The water needs changing"
+msgstr "A vizet cserélni kellene"
+
+#: ../applets/fish/fish.c:1681
+msgid "Look at today's date!"
+msgstr "Nézze meg a mai dátumot!"
+
+#: ../applets/fish/fish.c:1774
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "%s a hal, a jövendőmondó"
+
+#: ../applets/fish/fish.ui.h:1 ../mate-panel/panel-properties-dialog.ui.h:1
+msgid "    "
+msgstr "    "
+
+#: ../applets/fish/fish.ui.h:2
+msgid "Animation"
+msgstr "Animáció"
+
+#: ../applets/fish/fish.ui.h:3
+msgid "Co_mmand to run when clicked:"
+msgstr "_Kattintáskor végrehajtandó parancs:"
+
+#: ../applets/fish/fish.ui.h:4
+msgid "Fish Preferences"
+msgstr "A hal beállításai"
+
+#: ../applets/fish/fish.ui.h:6
+msgid "Select an animation"
+msgstr "Válasszon egy animációt"
+
+#: ../applets/fish/fish.ui.h:7
+msgid "_File:"
+msgstr "_Fájl:"
+
+#: ../applets/fish/fish.ui.h:8
+msgid "_Name of fish:"
+msgstr "A hal _neve:"
+
+#: ../applets/fish/fish.ui.h:9
+msgid "_Pause per frame:"
+msgstr "_Képkockánkénti várakozás:"
+
+#: ../applets/fish/fish.ui.h:10
+msgid "_Rotate on vertical panels"
+msgstr "Függőleges panelen _forgatás"
+
+#: ../applets/fish/fish.ui.h:11
+msgid "_Total frames in animation:"
+msgstr "_Képkockák száma:"
+
+#: ../applets/fish/fish.ui.h:12
+msgid "frames"
+msgstr "képkocka"
+
+#: ../applets/fish/fish.ui.h:13
+msgid "seconds"
+msgstr "másodpercenként"
+
+#: ../applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr ""
+"Egy név nélküli hal nagyon unalmas hal. Adjon életet a halának, adjon neki "
+"nevet!"
+
+#: ../applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "Kattintáskor végrehajtandó parancs"
+
+#: ../applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "Az animáció képkockáinak száma"
+
+#: ../applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Ha be van állítva, a hal animációja forgatva fog megjelenni a függőleges "
+"paneleken."
+
+#: ../applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "Képkockánkénti várakozás"
+
+#: ../applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "Függőleges panelen forgatás"
+
+#: ../applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "A hal animációja"
+
+#: ../applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "A hal neve"
+
+#: ../applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Ez a kulcs megadja a halra kattintáskor végrehajtandó parancsot."
+
+#: ../applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"Ez a kulcs megadja a hal kisalkalmazásban megjelenített animáció képének "
+"helyét a képkönyvtárhoz képest."
+
+#: ../applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "Ez a kulcs megadja a halanimáció képkockáinak számát."
+
+#: ../applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "Ez a kulcs megadja, hogy hány másodpercig látható egy képkocka."
+
+#: ../applets/notification_area/main.c:148
+msgid "Notification Area"
+msgstr "Értesítési terület"
+
+#: ../applets/notification_area/main.c:306
+msgid "Panel Notification Area"
+msgstr "Panel értesítési területe"
+
+#: ../applets/wncklet/showdesktop.c:182
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "%s betöltése sikertelen: %s\n"
+
+#: ../applets/wncklet/showdesktop.c:183
+msgid "Icon not found"
+msgstr "Az ikon nem található"
+
+#: ../applets/wncklet/showdesktop.c:245
+msgid "Click here to restore hidden windows."
+msgstr "Az elrejtett ablakok helyreállítása."
+
+#: ../applets/wncklet/showdesktop.c:247
+msgid "Click here to hide all windows and show the desktop."
+msgstr "A gomb elrejti az alkalmazások ablakait, és megjeleníti az asztalt."
+
+#: ../applets/wncklet/showdesktop.c:459 ../applets/wncklet/showdesktop.c:543
+msgid "Show Desktop Button"
+msgstr "Asztal megjelenítése gomb"
+
+#: ../applets/wncklet/showdesktop.c:545
+msgid "This button lets you hide all windows and show the desktop."
+msgstr ""
+"Ezzel a gombbal elrejtheti az összes ablakot és megjelenítheti az asztalt."
+
+#: ../applets/wncklet/showdesktop.c:575
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"Az ablakkezelője nem támogatja az asztal megjelenítése gombot, vagy nem "
+"futtat ablakkezelőt."
+
+#: ../applets/wncklet/window-list.c:612
+msgid "Window List"
+msgstr "Ablaklista"
+
+#: ../applets/wncklet/window-list.c:614
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr ""
+"Az Ablaklista egy listát jelenít meg az ablakokról gombok formájában és "
+"segít az ablakok kezelésében."
+
+#: ../applets/wncklet/window-list.ui.h:1
+msgid "Group windows when _space is limited"
+msgstr "Ablakok csoportosítása, ha kevés a _hely"
+
+#: ../applets/wncklet/window-list.ui.h:2
+msgid "Restore to current _workspace"
+msgstr "Visszaállítás a _jelenlegi munkaterületre"
+
+#: ../applets/wncklet/window-list.ui.h:3
+msgid "Restore to na_tive workspace"
+msgstr "Visszaállítás az _eredeti munkaterületre"
+
+#: ../applets/wncklet/window-list.ui.h:4
+msgid "Restoring Minimized Windows"
+msgstr "Minimalizált ablakok visszaállítása"
+
+#: ../applets/wncklet/window-list.ui.h:5
+msgid "Sh_ow windows from current workspace"
+msgstr "A je_lenlegi munkaterület ablakainak megjelenítése"
+
+#: ../applets/wncklet/window-list.ui.h:6
+msgid "Show windows from a_ll workspaces"
+msgstr "Az ö_sszes munkaterület ablakainak megjelenítése"
+
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Grouping"
+msgstr "Ablakcsoportosítás"
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Window List Content"
+msgstr "Ablaklista tartalma"
+
+#: ../applets/wncklet/window-list.ui.h:9
+msgid "Window List Preferences"
+msgstr "Ablaklista beállításai"
+
+#: ../applets/wncklet/window-list.ui.h:10
+msgid "_Always group windows"
+msgstr "_Mindig csoportosítsa az ablakokat"
+
+#: ../applets/wncklet/window-list.ui.h:11
+msgid "_Never group windows"
+msgstr "_Sose csoportosítsa az ablakokat"
+
+#: ../applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Megadja, mikor csoportosítsa az Ablaklista kisalkalmazás egyazon alkalmazás "
+"ablakait. Lehetséges értékek „never” (soha), „auto”, és „always” (mindig)."
+
+#: ../applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Ha be van állítva, az ablaklista az összes munkaterület ablakait "
+"tartalmazza, különben csak a jelenlegiét."
+
+#: ../applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Ha be van állítva, az ablak visszaállításakor, az a jelenlegi munkaterületen "
+"jelenjen meg, különben kapcsoljon át az ablak eredeti munkaterületére."
+
+#: ../applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "Legnagyobb ablaklistaméret"
+
+#: ../applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "Legkisebb ablaklistaméret"
+
+#: ../applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr "A jelenlegi munkaterületen bukkanjanak fel az ablakok"
+
+#: ../applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Az összes munkaterület ablakainak megjelenítése"
+
+#: ../applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"The use of this key was deprecated in MATE 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"Ez a kulcs a MATE 2.20-ban már elavult. A séma a régebbi verziókkal való "
+"kompatibilitás miatt maradt meg."
+
+#: ../applets/wncklet/window-list.schemas.in.h:9
+msgid "When to group windows"
+msgstr "Mikor legyenek az ablakok csoportosítva"
+
+#: ../applets/wncklet/window-menu.c:80 ../applets/wncklet/window-menu.c:247
+msgid "Window Selector"
+msgstr "Ablakválasztó"
+
+#: ../applets/wncklet/window-menu.c:84
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr ""
+"Az Ablakválasztó egy listát jelenít meg az ablakokról egy menüben és segít "
+"az ablakok kezelésében."
+
+#: ../applets/wncklet/workspace-switcher.c:211
+#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.ui.h:10
+msgid "rows"
+msgstr "sor"
+
+#: ../applets/wncklet/workspace-switcher.c:211
+#: ../applets/wncklet/workspace-switcher.c:974
+msgid "columns"
+msgstr "oszlop"
+
+#: ../applets/wncklet/workspace-switcher.c:492
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"A num_rows érték betöltése közben hiba történt a Munkaterület-váltóban: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:503
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"A display_workspace_names érték betöltése közben hiba történt a Munkaterület-"
+"váltóban: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:518
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"A display_all_workspaces érték betöltése közben hiba történt a Munkaterület-"
+"váltóban: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:622
+msgid "Workspace Switcher"
+msgstr "Munkaterület-váltó"
+
+#: ../applets/wncklet/workspace-switcher.c:624
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"A Munkaterület-váltó kisalkalmazás megjeleníti a munkaterületek kicsinyített "
+"változatát, ez megkönnyíti ablakai kezelését."
+
+#: ../applets/wncklet/workspace-switcher.ui.h:1
+msgid "Number of _workspaces:"
+msgstr "_Munkaterületek száma:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:2
+msgid "Show _all workspaces in:"
+msgstr "Minde_n munkaterület megjelenítése:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+msgid "Show _only the current workspace"
+msgstr "Csak a _jelenlegi munkaterület megjelenítése"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:4
+msgid "Show workspace _names in switcher"
+msgstr "_Munkaterületek neveinek megjelenítése a kisalkalmazásban"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:5
+msgid "Switcher"
+msgstr "Váltó"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:6
+msgid "Workspace Names"
+msgstr "Munkaterületnevek"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:7
+msgid "Workspace Switcher Preferences"
+msgstr "Munkaterület-váltó beállításai"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:8
+msgid "Workspace na_mes:"
+msgstr "Munka_terület-nevek:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:9
+msgid "Workspaces"
+msgstr "Munkaterületek"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "Minden munkaterület megjelenítése"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "Munkaterületnevek megjelenítése"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"Ha be van állítva, a munkaterület-váltó minden munkaterületet megjelenít, "
+"különben csak a jelenlegit."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Marco."
+msgstr ""
+"Ha be van állítva, a munkaterület-váltó megjeleníti a munkaterületek nevét, "
+"különben a tartalmukat jeleníti meg. Ez a beállítás csak a marco "
+"ablakkezelővel működik."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "Munkaterület-váltó sorai"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"Minden munkaterület megjelenítésénél ez határozza meg, hogy a kisalkalmazás "
+"hány sorban (vízszintes elrendezés) vagy oszlopban (függőleges elrendezés) "
+"jeleníti meg a munkaterületeket."
+
+#: ../matecomponent/libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the MATE-2.0 panel"
+msgstr "Egy egyszerű kisalkalmazás a MATE-2.0-s panel teszteléséhez"
+
+#: ../matecomponent/libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:2
+msgid "Test MateComponent Applet"
+msgstr "Teszt MateComponent kisalkalmazás"
+
+#: ../matecomponent/libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:3
+msgid "Test MateComponent Applet Factory"
+msgstr "Teszt MateComponent kisalkalmazás factory"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:34
+#: ../mate-panel/panel-test-applets.c:36
+msgid "Specify an applet IID to load"
+msgstr "Adja meg a betöltendő kisalkalmazás IID-jét"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:35
+#: ../mate-panel/panel-test-applets.c:37
+msgid ""
+"Specify a mateconf location in which the applet preferences should be stored"
+msgstr ""
+"Adjon meg egy mateconf helyet, ahol a kisalkalmazás tulajdonságai tárolva "
+"lesznek"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:36
+#: ../mate-panel/panel-test-applets.c:38
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr ""
+"Adja meg a kisalkalmazás induló méretét (xx-small (xxs), medium (közepes), "
+"large (nagy), stb. )"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:37
+#: ../mate-panel/panel-test-applets.c:39
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr ""
+"Adja meg a kisalkalmazás kiinduló tájolását (top (fent), bottom (lent), left "
+"(balra) vagy right (jobbra))"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:53
+#: ../mate-panel/panel-properties-dialog.c:123
+#: ../mate-panel/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Fent"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:54
+#: ../mate-panel/panel-properties-dialog.c:124
+#: ../mate-panel/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Lent"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:55
+#: ../mate-panel/panel-properties-dialog.c:125
+#: ../mate-panel/panel-test-applets.c:57
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Balra"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:56
+#: ../mate-panel/panel-properties-dialog.c:126
+#: ../mate-panel/panel-test-applets.c:58
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Jobbra"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:61
+#: ../mate-panel/panel-test-applets.c:63
+msgctxt "Size"
+msgid "XX Small"
+msgstr "XX kicsi"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:62
+#: ../mate-panel/panel-test-applets.c:64
+msgctxt "Size"
+msgid "X Small"
+msgstr "X kicsi"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:63
+#: ../mate-panel/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Small"
+msgstr "Kicsi"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:64
+#: ../mate-panel/panel-test-applets.c:66
+msgctxt "Size"
+msgid "Medium"
+msgstr "Közepes"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:65
+#: ../mate-panel/panel-test-applets.c:67
+msgctxt "Size"
+msgid "Large"
+msgstr "Nagy"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:66
+#: ../mate-panel/panel-test-applets.c:68
+msgctxt "Size"
+msgid "X Large"
+msgstr "X nagy"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:67
+#: ../mate-panel/panel-test-applets.c:69
+msgctxt "Size"
+msgid "XX Large"
+msgstr "XX nagy"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:129
+#: ../mate-panel/panel-test-applets.c:127
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "A(z) %s kisalkalmazás betöltése meghiúsult"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.c:249
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "a lekérdezés kivétellel tért vissza: %s\n"
+
+#. This is an utility to easily test various applets
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:2
+#: ../mate-panel/panel-test-applets.ui.h:2
+msgid "Test applet utility"
+msgstr "Kisalkalmazás-tesztelő segédeszköz"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Applet:"
+msgstr "_Kisalkalmazás:"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "_Tájolás:"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:5
+#: ../mate-panel/panel-test-applets.ui.h:5
+msgid "_Prefs Dir:"
+msgstr "_Beállítások könyvtára:"
+
+#: ../matecomponent/libmate-panel-applet/panel-test-applets-matecomponent.ui.h:6
+#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "_Méret:"
+
+#: ../matecomponent/panel-module/MATE_Panel_Popup.xml.h:1
+#: ../mate-panel/applet.c:554 ../libmate-panel-applet/mate-panel-applet.c:145
+msgid "Loc_k To Panel"
+msgstr "_Zárolás a panelhez"
+
+#: ../matecomponent/panel-module/MATE_Panel_Popup.xml.h:2
+#: ../mate-panel/applet.c:537 ../libmate-panel-applet/mate-panel-applet.c:139
+msgid "_Move"
+msgstr "Át_helyezés"
+
+#: ../matecomponent/panel-module/MATE_Panel_Popup.xml.h:3
+#: ../mate-panel/applet.c:526 ../libmate-panel-applet/mate-panel-applet.c:136
+msgid "_Remove From Panel"
+msgstr "_Eltávolítás a panelról"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "A fájl nem egy érvényes .desktop fájl"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Ismeretlen .desktop fájl verzió: „%s”"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "%s indítása"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Az alkalmazás nem fogad el dokumentumokat a parancssorban"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Ismeretlen indítási kapcsoló: %d"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "Nem adhatók dokumentum-URI címek egy „Type=Link” asztali bejegyzésnek"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Nem futtatható elem"
+
+#: ../mate-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "A munkamenet-kezelőhöz való csatlakozás tiltása"
+
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "A mentett beállításokat tartalmazó fájl megadása"
+
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "FÁJL"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "A munkamenet-kezelő azonosítójának megadása"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "AZONOSÍTÓ"
+
+#: ../mate-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Munkamenet-kezelés kapcsolói:"
+
+#: ../mate-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Munkamenet-kezelési kapcsolók megjelenítése"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../mate-panel/libpanel-util/panel-error.c:82
+#: ../mate-panel/mate-panel-applet-frame.c:745
+#: ../mate-panel/mate-panel-applet-frame.c:915
+msgid "Error"
+msgstr "Hiba"
+
+#: ../mate-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Válasszon ikont"
+
+#: ../mate-panel/libpanel-util/panel-launch.c:45
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "A(z) „%s” parancs nem futtatható"
+
+#: ../mate-panel/libpanel-util/panel-launch.c:48
+#: ../mate-panel/launcher.c:161
+msgid "Could not launch application"
+msgstr "Az alkalmazás elindítása sikertelen"
+
+#: ../mate-panel/libpanel-util/panel-show.c:44
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "A(z) „%s” hely nem nyitható meg"
+
+#: ../mate-panel/libpanel-util/panel-show.c:162
+msgid "No application to handle search folders is installed."
+msgstr "Nincs alkalmazás telepítve a keresőmappák kezelésére."
+
+#: ../mate-panel/applet.c:447
+msgid "???"
+msgstr "???"
+
+#: ../mate-panel/applet.c:1346
+msgid "Cannot find an empty spot"
+msgstr "Nem található üres hely"
+
+#: ../mate-panel/drawer.c:350 ../mate-panel/panel-addto.c:174
+#: ../mate-panel/panel-toplevel.c:1626
+msgid "Drawer"
+msgstr "Fiók"
+
+#: ../mate-panel/drawer.c:589
+msgid "_Add to Drawer..."
+msgstr "Hozzá_adás a fiókhoz…"
+
+#: ../mate-panel/drawer.c:595 ../mate-panel/launcher.c:807
+#: ../mate-panel/panel-action-button.c:141
+#: ../mate-panel/panel-context-menu.c:216
+msgid "_Properties"
+msgstr "T_ulajdonságok"
+
+#: ../mate-panel/mate-desktop-item-edit.c:29
+msgid "Create new file in the given directory"
+msgstr "Új fájl létrehozása az adott könyvtárban"
+
+#: ../mate-panel/mate-desktop-item-edit.c:30
+msgid "[FILE...]"
+msgstr "[FÁJL…]"
+
+#: ../mate-panel/mate-desktop-item-edit.c:108
+msgid "- Edit .desktop files"
+msgstr "- .desktop fájlok szerkesztése"
+
+#: ../mate-panel/mate-desktop-item-edit.c:146
+#: ../mate-panel/mate-desktop-item-edit.c:200 ../mate-panel/launcher.c:897
+msgid "Create Launcher"
+msgstr "Indítóikon létrehozása"
+
+#: ../mate-panel/mate-desktop-item-edit.c:171
+#: ../mate-panel/mate-desktop-item-edit.c:194
+msgid "Directory Properties"
+msgstr "Könyvtár tulajdonságai"
+
+#: ../mate-panel/mate-desktop-item-edit.c:177 ../mate-panel/launcher.c:735
+msgid "Launcher Properties"
+msgstr "Indítóikon tulajdonságai"
+
+#: ../mate-panel/mate-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Más alkalmazások indítása és különböző segédprogramok biztosítása ablakok "
+"kezeléséhez, az idő megjelenítéséhez, stb."
+
+#: ../mate-panel/mate-panel.desktop.in.in.h:2 ../mate-panel/main.c:93
+msgid "Panel"
+msgstr "Panel"
+
+#: ../mate-panel/launcher.c:118
+msgid "Could not show this URL"
+msgstr "Ez az URL nem jeleníthető meg"
+
+#: ../mate-panel/launcher.c:119
+msgid "No URL was specified."
+msgstr "Nem adott meg URL-t."
+
+#: ../mate-panel/launcher.c:227
+msgid "Could not use dropped item"
+msgstr "Nem használható az ejtett elem"
+
+#: ../mate-panel/launcher.c:423
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Nincs URI a panelindító desktop fájlhoz\n"
+
+#: ../mate-panel/launcher.c:462
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "%s desktop fájl megnyitása (%s%s panelindítóhoz) sikertelen\n"
+
+#: ../mate-panel/launcher.c:801
+msgid "_Launch"
+msgstr "I_ndítás"
+
+#: ../mate-panel/launcher.c:840
+#, c-format
+msgid "Key %s is not set, cannot load launcher\n"
+msgstr "A(z) %s kulcs nincs beállítva, az indítóikon nem tölthető be\n"
+
+#: ../mate-panel/launcher.c:966 ../mate-panel/panel-ditem-editor.c:1361
+#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/panel-ditem-editor.c:1426
+msgid "Could not save launcher"
+msgstr "Az indítóikon nem menthető"
+
+#: ../mate-panel/main.c:45
+msgid "Replace a currently running panel"
+msgstr "Jelenleg futó panel cseréje"
+
+#: ../mate-panel/menu.c:916
+msgid "Add this launcher to _panel"
+msgstr "Ezen indítóikon hozzáadása a _panelhez"
+
+#: ../mate-panel/menu.c:923
+msgid "Add this launcher to _desktop"
+msgstr "Ezen indítóikon hozzáadása az _asztalhoz"
+
+#: ../mate-panel/menu.c:935
+msgid "_Entire menu"
+msgstr "_Teljes menü"
+
+#: ../mate-panel/menu.c:940
+msgid "Add this as _drawer to panel"
+msgstr "Hozzáadás a panelhez _fiókként"
+
+#: ../mate-panel/menu.c:947
+msgid "Add this as _menu to panel"
+msgstr "Hozzáadás a panelhez _menüként"
+
+#: ../mate-panel/nothing.cP:609
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr "<b>VÉGE A JÁTÉKNAK</b> a(z) %d. szinten!"
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../mate-panel/nothing.cP:616
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s   %2$s   %3$s"
+
+#: ../mate-panel/nothing.cP:617
+msgid "Press 'q' to quit"
+msgstr "Kilépés: „q”"
+
+#: ../mate-panel/nothing.cP:622
+msgid "Paused"
+msgstr "Szüneteltetve"
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../mate-panel/nothing.cP:625 ../mate-panel/nothing.cP:636
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr "%1$s\t%2$s"
+
+#: ../mate-panel/nothing.cP:626
+msgid "Press 'p' to unpause"
+msgstr "Szünet vége: „p”"
+
+#: ../mate-panel/nothing.cP:632
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr "Szint: %s, Életek: %s"
+
+#: ../mate-panel/nothing.cP:637
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr "Balra/jobbra: mozgás, Szóköz: tűz, „p”: szünet, „q”: kilépés"
+
+#: ../mate-panel/nothing.cP:1385
+msgid "Killer GEGLs from Outer Space"
+msgstr "Gyilkos GEGL-ek a mélyűrből"
+
+#: ../mate-panel/panel-action-button.c:129
+msgid "_Activate Screensaver"
+msgstr "Képernyővédő _bekapcsolása"
+
+#: ../mate-panel/panel-action-button.c:135
+msgid "_Lock Screen"
+msgstr "_Képernyő zárolása"
+
+#: ../mate-panel/panel-action-button.c:254
+msgid "Could not connect to server"
+msgstr "Nem lehet csatlakozni a kiszolgálóhoz"
+
+#: ../mate-panel/panel-action-button.c:285
+msgid "Lock Screen"
+msgstr "Képernyő zárolása"
+
+#: ../mate-panel/panel-action-button.c:286
+msgid "Protect your computer from unauthorized use"
+msgstr "A számítógép megvédése a jogosulatlan használattól"
+
+#. when changing one of those two strings, don't forget to
+#. * update the ones in panel-menu-items.c (look for
+#. * "1" (msgctxt: "panel:showusername"))
+#: ../mate-panel/panel-action-button.c:300
+msgid "Log Out..."
+msgstr "Kijelentkezés…"
+
+#: ../mate-panel/panel-action-button.c:301
+msgid "Log out of this session to log in as a different user"
+msgstr "Kijelentkezés a munkamenetből, más felhasználóként való belépéshez"
+
+#: ../mate-panel/panel-action-button.c:310
+msgid "Run Application..."
+msgstr "Alkalmazás futtatása…"
+
+#: ../mate-panel/panel-action-button.c:311
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Alkalmazás futtatása parancs beírásával vagy listából kiválasztva"
+
+#: ../mate-panel/panel-action-button.c:320
+msgid "Search for Files..."
+msgstr "Fájlok keresése…"
+
+#: ../mate-panel/panel-action-button.c:321
+msgid "Locate documents and folders on this computer by name or content"
+msgstr ""
+"Dokumentumok és mappák keresése a számítógépen név vagy tartalom szerint"
+
+#: ../mate-panel/panel-action-button.c:329
+#: ../mate-panel/panel-force-quit.c:224
+msgid "Force Quit"
+msgstr "Erőltetett kilépés"
+
+#: ../mate-panel/panel-action-button.c:330
+msgid "Force a misbehaving application to quit"
+msgstr "Hibásan működő alkalmazás kilépésre kényszerítése"
+
+#. FIXME icon
+#: ../mate-panel/panel-action-button.c:339
+msgid "Connect to Server..."
+msgstr "Kapcsolódás kiszolgálóhoz…"
+
+#: ../mate-panel/panel-action-button.c:340
+msgid "Connect to a remote computer or shared disk"
+msgstr "Kapcsolódás távoli számítógéphez vagy megosztott lemezhez"
+
+#: ../mate-panel/panel-action-button.c:348
+msgid "Shut Down..."
+msgstr "Leállítás…"
+
+#: ../mate-panel/panel-action-button.c:349
+msgid "Shut down the computer"
+msgstr "A számítógép leállítása"
+
+#: ../mate-panel/panel-addto.c:115
+msgid "Custom Application Launcher"
+msgstr "Egyedi alkalmazásindító ikon"
+
+#: ../mate-panel/panel-addto.c:116
+msgid "Create a new launcher"
+msgstr "Új indítóikon létrehozása"
+
+#: ../mate-panel/panel-addto.c:126
+msgid "Application Launcher..."
+msgstr "Alkalmazásindító ikon…"
+
+#: ../mate-panel/panel-addto.c:127
+msgid "Copy a launcher from the applications menu"
+msgstr "Indítóikon másolása az Alkalmazások menüből"
+
+#: ../mate-panel/panel-addto.c:141 ../mate-panel/panel-menu-button.c:1091
+msgid "Main Menu"
+msgstr "Főmenü"
+
+#: ../mate-panel/panel-addto.c:142
+msgid "The main MATE menu"
+msgstr "A MATE főmenüje"
+
+#: ../mate-panel/panel-addto.c:152
+msgid "Menu Bar"
+msgstr "Menü"
+
+#: ../mate-panel/panel-addto.c:153
+msgid "A custom menu bar"
+msgstr "Egy egyéni menüsor"
+
+#: ../mate-panel/panel-addto.c:163
+msgid "Separator"
+msgstr "Elválasztó"
+
+#: ../mate-panel/panel-addto.c:164
+msgid "A separator to organize the panel items"
+msgstr "Egy elválasztó a panel elemeinek rendezéséhez"
+
+#: ../mate-panel/panel-addto.c:175
+msgid "A pop out drawer to store other items in"
+msgstr "Egy egyéb elemeket tartalmazó kinyíló fiók"
+
+#: ../mate-panel/panel-addto.c:256
+msgid "(empty)"
+msgstr "(üres)"
+
+#: ../mate-panel/panel-addto.c:1026
+#, c-format
+msgid "Find an _item to add to \"%s\":"
+msgstr "A következőhöz adandó _elem keresése: „%s”:"
+
+#: ../mate-panel/panel-addto.c:1030
+#, c-format
+msgid "Add to Drawer"
+msgstr "Hozzáadás a fiókhoz"
+
+#: ../mate-panel/panel-addto.c:1032
+msgid "Find an _item to add to the drawer:"
+msgstr "A fiókhoz adandó _elem keresése:"
+
+#: ../mate-panel/panel-addto.c:1034
+#, c-format
+msgid "Add to Panel"
+msgstr "Hozzáadás a panelhez"
+
+#: ../mate-panel/panel-addto.c:1036
+msgid "Find an _item to add to the panel:"
+msgstr "A panelhez adandó _elem keresése:"
+
+#: ../mate-panel/mate-panel-applet-frame.c:714
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr "„%s” váratlanul kilépett"
+
+#: ../mate-panel/mate-panel-applet-frame.c:716
+msgid "Panel object has quit unexpectedly"
+msgstr "A panelobjektum váratlanul kilépett"
+
+#: ../mate-panel/mate-panel-applet-frame.c:723
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr ""
+"Ha újratölt egy panelobjektumot, az automatikusan újra hozzá lesz adva a "
+"panelhez."
+
+#: ../mate-panel/mate-panel-applet-frame.c:729
+msgid "_Don't Reload"
+msgstr "Ne _töltse újra"
+
+#: ../mate-panel/mate-panel-applet-frame.c:730
+msgid "_Reload"
+msgstr "Új_ratöltés"
+
+#: ../mate-panel/mate-panel-applet-frame.c:878
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "A(z) „%s” betöltése közben a panel hibát érzékelt."
+
+#: ../mate-panel/mate-panel-applet-frame.c:894
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "Törli ezt a kisalkalmazást a beállításaiból?"
+
+#: ../mate-panel/panel-context-menu.c:104
+msgid "And many, many others..."
+msgstr "Sokan mások…"
+
+#: ../mate-panel/panel-context-menu.c:130
+msgid "The MATE Panel"
+msgstr "A MATE panel"
+
+#: ../mate-panel/panel-context-menu.c:133
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
+msgstr ""
+"Ez a program felelős más alkalmazások indításáért és hasznos "
+"segédprogramokat biztosít."
+
+#: ../mate-panel/panel-context-menu.c:137
+msgid "About the MATE Panel"
+msgstr "A MATE panel névjegye"
+
+#: ../mate-panel/panel-context-menu.c:171
+msgid "Cannot delete this panel"
+msgstr "Ez a panel nem törölhető"
+
+#: ../mate-panel/panel-context-menu.c:172
+msgid "You must always have at least one panel."
+msgstr "Mindig rendelkeznie kell legalább egy panellel."
+
+#: ../mate-panel/panel-context-menu.c:205
+msgid "_Add to Panel..."
+msgstr "Hozzá_adás a panelhez…"
+
+#: ../mate-panel/panel-context-menu.c:226
+msgid "_Delete This Panel"
+msgstr "Panel _törlése"
+
+#: ../mate-panel/panel-context-menu.c:241
+msgid "_New Panel"
+msgstr "Új _panel"
+
+#: ../mate-panel/panel-context-menu.c:293
+msgid "A_bout Panels"
+msgstr "A panelek _névjegye"
+
+#: ../mate-panel/panel-ditem-editor.c:114
+msgid "Application"
+msgstr "Alkalmazás"
+
+#: ../mate-panel/panel-ditem-editor.c:116
+msgid "Application in Terminal"
+msgstr "Alkalmazás terminálban"
+
+#: ../mate-panel/panel-ditem-editor.c:118
+msgid "Location"
+msgstr "Hely"
+
+#. Type
+#: ../mate-panel/panel-ditem-editor.c:622
+msgid "_Type:"
+msgstr "_Típus:"
+
+#. Name
+#: ../mate-panel/panel-ditem-editor.c:629
+msgid "_Name:"
+msgstr "_Név:"
+
+#: ../mate-panel/panel-ditem-editor.c:656
+msgid "_Browse..."
+msgstr "_Tallózás…"
+
+#. Comment
+#: ../mate-panel/panel-ditem-editor.c:663
+msgid "Co_mment:"
+msgstr "_Megjegyzés:"
+
+#: ../mate-panel/panel-ditem-editor.c:1012
+msgid "Choose an application..."
+msgstr "Válasszon alkalmazást…"
+
+#: ../mate-panel/panel-ditem-editor.c:1016
+msgid "Choose a file..."
+msgstr "Válasszon fájlt…"
+
+#: ../mate-panel/panel-ditem-editor.c:1181
+#: ../mate-panel/panel-ditem-editor.c:1190
+msgid "Comm_and:"
+msgstr "_Parancs:"
+
+#: ../mate-panel/panel-ditem-editor.c:1199
+msgid "_Location:"
+msgstr "He_ly:"
+
+#: ../mate-panel/panel-ditem-editor.c:1362
+msgid "The name of the launcher is not set."
+msgstr "Az indítóikon neve nincs beállítva."
+
+#: ../mate-panel/panel-ditem-editor.c:1366
+msgid "Could not save directory properties"
+msgstr "A könyvtár tulajdonságai nem menthetők"
+
+#: ../mate-panel/panel-ditem-editor.c:1367
+msgid "The name of the directory is not set."
+msgstr "A könyvtár neve nincs beállítva."
+
+#: ../mate-panel/panel-ditem-editor.c:1383
+msgid "The command of the launcher is not set."
+msgstr "Az indítóikon parancsa nincs beállítva."
+
+#: ../mate-panel/panel-ditem-editor.c:1386
+msgid "The location of the launcher is not set."
+msgstr "Az indítóikon helye nincs beállítva."
+
+#: ../mate-panel/panel-ditem-editor.c:1463
+msgid "Could not display help document"
+msgstr "A súgódokumentum nem jeleníthető meg"
+
+#: ../mate-panel/panel-force-quit.c:77
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Kattintson az ablakra, hogy az alkalmazás bezáródjon. A művelet az <ESC> "
+"billentyűvel szakítható meg."
+
+#: ../mate-panel/panel-force-quit.c:207
+msgid "Force this application to exit?"
+msgstr "Kilépésre kényszeríti ezt az alkalmazást?"
+
+#: ../mate-panel/panel-force-quit.c:210
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Ha az alkalmazást kilépésre kényszeríti, akkor a benne megnyitott "
+"dokumentumok mentetlen változtatásai elveszhetnek."
+
+#: ../mate-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"Egy logikai flag, annak jelzésére, hogy a felhasználó előző beállításai az /"
+"apps/panel/profiles/default-ból átmásolódtak-e új helyükre az /apps/panel "
+"alá."
+
+#: ../mate-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"Panelazonosítók listája. Minden azonosító egy önálló felsőszintű panelt "
+"azonosít. Minden egyes ilyen panel beállításai az /apps/panel/toplevels/"
+"$(id) alatt tárolódnak."
+
+#: ../mate-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"Panelkisalkalmazás-azonosítók listája. Minden azonosító egy önálló "
+"panelkisalkalmazást azonosít. Minden egyes ilyen kisalkalmazás beállításai "
+"az /apps/panel/applets/$(id) alatt tárolódnak."
+
+#: ../mate-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"Panelobjektum-azonosítók listája. Minden azonosító egy önálló "
+"panelobjektumot azonosít. Minden egyes ilyen objektum beállításai az /apps/"
+"panel/objects/$(id) alatt tárolódnak."
+
+#: ../mate-panel/panel-general.schemas.in.h:5
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr ""
+"Automatikus kiegészítés bekapcsolása az „Alkalmazás futtatása” "
+"párbeszédablakban"
+
+#: ../mate-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Programlista bekapcsolása az „Alkalmazás futtatása” párbeszédablakban"
+
+#: ../mate-panel/panel-general.schemas.in.h:7
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Programlista kibontása az „Alkalmazás futtatása” párbeszédablakban"
+
+#: ../mate-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+"Ha ez be van állítva, az automatikus kiegészítés elérhető lesz az "
+"„Alkalmazás futtatása” párbeszédablakban."
+
+#: ../mate-panel/panel-general.schemas.in.h:9
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Ha be van állítva, az „Ismert alkalmazások” lista az „Alkalmazás futtatása” "
+"párbeszédablakban kinyílik a párbeszédablak megnyitásakor. Ez a kulcs csak "
+"akkor lényeges, ha az enable_program_list kulcs be van állítva."
+
+#: ../mate-panel/panel-general.schemas.in.h:10
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Ha be van állítva, az „Ismert alkalmazások” lista az „Alkalmazás futtatása” "
+"párbeszédablakban elérhető. Hogy a lista kinyíljon-e vagy sem a "
+"párbeszédablak megnyitásakor, a show_program_list kulccsal ellenőrizhető."
+
+#: ../mate-panel/panel-general.schemas.in.h:11
+msgid "Old profiles configuration migrated"
+msgstr "A régi profilok beállításai átköltöztetve"
+
+#: ../mate-panel/panel-general.schemas.in.h:12
+msgid "Panel ID list"
+msgstr "Panelazonosító-lista"
+
+#: ../mate-panel/panel-general.schemas.in.h:13
+msgid "Panel applet ID list"
+msgstr "Panelkisalkalmazás-azonosító lista"
+
+#: ../mate-panel/panel-general.schemas.in.h:14
+msgid "Panel object ID list"
+msgstr "Panelobjektum-azonosító lista"
+
+#: ../mate-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"A panel által mellőzendő kisalkalmazások azonosítóinak listája. Így "
+"megakadályozható bizonyos kisalkalmazások betöltése vagy megjelenítése a "
+"menüben. Például a parancssor kisalkalmazás letiltásához adja a listához "
+"ezt: „OAFIID:MATE_MiniCommanderApplet”. A panelt újra kell indítani ezen "
+"beállítás életbe lépéséhez."
+
+#: ../mate-panel/panel-global.schemas.in.h:2
+msgid "Applet IIDs to disable from loading"
+msgstr "A be nem tölthető kisalkalmazások azonosítói"
+
+#: ../mate-panel/panel-global.schemas.in.h:3
+msgid "Autoclose drawer"
+msgstr "Fiók automatikus bezárása"
+
+#: ../mate-panel/panel-global.schemas.in.h:4
+msgid "Complete panel lockdown"
+msgstr "Panel teljes zárolása"
+
+#: ../mate-panel/panel-global.schemas.in.h:5
+msgid "Confirm panel removal"
+msgstr "Megerősítés a panel eltávolítása előtt"
+
+#: ../mate-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr "Elavult"
+
+#: ../mate-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "Erőltetett kilépés tiltása"
+
+#: ../mate-panel/panel-global.schemas.in.h:8
+msgid "Disable Logging Out"
+msgstr "Kijelentkezés tiltása"
+
+#: ../mate-panel/panel-global.schemas.in.h:9
+#: ../mate-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "Animáció engedélyezése"
+
+#: ../mate-panel/panel-global.schemas.in.h:10
+msgid "Enable tooltips"
+msgstr "Buboréksúgók engedélyezése"
+
+#: ../mate-panel/panel-global.schemas.in.h:11
+msgid "Highlight launchers on mouseover"
+msgstr "Alkalmazásindítók kiemelése ha az egérmutató föléjük ér"
+
+#: ../mate-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Ha be van állítva, megjelenik egy megerősítési ablak ha a felhasználó el "
+"akarja távolítani a panelt."
+
+#: ../mate-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"Ha be van állítva, automatikusan bezáródik a fiók, ha a felhasználó a benne "
+"lévő alkalmazásindítóra kattint."
+
+#: ../mate-panel/panel-global.schemas.in.h:14
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"Ha be van állítva, az alkalmazásindítót kiemeli, ha az egérmutató fölé ér."
+
+#: ../mate-panel/panel-global.schemas.in.h:15
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Ha be van állítva, a panel nem engedi a felhasználóknak egy alkalmazás "
+"kilépésre kényszerítését, az erőltetett kilépés gombhoz való hozzáférés "
+"megvonásával."
+
+#: ../mate-panel/panel-global.schemas.in.h:16
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"Ha be van állítva, a panel nem engedi a felhasználók kilépését a kilépés "
+"menübejegyzéshez való hozzáférés megvonásával."
+
+#: ../mate-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"Ha be van állítva, a panel nem engedi a panel konfigurációjának "
+"megváltoztatását. Egyes kisalkalmazásokat azonban szükséges lehet külön "
+"zárolni. A panelt újra kell indítani ezen beállítás érvényesítéséhez."
+
+#: ../mate-panel/panel-global.schemas.in.h:18
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "Ha be van állítva, a panelobjektumokhoz megjelennek a buboréksúgók."
+
+#: ../mate-panel/panel-global.schemas.in.h:19
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/mate/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"Ez a kulcs elavult, mivel nem használható megfelelő zárolás megvalósítására. "
+"Helyette a /desktop/mate/lockdown/disable_lock_screen kulcs használandó."
+
+#: ../mate-panel/panel-menu-bar.c:106
+msgid "Browse and run installed applications"
+msgstr "Telepített alkalmazások böngészése és futtatása"
+
+#: ../mate-panel/panel-menu-bar.c:108
+msgid "Access documents, folders and network places"
+msgstr "Dokumentumok, mappák és hálózati helyek elérése"
+
+#: ../mate-panel/panel-menu-bar.c:110
+msgid "Change desktop appearance and behavior, get help, or log out"
+msgstr ""
+"Az asztali környezet megjelenésének és viselkedésének módosítása, a súgó "
+"megjelenítése vagy kijelentkezés"
+
+#: ../mate-panel/panel-menu-bar.c:147
+msgid "Applications"
+msgstr "Alkalmazások"
+
+#: ../mate-panel/panel-menu-bar.c:358 ../mate-panel/panel-menu-button.c:670
+msgid "_Edit Menus"
+msgstr "_Menük szerkesztése"
+
+#: ../mate-panel/panel-menu-items.c:472
+msgid "Bookmarks"
+msgstr "Könyvjelzők"
+
+#. Translators: %s is a URI
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:541
+#, c-format
+msgid "Open '%s'"
+msgstr "„%s” megnyitása"
+
+#: ../mate-panel/panel-menu-items.c:566
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "%s médiaváltozásai nem olvashatók be"
+
+#: ../mate-panel/panel-menu-items.c:609
+#, c-format
+msgid "Rescan %s"
+msgstr "%s újraolvasása"
+
+#: ../mate-panel/panel-menu-items.c:646
+#, c-format
+msgid "Unable to mount %s"
+msgstr "%s nem csatolható"
+
+#: ../mate-panel/panel-menu-items.c:709
+#, c-format
+msgid "Mount %s"
+msgstr "%s csatolása"
+
+#: ../mate-panel/panel-menu-items.c:917
+msgid "Removable Media"
+msgstr "Cserélhető adathordozók"
+
+#: ../mate-panel/panel-menu-items.c:1004
+msgid "Network Places"
+msgstr "Hálózati helyek"
+
+#: ../mate-panel/panel-menu-items.c:1043
+msgid "Open your personal folder"
+msgstr "A személyes mappájának megnyitása"
+
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment).
+#: ../mate-panel/panel-menu-items.c:1062
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Asztal"
+
+#: ../mate-panel/panel-menu-items.c:1063
+msgid "Open the contents of your desktop in a folder"
+msgstr "Az asztal tartalmának megnyitása egy mappában"
+
+#: ../mate-panel/panel-menu-items.c:1454
+msgid "Places"
+msgstr "Helyek"
+
+#: ../mate-panel/panel-menu-items.c:1483
+msgid "System"
+msgstr "Rendszer"
+
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
+#. * but "1" if "Log Out %s" doesn't make any sense in your
+#. * language (where %s is a username).
+#.
+#: ../mate-panel/panel-menu-items.c:1564
+msgctxt "panel:showusername"
+msgid "1"
+msgstr "1"
+
+#. keep those strings in sync with the ones in
+#. * panel-action-button.c
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1576
+#, c-format
+msgid "Log Out %s..."
+msgstr "%s kijelentkeztetése…"
+
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1580
+#, c-format
+msgid "Log out %s of this session to log in as a different user"
+msgstr ""
+"%s kijelentkeztetése a munkamenetből, más felhasználóként való belépéshez"
+
+#: ../mate-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "Művelet gomb típusa"
+
+#: ../mate-panel/panel-object.schemas.in.h:2
+msgid "Applet MateComponent IID"
+msgstr "Kisalkalmazás matecomponent IID-je"
+
+#: ../mate-panel/panel-object.schemas.in.h:3
+msgid "Applet IID"
+msgstr "Kisalkalmazás IID-je"
+
+#: ../mate-panel/panel-object.schemas.in.h:4
+msgid "Icon used for object's button"
+msgstr "Az objektum gombjához használt ikon"
+
+#: ../mate-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"Ha be van állítva, a custom_icon kulcsban megadott ikont használja a gomb "
+"ikonjaként. Ha nincs beállítva, a kulcs mellőzve lesz. Ez a kulcs csak akkor "
+"lényeges, ha az object_type kulcs értéke „menu-object” vagy „drawer-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"Ha be van állítva, a menu_path kulcs által tartalmazott útvonalból lesznek "
+"felépítve a menü elemei. Ha nincs beállítva, a menu_path kulcs mellőzve "
+"lesz. Ez a kulcs csak akkor lényeges, ha az object_type kulcs értéke „menu-"
+"object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Ha be van állítva, az objektum pozíciója a panel jobb széléhez (vagy ha "
+"függőleges, az aljához) képest lesz értelmezve."
+
+#: ../mate-panel/panel-object.schemas.in.h:8
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"Ha be van állítva, a felhasználó nem mozgathatja a kisalkalmazást, csak "
+"miután feloldotta az objektumot a „feloldás” menüponttal."
+
+#: ../mate-panel/panel-object.schemas.in.h:9
+msgid "Interpret position relative to bottom/right edge"
+msgstr "Pozíció értelmezése az alsó/jobb szélhez képest"
+
+#: ../mate-panel/panel-object.schemas.in.h:10
+msgid "Launcher location"
+msgstr "Indítóikon helye"
+
+#: ../mate-panel/panel-object.schemas.in.h:11
+msgid "Lock the object to the panel"
+msgstr "A panelobjektum rögzítése"
+
+#: ../mate-panel/panel-object.schemas.in.h:12
+msgid "Menu content path"
+msgstr "Menü elemeinek útvonala"
+
+#: ../mate-panel/panel-object.schemas.in.h:13
+msgid "Object's position on the panel"
+msgstr "Objektum helyzete a panelen"
+
+#: ../mate-panel/panel-object.schemas.in.h:14
+msgid "Panel attached to drawer"
+msgstr "Fiókhoz csatolt panel"
+
+#: ../mate-panel/panel-object.schemas.in.h:15
+msgid "Panel object type"
+msgstr "Panelobjektum-típus"
+
+#: ../mate-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"Az ezen gomb által képviselt művelet típusa. Lehetséges értékek: "
+"„lock” (képernyő zárolása), „logout” (kilépés), „run” (futtatás), "
+"„search” (fájlok keresése) és „screenshot” (képernyőkép). Ez a kulcs csak "
+"akkor lényeges, ha az object_type kulcs értéke „action-applet”."
+
+#: ../mate-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"Az ezen fiókhoz csatolt panel azonosítója. Ez a kulcs csak akkor lényeges, "
+"ha az object_type kulcs értéke „drawer-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr ""
+"Azon felsőszintű panel azonosítója, amely tartalmazza ezt az objektumot."
+
+#: ../mate-panel/panel-object.schemas.in.h:19
+msgid ""
+"The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
+"\". This key is only relevant if the object_type key is \"matecomponent-applet\"."
+msgstr ""
+"A kisalkalmazás implementációs azonosítója (IID) például: "
+"„ClockAppletFactory::ClockApplet”. Ez a kulcs csak akkor lényeges, ha az "
+"object_type kulcs értéke „matecomponent-applet”."
+
+#: ../mate-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"Az ezen alkalmazásindítót leíró .desktop fájl helye. Ez a kulcs csak akkor "
+"lényeges, ha az object_type kulcs értéke „launcher-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:21
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"Az objektum gombjának ikonjaként használt képfájl helye. Ez a kulcs csak "
+"akkor lényeges, ha az object_type kulcs értéke „drawer-object” vagy „menu-"
+"object” és az use_custom_icon kulcs be van állítva."
+
+#: ../mate-panel/panel-object.schemas.in.h:22
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"Az útvonal, amiből a menü elemei fel lesznek építve. Ez a kulcs csak akkor "
+"lényeges, ha az use_menu_path be van állítva és az object_type kulcs értéke "
+"„menu-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:23
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"A panelobjektum pozíciója. A pozíciót a panel bal (v agy felső, ha "
+"függőleges) szélétől számított képpontok száma adja meg."
+
+#: ../mate-panel/panel-object.schemas.in.h:24
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"Ezen fiók vagy menü buboréksúgójában megjelenítendő szöveg. Ez a kulcs csak "
+"akkor lényeges, ha az object_type key is „drawer-object” vagy „menu-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:25
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"matecomponent-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"Ezen panelobjektum típusa. Lehetséges értékek: „drawer-object” (fiók), „menu-"
+"object” (menü), „launcher-object” (alkalmazásindító), „matecomponent-"
+"applet” (kisalkalmazás), „action-applet” (művelet) és „menu-bar” (menüsáv)."
+
+#: ../mate-panel/panel-object.schemas.in.h:26
+msgid ""
+"This key is deprecated, following the migration to a new library for "
+"applets. The MateComponent implementation ID of the applet - e.g. \"OAFIID:"
+"MATE_ClockApplet\". This key is only relevant if the object_type key is "
+"\"matecomponent-applet\"."
+msgstr ""
+"Ez a kulcs elavult a kisalkalmazások új programkönyvtárára való átállás "
+"után. A kisalkalmazás MateComponent implementációs azonosítója (IID) például: "
+"„OAFIID:MATE_ClockApplet”. Ez a kulcs csak akkor lényeges, ha az "
+"object_type kulcs értéke „matecomponent-applet”."
+
+#: ../mate-panel/panel-object.schemas.in.h:27
+msgid "Tooltip displayed for drawer or menu"
+msgstr "A fiók vagy menü buboréksúgójának szövege"
+
+#: ../mate-panel/panel-object.schemas.in.h:28
+msgid "Toplevel panel containing object"
+msgstr "Az objektumot tartalmazó felsőszintű panel"
+
+#: ../mate-panel/panel-object.schemas.in.h:29
+msgid "Use custom icon for object's button"
+msgstr "Egyedi ikon használata az objektum gombjához"
+
+#: ../mate-panel/panel-object.schemas.in.h:30
+msgid "Use custom path for menu contents"
+msgstr "Egyéni útvonal használata a menü elemeihez"
+
+#: ../mate-panel/panel-profile.c:772 ../mate-panel/panel-profile.c:799
+#: ../mate-panel/panel-profile.c:835 ../mate-panel/panel-profile.c:1700
+#, c-format
+msgid "Error reading MateConf string value '%s': %s"
+msgstr "Hiba a(z) „%s” Gconf karakterlánc beolvasásakor: %s"
+
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../mate-panel/panel-profile.c:814 ../mate-panel/panel-profile.c:1596
+#: ../mate-panel/panel-profile.c:1669 ../mate-panel/panel-profile.c:1751
+#, c-format
+msgid "Error reading MateConf integer value '%s': %s"
+msgstr "Hiba a(z) „%s” Gconf egész érték beolvasásakor: %s"
+
+#: ../mate-panel/panel-profile.c:1606
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+"A(z) „%s” panel a(z) %d számú képernyőn való megjelenésre van beállítva, ami "
+"most nem érhető el. A panel nem lesz betöltve."
+
+#: ../mate-panel/panel-profile.c:1684
+#, c-format
+msgid "Error reading MateConf boolean value '%s': %s"
+msgstr "Hiba a(z) „%s” Gconf logikai érték beolvasásakor: %s"
+
+#: ../mate-panel/panel-properties-dialog.c:866
+msgid "Drawer Properties"
+msgstr "Fiók tulajdonságai"
+
+#: ../mate-panel/panel-properties-dialog.c:981
+#: ../mate-panel/panel-run-dialog.c:2022
+#, c-format
+msgid "Unable to load file '%s': %s."
+msgstr "A(z) „%s” fájl nem tölthető be: %s."
+
+#: ../mate-panel/panel-properties-dialog.c:987
+msgid "Could not display properties dialog"
+msgstr "Nem jeleníthető meg a tulajdonságok párbeszédablak"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+msgid "<small>Opaque</small>"
+msgstr "<small>Átlátszatlan</small>"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+msgid "<small>Transparent</small>"
+msgstr "<small>Átlátszó</small>"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:4
+msgid "Arro_ws on hide buttons"
+msgstr "_Nyilak megjelenítése az elrejtőgombokon"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:5
+msgid "Background"
+msgstr "Háttér"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:6
+msgid "Background _image:"
+msgstr "Háttér_kép:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+msgid "Co_lor:"
+msgstr "S_zín:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+msgid "E_xpand"
+msgstr "S_zéthúzás"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:10
+msgid "Image Background Details"
+msgstr "Kép háttérének beállításai"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:11
+msgid "Panel Properties"
+msgstr "Panel beállításai"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:12
+msgid "Pick a color"
+msgstr "Szín kiválasztása"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "Rotate image when panel is _vertical"
+msgstr "_Függőleges panelen a kép forgatása"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:14
+msgid "S_tyle:"
+msgstr "_Stílus:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:15
+msgid "Select background"
+msgstr "Válasszon hátteret"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:16
+msgid "Show hide _buttons"
+msgstr "Elrejtő_gombok megjelenítése"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:17
+msgid "Solid c_olor"
+msgstr "H_omogén szín"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:18
+msgid "Some of these properties are locked down"
+msgstr "Néhány ezen tulajdonságok közül zárolva van"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:19
+msgid "St_retch"
+msgstr "_Nyújtás"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:20
+msgid "_Autohide"
+msgstr "_Automatikus elrejtés"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:21
+msgid "_Icon:"
+msgstr "_Ikon:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:22
+msgid "_None (use system theme)"
+msgstr "_Nincs (a rendszertéma használata)"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:24
+msgid "_Scale"
+msgstr "_Méretezés"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:26
+msgid "_Tile"
+msgstr "_Mozaik"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:27
+msgid "pixels"
+msgstr "képpont"
+
+#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#, c-format
+msgid "Could not open recently used document \"%s\""
+msgstr "A(z) „%s” legutóbb használt dokumentum nem nyitható meg"
+
+#: ../mate-panel/panel-recent.c:90
+#, c-format
+msgid "An unknown error occurred while trying to open \"%s\"."
+msgstr ""
+"Ismeretlen hiba történt a következő megnyitására tett kísérlet közben: „%s”."
+
+#: ../mate-panel/panel-recent.c:147
+msgid "Clear the Recent Documents list?"
+msgstr "Törli a Legutóbbi dokumentumok listáját?"
+
+#: ../mate-panel/panel-recent.c:149
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"Ha törli a Legutóbbi dokumentumok listáját, akkor a következőket törli:\n"
+"• Minden elemet a Helyek → Legutóbbi dokumentumok menüelemből.\n"
+"• Minden elemet az összes alkalmazás legutóbbi dokumentumainak listájából."
+
+#: ../mate-panel/panel-recent.c:161
+msgid "Clear Recent Documents"
+msgstr "Legutóbbi dokumentumok törlése"
+
+#: ../mate-panel/panel-recent.c:196
+msgid "Recent Documents"
+msgstr "Legutóbbi dokumentumok"
+
+#: ../mate-panel/panel-recent.c:235
+msgid "Clear Recent Documents..."
+msgstr "Legutóbbi dokumentumok törlése…"
+
+#: ../mate-panel/panel-recent.c:237
+msgid "Clear all items from the recent documents list"
+msgstr "Legutóbbi dokumentumok listájának törlése"
+
+#: ../mate-panel/panel-run-dialog.c:391
+#, c-format
+msgid "Could not run command '%s'"
+msgstr "A(z) „%s” parancs nem futtatható"
+
+#: ../mate-panel/panel-run-dialog.c:444
+#, c-format
+msgid "Could not convert '%s' from UTF-8"
+msgstr "Nem alakítható át UTF-8-ból a következő: „%s”"
+
+#: ../mate-panel/panel-run-dialog.c:1259
+msgid "Choose a file to append to the command..."
+msgstr "Válassza ki a parancshoz hozzáfűzendő fájlt…"
+
+#: ../mate-panel/panel-run-dialog.c:1637
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Select an application to view its description."
+msgstr "Válasszon ki egy alkalmazást a leírásának megtekintéséhez."
+
+#: ../mate-panel/panel-run-dialog.c:1675
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "A következő parancsot futtatja: „%s”"
+
+#: ../mate-panel/panel-run-dialog.c:1708
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr ""
+"A Futtatás párbeszédablakra dobott URI lista helytelen formátumú (%d) vagy "
+"hosszú (%d)\n"
+
+#: ../mate-panel/panel-run-dialog.c:2027
+msgid "Could not display run dialog"
+msgstr "A futtatás párbeszédablak nem jeleníthető meg"
+
+#: ../mate-panel/panel-run-dialog.ui.h:1
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Kattintson erre a gombra a parancshoz hozzáfűzendő fájl kiválasztásához."
+
+#: ../mate-panel/panel-run-dialog.ui.h:2
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Kattintson erre a gombra a kiválasztott alkalmazás vagy a parancsbeviteli "
+"mezőben lévő parancs futtatásához."
+
+#: ../mate-panel/panel-run-dialog.ui.h:3
+msgid "Command icon"
+msgstr "Parancs ikonja"
+
+#: ../mate-panel/panel-run-dialog.ui.h:4
+msgid "List of known applications"
+msgstr "Ismert alkalmazások listája"
+
+#: ../mate-panel/panel-run-dialog.ui.h:5
+msgid "Run Application"
+msgstr "Alkalmazás futtatása"
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Run in _terminal"
+msgstr "_Terminálban fusson"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "Run with _file..."
+msgstr "_Futtatás fájllal…"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "Jelölje be ezt a négyzetet a parancs terminálablakban futtatásához."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Show list of known _applications"
+msgstr "Ismert _alkalmazások listája"
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid "The icon of the command to be run."
+msgstr "A végrehajtandó parancs ikonja."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-stock-icons.c:90
+msgid "_Run"
+msgstr "_Futtatás"
+
+#: ../mate-panel/panel-stock-icons.c:91
+msgid "_Force quit"
+msgstr "_Erőltetett kilépés"
+
+#: ../mate-panel/panel-stock-icons.c:92
+msgid "C_lear"
+msgstr "_Törlés"
+
+#: ../mate-panel/panel-stock-icons.c:93
+msgid "D_on't Delete"
+msgstr "Ne _törölje"
+
+#: ../mate-panel/panel-toplevel.c:1190
+msgid "Hide Panel"
+msgstr "Panel elrejtése"
+
+#. translators: these string will be shown in MetaCity's switch window
+#. * popup when you pass the focus to a panel
+#: ../mate-panel/panel-toplevel.c:1597
+msgid "Top Expanded Edge Panel"
+msgstr "Fenti kiterjesztett élpanel"
+
+#: ../mate-panel/panel-toplevel.c:1598
+msgid "Top Centered Panel"
+msgstr "Fenti középre helyezett panel"
+
+#: ../mate-panel/panel-toplevel.c:1599
+msgid "Top Floating Panel"
+msgstr "Fenti úszópanel"
+
+#: ../mate-panel/panel-toplevel.c:1600
+msgid "Top Edge Panel"
+msgstr "Fenti élpanel"
+
+#: ../mate-panel/panel-toplevel.c:1604
+msgid "Bottom Expanded Edge Panel"
+msgstr "Lenti kiterjesztett élpanel"
+
+#: ../mate-panel/panel-toplevel.c:1605
+msgid "Bottom Centered Panel"
+msgstr "Lenti középre helyezett panel"
+
+#: ../mate-panel/panel-toplevel.c:1606
+msgid "Bottom Floating Panel"
+msgstr "Lenti úszópanel"
+
+#: ../mate-panel/panel-toplevel.c:1607
+msgid "Bottom Edge Panel"
+msgstr "Lenti élpanel"
+
+#: ../mate-panel/panel-toplevel.c:1611
+msgid "Left Expanded Edge Panel"
+msgstr "Bal oldali kiterjesztett élpanel"
+
+#: ../mate-panel/panel-toplevel.c:1612
+msgid "Left Centered Panel"
+msgstr "Bal oldali középre helyezett panel"
+
+#: ../mate-panel/panel-toplevel.c:1613
+msgid "Left Floating Panel"
+msgstr "Bal oldali úszópanel"
+
+#: ../mate-panel/panel-toplevel.c:1614
+msgid "Left Edge Panel"
+msgstr "Bal oldali élpanel"
+
+#: ../mate-panel/panel-toplevel.c:1618
+msgid "Right Expanded Edge Panel"
+msgstr "Jobb oldali kiterjesztett élpanel"
+
+#: ../mate-panel/panel-toplevel.c:1619
+msgid "Right Centered Panel"
+msgstr "Jobb oldali középre helyezett panel"
+
+#: ../mate-panel/panel-toplevel.c:1620
+msgid "Right Floating Panel"
+msgstr "Jobb oldali úszópanel"
+
+#: ../mate-panel/panel-toplevel.c:1621
+msgid "Right Edge Panel"
+msgstr "Jobb oldali élpanel"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Animáció sebessége"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "Panel automatikus rejtése a sarokba"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Háttérszín"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:4
+msgid "Background color opacity"
+msgstr "Háttérszín átlátszatlansága"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:5
+msgid "Background image"
+msgstr "Háttérkép"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:6
+msgid "Background type"
+msgstr "Háttér típusa"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:7
+msgid "Center panel on x-axis"
+msgstr "Panel középre helyezése vízszintesen"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:8
+msgid "Center panel on y-axis"
+msgstr "Panel középre helyezése függőlegesen"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:10
+msgid "Enable arrows on hide buttons"
+msgstr "Nyilak megjelenítése az elrejtőgombokon"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:11
+msgid "Enable hide buttons"
+msgstr "Elrejtőgombok engedélyezése"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:12
+msgid "Expand to occupy entire screen width"
+msgstr "Széthúzás a képernyő teljes szélességének kihasználásához"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:13
+msgid "Fit image to panel"
+msgstr "Kép igazítása a panelhez"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"Ha be van állítva, az elrejtőgombokon meg lesznek jelenítve a nyilak. Ez a "
+"kulcs csak akkor lényeges, ha az enable_buttons kulcs be van állítva."
+
+# FIXME képernyő széle: ok?
+#: ../mate-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"Ha be van állítva, a panel mindkét oldalán gombok lesznek megjelenítve, "
+"melyekkel a panel kimozgatható a képernyő szélére és csak a gomb marad "
+"látható."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"Ha be van állítva, a panel elrejtése és visszaállítása animált lesz ahelyett "
+"hogy ugrásszerűen történne."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Ha be van állítva, a háttérkép el lesz forgatva a panelen, ha az függőleges."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"Ha be van jelölve, a kép ki lesz feszítve (megőrizve a képarányt) a panel "
+"magasságához (ha vízszintes)."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Ha be van állítva, a kép ki lesz feszítve a panel dimenzióihoz. A képarány "
+"nem lesz megőrizve."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Ha be van állítva, a panel automatikusan el lesz rejtve a képernyő sarkába, "
+"ha a mutató elhagyja a panel területét. A mutatót a képernyő ezen sarkába "
+"mozgatva a panel újra megjelenik."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"Ha be van állítva, a panel elfoglalja a képernyő teljes szélességét (vagy "
+"magasságát, ha függőleges). Ebben a módban a panelt csak a képernyő szélére "
+"lehet elhelyezni. Ha nincs beállítva, a panel csak akkora lesz, hogy el "
+"lehessen rajta helyezni a kisalkalmazásokat, alkalmazásindítókat és gombokat."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"Ha be van állítva, az x és x_right kulcsok mellőzve lesznek és a panel a "
+"képernyő vízszintes tengelyének közepére lesz elhelyezve. A panel "
+"átméretezéskor ezen a helyen fog maradni, vagyis a panel mindkét oldalán "
+"nőni fog. Ha nincs beállítva, az x és x_right kulcsok adják meg a panel "
+"helyét."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"Ha be van állítva, az y és y_bottom kulcsok mellőzve lesznek és a panel a "
+"képernyő függőleges tengelyének közepére lesz elhelyezve. A panel "
+"átméretezéskor ezen a helyen fog maradni, vagyis a panel mindkét oldalán "
+"nőni fog. Ha nincs beállítva, az y és y_bottom kulcsok adják meg a panel "
+"helyét."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:24
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"Egy Xinerama-környezetben minden egyes önálló monitoron elhelyezhet "
+"paneleket. Ez a kulcs a jelenlegi monitort azonosítja, amelyen a panel "
+"megjelenik."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "Név a panel azonosításához"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "Panel automatikus elrejtése ennyi idő után"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "Panel automatikus megjelenítése ennyi idő után"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientation"
+msgstr "Panel tájolása"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "Panel mérete"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "Függőleges panelen a kép forgatása"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:31
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "Megadja a panel háttérszínét #RGB formátumban."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:32
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"Megadja a háttérképként használt képfájlt. Ha a kép tartalmaz egy alfa "
+"sávot, az asztal háttérképe át fog látszani alatta."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:33
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"A panel megjelenítése ennyi ezredmásodperccel azután, hogy a mutató a panel "
+"területére ér. Ez a kulcs csak akkor lényeges, ha az auto_hide kulcs be van "
+"állítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"A panel elrejtése ennyi ezredmásodperccel azután, hogy a mutató elhagyta a "
+"panel területét. Ez a kulcs csak akkor lényeges, ha az auto_hide kulcs be "
+"van állítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:35
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"Ennyi képpont lesz látható a panelből annak automatikus elrejtése után. Ez a "
+"kulcs csak akkor lényeges, ha az auto_hide kulcs be van állítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:36
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"Megadja a háttérszín átlátszatlanságát. Ha a szín nem teljesen átlátszatlan, "
+"(65535-nél kisebb érték) a szín vegyítve lesz az asztal háttérképével."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:37
+msgid "Stretch image to panel"
+msgstr "Kép nyújtása a panelra"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:38
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"A panel magassága (szélessége ha vízszintes). A panel futás közben "
+"megállapít egy minimumot a betűkészlet mérete és más jellemzők alapján. A "
+"maximum méret a képernyő magasságának (vagy szélességének) egynegyede."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"A panel helye a vízszintes tengely mentén, a képernyő jobb szélétől "
+"számítva. Ha az érték -1, akkor az érték figyelmen kívül marad és az x kulcs "
+"értéke kerül felhasználásra. Ha az érték nagyobb mint 0, akkor az x kulcs "
+"értéke marad figyelmen kívül. Ez a kulcs csak ki nem terjesztett módban "
+"lényeges. Kiterjesztett módban nem lényeges, akkor a panel a képernyő "
+"orientation (elhelyezés) kulcs által megadott széléhez lesz igazítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"A panel helye a vízszintes tengely mentén. Ez a kulcs kiterjesztett módban "
+"nem lényeges, akkor a panel a képernyő orientation (elhelyezés) kulcs által "
+"megadott széléhez lesz igazítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"A panel helye a függőleges tengely mentén a képernyő jobb szélétől számítva. "
+"Ha az érték -1, akkor az érték figyelmen kívül marad és az y kulcs értéke "
+"kerül felhasználásra. Ha az érték nagyobb mint 0, akkor az y kulcs értéke "
+"marad figyelmen kívül. Ez a kulcs csak ki nem terjesztett módban lényeges. "
+"Kiterjesztett módban nem lényeges, akkor a panel a képernyő orientation "
+"(elhelyezés) kulcs által megadott széléhez lesz igazítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:42
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"A panel helye a függőleges tengely mentén. Ez a kulcs kiterjesztett módban "
+"nem lényeges, akkor a panel a képernyő orientation (elhelyezés) kulcs által "
+"megadott széléhez lesz igazítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"A panel tájolása. Lehetséges értékek: „top” (fent), „bottom” (lent), "
+"„left” (balra), „right” (jobbra). Kiterjesztett módban a kulcs megadja, a "
+"képernyő melyik szélén lesz a panel. Nem kiterjesztett módban a különbség "
+"fent és lent között kevésbé fontos, - mindkettő vízszintes panelt jelent - "
+"de még mindig hasznos tippeket ad egyes panelobjektumok viselkedéséről. "
+"Például, egy felső panel esetén a menü gomb menüje a panel alatt bukkan fel, "
+"míg egy alsó panel menüje a panel fölött bukkan fel."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:44
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"A panelanimációk sebessége. Lehetséges értékek: „slow” (lassú), "
+"„medium” (közepes) és „fast” (gyors).  Ez a kulcs csak akkor lényeges, ha az "
+"enable_animations kulcs be van állítva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"Ez a panel emberek számára olvasható neve amit a panel azonosítására "
+"használhat. Fő célja, hogy a panel ablakának neveként szolgáljon, ami "
+"panelek közötti navigáláskor hasznos."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:46
+msgid "Visible pixels when hidden"
+msgstr "Látható képpontok elrejtés esetén"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:47
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Milyen típusú legyen ezen panel háttere. Lehetséges értékek: „gtk” - az "
+"alapértelmezett GTK+ elemháttér használata, „color” - a color (szín) kulcs "
+"lesz használva háttérszínként vagy „image” - az image (kép) kulcs által "
+"megadott kép lesz használva."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:48
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"Több képernyős beállítással minden önálló képernyőn lehetnek paneljai. Ez a "
+"kulcs azonosítja a jelenlegi képernyőt, amelyen a panel megjelenik."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:49
+msgid "X co-ordinate of panel"
+msgstr "A panel X koordinátája"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "A panel x koordinátája a képernyő jobb szélétől számítva"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:51
+msgid "X screen where the panel is displayed"
+msgstr "Az X képernyő, amelyen a panel megjelenik"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:52
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "A Xinerama monitor, amelyen a panel megjelenik"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:53
+msgid "Y co-ordinate of panel"
+msgstr "A panel Y koordinátája"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "A panel y koordinátája a képernyő aljától számítva"
+
+#: ../mate-panel/panel-util.c:315
+#, c-format
+msgid "Icon '%s' not found"
+msgstr "A(z) „%s” ikon nem található"
+
+#: ../mate-panel/panel-util.c:418
+#, c-format
+msgid "Could not execute '%s'"
+msgstr "A(z) „%s” nem hajtható végre"
+
+#: ../mate-panel/panel-util.c:654
+msgid "file"
+msgstr "fájl"
+
+#: ../mate-panel/panel-util.c:831
+msgid "Home Folder"
+msgstr "Saját mappa"
+
+#. Translators: this is the same string as the one found in
+#. * caja
+#: ../mate-panel/panel-util.c:843
+msgid "File System"
+msgstr "Fájlrendszer"
+
+#: ../mate-panel/panel-util.c:1016
+msgid "Search"
+msgstr "Keresés"
+
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../mate-panel/panel-util.c:1062
+#, c-format
+msgid "%1$s: %2$s"
+msgstr "%1$s, %2$s"
+
+#: ../mate-panel/panel.c:474
+#, c-format
+msgid "Open URL: %s"
+msgstr "URL megnyitása: %s"
+
+#: ../mate-panel/panel.c:1323
+msgid "Delete this drawer?"
+msgstr "Törli ezt a fiókot?"
+
+#: ../mate-panel/panel.c:1324
+msgid ""
+"When a drawer is deleted, the drawer and its\n"
+"settings are lost."
+msgstr "A fiók törlésekor a fiók és annak beállításai is elvesznek."
+
+#: ../mate-panel/panel.c:1327
+msgid "Delete this panel?"
+msgstr "Törli ezt a panelt?"
+
+#: ../mate-panel/panel.c:1328
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr "A panel törlésekor a panel és annak beállításai elvesznek."

@@ -1,0 +1,385 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY MatePanelApplet SYSTEM "xml/mate-panel-applet.xml">
+<!ENTITY MatePanelAppletMateConf SYSTEM "xml/mate-panel-applet-mateconf.xml">
+]>
+
+<book id="libmate-panel-applet">
+  <bookinfo>
+    <title>Panel Applet Library Reference Manual</title>
+    <authorgroup>
+      <author>
+        <firstname>Mark</firstname>
+        <surname>McLoughlin</surname>
+        <affiliation>
+          <address>
+            <email>mark@skynet.ie</email>
+          </address>
+        </affiliation>
+      </author>
+    </authorgroup>
+
+    <copyright>
+      <year>2001</year>
+      <year>2003</year>
+      <holder>Sun Microsystems, Inc.</holder>
+    </copyright>
+
+    <abstract>
+      <para>
+This manual documents the interfaces of the panel applet
+library for MATE 2.x and a short guide to porting applets from
+the MATE 1.x interfaces.
+      </para>
+    </abstract>
+
+  </bookinfo>
+
+  <chapter id="applet-writing">
+    <title>Writing Applets</title>
+
+    <para>Writing applets is very simple. You take some boiler plate
+code like below, change a couple of things and write the code that
+implements your widgetry. The hardest part is writing your widgetry -
+and its completely up to yourself how hard that should be.
+    </para>
+
+    <sect1 id="hello-world">
+      <title>Hello World Applet</title>
+
+      <para>As usual, following the pointless tradition of starting with
+an example of how get 'Hello World' on the screen in some form, here's
+just about the simplest applet you could write.
+      </para>
+
+      <programlisting>
+#include &lt;string.h&gt;
+
+#include &lt;mate-panel-applet.h&gt;
+#include &lt;gtk/gtklabel.h&gt;
+
+static gboolean
+hello_applet_fill (MatePanelApplet *applet,
+		   const gchar *iid,
+		   gpointer     data)
+{
+        GtkWidget *label;
+
+        if (strcmp (iid, "OAFIID:My_HelloApplet") != 0)
+		return FALSE;
+
+        label = gtk_label_new ("Hello World");
+	gtk_container_add (GTK_CONTAINER (applet), label);
+
+	gtk_widget_show_all (GTK_WIDGET (applet));
+
+        return TRUE;
+}
+
+
+MATE_PANEL_APPLET_MATECOMPONENT_FACTORY ("OAFIID:My_HelloApplet_Factory",
+                             PANEL_TYPE_APPLET,
+                             "TheHelloWorldApplet",
+                             "0",
+                             hello_applet_fill,
+                             NULL);
+      </programlisting>
+
+      <para>The code here is very similar to writing a normal MateComponent
+control. You define a factory using MATE_PANEL_APPLET_MATECOMPONENT_FACTORY(),
+passing it a factory function like hello_applet_fill().
+      </para>
+
+      <para>libmate-panel-applet automatically creates a #MatePanelApplet object
+for you, passing this to your factory method. Here, you should fill
+the applet with your widgets just like a #GtkBin. For example, if you
+were writing a cdplayer applet you would create a #GtkHBox, pack the
+hbox with the cdplayer buttons and in turn add the hbox to the applet.
+      </para>
+
+    </sect1>
+
+    <sect1 id="server-files">
+      <title>MateComponent Activation .server Files For Applets</title>
+
+      <para>Since an applet is a matecomponent component, you must write
+a .server file so that the matecomponent activation daemon is aware that
+your component exists and how to activate it. Copy and paste is
+your friend here ...
+      </para>
+
+      <programlisting>
+&lt;oaf_info&gt;
+&lt;oaf_server iid="OAFIID:My_HelloApplet_Factory" type="exe"
+            location="test-matecomponent-applet"&gt;
+
+        &lt;oaf_attribute name="repo_ids" type="stringv"&gt;
+                &lt;item value="IDL:MateComponent/GenericFactory:1.0"/&gt;
+                &lt;item value="IDL:MateComponent/Unknown:1.0"/&gt;
+        &lt;/oaf_attribute&gt;
+        &lt;oaf_attribute name="name" type="string" value="Hello World Applet Factory"/&gt;
+        &lt;oaf_attribute name="description" type="string" value="My first applet factory"/&gt;
+&lt;/oaf_server&gt;
+
+&lt;oaf_server iid="OAFIID:My_HelloApplet" type="factory"
+            location="OAFIID:My_HelloApplet_Factory"&gt;
+
+        &lt;oaf_attribute name="repo_ids" type="stringv"&gt;
+                &lt;item value="IDL:MATE/Vertigo/MatePanelAppletShell:1.0"/&gt;
+                &lt;item value="IDL:MateComponent/Control:1.0"/&gt;
+                &lt;item value="IDL:MateComponent/Unknown:1.0"/&gt;
+        &lt;/oaf_attribute&gt;
+        &lt;oaf_attribute name="name" type="string" value="Hello World Applet"/&gt;
+        &lt;oaf_attribute name="description" type="string" value="My first applet for the MATE2 panel"/&gt;
+        &lt;oaf_attribute name="panel:icon" type="string" value="mate-applets.png"/&gt;
+&lt;/oaf_server&gt;
+&lt;/oaf_info&gt;
+      </programlisting>
+
+      <para>Probably the most important thing to note here is that, unlike
+.server files for other matecomponent components, applet .server files contain
+a special attribute called 'panel:icon'. This is used by the panel to display
+an entry for the applet in the 'Add to Panel' dialog.
+      </para>
+    </sect1>
+
+    <sect1 id="applet-popups">
+      <title>Defining a Popup Context Menu</title>
+
+      <para>FIXME: write</para>
+    </sect1>
+
+    <sect1 id="panel-signals">
+      <title>Detecting Changes in the Panel.</title>
+
+      <para>FIXME: write</para>
+    </sect1>
+
+    <sect1 id="session-saving">
+      <title>Session/Preference Saving.</title>
+
+      <para>FIXME: write</para>
+    </sect1>
+
+    <sect1 id="multi-applets">
+      <title>Multiple Applets</title>
+
+      <para>FIXME: write</para>
+    </sect1>
+
+  </chapter>
+
+  <chapter id="applet-porting">
+    <title>Porting Applets from the MATE 1.x interfaces</title>
+
+      <para>In MATE 1.x the applet interface lived in a header called
+<filename>applet-widget.h</filename>. The interface was based on GOAD,
+the MATE 1.x object activation framework. A new interface was
+designed for MATE 2.x using the power of matecomponent UI embedding and the
+new object activation framework, matecomponent-activation. The interface is
+intended to be easy to use, cruft free, but semantically similar to
+the old API in order to make porting relatively painless.</para>
+
+      <simplesect id="applet-porting-activation">
+      <title>Applet Activation</title>
+
+	<para>The first thing to change when porting to the new API is
+the header. Include <filename>mate-panel-applet.h</filename> instead of
+<filename>applet-widget.h</filename>.</para>
+
+	<para>Next you need to change how the applet is activated.
+Browsing through old applet's code, its obvious that this was done in
+various ways in the past. The best advice is to hunt out the calls to
+applet_widget_init, applet_widget_new and applet_widget_add.
+applet_widget_new and applet_widget_add are now effectively merged
+into one call mate_panel_applet_new, to which the top-level widget of the
+applet should be passed. applet_widget_init is not neccessary anymore.
+So the new code should look something like this</para>
+
+      <programlisting>
+#include &lt;mate-panel-applet.h&gt;
+
+static MateComponentObject *
+blah_applet_new ()
+{
+        MatePanelApplet *applet;
+
+	/*
+	 * The old code setting up the applet widgetry
+	 * goes here. So effectively delete calls to
+	 * applet_widget_init and applet_widget_new
+	 * and the replace applet_widget_add with a call
+	 * to mate_panel_applet_new.
+	 */
+
+        applet = mate_panel_applet_new (label);
+
+        return MATECOMPONENT_OBJECT (mate_panel_applet_get_control (applet));
+}
+
+static MateComponentObject *
+blah_applet_factory (MateComponentGenericFactory *this,
+		     const gchar          *iid,
+		     gpointer              data)
+{
+        MateComponentObject *applet = NULL;
+
+        if (!strcmp (iid, "OAFIID:BlahApplet"))
+                applet = blah_applet_new ();
+
+        return applet;
+}
+
+
+MATE_PANEL_APPLET_MATECOMPONENT_FACTORY ("OAFIID:BlahApplet_Factory",
+                             "Blah",
+                             "0",
+                             blah_applet_factory,
+                             NULL)
+      </programlisting>
+
+	<para>You should use MATE_PANEL_APPLET_MATECOMPONENT_FACTORY or
+MATE_PANEL_APPLET_MATECOMPONENT_SHLIB_FACTORY depending on whether you want the
+applet to be out of process or in process.</para>
+
+      </simplesect>
+
+      <simplesect id="applet-porting-activation-files">
+      <title>Activation files</title>
+
+	<para>The next thing to do may be to port from a
+<filename>.gnorba</filename> file to a matecomponent-activation
+<filename>.server</filename> file. You no longer need a .desktop file
+for applets. A <filename>.gnorba</filename> looks something like this
+:</para>
+
+	<programlisting>
+[blah]
+type=exe
+repo_id=IDL:MATE/Applet:1.0
+description=Blah
+location_info=blah-de-blah
+	</programlisting>
+
+	<para>Your <filename>.server</filename> file should look like
+this :</para>
+
+	<programlisting>
+&lt;oaf_info&gt;
+
+&lt;oaf_server iid="OAFIID:BlahApplet"
+            type="exe"
+            location="blah-de-blah-2"&gt;
+
+        &lt;oaf_attribute name="repo_ids" type="stringv"&gt;
+                &lt;item value="IDL:MateComponent/GenericFactory:1.0""/&gt;
+                &lt;item value="IDL:MateComponent/Unknown:1.0"/&gt;
+        &lt;/oaf_attribute&gt;
+        &lt;oaf_attribute name="name" type="string" value="Blah Factory"/&gt;
+        &lt;oaf_attribute name="description" type="string" value="Blah De Blah"/&gt;
+
+&lt;/oaf_server&gt;
+
+&lt;oaf_server iid="OAFIID:BlahApplet"
+            type="factory"
+            location="OAFIID:BlahApplet_Factory"&gt;
+
+        &lt;oaf_attribute name="repo_ids" type="stringv"&gt;
+                &lt;item value="IDL:MATE/MatePanelAppletShell:1.0"/&gt;
+                &lt;item value="IDL:MateComponent/Control:1.0"/&gt;
+                &lt;item value="IDL:MateComponent/Unknown:1.0"/&gt;
+        &lt;/oaf_attribute&gt;
+        &lt;oaf_attribute name="name" type="string" value="Blah Applet"/&gt;
+        &lt;oaf_attribute name="description" type="string" value="Blah De Blah"/&gt;
+        &lt;oaf_attribute name="panel:icon" type="string" value="blah-de-blah.png"/&gt;
+
+&lt;/oaf_server&gt;
+
+&lt;/oaf_info&gt;
+	</programlisting>
+
+	<para>A lot of this should be copied and pasted. The most
+important bit is "panel:icon" which specfies the icon
+that should be displayed in the "Add to Panel" dialog.</para>
+
+      </simplesect>
+
+      <simplesect id="applet-porting-menus">
+      <title>Context Menu</title>
+
+	<para>Most applets also place extra menu items into it context
+menu. It might be a good idea to port this next. In MATE 1.x this was
+done using the applet_widget_register_stock_callback API call. In
+MATE 2.x 3 things must be done</para>
+
+	<itemizedlist>
+	<listitem><para>An xml desription of the popup menu must be
+written.</para></listitem>
+	<listitem><para>A description of the verbs must be prepared.
+This is basically a list of callbacks to be call when a certain menu
+item is clicked in the popup.</para></listitem>
+	<listitem><para>The menu is registered using a call to
+mate_panel_applet_setup_menu.</para></listitem>
+	</itemizedlist>
+
+	<para>The xml description should look something like this
+:</para>
+
+	<programlisting>
+static const char fish_menu_xml [] =
+        "&lt;popup name=\"button3\"&gt;\n"
+        "   &lt;menuitem name=\"Properties Item\" verb=\"BlahProperties\" _label=\"Properties ...\"\n"
+        "             pixtype=\"stock\" pixname=\"gtk-properties\"/&gt;\n"
+        "   &lt;menuitem name=\"Help Item\" verb=\"BlahHelp\" _label=\"Help\"\n"
+        "             pixtype=\"stock\" pixname=\"gtk-help\"/&gt;\n"
+        "   &lt;menuitem name=\"About Item\" verb=\"BlahAbout\" _label=\"About ...\"\n"
+        "             pixtype=\"stock\" pixname=\"mate-stock-about\"/&gt;\n"
+        "&lt;/popup&gt;\n";
+	</programlisting>
+
+	<para>This could also be in a seperate
+<filename>.xml</filename> file and loaded with
+mate_panel_applet_setup_menu_from_file. The description of the verbs should
+look something like :</para>
+
+	<programlisting>
+static const MateComponentUIVerb fish_menu_verbs [] = {
+        MATECOMPONENT_UI_VERB ("BlahProperties", display_properties_dialog),
+        MATECOMPONENT_UI_VERB ("BlahHelp",       display_help_dialog),
+        MATECOMPONENT_UI_VERB ("BlahAbout",      display_about_dialog),
+
+        MATECOMPONENT_UI_VERB_END
+};
+	</programlisting>
+
+	<para>This is just a list of callbacks invoked when the menu
+items are clicked. There are other macros you may use other than
+MATECOMPONENT_UI_VERB - see
+<filename>matecomponent-ui-component.h</filename>.</para>
+
+	<para>To actually register the menu you just do something like
+:</para>
+
+	<programlisting>
+	mate_panel_applet_setup_menu (MATE_PANEL_APPLET (blah->applet),
+                                 blah_menu_xml,
+                                 blah_menu_verbs,
+                                 blah);
+	</programlisting>
+
+	<para>The last argument is the user_data argument passed back
+to the callbacks.</para>
+
+	</simplesect>
+
+  </chapter>
+
+  <chapter id="mate-panel-applet">
+    <title>The Panel Applet Library</title>
+
+    &MatePanelApplet;
+    &MatePanelAppletMateConf;
+  </chapter>
+
+</book>

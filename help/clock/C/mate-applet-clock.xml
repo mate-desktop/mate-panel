@@ -1,0 +1,466 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.5.3.1">
+  <!ENTITY manrevision "2.7">
+  <!ENTITY date "January 2010">
+  <!ENTITY applet "Clock">
+]>
+<!--
+      (Do not remove this comment block.)
+  Maintained by the MATE Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 11, 2002
+
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="en">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Manual</title>
+	 <copyright>
+		<year>2009</year>
+		<year>2010</year>
+		<holder>Paul Cutler</holder>
+	 </copyright>
+	 <copyright>
+		<year>2002</year>
+		<year>2003</year>
+		<year>2004</year>
+		<holder>Sun Microsystems</holder>
+	 </copyright>
+	 <copyright>
+		<year>2000</year>
+		<holder>Dan Mueth</holder>
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is
+     not specified, the publisher/author is the same for all versions of the
+     document.  -->
+	 <publisher role="maintainer">
+		<publishername> MATE Documentation Project </publishername>
+	 </publisher>
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and
+     other legal stuff such as "NO WARRANTY" statement. Please do not change
+     any of this. -->
+
+	 <authorgroup>
+		<author>
+		  <firstname>Paul </firstname>
+		  <surname> Cutler</surname>
+		  <affiliation>
+			 <orgname>MATE Documentation Project</orgname>
+			 <address> <email>pcutler@gnome.org</email> </address>
+		  </affiliation>
+		</author>
+		<author>
+		  <firstname>Sun </firstname>
+		  <surname>Microsystems</surname>
+		  <affiliation>
+			 <orgname>MATE Documentation Project</orgname>
+			 <address></address>
+		  </affiliation>
+		</author>
+		<author>
+		  <firstname>Dan </firstname>
+		  <surname> Mueth</surname>
+		  <affiliation>
+			 <orgname>MATE Documentation Project</orgname>
+			 <address> <email>d-mueth@uchicago.edu</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname>
+	     <surname>Translator 1</surname>
+	     <affiliation>
+	       <orgname>Latin Translation Team</orgname>
+	       <address> <email>translator@gnome.org</email> </address>
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+
+	 <releaseinfo revision="2.28" role="review">
+	 </releaseinfo>
+
+	 <revhistory>
+
+		<revision>
+		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber>
+		  <date>&date;</date>
+		  <revdescription>
+			 <para role="author">Paul Cutler</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Clock Applet Manual V2.6</revnumber>
+		  <date>&date;</date>
+		  <revdescription>
+			 <para role="author">Paul Cutler</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Clock Applet Manual V2.5</revnumber>
+		  <date>February 2004</date>
+		  <revdescription>
+			 <para role="author">Sun Microsystems</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Clock Applet Manual V2.4</revnumber>
+		  <date>September 2003</date>
+		  <revdescription>
+			 <para role="author">Sun Microsystems</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Clock Applet Manual V2.3</revnumber>
+		  <date>January 2003</date>
+		  <revdescription>
+			 <para role="author">Sun Microsystems</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Clock Applet Manual V2.2</revnumber>
+		  <date>August 2002</date>
+		  <revdescription>
+			 <para role="author">Sun Microsystems</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Clock Applet Manual V2.1</revnumber>
+		  <date>June 2002</date>
+		  <revdescription>
+			 <para role="author">Sun Microsystems</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Clock Applet Manual V2.0</revnumber>
+		  <date>March 2002</date>
+		  <revdescription>
+			 <para role="author">Sun Microsystems</para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>&applet; Applet Manual</revnumber>
+		  <date>April 2000</date>
+		  <revdescription>
+			 <para role="author">Dan Mueth
+				<email>d-mueth@uchicago.edu</email></para>
+			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> This manual describes version &appletversion; of the &applet; applet.
+		</releaseinfo>
+	 <legalnotice>
+		<title>Feedback</title>
+		<para> To report a bug or make a suggestion regarding the &applet; applet or this manual, follow the directions in the <ulink url="ghelp:mate-feedback" type="help">MATE Feedback Page</ulink>. </para>
+
+	 </legalnotice>
+	 <abstract role="description">
+	 	<para>The <application>&applet;</application> applet displays the date and time, and when clicked, displays a calendar.  The <application>&applet;</application> can be customized to show seconds or a 12 or 24 hour clock.</para>
+	 </abstract>
+  </articleinfo>
+  <indexterm>
+	 <primary>Clock</primary>
+  </indexterm>
+<!-- ============= Document Body ============================= -->
+
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="clock-introduction">
+	 <title>Introduction</title>
+
+<!-- ==== Figure ============================================= -->
+	 <figure id="clock-fig">
+		<title>&applet; Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/clock_applet.png"
+				format="PNG"/>
+			 </imageobject>
+			 <textobject>
+				<phrase>Shows &applet; applet.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+<para>
+The <application>&applet;</application> applet displays the date and time, and when clicked, displays a calendar.  The <application>&applet;</application> can be customized to show seconds or a 12 or 24 hour clock.
+</para>
+
+
+
+<sect2 id="clock-introduction-add">
+<title>To Add &applet; to a Panel</title>
+  <para>Perform the following steps:</para>
+         <orderedlist>
+           <listitem>
+             <para>
+               Right-click on the panel.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Choose <guimenuitem>Add to Panel</guimenuitem>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Scroll down the list of items in the <guilabel>Add to Panel</guilabel> dialog, then select <guilabel>Clock</guilabel>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Click <guibutton>Add</guibutton>.
+             </para>
+           </listitem>
+         </orderedlist>
+    </sect2>
+</sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="clock-usage">
+	 <title>Usage</title>
+
+	<sect2 id="clock-usage-calendar">
+	<title>To Show the Calendar</title>
+	<para>Click on the applet to open a small calendar showing the current month. To close the calendar, click again on the part of the applet that is in the panel.</para>
+
+	<para>You can change the month shown in the calendar by clicking the arrows to each side of the month and year text.</para>
+
+	<para>Double-click a day in the calendar to launch the <application>Evolution</application> groupware application.</para>
+	</sect2>
+
+	<sect2 id="clock-usage-copy">
+	<title>To Insert the Date or Time Into an Application</title>
+<para>The <application>&applet;</application> applet takes the time from the system clock.
+</para>
+<para>
+	To insert the date or time from the <application>&applet;</application> applet into an application, perform the following steps:</para>
+	<orderedlist>
+		<listitem>
+			<para>Right-click on the <application>&applet;</application> applet.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose one of the following menu items from the applet popup menu:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+					<guimenuitem>Copy Time</guimenuitem>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+					<guimenuitem>Copy Date</guimenuitem>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+			Point to the location in your application where you want to insert the item.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			Choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Paste</guimenuitem> </menuchoice> or middle-click to insert the item.
+			</para>
+		</listitem>
+		</orderedlist>
+	</sect2>
+
+	<sect2 id="clock-usage-adjust">
+	<title>To Adjust the System Date or Time</title>
+	<para>To adjust the system date or time that the <application>&applet;</application> applet displays, perform the following steps:	</para>
+	<orderedlist>
+	<listitem>
+			<para>Right-click on the applet, then choose <guimenuitem>Adjust Date &amp; Time</guimenuitem>.
+			</para>
+	</listitem>
+	<listitem>
+			<para>Type the <literal>root</literal> password, then click <guibutton>OK</guibutton>.
+			</para>
+	</listitem>
+	<listitem>
+			<para>The <application>&applet;</application> applet starts the system tool that sets the system date and time. Use the tool to adjust the date and time.
+			</para>
+	</listitem>
+	</orderedlist>
+	</sect2>
+
+</sect1>
+
+<!-- ============= Preferences ============================= -->
+
+<sect1 id="clock-settings">
+<title>Clock Preferences</title>
+	<para>
+	To configure the <application>&applet;</application>, right-click on the applet, then choose <guimenuitem>Preferences</guimenuitem>. You will be presented with three tabs to change preferences for <guimenuitem>General</guimenuitem>,  <guimenuitem>Locations</guimenuitem> or <guimenuitem>Weather</guimenuitem>.</para>
+
+
+<sect2 id="generalprefs">
+	<title>General Preferences</title>
+	<variablelist>
+		  <varlistentry>
+			 <term><guilabel>Clock Format</guilabel></term>
+			 <listitem>
+			 <para>Select one of the following options:</para>
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>12 hour</guilabel></para>
+			 <para>Display the time in the a.m./p.m. format.</para>
+			 <note><para>This option is not shown if your session language does not use the 12 hour clock.
+			</para></note>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>24 hour</guilabel></para>
+			 <para>Display the time in the 00.00 to 24.00 format.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry>
+			 <term><guilabel>Show the date</guilabel></term>
+			 <listitem>
+			 <para>Select this option to display the date in the applet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry>
+			 <term><guilabel>Show seconds</guilabel></term>
+			 <listitem>
+			 <para>Select this option to display seconds in the applet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry>
+			 <term><guilabel>Show the weather</guilabel></term>
+			 <listitem>
+			 <para>Select this option to display the the current weather forecast at your location.
+			The weather will be displayed as an icon for sunny, cloudy, rain or more.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry>
+			 <term><guilabel>Show temperature</guilabel></term>
+			 <listitem>
+			 <para>Select this option to display the temperature at your location.</para>
+			 </listitem>
+		  </varlistentry>
+
+	</variablelist>
+
+</sect2>
+
+<sect2 id="locationprefs">
+	<title>Location Preferences</title>
+
+	<variablelist>
+		  <varlistentry>
+			 <term><guilabel>Locations</guilabel></term>
+			 <listitem>
+			 <para>You can add one or more locations and their local time to be displayed in the Clock.
+			To add a location:</para>
+			 <itemizedlist>
+			 <listitem>
+			 <para>Press <guilabel>Add</guilabel></para>
+			</listitem>
+			 <listitem>
+			 <para>Type the city, region or country name and as you type a list of options will appear
+			in a drop down box.  Select a match from the pop-up and the <guilabel>Timezone</guilabel>,
+			 <guilabel>Latitude</guilabel>, and <guilabel>Longitude</guilabel> entries will be
+			automatically filled in.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+	</variablelist>
+
+</sect2>
+
+
+<sect2 id="weatherprefs">
+	<title>Weather Preferences</title>
+
+	<variablelist>
+		  <varlistentry>
+			 <term><guilabel>Weather</guilabel></term>
+			 <listitem>
+			 <para>You can display the Temperature unit in one of the following options from the drop down box:
+			</para>
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>F</guilabel> (Fahrenheit)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>C</guilabel> (Celsius)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>K</guilabel> (Kelvin)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Default</guilabel> The default display for your region.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry>
+			 <term><guilabel>Wind speed unit</guilabel></term>
+			 <listitem>
+			 <para>You can display the Speed unit in one of the following options from the drop down box:
+			</para>
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>Beaufort scale</guilabel></para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Knots</guilabel></para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>mph</guilabel> (miles per hour)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>km/h</guilabel> (kilometers per hour)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Dm/a</guilabel> (meters per second)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Default</guilabel> The default display for your region.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+	</variablelist>
+
+
+</sect2>
+</sect1>
+
+</article>

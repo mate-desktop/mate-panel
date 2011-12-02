@@ -1,0 +1,3411 @@
+# translation of mate-panel.HEAD.po to Arabic
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2004 THE PACKAGE'S COPYRIGHT HOLDER
+# Sayed Jaffer Al-Mosawi <mosawi@arabeyes.org>, 2002.
+# Abdulaziz Al-Arfaj <alarfaj0@yahoo.com>, 2004.
+# Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007, 2008, 2009, 2010.
+# Anas Husseini <linux.anas@gmail.com>, 2007.
+# Djihed Afifi <djihed@gmail.com>, 2006, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: mate-panel.HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-26 15:18+0200\n"
+"PO-Revision-Date: 2010-04-26 15:18+0300\n"
+"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
+"Language-Team: Arabic <doc@arabeyes.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Virtaal 0.6.0\n"
+
+#: ../applets/clock/MATE_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time"
+msgstr "ا_ضبط التّاريخ و الوقت"
+
+#: ../applets/clock/MATE_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "انسخ ال_تاريخ"
+
+#: ../applets/clock/MATE_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "انسخ ال_وقت"
+
+#: ../applets/clock/MATE_ClockApplet.xml.h:4
+#: ../applets/fish/MATE_FishApplet.xml.h:1
+#: ../applets/notification_area/MATE_NotificationAreaApplet.xml.h:1
+#: ../applets/wncklet/MATE_ShowDesktopApplet.xml.h:1
+#: ../applets/wncklet/MATE_WindowListApplet.xml.h:1
+#: ../applets/wncklet/MATE_WindowMenuApplet.xml.h:1
+#: ../applets/wncklet/MATE_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About"
+msgstr "_عنْ"
+
+#: ../applets/clock/MATE_ClockApplet.xml.h:5
+#: ../applets/fish/MATE_FishApplet.xml.h:2
+#: ../applets/notification_area/MATE_NotificationAreaApplet.xml.h:2
+#: ../applets/wncklet/MATE_ShowDesktopApplet.xml.h:2
+#: ../applets/wncklet/MATE_WindowListApplet.xml.h:2
+#: ../applets/wncklet/MATE_WindowMenuApplet.xml.h:2
+#: ../applets/wncklet/MATE_WorkspaceSwitcherApplet.xml.h:2
+#: ../mate-panel/drawer.c:601 ../mate-panel/panel-action-button.c:710
+#: ../mate-panel/panel-context-menu.c:285 ../mate-panel/panel-menu-bar.c:345
+#: ../mate-panel/panel-menu-button.c:663
+msgid "_Help"
+msgstr "م_ساعدة"
+
+#: ../applets/clock/MATE_ClockApplet.xml.h:6
+#: ../applets/fish/MATE_FishApplet.xml.h:3
+#: ../applets/wncklet/MATE_WindowListApplet.xml.h:3
+#: ../applets/wncklet/MATE_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences"
+msgstr "ال_تّفضيلات"
+
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:1
+#: ../applets/clock/clock.c:3711
+msgid "Clock"
+msgstr "ساعة"
+
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "مصنع بريمج الساعة"
+
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:3
+msgid "Factory for creating clock applets."
+msgstr "مصنع لإنشاء بريمجات الساعة."
+
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr "احصل على الوقت والتاريخ الحالي"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:314
+msgid "%b %d"
+msgstr "%d %B"
+
+#: ../applets/clock/calendar-window.c:847
+msgid "Tasks"
+msgstr "المهمات"
+
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
+msgid "Edit"
+msgstr "حرِّر"
+
+#: ../applets/clock/calendar-window.c:968
+msgid "All Day"
+msgstr "كامل اليوم"
+
+#: ../applets/clock/calendar-window.c:1106
+msgid "Appointments"
+msgstr "المواعيد"
+
+#: ../applets/clock/calendar-window.c:1131
+msgid "Birthdays and Anniversaries"
+msgstr "أعياد الميلاد"
+
+#: ../applets/clock/calendar-window.c:1156
+msgid "Weather Information"
+msgstr "معلومات الطقس"
+
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
+msgid "Locations"
+msgstr "المواقع"
+
+#: ../applets/clock/calendar-window.c:1937
+msgid "Calendar"
+msgstr "التقويم"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:445
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:461
+msgid "%a %b %e"
+msgstr "%A %e %B"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:468
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:476
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s، %2$s"
+
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:649
+msgid "%A %B %d (%%s)"
+msgstr "%A %d %B (%%s)"
+
+#: ../applets/clock/clock.c:679
+msgid "Click to hide your appointments and tasks"
+msgstr "انقر لإخفاء مواعيدك و مهماتك"
+
+#: ../applets/clock/clock.c:682
+msgid "Click to view your appointments and tasks"
+msgstr "انقر لعرض مواعيدك و مهماتك"
+
+#: ../applets/clock/clock.c:686
+msgid "Click to hide month calendar"
+msgstr "انقر لإخفاء تقويم الشهر"
+
+#: ../applets/clock/clock.c:689
+msgid "Click to view month calendar"
+msgstr "انقر لعرض تقويم الشهر"
+
+#: ../applets/clock/clock.c:1421
+msgid "Computer Clock"
+msgstr "ساعة الحاسوب"
+
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1567
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1575
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1622
+msgid "%A, %B %d %Y"
+msgstr "%A، %e %B %Y"
+
+#: ../applets/clock/clock.c:1653
+msgid "Set System Time..."
+msgstr "اضبط وقت النظام..."
+
+#: ../applets/clock/clock.c:1654
+msgid "Set System Time"
+msgstr "اضبط وقت النظام"
+
+#: ../applets/clock/clock.c:1669
+msgid "Failed to set the system time"
+msgstr "فشل في ضبط وقت النظام"
+
+#: ../applets/clock/clock.c:2707
+msgid "Custom format"
+msgstr "تهيئة خاصة"
+
+#: ../applets/clock/clock.c:3194
+msgid "Choose Location"
+msgstr "اختر مكانًا"
+
+#: ../applets/clock/clock.c:3273
+msgid "Edit Location"
+msgstr "حرّر المكان"
+
+#: ../applets/clock/clock.c:3419
+msgid "City Name"
+msgstr "اسم المدينة"
+
+#: ../applets/clock/clock.c:3423
+msgid "City Time Zone"
+msgstr "المنطقة الزمنية للمدينة"
+
+#: ../applets/clock/clock.c:3608
+msgid "24 hour"
+msgstr "24 ساعة"
+
+#: ../applets/clock/clock.c:3609
+msgid "UNIX time"
+msgstr "وقت يونكس"
+
+#: ../applets/clock/clock.c:3610
+msgid "Internet time"
+msgstr "وقت الإنترنت"
+
+#: ../applets/clock/clock.c:3618
+msgid "Custom _format:"
+msgstr "ت_هيئة خاصة:"
+
+#: ../applets/clock/clock.c:3714
+msgid "The Clock displays the current time and date"
+msgstr "تعرض الساعة الوقت و اليوم الحاليين"
+
+#. Translator credits
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
+#: ../applets/notification_area/main.c:155
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
+#: ../applets/wncklet/window-menu.c:79
+#: ../applets/wncklet/workspace-switcher.c:621
+#: ../mate-panel/panel-context-menu.c:138
+msgid "translator-credits"
+msgstr ""
+"فريق عربآيز للترجمة http://www.arabeyes.org :\n"
+"جهاد عفيفي\t<djihed@gmail.com>\n"
+"أنس الحسيني\t<linux.anas@gmail.com>\n"
+"خالد حسني\t<khaledhosny@eglug.org>"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "<i>(optional)</i>"
+msgstr "<i>(اختياري)</i>"
+
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:3
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>اكتب اسم مدينة أو محافظة أو بلد ثم اختر ما يطابقها من القائمة "
+"المنبثقة.</i></small>"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "Clock Format"
+msgstr "نسق الساعة"
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Clock Preferences"
+msgstr "تفضيلات الساعة"
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Current Time:"
+msgstr "الوقت الحاضر:"
+
+#: ../applets/clock/clock.ui.h:7
+msgid "Display"
+msgstr "عرض"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "East"
+msgstr "الشرق"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:9
+msgid "General"
+msgstr "عام"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "L_atitude:"
+msgstr "دائرة ال_عرض:"
+
+#: ../applets/clock/clock.ui.h:11
+msgid "L_ongitude:"
+msgstr "خط ال_طول:"
+
+#: ../applets/clock/clock.ui.h:13
+msgid "North"
+msgstr "الشمال"
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Panel Display"
+msgstr "عرض الشريط"
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show _temperature"
+msgstr "اعرض ال_حرارة"
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show _weather"
+msgstr "اعرض ال_طقس"
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show seco_nds"
+msgstr "اعرض ال_ثواني"
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show the _date"
+msgstr "اعرض ال_تاريخ"
+
+#: ../applets/clock/clock.ui.h:19
+msgid "South"
+msgstr "الجنوب"
+
+#: ../applets/clock/clock.ui.h:20
+msgid "Time & Date"
+msgstr "الوقت والتّاريخ"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "Time _Settings"
+msgstr "إ_عدادت الوقت"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "Weather"
+msgstr "الطقس"
+
+#: ../applets/clock/clock.ui.h:23
+msgid "West"
+msgstr "الغرب"
+
+#: ../applets/clock/clock.ui.h:24
+msgid "_12 hour format"
+msgstr "نسق _12 ساعة"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_24 hour format"
+msgstr "نسق _24 ساعة"
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Location Name:"
+msgstr "ا_سم المكان:"
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Pressure unit:"
+msgstr "_وحدة قياس الضغط:"
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Set System Time"
+msgstr "ا_ضبط وقت النظام"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "_Temperature unit:"
+msgstr "وحدة قياس ال_حرارة:"
+
+#: ../applets/clock/clock.ui.h:30
+msgid "_Time:"
+msgstr "الو_قت:"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "_Timezone:"
+msgstr "المنطقة الز_منية:"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "_Visibility unit:"
+msgstr "وحدة قياس ال_رؤية:"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "_Wind speed unit:"
+msgstr "وحدة قياس سرعة الر_يح:"
+
+#. Translators:
+#. This controls whether the MATE panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: ../applets/clock/clock.schemas.in.h:11
+msgid "24-hour"
+msgstr "12-hour"
+
+#: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "لائحة المواقع التي ستظهر في نافذة التقويم."
+
+#: ../applets/clock/clock.schemas.in.h:13
+msgid "Custom format of the clock"
+msgstr "تهيئة خاصة للساعة"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "توسيع لائحة المواعيد"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "توسيع لائحة أيام الميلاد"
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "وسِّع لائحة المواقع"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr "توسيع لائحة المهمات"
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "توسيع لائحة معلومات الطقس"
+
+#: ../applets/clock/clock.schemas.in.h:19
+msgid "Hour format"
+msgstr "تهيئة الساعات"
+
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "إذا كان \"صحيح\"، اعرض أيقونة الطقس."
+
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "If true, display date in the clock, in addition to time."
+msgstr "إذا كان \"صحيح\"، سيعرض في الساعة اليوم بالإضافة إلى الوقت."
+
+#: ../applets/clock/clock.schemas.in.h:22
+msgid "If true, display seconds in time."
+msgstr "إذا كان \"صحيح\"، ستعرض الثواني في الوقت."
+
+#: ../applets/clock/clock.schemas.in.h:23
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "إذا كان \"صحيح\"، وسّع لائحة المواعيد في نافذة التقويم."
+
+#: ../applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "إذا كان \"صحيح\"، وسّع لائحة أيام الميلاد في نافذة التقويم."
+
+#: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "إذا كان \"صحيح\"، وسّع لائحة المواقع في نافذة التقويم."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "إذا كان \"صحيح\"، وسّع لائحة المهمات في نافذة التقويم."
+
+#: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "إذا كان \"صحيح\"، وسّع لائحة معلومات الطقس في نافذة التقويم."
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"إذا كان \"صحيح\"، أظهر التاريخ في نافذة تلميح عندما يكون المؤشر فوق الساعة"
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "If true, show the temperature next to the weather icon."
+msgstr "إذا كان \"صحيح\"، أظهر درجة الحرارة إلى جانب أيقونة الطقس."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show week numbers in the calendar."
+msgstr "إذا كان \"صحيح\"، أظهر أرقام الأسابيع في التقويم."
+
+#: ../applets/clock/clock.schemas.in.h:31
+msgid "List of locations"
+msgstr "قائمة الأماكن"
+
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "Show date in clock"
+msgstr "اعرض اليوم في الساعة"
+
+#: ../applets/clock/clock.schemas.in.h:33
+msgid "Show date in tooltip"
+msgstr "اعرض اليوم في تلميحة أداة"
+
+#: ../applets/clock/clock.schemas.in.h:34
+msgid "Show temperature in clock"
+msgstr "اعرض درجة الحرارة في الساعة"
+
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show time with seconds"
+msgstr "اعرض الوقت بالثواني"
+
+#: ../applets/clock/clock.schemas.in.h:36
+msgid "Show weather in clock"
+msgstr "اعرض الطقس في الساعة"
+
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show week numbers in calendar"
+msgstr "أظهر أرقام الأسابيع في التقويم"
+
+#: ../applets/clock/clock.schemas.in.h:38
+msgid "Speed unit"
+msgstr "وحدة قياس السرعة"
+
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Temperature unit"
+msgstr "وحدة قياس الحرارة"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "The unit to use when showing temperatures."
+msgstr "الوحدة التي ستستخدم عند إظهار درجات الحرارة."
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing wind speed."
+msgstr "الوحدة التي ستستخدم عند إظهار سرعة الريح."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid ""
+"The use of this key was deprecated in MATE 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"ألغي استخدام هذا المفتاح في جنوم 2.22. أُبقي على المخطط فقط للتطابق مع "
+"الإصدارات القديمة."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in MATE 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"ألغي استخدام هذا المفتاح في جنوم 2.22 تفضيلا لاستخدام المناطق الزمنية. أُبقي "
+"على المخطط فقط للتطابق مع الإصدارات القديمة."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
+"The use of this key was deprecated in MATE 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"ألغي استخدام هذا المفتاح في جنوم 2.6 دعما لمفتاح 'format'. أُبق على المخطط "
+"فقط للتطابق مع الإصدارات القديمة."
+
+#: ../applets/clock/clock.schemas.in.h:45
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"يحدّد المفتاح التهيئة المستخدمة من قبل بريمج الساعة عند ضبط مفتاح التهيئة لـ "
+"\"custom\".يمكنك استعمال محدّدات تحويل مفهومة من قبل strftime() للحصول على "
+"تهيئة محدّدة. راجع دليل strftime() لمزيد من المعلومات."
+
+#: ../applets/clock/clock.schemas.in.h:46
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"يحدّد هذا المفتاح نسق السّاعة المستخدم من قبل بريمج السّاعة. القيم الممكنة هي  "
+"\"12-hour\" و \"24-hour\" و \"internet\" و \"unix\" و \"custom\". إذا ضبط لـ "
+"\"internet\" ستعرض السّاعة وقت الإنترنت. نظام وقت الإنترنت يقسم اليوم إلى ألف "
+"نبضة. لا توجد نطاقات زمنيّة في هذا النّظام ممّا يجعل الوقت هو نفسه في جميع "
+"أنحاء العالم. إذا ضبط لـ\"unix\" فستعرض السّاعة الوقت بالثّواني منذ بداية "
+"العصر، أي 1970-01-01. إذا ضبط لـ\"custom\" فستعرض السّاعة الوقت حسب النّسق "
+"المحدّد في مفتاح custom_format."
+
+#: ../applets/clock/clock.schemas.in.h:47
+msgid "Time configuration tool"
+msgstr "أداة إعداد الوقت"
+
+#: ../applets/clock/clock.schemas.in.h:48
+msgid "Use Internet time"
+msgstr "استخدم وقت الإنترنت"
+
+#: ../applets/clock/clock.schemas.in.h:49
+msgid "Use UNIX time"
+msgstr "استخدم وقت يونكس"
+
+#: ../applets/clock/clock.schemas.in.h:50
+msgid "Use UTC"
+msgstr "استخدم ت‌ع‌م"
+
+#: ../applets/clock/clock-location-tile.c:183
+msgid "Failed to set the system timezone"
+msgstr "تعذَّر تعيين المنطقة الزمنية للنظام"
+
+#: ../applets/clock/clock-location-tile.c:240
+msgid "<small>Set...</small>"
+msgstr "<small>اضبط...</small>"
+
+#: ../applets/clock/clock-location-tile.c:241
+msgid "<small>Set</small>"
+msgstr "<small>اضبط</small>"
+
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "اجعل المكان هو المكان الحالي للحاسوب واستعمل منطقته الزمنية للحاسوب"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:453
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "‏ %l:%M <small>%p (%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
+msgid "%H:%M <small>(%A)</small>"
+msgstr "‏ %H:%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
+msgid "%l:%M <small>%p</small>"
+msgstr "‏ %l:%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:609
+#, c-format
+msgid "%s, %s"
+msgstr "‏%s، ‏%s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libmateweather.
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
+msgid "Unknown"
+msgstr "مجهول"
+
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:623
+#, c-format
+msgid "%s, feels like %s"
+msgstr "‏%s، وكأنه %s"
+
+#: ../applets/clock/clock-location-tile.c:646
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "الشروق : %s / الغروب : %s"
+
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
+#: ../mate-panel/libpanel-util/panel-show.c:235
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "لا يمكن فتح مستند المساعدة '%s'"
+
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
+msgid "Error displaying help document"
+msgstr "خطأ أثناء فتح مستند المساعدة"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "غَيِّر وقت النظام"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "غَيِّر المنطقة الزمنية للنظام"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "اضبط ساعة العتاد"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "يتَطَلَّب تغيير المنطقة الزمنية للنظام امتيازات. "
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "يتَطَلَّب تغيير وقت النظام امتيازات."
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "يتطَلَّب تشكيل ساعة العتاد امتيازات."
+
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "اعرض سمكة سابحة أو مخلوقا متحركا آخر"
+
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:2
+#: ../applets/fish/fish.c:617
+msgid "Fish"
+msgstr "سمكة"
+
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "من أين أتت تلك السمكة الغبية"
+
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:4
+msgid "Wanda Factory"
+msgstr "معاين واندا"
+
+#: ../applets/fish/fish.c:273
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"تحذير: قد يبدو الأمر نافعا، \n"
+"غير أن هذا البريمج عديم الجدوى فلربما لا تريد تشغيله.\n"
+"إننا ننصحك بشدة عدم استخدام %s لأي غرض\n"
+"قد يجعل البريمج عمليا أو مفيدا."
+
+#: ../applets/fish/fish.c:471
+msgid "Images"
+msgstr "صور"
+
+#: ../applets/fish/fish.c:585 ../applets/fish/fish.c:651
+#: ../applets/fish/fish.c:767
+#, no-c-format
+msgid "%s the Fish"
+msgstr "السمكة %s"
+
+#: ../applets/fish/fish.c:586
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr ""
+"ليس لـ %s أي فائدة. إنه يتطلب فضاء قرص و وقت تجميع كما يقتضي فضاء و ذاكرة "
+"شريط ثمينين إذا تم تحميلّه. الرجاء إرسال أي إنسان يستخدمه إلى العلاج النفسي."
+
+#: ../applets/fish/fish.c:610
+msgid "(with minor help from George)"
+msgstr "(بمساعدة بسيطة من جورج)"
+
+#: ../applets/fish/fish.c:652
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "السمكة %s، عرّافة معاصرة"
+
+#: ../applets/fish/fish.c:723
+msgid "Unable to locate the command to execute"
+msgstr "لا يمكن تحديد موقع الأمر الذي سينفذ"
+
+#: ../applets/fish/fish.c:772
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "تقول السمكة %s :"
+
+#: ../applets/fish/fish.c:841
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"لا يمكن قراءة خرج الأمر\n"
+"\n"
+"التفاصيل: %s"
+
+#: ../applets/fish/fish.c:906
+msgid "_Speak again"
+msgstr "_تحدّث مرة أخرى"
+
+#: ../applets/fish/fish.c:989
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "الأمر المحدد لا يعمل، تم استبداله بـ: %s"
+
+#: ../applets/fish/fish.c:1012
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"لا يمكن تنفيذ '%s'\n"
+"\n"
+"التفاصيل: %s"
+
+#: ../applets/fish/fish.c:1028
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"لا يمكن القراءة من '%s'\n"
+"\n"
+"التفاصيل: %s"
+
+#: ../applets/fish/fish.c:1653
+msgid "The water needs changing"
+msgstr "يحتاج الماء لتغييره"
+
+#: ../applets/fish/fish.c:1655
+msgid "Look at today's date!"
+msgstr "انظر في تاريخ اليوم!"
+
+#: ../applets/fish/fish.c:1748
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "السمكة %s، راوية الطرائف"
+
+#: ../applets/fish/fish.ui.h:1 ../mate-panel/panel-properties-dialog.ui.h:1
+msgid "    "
+msgstr "    "
+
+#: ../applets/fish/fish.ui.h:2
+msgid "Animation"
+msgstr "الحركة"
+
+#: ../applets/fish/fish.ui.h:3
+msgid "Co_mmand to run when clicked:"
+msgstr "الأ_مر الذي سينفذ عند النقر:"
+
+#: ../applets/fish/fish.ui.h:4
+msgid "Fish Preferences"
+msgstr "تفضيلات السمكة"
+
+#: ../applets/fish/fish.ui.h:6
+msgid "Select an animation"
+msgstr "اختر رسم متحرك"
+
+#: ../applets/fish/fish.ui.h:7
+msgid "_File:"
+msgstr "_ملف:"
+
+#: ../applets/fish/fish.ui.h:8
+msgid "_Name of fish:"
+msgstr "اسم ال_سمكة:"
+
+#: ../applets/fish/fish.ui.h:9
+msgid "_Pause per frame:"
+msgstr "المُ_هلة لكل إطار:"
+
+#: ../applets/fish/fish.ui.h:10
+msgid "_Rotate on vertical panels"
+msgstr "ت_دوير على الشرائط العمودية"
+
+#: ../applets/fish/fish.ui.h:11
+msgid "_Total frames in animation:"
+msgstr "عدد الإطارات ال_كلي في الرسوم المتحركة:"
+
+#: ../applets/fish/fish.ui.h:12
+msgid "frames"
+msgstr "إطارات"
+
+#: ../applets/fish/fish.ui.h:13
+msgid "seconds"
+msgstr "ثواني"
+
+#: ../applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr "سمكة بدون أسم سمكة مملة. أحيي سمكتك بإعطائها اسما."
+
+#: ../applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "الأمر الذي سينفذ عند النقر"
+
+#: ../applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "إطارات رسوم السمكة المتحركة"
+
+#: ../applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"إذا كان \"صحيح\"، ستعرض صور السمكة المتحرّكة مدوّرة على الشرائط العموديّة."
+
+#: ../applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "المهلة لكل إطار"
+
+#: ../applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "تدوير على الشرائط العمودية"
+
+#: ../applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "بكسامب الرسم المتحرك للسمكة"
+
+#: ../applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "اسم السمكة"
+
+#: ../applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "يحدد هذا المفاتح الأمر الذي سيحاول تنفيذه عند نقر السمكة."
+
+#: ../applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"يحدّد المفتاح اسم ملف البكسماب الذي سيستعمل للصور المتحرّكة في بريمج السمكة "
+"نسبة إلى دليل البكسماب."
+
+#: ../applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "يحدد هذا المفتاح عدد الإطارات التي ستعرض في الرسم المتحرك للسمكة."
+
+#: ../applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "يحدّد المفتاح عدد الثواني التي سيستغرقها عرض كل إطار."
+
+#: ../applets/notification_area/MATE_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "مساحة حيث ستظهر أيقونات الإبلاغ"
+
+#: ../applets/notification_area/MATE_NotificationAreaApplet.server.in.in.h:2
+#: ../applets/notification_area/main.c:150
+msgid "Notification Area"
+msgstr "مساحة التبليغ"
+
+#: ../applets/notification_area/MATE_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr "مصنع مساحة التبليغ"
+
+#: ../applets/notification_area/main.c:261
+msgid "Panel Notification Area"
+msgstr "مساحة التبليغ في الشريط"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "مصنع لبريمجات مرتبطة بتصفح النوافذ"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "أخفِ نوافذ التطبيقات و أظهر سطح المكتب"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:3
+msgid "Show Desktop"
+msgstr "أظهر سطح المكتب"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows using a menu"
+msgstr "تحول بين النوافذ المفتوحة باستعمال قائمة"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "تحول بين النوافذ المفتوحة باستعمال أزرار"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "تحول بين مساحات العمل"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:7
+#: ../applets/wncklet/window-list.c:609
+msgid "Window List"
+msgstr "قائمة النوافذ"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:8
+msgid "Window Navigation Applet Factory"
+msgstr "مصنع بريمج تصفح النوافذ"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:9
+#: ../applets/wncklet/window-menu.c:82 ../applets/wncklet/window-menu.c:244
+msgid "Window Selector"
+msgstr "منتقي النوافذ"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:10
+#: ../applets/wncklet/workspace-switcher.c:624
+msgid "Workspace Switcher"
+msgstr "مبدّل مساحات العمل"
+
+#: ../applets/wncklet/showdesktop.c:181
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "فشل تحميل %s: %s\n"
+
+#: ../applets/wncklet/showdesktop.c:182
+msgid "Icon not found"
+msgstr "لم يعثر على الأيقونة"
+
+#: ../applets/wncklet/showdesktop.c:241
+msgid "Click here to restore hidden windows."
+msgstr "انقر هنا لاسترجاع النوافذ المخفية."
+
+#: ../applets/wncklet/showdesktop.c:243
+msgid "Click here to hide all windows and show the desktop."
+msgstr "انقر هنا لإخفاء جميع النوافذ و إظهار سطح المكتب."
+
+#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
+msgid "Show Desktop Button"
+msgstr "أظهر زر سطح المكتب"
+
+#: ../applets/wncklet/showdesktop.c:536
+msgid "This button lets you hide all windows and show the desktop."
+msgstr "يمكنّك هذا الزر من إخفاء جميع النوافذ و إظهار المكتب."
+
+#: ../applets/wncklet/showdesktop.c:566
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr "مدير النوافذ لا يدعم زر إظهار سطح المكتب، أو أنك لا تستخدم مدير نوافذ."
+
+#: ../applets/wncklet/window-list.c:611
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr "تعرض لك قائمة النوافذ قائمة بكل النوافذ كما تسمح لك بتصفحها."
+
+#: ../applets/wncklet/window-list.ui.h:1
+msgid "Group windows when _space is limited"
+msgstr "جمّع النوافذ عندما تكون الم_ساحة محدودة"
+
+#: ../applets/wncklet/window-list.ui.h:2
+msgid "Restore to current _workspace"
+msgstr "استرجع لمساحة ال_عمل الحالية"
+
+#: ../applets/wncklet/window-list.ui.h:3
+msgid "Restore to na_tive workspace"
+msgstr "استرجع لمساحات العمل الأ_صلية"
+
+#: ../applets/wncklet/window-list.ui.h:4
+msgid "Restoring Minimized Windows"
+msgstr "استرجاع النوافذ المصغّرة"
+
+#: ../applets/wncklet/window-list.ui.h:5
+msgid "Sh_ow windows from current workspace"
+msgstr "أ_ظهر نوافذ مساحات العمل الحالية"
+
+#: ../applets/wncklet/window-list.ui.h:6
+msgid "Show windows from a_ll workspaces"
+msgstr "أظهر نوافذ _جميع مساحات العمل"
+
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Grouping"
+msgstr "تجميع النوافذ"
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Window List Content"
+msgstr "محتويات قائمة النوافذ"
+
+#: ../applets/wncklet/window-list.ui.h:9
+msgid "Window List Preferences"
+msgstr "تفضيلات قائمة النوافذ"
+
+#: ../applets/wncklet/window-list.ui.h:10
+msgid "_Always group windows"
+msgstr "جمّع النوافذ _دائما"
+
+#: ../applets/wncklet/window-list.ui.h:11
+msgid "_Never group windows"
+msgstr "لا تجمّع النوافذ أ_بدا"
+
+#: ../applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"يقرر متى تجميع نوافذ نفس التطبيق في قائمة النوافذ. القيم الممكنة هي \"never"
+"\"، \"auto\" و \"always\"."
+
+#: ../applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"إذا كان \"صحيح\"، ستعرض قائمة النوافذ نوافذ جميع مساحات العمل. أو أنّها ستعرض "
+"نوافذ مساحة العمل الحاليّة فقط."
+
+#: ../applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"إذا كان \"صحيح\"، ستنقل النافذة إلى مساحة العمل الحاليّة عند إلغاء تصغيرها. و "
+"إلا فسيقع التحوّل إلى مساحة عمل النافذة."
+
+#: ../applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "الحجم الأقصى لقائمة النوافذ"
+
+#: ../applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "الحجم الأدنى لقائمة النوافذ"
+
+#: ../applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr "انقل النوافذ إلى مساحة العمل الحالية عند إلغاء تصغيرها"
+
+#: ../applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "أظهر النوافذ من جميع مساحات العمل"
+
+#: ../applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"The use of this key was deprecated in MATE 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"ألغي استخدام هذا المفتاح في جنوم 2.6 دعمًا لمفتاح 'format'. أبقي على المخطط "
+"فقط للتطابق مع الإصدارات القديمة."
+
+#: ../applets/wncklet/window-list.schemas.in.h:9
+msgid "When to group windows"
+msgstr "متى تجمّع النوافذ"
+
+#: ../applets/wncklet/window-menu.c:86
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr "يعرض منتقي النوافذ قائمة لكل النوافذ و يمكنك من تصفحها."
+
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
+#: ../applets/wncklet/workspace-switcher.ui.h:10
+msgid "rows"
+msgstr "سطور"
+
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
+msgid "columns"
+msgstr "أعمدة"
+
+#: ../applets/wncklet/workspace-switcher.c:488
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "حدث خطأ عند تحميل قيمة 'num_rows' لمبدّل مساحات العمل: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:499
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"حدث خطأ عند تحميل قيمة 'display_workspace_names' لمبدّل مساحات العمل: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:514
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"حدث خطأ عند تحميل قيمة 'display_all_workspaces' لمبدّل مساحات العمل: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:626
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"يظهر لك مبدّل مساحات العمل صورًا صغيرة لمساحات عملك يمكنك من خلالها إدارة "
+"نوافذك."
+
+#: ../applets/wncklet/workspace-switcher.ui.h:1
+msgid "Number of _workspaces:"
+msgstr "عدد _مساحات العمل:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:2
+msgid "Show _all workspaces in:"
+msgstr "اعرض _كل مساحات العمل:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+msgid "Show _only the current workspace"
+msgstr "اعرض مساحة العمل ال_حالية فقط"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:4
+msgid "Show workspace _names in switcher"
+msgstr "اعرض أ_سماء مساحات العمل في المبدّل"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:5
+msgid "Switcher"
+msgstr "مبدّل"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:6
+msgid "Workspace Names"
+msgstr "أسماء مساحات العمل"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:7
+msgid "Workspace Switcher Preferences"
+msgstr "تفضيلات مبدّل مساحات العمل"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:8
+msgid "Workspace na_mes:"
+msgstr "أ_سماء مساحات العمل:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:9
+msgid "Workspaces"
+msgstr "مساحات العمل"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "اعرض كل مساحات العمل"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "اعرض أسماء مساحات العمل"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"إذا كان \"صحيح\"، فسيعرض مبدّل مساحات العمل كل مساحات العمل، وإلا فإنه سيظهر."
+"مساحة العمل الحالية فقط."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Marco."
+msgstr ""
+"إذا كان \"صحيح\"، فسيعرض مبدّل مساحات العمل أسماء مساحات العمل، وإلا فإنه "
+"سيظهر النوافذ في مساحة العمل. هذا الإعداد يعمل فقط إن كان مدير النوافذ هو "
+"Meatcity."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "أعمدة في مبدّل مساحات العمل"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"يحدد المفاتاح عدد السطور (للتصميم الأفقي) أو عدد الأعمدة (للتصميم العمودي) "
+"التي سيعرض فيها مبدّل مساحات العمل مساحات العمل. هذا المفتاح مفيد فقط عندضبط "
+"مفتاح display_all_workspaces لـ true."
+
+#: ../mate-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "الملف ليس ملف .desktop صالح"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "إصدارة ملف سطح مكتب غير معروفة '%s'"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "يبدأ %s"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "لا يقبل التطبيق المستندات عبر سطر الأوامر"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "خيار إطلاق غير معروف: %d"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "تعذّر تمرير مسار المستند إلى مُدخلة سطح مكتب من نوع 'Type=Link'1"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "عنصر لا يمكن تنفيذه"
+
+#: ../mate-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "عطّل الاتصال بمدير الجلسات"
+
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "حدد ملفا يحتوي الإعدادات المحفوظة"
+
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "ملف"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "حدد رقم معرّف إدارة الجلسات"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "المعرّف"
+
+#: ../mate-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "خيارات إدارة الجلسات:"
+
+#: ../mate-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "اعرض خيارات إدارة الجلسات"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../mate-panel/libpanel-util/panel-error.c:82
+#: ../mate-panel/mate-panel-applet-frame.c:1000
+#: ../mate-panel/mate-panel-applet-frame.c:1088
+msgid "Error"
+msgstr "خطأ"
+
+#: ../mate-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "اختر أيقونة"
+
+#: ../mate-panel/libpanel-util/panel-launch.c:45
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "لا يمكن بدء '%s'"
+
+#: ../mate-panel/libpanel-util/panel-launch.c:48
+#: ../mate-panel/launcher.c:161
+msgid "Could not launch application"
+msgstr "تعذّر تشغيل التّطبيق"
+
+#: ../mate-panel/libpanel-util/panel-show.c:44
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "لم يمكن فتح المكان '%s'"
+
+#: ../mate-panel/libpanel-util/panel-show.c:162
+msgid "No application to handle search folders is installed."
+msgstr "لا يوجد برنامج للتحكم في مجلّدات البحث."
+
+#: ../mate-panel/MATE_Panel_Popup.xml.h:1 ../mate-panel/applet.c:544
+msgid "Loc_k To Panel"
+msgstr "ا_قفل في الشّريط"
+
+#: ../mate-panel/MATE_Panel_Popup.xml.h:2 ../mate-panel/applet.c:527
+msgid "_Move"
+msgstr "ا_نقل"
+
+#: ../mate-panel/MATE_Panel_Popup.xml.h:3 ../mate-panel/applet.c:516
+msgid "_Remove From Panel"
+msgstr "ا_حذف من الشريط"
+
+#: ../mate-panel/applet.c:437
+msgid "???"
+msgstr "؟؟؟"
+
+#: ../mate-panel/applet.c:1321
+msgid "Cannot find an empty spot"
+msgstr "لم يمكن العثور على بقعة فارغة"
+
+#: ../mate-panel/drawer.c:350 ../mate-panel/panel-addto.c:175
+#: ../mate-panel/panel-toplevel.c:1624
+msgid "Drawer"
+msgstr "الدرج"
+
+#: ../mate-panel/drawer.c:589
+msgid "_Add to Drawer..."
+msgstr "أ_ضف إلى الدرج..."
+
+#: ../mate-panel/drawer.c:595 ../mate-panel/launcher.c:807
+#: ../mate-panel/panel-action-button.c:141
+#: ../mate-panel/panel-context-menu.c:216
+msgid "_Properties"
+msgstr "ال_خصائص"
+
+#: ../mate-panel/mate-desktop-item-edit.c:29
+msgid "Create new file in the given directory"
+msgstr "أنشئ ملف جديد في المجلد المعطى"
+
+#: ../mate-panel/mate-desktop-item-edit.c:30
+msgid "[FILE...]"
+msgstr "[ملف...]"
+
+#: ../mate-panel/mate-desktop-item-edit.c:108
+msgid "- Edit .desktop files"
+msgstr "- حرّر ملفات .desktop"
+
+#: ../mate-panel/mate-desktop-item-edit.c:146
+#: ../mate-panel/mate-desktop-item-edit.c:200 ../mate-panel/launcher.c:897
+msgid "Create Launcher"
+msgstr "أنشئ مطلق"
+
+#: ../mate-panel/mate-desktop-item-edit.c:171
+#: ../mate-panel/mate-desktop-item-edit.c:194
+msgid "Directory Properties"
+msgstr "خصائص الدليل"
+
+#: ../mate-panel/mate-desktop-item-edit.c:177 ../mate-panel/launcher.c:735
+msgid "Launcher Properties"
+msgstr "خصائص المطلق"
+
+#: ../mate-panel/mate-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr "بدء تطبيقات أخرى وتزويد وظائف متعددة لإدارة النوافذ، إظهار الوقت، إلخ"
+
+#: ../mate-panel/mate-panel.desktop.in.in.h:2 ../mate-panel/main.c:100
+msgid "Panel"
+msgstr "لوحة"
+
+#: ../mate-panel/launcher.c:118
+msgid "Could not show this URL"
+msgstr "لا يمكن عرض هذا العنوان"
+
+#: ../mate-panel/launcher.c:119
+msgid "No URL was specified."
+msgstr "لم يحدَّد أي عنوان."
+
+#: ../mate-panel/launcher.c:227
+msgid "Could not use dropped item"
+msgstr "لم يمكن إستعمال العنصر المُسقط"
+
+#: ../mate-panel/launcher.c:423
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "لا عنوان مزوّد لملف المكتب لمطلق الشريط\n"
+
+#: ../mate-panel/launcher.c:462
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "لا يمكن فتح ملف سطح المكتب %s لمطلق الشريط%s%s\n"
+
+#: ../mate-panel/launcher.c:801
+msgid "_Launch"
+msgstr "أ_طلق"
+
+#: ../mate-panel/launcher.c:840
+#, c-format
+msgid "Key %s is not set, cannot load launcher\n"
+msgstr "المفتاح %s غير مضبوط، لا يمكن تحميل المطلق\n"
+
+#: ../mate-panel/launcher.c:966 ../mate-panel/panel-ditem-editor.c:1357
+#: ../mate-panel/panel-ditem-editor.c:1391
+#: ../mate-panel/panel-ditem-editor.c:1422
+msgid "Could not save launcher"
+msgstr "لم يمكن حفظ المُطْلِق"
+
+#: ../mate-panel/main.c:47
+msgid "Replace a currently running panel"
+msgstr "استبدل شريطا يعمل حاليا"
+
+#: ../mate-panel/menu.c:914
+msgid "Add this launcher to _panel"
+msgstr "أضِف هذا المطلق إلى الشريط"
+
+#: ../mate-panel/menu.c:921
+msgid "Add this launcher to _desktop"
+msgstr "أضِف هذا المطلق إلى سطح المكتب"
+
+#: ../mate-panel/menu.c:933
+msgid "_Entire menu"
+msgstr "_كل القائمة"
+
+#: ../mate-panel/menu.c:938
+msgid "Add this as _drawer to panel"
+msgstr "أضِف هذا ك_درج للشريط"
+
+#: ../mate-panel/menu.c:945
+msgid "Add this as _menu to panel"
+msgstr "أضِف هذا كقا_ئمة للشريط"
+
+#: ../mate-panel/nothing.cP:609
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr "<b>انتهت اللعبة</b> عند المستوى %Id!"
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../mate-panel/nothing.cP:616
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s   %2$s   %3$s"
+
+#: ../mate-panel/nothing.cP:617
+msgid "Press 'q' to quit"
+msgstr "اضغط 'q' للخروج"
+
+#: ../mate-panel/nothing.cP:622
+msgid "Paused"
+msgstr "موقف مؤقتًا"
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../mate-panel/nothing.cP:625 ../mate-panel/nothing.cP:636
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr "%1$s\t%2$s"
+
+#: ../mate-panel/nothing.cP:626
+msgid "Press 'p' to unpause"
+msgstr "اضغط 'p' للإيقاف المؤقت"
+
+#: ../mate-panel/nothing.cP:632
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr "المستوى: %s، الأرواح: %s"
+
+#: ../mate-panel/nothing.cP:637
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+"يمين/يسار للتحرك، مفتاح المسافة لإطلاق النار، 'p' للتوقف المؤقت، 'q' للخروج"
+
+#: ../mate-panel/nothing.cP:1385
+msgid "Killer GEGLs from Outer Space"
+msgstr "القاتل GEGLs من الفضاء الخارجي"
+
+#: ../mate-panel/panel-action-button.c:129
+msgid "_Activate Screensaver"
+msgstr "_نشّط حافظة الشاشة"
+
+#: ../mate-panel/panel-action-button.c:135
+msgid "_Lock Screen"
+msgstr "أو_صد الشاشة"
+
+#: ../mate-panel/panel-action-button.c:254
+msgid "Could not connect to server"
+msgstr "تعذّر الاتّصال بالخادوم"
+
+#: ../mate-panel/panel-action-button.c:285
+msgid "Lock Screen"
+msgstr "أوصد الشاشة"
+
+#: ../mate-panel/panel-action-button.c:286
+msgid "Protect your computer from unauthorized use"
+msgstr "احم حاسوبك من الاستخدامات غير المرخّص بها"
+
+#. when changing one of those two strings, don't forget to
+#. * update the ones in panel-menu-items.c (look for
+#. * "1" (msgctxt: "panel:showusername"))
+#: ../mate-panel/panel-action-button.c:300
+msgid "Log Out..."
+msgstr "اخرج..."
+
+#: ../mate-panel/panel-action-button.c:301
+msgid "Log out of this session to log in as a different user"
+msgstr "اخرج من هذه الجلسة للولوج باسم مستخدم آخر"
+
+#: ../mate-panel/panel-action-button.c:310
+msgid "Run Application..."
+msgstr "شغّل تطبيقا..."
+
+#: ../mate-panel/panel-action-button.c:311
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "شغّل تطبيقا بكتابة أمر أو الاختيار من قائمة"
+
+#: ../mate-panel/panel-action-button.c:320
+msgid "Search for Files..."
+msgstr "ابحث عن ملفات..."
+
+#: ../mate-panel/panel-action-button.c:321
+msgid "Locate documents and folders on this computer by name or content"
+msgstr "اعثر على المستندات والملفات على هذا الحاسوب بالاسم أو المحتوى"
+
+#: ../mate-panel/panel-action-button.c:329
+#: ../mate-panel/panel-force-quit.c:221
+msgid "Force Quit"
+msgstr "أجبر الإنهاء"
+
+#: ../mate-panel/panel-action-button.c:330
+msgid "Force a misbehaving application to quit"
+msgstr "أجبر تطبيق لا يعمل طبيعيا على الانتهاء"
+
+#. FIXME icon
+#: ../mate-panel/panel-action-button.c:339
+msgid "Connect to Server..."
+msgstr "اتّصل بخادوم..."
+
+#: ../mate-panel/panel-action-button.c:340
+msgid "Connect to a remote computer or shared disk"
+msgstr "اتّصل بخادوم عن بعد أو قرص مشترك"
+
+#: ../mate-panel/panel-action-button.c:348
+msgid "Shut Down..."
+msgstr "أطفئ..."
+
+#: ../mate-panel/panel-action-button.c:349
+msgid "Shut down the computer"
+msgstr "أطفئ الحاسوب"
+
+#: ../mate-panel/panel-addto.c:116
+msgid "Custom Application Launcher"
+msgstr "مطلق تطبيق مخصّص"
+
+#: ../mate-panel/panel-addto.c:117
+msgid "Create a new launcher"
+msgstr "أنشئ مطلقا جديدا"
+
+#: ../mate-panel/panel-addto.c:127
+msgid "Application Launcher..."
+msgstr "مطلق تطبيق..."
+
+#: ../mate-panel/panel-addto.c:128
+msgid "Copy a launcher from the applications menu"
+msgstr "انسخ مُطلِقا من قائمة التطبيقات"
+
+#: ../mate-panel/panel-addto.c:142 ../mate-panel/panel-menu-button.c:1081
+msgid "Main Menu"
+msgstr "القائمة الرئيسية"
+
+#: ../mate-panel/panel-addto.c:143
+msgid "The main MATE menu"
+msgstr "قائمة جنوم الرّئيسيّة"
+
+#: ../mate-panel/panel-addto.c:153
+msgid "Menu Bar"
+msgstr "شريط القوائم"
+
+#: ../mate-panel/panel-addto.c:154
+msgid "A custom menu bar"
+msgstr "شريط قوائم مخصّص"
+
+#: ../mate-panel/panel-addto.c:164
+msgid "Separator"
+msgstr "فاصل"
+
+#: ../mate-panel/panel-addto.c:165
+msgid "A separator to organize the panel items"
+msgstr "فاصل لتنظيم عناصر الشريط"
+
+#: ../mate-panel/panel-addto.c:176
+msgid "A pop out drawer to store other items in"
+msgstr "درج قافز لحفظ عناصر أخرى فيه"
+
+#: ../mate-panel/panel-addto.c:267
+msgid "(empty)"
+msgstr "(فارغ)"
+
+#: ../mate-panel/panel-addto.c:410
+#: ../libmate-panel-applet/panel-test-applets.c:249
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "أرجع الاستعلام الاستثناء %s\n"
+
+#: ../mate-panel/panel-addto.c:1071
+#, c-format
+msgid "Find an _item to add to \"%s\":"
+msgstr "اختر _عنصرًا للإضافة ل \"%s\":"
+
+#: ../mate-panel/panel-addto.c:1075
+#, c-format
+msgid "Add to Drawer"
+msgstr "أضِف إلى الدرج"
+
+#: ../mate-panel/panel-addto.c:1077
+msgid "Find an _item to add to the drawer:"
+msgstr "اختر _عنصرًا ليضاف إلى الدرج:"
+
+#: ../mate-panel/panel-addto.c:1079
+#, c-format
+msgid "Add to Panel"
+msgstr "أضِف إلى الشّريط"
+
+#: ../mate-panel/panel-addto.c:1081
+msgid "Find an _item to add to the panel:"
+msgstr "اختر _عنصرًا ليضاف إلى الشّريط:"
+
+#: ../mate-panel/mate-panel-applet-frame.c:844
+#, c-format
+msgid "Exception from popup_menu '%s'\n"
+msgstr "استثناء من popup_menu '%s'\n"
+
+#: ../mate-panel/mate-panel-applet-frame.c:969
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr "توقف \"%s\" بصورة غير متوقعة"
+
+#: ../mate-panel/mate-panel-applet-frame.c:971
+msgid "Panel object has quit unexpectedly"
+msgstr "توقف جسم الشريط بصورة غير متوقعة"
+
+#: ../mate-panel/mate-panel-applet-frame.c:978
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr "إذا أعدت تحميل عنصر في الشريط فسيعاد إضافته تلقائيا."
+
+#: ../mate-panel/mate-panel-applet-frame.c:984
+msgid "_Don't Reload"
+msgstr "_لا تعِد التحميل"
+
+#: ../mate-panel/mate-panel-applet-frame.c:985
+msgid "_Reload"
+msgstr "أ_عد التحميل"
+
+#: ../mate-panel/mate-panel-applet-frame.c:1051
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "واجه الشريط مشكلة أثناء تحميل \"%s\"."
+
+#: ../mate-panel/mate-panel-applet-frame.c:1067
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "هل تريد حذف البريمج من إعداداتك؟"
+
+#: ../mate-panel/mate-panel-applet-frame.c:1141
+msgid "Unable to obtain AppletShell interface from control\n"
+msgstr "لا يمكن الحصول على واجهة AppletShell من القطعة\n"
+
+#: ../mate-panel/panel-context-menu.c:104
+msgid "And many, many others..."
+msgstr "و العديد العديد من الآخرين..."
+
+#: ../mate-panel/panel-context-menu.c:130
+msgid "The MATE Panel"
+msgstr "لوحة جنوم"
+
+#: ../mate-panel/panel-context-menu.c:133
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
+msgstr "هذا البرنامج مسؤول عن تشغيل تطبيقات أخرى ويزوّد بريمجات مفيدة ضمن نفسه."
+
+#: ../mate-panel/panel-context-menu.c:137
+msgid "About the MATE Panel"
+msgstr "عن لوحة جنوم"
+
+#: ../mate-panel/panel-context-menu.c:171
+msgid "Cannot delete this panel"
+msgstr "لا يمكن حذف هذا الشريط"
+
+#: ../mate-panel/panel-context-menu.c:172
+msgid "You must always have at least one panel."
+msgstr "يجب أن يكون لك دائما شريط واحد على الأقل."
+
+#: ../mate-panel/panel-context-menu.c:205
+msgid "_Add to Panel..."
+msgstr "أ_ضف إلى لشّريط..."
+
+#: ../mate-panel/panel-context-menu.c:226
+msgid "_Delete This Panel"
+msgstr "ا_حذف هذا الشريط"
+
+#: ../mate-panel/panel-context-menu.c:241
+msgid "_New Panel"
+msgstr "شريط _جديد"
+
+#: ../mate-panel/panel-context-menu.c:293
+msgid "A_bout Panels"
+msgstr "_عن الشّرائط"
+
+#: ../mate-panel/panel-ditem-editor.c:114
+msgid "Application"
+msgstr "تطبيق"
+
+#: ../mate-panel/panel-ditem-editor.c:116
+msgid "Application in Terminal"
+msgstr "تطبيق في الطرفية"
+
+#: ../mate-panel/panel-ditem-editor.c:118
+msgid "Location"
+msgstr "المكان"
+
+#. Type
+#: ../mate-panel/panel-ditem-editor.c:618
+msgid "_Type:"
+msgstr "الن_وع:"
+
+#. Name
+#: ../mate-panel/panel-ditem-editor.c:625
+msgid "_Name:"
+msgstr "الا_سم:"
+
+#: ../mate-panel/panel-ditem-editor.c:652
+msgid "_Browse..."
+msgstr "_تصفح..."
+
+#. Comment
+#: ../mate-panel/panel-ditem-editor.c:659
+msgid "Co_mment:"
+msgstr "ال_تعليق:"
+
+#: ../mate-panel/panel-ditem-editor.c:1008
+msgid "Choose an application..."
+msgstr "اختر تطبيقًا..."
+
+#: ../mate-panel/panel-ditem-editor.c:1012
+msgid "Choose a file..."
+msgstr "اختر ملفًا..."
+
+#: ../mate-panel/panel-ditem-editor.c:1177
+#: ../mate-panel/panel-ditem-editor.c:1186
+msgid "Comm_and:"
+msgstr "الأ_مر:"
+
+#: ../mate-panel/panel-ditem-editor.c:1195
+msgid "_Location:"
+msgstr "ال_مكان:"
+
+#: ../mate-panel/panel-ditem-editor.c:1358
+msgid "The name of the launcher is not set."
+msgstr "اسم المُطلِق غير محدد."
+
+#: ../mate-panel/panel-ditem-editor.c:1362
+msgid "Could not save directory properties"
+msgstr "لم يمكن حفظ خصائص المجلد"
+
+#: ../mate-panel/panel-ditem-editor.c:1363
+msgid "The name of the directory is not set."
+msgstr "اسم المجلد غير مضبوط."
+
+#: ../mate-panel/panel-ditem-editor.c:1379
+msgid "The command of the launcher is not set."
+msgstr "أمر المُطلِق غير مضبوط."
+
+#: ../mate-panel/panel-ditem-editor.c:1382
+msgid "The location of the launcher is not set."
+msgstr "موقع المُطلِق غير مضبوط."
+
+#: ../mate-panel/panel-ditem-editor.c:1459
+msgid "Could not display help document"
+msgstr "لا يمكن فتح مستند المساعدة"
+
+#: ../mate-panel/panel-force-quit.c:76
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "انقر على نافذة لإجبار التطبيق على الإنهاء. للإلغاء انقر <ESC>."
+
+#: ../mate-panel/panel-force-quit.c:204
+msgid "Force this application to exit?"
+msgstr "أأجبر هذا التطبيق على الانتهاء؟"
+
+#: ../mate-panel/panel-force-quit.c:207
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"إذا اخترت إجبار هذا التطبيق على الانتهاء، ستضيع جميع التغييرات غير المحفوظة "
+"على المستندات المفتوحة."
+
+#: ../mate-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"علم منطقي لعرض ما إذا كانت إعدادات المستخدم /apps/panel/profiles/default تم "
+"نسخها في المكان الجديد /apps/panel."
+
+#: ../mate-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"قائمة لهويات الشرائط. كل هوية تعرف شريطا علويا. إعدادات كل من هذه الشرائط "
+"مخزونة في /apps/panel/toplevels/$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"قائمة لهويات بريمجات الشرائط. كل هوية تعرف بريمج شريط واحد.إعدادات كل من هذه "
+"البريمجات مخزونة في /apps/panel/applets/$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"قائمة لهويات أجسام الشرائط. كل هوية تعرف جسم شريط واحد(مثلا مطلق أو زر عمل "
+"أو زر/عمود قائمة). إعدادات كل من هذه الأجسام مخزونة في /apps/panel/objects/"
+"$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:5
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "فعّل الإكمال التلقائي في حوار \"شغّل تطبيقا\""
+
+#: ../mate-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "فعّل قائمة البرامج في حوار \"شغّل تطبيقا\""
+
+#: ../mate-panel/panel-general.schemas.in.h:7
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "ابسط قائمة البرامج في حوار \"شغّل تطبيقا\""
+
+#: ../mate-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "إذا كان \"صحيح\"، يتم إضافة الإكمال الآلي في  \"شغّل تطبيقا\""
+
+#: ../mate-panel/panel-general.schemas.in.h:9
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"إذا ضبط إلى \"صحيح\"، فستُبسط قائمة \"التطبيقات المعروفة\" في حوار \"شغّل "
+"تطبيقا\" عند فتحه. ليس للمفتاح معنى إلا إذا ضبط مفتاح enable_program_list "
+"إلى صحيح."
+
+#: ../mate-panel/panel-general.schemas.in.h:10
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"إذا كان \"صحيح\"، فستوفر قائمة \"التطبيقات المعروفة\" في حوار \"شغّل تطبيقا"
+"\". يتحكم مفتاح show_program_list في تمديد القائمة أو عدمه عند عرض الحوار."
+
+#: ../mate-panel/panel-general.schemas.in.h:11
+msgid "Old profiles configuration migrated"
+msgstr "تم تحويل الإعدادات القديمة"
+
+#: ../mate-panel/panel-general.schemas.in.h:12
+msgid "Panel ID list"
+msgstr "قائمة هويات الشرائط"
+
+#: ../mate-panel/panel-general.schemas.in.h:13
+msgid "Panel applet ID list"
+msgstr "قائمات هويات بريمجات الشرائط"
+
+#: ../mate-panel/panel-general.schemas.in.h:14
+msgid "Panel object ID list"
+msgstr "قائمة هويات أجسام الشرائط"
+
+#: ../mate-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"قائمة IID البريمج التي سيتجاهلها الشريط. يمكنك هكذا منع بعض البريمجات من "
+"التحميل أو الظهور في الشريط. يمكنك لتعطيل بريمج المتحكم الصغير مثلا إضافة "
+"'OAFIID:MATE_MiniCommanderApplet' لهذه القائمة. يجب إعادة تشغيل الشريط "
+"لتطبيق التغييرات."
+
+#: ../mate-panel/panel-global.schemas.in.h:2
+msgid "Applet IIDs to disable from loading"
+msgstr "هوية الواجهة للبريمج لتعطيله عن التحميل"
+
+#: ../mate-panel/panel-global.schemas.in.h:3
+msgid "Autoclose drawer"
+msgstr "اغلق الدرج تلقائيا"
+
+#: ../mate-panel/panel-global.schemas.in.h:4
+msgid "Complete panel lockdown"
+msgstr "أقفل الشريط تماما"
+
+#: ../mate-panel/panel-global.schemas.in.h:5
+msgid "Confirm panel removal"
+msgstr "أكّد حذف الشريط"
+
+#: ../mate-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr "ملغاة"
+
+#: ../mate-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "عطّل إجبار الإنهاء"
+
+#: ../mate-panel/panel-global.schemas.in.h:8
+msgid "Disable Logging Out"
+msgstr "عطّل تسجيل الخروج"
+
+#: ../mate-panel/panel-global.schemas.in.h:9
+#: ../mate-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "فعّل الرسوم المتحركة"
+
+#: ../mate-panel/panel-global.schemas.in.h:10
+msgid "Enable tooltips"
+msgstr "فعّل تلميحات الأدوات"
+
+#: ../mate-panel/panel-global.schemas.in.h:11
+msgid "Highlight launchers on mouseover"
+msgstr "يبرز المطلقات عند مرور الفأرة فوقها"
+
+#: ../mate-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr "إذا كان \"صحيح\"، سيعرض حوار يسأل عن تأكيد لطلب المستخدم حذف الشريط."
+
+#: ../mate-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr "إذا كان \"صحيح\"، سيغلق الدرج آليّا عند نقر المستخدم مطلقا فيه."
+
+#: ../mate-panel/panel-global.schemas.in.h:14
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr "إذا كان \"صحيح\"، سيبرز مطلق عند سحب المستخدم المؤشر فوقه."
+
+#: ../mate-panel/panel-global.schemas.in.h:15
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"إذا كان \"صحيح\"، لن يسمح الشريط للمستخدم بإجبار تطبيق على الإنهاء، بحذف "
+"النفاذ إلى زر إجبار الإنهاء."
+
+#: ../mate-panel/panel-global.schemas.in.h:16
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"إذا كان \"صحيح\"، لن يسمح الشريط للمستخدم بتسجيل الخروج ،بحذف النفاذ إلى "
+"خانات قائمة تسجيل الخروج."
+
+#: ../mate-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"إذا كان \"صحيح\"، فلن يسمح الشريط بأي تغييرات على إعدادات الشريط. قد يتطلب "
+"قفل البريمجات الشخصيّة. يجب إعادة تشغيل الشريط حتى تطبّق التغييرات."
+
+#: ../mate-panel/panel-global.schemas.in.h:18
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "إذا كان \"صحيح\"، ستعرض تلميحات الأدوات للأجسام في الشريط."
+
+#: ../mate-panel/panel-global.schemas.in.h:19
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/mate/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"هذا المفتاح لاغِ، استخدم ‪/desktop/mate/lockdown/disable_lock_screen‬ بدلا منه."
+
+#: ../mate-panel/panel-menu-bar.c:106
+msgid "Browse and run installed applications"
+msgstr "تصفّح و شغّل التطبيقات المثبتة"
+
+#: ../mate-panel/panel-menu-bar.c:108
+msgid "Access documents, folders and network places"
+msgstr "المستندات، المجلدات و الأماكن الشبكية"
+
+#: ../mate-panel/panel-menu-bar.c:110
+msgid "Change desktop appearance and behavior, get help, or log out"
+msgstr "غيّر مظهر وسلوك سطح المكتب أو احصل على المساعدة أو اخرج"
+
+#: ../mate-panel/panel-menu-bar.c:147
+msgid "Applications"
+msgstr "تطبيقات"
+
+#: ../mate-panel/panel-menu-bar.c:353 ../mate-panel/panel-menu-button.c:668
+msgid "_Edit Menus"
+msgstr "ح_رّر القوائم"
+
+#: ../mate-panel/panel-menu-items.c:472
+msgid "Bookmarks"
+msgstr "العلامات"
+
+#. Translators: %s is a URI
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:541
+#, c-format
+msgid "Open '%s'"
+msgstr "افتح '%s'"
+
+#: ../mate-panel/panel-menu-items.c:566
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "تعذّر مسح %s بحثا عن تغيرات الأجهزة"
+
+#: ../mate-panel/panel-menu-items.c:609
+#, c-format
+msgid "Rescan %s"
+msgstr "أعد مسح %s"
+
+#: ../mate-panel/panel-menu-items.c:646
+#, c-format
+msgid "Unable to mount %s"
+msgstr "تعذّر وصل %s"
+
+#: ../mate-panel/panel-menu-items.c:709
+#, c-format
+msgid "Mount %s"
+msgstr "أوصل %s"
+
+#: ../mate-panel/panel-menu-items.c:917
+msgid "Removable Media"
+msgstr "الوسائط المنفصلة"
+
+#: ../mate-panel/panel-menu-items.c:1004
+msgid "Network Places"
+msgstr "أماكن الشبكة"
+
+#: ../mate-panel/panel-menu-items.c:1043
+msgid "Open your personal folder"
+msgstr "افتح مجلدك الشخصي"
+
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment).
+#: ../mate-panel/panel-menu-items.c:1062
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "سطح المكتب"
+
+#: ../mate-panel/panel-menu-items.c:1063
+msgid "Open the contents of your desktop in a folder"
+msgstr "افتح محتويات سطح المكتب في مجلد"
+
+#: ../mate-panel/panel-menu-items.c:1454
+msgid "Places"
+msgstr "أماكن"
+
+#: ../mate-panel/panel-menu-items.c:1483
+msgid "System"
+msgstr "نظام"
+
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
+#. * but "1" if "Log Out %s" doesn't make any sense in your
+#. * language (where %s is a username).
+#.
+#: ../mate-panel/panel-menu-items.c:1564
+msgctxt "panel:showusername"
+msgid "1"
+msgstr "0"
+
+#. keep those strings in sync with the ones in
+#. * panel-action-button.c
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1576
+#, c-format
+msgid "Log Out %s..."
+msgstr "اخرج %s..."
+
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1580
+#, c-format
+msgid "Log out %s of this session to log in as a different user"
+msgstr "أخرج %s من هذه الجلسة ليلج كمستخدم آخر"
+
+#: ../mate-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "نوع زر العمل"
+
+#: ../mate-panel/panel-object.schemas.in.h:2
+msgid "Applet MateComponent IID"
+msgstr "هوية الواجهة لبريمج بونوبو"
+
+#: ../mate-panel/panel-object.schemas.in.h:3
+msgid "Icon used for object's button"
+msgstr "الأيقونة المستعملة لزر العنصر"
+
+#: ../mate-panel/panel-object.schemas.in.h:4
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"إذا كان \"صحيح\"، سيستخدم مفتاح custom_icon كأيقونة خاصة للزر. إذا كان \"خطأ"
+"\"، سيتجاهل مفتاح custom_icon. لهذا المفتاح معنى فقط عند ضبط مفتاح "
+"object_type كـ \"menu-object\" أو \"drawer-object\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"إذا كان \"صحيح\"، فسيستخدم مفتاح menu_path كالمسار الذي منه ستبنى محتويات "
+"القائمة. إذا كان \"خطأ\"، فسيتجاهل مفتاح menu_path. لا معنى للمفتاح إلا عند "
+"ضبط مفتاح object_type كـ \"menu-object\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"إذا كان \"صحيح\"، فسيترجم موقع الجسم نسبة للحافة اليمنى للشريط  (أو السفلى "
+"للشرائط العمودية)."
+
+#: ../mate-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"إذا كان \"صحيح\"، لن يتمكن المستخدم من نقل بريمج دون إلغاء قفله أولا "
+"بإستعمال عنصر القائمة \"Unlock\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:8
+msgid "Interpret position relative to bottom/right edge"
+msgstr "فسّر الموقع نسبة إلى الحافة السفلى/العليا"
+
+#: ../mate-panel/panel-object.schemas.in.h:9
+msgid "Launcher location"
+msgstr "موقع المطلق"
+
+#: ../mate-panel/panel-object.schemas.in.h:10
+msgid "Lock the object to the panel"
+msgstr "أقفل الجسم على الشريط"
+
+#: ../mate-panel/panel-object.schemas.in.h:11
+msgid "Menu content path"
+msgstr "مسار محتوى القائمة"
+
+#: ../mate-panel/panel-object.schemas.in.h:12
+msgid "Object's position on the panel"
+msgstr "موقع الجسم على الشريط"
+
+#: ../mate-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr "الشريط المنسوب إلى الدرج"
+
+#: ../mate-panel/panel-object.schemas.in.h:14
+msgid "Panel object type"
+msgstr "نوع جسم الشريط"
+
+#: ../mate-panel/panel-object.schemas.in.h:15
+msgid ""
+"The MateComponent implementation ID of the applet - e.g. \"OAFIID:MATE_ClockApplet"
+"\". This key is only relevant if the object_type key is \"matecomponent-applet\"."
+msgstr ""
+"هوية تطبيق بونوبو للبريمج - مثلا \"OAFIID:MATE_ClockApplet\". ليس لهذا "
+"المفتاح معنى إلا عند ضبط المفتاح object_type كـ \"matecomponent-applet\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"نوع الحدث الذي يمثّله هذا الزر. القيم الممكنة هي \"lock\"، \"logout\"، \"run"
+"\"، \"search\" و \"screenshot\". ليس للمفتاح معنى إلا عند ضبط مفتاح "
+"object_type كـ \"action-applet\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"محدد هويّة الشريط المنسوب لهذا الدرج. ليس لهذا المفتاح معنى إلا عنذ ضبط مفتاح "
+"object_type لـ \"drawer-object\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "محدد هويّة شريط المستوى الأعلى الحاوي لهذا الجسم."
+
+#: ../mate-panel/panel-object.schemas.in.h:19
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"موقع ملف .desktop الواصف للمطلق. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح "
+"object_type كـ \"launcher-object\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"موقع ملف الصورة المستخدم كأيقونة لزر الجسم. ليس لهذا المفتاح معنى إلا عند "
+"ضبط مفتاح object_type كـ \"drawer-object\" أو \"menu-object\" و ضبط مفتاح "
+"use_custom_icon لـ true."
+
+#: ../mate-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"المسار الذي منه ستركب محتويات القائمة. ليس لهذا المفتاح معنى إلا عند ضبط "
+"مفتاح use_menu_path لـ true و مفتاح object_type لـ \"menu-object\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:22
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"موقع جسم الشريط هذا. الموقع محدّد بعدد البكسلات من حافة الشريط اليسرى (أو "
+"العليا إذا كان الشريط عموديّا)."
+
+#: ../mate-panel/panel-object.schemas.in.h:23
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"النص الذي سيعرض لهذا الدرج أو هذه القائمة. ليس لهذا المفتاح معنى إلا عند ضبط "
+"مفتاح object_type key كـ \"drawer-object\" أو \"menu-object\"."
+
+#: ../mate-panel/panel-object.schemas.in.h:24
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"matecomponent-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"نوع جسم الشريط. القيم الممكنة هي \"drawer-object\" (جسم درج) و \"menu-object"
+"\" (جسم قائمة) و \"launcher-object\" (جسم مطلق) و \"matecomponent-applet\" (بريمج "
+"بونوبو) و \"action-applet\" (بريمج حدث) و \"menu-bar\" (عمود قائمة)"
+
+#: ../mate-panel/panel-object.schemas.in.h:25
+msgid "Tooltip displayed for drawer or menu"
+msgstr "تلميحة الأداة المعروضة للدرج أو القائمة"
+
+#: ../mate-panel/panel-object.schemas.in.h:26
+msgid "Toplevel panel containing object"
+msgstr "شريط مستوى أعلى محتوية على الجسم"
+
+#: ../mate-panel/panel-object.schemas.in.h:27
+msgid "Use custom icon for object's button"
+msgstr "استخدم أيقونة خاصة لزر الشريط"
+
+#: ../mate-panel/panel-object.schemas.in.h:28
+msgid "Use custom path for menu contents"
+msgstr "استخدم مسار خاص لمحتويات القائمة"
+
+#: ../mate-panel/panel-profile.c:772 ../mate-panel/panel-profile.c:799
+#: ../mate-panel/panel-profile.c:835 ../mate-panel/panel-profile.c:1700
+#, c-format
+msgid "Error reading MateConf string value '%s': %s"
+msgstr "خطأ قراءة قيمة سلسلة MateConf '%s': %s"
+
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../mate-panel/panel-profile.c:814 ../mate-panel/panel-profile.c:1596
+#: ../mate-panel/panel-profile.c:1669 ../mate-panel/panel-profile.c:1751
+#, c-format
+msgid "Error reading MateConf integer value '%s': %s"
+msgstr "خطأ قراءة قيمة العدد الصحيح لـ MateConf '%s': %s"
+
+#: ../mate-panel/panel-profile.c:1606
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr "اضبط عرض الشريط '%s' على الشاشة %Id غير المتوفرة الآن.لن يحمل الشريط."
+
+#: ../mate-panel/panel-profile.c:1684
+#, c-format
+msgid "Error reading MateConf boolean value '%s': %s"
+msgstr "خطأ عند قراءة القيمة المنطقية لـ MateConf '%s': %s"
+
+#: ../mate-panel/panel-properties-dialog.c:123
+#: ../libmate-panel-applet/panel-test-applets.c:53
+msgctxt "Orientation"
+msgid "Top"
+msgstr "فوق"
+
+#: ../mate-panel/panel-properties-dialog.c:124
+#: ../libmate-panel-applet/panel-test-applets.c:54
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "تحت"
+
+#: ../mate-panel/panel-properties-dialog.c:125
+#: ../libmate-panel-applet/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Left"
+msgstr "يسار"
+
+#: ../mate-panel/panel-properties-dialog.c:126
+#: ../libmate-panel-applet/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Right"
+msgstr "يمين"
+
+#: ../mate-panel/panel-properties-dialog.c:866
+msgid "Drawer Properties"
+msgstr "خصائص الدرج"
+
+#: ../mate-panel/panel-properties-dialog.c:981
+#: ../mate-panel/panel-run-dialog.c:2019
+#, c-format
+msgid "Unable to load file '%s': %s."
+msgstr "تعذّر تحميل الملف '%s':‏ %s."
+
+#: ../mate-panel/panel-properties-dialog.c:987
+msgid "Could not display properties dialog"
+msgstr "لم يمكن عرض حوار الخصائص"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+msgid "<small>Opaque</small>"
+msgstr "<small>معتم</small>"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+msgid "<small>Transparent</small>"
+msgstr "<small>شفاف</small>"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:4
+msgid "Arro_ws on hide buttons"
+msgstr "أ_سهم على أزرار الإخفاء"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:5
+msgid "Background"
+msgstr "الخلفية"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:6
+msgid "Background _image:"
+msgstr "_صورة الخلفية:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+msgid "Co_lor:"
+msgstr "الل_ون:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+msgid "E_xpand"
+msgstr "اب_سط"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:10
+msgid "Image Background Details"
+msgstr "تفاصيل صورة الخلفية"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:11
+msgid "Panel Properties"
+msgstr "خصائص الشريط"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:12
+msgid "Pick a color"
+msgstr "اختر لونا"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "Rotate image when panel is _vertical"
+msgstr "دوّر الصورة عندما يكون الشريط _عموديا"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:14
+msgid "S_tyle:"
+msgstr "الأس_لوب:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:15
+msgid "Select background"
+msgstr "اختر صورة الخلفية"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:16
+msgid "Show hide _buttons"
+msgstr "أظهر أ_زرار الإخفاء"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:17
+msgid "Solid c_olor"
+msgstr "لون جامد"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:18
+msgid "Some of these properties are locked down"
+msgstr "بعض هذه الخصائص مقفولة"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:19
+msgid "St_retch"
+msgstr "_مدّد"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:20
+msgid "_Autohide"
+msgstr "إخفاء آ_لي"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:21
+msgid "_Icon:"
+msgstr "_أيقونة:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:22
+msgid "_None (use system theme)"
+msgstr "_لا شيء (يستخدم سِمة النظام)"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../libmate-panel-applet/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "الإ_تجاه:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:24
+msgid "_Scale"
+msgstr "_حجّم"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../libmate-panel-applet/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "ال_حجم:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:26
+msgid "_Tile"
+msgstr "_مربع"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:27
+msgid "pixels"
+msgstr "بكسلات"
+
+#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#, c-format
+msgid "Could not open recently used document \"%s\""
+msgstr "لا يمكن فتح المستند \"%s\" المفتوح حديثا"
+
+#: ../mate-panel/panel-recent.c:90
+#, c-format
+msgid "An unknown error occurred while trying to open \"%s\"."
+msgstr "حدث خطأ مجهول عند محاولة فتح \"%s\""
+
+#: ../mate-panel/panel-recent.c:147
+msgid "Clear the Recent Documents list?"
+msgstr "مسح قائمة المستندات الحديثة؟"
+
+#: ../mate-panel/panel-recent.c:149
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"إذا قمت بمسح قائمة المستندات الأخيرة فستمسح ما يلي:\n"
+"• كافّة العناصر من عنصر قائمة أماكن -> المستندات الحديثة.\n"
+"• كافّة العناصر من قائمة المستندات الحديثة في كافّة التّطبيقات."
+
+#: ../mate-panel/panel-recent.c:161
+msgid "Clear Recent Documents"
+msgstr "امسح المستندات الحديثة"
+
+#: ../mate-panel/panel-recent.c:196
+msgid "Recent Documents"
+msgstr "المستندات الحديثة"
+
+#: ../mate-panel/panel-recent.c:235
+msgid "Clear Recent Documents..."
+msgstr "امسح المستندات الحديثة..."
+
+#: ../mate-panel/panel-recent.c:237
+msgid "Clear all items from the recent documents list"
+msgstr "امسح كل العناصر من قائمة المستندات الحديثة"
+
+#: ../mate-panel/panel-run-dialog.c:391
+#, c-format
+msgid "Could not run command '%s'"
+msgstr "تعذّر تشغيل الأمر '%s'"
+
+#: ../mate-panel/panel-run-dialog.c:444
+#, c-format
+msgid "Could not convert '%s' from UTF-8"
+msgstr "لم يمكن تحويل '%s' من UTF-8"
+
+#: ../mate-panel/panel-run-dialog.c:1256
+msgid "Choose a file to append to the command..."
+msgstr "اختر ملف لإلحاقه بالأمر..."
+
+#: ../mate-panel/panel-run-dialog.c:1634
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Select an application to view its description."
+msgstr "اختر تطبيقا لعرض وصفه."
+
+#: ../mate-panel/panel-run-dialog.c:1672
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "سينفذ الأمر: '%s'"
+
+#: ../mate-panel/panel-run-dialog.c:1705
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr "قائمة العناوين من حوار التشغيل لها نسق (%Id) أو طول (%Id) خاطئ \n"
+
+#: ../mate-panel/panel-run-dialog.c:2024
+msgid "Could not display run dialog"
+msgstr "لم يمكن عرض حوار التشغيل"
+
+#: ../mate-panel/panel-run-dialog.ui.h:1
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr "أنقر هذا الزر للتصفّح عن ملف سيلحق بالأمر."
+
+#: ../mate-panel/panel-run-dialog.ui.h:2
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr "أنقر هذا الزر لتنفيذ التطبيق المنتقى أو الأمر في حقل خانة الأمر."
+
+#: ../mate-panel/panel-run-dialog.ui.h:3
+msgid "Command icon"
+msgstr "أيقونة الأمر"
+
+#: ../mate-panel/panel-run-dialog.ui.h:4
+msgid "List of known applications"
+msgstr "قائمة التطبيقات المعروفة"
+
+#: ../mate-panel/panel-run-dialog.ui.h:5
+msgid "Run Application"
+msgstr "شغّل تطبيقا"
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Run in _terminal"
+msgstr "شغّل في ال_طرفيّة"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "Run with _file..."
+msgstr "شغّل بال_ملف..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "اختر هذا الصندوق لتشغيل الأمر في نافذة الطرفية."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Show list of known _applications"
+msgstr "اعرض قائمة بالت_طبيقات المعروفة"
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid "The icon of the command to be run."
+msgstr "أيقونة الأمر الذي سيشغّل."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-stock-icons.c:90
+msgid "_Run"
+msgstr "_شغّل"
+
+#: ../mate-panel/panel-stock-icons.c:91
+msgid "_Force quit"
+msgstr "أ_جبر على الإنهاء"
+
+#: ../mate-panel/panel-stock-icons.c:92
+msgid "C_lear"
+msgstr "ا_مسح"
+
+#: ../mate-panel/panel-stock-icons.c:93
+msgid "D_on't Delete"
+msgstr "_لا تحذف"
+
+#: ../mate-panel/panel-toplevel.c:1188
+msgid "Hide Panel"
+msgstr "أخفي الشريط"
+
+#. translators: these string will be shown in MetaCity's switch window
+#. * popup when you pass the focus to a panel
+#: ../mate-panel/panel-toplevel.c:1595
+msgid "Top Expanded Edge Panel"
+msgstr "شريط حافة علوي منبسط"
+
+#: ../mate-panel/panel-toplevel.c:1596
+msgid "Top Centered Panel"
+msgstr "شريط موّسط علوي"
+
+#: ../mate-panel/panel-toplevel.c:1597
+msgid "Top Floating Panel"
+msgstr "شريط طافي علوي"
+
+#: ../mate-panel/panel-toplevel.c:1598
+msgid "Top Edge Panel"
+msgstr "شريط حافّة علوي"
+
+#: ../mate-panel/panel-toplevel.c:1602
+msgid "Bottom Expanded Edge Panel"
+msgstr "شريط حافة سفلي منبسط"
+
+#: ../mate-panel/panel-toplevel.c:1603
+msgid "Bottom Centered Panel"
+msgstr "شريط موسّط منبسط"
+
+#: ../mate-panel/panel-toplevel.c:1604
+msgid "Bottom Floating Panel"
+msgstr "شريط طافي سفلي"
+
+#: ../mate-panel/panel-toplevel.c:1605
+msgid "Bottom Edge Panel"
+msgstr "شريط حافّة سفلي"
+
+#: ../mate-panel/panel-toplevel.c:1609
+msgid "Left Expanded Edge Panel"
+msgstr "شريط حافة منبسط على اليسار"
+
+#: ../mate-panel/panel-toplevel.c:1610
+msgid "Left Centered Panel"
+msgstr "شريط موسّط على اليسار"
+
+#: ../mate-panel/panel-toplevel.c:1611
+msgid "Left Floating Panel"
+msgstr "شريط طافي على اليسار"
+
+#: ../mate-panel/panel-toplevel.c:1612
+msgid "Left Edge Panel"
+msgstr "شريط حافة على اليسار"
+
+#: ../mate-panel/panel-toplevel.c:1616
+msgid "Right Expanded Edge Panel"
+msgstr "شريط حافة منبسط على اليمين"
+
+#: ../mate-panel/panel-toplevel.c:1617
+msgid "Right Centered Panel"
+msgstr "شريط موسّط على اليمين"
+
+#: ../mate-panel/panel-toplevel.c:1618
+msgid "Right Floating Panel"
+msgstr "شريط طافي على اليمين"
+
+#: ../mate-panel/panel-toplevel.c:1619
+msgid "Right Edge Panel"
+msgstr "شريط حافة على اليمين"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "سرعة الحركة"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "أخفي الشريط آليّا في الزاوية"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "لون الخلفية"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:4
+msgid "Background color opacity"
+msgstr "عتمة لون الخلفية"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:5
+msgid "Background image"
+msgstr "صورة الخلفية"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:6
+msgid "Background type"
+msgstr "نوع الخلفية"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:7
+msgid "Center panel on x-axis"
+msgstr "وسّط الشريط على محور س"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:8
+msgid "Center panel on y-axis"
+msgstr "وسّط الشريط على محور ص"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:10
+msgid "Enable arrows on hide buttons"
+msgstr "فعّل الأسهم على أزرار الإخفاء"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:11
+msgid "Enable hide buttons"
+msgstr "فعّل أزرار الإخفاء"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:12
+msgid "Expand to occupy entire screen width"
+msgstr "ابسط لملأ كامل عرض الشاشة"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:13
+msgid "Fit image to panel"
+msgstr "ملائمة الصورة للشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"إذا كان \"صحيح\"، ستوضع أسهم على أزرار الإخفاء. ليس لهذا المفتاح معنى إلا "
+"عند ضبط مفتاح enable_buttons لـ true."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"إذا كان \"صحيح\"، ستوضع الأزرار على كل جهة من الشريط مما يجعله من الممكن "
+"نقله إلى حافة الشاشة، و لن يظهر إلا زر واحد."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"إذا كان \"صحيح\"، فسيحرّك إخفاء أو إلغاء إخفاء الشريط عوض أن يكون تلقائيّا."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr "إذا كان \"صحيح\"، ستدور صورة الخلفية عند توجه الشريط عموديا."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"إذا كان \"صحيح\"، ستحجم الصورة (مع الحفاظ على نسبة المظهر)  لإرتفاع الشريط "
+"(إذا كان أفقيا)."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"إذا كان \"صحيح\"، يتحجم الصورة لأبعاد الشريط. لن يحافظ على نسبة مظهر الصورة."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"إذا كان \"صحيح\"، سيخفى الشريط آليا في زاوية من الشاشة عند خروج المؤشر من "
+"مساحة الشريط. نقل المؤشر فوق تلك الزاوية مرة أخرى سيعيد إظهار الشريط."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"إذا كان \"صحيح\"، سيشغل الشريط كامل عرض الشاشة (أو إرتفاعها إذا كان شريطا "
+"عموديا). في هذا النسق لا يمكن وضع الشريط إلى على حافة الشاشة. إذا ضبط لـ "
+"false، فسيكون عرض الشريط مناسبا فقط لإحتواء البريمجات و المطلقات و الأزرار "
+"عليه."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"إذا كان \"صحيح\"، فسيتجاهل مفتاح س وسيوضع الشريط وسط محور س للشاشة. إذا أعيد "
+"تحجيم الشريط فسيبقى في ذلك الموقع - مثلًا سينمو الشريط في الجهتين. إذا ضبط لـ "
+"false، فسيحدد مفتاح س موقع الشريط."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"إذا كان \"صحيح\"، فسيتجاهل مفتاح ص و سيوضع الشريط وسط محور ص للشاشة. إذا "
+"أعيد تحجيم الشريط فسيبقى في ذلك الموقع - مثلا سينمو الشريط في الجهتين. إذا "
+"ضبط لـ false، فسيحدد مفتاح ص موقع الشريط."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:24
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"قد يكون لك شريط لكل شاشة في تعيين Xinerama. يحدد هذا المفتاح الشاشة الحالية "
+"التي فيها جاري عرض الشريط."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "اسم لتعريف الشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "تأخير الإخفاء الآلي للشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "تأخير إلغاء الإخفاء الآلي للشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientation"
+msgstr "اتجاه الشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "حجم الشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "تدوير الصور على الشرائط العمودية"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:31
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "يحدد لون خلفية الشريط بتهيئة #RGB"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:32
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"يحدد الملف الذي سيستخدم لصورة الخلفيّة. إذا كانت الصورة تحوي قنات ألفا فستركب "
+"مع خلفيّة الشاشة."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:33
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"يحدّد عدد المليثواني للتأخير  قبل إعادة إظهار الشريط عند دخول المؤشر مساحة "
+"الشريط. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح auto_hide لـ true."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"يحدّد عدد المليثواني للتأخير قبل إخفاء الشريط آليّا عند خروج المؤشر من مساحة "
+"الشريط. ليس لهذا المفتاح  معنى إلا عند ضبط مفتاح auto_hide لـ true."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:35
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"يحدد عدد البكسلات المرئية عند أخفاء الشريط آليا في زاوية. ليس لهذا المفتاح "
+"معنى إلا عند ضبط مفتاح auto_hide لـ true."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:36
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"يحدّد عتامة تهيئة لون الخلفيّة. إذا لم يكن اللون معتما تماما (قيمة أقل من "
+"65535) فسيركّب اللون على صورة خلفيّة المكتب."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:37
+msgid "Stretch image to panel"
+msgstr "مدّد الصورة لكامل الشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:38
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"ارتفاع الشريط (أو عرضه لشريط عمودي). سيحدّد الشريط عند وقت العمل حجما أدنى "
+"مؤسّس على حجم الخطّ و مؤشّرات أخرى.الحجم الأقصى محدّد كربع ارتفاع (أو عرض) "
+"الشاشة."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"موقع الشريط على طول محور س. إذا ضُبط على -1، ستـُتجاهل القيمة وستـُستخدم قيمة "
+"مفتاح س. إذا كانت القيمة أكبر من 0، ستـُتجاهل قيمة مفتاح س. هذا المفتاح مفيد "
+"فقط عند النسق غير المنبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع "
+"الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"موقع الشريط على طول محور س. هذا المفتاح مفيد فقط عند النسق غير المنبسط. عند "
+"النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من "
+"قبل مفتاح الإتّجاه."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"موقع الشريط على طول محور ص. إذا ضُبط على -1، ستـُتجاهل القيمة وستـُستخدم قيمة "
+"مفتاح ص. إذا كانت القيمة أكبر من 0، ستـُتجاهل قيمة مفتاح ص. هذا المفتاح مفيد "
+"فقط عند النسق غير المنبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع "
+"الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:42
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"موقع الشريط على طول محور ص. هذا المفتاح مفيد فقط عند النسق غير المنبسط. عند "
+"النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من "
+"قبل مفتاح الإتّجاه."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"إتجاه الشريط. القيم الممكنة هي \"top\" و \"bottom\" و \"left\" و \"right\". "
+"في نسق التمديد يحدد المفتاح أي حافة شاشة سيكون عليها الشريط. في نسق اللا "
+"تمديد يكون الفرق بين الأعلى و الأسفل أقل أ هميّة. - كلاهما يؤشر على أن هذا "
+"الشريط أفقي -  لكنهما يعطيان تلميحة مفيدة لكيفية تصرف يعض أجسام الشريط، مثلا "
+"سيبثق زر قائمة قائمته تحت الشريط في شرائط \"top\"، أم في شرائط \"bottom\" "
+"ستبثق القائمة فوق الشريط."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:44
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"السرعة التي يجب أن تحدث فيها حركات الشريط. القيم الممكنة هي \"بطيء\" و "
+"\"متوسّط\" و \"سريع\". هذا المفتاح مفيد فقط عند ضبط مفتاح enable_animations "
+"لـ true."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"هذا اسم يمكن قرائته من قبل فرد لتحديد الشريط. هدفه الرئيس أن يكون عنوان "
+"نافذة الشريط ممّا يساعد في تصفّح في النوافذ."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:46
+msgid "Visible pixels when hidden"
+msgstr "البكسلات المرئية عند اخفائه"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:47
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"أي نوع خلفية ستستخدم لهذا الشريط. القيم الممكنة هي \"gtk\" - خلفية قطع GTK+ "
+"الإفتراضيّة أو \"لون\" - سيستخدم مفتاح الألوان كلون الخلفيّة أو\"صورة\" - "
+"ستسخدم في هذه الحالة الصورة المحدّدة من قبل مفتاح الصور كخلفيّة."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:48
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"يمكن أن تكون لديك شرائط على كل شاشة  عند ضبط تعيين الشاشات متعدّدة. يحدّد هذا "
+"المفتاح الشاشة الحاليّة التي جاري عرض الشريط عليها."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:49
+msgid "X co-ordinate of panel"
+msgstr "إحداثي الشريط السيني"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "إحداثي الشريط السيني، بدءًا من يمين الشاشة"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:51
+msgid "X screen where the panel is displayed"
+msgstr "شاشة X التي سيعرض فيها الشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:52
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "شاشة Xinerama التي سيعرض فيها الشريط"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:53
+msgid "Y co-ordinate of panel"
+msgstr "إحداثي الشريط الصادي"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "إحداثي الشريط الصادي، بدءًا من أسفل الشاشة"
+
+#: ../mate-panel/panel-util.c:306
+#, c-format
+msgid "Icon '%s' not found"
+msgstr "لم يعثر عل الأيقونة '%s'"
+
+#: ../mate-panel/panel-util.c:409
+#, c-format
+msgid "Could not execute '%s'"
+msgstr "لم يمكن تنفيذ '%s'"
+
+#: ../mate-panel/panel-util.c:645
+msgid "file"
+msgstr "ملف"
+
+#: ../mate-panel/panel-util.c:822
+msgid "Home Folder"
+msgstr "مجلّد المنزل"
+
+#. Translators: this is the same string as the one found in
+#. * caja
+#: ../mate-panel/panel-util.c:834
+msgid "File System"
+msgstr "نظام ملفات"
+
+#: ../mate-panel/panel-util.c:1007
+msgid "Search"
+msgstr "بحث"
+
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../mate-panel/panel-util.c:1053
+#, c-format
+msgid "%1$s: %2$s"
+msgstr "‏%1$s: %2$s"
+
+#: ../mate-panel/panel.c:474
+#, c-format
+msgid "Open URL: %s"
+msgstr "افتح العنوان: %s"
+
+#: ../mate-panel/panel.c:1309
+msgid "Delete this drawer?"
+msgstr "هل تريد حذف هذا الدرج؟"
+
+#: ../mate-panel/panel.c:1310
+msgid ""
+"When a drawer is deleted, the drawer and its\n"
+"settings are lost."
+msgstr ""
+"عند حذف الدرج، يحذف الدرج مع\n"
+"خصائصه."
+
+#: ../mate-panel/panel.c:1313
+msgid "Delete this panel?"
+msgstr "هل تريد حذف هذا الشريط؟"
+
+#: ../mate-panel/panel.c:1314
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"عند حذف الشريط، يحذف الشريط مع\n"
+"خصائصه."
+
+#: ../libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the MATE-2.0 panel"
+msgstr "بريمج بسيط لاختبار شريط جنوم 2.0"
+
+#: ../libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:2
+msgid "Test MateComponent Applet"
+msgstr "اختبر بريمج بونوبو"
+
+#: ../libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:3
+msgid "Test MateComponent Applet Factory"
+msgstr "اختبر مصنع بريمج بونوبو"
+
+#: ../libmate-panel-applet/panel-test-applets.c:34
+msgid "Specify an applet IID to load"
+msgstr "حدّد هوية الواجهة لبريمج لتحميلها"
+
+#: ../libmate-panel-applet/panel-test-applets.c:35
+msgid ""
+"Specify a mateconf location in which the applet preferences should be stored"
+msgstr "حدّد موقع mateconf يجب أن تخزن فيه تفضيلات البريمج"
+
+#: ../libmate-panel-applet/panel-test-applets.c:36
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr "حدّد الحجم الأصلي للبريمج (صغير جدا جدا أو متوسط أو كبير الخ)"
+
+#: ../libmate-panel-applet/panel-test-applets.c:37
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr ""
+"حدّد الاتجاه الأصلي للبريمج (إلى الأعلى أو إلى الأسفل أو إلى اليسار أو إلى "
+"اليمين)"
+
+#: ../libmate-panel-applet/panel-test-applets.c:61
+msgctxt "Size"
+msgid "XX Small"
+msgstr "صغير جدًا جدًا"
+
+#: ../libmate-panel-applet/panel-test-applets.c:62
+msgctxt "Size"
+msgid "X Small"
+msgstr "صغير جدًا"
+
+#: ../libmate-panel-applet/panel-test-applets.c:63
+msgctxt "Size"
+msgid "Small"
+msgstr "صغير"
+
+#: ../libmate-panel-applet/panel-test-applets.c:64
+msgctxt "Size"
+msgid "Medium"
+msgstr "متوسط"
+
+#: ../libmate-panel-applet/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Large"
+msgstr "كبير"
+
+#: ../libmate-panel-applet/panel-test-applets.c:66
+msgctxt "Size"
+msgid "X Large"
+msgstr "كبير جدًا"
+
+#: ../libmate-panel-applet/panel-test-applets.c:67
+msgctxt "Size"
+msgid "XX Large"
+msgstr "كبير جدًا جدًا"
+
+#: ../libmate-panel-applet/panel-test-applets.c:129
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "لم يمكن تحميل البريمج %s"
+
+#. This is an utility to easily test various applets
+#: ../libmate-panel-applet/panel-test-applets.ui.h:2
+msgid "Test applet utility"
+msgstr "أداة بريمج الاختبار"
+
+#: ../libmate-panel-applet/panel-test-applets.ui.h:3
+msgid "_Applet:"
+msgstr "بريم_ج:"
+
+#: ../libmate-panel-applet/panel-test-applets.ui.h:5
+msgid "_Prefs Dir:"
+msgstr "د_ليل التفضيلات:"
+
+#~ msgid "If true, display time in Universal Coordinated Time zone."
+#~ msgstr "إذا ضبط لـ صحيح، فسيعرض الوقت بتهيئة التوقيت العالمي المنسّق."
+
+#~ msgid "Browse icons"
+#~ msgstr "تصفح الإيقونات"
+
+#~ msgid "<b>Clock Options</b>"
+#~ msgstr "<b>خيارات الساعة</b>"
+
+#~ msgid "<b>Animation</b>"
+#~ msgstr "<b>صور متحركة</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>عام</b>"
+
+#~ msgid "<b>Workspaces</b>"
+#~ msgstr "<b>مساحات العمل</b>"
+
+#~ msgid "Disable Lock Screen"
+#~ msgstr "عطّل قفل الشاشة"
+
+#~ msgid ""
+#~ "If true, the panel will not allow a user to lock their screen, by "
+#~ "removing access to the lock screen menu entries."
+#~ msgstr ""
+#~ "إذا ضبط true، لن يسمح الشريط للمستخدم بقفل الشاشة ،بحذف النفاذ إلى خانات "
+#~ "قائمة قفل الشاشة."
+
+#~ msgid "Command entry"
+#~ msgstr "خانة الأمر"
+
+#~ msgid "Enter a command string here to run it."
+#~ msgstr "أدخل أمرا هنا لتنفيذه."
+
+#~ msgid "Failed to launch time configuration tool: %s"
+#~ msgstr "فشل تشغيل أداة إعداد الوقت: %s"
+
+#~ msgid ""
+#~ "Failed to locate a program for configuring the date and time. Perhaps "
+#~ "none is installed?"
+#~ msgstr ""
+#~ "فشل تحديد مكان برنامج لإعداد التاريخ و الوقت. ربما لأنه لا وجود لبرنامج "
+#~ "مثبّت؟"
+
+#~ msgid "<b>Time Settings</b>"
+#~ msgstr "<b>إعدادات الوقت</b>"
+
+#~ msgid "Time Settings"
+#~ msgstr "إعدادات الوقت"
+
+#~ msgid ""
+#~ "This key specifies the program to run in order to configure the time."
+#~ msgstr "يحدّد هذا المفتاح البرنامج الذي سيشغّل لإعداد الوقت."
+
+#~ msgid "_Command:"
+#~ msgstr "الأم_ر:"
+
+#~ msgid "There was an error displaying help: %s"
+#~ msgstr "حصل خطأ أثناء عرض المساعدة: %s"
+
+#~ msgid "MATE Panel Shell"
+#~ msgstr "صدفة شريط جنوم"
+
+#~ msgid "Error watching mateconf key '%s': %s"
+#~ msgstr "خطأ مراقبة مفتاح mateconf '%s': %s"
+
+#~ msgid "Error loading mateconf directory '%s': %s"
+#~ msgstr "خطأ تحميل دليل mateconf '%s': %s"
+
+#~ msgid "Error getting value for '%s': %s"
+#~ msgstr "خطأ تلقي قيمة لـ '%s': %s"
+
+#~ msgid "Desktop Folder|Desktop"
+#~ msgstr "مجلد سطح المكتب"
+
+#~ msgid "panel:showusername|1"
+#~ msgstr "1"
+
+#~ msgid "Orientation|Top"
+#~ msgstr "أعلى"
+
+#~ msgid "Orientation|Bottom"
+#~ msgstr "أسفل"
+
+#~ msgid "Orientation|Left"
+#~ msgstr "يسار"
+
+#~ msgid "Orientation|Right"
+#~ msgstr "يمين"
+
+#~ msgid ""
+#~ "The panel could not register with the matecomponent-activation server (error "
+#~ "code: %d) and will exit.\n"
+#~ "It may be automatically restarted."
+#~ msgstr ""
+#~ "حدثت مشكلة عند محاولة تسجيل اللوحة مع خادوم matecomponent-activation. (شفرة "
+#~ "الخطأ هي: %Id) وستخرج اللوحة الآن.\n"
+#~ "سوف يُعاد التشغيل تلقائيًا."
+
+#~ msgid "The panel has encountered a fatal error"
+#~ msgstr "واجهت اللوحة خطأ فادحًا"
+
+#~ msgid "Force the panel to not be automatically restarted"
+#~ msgstr "إجبار اللوحة على عدم إعادة التشغيل تلقائيًا"
+
+#~ msgid "Incomplete '%s' background type received"
+#~ msgstr "تلقي نوع خلفية '%s' غير تام"
+
+#~ msgid "Incomplete '%s' background type received: %s"
+#~ msgstr "تلقي نوع خلفية '%s' غير تام: %s"
+
+#~ msgid "Failed to get pixmap %s"
+#~ msgstr "فشل تلقي البكسماب %s"
+
+#~ msgid "Unknown background type received"
+#~ msgstr "استقبل نوع خلفية مجهول"
+
+#~ msgid "The Applet's containing Panel's size in pixels"
+#~ msgstr "البريمج الذي يحوي حجم لوحة المهام بالبيكسل"
+
+#~ msgid "The Applet's containing Panel's background color or pixmap"
+#~ msgstr "البريمج الذي يحوي لون خلفية لوحة المهام أو رسمتها البيكسلية"
+
+#~ msgid "The Applet's flags"
+#~ msgstr "شارات البريمجات"
+
+#~ msgid "Ranges that hint what sizes are acceptable for the applet"
+#~ msgstr "المدى الملمح لأحجام البريمج المقبولة"
+
+#~ msgid "The Applet's containing Panel is locked down"
+#~ msgstr "الشريط الحاوي للبريمج مقفول"
+
+#~ msgid "Find _Next"
+#~ msgstr "ابحث عن ال_تالي"
+
+#~ msgid "Find..."
+#~ msgstr "ابحث..."
+
+#~ msgid "_Find:"
+#~ msgstr "_ابحث:"
+
+#~ msgid "Enter Password"
+#~ msgstr "ادخل كلمة السّر"
+
+#~ msgid "Could not find a suitable application."
+#~ msgstr "لا يمكن إيجاد تطبيق مناسب."

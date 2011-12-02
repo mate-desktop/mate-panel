@@ -1,0 +1,263 @@
+<!-- ##### SECTION Title ##### -->
+Panel Applet MateConf Utilities
+
+<!-- ##### SECTION Short_Description ##### -->
+Utility methods for manipulating per-applet MateConf preferences.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Applets typically define a set of preferences using a schemas
+file and mate_panel_applet_add_preferences(). Such preferences apply
+only to an individual applet instance. For example, you may add
+two clock applets to the panel and configure them differently.
+</para>
+
+<para>
+In order for the preferences to only apply to a single applet,
+each applet must have a seperate MateConf key for each of these
+preferences. The methods described below provide convient wrappers
+around the usual #MateConfClient functions and operate on these
+per-applet keys.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_get_full_key ##### -->
+<para>
+Access the full path for an individual per-applet MateConf key. Using
+the returned path you may directly modify the preference using
+the usual MateConf functions without using any of the convenience
+wrappers described below.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@Returns: The full MateConf key - free using g_free().
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_get_bool ##### -->
+<para>
+Convience wrapper for mateconf_client_get_bool() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_get_bool()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@opt_error: Optional #GError**.
+@Returns: The bool value of the key.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_get_int ##### -->
+<para>
+Convience wrapper for mateconf_client_get_int() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_get_int()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@opt_error: Optional #GError**.
+@Returns: The integer value of the key.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_get_string ##### -->
+<para>
+Convience wrapper for mateconf_client_get_string() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_get_string()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@opt_error: Optional #GError**.
+@Returns: The string value of the key, or %NULL if unset.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_get_float ##### -->
+<para>
+Convience wrapper for mateconf_client_get_float() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_get_float()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@opt_error: Optional #GError**.
+@Returns: The floating point value of the key.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_get_list ##### -->
+<para>
+Convience wrapper for mateconf_client_get_list() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_get_list()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@list_type: The MateConf value type of the list elements.
+@opt_error: Optional #GError**.
+@Returns: The list of values set for the key.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_get_value ##### -->
+<para>
+Convience wrapper for mateconf_client_get_value() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_get_value()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@opt_error: Optional #GError**.
+@Returns: The MateConf value set for the key.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_set_bool ##### -->
+<para>
+Convience wrapper for mateconf_client_set_bool() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_set_bool()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@the_bool: The boolean value to set the key with.
+@opt_error: Optional #GError**.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_set_int ##### -->
+<para>
+Convience wrapper for mateconf_client_set_int() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_set_int()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@the_int: The integer value to set the key with.
+@opt_error: Optional #GError**.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_set_string ##### -->
+<para>
+Convience wrapper for mateconf_client_set_string() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_set_string()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@the_string: The string value to set the key with.
+@opt_error: Optional #GError**.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_set_float ##### -->
+<para>
+Convience wrapper for mateconf_client_set_float() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_set_float()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@the_float: The floating point value to set the key with.
+@opt_error: Optional #GError**.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_set_list ##### -->
+<para>
+Convience wrapper for mateconf_client_set_list() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_set_list()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@list_type: The MateConf value type of the list items.
+@list: The list of values to set the key with.
+@opt_error: Optional #GError**.
+
+
+<!-- ##### FUNCTION mate_panel_applet_mateconf_set_value ##### -->
+<para>
+Convience wrapper for mateconf_client_set_value() which operates
+on the individual per-applet key.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which mateconf_client_set_value()
+returns.
+</para>
+
+@applet: The #MatePanelApplet.
+@key: The key name of the preference.
+@value: The MateConf value to set the key with.
+@opt_error: Optional #GError**.
+
+

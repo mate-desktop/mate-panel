@@ -1,0 +1,250 @@
+Panel session/configuration handling
+====================================
+
+(Please read the session-management docs in porting-docs before
+reading this)
+
+Panel global configuration
+--------------------------
+All the panel configuration options that are not per panel are stored
+in MateConf in the /apps/panel/global folder. There is a schema for it,
+and sysadms can override the defaults by changing the defaults in the
+default database.
+
+It will look like this
+
+ /apps/panel/global/run_dialog_key
+ /apps/panel/global/auto_hide_speed
+ /apps/panel/global/auto_hide_delay
+ 
+etc.
+ 
+Panel Profiles
+--------------
+
+All the per-panel setup is stored in named profiles. Initially the
+"Default" profile is created for you, and if you never create a new
+profile everything seems to the user just like profiles don't exist.
+The profiles contain all the per-panel settings and the per-applet
+settings.
+
+Each profile stores it's configuration in MateConf in a separate prefix,
+like this:
+ /apps/panel/profile/Default/
+ /apps/panel/profile/Work/
+ /apps/panel/profile/Home/
+ /apps/panel/profile/Laptop/
+
+When a new profile is created it's content is copied from a default
+profile choosen depending on the screen size. The defaults are stored
+in /apps/panel/default-profiles, like this:
+
+ /apps/panel/default-profiles/small/
+ /apps/panel/default-profiles/medium/
+ /apps/panel/default-profiles/large/
+
+These are delivered in a serialized fashion in mate-core, and the (to
+be written by hp) mateconf deserialization app is used to install
+them at make install/package install time. Then the sysadmin can
+change these as he sees fit. I can imagine a "make current profile be
+default" button somewhere.
+
+[ This is a area where opinions differ.
+
+ alex: 
+     The active profile can typically be changed by the user any time
+     using a popdown menu or suchlike. (Just imagine selecting a new
+     profile and all the panels will go swooosh and pop up in their
+     new places with different applets and stuff.)
+
+ _vicious_:
+     The name of the active profile is always the same as the current
+     gsm named session.
+]
+
+Per-Session Data
+----------------
+
+NOTE: This section only applies to alex version aboce. In _vicious_
+version, there would be no real per-session data, just the session name.
+
+The only per-session data saved by the panel is which profile it
+uses. In general per-session data should only be trivial things that
+the user won't be mad when(if?) he loses. According to hp's
+session-management docs in the porting-docs:
+
+       This can all be kind of a pain, so apps are encouraged to 
+       save all their state as part of the command they pass to the
+       session manager, and avoid saving persistent files.  That is, it's
+       easier and more robust to have a command line option
+       --with-window-count=3 than it is to store the window count in MateConf under
+       /apps/terminal/sessions/4543-3252345-6745/window_count
+       and provide a discard command to clear that key.
+
+It seems unnecessary to store the panel per session data in MateConf, so
+we would just store the command line saved to the session manager as
+"--profile=Laptop" (replace laptop by name of active profile). This
+way we won't have problems cleaning up MateConf either.
+
+Per-Panel configuration
+-----------------------
+
+The panel profile data would looks something like this:
+
+ /apps/panel/profile/Laptop/panels/12345/panel_type
+                                        /some_per-panel_setting
+                                        /which_applet_ids_are_in_this_panel  
+                                  /33214/ ...
+ /apps/panel/profile/Laptop/applets/43234/applet_type (oaf id?)
+			                 /some_applet_setting
+				         /prefs/   <- This is where the applet itself 
+                                                     stores it's per-instance prefs.
+                                   /56378/ ...
+			  					    
+This means that the panel profile configuration data is a list
+of panels with unique ids, that has per panel settings, and a list of
+applets with unique ids (applets may move between panels, and need to
+keep their prefs, so they are not in the panel subfolder).
+
+Each applet folder also have a "prefs" folder
+(e.g. /apps/panel/profile/Laptop/applets/43234/prefs/) which is used by the
+applet to store it's per instance data.
+
+Applet Prefs
+------------
+
+An applet has two sorts of preferences, per-instance and global. The
+per-instace perferences are options that may be different for each
+instance of the applet (such as number of rows in the pager), while
+the global preferences are preferences that are shared by all running
+applets of that type (and even non-running ones in different
+profiles). Examples of global preferences may be tooltip timeouts, or
+in deskguide the number of windows in a class before grouping starts.
+
+It is important that the preferences ui for the applet separates the
+global and the per-instance settings in some way, so users do not get
+totally confused about what is applied to all instances and what is not.
+
+Global applet preferences are managed entierly by the applet, and is
+normally stored in MateConf in a key such as:
+
+ /apps/applet/deskguide/grouping_limit
+
+Global settings have normal MateConf behaviour, and the applet should
+install a schema for them.
+
+Per-instance preferences are private to the applet. You should write
+schemas for them for good measure, but currently MateConf doesn't handle
+dynamic keys well, so they will not be installed. In the future this
+will be fixed though. The keys are private anyway, so not having
+schemas does not matter that much, since other apps should not modify
+them (and can't find them since they are dynamic and prefixed with
+strange id's).
+
+When the panel instantiates an applet (first time or not) it will give
+the applet a MateConf prefix (see above) for it to read and write it's
+per-instance configuration from. Since there is no way currently to
+have schemas for these dynamic prefixes there won't be any default
+values for the applet settings. Thus we have to hardcode the settings
+in the applet.
+
+So the way to read prefs changes slightly. You have to try reading,
+and if there is no data in mateconf, use the default value. The way to
+use this is to call mateconf_client_get(), which return NULL if the value
+is unset and has no default (this means it will automagically work
+whenever we implement dynamic prefix schemas).
+
+We should probably wrap the mateconf calls in some utility functions like
+this: 
+
+gint
+applet_mateconf_get_int_with_default (SomeAppletType *applet,
+		  		   const gchar* key,
+                                   gint default,
+                                   GError** err)
+{
+  GError* error = NULL;
+  MateConfValue* val;
+  MateConfClient *client = panel_mateconf_get_client ();
+  gchar *full_key; 
+
+  g_return_val_if_fail(err == NULL || *err == NULL, 0);
+
+  full_key = applet_get_full_key (applet, key);
+  val = get(client, full_key, TRUE, NULL, NULL, &error);
+  g_free (full_key);
+
+  if (val != NULL)
+    {
+      gint retval = def;
+
+      g_assert(error == NULL);
+      
+      if (check_type(key, val, MATECONF_VALUE_INT, &error))
+        retval = mateconf_value_get_int(val);
+      else
+        handle_error(client, error, err);
+
+      mateconf_value_free(val);
+
+      return retval;
+    }
+  else
+    return default;
+}
+
+And the applet would use this like this
+
+#define TOOLTIP_TIMEOUT_DEFAULT 100 /* msec */
+
+ timeout = applet_mateconf_get_int_with_default ("tooltip_timeout", TOOLTIP_TIMEOUT_DEFAULT, NULL);
+
+It is important that we have actual defines for the defaults, so as to
+not repeat the problems we had previously, with different defaults in
+different places.
+
+Session Manager interaction
+---------------------------
+
+[NOTE: Only applies to alex version, _vicious_ one doesn't even need this ]
+
+The panels responds to the SaveYourself request, but does not need to
+propagate this request to the applets, since the applet settings are
+stored per-instance-in-a-profile, and not in a session. This makes
+things robust (won't lose applet setup), and easier to understand for
+the user.
+
+The only thing the panel needs to do on SaveSetup is to pass the
+command line containing the active profile "--profile=Laptop" to the
+session manager. There are no MateConf cleanup needed, or no session id
+thrown about at all.
+
+
+Full example MateConf tree
+-----------------------
+/apps/applet/deskguide/grouping_limit
+                       ...
+/apps/applet/clock/format
+                   ...
+/apps/panel/global/run_dialog_key
+/apps/panel/global/auto_hide_speed
+/apps/panel/global/auto_hide_delay
+                   ...
+/apps/panel/profile/Default/panels/12345/type
+					 ...
+/apps/panel/profile/Default/panels/54543/type
+					 ...
+/apps/panel/profile/Default/applets/62568/oaf_iid
+/apps/panel/profile/Default/applets/62568/prefs/ ...
+				          ...
+/apps/panel/profile/Default/applets/43355/oaf_iid
+/apps/panel/profile/Default/applets/43355/prefs/ ...
+                                          ...
+/apps/panel/profile/Coding/ ...
+/apps/panel/profile/Gaming/ ..
+/apps/panel/default-profiles/small/ (panels and applets) 
+/apps/panel/default-profiles/medium/ (panels and applets) 
+/apps/panel/default-profiles/large/ (panels and applets)
+/schemas/apps/applet/deskguide/
+/schemas/apps/applet/clock/
+/schemas/apps/panel/global/

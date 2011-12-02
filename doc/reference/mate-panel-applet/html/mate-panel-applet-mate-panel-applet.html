@@ -1,0 +1,948 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MatePanelApplet</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Panel Applet Library Reference Manual">
+<link rel="up" href="mate-panel-applet.html" title="The Panel Applet Library">
+<link rel="prev" href="mate-panel-applet.html" title="The Panel Applet Library">
+<link rel="next" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html" title="Panel Applet MateConf Utilities">
+<meta name="generator" content="GTK-Doc V1.15.1 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="mate-panel-applet.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="mate-panel-applet.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Panel Applet Library Reference Manual</th>
+<td><a accesskey="n" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#mate-panel-applet-mate-panel-applet.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#mate-panel-applet-mate-panel-applet.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#mate-panel-applet-mate-panel-applet.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#mate-panel-applet-mate-panel-applet.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+                   | 
+                  <a href="#mate-panel-applet-mate-panel-applet.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#mate-panel-applet-mate-panel-applet.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="mate-panel-applet-mate-panel-applet"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="mate-panel-applet-mate-panel-applet.top_of_page"></a>MatePanelApplet</span></h2>
+<p>MatePanelApplet — The MatePanelApplet object.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="mate-panel-applet-mate-panel-applet.synopsis"></a><h2>Synopsis</h2>
+<a name="MatePanelApplet"></a><pre class="synopsis">
+#include &lt;mate-panel-applet.h&gt;
+
+struct              <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet-struct" title="struct MatePanelApplet">MatePanelApplet</a>;
+enum                <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletOrient" title="enum MatePanelAppletOrient">MatePanelAppletOrient</a>;
+enum                <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletBackgroundType" title="enum MatePanelAppletBackgroundType">MatePanelAppletBackgroundType</a>;
+enum                <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags">MatePanelAppletFlags</a>;
+<span class="returnvalue">gboolean</span>            (<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFactoryCallback" title="MatePanelAppletFactoryCallback ()">*MatePanelAppletFactoryCallback</a>)       (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *iid</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
+<span class="returnvalue">GtkWidget</span> *         <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-new" title="mate_panel_applet_new ()">mate_panel_applet_new</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletOrient" title="enum MatePanelAppletOrient"><span class="returnvalue">MatePanelAppletOrient</span></a>   <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-orient" title="mate_panel_applet_get_orient ()">mate_panel_applet_get_orient</a>             (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);
+<span class="returnvalue">guint</span>               <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-size" title="mate_panel_applet_get_size ()">mate_panel_applet_get_size</a>               (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);
+<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletBackgroundType" title="enum MatePanelAppletBackgroundType"><span class="returnvalue">MatePanelAppletBackgroundType</span></a>  <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-background" title="mate_panel_applet_get_background ()">mate_panel_applet_get_background</a>  (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code><span class="type">GdkColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><span class="type">GdkPixmap</span> **pixmap</code></em>);
+<span class="returnvalue">gchar</span> *             <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-preferences-key" title="mate_panel_applet_get_preferences_key ()">mate_panel_applet_get_preferences_key</a>    (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-add-preferences" title="mate_panel_applet_add_preferences ()">mate_panel_applet_add_preferences</a>        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *schema_dir</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="returnvalue">MatePanelAppletFlags</span></a>    <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-flags" title="mate_panel_applet_get_flags ()">mate_panel_applet_get_flags</a>              (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-set-flags" title="mate_panel_applet_set_flags ()">mate_panel_applet_set_flags</a>              (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a> flags</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-set-size-hints" title="mate_panel_applet_set_size_hints ()">mate_panel_applet_set_size_hints</a>         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">int</span> *size_hints</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> n_elements</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> base_size</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-locked-down" title="mate_panel_applet_get_locked_down ()">mate_panel_applet_get_locked_down</a>        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-request-focus" title="mate_panel_applet_request_focus ()">mate_panel_applet_request_focus</a>          (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint32</span> timestamp</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-setup-menu" title="mate_panel_applet_setup_menu ()">mate_panel_applet_setup_menu</a>             (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *xml</code></em>,
+                                                         <em class="parameter"><code><span class="type">GtkActionGroup</span> *action_group</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-setup-menu-from-file" title="mate_panel_applet_setup_menu_from_file ()">mate_panel_applet_setup_menu_from_file</a>   (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *filename</code></em>,
+                                                         <em class="parameter"><code><span class="type">GtkActionGroup</span> *action_group</code></em>);
+<span class="returnvalue">int</span>                 <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-factory-main" title="mate_panel_applet_factory_main ()">mate_panel_applet_factory_main</a>           (<em class="parameter"><code>const <span class="type">gchar</span> *factory_id</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> out_process</code></em>,
+                                                         <em class="parameter"><code><span class="type">GType</span> applet_type</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFactoryCallback" title="MatePanelAppletFactoryCallback ()"><span class="type">MatePanelAppletFactoryCallback</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> data</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----GInitiallyUnowned
+         +----GtkObject
+               +----GtkWidget
+                     +----GtkContainer
+                           +----GtkBin
+                                 +----GtkEventBox
+                                       +----MatePanelApplet
+</pre>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+MatePanelApplet implements
+ AtkImplementorIface and  GtkBuildable.</p>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--background" title='The "background" property'>background</a>"               <span class="type">gchar</span>*                : Read / Write
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--closure" title='The "closure" property'>closure</a>"                  <span class="type">gpointer</span>              : Read / Write / Construct Only
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--connection" title='The "connection" property'>connection</a>"               <span class="type">GDBusConnection</span>*      : Read / Write / Construct Only
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--flags" title='The "flags" property'>flags</a>"                    <span class="type">guint</span>                 : Read / Write
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--id" title='The "id" property'>id</a>"                       <span class="type">gchar</span>*                : Read / Write / Construct Only
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--locked" title='The "locked" property'>locked</a>"                   <span class="type">gboolean</span>              : Read / Write
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--locked-down" title='The "locked-down" property'>locked-down</a>"              <span class="type">gboolean</span>              : Read / Write
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--orient" title='The "orient" property'>orient</a>"                   <span class="type">guint</span>                 : Read / Write
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--prefs-key" title='The "prefs-key" property'>prefs-key</a>"                <span class="type">gchar</span>*                : Read / Write
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--size" title='The "size" property'>size</a>"                     <span class="type">guint</span>                 : Read / Write
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet--size-hints" title='The "size-hints" property'>size-hints</a>"               <span class="type">gpointer</span>              : Read / Write
+</pre>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet-change-background" title='The "change-background" signal'>change-background</a>"                              : <code class="literal">Run Last</code>
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet-change-orient" title='The "change-orient" signal'>change-orient</a>"                                  : <code class="literal">Run Last</code>
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet-change-size" title='The "change-size" signal'>change-size</a>"                                    : <code class="literal">Run Last</code>
+  "<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet-move-focus-out-of-applet" title='The "move-focus-out-of-applet" signal'>move-focus-out-of-applet</a>"                       : <code class="literal">Action</code>
+</pre>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> object is an object which encapsulates an applet. It
+is a <span class="type">GtkContainer</span> which may contain a single widget. This widget, in
+turn, should contain all widgets exposed by the applet.
+</p>
+<p>
+A <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> is associated with a <span class="type">MateComponentControl</span>. The control makes
+the cross process UI emmbedding required by applets possible.
+</p>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="MatePanelApplet-struct"></a><h3>struct MatePanelApplet</h3>
+<pre class="programlisting">struct MatePanelApplet;</pre>
+<p>
+The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> struct contains private data only.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelAppletOrient"></a><h3>enum MatePanelAppletOrient</h3>
+<pre class="programlisting">typedef enum {
+	MATE_PANEL_APPLET_ORIENT_UP,
+	MATE_PANEL_APPLET_ORIENT_DOWN,
+	MATE_PANEL_APPLET_ORIENT_LEFT,
+	MATE_PANEL_APPLET_ORIENT_RIGHT
+} MatePanelAppletOrient;
+</pre>
+<p>
+The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletOrient" title="enum MatePanelAppletOrient"><span class="type">MatePanelAppletOrient</span></a> type specifies the orientation of the applet. The
+values may seem backward (e.g. <code class="literal">MATE_PANEL_APPLET_ORIENT_LEFT</code> means the panel
+is on the right hand side), but this is because the value is representative
+of the applet's <span class="emphasis"><em>orientation</em></span>, not the panel's position.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelAppletBackgroundType"></a><h3>enum MatePanelAppletBackgroundType</h3>
+<pre class="programlisting">typedef enum {
+	PANEL_NO_BACKGROUND,
+	PANEL_COLOR_BACKGROUND,
+	PANEL_PIXMAP_BACKGROUND
+} MatePanelAppletBackgroundType;
+</pre>
+<p>
+The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletBackgroundType" title="enum MatePanelAppletBackgroundType"><span class="type">MatePanelAppletBackgroundType</span></a> enumerated type specifies the type of
+background of a panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="PANEL-NO-BACKGROUND:CAPS"></a><span class="term"><code class="literal">PANEL_NO_BACKGROUND</code></span></p></td>
+<td>The panel has no background, the default is used.
+</td>
+</tr>
+<tr>
+<td><p><a name="PANEL-COLOR-BACKGROUND:CAPS"></a><span class="term"><code class="literal">PANEL_COLOR_BACKGROUND</code></span></p></td>
+<td>The panel has a color, i.e rgb value,
+background.
+</td>
+</tr>
+<tr>
+<td><p><a name="PANEL-PIXMAP-BACKGROUND:CAPS"></a><span class="term"><code class="literal">PANEL_PIXMAP_BACKGROUND</code></span></p></td>
+<td> The panel has either an image background
+or is translucent.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelAppletFlags"></a><h3>enum MatePanelAppletFlags</h3>
+<pre class="programlisting">typedef enum {
+	MATE_PANEL_APPLET_FLAGS_NONE   = 0,
+	MATE_PANEL_APPLET_EXPAND_MAJOR = 1 &lt;&lt; 0,
+	MATE_PANEL_APPLET_EXPAND_MINOR = 1 &lt;&lt; 1,
+	MATE_PANEL_APPLET_HAS_HANDLE   = 1 &lt;&lt; 2
+} MatePanelAppletFlags;
+</pre>
+<p>
+The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a> associated with the applet are boolean flags which
+the panel may read in order to figure out how to handle the applet.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="PANEL-APPLET-FLAGS-NONE:CAPS"></a><span class="term"><code class="literal">MATE_PANEL_APPLET_FLAGS_NONE</code></span></p></td>
+<td>No flags are to be associated with the applet.
+</td>
+</tr>
+<tr>
+<td><p><a name="PANEL-APPLET-EXPAND-MAJOR:CAPS"></a><span class="term"><code class="literal">MATE_PANEL_APPLET_EXPAND_MAJOR</code></span></p></td>
+<td>The applet should expand horizontally on an
+horizontal panel and vertically on a vertical panel - e.g. the behaviour
+of the Window List applet.
+</td>
+</tr>
+<tr>
+<td><p><a name="PANEL-APPLET-EXPAND-MINOR:CAPS"></a><span class="term"><code class="literal">MATE_PANEL_APPLET_EXPAND_MINOR</code></span></p></td>
+<td>The applet should expand vertically on an
+horizontal panel and horizontally on a vertical panel. Most applets should
+set this flag in order to utilise the full panel width and allow the applet
+to be Fitt's Law compliant.
+</td>
+</tr>
+<tr>
+<td><p><a name="PANEL-APPLET-HAS-HANDLE:CAPS"></a><span class="term"><code class="literal">MATE_PANEL_APPLET_HAS_HANDLE</code></span></p></td>
+<td>The panel should draw a grab handle around the
+applet - e.g. the Window List and Notification Area applets both set this
+flag.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelAppletFactoryCallback"></a><h3>MatePanelAppletFactoryCallback ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            (*MatePanelAppletFactoryCallback)       (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *iid</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
+<p>
+This callback is invoked when the applet is loaded onto the panel. Typically
+the callback will check that <em class="parameter"><code>iid</code></em> matches and fill the <em class="parameter"><code>applet</code></em> with the
+widgets which make up the applet.
+</p>
+<p>
+Prior to the callback being invoked the <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> (or an instance of the
+sub-class specified by the <span class="type">GType</span> passed to the factory macros) is instantiated
+and initialized.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iid</code></em> :</span></p></td>
+<td>The MateComponent IID of the applet requested.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>The data passed to the factory macros.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> on success, <code class="literal">FALSE</code> on failure.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-new"></a><h3>mate_panel_applet_new ()</h3>
+<pre class="programlisting"><span class="returnvalue">GtkWidget</span> *         mate_panel_applet_new                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>. This function is typically not
+useful as the applet is created before the <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFactoryCallback" title="MatePanelAppletFactoryCallback ()"><span class="type">MatePanelAppletFactoryCallback</span></a>
+is invoked.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-get-orient"></a><h3>mate_panel_applet_get_orient ()</h3>
+<pre class="programlisting"><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletOrient" title="enum MatePanelAppletOrient"><span class="returnvalue">MatePanelAppletOrient</span></a>   mate_panel_applet_get_orient             (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);</pre>
+<p>
+Get the current orientation of the applet.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The orientation of the applet.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-get-size"></a><h3>mate_panel_applet_get_size ()</h3>
+<pre class="programlisting"><span class="returnvalue">guint</span>               mate_panel_applet_get_size               (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);</pre>
+<p>
+Get the current size hint for the panel. The size hint is
+not useful for most applets.
+</p>
+<p>
+Note: The return value is <span class="emphasis"><em>not an integer value
+specifying the pixel size of the panel.</em></span> Do not
+use this value to calculate the size of the applet. Use it
+only as a hint by which to decide the applet's layout.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The panel's size hint.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-get-background"></a><h3>mate_panel_applet_get_background ()</h3>
+<pre class="programlisting"><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletBackgroundType" title="enum MatePanelAppletBackgroundType"><span class="returnvalue">MatePanelAppletBackgroundType</span></a>  mate_panel_applet_get_background  (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code><span class="type">GdkColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><span class="type">GdkPixmap</span> **pixmap</code></em>);</pre>
+<p>
+Returns the current background type. If the background
+type is <a class="link" href="mate-panel-applet-mate-panel-applet.html#PANEL-NO-BACKGROUND:CAPS"><code class="literal">PANEL_NO_BACKGROUND</code></a> both <em class="parameter"><code>color</code></em> and <em class="parameter"><code>pixmap</code></em> will
+be unaffected. If the background type is <a class="link" href="mate-panel-applet-mate-panel-applet.html#PANEL-COLOR-BACKGROUND:CAPS"><code class="literal">PANEL_COLOR_BACKGROUND</code></a>
+then <em class="parameter"><code>color</code></em> will contain the current panel background colour.
+If the background type is <a class="link" href="mate-panel-applet-mate-panel-applet.html#PANEL-PIXMAP-BACKGROUND:CAPS"><code class="literal">PANEL_PIXMAP_BACKGROUND</code></a>, <em class="parameter"><code>pixmap</code></em> will
+contain a pointer to a <span class="type">GdkPixmap</span> which is a copy of the applet's
+portion of the panel's background pixmap.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>A <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td>A <span class="type">GdkColor</span> to be filled in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixmap</code></em> :</span></p></td>
+<td>Returned <span class="type">GdkPixmap</span>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The background type.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-get-preferences-key"></a><h3>mate_panel_applet_get_preferences_key ()</h3>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             mate_panel_applet_get_preferences_key    (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);</pre>
+<p>
+Returns the MateConf path to the directory containing the applet's
+per-instance preference keys. Using this you may construct the
+full path for the applet's preference keys. See
+<a class="xref" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html" title="Panel Applet MateConf Utilities"><span class="refentrytitle"><a name="mate-panel-applet-Panel-Applet-MateConf-Utilities.top_of_page"></a>Panel Applet MateConf Utilities</span>(3)</a> for
+more information.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A MateConf path.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-add-preferences"></a><h3>mate_panel_applet_add_preferences ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_add_preferences        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *schema_dir</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Associates each schema in <em class="parameter"><code>schema_dir</code></em> with a key in the applet's
+preferences directory (i.e. the directory returned by
+<a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-preferences-key" title="mate_panel_applet_get_preferences_key ()"><code class="function">mate_panel_applet_get_preferences_key()</code></a>). Each applet preference
+should have an associated schema to ensure that the key has
+a defined type, sane default and documentation.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which MateConf may return.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>schema_dir</code></em> :</span></p></td>
+<td>The MateConf path where the applet's schemas are installed
+e.g. /schemas/apps/my_applet
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-get-flags"></a><h3>mate_panel_applet_get_flags ()</h3>
+<pre class="programlisting"><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="returnvalue">MatePanelAppletFlags</span></a>    mate_panel_applet_get_flags              (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);</pre>
+<p>
+Retrieve the <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a> associated with the applet.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-set-flags"></a><h3>mate_panel_applet_set_flags ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_set_flags              (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a> flags</code></em>);</pre>
+<p>
+Set the <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a> associated with the applet. See
+<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a> for more details on the possible uses of
+these flags.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFlags" title="enum MatePanelAppletFlags"><span class="type">MatePanelAppletFlags</span></a> to associate.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-set-size-hints"></a><h3>mate_panel_applet_set_size_hints ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_set_size_hints         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">int</span> *size_hints</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> n_elements</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> base_size</code></em>);</pre>
+<p>
+Set a list of desired size ranges for an applet with the
+<a class="link" href="mate-panel-applet-mate-panel-applet.html#PANEL-APPLET-EXPAND-MAJOR:CAPS"><span class="type">MATE_PANEL_APPLET_EXPAND_MAJOR</span></a> flags set. <em class="parameter"><code>size_hints</code></em> is an
+array of (max, min) pairs where min(i) &gt; max(i + 1).
+</p>
+<p>
+The panel will endeavour to allocate the applet a size
+in one of the (<em class="parameter"><code>base</code></em> + max, <em class="parameter"><code>base</code></em> + min) ranges.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size_hints</code></em> :</span></p></td>
+<td>Array of size_hints.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_elements</code></em> :</span></p></td>
+<td>Number of elements in the array. <span class="emphasis"><em>
+Not</em></span> the number of pairs.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>base_size</code></em> :</span></p></td>
+<td>The base size of the applet.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-get-locked-down"></a><h3>mate_panel_applet_get_locked_down ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            mate_panel_applet_get_locked_down        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>);</pre>
+<p>
+Check if the <em class="parameter"><code>applet</code></em> is locked down. A locked down applet should not allow any change to its configuration.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if the <em class="parameter"><code>applet</code></em> is locked down, <code class="literal">FALSE</code> otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-request-focus"></a><h3>mate_panel_applet_request_focus ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_request_focus          (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint32</span> timestamp</code></em>);</pre>
+<p>
+Set keyboard focus to <em class="parameter"><code>applet</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timestamp</code></em> :</span></p></td>
+<td>timestamp of the event triggering the window focus
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-setup-menu"></a><h3>mate_panel_applet_setup_menu ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_setup_menu             (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *xml</code></em>,
+                                                         <em class="parameter"><code><span class="type">GtkActionGroup</span> *action_group</code></em>);</pre>
+<p>
+Sets up a popup menu for <em class="parameter"><code>applet</code></em> described by the xml
+string, <em class="parameter"><code>xml</code></em>. See <a class="xref" href="applet-writing.html" title="Writing Applets"><i>Writing Applets</i></a> section
+for a description of the format of the xml.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>A <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td>The xml character string describing the popup menu.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>action_group</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-setup-menu-from-file"></a><h3>mate_panel_applet_setup_menu_from_file ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_setup_menu_from_file   (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *filename</code></em>,
+                                                         <em class="parameter"><code><span class="type">GtkActionGroup</span> *action_group</code></em>);</pre>
+<p>
+Sets up a popup menu for <em class="parameter"><code>applet</code></em> described by the xml
+file, <em class="parameter"><code>file</code></em>. See <a class="xref" href="applet-writing.html" title="Writing Applets"><i>Writing Applets</i></a> for a description of
+the format of the xml.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>A <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>action_group</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-factory-main"></a><h3>mate_panel_applet_factory_main ()</h3>
+<pre class="programlisting"><span class="returnvalue">int</span>                 mate_panel_applet_factory_main           (<em class="parameter"><code>const <span class="type">gchar</span> *factory_id</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> out_process</code></em>,
+                                                         <em class="parameter"><code><span class="type">GType</span> applet_type</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletFactoryCallback" title="MatePanelAppletFactoryCallback ()"><span class="type">MatePanelAppletFactoryCallback</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> data</code></em>);</pre>
+<p>
+A generic 'main' routine for applets. This should not normally be
+used directly because it is invoked by <span class="type">MATE_PANEL_APPLET_MATECOMPONENT_FACTORY</span>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory_id</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out_process</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet_type</code></em> :</span></p></td>
+<td>The <span class="type">GType</span> to instantiate.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td>The factory callback.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>The factory user data pointer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>0 on success, 1 on failure.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="MatePanelApplet--background"></a><h3>The <code class="literal">"background"</code> property</h3>
+<pre class="programlisting">  "background"               <span class="type">gchar</span>*                : Read / Write</pre>
+<p>Panel Applet Background.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--closure"></a><h3>The <code class="literal">"closure"</code> property</h3>
+<pre class="programlisting">  "closure"                  <span class="type">gpointer</span>              : Read / Write / Construct Only</pre>
+<p>The Applet closure.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--connection"></a><h3>The <code class="literal">"connection"</code> property</h3>
+<pre class="programlisting">  "connection"               <span class="type">GDBusConnection</span>*      : Read / Write / Construct Only</pre>
+<p>The DBus Connection.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--flags"></a><h3>The <code class="literal">"flags"</code> property</h3>
+<pre class="programlisting">  "flags"                    <span class="type">guint</span>                 : Read / Write</pre>
+<p>Panel Applet flags.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--id"></a><h3>The <code class="literal">"id"</code> property</h3>
+<pre class="programlisting">  "id"                       <span class="type">gchar</span>*                : Read / Write / Construct Only</pre>
+<p>The Applet identifier.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--locked"></a><h3>The <code class="literal">"locked"</code> property</h3>
+<pre class="programlisting">  "locked"                   <span class="type">gboolean</span>              : Read / Write</pre>
+<p>Whether Panel Applet is locked.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--locked-down"></a><h3>The <code class="literal">"locked-down"</code> property</h3>
+<pre class="programlisting">  "locked-down"              <span class="type">gboolean</span>              : Read / Write</pre>
+<p>Whether Panel Applet is locked down.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--orient"></a><h3>The <code class="literal">"orient"</code> property</h3>
+<pre class="programlisting">  "orient"                   <span class="type">guint</span>                 : Read / Write</pre>
+<p>Panel Applet Orientation.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--prefs-key"></a><h3>The <code class="literal">"prefs-key"</code> property</h3>
+<pre class="programlisting">  "prefs-key"                <span class="type">gchar</span>*                : Read / Write</pre>
+<p>MateConf Preferences Key.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--size"></a><h3>The <code class="literal">"size"</code> property</h3>
+<pre class="programlisting">  "size"                     <span class="type">guint</span>                 : Read / Write</pre>
+<p>Panel Applet Size.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet--size-hints"></a><h3>The <code class="literal">"size-hints"</code> property</h3>
+<pre class="programlisting">  "size-hints"               <span class="type">gpointer</span>              : Read / Write</pre>
+<p>Panel Applet Size Hints.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-mate-panel-applet.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="MatePanelApplet-change-background"></a><h3>The <code class="literal">"change-background"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>              *matepanelapplet,
+                                                        <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletBackgroundType" title="enum MatePanelAppletBackgroundType"><span class="type">MatePanelAppletBackgroundType</span></a> arg1,
+                                                        <span class="type">GdkColor</span>                 *arg2,
+                                                        <span class="type">GdkPixmap</span>                *arg3,
+                                                        <span class="type">gpointer</span>                  user_data)        : <code class="literal">Run Last</code></pre>
+<p>
+Emitted when the background of the panel changes. Use <em class="parameter"><code>type</code></em> to
+determine which, if any, of <em class="parameter"><code>color</code></em> and <em class="parameter"><code>pimxap</code></em> is valid.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matepanelapplet</code></em> :</span></p></td>
+<td>The object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg3</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet-change-orient"></a><h3>The <code class="literal">"change-orient"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *matepanelapplet,
+                                                        <span class="type">guint</span>        arg1,
+                                                        <span class="type">gpointer</span>     user_data)        : <code class="literal">Run Last</code></pre>
+<p>
+Emitted when the orientation of the panel changes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matepanelapplet</code></em> :</span></p></td>
+<td>The object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>orient</code></em> :</span></p></td>
+<td>The new <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelAppletOrient" title="enum MatePanelAppletOrient"><span class="type">MatePanelAppletOrient</span></a> of the applet.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet-change-size"></a><h3>The <code class="literal">"change-size"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *matepanelapplet,
+                                                        <span class="type">gint</span>         arg1,
+                                                        <span class="type">gpointer</span>     user_data)        : <code class="literal">Run Last</code></pre>
+<p>
+Emitted when the size of the panel changes.
+</p>
+<p>
+Note: this is different for size negotiation which is handled by
+<code class="function">size_request()</code> and <code class="function">size_allocate()</code> as usual. This signal should
+be used to determine what font size or widget layout to use
+depending on the size of the panel. See <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-get-size" title="mate_panel_applet_get_size ()"><code class="function">mate_panel_applet_get_size()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matepanelapplet</code></em> :</span></p></td>
+<td>The object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td>The size hint of the panel.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="MatePanelApplet-move-focus-out-of-applet"></a><h3>The <code class="literal">"move-focus-out-of-applet"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>     *matepanelapplet,
+                                                        <span class="type">GtkDirectionType</span> arg1,
+                                                        <span class="type">gpointer</span>         user_data)        : <code class="literal">Action</code></pre>
+<p>
+Emitted when the applet has lost focus. This signal is used internally and is not meant to be used by applets themselves.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matepanelapplet</code></em> :</span></p></td>
+<td>The object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>direction</code></em> :</span></p></td>
+<td>The direction of focus movement.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15.1</div>
+</body>
+</html>

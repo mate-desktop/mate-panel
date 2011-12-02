@@ -1,0 +1,655 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Panel Applet MateConf Utilities</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Panel Applet Library Reference Manual">
+<link rel="up" href="mate-panel-applet.html" title="The Panel Applet Library">
+<link rel="prev" href="mate-panel-applet-mate-panel-applet.html" title="MatePanelApplet">
+<meta name="generator" content="GTK-Doc V1.15.1 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="mate-panel-applet-mate-panel-applet.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="mate-panel-applet.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Panel Applet Library Reference Manual</th>
+<td> </td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#mate-panel-applet-Panel-Applet-MateConf-Utilities.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#mate-panel-applet-Panel-Applet-MateConf-Utilities.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="mate-panel-applet-Panel-Applet-MateConf-Utilities"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="mate-panel-applet-Panel-Applet-MateConf-Utilities.top_of_page"></a>Panel Applet MateConf Utilities</span></h2>
+<p>Panel Applet MateConf Utilities — Utility methods for manipulating per-applet MateConf preferences.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="mate-panel-applet-Panel-Applet-MateConf-Utilities.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;mate-panel-applet-mateconf.h&gt;
+
+<span class="returnvalue">gchar</span> *             <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-get-full-key" title="mate_panel_applet_mateconf_get_full_key ()">mate_panel_applet_mateconf_get_full_key</a>     (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-get-bool" title="mate_panel_applet_mateconf_get_bool ()">mate_panel_applet_mateconf_get_bool</a>         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">gint</span>                <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-get-int" title="mate_panel_applet_mateconf_get_int ()">mate_panel_applet_mateconf_get_int</a>          (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">gchar</span> *             <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-get-string" title="mate_panel_applet_mateconf_get_string ()">mate_panel_applet_mateconf_get_string</a>       (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">gdouble</span>             <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-get-float" title="mate_panel_applet_mateconf_get_float ()">mate_panel_applet_mateconf_get_float</a>        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">GSList</span> *            <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-get-list" title="mate_panel_applet_mateconf_get_list ()">mate_panel_applet_mateconf_get_list</a>         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValueType"><span class="type">MateConfValueType</span></a> list_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValue"><span class="returnvalue">MateConfValue</span></a> *        <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-get-value" title="mate_panel_applet_mateconf_get_value ()">mate_panel_applet_mateconf_get_value</a>        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-set-bool" title="mate_panel_applet_mateconf_set_bool ()">mate_panel_applet_mateconf_set_bool</a>         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> the_bool</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-set-int" title="mate_panel_applet_mateconf_set_int ()">mate_panel_applet_mateconf_set_int</a>          (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">gint</span> the_int</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-set-string" title="mate_panel_applet_mateconf_set_string ()">mate_panel_applet_mateconf_set_string</a>       (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *the_string</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-set-float" title="mate_panel_applet_mateconf_set_float ()">mate_panel_applet_mateconf_set_float</a>        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">gdouble</span> the_float</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-set-list" title="mate_panel_applet_mateconf_set_list ()">mate_panel_applet_mateconf_set_list</a>         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValueType"><span class="type">MateConfValueType</span></a> list_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GSList</span> *list</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mate-panel-applet-Panel-Applet-MateConf-Utilities.html#mate-panel-applet-mateconf-set-value" title="mate_panel_applet_mateconf_set_value ()">mate_panel_applet_mateconf_set_value</a>        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValue"><span class="type">MateConfValue</span></a> *value</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-Panel-Applet-MateConf-Utilities.description"></a><h2>Description</h2>
+<p>
+Applets typically define a set of preferences using a schemas
+file and <a class="link" href="mate-panel-applet-mate-panel-applet.html#mate-panel-applet-add-preferences" title="mate_panel_applet_add_preferences ()"><code class="function">mate_panel_applet_add_preferences()</code></a>. Such preferences apply
+only to an individual applet instance. For example, you may add
+two clock applets to the panel and configure them differently.
+</p>
+<p>
+In order for the preferences to only apply to a single applet,
+each applet must have a seperate MateConf key for each of these
+preferences. The methods described below provide convient wrappers
+around the usual <span class="type">MateConfClient</span> functions and operate on these
+per-applet keys.
+</p>
+</div>
+<div class="refsect1">
+<a name="mate-panel-applet-Panel-Applet-MateConf-Utilities.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-get-full-key"></a><h3>mate_panel_applet_mateconf_get_full_key ()</h3>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             mate_panel_applet_mateconf_get_full_key     (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>);</pre>
+<p>
+Access the full path for an individual per-applet MateConf key. Using
+the returned path you may directly modify the preference using
+the usual MateConf functions without using any of the convenience
+wrappers described below.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The full MateConf key - free using <code class="function">g_free()</code>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-get-bool"></a><h3>mate_panel_applet_mateconf_get_bool ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            mate_panel_applet_mateconf_get_bool         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-bool"><code class="function">mateconf_client_get_bool()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-bool"><code class="function">mateconf_client_get_bool()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The bool value of the key.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-get-int"></a><h3>mate_panel_applet_mateconf_get_int ()</h3>
+<pre class="programlisting"><span class="returnvalue">gint</span>                mate_panel_applet_mateconf_get_int          (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-int"><code class="function">mateconf_client_get_int()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-int"><code class="function">mateconf_client_get_int()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The integer value of the key.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-get-string"></a><h3>mate_panel_applet_mateconf_get_string ()</h3>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             mate_panel_applet_mateconf_get_string       (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-string"><code class="function">mateconf_client_get_string()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-string"><code class="function">mateconf_client_get_string()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The string value of the key, or <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> if unset.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-get-float"></a><h3>mate_panel_applet_mateconf_get_float ()</h3>
+<pre class="programlisting"><span class="returnvalue">gdouble</span>             mate_panel_applet_mateconf_get_float        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-float"><code class="function">mateconf_client_get_float()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-float"><code class="function">mateconf_client_get_float()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The floating point value of the key.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-get-list"></a><h3>mate_panel_applet_mateconf_get_list ()</h3>
+<pre class="programlisting"><span class="returnvalue">GSList</span> *            mate_panel_applet_mateconf_get_list         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValueType"><span class="type">MateConfValueType</span></a> list_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-list"><code class="function">mateconf_client_get_list()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-get-list"><code class="function">mateconf_client_get_list()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list_type</code></em> :</span></p></td>
+<td>The MateConf value type of the list elements.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The list of values set for the key.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-get-value"></a><h3>mate_panel_applet_mateconf_get_value ()</h3>
+<pre class="programlisting"><a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValue"><span class="returnvalue">MateConfValue</span></a> *        mate_panel_applet_mateconf_get_value        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <code class="function">mateconf_client_get_value()</code> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <code class="function">mateconf_client_get_value()</code>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The MateConf value set for the key.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-set-bool"></a><h3>mate_panel_applet_mateconf_set_bool ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_mateconf_set_bool         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> the_bool</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-bool"><code class="function">mateconf_client_set_bool()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-bool"><code class="function">mateconf_client_set_bool()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>the_bool</code></em> :</span></p></td>
+<td>The boolean value to set the key with.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-set-int"></a><h3>mate_panel_applet_mateconf_set_int ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_mateconf_set_int          (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">gint</span> the_int</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-int"><code class="function">mateconf_client_set_int()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-int"><code class="function">mateconf_client_set_int()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>the_int</code></em> :</span></p></td>
+<td>The integer value to set the key with.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-set-string"></a><h3>mate_panel_applet_mateconf_set_string ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_mateconf_set_string       (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *the_string</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-string"><code class="function">mateconf_client_set_string()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-string"><code class="function">mateconf_client_set_string()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>the_string</code></em> :</span></p></td>
+<td>The string value to set the key with.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-set-float"></a><h3>mate_panel_applet_mateconf_set_float ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_mateconf_set_float        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><span class="type">gdouble</span> the_float</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-float"><code class="function">mateconf_client_set_float()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-float"><code class="function">mateconf_client_set_float()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>the_float</code></em> :</span></p></td>
+<td>The floating point value to set the key with.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-set-list"></a><h3>mate_panel_applet_mateconf_set_list ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_mateconf_set_list         (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValueType"><span class="type">MateConfValueType</span></a> list_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GSList</span> *list</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-list"><code class="function">mateconf_client_set_list()</code></a> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-client.html#mateconf-client-set-list"><code class="function">mateconf_client_set_list()</code></a>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list_type</code></em> :</span></p></td>
+<td>The MateConf value type of the list items.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
+<td>The list of values to set the key with.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mate-panel-applet-mateconf-set-value"></a><h3>mate_panel_applet_mateconf_set_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mate_panel_applet_mateconf_set_value        (<em class="parameter"><code><a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a> *applet</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *key</code></em>,
+                                                         <em class="parameter"><code><a href="/mate/usr/share/gtk-doc/html/mateconf/mateconf-mateconf-value.html#MateConfValue"><span class="type">MateConfValue</span></a> *value</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **opt_error</code></em>);</pre>
+<p>
+Convience wrapper for <code class="function">mateconf_client_set_value()</code> which operates
+on the individual per-applet key.
+</p>
+<p>
+If you pass <a href="/mate/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>opt_error</code></em>, this function will print
+a warning message from any <span class="type">GError</span> which <code class="function">mateconf_client_set_value()</code>
+returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>applet</code></em> :</span></p></td>
+<td>The <a class="link" href="mate-panel-applet-mate-panel-applet.html#MatePanelApplet"><span class="type">MatePanelApplet</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
+<td>The key name of the preference.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>The MateConf value to set the key with.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>opt_error</code></em> :</span></p></td>
+<td>Optional <span class="type">GError</span>**.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15.1</div>
+</body>
+</html>

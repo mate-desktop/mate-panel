@@ -1,0 +1,3897 @@
+# Finnish messages for mate-panel
+# Copyright (C) 2002-2009 Free Software Foundation, Inc.
+# Suomennos: http://mate.fi/
+# Ville Hautamäki <villeh@cs.joensuu.fi>, 1998, 2000
+# Mikko Rauhala <mjr@iki.fi>, 1999
+# Pauli Virtanen <pauli.virtanen@hut.fi>, 2000-2004
+# Ilkka Tuohela <hile@iki.fi>, 2005-2009
+# Timo Jyrinki <timo.jyrinki@iki.fi>, 2008
+# Tommi Vainikainen <thv@iki.fi>, 2009-2010
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mate-panel\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-18 15:49+0200\n"
+"PO-Revision-Date: 2010-03-18 15:49+0200\n"
+"Last-Translator: Tommi Vainikainen <thv@iki.fi>\n"
+"Language-Team: Finnish <mate-fi-laatu@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+#: ../applets/clock/MATE_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time"
+msgstr "_Aseta päiväys ja aika"
+
+# applets/gen_util/MATE_ClockApplet.xml.h:1
+#: ../applets/clock/MATE_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "Kopioi _päiväys"
+
+# applets/gen_util/MATE_ClockApplet.xml.h:2
+#: ../applets/clock/MATE_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "Kopioi _aika"
+
+# applets/fish/MATE_FishApplet.xml.h:1
+# applets/gen_util/MATE_ClockApplet.xml.h:3
+# applets/gen_util/MATE_MailCheckApplet.xml.h:1
+# applets/gen_util/MATE_PagerApplet.xml.h:1
+# applets/gen_util/MATE_TasklistApplet.xml.h:1
+#: ../applets/clock/MATE_ClockApplet.xml.h:4
+#: ../applets/fish/MATE_FishApplet.xml.h:1
+#: ../applets/notification_area/MATE_NotificationAreaApplet.xml.h:1
+#: ../applets/wncklet/MATE_ShowDesktopApplet.xml.h:1
+#: ../applets/wncklet/MATE_WindowListApplet.xml.h:1
+#: ../applets/wncklet/MATE_WindowMenuApplet.xml.h:1
+#: ../applets/wncklet/MATE_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About"
+msgstr "_Tietoja"
+
+# applets/fish/MATE_FishApplet.xml.h:2
+# applets/gen_util/MATE_ClockApplet.xml.h:4
+# applets/gen_util/MATE_MailCheckApplet.xml.h:3
+# applets/gen_util/MATE_PagerApplet.xml.h:2
+# applets/gen_util/MATE_TasklistApplet.xml.h:2 mate-panel/menu.c:3376
+#: ../applets/clock/MATE_ClockApplet.xml.h:5
+#: ../applets/fish/MATE_FishApplet.xml.h:2
+#: ../applets/notification_area/MATE_NotificationAreaApplet.xml.h:2
+#: ../applets/wncklet/MATE_ShowDesktopApplet.xml.h:2
+#: ../applets/wncklet/MATE_WindowListApplet.xml.h:2
+#: ../applets/wncklet/MATE_WindowMenuApplet.xml.h:2
+#: ../applets/wncklet/MATE_WorkspaceSwitcherApplet.xml.h:2
+#: ../mate-panel/drawer.c:601 ../mate-panel/panel-action-button.c:710
+#: ../mate-panel/panel-context-menu.c:285 ../mate-panel/panel-menu-bar.c:345
+#: ../mate-panel/panel-menu-button.c:663
+msgid "_Help"
+msgstr "O_hje"
+
+# applets/fish/MATE_FishApplet.xml.h:3
+# applets/gen_util/MATE_ClockApplet.xml.h:5
+# applets/gen_util/MATE_MailCheckApplet.xml.h:4
+# applets/gen_util/MATE_PagerApplet.xml.h:3
+# applets/gen_util/MATE_TasklistApplet.xml.h:3
+#: ../applets/clock/MATE_ClockApplet.xml.h:6
+#: ../applets/fish/MATE_FishApplet.xml.h:3
+#: ../applets/wncklet/MATE_WindowListApplet.xml.h:3
+#: ../applets/wncklet/MATE_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences"
+msgstr "_Asetukset"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:3
+# applets/gen_util/clock.c:1156
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:1
+#: ../applets/clock/clock.c:3711
+msgid "Clock"
+msgstr "Kello"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:4
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "Kellosovelmatehdas"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:13
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:3
+msgid "Factory for creating clock applets."
+msgstr "Tehdas kellosovelmien tuottamiseen."
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:5
+#: ../applets/clock/MATE_ClockApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr "Hae nykyinen aika ja päiväys"
+
+# applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
+msgid "%l:%M %p"
+msgstr "%I.%M %p"
+
+# applets/gen_util/clock.c:159 applets/gen_util/clock.c:469
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
+msgid "%H:%M"
+msgstr "%H.%M"
+
+# applets/gen_util/clock.c:170 applets/gen_util/clock.c:173
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:314
+msgid "%b %d"
+msgstr "%d.%m."
+
+#: ../applets/clock/calendar-window.c:847
+msgid "Tasks"
+msgstr "Tehtävät"
+
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: ../applets/clock/calendar-window.c:968
+msgid "All Day"
+msgstr "Koko päivä"
+
+#: ../applets/clock/calendar-window.c:1106
+msgid "Appointments"
+msgstr "Tapaamiset"
+
+#: ../applets/clock/calendar-window.c:1131
+msgid "Birthdays and Anniversaries"
+msgstr "Syntymä- ja vuosipäivät"
+
+#: ../applets/clock/calendar-window.c:1156
+msgid "Weather Information"
+msgstr "Säätiedot"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
+msgid "Locations"
+msgstr "Sijainnit"
+
+#: ../applets/clock/calendar-window.c:1937
+msgid "Calendar"
+msgstr "Kalenteri"
+
+# applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:445
+msgid "%l:%M:%S %p"
+msgstr "%I.%M.%S %p"
+
+# applets/gen_util/clock.c:157 applets/gen_util/clock.c:467
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
+msgid "%H:%M:%S"
+msgstr "%H.%M.%S"
+
+# applets/gen_util/clock.c:170 applets/gen_util/clock.c:173
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:461
+msgid "%a %b %e"
+msgstr "%a %e. %Bta"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:468
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:476
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
+# applets/gen_util/clock.c:503
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:649
+msgid "%A %B %d (%%s)"
+msgstr "%A %e. %Bta %Y (%%s)"
+
+#: ../applets/clock/clock.c:679
+msgid "Click to hide your appointments and tasks"
+msgstr "Piilota tapaamisesi ja tehtäväsi napsauttamalla tästä"
+
+#: ../applets/clock/clock.c:682
+msgid "Click to view your appointments and tasks"
+msgstr "Näytä tapaamisesi ja tehtäväsi napsauttamalla tästä"
+
+#: ../applets/clock/clock.c:686
+msgid "Click to hide month calendar"
+msgstr "Piilota kuukauden kalenteri napsauttamalla tästä"
+
+#: ../applets/clock/clock.c:689
+msgid "Click to view month calendar"
+msgstr "Näytä kuukauden kalenteri napsauttamalla tästä"
+
+# applets/gen_util/clock.c:378
+#: ../applets/clock/clock.c:1421
+msgid "Computer Clock"
+msgstr "Tietokoneen kello"
+
+# applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1567
+msgid "%I:%M:%S %p"
+msgstr "%I.%M.%S %p"
+
+# applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1575
+msgid "%I:%M %p"
+msgstr "%I.%M %p"
+
+# applets/gen_util/clock.c:503
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1622
+msgid "%A, %B %d %Y"
+msgstr "%A %e. %Bta %Y"
+
+#: ../applets/clock/clock.c:1653
+msgid "Set System Time..."
+msgstr "Aseta tietokoneen aika…"
+
+#: ../applets/clock/clock.c:1654
+msgid "Set System Time"
+msgstr "Aseta tietokoneen aika"
+
+#: ../applets/clock/clock.c:1669
+msgid "Failed to set the system time"
+msgstr "Tietokoneen aikaa ei voi asettaa"
+
+#: ../applets/clock/clock.c:2707
+msgid "Custom format"
+msgstr "Muu muoto"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../applets/clock/clock.c:3194
+msgid "Choose Location"
+msgstr "Valitse sijainti"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../applets/clock/clock.c:3273
+msgid "Edit Location"
+msgstr "Muokkaa sijaintia"
+
+# applets/fish/fish.c:713
+#: ../applets/clock/clock.c:3419
+msgid "City Name"
+msgstr "Kaupungin nimi"
+
+# mate-panel/distribution.c:26
+#: ../applets/clock/clock.c:3423
+msgid "City Time Zone"
+msgstr "Kaupungin aikavyöhyke"
+
+# applets/gen_util/clock.c:959
+#: ../applets/clock/clock.c:3608
+msgid "24 hour"
+msgstr "24-tuntinen"
+
+# applets/gen_util/clock.c:964
+#: ../applets/clock/clock.c:3609
+msgid "UNIX time"
+msgstr "Unix-aika"
+
+# applets/gen_util/clock.c:968
+#: ../applets/clock/clock.c:3610
+msgid "Internet time"
+msgstr "Internet-aika"
+
+# applets/gen_util/clock.schemas.in.h:6
+#: ../applets/clock/clock.c:3618
+msgid "Custom _format:"
+msgstr "Muu _muoto:"
+
+# applets/gen_util/clock.c:1158
+#: ../applets/clock/clock.c:3714
+msgid "The Clock displays the current time and date"
+msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
+
+# applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1667
+# applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
+# mate-panel/menu.c:242
+#. Translator credits
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
+#: ../applets/notification_area/main.c:155
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
+#: ../applets/wncklet/window-menu.c:79
+#: ../applets/wncklet/workspace-switcher.c:621
+#: ../mate-panel/panel-context-menu.c:138
+msgid "translator-credits"
+msgstr ""
+"Ilkka Tuohela, 2005-2009\n"
+"Timo Jyrinki, 2008\n"
+"Pauli Virtanen, 2000-2005\n"
+"Ville Hautamäki, 1998, 2000\n"
+"Mikko Rauhala, 1999\n"
+"\n"
+"http://mate.fi/"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "<i>(optional)</i>"
+msgstr "<i>(valinnainen)</i>"
+
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:3
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Syötä kaupunki, alue tai maan nimi ja valitse tarkempi valinta "
+"ponnahdusikkunasta.</i></small>"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "Clock Format"
+msgstr "Ajan muoto"
+
+# applets/gen_util/clock.c:916
+#: ../applets/clock/clock.ui.h:5
+msgid "Clock Preferences"
+msgstr "Kellon asetukset"
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Current Time:"
+msgstr "Nykyinen aika:"
+
+# applets/gen_util/pager.glade.h:9
+#: ../applets/clock/clock.ui.h:7
+msgid "Display"
+msgstr "Näyttö"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "East"
+msgstr "itäistä"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:9
+msgid "General"
+msgstr "Yleistä"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "L_atitude:"
+msgstr "_Leveyspiiri:"
+
+#: ../applets/clock/clock.ui.h:11
+msgid "L_ongitude:"
+msgstr "_Pituuspiiri:"
+
+#: ../applets/clock/clock.ui.h:13
+msgid "North"
+msgstr "pohjoista"
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Panel Display"
+msgstr "Paneelinäyttö"
+
+# applets/gen_util/clock.c:1015
+#: ../applets/clock/clock.ui.h:15
+msgid "Show _temperature"
+msgstr "_Näytä lämpötila"
+
+# applets/gen_util/clock.c:1015
+#: ../applets/clock/clock.ui.h:16
+msgid "Show _weather"
+msgstr "_Näytä sää"
+
+# applets/gen_util/clock.c:1005
+#: ../applets/clock/clock.ui.h:17
+msgid "Show seco_nds"
+msgstr "Näytä _sekunnit"
+
+# applets/gen_util/clock.c:1015
+#: ../applets/clock/clock.ui.h:18
+msgid "Show the _date"
+msgstr "_Näytä päiväys"
+
+#: ../applets/clock/clock.ui.h:19
+msgid "South"
+msgstr "eteläistä"
+
+#: ../applets/clock/clock.ui.h:20
+msgid "Time & Date"
+msgstr "Päiväys ja aika"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "Time _Settings"
+msgstr "Aika-a_setukset"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "Weather"
+msgstr "Sää"
+
+#: ../applets/clock/clock.ui.h:23
+msgid "West"
+msgstr "läntistä"
+
+# applets/gen_util/clock.schemas.in.h:6
+#: ../applets/clock/clock.ui.h:24
+msgid "_12 hour format"
+msgstr "_12-tuntinen muoto"
+
+# applets/gen_util/clock.schemas.in.h:6
+#: ../applets/clock/clock.ui.h:25
+msgid "_24 hour format"
+msgstr "_24-tuntinen muoto"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../applets/clock/clock.ui.h:26
+msgid "_Location Name:"
+msgstr "_Sijainnin nimi:"
+
+# libmate-panel-applet/panel-test-applets.glade.h:7
+#: ../applets/clock/clock.ui.h:27
+msgid "_Pressure unit:"
+msgstr "_Paineyksikkö:"
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Set System Time"
+msgstr "_Aseta tietokoneen aika"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "_Temperature unit:"
+msgstr "_Lämpötilan yksikkö:"
+
+#: ../applets/clock/clock.ui.h:30
+msgid "_Time:"
+msgstr "_Aika:"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "_Timezone:"
+msgstr "_Aikavyöhyke:"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "_Visibility unit:"
+msgstr "_Näkyvyyden yksikkö:"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "_Wind speed unit:"
+msgstr "_Tuulen nopeuden yksikkö:"
+
+# applets/gen_util/clock.c:959
+#. Translators:
+#. This controls whether the MATE panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: ../applets/clock/clock.schemas.in.h:11
+msgid "24-hour"
+msgstr "24-hour"
+
+#: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "Luettelo sijainneista, jotka näytetään kalenteri-ikkunassa."
+
+#: ../applets/clock/clock.schemas.in.h:13
+msgid "Custom format of the clock"
+msgstr "Mukautettu ajan näyttömuoto"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "Laajenna luettelo tapaamisista"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "Laajenna luettelo syntymäpäivistä"
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Laajenna luettelo sijainneista"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr "Laajenna luettelo tehtävistä"
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "Laajenna luettelo säätiedoista"
+
+# applets/gen_util/clock.schemas.in.h:6
+#: ../applets/clock/clock.schemas.in.h:19
+msgid "Hour format"
+msgstr "Tuntimuoto"
+
+# applets/gen_util/clock.schemas.in.h:3
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Jos tosi, näytä sääkuvake."
+
+# applets/gen_util/clock.schemas.in.h:2
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Jos tosi, päiväys näkyy kellossa ajan lisäksi."
+
+# applets/gen_util/clock.schemas.in.h:3
+#: ../applets/clock/clock.schemas.in.h:22
+msgid "If true, display seconds in time."
+msgstr "Jos tosi, sekunnit näkyvät ajassa."
+
+#: ../applets/clock/clock.schemas.in.h:23
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Jos tosi, näytä luettelo tapaamisista kalenteri-ikkunassa."
+
+#: ../applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Jos tosi, näytä luettelo syntymäpäivistä kalenteri-ikkunassa."
+
+#: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Jos tosi, laajenna luettelo sijainneista kalenteri-ikkunassa."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Jos tosi, näytä luettelo tehtävistä kalenteri-ikkunassa."
+
+#: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Jos tosi, näytä luettelo säätiedoista kalenteri-ikkunassa."
+
+# applets/gen_util/clock.schemas.in.h:8
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "Jos tosi, päiväys näkyy vinkissä, kun hiiri on sovelman yllä"
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Jos tosi, näytä lämpötila sääkuvakkeen vieressä."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show week numbers in the calendar."
+msgstr "Jos tosi, näytä viikkonumerot kalenterissa."
+
+# mate-panel/mate-run.c:1396
+#: ../applets/clock/clock.schemas.in.h:31
+msgid "List of locations"
+msgstr "Luettelo sijainneista"
+
+# applets/gen_util/clock.schemas.in.h:9
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "Show date in clock"
+msgstr "Näytä päiväys kellossa"
+
+# applets/gen_util/clock.schemas.in.h:10
+#: ../applets/clock/clock.schemas.in.h:33
+msgid "Show date in tooltip"
+msgstr "Näytä päiväys vinkissä"
+
+# applets/gen_util/clock.schemas.in.h:9
+#: ../applets/clock/clock.schemas.in.h:34
+msgid "Show temperature in clock"
+msgstr "Näytä lämpötila kellossa"
+
+# applets/gen_util/clock.schemas.in.h:11
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show time with seconds"
+msgstr "Näytä sekunnit"
+
+# applets/gen_util/clock.schemas.in.h:9
+#: ../applets/clock/clock.schemas.in.h:36
+msgid "Show weather in clock"
+msgstr "Näytä sää kellossa"
+
+# applets/gen_util/pager.glade.h:5
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show week numbers in calendar"
+msgstr "Näytä viikkonumerot kalenterissa"
+
+#: ../applets/clock/clock.schemas.in.h:38
+msgid "Speed unit"
+msgstr "Nopeusyksikkö"
+
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Temperature unit"
+msgstr "Lämpötilayksikkö"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "The unit to use when showing temperatures."
+msgstr "Lämpötiloja näytettäessä käytettävä yksikkö."
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing wind speed."
+msgstr "Tuulen nopeutta näytettäessä käytettävä yksikkö."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid ""
+"The use of this key was deprecated in MATE 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Tämän avain poistettiin käytöstä MATE 2.22 -versiossa sisäisen aika-"
+"asettelun lisäyksen ansiosta. Tämä kaavain on säilytetty vanhojen versioiden "
+"yhteensopivuuden vuoksi."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in MATE 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Tämän avaimen käyttö ei ole suositeltua MATE 2.28:ssa. Käytä mieluummin "
+"aikavyöhykkeitä. Kaavain on olemassa yhteensopivuuden vuoksi."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
+"The use of this key was deprecated in MATE 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"Tämän avaimen käyttö ei ole suositeltua MATE 2.6:ssa. Käytä mieluummin "
+"”format”-avainta. Kaavain on olemassa yhteensopivuuden vuoksi."
+
+#: ../applets/clock/clock.schemas.in.h:45
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"Tämä avain määrittelee kellosovelman näyttämän ajan muodon, kun avaimen "
+"”format” arvo on ”custom”. Voit käyttää kaikkia strftime()-kutsun ymmärtämiä "
+"aikamääreitä. Lue strftime-ohjesivulta lisätietoja."
+
+#: ../applets/clock/clock.schemas.in.h:46
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"Tämä avain määrittelee kellosovelman näyttämän ajan muodon. Mahdollisia "
+"arvoja ovat ”12-hour” (12-tuntinen), ”24-hour” (24-tuntinen), ”internet”, "
+"”unix” ja ”custom” (mukautettu). Jos arvo on ”internet”, kello näyttää "
+"”Internet-aikaa”, jossa päivä on jaettu tuhanteen ”.sykäykseen”. "
+"Aikavyöhykkeitä tässä järjestelmässä ei ole, joten aika on sama kaikkialla. "
+"Jos arvo on ”unix”, kello laskee sekunteja alkukohdasta (1.1.1970) alkaen. "
+"Jos arvo on ”custom”, kello näyttää ajan käyttäjän avaimessa ”custom_format” "
+"määrittelemässä muodossa."
+
+#: ../applets/clock/clock.schemas.in.h:47
+msgid "Time configuration tool"
+msgstr "Ajan asetustyökalu"
+
+# applets/gen_util/clock.schemas.in.h:12
+#: ../applets/clock/clock.schemas.in.h:48
+msgid "Use Internet time"
+msgstr "Näytä Internet-aikaa"
+
+# applets/gen_util/clock.schemas.in.h:13
+#: ../applets/clock/clock.schemas.in.h:49
+msgid "Use UNIX time"
+msgstr "Näytä Unix-aikaa"
+
+# applets/gen_util/clock.schemas.in.h:14
+#: ../applets/clock/clock.schemas.in.h:50
+msgid "Use UTC"
+msgstr "Näytä UTC-aikaa"
+
+#: ../applets/clock/clock-location-tile.c:183
+msgid "Failed to set the system timezone"
+msgstr "Järjestelmän aikavyöhykettä ei voi asettaa"
+
+#: ../applets/clock/clock-location-tile.c:240
+msgid "<small>Set...</small>"
+msgstr "<small>Aseta…</small>"
+
+#: ../applets/clock/clock-location-tile.c:241
+msgid "<small>Set</small>"
+msgstr "<small>Aseta</small>"
+
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr ""
+"Aseta sijainti nykyiseksi sijainniksi ja käytä sitä tietokoneen "
+"aikavyöhykkeenä"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:453
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l.%M <small>%p (%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H.%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
+msgid "%l:%M <small>%p</small>"
+msgstr "%l.%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:609
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libmateweather.
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
+msgid "Unknown"
+msgstr "Tuntematon"
+
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:623
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, tuntuu %s"
+
+#: ../applets/clock/clock-location-tile.c:646
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Aurinko nousee: %s / laskee: %s"
+
+# mate-panel/launcher.c:1050 mate-panel/menu.c:1059
+# mate-panel/panel-util.c:49
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
+#: ../mate-panel/libpanel-util/panel-show.c:235
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Ohjetiedostoa ”%s” ei voi näyttää"
+
+# mate-panel/launcher.c:1050 mate-panel/menu.c:1059
+# mate-panel/panel-util.c:49
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
+msgid "Error displaying help document"
+msgstr "Virhe näytettäessä ohjetiedostoa"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Muuta tietokoneen aikaa"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Vaihda tietokoneen aikavyöhykettä"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Aseta tietokoneen laitekello"
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr ""
+"Ylläpitäjän oikeudet vaaditaan järjestelmän aikavyöhykkeen vaihtamiseksi."
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Ylläpitäjän oikeudet vaaditaan järjestelmän ajan vaihtamiseksi."
+
+#: ../applets/clock/org.mate.clockapplet.mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Ylläpitäjän oikeudet vaaditaan järjestelmäkellon muuttamiseksi."
+
+# applets/fish/MATE_FishApplet_Factory.server.in.h:2
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "Näytä uiva kala tai jokin muu liikkuva eliö"
+
+# applets/fish/MATE_FishApplet_Factory.server.in.h:3
+# applets/fish/fish.c:1174
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:2
+#: ../applets/fish/fish.c:617
+msgid "Fish"
+msgstr "Kala"
+
+# applets/fish/MATE_FishApplet_Factory.server.in.h:4
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "Mistä tuo tyhmä kala tuli"
+
+# applets/fish/MATE_FishApplet_Factory.server.in.h:5
+#: ../applets/fish/MATE_FishApplet_Factory.server.in.in.h:4
+msgid "Wanda Factory"
+msgstr "Wanda-tehdas"
+
+# applets/fish/fish.c:572
+#: ../applets/fish/fish.c:273
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"Varoitus:  Komento vaikuttaa itse asiassa hyödylliseltä.\n"
+"Koska tämä on hyödytön sovelma, et varmaankaan halua tehdä\n"
+"tätä. Mielestämme %s ei sovi mihinkään, mikä tekisi siitä\n"
+"”käytännöllisen” tai hyödyllisen."
+
+#: ../applets/fish/fish.c:471
+msgid "Images"
+msgstr "Kuvat"
+
+# applets/fish/fish.c:478 applets/fish/fish.c:1141
+#: ../applets/fish/fish.c:585 ../applets/fish/fish.c:651
+#: ../applets/fish/fish.c:767
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s-kala"
+
+# applets/fish/fish.c:1177
+#: ../applets/fish/fish.c:586
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr ""
+"%s ei sovi mihinkään käyttöön. Se ainoastaan vie tilaa kiintolevyltä ja "
+"pidentää käännösaikaa. Jos se ladataan paneeliin, se voi myös viedä "
+"arvokasta muistia sekä paneelitilaa. Jos joku tavataan käyttämästä tätä "
+"sovelmaa, hänet pitäisi pikaisesti lähettää asiantuntevaan hoitoon."
+
+# applets/fish/fish.c:1156
+#: ../applets/fish/fish.c:610
+msgid "(with minor help from George)"
+msgstr "(Georgen pienoisella avustuksella)"
+
+# applets/fish/fish.c:68
+#: ../applets/fish/fish.c:652
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "%s-kala, nykyaikainen oraakkeli"
+
+#: ../applets/fish/fish.c:723
+msgid "Unable to locate the command to execute"
+msgstr "Suoritettavan komennon paikannus epäonnistui"
+
+# applets/fish/fish.c:67
+#: ../applets/fish/fish.c:772
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "%s-kala sanoo:"
+
+# mate-panel/mate-run.c:336 mate-panel/mate-run.c:410
+#: ../applets/fish/fish.c:841
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Komennon tulosteen lukeminen epäonnistui.\n"
+"\n"
+"Lisätiedot: %s"
+
+#: ../applets/fish/fish.c:906
+msgid "_Speak again"
+msgstr "_Sano uudestaan"
+
+#: ../applets/fish/fish.c:989
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "Asetettu komento ei toimi, joten se on korjattu komennolla: %s"
+
+# mate-panel/mate-run.c:336 mate-panel/mate-run.c:410
+#: ../applets/fish/fish.c:1012
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Komennon ”%s” suorittaminen epäonnistui.\n"
+"\n"
+"Lisätiedot: %s"
+
+# mate-panel/mate-run.c:336 mate-panel/mate-run.c:410
+#: ../applets/fish/fish.c:1028
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Tiedoston ”%s” lukeminen epäonnistui.\n"
+"\n"
+"Lisätiedot: %s"
+
+# applets/fish/fish.c:985
+#: ../applets/fish/fish.c:1653
+msgid "The water needs changing"
+msgstr "Vesi kaipaisi vaihtamista"
+
+#: ../applets/fish/fish.c:1655
+msgid "Look at today's date!"
+msgstr "Katso päiväystä!"
+
+# applets/fish/fish.c:107
+#: ../applets/fish/fish.c:1748
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "%s-kala, ennustaja"
+
+#: ../applets/fish/fish.ui.h:1 ../mate-panel/panel-properties-dialog.ui.h:1
+msgid "    "
+msgstr "    "
+
+# mate-panel/mate-panel-preferences.glade.h:6
+#: ../applets/fish/fish.ui.h:2
+msgid "Animation"
+msgstr "Animaatio"
+
+# applets/fish/fish.c:748
+#: ../applets/fish/fish.ui.h:3
+msgid "Co_mmand to run when clicked:"
+msgstr "Napsauttamalla käynnistyvä _komento:"
+
+# applets/fish/fish.c:703
+#: ../applets/fish/fish.ui.h:4
+msgid "Fish Preferences"
+msgstr "Kalan asetukset"
+
+# applets/gen_util/mailcheck.c:1505
+#: ../applets/fish/fish.ui.h:6
+msgid "Select an animation"
+msgstr "Valitse animaatio"
+
+#: ../applets/fish/fish.ui.h:7
+msgid "_File:"
+msgstr "_Tiedosto:"
+
+# applets/fish/fish.c:713
+#: ../applets/fish/fish.ui.h:8
+msgid "_Name of fish:"
+msgstr "Kalan _nimi:"
+
+# applets/fish/fish.schemas.in.h:3
+#: ../applets/fish/fish.ui.h:9
+msgid "_Pause per frame:"
+msgstr "_Tauko ruutua kohden:"
+
+# applets/fish/fish.c:798
+#: ../applets/fish/fish.ui.h:10
+msgid "_Rotate on vertical panels"
+msgstr "Ki_errä pystypaneeleissa"
+
+# applets/fish/fish.c:765
+#: ../applets/fish/fish.ui.h:11
+msgid "_Total frames in animation:"
+msgstr "_Ruutuja animaatiossa yhteensä:"
+
+# mate-panel/drawer.c:150
+#: ../applets/fish/fish.ui.h:12
+msgid "frames"
+msgstr "ruutua"
+
+# applets/gen_util/clock.c:1005
+#: ../applets/fish/fish.ui.h:13
+msgid "seconds"
+msgstr ". sekunti"
+
+# applets/fish/fish.schemas.in.h:1
+#: ../applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr "Nimetön kala on varsin tylsä ilmestys. Nimeäpä siis kalasi."
+
+# applets/fish/fish.schemas.in.h:2
+#: ../applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "Napsauttamalla käynnistyvä komento"
+
+# applets/fish/fish.schemas.in.h:7
+#: ../applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "Kalan animaation ruutujen määrä"
+
+#: ../applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "Jos tosi, kalan animaatio näkyy kiertyneenä pystypaneeleissa."
+
+# applets/fish/fish.schemas.in.h:3
+#: ../applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "Tauko ruutua kohden"
+
+# applets/fish/fish.schemas.in.h:4
+#: ../applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "Kierrä pystypaneeleissa"
+
+# applets/fish/fish.schemas.in.h:5
+#: ../applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "Kalan animaatiokuva"
+
+# applets/fish/fish.schemas.in.h:6
+#: ../applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "Kalan nimi"
+
+# applets/fish/fish.schemas.in.h:2
+#: ../applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Kalaa napsauttamalla käynnistyvä komento."
+
+#: ../applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"Tämä avain määrittelee kalasovelmassa näkyvässä animaatiossa käytettävän "
+"kuvan tiedostonimen suhteessa kuvakansioon."
+
+# applets/fish/fish.schemas.in.h:7
+#: ../applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "Kalan animaation ruutujen määrä."
+
+#: ../applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr ""
+"Tämä avain määrittelee ajan sekunteina, jonka verran kukin kehys näkyy."
+
+#: ../applets/notification_area/MATE_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "Alue, johon ilmoituskuvakkeet ilmestyvät"
+
+#: ../applets/notification_area/MATE_NotificationAreaApplet.server.in.in.h:2
+#: ../applets/notification_area/main.c:150
+msgid "Notification Area"
+msgstr "Ilmoitusalue"
+
+#: ../applets/notification_area/MATE_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr "Ilmoitusaluetehdas"
+
+#: ../applets/notification_area/main.c:261
+msgid "Panel Notification Area"
+msgstr "Paneelin ilmoitusalue"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:13
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "Tehdas ikkunanavigointiin liittyvien sovelmien luomiseen"
+
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "Piilota kaikki ikkunat ja näytä työpöytä"
+
+# mate-panel/menu.c:3710
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:3
+msgid "Show Desktop"
+msgstr "Näytä työpöytä"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:8
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows using a menu"
+msgstr "Siirry avoimien ikkunoiden välillä valikon avulla"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:8
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "Siirry avoimien ikkunoiden välillä painikkeiden avulla"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:9
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "Siirry työtilojen välillä"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:11
+# applets/gen_util/tasklist.c:713
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:7
+#: ../applets/wncklet/window-list.c:609
+msgid "Window List"
+msgstr "Ikkunaluettelo"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:4
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:8
+msgid "Window Navigation Applet Factory"
+msgstr "Ikkunanavigointisovelmatehdas"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:11
+# applets/gen_util/tasklist.c:713
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:9
+#: ../applets/wncklet/window-menu.c:82 ../applets/wncklet/window-menu.c:244
+msgid "Window Selector"
+msgstr "Ikkunanvalitsin"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:12
+# applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+# applets/gen_util/pager.glade.h:7
+#: ../applets/wncklet/MATE_Wncklet_Factory.server.in.in.h:10
+#: ../applets/wncklet/workspace-switcher.c:624
+msgid "Workspace Switcher"
+msgstr "Työtilanvaihdin"
+
+# mate-panel/mate-run.c:447
+#: ../applets/wncklet/showdesktop.c:181
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "Tiedoston ”%s” lataus epäonnistui: %s\n"
+
+# mate-panel/panel-util.c:72 mate-panel/panel-util.c:107
+# mate-panel/panel-util.c:132
+#: ../applets/wncklet/showdesktop.c:182
+msgid "Icon not found"
+msgstr "Kuvaketta ei löydy"
+
+#: ../applets/wncklet/showdesktop.c:241
+msgid "Click here to restore hidden windows."
+msgstr "Palauta piilotetut ikkunat napsauttamalla tätä"
+
+#: ../applets/wncklet/showdesktop.c:243
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Piilota kaikki ikkunat ja näytä työpöytä napsauttamalla tätä."
+
+# mate-panel/menu.c:3710
+#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
+msgid "Show Desktop Button"
+msgstr "Työpöydän näyttämispainike"
+
+#: ../applets/wncklet/showdesktop.c:536
+msgid "This button lets you hide all windows and show the desktop."
+msgstr "Tämä painike piilottaa kaikki ikkunat ja näyttää työpöydän."
+
+#: ../applets/wncklet/showdesktop.c:566
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr "Ikkunointiohjelma ei tue työpöytäpainiketta tai se ei ole käynnissä."
+
+# applets/gen_util/tasklist.c:715
+#: ../applets/wncklet/window-list.c:611
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr ""
+"Ikkunaluettelo näyttää kaikki ikkunat joukkona painikkeita joiden avulla "
+"ikkunoita voi vaihtaa."
+
+# applets/gen_util/tasklist.glade.h:1
+#: ../applets/wncklet/window-list.ui.h:1
+msgid "Group windows when _space is limited"
+msgstr "Ryhmittele ikkunat, kun _tilaa on rajallisesti"
+
+# applets/gen_util/tasklist.glade.h:4
+#: ../applets/wncklet/window-list.ui.h:2
+msgid "Restore to current _workspace"
+msgstr "Palauta nykyiseen _työtilaan"
+
+# applets/gen_util/tasklist.glade.h:5
+#: ../applets/wncklet/window-list.ui.h:3
+msgid "Restore to na_tive workspace"
+msgstr "Palauta _alkuperäiseen työtilaansa"
+
+# applets/gen_util/tasklist.glade.h:8
+#: ../applets/wncklet/window-list.ui.h:4
+msgid "Restoring Minimized Windows"
+msgstr "Palautettaessa pienennettyjä ikkunoita"
+
+# applets/gen_util/tasklist.glade.h:6
+#: ../applets/wncklet/window-list.ui.h:5
+msgid "Sh_ow windows from current workspace"
+msgstr "Näytä _nykyisen työtilan ikkunat"
+
+# applets/gen_util/tasklist.glade.h:7
+#: ../applets/wncklet/window-list.ui.h:6
+msgid "Show windows from a_ll workspaces"
+msgstr "Näytä k_aikkien työtilojen ikkunat"
+
+# applets/gen_util/tasklist.glade.h:12
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Grouping"
+msgstr "Ikkunoiden ryhmittely"
+
+# applets/gen_util/tasklist.glade.h:10
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Window List Content"
+msgstr "Ikkunaluettelon sisältö"
+
+# applets/gen_util/tasklist.glade.h:9
+#: ../applets/wncklet/window-list.ui.h:9
+msgid "Window List Preferences"
+msgstr "Ikkunaluettelon asetukset"
+
+# applets/gen_util/tasklist.glade.h:13
+#: ../applets/wncklet/window-list.ui.h:10
+msgid "_Always group windows"
+msgstr "Ryhmittele ikkunat _aina"
+
+# applets/gen_util/tasklist.glade.h:14
+#: ../applets/wncklet/window-list.ui.h:11
+msgid "_Never group windows"
+msgstr "_Älä ryhmittele ikkunoita"
+
+# applets/gen_util/tasklist.schemas.in.h:1
+#: ../applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Määrittelee, milloin saman sovelluksen ikkunat ryhmittyvät "
+"ikkunaluettelossa. Käypiä arvoja ovat ”never” (ei koskaan), "
+"”auto” (automaattisesti) ja ”always” (aina)."
+
+# applets/gen_util/tasklist.schemas.in.h:2
+#: ../applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Jos tosi, niin kaikkien työtilojen ikkunat näkyvät ikkunaluettelossa, "
+"muulloin vain nykyisen työtilan ikkunat näkyvät."
+
+# applets/gen_util/tasklist.schemas.in.h:3
+#: ../applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Jos tosi, niin pienennetyn ikkunan palauttaminen siirtää sen nykyiseen "
+"työtilaan. Muulloin siirrytään ikkunan työtilaan."
+
+# applets/gen_util/tasklist.glade.h:3
+#: ../applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "Suurin ikkunalistan koko"
+
+# applets/gen_util/tasklist.glade.h:2
+#: ../applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "Pienin ikkunalistan koko"
+
+# applets/gen_util/tasklist.schemas.in.h:6
+#: ../applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr "Siirrä ikkunat nykyiseen työtilaan palautettaessa"
+
+# applets/gen_util/tasklist.schemas.in.h:7
+#: ../applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Näytä kaikkien työtilojen ikkunat"
+
+#: ../applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"The use of this key was deprecated in MATE 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"Tämä avain on vanhentunut Mate 2.20-julkaisussa. Kaavain on olemassa "
+"yhteensopivuuden vuoksi."
+
+# applets/gen_util/tasklist.schemas.in.h:10
+#: ../applets/wncklet/window-list.schemas.in.h:9
+msgid "When to group windows"
+msgstr "Milloin ikkunat ryhmittyvät"
+
+# applets/gen_util/tasklist.c:715
+#: ../applets/wncklet/window-menu.c:86
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr ""
+"Ikkunavalitsin näyttää kaikki ikkunat valikkona josta ikkunoita voi vaihtaa."
+
+# applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
+# mate-panel/panel-config.c:1427 mate-panel/panel-util.c:241
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
+#: ../applets/wncklet/workspace-switcher.ui.h:10
+msgid "rows"
+msgstr "riviä"
+
+# applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
+msgid "columns"
+msgstr "saraketta"
+
+# applets/gen_util/pager.c:344
+#: ../applets/wncklet/workspace-switcher.c:488
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "Virhe num_rows-arvon latautuessa työtilanvaihdinta varten: %s\n"
+
+# applets/gen_util/pager.c:355
+#: ../applets/wncklet/workspace-switcher.c:499
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Virhe display_workspace_names-arvon latautuessa työtilanvaihdinta varten: %"
+"s\n"
+
+# applets/gen_util/pager.c:370
+#: ../applets/wncklet/workspace-switcher.c:514
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Virhe display_all_workspaces-arvon latautuessa työtilanvaihdinta varten: %s\n"
+
+# applets/gen_util/pager.c:505
+#: ../applets/wncklet/workspace-switcher.c:626
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Työtilanvaihdin näyttää työtilasi pienennettyinä ja helpottaa ikkunoiden "
+"hallintaa."
+
+# applets/gen_util/pager.glade.h:1
+#: ../applets/wncklet/workspace-switcher.ui.h:1
+msgid "Number of _workspaces:"
+msgstr "_Työtilojen lukumäärä:"
+
+# applets/gen_util/pager.glade.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:2
+msgid "Show _all workspaces in:"
+msgstr "Näytä _kaikki työtilat:"
+
+# applets/gen_util/pager.glade.h:4
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+msgid "Show _only the current workspace"
+msgstr "Näytä vain _nykyinen työtila"
+
+# applets/gen_util/pager.glade.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:4
+msgid "Show workspace _names in switcher"
+msgstr "Näytä _työtilojen nimet vaihtimessa"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:5
+msgid "Switcher"
+msgstr "Vaihdin"
+
+# applets/gen_util/pager.glade.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:6
+msgid "Workspace Names"
+msgstr "Työtilojen nimet"
+
+# applets/gen_util/pager.glade.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:7
+msgid "Workspace Switcher Preferences"
+msgstr "Työtilanvaihtimen asetukset"
+
+# applets/gen_util/pager.glade.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
+msgid "Workspace na_mes:"
+msgstr "Työtilojen _nimet:"
+
+# applets/gen_util/pager.glade.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:9
+msgid "Workspaces"
+msgstr "Työtilat"
+
+# applets/gen_util/pager.glade.h:3
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "Näytä kaikki työtilat"
+
+# applets/gen_util/pager.glade.h:6
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "Näytä työtilojen nimet"
+
+# applets/gen_util/pager.schemas.in.h:1
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"Jos tämä on tosi, kaikki työtilat näkyvät työtilanvaihtimessa. Muulloin vain "
+"nykyinen työtila näkyy."
+
+# applets/gen_util/pager.schemas.in.h:2
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Marco."
+msgstr ""
+"Jos tosi, työtilanvaihtimessa näkyville työtiloille näytetään nimet. Muutoin "
+"työtilat näyttävät työtilassa olevat ikkunat. Tämä toimii vain, jos "
+"ikkunanhallintaohjelmana on marco."
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:12
+# applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+# applets/gen_util/pager.glade.h:7
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "Rivejä työtilanvaihtimessa"
+
+# applets/gen_util/pager.schemas.in.h:4
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"Kun kaikki työtilat näkyvät, tämä määrittää kuinka monessa rivissä (vaaka-"
+"asettelu) tai sarakkeessa (pystyasettelu) ne ovat työtilanvaihtimessa. Tällä "
+"on merkitystä vain jos avaimen ”display_all_workspaces” arvo on tosi."
+
+#: ../mate-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Tiedosto ei ole kelvollinen .desktop-tiedosto"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Tunnistamaton työpöytätiedoston versio ”%s”"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "Käynnistetään %s"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Sovellus ei hyväksy asiakirjoja komentorivillä"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Tunnistamaton käynnistysvalitsin: %d"
+
+#: ../mate-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "Ei voida antaa asiakirjan URIa ”Type=Link”-työpöytätietueelle"
+
+# mate-panel/launcher.c:152
+#: ../mate-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Ei käynnistettävä kohde"
+
+#: ../mate-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Katkaise yhteys istunnonhallintaan"
+
+# libmate-panel-applet/mate-panel-applet.c:956
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Määritä tiedosto, joka sisältää tallennetut asetukset"
+
+#: ../mate-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "TIEDOSTO"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Määritä istunnonhallinan tunniste"
+
+#: ../mate-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
+
+#: ../mate-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Istunnonhallinnan valitsimet:"
+
+#: ../mate-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Näytä istunnanhallinan valitsimet"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../mate-panel/libpanel-util/panel-error.c:82
+#: ../mate-panel/mate-panel-applet-frame.c:1000
+#: ../mate-panel/mate-panel-applet-frame.c:1088
+msgid "Error"
+msgstr "Virhe"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../mate-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Valitse kuvake"
+
+# mate-panel/launcher.c:83
+#: ../mate-panel/libpanel-util/panel-launch.c:45
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "Kohdetta ”%s” ei voi käynnistää"
+
+# mate-panel/launcher.c:152
+#: ../mate-panel/libpanel-util/panel-launch.c:48
+#: ../mate-panel/launcher.c:161
+msgid "Could not launch application"
+msgstr "Ohjelmaa ei voi käynnistää"
+
+# mate-panel/launcher.c:1050 mate-panel/menu.c:1059
+# mate-panel/panel-util.c:49
+#: ../mate-panel/libpanel-util/panel-show.c:44
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "Sijaintia ”%s” ei voi avata"
+
+#: ../mate-panel/libpanel-util/panel-show.c:162
+msgid "No application to handle search folders is installed."
+msgstr "Mitään sovellusta hakukansioiden käsittelyyn ei ole asennettu."
+
+# mate-panel/MATE_Panel_Popup.xml.h:2 mate-panel/applet.c:513
+#: ../mate-panel/MATE_Panel_Popup.xml.h:1 ../mate-panel/applet.c:544
+msgid "Loc_k To Panel"
+msgstr "_Lukitse paneeliin"
+
+# mate-panel/MATE_Panel_Popup.xml.h:1 mate-panel/applet.c:524
+#: ../mate-panel/MATE_Panel_Popup.xml.h:2 ../mate-panel/applet.c:527
+msgid "_Move"
+msgstr "_Siirrä"
+
+# mate-panel/MATE_Panel_Popup.xml.h:2 mate-panel/applet.c:513
+#: ../mate-panel/MATE_Panel_Popup.xml.h:3 ../mate-panel/applet.c:516
+msgid "_Remove From Panel"
+msgstr "_Poista paneelista"
+
+# mate-panel/applet.c:449 mate-panel/foobar-widget.c:359
+#: ../mate-panel/applet.c:437
+msgid "???"
+msgstr "???"
+
+# mate-panel/applet.c:1123
+#: ../mate-panel/applet.c:1321
+msgid "Cannot find an empty spot"
+msgstr "Tyhjää paikkaa ei löydy"
+
+# mate-panel/drawer.c:193 mate-panel/drawer.c:442 mate-panel/menu.c:3239
+#: ../mate-panel/drawer.c:350 ../mate-panel/panel-addto.c:175
+#: ../mate-panel/panel-toplevel.c:1624
+msgid "Drawer"
+msgstr "Vetolaatikko"
+
+# mate-panel/menu.c:3324
+#: ../mate-panel/drawer.c:589
+msgid "_Add to Drawer..."
+msgstr "_Lisää laatikkoon…"
+
+# mate-panel/menu.c:3351
+#: ../mate-panel/drawer.c:595 ../mate-panel/launcher.c:807
+#: ../mate-panel/panel-action-button.c:141
+#: ../mate-panel/panel-context-menu.c:216
+msgid "_Properties"
+msgstr "_Ominaisuudet"
+
+# mate-panel/mate-desktop-item-edit.c:27
+#: ../mate-panel/mate-desktop-item-edit.c:29
+msgid "Create new file in the given directory"
+msgstr "Luo uusi tiedosto annettuun kansioon"
+
+#: ../mate-panel/mate-desktop-item-edit.c:30
+msgid "[FILE...]"
+msgstr "[TIEDOSTO…]"
+
+#: ../mate-panel/mate-desktop-item-edit.c:108
+msgid "- Edit .desktop files"
+msgstr "- Muokkaa .desktop-tiedostoja"
+
+# mate-panel/launcher.c:766 mate-panel/menu-ditem.c:514
+#: ../mate-panel/mate-desktop-item-edit.c:146
+#: ../mate-panel/mate-desktop-item-edit.c:200 ../mate-panel/launcher.c:897
+msgid "Create Launcher"
+msgstr "Luo käynnistin"
+
+# mate-panel/panel-config.c:1638
+#: ../mate-panel/mate-desktop-item-edit.c:171
+#: ../mate-panel/mate-desktop-item-edit.c:194
+msgid "Directory Properties"
+msgstr "Kansion ominaisuudet"
+
+# mate-panel/launcher.c:573 mate-panel/menu-ditem.c:176
+# mate-panel/menu-ditem.c:250
+#: ../mate-panel/mate-desktop-item-edit.c:177 ../mate-panel/launcher.c:735
+msgid "Launcher Properties"
+msgstr "Käynnistimen ominaisuudet"
+
+#: ../mate-panel/mate-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Käynnistä muita ohjelmia, hallitse ikkunoita eri tavoilla, näytä aika jne."
+
+# mate-panel/menu.c:3364
+#: ../mate-panel/mate-panel.desktop.in.in.h:2 ../mate-panel/main.c:100
+msgid "Panel"
+msgstr "Paneeli"
+
+#: ../mate-panel/launcher.c:118
+msgid "Could not show this URL"
+msgstr "Tätä URLia ei voi näyttää"
+
+#: ../mate-panel/launcher.c:119
+msgid "No URL was specified."
+msgstr "URLia ei ole määritelty."
+
+#: ../mate-panel/launcher.c:227
+msgid "Could not use dropped item"
+msgstr "Raahattua kohdetta ei voi käyttää"
+
+#: ../mate-panel/launcher.c:423
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Paneelikäynnistimen desktop-tiedoston URI puuttuu\n"
+
+#: ../mate-panel/launcher.c:462
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "Paneelikäynnistimen desktop-tiedosto %s ei avautunut%s%s\n"
+
+# mate-panel/menu.c:3211
+#: ../mate-panel/launcher.c:801
+msgid "_Launch"
+msgstr "_Käynnistä"
+
+#: ../mate-panel/launcher.c:840
+#, c-format
+msgid "Key %s is not set, cannot load launcher\n"
+msgstr "Avainta %s ei ole asetettu, joten käynnistintä ei voi ladata\n"
+
+# mate-panel/launcher.c:766 mate-panel/menu-ditem.c:514
+#: ../mate-panel/launcher.c:966 ../mate-panel/panel-ditem-editor.c:1357
+#: ../mate-panel/panel-ditem-editor.c:1391
+#: ../mate-panel/panel-ditem-editor.c:1422
+msgid "Could not save launcher"
+msgstr "Käynnistintä ei voi tallentaa"
+
+#: ../mate-panel/main.c:47
+msgid "Replace a currently running panel"
+msgstr "Korvaa käynnissä oleva paneeli"
+
+# mate-panel/menu.c:1342
+#: ../mate-panel/menu.c:914
+msgid "Add this launcher to _panel"
+msgstr "Lisää tämä käynnistin _paneeliin"
+
+# mate-panel/menu.c:1342
+#: ../mate-panel/menu.c:921
+msgid "Add this launcher to _desktop"
+msgstr "Lisää tämä käynnistin _työpöydälle"
+
+# mate-panel/menu.c:1442
+#: ../mate-panel/menu.c:933
+msgid "_Entire menu"
+msgstr "_Koko valikko"
+
+# mate-panel/menu.c:1451
+#: ../mate-panel/menu.c:938
+msgid "Add this as _drawer to panel"
+msgstr "Lisää tämä _vetolaatikkona paneeliin"
+
+# mate-panel/menu.c:1459
+#: ../mate-panel/menu.c:945
+msgid "Add this as _menu to panel"
+msgstr "Lisää tämä _valikkona paneeliin"
+
+#: ../mate-panel/nothing.cP:609
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr "<b>PELI PÄÄTTYI</b> tasolle %d!"
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../mate-panel/nothing.cP:616
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s - %2$s - %3$s"
+
+#: ../mate-panel/nothing.cP:617
+msgid "Press 'q' to quit"
+msgstr "Lopeta painamalla 'q'"
+
+#: ../mate-panel/nothing.cP:622
+msgid "Paused"
+msgstr "Pysäytetty"
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../mate-panel/nothing.cP:625 ../mate-panel/nothing.cP:636
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr "%1$s\t%2$s"
+
+#: ../mate-panel/nothing.cP:626
+msgid "Press 'p' to unpause"
+msgstr "Jatka painamalla p"
+
+#: ../mate-panel/nothing.cP:632
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr "Taso: %s, Elämiä: %s"
+
+#: ../mate-panel/nothing.cP:637
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+"Siirtyminen vasen ja oikea, tulitus välilyönti, tauko ”p” ja lopetus ”q”"
+
+#: ../mate-panel/nothing.cP:1385
+msgid "Killer GEGLs from Outer Space"
+msgstr "Tappajageglit ulkoavaruudesta"
+
+# mate-panel/logout.c:211
+#: ../mate-panel/panel-action-button.c:129
+msgid "_Activate Screensaver"
+msgstr "_Käynnistä näytönsäästäjä"
+
+# mate-panel/foobar-widget.c:199 mate-panel/logout.c:212
+# mate-panel/menu.c:3447
+#: ../mate-panel/panel-action-button.c:135
+msgid "_Lock Screen"
+msgstr "_Lukitse näyttö"
+
+#: ../mate-panel/panel-action-button.c:254
+msgid "Could not connect to server"
+msgstr "Palvelimeen ei saatu yhteyttä"
+
+# mate-panel/foobar-widget.c:199 mate-panel/logout.c:212
+# mate-panel/menu.c:3447
+#: ../mate-panel/panel-action-button.c:285
+msgid "Lock Screen"
+msgstr "Lukitse näyttö"
+
+# mate-panel/foobar-widget.c:203
+#: ../mate-panel/panel-action-button.c:286
+msgid "Protect your computer from unauthorized use"
+msgstr "Lukitse tietokoneen näyttö ja estä luvaton käyttö"
+
+# mate-panel/foobar-widget.c:212 mate-panel/menu.c:3460
+#. when changing one of those two strings, don't forget to
+#. * update the ones in panel-menu-items.c (look for
+#. * "1" (msgctxt: "panel:showusername"))
+#: ../mate-panel/panel-action-button.c:300
+msgid "Log Out..."
+msgstr "Kirjaudu ulos…"
+
+# mate-panel/menu.c:3466
+#: ../mate-panel/panel-action-button.c:301
+msgid "Log out of this session to log in as a different user"
+msgstr "Kirjaudu ulos tästä istunnosta toisena käyttäjänä kirjautumista varten"
+
+# mate-panel/menu.c:1392
+#: ../mate-panel/panel-action-button.c:310
+msgid "Run Application..."
+msgstr "Suorita sovellus…"
+
+# mate-panel/foobar-widget.c:164
+#: ../mate-panel/panel-action-button.c:311
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Käynnistä sovellus kirjoittamalla komento tai valitsemalla listasta"
+
+# mate-panel/foobar-widget.c:173 mate-panel/menu.c:3680
+#: ../mate-panel/panel-action-button.c:320
+msgid "Search for Files..."
+msgstr "Etsi tiedostoja…"
+
+#: ../mate-panel/panel-action-button.c:321
+msgid "Locate documents and folders on this computer by name or content"
+msgstr ""
+"Etsi asiakirjoja ja kansioita tietokoneelta nimen tai sisällön perusteella"
+
+#: ../mate-panel/panel-action-button.c:329
+#: ../mate-panel/panel-force-quit.c:221
+msgid "Force Quit"
+msgstr "Sulje väkisin"
+
+#: ../mate-panel/panel-action-button.c:330
+msgid "Force a misbehaving application to quit"
+msgstr "Pakota väärin toimiva sovellus sulkeutumaan"
+
+#. FIXME icon
+#: ../mate-panel/panel-action-button.c:339
+msgid "Connect to Server..."
+msgstr "Yhdistä palvelimeen…"
+
+#: ../mate-panel/panel-action-button.c:340
+msgid "Connect to a remote computer or shared disk"
+msgstr "Yhdistä etätietokoneeseen tai jaettuun levyyn"
+
+#: ../mate-panel/panel-action-button.c:348
+msgid "Shut Down..."
+msgstr "Sammuta…"
+
+#: ../mate-panel/panel-action-button.c:349
+msgid "Shut down the computer"
+msgstr "Sammuta tietokone"
+
+# mate-panel/menu.c:1392
+#: ../mate-panel/panel-addto.c:116
+msgid "Custom Application Launcher"
+msgstr "Muun sovelluksen käynnistin"
+
+# mate-panel/launcher.c:766 mate-panel/menu-ditem.c:514
+#: ../mate-panel/panel-addto.c:117
+msgid "Create a new launcher"
+msgstr "Luo uusi käynnistin"
+
+# mate-panel/menu.c:1392
+#: ../mate-panel/panel-addto.c:127
+msgid "Application Launcher..."
+msgstr "Sovelluksen käynnistin…"
+
+# mate-panel/launcher.c:152
+#: ../mate-panel/panel-addto.c:128
+msgid "Copy a launcher from the applications menu"
+msgstr "Kopioi käynnistin sovellusvalikosta"
+
+# mate-panel/distribution.c:26
+#: ../mate-panel/panel-addto.c:142 ../mate-panel/panel-menu-button.c:1081
+msgid "Main Menu"
+msgstr "Päävalikko"
+
+# mate-panel/menu.c:277
+#: ../mate-panel/panel-addto.c:143
+msgid "The main MATE menu"
+msgstr "Maten päävalikko"
+
+# mate-panel/menu-ditem.c:282 mate-panel/menu.c:3738
+# mate-panel/menu.c:3967
+#: ../mate-panel/panel-addto.c:153
+msgid "Menu Bar"
+msgstr "Valikkopalkki"
+
+#: ../mate-panel/panel-addto.c:154
+msgid "A custom menu bar"
+msgstr "Maten oma valikkopalkki"
+
+#: ../mate-panel/panel-addto.c:164
+msgid "Separator"
+msgstr "Erotin"
+
+#: ../mate-panel/panel-addto.c:165
+msgid "A separator to organize the panel items"
+msgstr "Erotin, joka auttaa järjestelmään paneelin esineitä"
+
+#: ../mate-panel/panel-addto.c:176
+msgid "A pop out drawer to store other items in"
+msgstr "Ulos ponnahtava laatikko, johon voi siirtää esineitä"
+
+#: ../mate-panel/panel-addto.c:267
+msgid "(empty)"
+msgstr "(tyhjä)"
+
+# mate-panel/menu.c:2391 libmate-panel-applet/panel-test-applets.c:102
+#: ../mate-panel/panel-addto.c:410
+#: ../libmate-panel-applet/panel-test-applets.c:249
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "kysely palautti poikkeuksen %s\n"
+
+#: ../mate-panel/panel-addto.c:1071
+#, c-format
+msgid "Find an _item to add to \"%s\":"
+msgstr "Etsi kohtaan ”%s” lisättävä _esine:"
+
+# mate-panel/menu.c:3324
+#: ../mate-panel/panel-addto.c:1075
+#, c-format
+msgid "Add to Drawer"
+msgstr "Lisää laatikkoon"
+
+#: ../mate-panel/panel-addto.c:1077
+msgid "Find an _item to add to the drawer:"
+msgstr "Valitse laatikkoon lisättävä _esine:"
+
+# mate-panel/menu.c:3324
+#: ../mate-panel/panel-addto.c:1079
+#, c-format
+msgid "Add to Panel"
+msgstr "Lisää paneeliin"
+
+#: ../mate-panel/panel-addto.c:1081
+msgid "Find an _item to add to the panel:"
+msgstr "Valitse paneeliin lisättävä _esine:"
+
+# mate-panel/mate-panel-applet-frame.c:607
+#: ../mate-panel/mate-panel-applet-frame.c:844
+#, c-format
+msgid "Exception from popup_menu '%s'\n"
+msgstr "Poikkeus popup_menusta ”%s”\n"
+
+#: ../mate-panel/mate-panel-applet-frame.c:969
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr "”%s” sulkeutui odottamatta"
+
+# mate-panel/panel-config.c:1638
+#: ../mate-panel/mate-panel-applet-frame.c:971
+msgid "Panel object has quit unexpectedly"
+msgstr "Paneelin esine on sulkeutunut odottamatta"
+
+#: ../mate-panel/mate-panel-applet-frame.c:978
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr ""
+"Jos lataat esineen uudelleen, se ilmestyy automaattisesti takaisin paneeliin."
+
+#: ../mate-panel/mate-panel-applet-frame.c:984
+msgid "_Don't Reload"
+msgstr "_Älä lataa uudelleen"
+
+#: ../mate-panel/mate-panel-applet-frame.c:985
+msgid "_Reload"
+msgstr "_Lataa uudelleen"
+
+# mate-panel/mate-panel-applet-frame.c:922
+#: ../mate-panel/mate-panel-applet-frame.c:1051
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "Paneelilla oli ongelmia sovelman ”%s” lataamisessa."
+
+# mate-panel/mate-panel-applet-frame.c:922
+#: ../mate-panel/mate-panel-applet-frame.c:1067
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "Haluatko poistaa sovelman työpöydältäsi?"
+
+# mate-panel/mate-panel-applet-frame.c:796
+#: ../mate-panel/mate-panel-applet-frame.c:1141
+msgid "Unable to obtain AppletShell interface from control\n"
+msgstr "AppletShell-rajapinnan saaminen säätimeltä ei onnistu\n"
+
+# mate-panel/menu.c:230
+#: ../mate-panel/panel-context-menu.c:104
+msgid "And many, many others..."
+msgstr "Ja monet, monet muut…"
+
+# mate-panel/menu.c:277
+#: ../mate-panel/panel-context-menu.c:130
+msgid "The MATE Panel"
+msgstr "Maten paneeli"
+
+# mate-panel/menu.c:265
+#: ../mate-panel/panel-context-menu.c:133
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
+msgstr ""
+"Tämä ohjelma käynnistää muita ohjelmia ja tarjoaa hyödyllisiä apuohjelmia."
+
+# mate-panel/menu.c:277
+#: ../mate-panel/panel-context-menu.c:137
+msgid "About the MATE Panel"
+msgstr "Tietoja Maten paneelista"
+
+# mate-panel/menu.c:3306 mate-panel/menu.c:3337
+#: ../mate-panel/panel-context-menu.c:171
+msgid "Cannot delete this panel"
+msgstr "Tätä paneelia ei voi poistaa"
+
+#: ../mate-panel/panel-context-menu.c:172
+msgid "You must always have at least one panel."
+msgstr "Vähintään yksi paneeli on aina oltava määritelty."
+
+# mate-panel/menu.c:3324
+#: ../mate-panel/panel-context-menu.c:205
+msgid "_Add to Panel..."
+msgstr "_Lisää paneeliin…"
+
+# mate-panel/menu.c:3306 mate-panel/menu.c:3337
+#: ../mate-panel/panel-context-menu.c:226
+msgid "_Delete This Panel"
+msgstr "_Poista tämä paneeli"
+
+# mate-panel/menu.c:3364
+#: ../mate-panel/panel-context-menu.c:241
+msgid "_New Panel"
+msgstr "_Uusi paneeli"
+
+# mate-panel/menu.c:3409
+#: ../mate-panel/panel-context-menu.c:293
+msgid "A_bout Panels"
+msgstr "_Tietoja paneeleista"
+
+# mate-panel/foobar-widget.c:697 mate-panel/menu.c:2809
+# mate-panel/menu.c:2815 mate-panel/menu.c:3633
+#: ../mate-panel/panel-ditem-editor.c:114
+msgid "Application"
+msgstr "Sovellus"
+
+# mate-panel/menu.c:1392
+#: ../mate-panel/panel-ditem-editor.c:116
+msgid "Application in Terminal"
+msgstr "Sovellus päätteessä"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../mate-panel/panel-ditem-editor.c:118
+msgid "Location"
+msgstr "Sijainti"
+
+#. Type
+#: ../mate-panel/panel-ditem-editor.c:618
+msgid "_Type:"
+msgstr "_Tyyppi:"
+
+# applets/fish/fish.c:713
+#. Name
+#: ../mate-panel/panel-ditem-editor.c:625
+msgid "_Name:"
+msgstr "_Nimi:"
+
+# applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
+# mate-panel/panel-config.c:1427 mate-panel/panel-util.c:241
+#: ../mate-panel/panel-ditem-editor.c:652
+msgid "_Browse..."
+msgstr "_Selaa…"
+
+# mate-panel/mate-run.c:849
+#. Comment
+#: ../mate-panel/panel-ditem-editor.c:659
+msgid "Co_mment:"
+msgstr "Ko_mmentti:"
+
+# mate-panel/menu.c:1392
+#: ../mate-panel/panel-ditem-editor.c:1008
+msgid "Choose an application..."
+msgstr "Valitse sovellus…"
+
+#: ../mate-panel/panel-ditem-editor.c:1012
+msgid "Choose a file..."
+msgstr "Valitse tiedosto…"
+
+# mate-panel/mate-run.c:849
+#: ../mate-panel/panel-ditem-editor.c:1177
+#: ../mate-panel/panel-ditem-editor.c:1186
+msgid "Comm_and:"
+msgstr "K_omento:"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../mate-panel/panel-ditem-editor.c:1195
+msgid "_Location:"
+msgstr "_Sijainti:"
+
+#: ../mate-panel/panel-ditem-editor.c:1358
+msgid "The name of the launcher is not set."
+msgstr "Käynnistimen nimeä ei ole asetettu."
+
+#: ../mate-panel/panel-ditem-editor.c:1362
+msgid "Could not save directory properties"
+msgstr "Kansion ominaisuuksia ei voi tallentaa"
+
+#: ../mate-panel/panel-ditem-editor.c:1363
+msgid "The name of the directory is not set."
+msgstr "Kansion namea ei ole asetettu."
+
+#: ../mate-panel/panel-ditem-editor.c:1379
+msgid "The command of the launcher is not set."
+msgstr "Käynnistimestä suoritettavaa komentoa ei ole asetettu."
+
+#: ../mate-panel/panel-ditem-editor.c:1382
+msgid "The location of the launcher is not set."
+msgstr "Käynnistimen sijaintia ei ole asetettu."
+
+# mate-panel/launcher.c:1050 mate-panel/menu.c:1059
+# mate-panel/panel-util.c:49
+#: ../mate-panel/panel-ditem-editor.c:1459
+msgid "Could not display help document"
+msgstr "Ohjetiedostoa ei voi näyttää"
+
+#: ../mate-panel/panel-force-quit.c:76
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Pakota sovellus sulkeutumaan napsauttamalla ikkunaa. Peru painamalla Escape."
+
+#: ../mate-panel/panel-force-quit.c:204
+msgid "Force this application to exit?"
+msgstr "Suljetaanko tämä sovellus väkisin?"
+
+#: ../mate-panel/panel-force-quit.c:207
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Jos suljet sovelluksen väkisin, saatetaan avoimissa asiakirjoissa olevat "
+"tallentamattomat muutokset menettää."
+
+#: ../mate-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"Totuusarvo, joka ilmaisee onko käyttäjän vanhat asetukset sijainnista /apps/"
+"panel/profiles/default kopioitu uuteen paikkaan sijainnissa apps/panel."
+
+#: ../mate-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"Luettelo paneelien ID:istä. Jokainen ID kuvaa yksittäistä ylätason paneelia. "
+"Näiden paneelien asetukset ovat sijainnissa /apps/panel/toplevels/$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"Luettelo paneelisovelmien ID:istä. Jokainen ID kuvaa yksittäistä "
+"paneelisovelmaa. Näiden paneelisovelmien asetukset ovat sijainnissa /apps/"
+"panel/applets/$(id)."
+
+#: ../mate-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"Luettelo paneeliesineiden ID:istä. Jokainen ID kuvaa yksittäistä "
+"paneeliesinettä (esim. käynnistin, toimintopainike, valikkopainike tai -"
+"palkki). Näiden paneeliesineiden asetukset ovat sijainnissa /apps/panel/"
+"objects/$(id)."
+
+# mate-panel/panel-per-panel-config.schemas.in.h:1
+#: ../mate-panel/panel-general.schemas.in.h:5
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "Näytä automaattinen täydennys ”Suorita sovellus”-ikkunassa"
+
+# mate-panel/panel-per-panel-config.schemas.in.h:1
+#: ../mate-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Näytä sovellusluettelo ”Suorita sovellus”-ikkunassa"
+
+# mate-panel/panel-per-panel-config.schemas.in.h:1
+#: ../mate-panel/panel-general.schemas.in.h:7
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Avaa sovellusluettelo ”Suorita sovellus”-ikkunassa"
+
+#: ../mate-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+"Jos tosi, ”Suorita sovellus”-ikkunassa on käytössä automaattinen täydennys."
+
+#: ../mate-panel/panel-general.schemas.in.h:9
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Jos tosi, ”Tunnetut sovellukset”-luettelo ”Käynnistä sovellus”-ikkunassa on "
+"auki kun ikkuna avautuu. Tällä on vaikutusta vain jos ”enable_program_list” "
+"on tosi."
+
+#: ../mate-panel/panel-general.schemas.in.h:10
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Jos tosi ”Tunnetut sovellukset”-luettelo ”Käynnistä sovellus”-ikkunassa on "
+"näkyvissä. Onko tämä luettelo auki kun ikkuna avautuessa, määräytyy avaimen "
+"”show_program_list” arvon mukaan."
+
+#: ../mate-panel/panel-general.schemas.in.h:11
+msgid "Old profiles configuration migrated"
+msgstr "Vanhat profiiliasetukset kopioitu nykyiseen paikkaan"
+
+#: ../mate-panel/panel-general.schemas.in.h:12
+msgid "Panel ID list"
+msgstr "Paneelin ID-lista"
+
+#: ../mate-panel/panel-general.schemas.in.h:13
+msgid "Panel applet ID list"
+msgstr "Paneelisovelmien ID-luettelo"
+
+# mate-panel/panel-config.c:1638
+#: ../mate-panel/panel-general.schemas.in.h:14
+msgid "Panel object ID list"
+msgstr "Paneeliesineiden ID-luettelo"
+
+#: ../mate-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"Luettelo sovelmien IID:istä, jotka paneeli jättää huomiotta. Tällä tavoin "
+"voit estää tiettyjen sovelmien latautumisen tai valikoissa näkymisen. Jos "
+"esimerkiksi haluat poistaa sovelman ”mini-commander” käytöstä, lisää ”OAFIID:"
+"MATE_MiniCommanderApplet” tähän luetteloon. Paneeli täytyy käynnistää "
+"uudelleen, jotta tämä tulee voimaan."
+
+#: ../mate-panel/panel-global.schemas.in.h:2
+msgid "Applet IIDs to disable from loading"
+msgstr "IID:t sovelmille, joiden lataus estetään"
+
+#: ../mate-panel/panel-global.schemas.in.h:3
+msgid "Autoclose drawer"
+msgstr "Sulje laatikko itsestään"
+
+#: ../mate-panel/panel-global.schemas.in.h:4
+msgid "Complete panel lockdown"
+msgstr "Täydellinen paneelin lukinta"
+
+#: ../mate-panel/panel-global.schemas.in.h:5
+msgid "Confirm panel removal"
+msgstr "Varmista paneelista poisto"
+
+#: ../mate-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr "Vanhentunut"
+
+#: ../mate-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "Poista väkisin sulkeminen käytöstä"
+
+#: ../mate-panel/panel-global.schemas.in.h:8
+msgid "Disable Logging Out"
+msgstr "Poista ulos kirjautuminen käytöstä"
+
+# applets/gen_util/mailcheck.c:1505
+#: ../mate-panel/panel-global.schemas.in.h:9
+#: ../mate-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "Käytä animaatioita"
+
+# applets/gen_util/mailcheck.c:1505
+#: ../mate-panel/panel-global.schemas.in.h:10
+msgid "Enable tooltips"
+msgstr "Käytä vinkkejä"
+
+#: ../mate-panel/panel-global.schemas.in.h:11
+msgid "Highlight launchers on mouseover"
+msgstr "Korosta käynnistimet kun hiiri on niiden päällä"
+
+#: ../mate-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Jos tosi, ikkuna avautuu ja kysyy varmistusta, kun käyttäjä poistaa paneelin."
+
+#: ../mate-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"Jos tosi, laatikko sulkeutuu itsestään kun käyttäjä napsauttaa siinä olevaa "
+"käynnistintä."
+
+#: ../mate-panel/panel-global.schemas.in.h:14
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr "Jos tosi, käynnistin korostuu kun käyttäjä siirtää hiiren sen ylle."
+
+#: ../mate-panel/panel-global.schemas.in.h:15
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Jos tosi, paneeli ei salli käyttäjän sulkea ohjelmia väkisin, eli "
+"väkisinsulkemispainike poistuu käytöstä."
+
+#: ../mate-panel/panel-global.schemas.in.h:16
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"Jos tosi, paneeli ei salli käyttäjän kirjautua ulos, eli "
+"uloskirjautumisvalinnat poistuvat valikoista."
+
+#: ../mate-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"Jos tosi, paneeli ei salli muutoksia paneelin asetuksiin. Yksittäiset "
+"sovelmat kuitenkin täytynee lukita erikseen. Paneeli täytyy käynnistää "
+"uudelleen, jotta tämä tulee voimaan."
+
+#: ../mate-panel/panel-global.schemas.in.h:18
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "Jos tosi, paneelien esineiden vinkit näkyvät."
+
+#: ../mate-panel/panel-global.schemas.in.h:19
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/mate/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"Tämä avain on vanhentunut eikä sitä voida käyttää toteuttamaan lukitusta "
+"kunnolla. Avainta /desktop/mate/lockdown/disable_lock_screen tulisi käyttää "
+"tämän sijaa."
+
+#: ../mate-panel/panel-menu-bar.c:106
+msgid "Browse and run installed applications"
+msgstr "Selaa ja suorita asennettuja sovelluksia"
+
+#: ../mate-panel/panel-menu-bar.c:108
+msgid "Access documents, folders and network places"
+msgstr "Avaa asiakirjoja, kansioita ja verkkosijainteja"
+
+#: ../mate-panel/panel-menu-bar.c:110
+msgid "Change desktop appearance and behavior, get help, or log out"
+msgstr "Muuta työpöydän ulkoasua ja toimintaa, etsi apua tai kirjaudu ulos"
+
+# mate-panel/foobar-widget.c:697 mate-panel/menu.c:2809
+# mate-panel/menu.c:2815 mate-panel/menu.c:3633
+#: ../mate-panel/panel-menu-bar.c:147
+msgid "Applications"
+msgstr "Sovellukset"
+
+# mate-panel/distribution.c:26
+#: ../mate-panel/panel-menu-bar.c:353 ../mate-panel/panel-menu-button.c:668
+msgid "_Edit Menus"
+msgstr "_Muokkaa valikoita"
+
+#: ../mate-panel/panel-menu-items.c:472
+msgid "Bookmarks"
+msgstr "Kirjanmerkit"
+
+# mate-panel/panel.c:881
+#. Translators: %s is a URI
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:541
+#, c-format
+msgid "Open '%s'"
+msgstr "Avaa ”%s”"
+
+#: ../mate-panel/panel-menu-items.c:566
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Laitetta ”%s” ei voi tarkkailla mediamuutoksien varalta"
+
+#: ../mate-panel/panel-menu-items.c:609
+#, c-format
+msgid "Rescan %s"
+msgstr "Tarkista %s"
+
+# applets/gen_util/mailcheck.c:1505
+#: ../mate-panel/panel-menu-items.c:646
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Ei voi liittää %s"
+
+#: ../mate-panel/panel-menu-items.c:709
+#, c-format
+msgid "Mount %s"
+msgstr "Liitä %s"
+
+#: ../mate-panel/panel-menu-items.c:917
+msgid "Removable Media"
+msgstr "Irrotettavat asemat"
+
+#: ../mate-panel/panel-menu-items.c:1004
+msgid "Network Places"
+msgstr "Verkkosijainnit"
+
+#: ../mate-panel/panel-menu-items.c:1043
+msgid "Open your personal folder"
+msgstr "Avaa henkilökohtaisen kansiosi"
+
+# mate-panel/menu.c:3710
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment).
+#: ../mate-panel/panel-menu-items.c:1062
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Työpöytä"
+
+#: ../mate-panel/panel-menu-items.c:1063
+msgid "Open the contents of your desktop in a folder"
+msgstr "Avaa työpöydän sisältö kansiona"
+
+#: ../mate-panel/panel-menu-items.c:1454
+msgid "Places"
+msgstr "Sijainnit"
+
+#: ../mate-panel/panel-menu-items.c:1483
+msgid "System"
+msgstr "Järjestelmä"
+
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
+#. * but "1" if "Log Out %s" doesn't make any sense in your
+#. * language (where %s is a username).
+#.
+#: ../mate-panel/panel-menu-items.c:1564
+msgctxt "panel:showusername"
+msgid "1"
+msgstr "1"
+
+# mate-panel/foobar-widget.c:212 mate-panel/menu.c:3460
+#. keep those strings in sync with the ones in
+#. * panel-action-button.c
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1576
+#, c-format
+msgid "Log Out %s..."
+msgstr "Kirjaa ulos käyttäjä %s…"
+
+# mate-panel/menu.c:3466
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../mate-panel/panel-menu-items.c:1580
+#, c-format
+msgid "Log out %s of this session to log in as a different user"
+msgstr ""
+"Kirjaa ulos käyttäjä %s, jos haluat kirjautua sisään toisena käyttäjänä"
+
+# mate-panel/foobar-widget.c:224
+#: ../mate-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "Toimintopainikkeen tyyppi"
+
+#: ../mate-panel/panel-object.schemas.in.h:2
+msgid "Applet MateComponent IID"
+msgstr "Sovelman MateComponent-IID"
+
+#: ../mate-panel/panel-object.schemas.in.h:3
+msgid "Icon used for object's button"
+msgstr "Esineen painikkeessa näkyvä kuvake"
+
+#: ../mate-panel/panel-object.schemas.in.h:4
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"Jos tosi, avain ”custom_icon” määrittelee painikkeen mukautetun kuvakkeen. "
+"Jos epätosi, avain ”custom_icon” jää huomiotta. Tällä on merkitystä vain jos "
+"avaimen ”object_type” arvo on ”menu-object” tai ”drawer-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"Jos tosi, avain ”menu_path” määrittelee polun, josta valikon sisältö "
+"rakentuu. Jos epätosi, ”menu_path” jää huomiotta. Tällä on merkitystä vain "
+"jos avaimen ”object_type” arvo on ”menu-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Jos tosi, paneeliesineen sijainti tulkitaan annetuksi suhteessa paneelin "
+"oikeaan reunaan (tai alareunaan pystypaneeleissa)."
+
+#: ../mate-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"Jos tosi, käyttäjä ei voi siirtää sovelmaa avaamatta esineen lukitusta "
+"valitsemalla valikosta ”Avaa lukitus”."
+
+#: ../mate-panel/panel-object.schemas.in.h:8
+msgid "Interpret position relative to bottom/right edge"
+msgstr "Tulkitse sijainti suhteessa oikeaan reunaan tai alareunaan"
+
+# mate-panel/launcher.c:573 mate-panel/menu-ditem.c:176
+# mate-panel/menu-ditem.c:250
+#: ../mate-panel/panel-object.schemas.in.h:9
+msgid "Launcher location"
+msgstr "Käynnistimen sijainti"
+
+#: ../mate-panel/panel-object.schemas.in.h:10
+msgid "Lock the object to the panel"
+msgstr "Lukitse esine paneeliin"
+
+# mate-panel/foobar-widget.c:678 mate-panel/menu.c:2682
+#: ../mate-panel/panel-object.schemas.in.h:11
+msgid "Menu content path"
+msgstr "Valikon sisällön polku"
+
+#: ../mate-panel/panel-object.schemas.in.h:12
+msgid "Object's position on the panel"
+msgstr "Esineen sijainti paneelissa"
+
+#: ../mate-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr "Laatikkoon liittyvä paneeli"
+
+# mate-panel/panel-config.c:1638
+#: ../mate-panel/panel-object.schemas.in.h:14
+msgid "Panel object type"
+msgstr "Paneeliesineen tyyppi"
+
+#: ../mate-panel/panel-object.schemas.in.h:15
+msgid ""
+"The MateComponent implementation ID of the applet - e.g. \"OAFIID:MATE_ClockApplet"
+"\". This key is only relevant if the object_type key is \"matecomponent-applet\"."
+msgstr ""
+"Sovelman MateComponent-IID, esimerkiksi ”OAFIID:MATE_ClockApplet”. Tällä on "
+"merkitystä vain jos avaimen ”object_type” arvo on ”matecomponent-applet”."
+
+#: ../mate-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"Toimintotyyppi, jota tämä painike vastaa. Mahdollisia arvoja ovat "
+"”lock” (lukitse), ”logout” (kirjaudu ulos), ”search” (etsi) ja "
+"”screenshot” (ota kuvakaappaus). Tällä on merkitystä vain jos avaimen "
+"”object_type” arvo on ”action-applet”."
+
+#: ../mate-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"Tähän laatikkoon liittyvän paneelin tunniste. Tällä on merkitystä vain jos "
+"avaimen ”object_type” arvo on ”drawer-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "Tämän esineen sisältävän ylätason paneelin tunniste."
+
+#: ../mate-panel/panel-object.schemas.in.h:19
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"Käynnistintä kuvaavan .desktop-tiedoston sijainti. Tällä on merkitystä vain "
+"jos avaimen ”object_type” arvo on ”launcher-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"Esineen painikkeen kuvakkeena toimivan kuvatiedoston sijainti. Tällä on "
+"merkitystä vain jos avaimen ”object_type” arvo on ”drawer-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"Polku, josta valikon sisältö rakentuu. Tällä on merkitystä vain jos "
+"”use_menu_path” on tosi, ja avaimen ”object_type” arvo on ”menu-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:22
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"Tämän paneeliesineen sijainti. Sijainti tulee antaa kuvapisteinä paneelin "
+"vasemmasta reunasta (tai pystypaneeleissa yläreunasta)."
+
+#: ../mate-panel/panel-object.schemas.in.h:23
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"Tämän laatikon tai valikon vinkissä näkyvä teksti. Tällä on merkitystä vain "
+"jos avaimen ”object_type” arvo on ”drawer-object” tai ”menu-object”."
+
+#: ../mate-panel/panel-object.schemas.in.h:24
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"matecomponent-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"Tämän paneeliesineen tyyppi. Mahdollisia arvoja ovat ”drawer-"
+"object” (laatikko), ”menu-object” (valikko), ”launcher-object” (käynnistin), "
+"”matecomponent-applet” (MateComponent-sovelma), ”action-applet” (toimintosovelma) ja ”menu-"
+"bar” (valikkopalkki)."
+
+#: ../mate-panel/panel-object.schemas.in.h:25
+msgid "Tooltip displayed for drawer or menu"
+msgstr "Laatikon tai valikon vinkki"
+
+#: ../mate-panel/panel-object.schemas.in.h:26
+msgid "Toplevel panel containing object"
+msgstr "Esineen sisältävä ylätason paneeli"
+
+#: ../mate-panel/panel-object.schemas.in.h:27
+msgid "Use custom icon for object's button"
+msgstr "Käytä mukautettua kuvaketta esineen painikkeessa"
+
+#: ../mate-panel/panel-object.schemas.in.h:28
+msgid "Use custom path for menu contents"
+msgstr "Käytä mukautettua polkua valikon sisällölle"
+
+#: ../mate-panel/panel-profile.c:772 ../mate-panel/panel-profile.c:799
+#: ../mate-panel/panel-profile.c:835 ../mate-panel/panel-profile.c:1700
+#, c-format
+msgid "Error reading MateConf string value '%s': %s"
+msgstr "Virhe MateConf-merkkijonoarvon ”%s” lukemisessa: %s"
+
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../mate-panel/panel-profile.c:814 ../mate-panel/panel-profile.c:1596
+#: ../mate-panel/panel-profile.c:1669 ../mate-panel/panel-profile.c:1751
+#, c-format
+msgid "Error reading MateConf integer value '%s': %s"
+msgstr "Virhe MateConf-kokonaislukuarvon ”%s” lukemisessa: %s"
+
+#: ../mate-panel/panel-profile.c:1606
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+"Paneeli ”%s” on määritelty ruudulla %d näkyväksi, mutta ruutu ei ole nyt "
+"käytössä. Paneeli ei lataudu."
+
+#: ../mate-panel/panel-profile.c:1684
+#, c-format
+msgid "Error reading MateConf boolean value '%s': %s"
+msgstr "Virhe MateConf-totuusarvon ”%s” lukemisessa: %s"
+
+#: ../mate-panel/panel-properties-dialog.c:123
+#: ../libmate-panel-applet/panel-test-applets.c:53
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Ylhäällä"
+
+#: ../mate-panel/panel-properties-dialog.c:124
+#: ../libmate-panel-applet/panel-test-applets.c:54
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Alhaalla"
+
+#: ../mate-panel/panel-properties-dialog.c:125
+#: ../libmate-panel-applet/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Vasemmalla"
+
+#: ../mate-panel/panel-properties-dialog.c:126
+#: ../libmate-panel-applet/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Oikealla"
+
+# mate-panel/panel-config.c:1638
+#: ../mate-panel/panel-properties-dialog.c:866
+msgid "Drawer Properties"
+msgstr "Vetimen ominaisuudet"
+
+# mate-panel/mate-run.c:447
+#: ../mate-panel/panel-properties-dialog.c:981
+#: ../mate-panel/panel-run-dialog.c:2019
+#, c-format
+msgid "Unable to load file '%s': %s."
+msgstr "Tiedostoa ”%s” ei voi ladata: %s."
+
+#: ../mate-panel/panel-properties-dialog.c:987
+msgid "Could not display properties dialog"
+msgstr "Ominaisuusikkunaa ei voi näyttää"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+msgid "<small>Opaque</small>"
+msgstr "<small>Peittävä</small>"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+msgid "<small>Transparent</small>"
+msgstr "<small>Läpinäkyvä</small>"
+
+# mate-panel/panel-config.c:567
+#: ../mate-panel/panel-properties-dialog.ui.h:4
+msgid "Arro_ws on hide buttons"
+msgstr "Näytä piilotuspainikkeiden n_uolet"
+
+# mate-panel/panel-config.c:1721
+#: ../mate-panel/panel-properties-dialog.ui.h:5
+msgid "Background"
+msgstr "Tausta"
+
+# mate-panel/panel-config.c:1721
+#: ../mate-panel/panel-properties-dialog.ui.h:6
+msgid "Background _image:"
+msgstr "Tausta_kuva:"
+
+# mate-panel/panel-config.c:1369 mate-panel/panel-config.c:1385
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+msgid "Co_lor:"
+msgstr "_Väri:"
+
+# mate-panel/disclosure-widget.c:260
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+msgid "E_xpand"
+msgstr "_Laajenna"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:10
+msgid "Image Background Details"
+msgstr "Kuvan taustan lisätiedot"
+
+# mate-panel/panel-config.c:1638
+#: ../mate-panel/panel-properties-dialog.ui.h:11
+msgid "Panel Properties"
+msgstr "Paneelin ominaisuudet"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:12
+msgid "Pick a color"
+msgstr "Valitse väri"
+
+# mate-panel/panel-config.c:1467
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "Rotate image when panel is _vertical"
+msgstr "Kierrä kuva p_ystypaneeleissa"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:14
+msgid "S_tyle:"
+msgstr "_Tyyli:"
+
+# mate-panel/panel-config.c:1721
+#: ../mate-panel/panel-properties-dialog.ui.h:15
+msgid "Select background"
+msgstr "Valitse tausta"
+
+# mate-panel/panel-config.c:556
+#: ../mate-panel/panel-properties-dialog.ui.h:16
+msgid "Show hide _buttons"
+msgstr "Nä_ytä piilotuspainikkeet"
+
+# mate-panel/panel-config.c:1369 mate-panel/panel-config.c:1385
+#: ../mate-panel/panel-properties-dialog.ui.h:17
+msgid "Solid c_olor"
+msgstr "_Yhtenäinen väri"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:18
+msgid "Some of these properties are locked down"
+msgstr "Jotkin ominaisuuksista on lukittu"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:19
+msgid "St_retch"
+msgstr "_Venytä"
+
+# mate-panel/panel-config.c:545
+#: ../mate-panel/panel-properties-dialog.ui.h:20
+msgid "_Autohide"
+msgstr "_Piilota itsestään"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:21
+msgid "_Icon:"
+msgstr "K_uvake:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:22
+msgid "_None (use system theme)"
+msgstr "_Ei mikään (käytä järjestelmän teemaa)"
+
+# libmate-panel-applet/panel-test-applets.glade.h:6
+#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../libmate-panel-applet/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "_Asento:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:24
+msgid "_Scale"
+msgstr "_Sovita"
+
+# libmate-panel-applet/panel-test-applets.glade.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../libmate-panel-applet/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "_Koko:"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:26
+msgid "_Tile"
+msgstr "V_ierekkäin"
+
+#: ../mate-panel/panel-properties-dialog.ui.h:27
+msgid "pixels"
+msgstr "kuvapistettä"
+
+# mate-panel/launcher.c:1050 mate-panel/menu.c:1059
+# mate-panel/panel-util.c:49
+#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#, c-format
+msgid "Could not open recently used document \"%s\""
+msgstr "Äskettäin käytettyä asiakirjaa ”%s” ei voi avata"
+
+#: ../mate-panel/panel-recent.c:90
+#, c-format
+msgid "An unknown error occurred while trying to open \"%s\"."
+msgstr "Tapahtui tuntematon virhe avattaessa kohdetta ”%s”."
+
+#: ../mate-panel/panel-recent.c:147
+msgid "Clear the Recent Documents list?"
+msgstr "Unohdetaanko viimeisimmät asiakirjat?"
+
+#: ../mate-panel/panel-recent.c:149
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"Jos viimeisimpien asiakirjojen luettelo tyhjennetään, katoavat:\n"
+"• Kaikki kohdat valikosta Sijainnit → Viimeisimmät asiakirjat.\n"
+"• Kaikki kohdat sovellusten viimeisimmät asiakirjat -luetteloista."
+
+#: ../mate-panel/panel-recent.c:161
+msgid "Clear Recent Documents"
+msgstr "Unohda viimeisimmät asiakirjat"
+
+#: ../mate-panel/panel-recent.c:196
+msgid "Recent Documents"
+msgstr "Viimeisimmät asiakirjat"
+
+#: ../mate-panel/panel-recent.c:235
+msgid "Clear Recent Documents..."
+msgstr "Unohda viimeisimmät asiakirjat…"
+
+#: ../mate-panel/panel-recent.c:237
+msgid "Clear all items from the recent documents list"
+msgstr "Unohdetaanko viimeisimmät asiakirjat?"
+
+# mate-panel/launcher.c:152
+#: ../mate-panel/panel-run-dialog.c:391
+#, c-format
+msgid "Could not run command '%s'"
+msgstr "Komentoa ”%s” ei voi suorittaa"
+
+#: ../mate-panel/panel-run-dialog.c:444
+#, c-format
+msgid "Could not convert '%s' from UTF-8"
+msgstr "Tekstiä ”%s” ei voi muuntaa UTF-8:sta"
+
+#: ../mate-panel/panel-run-dialog.c:1256
+msgid "Choose a file to append to the command..."
+msgstr "Valitse komennon perään liitettävä tiedosto…"
+
+#: ../mate-panel/panel-run-dialog.c:1634
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Select an application to view its description."
+msgstr "Katsele sovelluksen kuvausta valitsemalla se."
+
+# mate-panel/mate-run.c:1268
+#: ../mate-panel/panel-run-dialog.c:1672
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "Suorittaa komennon ”%s”"
+
+#: ../mate-panel/panel-run-dialog.c:1705
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr ""
+"Suorita-ikkunaan pudotettu URI-luettelo on väärän muotoinen (%d) tai "
+"pituinen (%d)\n"
+
+#: ../mate-panel/panel-run-dialog.c:2024
+msgid "Could not display run dialog"
+msgstr "Suoritusikkunaa ei voi näyttää"
+
+#: ../mate-panel/panel-run-dialog.ui.h:1
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Valitse tiedosto, jonka nimi liittyy komentomerkkijonon perään, "
+"napsauttamalla tätä painiketta."
+
+#: ../mate-panel/panel-run-dialog.ui.h:2
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Käynnistä valittu sovellus tai komentokenttään kirjoitettu komento "
+"napsauttamalla tätä painiketta."
+
+# mate-panel/mate-run.c:849
+#: ../mate-panel/panel-run-dialog.ui.h:3
+msgid "Command icon"
+msgstr "Komennon kuvake"
+
+# mate-panel/mate-run.c:1396
+#: ../mate-panel/panel-run-dialog.ui.h:4
+msgid "List of known applications"
+msgstr "Luettelo tunnetuista sovelluksista"
+
+# mate-panel/menu.c:1392
+#: ../mate-panel/panel-run-dialog.ui.h:5
+msgid "Run Application"
+msgstr "Suorita sovellus"
+
+# mate-panel/mate-run.c:883
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Run in _terminal"
+msgstr "Suorita p_äätteessä"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "Run with _file..."
+msgstr "Käynnistä _tiedoston kanssa…"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "Käynnistä komento päätteessä valitsemalla tämä."
+
+# mate-panel/mate-run.c:1396
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Show list of known _applications"
+msgstr "Näytä _luettelo tunnetuista sovelluksista"
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid "The icon of the command to be run."
+msgstr "Suoritettavan komennon kuvake."
+
+# mate-panel/mate-run.c:1489
+#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-stock-icons.c:90
+msgid "_Run"
+msgstr "_Suorita"
+
+#: ../mate-panel/panel-stock-icons.c:91
+msgid "_Force quit"
+msgstr "Sulje _väkisin"
+
+#: ../mate-panel/panel-stock-icons.c:92
+msgid "C_lear"
+msgstr "T_yhjennä"
+
+#: ../mate-panel/panel-stock-icons.c:93
+msgid "D_on't Delete"
+msgstr "_Älä poista"
+
+#: ../mate-panel/panel-toplevel.c:1188
+msgid "Hide Panel"
+msgstr "Piilota paneeli"
+
+# mate-panel/disclosure-widget.c:260
+#. translators: these string will be shown in MetaCity's switch window
+#. * popup when you pass the focus to a panel
+#: ../mate-panel/panel-toplevel.c:1595
+msgid "Top Expanded Edge Panel"
+msgstr "Laajennettu yläreunapaneeli"
+
+# applets/gen_util/MATE_GenUtilApplet_Factory.server.in.in.h:7
+#: ../mate-panel/panel-toplevel.c:1596
+msgid "Top Centered Panel"
+msgstr "Keskitetty yläpaneeli"
+
+# mate-panel/menu.c:2665 mate-panel/menu.c:2669
+# mate-panel/panel-config.c:1702
+#: ../mate-panel/panel-toplevel.c:1597
+msgid "Top Floating Panel"
+msgstr "Irrallinen yläpaneeli"
+
+# mate-panel/menu.c:277
+#: ../mate-panel/panel-toplevel.c:1598
+msgid "Top Edge Panel"
+msgstr "Yläreunapaneeli"
+
+# mate-panel/disclosure-widget.c:260
+#: ../mate-panel/panel-toplevel.c:1602
+msgid "Bottom Expanded Edge Panel"
+msgstr "Laajennettu alareunapaneeli"
+
+#: ../mate-panel/panel-toplevel.c:1603
+msgid "Bottom Centered Panel"
+msgstr "Keskitetty alapaneeli"
+
+#: ../mate-panel/panel-toplevel.c:1604
+msgid "Bottom Floating Panel"
+msgstr "Irrallinen alapaneeli"
+
+#: ../mate-panel/panel-toplevel.c:1605
+msgid "Bottom Edge Panel"
+msgstr "Alareunapaneeli"
+
+# mate-panel/disclosure-widget.c:260
+#: ../mate-panel/panel-toplevel.c:1609
+msgid "Left Expanded Edge Panel"
+msgstr "Laajennettu vasen reunapaneeli"
+
+# mate-panel/menu.c:3306 mate-panel/menu.c:3337
+#: ../mate-panel/panel-toplevel.c:1610
+msgid "Left Centered Panel"
+msgstr "Keskitetty vasen reunapaneeli"
+
+#: ../mate-panel/panel-toplevel.c:1611
+msgid "Left Floating Panel"
+msgstr "Irrallinen vasen paneeli"
+
+# mate-panel/menu.c:3306 mate-panel/menu.c:3337
+#: ../mate-panel/panel-toplevel.c:1612
+msgid "Left Edge Panel"
+msgstr "Vasen reunapaneeli"
+
+# mate-panel/disclosure-widget.c:260
+#: ../mate-panel/panel-toplevel.c:1616
+msgid "Right Expanded Edge Panel"
+msgstr "Laajennettu oikea reunapaneeli"
+
+#: ../mate-panel/panel-toplevel.c:1617
+msgid "Right Centered Panel"
+msgstr "Keskitetty oikea paneeli"
+
+#: ../mate-panel/panel-toplevel.c:1618
+msgid "Right Floating Panel"
+msgstr "Irrallinen oikea paneeli"
+
+#: ../mate-panel/panel-toplevel.c:1619
+msgid "Right Edge Panel"
+msgstr "Oikea reunapaneeli"
+
+# mate-panel/mate-panel-preferences.glade.h:6
+#: ../mate-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Animaationopeus"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "Piilota paneeli itsestään nurkkaan"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Taustaväri"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:4
+msgid "Background color opacity"
+msgstr "Taustavärin peittävyys"
+
+# mate-panel/panel-config.c:1721
+#: ../mate-panel/panel-toplevel.schemas.in.h:5
+msgid "Background image"
+msgstr "Taustakuva"
+
+# mate-panel/panel-config.c:1721
+#: ../mate-panel/panel-toplevel.schemas.in.h:6
+msgid "Background type"
+msgstr "Taustan tyyppi"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:7
+msgid "Center panel on x-axis"
+msgstr "Keskitä paneeli x-akselilla"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:8
+msgid "Center panel on y-axis"
+msgstr "Keskitä paneeli y-akselilla"
+
+# mate-panel/panel-config.c:567
+#: ../mate-panel/panel-toplevel.schemas.in.h:10
+msgid "Enable arrows on hide buttons"
+msgstr "Näytä piilotuspainikkeiden nuolet"
+
+# mate-panel/drawer.c:166
+#: ../mate-panel/panel-toplevel.schemas.in.h:11
+msgid "Enable hide buttons"
+msgstr "Näytä piilotuspainikkeet"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:12
+msgid "Expand to occupy entire screen width"
+msgstr "Laajenna viemään koko ruudun leveys"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:13
+msgid "Fit image to panel"
+msgstr "Sovita kuva paneeliin"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"Jos tosi, piilotuspainikkeissa on nuolet. Tällä on merkitystä vain jos "
+"avaimen ”enable_buttons” arvo on tosi."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"Jos tosi, paneelin päihin tulee painikkeet, joilla paneelin voi siirtää "
+"ruudun laitaan siten, että vain painike näkyy."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"Jos tosi, tämän paneelin piilottaminen ja ilmestyminen näkyvät animoituina "
+"sen sijaan että tapahtuisivat välittömästi."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr "Jos tosi, taustakuva kiertyy kun paneeli on pystyasennossa."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"Jos tosi, kuva skaalautuu (säilyttäen sivusuhteensa) paneelin korkeuteen "
+"(jos vaakasuunnassa)."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Jos tosi, kuva skaalautuu paneelin mittojen mukaan. Kuvan sivusuhde ei "
+"tällöin säily."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Jos tosi, paneeli piilottaa itsensä näytön nurkkaan, kun hiiri ei ole sen "
+"päällä. Hiiren osoittimen siirtäminen nurkkaan saa paneelin ilmestymään."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"Jos tosi, paneeli on koko ruudun leveyden kokoinen (tai korkeuden, jos "
+"paneeli on pystyssä). Tässä tilassa paneelin voi sijoittaa vain ruudun "
+"reunalle. Jos epätosi, paneeli on juuri tarpeeksi suuri, jotta kaikki "
+"sovelmat, käynnistimet ja painikkeet sopivat siihen."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"Jos tosi, x- ja y-avaimet jätetään huomioimatta, ja paneeli sijoitetaan "
+"näytön x-akselilla keskelle. Jos paneelin kokoa muutetaan, se säilyy samassa "
+"paikassa, eli se kasvaa molemmilta sivuilta. Jos arvo on epätosi, x- ja y-"
+"avaimet määrittävät paneelin sijainnin."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"Jos tosi, x- ja y-avaimet jätetään huomioimatta, ja paneeli sijoitetaan "
+"näytön y-akselilla keskelle. Jos paneelin kokoa muutetaan, se säilyy samassa "
+"paikassa, eli se kasvaa molemmilta sivuilta. Jos arvo on epätosi, x- ja y-"
+"avaimet määrittävät paneelin sijainnin."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:24
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"Xinerama-asetuksissa paneeleita voi olla kaikilla näytöillä. Tämä avain "
+"määrittelee nykyisen näytön, jolla paneeli on."
+
+# mate-panel/basep-widget.c:155
+#: ../mate-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "Nimi, jolla paneeli tunnetaan"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "Paneelin piiloutumisviive"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "Paneelin ilmestymisviive"
+
+# libmate-panel-applet/panel-test-applets.glade.h:6
+#: ../mate-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientation"
+msgstr "Paneelin suunta"
+
+# mate-panel/mate-panel-preferences.desktop.in.h:2
+#: ../mate-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "Paneelin koko"
+
+# applets/fish/fish.schemas.in.h:4
+#: ../mate-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "Kierrä kuvaa pystypaneeleissa"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:31
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "Määrittelee paneelin taustavärin #RGB-muodossa."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:32
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"Määrittelee paneelin taustakuvan tiedoston. Jos tiedostossa on alfakanava, "
+"kuva sulautuu työpöydän taustakuvan päälle."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:33
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Määrittelee viipeen (millisekunteina) osoittimen paneelin ylle tulemisen ja "
+"paneelin itsestään ilmestymisen välillä. Tällä on merkitystä vain jos "
+"avaimen ”auto_hide” arvo on tosi."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Määrittelee viipeen (millisekunteina) osoittimen paneelin päältä pois "
+"siirtymisen ja paneelin itsensä piilottamisen välillä. Tällä on merkitystä "
+"vain jos avain ”auto_hide” on tosi."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:35
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"Määrittelee paneelista näkyvien kuvapisteiden määrän, kun se on piilottanut "
+"itsensä nurkkaan. Tällä on merkitystä vain jos avaimen ”auto_hide” arvo on "
+"tosi."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:36
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"Määrittelee taustavärimuodon peittävyyden. Jos väri ei ole täysin peittävä "
+"(arvo on pienempi kuin 65535), väri piirtyy työpöydän taustakuvan päälle."
+
+# mate-panel/basep-widget.c:163
+#: ../mate-panel/panel-toplevel.schemas.in.h:37
+msgid "Stretch image to panel"
+msgstr "Venytä kuva paneeliin sopivaksi"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:38
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"Paneelin korkeus (tai pystypaneelin leveys). Paneelin minimikoko määrittyy "
+"ajonaikaisesti kirjasinkoon ja muiden merkkien perusteella. Maksimikoko on "
+"kiinteä yksi neljäsosa ruudun korkeudesta (tai leveydestä)."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Paneelin sijainti x-akselilla, alkaen näytön oikeasta laidasta. Jos arvo on -"
+"1, arvoa ei käytetä ja käytetään arvoa avaimesta x. Jos arvo on suurempi "
+"kuin 0, jätetään avaimen x arvo huomioimatta. Tällä arvolla on merkitystä "
+"vain laajentamattomassa tilassa. Laajennetussa tilassa tätä avainta ei "
+"huomioida, ja paneeli asetetaan orientation-avaimen määräämän sijainnin "
+"mukaisesti näytön reunalle."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Paneelin sijainti x-akselilla. Tällä on merkitystä vain laajentamattomassa "
+"tilassa. Laajennetussa tilassa tämä avain jää huomiotta ja paneeli sijoittuu "
+"ruudun reunalle ”orientation”-avaimen (suunta) mukaisesti."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Paneelin sijainti y-akselilla, alkaen näytön alalaidasta. Jos arvo on -1, "
+"arvoa ei käytetä ja käytetään arvoa avaimesta y. Jos arvo on suurempi kuin "
+"0, jätetään avaimen y arvo huomioimatta. Tällä arvolla on merkitystä vain "
+"laajentamattomassa tilassa. Laajennetussa tilassa tätä avainta ei huomioida, "
+"ja paneeli asetetaan orientation-avaimen määräämän sijainnin mukaisesti "
+"näytön reunalle."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:42
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Paneelin sijainti y-akselilla. Tällä on merkitystä vain laajentamattomassa "
+"tilassa. Laajennetussa tilassa tämä avain jää huomiotta ja paneeli sijoittuu "
+"ruudun reunalle ”orientation”-avaimen (suunta) mukaisesti."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"Paneelin suunta. Mahdollisia arvoja ovat ”top” (yläreuna), "
+"”bottom” (alareuna), ”left” (vasen reuna) ja ”right” (oikea reuna). "
+"Laajennetussa tilassa tämä määrittelee millä ruudun reunalla paneeli on. "
+"Laajentamattomassa tilassa ero arvojen ”top” ja ”bottom” välillä on vähemmän "
+"tärkeä, molemmat tarkoittavat, että paneeli on vaakasuuntainen, mutta "
+"antavat silti vihjeen eräille paneeliesineille miten niiden pitäisi toimia. "
+"Esimerkiksi yläpaneelissa valikkopainike avaa valikon paneelin alle, kun "
+"taas alapaneelissa valikko avautuu paneelin ylle."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:44
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"Nopeus, jolla paneelianimaatiot näkyvät. Mahdollisia arvoja ovat "
+"”slow” (hidas), ”medium” (keskinopea) ja ”fast” (nopea). Tällä on merkitystä "
+"vain jos avaimen ”enable_animations” arvo on tosi."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"Tämä on selväkielinen paneelin nimi. Tämän päätarkoitus on toimia paneeli-"
+"ikkunan otsikkona, mistä on hyötyä paneelien välisessä navigoinnissa."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:46
+msgid "Visible pixels when hidden"
+msgstr "Piilossa olevasta paneelista näkyvien kuvapisteiden määrä"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:47
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Minkälainen tausta tällä paneelilla on. Mahdollisia arvoja ovat ”gtk” (GTK+ "
+"säädinten oletustausta), ”color” (”color”-avaimen määrittelemä taustaväri) "
+"tai ”image” (”image”-avaimen määrittelemä kuva)."
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:48
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"Moninäyttöisessä järjestelmässä paneeleita voi olla joka näytöllä. Tämä "
+"avain kertoo nykyisen näytön, jolla paneeli on."
+
+# mate-panel/basep-widget.c:155
+#: ../mate-panel/panel-toplevel.schemas.in.h:49
+msgid "X co-ordinate of panel"
+msgstr "Paneelin x-koordinaatti"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "Paneelin X-koordinaatti, alkaen näytön oikeasta laidasta"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:51
+msgid "X screen where the panel is displayed"
+msgstr "X-ruutu, jolla paneeli on"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:52
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "Xinerama-näyttöruutu, jolla paneeli on"
+
+# mate-panel/basep-widget.c:155
+#: ../mate-panel/panel-toplevel.schemas.in.h:53
+msgid "Y co-ordinate of panel"
+msgstr "Paneelin y-koordinaatti"
+
+#: ../mate-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "Paneelin Y-koordinaatti, alkaen näytön alalaidasta"
+
+# mate-panel/panel-util.c:72 mate-panel/panel-util.c:107
+# mate-panel/panel-util.c:132
+#: ../mate-panel/panel-util.c:306
+#, c-format
+msgid "Icon '%s' not found"
+msgstr "Kuvaketta ”%s” ei löydy"
+
+# mate-panel/foobar-widget.c:140 mate-panel/menu.c:3534
+#: ../mate-panel/panel-util.c:409
+#, c-format
+msgid "Could not execute '%s'"
+msgstr "Komennon ”%s” suorittaminen epäonnistui"
+
+#: ../mate-panel/panel-util.c:645
+msgid "file"
+msgstr "tiedosto"
+
+#: ../mate-panel/panel-util.c:822
+msgid "Home Folder"
+msgstr "Kotikansio"
+
+#. Translators: this is the same string as the one found in
+#. * caja
+#: ../mate-panel/panel-util.c:834
+msgid "File System"
+msgstr "Tiedostojärjestelmä"
+
+#: ../mate-panel/panel-util.c:1007
+msgid "Search"
+msgstr "Haku"
+
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../mate-panel/panel-util.c:1053
+#, c-format
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+# mate-panel/panel.c:881
+#: ../mate-panel/panel.c:474
+#, c-format
+msgid "Open URL: %s"
+msgstr "Avaa URL: %s"
+
+# mate-panel/menu.c:3306 mate-panel/menu.c:3337
+#: ../mate-panel/panel.c:1309
+msgid "Delete this drawer?"
+msgstr "Poistetaanko tämä laatikko?"
+
+# mate-panel/menu.c:2964
+#: ../mate-panel/panel.c:1310
+msgid ""
+"When a drawer is deleted, the drawer and its\n"
+"settings are lost."
+msgstr ""
+"Kun laatikko poistetaan, se ja siihen liittyvät\n"
+"asetukset häviävät."
+
+# mate-panel/menu.c:3306 mate-panel/menu.c:3337
+#: ../mate-panel/panel.c:1313
+msgid "Delete this panel?"
+msgstr "Poistetaanko tämä paneeli?"
+
+# mate-panel/menu.c:2964
+#: ../mate-panel/panel.c:1314
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"Kun paneeli poistetaan, se ja sen asetukset\n"
+"häviävät."
+
+# libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:1
+#: ../libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the MATE-2.0 panel"
+msgstr "Yksinkertainen MATE-2.0:n paneelin testisovelma "
+
+# libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:2
+#: ../libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:2
+msgid "Test MateComponent Applet"
+msgstr "MateComponent-testisovelma"
+
+# libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:3
+#: ../libmate-panel-applet/MATE_Panel_TestApplet.server.in.h:3
+msgid "Test MateComponent Applet Factory"
+msgstr "MateComponent-testisovelmatehdas"
+
+# mate-panel/main.c:166
+#: ../libmate-panel-applet/panel-test-applets.c:34
+msgid "Specify an applet IID to load"
+msgstr "Anna ladattavan sovelman IID"
+
+#: ../libmate-panel-applet/panel-test-applets.c:35
+msgid ""
+"Specify a mateconf location in which the applet preferences should be stored"
+msgstr "Määrittele Gconf-sijainti, johon sovelman asetukset tallentuvat"
+
+#: ../libmate-panel-applet/panel-test-applets.c:36
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr "Määrittele paneelin alkukoko (xx-small, medium, large, jne.)"
+
+#: ../libmate-panel-applet/panel-test-applets.c:37
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr "Määrittele paneelin alkuasento (ylä, ala, vasen, oikea)"
+
+# libmate-panel-applet/panel-test-applets.glade.h:15
+#: ../libmate-panel-applet/panel-test-applets.c:61
+msgctxt "Size"
+msgid "XX Small"
+msgstr "Erityisen pieni"
+
+# libmate-panel-applet/panel-test-applets.glade.h:13
+#: ../libmate-panel-applet/panel-test-applets.c:62
+msgctxt "Size"
+msgid "X Small"
+msgstr "Hyvin pieni"
+
+# libmate-panel-applet/panel-test-applets.glade.h:10
+#: ../libmate-panel-applet/panel-test-applets.c:63
+msgctxt "Size"
+msgid "Small"
+msgstr "Pieni"
+
+# mate-panel/mate-panel-preferences.glade.h:2
+# libmate-panel-applet/panel-test-applets.glade.h:5
+#: ../libmate-panel-applet/panel-test-applets.c:64
+msgctxt "Size"
+msgid "Medium"
+msgstr "Tavallinen"
+
+# libmate-panel-applet/panel-test-applets.glade.h:3
+#: ../libmate-panel-applet/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Large"
+msgstr "Suuri"
+
+# libmate-panel-applet/panel-test-applets.glade.h:12
+#: ../libmate-panel-applet/panel-test-applets.c:66
+msgctxt "Size"
+msgid "X Large"
+msgstr "Hyvin suuri"
+
+# libmate-panel-applet/panel-test-applets.glade.h:14
+#: ../libmate-panel-applet/panel-test-applets.c:67
+msgctxt "Size"
+msgid "XX Large"
+msgstr "Erityisen suuri"
+
+# mate-panel/mate-run.c:447
+#: ../libmate-panel-applet/panel-test-applets.c:129
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "Sovelman ”%s” lataus epäonnistui"
+
+#. This is an utility to easily test various applets
+#: ../libmate-panel-applet/panel-test-applets.ui.h:2
+msgid "Test applet utility"
+msgstr "Testisovelma-apuohjelma"
+
+# libmate-panel-applet/panel-test-applets.glade.h:1
+#: ../libmate-panel-applet/panel-test-applets.ui.h:3
+msgid "_Applet:"
+msgstr "_Sovelma:"
+
+# libmate-panel-applet/panel-test-applets.glade.h:7
+#: ../libmate-panel-applet/panel-test-applets.ui.h:5
+msgid "_Prefs Dir:"
+msgstr "_Asetuskansio:"
+
+# applets/gen_util/clock.schemas.in.h:4
+#~ msgid "If true, display time in Universal Coordinated Time zone."
+#~ msgstr "Jos tosi, näytä yleismaailmallista aikaa (UTC)"
+
+# applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
+# mate-panel/panel-config.c:1427 mate-panel/panel-util.c:241
+#~ msgid "Browse icons"
+#~ msgstr "Selaa kuvakkeita"
+
+# mate-panel/mate-panel-screenshot.glade.h:2
+#~ msgid "<b>Clock Options</b>"
+#~ msgstr "<b>Kellon valinnat</b>"
+
+# mate-panel/mate-panel-screenshot.glade.h:2
+#~ msgid "<b>Animation</b>"
+#~ msgstr "<b>Animaatio</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Yleistä</b>"
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#~ msgid "<b>Switcher</b>"
+#~ msgstr "<b>Vaihdin</b>"
+
+# applets/gen_util/pager.glade.h:9
+#~ msgid "<b>Workspaces</b>"
+#~ msgstr "<b>Työtilat</b>"
+
+# mate-panel/foobar-widget.c:199 mate-panel/logout.c:212
+# mate-panel/menu.c:3447
+#~ msgid "Disable Lock Screen"
+#~ msgstr "Poista ruudun lukitseminen käytöstä"
+
+#~ msgid ""
+#~ "If true, the panel will not allow a user to lock their screen, by "
+#~ "removing access to the lock screen menu entries."
+#~ msgstr ""
+#~ "Jos tosi, paneeli ei salli käyttäjän lukita näyttöruutua, eli "
+#~ "näyttöruudun lukitsemisvalinnat poistuvat valikoista."
+
+# mate-panel/mate-run.c:849
+#~ msgid "Command entry"
+#~ msgstr "Komentolaatikko"
+
+#~ msgid "Enter a command string here to run it."
+#~ msgstr "Suorita komento kirjoittamalla se tähän."
+
+# mate-panel/mate-run.c:229 mate-panel/mate-run.c:246
+#~ msgid "Failed to launch time configuration tool: %s"
+#~ msgstr "Ajan asetustyökalun käynnistys epäonnistui: %s"
+
+#~ msgid ""
+#~ "Failed to locate a program for configuring the date and time. Perhaps "
+#~ "none is installed?"
+#~ msgstr ""
+#~ "Päiväyksen ja ajan muuttamiseen käytettävää ohjelmaa ei löytynyt. Ehkäpä "
+#~ "sitä ei ole asennettu?"
+
+# mate-panel/mate-panel-screenshot.glade.h:2
+#~ msgid "<b>Time Settings</b>"
+#~ msgstr "<b>Aika-asetukset</b>"
+
+#~ msgid "Time Settings"
+#~ msgstr "Aika-asetukset"
+
+#~ msgid ""
+#~ "This key specifies the program to run in order to configure the time."
+#~ msgstr "Ohjelma, joka käynnistetään, kun aika-asetuksia halutaan muuttaa."
+
+# mate-panel/mate-run.c:849
+#~ msgid "_Command:"
+#~ msgstr "_Komento:"
+
+# applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
+# applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+# applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
+# applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
+#~ msgid "There was an error displaying help: %s"
+#~ msgstr "Ohjeen näyttämisessä tapahtui virhe: %s"
+
+# mate-panel/MATE_Panel.server.in.h:1
+#~ msgid "MATE Panel Shell"
+#~ msgstr "Maten paneelikuori"
+
+#~ msgid "Desktop Folder|Desktop"
+#~ msgstr "Työpöytä"
+
+#~ msgid "panel:showusername|1"
+#~ msgstr "1"
+
+# libmate-panel-applet/panel-test-applets.glade.h:6
+#~ msgid "Orientation|Top"
+#~ msgstr "Ylhäällä"
+
+# libmate-panel-applet/panel-test-applets.glade.h:6
+#~ msgid "Orientation|Bottom"
+#~ msgstr "Alhaalla"
+
+# libmate-panel-applet/panel-test-applets.glade.h:6
+#~ msgid "Orientation|Left"
+#~ msgstr "Vasemmalla"
+
+# libmate-panel-applet/panel-test-applets.glade.h:6
+#~ msgid "Orientation|Right"
+#~ msgstr "Oikealla"
+
+# mate-panel/panel-shell.c:47
+#~ msgid ""
+#~ "The panel could not register with the matecomponent-activation server (error "
+#~ "code: %d) and will exit.\n"
+#~ "It may be automatically restarted."
+#~ msgstr ""
+#~ "Paneelin rekisteröitymisessä MateComponent-aktivointipalvelimelle oli ongelmia "
+#~ "(virhekoodi %d) ja se suljetaan.\n"
+#~ "Paneeli voidaan käynnistää automaattisesti uudestaan."
+
+# mate-panel/mate-panel-applet-frame.c:922
+#~ msgid "The panel has encountered a fatal error"
+#~ msgstr "Paneelissa tapahtui kriittinen virhe"
+
+#~ msgid "Force the panel to not be automatically restarted"
+#~ msgstr "Estä paneelin automaattinen uudelleenkäynnistys"
+
+# libmate-panel-applet/mate-panel-applet.c:774
+#~ msgid "Failed to get pixmap %s"
+#~ msgstr "Kuvan %s saaminen ei onnistunut"
+
+# libmate-panel-applet/mate-panel-applet.c:781
+#~ msgid "Unknown background type received"
+#~ msgstr "Tuntematon taustatyyppi vastaanotettu"
+
+# libmate-panel-applet/mate-panel-applet.c:964
+#~ msgid "The Applet's containing Panel's size in pixels"
+#~ msgstr "Sovelman sisältävän paneelin koko kuvapisteinä"
+
+# libmate-panel-applet/mate-panel-applet.c:972
+#~ msgid "The Applet's containing Panel's background color or pixmap"
+#~ msgstr "Sovelman sisältävän paneelin taustan väri tai kuva"
+
+# libmate-panel-applet/mate-panel-applet.c:980
+#~ msgid "The Applet's flags"
+#~ msgstr "Sovelman liput"
+
+# libmate-panel-applet/mate-panel-applet.c:988
+#~ msgid "Ranges that hint what sizes are acceptable for the applet"
+#~ msgstr "Välit, jotka vihjaavat, mitkä ovat sopivia kokoja sovelmalle"
+
+# libmate-panel-applet/mate-panel-applet.c:956
+#~ msgid "The Applet's containing Panel is locked down"
+#~ msgstr "Sovelman sisältävä paneeli on lukittu"
+
+#~ msgid "Find _Next"
+#~ msgstr "Etsi _seuraava"
+
+#~ msgid "_Find:"
+#~ msgstr "_Etsi:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Syötä salasana"
+
+#~ msgid "Could not find a suitable application."
+#~ msgstr "Sopivaa sovellusta ei löydy."
+
+# mate-panel/mate-panel-screenshot.glade.h:3
+#~ msgid "Unknown Location"
+#~ msgstr "Tuntematon sijainti"
+
+# mate-panel/mate-panel-screenshot.glade.h:2
+#~ msgid "<b>Active timezones</b>"
+#~ msgstr "<b>Aktiiviset aikavyöhykkeet</b>"
+
+# mate-panel/mate-panel-screenshot.glade.h:2
+#~ msgid "<b>Add timezone</b>"
+#~ msgstr "<b>Lisää aikavyöhyke</b>"
+
+#~ msgid "<small><b>Location:</b></small>"
+#~ msgstr "<small><b>Sijainti:</b></small>"
+
+#~ msgid ""
+#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
+#~ "right click to zoom out.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Lähennä napsauttamalla karttaa ja valitse kaupungin "
+#~ "aikavyöhyke. Voit loitontaa oikeasta napista.</i></small>"
+
+# mate-panel/distribution.c:26
+#~ msgid "Edit Timezones"
+#~ msgstr "Muokkaa aikavyöhykkeitä"
+
+#~ msgid "%s - %s"
+#~ msgstr "%s - %s"
+
+#~ msgid "move the mouse on the map"
+#~ msgstr "siirrä hiirtä kartalla"
+
+# mate-panel/mate-panel-screenshot.glade.h:2
+#~ msgid "<b>Location:</b> %s"
+#~ msgstr "<b>Sijainti:</b> %s"
+
+# applets/fish/fish.c:713
+#~ msgid "Name"
+#~ msgstr "Nimi"
+
+#~ msgid "Timezone"
+#~ msgstr "Aikavyöhyke"
+
+#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s kesäajassa (UTC %s%.2ld:%.2ld)"
+
+#~ msgid "%s (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s (UTC %s%.2ld:%.2ld)"
+
+#~ msgid ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgstr ""
+#~ "%s - %s\n"
+#~ "%s"
+
+#~ msgid "Timezones"
+#~ msgstr "Aikavyöhykkeet"
+
+#~ msgid "Log out of this system now?"
+#~ msgstr "Haluatko kirjautua heti ulos?"
+
+# mate-panel/foobar-widget.c:212 mate-panel/menu.c:3460
+#~ msgid "_Log Out"
+#~ msgstr "_Kirjaudu ulos"
+
+#~ msgid "Shut down this system now?"
+#~ msgstr "Haluatko sammuttaa tietokoneen heti?"
+
+#~ msgid "S_uspend"
+#~ msgstr "_Keskeytystila"
+
+#~ msgid "_Hibernate"
+#~ msgstr "_Lepotila"
+
+#~ msgid "_Restart"
+#~ msgstr "_Käynnistä uudelleen"
+
+#~ msgid "_Shut Down"
+#~ msgstr "_Sammuta"

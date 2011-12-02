@@ -1,0 +1,14 @@
+libmate-panel-applet todo list
+=========================
+
+	Things that need to be finished before this library can be considered
+anyway complete.
+
+	* Size negotiation. Basically make sure this works. It should be no
+	  different than the usual GtkWidget size request/allocation. The
+	  applets shouldn't be allowed to be any bigger than the panel. The
+	  other issue is with applets that want to expand to fill the available
+	  space on the panel. At the moment this is solved with getExpandFlags,
+	  but this ends up with some freaky stuff going on when you're moving
+	  applets. Maybe we should consider having a re-sizable flag which would
+	  make the applets have grabs for re-sizing.

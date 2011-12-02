@@ -1,0 +1,393 @@
+<!-- ##### SECTION Title ##### -->
+MatePanelApplet
+
+<!-- ##### SECTION Short_Description ##### -->
+The MatePanelApplet object.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+The #MatePanelApplet object is an object which encapsulates an applet. It
+is a #GtkContainer which may contain a single widget. This widget, in
+turn, should contain all widgets exposed by the applet.
+</para>
+
+<para>
+A #MatePanelApplet is associated with a #MateComponentControl. The control makes
+the cross process UI emmbedding required by applets possible.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MatePanelApplet ##### -->
+<para>
+The #MatePanelApplet struct contains private data only.
+</para>
+
+
+<!-- ##### SIGNAL MatePanelApplet::change-background ##### -->
+<para>
+Emitted when the background of the panel changes. Use @type to
+determine which, if any, of @color and @pimxap is valid.
+</para>
+
+@matepanelapplet: The object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+<!-- # Unused Parameters # -->
+@type: The #MatePanelAppletBackgroundType.
+@color: The #GdkColor if @type is #PANEL_COLOR_BACKGROUND.
+@pixmap: The pixmap file name if @type is #PANEL_PIXMAP_BACKGROUND
+
+<!-- ##### SIGNAL MatePanelApplet::change-orient ##### -->
+<para>
+Emitted when the orientation of the panel changes.
+</para>
+
+@matepanelapplet: The object which received the signal.
+@orient: The new #MatePanelAppletOrient of the applet.
+
+<!-- ##### SIGNAL MatePanelApplet::change-size ##### -->
+<para>
+Emitted when the size of the panel changes.
+</para>
+
+<para>
+Note: this is different for size negotiation which is handled by
+size_request() and size_allocate() as usual. This signal should
+be used to determine what font size or widget layout to use 
+depending on the size of the panel. See mate_panel_applet_get_size().
+</para>
+
+@matepanelapplet: The object which received the signal.
+@size: The size hint of the panel.
+
+<!-- ##### SIGNAL MatePanelApplet::move-focus-out-of-applet ##### -->
+<para>
+Emitted when the applet has lost focus. This signal is used internally and is not meant to be used by applets themselves.
+</para>
+
+@matepanelapplet: The object which received the signal.
+@direction: The direction of focus movement.
+
+<!-- ##### ARG MatePanelApplet:background ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:closure ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:connection ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:flags ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:id ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:locked ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:locked-down ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:orient ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:prefs-key ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:size ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MatePanelApplet:size-hints ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM MatePanelAppletOrient ##### -->
+<para>
+The #MatePanelAppletOrient type specifies the orientation of the applet. The
+values may seem backward (e.g. %MATE_PANEL_APPLET_ORIENT_LEFT means the panel
+is on the right hand side), but this is because the value is representative
+of the applet's <emphasis>orientation</emphasis>, not the panel's position.
+</para>
+
+@MATE_PANEL_APPLET_ORIENT_UP: 
+@MATE_PANEL_APPLET_ORIENT_DOWN: 
+@MATE_PANEL_APPLET_ORIENT_LEFT: 
+@MATE_PANEL_APPLET_ORIENT_RIGHT: 
+
+<!-- ##### ENUM MatePanelAppletBackgroundType ##### -->
+<para>
+The #MatePanelAppletBackgroundType enumerated type specifies the type of
+background of a panel.
+</para>
+
+@PANEL_NO_BACKGROUND: The panel has no background, the default is used.
+@PANEL_COLOR_BACKGROUND: The panel has a color, i.e rgb value,
+background.
+@PANEL_PIXMAP_BACKGROUND:  The panel has either an image background
+or is translucent.
+
+<!-- ##### ENUM MatePanelAppletFlags ##### -->
+<para>
+The #MatePanelAppletFlags associated with the applet are boolean flags which
+the panel may read in order to figure out how to handle the applet.
+</para>
+
+@MATE_PANEL_APPLET_FLAGS_NONE: No flags are to be associated with the applet.
+@MATE_PANEL_APPLET_EXPAND_MAJOR: The applet should expand horizontally on an
+horizontal panel and vertically on a vertical panel - e.g. the behaviour
+of the Window List applet.
+@MATE_PANEL_APPLET_EXPAND_MINOR: The applet should expand vertically on an
+horizontal panel and horizontally on a vertical panel. Most applets should
+set this flag in order to utilise the full panel width and allow the applet
+to be Fitt's Law compliant.
+@MATE_PANEL_APPLET_HAS_HANDLE: The panel should draw a grab handle around the
+applet - e.g. the Window List and Notification Area applets both set this
+flag.
+
+<!-- ##### USER_FUNCTION MatePanelAppletFactoryCallback ##### -->
+<para>
+This callback is invoked when the applet is loaded onto the panel. Typically
+the callback will check that @iid matches and fill the @applet with the
+widgets which make up the applet.
+</para>
+
+<para>
+Prior to the callback being invoked the #MatePanelApplet (or an instance of the
+sub-class specified by the #GType passed to the factory macros) is instantiated
+and initialized.
+</para>
+
+@applet: The #MatePanelApplet.
+@iid: The MateComponent IID of the applet requested.
+@user_data: The data passed to the factory macros.
+@Returns: %TRUE on success, %FALSE on failure.
+
+
+<!-- ##### FUNCTION mate_panel_applet_new ##### -->
+<para>
+Creates a new #MatePanelApplet. This function is typically not
+useful as the applet is created before the #MatePanelAppletFactoryCallback
+is invoked.
+</para>
+
+@void: 
+@Returns: The #MatePanelApplet.
+
+
+<!-- ##### FUNCTION mate_panel_applet_get_orient ##### -->
+<para>
+Get the current orientation of the applet.
+</para>
+
+@applet: The #MatePanelApplet.
+@Returns: The orientation of the applet.
+
+
+<!-- ##### FUNCTION mate_panel_applet_get_size ##### -->
+<para>
+Get the current size hint for the panel. The size hint is
+not useful for most applets.
+</para>
+
+<para>
+Note: The return value is <emphasis>not an integer value
+specifying the pixel size of the panel.</emphasis> Do not
+use this value to calculate the size of the applet. Use it
+only as a hint by which to decide the applet's layout.
+</para>
+
+@applet: The #MatePanelApplet.
+@Returns: The panel's size hint.
+
+
+<!-- ##### FUNCTION mate_panel_applet_get_background ##### -->
+<para>
+Returns the current background type. If the background
+type is %PANEL_NO_BACKGROUND both @color and @pixmap will
+be unaffected. If the background type is %PANEL_COLOR_BACKGROUND
+then @color will contain the current panel background colour.
+If the background type is %PANEL_PIXMAP_BACKGROUND, @pixmap will
+contain a pointer to a #GdkPixmap which is a copy of the applet's
+portion of the panel's background pixmap.
+</para>
+
+<!-- FIXME: give an example of how to use this -->
+
+@applet: A #MatePanelApplet.
+@color: A #GdkColor to be filled in.
+@pixmap: Returned #GdkPixmap.
+@Returns: The background type.
+
+
+<!-- ##### FUNCTION mate_panel_applet_get_preferences_key ##### -->
+<para>
+Returns the MateConf path to the directory containing the applet's
+per-instance preference keys. Using this you may construct the
+full path for the applet's preference keys. See 
+<xref linkend="mate-panel-applet-Panel-Applet-MateConf-Utilities" /> for
+more information.
+</para>
+
+@applet: The #MatePanelApplet.
+@Returns: A MateConf path.
+
+
+<!-- ##### FUNCTION mate_panel_applet_add_preferences ##### -->
+<para>
+Associates each schema in @schema_dir with a key in the applet's
+preferences directory (i.e. the directory returned by
+mate_panel_applet_get_preferences_key()). Each applet preference
+should have an associated schema to ensure that the key has
+a defined type, sane default and documentation.
+</para>
+
+<para>
+If you pass %NULL for @opt_error, this function will print
+a warning message from any #GError which MateConf may return.
+</para>
+
+@applet: The #MatePanelApplet.
+@schema_dir: The MateConf path where the applet's schemas are installed
+e.g. /schemas/apps/my_applet
+@opt_error: Optional #GError.
+
+
+<!-- ##### FUNCTION mate_panel_applet_get_flags ##### -->
+<para>
+Retrieve the #MatePanelAppletFlags associated with the applet.
+</para>
+
+@applet: The #MatePanelApplet.
+@Returns: The #MatePanelAppletFlags.
+
+
+<!-- ##### FUNCTION mate_panel_applet_set_flags ##### -->
+<para>
+Set the #MatePanelAppletFlags associated with the applet. See
+#MatePanelAppletFlags for more details on the possible uses of
+these flags.
+</para>
+
+@applet: The #MatePanelApplet.
+@flags: The #MatePanelAppletFlags to associate.
+
+
+<!-- ##### FUNCTION mate_panel_applet_set_size_hints ##### -->
+<para>
+Set a list of desired size ranges for an applet with the
+#MATE_PANEL_APPLET_EXPAND_MAJOR flags set. @size_hints is an
+array of (max, min) pairs where min(i) > max(i + 1).
+</para>
+
+<para>
+The panel will endeavour to allocate the applet a size
+in one of the (@base + max, @base + min) ranges.
+</para>
+
+@applet: The #MatePanelApplet.
+@size_hints: Array of size_hints.
+@n_elements: Number of elements in the array. <emphasis>
+Not</emphasis> the number of pairs.
+@base_size: The base size of the applet.
+
+
+<!-- ##### FUNCTION mate_panel_applet_get_locked_down ##### -->
+<para>
+Check if the @applet is locked down. A locked down applet should not allow any change to its configuration.
+</para>
+
+@applet: The #MatePanelApplet.
+@Returns: %TRUE if the @applet is locked down, %FALSE otherwise.
+
+
+<!-- ##### FUNCTION mate_panel_applet_request_focus ##### -->
+<para>
+Set keyboard focus to @applet.
+</para>
+
+@applet: The #MatePanelApplet.
+@timestamp: timestamp of the event triggering the window focus
+
+
+<!-- ##### FUNCTION mate_panel_applet_setup_menu ##### -->
+<para>
+Sets up a popup menu for @applet described by the xml
+string, @xml. See <xref linkend="applet-writing" /> section
+for a description of the format of the xml.
+</para>
+
+@applet: A #MatePanelApplet.
+@xml: The xml character string describing the popup menu.
+@action_group: 
+<!-- # Unused Parameters # -->
+@verb_list: The list of #MateComponentUIVerbs for the menu.
+@user_data: The user data pointer for the menu.
+
+
+<!-- ##### FUNCTION mate_panel_applet_setup_menu_from_file ##### -->
+<para>
+Sets up a popup menu for @applet described by the xml
+file, @file. See <xref linkend="applet-writing" /> for a description of
+the format of the xml.
+</para>
+
+@applet: A #MatePanelApplet.
+@filename: 
+@action_group: 
+<!-- # Unused Parameters # -->
+@opt_datadir: The data directory - i.e. ${prefix}/share (optional).
+@file: The file's name.
+@opt_app_name: The application's name (optional).
+@verb_list: The list of #MateComponentUIVerbs for the menu.
+@user_data: The user data pointer for the menu.
+
+
+<!-- ##### FUNCTION mate_panel_applet_factory_main ##### -->
+<para>
+A generic 'main' routine for applets. This should not normally be
+used directly because it is invoked by #MATE_PANEL_APPLET_MATECOMPONENT_FACTORY.
+</para>
+
+@factory_id: 
+@out_process: 
+@applet_type: The #GType to instantiate.
+@callback: The factory callback.
+@data: The factory user data pointer.
+@Returns: 0 on success, 1 on failure.
+<!-- # Unused Parameters # -->
+@iid: The matecomponent-activation iid of the factory.
+
+
