@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [2011.11.24], [https://github.com/perberos/mate-desktop-environment])
+AC_INIT([mate-panel], [2011.12.01], [https://github.com/perberos/mate-desktop-environment])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
