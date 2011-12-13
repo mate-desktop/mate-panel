@@ -136,7 +136,8 @@ mate_panel_LDADD =		\
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la			\
 	$(PANEL_LIBS)									\
 	$(XRANDR_LIBS)									\
-	$(X_LIBS)
+	$(X_LIBS) \
+	-lm
 
 mate_panel_LDFLAGS = -export-dynamic
 
@@ -149,7 +150,8 @@ mate_desktop_item_edit_SOURCES =	\
 
 mate_desktop_item_edit_LDADD = 	\
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
-	$(PANEL_LIBS)
+	$(PANEL_LIBS) \
+	-lX11
 
 mate_panel_test_applets_SOURCES =		\
 	panel-modules.c			\
