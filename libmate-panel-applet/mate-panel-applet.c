@@ -2245,6 +2245,16 @@ _mate_panel_applet_setup_x_error_handler (void)
 	_x_error_func = XSetErrorHandler (_x_error_handler);
 }
 
+/**
+ * mate_panel_applet_factory_main:
+ * @factory_id: Factory ID.
+ * @out_process: If the factory is on a separate process or not.
+ * @applet_type: GType of the applet this factory creates.
+ * @callback: (scope call): Callback to be called when a new applet is to be created.
+ * @data: (closure): Callback data.
+ *
+ * Returns: 0 on success, 1 if there is an error.
+ */
 int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer user_data)
 {
 	MatePanelAppletFactory* factory;
