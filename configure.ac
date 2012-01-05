@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [1.1.0], [https://github.com/perberos/mate-desktop-environment])
+AC_INIT([mate-panel], [1.1.0], [http://www.mate-desktop.org])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
@@ -323,7 +323,7 @@ fi
 
 dnl  Language Support
 
-GETTEXT_PACKAGE=mate-panel-2.0
+GETTEXT_PACKAGE=mate-panel
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Define the gettext package to be used])
 AC_SUBST(GETTEXT_PACKAGE)
 
