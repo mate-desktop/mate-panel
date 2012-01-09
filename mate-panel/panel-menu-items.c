@@ -1028,6 +1028,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	GtkWidget *item;
 	char      *mateconf_name;
 	char      *name;
+    char      *path;
 	char      *uri;
 	GFile     *file;
 
@@ -1193,6 +1194,10 @@ panel_desktop_menu_item_append_menu (GtkWidget *menu,
 
 	if (add_separator)
 		add_menu_separator (menu);
+
+        if (g_file_test ("/usr/share/applications/alatarjeta.desktop",
+                        G_FILE_TEST_IS_REGULAR))
+         panel_menu_items_append_from_desktop (menu, "alatarjeta.desktop", NULL, FALSE);
 
 	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL, FALSE);
 	panel_menu_items_append_from_desktop (menu, "mate-about.desktop", NULL, FALSE);

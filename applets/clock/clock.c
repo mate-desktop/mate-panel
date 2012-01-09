@@ -93,6 +93,8 @@ static MateConfEnumStringPair format_type_enum_map [] = {
 	{ CLOCK_FORMAT_UNIX,     "unix"     },
 	{ CLOCK_FORMAT_INTERNET, "internet" },
 	{ CLOCK_FORMAT_CUSTOM,   "custom"   },
+    { CLOCK_FORMAT_FUZZY_HOUR, "fuzzy-hour" },
+    { CLOCK_FORMAT_FUZZY_DAY,  "fuzzy-day"  },
 	{ 0, NULL }
 };
 
@@ -348,7 +350,9 @@ clock_timeout_callback (gpointer data)
 		    (unsigned int)get_itime (cd->current_time)) {
 			update_clock (cd);
 		} else if ((cd->format == CLOCK_FORMAT_12 ||
-			    cd->format == CLOCK_FORMAT_24) &&
+			    cd->format == CLOCK_FORMAT_24 ||
+                cd->format == CLOCK_FORMAT_FUZZY_HOUR ||
+                cd->format == CLOCK_FORMAT_FUZZY_DAY) &&
 			   new_time / 60 != cd->current_time / 60) {
 			update_clock (cd);
 		}
@@ -441,6 +445,8 @@ get_updated_timeformat (ClockData *cd)
 		 * It is used to display the time in 12-hours format (eg, like
 		 * in the US: 8:10 am). The %p expands to am/pm. */
 		time_format = cd->showseconds ? _("%l:%M:%S %p") : _("%l:%M %p");
+        else if (cd->format == CLOCK_FORMAT_FUZZY_HOUR || cd->format == CLOCK_FORMAT_FUZZY_DAY)
+                time_format = g_strdup("");
 	else
 		/* Translators: This is a strftime format string.
 		 * It is used to display the time in 24-hours format (eg, like
@@ -561,6 +567,190 @@ format_time (ClockData *cd)
 		g_free (timeformat);
 
 		utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
+        } else if (cd->format == CLOCK_FORMAT_FUZZY_HOUR) {
+                if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
+			strcpy (hour, "");
+
+                utf8 = malloc(100*sizeof(char));
+                strcpy(utf8, hour);
+
+                if (tm->tm_min > 52 || tm->tm_min < 8)
+                {
+                        if (tm->tm_min > 52)
+                                tm->tm_hour = (tm->tm_hour + 1) % 24;
+
+                        switch (tm->tm_hour)
+                        {
+                                case 0:
+                                        strcat(utf8, "Midnight");
+                                        break;
+                                case 12:
+                                        strcat(utf8, "Noon");
+                                break;
+                                case 1:
+                                case 13:
+                                        strcat(utf8, "One o'clock");
+                                        break;
+                                case 2:
+                                case 14:
+                                        strcat(utf8, "Two o'clock");
+                                        break;
+                                case 3:
+                                case 15:
+                                        strcat(utf8, "Three o'clock");
+                                        break;
+                                case 4:
+                                case 16:
+                                        strcat(utf8, "Four o'clock");
+                                        break;
+                                case 5:
+                                case 17:
+                                        strcat(utf8, "Five o'clock");
+                                        break;
+                                case 6:
+                                case 18:
+                                        strcat(utf8, "Six o'clock");
+                                        break;
+                                case 7:
+                                case 19:
+                                        strcat(utf8, "Seven o'clock");
+                                        break;
+                                case 8:
+                                case 20:
+                                        strcat(utf8, "Eight o'clock");
+                                        break;
+                                case 9:
+                                case 21:
+                                        strcat(utf8, "Nine o'clock");
+                                        break;
+                                case 10:
+                                case 22:
+                                        strcat(utf8, "Ten o'clock");
+                                        break;
+                                case 11:
+                                case 23:
+                                        strcat(utf8, "Eleven o'clock");
+                                        break;
+                        }
+                }
+                else
+                {
+                        if (tm->tm_min > 7 && tm->tm_min < 23)
+                        {
+                                strcat(utf8, "Quarter past ");
+                        }
+                        if (tm->tm_min > 22 && tm->tm_min < 38)
+                        {
+                                strcat(utf8, "Half past ");
+                        }
+                        if (tm->tm_min > 37 && tm->tm_min < 53)
+                        {
+                                strcat(utf8, "Quarter to ");
+                                tm->tm_hour = (tm->tm_hour+1) % 24;
+                        }
+        
+                        switch (tm->tm_hour)
+                        {
+                                case 0:
+                                        strcat(utf8, "midnight");
+                                        break;
+                                case 12:
+                                        strcat(utf8, "noon");
+                                break;
+                                case 1:
+                                case 13:
+                                        strcat(utf8, "one");
+                                        break;
+                                case 2:
+                                case 14:
+                                        strcat(utf8, "two");
+                                        break;
+                                case 3:
+                                case 15:
+                                        strcat(utf8, "three");
+                                        break;
+                                case 4:
+                                case 16:
+                                        strcat(utf8, "four");
+                                        break;
+                                case 5:
+                                case 17:
+                                        strcat(utf8, "five");
+                                        break;
+                                case 6:
+                                case 18:
+                                        strcat(utf8, "six");
+                                        break;
+                                case 7:
+                                case 19:
+                                        strcat(utf8, "seven");
+                                        break;
+                                case 8:
+                                case 20:
+                                        strcat(utf8, "eight");
+                                        break;
+                                case 9:
+                                case 21:
+                                        strcat(utf8, "nine");
+                                        break;
+                                case 10:
+                                case 22:
+                                        strcat(utf8, "ten");
+                                        break;
+                                case 11:
+                                case 23:
+                                        strcat(utf8, "eleven");
+                                        break;
+                        }
+                }
+        } else if (cd->format == CLOCK_FORMAT_FUZZY_DAY) {
+                if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
+			strcpy (hour, "");
+
+                utf8 = malloc(100*sizeof(char));
+                strcpy(utf8, hour);
+
+                switch (tm->tm_hour)
+                {
+                        case 23:
+                        case 0:
+                        case 1:
+                        case 2:
+                                strcat(utf8, "Late night");
+                                break;
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                                strcat(utf8, "Early morning");
+                                break;
+                        case 8:
+                        case 9:
+                        case 10:
+                                strcat(utf8, "Morning");
+                                break;
+                        case 11:
+                        case 12:
+                        case 13:
+                                strcat(utf8, "Mid-day");
+                                break;
+                        case 14:
+                        case 15:
+                        case 16:
+                                strcat(utf8, "Afternoon");
+                                break;
+                        case 17:
+                        case 18:
+                        case 19:
+                                strcat(utf8, "Evening");
+                                break;
+                        case 20:
+                        case 21:
+                        case 22:
+                                strcat(utf8, "Night");
+                                break;
+                }
 	} else {
 		if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
 			strcpy (hour, "???");
@@ -3291,13 +3481,28 @@ run_prefs_locations_edit (GtkButton *unused, ClockData *cd)
 }
 
 static void
-set_12hr_format_radio_cb (GtkWidget *widget, ClockData *cd)
+set_12hr_24hr_fuzzy_format_radio_cb (GtkWidget *widget, ClockData *cd)
 {
+        GtkWidget *radio_12hr;
+        GtkWidget *radio_24hr;
+        GtkWidget *radio_fuzzyhr;
+        GtkWidget *radio_fuzzyday;
+
+        /* Set the 12 hour / 24 hour widget */
+        radio_12hr     = _clock_get_widget (cd, "12hr_radio");
+        radio_24hr     = _clock_get_widget (cd, "24hr_radio");
+        radio_fuzzyhr  = _clock_get_widget (cd, "fuzzyhr_radio");
+        radio_fuzzyday = _clock_get_widget (cd, "fuzzyday_radio");
+
 	const gchar *val;
         ClockFormat format;
 
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio_12hr)))
                 format = CLOCK_FORMAT_12;
+        else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio_fuzzyhr)))
+                format = CLOCK_FORMAT_FUZZY_HOUR;
+        else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio_fuzzyday)))
+                format = CLOCK_FORMAT_FUZZY_DAY;
         else
                 format = CLOCK_FORMAT_24;
 
@@ -3376,25 +3581,46 @@ fill_prefs_window (ClockData *cd)
 
         GtkWidget *radio_12hr;
         GtkWidget *radio_24hr;
+	GtkWidget *radio_fuzzyhr;
+	GtkWidget *radio_fuzzyday;
 	GtkWidget *widget;
 	GtkCellRenderer *renderer;
         GtkTreeViewColumn *col;
 	GtkListStore *store;
         int i;
 
-	/* Set the 12 hour / 24 hour widget */
-        radio_12hr = _clock_get_widget (cd, "12hr_radio");
-        radio_24hr = _clock_get_widget (cd, "24hr_radio");
+	/* Set the 12 hour / 24 hour / fuzzy widget */
+        radio_12hr     = _clock_get_widget (cd, "12hr_radio");
+        radio_24hr     = _clock_get_widget (cd, "24hr_radio");
+        radio_fuzzyhr  = _clock_get_widget (cd, "fuzzyhr_radio");
+        radio_fuzzyday = _clock_get_widget (cd, "fuzzyday_radio");
 
-        if (cd->format == CLOCK_FORMAT_12)
-                widget = radio_12hr;
-        else
-                widget = radio_24hr;
+        switch (cd->format)
+        {
+                case CLOCK_FORMAT_12:
+                        widget = radio_12hr;
+                        break;
+                case CLOCK_FORMAT_FUZZY_HOUR:
+                        widget = radio_fuzzyhr;
+                        break;
+                case CLOCK_FORMAT_FUZZY_DAY:
+                        widget = radio_fuzzyday;
+                        break;
+                default:
+                        widget = radio_24hr;
+                        break;
+        }
 
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
 	g_signal_connect (radio_12hr, "toggled",
-			  G_CALLBACK (set_12hr_format_radio_cb), cd);
+			  G_CALLBACK (set_12hr_24hr_fuzzy_format_radio_cb), cd);
+	g_signal_connect (radio_24hr, "toggled",
+			  G_CALLBACK (set_12hr_24hr_fuzzy_format_radio_cb), cd);
+	g_signal_connect (radio_fuzzyhr, "toggled",
+			  G_CALLBACK (set_12hr_24hr_fuzzy_format_radio_cb), cd);
+	g_signal_connect (radio_fuzzyday, "toggled",
+			  G_CALLBACK (set_12hr_24hr_fuzzy_format_radio_cb), cd);
 
 	/* Set the "Show Date" checkbox */
 	widget = _clock_get_widget (cd, "date_check");

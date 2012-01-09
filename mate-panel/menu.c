@@ -1488,8 +1488,7 @@ create_menuitem (GtkWidget          *menu,
 					NULL, NULL,
 					alias_directory ? matemenu_tree_directory_get_icon (alias_directory) :
 							  matemenu_tree_entry_get_icon (entry),
-					NULL);
-
+                                       PANEL_STOCK_DEFAULT_ICON);
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
