@@ -54,6 +54,7 @@
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-util.h"
+#include "applet-signaler.h"
 
 #define BOOKMARKS_FILENAME      ".gtk-bookmarks"
 #define DESKTOP_IS_HOME_DIR_DIR "/apps/caja/preferences"
@@ -1526,6 +1527,61 @@ panel_desktop_menu_item_set_panel (GtkWidget   *item,
 				       "menu_panel", panel);
 }
 
+#define FUSA_APPLET_IID "OAFIID:MATE_FastUserSwitchApplet"
+#define INDICATOR_APPLET_COMPLETE_IID "OAFIID:MATE_IndicatorAppletComplete"
+
+static void
+panel_menu_items_hide_on_fusa (MatePanelAppletSignaler * pas, AppletInfo * info, GtkWidget * widget)
+{
+	/* check if we are running stracciatella session */
+	if (g_strcmp0(g_getenv("MDMSESSION"), "mate-stracciatella") == 0) {
+	        g_debug("Running stracciatella MATE session, not touching menu items");
+	        return TRUE;
+	}
+
+	const char * iid = mate_panel_applet_get_iid(info);
+	if (iid == NULL)
+		return;
+
+	if (g_strcmp0(iid, FUSA_APPLET_IID) == 0 ||
+	        g_strcmp0(iid, INDICATOR_APPLET_COMPLETE_IID) == 0)
+		gtk_widget_hide(widget);
+
+	return;
+}
+
+static void
+panel_menu_items_show_on_fusa (MatePanelAppletSignaler * pas, AppletInfo * info, GtkWidget * widget)
+{
+	/* check if we are running stracciatella session */
+	if (g_strcmp0(g_getenv("MDMSESSION"), "mate-stracciatella") == 0) {
+	        g_debug("Running stracciatella MATE session, not touching menu items");
+	        return TRUE;
+	}
+
+	const char * iid = mate_panel_applet_get_iid(info);
+	if (iid == NULL)
+		return;
+
+	if (g_strcmp0(iid, FUSA_APPLET_IID) == 0 ||
+	        g_strcmp0(iid, INDICATOR_APPLET_COMPLETE_IID) == 0)
+		gtk_widget_show(widget);
+
+	return;
+}
+
+static void
+disconnect_signalers (MatePanelAppletSignaler *signaler,
+                      GtkWidget           *widget)
+{
+        g_signal_handlers_disconnect_by_func (signaler,
+                                              panel_menu_items_hide_on_fusa,
+                                              widget);
+        g_signal_handlers_disconnect_by_func (signaler,
+                                              panel_menu_items_show_on_fusa,
+                                              widget);
+}
+
 void
 panel_menu_items_append_lock_logout (GtkWidget *menu)
 {
@@ -1536,6 +1592,13 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	const char *translate;
 	char       *label;
 	char       *tooltip;
+	GtkWidget  *separator = NULL;
+	AppletInfo *fusa = NULL;
+	MatePanelAppletSignaler *signaler = mate_panel_applet_signaler_get_default ();
+
+	fusa = mate_panel_applet_get_by_iid(FUSA_APPLET_IID);
+	if (fusa == NULL)
+		fusa = mate_panel_applet_get_by_iid(INDICATOR_APPLET_COMPLETE_IID);
 
 	separator_inserted = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
@@ -1543,6 +1606,19 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	if (last != NULL) {
 		separator_inserted = GTK_IS_SEPARATOR (GTK_WIDGET (last->data));
 	}
+        if (separator_inserted) {
+                g_object_weak_ref (G_OBJECT (last->data),
+                                    (GWeakNotify) disconnect_signalers,
+                                    signaler);
+
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_ADDED,
+                                 G_CALLBACK(panel_menu_items_hide_on_fusa), last->data);
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_REMOVED,
+                                 G_CALLBACK(panel_menu_items_show_on_fusa), last->data);
+                if (fusa != NULL) {
+                        gtk_widget_hide(GTK_WIDGET(last->data));
+                }
+        }
 	g_list_free (children);
 
 	if (panel_lock_screen_action_available("lock"))
@@ -1553,11 +1629,23 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		{
 			if (!separator_inserted)
 			{
-				add_menu_separator(menu);
+				separator = add_menu_separator(menu);
 				separator_inserted = TRUE;
 			}
 
 			gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+
+                        g_object_weak_ref (G_OBJECT (item),
+                                            (GWeakNotify) disconnect_signalers,
+                                            signaler);
+
+                        g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_ADDED,
+                                         G_CALLBACK(panel_menu_items_hide_on_fusa), item);
+                        g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_REMOVED,
+                                         G_CALLBACK(panel_menu_items_show_on_fusa), item);
+                        if (fusa != NULL) {
+                                gtk_widget_hide(GTK_WIDGET(item));
+                        }
 		}
 	}
 
@@ -1600,19 +1688,65 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 
 	if (item != NULL) {
 		if (!separator_inserted) {
-			add_menu_separator (menu);
+			separator = add_menu_separator (menu);
 			separator_inserted = TRUE;
 		}
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+                g_object_weak_ref (G_OBJECT (item),
+                                    (GWeakNotify) disconnect_signalers,
+                                    signaler);
+
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_ADDED,
+                                 G_CALLBACK(panel_menu_items_hide_on_fusa), item);
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_REMOVED,
+                                 G_CALLBACK(panel_menu_items_show_on_fusa), item);
+                if (fusa != NULL) {
+                        gtk_widget_hide(GTK_WIDGET(item));
+                }
 	}
 
 	item = panel_menu_items_create_action_item (PANEL_ACTION_SHUTDOWN);
 	if (item != NULL && !g_getenv("LTSP_CLIENT")) {
 		if (!separator_inserted)
-			add_menu_separator (menu);
+			separator = add_menu_separator (menu);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+                g_object_weak_ref (G_OBJECT (item),
+                                    (GWeakNotify) disconnect_signalers,
+                                    signaler);
+
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_ADDED,
+                                 G_CALLBACK(panel_menu_items_hide_on_fusa), item);
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_REMOVED,
+                                 G_CALLBACK(panel_menu_items_show_on_fusa), item);
+                if (fusa != NULL) {
+                        gtk_widget_hide(GTK_WIDGET(item));
+                }
+        }
+
+        /* Okay, this is confusing, but required to make the patch
+         * smaller.  Basically if the seperator was created externally it
+         * gets the signal handlers added when it is detected, but the
+         * local variable remains NULL.  This allows the return in the
+         * middle to still work.  But, if the seperator gets built in the
+         * remainder of this function then the signal handlers get added
+         * on here as the local variable becomes a pointer to that created
+         * seperator.  Whew.  */
+        if (separator != NULL) {
+                g_object_weak_ref (G_OBJECT (separator),
+                                    (GWeakNotify) disconnect_signalers,
+                                    signaler);
+
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_ADDED,
+                                 G_CALLBACK(panel_menu_items_hide_on_fusa), separator);
+                g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_REMOVED,
+                                 G_CALLBACK(panel_menu_items_show_on_fusa), separator);
+                if (fusa != NULL) {
+                        gtk_widget_hide(GTK_WIDGET(separator));
+               }
 	}
 }
 

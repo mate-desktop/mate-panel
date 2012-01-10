@@ -1000,3 +1000,15 @@ mate_panel_applet_frame_create (PanelToplevel *toplevel,
 
 	g_free (id);
 }
+
+/** \brief  Gets the IID for a panel applet frame
+	\param  frame  Applet frame
+	\return The IID of the applet or NULL on error
+*/
+const gchar * 
+mate_panel_applet_frame_get_iid (MatePanelAppletFrame * frame)
+{
+	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (frame), NULL);
+
+	return frame->priv->iid;
+}
