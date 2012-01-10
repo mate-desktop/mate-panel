@@ -47,6 +47,7 @@
 #include "panel-stock-icons.h"
 #include "panel-typebuiltins.h"
 #include "panel-icon-names.h"
+#include "applet-signaler.h"
 
 G_DEFINE_TYPE (PanelMenuBar, panel_menu_bar, GTK_TYPE_MENU_BAR)
 
@@ -91,11 +92,68 @@ static gboolean panel_menu_bar_hide_tooltip_and_focus(GtkWidget* widget, PanelMe
 	return FALSE;
 }
 
+#define FUSA_APPLET_IID "OAFIID:MATE_FastUserSwitchApplet"
+#define INDICATOR_APPLET_COMPLETE_IID "OAFIID:MATE_IndicatorAppletComplete"
+
+static void
+panel_menu_bar_set_tooltip_remove (MatePanelAppletSignaler * pas, AppletInfo * info, GtkWidget * widget)
+{
+       const char * iid = mate_panel_applet_get_iid(info);
+       if (iid == NULL)
+               return;
+
+       if (g_strcmp0(iid, FUSA_APPLET_IID) == 0 ||
+               g_strcmp0(iid, INDICATOR_APPLET_COMPLETE_IID) == 0)
+               panel_util_set_tooltip_text (widget,
+                                                _("Change desktop appearance and behavior, get help, or log out"));
+
+       return;
+}
+
+static void
+panel_menu_bar_set_tooltip_add (MatePanelAppletSignaler * pas, AppletInfo * info, GtkWidget * widget)
+{
+       const char * iid = mate_panel_applet_get_iid(info);
+       if (iid == NULL)
+               return;
+
+       if (g_strcmp0(iid, FUSA_APPLET_IID) == 0 ||
+               g_strcmp0(iid, INDICATOR_APPLET_COMPLETE_IID) == 0)
+               panel_util_set_tooltip_text (widget,
+                                                _("Change system appearance and behavior, or get help"));
+
+       return;
+}
+
+static void
+disconnect_signalers (MatePanelAppletSignaler *signaler,
+                      GtkWidget           *widget)
+{
+  g_signal_handlers_disconnect_by_func (signaler,
+                                        panel_menu_bar_set_tooltip_add,
+                                        widget);
+  g_signal_handlers_disconnect_by_func (signaler,
+                                        panel_menu_bar_set_tooltip_remove,
+                                        widget);
+}
+
 static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 {
+	MatePanelAppletSignaler *signaler = mate_panel_applet_signaler_get_default();
+
 	panel_util_set_tooltip_text(menubar->priv->applications_item, _("Browse and run installed applications"));
 	panel_util_set_tooltip_text(menubar->priv->places_item, _("Access documents, folders and network places"));
 	panel_util_set_tooltip_text(menubar->priv->desktop_item, _("Change desktop appearance and behavior, get help, or log out"));
+
+        g_object_weak_ref (G_OBJECT (menubar->priv->desktop_item),
+                           (GWeakNotify) disconnect_signalers,
+                           signaler);
+
+        g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_ADDED,
+                         G_CALLBACK(panel_menu_bar_set_tooltip_add), menubar->priv->desktop_item);
+        g_signal_connect(signaler, MATE_PANEL_APPLET_SIGNALER_SIGNAL_APPLET_REMOVED,
+                         G_CALLBACK(panel_menu_bar_set_tooltip_remove), menubar->priv->desktop_item);
+
 
 	//FIXME: this doesn't handle the right-click case. Sigh.
 	/* Hide tooltip if a menu is activated */
