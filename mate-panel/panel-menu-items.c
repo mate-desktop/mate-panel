@@ -1195,8 +1195,19 @@ panel_desktop_menu_item_append_menu (GtkWidget *menu,
 	if (add_separator)
 		add_menu_separator (menu);
 
-	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL, FALSE);
+	panel_menu_items_append_from_desktop (menu, "yelp.desktop", _("Help and Support"), FALSE);
+
 	panel_menu_items_append_from_desktop (menu, "mate-about.desktop", NULL, FALSE);
+
+#ifdef UBUNTU
+	if (g_file_test ("/usr/share/omf/about-ubuntu/about-ubuntu-C.omf",
+			 G_FILE_TEST_IS_REGULAR))
+	  panel_menu_items_append_from_desktop (menu, "ubuntu-about.desktop", NULL, FALSE);
+
+	if (g_file_test ("/usr/share/omf/about-edubuntu/about-edubuntu-C.omf",
+			 G_FILE_TEST_IS_REGULAR))
+	  panel_menu_items_append_from_desktop (menu, "edubuntu-about.desktop", NULL, FALSE);
+#endif
 
 	if (parent->priv->append_lock_logout)
 		panel_menu_items_append_lock_logout (menu);
