@@ -288,7 +288,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 	mate_panel_applet_add_callback(menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
 
 	/* Menu editors */
-	if (panel_is_program_in_path("alacarte") || panel_is_program_in_path("matemenu-simple-editor"))
+	if (panel_is_program_in_path("alatarjeta") || panel_is_program_in_path("matemenu-simple-editor"))
 	{
 		mate_panel_applet_add_callback (menubar->priv->info, "edit", NULL, _("_Edit Menus"), NULL);
 	}
@@ -334,7 +334,7 @@ void panel_menu_bar_invoke_menu(PanelMenuBar* menubar, const char* callback_name
 	{
 		GError* error = NULL;
 
-		panel_launch_desktop_file_with_fallback("alacarte.desktop", "alacarte", screen, &error);
+		panel_launch_desktop_file_with_fallback("alatarjeta.desktop", "alatarjeta", screen, &error);
 
 		if (error)
 		{
