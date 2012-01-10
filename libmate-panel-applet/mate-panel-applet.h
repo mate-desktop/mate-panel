@@ -134,6 +134,12 @@ gboolean _mate_panel_applet_shlib_factory(void);
 	} while (0)
 #endif /* !defined(ENABLE_NLS) */
 
+#ifdef UBUNTU
+#define _UNSET_UBUNTU_MENUPROXY	unsetenv("UBUNTU_MENUPROXY");
+#else
+#define _UNSET_UBUNTU_MENUPROXY	
+#endif
+
 #define MATE_PANEL_APPLET_OUT_PROCESS_FACTORY(id, type, name, callback, data) \
 int main(int argc, char* argv[]) \
 { \
@@ -141,6 +147,7 @@ int main(int argc, char* argv[]) \
 	GError* error; \
 	int retval; \
 	 \
+	_UNSET_UBUNTU_MENUPROXY \
 	_MATE_PANEL_APPLET_SETUP_GETTEXT (TRUE); \
 	 \
 	context = g_option_context_new(""); \
