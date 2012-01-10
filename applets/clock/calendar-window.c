@@ -1238,32 +1238,13 @@ calendar_day_activated (GtkCalendar    *calendar,
 	unsigned int  day;
 	unsigned int  month;
 	unsigned int  year;
-	time_t        date;
-	struct tm     utc_date_tm;
-	struct tm     local_date_tm = { 0, };
 	char         *argument;
 
 	gtk_calendar_get_date (calendar, &year, &month, &day);
 
-	local_date_tm.tm_mday  = (int) day;
-	local_date_tm.tm_mon   = (int) month;
-	local_date_tm.tm_year  = (int) year - 1900;
-	local_date_tm.tm_isdst = -1;
-
-	/* convert the local date picked in the calendar to broken-down UTC */
-	date = mktime (&local_date_tm);
-	gmtime_r (&date, &utc_date_tm);
-
-	/* FIXME: once bug 409200 is fixed, we'll have to make this hh:mm:ss
-	 * instead of hhmmss */
 	argument = g_strdup_printf ("calendar:///?startdate="
-				    "%.4d%.2d%.2dT%.2d%.2d%.2dZ",
-				    utc_date_tm.tm_year + 1900,
-				    utc_date_tm.tm_mon + 1,
-				    utc_date_tm.tm_mday,
-				    utc_date_tm.tm_hour,
-				    utc_date_tm.tm_min,
-				    0);
+				    "%.4d%.2d%.2d",
+				    year, month, day);
 
 	clock_launch_calendar_app (calwin, argument);
 
