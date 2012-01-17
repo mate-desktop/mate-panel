@@ -164,6 +164,7 @@ load_applet_into_window (const char *title,
 	g_variant_builder_add (&builder, "{sv}",
 			       "orient", g_variant_new_uint32 (orientation));
 	mate_panel_applet_container_add (MATE_PANEL_APPLET_CONTAINER (container),
+				    gtk_widget_get_screen (applet_window),
 				    title, NULL,
 				    (GAsyncReadyCallback)applet_activated_cb,
 				    applet_window,
