@@ -40,7 +40,6 @@
 #include <matecomponent/matecomponent-types.h>
 #include <matecomponent/matecomponent-property-bag.h>
 #include <matecomponent/matecomponent-item-handler.h>
-#include <matecomponent/matecomponent-shlib-factory.h>
 #include <matecomponent/matecomponent-property-bag-client.h>
 #include <mateconf/mateconf.h>
 #include <mateconf/mateconf-client.h>
@@ -1809,54 +1808,6 @@ mate_panel_applet_factory_main (const gchar                 *iid,
 	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
 
 	return mate_panel_applet_factory_main_closure (iid, applet_type, closure);
-}
-
-MateComponent_Unknown
-mate_panel_applet_shlib_factory_closure (const char         *iid,
-				    GType               applet_type,
-				    PortableServer_POA  poa,
-				    gpointer            impl_ptr,
-				    GClosure           *closure,
-				    CORBA_Environment  *ev)
-{
-	MateComponentShlibFactory *factory;
-
-	g_return_val_if_fail (iid != NULL, CORBA_OBJECT_NIL);
-	g_return_val_if_fail (closure != NULL, CORBA_OBJECT_NIL);
-
-	g_assert (g_type_is_a (applet_type, PANEL_TYPE_APPLET));
-
-	bindtextdomain (GETTEXT_PACKAGE, MATELOCALEDIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-
-	closure = matecomponent_closure_store (closure, mate_panel_applet_marshal_BOOLEAN__STRING);
-
-	factory = matecomponent_shlib_factory_new_closure (
-			iid, poa, impl_ptr,
-			g_cclosure_new (G_CALLBACK (mate_panel_applet_factory_callback),
-					mate_panel_applet_callback_data_new (applet_type, closure),
-					(GClosureNotify) mate_panel_applet_callback_data_free));
-
-        return CORBA_Object_duplicate (MATECOMPONENT_OBJREF (factory), ev);
-}
-
-MateComponent_Unknown
-mate_panel_applet_shlib_factory (const char                 *iid,
-			    GType                       applet_type,
-			    PortableServer_POA          poa,
-			    gpointer                    impl_ptr,
-			    MatePanelAppletFactoryCallback  callback,
-			    gpointer                    user_data,
-			    CORBA_Environment          *ev)
-{
-	g_return_val_if_fail (iid != NULL, CORBA_OBJECT_NIL);
-	g_return_val_if_fail (callback != NULL, CORBA_OBJECT_NIL);
-
-	return mate_panel_applet_shlib_factory_closure (
-			iid, applet_type, poa, impl_ptr,
-			g_cclosure_new (G_CALLBACK (callback),
-					user_data, NULL),
-			ev);
 }
 
 void
