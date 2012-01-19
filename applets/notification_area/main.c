@@ -130,7 +130,7 @@ static void about_cb(GtkAction* action, AppletData* data)
 		"logo-icon-name", NOTIFICATION_AREA_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://matsusoft.com.ar/projects/mate/",
+		"website", "http://www.mate-desktop.org",
 		NULL);
 }
 
