@@ -58,8 +58,10 @@ AppletInfo *mate_panel_applet_register    (GtkWidget       *applet,
 void mate_panel_applet_stop_loading (const char *id);
 
 const char *mate_panel_applet_get_id           (AppletInfo      *info);
+const char *mate_panel_applet_get_iid          (AppletInfo      *info);
 const char *mate_panel_applet_get_id_by_widget (GtkWidget       *widget);
 AppletInfo *mate_panel_applet_get_by_id        (const char      *id);
+AppletInfo *mate_panel_applet_get_by_iid       (const char      *iid);
 AppletInfo *mate_panel_applet_get_by_type      (PanelObjectType  object_type, GdkScreen *screen);
 
 GSList     *mate_panel_applet_list_applets (void);

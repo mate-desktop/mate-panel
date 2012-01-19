@@ -48,6 +48,8 @@ extern "C" {
 #define PANEL_STOCK_EXECUTE             "panel-execute"
 #define PANEL_STOCK_CLEAR               "panel-clear"
 #define PANEL_STOCK_DONT_DELETE         "panel-dont-delete"
+/* FIXME: put a more representative icon here */
+#define PANEL_STOCK_DEFAULT_ICON               "application-default-icon"
 
 void        panel_init_stock_icons_and_items (void);
 GtkIconSize panel_menu_icon_get_size         (void);

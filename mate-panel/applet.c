@@ -34,6 +34,7 @@
 #include "panel-globals.h"
 #include "panel-properties-dialog.h"
 #include "panel-lockdown.h"
+#include "applet-signaler.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -750,6 +751,7 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 	info->widget = NULL;
 
 	registered_applets = g_slist_remove (registered_applets, info);
+	mate_panel_applet_signaler_remove_applet(info);
 
 	queued_position_saves =
 		g_slist_remove (queued_position_saves, info);
@@ -1216,6 +1218,26 @@ mate_panel_applet_get_id (AppletInfo *info)
 	return info->id;
 }
 
+/** \brief  Get the MateComponent IID of the Applet
+	\param  info  The AppletInfo struct representing the applet
+	\return  Either the IID of the applet or NULL if the applet does
+	         not have an IID.
+*/
+const char *
+mate_panel_applet_get_iid (AppletInfo *info)
+{
+	if (!info)
+		return NULL;
+	if (info->type != PANEL_OBJECT_APPLET)
+		return NULL;
+
+	MatePanelAppletFrame * frame = MATE_PANEL_APPLET_FRAME(info->data);
+	if (frame == NULL)
+		return NULL;  /* This should never happen, but just in case */
+
+	return mate_panel_applet_frame_get_iid(frame);
+}
+
 const char *
 mate_panel_applet_get_id_by_widget (GtkWidget *applet_widget)
 {
@@ -1239,10 +1261,40 @@ mate_panel_applet_get_by_id (const char *id)
 {
 	GSList *l;
 
+	if (id == NULL)
+		return NULL;
+
 	for (l = registered_applets; l; l = l->next) {
 		AppletInfo *info = l->data;
 
 		if (!strcmp (info->id, id))
+			return info;
+	}
+
+	return NULL;
+}
+
+/** \brief  Will find an applet by looking for it's IID
+	\param  iid  The IID to look for in an applet
+	\return Either the AppletInfo structure representing the applet or
+	        NULL if an applet with that IID can not be found.
+*/
+AppletInfo *
+mate_panel_applet_get_by_iid (const char *iid)
+{
+	GSList *l;
+
+	if (iid == NULL)
+		return NULL;
+
+	for (l = registered_applets; l; l = l->next) {
+		AppletInfo *info = l->data;
+		const char *applet_iid = mate_panel_applet_get_iid(info);
+
+		if (applet_iid == NULL)
+			continue;
+
+		if (!strcmp (applet_iid, iid))
 			return info;
 	}
 
@@ -1384,6 +1436,7 @@ mate_panel_applet_register (GtkWidget       *applet,
 	else
 		gtk_widget_child_focus (applet, GTK_DIR_TAB_FORWARD);
 
+	mate_panel_applet_signaler_add_applet(info);
 	return info;
 }
 

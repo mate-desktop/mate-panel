@@ -1211,7 +1211,8 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 void
 setup_uri_drag (GtkWidget  *menuitem,
 		const char *uri,
-		const char *icon)
+		const char *icon,
+		GdkDragAction action)
 {
 	static GtkTargetEntry menu_item_targets[] = {
 		{ "text/uri-list", 0, 0 }
@@ -1223,7 +1224,7 @@ setup_uri_drag (GtkWidget  *menuitem,
 	gtk_drag_source_set (menuitem,
 			     GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 			     menu_item_targets, 1,
-			     GDK_ACTION_COPY);
+			     action);
 
 	if (icon != NULL)
 		gtk_drag_source_set_icon_name (menuitem, icon);
@@ -1488,8 +1489,7 @@ create_menuitem (GtkWidget          *menu,
 					NULL, NULL,
 					alias_directory ? matemenu_tree_directory_get_icon (alias_directory) :
 							  matemenu_tree_entry_get_icon (entry),
-					NULL);
-
+                                       PANEL_STOCK_DEFAULT_ICON);
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
