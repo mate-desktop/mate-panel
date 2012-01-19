@@ -68,6 +68,7 @@ panel_sources =			\
 	panel-ditem-editor.c	\
 	panel-modules.c		\
 	mate-panel-applet-info.c \
+	applet-signaler.c	\
 	panel-reset.c
 
 panel_headers =			\
@@ -118,6 +119,7 @@ panel_headers =			\
 	panel-icon-names.h	\
 	panel-modules.h		\
 	mate-panel-applet-info.h \
+	applet-signaler.h	\
 	panel-reset.h
 
 mate_panel_SOURCES =			\

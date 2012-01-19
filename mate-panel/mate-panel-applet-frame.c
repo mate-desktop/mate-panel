@@ -801,6 +801,12 @@ mate_panel_applet_frame_activating_free (MatePanelAppletFrameActivating *frame_a
 	g_slice_free (MatePanelAppletFrameActivating, frame_act);
 }
 
+GdkScreen *
+mate_panel_applet_frame_activating_get_screen (MatePanelAppletFrameActivating *frame_act)
+{
+	return gtk_widget_get_screen (frame_act->panel);
+}
+
 PanelOrientation
 mate_panel_applet_frame_activating_get_orientation(MatePanelAppletFrameActivating *frame_act)
 {
@@ -999,4 +1005,16 @@ mate_panel_applet_frame_create (PanelToplevel *toplevel,
 	panel_profile_add_to_list (PANEL_MATECONF_APPLETS, id);
 
 	g_free (id);
+}
+
+/** \brief  Gets the IID for a panel applet frame
+	\param  frame  Applet frame
+	\return The IID of the applet or NULL on error
+*/
+const gchar * 
+mate_panel_applet_frame_get_iid (MatePanelAppletFrame * frame)
+{
+	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (frame), NULL);
+
+	return frame->priv->iid;
 }

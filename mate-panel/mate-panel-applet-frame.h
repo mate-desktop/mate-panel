@@ -107,6 +107,7 @@ void  mate_panel_applet_frame_set_panel          (MatePanelAppletFrame    *frame
 
 typedef struct _MatePanelAppletFrameActivating        MatePanelAppletFrameActivating;
 
+GdkScreen        *mate_panel_applet_frame_activating_get_screen      (MatePanelAppletFrameActivating *frame_act);
 PanelOrientation  mate_panel_applet_frame_activating_get_orientation (MatePanelAppletFrameActivating *frame_act);
 guint32           mate_panel_applet_frame_activating_get_size        (MatePanelAppletFrameActivating *frame_act);
 gboolean          mate_panel_applet_frame_activating_get_locked      (MatePanelAppletFrameActivating *frame_act);
@@ -139,6 +140,9 @@ void  _mate_panel_applet_frame_applet_remove         (MatePanelAppletFrame *fram
 void  _mate_panel_applet_frame_applet_move           (MatePanelAppletFrame *frame);
 void  _mate_panel_applet_frame_applet_lock           (MatePanelAppletFrame *frame,
 						 gboolean          locked);
+
+const gchar * mate_panel_applet_frame_get_iid (MatePanelAppletFrame * frame);
+
 #ifdef __cplusplus
 }
 #endif
