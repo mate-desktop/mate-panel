@@ -1,4 +1,5 @@
-AC_INIT([mate-panel], [1.1.0], [http://www.mate-desktop.org])
+AC_INIT([mate-panel], [1.1.1], [https://github.com/mate-desktop/mate-panel/issues],
+    [mate-panel], [http://www.mate-desktop.org])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
@@ -306,7 +307,7 @@ AC_SUBST(MATECOMPONENT_ACT_IDLDIR)
 
 
 dnl ****************************************************************************
-dnl * using Ubuntu hacks
+dnl * Ubuntu hacks
 dnl ****************************************************************************
 AC_ARG_ENABLE(ubuntu,
 	AS_HELP_STRING([--enable-ubuntu], [Enable Ubuntu Counter Hacks]), enable_ubuntu=yes, enable_ubuntu=no)
