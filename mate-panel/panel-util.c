@@ -445,13 +445,9 @@ void panel_lock_screen(GdkScreen* screen)
 }
 
 
-#define PANEL_LAUNCHER_PERSONAL_PATH "panel2.d/default/launchers"
-
-static char *
-panel_launcher_get_personal_path (void)
+static char* panel_launcher_get_personal_path(void)
 {
-	return g_build_filename (g_get_home_dir (), ".mate2",
-				 PANEL_LAUNCHER_PERSONAL_PATH, NULL);
+	return g_build_filename(g_get_home_dir(), ".config", "mate", "panel2.d", "default", "launchers", NULL);
 }
 
 gboolean
