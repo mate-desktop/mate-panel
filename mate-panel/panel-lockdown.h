@@ -40,6 +40,7 @@ gboolean panel_lockdown_get_disable_command_line (void);
 gboolean panel_lockdown_get_disable_lock_screen  (void);
 gboolean panel_lockdown_get_disable_log_out      (void);
 gboolean panel_lockdown_get_disable_force_quit   (void);
+gboolean panel_lockdown_get_disable_places_menu   (void);
 
 gboolean panel_lockdown_is_applet_disabled (const char *iid);
 

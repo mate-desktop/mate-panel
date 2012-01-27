@@ -29,7 +29,7 @@
 #include <string.h>
 #include "panel-mateconf.h"
 
-#define N_LISTENERS 6
+#define N_LISTENERS 7
 
 #define PANEL_GLOBAL_LOCKDOWN_DIR    "/apps/panel/global"
 #define DESKTOP_MATE_LOCKDOWN_DIR   "/desktop/mate/lockdown"
@@ -38,6 +38,7 @@
 #define DISABLE_LOCK_SCREEN_KEY      DESKTOP_MATE_LOCKDOWN_DIR  "/disable_lock_screen"
 #define DISABLE_LOG_OUT_KEY          PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_log_out"
 #define DISABLE_FORCE_QUIT_KEY       PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_force_quit"
+#define DISABLE_PLACES_MENU_KEY      PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_places_menu"
 #define DISABLED_APPLETS_KEY         PANEL_GLOBAL_LOCKDOWN_DIR  "/disabled_applets"
 
 typedef struct {
@@ -48,6 +49,7 @@ typedef struct {
         guint   disable_lock_screen : 1;
         guint   disable_log_out : 1;
         guint   disable_force_quit : 1;
+        guint   disable_places_menu : 1;
 
         GSList *disabled_applets;
 
@@ -134,6 +136,20 @@ disable_force_quit_notify (MateConfClient   *client,
                 return;
 
         lockdown->disable_force_quit = mateconf_value_get_bool (entry->value);
+
+        panel_lockdown_invoke_closures (lockdown);
+}
+
+ static void
+ disable_places_menu_notify (MateConfClient   *client,
+                            guint          cnxn_id,
+                            MateConfEntry    *entry,
+                            PanelLockdown *lockdown)
+{
+        if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
+                return;
+
+        lockdown->disable_places_menu = mateconf_value_get_bool (entry->value);
 
         panel_lockdown_invoke_closures (lockdown);
 }
@@ -268,6 +284,12 @@ panel_lockdown_init (void)
                                           (MateConfClientNotifyFunc) disable_force_quit_notify,
                                           i++);
 
+        panel_lockdown.disable_places_menu =
+                panel_lockdown_load_bool (&panel_lockdown,
+                                          client,
+                                          DISABLE_PLACES_MENU_KEY,
+                                          (MateConfClientNotifyFunc) disable_places_menu_notify,
+                                          i++);
         panel_lockdown.disabled_applets =
                 panel_lockdown_load_disabled_applets (&panel_lockdown,
                                                       client,
@@ -355,6 +377,14 @@ panel_lockdown_get_disable_force_quit (void)
         g_assert (panel_lockdown.initialized != FALSE);
 
         return panel_lockdown.disable_force_quit;
+}
+
+gboolean
+panel_lockdown_get_disable_places_menu (void)
+{
+        g_assert (panel_lockdown.initialized != FALSE);
+
+        return panel_lockdown.disable_places_menu;
 }
 
 gboolean
