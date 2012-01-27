@@ -1,186 +1,186 @@
 SUBDIRS = libegg libmate-panel-applet-private libpanel-util
 
 bin_PROGRAMS = \
-	mate-panel 			\
-	mate-desktop-item-edit		\
+	mate-panel \
+	mate-desktop-item-edit \
 	mate-panel-test-applets
 libexec_SCRIPTS = mate-panel-add
 
-AM_CPPFLAGS =							\
-	$(PANEL_CFLAGS)						\
-	-I.							\
-	-I$(srcdir)						\
-	-I$(top_builddir)/mate-panel				\
-	-I$(top_builddir)/mate-panel/libpanel-util		\
-	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DICONDIR=\""$(datadir)/mate-panel/pixmaps"\"		\
+AM_CPPFLAGS = \
+	$(PANEL_CFLAGS) \
+	-I. \
+	-I$(srcdir) \
+	-I$(top_builddir)/mate-panel \
+	-I$(top_builddir)/mate-panel/libpanel-util \
+	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DBUILDERDIR=\""$(uidir)"\" \
+	-DICONDIR=\""$(datadir)/mate-panel/pixmaps"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-panel_sources =			\
-	panel-typebuiltins.c	\
-	panel-typebuiltins.h	\
-	panel-marshal.c		\
-	panel-marshal.h		\
-	main.c			\
-	panel-widget.c		\
-	button-widget.c		\
-	xstuff.c		\
-	panel-session.c		\
-	panel-compatibility.c	\
-	panel.c			\
-	applet.c		\
-	drawer.c		\
-	panel-config-global.c	\
-	panel-util.c		\
-	panel-mateconf.c		\
-	panel-properties-dialog.c	\
-	panel-run-dialog.c	\
-	menu.c			\
-	panel-context-menu.c	\
-	launcher.c		\
-	mate-panel-applet-frame.c	\
-	mate-panel-applets-manager.c	\
-	panel-shell.c		\
-	panel-background.c	\
-	panel-background-monitor.c	\
-	panel-stock-icons.c	\
-	panel-action-button.c	\
-	panel-menu-bar.c	\
-	panel-menu-button.c	\
-	panel-menu-items.c	\
-	panel-separator.c	\
-	panel-recent.c		\
-	panel-action-protocol.c	\
-	panel-toplevel.c	\
-	panel-struts.c		\
-	panel-frame.c		\
-	panel-xutils.c		\
-	panel-multiscreen.c	\
-	panel-a11y.c		\
-	panel-bindings.c	\
-	panel-profile.c		\
-	panel-force-quit.c	\
-	panel-lockdown.c	\
-	panel-addto.c		\
-	panel-ditem-editor.c	\
-	panel-modules.c		\
+panel_sources = \
+	panel-typebuiltins.c \
+	panel-typebuiltins.h \
+	panel-marshal.c \
+	panel-marshal.h \
+	main.c \
+	panel-widget.c \
+	button-widget.c \
+	xstuff.c \
+	panel-session.c \
+	panel-compatibility.c \
+	panel.c \
+	applet.c \
+	drawer.c \
+	panel-config-global.c \
+	panel-util.c \
+	panel-mateconf.c \
+	panel-properties-dialog.c \
+	panel-run-dialog.c \
+	menu.c \
+	panel-context-menu.c \
+	launcher.c \
+	mate-panel-applet-frame.c \
+	mate-panel-applets-manager.c \
+	panel-shell.c \
+	panel-background.c \
+	panel-background-monitor.c \
+	panel-stock-icons.c \
+	panel-action-button.c \
+	panel-menu-bar.c \
+	panel-menu-button.c \
+	panel-menu-items.c \
+	panel-separator.c \
+	panel-recent.c \
+	panel-action-protocol.c \
+	panel-toplevel.c \
+	panel-struts.c \
+	panel-frame.c \
+	panel-xutils.c \
+	panel-multiscreen.c \
+	panel-a11y.c \
+	panel-bindings.c \
+	panel-profile.c \
+	panel-force-quit.c \
+	panel-lockdown.c \
+	panel-addto.c \
+	panel-ditem-editor.c \
+	panel-modules.c \
 	mate-panel-applet-info.c \
 	panel-reset.c
 
-panel_headers =			\
-	panel-types.h		\
-	panel-widget.h		\
-	panel-globals.h		\
-	button-widget.h		\
-	xstuff.h		\
-	panel-session.h		\
-	panel-compatibility.h	\
-	panel.h			\
-	applet.h		\
-	drawer.h		\
-	panel-util.h		\
-	panel-properties-dialog.h	\
-	panel-config-global.h	\
-	panel-mateconf.h		\
-	panel-run-dialog.h	\
-	menu.h			\
-	panel-context-menu.h	\
-	launcher.h		\
-	mate-panel-applet-frame.h	\
-	mate-panel-applets-manager.h	\
-	panel-shell.h		\
-	panel-background.h	\
-	panel-background-monitor.h	\
-	panel-stock-icons.h	\
-	panel-action-button.h	\
-	panel-menu-bar.h	\
-	panel-menu-button.h	\
-	panel-menu-items.h	\
-	panel-separator.h	\
-	panel-recent.h		\
-	panel-action-protocol.h	\
-	panel-toplevel.h	\
-	panel-struts.h		\
-	panel-frame.h		\
-	panel-xutils.h		\
-	panel-multiscreen.h	\
-	panel-a11y.h		\
-	panel-bindings.h	\
-	panel-profile.h		\
-	panel-enums.h		\
-	panel-force-quit.h	\
-	panel-lockdown.h	\
-	panel-addto.h		\
-	panel-ditem-editor.h	\
-	panel-icon-names.h	\
-	panel-modules.h		\
+panel_headers = \
+	panel-types.h \
+	panel-widget.h \
+	panel-globals.h \
+	button-widget.h \
+	xstuff.h \
+	panel-session.h \
+	panel-compatibility.h \
+	panel.h \
+	applet.h \
+	drawer.h \
+	panel-util.h \
+	panel-properties-dialog.h \
+	panel-config-global.h \
+	panel-mateconf.h \
+	panel-run-dialog.h \
+	menu.h \
+	panel-context-menu.h \
+	launcher.h \
+	mate-panel-applet-frame.h \
+	mate-panel-applets-manager.h \
+	panel-shell.h \
+	panel-background.h \
+	panel-background-monitor.h \
+	panel-stock-icons.h \
+	panel-action-button.h \
+	panel-menu-bar.h \
+	panel-menu-button.h \
+	panel-menu-items.h \
+	panel-separator.h \
+	panel-recent.h \
+	panel-action-protocol.h \
+	panel-toplevel.h \
+	panel-struts.h \
+	panel-frame.h \
+	panel-xutils.h \
+	panel-multiscreen.h \
+	panel-a11y.h \
+	panel-bindings.h \
+	panel-profile.h \
+	panel-enums.h \
+	panel-force-quit.h \
+	panel-lockdown.h \
+	panel-addto.h \
+	panel-ditem-editor.h \
+	panel-icon-names.h \
+	panel-modules.h \
 	mate-panel-applet-info.h \
 	panel-reset.h
 
-mate_panel_SOURCES =			\
-	$(panel_sources)		\
+mate_panel_SOURCES = \
+	$(panel_sources) \
 	$(panel_headers)
 
-mate_panel_CPPFLAGS = 				\
-	$(AM_CPPFLAGS)				\
-	$(XRANDR_CFLAGS)			\
-	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
+mate_panel_CPPFLAGS = \
+	$(AM_CPPFLAGS) \
+	$(XRANDR_CFLAGS) \
+	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DMATEMENU_I_KNOW_THIS_IS_UNSTABLE
 
-mate_panel_LDADD =		\
-	$(top_builddir)/mate-panel/libegg/libegg.la					\
-	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private.la	\
-	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la			\
-	$(PANEL_LIBS)									\
-	$(XRANDR_LIBS)									\
+mate_panel_LDADD = \
+	$(top_builddir)/mate-panel/libegg/libegg.la \
+	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private.la \
+	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
+	$(PANEL_LIBS) \
+	$(XRANDR_LIBS) \
 	$(X_LIBS) \
 	-lm
 
 mate_panel_LDFLAGS = -export-dynamic
 
-mate_desktop_item_edit_SOURCES =	\
-	mate-desktop-item-edit.c	\
-	panel-ditem-editor.c		\
-	panel-marshal.c			\
-	panel-util.c			\
+mate_desktop_item_edit_SOURCES = \
+	mate-desktop-item-edit.c \
+	panel-ditem-editor.c \
+	panel-marshal.c \
+	panel-util.c \
 	xstuff.c
 
-mate_desktop_item_edit_LDADD = 	\
+mate_desktop_item_edit_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
 	-lX11
 
-mate_panel_test_applets_SOURCES =		\
-	panel-modules.c			\
-	mate-panel-applet-info.c		\
-	mate-panel-applets-manager.c		\
-	panel-marshal.c			\
+mate_panel_test_applets_SOURCES = \
+	panel-modules.c \
+	mate-panel-applet-info.c \
+	mate-panel-applets-manager.c \
+	panel-marshal.c \
 	panel-test-applets.c
 
-mate_panel_test_applets_CPPFLAGS =			\
-	$(AM_CPPFLAGS)				\
-	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
+mate_panel_test_applets_CPPFLAGS = \
+	$(AM_CPPFLAGS) \
+	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DMATE_PANEL_APPLETS_DIR=\"$(appletsdir)\"
 
-mate_panel_test_applets_LDADD = 		\
-	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private-mini.la	\
-	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la				\
+mate_panel_test_applets_LDADD = \
+	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private-mini.la \
+	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS)
 
 mate_panel_test_applets_LDFLAGS = -export-dynamic
 
 mate-panel-add: mate-panel-add.in Makefile
-	$(AM_V_GEN)sed 						\
-		-e s!\@PYTHON\@!@PYTHON@! 			\
-		-e s!\@MATE_PANEL_APPLETS_DIR\@!$(appletsdir)! 	\
+	$(AM_V_GEN)sed \
+		-e s!\@PYTHON\@!@PYTHON@! \
+		-e s!\@MATE_PANEL_APPLETS_DIR\@!$(appletsdir)! \
 		< $< > $@
 	$(AM_V_at)chmod a+x $@
 
-panel_enum_headers =					\
-	$(top_srcdir)/mate-panel/panel-enums.h		\
+panel_enum_headers = \
+	$(top_srcdir)/mate-panel/panel-enums.h \
 	$(top_srcdir)/mate-panel/panel-types.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
@@ -219,18 +219,18 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 		$(panel_enum_headers) > $@
 
 BUILT_SOURCES = \
-	panel-typebuiltins.c		\
-	panel-typebuiltins.h		\
-	panel-marshal.c			\
+	panel-typebuiltins.c \
+	panel-typebuiltins.h \
+	panel-marshal.c \
 	panel-marshal.h
 
 rcdir = $(datadir)
 rc_DATA = mate-panelrc
 
 uidir = $(datadir)/mate-panel/ui
-ui_DATA =					\
-	panel-properties-dialog.ui		\
-	panel-run-dialog.ui			\
+ui_DATA = \
+	panel-properties-dialog.ui \
+	panel-run-dialog.ui \
 	panel-test-applets.ui
 
 desktopdir = $(datadir)/applications
@@ -243,10 +243,10 @@ entriesdir       = $(MATECONF_SCHEMA_FILE_DIR)
 entries_DATA     = panel-default-setup.entries
 
 schemasdir       = $(MATECONF_SCHEMA_FILE_DIR)
-schemas_in_files =				\
-	panel-global.schemas.in 		\
-	panel-general.schemas.in		\
-	panel-toplevel.schemas.in		\
+schemas_in_files = \
+	panel-global.schemas.in \
+	panel-general.schemas.in \
+	panel-toplevel.schemas.in \
 	panel-object.schemas.in
 schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
 
@@ -267,16 +267,16 @@ uninstall-local:
 	done
 endif
 
-EXTRA_DIST =					\
-	$(ui_DATA)				\
-	nothing.cP				\
-	nothing.h				\
-	$(schemas_in_files)			\
-	panel-compatibility.schemas		\
-	panel-marshal.list			\
-	mate-panelrc				\
-	$(entries_DATA)				\
-	$(desktop_in_files)			\
+EXTRA_DIST = \
+	$(ui_DATA) \
+	nothing.cP \
+	nothing.h \
+	$(schemas_in_files) \
+	panel-compatibility.schemas \
+	panel-marshal.list \
+	mate-panelrc \
+	$(entries_DATA) \
+	$(desktop_in_files) \
 	mate-panel-add.in
 
 CLEANFILES = \
