@@ -40,7 +40,9 @@ typedef enum {
 	CLOCK_FORMAT_24,
 	CLOCK_FORMAT_UNIX,
 	CLOCK_FORMAT_INTERNET,
-	CLOCK_FORMAT_CUSTOM
+	CLOCK_FORMAT_CUSTOM,
+	CLOCK_FORMAT_FUZZY_HOUR,
+	CLOCK_FORMAT_FUZZY_DAY
 } ClockFormat;
 
 gboolean clock_locale_supports_am_pm (void);

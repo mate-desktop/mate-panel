@@ -74,7 +74,8 @@ static void panel_menu_bar_update_text_gravity(PanelMenuBar* menubar);
 static gboolean panel_menu_bar_reinit_tooltip(GtkWidget* widget, PanelMenuBar* menubar)
 {
 	g_object_set(menubar->priv->applications_item, "has-tooltip", TRUE, NULL);
-	g_object_set(menubar->priv->places_item, "has-tooltip", TRUE, NULL);
+	if (!panel_lockdown_get_disable_places_menu())
+		g_object_set(menubar->priv->places_item, "has-tooltip", TRUE, NULL);
 	g_object_set(menubar->priv->desktop_item, "has-tooltip", TRUE, NULL);
 
 	return FALSE;
@@ -94,13 +95,15 @@ static gboolean panel_menu_bar_hide_tooltip_and_focus(GtkWidget* widget, PanelMe
 static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 {
 	panel_util_set_tooltip_text(menubar->priv->applications_item, _("Browse and run installed applications"));
-	panel_util_set_tooltip_text(menubar->priv->places_item, _("Access documents, folders and network places"));
+	if (!panel_lockdown_get_disable_places_menu())
+		panel_util_set_tooltip_text(menubar->priv->places_item, _("Access documents, folders and network places"));
 	panel_util_set_tooltip_text(menubar->priv->desktop_item, _("Change desktop appearance and behavior, get help, or log out"));
 
 	//FIXME: this doesn't handle the right-click case. Sigh.
 	/* Hide tooltip if a menu is activated */
 	g_signal_connect(menubar->priv->applications_item, "activate", G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus), menubar);
-	g_signal_connect(menubar->priv->places_item, "activate", G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus), menubar);
+	if (!panel_lockdown_get_disable_places_menu())
+		g_signal_connect(menubar->priv->places_item, "activate", G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus), menubar);
 	g_signal_connect(menubar->priv->desktop_item, "activate", G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus), menubar);
 
 	/* Reset tooltip when the menu bar is not used */
@@ -125,9 +128,9 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menubar->priv->applications_item), menubar->priv->applications_menu);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->applications_item);
-
-	menubar->priv->places_item = panel_place_menu_item_new(FALSE);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->places_item);
+	if (!panel_lockdown_get_disable_places_menu())
+		menubar->priv->places_item = panel_place_menu_item_new(FALSE);
+		gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->places_item);
 
 	menubar->priv->desktop_item = panel_desktop_menu_item_new(FALSE, TRUE);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->desktop_item);
@@ -393,7 +396,8 @@ static void set_item_text_gravity(GtkWidget* item)
 static void panel_menu_bar_update_text_gravity(PanelMenuBar* menubar)
 {
 	set_item_text_gravity(menubar->priv->applications_item);
-	set_item_text_gravity(menubar->priv->places_item);
+	if (!panel_lockdown_get_disable_places_menu())
+		set_item_text_gravity(menubar->priv->places_item);
 	set_item_text_gravity(menubar->priv->desktop_item);
 }
 
@@ -446,7 +450,8 @@ static void panel_menu_bar_update_orientation(PanelMenuBar* menubar)
 	gtk_menu_bar_set_child_pack_direction(GTK_MENU_BAR(menubar), pack_direction);
 
 	set_item_text_angle_and_alignment(menubar->priv->applications_item, text_angle, text_xalign, text_yalign);
-	set_item_text_angle_and_alignment(menubar->priv->places_item, text_angle, text_xalign, text_yalign);
+	if (!panel_lockdown_get_disable_places_menu())
+		set_item_text_angle_and_alignment(menubar->priv->places_item, text_angle, text_xalign, text_yalign);
 	set_item_text_angle_and_alignment(menubar->priv->desktop_item, text_angle, text_xalign, text_yalign);
 }
 
