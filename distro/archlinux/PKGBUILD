@@ -8,13 +8,13 @@ depends=('libwnck' 'mate-conf' 'mate-menus' 'mate-desktop' 'librsvg' 'hicolor-ic
 makedepends=('mate-doc-utils' 'pkgconfig' 'intltool' 'networkmanager')
 options=('!emptydirs' '!libtool')
 install=mate-panel.install
-source=(http://sourceforge.net/projects/matede/files/${pkgver}/${pkgname}.tar.gz/download)
-sha256sums=('fb23f4173a5106acf11e38c98ca34af9e5d21f3a09b4210cc1cd323b725efb13')
-url="http://matsusoft.com.ar/projects"
+source=()
+sha256sums=()
+url="http://matsusoft.com.ar/projects/mate/"
 groups=('mate')
 
 build() {
-    cd "${srcdir}/${pkgname}"
+	cd "${srcdir}/../../../"
 
     PYTHON=/usr/bin/python2 ./autogen.sh \
         --prefix=/usr \
@@ -29,7 +29,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${pkgname}"
+	cd "${srcdir}/../../../"
 
     make MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR="${pkgdir}" install || return 1
 
