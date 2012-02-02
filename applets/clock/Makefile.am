@@ -42,9 +42,6 @@ CLOCK_CPPFLAGS =						\
 	-I$(srcdir)/../../libmate-panel-applet			\
 	-I$(top_builddir)/libmate-panel-applet			\
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
-	-DICONDIR=\""$(datadir)/mate-panel/pixmaps"\"		\
 	-DMATEWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
 CLOCK_LDADD =						\
@@ -122,6 +119,8 @@ clock-typebuiltins.h: @REBUILD@ $(clock_enum_headers)
 BUILT_SOURCES =					\
 	clock-marshallers.c			\
 	clock-marshallers.h			\
+	clock-resources.c			\
+	clock-resources.h			\
 	clock-typebuiltins.c			\
 	clock-typebuiltins.h
 
@@ -149,11 +148,15 @@ org.mate.panel.applet.ClockAppletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
-uidir		= $(datadir)/mate-panel/ui
-ui_DATA		= clock.ui
+ui_FILES =	\
+	clock.ui \
+	clock-menu.xml
 
-xmluidir 	= $(datadir)/mate-panel/ui
-xmlui_DATA	= clock-menu.xml
+clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
+
+clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
 
 clock_gschemas_in = org.mate.panel.applet.clock.gschema.xml.in
 gsettings_SCHEMAS = $(clock_gschemas_in:.xml.in=.xml)
@@ -164,8 +167,8 @@ gsettings_SCHEMAS = $(clock_gschemas_in:.xml.in=.xml)
 EXTRA_DIST =						\
 	org.mate.panel.ClockApplet.mate-panel-applet.in.in	\
 	$(clock_gschemas_in)				\
-	$(xmlui_DATA)					\
-	$(ui_DATA)					\
+	$(ui_FILES)					\
+	clock.gresource.xml				\
 	clock-marshallers.list				\
 	$(service_in_files)
 

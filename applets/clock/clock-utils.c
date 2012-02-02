@@ -128,8 +128,11 @@ clock_utils_display_help (GtkWidget  *widget,
 }
 
 GdkPixbuf *
-clock_utils_pixbuf_from_svg_file_at_size (const char *name, int width, int height)
+clock_utils_pixbuf_from_svg_resource_at_size (const char *resource,
+	                                          int         width,
+	                                          int         height)
 {
+	GInputStream      *stream = NULL;
 	RsvgHandle        *handle = NULL;
 	RsvgDimensionData  svg_dimensions;
 	GdkPixbuf         *pixbuf = NULL;
@@ -137,9 +140,16 @@ clock_utils_pixbuf_from_svg_file_at_size (const char *name, int width, int heigh
 	cairo_matrix_t     matrix;
 	cairo_t           *cr = NULL;
 
-	handle = rsvg_handle_new_from_file (name, NULL);
+	stream = g_resources_open_stream (resource, 0, NULL);
+	if (!stream)
+		goto out;
+
+	handle = rsvg_handle_new ();
 	if (!handle)
-		return NULL;
+		goto out;
+
+	if (!rsvg_handle_read_stream_sync (handle, stream, NULL, NULL))
+		goto out;
 
 	rsvg_handle_get_dimensions (handle, &svg_dimensions);
 
@@ -155,7 +165,11 @@ clock_utils_pixbuf_from_svg_file_at_size (const char *name, int width, int heigh
 	pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, width, height);
 	cairo_surface_destroy (surface);
 
-	rsvg_handle_close (handle, NULL);
+out:
+	if (handle)
+		rsvg_handle_close (handle, NULL);
+	if (stream)
+		g_object_unref (stream);
 
 	return pixbuf;
 }
