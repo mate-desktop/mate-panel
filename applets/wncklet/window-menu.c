@@ -221,7 +221,6 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 {
 	WindowMenu* window_menu;
 	GtkActionGroup* action_group;
-	gchar* ui_path;
 
 	window_menu = g_new0(WindowMenu, 1);
 
@@ -238,9 +237,9 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	action_group = gtk_action_group_new("WindowMenu Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions(action_group, window_menu_actions, G_N_ELEMENTS(window_menu_actions), window_menu);
-	ui_path = g_build_filename(WNCK_MENU_UI_DIR, "window-menu-menu.xml", NULL);
-	mate_panel_applet_setup_menu_from_file(applet, ui_path, action_group);
-	g_free(ui_path);
+	mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (window_menu->applet),
+	                                            WNCKLET_RESOURCE_PATH "window-menu-menu.xml",
+	                                            action_group);
 	g_object_unref(action_group);
 
 	window_menu->selector = wnck_selector_new();

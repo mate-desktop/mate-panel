@@ -372,7 +372,6 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 {
 	ShowDesktopData* sdd;
 	GtkActionGroup* action_group;
-	gchar* ui_path;
 	AtkObject* atk_obj;
 	GtkCssProvider *provider;
 
@@ -440,9 +439,9 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	action_group = gtk_action_group_new("ShowDesktop Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions(action_group, show_desktop_menu_actions, G_N_ELEMENTS (show_desktop_menu_actions), sdd);
-	ui_path = g_build_filename(WNCK_MENU_UI_DIR, "showdesktop-menu.xml", NULL);
-	mate_panel_applet_setup_menu_from_file(MATE_PANEL_APPLET(sdd->applet), ui_path, action_group);
-	g_free(ui_path);
+	mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (sdd->applet),
+	                                            WNCKLET_RESOURCE_PATH "showdesktop-menu.xml",
+	                                            action_group);
 	g_object_unref(action_group);
 
 	g_signal_connect(G_OBJECT(sdd->applet), "destroy", G_CALLBACK(applet_destroyed), sdd);
