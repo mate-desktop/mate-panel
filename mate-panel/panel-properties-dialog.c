@@ -30,7 +30,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-#include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-icon-chooser.h>
@@ -911,7 +910,6 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 {
 	PanelPropertiesDialog *dialog;
 	GtkBuilder            *gui;
-	GError                *error;
 
 	if (!panel_properties_dialog_quark)
 		panel_properties_dialog_quark =
@@ -927,29 +925,9 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 
 	gui = gtk_builder_new ();
 	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
-
-	error = NULL;
-	gtk_builder_add_from_file (gui,
-				   BUILDERDIR "/panel-properties-dialog.ui",
-				   &error);
-
-        if (error) {
-		char *secondary;
-
-		secondary = g_strdup_printf (_("Unable to load file '%s': %s."),
-					     BUILDERDIR"/panel-properties-dialog.ui",
-					     error->message);
-		panel_error_dialog (GTK_WINDOW (toplevel),
-				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
-				    "cannot_display_properties_dialog", TRUE,
-				    _("Could not display properties dialog"),
-				    secondary);
-		g_free (secondary);
-		g_error_free (error);
-		g_object_unref (gui);
-
-		return;
-	}
+	gtk_builder_add_from_resource (gui,
+	                               PANEL_RESOURCE_PATH "panel-properties-dialog.ui",
+	                               NULL);
 
 	dialog = panel_properties_dialog_new (toplevel, gui);
 
