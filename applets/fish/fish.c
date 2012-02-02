@@ -50,6 +50,7 @@
 	(G_TYPE_CHECK_INSTANCE_TYPE((o), FISH_TYPE_APPLET))
 
 #define FISH_ICON "mate-panel-fish"
+#define FISH_RESOURCE_PATH "/org/mate/panel/applet/fish/"
 
 #define FISH_SCHEMA      "org.mate.panel.applet.fish"
 #define FISH_NAME_KEY    "name"
@@ -378,7 +379,6 @@ static void chooser_preview_update(GtkFileChooser* file_chooser, gpointer data)
 static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 {
 	GtkBuilder    *builder;
-	GError        *error;
 	GtkWidget     *button;
 	GtkFileFilter *filter;
 	GtkWidget     *chooser_preview;
@@ -393,14 +393,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 
 	builder = gtk_builder_new ();
 	gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
-
-	error = NULL;
-	gtk_builder_add_from_file (builder, FISH_BUILDERDIR "/fish.ui", &error);
-	if (error) {
-		g_warning ("Error loading preferences: %s", error->message);
-		g_error_free (error);
-		return;
-	}
+	gtk_builder_add_from_resource (builder, FISH_RESOURCE_PATH "fish.ui", NULL);
 
 	fish->preferences_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "fish_preferences_dialog"));
 
@@ -1716,7 +1709,6 @@ static gboolean fish_applet_fill(FishApplet* fish)
 {
 	MatePanelApplet* applet = (MatePanelApplet*) fish;
 	GtkActionGroup* action_group;
-	gchar* ui_path;
 
 	fish->orientation = mate_panel_applet_get_orient (applet);
 
@@ -1751,9 +1743,9 @@ static gboolean fish_applet_fill(FishApplet* fish)
 				      fish_menu_verbs,
 				      G_N_ELEMENTS (fish_menu_verbs),
 				      fish);
-	ui_path = g_build_filename (FISH_MENU_UI_DIR, "fish-menu.xml", NULL);
-	mate_panel_applet_setup_menu_from_file (applet, ui_path, action_group);
-	g_free (ui_path);
+	mate_panel_applet_setup_menu_from_resource (applet,
+	                                            FISH_RESOURCE_PATH "fish-menu.xml",
+	                                            action_group);
 
 	if (mate_panel_applet_get_locked_down (applet)) {
 		GtkAction *action;
