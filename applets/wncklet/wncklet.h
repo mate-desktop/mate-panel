@@ -30,6 +30,8 @@
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
 
+#define WNCKLET_RESOURCE_PATH "/org/mate/panel/applet/wncklet/"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

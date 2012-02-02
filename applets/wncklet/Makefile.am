@@ -6,9 +6,6 @@ AM_CPPFLAGS =							\
 	-I$(top_srcdir)/libmate-panel-applet				\
 	-I$(top_builddir)/libmate-panel-applet			\
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DPAGER_BUILDERDIR=\""$(uidir)"\"			\
-	-DTASKLIST_BUILDERDIR=\""$(uidir)"\"			\
-	-DWNCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
@@ -23,7 +20,8 @@ WNCKLET_SOURCES = \
 	workspace-switcher.c \
 	workspace-switcher.h \
 	showdesktop.c \
-	showdesktop.h
+	showdesktop.h \
+	$(BUILT_SOURCES)
 
 WNCKLET_LDADD =						\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
@@ -74,15 +72,23 @@ org.mate.panel.applet.WnckletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
-uidir   = $(datadir)/mate-panel/ui
-ui_DATA = workspace-switcher.ui window-list.ui
-
-xmluidir    = $(datadir)/mate-panel/ui
-xmlui_DATA  = \
+ui_FILES = \
+	showdesktop-menu.xml \
+	window-list-menu.xml \
+	window-list.ui \
 	window-menu-menu.xml \
 	workspace-switcher-menu.xml \
-	showdesktop-menu.xml \
-	window-list-menu.xml
+	workspace-switcher.ui
+
+wncklet-resources.c: wncklet.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/wncklet.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name wncklet $<
+
+wncklet-resources.h: wncklet.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/wncklet.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name wncklet $<
+
+BUILT_SOURCES = 		\
+	wncklet-resources.c	\
+	wncklet-resources.h
 
 wncklet_gschemas_in = \
 	org.mate.panel.applet.window-list.gschema.xml.in \
@@ -95,10 +101,10 @@ gsettings_SCHEMAS = $(wncklet_gschemas_in:.xml.in=.xml)
 EXTRA_DIST = \
 	org.mate.panel.Wncklet.mate-panel-applet.in.in \
 	$(service_in_files) \
-	$(xmlui_DATA) \
 	$(wncklet_gschemas_in) \
-	$(ui_DATA)
+	$(ui_FILES) \
+	wncklet.gresource.xml
 
-CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)
+CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)
 
 -include $(top_srcdir)/git.mk
