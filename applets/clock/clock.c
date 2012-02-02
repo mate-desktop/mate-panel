@@ -2377,9 +2377,6 @@ fill_clock_applet (MatePanelApplet *applet)
         ClockData      *cd;
         GtkActionGroup *action_group;
         GtkAction      *action;
-        gchar          *ui_path;
-        char           *filename;
-        GError         *error;
 
         mate_panel_applet_set_flags (applet, MATE_PANEL_APPLET_EXPAND_MINOR);
 
@@ -2394,17 +2391,7 @@ fill_clock_applet (MatePanelApplet *applet)
 
         cd->builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (cd->builder, GETTEXT_PACKAGE);
-        filename = g_build_filename (BUILDERDIR, "clock.ui", NULL);
-
-        error = NULL;
-        gtk_builder_add_from_file (cd->builder, filename, &error);
-        if (error) {
-                g_warning ("Error loading \"%s\": %s",
-                           filename, error->message);
-                g_error_free (error);
-        }
-
-        g_free (filename);
+        gtk_builder_add_from_resource (cd->builder, CLOCK_RESOURCE_PATH "clock.ui", NULL);
 
         create_clock_widget (cd);
 
@@ -2436,10 +2423,9 @@ fill_clock_applet (MatePanelApplet *applet)
                                       clock_menu_actions,
                                       G_N_ELEMENTS (clock_menu_actions),
                                       cd);
-        ui_path = g_build_filename (CLOCK_MENU_UI_DIR, "clock-menu.xml", NULL);
-        mate_panel_applet_setup_menu_from_file (MATE_PANEL_APPLET (cd->applet),
-                                           ui_path, action_group);
-        g_free (ui_path);
+        mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (cd->applet),
+                                                    CLOCK_RESOURCE_PATH "clock-menu.xml",
+                                                    action_group);
 
         if (mate_panel_applet_get_locked_down (MATE_PANEL_APPLET (cd->applet))) {
                 action = gtk_action_group_get_action (action_group, "ClockPreferences");

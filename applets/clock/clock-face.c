@@ -15,6 +15,7 @@
 #include <math.h>
 #include <time.h>
 
+#include "clock.h"
 #include "clock-face.h"
 #include "clock-location.h"
 #include "clock-utils.h"
@@ -436,18 +437,22 @@ clock_face_load_face (ClockFace *this, gint width, gint height)
                 return;
         }
 
-        /* The pixbuf is not cached, let's load it */
-	name = g_strconcat (ICONDIR, "/clock-face-", size_string[priv->size],
-                            "-", daytime_string[priv->timeofday], ".svg",
-                            NULL);
-	priv->face_pixbuf = clock_utils_pixbuf_from_svg_file_at_size (name, width, height);
+	/* The pixbuf is not cached, let's load it */
+	name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
+	                    "clock-face-", size_string[priv->size],
+	                    "-", daytime_string[priv->timeofday], ".svg",
+	                    NULL);
+    priv->face_pixbuf = clock_utils_pixbuf_from_svg_resource_at_size (name,
+                                                                      width, height);
 	g_free (name);
 
 	if (!priv->face_pixbuf) {
-                name = g_strconcat (ICONDIR, "/clock-face-",
-                                    size_string[priv->size], ".svg", NULL);
-                priv->face_pixbuf = clock_utils_pixbuf_from_svg_file_at_size (name, width, height);
-                g_free (name);
+	        name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
+	                            "clock-face-", size_string[priv->size], ".svg",
+	                            NULL);
+	        priv->face_pixbuf = clock_utils_pixbuf_from_svg_resource_at_size (name,
+	                                                                          width, height);
+	        g_free (name);
         }
 
         /* Save the found pixbuf in the cache */

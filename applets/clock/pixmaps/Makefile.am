@@ -1,6 +1,4 @@
-icondir = $(datadir)/mate-panel/pixmaps
-icon_DATA =				\
-	clock-calendar-icon.png		\
+icon_FILES =				\
 	clock-face-large.svg		\
 	clock-face-small.svg		\
 	clock-face-small-morning.svg	\
@@ -14,7 +12,7 @@ icon_DATA =				\
 
 EXTRA_DIST = 		\
 	clock-map.svg	\
-	$(icon_DATA)
+	$(icon_FILES)
 
 MAINTAINERCLEANFILES = Makefile.in
 

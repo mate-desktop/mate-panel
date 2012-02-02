@@ -27,9 +27,9 @@ enum {
 };
 
 static char *marker_files[MARKER_NB] = {
-        ICONDIR "/clock-map-location-marker.png",
-        ICONDIR "/clock-map-location-hilight.png",
-        ICONDIR "/clock-map-location-current.png"
+        "clock-map-location-marker.png",
+        "clock-map-location-hilight.png",
+        "clock-map-location-current.png"
 };
 
 static guint signals[LAST_SIGNAL] = { 0 };
@@ -135,8 +135,17 @@ clock_map_init (ClockMap *this)
         g_assert (sizeof (marker_files)/sizeof (char *) == MARKER_NB);
 
         for (i = 0; i < MARKER_NB; i++) {
-                priv->location_marker_pixbuf[i] = gdk_pixbuf_new_from_file
-                                                  (marker_files[i], NULL);
+                char *resource;
+                GInputStream *stream;
+
+                resource = g_strconcat (CLOCK_RESOURCE_PATH "icons/", marker_files[i], NULL);
+                stream = g_resources_open_stream (resource, 0, NULL);
+                g_free (resource);
+
+                if (stream != NULL) {
+                        priv->location_marker_pixbuf[i] = gdk_pixbuf_new_from_stream (stream, NULL, NULL);
+                        g_object_unref (stream);
+                }
         }
 }
 
@@ -208,11 +217,17 @@ clock_map_refresh (ClockMap *this)
         }
 
         if (!priv->stock_map_pixbuf) {
-                GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale
-                        (ICONDIR "/clock-map.png",
-                         priv->width, priv->height, FALSE, NULL);
+                GInputStream *stream = g_resources_open_stream (CLOCK_RESOURCE_PATH "icons/clock-map.png",
+                                                                0, NULL);
+                if (stream != NULL) {
+                        GdkPixbuf *pixbuf = gdk_pixbuf_new_from_stream_at_scale (stream,
+                                                                                 priv->width, priv->height,
+                                                                                 FALSE,
+                                                                                 NULL, NULL);
+                        g_object_unref (stream);
 
-                priv->stock_map_pixbuf = pixbuf;
+                        priv->stock_map_pixbuf = pixbuf;
+                }
         }
 
         clock_map_place_locations (this);
