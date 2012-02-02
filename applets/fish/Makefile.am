@@ -6,13 +6,13 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/libmate-panel-applet \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\" \
-	-DFISH_BUILDERDIR=\""$(uidir)"\" \
-	-DFISH_MENU_UI_DIR=\""$(xmluidir)"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-FISH_SOURCES = fish.c
+FISH_SOURCES = \
+	fish.c		\
+	$(BUILT_SOURCES)
 
 FISH_LDADD = \
 	../../libmate-panel-applet/libmate-panel-applet-4.la \
@@ -71,11 +71,19 @@ fishbitmaps_DATA = \
 	footguy.png \
 	monkey.png
 
-uidir = $(datadir)/mate-panel/ui
-ui_DATA = fish.ui
+ui_FILES = \
+	fish.ui	\
+	fish-menu.xml
 
-xmluidir = $(datadir)/mate-panel/ui
-xmlui_DATA = fish-menu.xml
+fish-resources.c: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/fish.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $<
+
+fish-resources.h: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/fish.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $<
+
+BUILT_SOURCES = 		\
+	fish-resources.c	\
+	fish-resources.h
 
 fish_gschemas_in = org.mate.panel.applet.fish.gschema.xml.in
 gsettings_SCHEMAS = $(fish_gschemas_in:.xml.in=.xml)
@@ -87,10 +95,10 @@ EXTRA_DIST = \
 	$(fishbitmaps_DATA) \
 	org.mate.panel.FishApplet.mate-panel-applet.in.in \
 	$(service_in_files) \
-	$(ui_DATA) \
-	$(xmlui_DATA) \
+	$(ui_FILES)	\
+	fish.gresource.xml \
 	$(fish_gschemas_in)
 
-CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)
+CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)
 
 -include $(top_srcdir)/git.mk
