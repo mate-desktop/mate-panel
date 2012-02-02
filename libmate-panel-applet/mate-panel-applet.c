@@ -711,6 +711,46 @@ mate_panel_applet_setup_menu_from_file (MatePanelApplet    *applet,
 	g_free (xml);
 }
 
+/**
+ * mate_panel_applet_setup_menu_from_resource:
+ * @applet: a #MatePanelApplet.
+ * @resource_path: a resource path
+ * @action_group: a #GtkActionGroup.
+ *
+ * Sets up the context menu of @applet. @filename is a resource path to a menu
+ * XML file, containing a #GtkUIManager UI definition that describes how to
+ * display the menu items. @action_group contains the various #GtkAction that
+ * are referenced in @xml.
+ *
+ * See also the <link linkend="getting-started.context-menu">Context
+ * Menu</link> section.
+ *
+ * Since: 1.20.1
+ **/
+void
+mate_panel_applet_setup_menu_from_resource (MatePanelApplet    *applet,
+				       const gchar    *resource_path,
+				       GtkActionGroup *action_group)
+{
+	GBytes *bytes;
+	GError *error = NULL;
+
+	bytes = g_resources_lookup_data (resource_path,
+					 G_RESOURCE_LOOKUP_FLAGS_NONE,
+					 &error);
+
+	if (bytes) {
+		mate_panel_applet_setup_menu (applet,
+					 g_bytes_get_data (bytes, NULL),
+					 action_group);
+	} else {
+		g_warning ("%s", error->message);
+		g_error_free (error);
+	}
+
+	g_bytes_unref (bytes);
+}
+
 static void
 mate_panel_applet_finalize (GObject *object)
 {
