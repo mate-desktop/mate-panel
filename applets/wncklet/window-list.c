@@ -372,7 +372,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 {
 	TasklistData* tasklist;
 	GtkActionGroup* action_group;
-	gchar* ui_path;
 	GtkCssProvider  *provider;
 	GdkScreen *screen;
 
@@ -468,9 +467,9 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	/* end of system monitor item */
 	
 
-	ui_path = g_build_filename(WNCK_MENU_UI_DIR, "window-list-menu.xml", NULL);
-	mate_panel_applet_setup_menu_from_file(MATE_PANEL_APPLET(tasklist->applet), ui_path, action_group);
-	g_free(ui_path);
+	mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (tasklist->applet),
+	                                            WNCKLET_RESOURCE_PATH "window-list-menu.xml",
+	                                            action_group);
 
 	if (mate_panel_applet_get_locked_down(MATE_PANEL_APPLET(tasklist->applet)))
 	{
@@ -649,20 +648,10 @@ static void display_properties_dialog(GtkAction* action, TasklistData* tasklist)
 	if (tasklist->properties_dialog == NULL)
 	{
 		GtkBuilder* builder;
-		GError* error;
 
 		builder = gtk_builder_new();
 		gtk_builder_set_translation_domain(builder, GETTEXT_PACKAGE);
-
-		error = NULL;
-		gtk_builder_add_from_file(builder, TASKLIST_BUILDERDIR "/window-list.ui", &error);
-
-		if (error)
-		{
-			g_warning("Error loading preferences: %s", error->message);
-			g_error_free(error);
-			return;
-		}
+		gtk_builder_add_from_resource (builder, WNCKLET_RESOURCE_PATH "window-list.ui", NULL);
 
 		tasklist->properties_dialog = WID("tasklist_properties_dialog");
 
