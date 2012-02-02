@@ -335,7 +335,6 @@ int
 main (int argc, char **argv)
 {
 	GtkBuilder *builder;
-	char       *uifile;
 	char       *applets_dir;
 	GError     *error;
 
@@ -374,17 +373,7 @@ main (int argc, char **argv)
 
 	builder = gtk_builder_new ();
 	gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
-
-	uifile = BUILDERDIR "/panel-test-applets.ui";
-	gtk_builder_add_from_file (builder, uifile, &error);
-
-	if (error) {
-		g_warning ("Error loading \"%s\": %s", uifile, error->message);
-		g_error_free (error);
-		panel_cleanup_do ();
-
-		return 1;
-	}
+	gtk_builder_add_from_resource (builder, "/org/mate/panel/test/panel-test-applets.ui", NULL);
 
 	gtk_builder_connect_signals (builder, NULL);
 
