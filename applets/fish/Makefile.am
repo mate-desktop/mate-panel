@@ -63,7 +63,7 @@ org.mate.panel.applet.FishAppletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
-fishbitmapsdir = $(datadir)/mate-panel/pixmaps
+fishbitmapsdir = $(datadir)/mate-panel/fish
 fishbitmaps_DATA = \
 	wanda.png \
 	fishanim.png \
