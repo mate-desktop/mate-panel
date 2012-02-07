@@ -136,16 +136,10 @@ clock_map_init (ClockMap *this)
 
         for (i = 0; i < MARKER_NB; i++) {
                 char *resource;
-                GInputStream *stream;
 
                 resource = g_strconcat (CLOCK_RESOURCE_PATH "icons/", marker_files[i], NULL);
-                stream = g_resources_open_stream (resource, 0, NULL);
+                priv->location_marker_pixbuf[i] = gdk_pixbuf_new_from_resource (resource, NULL);
                 g_free (resource);
-
-                if (stream != NULL) {
-                        priv->location_marker_pixbuf[i] = gdk_pixbuf_new_from_stream (stream, NULL, NULL);
-                        g_object_unref (stream);
-                }
         }
 }
 
@@ -217,17 +211,10 @@ clock_map_refresh (ClockMap *this)
         }
 
         if (!priv->stock_map_pixbuf) {
-                GInputStream *stream = g_resources_open_stream (CLOCK_RESOURCE_PATH "icons/clock-map.png",
-                                                                0, NULL);
-                if (stream != NULL) {
-                        GdkPixbuf *pixbuf = gdk_pixbuf_new_from_stream_at_scale (stream,
-                                                                                 priv->width, priv->height,
-                                                                                 FALSE,
-                                                                                 NULL, NULL);
-                        g_object_unref (stream);
-
-                        priv->stock_map_pixbuf = pixbuf;
-                }
+                priv->stock_map_pixbuf = gdk_pixbuf_new_from_resource_at_scale (CLOCK_RESOURCE_PATH "icons/clock-map.png",
+                                                                                priv->width, priv->height,
+                                                                                FALSE,
+                                                                                NULL);
         }
 
         clock_map_place_locations (this);
