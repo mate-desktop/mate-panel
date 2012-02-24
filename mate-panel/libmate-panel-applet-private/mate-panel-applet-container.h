@@ -75,6 +75,7 @@ GtkWidget *mate_panel_applet_container_new                     (void);
 
 
 void       mate_panel_applet_container_add                     (MatePanelAppletContainer *container,
+							   GdkScreen            *screen,
 							   const gchar          *iid,
 							   GCancellable        *cancellable,
 							   GAsyncReadyCallback  callback,

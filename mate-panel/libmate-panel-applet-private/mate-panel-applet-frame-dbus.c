@@ -411,6 +411,7 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 	MatePanelAppletFrameDBus *dbus_frame;
 	MatePanelAppletFrame     *frame;
 	GVariantBuilder       builder;
+	GdkScreen            *screen;
 	gchar                *conf_path;
 	gchar                *background;
 	guint                 orient;
@@ -425,6 +426,7 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 	frame = MATE_PANEL_APPLET_FRAME (dbus_frame);
 	_mate_panel_applet_frame_set_iid (frame, iid);
 
+	screen = panel_applet_frame_activating_get_screen (frame_act);
 	orient = get_mate_panel_applet_orient (mate_panel_applet_frame_activating_get_orientation (frame_act));
 	conf_path = mate_panel_applet_frame_activating_get_conf_path (frame_act);
 	/* we can't really get a background string at this point since we don't
@@ -456,7 +458,7 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 	g_object_set_data (G_OBJECT (frame), "mate-panel-applet-frame-activating", frame_act);
 
 	mate_panel_applet_container_add (dbus_frame->priv->container,
-				    iid, NULL,
+				    screen, iid, NULL,
 				    (GAsyncReadyCallback) mate_panel_applet_frame_dbus_activated,
 				    frame,
 				    g_variant_builder_end (&builder));

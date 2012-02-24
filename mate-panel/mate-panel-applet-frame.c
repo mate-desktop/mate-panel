@@ -801,6 +801,12 @@ mate_panel_applet_frame_activating_free (MatePanelAppletFrameActivating *frame_a
 	g_slice_free (MatePanelAppletFrameActivating, frame_act);
 }
 
+GdkScreen *
+panel_applet_frame_activating_get_screen (MatePanelAppletFrameActivating *frame_act)
+{
+	return gtk_widget_get_screen (frame_act->panel);
+}
+
 PanelOrientation
 mate_panel_applet_frame_activating_get_orientation(MatePanelAppletFrameActivating *frame_act)
 {
