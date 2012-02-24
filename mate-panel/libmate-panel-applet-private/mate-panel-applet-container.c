@@ -441,6 +441,7 @@ on_factory_appeared (GDBusConnection   *connection,
 
 static void
 mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
+				   GdkScreen            *screen,
 				   const gchar          *iid,
 				   GVariant             *props,
 				   GCancellable         *cancellable,
@@ -449,7 +450,7 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 {
 	GSimpleAsyncResult *result;
 	AppletFactoryData  *data;
-	gint                screen;
+	gint                screen_number;
 	gchar              *bus_name;
 	gchar              *factory_id;
 	gchar              *applet_id;
@@ -474,12 +475,14 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 	factory_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
 	applet_id += 2;
 
-	screen = gdk_screen_get_number (gtk_widget_get_screen (container->priv->socket));
+	/* we can't use the screen of the container widget since it's not in a
+	 * widget hierarchy yet */
+	screen_number = gdk_screen_get_number (screen);
 
 	data = g_new (AppletFactoryData, 1);
 	data->result = result;
 	data->factory_id = factory_id;
-	data->parameters = g_variant_new ("(si*)", applet_id, screen, props);
+	data->parameters = g_variant_new ("(si*)", applet_id, screen_number, props);
 	data->cancellable = cancellable ? g_object_ref (cancellable) : NULL;
 
 	bus_name = g_strdup_printf (MATE_PANEL_APPLET_BUS_NAME, factory_id);
@@ -498,6 +501,7 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 
 void
 mate_panel_applet_container_add (MatePanelAppletContainer *container,
+			    GdkScreen            *screen,
 			    const gchar          *iid,
 			    GCancellable         *cancellable,
 			    GAsyncReadyCallback   callback,
@@ -509,7 +513,7 @@ mate_panel_applet_container_add (MatePanelAppletContainer *container,
 
 	mate_panel_applet_container_cancel_pending_operations (container);
 
-	mate_panel_applet_container_get_applet (container, iid, properties,
+	mate_panel_applet_container_get_applet (container, screen, iid, properties,
 					   cancellable, callback, user_data);
 }
 
