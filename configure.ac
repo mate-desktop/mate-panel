@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [1.1.1], [https://github.com/mate-desktop/mate-panel/issues],
+AC_INIT([mate-panel], [1.2.0], [https://github.com/mate-desktop/mate-panel/issues],
     [mate-panel], [http://www.mate-desktop.org])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
