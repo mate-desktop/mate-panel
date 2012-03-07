@@ -251,8 +251,8 @@ mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory)
 	g_bus_own_name (G_BUS_TYPE_SESSION,
 			service_name,
 			G_BUS_NAME_OWNER_FLAGS_NONE,
+			(GBusAcquiredCallback) on_name_acquired,
 			NULL,
-			(GBusNameAcquiredCallback) on_name_acquired,
 			(GBusNameLostCallback) on_name_lost,
 			factory, NULL);
 	g_free (service_name);
