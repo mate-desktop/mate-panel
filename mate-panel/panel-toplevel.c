@@ -4441,13 +4441,14 @@ panel_toplevel_init (PanelToplevel *toplevel)
 {
 	int i;
 
-	/* This is a hack for the default resize grip on Ubuntu.
+	/* This is a hack for the default resize grip on Ubuntu < 12.04.
 	 * Once again, thank you Ubuntu.
 	 *
 	 * We need to add a --enable-ubuntu for this.
 	 */
 	#ifdef UBUNTU
-		gtk_window_set_has_resize_grip(&toplevel->window_instance, FALSE);
+		if (gtk_major_version == 2 && gtk_micro_version < 10)
+			gtk_window_set_has_resize_grip(&toplevel->window_instance, FALSE);
 	#endif
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
