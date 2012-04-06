@@ -108,9 +108,9 @@ struct _CalendarWindowPrivate {
         GtkTreeModelFilter *birthdays_filter;
         GtkTreeModelFilter *tasks_filter;
         GtkTreeModelFilter *weather_filter;
+#endif /* HAVE_LIBECAL */
 
 	MateConfClient *mateconfclient;
-#endif /* HAVE_LIBECAL */
 };
 
 G_DEFINE_TYPE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
@@ -1341,6 +1341,7 @@ setup_list_size_constraint (GtkWidget *widget,
                                G_CALLBACK (constrain_list_size), constraint,
                                (GClosureNotify) g_free, 0);
 }
+#endif /* HAVE_LIBECAL */
 
 static void
 expander_activated (GtkExpander    *expander,
@@ -1414,7 +1415,6 @@ connect_expander_with_mateconf (CalendarWindow *calwin,
         g_object_set_data_full (G_OBJECT (expander), "listener-id",
                                 GUINT_TO_POINTER (listener), remove_listener);
 }
-#endif /* HAVE_LIBECAL */
 
 static void
 calendar_window_pack_pim (CalendarWindow *calwin,
@@ -1635,9 +1635,7 @@ create_hig_frame (CalendarWindow *calwin,
                 g_signal_connect_swapped (button, "clicked", callback, calwin);
         }
 
-#ifdef HAVE_LIBECAL
 	connect_expander_with_mateconf (calwin, expander, key);
-#endif
 
         return vbox;
 }
@@ -1810,11 +1808,11 @@ calendar_window_set_property (GObject       *object,
 static void
 calendar_window_destroy (GtkObject *object)
 {
-#ifdef HAVE_LIBECAL
 	CalendarWindow *calwin;
 
 	calwin = CALENDAR_WINDOW (object);
 
+#ifdef HAVE_LIBECAL
         if (calwin->priv->client)
                 g_object_unref (calwin->priv->client);
         calwin->priv->client = NULL;
@@ -1842,11 +1840,11 @@ calendar_window_destroy (GtkObject *object)
         if (calwin->priv->weather_filter)
                 g_object_unref (calwin->priv->weather_filter);
         calwin->priv->weather_filter = NULL;
+#endif /* HAVE_LIBECAL */
 
 	if (calwin->priv->mateconfclient)
 		g_object_unref (calwin->priv->mateconfclient);
 	calwin->priv->mateconfclient = NULL;
-#endif /* HAVE_LIBECAL */
 
 	GTK_OBJECT_CLASS (calendar_window_parent_class)->destroy (object);
 }
@@ -1939,8 +1937,8 @@ calendar_window_init (CalendarWindow *calwin)
 
 #ifdef HAVE_LIBECAL
 	calwin->priv->previous_selection = NULL;
-	calwin->priv->mateconfclient = mateconf_client_get_default ();
 #endif
+	calwin->priv->mateconfclient = mateconf_client_get_default ();
 }
 
 GtkWidget *
