@@ -15,7 +15,8 @@
         <long>
           The type of this panel object. Possible values are
           "drawer-object", "menu-object", "launcher-object",
-          "matecomponent-applet", "action-applet" and "menu-bar".
+          "external-applet", "action-applet", "menu-bar" and
+	  "separator".
         </long>
       </locale>
     </schema>
@@ -105,7 +106,8 @@
         <long>
           The implementation ID of the applet - e.g.
           "ClockAppletFactory::ClockApplet". This key is only
-          relevant if the object_type key is "matecomponent-applet".
+          relevant if the object_type key is "external-applet"
+	  (or the deprecated "matecomponent-applet").
         </long>
       </locale>
     </schema>

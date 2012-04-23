@@ -261,7 +261,7 @@ class PanelAdder:
         self.client.set_bool(os.path.join(dir, 'panel_right_stick'), self.right_stick)
 
         if self.type == PANEL_TYPE_APPLET:
-            self.client.set_string(os.path.join(dir, 'object_type'), 'matecomponent-applet')
+            self.client.set_string(os.path.join(dir, 'object_type'), 'external-applet')
             self.client.set_string(os.path.join(dir, 'applet_iid'), self.applet_iid)
             id_list = self._panel_get_list(MATE_PANEL_APPLETS_KEY)
             id_list.append(id)
