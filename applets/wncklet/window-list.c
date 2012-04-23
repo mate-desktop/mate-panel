@@ -64,6 +64,7 @@ typedef struct {
 	guint listeners [3];
 } TasklistData;
 
+static void callSystemMonitor(GtkAction* action, TasklistData* tasklist);
 static void display_properties_dialog(GtkAction* action, TasklistData* tasklist);
 static void display_help_dialog(GtkAction* action, TasklistData* tasklist);
 static void display_about_dialog(GtkAction* action, TasklistData* tasklist);
@@ -170,7 +171,22 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 	g_free(tasklist);
 }
 
+/* TODO: this is sad, should be used a function to retrieve  applications from
+ *  .desktop or some like that. */
+static const char* listOfSystemMonitors[] = {
+	"mate-system-monitor",
+	"gnome-system-monitor",
+};
+
 static const GtkActionEntry tasklist_menu_actions[] = {
+	{
+		"TasklistSystemMonitor",
+		"utilities-system-monitor",
+		N_("_System Monitor"),
+		NULL,
+		NULL,
+		G_CALLBACK(callSystemMonitor)
+	},
 	{
 		"TasklistPreferences",
 		GTK_STOCK_PROPERTIES,
@@ -525,6 +541,34 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	action_group = gtk_action_group_new("Tasklist Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions(action_group, tasklist_menu_actions, G_N_ELEMENTS(tasklist_menu_actions), tasklist);
+
+
+	/* disable the item of system monitor, if not exists.
+	 * example, mate-system-monitor, o gnome-system-monitor */
+	char* programpath;
+	int i;
+
+	for (i = 0; i < G_N_ELEMENTS(listOfSystemMonitors); i += 1)
+	{
+		programpath = g_find_program_in_path(listOfSystemMonitors[i]);
+		
+		if (programpath != NULL)
+		{
+			g_free(programpath);
+			/* we give up */
+			goto _system_monitor_found;
+		}
+		
+		/* search another */
+	}
+
+	/* system monitor not found */
+	gtk_action_set_visible(gtk_action_group_get_action(action_group, "TasklistSystemMonitor"), FALSE);
+	
+	_system_monitor_found:;
+	/* end of system monitor item */
+	
+
 	ui_path = g_build_filename(WNCK_MENU_UI_DIR, "window-list-menu.xml", NULL);
 	mate_panel_applet_setup_menu_from_file(MATE_PANEL_APPLET(tasklist->applet), ui_path, action_group);
 	g_free(ui_path);
@@ -542,6 +586,31 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	gtk_widget_show(tasklist->applet);
 
 	return TRUE;
+}
+
+static void callSystemMonitor(GtkAction* action, TasklistData* tasklist)
+{
+	char* argv[2] = {NULL, NULL};
+	char* programpath;
+	int i;
+
+	for (i = 0; i < G_N_ELEMENTS(listOfSystemMonitors); i += 1)
+	{
+		programpath = g_find_program_in_path(listOfSystemMonitors[i]);
+		
+		if (programpath != NULL)
+		{
+			g_free(programpath);
+			
+			argv[0] = listOfSystemMonitors[i];
+			
+			gdk_spawn_on_screen(gtk_widget_get_screen(tasklist->applet), NULL, argv, NULL,
+				      G_SPAWN_SEARCH_PATH,
+				      NULL, NULL, NULL, NULL);
+			
+			return;
+		}
+	}
 }
 
 
