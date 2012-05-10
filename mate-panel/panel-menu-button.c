@@ -664,8 +664,9 @@ panel_menu_button_load (const char  *menu_path,
 
 	mate_panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
 
-        if (panel_is_program_in_path ("mozo") ||
-	    panel_is_program_in_path ("matemenu-simple-editor"))
+        if (!panel_lockdown_get_locked_down () &&
+            (panel_is_program_in_path ("mozo") ||
+	    panel_is_program_in_path ("matemenu-simple-editor")))
 		mate_panel_applet_add_callback (info, "edit", NULL,
 					   _("_Edit Menus"), NULL);
 

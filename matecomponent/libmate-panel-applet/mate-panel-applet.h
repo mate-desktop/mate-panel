@@ -159,21 +159,6 @@ int                mate_panel_applet_factory_main_closure  (const gchar		  *iid,
 						       GType                       applet_type,
 						       GClosure                   *closure);
 
-MateComponent_Unknown     mate_panel_applet_shlib_factory         (const char                 *iid,
-						       GType                       applet_type,
-						       PortableServer_POA          poa,
-						       gpointer                    impl_ptr,
-						       MatePanelAppletFactoryCallback  callback,
-						       gpointer                    user_data,
-						       CORBA_Environment          *ev);
-
-MateComponent_Unknown	   mate_panel_applet_shlib_factory_closure (const char                 *iid,
-						       GType                       applet_type,
-						       PortableServer_POA          poa,
-						       gpointer                    impl_ptr,
-						       GClosure                   *closure,
-						       CORBA_Environment          *ev);
-
 /*
  * These macros are getting a bit unwieldy.
  *
@@ -233,23 +218,6 @@ int main (int argc, char *argv [])						\
 										\
 	return retval;								\
 }
-
-#define MATE_PANEL_APPLET_MATECOMPONENT_SHLIB_FACTORY(iid, type, descr, callback, data)	\
-static MateComponent_Unknown								\
-__mate_panel_applet_shlib_factory (PortableServer_POA  poa,				\
-			      const char         *oafiid,			\
-			      gpointer            impl_ptr,			\
-			      CORBA_Environment  *ev)				\
-{										\
-	_MATE_PANEL_APPLET_SETUP_GETTEXT (FALSE);					\
-        return mate_panel_applet_shlib_factory ((iid), (type), poa, impl_ptr,	\
-					   (callback), (data), ev);		\
-}										\
-static MateComponentActivationPluginObject plugin_list[] = {				\
-	{ (iid), __mate_panel_applet_shlib_factory },				\
-	{ NULL }								\
-};										\
-const  MateComponentActivationPlugin MateComponent_Plugin_info = { plugin_list, (descr) };
 
 #ifdef __cplusplus
 }

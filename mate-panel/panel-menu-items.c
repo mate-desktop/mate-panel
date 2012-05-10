@@ -261,7 +261,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 
 	uri = g_filename_to_uri (full_path, NULL, NULL);
 
-	setup_uri_drag (item, uri, icon);
+	setup_uri_drag (item, uri, icon, GDK_ACTION_COPY);
 	g_free (uri);
 
 	g_key_file_free (key_file);
@@ -308,7 +308,8 @@ panel_menu_items_append_place_item (const char *icon_name,
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
-	setup_uri_drag (item, uri, icon_name);
+	if (g_str_has_prefix (uri, "file:")) /*Links only work for local files*/
+		setup_uri_drag (item, uri, icon_name, GDK_ACTION_LINK);
 }
 
 static GtkWidget *
@@ -1602,7 +1603,7 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	}
 
 	item = panel_menu_items_create_action_item (PANEL_ACTION_SHUTDOWN);
-	if (item != NULL) {
+	if (item != NULL && !g_getenv("LTSP_CLIENT")) {
 		if (!separator_inserted)
 			add_menu_separator (menu);
 
