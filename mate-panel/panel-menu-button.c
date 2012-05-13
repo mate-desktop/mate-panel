@@ -636,6 +636,7 @@ panel_menu_button_load (const char  *menu_path,
 			gboolean     locked,
 			int          position,
 			gboolean     exactpos,
+			gboolean     has_arrow,
 			const char  *id)
 {
 	PanelMenuButton *button;
@@ -649,7 +650,7 @@ panel_menu_button_load (const char  *menu_path,
 			       "tooltip", tooltip,
 			       "use-menu-path", use_menu_path,
 			       "use-custom-icon", use_custom_icon,
-			       "has-arrow", TRUE,
+			       "has-arrow", has_arrow,
 			       NULL);
 
 	info = mate_panel_applet_register (GTK_WIDGET (button), NULL, NULL,
@@ -878,6 +879,7 @@ panel_menu_button_load_from_mateconf (PanelWidget *panel,
 	char        *tooltip;
 	gboolean     use_menu_path;
 	gboolean     use_custom_icon;
+	gboolean     has_arrow;
 
 	client  = panel_mateconf_get_client ();
 
@@ -896,6 +898,9 @@ panel_menu_button_load_from_mateconf (PanelWidget *panel,
 	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "use_custom_icon");
 	use_custom_icon = mateconf_client_get_bool (client, key, NULL);
 
+	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "has_arrow");
+	has_arrow = mateconf_client_get_bool (client, key, NULL);
+
 	panel_menu_button_load (menu_path,
 				use_menu_path,
 				custom_icon,
@@ -905,6 +910,7 @@ panel_menu_button_load_from_mateconf (PanelWidget *panel,
 				locked,
 				position,
 				exactpos,
+				has_arrow,
 				id);
 
 	g_free (menu_path);
