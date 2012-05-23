@@ -15,7 +15,8 @@
         <long>
           The type of this panel object. Possible values are
           "drawer-object", "menu-object", "launcher-object",
-          "matecomponent-applet", "action-applet" and "menu-bar".
+          "external-applet", "action-applet", "menu-bar" and
+	  "separator".
         </long>
       </locale>
     </schema>
@@ -105,7 +106,8 @@
         <long>
           The implementation ID of the applet - e.g.
           "ClockAppletFactory::ClockApplet". This key is only
-          relevant if the object_type key is "matecomponent-applet".
+          relevant if the object_type key is "external-applet"
+	  (or the deprecated "matecomponent-applet").
         </long>
       </locale>
     </schema>
@@ -204,6 +206,20 @@
           The path from which the menu contents is contructed. This
           key is only relevant if the use_menu_path key is true and
           the object_type key is "menu-object".
+        </long>
+      </locale>
+    </schema>
+    
+    <schema>
+      <key>/schemas/apps/panel/objects/has_arrow</key>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Draw arrow in menu button</short>
+        <long>
+          If true, an arrow is drawn over the menu button icon. If
+          false, menu button has only the icon.
         </long>
       </locale>
     </schema>

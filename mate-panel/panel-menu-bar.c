@@ -288,7 +288,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 	mate_panel_applet_add_callback(menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
 
 	/* Menu editors */
-	if (panel_is_program_in_path("mozo") || panel_is_program_in_path("matemenu-simple-editor"))
+	if (!panel_lockdown_get_locked_down () && (panel_is_program_in_path("mozo") || panel_is_program_in_path("matemenu-simple-editor")))
 	{
 		mate_panel_applet_add_callback (menubar->priv->info, "edit", NULL, _("_Edit Menus"), NULL);
 	}

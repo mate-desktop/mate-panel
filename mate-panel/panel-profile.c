@@ -99,10 +99,12 @@ static MateConfEnumStringPair panel_object_type_map [] = {
 	{ PANEL_OBJECT_DRAWER,    "drawer-object" },
 	{ PANEL_OBJECT_MENU,      "menu-object" },
 	{ PANEL_OBJECT_LAUNCHER,  "launcher-object" },
-	{ PANEL_OBJECT_APPLET,    "matecomponent-applet" },
+	{ PANEL_OBJECT_APPLET,    "external-applet" },
 	{ PANEL_OBJECT_ACTION,    "action-applet" },
 	{ PANEL_OBJECT_MENU_BAR,  "menu-bar" },
 	{ PANEL_OBJECT_SEPARATOR, "separator" },
+	/* The following is for backwards compatibility with 2.30.x and earlier */
+	{ PANEL_OBJECT_APPLET,    "matecomponent-applet" },
 	/* The following two are for backwards compatibility with 2.0.x */
 	{ PANEL_OBJECT_LOCK,      "lock-object" },
 	{ PANEL_OBJECT_LOGOUT,    "logout-object" },
