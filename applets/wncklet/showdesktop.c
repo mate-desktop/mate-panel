@@ -463,17 +463,21 @@ static void display_help_dialog(GtkAction* action, ShowDesktopData* sdd)
 static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)
 {
 	static const gchar* authors[] = {
+		"Perberos <perberos@gmail.com>",
+		"Steve Zesch <stevezesch2@gmail.com>",
+		"Stefano Karapetsas <stefano@karapetsas.com>",
 		"Havoc Pennington <hp@redhat.com>",
 		NULL
 	};
 	static const char* documenters[] = {
-		"Sun MATE Documentation Team <gdocteam@sun.com>",
+		"Sun GNOME Documentation Team <gdocteam@sun.com>",
 		NULL
 	};
 
 	/* Translator credits */
 	//const char* translator_credits = _("translator-credits");
 	char copyright[] = \
+		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 
 	gtk_show_about_dialog(GTK_WINDOW(sdd->applet),
@@ -486,7 +490,7 @@ static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)
 		"logo-icon-name", SHOW_DESKTOP_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://matsusoft.com.ar/projects/mate/",
+		"website", "http://www.mate-desktop.org/",
 		NULL);
 }
 

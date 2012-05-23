@@ -53,13 +53,6 @@ typedef struct {
 	GtkWidget* move_minimized_radio;
 	GtkWidget* change_workspace_radio;
 
-	/* new options, must be translated! */
-	/*GtkWidget* style_group_radio;
-	GtkWidget* icon_group_radio;
-	GtkWidget* text_group_radio;*/
-
-
-
 	/* mateconf listeners id */
 	guint listeners [3];
 } TasklistData;
@@ -622,17 +615,21 @@ static void display_help_dialog(GtkAction* action, TasklistData* tasklist)
 static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 {
 	static const gchar* authors[] = {
+		"Perberos <perberos@gmail.com>",
+		"Steve Zesch <stevezesch2@gmail.com>",
+		"Stefano Karapetsas <stefano@karapetsas.com>",
 		"Alexander Larsson <alla@lysator.liu.se>",
 		NULL
 	};
 
 	const char* documenters [] = {
-		"Sun MATE Documentation Team <gdocteam@sun.com>",
+		"Sun GNOME Documentation Team <gdocteam@sun.com>",
 		NULL
 	};
 
 	char copyright[] = \
-		"Copyright \xc2\xa9 2001-2002 Red Hat, Inc.";
+		"Copyright \xc2\xa9 2011 Perberos\n"
+		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 
 	gtk_show_about_dialog(GTK_WINDOW(tasklist->applet),
 		"program-name", _("Window List"),
@@ -644,7 +641,7 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		"logo-icon-name", WINDOW_LIST_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://matsusoft.com.ar/projects/mate/",
+		"website", "http://www.mate-desktop.org/",
 		NULL);
 }
 

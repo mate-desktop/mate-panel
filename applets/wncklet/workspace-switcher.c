@@ -559,18 +559,22 @@ static void display_help_dialog(GtkAction* action, PagerData* pager)
 static void display_about_dialog(GtkAction* action, PagerData* pager)
 {
 	static const gchar* authors[] = {
+		"Perberos <perberos@gmail.com>",
+		"Steve Zesch <stevezesch2@gmail.com>",
+		"Stefano Karapetsas <stefano@karapetsas.com>",
 		"Alexander Larsson <alla@lysator.liu.se>",
 		NULL
 	};
 
 	const char* documenters[] = {
 		"John Fleck <jfleck@inkstain.net>",
-		"Sun MATE Documentation Team <gdocteam@sun.com>",
+		"Sun GNOME Documentation Team <gdocteam@sun.com>",
 		NULL
 	};
 
 	char copyright[] = \
-		"Copyright \xc2\xa9 2001-2002 Red Hat, Inc.";
+		"Copyright \xc2\xa9 2011 Perberos\n"
+		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 
 	gtk_show_about_dialog(GTK_WINDOW(pager->applet),
 		"program-name", _("Workspace Switcher"),
@@ -582,7 +586,7 @@ static void display_about_dialog(GtkAction* action, PagerData* pager)
 		"logo-icon-name", WORKSPACE_SWITCHER_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://matsusoft.com.ar/projects/mate/",
+		"website", "http://www.mate-desktop.org/",
 		NULL);
 }
 

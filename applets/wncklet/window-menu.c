@@ -59,6 +59,9 @@ static void window_menu_help(GtkAction* action, WindowMenu* window_menu)
 static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 {
 	static const char* authors[] = {
+		"Perberos <perberos@gmail.com>",
+		"Steve Zesch <stevezesch2@gmail.com>",
+		"Stefano Karapetsas <stefano@karapetsas.com>",
 		"Mark McLoughlin <mark@skynet.ie>",
 		"George Lebl <jirka@5z.com>",
 		"Jacob Berkman <jacob@helixcode.com>",
@@ -66,11 +69,12 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 	};
 
 	const char* documenters[] = {
-		"Sun MATE Documentation Team <gdocteam@sun.com>",
+		"Sun GNOME Documentation Team <gdocteam@sun.com>",
 		NULL
 	};
 
 	char copyright[] = \
+		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 		"Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
 		"Copyright \xc2\xa9 2000 Helix Code, Inc.";
@@ -85,7 +89,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		"logo-icon-name", WINDOW_MENU_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://matsusoft.com.ar/projects/mate/",
+		"website", "http://www.mate-desktop.org/",
 		NULL);
 }
 
