@@ -1,14 +1,12 @@
 /* -*- mode: C; c-file-style: "linux" -*- */
 /*
- * libwnck based tasklist applet.
+ * libmatewnck based tasklist applet.
  * (C) 2001 Red Hat, Inc
  * (C) 2001 Alexander Larsson
  *
  * Authors: Alexander Larsson
  *
  */
-
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 
 #ifdef HAVE_CONFIG_H
 	#include <config.h>
@@ -21,7 +19,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <libwnck/libwnck.h>
+#include <libmatewnck/libmatewnck.h>
 #include <mateconf/mateconf-client.h>
 
 #include "wncklet.h"
@@ -34,7 +32,7 @@ typedef struct {
 	GtkWidget* tasklist;
 
 	gboolean include_all_workspaces;
-	WnckTasklistGroupingType grouping;
+	MatewnckTasklistGroupingType grouping;
 	gboolean move_unminimized_windows;
 
 	GtkOrientation orientation;
@@ -73,9 +71,9 @@ static void tasklist_update(TasklistData* tasklist)
 		gtk_widget_set_size_request(GTK_WIDGET(tasklist->tasklist), tasklist->size, -1);
 	}
 
-	wnck_tasklist_set_grouping(WNCK_TASKLIST(tasklist->tasklist), tasklist->grouping);
-	wnck_tasklist_set_include_all_workspaces(WNCK_TASKLIST(tasklist->tasklist), tasklist->include_all_workspaces);
-	wnck_tasklist_set_switch_workspace_on_unminimize(WNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
+	matewnck_tasklist_set_grouping(MATEWNCK_TASKLIST(tasklist->tasklist), tasklist->grouping);
+	matewnck_tasklist_set_include_all_workspaces(MATEWNCK_TASKLIST(tasklist->tasklist), tasklist->include_all_workspaces);
+	matewnck_tasklist_set_switch_workspace_on_unminimize(MATEWNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
 }
 
 static void response_cb(GtkWidget* widget, int id, TasklistData* tasklist)
@@ -125,11 +123,11 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 	switch (type)
 	{
 		case PANEL_NO_BACKGROUND:
-			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NORMAL);
+			matewnck_tasklist_set_button_relief(MATEWNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NORMAL);
 			break;
 		case PANEL_COLOR_BACKGROUND:
 		case PANEL_PIXMAP_BACKGROUND:
-			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NONE);
+			matewnck_tasklist_set_button_relief(MATEWNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NONE);
 			break;
 	}
 }
@@ -245,9 +243,9 @@ static void display_all_workspaces_changed(MateConfClient* client, guint cnxn_id
 	tasklist_properties_update_content_radio(tasklist);
 }
 
-static WnckTasklistGroupingType get_grouping_type(MateConfValue* value)
+static MatewnckTasklistGroupingType get_grouping_type(MateConfValue* value)
 {
-	WnckTasklistGroupingType type = -1;
+	MatewnckTasklistGroupingType type = -1;
 	const char* str;
 
 	g_assert(value != NULL);
@@ -255,7 +253,7 @@ static WnckTasklistGroupingType get_grouping_type(MateConfValue* value)
 	/* Backwards compat for old type: */
 	if (value->type == MATECONF_VALUE_BOOL)
 	{
-		type = (mateconf_value_get_bool(value)) ? WNCK_TASKLIST_AUTO_GROUP : WNCK_TASKLIST_NEVER_GROUP;
+		type = (mateconf_value_get_bool(value)) ? MATEWNCK_TASKLIST_AUTO_GROUP : MATEWNCK_TASKLIST_NEVER_GROUP;
 
 	}
 	else if (value->type == MATECONF_VALUE_STRING)
@@ -264,33 +262,33 @@ static WnckTasklistGroupingType get_grouping_type(MateConfValue* value)
 
 		if (g_ascii_strcasecmp(str, "never") == 0)
 		{
-			type = WNCK_TASKLIST_NEVER_GROUP;
+			type = MATEWNCK_TASKLIST_NEVER_GROUP;
 		}
 		else if (g_ascii_strcasecmp(str, "auto") == 0)
 		{
-			type = WNCK_TASKLIST_AUTO_GROUP;
+			type = MATEWNCK_TASKLIST_AUTO_GROUP;
 		}
 		else if (g_ascii_strcasecmp(str, "always") == 0)
 		{
-			type = WNCK_TASKLIST_ALWAYS_GROUP;
+			type = MATEWNCK_TASKLIST_ALWAYS_GROUP;
 		}
 	}
 
 	return type;
 }
 
-static GtkWidget* get_grouping_button(TasklistData* tasklist, WnckTasklistGroupingType type)
+static GtkWidget* get_grouping_button(TasklistData* tasklist, MatewnckTasklistGroupingType type)
 {
 	switch (type)
 	{
 		default:
-		case WNCK_TASKLIST_NEVER_GROUP:
+		case MATEWNCK_TASKLIST_NEVER_GROUP:
 			return tasklist->never_group_radio;
 			break;
-		case WNCK_TASKLIST_AUTO_GROUP:
+		case MATEWNCK_TASKLIST_AUTO_GROUP:
 			return tasklist->auto_group_radio;
 			break;
-		case WNCK_TASKLIST_ALWAYS_GROUP:
+		case MATEWNCK_TASKLIST_ALWAYS_GROUP:
 			return tasklist->always_group_radio;
 			break;
 	}
@@ -298,7 +296,7 @@ static GtkWidget* get_grouping_button(TasklistData* tasklist, WnckTasklistGroupi
 
 static void group_windows_changed(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, TasklistData* tasklist)
 {
-	WnckTasklistGroupingType type;
+	MatewnckTasklistGroupingType type;
 	GtkWidget* button;
 
 	if (!entry->value || (entry->value->type != MATECONF_VALUE_BOOL && entry->value->type != MATECONF_VALUE_STRING))
@@ -386,11 +384,11 @@ static void applet_size_request(GtkWidget* widget, GtkRequisition* requisition, 
 	int len;
 	const int* size_hints;
 	GtkRequisition child_req;
-	WnckTasklist* wncktl = WNCK_TASKLIST(tasklist->tasklist);
+	MatewnckTasklist* matewncktl = MATEWNCK_TASKLIST(tasklist->tasklist);
 
 	gtk_widget_get_child_requisition(tasklist->applet, &child_req);
 
-	size_hints = wnck_tasklist_get_size_hint_list(wncktl, &len);
+	size_hints = matewnck_tasklist_get_size_hint_list(matewncktl, &len);
 	g_assert(len % 2 == 0);
 
 	mate_panel_applet_set_size_hints(MATE_PANEL_APPLET(tasklist->applet), size_hints, len, 0);
@@ -486,7 +484,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	}
 
 	if (tasklist->grouping < 0)
-		tasklist->grouping = WNCK_TASKLIST_AUTO_GROUP; /* Default value */
+		tasklist->grouping = MATEWNCK_TASKLIST_AUTO_GROUP; /* Default value */
 
 	error = NULL;
 	tasklist->move_unminimized_windows = mate_panel_applet_mateconf_get_bool(applet, "move_unminimized_windows", &error);
@@ -512,9 +510,9 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-	tasklist->tasklist = wnck_tasklist_new(NULL);
+	tasklist->tasklist = matewnck_tasklist_new(NULL);
 
-	wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
+	matewnck_tasklist_set_icon_loader(MATEWNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
 
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "destroy", G_CALLBACK(destroy_tasklist), tasklist);
 

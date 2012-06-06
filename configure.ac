@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [1.3.0], [https://github.com/mate-desktop/mate-panel/issues],
+AC_INIT([mate-panel], [1.3.1], [https://github.com/mate-desktop/mate-panel/issues],
     [mate-panel], [http://www.mate-desktop.org])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
@@ -62,7 +62,7 @@ GDK_PIXBUF_REQUIRED=2.7.1
 PANGO_REQUIRED=1.15.4
 GLIB_REQUIRED=2.25.12
 GTK_REQUIRED=2.19.7
-LIBWNCK_REQUIRED=2.19.5
+LIBMATEWNCK_REQUIRED=1.3.0
 MATECONF_REQUIRED=1.1.0
 LIBMATE_MENU_REQUIRED=1.1.0
 LIBECAL_REQUIRED=1.6.0
@@ -92,7 +92,7 @@ PKG_CHECK_MODULES(NOTIFICATION_AREA, gtk+-2.0 >= $GTK_REQUIRED)
 AC_SUBST(NOTIFICATION_AREA_CFLAGS)
 AC_SUBST(NOTIFICATION_AREA_LIBS)
 
-PKG_CHECK_MODULES(WNCKLET, gtk+-2.0 >= $GTK_REQUIRED libwnck-1.0 >= $LIBWNCK_REQUIRED)
+PKG_CHECK_MODULES(WNCKLET, gtk+-2.0 >= $GTK_REQUIRED libmatewnck >= $LIBMATEWNCK_REQUIRED)
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
 

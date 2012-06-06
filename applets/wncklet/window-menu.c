@@ -25,8 +25,6 @@
  *      Jacob Berkman <jacob@helixcode.com>
  */
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-
 #ifdef HAVE_CONFIG_H
 	#include <config.h>
 #endif
@@ -37,7 +35,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <libwnck/selector.h>
+#include <libmatewnck/selector.h>
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -183,7 +181,7 @@ static void window_menu_size_allocate(MatePanelApplet* applet, GtkAllocation* al
 static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* event, WindowMenu* window_menu)
 {
 	GtkMenuShell* menu_shell;
-	WnckSelector* selector;
+	MatewnckSelector* selector;
 
 	switch (event->keyval)
 	{
@@ -193,7 +191,7 @@ static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* even
 		case GDK_Return:
 		case GDK_space:
 		case GDK_KP_Space:
-			selector = WNCK_SELECTOR(window_menu->selector);
+			selector = MATEWNCK_SELECTOR(window_menu->selector);
 			/*
 			 * We need to call _gtk_menu_shell_activate() here as is done in
 			 * window_key_press_handler in gtkmenubar.c which pops up menu
@@ -253,7 +251,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	g_free(ui_path);
 	g_object_unref(action_group);
 
-	window_menu->selector = wnck_selector_new();
+	window_menu->selector = matewnck_selector_new();
 	gtk_container_add(GTK_CONTAINER(window_menu->applet), window_menu->selector);
 
 	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(window_menu->applet), GTK_WIDGET(window_menu->selector));

@@ -24,8 +24,7 @@
 #ifndef __WNCKLET_H__
 #define __WNCKLET_H__
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-#include <libwnck/screen.h>
+#include <libmatewnck/screen.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -37,7 +36,7 @@ extern "C" {
 
 void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* link_id, const char* icon_name);
 
-WnckScreen* wncklet_get_screen(GtkWidget* applet);
+MatewnckScreen* wncklet_get_screen(GtkWidget* applet);
 
 void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback func, gpointer func_data, gpointer alive_object);
 

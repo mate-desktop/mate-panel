@@ -1,5 +1,5 @@
 /*
- * libwnck based tasklist Applet.
+ * libmatewnck based tasklist Applet.
  * (C) 2001 Alexander Larsson
  *
  * Authors: Alexander Larsson
