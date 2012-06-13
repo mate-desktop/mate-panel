@@ -701,7 +701,7 @@ mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
 
-	screen	= gtk_widget_get_screen (GTK_WIDGET (applet));
+	screen	= gtk_window_get_screen (GTK_WINDOW (applet->priv->plug));
 	root	= gdk_screen_get_root_window (screen);
 	display = gdk_screen_get_display (screen);
 
@@ -955,7 +955,7 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 	applet = MATE_PANEL_APPLET (widget);
 
-	screen = gtk_widget_get_screen (widget);
+	screen = gtk_window_get_screen (GTK_WINDOW (applet->priv->plug));
 
 	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 	gdk_window_get_origin (gtk_widget_get_window (widget),
