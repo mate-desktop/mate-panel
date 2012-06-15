@@ -76,7 +76,8 @@ dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-2.0)
 
-PKG_CHECK_MODULES(PANEL, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED mateconf-2.0 >= $MATECONF_REQUIRED libmate-menu >= $LIBMATE_MENU_REQUIRED libcanberra-gtk dbus-glib-1 >= $DBUS_GLIB_REQUIRED)
+PKG_CHECK_MODULES(GMODULE, gmodule-2.0,[GMODULE_ADD="gmodule-2.0"],[GMODULE_ADD=""])
+PKG_CHECK_MODULES(PANEL, $GMODULE_ADD gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED mateconf-2.0 >= $MATECONF_REQUIRED libmate-menu >= $LIBMATE_MENU_REQUIRED libcanberra-gtk dbus-glib-1 >= $DBUS_GLIB_REQUIRED)
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
 
