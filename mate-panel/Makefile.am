@@ -263,7 +263,7 @@ install-data-local:
 	fi
 uninstall-local:
 	for p in $(schema_DATA) ; do \
-		MATECONF_CONFIG_SOURCE=$(MATECONF_SCHEMA_CONFIG_SOURCE) $(MATECONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/ngome-panel/$$p ; \
+		MATECONF_CONFIG_SOURCE=$(MATECONF_SCHEMA_CONFIG_SOURCE) $(MATECONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/mate-panel/$$p ; \
 	done
 endif
 
