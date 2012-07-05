@@ -1,3 +1,1315 @@
-Amnesia
+commit 1a88770385c3b71a423ee7ee620a252e0d6e8908
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Jul 4 16:25:18 2012 +0200
 
-Check the ChangeLog from gnome-panel at gnome.org
+    sync translations with transifex
+
+ po/af.po  | 2704 +++++++++-------------------
+ po/ar.po  | 1729 +++++++-----------
+ po/ast.po | 2596 ++++++++++++---------------
+ po/ca.po  | 5842 +++++--------------------------------------------------------
+ po/cs.po  | 1098 +++++-------
+ po/eo.po  | 1287 +++++---------
+ po/es.po  | 1865 +++++++-------------
+ po/eu.po  | 1706 ++++++++----------
+ po/fr.po  | 1257 +++++--------
+ po/he.po  | 1696 +++++++-----------
+ po/nl.po  |    8 +-
+ po/pl.po  |    9 +-
+ po/ru.po  | 1048 ++++++-----
+ po/sl.po  | 1061 ++++++-----
+ po/tr.po  |   15 +-
+ po/uk.po  | 1684 ++++++++----------
+ 16 files changed, 8248 insertions(+), 17357 deletions(-)
+
+commit 8234ff98dfc1ee9cf3fb0fd0c722256ea3c48034
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Jul 4 16:12:47 2012 +0200
+
+    add po gnome copyrights file
+
+ po/gnome-copyrights.txt | 1443 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 1443 insertions(+)
+
+commit 765098c3b9d988f4ae690eebd38e559352fa5320
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Jun 20 12:55:14 2012 +0200
+
+    fix "ngome" occurence
+    thanks to nmarques
+
+ mate-panel/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9624cc67fbe896f5d2a25843e17d107028663f1d
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Jun 20 09:33:10 2012 +0200
+
+    prepare 1.3.2
+
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 433b732669ea1accb0fbc79bce6c39f416ea5234
+Merge: 6b4bc7a bf0d96e
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Jun 19 15:37:13 2012 -0700
+
+    Merge pull request #28 from ketheriel/master
+    
+    libpanel-applet: Use on_bus_acquired instead of on_name_acquired
+
+commit bf0d96ed544a2a50ad7ca350baf75aab3d77622c
+Author: Nelson Marques <nmo.marques@gmail.com>
+Date:   Tue Jun 19 23:46:42 2012 +0200
+
+    libpanel-applet: Use on_bus_acquired instead of on_name_acquired
+    
+    Prevent race conditions when the session starts (panel is displayed instantly); This is well documented in the gdbus documentation: https://bugzilla.gnome.org/show_bug.cgi?id=654843
+
+ libmate-panel-applet/mate-panel-applet-factory.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 6b4bc7a4e45fec8a17c9be53338cfdca5eb4cc24
+Merge: 32879f4 13d4184
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Jun 15 05:46:08 2012 -0700
+
+    Merge pull request #23 from MDykstra/master
+    
+    now linking under up-to-date Arch Linux system
+
+commit 32879f4b29b115387255580aede2269eb8f818d3
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Jun 13 10:53:29 2012 +0200
+
+    Use right GdkScreen for focus request and menu
+    http://bugzilla-attachments.gnome.org/attachment.cgi?id=179797
+    
+    Calling gtk_widget_get_screen() on a widget embedded in a plug doesn't
+    necessarily return what you expect (because of
+    gtk_widget_get_toplevel()).
+    
+    Instead, call gtk_window_get_screen() on the plug.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=632369
+
+ libmate-panel-applet/mate-panel-applet.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit bd86f8daead7479405667acb84d4b976301641b2
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Jun 6 17:33:00 2012 +0200
+
+    switch to libmatewnck
+
+ applets/notification_area/na-tray-child.c |    4 +-
+ applets/wncklet/showdesktop.c             |   38 ++++++-------
+ applets/wncklet/window-list.c             |   50 ++++++++---------
+ applets/wncklet/window-list.h             |    2 +-
+ applets/wncklet/window-menu.c             |   10 ++--
+ applets/wncklet/wncklet.c                 |   12 ++--
+ applets/wncklet/wncklet.h                 |    5 +-
+ applets/wncklet/workspace-switcher.c      |   86 ++++++++++++++---------------
+ applets/wncklet/workspace-switcher.h      |    2 +-
+ configure.ac                              |    6 +-
+ distro/archlinux/PKGBUILD                 |    2 +-
+ 11 files changed, 104 insertions(+), 113 deletions(-)
+
+commit 55d552d3f66f6730e195fbb3f25c415161f6b3f0
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Jun 6 10:30:24 2012 +0200
+
+    removed distro/ubuntu folder
+
+ distro/ubuntu/build    |   31 -------------------------------
+ distro/ubuntu/postinst |   15 ---------------
+ distro/ubuntu/postrm   |    8 --------
+ distro/ubuntu/preinst  |    7 -------
+ distro/ubuntu/prerm    |   16 ----------------
+ 5 files changed, 77 deletions(-)
+
+commit 8b37f5bb6c8bd04dcde7edd66a366ba5c1eb3834
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed May 23 17:14:21 2012 +0200
+
+    fix some things for MATE in wncklet applet
+
+ applets/wncklet/showdesktop.c          |    8 +-
+ applets/wncklet/window-list.c          |   17 ++---
+ applets/wncklet/window-list.schemas.in |    8 +-
+ applets/wncklet/window-list.ui         |  130 --------------------------------
+ applets/wncklet/window-menu.c          |    8 +-
+ applets/wncklet/workspace-switcher.c   |   10 ++-
+ 6 files changed, 30 insertions(+), 151 deletions(-)
+
+commit 13d41840ccb39bebe44b52653ba8d59b0c4985a0
+Merge: d3b927a 9af851f
+Author: Marcel Dijkstra <marcel.dykstra@gmail.com>
+Date:   Wed May 23 02:33:19 2012 +0200
+
+    Merge remote-tracking branch 'upstream/master' into slave
+
+commit 9af851f0c4f0296eb5654233b9fc251e9377c8b9
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon May 21 21:22:01 2012 +0200
+
+    start 1.3
+
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d3b927a321242e36abdb1e4acc488cde7899800e
+Author: Marcel Dijkstra <marcel.dykstra@gmail.com>
+Date:   Wed May 16 04:03:15 2012 +0200
+
+    only depend on gmodule-2.0 if it exists
+
+ configure.ac |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 656540dac716816bbc906b373d6ff6e488e536bd
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sun May 13 19:09:31 2012 +0200
+
+    add option to hide arrow in menu button
+    https://github.com/mate-desktop/mate-panel/issues/24
+    https://bugzilla.gnome.org/show_bug.cgi?id=598196
+    patch by Damir Gilyazov
+
+ mate-panel/panel-menu-button.c     |    8 +++++++-
+ mate-panel/panel-object.schemas.in |   14 ++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+commit 69769af51fe3f072bfd2612a27afc095eb67384f
+Merge: 9639e4e 4cd1138
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Thu May 10 12:59:42 2012 -0700
+
+    Merge pull request #18 from benpicco/upstream
+    
+    pull in upstream changes & fixes
+
+commit b3fabe6bbdf380e7d3202677c1d0899b47cbff8e
+Author: Marcel Dijkstra <marcel.dykstra@gmail.com>
+Date:   Thu Apr 26 23:13:42 2012 +0200
+
+    linker now requires gmodule-2.0 in mate-panel
+
+ configure.ac |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 9639e4e9ccdbf44e8a4a29a57c23cc7c4cf05253
+Merge: 36f6cbe ef01aab
+Author: Perberos <perberos@gmail.com>
+Date:   Mon Apr 23 05:39:12 2012 -0300
+
+    Merge branch 'master' of github.com:mate-desktop/mate-panel
+
+commit 36f6cbeb068f46ebf165e718005699979acaa36f
+Author: Perberos <perberos@gmail.com>
+Date:   Mon Apr 23 05:37:29 2012 -0300
+
+    adding an item for system monitors on the windows list applet
+
+ applets/wncklet/window-list-menu.xml |    2 +
+ applets/wncklet/window-list.c        |   69 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 71 insertions(+)
+
+commit ef01aabe2567bda92e02c62f2f07d95b47e92cc9
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Apr 6 10:02:57 2012 +0200
+
+    update translations (pl, tr)
+
+ po/pl.po | 1119 +++++++++++++-------------------
+ po/tr.po | 2196 ++++++++++++++++++++++++--------------------------------------
+ 2 files changed, 1290 insertions(+), 2025 deletions(-)
+
+commit ebb303b9ebc2f42289f69d48a70b00de61f06852
+Merge: f83141e 69f2936
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Apr 6 00:12:41 2012 -0700
+
+    Merge pull request #19 from haxar/69f29364bbbe1d1772cf0ce5e4efe0af1beccd42
+    
+    g-ir-scanner: fix build when configure prefix != /usr
+
+commit f83141e3dc98adb70870bbf920453397951b70fd
+Merge: 5b2e509 f27accd
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Apr 6 00:12:24 2012 -0700
+
+    Merge pull request #20 from haxar/clock-applet-map
+    
+    clock-applet: keep locations map expanded state
+
+commit f27accd68a9abec65c702fa430562ee545f0d096
+Author: haxar <grezski@gmail.com>
+Date:   Thu Apr 5 20:23:40 2012 -0700
+
+    clock-applet: use mateconf client to get and set KEY_LOCATIONS_EXPANDED key when HAVE_LIBECAL is not defined
+
+ applets/clock/calendar-window.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
+
+commit 69f29364bbbe1d1772cf0ce5e4efe0af1beccd42
+Author: haxar <grezski@gmail.com>
+Date:   Thu Apr 5 20:23:29 2012 -0700
+
+    g-ir-scanner: when configure prefix != /usr, add prefix to scanner include paths
+
+ libmate-panel-applet/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4cd113800b89a73dfa77ed4081811055a4cbe23e
+Author: Sebastien Bacher <seb128@ubuntu.com>
+Date:   Fri Jul 10 14:24:56 2009 +0200
+
+    lockdown locks the menu editor entry too
+    
+    Bug: http://bugzilla.gnome.org/show_bug.cgi?id=499148
+    Bug-Ubuntu: https://bugs.launchpad.net/bugs/4712
+
+ mate-panel/panel-menu-bar.c    |    2 +-
+ mate-panel/panel-menu-button.c |    5 +++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit 8c25e1bdd328a8712735c0b00cf4aede7993da1d
+Author: Oliver Grawert <ogra@ubuntu.com>
+Date:   Mon Oct 13 16:53:28 2008 +0200
+
+    Suppress the shutdown option in the panel if LTSP_CLIENT is set
+
+ mate-panel/panel-menu-items.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e0d316abc53e6858814ccc83cb42b3e541e72977
+Author: Jorge Bernal "Koke <koke@amedias.org>
+Date:   Wed Mar 23 03:20:01 2005 +0100
+
+    Show a default icon for .desktop files that don't have one
+    
+    Bug: https://bugzilla.gnome.org/show_bug.cgi?id=76495
+
+ mate-panel/menu.c              |    2 +-
+ mate-panel/panel-stock-icons.h |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 68ec89213e4d7c23cb681016b0b627e39fae9e4f
+Author: Marcel Stimberg <stimb@cs.tu-berlin.de>
+Date:   Sun Aug 23 20:40:16 2009 +0000
+
+    When using Drag'n'Drop from Places menu, install a link launcher (.desktop file) instead of copying the entire directory.
+    
+    Bug: https://bugzilla.gnome.org/show_bug.cgi?id=357934
+    Bug-Ubuntu: https://launchpad.net/bugs/62529
+
+ mate-panel/menu.c             |    5 +++--
+ mate-panel/menu.h             |    3 ++-
+ mate-panel/panel-menu-items.c |    5 +++--
+ 3 files changed, 8 insertions(+), 5 deletions(-)
+
+commit ab55bf3e46ccab95d268bf0e10dce2e15294cabf
+Author: Vincent Untz <vuntz@gnome.org>
+Date:   Thu Feb 17 12:47:25 2011 +0100
+
+    matecomponent: Remove API to build matecomponent applet as shared library
+    
+    Yes, it's bad, it breaks API and ABI. In a stable branch. But it's the
+    matecomponent compatibility module. And it's a rather important fix.
+    
+    We can't have matecomponent applets as shared libraries since both matecomponent
+    applets and dbus applets are sharing the MatePanelApplet type name, and they
+    will conflict in the same process. Since we know we want to allow dbus
+    in-process applets, it means we have to disallow matecomponent in-process
+    applets. Hence this change.
+
+ .../libmate-panel-applet/mate-panel-applet.c       |   49 --------------------
+ .../libmate-panel-applet/mate-panel-applet.h       |   32 -------------
+ 2 files changed, 81 deletions(-)
+
+commit 065282bda1caacc9891c4f0c5411f03f17dc5555
+Author: Germán Póo-Caamaño <gpoo@gnome.org>
+Date:   Sat Jan 29 22:08:32 2011 -0800
+
+    mate-panel-desktop: Fix the Categories key
+    
+    mate-panel is not an utility, it is part of the core.  Hence,
+    the Categories reflects panel is part of System.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=640690
+    
+    Signed-off-by: Germán Póo-Caamaño <gpoo@gnome.org>
+
+ mate-panel/mate-panel.desktop.in.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 92ba1e2db39b69340462ce0570bb971154ecdf2d
+Author: Vincent Untz <vuntz@gnome.org>
+Date:   Fri Jan 7 17:42:43 2011 -0800
+
+    Change references from matecomponent-applet to external-applet in mateconf
+    
+    Signed-off-by: Germán Póo-Caamaño <gpoo@gnome.org>
+
+ mate-panel/mate-panel-add.in           |    2 +-
+ mate-panel/panel-default-setup.entries |   12 ++++++------
+ mate-panel/panel-object.schemas.in     |    6 ++++--
+ mate-panel/panel-profile.c             |    4 +++-
+ 4 files changed, 14 insertions(+), 10 deletions(-)
+
+commit 5b2e5096babd9008c9f29836a93302816e15b68f
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sun Mar 11 21:23:05 2012 +0100
+
+    1.2.1 release
+
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 340a69c6f3a0d27a4d127d337a3933e01162ab7c
+Author: Perberos <perberos@gmail.com>
+Date:   Wed Mar 7 10:13:20 2012 -0300
+
+    http://bugzilla-attachments.gnome.org/attachment.cgi?id=201328
+
+ libmate-panel-applet/mate-panel-applet-factory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 57923befd804306ffc51c897e74449cbb62dd669
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Feb 29 23:20:33 2012 +0100
+
+    fix mate-autogen rename
+
+ autogen.sh |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit cdabbca548fbe1d695b698c9b419a21188247553
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Feb 29 21:48:47 2012 +0100
+
+    fix for 1.2 release
+
+ MAINTAINERS  |   18 ------------------
+ configure.ac |    2 +-
+ 2 files changed, 1 insertion(+), 19 deletions(-)
+
+commit 95478d54ab1c61549f76639203c969c6be9dfd99
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Feb 29 19:34:49 2012 +0100
+
+    update translations
+
+ po/et.po    | 1468 ++++++++++++++++++++++++++++++++++--------------------
+ po/nl.po    | 1579 +++++++++++++++++------------------------------------------
+ po/pt_BR.po | 1501 +++++++++++++++++---------------------------------------
+ 3 files changed, 1813 insertions(+), 2735 deletions(-)
+
+commit a863fa94d275584bdd7daf4de463323fde4b91c8
+Merge: d785147 5fcd54e
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon Feb 27 08:49:53 2012 -0800
+
+    Merge pull request #10 from brianjmurrell/master
+    
+    Fix for mate-panel issue #9
+
+commit 5fcd54e8b74acf364cc348850f69a1a416b89692
+Author: Brian J. Murrell <brian@interlinx.bc.ca>
+Date:   Thu Feb 23 20:49:54 2012 -0500
+
+    fix for GNOME bug 632369
+
+ .../mate-panel-applet-container.c                  |   12 ++++++++----
+ .../mate-panel-applet-container.h                  |    1 +
+ .../mate-panel-applet-frame-dbus.c                 |    4 +++-
+ mate-panel/mate-panel-applet-frame.c               |    6 ++++++
+ mate-panel/mate-panel-applet-frame.h               |    2 ++
+ mate-panel/panel-test-applets.c                    |    1 +
+ 6 files changed, 21 insertions(+), 5 deletions(-)
+
+commit d7851474e28e1aa65cbdabe0d3b4032afc7d40f3
+Author: Perberos <perberos@gmail.com>
+Date:   Mon Jan 30 13:12:30 2012 -0300
+
+    g_get_user_config_dir() would be better (https://github.com/mate-desktop/mate-panel/issues/8)
+
+ mate-panel/panel-util.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 1016505cc78a6dfe385c935ab17bf458f0ba2de3
+Author: Perberos <perberos@gmail.com>
+Date:   Fri Jan 27 09:16:21 2012 -0300
+
+    ~/.mate2/ moved to ~/.config/mate/
+
+ mate-panel/panel-util.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+commit 8821addfd919b8ab42e7f8462ae78315d116f74c
+Author: Perberos <perberos@gmail.com>
+Date:   Fri Jan 27 09:12:03 2012 -0300
+
+    website info redundancy, refer to mate-about
+
+ mate-panel/panel-context-menu.c |  423 +++++++++++++++++++--------------------
+ 1 file changed, 211 insertions(+), 212 deletions(-)
+
+commit 190debbe91a21932a637989a5d1659c866c0ec30
+Author: Perberos <perberos@gmail.com>
+Date:   Fri Jan 27 09:11:32 2012 -0300
+
+    removing extra spaces
+
+ mate-panel/Makefile.am |  320 ++++++++++++++++++++++++------------------------
+ 1 file changed, 160 insertions(+), 160 deletions(-)
+
+commit 19bfea3a8d5f2d20c3ad927b729fb04ba3ceef8f
+Author: Perberos <perberos@gmail.com>
+Date:   Fri Jan 27 09:10:25 2012 -0300
+
+    website info redundancy, refer to mate-about
+
+ applets/notification_area/main.c |    1 -
+ 1 file changed, 1 deletion(-)
+
+commit 16659f4b196ce57bfc76ff51e85e9dc4417b2527
+Author: Perberos <perberos@gmail.com>
+Date:   Fri Jan 27 09:08:00 2012 -0300
+
+    changing pkgbuild source method
+
+ distro/archlinux/PKGBUILD |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit ea9dffce8aa379670e983669562b00435f8316ba
+Author: Perberos <perberos@gmail.com>
+Date:   Fri Jan 27 09:04:25 2012 -0300
+
+    removing autogenerated files
+
+ applets/Makefile.in                                |  677 ------
+ applets/clock/Makefile.in                          | 1595 --------------
+ applets/clock/pixmaps/Makefile.in                  |  537 -----
+ applets/notification_area/Makefile.in              |  964 ---------
+ applets/wncklet/Makefile.in                        | 1075 ----------
+ doc/Makefile.in                                    |  676 ------
+ doc/reference/Makefile.in                          |  672 ------
+ doc/reference/mate-panel-applet/Makefile.in        |  804 -------
+ help/Makefile.in                                   |  672 ------
+ help/clock/Makefile.in                             | 1030 ---------
+ help/fish/Makefile.in                              | 1030 ---------
+ icons/16x16/Makefile.in                            |  564 -----
+ icons/22x22/Makefile.in                            |  564 -----
+ icons/24x24/Makefile.in                            |  550 -----
+ icons/32x32/Makefile.in                            |  564 -----
+ icons/48x48/Makefile.in                            |  544 -----
+ icons/Makefile.in                                  |  725 -------
+ icons/scalable/Makefile.in                         |  550 -----
+ libmate-panel-applet/Makefile.in                   |  921 --------
+ man/Makefile.in                                    |  553 -----
+ mate-panel/Makefile.in                             | 2222 --------------------
+ mate-panel/libegg/Makefile.in                      |  622 ------
+ .../libmate-panel-applet-private/Makefile.in       |  644 ------
+ mate-panel/libpanel-util/Makefile.in               |  647 ------
+ mate-panel/mate-panel-add.in                       |    3 +-
+ matecomponent/Makefile.in                          |  672 ------
+ matecomponent/idl/Makefile.in                      |  520 -----
+ matecomponent/libmate-panel-applet/Makefile.in     |  952 ---------
+ matecomponent/panel-module/Makefile.in             |  786 -------
+ po/Makefile.in.in                                  |  217 --
+ 30 files changed, 2 insertions(+), 22550 deletions(-)
+
+commit e0a48baf161a51e7a61ffdf61e8c60050c9472f5
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Jan 19 13:36:31 2012 +0100
+
+    alacarte -> mozo (thanks to benpicco for the tip)
+
+ mate-panel/panel-menu-bar.c    |    4 ++--
+ mate-panel/panel-menu-button.c |    6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 60fe93f5130407c3e02748341affbce360606c53
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Jan 19 11:48:30 2012 +0100
+
+    1.1.1 release
+
+ AUTHORS                   |   15 +++++++++++----
+ HACKING                   |   20 ++++----------------
+ README                    |   13 +++----------
+ configure.ac              |    5 +++--
+ distro/archlinux/PKGBUILD |    2 +-
+ distro/ubuntu/build       |    2 +-
+ 6 files changed, 23 insertions(+), 34 deletions(-)
+
+commit 40dd3d1c879d031e128c521a409007acf0051b25
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Wed Jan 18 21:38:02 2012 -0500
+
+    Fixed mate-desktop URL
+
+ applets/notification_area/main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c8123c706d8c463e216c35aa41c53cf03ae3a695
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Fri Jan 13 19:58:46 2012 -0500
+
+    Added mate-desktop.org to about window.
+
+ mate-panel/panel-context-menu.c |  423 ++++++++++++++++++++-------------------
+ 1 file changed, 212 insertions(+), 211 deletions(-)
+
+commit 4b0e0770aaa3d58e89ab0bd77799c8d162a6dbc1
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Tue Jan 10 14:26:02 2012 -0500
+
+    Changed mate.gr.jp to gnome.gr.jp as requested in Issue #86
+
+ po/ja.po |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+commit 4b23e8a1c2ddd97c200197abd10e7a6604643469
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Jan 5 16:29:12 2012 +0100
+
+    libmate-panel-applet: Add introspection annotations
+    mate_panel_applet_factory_main was being generated with introspectable="0" because of missing annotations
+    http://git.gnome.org/browse/gnome-panel/commit/?h=gnome-2-32&id=9cbae555115013bc7946e2ce3584d40639248f14
+
+ libmate-panel-applet/mate-panel-applet.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit eb26152358112a7a289c51f8100a8975f532df54
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Jan 5 16:21:29 2012 +0100
+
+    updated de translation
+
+ po/de.po | 1298 ++++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 586 insertions(+), 712 deletions(-)
+
+commit 6b4c95bf8f8dc8254bb14bd9e72b25e96f99a5f2
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Jan 5 16:17:00 2012 +0100
+
+    increased items number in bookmarks menu (same as debian&ubuntu gnome-panel)
+
+ mate-panel/panel-menu-items.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit bf0701223a05c06e154c6ed81664363a6f8a81bb
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Jan 5 15:58:35 2012 +0100
+
+    renamed gettext package name
+
+ configure.ac |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit f7d562381383c00e9ff0ac3b02557836a06b3c97
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon Jan 2 16:33:08 2012 +0100
+
+    updated it translation
+
+ po/it.po |  935 ++++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 429 insertions(+), 506 deletions(-)
+
+commit ea5dba1a995c3643e1e01dcca148a7986ed89e8a
+Author: Perberos <perberos@gmail.com>
+Date:   Tue Dec 13 13:53:58 2011 -0200
+
+    adding missing ld flags
+
+ mate-panel/Makefile.am |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit 3f01e0e02e559f9e3e632596dd8097b689b174c4
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Fri Dec 9 23:32:44 2011 -0500
+
+    updated version
+
+ configure.ac              |   18 +++++++++---------
+ distro/archlinux/PKGBUILD |    2 +-
+ distro/ubuntu/build       |    2 +-
+ 3 files changed, 11 insertions(+), 11 deletions(-)
+
+commit dab51c76bea31b0bb8b79119de2f6a68f4fff489
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Fri Dec 2 20:15:54 2011 -0500
+
+    Changed version to 2011.12.01
+
+ configure.ac              |    2 +-
+ distro/archlinux/PKGBUILD |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit c51ef797a707f4e2c6f9688d4378f2b0e9898a66
+Author: Perberos <perberos@gmail.com>
+Date:   Thu Dec 1 22:56:10 2011 -0300
+
+    moving from https://github.com/perberos/mate-desktop-environment
+
+ AUTHORS                                            |   52 +
+ COPYING                                            |  339 +
+ COPYING-DOCS                                       |  355 +
+ COPYING.LIB                                        |  481 ++
+ ChangeLog                                          |    3 +
+ HACKING                                            |   31 +
+ MAINTAINERS                                        |   18 +
+ Makefile.am                                        |   53 +
+ NEWS                                               |    3 +
+ README                                             |   49 +
+ applets/Makefile.am                                |    7 +
+ applets/Makefile.in                                |  677 ++
+ applets/clock/Makefile.am                          |  205 +
+ applets/clock/Makefile.in                          | 1595 ++++
+ applets/clock/calendar-client.c                    | 2169 ++++++
+ applets/clock/calendar-client.h                    |  153 +
+ applets/clock/calendar-debug.h                     |   56 +
+ applets/clock/calendar-sources.c                   |  658 ++
+ applets/clock/calendar-sources.h                   |   70 +
+ applets/clock/calendar-window.c                    | 2125 ++++++
+ applets/clock/calendar-window.h                    |   84 +
+ applets/clock/clock-face.c                         |  462 ++
+ applets/clock/clock-face.h                         |   64 +
+ applets/clock/clock-location-tile.c                |  728 ++
+ applets/clock/clock-location-tile.h                |   51 +
+ applets/clock/clock-location.c                     |  894 +++
+ applets/clock/clock-location.h                     |   87 +
+ applets/clock/clock-map.c                          |  700 ++
+ applets/clock/clock-map.h                          |   43 +
+ applets/clock/clock-marshallers.list               |    3 +
+ applets/clock/clock-menu.xml                       |    8 +
+ applets/clock/clock-sunpos.c                       |  197 +
+ applets/clock/clock-sunpos.h                       |    8 +
+ applets/clock/clock-utils.c                        |  127 +
+ applets/clock/clock-utils.h                        |   57 +
+ applets/clock/clock.c                              | 3745 +++++++++
+ applets/clock/clock.h                              |   41 +
+ applets/clock/clock.schemas.in                     |  313 +
+ applets/clock/clock.ui                             | 1136 +++
+ ....mate.panel.ClockApplet.mate-panel-applet.in.in |   18 +
+ ...mate.panel.applet.ClockAppletFactory.service.in |    3 +
+ applets/clock/pixmaps/Makefile.am                  |   21 +
+ applets/clock/pixmaps/Makefile.in                  |  537 ++
+ applets/clock/pixmaps/clock-calendar-icon.png      |  Bin 0 -> 653 bytes
+ applets/clock/pixmaps/clock-face-large.svg         |  291 +
+ applets/clock/pixmaps/clock-face-small-day.svg     |  290 +
+ applets/clock/pixmaps/clock-face-small-evening.svg |  290 +
+ applets/clock/pixmaps/clock-face-small-morning.svg |  290 +
+ applets/clock/pixmaps/clock-face-small-night.svg   |  291 +
+ applets/clock/pixmaps/clock-face-small.svg         |  290 +
+ .../clock/pixmaps/clock-map-location-current.png   |  Bin 0 -> 379 bytes
+ .../clock/pixmaps/clock-map-location-hilight.png   |  Bin 0 -> 346 bytes
+ .../clock/pixmaps/clock-map-location-marker.png    |  Bin 0 -> 283 bytes
+ applets/clock/pixmaps/clock-map.png                |  Bin 0 -> 25244 bytes
+ applets/clock/pixmaps/clock-map.svg                |  755 ++
+ applets/clock/set-timezone.c                       |  291 +
+ applets/clock/set-timezone.h                       |   40 +
+ applets/clock/system-timezone.c                    | 1048 +++
+ applets/clock/system-timezone.h                    |   87 +
+ applets/clock/test-system-timezone.c               |  122 +
+ applets/fish/Makefile.am                           |  111 +
+ applets/fish/fish-menu.xml                         |    4 +
+ applets/fish/fish.c                                | 2012 +++++
+ applets/fish/fish.schemas.in                       |   91 +
+ applets/fish/fish.ui                               |  444 ++
+ applets/fish/fishanim.png                          |  Bin 0 -> 4859 bytes
+ applets/fish/footguy.png                           |  Bin 0 -> 176 bytes
+ applets/fish/monkey.png                            |  Bin 0 -> 5063 bytes
+ applets/fish/nyan.png                              |  Bin 0 -> 1211 bytes
+ applets/fish/oldwanda.png                          |  Bin 0 -> 12996 bytes
+ ...g.mate.panel.FishApplet.mate-panel-applet.in.in |   17 +
+ ....mate.panel.applet.FishAppletFactory.service.in |    3 +
+ applets/fish/wanda.png                             |  Bin 0 -> 13683 bytes
+ applets/fish/wanda.svg                             | 3724 +++++++++
+ applets/notification_area/Makefile.am              |  112 +
+ applets/notification_area/Makefile.in              |  964 +++
+ applets/notification_area/fixedtip.c               |  269 +
+ applets/notification_area/fixedtip.h               |   72 +
+ applets/notification_area/main.c                   |  267 +
+ applets/notification_area/na-marshal.c             |  167 +
+ applets/notification_area/na-marshal.h             |   36 +
+ applets/notification_area/na-marshal.list          |    3 +
+ applets/notification_area/na-tray-child.c          |  539 ++
+ applets/notification_area/na-tray-child.h          |   75 +
+ applets/notification_area/na-tray-manager.c        |  859 +++
+ applets/notification_area/na-tray-manager.h        |  101 +
+ applets/notification_area/na-tray.c                |  837 ++
+ applets/notification_area/na-tray.h                |   71 +
+ .../notification_area/notification-area-menu.xml   |    3 +
+ ....NotificationAreaApplet.mate-panel-applet.in.in |   17 +
+ ...applet.NotificationAreaAppletFactory.service.in |    3 +
+ applets/notification_area/testtray.c               |  220 +
+ applets/wncklet/Makefile.am                        |  115 +
+ applets/wncklet/Makefile.in                        | 1075 +++
+ .../org.mate.panel.Wncklet.mate-panel-applet.in.in |   50 +
+ ...org.mate.panel.applet.WnckletFactory.service.in |    3 +
+ applets/wncklet/showdesktop-menu.xml               |    3 +
+ applets/wncklet/showdesktop.c                      |  533 ++
+ applets/wncklet/showdesktop.h                      |   42 +
+ applets/wncklet/window-list-menu.xml               |    4 +
+ applets/wncklet/window-list.c                      |  749 ++
+ applets/wncklet/window-list.h                      |   25 +
+ applets/wncklet/window-list.schemas.in             |   77 +
+ applets/wncklet/window-list.ui                     |  443 ++
+ applets/wncklet/window-menu-menu.xml               |    3 +
+ applets/wncklet/window-menu.c                      |  269 +
+ applets/wncklet/window-menu.h                      |   45 +
+ applets/wncklet/wncklet.c                          |  144 +
+ applets/wncklet/wncklet.h                          |   48 +
+ applets/wncklet/workspace-switcher-menu.xml        |    6 +
+ applets/wncklet/workspace-switcher.c               |  932 +++
+ applets/wncklet/workspace-switcher.h               |   25 +
+ applets/wncklet/workspace-switcher.schemas.in      |   52 +
+ applets/wncklet/workspace-switcher.ui              |  323 +
+ autogen.sh                                         |   25 +
+ configure.ac                                       |  445 ++
+ distro/archlinux/PKGBUILD                          |   39 +
+ distro/archlinux/mate-panel.install                |   31 +
+ distro/ubuntu/build                                |   31 +
+ distro/ubuntu/postinst                             |   15 +
+ distro/ubuntu/postrm                               |    8 +
+ distro/ubuntu/preinst                              |    7 +
+ distro/ubuntu/prerm                                |   16 +
+ doc/Makefile.am                                    |    7 +
+ doc/Makefile.in                                    |  676 ++
+ doc/panel-keynav.txt                               |   84 +
+ doc/panel-session-handling.txt                     |  250 +
+ doc/reference/Makefile.am                          |    3 +
+ doc/reference/Makefile.in                          |  672 ++
+ doc/reference/mate-panel-applet/Makefile.am        |   68 +
+ doc/reference/mate-panel-applet/Makefile.in        |  804 ++
+ .../mate-panel-applet/html/applet-popups.html      |   31 +
+ .../mate-panel-applet/html/applet-porting.html     |  207 +
+ .../mate-panel-applet/html/applet-writing.html     |   93 +
+ doc/reference/mate-panel-applet/html/home.png      |  Bin 0 -> 654 bytes
+ doc/reference/mate-panel-applet/html/index.html    |   64 +
+ doc/reference/mate-panel-applet/html/index.sgml    |   69 +
+ doc/reference/mate-panel-applet/html/left.png      |  Bin 0 -> 459 bytes
+ ...nel-applet-Panel-Applet-MateConf-Utilities.html |  655 ++
+ .../html/mate-panel-applet-mate-panel-applet.html  |  948 +++
+ .../html/mate-panel-applet.devhelp                 |   68 +
+ .../html/mate-panel-applet.devhelp2                |   75 +
+ .../mate-panel-applet/html/mate-panel-applet.html  |   38 +
+ .../mate-panel-applet/html/multi-applets.html      |   31 +
+ .../mate-panel-applet/html/panel-signals.html      |   31 +
+ doc/reference/mate-panel-applet/html/right.png     |  Bin 0 -> 472 bytes
+ .../mate-panel-applet/html/server-files.html       |   67 +
+ .../mate-panel-applet/html/session-saving.html     |   31 +
+ doc/reference/mate-panel-applet/html/style.css     |  265 +
+ doc/reference/mate-panel-applet/html/up.png        |  Bin 0 -> 406 bytes
+ .../mate-panel-applet/mate-panel-applet-docs.sgml  |  385 +
+ .../mate-panel-applet-sections.txt                 |   67 +
+ .../mate-panel-applet/mate-panel-applet.types      |    3 +
+ .../tmpl/mate-panel-applet-mateconf.sgml           |  263 +
+ .../tmpl/mate-panel-applet-unused.sgml             |  109 +
+ .../mate-panel-applet/tmpl/mate-panel-applet.sgml  |  393 +
+ help/Makefile.am                                   |    3 +
+ help/Makefile.in                                   |  672 ++
+ help/clock/C/figures/clock_applet.png              |  Bin 0 -> 406 bytes
+ help/clock/C/legal.xml                             |   64 +
+ help/clock/C/mate-applet-clock.xml                 |  466 ++
+ help/clock/Makefile.am                             |    9 +
+ help/clock/Makefile.in                             | 1030 +++
+ help/clock/ar/ar.po                                |  377 +
+ help/clock/ar/figures/clock_applet.png             |  Bin 0 -> 2312 bytes
+ help/clock/ca/ca.po                                |  373 +
+ help/clock/ca/figures/clock_applet.png             |  Bin 0 -> 1207 bytes
+ help/clock/cs/cs.po                                |  672 ++
+ help/clock/cs/figures/clock_applet.png             |  Bin 0 -> 879 bytes
+ help/clock/da/da.po                                |  716 ++
+ help/clock/de/de.po                                |  694 ++
+ help/clock/de/figures/clock_applet.png             |  Bin 0 -> 1398 bytes
+ help/clock/el/el.po                                |  597 ++
+ help/clock/el/figures/clock_applet.png             |  Bin 0 -> 2160 bytes
+ help/clock/en_GB/en_GB.po                          |  541 ++
+ help/clock/es/es.po                                |  742 ++
+ help/clock/es/figures/clock_applet.png             |  Bin 0 -> 1795 bytes
+ help/clock/eu/eu.po                                |  375 +
+ help/clock/eu/figures/clock_applet.png             |  Bin 0 -> 1274 bytes
+ help/clock/fi/fi.po                                |  420 ++
+ help/clock/fr/figures/clock_applet.png             |  Bin 0 -> 1341 bytes
+ help/clock/fr/fr.po                                |  685 ++
+ help/clock/it/figures/clock_applet.png             |  Bin 0 -> 1574 bytes
+ help/clock/it/it.po                                |  374 +
+ help/clock/ja/figures/clock_applet.png             |  Bin 0 -> 1589 bytes
+ help/clock/ja/ja.po                                |  696 ++
+ help/clock/ko/figures/clock_applet.png             |  Bin 0 -> 418 bytes
+ help/clock/ko/ko.po                                |  529 ++
+ help/clock/mate-applet-clock.omf.in                |   11 +
+ help/clock/nl/figures/clock_applet.png             |  Bin 0 -> 406 bytes
+ help/clock/nl/nl.po                                |  957 +++
+ help/clock/oc/oc.po                                |  466 ++
+ help/clock/pa/pa.po                                |  486 ++
+ help/clock/pt/pt.po                                |  547 ++
+ help/clock/pt_BR/pt_BR.po                          |  545 ++
+ help/clock/ru/ru.po                                |  427 ++
+ help/clock/sr/figures/clock_applet.png             |  Bin 0 -> 1058 bytes
+ help/clock/sr/sr.po                                |  539 ++
+ help/clock/sv/figures/clock_applet.png             |  Bin 0 -> 399 bytes
+ help/clock/sv/sv.po                                |  394 +
+ help/clock/th/figures/clock_applet.png             |  Bin 0 -> 1235 bytes
+ help/clock/th/th.po                                |  414 +
+ help/clock/uk/figures/clock_applet.png             |  Bin 0 -> 1923 bytes
+ help/clock/uk/uk.po                                |  538 ++
+ help/clock/zh_CN/figures/clock_applet.png          |  Bin 0 -> 1444 bytes
+ help/clock/zh_CN/zh_CN.po                          |  676 ++
+ help/clock/zh_HK/zh_HK.po                          |  659 ++
+ help/clock/zh_TW/figures/clock_applet.png          |  Bin 0 -> 429 bytes
+ help/clock/zh_TW/zh_TW.po                          |  702 ++
+ help/fish/C/figures/fish_applet.png                |  Bin 0 -> 5818 bytes
+ help/fish/C/legal.xml                              |   76 +
+ help/fish/C/mate-applet-fish.xml                   |  265 +
+ help/fish/Makefile.am                              |    9 +
+ help/fish/Makefile.in                              | 1030 +++
+ help/fish/ca/ca.po                                 |  269 +
+ help/fish/cs/cs.po                                 |  453 ++
+ help/fish/de/de.po                                 |  463 ++
+ help/fish/el/el.po                                 |  364 +
+ help/fish/en_GB/en_GB.po                           |  409 +
+ help/fish/es/es.po                                 |  464 ++
+ help/fish/eu/eu.po                                 |  271 +
+ help/fish/fi/fi.po                                 |  316 +
+ help/fish/fr/fr.po                                 |  446 ++
+ help/fish/it/it.po                                 |  457 ++
+ help/fish/ja/ja.po                                 |  433 ++
+ help/fish/ko/figures/fish_applet.png               |  Bin 0 -> 5818 bytes
+ help/fish/ko/ko.po                                 |  396 +
+ help/fish/mate-applet-fish.omf.in                  |   11 +
+ help/fish/oc/oc.po                                 |  348 +
+ help/fish/ru/ru.po                                 |  405 +
+ help/fish/sv/sv.po                                 |  284 +
+ help/fish/th/th.po                                 |  394 +
+ help/fish/uk/figures/fish_applet.png               |  Bin 0 -> 5818 bytes
+ help/fish/uk/uk.po                                 |  405 +
+ help/fish/zh_CN/zh_CN.po                           |  421 ++
+ icons/16x16/Makefile.am                            |   48 +
+ icons/16x16/Makefile.in                            |  564 ++
+ icons/16x16/mate-panel-clock.png                   |  Bin 0 -> 887 bytes
+ icons/16x16/mate-panel-clock.xcf.bz2               |  Bin 0 -> 1399 bytes
+ icons/16x16/mate-panel-drawer.png                  |  Bin 0 -> 444 bytes
+ icons/16x16/mate-panel-drawer.svg                  |  297 +
+ icons/16x16/mate-panel-fish.png                    |  Bin 0 -> 740 bytes
+ icons/16x16/mate-panel-fish.xcf.bz2                |  Bin 0 -> 1450 bytes
+ icons/16x16/mate-panel-force-quit.png              |  Bin 0 -> 711 bytes
+ icons/16x16/mate-panel-force-quit.svg              |  144 +
+ icons/16x16/mate-panel-launcher.png                |  Bin 0 -> 571 bytes
+ icons/16x16/mate-panel-launcher.svg                |  488 ++
+ icons/16x16/mate-panel-notification-area.png       |  Bin 0 -> 812 bytes
+ icons/16x16/mate-panel-notification-area.svg       |  285 +
+ icons/16x16/mate-panel-separator.png               |  Bin 0 -> 160 bytes
+ icons/16x16/mate-panel-separator.svg               |  105 +
+ icons/16x16/mate-panel-window-list.png             |  Bin 0 -> 390 bytes
+ icons/16x16/mate-panel-window-list.xcf.bz2         |  Bin 0 -> 657 bytes
+ icons/16x16/mate-panel-window-menu.png             |  Bin 0 -> 545 bytes
+ icons/16x16/mate-panel-window-menu.xcf.bz2         |  Bin 0 -> 900 bytes
+ icons/16x16/mate-panel-workspace-switcher.png      |  Bin 0 -> 400 bytes
+ icons/16x16/mate-panel-workspace-switcher.svg      |  186 +
+ icons/16x16/mate-panel.png                         |  Bin 0 -> 354 bytes
+ icons/16x16/mate-panel.svg                         |  231 +
+ icons/22x22/Makefile.am                            |   48 +
+ icons/22x22/Makefile.in                            |  564 ++
+ icons/22x22/mate-panel-clock.png                   |  Bin 0 -> 1459 bytes
+ icons/22x22/mate-panel-clock.svg                   |  268 +
+ icons/22x22/mate-panel-drawer.png                  |  Bin 0 -> 718 bytes
+ icons/22x22/mate-panel-drawer.svg                  |  352 +
+ icons/22x22/mate-panel-fish.png                    |  Bin 0 -> 1461 bytes
+ icons/22x22/mate-panel-fish.xcf.bz2                |  Bin 0 -> 2617 bytes
+ icons/22x22/mate-panel-force-quit.png              |  Bin 0 -> 1018 bytes
+ icons/22x22/mate-panel-force-quit.xcf.bz2          |  Bin 0 -> 1598 bytes
+ icons/22x22/mate-panel-launcher.png                |  Bin 0 -> 955 bytes
+ icons/22x22/mate-panel-launcher.svg                |  788 ++
+ icons/22x22/mate-panel-notification-area.png       |  Bin 0 -> 1267 bytes
+ icons/22x22/mate-panel-notification-area.svg       |  292 +
+ icons/22x22/mate-panel-separator.png               |  Bin 0 -> 165 bytes
+ icons/22x22/mate-panel-separator.svg               |  105 +
+ icons/22x22/mate-panel-window-list.png             |  Bin 0 -> 609 bytes
+ icons/22x22/mate-panel-window-list.xcf.bz2         |  Bin 0 -> 1174 bytes
+ icons/22x22/mate-panel-window-menu.png             |  Bin 0 -> 701 bytes
+ icons/22x22/mate-panel-window-menu.xcf.bz2         |  Bin 0 -> 1485 bytes
+ icons/22x22/mate-panel-workspace-switcher.png      |  Bin 0 -> 537 bytes
+ icons/22x22/mate-panel-workspace-switcher.svg      |  186 +
+ icons/22x22/mate-panel.png                         |  Bin 0 -> 394 bytes
+ icons/22x22/mate-panel.svg                         |  230 +
+ icons/24x24/Makefile.am                            |   34 +
+ icons/24x24/Makefile.in                            |  550 ++
+ icons/24x24/mate-panel-clock.png                   |  Bin 0 -> 1510 bytes
+ icons/24x24/mate-panel-drawer.png                  |  Bin 0 -> 715 bytes
+ icons/24x24/mate-panel-fish.png                    |  Bin 0 -> 1475 bytes
+ icons/24x24/mate-panel-force-quit.png              |  Bin 0 -> 1045 bytes
+ icons/24x24/mate-panel-launcher.png                |  Bin 0 -> 1023 bytes
+ icons/24x24/mate-panel-notification-area.png       |  Bin 0 -> 1318 bytes
+ icons/24x24/mate-panel-separator.png               |  Bin 0 -> 191 bytes
+ icons/24x24/mate-panel-window-list.png             |  Bin 0 -> 649 bytes
+ icons/24x24/mate-panel-window-menu.png             |  Bin 0 -> 733 bytes
+ icons/24x24/mate-panel-workspace-switcher.png      |  Bin 0 -> 560 bytes
+ icons/24x24/mate-panel.png                         |  Bin 0 -> 430 bytes
+ icons/32x32/Makefile.am                            |   48 +
+ icons/32x32/Makefile.in                            |  564 ++
+ icons/32x32/mate-panel-clock.png                   |  Bin 0 -> 2177 bytes
+ icons/32x32/mate-panel-clock.svg                   |  291 +
+ icons/32x32/mate-panel-drawer.png                  |  Bin 0 -> 865 bytes
+ icons/32x32/mate-panel-drawer.svg                  |  486 ++
+ icons/32x32/mate-panel-fish.png                    |  Bin 0 -> 1785 bytes
+ icons/32x32/mate-panel-fish.svg                    |  656 ++
+ icons/32x32/mate-panel-force-quit.png              |  Bin 0 -> 1588 bytes
+ icons/32x32/mate-panel-force-quit.svg              |  362 +
+ icons/32x32/mate-panel-launcher.png                |  Bin 0 -> 1777 bytes
+ icons/32x32/mate-panel-launcher.svg                |  710 ++
+ icons/32x32/mate-panel-notification-area.png       |  Bin 0 -> 1712 bytes
+ icons/32x32/mate-panel-notification-area.svg       |  291 +
+ icons/32x32/mate-panel-separator.png               |  Bin 0 -> 176 bytes
+ icons/32x32/mate-panel-separator.svg               |  105 +
+ icons/32x32/mate-panel-window-list.png             |  Bin 0 -> 723 bytes
+ icons/32x32/mate-panel-window-list.svg             |  170 +
+ icons/32x32/mate-panel-window-menu.png             |  Bin 0 -> 830 bytes
+ icons/32x32/mate-panel-window-menu.svg             |  368 +
+ icons/32x32/mate-panel-workspace-switcher.png      |  Bin 0 -> 706 bytes
+ icons/32x32/mate-panel-workspace-switcher.svg      |  452 ++
+ icons/32x32/mate-panel.png                         |  Bin 0 -> 1070 bytes
+ icons/32x32/mate-panel.svg                         |  202 +
+ icons/48x48/Makefile.am                            |   28 +
+ icons/48x48/Makefile.in                            |  544 ++
+ icons/48x48/mate-panel.png                         |  Bin 0 -> 1523 bytes
+ icons/48x48/mate-panel.svg                         |  274 +
+ icons/Makefile.am                                  |   10 +
+ icons/Makefile.in                                  |  725 ++
+ icons/mate-gegl2-2.png                             |  Bin 0 -> 10394 bytes
+ icons/mate-gegl2.png                               |  Bin 0 -> 8359 bytes
+ icons/scalable/Makefile.am                         |   34 +
+ icons/scalable/Makefile.in                         |  550 ++
+ icons/scalable/mate-panel-clock.svg                |  450 ++
+ icons/scalable/mate-panel-drawer.svg               |  819 ++
+ icons/scalable/mate-panel-fish.svg                 |  658 ++
+ icons/scalable/mate-panel-force-quit.svg           |  347 +
+ icons/scalable/mate-panel-launcher.svg             |  724 ++
+ icons/scalable/mate-panel-notification-area.svg    |  289 +
+ icons/scalable/mate-panel-separator.svg            |  105 +
+ icons/scalable/mate-panel-window-list.svg          |  324 +
+ icons/scalable/mate-panel-window-menu.svg          |  371 +
+ icons/scalable/mate-panel-workspace-switcher.svg   |  361 +
+ icons/scalable/mate-panel.svg                      |  274 +
+ libmate-panel-applet/Makefile.am                   |  143 +
+ libmate-panel-applet/Makefile.in                   |  921 +++
+ libmate-panel-applet/TODO                          |   14 +
+ .../libmatepanelapplet-3.0-uninstalled.pc.in       |   11 +
+ libmate-panel-applet/libmatepanelapplet-3.0.pc.in  |   11 +
+ libmate-panel-applet/mate-panel-applet-factory.c   |  263 +
+ libmate-panel-applet/mate-panel-applet-factory.h   |   57 +
+ .../mate-panel-applet-marshal.list                 |    5 +
+ libmate-panel-applet/mate-panel-applet-mateconf.c  |  457 ++
+ libmate-panel-applet/mate-panel-applet-mateconf.h  |   90 +
+ libmate-panel-applet/mate-panel-applet.c           | 2315 ++++++
+ libmate-panel-applet/mate-panel-applet.h           |  184 +
+ .../org.mate.panel.TestApplet.mate-panel-applet.in |   10 +
+ libmate-panel-applet/test-dbus-applet.c            |  211 +
+ m4/d-type.m4                                       |   49 +
+ man/Makefile.am                                    |    5 +
+ man/Makefile.in                                    |  553 ++
+ man/mate-panel.1                                   |   27 +
+ mate-panel/Makefile.am                             |  290 +
+ mate-panel/Makefile.in                             | 2222 ++++++
+ mate-panel/applet.c                                | 1449 ++++
+ mate-panel/applet.h                                |  119 +
+ mate-panel/button-widget.c                         |  902 +++
+ mate-panel/button-widget.h                         |   60 +
+ mate-panel/drawer.c                                |  806 ++
+ mate-panel/drawer.h                                |   52 +
+ mate-panel/launcher.c                              | 1114 +++
+ mate-panel/launcher.h                              |   80 +
+ mate-panel/libegg/Makefile.am                      |   25 +
+ mate-panel/libegg/Makefile.in                      |  622 ++
+ mate-panel/libegg/eggdesktopfile.c                 | 1510 ++++
+ mate-panel/libegg/eggdesktopfile.h                 |  164 +
+ mate-panel/libegg/eggsmclient-private.h            |   57 +
+ mate-panel/libegg/eggsmclient-xsmp.c               | 1370 ++++
+ mate-panel/libegg/eggsmclient.c                    |  604 ++
+ mate-panel/libegg/eggsmclient.h                    |  121 +
+ .../libmate-panel-applet-private/Makefile.am       |   34 +
+ .../libmate-panel-applet-private/Makefile.in       |  644 ++
+ .../mate-panel-applet-container.c                  |  790 ++
+ .../mate-panel-applet-container.h                  |  118 +
+ .../mate-panel-applet-frame-dbus.c                 |  468 ++
+ .../mate-panel-applet-frame-dbus.h                 |   65 +
+ .../mate-panel-applet-mini.c                       |    5 +
+ .../mate-panel-applets-manager-dbus.c              |  604 ++
+ .../mate-panel-applets-manager-dbus.h              |   60 +
+ mate-panel/libpanel-util/Makefile.am               |   39 +
+ mate-panel/libpanel-util/Makefile.in               |  647 ++
+ mate-panel/libpanel-util/panel-cleanup.c           |  110 +
+ mate-panel/libpanel-util/panel-cleanup.h           |   51 +
+ mate-panel/libpanel-util/panel-dbus-service.c      |  307 +
+ mate-panel/libpanel-util/panel-dbus-service.h      |   78 +
+ mate-panel/libpanel-util/panel-error.c             |   96 +
+ mate-panel/libpanel-util/panel-error.h             |   49 +
+ mate-panel/libpanel-util/panel-glib.c              |  164 +
+ mate-panel/libpanel-util/panel-glib.h              |   46 +
+ mate-panel/libpanel-util/panel-gtk.c               |   83 +
+ mate-panel/libpanel-util/panel-gtk.h               |   42 +
+ mate-panel/libpanel-util/panel-icon-chooser.c      |  555 ++
+ mate-panel/libpanel-util/panel-icon-chooser.h      |   79 +
+ mate-panel/libpanel-util/panel-keyfile.c           |  363 +
+ mate-panel/libpanel-util/panel-keyfile.h           |   79 +
+ mate-panel/libpanel-util/panel-launch.c            |  234 +
+ mate-panel/libpanel-util/panel-launch.h            |   65 +
+ mate-panel/libpanel-util/panel-list.c              |  212 +
+ mate-panel/libpanel-util/panel-list.h              |   56 +
+ mate-panel/libpanel-util/panel-session-manager.c   |  192 +
+ mate-panel/libpanel-util/panel-session-manager.h   |   75 +
+ mate-panel/libpanel-util/panel-show.c              |  283 +
+ mate-panel/libpanel-util/panel-show.h              |   54 +
+ mate-panel/libpanel-util/panel-xdg.c               |  152 +
+ mate-panel/libpanel-util/panel-xdg.h               |   43 +
+ mate-panel/main.c                                  |  153 +
+ mate-panel/mate-desktop-item-edit.c                |  225 +
+ mate-panel/mate-panel-add.in                       |  325 +
+ mate-panel/mate-panel-applet-frame.c               | 1002 +++
+ mate-panel/mate-panel-applet-frame.h               |  146 +
+ mate-panel/mate-panel-applet-info.c                |  113 +
+ mate-panel/mate-panel-applet-info.h                |   51 +
+ mate-panel/mate-panel-applets-manager.c            |  201 +
+ mate-panel/mate-panel-applets-manager.h            |   94 +
+ mate-panel/mate-panel.desktop.in.in                |   19 +
+ mate-panel/mate-panelrc                            |    4 +
+ mate-panel/menu.c                                  | 1914 +++++
+ mate-panel/menu.h                                  |   80 +
+ mate-panel/nothing.cP                              | 1568 ++++
+ mate-panel/nothing.h                               |   22 +
+ mate-panel/panel-a11y.c                            |  135 +
+ mate-panel/panel-a11y.h                            |   43 +
+ mate-panel/panel-action-button.c                   |  907 +++
+ mate-panel/panel-action-button.h                   |  103 +
+ mate-panel/panel-action-protocol.c                 |  158 +
+ mate-panel/panel-action-protocol.h                 |   40 +
+ mate-panel/panel-addto.c                           | 1428 ++++
+ mate-panel/panel-addto.h                           |   39 +
+ mate-panel/panel-background-monitor.c              |  440 ++
+ mate-panel/panel-background-monitor.h              |   60 +
+ mate-panel/panel-background.c                      | 1156 +++
+ mate-panel/panel-background.h                      |  133 +
+ mate-panel/panel-bindings.c                        |  303 +
+ mate-panel/panel-bindings.h                        |   42 +
+ mate-panel/panel-compatibility.c                   | 1167 +++
+ mate-panel/panel-compatibility.h                   |   48 +
+ mate-panel/panel-compatibility.schemas             |  546 ++
+ mate-panel/panel-config-global.c                   |  153 +
+ mate-panel/panel-config-global.h                   |   47 +
+ mate-panel/panel-context-menu.c                    |  307 +
+ mate-panel/panel-context-menu.h                    |   33 +
+ mate-panel/panel-default-setup.entries             |  657 ++
+ mate-panel/panel-ditem-editor.c                    | 1804 +++++
+ mate-panel/panel-ditem-editor.h                    |  115 +
+ mate-panel/panel-enums.h                           |  110 +
+ mate-panel/panel-force-quit.c                      |  316 +
+ mate-panel/panel-force-quit.h                      |   41 +
+ mate-panel/panel-frame.c                           |  328 +
+ mate-panel/panel-frame.h                           |   69 +
+ mate-panel/panel-general.schemas.in                |  127 +
+ mate-panel/panel-global.schemas.in                 |  276 +
+ mate-panel/panel-globals.h                         |   41 +
+ mate-panel/panel-icon-names.h                      |   40 +
+ mate-panel/panel-lockdown.c                        |  442 ++
+ mate-panel/panel-lockdown.h                        |   55 +
+ mate-panel/panel-marshal.list                      |    3 +
+ mate-panel/panel-mateconf.c                        |  351 +
+ mate-panel/panel-mateconf.h                        |   76 +
+ mate-panel/panel-menu-bar.c                        |  474 ++
+ mate-panel/panel-menu-bar.h                        |   83 +
+ mate-panel/panel-menu-button.c                     | 1194 +++
+ mate-panel/panel-menu-button.h                     |   98 +
+ mate-panel/panel-menu-items.c                      | 1618 ++++
+ mate-panel/panel-menu-items.h                      |   99 +
+ mate-panel/panel-modules.c                         |   86 +
+ mate-panel/panel-modules.h                         |   30 +
+ mate-panel/panel-multiscreen.c                     |  784 ++
+ mate-panel/panel-multiscreen.h                     |   58 +
+ mate-panel/panel-object.schemas.in                 |  247 +
+ mate-panel/panel-profile.c                         | 2647 +++++++
+ mate-panel/panel-profile.h                         |  188 +
+ mate-panel/panel-properties-dialog.c               |  999 +++
+ mate-panel/panel-properties-dialog.h               |   40 +
+ mate-panel/panel-properties-dialog.ui              |  769 ++
+ mate-panel/panel-recent.c                          |  243 +
+ mate-panel/panel-recent.h                          |   41 +
+ mate-panel/panel-reset.c                           |   46 +
+ mate-panel/panel-reset.h                           |   37 +
+ mate-panel/panel-run-dialog.c                      | 2041 +++++
+ mate-panel/panel-run-dialog.h                      |   41 +
+ mate-panel/panel-run-dialog.ui                     |  270 +
+ mate-panel/panel-separator.c                       |  250 +
+ mate-panel/panel-separator.h                       |   71 +
+ mate-panel/panel-session.c                         |   80 +
+ mate-panel/panel-session.h                         |   39 +
+ mate-panel/panel-shell.c                           |  164 +
+ mate-panel/panel-shell.h                           |   37 +
+ mate-panel/panel-stock-icons.c                     |  141 +
+ mate-panel/panel-stock-icons.h                     |   60 +
+ mate-panel/panel-struts.c                          |  516 ++
+ mate-panel/panel-struts.h                          |   56 +
+ mate-panel/panel-test-applets.c                    |  388 +
+ mate-panel/panel-test-applets.ui                   |  203 +
+ mate-panel/panel-toplevel.c                        | 5298 +++++++++++++
+ mate-panel/panel-toplevel.h                        |  179 +
+ mate-panel/panel-toplevel.schemas.in               |  434 ++
+ mate-panel/panel-types.h                           |   19 +
+ mate-panel/panel-util.c                            | 1210 +++
+ mate-panel/panel-util.h                            |   72 +
+ mate-panel/panel-widget.c                          | 3010 ++++++++
+ mate-panel/panel-widget.h                          |  242 +
+ mate-panel/panel-xutils.c                          |  258 +
+ mate-panel/panel-xutils.h                          |   64 +
+ mate-panel/panel.c                                 | 1403 ++++
+ mate-panel/panel.h                                 |   57 +
+ mate-panel/xstuff.c                                |  736 ++
+ mate-panel/xstuff.h                                |   39 +
+ matecomponent/Makefile.am                          |    3 +
+ matecomponent/Makefile.in                          |  672 ++
+ matecomponent/idl/MATE_Panel.idl                   |   51 +
+ matecomponent/idl/Makefile.am                      |    6 +
+ matecomponent/idl/Makefile.in                      |  520 ++
+ .../MATE_Panel_TestApplet.server.in                |   31 +
+ matecomponent/libmate-panel-applet/Makefile.am     |  129 +
+ matecomponent/libmate-panel-applet/Makefile.in     |  952 +++
+ matecomponent/libmate-panel-applet/TODO            |   14 +
+ .../libmatepanelapplet-2.0-uninstalled.pc.in       |   11 +
+ .../libmatepanelapplet-2.0.pc.in                   |   11 +
+ .../mate-panel-applet-marshal.list                 |    5 +
+ .../mate-panel-applet-mateconf.c                   |  458 ++
+ .../mate-panel-applet-mateconf.h                   |   90 +
+ .../mate-panel-applet-private.h                    |   40 +
+ .../libmate-panel-applet/mate-panel-applet-shell.c |  105 +
+ .../libmate-panel-applet/mate-panel-applet-shell.h |   62 +
+ .../libmate-panel-applet/mate-panel-applet.c       | 1879 +++++
+ .../libmate-panel-applet/mate-panel-applet.h       |  258 +
+ .../panel-test-applets-matecomponent.c             |  349 +
+ .../panel-test-applets-matecomponent.ui            |  203 +
+ .../test-matecomponent-applet.c                    |  204 +
+ matecomponent/panel-module/MATE_Panel_Popup.xml    |   20 +
+ matecomponent/panel-module/Makefile.am             |   51 +
+ matecomponent/panel-module/Makefile.in             |  786 ++
+ .../mate-panel-applet-frame-matecomponent.c        |  759 ++
+ .../mate-panel-applet-frame-matecomponent.h        |   65 +
+ .../mate-panel-applets-manager-matecomponent.c     |  250 +
+ .../mate-panel-applets-manager-matecomponent.h     |   59 +
+ .../mate-panel-applets-matecomponent-module.c      |   48 +
+ po/LINGUAS                                         |  109 +
+ po/Makefile.in.in                                  |  217 +
+ po/POTFILES.in                                     |   80 +
+ po/POTFILES.skip                                   |    7 +
+ po/af.po                                           | 4154 ++++++++++
+ po/am.po                                           | 3084 ++++++++
+ po/ar.po                                           | 3411 +++++++++
+ po/as.po                                           | 3490 +++++++++
+ po/ast.po                                          | 3438 +++++++++
+ po/az.po                                           | 2979 ++++++++
+ po/be.po                                           | 3606 +++++++++
+ po/be@latin.po                                     | 3531 +++++++++
+ po/bg.po                                           | 3289 ++++++++
+ po/bn.po                                           | 3320 ++++++++
+ po/bn_IN.po                                        | 3264 ++++++++
+ po/br.po                                           | 2963 ++++++++
+ po/bs.po                                           | 3005 ++++++++
+ po/ca.po                                           | 7962 ++++++++++++++++++++
+ po/ca@valencia.po                                  | 7944 +++++++++++++++++++
+ po/crh.po                                          | 3443 +++++++++
+ po/cs.po                                           | 3268 ++++++++
+ po/cy.po                                           | 3750 +++++++++
+ po/da.po                                           | 5305 +++++++++++++
+ po/de.po                                           | 3527 +++++++++
+ po/dz.po                                           | 3076 ++++++++
+ po/el.po                                           | 3503 +++++++++
+ po/en@shaw.po                                      | 3277 ++++++++
+ po/en_CA.po                                        | 2854 +++++++
+ po/en_GB.po                                        | 3746 +++++++++
+ po/eo.po                                           | 3443 +++++++++
+ po/es.po                                           | 3605 +++++++++
+ po/et.po                                           | 2644 +++++++
+ po/eu.po                                           | 3332 ++++++++
+ po/fa.po                                           | 3805 ++++++++++
+ po/fi.po                                           | 3897 ++++++++++
+ po/fr.po                                           | 3365 +++++++++
+ po/fur.po                                          | 3385 +++++++++
+ po/fy.po                                           | 3059 ++++++++
+ po/ga.po                                           | 3054 ++++++++
+ po/gl.po                                           | 3340 ++++++++
+ po/gu.po                                           | 3246 ++++++++
+ po/gv.po                                           | 3395 +++++++++
+ po/ha.po                                           | 3544 +++++++++
+ po/he.po                                           | 3434 +++++++++
+ po/hi.po                                           | 3244 ++++++++
+ po/hr.po                                           | 3335 ++++++++
+ po/hu.po                                           | 3293 ++++++++
+ po/hy.po                                           | 3231 ++++++++
+ po/id.po                                           | 3300 ++++++++
+ po/ig.po                                           | 3493 +++++++++
+ po/is.po                                           | 3332 ++++++++
+ po/it.po                                           | 3447 +++++++++
+ po/ja.po                                           | 3346 ++++++++
+ po/ka.po                                           | 3422 +++++++++
+ po/kk.po                                           | 2809 +++++++
+ po/kn.po                                           | 3327 ++++++++
+ po/ko.po                                           | 3221 ++++++++
+ po/ku.po                                           | 2996 ++++++++
+ po/ky.po                                           | 2624 +++++++
+ po/la.po                                           | 3014 ++++++++
+ po/li.po                                           | 4056 ++++++++++
+ po/lt.po                                           | 3382 +++++++++
+ po/lv.po                                           | 3442 +++++++++
+ po/mai.po                                          | 3162 ++++++++
+ po/mg.po                                           | 3826 ++++++++++
+ po/mi.po                                           | 2506 ++++++
+ po/mk.po                                           | 3358 +++++++++
+ po/ml.po                                           | 3276 ++++++++
+ po/mn.po                                           | 2852 +++++++
+ po/mr.po                                           | 3220 ++++++++
+ po/ms.po                                           | 3851 ++++++++++
+ po/nb.po                                           | 3278 ++++++++
+ po/nds.po                                          | 2993 ++++++++
+ po/ne.po                                           | 3024 ++++++++
+ po/nl.po                                           | 3705 +++++++++
+ po/nn.po                                           | 3691 +++++++++
+ po/nso.po                                          | 3125 ++++++++
+ po/oc.po                                           | 3165 ++++++++
+ po/or.po                                           | 3225 ++++++++
+ po/pa.po                                           | 3322 ++++++++
+ po/pl.po                                           | 3281 ++++++++
+ po/ps.po                                           | 3148 ++++++++
+ po/pt.po                                           | 4359 +++++++++++
+ po/pt_BR.po                                        | 3651 +++++++++
+ po/ro.po                                           | 3384 +++++++++
+ po/ru.po                                           | 2852 +++++++
+ po/rw.po                                           | 3037 ++++++++
+ po/si.po                                           | 2717 +++++++
+ po/sk.po                                           | 3641 +++++++++
+ po/sl.po                                           | 2859 +++++++
+ po/sq.po                                           | 3289 ++++++++
+ po/sr.po                                           | 4134 ++++++++++
+ po/sr@ije.po                                       | 3331 ++++++++
+ po/sr@latin.po                                     | 4134 ++++++++++
+ po/sv.po                                           | 2906 +++++++
+ po/ta.po                                           | 3583 +++++++++
+ po/te.po                                           | 3292 ++++++++
+ po/th.po                                           | 4245 +++++++++++
+ po/tr.po                                           | 3505 +++++++++
+ po/ug.po                                           | 3408 +++++++++
+ po/uk.po                                           | 3327 ++++++++
+ po/uz.po                                           | 2948 ++++++++
+ po/uz@cyrillic.po                                  | 2948 ++++++++
+ po/vi.po                                           | 2818 +++++++
+ po/wa.po                                           | 3731 +++++++++
+ po/xh.po                                           | 2834 +++++++
+ po/yi.po                                           | 2700 +++++++
+ po/yo.po                                           | 3496 +++++++++
+ po/zh_CN.po                                        | 3356 +++++++++
+ po/zh_HK.po                                        | 3353 +++++++++
+ po/zh_TW.po                                        | 3483 +++++++++
+ po/zu.po                                           | 3033 ++++++++
+ 656 files changed, 536681 insertions(+)
