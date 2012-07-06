@@ -317,7 +317,7 @@ clock_set_timeout (ClockData *cd,
  		struct timeval tv;
 
 		gettimeofday (&tv, NULL);
- 		timeouttime = (G_USEC_PER_SEC - tv.tv_usec)/1000+1;
+ 		timeouttime = (G_USEC_PER_SEC - tv.tv_usec)/1000+20;
 
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
