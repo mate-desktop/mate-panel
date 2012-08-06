@@ -69,8 +69,7 @@ fishbitmaps_DATA = \
 	fishanim.png \
 	oldwanda.png \
 	footguy.png \
-	monkey.png \
-	nyan.png
+	monkey.png
 
 uidir = $(datadir)/mate-panel/ui
 ui_DATA = fish.ui
