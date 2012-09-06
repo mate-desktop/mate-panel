@@ -27,6 +27,8 @@
 
 #include "calendar-client.h"
 
+#include <mateconf/mateconf-client.h>
+
 #include <libintl.h>
 #include <string.h>
 #define HANDLE_LIBICAL_MEMORY
