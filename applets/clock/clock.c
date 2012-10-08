@@ -3713,7 +3713,7 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
 		"logo-icon-name", CLOCK_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://matsusoft.com.ar/projects/mate/",
+		"website", "http://mate-desktop.org/",
 		NULL);
 }
 
