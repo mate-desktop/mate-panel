@@ -553,7 +553,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 				     "evaluation.");
 	const char* documenters [] = {
 		"Telsa Gwynne <hobbit@aloss.ukuu.org.uk>",
-		"Sun MATE Documentation Team <gdocteam@sun.com>",
+		"Sun GNOME Documentation Team <gdocteam@sun.com>",
           	NULL
 	};
 
