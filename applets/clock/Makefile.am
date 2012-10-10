@@ -14,15 +14,6 @@ libsystem_timezone_la_SOURCES = \
 	system-timezone.h
 libsystem_timezone_la_LIBADD = $(TZ_LIBS)
 
-if HAVE_LIBECAL
-CALENDAR_SOURCES =		\
-	calendar-client.c	\
-	calendar-client.h	\
-	calendar-sources.c	\
-	calendar-sources.h	\
-	calendar-debug.h
-endif
-
 CLOCK_SOURCES = 		\
 	calendar-window.c	\
 	calendar-window.h	\
@@ -42,8 +33,7 @@ CLOCK_SOURCES = 		\
 	clock-utils.h		\
 	set-timezone.c		\
 	set-timezone.h		\
-	$(BUILT_SOURCES)	\
-	$(CALENDAR_SOURCES)
+	$(BUILT_SOURCES)
 
 CLOCK_CPPFLAGS =						\
 	$(AM_CPPFLAGS)						\
@@ -55,11 +45,10 @@ CLOCK_CPPFLAGS =						\
 	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
 	-DICONDIR=\""$(datadir)/mate-panel/pixmaps"\"		\
-	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
 	-DMATEWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
 CLOCK_LDADD =						\
-	../../libmate-panel-applet/libmate-panel-applet-3.la	\
+	../../libmate-panel-applet/libmate-panel-applet-4.la	\
 	$(CLOCK_LIBS)					\
 	$(LIBMATE_PANEL_APPLET_LIBS)				\
 	libsystem-timezone.la				\
@@ -166,28 +155,13 @@ ui_DATA		= clock.ui
 xmluidir 	= $(datadir)/mate-panel/ui
 xmlui_DATA	= clock-menu.xml
 
-schemasdir       = $(MATECONF_SCHEMA_FILE_DIR)
-schemas_in_files = clock.schemas.in
-schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
-
-@INTLTOOL_SCHEMAS_RULE@
-
-if MATECONF_SCHEMAS_INSTALL
-install-data-local:
-	if test -z "$(DESTDIR)" ; then \
-		for p in $(schemas_DATA) ; do \
-			MATECONF_CONFIG_SOURCE=$(MATECONF_SCHEMA_CONFIG_SOURCE) $(MATECONFTOOL) --makefile-install-rule $(top_builddir)/applets/clock/$$p ; \
-		done \
-	fi
-uninstall-local:
-	for p in $(schema_DATA) ; do \
-		MATECONF_CONFIG_SOURCE=$(MATECONF_SCHEMA_CONFIG_SOURCE) $(MATECONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/clock/$$p ; \
-	done
-endif
+gsettings_SCHEMAS = org.mate.panel.applet.clock.gschema.xml
+@INTLTOOL_XML_NOMERGE_RULE@
+@GSETTINGS_RULES@
 
 EXTRA_DIST =						\
 	org.mate.panel.ClockApplet.mate-panel-applet.in.in	\
-	$(schemas_in_files)				\
+	$(gsettings_SCHEMAS)				\
 	$(xmlui_DATA)					\
 	$(ui_DATA)					\
 	clock-marshallers.list				\
@@ -198,7 +172,6 @@ CLEANFILES =			\
 	$(applet_DATA) 		\
 	$(applet_DATA).in	\
 	$(service_DATA)		\
-	$(schemas_DATA)		\
 	$(polkit_DATA)		\
 	$(dbus_services_DATA)
 

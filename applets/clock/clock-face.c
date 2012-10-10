@@ -289,7 +289,7 @@ update_time_and_face (ClockFace *this,
                 localtime_r (&timet, &priv->time);
         }
 
-	/* FIXME  this should be a mateconf setting
+	/* FIXME  this should be a pref in gsetting
          * Or we could use some code from clock-sun.c?
          * currently we hardcode
          * morning 7-9

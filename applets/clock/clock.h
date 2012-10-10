@@ -32,7 +32,7 @@ extern "C" {
 #endif
 
 #define CLOCK_ICON "mate-panel-clock"
-#define CLOCK_SCHEMA_DIR "/schemas/apps/clock_applet/prefs"
+#define CLOCK_SCHEMA "org.mate.panel.applet.clock"
 
 #ifdef __cplusplus
 }

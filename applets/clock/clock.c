@@ -27,6 +27,7 @@
  *      George Lebl
  *      Gediminas Paulauskas
  *      Mark McLoughlin
+ *      Stefano Karapetsas
  */
 
 #include "config.h"
@@ -42,23 +43,19 @@
 #include <locale.h>
 
 #include <mate-panel-applet.h>
-#include <mate-panel-applet-mateconf.h>
+#include <mate-panel-applet-gsettings.h>
 
 #include <glib/gi18n.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdkx.h>
-#include <mateconf/mateconf-client.h>
+#include <gio/gio.h>
 
 #include <libmateweather/mateweather-prefs.h>
 #include <libmateweather/mateweather-xml.h>
 #include <libmateweather/location-entry.h>
 #include <libmateweather/timezone-menu.h>
-
-#ifdef HAVE_LIBECAL
-#include <libedataserverui/e-passwords.h>
-#endif
 
 #include "clock.h"
 
@@ -75,26 +72,16 @@
 
 #define NEVER_SENSITIVE "never_sensitive"
 
-#define N_MATECONF_PREFS 11 /* Keep this in sync with the number of keys below! */
 #define KEY_FORMAT		"format"
-#define KEY_SHOW_SECONDS	"show_seconds"
-#define KEY_SHOW_DATE		"show_date"
-#define KEY_SHOW_WEATHER	"show_weather"
-#define KEY_SHOW_TEMPERATURE	"show_temperature"
-#define KEY_CUSTOM_FORMAT	"custom_format"
-#define KEY_SHOW_WEEK		"show_week_numbers"
+#define KEY_SHOW_SECONDS	"show-seconds"
+#define KEY_SHOW_DATE		"show-date"
+#define KEY_SHOW_WEATHER	"show-weather"
+#define KEY_SHOW_TEMPERATURE	"show-temperature"
+#define KEY_CUSTOM_FORMAT	"custom-format"
+#define KEY_SHOW_WEEK		"show-week-numbers"
 #define KEY_CITIES		"cities"
-#define KEY_TEMPERATURE_UNIT	"temperature_unit"
-#define KEY_SPEED_UNIT		"speed_unit"
-
-static MateConfEnumStringPair format_type_enum_map [] = {
-	{ CLOCK_FORMAT_12,       "12-hour"  },
-	{ CLOCK_FORMAT_24,       "24-hour"  },
-	{ CLOCK_FORMAT_UNIX,     "unix"     },
-	{ CLOCK_FORMAT_INTERNET, "internet" },
-	{ CLOCK_FORMAT_CUSTOM,   "custom"   },
-	{ 0, NULL }
-};
+#define KEY_TEMPERATURE_UNIT	"temperature-unit"
+#define KEY_SPEED_UNIT		"speed-unit"
 
 enum {
 	COL_CITY_NAME = 0,
@@ -163,8 +150,6 @@ struct _ClockData {
         gboolean     show_weather;
         gboolean     show_temperature;
 
-        gboolean     use_temperature_default;
-        gboolean     use_speed_default;
         TempUnit     temperature_unit;
         SpeedUnit    speed_unit;
 
@@ -194,7 +179,7 @@ struct _ClockData {
 
 	gboolean   can_handle_format_12;
 
-	guint listeners [N_MATECONF_PREFS];
+	GSettings *settings;
 };
 
 /* Used to count the number of clock instances. It's there to know when we
@@ -489,7 +474,8 @@ get_updated_timeformat (ClockData *cd)
 static void
 update_timeformat (ClockData *cd)
 {
-	g_free (cd->timeformat);
+	if (cd->timeformat)
+		g_free (cd->timeformat);
 	cd->timeformat = get_updated_timeformat (cd);
 }
 
@@ -671,21 +657,12 @@ update_tooltip (ClockData * cd)
                 g_free (utf8);
                 g_free (tip);
         } else {
-#ifdef HAVE_LIBECAL
-		if (cd->calendar_popup)
-			gtk_widget_set_tooltip_text (cd->panel_button,
-						     _("Click to hide your appointments and tasks"));
-		else
-			gtk_widget_set_tooltip_text (cd->panel_button,
-						     _("Click to view your appointments and tasks"));
-#else
 		if (cd->calendar_popup)
 			gtk_widget_set_tooltip_text (cd->panel_button,
 						     _("Click to hide month calendar"));
 		else
 			gtk_widget_set_tooltip_text (cd->panel_button,
 						     _("Click to view month calendar"));
-#endif
         }
 }
 
@@ -726,28 +703,23 @@ refresh_click_timeout_time_only (ClockData *cd)
 static void
 free_locations (ClockData *cd)
 {
-        GList *l;
+        if (cd->locations != NULL) {
+		GList *l;
 
-        for (l = cd->locations; l; l = l->next)
-                g_object_unref (l->data);
+		for (l = cd->locations; l; l = l->next)
+			g_object_unref (l->data);
 
-        g_list_free (cd->locations);
+		g_list_free (cd->locations);
+	}
         cd->locations = NULL;
 }
 
 static void
 destroy_clock (GtkWidget * widget, ClockData *cd)
 {
-	MateConfClient *client;
-	int          i;
-
-	client = mateconf_client_get_default ();
-
-	for (i = 0; i < N_MATECONF_PREFS; i++)
-		mateconf_client_notify_remove (
-				client, cd->listeners [i]);
-
-	g_object_unref (G_OBJECT (client));
+	if (cd->settings)
+		g_object_unref (cd->settings);
+	cd->settings = NULL;
 
 	if (cd->timeout)
 		g_source_remove (cd->timeout);
@@ -766,7 +738,8 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 
         free_locations (cd);
 
-        g_list_free (cd->location_tiles);
+        if (cd->location_tiles)
+                g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
 	if (cd->systz) {
@@ -785,13 +758,6 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 	}
 
 	g_free (cd);
-
-#ifdef HAVE_LIBECAL
-	if (clock_numbers > 0) {
-		e_passwords_shutdown ();
-		clock_numbers--;
-	}
-#endif
 }
 
 static gboolean
@@ -830,18 +796,16 @@ static GtkWidget *
 create_calendar (ClockData *cd)
 {
 	GtkWidget *window;
-	char      *prefs_dir;
+	char      *prefs_path;
 
-	prefs_dir = mate_panel_applet_get_preferences_key (MATE_PANEL_APPLET (cd->applet));
+	prefs_path = mate_panel_applet_get_preferences_path (MATE_PANEL_APPLET (cd->applet));
 	window = calendar_window_new (&cd->current_time,
-				      prefs_dir,
+				      prefs_path,
 				      cd->orient == MATE_PANEL_APPLET_ORIENT_UP);
-	g_free (prefs_dir);
+	g_free (prefs_path);
 
 	calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
 					cd->showweek);
-	calendar_window_set_time_format (CALENDAR_WINDOW (window),
-					 cd->format);
 
         gtk_window_set_screen (GTK_WINDOW (window),
 			       gtk_widget_get_screen (cd->applet));
@@ -1116,7 +1080,8 @@ create_cities_section (ClockData *cd)
                 cd->cities_section = NULL;
         }
 
-        g_list_free (cd->location_tiles);
+	if (cd->location_tiles)
+		g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
         cd->cities_section = gtk_vbox_new (FALSE, 6);
@@ -1209,7 +1174,8 @@ update_calendar_popup (ClockData *cd)
                         cd->map_widget = NULL;
 			cd->clock_vbox = NULL;
 
-        		g_list_free (cd->location_tiles);
+			if (cd->location_tiles)
+				g_list_free (cd->location_tiles);
         		cd->location_tiles = NULL;
                 }
 		update_tooltip (cd);
@@ -1370,11 +1336,6 @@ weather_tooltip (GtkWidget   *widget,
 static void
 create_clock_widget (ClockData *cd)
 {
-#ifdef HAVE_LIBECAL
-	clock_numbers++;
-	e_passwords_init ();
-#endif
-
         /* Main toggle button */
         cd->panel_button = create_main_clock_button ();
 	g_signal_connect (cd->panel_button, "button_press_event",
@@ -1882,20 +1843,12 @@ static const GtkActionEntry clock_menu_actions [] = {
 };
 
 static void
-format_changed (MateConfClient  *client,
-                guint         cnxn_id,
-                MateConfEntry   *entry,
+format_changed (GSettings    *settings,
+                gchar        *key,
                 ClockData    *clock)
 {
-	const char  *value;
 	int          new_format;
-
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
-	value = mateconf_value_get_string (entry->value);
-	if (!mateconf_string_to_enum (format_type_enum_map, value, &new_format))
-		return;
+	new_format = g_settings_get_enum (settings, key);
 
 	if (!clock->can_handle_format_12 && new_format == CLOCK_FORMAT_12)
 		new_format = CLOCK_FORMAT_24;
@@ -1907,43 +1860,26 @@ format_changed (MateConfClient  *client,
 	refresh_clock_timeout (clock);
 
 	if (clock->calendar_popup != NULL) {
-		calendar_window_set_time_format (CALENDAR_WINDOW (clock->calendar_popup), clock->format);
                 position_calendar_popup (clock);
 	}
 
 }
 
 static void
-show_seconds_changed (MateConfClient  *client,
-                   guint         cnxn_id,
-                   MateConfEntry   *entry,
-                   ClockData    *clock)
+show_seconds_changed (GSettings    *settings,
+		      gchar        *key,
+		      ClockData    *clock)
 {
-	gboolean value;
-
-	if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-		return;
-
-	value = mateconf_value_get_bool (entry->value);
-
-	clock->showseconds = (value != 0);
+	clock->showseconds = g_settings_get_boolean (settings, key);
 	refresh_clock_timeout (clock);
 }
 
 static void
-show_date_changed (MateConfClient  *client,
-                   guint         cnxn_id,
-                   MateConfEntry   *entry,
+show_date_changed (GSettings    *settings,
+                   gchar        *key,
                    ClockData    *clock)
 {
-	gboolean value;
-
-	if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-		return;
-
-	value = mateconf_value_get_bool (entry->value);
-
-	clock->showdate = (value != 0);
+	clock->showdate = g_settings_get_boolean (settings, key);
 	update_timeformat (clock);
 	refresh_clock (clock);
 }
@@ -1971,16 +1907,13 @@ update_panel_weather (ClockData *cd)
 }
 
 static void
-update_weather_bool_value_and_toggle_from_mateconf (ClockData *cd, MateConfEntry *entry,
+update_weather_bool_value_and_toggle_from_gsettings (ClockData *cd, gchar *key,
                                                  gboolean *value_loc, const char *widget_name)
 {
 	GtkWidget *widget;
         gboolean value;
 
-        if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-                return;
-
-        value = mateconf_value_get_bool (entry->value);
+        value = g_settings_get_boolean (cd->settings, key);
 
         *value_loc = (value != 0);
 
@@ -1993,21 +1926,19 @@ update_weather_bool_value_and_toggle_from_mateconf (ClockData *cd, MateConfEntry
 }
 
 static void
-show_weather_changed (MateConfClient  *client,
-                      guint         cnxn_id,
-                      MateConfEntry   *entry,
+show_weather_changed (GSettings    *settings,
+                      gchar        *key,
                       ClockData    *cd)
 {
-        update_weather_bool_value_and_toggle_from_mateconf (cd, entry, &cd->show_weather, "weather_check");
+        update_weather_bool_value_and_toggle_from_gsettings (cd, key, &cd->show_weather, "weather_check");
 }
 
 static void
-show_temperature_changed (MateConfClient  *client,
-                          guint         cnxn_id,
-                          MateConfEntry   *entry,
+show_temperature_changed (GSettings    *settings,
+                          gchar        *key,
                           ClockData    *cd)
 {
-        update_weather_bool_value_and_toggle_from_mateconf (cd, entry, &cd->show_temperature, "temperature_check");
+        update_weather_bool_value_and_toggle_from_gsettings (cd, key, &cd->show_temperature, "temperature_check");
 }
 
 static void
@@ -2110,7 +2041,7 @@ typedef struct {
         ClockData *cd;
 } LocationParserData;
 
-/* Parser for our serialized locations in mateconf */
+/* Parser for our serialized locations in gsettings */
 static void
 location_start_element (GMarkupParseContext *context,
                         const gchar *element_name,
@@ -2194,13 +2125,11 @@ static GMarkupParser location_parser = {
 };
 
 static void
-cities_changed (MateConfClient  *client,
-                guint         cnxn_id,
-                MateConfEntry   *entry,
+cities_changed (GSettings    *settings,
+                gchar        *key,
                 ClockData    *cd)
 {
 	LocationParserData data;
-
         GSList *cur = NULL;
 
         GMarkupParseContext *context;
@@ -2208,17 +2137,13 @@ cities_changed (MateConfClient  *client,
 	data.cities = NULL;
 	data.cd = cd;
 
-        if (!entry->value || entry->value->type != MATECONF_VALUE_LIST)
-                return;
-
         context = g_markup_parse_context_new (&location_parser, 0, &data, NULL);
 
-        cur = mateconf_value_get_list (entry->value);
+        cur = mate_panel_applet_settings_get_gslist (settings, key);
 
         while (cur) {
-                const char *str = mateconf_value_get_string (cur->data);
+                const char *str = cur->data;
                 g_markup_parse_context_parse (context, str, strlen (str), NULL);
-
                 cur = cur->next;
         }
 
@@ -2226,22 +2151,6 @@ cities_changed (MateConfClient  *client,
 
         set_locations (cd, data.cities);
         create_cities_store (cd);
-}
-
-static void
-update_temperature_combo (ClockData *cd)
-{
-	GtkWidget *widget;
-        int active_index;
-
-	widget = _clock_get_widget (cd, "temperature_combo");
-
-        if (cd->use_temperature_default)
-                active_index = 0;
-        else
-                active_index = cd->temperature_unit - 1;
-
-        gtk_combo_box_set_active (GTK_COMBO_BOX (widget), active_index);
 }
 
 static void
@@ -2269,43 +2178,6 @@ update_weather_locations (ClockData *cd)
 }
 
 static void
-clock_migrate_to_26 (ClockData *clock)
-{
-	gboolean  unixtime;
-	gboolean  internettime;
-	int       hourformat;
-
-	internettime = mate_panel_applet_mateconf_get_bool (MATE_PANEL_APPLET (clock->applet),
-						    "internet_time",
-						    NULL);
-	unixtime = mate_panel_applet_mateconf_get_bool (MATE_PANEL_APPLET (clock->applet),
-						"unix_time",
-						NULL);
-	hourformat = mate_panel_applet_mateconf_get_int (MATE_PANEL_APPLET (clock->applet),
-						 "hour_format",
-						 NULL);
-
-	if (unixtime)
-		clock->format = CLOCK_FORMAT_UNIX;
-	else if (internettime)
-		clock->format = CLOCK_FORMAT_INTERNET;
-	else if (hourformat == 12)
-		clock->format = CLOCK_FORMAT_12;
-	else if (hourformat == 24)
-		clock->format = CLOCK_FORMAT_24;
-
-	/* It's still possible that we have none of the old keys, in which case
-	 * we're not migrating from 2.6, but the config is simply wrong. So
-	 * don't set the format key in this case. */
-	if (clock->format != CLOCK_FORMAT_INVALID)
-		mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (clock->applet),
-					       KEY_FORMAT,
-					       mateconf_enum_to_string (format_type_enum_map,
-								     clock->format),
-					       NULL);
-}
-
-static void
 clock_timezone_changed (SystemTimezone *systz,
 			const char     *new_tz,
 			ClockData      *cd)
@@ -2317,111 +2189,65 @@ clock_timezone_changed (SystemTimezone *systz,
 }
 
 static void
-parse_and_set_temperature_string (const char *str, ClockData *cd)
-{
-        gint value = 0;
-	gboolean use_default = FALSE;
-
-	value = mateweather_prefs_parse_temperature (str, &use_default);
-
-	cd->use_temperature_default = use_default;
-	cd->temperature_unit = value;
-}
-
-static void
-parse_and_set_speed_string (const char *str, ClockData *cd)
-{
-        gint value = 0;
-	gboolean use_default = FALSE;
-
-	value = mateweather_prefs_parse_speed (str, &use_default);
-
-	cd->use_speed_default = use_default;
-	cd->speed_unit = value;
-}
-
-static void
-temperature_unit_changed (MateConfClient  *client,
-                          guint         cnxn_id,
-                          MateConfEntry   *entry,
+temperature_unit_changed (GSettings    *settings,
+                          gchar        *key,
                           ClockData    *cd)
 {
-        const gchar *value;
-
-        if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-                return;
-
-        value = mateconf_value_get_string (entry->value);
-        parse_and_set_temperature_string (value, cd);
-	update_temperature_combo (cd);
+        cd->temperature_unit = g_settings_get_enum (settings, key);
+	if (cd->temperature_unit > 0)
+	{
+		GtkWidget *widget;
+		gint oldvalue;
+		widget = _clock_get_widget (cd, "temperature_combo");
+		oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 1;
+		if (oldvalue != cd->speed_unit)
+			gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->temperature_unit -1);
+	}
 	update_weather_locations (cd);
 }
 
 static void
-update_speed_combo (ClockData *cd)
-{
-	GtkWidget *widget;
-        int active_index;
-
-	widget = _clock_get_widget (cd, "wind_speed_combo");
-
-	if (cd->use_speed_default)
-                active_index = 0;
-        else
-                active_index = cd->speed_unit - 1;
-
-        gtk_combo_box_set_active (GTK_COMBO_BOX (widget), active_index);
-}
-
-static void
-speed_unit_changed (MateConfClient  *client,
-                    guint         cnxn_id,
-                    MateConfEntry   *entry,
+speed_unit_changed (GSettings    *settings,
+                    gchar        *key,
                     ClockData    *cd)
 {
-        const gchar *value;
-
-        if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-                return;
-
-        value = mateconf_value_get_string (entry->value);
-        parse_and_set_speed_string (value, cd);
-	update_speed_combo (cd);
+        cd->speed_unit = g_settings_get_enum (settings, key);
+	if (cd->speed_unit > 0)
+	{
+		GtkWidget *widget;
+		gint oldvalue;
+		widget = _clock_get_widget (cd, "wind_speed_combo");
+		oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 1;
+		if (oldvalue != cd->speed_unit)
+			gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->speed_unit -1);
+	}
 	update_weather_locations (cd);
 }
 
 static void
-custom_format_changed (MateConfClient  *client,
-                       guint         cnxn_id,
-                       MateConfEntry   *entry,
+custom_format_changed (GSettings    *settings,
+                       gchar        *key,
                        ClockData    *clock)
 {
-	const char *value;
-
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
-	value = mateconf_value_get_string (entry->value);
+	gchar *value;
+	value = g_settings_get_string (settings, key);
 
         g_free (clock->custom_format);
 	clock->custom_format = g_strdup (value);
 
 	if (clock->format == CLOCK_FORMAT_CUSTOM)
 		refresh_clock (clock);
+	g_free (value);
 }
 
 static void
-show_week_changed (MateConfClient  *client,
-		   guint         cnxn_id,
-		   MateConfEntry   *entry,
+show_week_changed (GSettings    *settings,
+		   gchar        *key,
 		   ClockData    *clock)
 {
 	gboolean value;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-		return;
-
-	value = mateconf_value_get_bool (entry->value);
+	value = g_settings_get_boolean (settings, key);
 
 	if (clock->showweek == (value != 0))
 		return;
@@ -2434,71 +2260,39 @@ show_week_changed (MateConfClient  *client,
 	}
 }
 
-static guint
-setup_mateconf_preference (ClockData *cd, MateConfClient *client, const char *key_name, MateConfClientNotifyFunc callback)
-{
-        char *key;
-        guint id;
-
-        key = mate_panel_applet_mateconf_get_full_key (MATE_PANEL_APPLET (cd->applet),
-                                               key_name);
-        id = mateconf_client_notify_add (client, key,
-                                      callback,
-                                      cd, NULL, NULL);
-        g_free (key);
-
-        return id;
-}
-
 static void
-setup_mateconf (ClockData *cd)
+setup_gsettings (ClockData *cd)
 {
-        struct {
-                const char *key_name;
-                MateConfClientNotifyFunc callback;
-        } prefs[] = {
-                { KEY_FORMAT,		(MateConfClientNotifyFunc) format_changed },
-                { KEY_SHOW_SECONDS,	(MateConfClientNotifyFunc) show_seconds_changed },
-                { KEY_SHOW_DATE,	(MateConfClientNotifyFunc) show_date_changed },
-                { KEY_SHOW_WEATHER,	(MateConfClientNotifyFunc) show_weather_changed },
-                { KEY_SHOW_TEMPERATURE,	(MateConfClientNotifyFunc) show_temperature_changed },
-                { KEY_CUSTOM_FORMAT,	(MateConfClientNotifyFunc) custom_format_changed },
-                { KEY_SHOW_WEEK,	(MateConfClientNotifyFunc) show_week_changed },
-                { KEY_CITIES,		(MateConfClientNotifyFunc) cities_changed },
-                { KEY_TEMPERATURE_UNIT,	(MateConfClientNotifyFunc) temperature_unit_changed },
-                { KEY_SPEED_UNIT,	(MateConfClientNotifyFunc) speed_unit_changed },
-        };
-
-	MateConfClient *client;
-        int          i;
-
-	client = mateconf_client_get_default ();
-
-        for (i = 0; i < G_N_ELEMENTS (prefs); i++)
-                cd->listeners[i] = setup_mateconf_preference (cd, client, prefs[i].key_name, prefs[i].callback);
-
-	g_object_unref (G_OBJECT (client));
+        cd->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (cd->applet), CLOCK_SCHEMA);
+        g_signal_connect (cd->settings, "changed::" KEY_FORMAT, G_CALLBACK (format_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_SECONDS, G_CALLBACK (show_seconds_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_DATE, G_CALLBACK (show_date_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_WEATHER, G_CALLBACK (show_weather_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_TEMPERATURE, G_CALLBACK (show_temperature_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_CUSTOM_FORMAT, G_CALLBACK (custom_format_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_WEEK, G_CALLBACK (show_week_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_CITIES, G_CALLBACK (cities_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_TEMPERATURE_UNIT, G_CALLBACK (temperature_unit_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SPEED_UNIT, G_CALLBACK (speed_unit_changed), cd);
 }
 
 static GList *
-parse_mateconf_cities (ClockData *cd, GSList *values)
+parse_gsettings_cities (ClockData *cd, gchar **values)
 {
-        GSList *cur = values;
+        gint i;
 	LocationParserData data;
         GMarkupParseContext *context;
 
 	data.cities = NULL;
 	data.cd = cd;
 
-        context =
-                g_markup_parse_context_new (&location_parser, 0, &data, NULL);
+        context = g_markup_parse_context_new (&location_parser, 0, &data, NULL);
 
-        while (cur) {
-                const char *str = (char *)cur->data;
-                g_markup_parse_context_parse (context, str, strlen(str), NULL);
-
-                cur = cur->next;
-        }
+        if (values) {
+	    for (i = 0; values[i]; i++) {
+		    g_markup_parse_context_parse (context, values[i], strlen(values[i]), NULL);
+	    }
+	}
 
         g_markup_parse_context_free (context);
 
@@ -2506,70 +2300,37 @@ parse_mateconf_cities (ClockData *cd, GSList *values)
 }
 
 static void
-load_mateconf_settings (ClockData *cd)
+load_gsettings (ClockData *cd)
 {
-        MatePanelApplet *applet;
-        int format;
-        char *format_str;
-        char *value;
-        GError *error;
-        GSList *values = NULL;
+        gchar **values;
         GList *cities = NULL;
 
-        applet = MATE_PANEL_APPLET (cd->applet);
-
-        cd->format = CLOCK_FORMAT_INVALID;
-
-	format_str = mate_panel_applet_mateconf_get_string (applet, KEY_FORMAT, NULL);
-	if (format_str &&
-            mateconf_string_to_enum (format_type_enum_map, format_str, &format))
-                cd->format = format;
-	else
-		clock_migrate_to_26 (cd);
-
-        g_free (format_str);
+        cd->format = g_settings_get_enum (cd->settings, KEY_FORMAT);
 
 	if (cd->format == CLOCK_FORMAT_INVALID)
 		cd->format = clock_locale_format ();
 
-	cd->custom_format = mate_panel_applet_mateconf_get_string (applet, KEY_CUSTOM_FORMAT, NULL);
-	cd->showseconds = mate_panel_applet_mateconf_get_bool (applet, KEY_SHOW_SECONDS, NULL);
-
-	error = NULL;
-	cd->showdate = mate_panel_applet_mateconf_get_bool (applet, KEY_SHOW_DATE, &error);
-	if (error) {
-		g_error_free (error);
-		/* if on a small screen don't show date by default */
-		if (gdk_screen_width () <= 800)
-			cd->showdate = FALSE;
-		else
-			cd->showdate = TRUE;
-	}
-
-        cd->show_weather = mate_panel_applet_mateconf_get_bool (applet, KEY_SHOW_WEATHER, NULL);
-        cd->show_temperature = mate_panel_applet_mateconf_get_bool (applet, KEY_SHOW_TEMPERATURE, NULL);
-	cd->showweek = mate_panel_applet_mateconf_get_bool (applet, KEY_SHOW_WEEK, NULL);
+	cd->custom_format = g_settings_get_string (cd->settings, KEY_CUSTOM_FORMAT);
+	cd->showseconds = g_settings_get_boolean (cd->settings, KEY_SHOW_SECONDS);
+	cd->showdate = g_settings_get_boolean (cd->settings, KEY_SHOW_DATE);
+        cd->show_weather = g_settings_get_boolean (cd->settings, KEY_SHOW_WEATHER);
+        cd->show_temperature = g_settings_get_boolean (cd->settings, KEY_SHOW_TEMPERATURE);
+	cd->showweek = g_settings_get_boolean (cd->settings, KEY_SHOW_WEEK);
         cd->timeformat = NULL;
 
 	cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
 	if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
 		cd->format = CLOCK_FORMAT_24;
 
-	value = mate_panel_applet_mateconf_get_string (applet, KEY_TEMPERATURE_UNIT, NULL);
-	parse_and_set_temperature_string (value, cd);
-        g_free (value);
+	cd->temperature_unit = g_settings_get_enum (cd->settings, KEY_TEMPERATURE_UNIT);
+	cd->speed_unit = g_settings_get_enum (cd->settings, KEY_SPEED_UNIT);
 
-	value = mate_panel_applet_mateconf_get_string (applet, KEY_SPEED_UNIT, NULL);
-	parse_and_set_speed_string (value, cd);
-        g_free (value);
+        values = g_settings_get_strv (cd->settings, KEY_CITIES);
 
-        values = mate_panel_applet_mateconf_get_list (MATE_PANEL_APPLET (cd->applet), KEY_CITIES,
-                                              MATECONF_VALUE_STRING, NULL);
-
-        if (g_slist_length (values) == 0) {
+        if (!values || (g_strv_length (values) == 0)) {
                 cities = NULL;
         } else {
-                cities = parse_mateconf_cities (cd, values);
+                cities = parse_gsettings_cities (cd, values);
         }
 
         set_locations (cd, cities);
@@ -2585,7 +2346,6 @@ fill_clock_applet (MatePanelApplet *applet)
         char           *filename;
 	GError         *error;
 
-	mate_panel_applet_add_preferences (applet, CLOCK_SCHEMA_DIR, NULL);
 	mate_panel_applet_set_flags (applet, MATE_PANEL_APPLET_EXPAND_MINOR);
 
 	cd = g_new0 (ClockData, 1);
@@ -2594,8 +2354,8 @@ fill_clock_applet (MatePanelApplet *applet)
 
 	cd->applet = GTK_WIDGET (applet);
 
-	setup_mateconf (cd);
-        load_mateconf_settings (cd);
+	setup_gsettings (cd);
+        load_gsettings (cd);
 
 	cd->builder = gtk_builder_new ();
 	gtk_builder_set_translation_domain (cd->builder, GETTEXT_PACKAGE);
@@ -2665,181 +2425,6 @@ fill_clock_applet (MatePanelApplet *applet)
 	return TRUE;
 }
 
-/* FIXME old clock applet */
-#if 0
-static void
-setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label, const char *key)
-{
-        /* FMQ: was used from old preferences dialog; fix this up */
-	char *fullkey;
-	MateConfClient *client;
-
-	client = mateconf_client_get_default ();
-
-	fullkey = mate_panel_applet_mateconf_get_full_key
-		(MATE_PANEL_APPLET (clock->applet), key);
-
-	if ( ! mateconf_client_key_is_writable (client, fullkey, NULL)) {
-		g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
-				   GINT_TO_POINTER (1));
-		gtk_widget_set_sensitive (w, FALSE);
-		if (label != NULL) {
-			g_object_set_data (G_OBJECT (label), NEVER_SENSITIVE,
-					   GINT_TO_POINTER (1));
-			gtk_widget_set_sensitive (label, FALSE);
-		}
-	}
-
-	g_free (fullkey);
-
-	g_object_unref (G_OBJECT (client));
-}
-
-static void
-update_properties_for_format (ClockData   *cd,
-                              GtkComboBox *combo,
-                              ClockFormat  format)
-{
-
-        /* show the custom format things the first time we actually
-         * have a custom format set in MateConf, but after that don't
-         * unshow it if the format changes
-         */
-        if (!cd->custom_format_shown &&
-            (cd->format == CLOCK_FORMAT_CUSTOM ||
-             (cd->custom_format && cd->custom_format [0]))) {
-                gtk_widget_show (cd->custom_hbox);
-                gtk_widget_show (cd->custom_label);
-                gtk_widget_show (cd->custom_entry);
-
-                gtk_combo_box_append_text (combo, _("Custom format"));
-
-                cd->custom_format_shown = TRUE;
-        }
-
-        /* Some combinations of options do not make sense */
-        switch (format) {
-        case CLOCK_FORMAT_12:
-        case CLOCK_FORMAT_24:
-                gtk_widget_set_sensitive (cd->showseconds_check, TRUE);
-                gtk_widget_set_sensitive (cd->showdate_check, TRUE);
-		gtk_widget_set_sensitive (cd->custom_entry, FALSE);
-		gtk_widget_set_sensitive (cd->custom_label, FALSE);
-                break;
-        case CLOCK_FORMAT_UNIX:
-                gtk_widget_set_sensitive (cd->showseconds_check, FALSE);
-                gtk_widget_set_sensitive (cd->showdate_check, FALSE);
-                gtk_widget_set_sensitive (cd->custom_entry, FALSE);
-                gtk_widget_set_sensitive (cd->custom_label, FALSE);
-                break;
-        case CLOCK_FORMAT_INTERNET:
-                gtk_widget_set_sensitive (cd->showseconds_check, TRUE);
-                gtk_widget_set_sensitive (cd->showdate_check, FALSE);
-		gtk_widget_set_sensitive (cd->custom_entry, FALSE);
-		gtk_widget_set_sensitive (cd->custom_label, FALSE);
-                break;
-	case CLOCK_FORMAT_CUSTOM:
-		gtk_widget_set_sensitive (cd->showseconds_check, FALSE);
-		gtk_widget_set_sensitive (cd->showdate_check, FALSE);
-		gtk_widget_set_sensitive (cd->custom_entry, TRUE);
-		gtk_widget_set_sensitive (cd->custom_label, TRUE);
-                break;
-        default:
-                g_assert_not_reached ();
-                break;
-	}
-}
-
-static void
-set_format_cb (GtkComboBox *combo,
-	       ClockData   *cd)
-{
-        /* FMQ: was used from old preferences dialog; fix this up */
-        ClockFormat format;
-
-	/* valid values begin from 1 */
-	if (cd->can_handle_format_12)
-		format = gtk_combo_box_get_active (combo) + 1;
-	else
-		format = gtk_combo_box_get_active (combo) + 2;
-
-        update_properties_for_format (cd, combo, format);
-
-        if (cd->format != format)
-                mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (cd->applet),
-                                               KEY_FORMAT,
-                                               mateconf_enum_to_string (format_type_enum_map, format),
-                                               NULL);
-}
-#endif
-
-static void
-set_show_seconds_cb (GtkWidget *w,
-                     ClockData *clock)
-{
-	mate_panel_applet_mateconf_set_bool (MATE_PANEL_APPLET (clock->applet),
-				     KEY_SHOW_SECONDS,
-				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
-				     NULL);
-}
-
-static void
-set_show_date_cb (GtkWidget *w,
-		  ClockData *clock)
-{
-	mate_panel_applet_mateconf_set_bool (MATE_PANEL_APPLET (clock->applet),
-				     KEY_SHOW_DATE,
-				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
-				     NULL);
-}
-
-static void
-set_show_weather_cb (GtkWidget *w,
-                     ClockData *clock)
-{
-	mate_panel_applet_mateconf_set_bool (MATE_PANEL_APPLET (clock->applet),
-				     KEY_SHOW_WEATHER,
-				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
-				     NULL);
-}
-
-static void
-set_show_temperature_cb (GtkWidget *w,
-                         ClockData *clock)
-{
-	mate_panel_applet_mateconf_set_bool (MATE_PANEL_APPLET (clock->applet),
-				     KEY_SHOW_TEMPERATURE,
-				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
-				     NULL);
-}
-
-#if 0
-static void
-set_show_zones_cb (GtkWidget *w,
-		   ClockData *clock)
-{
-	mate_panel_applet_mateconf_set_bool (MATE_PANEL_APPLET (clock->applet),
-				     KEY_SHOW_ZONES,
-				     GTK_TOGGLE_BUTTON (w)->active,
-				     NULL);
-}
-#endif
-
-/* FIXME old clock applet */
-#if 0
-static void
-set_custom_format_cb (GtkEntry  *entry,
-		      ClockData *cd)
-{
-        /* FMQ: was used from old preferences dialog; fix this up */
-	const char *custom_format;
-
-	custom_format = gtk_entry_get_text (entry);
-	mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (cd->applet),
-				       KEY_CUSTOM_FORMAT, custom_format, NULL);
-}
-#endif
-
 static void
 prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
 {
@@ -2882,28 +2467,26 @@ save_cities_store (ClockData *cd)
 {
         ClockLocation *loc;
         GList *node = cd->locations;
-
-        GSList *root = NULL;
-        GSList *list = NULL;
+        gint len = g_list_length(cd->locations);
+        gchar **array[len + 1];
+        gchar **array_reverse[len + 1];
+        gint i = 0;
 
         while (node) {
                 loc = CLOCK_LOCATION (node->data);
-                list = g_slist_prepend (list, loc_to_string (loc));
+                array[i] = loc_to_string (loc);
+                i++;
                 node = node->next;
         }
+        array[i] = NULL;
 
-        list = g_slist_reverse (list);
-	mate_panel_applet_mateconf_set_list (MATE_PANEL_APPLET (cd->applet),
-                                     KEY_CITIES, MATECONF_VALUE_STRING, list, NULL);
-
-        root = list;
-
-        while (list) {
-                g_free (list->data);
-                list = g_slist_next (list);
+        for (i = 0; i <= (len - 1); i++) {
+                array_reverse [len - i - 1] = g_strdup (array [i]);
         }
+        array_reverse[i] = NULL;
 
-        g_slist_free (root);
+        g_settings_set_strv (cd->settings, KEY_CITIES, (const gchar **) array_reverse);
+        /* FIXME free arrays */
 }
 
 static void
@@ -2980,7 +2563,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
         g_free (city);
 
 	/* This will update everything related to locations to take into
-	 * account the new location (via the mateconf notification) */
+	 * account the new location (via the gsettings changed signal) */
         save_cities_store (cd);
 
         edit_hide (edit_window, cd);
@@ -3179,7 +2762,7 @@ remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 	g_object_unref (loc);
 
 	/* This will update everything related to locations to take into
-	 * account the removed location (via the mateconf notification) */
+	 * account the removed location (via the gsettings changed signal) */
         save_cities_store (cd);
 }
 
@@ -3293,7 +2876,6 @@ run_prefs_locations_edit (GtkButton *unused, ClockData *cd)
 static void
 set_12hr_format_radio_cb (GtkWidget *widget, ClockData *cd)
 {
-	const gchar *val;
         ClockFormat format;
 
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
@@ -3301,10 +2883,7 @@ set_12hr_format_radio_cb (GtkWidget *widget, ClockData *cd)
         else
                 format = CLOCK_FORMAT_24;
 
-        val = mateconf_enum_to_string (format_type_enum_map, format);
-
-	mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (cd->applet),
-				       KEY_FORMAT, val, NULL);
+	g_settings_set_enum (cd->settings, KEY_FORMAT, format);
 }
 
 static void
@@ -3315,19 +2894,12 @@ temperature_combo_changed (GtkComboBox *combo, ClockData *cd)
 	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 1;
-
-	if (cd->use_temperature_default)
-		old_value = TEMP_UNIT_DEFAULT;
-	else
-		old_value = cd->temperature_unit;
+	old_value = cd->temperature_unit;
 
 	if (value == old_value)
 		return;
 
-	str = mateweather_prefs_temp_enum_to_string (value);
-
-	mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (cd->applet),
-				       KEY_TEMPERATURE_UNIT, str, NULL);
+	g_settings_set_enum (cd->settings, KEY_TEMPERATURE_UNIT, value);
 }
 
 static void
@@ -3338,20 +2910,14 @@ speed_combo_changed (GtkComboBox *combo, ClockData *cd)
 	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 1;
-
-	if (cd->use_speed_default)
-		old_value = SPEED_UNIT_DEFAULT;
-	else
-		old_value = cd->speed_unit;
+	old_value = cd->speed_unit;
 
 	if (value == old_value)
 		return;
 
-	str = mateweather_prefs_speed_enum_to_string (value);
-
-	mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (cd->applet),
-				       KEY_SPEED_UNIT, str, NULL);
+	g_settings_set_enum (cd->settings, KEY_SPEED_UNIT, value);
 }
+
 
 static void
 fill_prefs_window (ClockData *cd)
@@ -3398,27 +2964,23 @@ fill_prefs_window (ClockData *cd)
 
 	/* Set the "Show Date" checkbox */
 	widget = _clock_get_widget (cd, "date_check");
-	g_signal_connect (widget, "toggled",
-                          G_CALLBACK (set_show_date_cb), cd);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->showdate);
+	g_settings_bind (cd->settings, KEY_SHOW_DATE, widget, "active",
+                         G_SETTINGS_BIND_DEFAULT);
 
 	/* Set the "Show Seconds" checkbox */
 	widget = _clock_get_widget (cd, "seconds_check");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->showseconds);
-	g_signal_connect (widget, "toggled",
-                          G_CALLBACK (set_show_seconds_cb), cd);
+	g_settings_bind (cd->settings, KEY_SHOW_SECONDS, widget, "active",
+                         G_SETTINGS_BIND_DEFAULT);
 
 	/* Set the "Show weather" checkbox */
 	widget = _clock_get_widget (cd, "weather_check");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->show_weather);
-	g_signal_connect (widget, "toggled",
-                          G_CALLBACK (set_show_weather_cb), cd);
+	g_settings_bind (cd->settings, KEY_SHOW_WEATHER, widget, "active",
+                         G_SETTINGS_BIND_DEFAULT);
 
 	/* Set the "Show temperature" checkbox */
 	widget = _clock_get_widget (cd, "temperature_check");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->show_temperature);
-	g_signal_connect (widget, "toggled",
-                          G_CALLBACK (set_show_temperature_cb), cd);
+	g_settings_bind (cd->settings, KEY_SHOW_TEMPERATURE, widget, "active",
+                         G_SETTINGS_BIND_DEFAULT);
 
 	/* Fill the Cities list */
 	widget = _clock_get_widget (cd, "cities_list");
@@ -3448,10 +3010,12 @@ fill_prefs_window (ClockData *cd)
         for (i = 0; temperatures[i] != -1; i++)
                 gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
                                            mateweather_prefs_get_temp_display_name (temperatures[i]));
-
-	update_temperature_combo (cd);
+	
+	if (cd->temperature_unit > 0)
+		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
+					  cd->temperature_unit - 1);
 	g_signal_connect (widget, "changed",
-                          G_CALLBACK (temperature_combo_changed), cd);
+			  G_CALLBACK (temperature_combo_changed), cd);
 
         /* Wind speed combo */
 	widget = _clock_get_widget (cd, "wind_speed_combo");
@@ -3465,7 +3029,9 @@ fill_prefs_window (ClockData *cd)
                 gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
                                            mateweather_prefs_get_speed_display_name (speeds[i]));
 
-	update_speed_combo (cd);
+	if (cd->speed_unit > 0)
+		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
+					  cd->speed_unit - 1);
 	g_signal_connect (widget, "changed",
                           G_CALLBACK (speed_combo_changed), cd);
 }
@@ -3603,75 +3169,6 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 	gtk_window_present (GTK_WINDOW (cd->prefs_window));
 
         refresh_click_timeout_time_only (cd);
-
-        /* FMQ: cd->props was the old preferences window; remove references to it */
-        /* FMQ: connect to the Help button by hand; look at properties_response_cb() for the help code */
-#if 0
-        /* FMQ: check the code below; replace the proper parts */
-	GtkWidget *hbox;
-	GtkWidget *vbox;
-	GtkWidget *combo;
-	GtkWidget *label;
-
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("24 hour"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("UNIX time"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("Internet time"));
-
-	gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
-	gtk_widget_show (combo);
-
-	cd->custom_hbox = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (vbox), cd->custom_hbox, TRUE, TRUE, 0);
-
-	cd->custom_label = gtk_label_new_with_mnemonic (_("Custom _format:"));
-	gtk_label_set_use_markup (GTK_LABEL (cd->custom_label), TRUE);
-	gtk_label_set_justify (GTK_LABEL (cd->custom_label),
-			       GTK_JUSTIFY_LEFT);
-	gtk_misc_set_alignment (GTK_MISC (cd->custom_label), 0, 0.5);
-	gtk_box_pack_start (GTK_BOX (cd->custom_hbox),
-                            cd->custom_label,
-			    FALSE, FALSE, 0);
-
-	cd->custom_entry = gtk_entry_new ();
-	gtk_box_pack_start (GTK_BOX (cd->custom_hbox),
-                            cd->custom_entry,
-			    FALSE, FALSE, 0);
-	gtk_entry_set_text (GTK_ENTRY (cd->custom_entry),
-			    cd->custom_format);
-	g_signal_connect (cd->custom_entry, "changed",
-			  G_CALLBACK (set_custom_format_cb),
-			  cd);
-
-	g_signal_connect (cd->props, "destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-                          &cd->props);
-	g_signal_connect (cd->props, "response",
-			  G_CALLBACK (properties_response_cb),
-                          cd);
-
-	cd->custom_format_shown = FALSE;
-	update_properties_for_format (cd, GTK_COMBO_BOX (combo), cd->format);
-
-	/* valid values begin from 1 */
-	if (cd->can_handle_format_12)
-		gtk_combo_box_set_active (GTK_COMBO_BOX (combo),
-					  cd->format - 1);
-	else
-		gtk_combo_box_set_active (GTK_COMBO_BOX (combo),
-					  cd->format - 2);
-
-        g_signal_connect (combo, "changed",
-                          G_CALLBACK (set_format_cb), cd);
-
-	/* Now set up the sensitivity based on mateconf key writability */
-	setup_writability_sensitivity (cd, combo, label, KEY_FORMAT);
-	setup_writability_sensitivity (cd, cd->custom_entry, cd->custom_label,
-				       KEY_CUSTOM_FORMAT);
-	setup_writability_sensitivity (cd, cd->showseconds_check, NULL, KEY_SHOW_SECONDS);
-	setup_writability_sensitivity (cd, cd->showdate_check, NULL, KEY_SHOW_DATE);
-
-	gtk_widget_show (cd->props);
-#endif
 }
 
 static void
