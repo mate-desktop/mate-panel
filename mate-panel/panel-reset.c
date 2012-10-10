@@ -17,27 +17,26 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
+ *
+ * Authors:
+ *    Perberos <perberos@gmail.com>
+ *    Stefano Karapetsas <stefano@karapetsas.com>
  */
 
 #ifndef __PANEL_RESET_C__
 #define __PANEL_RESET_C__
 
 #include <stdlib.h>
+#include <glib.h>
 #include "panel-reset.h"
+#include "panel-schemas.h"
+#include <libpanel-util/panel-dconf.h>
 
 void panel_reset()
 {
-	/* En teoria, al hacer `mate-panel --reset` se podria correr este comando
-	 * para que se reestablesca la configuracion por defecto del panel. O se
-	 * borre para que pueda elegir una nueva. Esto ultimo solo si se desarrolla
-	 * el dialogo de seleccion de configuracion inicial.
-	 *
-	 * La configuracion no se borra a travez de los archivos, por que hacer esto
-	 * no hace que el demonio de configuracion se actualice. Obligando que se
-	 * deba cerrar sesion antes de volver a abrir el panel.
-	 * Es por eso que se eliminan las entradas a travez de mate-conf.
-	 */
-	system("mateconftool-2 --recursive-unset /apps/panel"); // unix like
+	panel_dconf_recursive_reset (PANEL_GENERAL_PATH, NULL);
+	panel_dconf_recursive_reset (PANEL_TOPLEVEL_PATH, NULL);
+	panel_dconf_recursive_reset (PANEL_OBJECT_PATH, NULL);
 
 	/* TODO: send a dbus message to mate-panel, if active, to reload the panel
 	 * configuration */

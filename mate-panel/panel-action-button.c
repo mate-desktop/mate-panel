@@ -31,6 +31,7 @@
 #include "panel-action-button.h"
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
@@ -39,7 +40,6 @@
 
 #include "applet.h"
 #include "panel-config-global.h"
-#include "panel-mateconf.h"
 #include "panel-profile.h"
 #include "panel-typebuiltins.h"
 #include "panel-force-quit.h"
@@ -49,14 +49,12 @@
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
 #include "panel-lockdown.h"
-#include "panel-compatibility.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
-
-#define LOGOUT_PROMPT_KEY "/apps/mate-session/options/logout_prompt"
 
 enum {
 	PROP_0,
@@ -67,13 +65,25 @@ enum {
 struct _PanelActionButtonPrivate {
 	PanelActionButtonType  type;
 	AppletInfo            *info;
-
-	guint                  mateconf_notify;
+	GSettings             *settings;
 
 	guint                  dnd_enabled : 1;
 };
 
-static MateConfEnumStringPair panel_action_type_map [] = {
+static void
+panel_action_button_type_changed (GSettings       *settings,
+								  gchar           *key,
+								  PanelActionButton *button);
+
+/* Utility function converts enumerations to and from strings */
+typedef struct _ObsoleteEnumStringPair ObsoleteEnumStringPair;
+
+struct _ObsoleteEnumStringPair {
+	gint enum_value;
+	const gchar* str;
+};
+
+static ObsoleteEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_NONE,           "none"           },
 	{ PANEL_ACTION_LOCK,           "lock"           },
 	{ PANEL_ACTION_LOGOUT,         "logout"         },
@@ -82,10 +92,48 @@ static MateConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
 	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
-	/* compatibility with MATE < 2.13.90 */
-	{ PANEL_ACTION_SCREENSHOT,     "screenshot"     },
 	{ 0,                           NULL             },
 };
+
+/* FIXME obsolete way to get string for enum */
+/* taken from deprecated mate-conf code */
+static const gchar*
+obsolete_enum_to_string (ObsoleteEnumStringPair lookup_table[],
+                         gint enum_value)
+{
+  int i = 0;
+  
+  while (lookup_table[i].str != NULL)
+    {
+      if (lookup_table[i].enum_value == enum_value)
+        return lookup_table[i].str;
+
+      ++i;
+    }
+
+  return NULL;
+}
+
+static gboolean
+obsolete_string_to_enum (ObsoleteEnumStringPair lookup_table[],
+                      const gchar* str,
+                      gint* enum_value_retloc)
+{
+  int i = 0;
+  
+  while (lookup_table[i].str != NULL)
+    {
+      if (g_ascii_strcasecmp (lookup_table[i].str, str) == 0)
+        {
+          *enum_value_retloc = lookup_table[i].enum_value;
+          return TRUE;
+        }
+
+      ++i;
+    }
+
+  return FALSE;
+}
 
 /* Lock Screen
  */
@@ -158,17 +206,16 @@ static void
 panel_action_logout (GtkWidget *widget)
 {
 	PanelSessionManager *manager;
-	gboolean             not_prompt;
+	gboolean             prompt;
 
-	not_prompt = mateconf_client_get_bool (panel_mateconf_get_client (),
-					    LOGOUT_PROMPT_KEY, NULL);
-	/* this avoids handling errors from mateconf since prompting is
-	 * safer */
-	not_prompt = !not_prompt;
+	GSettings *msm_settings;
+	msm_settings = g_settings_new (MATE_SESSION_SCHEMA);
+	prompt = g_settings_get_boolean (msm_settings, MATE_SESSION_LOGOUT_PROMPT_KEY);
+	g_object_unref (msm_settings);
 
 	manager = panel_session_manager_get ();
 
-	if (not_prompt)
+	if (!prompt)
 		panel_session_manager_request_logout (manager,
 						      PANEL_SESSION_MANAGER_LOGOUT_MODE_NO_CONFIRMATION);
 	else
@@ -350,30 +397,13 @@ static PanelAction actions [] = {
 		"ACTION:shutdown:NEW",
 		panel_action_shutdown, NULL, NULL,
 		panel_action_shutdown_reboot_is_disabled
-	},
-	/* deprecated actions */
-	{
-		PANEL_ACTION_SCREENSHOT,
-		NULL, NULL, NULL, NULL, NULL,
-		NULL, NULL, NULL, NULL
 	}
 };
-
-static gboolean
-panel_action_get_is_deprecated (PanelActionButtonType type)
-{
-	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
-
-	return (type >= PANEL_ACTION_SCREENSHOT);
-}
 
 gboolean
 panel_action_get_is_disabled (PanelActionButtonType type)
 {
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
-
-	if (panel_action_get_is_deprecated (type))
-		return TRUE;
 
 	if (actions [type].is_disabled)
 		return actions [type].is_disabled ();
@@ -432,15 +462,15 @@ panel_action_button_finalize (GObject *object)
 {
 	PanelActionButton *button = PANEL_ACTION_BUTTON (object);
 
+	if (button->priv->settings)
+		g_object_unref (button->priv->settings);
+	button->priv->settings = NULL;
+
 	button->priv->info = NULL;
 	button->priv->type = PANEL_ACTION_NONE;
 
 	panel_lockdown_notify_remove (G_CALLBACK (panel_action_button_update_sensitivity),
 				      button);
-
-	mateconf_client_notify_remove (panel_mateconf_get_client (),
-				    button->priv->mateconf_notify);
-	button->priv->mateconf_notify = 0;
 
 	G_OBJECT_CLASS (panel_action_button_parent_class)->finalize (object);
 }
@@ -512,7 +542,7 @@ panel_action_button_drag_data_get (GtkWidget          *widget,
 	button = PANEL_ACTION_BUTTON (widget);
 
 	drag_data = g_strdup_printf ("ACTION:%s:%d",
-				     mateconf_enum_to_string (panel_action_type_map, button->priv->type),
+				     obsolete_enum_to_string (panel_action_type_map, button->priv->type),
 				     panel_find_applet_index (widget));
 
 	gtk_selection_data_set (
@@ -592,7 +622,6 @@ panel_action_button_init (PanelActionButton *button)
 	button->priv->type = PANEL_ACTION_NONE;
 	button->priv->info = NULL;
 
-	button->priv->mateconf_notify = 0;
 	button->priv->dnd_enabled  = FALSE;
 }
 
@@ -601,9 +630,6 @@ panel_action_button_set_type (PanelActionButton     *button,
 			      PanelActionButtonType  type)
 {
 	g_return_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST);
-
-	if (panel_action_get_is_deprecated (type))
-		return;
 
 	if (type == button->priv->type)
 		return;
@@ -621,39 +647,33 @@ panel_action_button_set_type (PanelActionButton     *button,
 }
 
 static void
-panel_action_button_type_changed (MateConfClient       *client,
-				  guint              cnxn_id,
-				  MateConfEntry        *entry,
-				  PanelActionButton *button)
+panel_action_button_type_changed (GSettings       *settings,
+								  gchar           *key,
+								  PanelActionButton *button)
 {
 	int         type;
-	const char *action_type;
-
 	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
-
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
-	action_type = mateconf_value_get_string (entry->value);
-
-	if (!mateconf_string_to_enum (panel_action_type_map, action_type, &type))
-		return;
-
+	type = g_settings_get_enum (settings, key);
 	panel_action_button_set_type (button, type);
 }
 
 static void
-panel_action_button_connect_to_mateconf (PanelActionButton *button)
+panel_action_button_connect_to_gsettings (PanelActionButton *button)
 {
-	const char *key;
+	gchar *settings_path;
+	gchar *signal_name;
 
-	key = panel_mateconf_full_key (
-			PANEL_MATECONF_OBJECTS, button->priv->info->id, "action_type");
+	settings_path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", button->priv->info->id);
+	button->priv->settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, settings_path);
 
-	button->priv->mateconf_notify =
-		mateconf_client_notify_add (panel_mateconf_get_client (), key,
-					 (MateConfClientNotifyFunc) panel_action_button_type_changed,
-					 button, NULL, NULL);
+	signal_name = g_strdup_printf ("changed::%s", PANEL_OBJECT_ACTION_TYPE_KEY);
+	g_signal_connect (button->priv->settings,
+					  signal_name,
+					  G_CALLBACK (panel_action_button_type_changed),
+					  button);
+
+	g_free (signal_name);
+	g_free (settings_path);
 
 	panel_lockdown_notify_add (G_CALLBACK (panel_action_button_update_sensitivity),
 				   button);
@@ -672,8 +692,7 @@ panel_action_button_load (PanelActionButtonType  type,
 			  gboolean               locked,
 			  int                    position,
 			  gboolean               exactpos,
-			  const char            *id,
-			  gboolean               compatibility)
+			  const char            *id)
 {
 	PanelActionButton *button;
 	PanelObjectType    object_type;
@@ -683,18 +702,6 @@ panel_action_button_load (PanelActionButtonType  type,
 	button = g_object_new (PANEL_TYPE_ACTION_BUTTON, "action-type", type, NULL);
 
 	object_type = PANEL_OBJECT_ACTION;
-
-	if (compatibility)
-	{ /* Backward compatibility with MATE 2.0.x */
-		if (type == PANEL_ACTION_LOCK)
-		{
-			object_type = PANEL_OBJECT_LOCK;
-		}
-		else if (type == PANEL_ACTION_LOGOUT)
-		{
-			object_type = PANEL_OBJECT_LOGOUT;
-		}
-	}
 
 	button->priv->info = mate_panel_applet_register (GTK_WIDGET (button),
 						    NULL, NULL,
@@ -717,7 +724,7 @@ panel_action_button_load (PanelActionButtonType  type,
 	if (actions [button->priv->type].setup_menu)
 		actions [button->priv->type].setup_menu (button);
 
-	panel_action_button_connect_to_mateconf (button);
+	panel_action_button_connect_to_gsettings (button);
 
 	g_signal_connect (button, "style-set",
 			  G_CALLBACK (panel_action_button_style_set), NULL);
@@ -728,76 +735,47 @@ panel_action_button_create (PanelToplevel         *toplevel,
 			    int                    position,
 			    PanelActionButtonType  type)
 {
-	MateConfClient *client;
-	const char  *key;
+	GSettings   *settings;
 	char        *id;
-
-	client  = panel_mateconf_get_client ();
+	char        *path;
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_ACTION, toplevel, position, FALSE);
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "action_type");
-	mateconf_client_set_string (client,
-				 key,
-				 mateconf_enum_to_string (panel_action_type_map, type),
-				 NULL);
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
 
-	panel_profile_add_to_list (PANEL_MATECONF_OBJECTS, id);
+	g_settings_set_enum (settings,
+						 PANEL_OBJECT_ACTION_TYPE_KEY,
+						 type);
+
+	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 
 	g_free (id);
-}
-
-/* This is only for backwards compatibility with 2.0.x
- * We load an old-style lock/logout button as an action
- * button but make sure to retain the lock/logout configuration
- * so logging back into 2.0.x still works.
- */
-void
-panel_action_button_load_compatible (PanelObjectType  object_type,
-				     PanelWidget     *panel,
-				     gboolean         locked,
-				     int              position,
-				     gboolean         exactpos,
-				     const char      *id)
-{
-	PanelActionButtonType action_type;
-
-	g_assert (object_type == PANEL_OBJECT_LOGOUT || object_type == PANEL_OBJECT_LOCK);
-
-	action_type = object_type == PANEL_OBJECT_LOGOUT ? PANEL_ACTION_LOGOUT : PANEL_ACTION_LOCK;
-
-	panel_action_button_load (action_type, panel, locked, position, exactpos, id, TRUE);
+	g_free (path);
+	g_object_unref (settings);
 }
 
 void
-panel_action_button_load_from_mateconf (PanelWidget *panel,
+panel_action_button_load_from_gsettings (PanelWidget *panel,
 				     gboolean     locked,
 				     int          position,
 				     gboolean     exactpos,
 				     const char  *id)
 {
-	int          type;
-	const char  *key;
-	char        *action_type;
+	GSettings             *settings;
+	PanelActionButtonType  type;
+	char                  *path;
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "action_type");
-	action_type = mateconf_client_get_string (panel_mateconf_get_client (), key, NULL);
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
 
-	if (!mateconf_string_to_enum (panel_action_type_map, action_type, &type)) {
-		g_warning ("Unkown action type '%s' from %s", action_type, key);
-		g_free (action_type);
-		return;
-	}
+	type = g_settings_get_enum (settings, PANEL_OBJECT_ACTION_TYPE_KEY);
 
-	g_free (action_type);
+	g_free (path);
+	g_object_unref (settings);
 
-	/* compatibility: migrate from MATE < 2.13.90 */
-	if (type == PANEL_ACTION_SCREENSHOT)
-		panel_compatibility_migrate_screenshot_action (panel_mateconf_get_client (),
-							       id);
-	else
-		panel_action_button_load (type, panel, locked,
-					  position, exactpos, id, FALSE);
+	panel_action_button_load (type, panel, locked,
+					  position, exactpos, id);
 }
 
 void
@@ -849,15 +827,12 @@ panel_action_button_load_from_drag (PanelToplevel *toplevel,
 		return retval;
 	}
 
-	if (!mateconf_string_to_enum (panel_action_type_map, elements [1], (gpointer) &type)) {
+	if (!obsolete_string_to_enum (panel_action_type_map, elements [1], (gpointer) &type)) {
 		g_strfreev (elements);
 		return retval;
 	}
 
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
-
-	if (panel_action_get_is_deprecated (type))
-		return retval;
 
 	if (strcmp (elements [2], "NEW")) {
 		*old_applet_idx = strtol (elements [2], NULL, 10);

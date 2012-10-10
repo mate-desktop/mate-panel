@@ -21,6 +21,7 @@
  * Authors:
  *      Mark McLoughlin <mark@skynet.ie>
  *      Glynn Foster <glynn.foster@sun.com>
+ *      Stefano Karapetsas <stefano@karapetsas.com>
  */
 
 #include <config.h>
@@ -28,10 +29,9 @@
 #include "panel-config-global.h"
 
 #include <string.h>
-#include <mateconf/mateconf.h>
+#include <gio/gio.h>
 
 #include "panel-globals.h"
-#include "panel-mateconf.h"
 
 typedef struct {
 	guint               tooltips_enabled : 1;
@@ -43,6 +43,7 @@ typedef struct {
 
 static GlobalConfig global_config = { 0, };
 static gboolean global_config_initialised = FALSE;
+static GSettings *panel_global_settings = NULL;
 
 gboolean
 panel_global_config_get_highlight_when_over (void)
@@ -85,69 +86,56 @@ panel_global_config_get_confirm_panel_remove (void)
 }
 
 static void
-panel_global_config_set_entry (MateConfEntry *entry)
+panel_global_config_set_entry (GSettings *settings, gchar *key)
 {
-	MateConfValue *value;
-	const char *key;
+	g_return_if_fail (settings != NULL);
+	g_return_if_fail (key != NULL);
 
-	g_return_if_fail (entry != NULL);
-
-	value = mateconf_entry_get_value (entry);
-	key   = panel_mateconf_basename (mateconf_entry_get_key (entry));
-
-	if (!value || !key)
-		return;
-
-	if (strcmp (key, "tooltips_enabled") == 0)
+	if (strcmp (key, "tooltips-enabled") == 0)
 		global_config.tooltips_enabled =
-				mateconf_value_get_bool (value);
+				g_settings_get_boolean (settings, key);
 
-	else if (strcmp (key, "enable_animations") == 0)
+	else if (strcmp (key, "enable-animations") == 0)
 		global_config.enable_animations =
-				mateconf_value_get_bool (value);
+				g_settings_get_boolean (settings, key);
 
-	else if (strcmp (key, "drawer_autoclose") == 0)
+	else if (strcmp (key, "drawer-autoclose") == 0)
 		global_config.drawer_auto_close =
-			mateconf_value_get_bool (value);
+			g_settings_get_boolean (settings, key);
 
-	else if (strcmp (key, "confirm_panel_remove") == 0)
+	else if (strcmp (key, "confirm-panel-remove") == 0)
 		global_config.confirm_panel_remove =
-			mateconf_value_get_bool (value);
+			g_settings_get_boolean (settings, key);
 
-	else if (strcmp (key, "highlight_launchers_on_mouseover") == 0)
+	else if (strcmp (key, "highlight-launchers-on-mouseover") == 0)
 		global_config.highlight_when_over =
-			mateconf_value_get_bool (value);
+			g_settings_get_boolean (settings, key);
 }
 
 static void
-panel_global_config_notify (MateConfClient *client,
-			    guint        cnxn_id,
-			    MateConfEntry  *entry,
-			    gpointer     user_data)
+panel_global_config_notify (GSettings   *settings,
+							gchar       *key,
+							gpointer     user_data)
 {
-        panel_global_config_set_entry (entry);
+        panel_global_config_set_entry (settings, key);
 }
 
 void
 panel_global_config_load (void)
 {
-	MateConfClient *client;
-	GSList      *l, *entries;
-	const char  *key = "/apps/panel/global";
+	gchar **keys;
+	gint i;
 
-	client = panel_mateconf_get_client ();
+	panel_global_settings = g_settings_new ("org.mate.panel");
 
-	mateconf_client_add_dir (client, key, MATECONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	keys = g_settings_list_keys (panel_global_settings);
 
-	entries = mateconf_client_all_entries (client, key, NULL);
-
-	for (l = entries; l; l = l->next) {
-		panel_global_config_set_entry (l->data);
-		mateconf_entry_unref (l->data);
+	for (i = 0; keys[i]; i++) {
+		panel_global_config_set_entry (panel_global_settings, keys[i]);
 	}
-	g_slist_free (entries);
+	g_strfreev (keys);
 
-	mateconf_client_notify_add (client, key, panel_global_config_notify, NULL, NULL, NULL);
+	g_signal_connect (panel_global_settings, "changed", G_CALLBACK (panel_global_config_notify), NULL);
 
 	global_config_initialised = TRUE;
 }

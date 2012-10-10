@@ -14,6 +14,7 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/mate-panel/libpanel-util \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DBUILDERDIR=\""$(uidir)"\" \
+	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
 	-DICONDIR=\""$(datadir)/mate-panel/pixmaps"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
 
@@ -29,13 +30,12 @@ panel_sources = \
 	button-widget.c \
 	xstuff.c \
 	panel-session.c \
-	panel-compatibility.c \
 	panel.c \
 	applet.c \
 	drawer.c \
 	panel-config-global.c \
 	panel-util.c \
-	panel-mateconf.c \
+	panel-gsettings.c \
 	panel-properties-dialog.c \
 	panel-run-dialog.c \
 	menu.c \
@@ -61,6 +61,7 @@ panel_sources = \
 	panel-multiscreen.c \
 	panel-a11y.c \
 	panel-bindings.c \
+	panel-layout.c \
 	panel-profile.c \
 	panel-force-quit.c \
 	panel-lockdown.c \
@@ -77,14 +78,13 @@ panel_headers = \
 	button-widget.h \
 	xstuff.h \
 	panel-session.h \
-	panel-compatibility.h \
 	panel.h \
 	applet.h \
 	drawer.h \
 	panel-util.h \
 	panel-properties-dialog.h \
 	panel-config-global.h \
-	panel-mateconf.h \
+	panel-gsettings.h \
 	panel-run-dialog.h \
 	menu.h \
 	panel-context-menu.h \
@@ -109,6 +109,7 @@ panel_headers = \
 	panel-multiscreen.h \
 	panel-a11y.h \
 	panel-bindings.h \
+	panel-layout.h \
 	panel-profile.h \
 	panel-enums.h \
 	panel-force-quit.h \
@@ -118,7 +119,8 @@ panel_headers = \
 	panel-icon-names.h \
 	panel-modules.h \
 	mate-panel-applet-info.h \
-	panel-reset.h
+	panel-reset.h \
+	panel-schemas.h
 
 mate_panel_SOURCES = \
 	$(panel_sources) \
@@ -181,6 +183,7 @@ mate-panel-add: mate-panel-add.in Makefile
 
 panel_enum_headers = \
 	$(top_srcdir)/mate-panel/panel-enums.h \
+	$(top_srcdir)/mate-panel/panel-enums-gsettings.h \
 	$(top_srcdir)/mate-panel/panel-types.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
@@ -239,40 +242,10 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
 
-entriesdir       = $(MATECONF_SCHEMA_FILE_DIR)
-entries_DATA     = panel-default-setup.entries
-
-schemasdir       = $(MATECONF_SCHEMA_FILE_DIR)
-schemas_in_files = \
-	panel-global.schemas.in \
-	panel-general.schemas.in \
-	panel-toplevel.schemas.in \
-	panel-object.schemas.in
-schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
-
-@INTLTOOL_SCHEMAS_RULE@
-
-if MATECONF_SCHEMAS_INSTALL
-install-data-local:
-	if test -z "$(DESTDIR)" ; then \
-		for p in $(schemas_DATA) ; do \
-			MATECONF_CONFIG_SOURCE=$(MATECONF_SCHEMA_CONFIG_SOURCE) $(MATECONFTOOL) --makefile-install-rule $(top_builddir)/mate-panel/$$p ; \
-		done ; \
-		$(MATECONFTOOL) --direct --config-source=$(MATECONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries ; \
-		$(MATECONFTOOL) --direct --config-source=$(MATECONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries /apps/panel ; \
-	fi
-uninstall-local:
-	for p in $(schema_DATA) ; do \
-		MATECONF_CONFIG_SOURCE=$(MATECONF_SCHEMA_CONFIG_SOURCE) $(MATECONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/mate-panel/$$p ; \
-	done
-endif
-
 EXTRA_DIST = \
 	$(ui_DATA) \
 	nothing.cP \
 	nothing.h \
-	$(schemas_in_files) \
-	panel-compatibility.schemas \
 	panel-marshal.list \
 	mate-panelrc \
 	$(entries_DATA) \
@@ -281,7 +254,6 @@ EXTRA_DIST = \
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
-	$(schemas_in_files:.schemas.in=.schemas) \
 	$(sys_DATA) \
 	$(desktop_DATA) \
 	mate-panel-add

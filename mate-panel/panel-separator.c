@@ -203,7 +203,7 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 }
 
 void
-panel_separator_load_from_mateconf (PanelWidget *panel,
+panel_separator_load_from_gsettings (PanelWidget *panel,
 				 gboolean     locked,
 				 int          position,
 				 const char  *id)
@@ -238,7 +238,7 @@ panel_separator_create (PanelToplevel *toplevel,
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_SEPARATOR,
 					   toplevel, position, FALSE);
-	panel_profile_add_to_list (PANEL_MATECONF_OBJECTS, id);
+	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 	g_free (id);
 }
 

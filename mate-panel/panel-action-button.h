@@ -65,14 +65,7 @@ void       panel_action_button_create           (PanelToplevel         *toplevel
 void       panel_action_button_set_type         (PanelActionButton     *button,
 						 PanelActionButtonType  type);
 
-void       panel_action_button_load_from_mateconf  (PanelWidget            *panel,
-						 gboolean                locked,
-						 int                     position,
-						 gboolean                exactpos,
-						 const char             *id);
-
-void       panel_action_button_load_compatible  (PanelObjectType         object_type,
-						 PanelWidget            *panel,
+void       panel_action_button_load_from_gsettings  (PanelWidget            *panel,
 						 gboolean                locked,
 						 int                     position,
 						 gboolean                exactpos,

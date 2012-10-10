@@ -47,6 +47,7 @@
 #include "panel-struts.h"
 #include "panel-config-global.h"
 #include "panel-lockdown.h"
+#include "panel-schemas.h"
 
 G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 
@@ -76,6 +77,8 @@ typedef enum {
 } PanelGrabOpType;
 
 struct _PanelToplevelPrivate {
+	gchar                  *settings_path;
+
 	gboolean                expand;
 	PanelOrientation        orientation;
 	int                     size;
@@ -212,6 +215,7 @@ enum {
 enum {
 	PROP_0,
 	PROP_NAME,
+	PROP_SETTINGS_PATH,
 	PROP_EXPAND,
 	PROP_ORIENTATION,
 	PROP_SIZE,
@@ -454,7 +458,7 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	     op_type == PANEL_GRAB_OP_RESIZE_DOWN ||
 	     op_type == PANEL_GRAB_OP_RESIZE_LEFT ||
 	     op_type == PANEL_GRAB_OP_RESIZE_RIGHT) &&
-	    ! panel_profile_is_writable_toplevel_size (toplevel))
+	    ! panel_profile_key_is_writable (toplevel, PANEL_TOPLEVEL_SIZE_KEY))
 		return;
 
 	if (toplevel->priv->attached && op_type == PANEL_GRAB_OP_MOVE) {
@@ -3819,6 +3823,9 @@ panel_toplevel_set_property (GObject      *object,
 	case PROP_NAME:
 		panel_toplevel_set_name (toplevel, g_value_get_string (value));
 		break;
+	case PROP_SETTINGS_PATH:
+		panel_toplevel_set_settings_path (toplevel, g_value_get_string (value));
+		break;
 	case PROP_EXPAND:
 		panel_toplevel_set_expand (toplevel, g_value_get_boolean (value));
 		break;
@@ -3913,6 +3920,9 @@ panel_toplevel_get_property (GObject    *object,
 	case PROP_NAME:
 		g_value_set_string (value, panel_toplevel_get_name (toplevel));
 		break;
+	case PROP_SETTINGS_PATH:
+		g_value_set_string (value, toplevel->priv->settings_path);
+		break;
 	case PROP_EXPAND:
 		g_value_set_boolean (value, toplevel->priv->expand);
 		break;
@@ -3981,6 +3991,21 @@ panel_toplevel_finalize (GObject *object)
 	panel_struts_unregister_strut (toplevel);
 
 	toplevel_list = g_slist_remove (toplevel_list, toplevel);
+
+	if (toplevel->priv->settings_path) {
+		g_free (toplevel->priv->settings_path);
+		toplevel->priv->settings_path = NULL;
+	}
+
+	if (toplevel->settings) {
+		g_object_unref (toplevel->settings);
+		toplevel->settings = NULL;
+	}
+
+	if (toplevel->background_settings) {
+		g_object_unref (toplevel->background_settings);
+		toplevel->background_settings = NULL;
+	}
 
 	if (toplevel->priv->gtk_settings) {
 		g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
@@ -4063,6 +4088,16 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			"name",
 			"Name",
 			"The name of this panel",
+			NULL,
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_SETTINGS_PATH,
+		g_param_spec_string (
+			"settings-path",
+			"GSettings path",
+			"The GSettings path used for this panel",
 			NULL,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -4596,6 +4631,13 @@ panel_toplevel_set_name (PanelToplevel *toplevel,
 	panel_toplevel_update_name (toplevel);
 
 	g_object_notify (G_OBJECT (toplevel), "name");
+}
+
+void
+panel_toplevel_set_settings_path (PanelToplevel *toplevel,
+				  const char    *settings_path)
+{
+	toplevel->priv->settings_path = g_strdup (settings_path);
 }
 
 const char* panel_toplevel_get_name(PanelToplevel* toplevel)

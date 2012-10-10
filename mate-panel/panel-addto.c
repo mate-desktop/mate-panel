@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
 #include <matemenu-tree.h>
 
@@ -48,6 +49,7 @@
 #include "panel-profile.h"
 #include "panel-addto.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 typedef struct {
 	PanelWidget *panel_widget;
@@ -71,8 +73,6 @@ typedef struct {
 
 	gchar        *search_text;
 	gchar        *applet_search_text;
-
-	guint         name_notify;
 
 	int           insertion_position;
 } PanelAddtoDialog;
@@ -939,16 +939,18 @@ panel_addto_dialog_free_application_list (GSList *application_list)
 }
 
 static void
+panel_addto_name_notify (GSettings        *settings,
+			 gchar            *key,
+			 PanelAddtoDialog *dialog);
+
+static void
 panel_addto_dialog_free (PanelAddtoDialog *dialog)
 {
-	MateConfClient *client;
 	GSList      *item;
 
-	client = panel_mateconf_get_client ();
-
-	if (dialog->name_notify)
-		mateconf_client_notify_remove (client, dialog->name_notify);
-	dialog->name_notify = 0;
+	g_signal_handlers_disconnect_by_func(dialog->panel_widget->toplevel->settings,
+					     G_CALLBACK (panel_addto_name_notify),
+					     dialog);
 
 	if (dialog->search_text)
 		g_free (dialog->search_text);
@@ -1030,27 +1032,11 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 }
 
 static void
-panel_addto_name_notify (MateConfClient      *client,
-			 guint             cnxn_id,
-			 MateConfEntry       *entry,
+panel_addto_name_notify (GSettings        *settings,
+			 gchar            *key,
 			 PanelAddtoDialog *dialog)
 {
-	MateConfValue *value;
-	const char *key;
-	const char *text = NULL;
-
-	key = panel_mateconf_basename (mateconf_entry_get_key (entry));
-
-	if (strcmp (key, "name"))
-		return;
-
-	value = mateconf_entry_get_value (entry);
-
-	if (value && value->type == MATECONF_VALUE_STRING)
-		text = mateconf_value_get_string (value);
-
-	if (text)
-		panel_addto_name_change (dialog, text);
+	panel_addto_name_change (dialog, g_settings_get_string (settings, key));
 }
 
 static gboolean
@@ -1253,13 +1239,11 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 				 (GDestroyNotify) panel_addto_dialog_free);
 
 	dialog->panel_widget = panel_widget;
-	dialog->name_notify =
-		panel_profile_toplevel_notify_add (
-			dialog->panel_widget->toplevel,
-			"name",
-			(MateConfClientNotifyFunc) panel_addto_name_notify,
-			dialog);
 
+	g_signal_connect (dialog->panel_widget->toplevel->settings,
+			  "changed::" PANEL_TOPLEVEL_NAME_KEY,
+			  G_CALLBACK (panel_addto_name_notify),
+			  dialog);
 
 	dialog->addto_dialog = gtk_dialog_new ();
 	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),

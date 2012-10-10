@@ -302,7 +302,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 	panel_widget_set_applet_expandable(panel, GTK_WIDGET(menubar), FALSE, TRUE);
 }
 
-void panel_menu_bar_load_from_mateconf(PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
+void panel_menu_bar_load_from_gsettings (PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
 {
 	panel_menu_bar_load(panel, locked, position, exactpos, id);
 }
@@ -312,7 +312,7 @@ void panel_menu_bar_create(PanelToplevel* toplevel, int position)
 	char* id;
 
 	id = panel_profile_prepare_object(PANEL_OBJECT_MENU_BAR, toplevel, position, FALSE);
-	panel_profile_add_to_list(PANEL_MATECONF_OBJECTS, id);
+	panel_profile_add_to_list(PANEL_GSETTINGS_OBJECTS, id);
 	g_free(id);
 }
 

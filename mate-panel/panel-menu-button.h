@@ -74,8 +74,10 @@ void       panel_menu_button_set_use_menu_path   (PanelMenuButton  *button,
 gboolean   panel_menu_button_get_use_menu_path   (PanelMenuButton  *button);
 void       panel_menu_button_set_use_custom_icon (PanelMenuButton  *button,
 						  gboolean          use_custom_icon);
+void       panel_menu_button_set_has_arrow       (PanelMenuButton *button,
+				           gboolean         has_arrow);
 
-void       panel_menu_button_load_from_mateconf     (PanelWidget      *panel,
+void       panel_menu_button_load_from_gsettings     (PanelWidget      *panel,
 						  gboolean          locked,
 						  int               position,
 						  gboolean          exactpos,

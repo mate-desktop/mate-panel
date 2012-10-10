@@ -17,19 +17,20 @@
 
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#include <gio/gio.h>
 
 #include "drawer.h"
 
 #include "applet.h"
 #include "button-widget.h"
 #include "panel-config-global.h"
-#include "panel-mateconf.h"
 #include "panel-profile.h"
 #include "panel-util.h"
 #include "xstuff.h"
 #include "panel-globals.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 static void
 drawer_click (GtkWidget *w, Drawer *drawer)
@@ -52,17 +53,6 @@ static void
 destroy_drawer (GtkWidget *widget,
 		Drawer    *drawer)
 {
-	MateConfClient *client;
-	int          i;
-
-	client = panel_mateconf_get_client ();
-
-	for (i = 0; i < PANEL_DRAWER_N_LISTENERS; i++) {
-		if (drawer->listeners [i])
-			mateconf_client_notify_remove (client, drawer->listeners [i]);
-		drawer->listeners [i] = 0;
-	}
-
 	if (drawer->toplevel)
 		gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
 	drawer->toplevel = NULL;
@@ -385,27 +375,20 @@ create_drawer_applet (PanelToplevel    *toplevel,
 }
 
 static PanelToplevel *
-create_drawer_toplevel (const char *drawer_id)
+create_drawer_toplevel (const char *drawer_id, GSettings *settings)
 {
 	PanelToplevel *toplevel;
-	MateConfClient   *client;
-	const char    *key;
 	char          *toplevel_id;
 
-	client  = panel_mateconf_get_client ();
-
-	toplevel_id = panel_profile_find_new_id (PANEL_MATECONF_TOPLEVELS);
-
-	toplevel = panel_profile_load_toplevel (client, PANEL_CONFIG_DIR,
-						PANEL_MATECONF_TOPLEVELS, toplevel_id);
+	toplevel_id = panel_profile_find_new_id (PANEL_GSETTINGS_TOPLEVELS);
+	toplevel = panel_profile_load_toplevel (toplevel_id);
 
 	if (!toplevel) {
 		g_free (toplevel_id);
 		return NULL;
 	}
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer_id, "attached_toplevel_id");
-	mateconf_client_set_string (client, key, toplevel_id, NULL);
+	g_settings_set_string (settings, PANEL_OBJECT_ATTACHED_TOPLEVEL_ID_KEY, toplevel_id);
 	g_free (toplevel_id);
 
 	panel_profile_set_toplevel_enable_buttons (toplevel, TRUE);
@@ -428,24 +411,17 @@ drawer_button_size_allocated (GtkWidget     *widget,
 }
 
 static void
-panel_drawer_use_custom_icon_changed (MateConfClient *client,
-				      guint        cnxn_id,
-				      MateConfEntry  *entry,
+panel_drawer_use_custom_icon_changed (GSettings *settings,
+				      gchar     *key,
 				      Drawer      *drawer)
 {
 	gboolean  use_custom_icon;
 	char     *custom_icon = NULL;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-		return;
-
-	use_custom_icon = mateconf_value_get_bool (entry->value);
+	use_custom_icon = g_settings_get_boolean (settings, key);
 
 	if (use_custom_icon) {
-		const char *key;
-
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer->info->id, "custom_icon");
-		custom_icon = mateconf_client_get_string (client, key, NULL);
+		custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
 	}
 
 	button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
@@ -454,70 +430,45 @@ panel_drawer_use_custom_icon_changed (MateConfClient *client,
 }
 
 static void
-panel_drawer_custom_icon_changed (MateConfClient *client,
-				  guint        cnxn_id,
-				  MateConfEntry  *entry,
-				  Drawer      *drawer)
+panel_drawer_custom_icon_changed (GSettings *settings,
+				  gchar     *key,
+				  Drawer    *drawer)
 {
 	const char *custom_icon;
-
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
-	custom_icon = mateconf_value_get_string (entry->value);
+	custom_icon = g_settings_get_string (settings, key);
 
 	if (custom_icon && custom_icon [0]) {
-		const char *key;
 		gboolean    use_custom_icon;
-
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer->info->id, "use_custom_icon");
-		use_custom_icon = mateconf_client_get_bool (client, key, NULL);
+		use_custom_icon = g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY);
 		if (use_custom_icon)
 			button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
 	}
 }
 
 static void
-panel_drawer_tooltip_changed (MateConfClient *client,
-			      guint        cnxn_id,
-			      MateConfEntry  *entry,
+panel_drawer_tooltip_changed (GSettings *settings,
+			      gchar     *key,
 			      Drawer      *drawer)
 {
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
 	set_tooltip_and_name (drawer,
-			      mateconf_value_get_string (entry->value));
+			      g_settings_get_string (settings, key));
 }
 
 static void
-panel_drawer_connect_to_mateconf (Drawer *drawer)
+panel_drawer_connect_to_gsettings (Drawer *drawer)
 {
-	MateConfClient *client;
-	const char  *key;
-	int          i = 0;
-
-	client  = panel_mateconf_get_client ();
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer->info->id, "use_custom_icon");
-        drawer->listeners [i++] =
-		mateconf_client_notify_add (client, key,
-					 (MateConfClientNotifyFunc) panel_drawer_use_custom_icon_changed,
-					 drawer, NULL, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer->info->id, "custom_icon");
-        drawer->listeners [i++] =
-		mateconf_client_notify_add (client, key,
-					 (MateConfClientNotifyFunc) panel_drawer_custom_icon_changed,
-					 drawer, NULL, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer->info->id, "tooltip");
-        drawer->listeners [i++] =
-		mateconf_client_notify_add (client, key,
-					 (MateConfClientNotifyFunc) panel_drawer_tooltip_changed,
-					 drawer, NULL, NULL);
-
-	g_assert (i == PANEL_DRAWER_N_LISTENERS);
+	g_signal_connect (drawer->info->settings,
+			  "changed::" PANEL_OBJECT_USE_CUSTOM_ICON_KEY,
+			  G_CALLBACK (panel_drawer_use_custom_icon_changed),
+			  drawer);
+	g_signal_connect (drawer->info->settings,
+			  "changed::" PANEL_OBJECT_CUSTOM_ICON_KEY,
+			  G_CALLBACK (panel_drawer_custom_icon_changed),
+			  drawer);
+	g_signal_connect (drawer->info->settings,
+			  "changed::" PANEL_OBJECT_TOOLTIP_KEY,
+			  G_CALLBACK (panel_drawer_tooltip_changed),
+			  drawer);
 }
 
 static gboolean
@@ -528,6 +479,7 @@ drawer_changes_enabled (void)
 
 static void
 load_drawer_applet (char          *toplevel_id,
+		    GSettings     *settings,
 		    const char    *custom_icon,
 		    gboolean       use_custom_icon,
 		    const char    *tooltip,
@@ -548,7 +500,7 @@ load_drawer_applet (char          *toplevel_id,
 		toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
 
 	if (!toplevel)
-		toplevel = create_drawer_toplevel (id);
+		toplevel = create_drawer_toplevel (id, settings);
 
 	if (toplevel) {
 		panel_toplevel_hide (toplevel, FALSE, -1);
@@ -601,7 +553,7 @@ load_drawer_applet (char          *toplevel_id,
 				   _("_Help"),
 				   NULL);
 
-	panel_drawer_connect_to_mateconf (drawer);
+	panel_drawer_connect_to_gsettings (drawer);
 }
 
 static void
@@ -611,45 +563,45 @@ panel_drawer_prepare (const char  *drawer_id,
 		      const char  *tooltip,
 		      char       **attached_toplevel_id)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client  = panel_mateconf_get_client ();
+	GSettings *settings;
+	char *path;
+	
+	path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, drawer_id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_free (path);
 
 	if (tooltip) {
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer_id, "tooltip");
-		mateconf_client_set_string (client, key, tooltip, NULL);
+		g_settings_set_string (settings, PANEL_OBJECT_TOOLTIP_KEY, tooltip);
 	}
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer_id, "use_custom_icon");
-	mateconf_client_set_bool (client, key, use_custom_icon, NULL);
+	g_settings_set_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY, use_custom_icon);
 
 	if (custom_icon) {
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer_id, "custom_icon");
-		mateconf_client_set_string (client, key, custom_icon, NULL);
+		g_settings_set_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY, custom_icon);
 	}
 
 	if (attached_toplevel_id) {
 		char *toplevel_id;
-		char *toplevel_dir;
+		char *toplevel_path;
+		GSettings *toplevel_settings;
 
-		toplevel_id = panel_profile_find_new_id (PANEL_MATECONF_TOPLEVELS);
+		toplevel_id = panel_profile_find_new_id (PANEL_GSETTINGS_TOPLEVELS);
 
-		toplevel_dir = g_strdup_printf (PANEL_CONFIG_DIR "/toplevels/%s",
+		toplevel_path = g_strdup_printf (PANEL_TOPLEVEL_PATH "%s/",
 						toplevel_id);
-		panel_mateconf_associate_schemas_in_dir (client, toplevel_dir, PANEL_SCHEMAS_DIR "/toplevels");
 
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, drawer_id, "attached_toplevel_id");
-		mateconf_client_set_string (client, key, toplevel_id, NULL);
+		toplevel_settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, toplevel_path);
 
-		key = panel_mateconf_full_key (PANEL_MATECONF_TOPLEVELS, toplevel_id, "enable_buttons");
-		mateconf_client_set_bool (client, key, TRUE, NULL);
-
-		key = panel_mateconf_full_key (PANEL_MATECONF_TOPLEVELS, toplevel_id, "enable_arrows");
-		mateconf_client_set_bool (client, key, TRUE, NULL);
+		g_settings_set_string (settings, PANEL_OBJECT_ATTACHED_TOPLEVEL_ID_KEY, toplevel_id);
+		g_settings_set_boolean (toplevel_settings, PANEL_TOPLEVEL_ENABLE_BUTTONS_KEY, TRUE);
+		g_settings_set_boolean (toplevel_settings, PANEL_TOPLEVEL_ENABLE_ARROWS_KEY, TRUE);
 
 		*attached_toplevel_id = toplevel_id;
+
+		g_object_unref (toplevel_settings);
+		g_free (toplevel_path);
 	}
+	g_object_unref (settings);
 }
 
 void
@@ -665,7 +617,7 @@ panel_drawer_create (PanelToplevel *toplevel,
 
 	panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, NULL);
 
-	panel_profile_add_to_list (PANEL_MATECONF_OBJECTS, id);
+	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 
 	g_free (id);
 }
@@ -684,7 +636,7 @@ panel_drawer_create_with_id (const char    *toplevel_id,
 
 	panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, &attached_toplevel_id);
 
-	panel_profile_add_to_list (PANEL_MATECONF_OBJECTS, id);
+	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 
 	g_free (id);
 
@@ -692,38 +644,36 @@ panel_drawer_create_with_id (const char    *toplevel_id,
 }
 
 void
-drawer_load_from_mateconf (PanelWidget *panel_widget,
-			gboolean     locked,
-			gint         position,
-			const char  *id)
+drawer_load_from_gsettings (PanelWidget *panel_widget,
+			    gboolean     locked,
+			    gint         position,
+			    const char  *id)
 {
-	MateConfClient *client;
-	const char  *key;
 	gboolean     use_custom_icon;
 	char        *toplevel_id;
 	char        *custom_icon;
 	char        *tooltip;
+	gchar       *path;
+	GSettings   *settings;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	client  = panel_mateconf_get_client ();
+	path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_free (path); 
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "attached_toplevel_id");
-	toplevel_id = mateconf_client_get_string (client, key, NULL);
+	toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_ATTACHED_TOPLEVEL_ID_KEY);
 
-	panel_profile_load_toplevel (client, PANEL_CONFIG_DIR, PANEL_MATECONF_TOPLEVELS, toplevel_id);
+	panel_profile_load_toplevel (toplevel_id);
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "use_custom_icon");
-	use_custom_icon = mateconf_client_get_bool (client, key, NULL);
+	use_custom_icon = g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY);
+	custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "custom_icon");
-	custom_icon = mateconf_client_get_string (client, key, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "tooltip");
-	tooltip = mateconf_client_get_string (client, key, NULL);
+	tooltip = g_settings_get_string (settings, PANEL_OBJECT_TOOLTIP_KEY);
 
 	load_drawer_applet (toplevel_id,
+			    settings,
 			    custom_icon,
 			    use_custom_icon,
 			    tooltip,

@@ -15,6 +15,8 @@
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
 #include "panel-globals.h"
+#include "panel-enums.h"
+#include "panel-enums-gsettings.h"
 
 #define BUTTON_WIDGET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BUTTON_TYPE_WIDGET, ButtonWidgetPrivate))
 

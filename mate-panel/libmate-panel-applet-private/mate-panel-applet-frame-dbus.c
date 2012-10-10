@@ -435,7 +435,7 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 
 	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 	g_variant_builder_add (&builder, "{sv}",
-			       "prefs-key",
+			       "prefs-path",
 			       g_variant_new_string (conf_path));
 	g_variant_builder_add (&builder, "{sv}",
 			       "orient",

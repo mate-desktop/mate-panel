@@ -30,13 +30,11 @@
 #include "panel-context-menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
-#include "panel-mateconf.h"
 #include "panel-profile.h"
 #include "mate-panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-separator.h"
-#include "panel-compatibility.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
@@ -407,8 +405,8 @@ set_background_image_from_uri (PanelToplevel *toplevel,
 {
 	char *image;
 
-	if ( ! panel_profile_is_writable_background_type (toplevel) ||
-	     ! panel_profile_is_writable_background_image (toplevel))
+	if ( ! panel_profile_background_key_is_writable (toplevel, "type") ||
+	     ! panel_profile_background_key_is_writable (toplevel, "image"))
 		return FALSE;
 
 	if (!(image = g_filename_from_uri (uri, NULL, NULL)))
@@ -431,8 +429,8 @@ set_background_color (PanelToplevel *toplevel,
 	if (!dropped)
 		return FALSE;
 
-	if ( ! panel_profile_is_writable_background_type (toplevel) ||
-	     ! panel_profile_is_writable_background_color (toplevel))
+	if ( ! panel_profile_background_key_is_writable (toplevel, "color") ||
+	     ! panel_profile_background_key_is_writable (toplevel, "type"))
 		return FALSE;
 
 	color.gdk.red   = dropped [0];
@@ -1086,7 +1084,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		success = set_background_image_from_uri (panel->toplevel, (char *) data);
 		break;
 	case TARGET_BACKGROUND_RESET:
-		if (panel_profile_is_writable_background_type (panel->toplevel)) {
+		if (panel_profile_background_key_is_writable (panel->toplevel, "type")) {
 			panel_profile_set_background_type (panel->toplevel, PANEL_BACK_NONE);
 			success = TRUE;
 		} else {

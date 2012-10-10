@@ -29,7 +29,7 @@
 
 #include <glib/gi18n.h>
 
-#include <mateconf/mateconf.h>
+#include <gio/gio.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
@@ -42,7 +42,7 @@
 #include "panel-lockdown.h"
 #include "panel-stock-icons.h"
 #include "xstuff.h"
-#include "panel-compatibility.h"
+#include "panel-schemas.h"
 
 #include "mate-panel-applet-frame.h"
 
@@ -74,7 +74,7 @@ G_DEFINE_TYPE (MatePanelAppletFrame, mate_panel_applet_frame, GTK_TYPE_EVENT_BOX
 #define MATE_PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, MatePanelAppletFramePrivate))
 
 #define HANDLE_SIZE 10
-#define MATE_PANEL_APPLET_PREFS_KEY "/apps/panel/applets/%s/prefs"
+#define MATE_PANEL_APPLET_PREFS_PATH "/org/mate/panel/objects/%s/prefs/"
 
 struct _MatePanelAppletFramePrivate {
 	PanelWidget     *panel;
@@ -834,7 +834,7 @@ mate_panel_applet_frame_activating_get_locked_down (MatePanelAppletFrameActivati
 gchar *
 mate_panel_applet_frame_activating_get_conf_path (MatePanelAppletFrameActivating *frame_act)
 {
-	return g_strdup_printf (MATE_PANEL_APPLET_PREFS_KEY, frame_act->id);
+	return g_strdup_printf (MATE_PANEL_APPLET_PREFS_PATH, frame_act->id);
 }
 
 static void
@@ -857,7 +857,7 @@ mate_panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 								 item);
 		}
 
-		panel_profile_remove_from_list (PANEL_MATECONF_APPLETS, id);
+		panel_profile_remove_from_list (PANEL_GSETTINGS_OBJECTS, id);
 	}
 
 	g_free (id);
@@ -962,17 +962,24 @@ mate_panel_applet_frame_load (const gchar *iid,
 }
 
 void
-mate_panel_applet_frame_load_from_mateconf (PanelWidget *panel_widget,
+mate_panel_applet_frame_load_from_gsettings (PanelWidget *panel_widget,
 				    gboolean     locked,
 				    int          position,
 				    const char  *id)
 {
+	GSettings *settings;
+	gchar *path;
 	gchar *applet_iid;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	applet_iid = panel_compatibility_get_applet_iid (id);
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	applet_iid = g_settings_get_string (settings, PANEL_OBJECT_APPLET_IID_KEY);
+	g_object_unref (settings);
+	g_free (path);
+
 	if (!applet_iid) {
 		mate_panel_applet_stop_loading (id);
 		return;
@@ -989,20 +996,21 @@ mate_panel_applet_frame_create (PanelToplevel *toplevel,
 			   int            position,
 			   const char    *iid)
 {
-	MateConfClient *client;
-	const char  *key;
+	GSettings   *settings;
+	gchar       *path;
 	char        *id;
 
 	g_return_if_fail (iid != NULL);
 
-	client =  panel_mateconf_get_client ();
-
 	id = panel_profile_prepare_object (PANEL_OBJECT_APPLET, toplevel, position, FALSE);
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_APPLETS, id, "applet_iid");
-	mateconf_client_set_string (client, key, iid, NULL);
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_settings_set_string (settings, PANEL_OBJECT_APPLET_IID_KEY, iid);
 
-	panel_profile_add_to_list (PANEL_MATECONF_APPLETS, id);
+	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 
 	g_free (id);
+	g_free (path);
+	g_object_unref (settings);
 }

@@ -7,8 +7,6 @@
 extern "C" {
 #endif
 
-#define PANEL_DRAWER_N_LISTENERS 3
-
 typedef struct {
 	char          *tooltip;
 
@@ -19,8 +17,6 @@ typedef struct {
 	guint          close_timeout_id;
 
 	AppletInfo    *info;
-
-	guint          listeners [PANEL_DRAWER_N_LISTENERS];
 } Drawer;
 
 void  panel_drawer_create          (PanelToplevel *toplevel,
@@ -38,7 +34,7 @@ char *panel_drawer_create_with_id  (const char    *toplevel_id,
 void  panel_drawer_set_dnd_enabled (Drawer        *drawer,
 				    gboolean       dnd_enabled);
 
-void  drawer_load_from_mateconf       (PanelWidget   *panel_widget,
+void  drawer_load_from_gsettings   (PanelWidget   *panel_widget,
 				    gboolean       locked,
 				    gint           position,
 				    const char    *id);

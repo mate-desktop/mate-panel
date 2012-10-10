@@ -29,7 +29,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
-#include <mateconf/mateconf-client.h>
 
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-xdg.h>
@@ -48,6 +47,7 @@
 #include "panel-run-dialog.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 typedef struct {
 	GtkWidget    *pixmap;
@@ -89,7 +89,12 @@ static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 
 static inline gboolean desktop_is_home_dir(void)
 {
-	return mateconf_client_get_bool(panel_mateconf_get_client(), "/apps/caja/preferences/desktop_is_home_dir", NULL);
+	gboolean retval;
+	GSettings *settings;
+	settings = g_settings_new (CAJA_PREFS_SCHEMA);
+	retval = g_settings_get_boolean (settings, CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY);
+	g_object_unref (settings);
+	return retval;
 }
 
 GtkWidget *

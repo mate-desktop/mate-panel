@@ -3,16 +3,19 @@
  *
  * Authors:
  *    Mark McLoughlin <mark@skynet.ie>
+ *    Stefano Karapetsas <stefano@karapetsas.com>
  *
  * Copyright 2002 Sun Microsystems, Inc.
+ *           2012 Stefano Karapetsas
  */
 
 #include <config.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <mateconf/mateconf.h>
+#include <gio/gio.h>
 
 #include <libpanel-util/panel-cleanup.h>
+#include <libpanel-util/panel-dconf.h>
 
 #include <libmate-panel-applet-private/mate-panel-applet-container.h>
 #include <libmate-panel-applet-private/mate-panel-applets-manager-dbus.h>
@@ -23,18 +26,18 @@ G_GNUC_UNUSED void on_execute_button_clicked (GtkButton *button, gpointer dummy)
 
 static GtkWidget *win = NULL;
 static GtkWidget *applet_combo = NULL;
-static GtkWidget *prefs_dir_entry = NULL;
+static GtkWidget *prefs_path_entry = NULL;
 static GtkWidget *orient_combo = NULL;
 static GtkWidget *size_combo = NULL;
 
 static char *cli_iid = NULL;
-static char *cli_prefs_dir = NULL;
+static char *cli_prefs_path = NULL;
 static char *cli_size = NULL;
 static char *cli_orient = NULL;
 
 static const GOptionEntry options [] = {
 	{ "iid", 0, 0, G_OPTION_ARG_STRING, &cli_iid, N_("Specify an applet IID to load"), NULL},
-	{ "prefs-dir", 0, 0, G_OPTION_ARG_STRING, &cli_prefs_dir, N_("Specify a mateconf location in which the applet preferences should be stored"), NULL},
+	{ "prefs-path", 0, 0, G_OPTION_ARG_STRING, &cli_prefs_path, N_("Specify a gsettings path in which the applet preferences should be stored"), NULL},
 	{ "size", 0, 0, G_OPTION_ARG_STRING, &cli_size, N_("Specify the initial size of the applet (xx-small, medium, large etc.)"), NULL},
 	{ "orient", 0, 0, G_OPTION_ARG_STRING, &cli_orient, N_("Specify the initial orientation of the applet (top, bottom, left or right)"), NULL},
 	{ NULL}
@@ -136,7 +139,7 @@ applet_activated_cb (GObject      *source_object,
 
 static void
 load_applet_into_window (const char *title,
-			 const char *prefs_key,
+			 const char *prefs_path,
 			 guint       size,
 			 guint       orientation)
 {
@@ -158,7 +161,7 @@ load_applet_into_window (const char *title,
 
 	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 	g_variant_builder_add (&builder, "{sv}",
-			       "prefs-key", g_variant_new_string (prefs_key));
+			       "prefs-path", g_variant_new_string (prefs_path));
 	g_variant_builder_add (&builder, "{sv}",
 			       "size", g_variant_new_uint32 (size));
 	g_variant_builder_add (&builder, "{sv}",
@@ -201,7 +204,7 @@ load_applet_from_command_line (void)
 
 	g_print ("Loading %s\n", cli_iid);
 
-	load_applet_into_window (cli_iid, cli_prefs_dir, size, orient);
+	load_applet_into_window (cli_iid, cli_prefs_path, size, orient);
 }
 
 G_GNUC_UNUSED void
@@ -213,7 +216,7 @@ on_execute_button_clicked (GtkButton *button,
 	title = get_combo_applet_id (applet_combo);
 
 	load_applet_into_window (title,
-				 gtk_entry_get_text (GTK_ENTRY (prefs_dir_entry)),
+				 gtk_entry_get_text (GTK_ENTRY (prefs_path_entry)),
 				 get_combo_value (size_combo),
 				 get_combo_value (orient_combo));
 	g_free (title);
@@ -261,8 +264,11 @@ setup_options (void)
 	MatePanelAppletsManager *manager;
 	GList               *applet_list, *l;
 	int                  i;
-	char                *prefs_dir;
-	char                *unique_key;
+	int                  j;
+	char                *prefs_path = NULL;
+	char                *unique_key = NULL;
+	gboolean            *unique_key_found = FALSE;
+	gchar              **dconf_paths;
 	GtkListStore        *model;
 	GtkTreeIter          iter;
 	GtkCellRenderer     *renderer;
@@ -301,11 +307,27 @@ setup_options (void)
 	setup_combo (orient_combo, orient_items, "Orientation",
 		     G_N_ELEMENTS (orient_items));
 
-	unique_key = mateconf_unique_key ();
-	prefs_dir = g_strdup_printf ("/tmp/%s", unique_key);
-	g_free (unique_key);
-	gtk_entry_set_text (GTK_ENTRY (prefs_dir_entry), prefs_dir);
-	g_free (prefs_dir);
+	for (i = 0; !unique_key_found; i++)
+	{
+		unique_key = g_strdup_printf ("mate-panel-test-applet-%d", i);
+		unique_key_found = TRUE;
+		dconf_paths = panel_dconf_list_subdirs ("/tmp/", TRUE);
+		for (j = 0; dconf_paths[j] != NULL; j++)
+		{
+			if (g_strcmp0(unique_key, dconf_paths[j]) == 0) {
+				unique_key_found = FALSE;
+				break;
+			}
+		}
+		if (dconf_paths)
+			g_strfreev (dconf_paths);
+	}
+	
+	prefs_path = g_strdup_printf ("/tmp/%s/", unique_key);
+	if (unique_key)
+		g_free (unique_key);
+	gtk_entry_set_text (GTK_ENTRY (prefs_path_entry), prefs_path);
+	g_free (prefs_path);
 }
 
 int
@@ -369,8 +391,8 @@ main (int argc, char **argv)
 							      "toplevel"));
 	applet_combo    = GTK_WIDGET (gtk_builder_get_object (builder,
 							      "applet-combo"));
-	prefs_dir_entry = GTK_WIDGET (gtk_builder_get_object (builder,
-							      "prefs-dir-entry"));
+	prefs_path_entry = GTK_WIDGET (gtk_builder_get_object (builder,
+							      "prefs-path-entry"));
 	orient_combo    = GTK_WIDGET (gtk_builder_get_object (builder,
 							      "orient-combo"));
 	size_combo      = GTK_WIDGET (gtk_builder_get_object (builder,

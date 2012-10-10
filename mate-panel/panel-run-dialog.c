@@ -40,7 +40,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
-#include <mateconf/mateconf-client.h>
 #include <matemenu-tree.h>
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
@@ -53,7 +52,6 @@
 #include <libpanel-util/panel-show.h>
 
 #include "nothing.h"
-#include "panel-mateconf.h"
 #include "panel-util.h"
 #include "panel-globals.h"
 #include "panel-enums.h"
@@ -93,13 +91,14 @@ typedef struct {
 	int	          add_icons_idle_id;
 	int	          add_items_idle_id;
 	int		  find_command_idle_id;
-	int		  content_notify_id;
 	gboolean	  use_program_list;
 	gboolean	  completion_started;
 
 	char		 *icon_path;
 	char             *desktop_path;
 	char		 *item_name;
+
+	GSettings        *settings;
 } PanelRunDialog;
 
 enum {
@@ -117,72 +116,67 @@ static PanelRunDialog *static_dialog = NULL;
 
 static void panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog);
 
-#define PANEL_RUN_HISTORY_KEY "/apps/mate-settings/mate-panel/history-mate-run"
+#define PANEL_RUN_SCHEMA "org.mate.panel"
+#define PANEL_RUN_HISTORY_KEY "history-mate-run"
+#define PANEL_RUN_SHOW_PROGRAM_LIST_KEY "show-program-list"
 #define PANEL_RUN_MAX_HISTORY 10
 
 static GtkTreeModel *
-_panel_run_get_recent_programs_list (void)
+_panel_run_get_recent_programs_list (PanelRunDialog *dialog)
 {
 	GtkListStore *list;
-	GSList       *mateconf_items;
-	GSList       *command;
+	gchar       **items;
 	int           i = 0;
 
 	list = gtk_list_store_new (1, G_TYPE_STRING);
 
-	mateconf_items = mateconf_client_get_list (panel_mateconf_get_client (),
-					     PANEL_RUN_HISTORY_KEY,
-					     MATECONF_VALUE_STRING, NULL);
+	items = g_settings_get_strv (dialog->settings, PANEL_RUN_HISTORY_KEY);
 
-	for (command = mateconf_items;
-	     command && i < PANEL_RUN_MAX_HISTORY;
-	     command = command->next) {
+	for (i = 0;
+	     items[i] && i < PANEL_RUN_MAX_HISTORY;
+	     i++) {
 		GtkTreeIter iter;
 		gtk_list_store_prepend (list, &iter);
-		gtk_list_store_set (list, &iter, 0, command->data, -1);
-		i++;
+		gtk_list_store_set (list, &iter, 0, items[i], -1);
 	}
 
-	g_slist_free (mateconf_items);
+	g_strfreev (items);
 
 	return GTK_TREE_MODEL (list);
 }
 
 static void
-_panel_run_save_recent_programs_list (GtkComboBoxEntry *entry,
+_panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
+				      GtkComboBoxEntry *entry,
 				      char             *lastcommand)
 {
 	GtkTreeModel *model;
 	GtkTreeIter   iter;
-	GSList       *mateconf_items = NULL;
-	int           i = 0;
+	GArray       *items;
+	gint          i = 0;
 
-	mateconf_items = g_slist_prepend (mateconf_items, lastcommand);
+	items = g_array_new (TRUE, TRUE, sizeof (gchar *));
+	g_array_append_val (items, lastcommand);
 	i++;
 
 	model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
 
 	if (gtk_tree_model_get_iter_first (model, &iter)) {
 		char *command;
-
 		do {
 			gtk_tree_model_get (model, &iter, 0, &command, -1);
-
-			if (strcmp (command, lastcommand) == 0)
+			if (g_strcmp0 (command, lastcommand) == 0)
 				continue;
-
-			mateconf_items = g_slist_prepend (mateconf_items, command);
+			g_array_append_val (items, command);
 			i++;
 		} while (gtk_tree_model_iter_next (model, &iter) &&
 			 i < PANEL_RUN_MAX_HISTORY);
 	}
 
-	mateconf_client_set_list (panel_mateconf_get_client (),
-			       PANEL_RUN_HISTORY_KEY,
-			       MATECONF_VALUE_STRING, mateconf_items,
-			       NULL);
+	g_settings_set_strv (dialog->settings, PANEL_RUN_HISTORY_KEY,
+			     (const gchar **) items->data);
 
-	g_slist_free (mateconf_items);
+	g_array_free (items, TRUE);
 }
 
 static void
@@ -217,10 +211,9 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 		g_source_remove (dialog->find_command_idle_id);
 	dialog->find_command_idle_id = 0;
 
-	if (dialog->content_notify_id)
-		mateconf_client_notify_remove (panel_mateconf_get_client (),
-					    dialog->content_notify_id);
-	dialog->content_notify_id = 0;
+	if (dialog->settings != NULL)
+		g_object_unref (dialog->settings);
+	dialog->settings = NULL;
 
 	if (dialog->dir_hash)
 		g_hash_table_destroy (dialog->dir_hash);
@@ -479,7 +472,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	if (result) {
 		/* only save working commands in history */
 		_panel_run_save_recent_programs_list
-			(GTK_COMBO_BOX_ENTRY (dialog->combobox), command);
+			(dialog, GTK_COMBO_BOX_ENTRY (dialog->combobox), command);
 
 		/* only close the dialog if we successfully showed or launched
 		 * something */
@@ -1181,12 +1174,11 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
 }
 
 static void
-panel_run_dialog_content_notify (MateConfClient    *client,
-				 int             notify_id,
-				 MateConfEntry     *entry,
+panel_run_dialog_content_notify (GSettings      *settings,
+				 gchar          *key,
 				 PanelRunDialog *dialog)
 {
-	panel_run_dialog_update_content (dialog, mateconf_value_get_bool (entry->value));
+	panel_run_dialog_update_content (dialog, g_settings_get_boolean (settings, key));
 }
 
 static void
@@ -1201,9 +1193,6 @@ static void
 panel_run_dialog_setup_list_expander (PanelRunDialog *dialog,
 				      GtkBuilder     *gui)
 {
-	MateConfClient *client;
-	const char *key;
-
 	dialog->list_expander = PANEL_GTK_BUILDER_GET (gui, "list_expander");
 
 	if (panel_profile_get_enable_program_list ()) {
@@ -1217,16 +1206,10 @@ panel_run_dialog_setup_list_expander (PanelRunDialog *dialog,
 				  G_CALLBACK (list_expander_toggled),
 				  dialog);
 
-		client = panel_mateconf_get_client ();
-		key = panel_mateconf_general_key ("show_program_list");
-
-		dialog->content_notify_id =
-			mateconf_client_notify_add (client, key,
-						 (MateConfClientNotifyFunc) panel_run_dialog_content_notify,
-						 dialog, NULL, NULL);
-
-		if (!dialog->content_notify_id)
-			g_warning ("error setting up content change notification");
+		g_signal_connect (dialog->settings,
+				  "changed::" PANEL_RUN_SHOW_PROGRAM_LIST_KEY,
+				  G_CALLBACK (panel_run_dialog_content_notify),
+				  dialog);
 	}
 }
 
@@ -1748,7 +1731,7 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 	gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->combobox),
-				 _panel_run_get_recent_programs_list ());
+				 _panel_run_get_recent_programs_list (dialog));
 	gtk_combo_box_entry_set_text_column
 		(GTK_COMBO_BOX_ENTRY (dialog->combobox), 0);
 
@@ -1943,6 +1926,8 @@ panel_run_dialog_new (GdkScreen  *screen,
 
 	dialog->run_button = PANEL_GTK_BUILDER_GET (gui, "run_button");
 	dialog->terminal_checkbox = PANEL_GTK_BUILDER_GET (gui, "terminal_checkbox");
+
+	dialog->settings = g_settings_new (PANEL_RUN_SCHEMA);
 
 	panel_run_dialog_setup_pixmap        (dialog, gui);
 	panel_run_dialog_setup_entry         (dialog, gui);

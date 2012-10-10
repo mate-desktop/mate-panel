@@ -25,21 +25,24 @@
 #include <config.h>
 
 #include "panel-profile.h"
+#include "panel-layout.h"
 
 #include <string.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
 #include <libpanel-util/panel-list.h>
+#include <libpanel-util/panel-dconf.h>
 
 #include "applet.h"
-#include "panel-compatibility.h"
-#include "panel-mateconf.h"
 #include "panel.h"
 #include "panel-widget.h"
 #include "panel-util.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-lockdown.h"
+#include "panel-gsettings.h"
+#include "panel-schemas.h"
 
 typedef struct {
 	GdkScreen       *screen;
@@ -67,145 +70,16 @@ typedef struct {
 
 typedef const char *(*PanelProfileGetIdFunc)   (gpointer           object);
 typedef gboolean    (*PanelProfileOnLoadQueue) (const char        *id);
-typedef void        (*PanelProfileLoadFunc)    (MateConfClient       *client,
-						const char        *profile_dir, 
-						PanelMateConfKeyType  type,
-						const char        *id);
+typedef void        (*PanelProfileLoadFunc)    (const char        *id);
 typedef void        (*PanelProfileDestroyFunc) (const char        *id);
 
-static MateConfEnumStringPair panel_orientation_map [] = {
-	{ PANEL_ORIENTATION_TOP,    "top"    },
-	{ PANEL_ORIENTATION_BOTTOM, "bottom" },
-	{ PANEL_ORIENTATION_LEFT,   "left"   },
-	{ PANEL_ORIENTATION_RIGHT,  "right"  },
-	{ 0,                        NULL     }
-};
-
-static MateConfEnumStringPair panel_animation_speed_map [] = {
-	{ PANEL_ANIMATION_SLOW,   "slow"   },
-	{ PANEL_ANIMATION_MEDIUM, "medium" },
-	{ PANEL_ANIMATION_FAST,   "fast"   },
-	{ 0,                      NULL     }
-};
-
-static MateConfEnumStringPair panel_background_type_map [] = {
-	{ PANEL_BACK_NONE,  "gtk"   },
-	{ PANEL_BACK_COLOR, "color" },
-	{ PANEL_BACK_IMAGE, "image" },
-	{ 0,                NULL    }
-};
-
-static MateConfEnumStringPair panel_object_type_map [] = {
-	{ PANEL_OBJECT_DRAWER,    "drawer-object" },
-	{ PANEL_OBJECT_MENU,      "menu-object" },
-	{ PANEL_OBJECT_LAUNCHER,  "launcher-object" },
-	{ PANEL_OBJECT_APPLET,    "external-applet" },
-	{ PANEL_OBJECT_ACTION,    "action-applet" },
-	{ PANEL_OBJECT_MENU_BAR,  "menu-bar" },
-	{ PANEL_OBJECT_SEPARATOR, "separator" },
-	/* The following is for backwards compatibility with 2.30.x and earlier */
-	{ PANEL_OBJECT_APPLET,    "matecomponent-applet" },
-	/* The following two are for backwards compatibility with 2.0.x */
-	{ PANEL_OBJECT_LOCK,      "lock-object" },
-	{ PANEL_OBJECT_LOGOUT,    "logout-object" },
-	{ 0,                      NULL }
-};
+static GSettings *profile_settings = NULL;
 
 static GQuark toplevel_id_quark = 0;
 static GQuark queued_changes_quark = 0;
 static GQuark commit_timeout_quark = 0;
 
-static void panel_profile_object_id_list_update (MateConfClient       *client,
-						 MateConfValue        *value,
-						 PanelMateConfKeyType  type);
-
-gboolean
-panel_profile_map_orientation_string (const char       *str,
-				      PanelOrientation *orientation)
-{
-	int mapped;
-
-	g_return_val_if_fail (orientation != NULL, FALSE);
-
-	if (!str)
-		return FALSE;
-
-	if (!mateconf_string_to_enum (panel_orientation_map, str, &mapped))
-		return FALSE;
-
-	*orientation = mapped;
-
-	return TRUE;
-}
-
-const char *
-panel_profile_map_orientation (PanelOrientation orientation)
-{
-	return mateconf_enum_to_string (panel_orientation_map, orientation);
-}
-
-gboolean
-panel_profile_map_speed_string (const char          *str,
-				PanelAnimationSpeed *speed)
-{
-	int mapped;
-
-	g_return_val_if_fail (speed != NULL, FALSE);
-
-	if (!str)
-		return FALSE;
-
-	if (!mateconf_string_to_enum (panel_animation_speed_map, str, &mapped))
-		return FALSE;
-
-	*speed = mapped;
-
-	return TRUE;
-}
-
-gboolean
-panel_profile_map_background_type_string (const char          *str,
-					  PanelBackgroundType *background_type)
-{
-	int mapped;
-
-	g_return_val_if_fail (background_type != NULL, FALSE);
-
-	if (!str)
-		return FALSE;
-
-	if (!mateconf_string_to_enum (panel_background_type_map, str, &mapped))
-		return FALSE;
-
-	*background_type = mapped;
-
-	return TRUE;
-}
-
-const char *
-panel_profile_map_background_type (PanelBackgroundType  background_type)
-{
-	return mateconf_enum_to_string (panel_background_type_map, background_type);
-}
-
-gboolean
-panel_profile_map_object_type_string (const char       *str,
-				      PanelObjectType  *object_type)
-{
-	int mapped;
-
-	g_return_val_if_fail (object_type != NULL, FALSE);
-
-	if (!str)
-		return FALSE;
-
-	if (!mateconf_string_to_enum (panel_object_type_map, str, &mapped))
-		return FALSE;
-
-	*object_type = mapped;
-
-	return TRUE;
-}
+static void panel_profile_object_id_list_update (gchar **objects);
 
 static void
 panel_profile_set_toplevel_id (PanelToplevel *toplevel,
@@ -246,80 +120,49 @@ panel_profile_get_toplevel_by_id (const char *toplevel_id)
 }
 
 char *
-panel_profile_find_new_id (PanelMateConfKeyType type)
+panel_profile_find_new_id (PanelGSettingsKeyType type)
 {
-	MateConfClient *client;
-	GSList      *l, *existing_ids;
-	const char  *key;
+	gchar      **existing_ids;
 	char        *retval = NULL;
 	char        *prefix;
 	char        *dir;
 	int          i;
-
-	client  = panel_mateconf_get_client ();
+	int          j;
 
 	switch (type) {
-	case PANEL_MATECONF_TOPLEVELS:
-		prefix = "panel";
-		dir = "toplevels";
-		break;
-	case PANEL_MATECONF_OBJECTS:
-		prefix = "object";
-		dir = "objects";
-		break;
-	case PANEL_MATECONF_APPLETS:
-		prefix = "applet";
-		dir = "applets";
-		break;
-	default:
-		prefix = dir = NULL;
-		g_assert_not_reached ();
-		break;
+		case PANEL_GSETTINGS_TOPLEVELS:
+			prefix = PANEL_TOPLEVEL_DEFAULT_PREFIX;
+			dir = PANEL_TOPLEVEL_PATH;
+			break;
+		case PANEL_GSETTINGS_OBJECTS:
+			prefix = PANEL_OBJECT_DEFAULT_PREFIX;
+			dir = PANEL_OBJECT_PATH;
+			break;
+		default:
+			prefix = dir = NULL;
+			g_assert_not_reached ();
+			break;
 	}
 
-	key = panel_mateconf_sprintf (PANEL_CONFIG_DIR "/%s", dir);
-	existing_ids = mateconf_client_all_dirs (client, key, NULL);
+	existing_ids = panel_dconf_list_subdirs (dir, TRUE);
 
 	for (i = 0; !retval; i++) {
 		retval = g_strdup_printf ("%s_%d", prefix, i);
 
-		for (l = existing_ids; l; l = l->next)
-			if (!strcmp (panel_mateconf_basename (l->data), retval)) {
+		for (j = 0; existing_ids[j] != NULL; j++) {
+			if (g_strcmp0 (existing_ids[j], retval) == 0) {
 				g_free (retval);
 				retval = NULL;
 				break;
 			}
+		}
 	}
+	if (existing_ids)
+		g_strfreev (existing_ids);
 
 	g_assert (retval != NULL);
 
-	for (l = existing_ids; l; l = l->next)
-		g_free (l->data);
-	g_slist_free (existing_ids);
-
 	return retval;
-}
-
-static void
-panel_profile_set_queued_changes (PanelToplevel  *toplevel,
-				  MateConfChangeSet *changes)
-{
-	if (!queued_changes_quark)
-		queued_changes_quark = g_quark_from_static_string ("panel-queued-changes");
-
-	g_object_set_qdata_full (G_OBJECT (toplevel),
-				 queued_changes_quark,
-				 changes,
-				 (GDestroyNotify) mateconf_change_set_unref);
-}
-
-static MateConfChangeSet *
-panel_profile_get_queued_changes (GObject *object)
-{
-	if (!queued_changes_quark)
-		return NULL;
-
-	return g_object_get_qdata (object, queued_changes_quark);
 }
 
 static void
@@ -357,66 +200,33 @@ panel_profile_get_commit_timeout (GObject *object)
 	return GPOINTER_TO_UINT (g_object_get_qdata (object, commit_timeout_quark));
 }
 
-static const char *
-panel_profile_get_toplevel_key (PanelToplevel *toplevel,
-				const char    *key)
-{
-	const char *id;
-
-	id = panel_profile_get_toplevel_id (toplevel);
-
-	return panel_mateconf_full_key (PANEL_MATECONF_TOPLEVELS, id, key);
+gboolean
+panel_profile_key_is_writable (PanelToplevel *toplevel, gchar *key) {
+	return g_settings_is_writable (toplevel->settings, key);
 }
 
-#define TOPLEVEL_IS_WRITABLE_FUNC(k, p, s)                            \
-	gboolean                                                      \
-	panel_profile_is_writable_##p##_##s (PanelToplevel *toplevel) \
-	{                                                             \
-		MateConfClient *client;                                  \
-		const char  *key;                                     \
-		client = panel_mateconf_get_client ();                   \
-		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		return mateconf_client_key_is_writable (client, key, NULL); \
-	}
+gboolean
+panel_profile_background_key_is_writable (PanelToplevel *toplevel, gchar *key) {
+	return g_settings_is_writable (toplevel->background_settings, key);
+}
 
 void
 panel_profile_set_background_type (PanelToplevel       *toplevel,
 				   PanelBackgroundType  background_type)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/type");
-	mateconf_client_set_string (client,
-				 key,
-				 panel_profile_map_background_type (background_type),
-			         NULL);
+	g_settings_set_enum (toplevel->background_settings,
+						 "type",
+						 background_type);
 }
 
 PanelBackgroundType
 panel_profile_get_background_type (PanelToplevel *toplevel)
 {
 	PanelBackgroundType  background_type;
-	MateConfClient         *client;
-	const char          *key;
-	char                *str;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/type");
-	str = mateconf_client_get_string (client, key, NULL);
-
-	if (!str || !panel_profile_map_background_type_string (str, &background_type))
-		background_type = PANEL_BACK_NONE;
-
-	g_free (str);
-
+	g_settings_get_enum (toplevel->background_settings,
+						 "type");
 	return background_type;
 }
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/type", background, type)
 
 void
 panel_profile_set_background_color (PanelToplevel *toplevel,
@@ -434,25 +244,18 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 	color->alpha = panel_profile_get_background_opacity (toplevel);
 }
 
-TOPLEVEL_IS_WRITABLE_FUNC ("background/color", background, color)
-
 void
 panel_profile_set_background_gdk_color (PanelToplevel *toplevel,
 					GdkColor      *gdk_color)
 {
-	MateConfClient *client;
-	const char  *key;
 	char        *color_str;
-
-	client = panel_mateconf_get_client ();
 
 	color_str = g_strdup_printf ("#%02x%02x%02x",
 				     gdk_color->red   / 256,
 				     gdk_color->green / 256,
 				     gdk_color->blue  / 256);
 
-	key = panel_profile_get_toplevel_key (toplevel, "background/color");
-	mateconf_client_set_string (client, key, color_str, NULL);
+	g_settings_set_string(toplevel->background_settings, "color", color_str);
 
 	g_free (color_str);
 }
@@ -461,14 +264,9 @@ void
 panel_profile_get_background_gdk_color (PanelToplevel *toplevel,
 					GdkColor      *gdk_color)
 {
-	MateConfClient *client;
-	const char  *key;
 	char        *color_str;
 
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/color");
-	color_str = mateconf_client_get_string (client, key, NULL);
+	color_str = g_settings_get_string (toplevel->background_settings, "color");
 	if (!color_str || !gdk_color_parse (color_str, gdk_color)) {
 		gdk_color->red   = 0;
 		gdk_color->green = 0;
@@ -482,177 +280,113 @@ void
 panel_profile_set_background_opacity (PanelToplevel *toplevel,
 				      guint16        opacity)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
-	mateconf_client_set_int (client, key, opacity, NULL);
+	g_settings_set_int (toplevel->background_settings, "opacity", opacity);
 }
 
 guint16
 panel_profile_get_background_opacity (PanelToplevel *toplevel)
 {
-	MateConfClient *client;
-	const char  *key;
 	guint16      opacity;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
-	opacity = mateconf_client_get_int (client, key, NULL);
-
+	opacity = g_settings_get_int (toplevel->background_settings, "opacity");
 	return opacity;
 }
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/opacity", background, opacity)
 
 void
 panel_profile_set_background_image (PanelToplevel *toplevel,
 				    const char    *image)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/image");
-
 	if (image && image [0])
-		mateconf_client_set_string (client, key, image, NULL);
+		g_settings_set_string (toplevel->background_settings, "image", image);
 	else
-		mateconf_client_unset (client, key, NULL);
+		g_settings_reset (toplevel->background_settings, "image");
 }
 
 char *
 panel_profile_get_background_image (PanelToplevel *toplevel)
 {
-	MateConfClient *client;
-	const char  *key;
 	char        *retval;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/image");
-	retval = mateconf_client_get_string (client, key, NULL);
-
+	retval = g_settings_get_string (toplevel->background_settings, "image");
 	return retval;
 }
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/image", background, image)
 
 void
 panel_profile_set_toplevel_name (PanelToplevel *toplevel,
 				 const char    *name)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "name");
-
 	if (name && name [0])
-		mateconf_client_set_string (client, key, name, NULL);
+		g_settings_set_string (toplevel->settings, "name", name);
 	else
-		mateconf_client_unset (client, key, NULL);
+		g_settings_reset (toplevel->settings, "name");
 }
 
 char *
 panel_profile_get_toplevel_name (PanelToplevel *toplevel)
 {
-	MateConfClient *client;
-	const char  *key;
 	char        *retval;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "name");
-	retval = mateconf_client_get_string (client, key, NULL);
-
+	retval = g_settings_get_string (toplevel->settings, "name");
 	return retval;
 }
-
-TOPLEVEL_IS_WRITABLE_FUNC ("name", toplevel, name)
 
 void
 panel_profile_set_toplevel_orientation (PanelToplevel    *toplevel,
 					PanelOrientation  orientation)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "orientation");
-	mateconf_client_set_string (client,
-				 key,
-				 panel_profile_map_orientation (orientation),
-				 NULL);
+	g_settings_set_enum (toplevel->settings, "orientation", orientation);
 }
 
 PanelOrientation
 panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 {
 	PanelOrientation  orientation;
-	MateConfClient      *client;
-	const char       *key;
-	char             *str;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "orientation");
-	str = mateconf_client_get_string (client, key, NULL);
-
-	if (!panel_profile_map_orientation_string (str, &orientation))
-	    orientation = panel_toplevel_get_orientation (toplevel);
-
-	g_free (str);
-
+	orientation = g_settings_get_enum (toplevel->settings, "orientation");
 	return orientation;
 }
 
-TOPLEVEL_IS_WRITABLE_FUNC ("orientation", toplevel, orientation)
-
-#define TOPLEVEL_GET_SET_FUNCS(k, p, t, s, a)                         \
+#define TOPLEVEL_GET_SET_FUNCS(k, p, t, s, a)                     \
 	void                                                          \
 	panel_profile_set_##p##_##s (PanelToplevel *toplevel, a s)    \
 	{                                                             \
-		MateConfClient *client;                                  \
-		const char  *key;                                     \
-		client = panel_mateconf_get_client ();                   \
-		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		mateconf_client_set_##t (client, key, s, NULL);          \
+		g_settings_set_##t (toplevel->settings, k, s);            \
 	}                                                             \
 	a                                                             \
 	panel_profile_get_##p##_##s (PanelToplevel *toplevel)         \
 	{                                                             \
-		MateConfClient *client;                                  \
-		const char  *key;                                     \
-		a retval;                                             \
-		client = panel_mateconf_get_client ();                   \
-		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		retval = mateconf_client_get_##t (client, key, NULL);    \
-		return retval;                                        \
+		a retval;                                                 \
+		retval = g_settings_get_##t (toplevel->settings, k);      \
+		return retval;                                            \
+	}
+
+TOPLEVEL_GET_SET_FUNCS ("size",               toplevel,   int,     size,           int)
+TOPLEVEL_GET_SET_FUNCS ("expand",             toplevel,   boolean, expand,         gboolean)
+TOPLEVEL_GET_SET_FUNCS ("auto-hide",          toplevel,   boolean, auto_hide,      gboolean)
+TOPLEVEL_GET_SET_FUNCS ("enable-buttons",     toplevel,   boolean, enable_buttons, gboolean)
+TOPLEVEL_GET_SET_FUNCS ("enable-arrows",      toplevel,   boolean, enable_arrows,  gboolean)
+
+#define TOPLEVEL_GET_SET_BG_FUNCS(k, p, t, s, a)                     \
+	void                                                          \
+	panel_profile_set_##p##_##s (PanelToplevel *toplevel, a s)    \
+	{                                                             \
+		g_settings_set_##t (toplevel->background_settings, k, s);            \
 	}                                                             \
-        TOPLEVEL_IS_WRITABLE_FUNC(k, p, s)
+	a                                                             \
+	panel_profile_get_##p##_##s (PanelToplevel *toplevel)         \
+	{                                                             \
+		a retval;                                                 \
+		retval = g_settings_get_##t (toplevel->background_settings, k);      \
+		return retval;                                            \
+	}
 
-TOPLEVEL_GET_SET_FUNCS ("size",               toplevel,   int,  size,           int)
-TOPLEVEL_GET_SET_FUNCS ("expand",             toplevel,   bool, expand,         gboolean)
-TOPLEVEL_GET_SET_FUNCS ("auto_hide",          toplevel,   bool, auto_hide,      gboolean)
-TOPLEVEL_GET_SET_FUNCS ("enable_buttons",     toplevel,   bool, enable_buttons, gboolean)
-TOPLEVEL_GET_SET_FUNCS ("enable_arrows",      toplevel,   bool, enable_arrows,  gboolean)
-TOPLEVEL_GET_SET_FUNCS ("background/fit",     background, bool, fit,            gboolean)
-TOPLEVEL_GET_SET_FUNCS ("background/stretch", background, bool, stretch,        gboolean)
-TOPLEVEL_GET_SET_FUNCS ("background/rotate",  background, bool, rotate,         gboolean)
+TOPLEVEL_GET_SET_BG_FUNCS ("fit",     background, boolean, fit,            gboolean)
+TOPLEVEL_GET_SET_BG_FUNCS ("stretch", background, boolean, stretch,        gboolean)
+TOPLEVEL_GET_SET_BG_FUNCS ("rotate",  background, boolean, rotate,         gboolean)
 
-static const char *
-panel_profile_get_attached_object_key (PanelToplevel *toplevel,
-				       const char    *key)
+GSettings*
+panel_profile_get_attached_object_settings (PanelToplevel *toplevel)
 {
 	GtkWidget  *attach_widget;
 	const char *id;
+	char *path;
+	GSettings *settings;
 
 	attach_widget = panel_toplevel_get_attach_widget (toplevel);
 
@@ -661,200 +395,134 @@ panel_profile_get_attached_object_key (PanelToplevel *toplevel,
 	if (!id)
 		return NULL;
 
-	return panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, key);
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_free (path);
+
+	return settings;
 }
 
 void
 panel_profile_set_attached_custom_icon (PanelToplevel *toplevel,
 					const char    *custom_icon)
 {
-	MateConfClient *client;
-	const char  *key;
+	GSettings *settings;
+	settings = panel_profile_get_attached_object_settings (toplevel);
 
-	client = panel_mateconf_get_client ();
+	g_settings_set_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY, custom_icon != NULL);
+	g_settings_set_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY, sure_string (custom_icon));
 
-	key = panel_profile_get_attached_object_key (toplevel, "use_custom_icon");
-	if (key)
-		mateconf_client_set_bool (client, key, custom_icon != NULL, NULL);
-
-	key = panel_profile_get_attached_object_key (toplevel, "custom_icon");
-	if (key)
-		mateconf_client_set_string (client, key, sure_string (custom_icon), NULL);
+	g_object_unref (settings);
 }
 
 char *
 panel_profile_get_attached_custom_icon (PanelToplevel *toplevel)
 {
-	MateConfClient *client;
-	const char  *key;
+	gchar *custom_icon = NULL;
+	if (panel_toplevel_get_is_attached (toplevel))
+	{
+		GSettings *settings;
+		settings = panel_profile_get_attached_object_settings (toplevel);
 
-	client = panel_mateconf_get_client ();
+		if (!g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY))
+		{
+			g_object_unref (settings);
+			return NULL;
+		}
 
-	key = panel_profile_get_attached_object_key (toplevel, "use_custom_icon");
-	if (!key || !mateconf_client_get_bool (client, key, NULL))
-		return NULL;
-
-	key = panel_profile_get_attached_object_key (toplevel, "custom_icon");
-
-	return key ? mateconf_client_get_string (client, key, NULL) : NULL;
+		custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
+		g_object_unref (settings);
+	}
+	return custom_icon;
 }
 
 gboolean
 panel_profile_is_writable_attached_custom_icon (PanelToplevel *toplevel)
 {
-	MateConfClient *client;
-	const char  *key;
+	gboolean is_writable = FALSE;
+	if (panel_toplevel_get_is_attached (toplevel))
+	{
+		GSettings *settings;
+		settings = panel_profile_get_attached_object_settings (toplevel);
 
-	client = panel_mateconf_get_client ();
+		is_writable = g_settings_is_writable (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY) &&
+					  g_settings_is_writable (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
 
-	key = panel_profile_get_attached_object_key (toplevel, "use_custom_icon");
-	if (!key)
-		return TRUE;
-
-	if (!mateconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	key = panel_profile_get_attached_object_key (toplevel, "custom_icon");
-
-	return key ? mateconf_client_key_is_writable (client, key, NULL) : TRUE;
+		g_object_unref (settings);
+	}
+	return is_writable;
 }
 
 void
 panel_profile_set_attached_tooltip (PanelToplevel *toplevel,
 				    const char    *tooltip)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_attached_object_key (toplevel, "tooltip");
-	if (key)
-		mateconf_client_set_string (client, key, tooltip, NULL);
+	GSettings *settings;
+	settings = panel_profile_get_attached_object_settings (toplevel);
+	g_settings_set_string (settings, PANEL_OBJECT_TOOLTIP_KEY, tooltip);
+	g_object_unref (settings);
 }
 
 char *
 panel_profile_get_attached_tooltip (PanelToplevel *toplevel)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_attached_object_key (toplevel, "tooltip");
-
-	return key ? mateconf_client_get_string (client, key, NULL) : NULL;
+	gchar *tooltip = NULL;
+	if (panel_toplevel_get_is_attached (toplevel))
+	{
+		GSettings *settings;
+		settings = panel_profile_get_attached_object_settings (toplevel);
+		tooltip = g_settings_get_string (settings, PANEL_OBJECT_TOOLTIP_KEY);
+		g_object_unref (settings);
+	}
+	return tooltip;
 }
 
 gboolean
 panel_profile_is_writable_attached_tooltip (PanelToplevel *toplevel)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_attached_object_key (toplevel, "tooltip");
-
-	return key ? mateconf_client_key_is_writable (client, key, NULL) : TRUE;
-}
-
-static PanelBackgroundType
-get_background_type (MateConfClient *client,
-		     const char  *toplevel_dir)
-{
-	PanelBackgroundType  background_type;
-	GError              *error = NULL;
-	const char          *key;
-	char                *type_str;
-
-	key = panel_mateconf_sprintf ("%s/background/type", toplevel_dir);
-	type_str = mateconf_client_get_string (client, key, &error);
-	if (error) {
-		g_warning (_("Error reading MateConf string value '%s': %s"),
-			   key, error->message);
-		g_error_free (error);
-		return PANEL_BACK_NONE;
+	gboolean is_writable = FALSE;
+	if (panel_toplevel_get_is_attached (toplevel))
+	{
+		GSettings *settings;
+		settings = panel_profile_get_attached_object_settings (toplevel);
+		is_writable = g_settings_is_writable (settings, PANEL_OBJECT_TOOLTIP_KEY);
+		g_object_unref (settings);
 	}
-
-	if (!type_str || !panel_profile_map_background_type_string (type_str, &background_type))
-		background_type = PANEL_BACK_NONE;
-
-	g_free (type_str);
-	
-	return background_type;
+	return is_writable;
 }
 
 static void
-get_background_color (MateConfClient *client,
-		      const char  *toplevel_dir,
-		      PanelColor  *color)
+get_background_color (PanelToplevel *toplevel,
+					  PanelColor  *color)
 {
-	GError     *error;
-	const char *key;
 	char       *color_str;
-
-	error = NULL;
-	key = panel_mateconf_sprintf ("%s/background/color", toplevel_dir);
-	color_str = mateconf_client_get_string (client, key, &error);
-	if (error) {
-		g_warning (_("Error reading MateConf string value '%s': %s"),
-			   key, error->message);
-		g_error_free (error);
-	} else if (!color_str || !gdk_color_parse (color_str, &(color->gdk))) {
+	color_str = g_settings_get_string (toplevel->background_settings, "color");
+	if (!color_str || !gdk_color_parse (color_str, &(color->gdk))) {
 		color->gdk.red   = 0;
 		color->gdk.green = 0;
 		color->gdk.blue  = 0;
 	}
-
 	g_free (color_str);
 
-	error = NULL;
-	key = panel_mateconf_sprintf ("%s/background/opacity", toplevel_dir);
-	color->alpha = mateconf_client_get_int (client, key, &error);
-	if (error) {
-		g_warning (_("Error reading MateConf integer value '%s': %s"),
-			   key, error->message);
-		g_error_free (error);
-		color->alpha = 65535; /* fallback to fully opaque */
-	}
+	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity");
 }
 
 static char *
-get_background_image (MateConfClient  *client,
-		      const char   *toplevel_dir,
+get_background_image (PanelToplevel *toplevel,
 		      gboolean     *fit,
 		      gboolean     *stretch,
 		      gboolean     *rotate)
 {
-	const char *key;
-	GError     *error = NULL;
 	char       *image;
-
-	key = panel_mateconf_sprintf ("%s/background/image", toplevel_dir);
-	image = mateconf_client_get_string (client, key, &error);
-	if (error) {
-		g_warning (_("Error reading MateConf string value '%s': %s"),
-			   key, error->message);
-		g_error_free (error);
-	}
-
-	key = panel_mateconf_sprintf ("%s/background/fit", toplevel_dir);
-	*fit = mateconf_client_get_bool (client, key, NULL);
-
-	key = panel_mateconf_sprintf ("%s/background/stretch", toplevel_dir);
-	*stretch = mateconf_client_get_bool (client, key, NULL);
-
-	key = panel_mateconf_sprintf ("%s/background/rotate", toplevel_dir);
-	*rotate = mateconf_client_get_bool (client, key, NULL);
-
+	image = g_settings_get_string (toplevel->background_settings, "image");
+	*fit = g_settings_get_boolean (toplevel->background_settings, "fit");
+	*stretch = g_settings_get_boolean (toplevel->background_settings, "stretch");
+	*rotate = g_settings_get_boolean (toplevel->background_settings, "rotate");
 	return image;
 }
 
 static void
-panel_profile_load_background (PanelToplevel *toplevel,
-			       MateConfClient   *client,
-			       const char    *toplevel_dir)
+panel_profile_load_background (PanelToplevel *toplevel)
 {
 	PanelWidget         *panel_widget;
 	PanelBackground     *background;
@@ -868,11 +536,11 @@ panel_profile_load_background (PanelToplevel *toplevel,
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 	background = &panel_widget->background;
 
-	background_type = get_background_type (client, toplevel_dir);
+	background_type = panel_profile_get_background_type (toplevel);
 
-	get_background_color (client, toplevel_dir, &color);
+	get_background_color (toplevel, &color);
 
-	image = get_background_image (client, toplevel_dir, &fit, &stretch, &rotate);
+	image = get_background_image (toplevel, &fit, &stretch, &rotate);
 
 	panel_background_set (background,
 			      background_type,
@@ -888,15 +556,9 @@ panel_profile_load_background (PanelToplevel *toplevel,
 static gboolean
 panel_profile_commit_toplevel_changes (PanelToplevel *toplevel)
 {
-	MateConfChangeSet *queued_changes;
+	if (g_settings_get_has_unapplied (toplevel->queued_settings))
+		g_settings_apply (toplevel->queued_settings);
 
-	queued_changes = panel_profile_get_queued_changes (G_OBJECT (toplevel));
-	if (queued_changes)
-		mateconf_client_commit_change_set (
-				panel_mateconf_get_client (),
-				queued_changes, FALSE, NULL);
-
-	panel_profile_set_queued_changes (toplevel, NULL);
 	panel_profile_set_commit_timeout (toplevel, 0);
 
 	return FALSE;
@@ -906,75 +568,60 @@ static void
 panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 					      ToplevelLocationChange *change)
 {
-	MateConfChangeSet *queued_changes;
 	guint           commit_timeout;
 
-	queued_changes = panel_profile_get_queued_changes (G_OBJECT (toplevel));
-	if (!queued_changes) {
-		queued_changes = mateconf_change_set_new ();
-		panel_profile_set_queued_changes (toplevel, queued_changes);
-	}
+	g_settings_delay (toplevel->queued_settings);
 
 	if (change->screen_changed)
-		mateconf_change_set_set_int (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "screen"),
-			gdk_screen_get_number (change->screen));
+		g_settings_set_int (toplevel->queued_settings,
+							"screen",
+							gdk_screen_get_number (change->screen));
 
 	if (change->monitor_changed)
-		mateconf_change_set_set_int (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "monitor"),
-			change->monitor);
+		g_settings_set_int (toplevel->queued_settings,
+							"monitor",
+							change->monitor);
 
 	if (change->size_changed)
-		mateconf_change_set_set_int (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "size"),
-			change->size);
+		g_settings_set_int (toplevel->queued_settings,
+									 "size",
+									 change->size);
 
 	if (change->orientation_changed)
-		mateconf_change_set_set_string (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "orientation"),
-			mateconf_enum_to_string (panel_orientation_map, change->orientation));
+		g_settings_set_enum (toplevel->queued_settings,
+										"orientation",
+										change->orientation);
 
 	if (!panel_toplevel_get_expand (toplevel)) {
 		if (change->x_changed)
-			mateconf_change_set_set_int (
-				queued_changes,
-				panel_profile_get_toplevel_key (toplevel, "x"),
-				change->x);
+			g_settings_set_int (toplevel->queued_settings,
+								"x",
+								change->x);
 
 		if (change->x_right_changed)
-			mateconf_change_set_set_int (
-				queued_changes,
-				panel_profile_get_toplevel_key (toplevel, "x_right"),
-				change->x_right);
+			g_settings_set_int (toplevel->queued_settings,
+								"x-right",
+								change->x_right);
 
 		if (change->x_centered_changed)
-			mateconf_change_set_set_bool (
-				queued_changes,
-				panel_profile_get_toplevel_key (toplevel, "x_centered"),
-				change->x_centered);
+			g_settings_set_boolean (toplevel->queued_settings,
+									"x-centered",
+									change->x_centered);
 
 		if (change->y_changed)
-			mateconf_change_set_set_int (
-				queued_changes,
-				panel_profile_get_toplevel_key (toplevel, "y"),
-				change->y);
+			g_settings_set_int (toplevel->queued_settings,
+								"y",
+								change->y);
 
 		if (change->y_bottom_changed)
-			mateconf_change_set_set_int (
-				queued_changes,
-				panel_profile_get_toplevel_key (toplevel, "y_bottom"),
-				change->y_bottom);
+			g_settings_set_int (toplevel->queued_settings,
+								"y-bottom",
+								change->y_bottom);
 
 		if (change->y_centered_changed)
-			mateconf_change_set_set_bool (
-				queued_changes,
-				panel_profile_get_toplevel_key (toplevel, "y_centered"),
-				change->y_centered);
+			g_settings_set_boolean (toplevel->queued_settings,
+									"y-centered",
+									change->y_centered);
 	}
 
 	commit_timeout = panel_profile_get_commit_timeout (G_OBJECT (toplevel));
@@ -1059,380 +706,202 @@ panel_profile_connect_to_toplevel (PanelToplevel *toplevel)
 }
 
 static void
-set_name_from_string (PanelToplevel *toplevel,
-		      const char    *str)
+panel_profile_toplevel_change_notify (GSettings *settings,
+									  gchar *key,
+									  PanelToplevel *toplevel)
 {
-	if (!str)
-		return;
 
-	panel_toplevel_set_name (toplevel, str);
-}
-
-static void
-set_orientation_from_string (PanelToplevel *toplevel,
-			     const char    *str)
-{
-	PanelOrientation orientation;
-
-	if (!str || !panel_profile_map_orientation_string (str, &orientation))
-		return;
-
-	panel_toplevel_set_orientation (toplevel, orientation);
-}
-
-static void
-set_animation_speed_from_string (PanelToplevel *toplevel,
-				 const char    *str)
-{
-	PanelAnimationSpeed animation_speed;
-
-	if (!str || !panel_profile_map_speed_string (str, &animation_speed))
-		return;
-
-	panel_toplevel_set_animation_speed (toplevel, animation_speed);
-}
-
-static void
-panel_profile_toplevel_change_notify (MateConfClient   *client,
-				      guint          cnxn_id,
-				      MateConfEntry    *entry,
-				      PanelToplevel *toplevel)
-{
-	MateConfValue *value;
-	const char *key;
-
-	key = panel_mateconf_basename (mateconf_entry_get_key (entry));
-
-	if (!(value = mateconf_entry_get_value (entry)))
-		return;
-
-#define UPDATE_STRING(k, n)                                                             \
+#define UPDATE_STRING(k, n)                                                     \
 		if (!strcmp (key, k)) {                                                 \
-			if (value->type == MATECONF_VALUE_STRING)                          \
-				set_##n##_from_string (toplevel,                        \
-						       mateconf_value_get_string (value)); \
+			panel_toplevel_set_##n (toplevel,                                   \
+									g_settings_get_string (settings, key));     \
 		}
 
-#define UPDATE_INT(k, n)                                                                \
+#define UPDATE_ENUM(k, n)                                                       \
 		if (!strcmp (key, k)) {                                                 \
-			if (value->type == MATECONF_VALUE_INT)                             \
-				panel_toplevel_set_##n (toplevel,                       \
-							mateconf_value_get_int (value));   \
+			panel_toplevel_set_##n (toplevel,                                   \
+									g_settings_get_enum (settings, key));       \
 		}
 
-#define UPDATE_BOOL(k, n)                                                               \
+#define UPDATE_INT(k, n)                                                        \
 		if (!strcmp (key, k)) {                                                 \
-			if (value->type == MATECONF_VALUE_BOOL)                            \
-				panel_toplevel_set_##n (toplevel,                       \
-							mateconf_value_get_bool (value));  \
+			panel_toplevel_set_##n (toplevel,                                   \
+									g_settings_get_int (settings, key));        \
 		}
 
-#define UPDATE_POS(k, n, n2)                                                            \
+#define UPDATE_BOOL(k, n)                                                       \
 		if (!strcmp (key, k)) {                                                 \
-			if (value->type == MATECONF_VALUE_INT) {                           \
-				int x, x_right, y, y_bottom;                            \
-				panel_toplevel_get_position (toplevel, &x, &x_right,    \
-							     &y, &y_bottom);            \
-				panel_toplevel_set_##n (                                \
-					toplevel,                                       \
-					mateconf_value_get_int (value),                    \
-					n2,                                             \
-					panel_toplevel_get_##n##_centered (toplevel));  \
-			}                                                               \
+			panel_toplevel_set_##n (toplevel,                                   \
+									g_settings_get_boolean (settings, key));    \
 		}
 
-#define UPDATE_POS2(k, n, n2)                                                           \
+#define UPDATE_POS(k, n, n2)                                                    \
 		if (!strcmp (key, k)) {                                                 \
-			if (value->type == MATECONF_VALUE_INT) {                           \
-				int x, x_right, y, y_bottom;                            \
-				panel_toplevel_get_position (toplevel, &x, &x_right,    \
-							     &y, &y_bottom);            \
-				panel_toplevel_set_##n (                                \
-					toplevel,                                       \
-					n,                                              \
-					mateconf_value_get_int (value),                    \
-					panel_toplevel_get_##n##_centered (toplevel));  \
-			}                                                               \
+			int x, x_right, y, y_bottom;                            \
+			panel_toplevel_get_position (toplevel, &x, &x_right,    \
+						     &y, &y_bottom);                        \
+			panel_toplevel_set_##n (                                \
+				toplevel,                                           \
+				g_settings_get_int (settings, key),                 \
+				n2,                                                 \
+				panel_toplevel_get_##n##_centered (toplevel));      \
 		}
 
-#define UPDATE_CENTERED(k, n, n2)                                                       \
-		if (!strcmp (key, k)) {                                                 \
-			if (value->type == MATECONF_VALUE_BOOL) {                          \
-				int x, x_right, y, y_bottom;                            \
-				panel_toplevel_get_position (toplevel, &x, &x_right,    \
-							     &y, &y_bottom);            \
-				panel_toplevel_set_##n (                                \
-					toplevel, n, n2, mateconf_value_get_bool (value)); \
-			}                                                               \
+#define UPDATE_POS2(k, n, n2)                                       \
+		if (!strcmp (key, k)) {                                     \
+			int x, x_right, y, y_bottom;                            \
+			panel_toplevel_get_position (toplevel, &x, &x_right,    \
+						     &y, &y_bottom);                        \
+			panel_toplevel_set_##n (                                \
+				toplevel,                                           \
+				n,                                                  \
+				g_settings_get_int (settings, key),                 \
+				panel_toplevel_get_##n##_centered (toplevel));      \
+		}
+
+#define UPDATE_CENTERED(k, n, n2)                                   \
+		if (!strcmp (key, k)) {                                     \
+			int x, x_right, y, y_bottom;                            \
+			panel_toplevel_get_position (toplevel, &x, &x_right,    \
+						     &y, &y_bottom);                        \
+			panel_toplevel_set_##n (                                \
+				toplevel, n, n2,                                    \
+				g_settings_get_boolean (settings, key));            \
 		}
 
 	if (!strcmp (key, "screen")) {
-		if (value->type == MATECONF_VALUE_INT) {
-			GdkScreen *screen;
-
-			screen = gdk_display_get_screen (
-					gdk_display_get_default (), 
-					mateconf_value_get_int (value));
-			if (screen)
-				gtk_window_set_screen (GTK_WINDOW (toplevel), screen);
-			else
-				/* Make sure to set the key back to an actual
-				 * available screen so it will get loaded on
-				 * next startup.
-				 */
-				panel_profile_toplevel_screen_changed (toplevel);
-		}
-			
+		GdkScreen *screen;
+		screen = gdk_display_get_screen (
+				gdk_display_get_default (), 
+				g_settings_get_int (settings, key));
+		if (screen)
+			gtk_window_set_screen (GTK_WINDOW (toplevel), screen);
+		else
+			/* Make sure to set the key back to an actual
+			 * available screen so it will get loaded on
+			 * next startup.
+			 */
+			panel_profile_toplevel_screen_changed (toplevel);
 	}
 	else UPDATE_INT ("monitor", monitor)
 	else UPDATE_STRING ("name", name)
 	else UPDATE_BOOL ("expand", expand)
-	else UPDATE_STRING ("orientation", orientation)
+	else UPDATE_ENUM ("orientation", orientation)
 	else UPDATE_INT ("size", size)
 	else UPDATE_POS ("x", x, x_right)
 	else UPDATE_POS ("y", y, y_bottom)
-	else UPDATE_POS2 ("x_right", x, x_right)
-	else UPDATE_POS2 ("y_bottom", y, y_bottom)
-	else UPDATE_CENTERED ("x_centered", x, x_right)
-	else UPDATE_CENTERED ("y_centered", y, y_bottom)
-	else UPDATE_BOOL ("auto_hide", auto_hide)
-	else UPDATE_BOOL ("enable_animations", animate)
-	else UPDATE_BOOL ("enable_buttons", enable_buttons)
-	else UPDATE_BOOL ("enable_arrows", enable_arrows)
-	else UPDATE_INT ("hide_delay", hide_delay)
-	else UPDATE_INT ("unhide_delay", unhide_delay)
-	else UPDATE_INT ("auto_hide_size", auto_hide_size)
-	else UPDATE_STRING ("animation_speed", animation_speed)
+	else UPDATE_POS2 ("x-right", x, x_right)
+	else UPDATE_POS2 ("y-bottom", y, y_bottom)
+	else UPDATE_CENTERED ("x-centered", x, x_right)
+	else UPDATE_CENTERED ("y-centered", y, y_bottom)
+	else UPDATE_BOOL ("auto-hide", auto_hide)
+	else UPDATE_BOOL ("enable-animations", animate)
+	else UPDATE_BOOL ("enable-buttons", enable_buttons)
+	else UPDATE_BOOL ("enable-arrows", enable_arrows)
+	else UPDATE_INT ("hide-delay", hide_delay)
+	else UPDATE_INT ("unhide-delay", unhide_delay)
+	else UPDATE_INT ("auto-hide-size", auto_hide_size)
+	else UPDATE_ENUM ("animation-speed", animation_speed)
 }
 
 static void
-panel_profile_background_change_notify (MateConfClient   *client,
-					guint          cnxn_id,
-					MateConfEntry    *entry,
-					PanelToplevel *toplevel)
+panel_profile_background_change_notify (GSettings *settings,
+										gchar *key,
+										PanelToplevel *toplevel)
 {
 	PanelWidget     *panel_widget;
 	PanelBackground *background;
-	MateConfValue      *value;
-	const char      *key;
-
-	key = panel_mateconf_basename (mateconf_entry_get_key (entry));
-
-	if (!(value = mateconf_entry_get_value (entry)))
-		return;
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 	background = &panel_widget->background;
 
 	if (!strcmp (key, "type")) {
-		if (value->type == MATECONF_VALUE_STRING) {
-			PanelBackgroundType  background_type;
-
-			if (panel_profile_map_background_type_string (
-						mateconf_value_get_string (value),
-						&background_type)) {
-				panel_background_set_type (background, background_type);
-				panel_toplevel_update_edges (toplevel);
-			}
-		}
+		PanelBackgroundType  background_type;
+		background_type = g_settings_get_enum (settings, key);
+		panel_background_set_type (background, background_type);
+		panel_toplevel_update_edges (toplevel);
 	} else if (!strcmp (key, "color")) {
-		if (value->type == MATECONF_VALUE_STRING) {
-			GdkColor    gdk_color;
-			const char *str;
-
-			str = mateconf_value_get_string (value);
-
-			if (gdk_color_parse (str, &gdk_color))
-				panel_background_set_gdk_color (background, &gdk_color);
-		}
+		GdkColor    gdk_color;
+		const char *str;
+		str = g_settings_get_string (settings, key);
+		if (gdk_color_parse (str, &gdk_color))
+			panel_background_set_gdk_color (background, &gdk_color);
 	} else if (!strcmp (key, "opacity")) {
-		if (value->type == MATECONF_VALUE_INT)
-			panel_background_set_opacity (background,
-						      mateconf_value_get_int (value));
+		panel_background_set_opacity (background,
+					      g_settings_get_int (settings, key));
 	} else if (!strcmp (key, "image")) {
-		if (value->type == MATECONF_VALUE_STRING)
-			panel_background_set_image (background,
-						    mateconf_value_get_string (value));
+		panel_background_set_image (background,
+					    g_settings_get_string (settings, key));
 	} else if (!strcmp (key, "fit")) {
-		if (value->type == MATECONF_VALUE_BOOL)
-			panel_background_set_fit (background,
-						  mateconf_value_get_bool (value));
+		panel_background_set_fit (background,
+					  g_settings_get_boolean (settings, key));
 	} else if (!strcmp (key, "stretch")) {
-		if (value->type == MATECONF_VALUE_BOOL)
-			panel_background_set_stretch (background,
-						      mateconf_value_get_bool (value));
+		panel_background_set_stretch (background,
+					      g_settings_get_boolean (settings, key));
 	} else if (!strcmp (key, "rotate")) {
-		if (value->type == MATECONF_VALUE_BOOL)
-			panel_background_set_rotate (background,
-						     mateconf_value_get_bool (value));
+		panel_background_set_rotate (background,
+					     g_settings_get_boolean (settings, key));
 	}
-}
-
-static void
-panel_profile_disconnect_toplevel (PanelToplevel *toplevel,
-				   gpointer       data)
-{
-	MateConfClient *client;
-	guint        notify_id = GPOINTER_TO_UINT (data);
-
-	client = panel_mateconf_get_client ();
-
-	mateconf_client_notify_remove (client, notify_id);
-}
-
-guint
-panel_profile_toplevel_notify_add (PanelToplevel         *toplevel,
-				   const char            *key,
-				   MateConfClientNotifyFunc  func,
-				   gpointer               data)
-{
-	MateConfClient *client;
-	const char  *tmp;
-	guint        retval;
-
-	client = panel_mateconf_get_client ();
-
-	if (!key)
-		tmp = panel_mateconf_sprintf (PANEL_CONFIG_DIR "/toplevels/%s",
-					   panel_profile_get_toplevel_id (toplevel));
-	else
-		tmp = panel_mateconf_sprintf (PANEL_CONFIG_DIR "/toplevels/%s/%s",
-					   panel_profile_get_toplevel_id (toplevel),
-					   key);
-
-	retval = mateconf_client_notify_add (client, tmp, func, data, NULL, NULL);
-
-	return retval;
-}
-
-static void
-panel_profile_save_id_list (PanelMateConfKeyType  type,
-			    GSList            *list,
-			    gboolean           resave)
-{
-	MateConfClient *client;
-	const char  *key;
-	const char  *id_list;
-
-	g_assert (!(resave && list != NULL));
-
-	client = panel_mateconf_get_client ();
-
-	id_list = panel_mateconf_key_type_to_id_list (type);
-
-	key = panel_mateconf_general_key (id_list);
-	if (resave)
-		list = mateconf_client_get_list (client, key, MATECONF_VALUE_STRING, NULL);
-	else {
-		/* Make sure the elements in the list appear only once. We only
-		 * do it when we save a list with new elements. */
-		list = panel_g_slist_make_unique (list,
-						  (GCompareFunc) strcmp,
-						  TRUE);
-	}
-
-	mateconf_client_set_list (client, key, MATECONF_VALUE_STRING, list, NULL);
-
-	g_slist_foreach (list, (GFunc) g_free, NULL);
-	g_slist_free (list);
-}
-
-static inline void
-panel_profile_save_other_id_lists (PanelMateConfKeyType type)
-{
-	if (type != PANEL_MATECONF_TOPLEVELS)
-		panel_profile_save_id_list (PANEL_MATECONF_TOPLEVELS, NULL, TRUE);
-
-	if (type != PANEL_MATECONF_OBJECTS)
-		panel_profile_save_id_list (PANEL_MATECONF_OBJECTS, NULL, TRUE);
-
-	if (type != PANEL_MATECONF_APPLETS)
-		panel_profile_save_id_list (PANEL_MATECONF_APPLETS, NULL, TRUE);
 }
 
 void
-panel_profile_add_to_list (PanelMateConfKeyType  type,
-			   const char        *id)
+panel_profile_add_to_list (PanelGSettingsKeyType  type,
+						   const char        *id)
 {
-	MateConfClient *client;
-	GSList      *list;
-	const char  *key;
-	const char  *id_list;
-	char        *new_id;
-
-	client = panel_mateconf_get_client ();
-
-	id_list = panel_mateconf_key_type_to_id_list (type);
-
-	key = panel_mateconf_general_key (id_list);
-	list = mateconf_client_get_list (client, key, MATECONF_VALUE_STRING, NULL);
+	char  *key;
+	char  *new_id;
 
 	new_id = id ? g_strdup (id) : panel_profile_find_new_id (type);
 
-	list = g_slist_append (list, new_id);
+	if (type == PANEL_GSETTINGS_TOPLEVELS)
+		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
+	else if (type == PANEL_GSETTINGS_OBJECTS)
+		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
 
-	panel_profile_save_id_list (type, list, FALSE);
-	panel_profile_save_other_id_lists (type);
+	panel_gsettings_append_strv (profile_settings,
+								 key,
+								 new_id);
+
+	g_free (key);
+	g_free (new_id);
 }
 
 void
-panel_profile_remove_from_list (PanelMateConfKeyType  type,
-				const char        *id)
+panel_profile_remove_from_list (PanelGSettingsKeyType  type,
+								const char        *id)
 {
-	MateConfClient *client;
-	GSList      *list, *l;
-	const char  *key;
-	const char  *id_list;
-
-	client = panel_mateconf_get_client ();
-
-	id_list = panel_mateconf_key_type_to_id_list (type);
-
-	key = panel_mateconf_general_key (id_list);
-	list = mateconf_client_get_list (client, key, MATECONF_VALUE_STRING, NULL);
-
-	/* Remove all occurrence of id and not just the first. We're more solid
-	 * this way (see bug #137308 for example). */
-	l = list;
-	while (l) {
-		GSList *next;
-
-		next = l->next;
-
-		if (!strcmp (id, l->data)) {
-			g_free (l->data);
-			list = g_slist_delete_link (list, l);
-		}
-
-		l = next;
-	}
-
-	panel_profile_save_id_list (type, list, FALSE);
-	panel_profile_save_other_id_lists (type);
+	gchar *key;
+	if (type == PANEL_GSETTINGS_TOPLEVELS)
+		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
+	else if (type == PANEL_GSETTINGS_OBJECTS)
+		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
+	
+	panel_gsettings_remove_all_from_strv (profile_settings,
+										  key,
+										  id);
+	g_free (key);
 }
 
 static gboolean
-panel_profile_id_list_is_writable (PanelMateConfKeyType type)
+panel_profile_id_list_is_writable (PanelGSettingsKeyType type)
 {
-	MateConfClient *client;
-	const char  *key;
-	const char  *id_list;
-
-	client = panel_mateconf_get_client ();
-
-	id_list = panel_mateconf_key_type_to_id_list (type);
-
-	key = panel_mateconf_general_key (id_list);
-	return mateconf_client_key_is_writable (client, key, NULL);
+	gboolean is_writable;
+	gchar  *key;
+	if (type == PANEL_GSETTINGS_TOPLEVELS)
+		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
+	else if (type == PANEL_GSETTINGS_OBJECTS)
+		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
+	is_writable = g_settings_is_writable (profile_settings, key);
+	g_free (key);
+	return is_writable;
 }
 
 gboolean
 panel_profile_id_lists_are_writable (void)
 {
   return
-    panel_profile_id_list_is_writable (PANEL_MATECONF_TOPLEVELS) &&
-    panel_profile_id_list_is_writable (PANEL_MATECONF_APPLETS)   &&
-    panel_profile_id_list_is_writable (PANEL_MATECONF_OBJECTS);
+    panel_profile_id_list_is_writable (PANEL_GSETTINGS_TOPLEVELS) &&
+    panel_profile_id_list_is_writable (PANEL_GSETTINGS_OBJECTS);
 }
 
 static gboolean
@@ -1497,77 +966,68 @@ panel_profile_find_empty_spot (GdkScreen *screen,
 void
 panel_profile_create_toplevel (GdkScreen *screen)
 {
-	MateConfClient     *client;
-	const char      *key;
 	char            *id;
-	char            *dir;
+	char            *path;
 	PanelOrientation orientation;
 	int              monitor;
-       
+	GSettings       *settings;
+
 	g_return_if_fail (screen != NULL);
 
-	client = panel_mateconf_get_client ();
+	id = panel_profile_find_new_id (PANEL_GSETTINGS_TOPLEVELS);
 
-	id = panel_profile_find_new_id (PANEL_MATECONF_TOPLEVELS);
+	path = g_strdup_printf (PANEL_TOPLEVEL_PATH "%s/", id);
 
-	dir = g_strdup_printf (PANEL_CONFIG_DIR "/toplevels/%s", id);
-	panel_mateconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/toplevels");
-	g_free (dir);
+	settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
+	g_free (path);
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_TOPLEVELS, id, "screen");
-	mateconf_client_set_int (client, key, gdk_screen_get_number (screen), NULL);
+	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, gdk_screen_get_number (screen));
 
 	if (panel_profile_find_empty_spot (screen, &orientation, &monitor)) {
-		key = panel_mateconf_full_key (PANEL_MATECONF_TOPLEVELS, id, "monitor");
-		mateconf_client_set_int (client, key, monitor, NULL);
-
-		key = panel_mateconf_full_key (PANEL_MATECONF_TOPLEVELS, id, "orientation");
-		mateconf_client_set_string (client, key, panel_profile_map_orientation (orientation), NULL);
+		g_settings_set_int (settings, PANEL_TOPLEVEL_MONITOR_KEY, monitor);
+		g_settings_set_enum (settings, PANEL_TOPLEVEL_ORIENTATION_KEY, orientation);
 	}
 	
-	panel_profile_add_to_list (PANEL_MATECONF_TOPLEVELS, id);
+	panel_profile_add_to_list (PANEL_GSETTINGS_TOPLEVELS, id);
 
+	g_object_unref (settings);
 	g_free (id);
 }
 
 static void
-panel_profile_delete_toplevel_objects (const char        *toplevel_id,
-				       PanelMateConfKeyType  key_type)
+panel_profile_delete_toplevel_objects (const char *toplevel_id)
 {
-	MateConfClient *client;
-	const char  *key;
-	GSList      *new_list = NULL,*list, *l;
+	gchar   **list;
+	GArray   *newlist;
+	int       i;
 
-	client = panel_mateconf_get_client ();
+	list = g_settings_get_strv (profile_settings, PANEL_OBJECT_ID_LIST_KEY);
+	newlist = g_array_new (TRUE, TRUE, sizeof (gchar *));
 
-	key = panel_mateconf_general_key (panel_mateconf_key_type_to_id_list (key_type));
-	list = mateconf_client_get_list (client, key, MATECONF_VALUE_STRING, NULL);
-
-	for (l = list; l; l = l->next) {
-		char *id = l->data;
+	for (i = 0; list[i]; i++) {
+		char *path;
 		char *parent_toplevel_id;
+		GSettings *settings;
 
-		key = panel_mateconf_full_key (key_type, id, "toplevel_id");
-		parent_toplevel_id = mateconf_client_get_string (client, key, NULL);
+		path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", list[i]);
+		settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+		parent_toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
+		g_free (path);
+		g_object_unref (settings);
 
 		if (parent_toplevel_id && !strcmp (toplevel_id, parent_toplevel_id)) {
-			g_free (id);
 			g_free (parent_toplevel_id);
 			continue;
 		}
 
-		new_list = g_slist_prepend (new_list, id);
+		newlist = g_array_append_val (newlist, list[i]);
 
 		g_free (parent_toplevel_id);
 	}
-	g_slist_free (list);
 
-	key = panel_mateconf_general_key (panel_mateconf_key_type_to_id_list (key_type));
-	mateconf_client_set_list (client, key, MATECONF_VALUE_STRING, new_list, NULL);
-
-	for (l = new_list; l; l = l->next)
-		g_free (l->data);
-	g_slist_free (new_list);
+	g_settings_set_strv (profile_settings, PANEL_OBJECT_ID_LIST_KEY, (const gchar **) newlist->data);
+	g_array_free (newlist, TRUE);
+	g_strfreev (list);
 }
 
 void
@@ -1577,29 +1037,22 @@ panel_profile_delete_toplevel (PanelToplevel *toplevel)
 
 	toplevel_id = panel_profile_get_toplevel_id (toplevel);
 
-	panel_profile_delete_toplevel_objects (toplevel_id, PANEL_MATECONF_OBJECTS);
-	panel_profile_delete_toplevel_objects (toplevel_id, PANEL_MATECONF_APPLETS);
+	panel_profile_delete_toplevel_objects (toplevel_id);
 
-	panel_profile_remove_from_list (PANEL_MATECONF_TOPLEVELS, toplevel_id);
+	panel_profile_remove_from_list (PANEL_GSETTINGS_TOPLEVELS, toplevel_id);
 }
 
 static GdkScreen *
-get_toplevel_screen (MateConfClient   *client,
-		     const char    *toplevel_dir)
+get_toplevel_screen (char *toplevel_path)
 {
-	GError     *error = NULL;
+
 	GdkDisplay *display;
-	const char *key;
+	GSettings  *settings;
 	int         screen_n;
 
-	key = panel_mateconf_sprintf ("%s/screen", toplevel_dir);
-	screen_n = mateconf_client_get_int (client, key, &error);
-	if (error) {
-		g_warning (_("Error reading MateConf integer value '%s': %s"),
-			   key, error->message);
-		g_error_free (error);
-		return gdk_screen_get_default ();
-	}
+	settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, toplevel_path);
+	screen_n = g_settings_get_int (settings, "screen");
+	g_object_unref (settings);
 
 	display = gdk_display_get_default ();
 
@@ -1616,42 +1069,20 @@ get_toplevel_screen (MateConfClient   *client,
 }
 
 PanelToplevel *
-panel_profile_load_toplevel (MateConfClient       *client,
-			     const char        *profile_dir,
-			     PanelMateConfKeyType  type,
-			     const char        *toplevel_id)
+panel_profile_load_toplevel (char *toplevel_id)
 {
 	PanelToplevel *toplevel;
 	GdkScreen     *screen;
-	GError        *error;
-	const char    *key;
-	char          *toplevel_dir;
-	guint          notify_id;
+	char          *toplevel_path;
+	char          *toplevel_background_path;
 
 	if (!toplevel_id || !toplevel_id [0])
 		return NULL;
 
-	toplevel_dir = g_strdup_printf ("%s/toplevels/%s", profile_dir, toplevel_id);
+	toplevel_path = g_strdup_printf ("%s%s/", PANEL_TOPLEVEL_PATH, toplevel_id);
 
-	if (!mateconf_client_dir_exists (client, toplevel_dir, NULL))
-		panel_mateconf_associate_schemas_in_dir (
-			client, toplevel_dir, PANEL_SCHEMAS_DIR "/toplevels");
-
-	mateconf_client_add_dir (client,
-			      toplevel_dir,
-			      MATECONF_CLIENT_PRELOAD_ONELEVEL,
-			      NULL);
-
-	key = panel_mateconf_sprintf ("%s/background", toplevel_dir);
-	mateconf_client_add_dir (client,
-			      key,
-			      MATECONF_CLIENT_PRELOAD_ONELEVEL,
-			      NULL);
-
-	if (!(screen = get_toplevel_screen (client, toplevel_dir))) {
-		mateconf_client_remove_dir (client, key, NULL);
-		mateconf_client_remove_dir (client, toplevel_dir, NULL);
-		g_free (toplevel_dir);
+	if (!(screen = get_toplevel_screen (toplevel_path))) {
+		g_free (toplevel_path);
 		return NULL;
 	}
 
@@ -1659,131 +1090,86 @@ panel_profile_load_toplevel (MateConfClient       *client,
 				 "screen", screen,
 				 NULL);
 
-#define GET_INT(k, fn)                                                              \
-	{                                                                           \
-		int val;                                                            \
-		error = NULL;                                                       \
-		key = panel_mateconf_sprintf ("%s/" k, toplevel_dir);                  \
-		val = mateconf_client_get_int (client, key, &error);                   \
-		if (!error)                                                         \
-			panel_toplevel_set_##fn (toplevel, val);                    \
-		else {                                                              \
-			g_warning (_("Error reading MateConf integer value '%s': %s"), \
-				   key, error->message);                            \
-			g_error_free (error);                                       \
-		}                                                                   \
+	panel_toplevel_set_settings_path (toplevel, toplevel_path);
+	toplevel->settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, toplevel_path);
+	toplevel->queued_settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, toplevel_path);
+
+	toplevel_background_path = g_strdup_printf ("%sbackground/", toplevel_path);
+	toplevel->background_settings = g_settings_new_with_path (PANEL_TOPLEVEL_BACKGROUND_SCHEMA, toplevel_background_path);
+
+#define GET_INT(k, fn)                                              \
+	{                                                               \
+		int val;                                                    \
+		val = g_settings_get_int (toplevel->settings, k);     \
+		panel_toplevel_set_##fn (toplevel, val);                    \
 	}
 
-#define GET_BOOL(k, fn)                                                             \
-	{                                                                           \
-		gboolean val;                                                       \
-		error = NULL;                                                       \
-		key = panel_mateconf_sprintf ("%s/" k, toplevel_dir);                  \
-		val = mateconf_client_get_bool (client, key, &error);                  \
-		if (!error)                                                         \
-			panel_toplevel_set_##fn (toplevel, val);                    \
-		else {                                                              \
-			g_warning (_("Error reading MateConf boolean value '%s': %s"), \
-				   key, error->message);                            \
-			g_error_free (error);                                       \
-		}                                                                   \
+#define GET_BOOL(k, fn)                                                \
+	{                                                                  \
+		gboolean val;                                                  \
+		val = g_settings_get_boolean (toplevel->settings, k);    \
+		panel_toplevel_set_##fn (toplevel, val);                       \
 	}
 
-#define GET_STRING(k, fn)                                                           \
-	{                                                                           \
-		char *val;                                                          \
-		error = NULL;                                                       \
-		key = panel_mateconf_sprintf ("%s/" k, toplevel_dir);                  \
-		val = mateconf_client_get_string (client, key, &error);                \
-		if (!error && val) {                                                \
-			set_##fn##_from_string (toplevel, val);                     \
-			g_free (val);                                               \
-		} else if (error) {                                                 \
-			g_warning (_("Error reading MateConf string value '%s': %s"),  \
-				   key, error->message);                            \
-			g_error_free (error);                                       \
-		}                                                                   \
+#define GET_STRING(k, fn)                                           \
+	{                                                               \
+		char *val;                                                  \
+		val = g_settings_get_string (toplevel->settings, k);        \
+		panel_toplevel_set_##fn (toplevel, val);                     \
+		g_free (val);                                               \
+	}
+
+#define GET_ENUM(k, fn)                                           \
+	{                                                               \
+		int val;                                                  \
+		val = g_settings_get_enum (toplevel->settings, k);        \
+		panel_toplevel_set_##fn (toplevel, val);                     \
 	}
 
 	GET_STRING ("name", name);
 	GET_INT ("monitor", monitor);
 	GET_BOOL ("expand", expand);
-	GET_STRING ("orientation", orientation);
+	GET_ENUM ("orientation", orientation);
 	GET_INT ("size", size);
-	GET_BOOL ("auto_hide", auto_hide);
-	GET_BOOL ("enable_animations", animate);
-	GET_BOOL ("enable_buttons", enable_buttons);
-	GET_BOOL ("enable_arrows", enable_arrows);
-	GET_INT ("hide_delay", hide_delay);
-	GET_INT ("unhide_delay", unhide_delay);
-	GET_INT ("auto_hide_size", auto_hide_size);
-	GET_STRING ("animation_speed", animation_speed);
+	GET_BOOL ("auto-hide", auto_hide);
+	GET_BOOL ("enable-animations", animate);
+	GET_BOOL ("enable-buttons", enable_buttons);
+	GET_BOOL ("enable-arrows", enable_arrows);
+	GET_INT ("hide-delay", hide_delay);
+	GET_INT ("unhide-delay", unhide_delay);
+	GET_INT ("auto-hide-size", auto_hide_size);
+	GET_ENUM ("animation-speed", animation_speed);
 
-#define GET_POSITION(a, b, c, fn)                                                   \
-	{                                                                           \
-		gboolean centered;                                                  \
-		int      position;                                                  \
-		int      position2;                                                 \
-		key = panel_mateconf_sprintf ("%s/" c, toplevel_dir);                  \
-		centered = mateconf_client_get_bool (client, key, &error);             \
-		if (!error) {                                                       \
-			key = panel_mateconf_sprintf ("%s/" a, toplevel_dir);          \
-			position = mateconf_client_get_int (client, key, &error);      \
-		}                                                                   \
-		if (!error) {                                                       \
-			MateConfValue *value;                                          \
-			key = panel_mateconf_sprintf ("%s/" b, toplevel_dir);          \
-			/* we need to do this since the key was added in 2.19 and   \
-			 * the default value returned when the key is not set       \
-			 * (for people coming from older versions) is 0, which      \
-			 * is not what we want. */                                  \
-			value = mateconf_client_get_without_default (client, key, &error);\
-			if (value && value->type == MATECONF_VALUE_INT)                \
-				position2 = mateconf_value_get_int (value);            \
-			else                                                        \
-				position2 = -1;                                     \
-                                                                                    \
-			if (value)                                                  \
-				mateconf_value_free (value);                           \
-		}                                                                   \
-		if (!error)                                                         \
-			panel_toplevel_set_##fn (toplevel, position, position2,     \
-						 centered);                         \
-		else {                                                              \
-			g_warning (_("Error reading MateConf integer value '%s': %s"), \
-				   key, error->message);                            \
-			g_error_free (error);                                       \
-		}                                                                   \
+#define GET_POSITION(a, b, c, fn)                                          \
+	{                                                                      \
+		gboolean centered;                                                 \
+		int      position;                                                 \
+		int      position2;                                                \
+		centered = g_settings_get_boolean (toplevel->settings, c);   \
+		position = g_settings_get_int (toplevel->settings, a);       \
+		position2 = g_settings_get_int (toplevel->settings, b);      \
+		panel_toplevel_set_##fn (toplevel, position, position2, centered); \
 	}
 
-	GET_POSITION ("x", "x_right", "x_centered", x);
-	GET_POSITION ("y", "y_bottom", "y_centered", y);
+	GET_POSITION ("x", "x-right", "x-centered", x);
+	GET_POSITION ("y", "y-bottom", "y-centered", y);
 
-	panel_profile_load_background (toplevel, client, toplevel_dir);
+	panel_profile_load_background (toplevel);
 
 	panel_profile_set_toplevel_id (toplevel, toplevel_id);
 
 	panel_profile_connect_to_toplevel (toplevel);
 
-	notify_id = panel_profile_toplevel_notify_add (
-			toplevel,
-			NULL,
-			(MateConfClientNotifyFunc) panel_profile_toplevel_change_notify,
-			toplevel);
-	g_signal_connect (toplevel, "destroy",
-			  G_CALLBACK (panel_profile_disconnect_toplevel),
-			  GUINT_TO_POINTER (notify_id));
+	g_signal_connect (toplevel->settings,
+					  "changed",
+					  G_CALLBACK (panel_profile_toplevel_change_notify),
+					  toplevel);
+	g_signal_connect (toplevel->background_settings,
+					  "changed",
+					  G_CALLBACK (panel_profile_background_change_notify),
+					  toplevel);
 
-	notify_id = panel_profile_toplevel_notify_add (
-			toplevel,
-			"background",
-			(MateConfClientNotifyFunc) panel_profile_background_change_notify,
-			toplevel);
-	g_signal_connect (toplevel, "destroy",
-			  G_CALLBACK (panel_profile_disconnect_toplevel),
-			  GUINT_TO_POINTER (notify_id));
-
-	g_free (toplevel_dir);
+	g_free (toplevel_background_path);
 
 	panel_setup (toplevel);
 
@@ -1791,18 +1177,13 @@ panel_profile_load_toplevel (MateConfClient       *client,
 }
 
 static void
-panel_profile_load_and_show_toplevel (MateConfClient       *client,
-				      const char        *profile_dir,
-				      PanelMateConfKeyType  type,
-				      const char        *toplevel_id)
+panel_profile_load_and_show_toplevel (char *toplevel_id)
 {
-	PanelToplevel *toplevel;
-	const char    *id_list;
-	const char    *key;
-	MateConfValue    *value;
-	gboolean       loading_queued_applets;
+	PanelToplevel  *toplevel;
+	gchar         **objects;
+	gboolean        loading_queued_applets;
 
-	toplevel = panel_profile_load_toplevel (client, profile_dir, type, toplevel_id);
+	toplevel = panel_profile_load_toplevel (toplevel_id);
 	if (!toplevel)
 		return;
 
@@ -1812,39 +1193,27 @@ panel_profile_load_and_show_toplevel (MateConfClient       *client,
 
 	/* reload list of objects to get those that might be on the new
 	 * toplevel */
-	id_list = panel_mateconf_key_type_to_id_list (PANEL_MATECONF_OBJECTS);
-	key = panel_mateconf_sprintf ("%s/general/%s", profile_dir, id_list);
-	value = mateconf_client_get (client, key, NULL);
-	if (value) {
-		panel_profile_object_id_list_update (client, value,
-						     PANEL_MATECONF_OBJECTS);
+	GSettings *panel_settings;
+	panel_settings = g_settings_new (PANEL_SCHEMA);
+	objects = g_settings_get_strv (panel_settings, PANEL_OBJECT_ID_LIST_KEY);
+	
+	if (objects) {
+		panel_profile_object_id_list_update (objects);
 		loading_queued_applets = TRUE;
-		mateconf_value_free (value);
-	}
-
-	id_list = panel_mateconf_key_type_to_id_list (PANEL_MATECONF_APPLETS);
-	key = panel_mateconf_sprintf ("%s/general/%s", profile_dir, id_list);
-	value = mateconf_client_get (client, key, NULL);
-	if (value) {
-		panel_profile_object_id_list_update (client, value,
-						     PANEL_MATECONF_APPLETS);
-		loading_queued_applets = TRUE;
-		mateconf_value_free (value);
 	}
 
 	if (!loading_queued_applets)
 		mate_panel_applet_load_queued_applets (FALSE);
+	
+	g_strfreev (objects);
+	g_object_unref (panel_settings);
 }
 
 static void
-panel_profile_load_and_show_toplevel_startup (MateConfClient       *client,
-					      const char        *profile_dir,
-					      PanelMateConfKeyType  type,
-					      const char        *toplevel_id)
+panel_profile_load_and_show_toplevel_startup (const char *toplevel_id)
 {
 	PanelToplevel *toplevel;
-
-	toplevel = panel_profile_load_toplevel (client, profile_dir, type, toplevel_id);
+	toplevel = panel_profile_load_toplevel (toplevel_id);
 	if (toplevel)
 		gtk_widget_show (GTK_WIDGET (toplevel));
 }
@@ -1866,39 +1235,26 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 				      int              position,
 				      gboolean         right_stick)
 {
-	PanelMateConfKeyType  key_type;
-	MateConfClient       *client;
+	PanelGSettingsKeyType  key_type;
 	const char        *key;
 	char              *id;
-	char              *dir;
+	char              *settings_path;
+	GSettings         *settings;
 
-	key_type = (object_type == PANEL_OBJECT_APPLET) ? PANEL_MATECONF_APPLETS : PANEL_MATECONF_OBJECTS;
-
-	client  = panel_mateconf_get_client ();
-
+	key_type = PANEL_GSETTINGS_OBJECTS;
 	id = panel_profile_find_new_id (key_type);
 
-	dir = g_strdup_printf (PANEL_CONFIG_DIR "/%s/%s",
-			       (key_type == PANEL_MATECONF_APPLETS) ? "applets" : "objects",
-			       id);
-	panel_mateconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/objects");
+	settings_path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 
-	key = panel_mateconf_full_key (key_type, id, "object_type");
-	mateconf_client_set_string (client,
-				 key,
-				 mateconf_enum_to_string (panel_object_type_map, object_type),
-				 NULL);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, settings_path);
 
-	key = panel_mateconf_full_key (key_type, id, "toplevel_id");
-	mateconf_client_set_string (client, key, toplevel_id, NULL);
+	g_settings_set_enum (settings, PANEL_OBJECT_TYPE_KEY, object_type);
+	g_settings_set_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY, toplevel_id);
+	g_settings_set_int (settings, PANEL_OBJECT_POSITION_KEY, position);
+	g_settings_set_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, right_stick);
 
-	key = panel_mateconf_full_key (key_type, id, "position");
-	mateconf_client_set_int (client, key, position, NULL);
-
-	key = panel_mateconf_full_key (key_type, id, "panel_right_stick");
-	mateconf_client_set_bool (client, key, right_stick, NULL);
-
-	g_free (dir);
+	g_free (settings_path);
+	g_object_unref (settings);
 
 	return id;
 }
@@ -1918,59 +1274,34 @@ panel_profile_prepare_object (PanelObjectType  object_type,
 void
 panel_profile_delete_object (AppletInfo *applet_info)
 {
-	PanelMateConfKeyType  type;
+	PanelGSettingsKeyType  type;
 	const char        *id;
 
-	type = (applet_info->type) == PANEL_OBJECT_APPLET ? PANEL_MATECONF_APPLETS :
-							    PANEL_MATECONF_OBJECTS;
+	type = PANEL_GSETTINGS_OBJECTS;
 	id = mate_panel_applet_get_id (applet_info);
 
 	panel_profile_remove_from_list (type, id);
 }
 
 static void
-panel_profile_load_object (MateConfClient       *client,
-			   const char        *profile_dir,
-			   PanelMateConfKeyType  type,
-			   const char        *id)
+panel_profile_load_object (char *id)
 {
 	PanelObjectType  object_type;
-	char            *object_dir;
-	const char      *key;
-	char            *type_string;
+	char            *object_path;
 	char            *toplevel_id;
 	int              position;
 	gboolean         right_stick;
 	gboolean         locked;
+	GSettings       *settings;
 
-	object_dir = g_strdup_printf ("%s/%s/%s",
-				      profile_dir,
-				      type == PANEL_MATECONF_OBJECTS ? "objects" : "applets",
-				      id);
+	object_path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, object_path);
 
-	mateconf_client_add_dir (client, object_dir, MATECONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-
-	key = panel_mateconf_sprintf ("%s/object_type", object_dir);
-	type_string = mateconf_client_get_string (client, key, NULL);
-        
-	if (!panel_profile_map_object_type_string (type_string, &object_type)) {
-		g_free (type_string);
-		mateconf_client_remove_dir (client, object_dir, NULL);
-		g_free (object_dir);
-		return;
-	}
-	
-	key = panel_mateconf_sprintf ("%s/position", object_dir);
-	position = mateconf_client_get_int (client, key, NULL);
-	
-	key = panel_mateconf_sprintf ("%s/toplevel_id", object_dir);
-	toplevel_id = mateconf_client_get_string (client, key, NULL);
-
-	key = panel_mateconf_sprintf ("%s/panel_right_stick", object_dir);
-	right_stick = mateconf_client_get_bool (client, key, NULL);
-
-	key = panel_mateconf_sprintf ("%s/locked", object_dir);
-	locked = mateconf_client_get_bool (client, key, NULL);
+	object_type = g_settings_get_enum (settings, PANEL_OBJECT_TYPE_KEY);
+	position = g_settings_get_int (settings, PANEL_OBJECT_POSITION_KEY);
+	toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
+	right_stick = g_settings_get_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
+	locked = g_settings_get_boolean (settings, PANEL_OBJECT_LOCKED_KEY);
 
 	mate_panel_applet_queue_applet_to_load (id,
 					   object_type,
@@ -1980,8 +1311,8 @@ panel_profile_load_object (MateConfClient       *client,
 					   locked);
 
 	g_free (toplevel_id);
-	g_free (type_string);
-	g_free (object_dir);
+	g_free (object_path);
+	g_object_unref (settings);
 }
 
 static void
@@ -1995,43 +1326,36 @@ panel_profile_destroy_object (const char *id)
 }
 
 static void
-panel_profile_delete_dir (MateConfClient       *client,
-			  PanelMateConfKeyType  type,
-			  const char        *id)
+panel_profile_delete_dir (PanelGSettingsKeyType  type,
+						  const char            *id)
 {
-	const char *key;
-	char       *type_str;
+	gchar *dir;
 
 	switch (type) {
-	case PANEL_MATECONF_TOPLEVELS:
-		type_str = "toplevels";
-		break;
-	case PANEL_MATECONF_OBJECTS:
-		type_str = "objects";
-		break;
-	case PANEL_MATECONF_APPLETS:
-		type_str = "applets";
-		break;
-	default:
-		type_str = NULL;
-		g_assert_not_reached ();
-		break;
+		case PANEL_GSETTINGS_TOPLEVELS:
+			dir = g_strdup_printf (PANEL_TOPLEVEL_PATH "%s/", id);
+			break;
+		case PANEL_GSETTINGS_OBJECTS:
+			dir = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+			break;
 	}
 
-	if (type == PANEL_MATECONF_TOPLEVELS) {
-		key = panel_mateconf_sprintf (PANEL_CONFIG_DIR "/%s/%s/background",
-					   type_str, id);
-		mateconf_client_remove_dir (client, key, NULL);
+	if (type == PANEL_GSETTINGS_TOPLEVELS) {
+		gchar *subdir;
+		subdir = g_strdup_printf (PANEL_TOPLEVEL_PATH "%s/background/", id);
+		panel_dconf_recursive_reset (subdir, NULL);
+		g_free (subdir);
+	}
+	else if (type == PANEL_GSETTINGS_OBJECTS) {
+		gchar *subdir;
+		subdir = g_strdup_printf (PANEL_TOPLEVEL_PATH "%s/prefs/", id);
+		panel_dconf_recursive_reset (subdir, NULL);
+		g_free (subdir);
 	}
 
-	key = panel_mateconf_sprintf (PANEL_CONFIG_DIR "/%s/%s",
-				   type_str, id);
-	mateconf_client_remove_dir (client, key, NULL);
+	panel_dconf_recursive_reset (dir, NULL);
 
-	mateconf_client_recursive_unset (client,
-				      key,
-				      MATECONF_UNSET_INCLUDING_SCHEMA_NAMES,
-				      NULL);
+	g_free (dir);
 }
 
 static gboolean
@@ -2067,7 +1391,7 @@ panel_profile_id_exists (GSList     *id_list,
 		return FALSE;
 
 	for (l = id_list; l; l = l->next) {
-		const char *check_id = mateconf_value_get_string (l->data);
+		const char *check_id = l->data;
 
 		if (!strcmp (id, check_id))
 			return TRUE;
@@ -2077,19 +1401,17 @@ panel_profile_id_exists (GSList     *id_list,
 }
 
 static void
-panel_profile_load_added_ids (MateConfClient            *client,
-			      PanelMateConfKeyType       type,
-			      GSList                 *list,
-			      GSList                 *id_list,
-			      PanelProfileGetIdFunc   get_id_func,
-			      PanelProfileLoadFunc    load_handler,
-			      PanelProfileOnLoadQueue on_load_queue)
+panel_profile_load_added_ids (GSList                 *list,
+							  GSList                 *id_list,
+							  PanelProfileGetIdFunc   get_id_func,
+							  PanelProfileLoadFunc    load_handler,
+							  PanelProfileOnLoadQueue on_load_queue)
 {
 	GSList *added_ids = NULL;
 	GSList *l;
 
 	for (l = id_list; l; l = l->next) {
-		const char *id = mateconf_value_get_string (l->data);
+		const char *id = l->data;
 
 		if (!panel_profile_object_exists (list, id, get_id_func) &&
 		    (on_load_queue == NULL || !on_load_queue (id)))
@@ -2101,7 +1423,7 @@ panel_profile_load_added_ids (MateConfClient            *client,
 		id = (char *) l->data;
 
 		if (id && id[0])
-			load_handler (client, PANEL_CONFIG_DIR, type, id);
+			load_handler (id);
 
 		g_free (l->data);
 		l->data = NULL;
@@ -2111,12 +1433,11 @@ panel_profile_load_added_ids (MateConfClient            *client,
 }
 
 static void
-panel_profile_delete_removed_ids (MateConfClient             *client,
-				  PanelMateConfKeyType        type,
-				  GSList                  *list,
-				  GSList                  *id_list,
-				  PanelProfileGetIdFunc    get_id_func,
-				  PanelProfileDestroyFunc  destroy_handler)
+panel_profile_delete_removed_ids (PanelGSettingsKeyType    type,
+								  GSList                  *list,
+								  GSList                  *id_list,
+								  PanelProfileGetIdFunc    get_id_func,
+								  PanelProfileDestroyFunc  destroy_handler)
 {
 	GSList *removed_ids = NULL;
 	GSList *l;
@@ -2133,7 +1454,7 @@ panel_profile_delete_removed_ids (MateConfClient             *client,
 	for (l = removed_ids; l; l = l->next) {
 		const char *id = l->data;
 
-		panel_profile_delete_dir (client, type, id);
+		panel_profile_delete_dir (type, id);
 		destroy_handler (id);
 
 		g_free (l->data);
@@ -2143,27 +1464,21 @@ panel_profile_delete_removed_ids (MateConfClient             *client,
 }
 
 static void
-panel_profile_toplevel_id_list_notify (MateConfClient *client,
-				       guint        cnxn_id,
-				       MateConfEntry  *entry)
+panel_profile_toplevel_id_list_notify (GSettings *settings,
+									   gchar *key,
+									   gpointer   user_data)
 {
-	MateConfValue *value;
 	GSList     *l, *existing_toplevels;
 	GSList     *toplevel_ids;
+	gchar     **toplevel_ids_strv;
 
-	if (!(value = mateconf_entry_get_value (entry)))
-		return;
+	toplevel_ids_strv = g_settings_get_strv (settings, key);
 
-	if (value->type != MATECONF_VALUE_LIST ||
-	    mateconf_value_get_list_type (value) != MATECONF_VALUE_STRING) {
-		mateconf_value_free (value);
-		return;
-	}
-
-	toplevel_ids = g_slist_copy (mateconf_value_get_list (value));
+	toplevel_ids = panel_gsettings_strv_to_gslist (toplevel_ids_strv);
 	toplevel_ids = panel_g_slist_make_unique (toplevel_ids,
-						  panel_mateconf_value_strcmp,
+						  g_strcmp0,
 						  FALSE);
+	g_strfreev (toplevel_ids_strv);
 
 	existing_toplevels = NULL;
 	for (l = panel_toplevel_list_toplevels (); l; l = l->next) {
@@ -2176,69 +1491,52 @@ panel_profile_toplevel_id_list_notify (MateConfClient *client,
 		existing_toplevels = g_slist_prepend (existing_toplevels, toplevel);
 	}
 
-	panel_profile_load_added_ids (client,
-				      PANEL_MATECONF_TOPLEVELS,
-				      existing_toplevels,
-				      toplevel_ids,
-				      (PanelProfileGetIdFunc) panel_profile_get_toplevel_id,
-				      (PanelProfileLoadFunc) panel_profile_load_and_show_toplevel,
-				      (PanelProfileOnLoadQueue) NULL);
+	panel_profile_load_added_ids (existing_toplevels,
+								  toplevel_ids,
+								  (PanelProfileGetIdFunc) panel_profile_get_toplevel_id,
+								  (PanelProfileLoadFunc) panel_profile_load_and_show_toplevel,
+								  (PanelProfileOnLoadQueue) NULL);
 
-	panel_profile_delete_removed_ids (client,
-					  PANEL_MATECONF_TOPLEVELS,
-					  existing_toplevels,
-					  toplevel_ids,
-					  (PanelProfileGetIdFunc) panel_profile_get_toplevel_id,
-					  (PanelProfileDestroyFunc) panel_profile_destroy_toplevel);
+	panel_profile_delete_removed_ids (PANEL_GSETTINGS_TOPLEVELS,
+									  existing_toplevels,
+									  toplevel_ids,
+									  (PanelProfileGetIdFunc) panel_profile_get_toplevel_id,
+									  (PanelProfileDestroyFunc) panel_profile_destroy_toplevel);
 
 	g_slist_free (existing_toplevels);
 	g_slist_free (toplevel_ids);
 }
 
 static void
-panel_profile_object_id_list_update (MateConfClient       *client,
-				     MateConfValue        *value,
-				     PanelMateConfKeyType  type)
+panel_profile_object_id_list_update (gchar **objects)
 {
 	GSList *existing_applets;
 	GSList *sublist = NULL, *l;
 	GSList *object_ids;
 
-	if (value->type != MATECONF_VALUE_LIST ||
-	    mateconf_value_get_list_type (value) != MATECONF_VALUE_STRING) {
-		mateconf_value_free (value);
-		return;
-	}
-
-	object_ids = g_slist_copy (mateconf_value_get_list (value));
+	object_ids = panel_gsettings_strv_to_gslist (objects);
 	object_ids = panel_g_slist_make_unique (object_ids,
-						panel_mateconf_value_strcmp,
+						g_strcmp0,
 						FALSE);
 
 	existing_applets = mate_panel_applet_list_applets ();
 
 	for (l = existing_applets; l; l = l->next) {
 		AppletInfo *info = l->data;
-
-		if ((type == PANEL_MATECONF_APPLETS && info->type == PANEL_OBJECT_APPLET) ||
-		    (type == PANEL_MATECONF_OBJECTS && info->type != PANEL_OBJECT_APPLET))
-			sublist = g_slist_prepend (sublist, info);
+		sublist = g_slist_prepend (sublist, info);
 	}
 
-	panel_profile_load_added_ids (client,
-				      type,
-				      sublist,
-				      object_ids,
-				      (PanelProfileGetIdFunc) mate_panel_applet_get_id,
-				      (PanelProfileLoadFunc) panel_profile_load_object,
-				      (PanelProfileOnLoadQueue) mate_panel_applet_on_load_queue);
+	panel_profile_load_added_ids (sublist,
+								  object_ids,
+								  (PanelProfileGetIdFunc) mate_panel_applet_get_id,
+								  (PanelProfileLoadFunc) panel_profile_load_object,
+								  (PanelProfileOnLoadQueue) mate_panel_applet_on_load_queue);
 
-	panel_profile_delete_removed_ids (client,
-					  type,
-					  sublist,
-					  object_ids,
-					  (PanelProfileGetIdFunc) mate_panel_applet_get_id,
-					  (PanelProfileDestroyFunc) panel_profile_destroy_object);
+	panel_profile_delete_removed_ids (PANEL_GSETTINGS_OBJECTS,
+									  sublist,
+									  object_ids,
+									  (PanelProfileGetIdFunc) mate_panel_applet_get_id,
+									  (PanelProfileDestroyFunc) panel_profile_destroy_object);
 
 	g_slist_free (sublist);
 	g_slist_free (object_ids);
@@ -2247,237 +1545,50 @@ panel_profile_object_id_list_update (MateConfClient       *client,
 }
 
 static void
-panel_profile_object_id_list_notify (MateConfClient *client,
-				     guint        cnxn_id,
-				     MateConfEntry  *entry,
-				     gpointer     data)
+panel_profile_object_id_list_notify (GSettings *settings,
+									 gchar *key,
+									 gpointer data)
 {
-	MateConfValue        *value;
-	PanelMateConfKeyType  type = GPOINTER_TO_INT (data);
-
-	if (!(value = mateconf_entry_get_value (entry)))
-		return;
-
-	panel_profile_object_id_list_update (client, value, type);
+	gchar **objects;
+	objects = g_settings_get_strv (settings, key);
+	panel_profile_object_id_list_update (objects);
+	g_strfreev (objects);
 }
 
 static void
-panel_profile_load_list (MateConfClient           *client,
-			 const char            *profile_dir,
-			 PanelMateConfKeyType      type,
-			 PanelProfileLoadFunc   load_handler,
-			 MateConfClientNotifyFunc  notify_handler)
+panel_profile_load_list (GSettings              *settings,
+						 PanelGSettingsKeyType   type,
+						 PanelProfileLoadFunc    load_handler,
+						 GCallback               notify_handler)
 {
 
-	const char *key;
-	GSList     *list;
-	GSList     *l;
-	const char *id_list;
+	gchar  *key;
+	gchar  *changed_signal;
+	gchar **list;
+	gint    i;
 
-	id_list = panel_mateconf_key_type_to_id_list (type);
+	if (type == PANEL_GSETTINGS_TOPLEVELS)
+		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
+	else if (type == PANEL_GSETTINGS_OBJECTS)
+		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
 
-	key = panel_mateconf_sprintf ("%s/general/%s", profile_dir, id_list);
+	changed_signal = g_strdup_printf ("changed::%s", key);
 
-	mateconf_client_notify_add (client, key, notify_handler,
-				 GINT_TO_POINTER (type),
-				 NULL, NULL);
+	g_signal_connect (settings, changed_signal, G_CALLBACK (notify_handler), NULL); 
 
-	list = mateconf_client_get_list (client, key, MATECONF_VALUE_STRING, NULL);
-	list = panel_g_slist_make_unique (list,
-					  (GCompareFunc) strcmp,
-					  TRUE);
+	list = g_settings_get_strv (settings, key);
 
-	for (l = list; l; l = l->next) {
-		char *id;
-		id = (char *) l->data;
-
-		if (id && id[0])
-			load_handler (client, profile_dir, type, id);
-
-		g_free (l->data);
-		l->data = NULL;
+	for (i = 0; list[i]; i++) {
+		load_handler (list[i]);
 	}
-	g_slist_free (list);
-}
-
-static GSList *
-panel_profile_copy_defaults_for_screen (MateConfClient       *client,
-					const char        *profile_dir,
-					int                screen_n,
-					PanelMateConfKeyType  type)
-{
-	GSList     *default_ids, *l;
-	GSList     *new_ids = NULL;
-	const char *key;
-	const char *id_list, *type_str;
-
-	id_list = panel_mateconf_key_type_to_id_list (type);
-
-	switch (type) {
-	case PANEL_MATECONF_TOPLEVELS:
-		type_str    = "toplevels";
-		break;
-	case PANEL_MATECONF_OBJECTS:
-		type_str    = "objects";
-		break;
-	case PANEL_MATECONF_APPLETS:
-		type_str    = "applets";
-		break;
-	default:
-		type_str = NULL;
-		g_assert_not_reached ();
-		break;
-	}
-
-	key = panel_mateconf_sprintf (PANEL_DEFAULTS_DIR "/general/%s", id_list);
-	default_ids = mateconf_client_get_list (client, key, MATECONF_VALUE_STRING, NULL);
-
-	for (l = default_ids; l; l = l->next) {
-		char *default_id = l->data;
-		char *new_id;
-		char *src_dir;
-		char *dest_dir;
-
-		new_id = g_strdup_printf ("%s_screen%d", default_id, screen_n);
-
-		src_dir  = g_strdup_printf (PANEL_DEFAULTS_DIR "/%s/%s", type_str, default_id);
-		dest_dir = g_strdup_printf ("%s/%s/%s", profile_dir, type_str, new_id);
-
-		panel_mateconf_copy_dir (client, src_dir, dest_dir);
-
-		new_ids = g_slist_prepend (new_ids, new_id);
-
-		g_free (src_dir);
-		g_free (dest_dir);
-		g_free (l->data);
-	}
-	g_slist_free (default_ids);
-
-	return new_ids;
+	if (list)
+		g_strfreev (list);
+	g_free (changed_signal);
+	g_free (key);
 }
 
 static void
-panel_profile_append_new_ids (MateConfClient       *client,
-			      PanelMateConfKeyType  type,
-			      GSList            *new_ids)
-{
-	GSList     *list, *l;
-	const char *key;
-	const char *id_list;
-
-	id_list = panel_mateconf_key_type_to_id_list (type);
-
-	key = panel_mateconf_general_key (id_list);
-	list = mateconf_client_get_list (client, key, MATECONF_VALUE_STRING, NULL);
-
-	for (l = new_ids; l; l = l->next)
-		list = g_slist_append (list, l->data);
-
-	g_slist_free (new_ids);
-
-	mateconf_client_set_list (client, key, MATECONF_VALUE_STRING, list, NULL);
-	
-	for (l = list; l; l = l->next)
-		g_free (l->data);
-	g_slist_free (list);
-}
-
-static void
-panel_profile_copy_default_objects_for_screen (MateConfClient       *client,
-					       const char        *profile_dir,
-					       int                screen_n,
-					       PanelMateConfKeyType  type)
-{
-	GSList *new_objects, *l, *next;
-
-	new_objects = panel_profile_copy_defaults_for_screen (client, profile_dir, screen_n, type);
-
-	for (l = new_objects; l; l = next) {
-		char       *object_id = l->data;
-		const char *key;
-		char       *toplevel_id;
-		char       *new_toplevel_id;
-
-		next = l->next;
-
-		key = panel_mateconf_full_key (type, object_id, "toplevel_id");
-		toplevel_id = mateconf_client_get_string (client, key, NULL);
-		if (!toplevel_id) {
-			new_objects = g_slist_remove_link (new_objects, l);
-			g_free (l->data);
-			g_slist_free_1 (l);
-			continue;
-		}
-
-		new_toplevel_id = g_strdup_printf ("%s_screen%d", toplevel_id, screen_n);
-		mateconf_client_set_string (client, key, new_toplevel_id, NULL);
-
-		g_free (toplevel_id);
-		g_free (new_toplevel_id);
-	}
-
-	panel_profile_append_new_ids (client, type, new_objects);
-}
-
-/* FIXME:
- *   We might want to do something more sophisticated like hardcode
- *   the default panel setup as the fallback panels.
- */
-static GSList *
-panel_profile_create_fallback_toplevel_list (MateConfClient *client,
-					     const char  *profile_dir)
-{
-	char *id;
-	char *dir;
-
-	id = panel_profile_find_new_id (PANEL_MATECONF_TOPLEVELS);
-
-	dir = g_strdup_printf ("%s/toplevels/%s", profile_dir, id);
-	panel_mateconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/toplevels");
-	g_free (dir);
-
-	return g_slist_prepend (NULL, id);
-}
-
-static void
-panel_profile_load_defaults_on_screen (MateConfClient *client,
-				       const char  *profile_dir,
-				       GdkScreen   *screen)
-{
-	GSList *new_toplevels, *l;
-	int     screen_n;
-
-	screen_n = gdk_screen_get_number (screen);
-
-	new_toplevels = panel_profile_copy_defaults_for_screen (
-				client, profile_dir, screen_n, PANEL_MATECONF_TOPLEVELS);
-	if (!new_toplevels) {
-		g_warning ("Failed to load default panel configuration. panel-default-setup.entries "
-			   "hasn't been installed using mateconftool-2 --load ?\n");
-		new_toplevels = panel_profile_create_fallback_toplevel_list (client, profile_dir);
-	}
-
-	for (l = new_toplevels; l; l = l->next) {
-		char       *toplevel_id = l->data;
-		const char *key;
-
-		key = panel_mateconf_full_key (PANEL_MATECONF_TOPLEVELS,
-					    toplevel_id,
-					    "screen");
-		mateconf_client_set_int (client, key, screen_n, NULL);
-	}
-
-	panel_profile_append_new_ids (client, PANEL_MATECONF_TOPLEVELS, new_toplevels);
-
-	panel_profile_copy_default_objects_for_screen (
-				client, profile_dir, screen_n, PANEL_MATECONF_OBJECTS);
-	panel_profile_copy_default_objects_for_screen (
-				client, profile_dir, screen_n, PANEL_MATECONF_APPLETS);
-}
-
-static void
-panel_profile_ensure_toplevel_per_screen (MateConfClient *client,
-					  const char  *profile_dir)
+panel_profile_ensure_toplevel_per_screen ()
 {
 	GSList     *toplevels;
 	GSList     *empty_screens = NULL;
@@ -2504,7 +1615,7 @@ panel_profile_ensure_toplevel_per_screen (MateConfClient *client,
 	}
 
 	for (l = empty_screens; l; l = l->next)
-		panel_profile_load_defaults_on_screen (client, profile_dir, l->data);
+		panel_layout_apply_default_from_gkeyfile (l->data);
 
 	g_slist_free (empty_screens);
 }
@@ -2512,112 +1623,71 @@ panel_profile_ensure_toplevel_per_screen (MateConfClient *client,
 void
 panel_profile_load (void)
 {
-	MateConfClient *client;
+	profile_settings = g_settings_new ("org.mate.panel");
 
-	client  = panel_mateconf_get_client ();
-
-	mateconf_client_add_dir (client, PANEL_CONFIG_DIR "/general", MATECONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-
-	panel_compatibility_maybe_copy_old_config (client);
-
-	panel_compatibility_migrate_panel_id_list (client);
-
-	panel_profile_load_list (client,
-				 PANEL_CONFIG_DIR,
-				 PANEL_MATECONF_TOPLEVELS,
+	panel_profile_load_list (profile_settings,
+				 PANEL_GSETTINGS_TOPLEVELS,
 				 panel_profile_load_and_show_toplevel_startup,
-				 (MateConfClientNotifyFunc) panel_profile_toplevel_id_list_notify);
-	panel_profile_load_list (client,
-				 PANEL_CONFIG_DIR,
-				 PANEL_MATECONF_OBJECTS,
+				 G_CALLBACK (panel_profile_toplevel_id_list_notify));
+	panel_profile_load_list (profile_settings,
+				 PANEL_GSETTINGS_OBJECTS,
 				 panel_profile_load_object,
-				 (MateConfClientNotifyFunc) panel_profile_object_id_list_notify);
-	panel_profile_load_list (client,
-				 PANEL_CONFIG_DIR,
-				 PANEL_MATECONF_APPLETS,
-				 panel_profile_load_object,
-				 (MateConfClientNotifyFunc) panel_profile_object_id_list_notify);
+				 G_CALLBACK (panel_profile_object_id_list_notify));
 
-	panel_profile_ensure_toplevel_per_screen (client, PANEL_CONFIG_DIR);
+	panel_profile_ensure_toplevel_per_screen ();
 
 	mate_panel_applet_load_queued_applets (TRUE);
 }
 
 static gboolean
-get_program_listing_setting (const char *setting)
+get_program_listing_setting (const char *key)
 {
-	MateConfClient *client;
-	const char  *key;
-	gboolean     retval;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_mateconf_general_key (setting);
-	retval = mateconf_client_get_bool (client, key, NULL);
-
+	gboolean retval;
+	retval = g_settings_get_boolean (profile_settings, key);
 	return retval;
 }
 
 gboolean
 panel_profile_get_show_program_list (void)
 {
-	return get_program_listing_setting ("show_program_list");
+	return get_program_listing_setting ("show-program-list");
 }
 
 gboolean
 panel_profile_get_enable_program_list (void)
 {
-	return get_program_listing_setting ("enable_program_list");
+	return get_program_listing_setting ("enable-program-list");
 }
 
 gboolean
 panel_profile_get_enable_autocompletion (void)
 {
-	return get_program_listing_setting ("enable_autocompletion");
+	return get_program_listing_setting ("enable-autocompletion");
 }
 
 void
 panel_profile_set_show_program_list (gboolean show_program_list)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_mateconf_general_key ("show_program_list");
-	mateconf_client_set_bool (client, key, show_program_list, NULL);
+	g_settings_set_boolean (profile_settings, "show-program-list", show_program_list);
 }
 
 gboolean
 panel_profile_is_writable_show_program_list (void)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client = panel_mateconf_get_client ();
-
-	key = panel_mateconf_general_key ("show_program_list");
-	return mateconf_client_key_is_writable (client, key, NULL);
+	return g_settings_is_writable (profile_settings, "show-program-list");
 }
 
 gboolean
 panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 {
-	const char *key;
-	MateConfClient *client;
-
 	if (panel_lockdown_get_locked_down () ||
-	    !panel_profile_is_writable_toplevel_orientation (toplevel))
+	    !g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_ORIENTATION_KEY))
 		return FALSE;
 
-	client = panel_mateconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "screen");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_SCREEN_KEY))
 		return FALSE;
 
-	key = panel_profile_get_toplevel_key (toplevel, "monitor");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_MONITOR_KEY))
 		return FALSE;
 
 	/* For expanded panels we don't really have to check 
@@ -2625,24 +1695,18 @@ panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 	if (panel_toplevel_get_expand (toplevel))
 		return TRUE;
 
-	key = panel_profile_get_toplevel_key (toplevel, "x");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_X_KEY))
 		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "x_right");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_X_RIGHT_KEY))
 		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "x_centered");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_X_CENTERED_KEY))
 		return FALSE;
 
-	key = panel_profile_get_toplevel_key (toplevel, "y");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_Y_KEY))
 		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "y_bottom");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_Y_BOTTOM_KEY))
 		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "y_centered");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_Y_CENTERED_KEY))
 		return FALSE;
 
 	return TRUE;

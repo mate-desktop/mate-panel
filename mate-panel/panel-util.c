@@ -38,7 +38,7 @@
 #include "nothing.h"
 #include "xstuff.h"
 #include "panel-config-global.h"
-#include "panel-mateconf.h"
+#include "panel-schemas.h"
 #include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
@@ -822,7 +822,6 @@ panel_util_get_file_display_name_if_mount (GFile *file)
 	return ret;
 }
 
-#define HOME_NAME_KEY           "/apps/caja/desktop/home_icon_name"
 static char *
 panel_util_get_file_display_for_common_files (GFile *file)
 {
@@ -830,18 +829,20 @@ panel_util_get_file_display_for_common_files (GFile *file)
 
 	compare = g_file_new_for_path (g_get_home_dir ());
 	if (g_file_equal (file, compare)) {
-		char *mateconf_name;
+		GSettings *caja_desktop_settings;
+		char *caja_home_icon_name;
 
 		g_object_unref (compare);
 
-		mateconf_name = mateconf_client_get_string (panel_mateconf_get_client (),
-						      HOME_NAME_KEY,
-						      NULL);
-		if (PANEL_GLIB_STR_EMPTY (mateconf_name)) {
-			g_free (mateconf_name);
+		caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
+		caja_home_icon_name = g_settings_get_string (caja_desktop_settings,
+													 CAJA_DESKTOP_HOME_ICON_NAME_KEY);
+		g_object_unref (caja_desktop_settings);
+		if (PANEL_GLIB_STR_EMPTY (caja_home_icon_name)) {
+			g_free (caja_home_icon_name);
 			return g_strdup (_("Home Folder"));
 		} else {
-			return mateconf_name;
+			return caja_home_icon_name;
 		}
 	}
 	g_object_unref (compare);

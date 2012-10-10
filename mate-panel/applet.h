@@ -3,8 +3,8 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
+#include <gio/gio.h>
 #include "panel-widget.h"
-#include "panel-mateconf.h"
 #include "panel-enums.h"
 
 #ifdef __cplusplus
@@ -26,6 +26,8 @@ typedef struct {
 
 	gpointer         data;
 	GDestroyNotify   data_destroy;
+
+	GSettings       *settings;
 
 	char            *id;
 } AppletInfo;

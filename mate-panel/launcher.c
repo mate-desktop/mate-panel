@@ -33,7 +33,6 @@
 #include "button-widget.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
-#include "panel-mateconf.h"
 #include "panel-profile.h"
 #include "xstuff.h"
 #include "panel-toplevel.h"
@@ -41,9 +40,9 @@
 #include "panel-globals.h"
 #include "panel-multiscreen.h"
 #include "panel-lockdown.h"
-#include "panel-compatibility.h"
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 static GdkScreen *
 launcher_get_screen (Launcher *launcher)
@@ -414,7 +413,7 @@ static Launcher *
 create_launcher (const char *location)
 {
 	GKeyFile *key_file;
-	gboolean  loaded;
+	gboolean  loaded = FALSE;
 	Launcher *launcher;
 	GError   *error = NULL;
 	char     *new_location;
@@ -686,21 +685,13 @@ launcher_saved (GtkWidget *dialog,
 		Launcher  *launcher)
 {
 	const char  *uri;
-	MateConfClient *client;
-	const char  *key;
-
 	uri = panel_ditem_editor_get_uri (PANEL_DITEM_EDITOR (dialog));
 	if (panel_launcher_get_filename (uri) != NULL)
 		uri = panel_launcher_get_filename (uri);
 
 	if (uri && launcher->location && strcmp (uri, launcher->location)) {
-		client = panel_mateconf_get_client ();
 
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS,
-					    launcher->info->id,
-					    "launcher_location");
-
-		mateconf_client_set_string (client, key, uri, NULL);
+		g_settings_set_string (launcher->info->settings, PANEL_OBJECT_LAUNCHER_LOCATION_KEY, uri);
 
 		if (launcher->location)
 			g_free (launcher->location);
@@ -817,28 +808,28 @@ load_launcher_applet (const char       *location,
 }
 
 void
-launcher_load_from_mateconf (PanelWidget *panel_widget,
-			  gboolean     locked,
-			  int          position,
-			  const char  *id)
+launcher_load_from_gsettings (PanelWidget *panel_widget,
+			      gboolean     locked,
+			      int          position,
+			      const char  *id)
 {
-	MateConfClient *client;
+	GSettings   *settings;
+	char        *path;
 	Launcher    *launcher;
-	const char  *key;
 	char        *launcher_location;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	client  = panel_mateconf_get_client ();
+	path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_free (path); 
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "launcher_location");
-	panel_compatibility_migrate_applications_scheme (client, key);
-	launcher_location = mateconf_client_get_string (client, key, NULL);
+	launcher_location = g_settings_get_string (settings, PANEL_OBJECT_LAUNCHER_LOCATION_KEY);
 
 	if (!launcher_location) {
 		g_printerr (_("Key %s is not set, cannot load launcher\n"),
-			    key);
+			    PANEL_OBJECT_LAUNCHER_LOCATION_KEY);
 		return;
 	}
 
@@ -850,8 +841,7 @@ launcher_load_from_mateconf (PanelWidget *panel_widget,
 					 id);
 
 	if (launcher) {
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "launcher_location");
-		if (!mateconf_client_key_is_writable (client, key, NULL)) {
+		if (!g_settings_is_writable (settings, PANEL_OBJECT_LAUNCHER_LOCATION_KEY)) {
 			AppletUserMenu *menu;
 
 			menu = mate_panel_applet_get_callback (launcher->info->user_menu,
@@ -862,6 +852,7 @@ launcher_load_from_mateconf (PanelWidget *panel_widget,
 	}
 
 	g_free (launcher_location);
+	g_object_unref (settings);
 }
 
 static void
@@ -976,20 +967,22 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 			       int            position,
 			       const char    *location)
 {
-	MateConfClient *client;
-	const char  *key;
+	GSettings   *settings;
+	char        *path;
 	char        *id;
 	char        *no_uri;
 	const char  *new_location;
 
 	g_return_if_fail (location != NULL);
 
-	client = panel_mateconf_get_client ();
-
 	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER,
 						   toplevel_id,
 						   position,
 						   FALSE);
+
+	path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_free (path); 
 
 	no_uri = NULL;
 	/* if we have an URI, it might contain escaped characters (? : etc)
@@ -1003,15 +996,13 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 	if (new_location == NULL)
 		new_location = no_uri;
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS,
-				    id,
-				    "launcher_location");
-	mateconf_client_set_string (client, key, new_location, NULL);
+	g_settings_set_string (settings, PANEL_OBJECT_LAUNCHER_LOCATION_KEY, new_location);
 
-	panel_profile_add_to_list (PANEL_MATECONF_OBJECTS, id);
+	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 
 	g_free (no_uri);
 	g_free (id);
+	g_object_unref (settings);
 }
 
 void

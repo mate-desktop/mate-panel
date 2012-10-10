@@ -13,6 +13,7 @@
 
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
+#include <gio/gio.h>
 
 #include <libpanel-util/panel-show.h>
 
@@ -20,13 +21,11 @@
 #include "drawer.h"
 #include "launcher.h"
 #include "panel-addto.h"
-#include "panel-mateconf.h"
 #include "panel-config-global.h"
 #include "mate-panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-separator.h"
-#include "panel-compatibility.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 #include "panel-profile.h"
@@ -34,6 +33,7 @@
 #include "panel-globals.h"
 #include "panel-properties-dialog.h"
 #include "panel-lockdown.h"
+#include "panel-schemas.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -171,12 +171,10 @@ mate_panel_applet_recreate_menu (AppletInfo	*info)
 }
 
 static void
-mate_panel_applet_locked_change_notify (MateConfClient *client,
-				   guint        cnxn_id,
-				   MateConfEntry  *entry,
-				   GtkWidget   *applet)
+mate_panel_applet_locked_change_notify (GSettings *settings,
+									    gchar *key,
+									    GtkWidget   *applet)
 {
-	MateConfValue  *value;
 	gboolean     locked;
 	gboolean     applet_locked;
 	AppletInfo  *info;
@@ -189,11 +187,7 @@ mate_panel_applet_locked_change_notify (MateConfClient *client,
 	if (info == NULL)
 		return;
 
-	value = mateconf_entry_get_value (entry);
-	if (value == NULL || value->type != MATECONF_VALUE_BOOL)
-		return;
-
-	locked = mateconf_value_get_bool (value);
+	locked = g_settings_get_boolean (settings, key);
 
 	panel_widget = mate_panel_applet_get_panel_widget (info);
 	applet_locked = panel_widget_get_applet_locked (panel_widget,
@@ -749,6 +743,11 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 
 	info->widget = NULL;
 
+	if (info->settings) {
+		g_object_unref (info->settings);
+		info->settings = NULL;
+	}
+
 	registered_applets = g_slist_remove (registered_applets, info);
 
 	queued_position_saves =
@@ -950,43 +949,33 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 
 	switch (applet_type) {
 	case PANEL_OBJECT_APPLET:
-		mate_panel_applet_frame_load_from_mateconf (
+		mate_panel_applet_frame_load_from_gsettings (
 					panel_widget,
 					applet->locked,
 					applet->position,
 					applet->id);
 		break;
 	case PANEL_OBJECT_DRAWER:
-		drawer_load_from_mateconf (panel_widget,
+		drawer_load_from_gsettings (panel_widget,
 					applet->locked,
 					applet->position,
 					applet->id);
 		break;
 	case PANEL_OBJECT_MENU:
-		panel_menu_button_load_from_mateconf (panel_widget,
+		panel_menu_button_load_from_gsettings (panel_widget,
 						   applet->locked,
 						   applet->position,
 						   TRUE,
 						   applet->id);
 		break;
 	case PANEL_OBJECT_LAUNCHER:
-		launcher_load_from_mateconf (panel_widget,
+		launcher_load_from_gsettings (panel_widget,
 					  applet->locked,
 					  applet->position,
 					  applet->id);
 		break;
-	case PANEL_OBJECT_LOGOUT:
-	case PANEL_OBJECT_LOCK:
-		panel_action_button_load_compatible (
-				applet->type,
-				panel_widget,
-				applet->locked,
-				applet->position,
-				TRUE,
-				applet->id);
-		break;
 	case PANEL_OBJECT_ACTION:
-		panel_action_button_load_from_mateconf (
+		panel_action_button_load_from_gsettings (
 				panel_widget,
 				applet->locked,
 				applet->position,
@@ -994,7 +983,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 				applet->id);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
-		panel_menu_bar_load_from_mateconf (
+		panel_menu_bar_load_from_gsettings (
 				panel_widget,
 				applet->locked,
 				applet->position,
@@ -1002,7 +991,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 				applet->id);
 		break;
 	case PANEL_OBJECT_SEPARATOR:
-		panel_separator_load_from_mateconf (panel_widget,
+		panel_separator_load_from_gsettings (panel_widget,
 						 applet->locked,
 						 applet->position,
 						 applet->id);
@@ -1136,10 +1125,7 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 			    const char *id,
 			    gboolean    immediate)
 {
-	PanelMateConfKeyType  key_type;
-	MateConfClient       *client;
 	PanelWidget       *panel_widget;
-	const char        *key;
 	const char        *toplevel_id;
 	char              *old_toplevel_id;
 	gboolean           right_stick;
@@ -1165,19 +1151,14 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 	if (!(toplevel_id = mate_panel_applet_get_toplevel_id (applet_info)))
 		return;
 
-	client  = panel_mateconf_get_client ();
-
-	key_type = applet_info->type == PANEL_OBJECT_APPLET ? PANEL_MATECONF_APPLETS : PANEL_MATECONF_OBJECTS;
-
 	panel_widget = mate_panel_applet_get_panel_widget (applet_info);
 
 	/* FIXME: Instead of getting keys, comparing and setting, there
 	   should be a dirty flag */
 
-	key = panel_mateconf_full_key (key_type, id, "toplevel_id");
-	old_toplevel_id = mateconf_client_get_string (client, key, NULL);
+	old_toplevel_id = g_settings_get_string (applet_info->settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
 	if (old_toplevel_id == NULL || strcmp (old_toplevel_id, toplevel_id) != 0)
-		mateconf_client_set_string (client, key, toplevel_id, NULL);
+		g_settings_set_string (applet_info->settings, PANEL_OBJECT_TOPLEVEL_ID_KEY, toplevel_id);
 	g_free (old_toplevel_id);
 
 	/* Note: changing some properties of the panel that may not be locked down
@@ -1186,25 +1167,21 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 	   So check if these are writable before attempting to write them */
 
 	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
-	key = panel_mateconf_full_key (
-			key_type, id, "panel_right_stick");
-	if (mateconf_client_key_is_writable (client, key, NULL) &&
-	    (mateconf_client_get_bool (client, key, NULL) ? 1 : 0) != right_stick)
-		mateconf_client_set_bool (client, key, right_stick, NULL);
+	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) &&
+	    (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) ? 1 : 0) != right_stick)
+		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, right_stick);
 
 	position = mate_panel_applet_get_position (applet_info);
 	if (right_stick && !panel_widget->packed)
 		position = panel_widget->size - position;
 
-	key = panel_mateconf_full_key (key_type, id, "position");
-	if (mateconf_client_key_is_writable (client, key, NULL) &&
-	    mateconf_client_get_int (client, key, NULL) != position)
-		mateconf_client_set_int (client, key, position, NULL);
+	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_POSITION_KEY) &&
+	    g_settings_get_int (applet_info->settings, PANEL_OBJECT_POSITION_KEY) != position)
+		g_settings_set_int (applet_info->settings, PANEL_OBJECT_POSITION_KEY, position);
 
 	locked = panel_widget_get_applet_locked (panel_widget, applet_info->widget) ? 1 : 0;
-	key = panel_mateconf_full_key (key_type, id, "locked");
-	if (mateconf_client_get_bool (client, key, NULL) ? 1 : 0 != locked)
-		mateconf_client_set_bool (client, key, locked, NULL);
+	if (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY) ? 1 : 0 != locked)
+		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY, locked);
 }
 
 const char *
@@ -1287,7 +1264,8 @@ mate_panel_applet_register (GtkWidget       *applet,
 		       const char      *id)
 {
 	AppletInfo *info;
-	const char *key;
+	gchar *path;
+	gchar *locked_changed;
 
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -1307,18 +1285,21 @@ mate_panel_applet_register (GtkWidget       *applet,
 	info->move_item    = NULL;
 	info->id           = g_strdup (id);
 
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	info->settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_free (path);
+
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
 	if (type != PANEL_OBJECT_APPLET)
 		panel_lockdown_notify_add (G_CALLBACK (mate_panel_applet_recreate_menu),
 					   info);
 
-	key = panel_mateconf_full_key ((type == PANEL_OBJECT_APPLET) ?
-				     PANEL_MATECONF_APPLETS : PANEL_MATECONF_OBJECTS,
-				    id, "locked");
-	panel_mateconf_notify_add_while_alive (key,
-					    (MateConfClientNotifyFunc) mate_panel_applet_locked_change_notify,
-					    G_OBJECT (applet));
+	locked_changed = g_strdup_printf ("changed::%s", PANEL_OBJECT_LOCKED_KEY);
+	g_signal_connect (info->settings,
+					  locked_changed,
+					  G_CALLBACK (mate_panel_applet_locked_change_notify),
+					  G_OBJECT (applet));
 
 	if (type == PANEL_OBJECT_DRAWER) {
 		Drawer *drawer = data;
@@ -1403,27 +1384,16 @@ mate_panel_applet_get_position (AppletInfo *applet)
 gboolean
 mate_panel_applet_can_freely_move (AppletInfo *applet)
 {
-	MateConfClient       *client;
-	PanelMateConfKeyType  key_type;
-	const char        *key;
-
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
 
-	client  = panel_mateconf_get_client ();
-
-	key_type = (applet->type == PANEL_OBJECT_APPLET) ? PANEL_MATECONF_APPLETS : PANEL_MATECONF_OBJECTS;
-
-	key = panel_mateconf_full_key (key_type, applet->id, "position");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_POSITION_KEY))
 		return FALSE;
 
-	key = panel_mateconf_full_key (key_type, applet->id, "toplevel_id");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_TOPLEVEL_ID_KEY))
 		return FALSE;
 
-	key = panel_mateconf_full_key (key_type, applet->id, "panel_right_stick");
-	if (!mateconf_client_key_is_writable (client, key, NULL))
+	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY))
 		return FALSE;
 
 	return TRUE;
@@ -1432,18 +1402,9 @@ mate_panel_applet_can_freely_move (AppletInfo *applet)
 gboolean
 mate_panel_applet_lockable (AppletInfo *applet)
 {
-	MateConfClient        *client;
-	PanelMateConfKeyType   key_type;
-	const char         *key;
-
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
 
-	client  = panel_mateconf_get_client ();
 
-	key_type = (applet->type == PANEL_OBJECT_APPLET) ? PANEL_MATECONF_APPLETS : PANEL_MATECONF_OBJECTS;
-
-	key = panel_mateconf_full_key (key_type, applet->id, "locked");
-
-	return mateconf_client_key_is_writable (client, key, NULL);
+	return g_settings_is_writable (applet->settings, PANEL_OBJECT_LOCKED_KEY);
 }

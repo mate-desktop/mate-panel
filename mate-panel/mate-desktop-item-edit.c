@@ -14,8 +14,6 @@
 /* FIXME Symbols needed by panel-util.c - sucky */
 #include "applet.h"
 GSList *mate_panel_applet_list_applets (void) { return NULL; }
-#include "panel-mateconf.h"
-MateConfClient *panel_mateconf_get_client (void) { return NULL; }
 #include "panel-config-global.h"
 gboolean panel_global_config_get_tooltips_enabled (void) { return FALSE; }
 #include "panel-lockdown.h"

@@ -27,18 +27,8 @@
 #include "panel-lockdown.h"
 
 #include <string.h>
-#include "panel-mateconf.h"
-
-#define N_LISTENERS 6
-
-#define PANEL_GLOBAL_LOCKDOWN_DIR    "/apps/panel/global"
-#define DESKTOP_MATE_LOCKDOWN_DIR   "/desktop/mate/lockdown"
-#define PANEL_GLOBAL_LOCKED_DOWN_KEY PANEL_GLOBAL_LOCKDOWN_DIR  "/locked_down"
-#define DISABLE_COMMAND_LINE_KEY     DESKTOP_MATE_LOCKDOWN_DIR "/disable_command_line"
-#define DISABLE_LOCK_SCREEN_KEY      DESKTOP_MATE_LOCKDOWN_DIR  "/disable_lock_screen"
-#define DISABLE_LOG_OUT_KEY          PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_log_out"
-#define DISABLE_FORCE_QUIT_KEY       PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_force_quit"
-#define DISABLED_APPLETS_KEY         PANEL_GLOBAL_LOCKDOWN_DIR  "/disabled_applets"
+#include <gio/gio.h>
+#include "panel-schemas.h"
 
 typedef struct {
         guint   initialized : 1;
@@ -49,11 +39,12 @@ typedef struct {
         guint   disable_log_out : 1;
         guint   disable_force_quit : 1;
 
-        GSList *disabled_applets;
-
-        guint   listeners [N_LISTENERS];
+        gchar **disabled_applets;
 
         GSList *closures;
+
+        GSettings *panel_settings;
+        GSettings *lockdown_settings;
 } PanelLockdown;
 
 static PanelLockdown panel_lockdown = { 0, };
@@ -69,148 +60,95 @@ panel_lockdown_invoke_closures (PanelLockdown *lockdown)
 }
 
 static void
-locked_down_notify (MateConfClient   *client,
-                    guint          cnxn_id,
-                    MateConfEntry    *entry,
+locked_down_notify (GSettings     *settings,
+                    gchar         *key,
                     PanelLockdown *lockdown)
 {
-        if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-                return;
-
-        lockdown->locked_down = mateconf_value_get_bool (entry->value);
-
+        lockdown->locked_down = g_settings_get_boolean (settings, key);
         panel_lockdown_invoke_closures (lockdown);
 }
 
 static void
-disable_command_line_notify (MateConfClient   *client,
-                             guint          cnxn_id,
-                             MateConfEntry    *entry,
+disable_command_line_notify (GSettings     *settings,
+                             gchar         *key,
                              PanelLockdown *lockdown)
 {
-        if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-                return;
-
-        lockdown->disable_command_line = mateconf_value_get_bool (entry->value);
-
+        lockdown->disable_command_line = g_settings_get_boolean (settings, key);
         panel_lockdown_invoke_closures (lockdown);
 }
 
 static void
-disable_lock_screen_notify (MateConfClient   *client,
-                            guint          cnxn_id,
-                            MateConfEntry    *entry,
+disable_lock_screen_notify (GSettings     *settings,
+                            gchar         *key,
                             PanelLockdown *lockdown)
 {
-        if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-                return;
-
-        lockdown->disable_lock_screen = mateconf_value_get_bool (entry->value);
-
+        lockdown->disable_lock_screen = g_settings_get_boolean (settings, key);
         panel_lockdown_invoke_closures (lockdown);
 }
 
 static void
-disable_log_out_notify (MateConfClient   *client,
-                        guint          cnxn_id,
-                        MateConfEntry    *entry,
+disable_log_out_notify (GSettings     *settings,
+                        gchar         *key,
                         PanelLockdown *lockdown)
 {
-        if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-                return;
-
-        lockdown->disable_log_out = mateconf_value_get_bool (entry->value);
-
+        lockdown->disable_log_out = g_settings_get_boolean (settings, key);
         panel_lockdown_invoke_closures (lockdown);
 }
 
 static void
-disable_force_quit_notify (MateConfClient   *client,
-                           guint          cnxn_id,
-                           MateConfEntry    *entry,
+disable_force_quit_notify (GSettings     *settings,
+                           gchar         *key,
                            PanelLockdown *lockdown)
 {
-        if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-                return;
-
-        lockdown->disable_force_quit = mateconf_value_get_bool (entry->value);
-
+        lockdown->disable_force_quit = g_settings_get_boolean (settings, key);
         panel_lockdown_invoke_closures (lockdown);
 }
 
 static void
-disabled_applets_notify (MateConfClient   *client,
-                         guint          cnxn_id,
-                         MateConfEntry    *entry,
+disabled_applets_notify (GSettings     *settings,
+                         gchar         *key,
                          PanelLockdown *lockdown)
 {
-        GSList *l;
-
-        if (!entry->value || entry->value->type != MATECONF_VALUE_LIST ||
-            mateconf_value_get_list_type (entry->value) != MATECONF_VALUE_STRING)
-                return;
-
-        for (l = lockdown->disabled_applets; l; l = l->next)
-                g_free (l->data);
-        g_slist_free (lockdown->disabled_applets);
-        lockdown->disabled_applets = NULL;
-
-        for (l = mateconf_value_get_list (entry->value); l; l = l->next) {
-                const char *iid = mateconf_value_get_string (l->data);
-
-                lockdown->disabled_applets =
-                        g_slist_prepend (lockdown->disabled_applets,
-                                         g_strdup (iid));
-        }
-
+        lockdown->disabled_applets = g_settings_get_strv (settings, key);
         panel_lockdown_invoke_closures (lockdown);
 }
 
 static gboolean
 panel_lockdown_load_bool (PanelLockdown         *lockdown,
-                          MateConfClient           *client,
+                          GSettings             *settings,
                           const char            *key,
-                          MateConfClientNotifyFunc  notify_func,
-                          int                    listener)
+                          GCallback              notify_func)
 {
-        GError   *error = NULL;
         gboolean  retval;
+        gchar *signal_name;
 
-        retval = mateconf_client_get_bool (client, key, &error);
-        if (error) {
-                g_warning ("Error getting value of '%s': %s\n",
-                           key, error->message);
-                retval = FALSE;
-        }
+        retval = g_settings_get_boolean (settings, key);
 
-        lockdown->listeners [listener] =
-                mateconf_client_notify_add (client,
-                                         key,
-                                         notify_func,
-                                         lockdown,
-                                         NULL, NULL);
+        signal_name = g_strdup_printf ("changed::%s", key);
+
+        g_signal_connect (settings,
+                          signal_name,
+                          G_CALLBACK (notify_func),
+                          lockdown);
+
+        g_free (signal_name);
 
         return retval;
 }
 
-static GSList *
+static gchar **
 panel_lockdown_load_disabled_applets (PanelLockdown *lockdown,
-                                      MateConfClient   *client,
-                                      int            listener)
+                                      GSettings     *settings)
 {
-        GSList *retval;
+        gchar **retval;
 
-        retval = mateconf_client_get_list (client,
-                                        DISABLED_APPLETS_KEY,
-                                        MATECONF_VALUE_STRING,
-                                        NULL);
+        retval = g_settings_get_strv (settings,
+                                      PANEL_DISABLED_APPLETS_KEY);
 
-        lockdown->listeners [listener] =
-                mateconf_client_notify_add (client,
-                                         DISABLED_APPLETS_KEY,
-                                         (MateConfClientNotifyFunc) disabled_applets_notify,
-                                         lockdown,
-                                         NULL, NULL);
+        g_signal_connect (settings,
+                          "changed::" PANEL_DISABLED_APPLETS_KEY,
+                          G_CALLBACK (disabled_applets_notify),
+                          lockdown);
 
         return retval;
 }
@@ -218,62 +156,42 @@ panel_lockdown_load_disabled_applets (PanelLockdown *lockdown,
 void
 panel_lockdown_init (void)
 {
-        MateConfClient *client;
-        int          i = 0;
-
-        client = panel_mateconf_get_client ();
-
-        mateconf_client_add_dir (client,
-                              DESKTOP_MATE_LOCKDOWN_DIR,
-                              MATECONF_CLIENT_PRELOAD_ONELEVEL,
-                              NULL);
-
-        mateconf_client_add_dir (client,
-                              PANEL_GLOBAL_LOCKDOWN_DIR,
-                              MATECONF_CLIENT_PRELOAD_ONELEVEL,
-                              NULL);
+        panel_lockdown.panel_settings = g_settings_new (PANEL_SCHEMA);
+        panel_lockdown.lockdown_settings = g_settings_new (LOCKDOWN_SCHEMA);
 
         panel_lockdown.locked_down =
                 panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          PANEL_GLOBAL_LOCKED_DOWN_KEY,
-                                          (MateConfClientNotifyFunc) locked_down_notify,
-                                          i++);
+                                          panel_lockdown.panel_settings,
+                                          PANEL_LOCKED_DOWN_KEY,
+                                          G_CALLBACK (locked_down_notify));
 
         panel_lockdown.disable_command_line =
                 panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_COMMAND_LINE_KEY,
-                                          (MateConfClientNotifyFunc) disable_command_line_notify,
-                                          i++);
+                                          panel_lockdown.lockdown_settings,
+                                          LOCKDOWN_DISABLE_COMMAND_LINE_KEY,
+                                          G_CALLBACK (disable_command_line_notify));
         
         panel_lockdown.disable_lock_screen =
                 panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_LOCK_SCREEN_KEY,
-                                          (MateConfClientNotifyFunc) disable_lock_screen_notify,
-                                          i++);
+                                          panel_lockdown.lockdown_settings,
+                                          LOCKDOWN_DISABLE_LOCK_SCREEN_KEY,
+                                          G_CALLBACK (disable_lock_screen_notify));
 
         panel_lockdown.disable_log_out =
                 panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_LOG_OUT_KEY,
-                                          (MateConfClientNotifyFunc) disable_log_out_notify,
-                                          i++);
+                                          panel_lockdown.panel_settings,
+                                          PANEL_DISABLE_LOG_OUT_KEY,
+                                          G_CALLBACK (disable_log_out_notify));
 
         panel_lockdown.disable_force_quit =
                 panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_FORCE_QUIT_KEY,
-                                          (MateConfClientNotifyFunc) disable_force_quit_notify,
-                                          i++);
+                                          panel_lockdown.panel_settings,
+                                          PANEL_DISABLE_FORCE_QUIT_KEY,
+                                          G_CALLBACK (disable_force_quit_notify));
 
         panel_lockdown.disabled_applets =
                 panel_lockdown_load_disabled_applets (&panel_lockdown,
-                                                      client,
-                                                      i++);
-
-        g_assert (i == N_LISTENERS);
+                                                      panel_lockdown.panel_settings);
 
         panel_lockdown.initialized = TRUE;
 }
@@ -281,33 +199,23 @@ panel_lockdown_init (void)
 void
 panel_lockdown_finalize (void)
 {
-        MateConfClient *client;
-        GSList      *l;
-        int          i;
+        GSList *l;
 
         g_assert (panel_lockdown.initialized != FALSE);
 
-        client = panel_mateconf_get_client ();
-
-        for (l = panel_lockdown.disabled_applets; l; l = l->next)
-                g_free (l->data);
-        g_slist_free (panel_lockdown.disabled_applets);
-        panel_lockdown.disabled_applets = NULL;
-
-        for (i = 0; i < N_LISTENERS; i++) {
-                if (panel_lockdown.listeners [i])
-                        mateconf_client_notify_remove (client,
-                                                    panel_lockdown.listeners [i]);
-                panel_lockdown.listeners [i] = 0;
+        if (panel_lockdown.disabled_applets) {
+                g_strfreev (panel_lockdown.disabled_applets);
+                panel_lockdown.disabled_applets = NULL;
         }
 
-        mateconf_client_remove_dir (client,
-                                 PANEL_GLOBAL_LOCKDOWN_DIR,
-                                 NULL);
-
-        mateconf_client_remove_dir (client,
-                                 DESKTOP_MATE_LOCKDOWN_DIR,
-                                 NULL);
+        if (panel_lockdown.panel_settings) {
+                g_object_unref (panel_lockdown.panel_settings);
+                panel_lockdown.panel_settings = NULL;
+        }
+        if (panel_lockdown.lockdown_settings) {
+                g_object_unref (panel_lockdown.lockdown_settings);
+                panel_lockdown.lockdown_settings = NULL;
+        }
 
         for (l = panel_lockdown.closures; l; l = l->next)
                 g_closure_unref (l->data);
@@ -360,13 +268,14 @@ panel_lockdown_get_disable_force_quit (void)
 gboolean
 panel_lockdown_is_applet_disabled (const char *iid)
 {
-        GSList *l;
+        gint i;
 
         g_assert (panel_lockdown.initialized != FALSE);
 
-        for (l = panel_lockdown.disabled_applets; l; l = l->next)
-                if (!strcmp (l->data, iid))
-                        return TRUE;
+        if (panel_lockdown.disabled_applets)
+                for (i = 0; panel_lockdown.disabled_applets[i]; i++)
+                        if (!strcmp (panel_lockdown.disabled_applets[i], iid))
+                                return TRUE;
 
         return FALSE;
 }

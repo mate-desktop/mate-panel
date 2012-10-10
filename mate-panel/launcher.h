@@ -26,7 +26,7 @@ typedef struct {
 	GKeyFile          *key_file;
 
 	GtkWidget         *prop_dialog;
-	GSList 		  *error_dialogs;
+	GSList            *error_dialogs;
 
 	gulong             destroy_handler;
 } Launcher;
@@ -53,10 +53,10 @@ void		launcher_launch    		(Launcher  *launcher,
 
 void		launcher_properties		(Launcher  *launcher);
 
-void            launcher_load_from_mateconf        (PanelWidget *panel_widget,
-						 gboolean     locked,
-						 gint         position,
-						 const char  *id);
+void            launcher_load_from_gsettings        (PanelWidget *panel_widget,
+													 gboolean     locked,
+													 gint         position,
+													 const char  *id);
 
 void            panel_launcher_delete           (Launcher *launcher);
 

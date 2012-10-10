@@ -28,14 +28,12 @@
 
 #include <string.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
-#include "panel-mateconf.h"
+#include "panel-schemas.h"
 #include "panel-profile.h"
 #include "panel-xutils.h"
 
-#define BINDINGS_PREFIX    "/apps/marco/window_keybindings"
-#define MOUSE_MODIFIER_DIR "/apps/marco/general"
-#define MOUSE_MODIFIER_KEY "/apps/marco/general/mouse_button_modifier"
 #define DEFAULT_MOUSE_MODIFIER GDK_MOD1_MASK
 
 typedef struct {
@@ -46,15 +44,17 @@ typedef struct {
 } PanelBinding;
 
 static gboolean initialised = FALSE;
+static GSettings *marco_settings = NULL; 
+static GSettings *marco_keybindings_settings = NULL; 
 
 static PanelBinding bindings [] = {
-	{ "activate_window_menu", "popup-panel-menu", 0, 0 },
-	{ "toggle_maximized",     "toggle-expand",    0, 0 },
-	{ "maximize",             "expand",           0, 0 },
-	{ "unmaximize",           "unexpand",         0, 0 },
-	{ "toggle_shaded",        "toggle-hidden",    0, 0 },
-	{ "begin_move",           "begin-move",       0, 0 },
-	{ "begin_resize",         "begin-resize",     0, 0 },
+	{ MARCO_ACTIVATE_WINDOW_MENU_KEY, "popup-panel-menu", 0, 0 },
+	{ MARCO_TOGGLE_MAXIMIZED_KEY,     "toggle-expand",    0, 0 },
+	{ MARCO_MAXIMIZE_KEY,             "expand",           0, 0 },
+	{ MARCO_UNMAXIMIZE_KEY,           "unexpand",         0, 0 },
+	{ MARCO_TOGGLE_SHADED_KEY,        "toggle-hidden",    0, 0 },
+	{ MARCO_BEGIN_MOVE_KEY,           "begin-move",       0, 0 },
+	{ MARCO_BEGIN_RESIZE_KEY,         "begin-resize",     0, 0 },
 };
 
 static guint mouse_button_modifier_keymask = DEFAULT_MOUSE_MODIFIER;
@@ -120,25 +120,17 @@ panel_binding_set_entry (PanelBinding  *binding,
 }
 
 static void
-panel_binding_changed (MateConfClient  *client,
-		       guint         cnxn_id,
-		       MateConfEntry   *entry,
-		       PanelBinding *binding)
+panel_binding_changed (GSettings *settings,
+					   gchar *key,
+					   PanelBinding *binding)
 {
-	MateConfValue *value;
-
 	if (binding->keyval)
 		panel_binding_clear_entry (binding, NULL);
 
 	binding->keyval    = 0;
 	binding->modifiers = 0;
 
-	value = mateconf_entry_get_value (entry);
-
-	if (!value || value->type != MATECONF_VALUE_STRING)
-		return;
-
-	panel_binding_set_from_string (binding, mateconf_value_get_string (value));
+	panel_binding_set_from_string (binding, g_settings_get_string (settings, key));
 
 	if (!binding->keyval)
 		return;
@@ -150,16 +142,13 @@ static void
 panel_binding_watch (PanelBinding *binding,
 		     const char   *key)
 {
-	GError *error = NULL;
-
-	mateconf_client_notify_add (panel_mateconf_get_client (), key,
-				(MateConfClientNotifyFunc) panel_binding_changed,
-				binding, NULL, &error);
-	if (error) {
-		g_warning ("Error watching mateconf key '%s': %s",
-			   key, error->message);
-		g_error_free (error);
-	}
+	gchar *signal_name;
+	signal_name = g_strdup_printf ("changed::%s", key);
+	g_signal_connect (marco_keybindings_settings,
+					  signal_name,
+					  G_CALLBACK (panel_binding_changed),
+					  binding);
+	g_free (signal_name);
 }
 
 static void
@@ -182,95 +171,42 @@ panel_bindings_mouse_modifier_set_from_string (const char *str)
 }
 
 static void
-panel_bindings_mouse_modifier_changed (MateConfClient  *client,
-				       guint         cnxn_id,
-				       MateConfEntry   *entry,
-				       gpointer      user_data)
+panel_bindings_mouse_modifier_changed (GSettings *settings,
+									   gchar *key,
+									   gpointer user_data)
 {
-	MateConfValue *value;
-	const char *str;
-
-	value = mateconf_entry_get_value (entry);
-
-	if (!value || value->type != MATECONF_VALUE_STRING)
-		return;
-
-	str = mateconf_value_get_string (value);
-	panel_bindings_mouse_modifier_set_from_string (str);
+	panel_bindings_mouse_modifier_set_from_string (g_settings_get_string (settings, key));
 }
 
 static void
 panel_bindings_initialise (void)
 {
-	MateConfClient *client;
-	GError      *error;
 	int          i;
 	char        *str;
 
 	if (initialised)
 		return;
 
-	client = panel_mateconf_get_client ();
-
-	error = NULL;
-	mateconf_client_add_dir (client, BINDINGS_PREFIX,
-			      MATECONF_CLIENT_PRELOAD_ONELEVEL, &error);
-	if (error) {
-		g_warning ("Error loading mateconf directory '%s': %s",
-			   BINDINGS_PREFIX, error->message),
-		g_error_free (error);
-	}
+	marco_settings = g_settings_new (MARCO_SCHEMA);
+	marco_keybindings_settings = g_settings_new (MARCO_KEYBINDINGS_SCHEMA);
 
 	for (i = 0; i < G_N_ELEMENTS (bindings); i++) {
-		const char *key;
-
-		key = panel_mateconf_sprintf ("%s/%s", BINDINGS_PREFIX, bindings [i].key);
-
-		error = NULL;
-		str = mateconf_client_get_string (client, key, &error);
-		if (error) {
-			g_warning ("Error getting value for '%s': %s",
-				   key, error->message);
-			g_error_free (error);
-			continue;
-		}
-
+		str = g_settings_get_string (marco_keybindings_settings, bindings [i].key);
 		panel_binding_set_from_string (&bindings [i], str);
-		panel_binding_watch (&bindings [i], key);
-
+		panel_binding_watch (&bindings [i], bindings [i].key);
 		g_free (str);
 	}
 
 	/* mouse button modifier */
-	error = NULL;
-	mateconf_client_add_dir (client, MOUSE_MODIFIER_DIR,
-			      MATECONF_CLIENT_PRELOAD_NONE, &error);
-	if (error) {
-		g_warning ("Error loading mateconf directory '%s': %s",
-			   MOUSE_MODIFIER_DIR, error->message),
-		g_error_free (error);
-	}
 
-	error = NULL;
-	mateconf_client_notify_add (client, MOUSE_MODIFIER_KEY,
-				 panel_bindings_mouse_modifier_changed,
-				 NULL, NULL, &error);
-	if (error) {
-		g_warning ("Error watching mateconf key '%s': %s",
-			   MOUSE_MODIFIER_KEY, error->message);
-		g_error_free (error);
-	}
+	g_signal_connect (marco_settings,
+					  "changed::" MARCO_MOUSE_BUTTON_MODIFIER_KEY,
+					  G_CALLBACK (panel_bindings_mouse_modifier_changed),
+					  NULL);
 
-	error = NULL;
-	str = mateconf_client_get_string (client, MOUSE_MODIFIER_KEY, &error);
-	if (error) {
-		g_warning ("Error getting value for '%s': %s",
-			   MOUSE_MODIFIER_KEY, error->message);
-		g_error_free (error);
-	} else {
-		panel_bindings_mouse_modifier_set_from_string (str);
-		g_free (str);
-	}
+	str = g_settings_get_string (marco_settings, MARCO_MOUSE_BUTTON_MODIFIER_KEY);
+	panel_bindings_mouse_modifier_set_from_string (str);
+	g_free (str);
 
 	initialised = TRUE;
 }

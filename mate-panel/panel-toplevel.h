@@ -53,6 +53,9 @@ typedef struct _PanelToplevelPrivate PanelToplevelPrivate;
 
 struct _PanelToplevel {
 	GtkWindow              window_instance;
+	GSettings             *settings;
+	GSettings             *queued_settings;
+	GSettings             *background_settings;
 
 	PanelToplevelPrivate  *priv;
 };
@@ -81,6 +84,8 @@ PanelWidget         *panel_toplevel_get_panel_widget       (PanelToplevel       
 void                 panel_toplevel_set_name               (PanelToplevel       *toplevel,
 							    const char          *name);
 const char* panel_toplevel_get_name(PanelToplevel* toplevel);
+void                 panel_toplevel_set_settings_path      (PanelToplevel       *toplevel,
+							    const char          *settings_path);
 const char* panel_toplevel_get_description(PanelToplevel* toplevel);
 void                 panel_toplevel_set_expand             (PanelToplevel       *toplevel,
 							    gboolean             expand);

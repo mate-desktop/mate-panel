@@ -28,6 +28,7 @@
 
 #include <string.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
 #include <matemenu-tree.h>
 
@@ -44,6 +45,7 @@
 #include "panel-lockdown.h"
 #include "panel-a11y.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 G_DEFINE_TYPE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET)
 
@@ -56,6 +58,7 @@ enum {
 	PROP_TOOLTIP,
 	PROP_USE_MENU_PATH,
 	PROP_USE_CUSTOM_ICON,
+	PROP_HAS_ARROW,
 	PROP_DND_ENABLED
 };
 
@@ -80,7 +83,7 @@ static MenuPathRootItem root_items[] = {
 
 struct _PanelMenuButtonPrivate {
 	PanelToplevel         *toplevel;
-	guint                  mateconf_notify;
+	GSettings             *settings;
 	char                  *applet_id;
 
 	GtkWidget             *menu;
@@ -92,10 +95,11 @@ struct _PanelMenuButtonPrivate {
 	MenuPathRoot           path_root;
 	guint                  use_menu_path : 1;
 	guint                  use_custom_icon : 1;
+	guint                  has_arrow : 1;
 	guint                  dnd_enabled : 1;
 };
 
-static void panel_menu_button_disconnect_from_mateconf (PanelMenuButton *button);
+static void panel_menu_button_disconnect_from_gsettings (PanelMenuButton *button);
 static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
 static void panel_menu_button_set_icon              (PanelMenuButton *button);
 
@@ -172,15 +176,15 @@ panel_menu_button_init (PanelMenuButton *button)
 
 	button->priv->applet_id    = NULL;
 	button->priv->toplevel     = NULL;
-	button->priv->mateconf_notify = 0;
 
 	button->priv->menu_path   = NULL;
 	button->priv->custom_icon = NULL;
-	button->priv->tooltip = NULL;
+	button->priv->tooltip     = NULL;
 
 	button->priv->path_root       = LAST_MENU;
 	button->priv->use_menu_path   = FALSE;
 	button->priv->use_custom_icon = FALSE;
+	button->priv->has_arrow       = FALSE;
 }
 
 static void
@@ -191,7 +195,7 @@ panel_menu_button_finalize (GObject *object)
 	panel_lockdown_notify_remove (G_CALLBACK (panel_menu_button_recreate_menu),
 				      button);
 
-	panel_menu_button_disconnect_from_mateconf (button);
+	panel_menu_button_disconnect_from_gsettings (button);
 
 	if (button->priv->menu) {
 		/* detaching the menu will kill our reference */
@@ -242,6 +246,9 @@ panel_menu_button_get_property (GObject    *object,
 	case PROP_USE_CUSTOM_ICON:
 		g_value_set_boolean (value, button->priv->use_custom_icon);
 		break;
+	case PROP_HAS_ARROW:
+		g_value_set_boolean (value, button->priv->has_arrow);
+		break;
 	case PROP_DND_ENABLED:
 		g_value_set_boolean (value, button->priv->dnd_enabled);
 		break;
@@ -278,6 +285,9 @@ panel_menu_button_set_property (GObject      *object,
 		break;
 	case PROP_USE_CUSTOM_ICON:
 		panel_menu_button_set_use_custom_icon (button, g_value_get_boolean (value));
+		break;
+	case PROP_HAS_ARROW:
+		panel_menu_button_set_has_arrow (button, g_value_get_boolean (value));
 		break;
 	case PROP_DND_ENABLED:
 		panel_menu_button_set_dnd_enabled (button, g_value_get_boolean (value));
@@ -543,6 +553,16 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 					      FALSE,
 					      G_PARAM_READWRITE));
 
+
+	g_object_class_install_property (
+			gobject_class,
+			PROP_HAS_ARROW,
+                        g_param_spec_boolean ("has-arrow",
+					      "Has Arrow",
+					      "Determine if an arrow is drawn over the menu button icon",
+					      FALSE,
+					      G_PARAM_READWRITE));
+
 	g_object_class_install_property (
 			gobject_class,
 			PROP_DND_ENABLED,
@@ -554,76 +574,52 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 }
 
 static void
-panel_menu_button_mateconf_notify (MateConfClient     *client,
-				guint            cnxn_id,
-				MateConfEntry      *entry,
-				PanelMenuButton *button)
+panel_menu_button_gsettings_notify (GSettings     *settings,
+									gchar         *key,
+									PanelMenuButton *button)
 {
-	MateConfValue *value;
-	const char *key;
-
-	key = panel_mateconf_basename (mateconf_entry_get_key (entry));
-
-	value = entry->value;
-
-	if (!strcmp (key, "menu_path")) {
-		if (value && value->type == MATECONF_VALUE_STRING)
-			panel_menu_button_set_menu_path (button,
-							 mateconf_value_get_string (value));
-	} else if (!strcmp (key, "custom_icon")) {
-		if (value && value->type == MATECONF_VALUE_STRING)
-			panel_menu_button_set_custom_icon (button,
-							   mateconf_value_get_string (value));
-	} else if (!strcmp (key, "tooltip")) {
-		if (value && value->type == MATECONF_VALUE_STRING)
-			panel_menu_button_set_tooltip (button,
-						       mateconf_value_get_string (value));
-	} else if (!strcmp (key, "use_menu_path")) {
-		if (value && value->type == MATECONF_VALUE_BOOL)
-			panel_menu_button_set_use_menu_path (button,
-							     mateconf_value_get_bool (value));
-	} else if (!strcmp (key, "use_custom_icon")) {
-		if (value && value->type == MATECONF_VALUE_BOOL)
-			panel_menu_button_set_use_custom_icon (button,
-							       mateconf_value_get_bool (value));
+	if (!strcmp (key, PANEL_OBJECT_MENU_PATH_KEY)) {
+		panel_menu_button_set_menu_path (button,
+							 g_settings_get_string (settings, key));
+	} else if (!strcmp (key, PANEL_OBJECT_CUSTOM_ICON_KEY)) {
+		panel_menu_button_set_custom_icon (button,
+							 g_settings_get_string (settings, key));
+	} else if (!strcmp (key, PANEL_OBJECT_TOOLTIP_KEY)) {
+		panel_menu_button_set_tooltip (button,
+							 g_settings_get_string (settings, key));
+	} else if (!strcmp (key, PANEL_OBJECT_USE_MENU_PATH_KEY)) {
+		panel_menu_button_set_use_menu_path (button,
+							 g_settings_get_boolean (settings, key));
+	} else if (!strcmp (key, PANEL_OBJECT_USE_CUSTOM_ICON_KEY)) {
+		panel_menu_button_set_use_custom_icon (button,
+							 g_settings_get_boolean (settings, key));
+	} else if (!strcmp (key, PANEL_OBJECT_HAS_ARROW_KEY)) {
+		panel_menu_button_set_has_arrow (button,
+							 g_settings_get_boolean (settings, key));
 	}
 }
 
 static void
-panel_menu_button_connect_to_mateconf (PanelMenuButton *button)
+panel_menu_button_connect_to_gsettings (PanelMenuButton *button)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	client  = panel_mateconf_get_client ();
-
-	key = panel_mateconf_sprintf (PANEL_CONFIG_DIR "/objects/%s",
-				   button->priv->applet_id);
-	mateconf_client_add_dir (client, key, MATECONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	button->priv->mateconf_notify =
-		mateconf_client_notify_add (client, key,
-					 (MateConfClientNotifyFunc) panel_menu_button_mateconf_notify,
-					 button, NULL, NULL);
+	gchar *path;
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", button->priv->applet_id);
+	button->priv->settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+	g_signal_connect (button->priv->settings,
+					  "changed",
+					  G_CALLBACK (panel_menu_button_gsettings_notify),
+					  button);
+	g_free (path);
 }
 
 static void
-panel_menu_button_disconnect_from_mateconf (PanelMenuButton *button)
+panel_menu_button_disconnect_from_gsettings (PanelMenuButton *button)
 {
-	MateConfClient *client;
-	const char  *key;
-
-	if (!button->priv->mateconf_notify)
-		return;
-
-	client  = panel_mateconf_get_client ();
-
-	key = panel_mateconf_sprintf (PANEL_CONFIG_DIR "/objects/%s",
-				   button->priv->applet_id);
-
-	mateconf_client_notify_remove (client, button->priv->mateconf_notify);
-	button->priv->mateconf_notify = 0;
-
-	mateconf_client_remove_dir (client, key, NULL);
+	if (button->priv->settings)
+	{
+		g_object_unref (button->priv->settings);
+		button->priv->settings = NULL;
+	}
 }
 
 static void
@@ -674,7 +670,7 @@ panel_menu_button_load (const char  *menu_path,
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
-	panel_menu_button_connect_to_mateconf (button);
+	panel_menu_button_connect_to_gsettings (button);
 
 	panel_lockdown_notify_add (G_CALLBACK (panel_menu_button_recreate_menu),
 				   button);
@@ -866,14 +862,26 @@ panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
 }
 
 void
-panel_menu_button_load_from_mateconf (PanelWidget *panel,
+panel_menu_button_set_has_arrow (PanelMenuButton *button,
+				       gboolean         has_arrow)
+{
+	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
+
+	button->priv->has_arrow = has_arrow != FALSE;
+
+	button_widget_set_has_arrow (BUTTON_WIDGET (button), has_arrow);
+}
+
+
+void
+panel_menu_button_load_from_gsettings (PanelWidget *panel,
 				   gboolean     locked,
 				   int          position,
 				   gboolean     exactpos,
 				   const char  *id)
 {
-	MateConfClient *client;
-	const char  *key;
+	GSettings   *settings;
+	gchar       *path;
 	char        *menu_path;
 	char        *custom_icon;
 	char        *tooltip;
@@ -881,25 +889,15 @@ panel_menu_button_load_from_mateconf (PanelWidget *panel,
 	gboolean     use_custom_icon;
 	gboolean     has_arrow;
 
-	client  = panel_mateconf_get_client ();
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "menu_path");
-	menu_path = mateconf_client_get_string (client, key, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "custom_icon");
-	custom_icon = mateconf_client_get_string (client, key, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "tooltip");
-	tooltip = mateconf_client_get_string (client, key, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "use_menu_path");
-	use_menu_path = mateconf_client_get_bool (client, key, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "use_custom_icon");
-	use_custom_icon = mateconf_client_get_bool (client, key, NULL);
-
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "has_arrow");
-	has_arrow = mateconf_client_get_bool (client, key, NULL);
+	menu_path = g_settings_get_string (settings, PANEL_OBJECT_MENU_PATH_KEY);
+	custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
+	tooltip = g_settings_get_string (settings, PANEL_OBJECT_TOOLTIP_KEY);
+	use_menu_path = g_settings_get_boolean (settings, PANEL_OBJECT_USE_MENU_PATH_KEY);
+	use_custom_icon = g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY);
+	has_arrow = g_settings_get_boolean (settings, PANEL_OBJECT_HAS_ARROW_KEY);
 
 	panel_menu_button_load (menu_path,
 				use_menu_path,
@@ -916,6 +914,8 @@ panel_menu_button_load_from_mateconf (PanelWidget *panel,
 	g_free (menu_path);
 	g_free (custom_icon);
 	g_free (tooltip);
+	g_free (path);
+	g_object_unref (settings);
 }
 
 gboolean
@@ -926,44 +926,43 @@ panel_menu_button_create (PanelToplevel *toplevel,
 			  gboolean       use_menu_path,
 			  const char    *tooltip)
 {
-	MateConfClient *client;
+	GSettings   *settings;
+	gchar       *path;
 	const char  *scheme;
-	const char  *key;
 	char        *id;
-
-	client  = panel_mateconf_get_client ();
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position, FALSE);
 
-	key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "use_menu_path");
-	mateconf_client_set_bool (client, key, use_menu_path, NULL);
+	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
+	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+
+	g_settings_set_boolean (settings, PANEL_OBJECT_USE_MENU_PATH_KEY, use_menu_path);
 
 	scheme = panel_menu_filename_to_scheme (filename);
 
 	if (filename && !scheme) {
 		g_warning ("Failed to find menu scheme for %s\n", filename);
 		g_free (id);
+		g_free (path);
+		g_object_unref (settings);
 		return FALSE;
 	}
 
 	if (use_menu_path && menu_path && menu_path [0] && scheme) {
-		char       *menu_uri;
-
+		char *menu_uri;
 		menu_uri = g_strconcat (scheme, ":", menu_path, NULL);
-
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "menu_path");
-		mateconf_client_set_string (client, key, menu_uri, NULL);
-
+		g_settings_set_string (settings, PANEL_OBJECT_MENU_PATH_KEY, menu_uri);
 		g_free (menu_uri);
 	}
 
 	if (tooltip && tooltip [0]) {
-		key = panel_mateconf_full_key (PANEL_MATECONF_OBJECTS, id, "tooltip");
-		mateconf_client_set_string (client, key, tooltip, NULL);
+		g_settings_set_string (settings, PANEL_OBJECT_TOOLTIP_KEY, tooltip);
 	}
 
-	panel_profile_add_to_list (PANEL_MATECONF_OBJECTS, id);
+	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 	g_free (id);
+	g_free (path);
+	g_object_unref (settings);
 
 	return TRUE;
 }

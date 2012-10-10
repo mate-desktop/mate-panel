@@ -20,7 +20,6 @@
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-glib.h>
 
-#include "panel-mateconf.h"
 #include "panel-profile.h"
 #include "panel-config-global.h"
 #include "panel-shell.h"
@@ -115,11 +114,6 @@ main (int argc, char **argv)
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
-	mateconf_client_add_dir (panel_mateconf_get_client (),
-			      "/desktop/mate/interface",
-			      MATECONF_CLIENT_PRELOAD_NONE,
-			      NULL);
-
 	panel_global_config_load ();
 	panel_lockdown_init ();
 	panel_profile_load ();
@@ -142,10 +136,6 @@ main (int argc, char **argv)
 	gtk_main ();
 
 	panel_lockdown_finalize ();
-
-	mateconf_client_remove_dir (panel_mateconf_get_client (),
-				 "/desktop/mate/interface",
-				 NULL);
 
 	panel_cleanup_do ();
 

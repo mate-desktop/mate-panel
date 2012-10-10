@@ -82,7 +82,7 @@ void  mate_panel_applet_frame_create             (PanelToplevel       *toplevel,
 					     int                  position,
 					     const char          *iid);
 
-void  mate_panel_applet_frame_load_from_mateconf    (PanelWidget         *panel_widget,
+void  mate_panel_applet_frame_load_from_gsettings    (PanelWidget         *panel_widget,
 					     gboolean             locked,
 					     int                  position,
 					     const char          *id);

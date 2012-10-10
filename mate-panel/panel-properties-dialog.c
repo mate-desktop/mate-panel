@@ -28,6 +28,7 @@
 
 #include <string.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -37,13 +38,15 @@
 
 #include "nothing.h"
 #include "panel-profile.h"
-#include "panel-mateconf.h"
+#include "panel-schemas.h"
 #include "panel-util.h"
 #include "panel-globals.h"
 #include "panel-icon-names.h"
 
 typedef struct {
 	PanelToplevel *toplevel;
+	GSettings     *settings;
+	GSettings     *background_settings;
 
 	GtkWidget     *properties_dialog;
 
@@ -77,9 +80,6 @@ typedef struct {
 	GtkWidget     *writability_warn_general;
 	GtkWidget     *writability_warn_background;
 
-	guint          toplevel_notify;
-	guint          background_notify;
-
 	/* FIXME: This is a workaround for GTK+ bug #327243 */
 	int            selection_emitted;
 } PanelPropertiesDialog;
@@ -89,17 +89,13 @@ static GQuark panel_properties_dialog_quark = 0;
 static void
 panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 {
-	MateConfClient *client;
+	if (dialog->settings)
+		g_object_unref (dialog->settings);
+	dialog->settings = NULL;
 
-	client = panel_mateconf_get_client ();
-
-	if (dialog->toplevel_notify)
-		mateconf_client_notify_remove (client, dialog->toplevel_notify);
-	dialog->toplevel_notify = 0;
-
-	if (dialog->background_notify)
-		mateconf_client_notify_remove (client, dialog->background_notify);
-	dialog->background_notify = 0;
+	if (dialog->background_settings)
+		g_object_unref (dialog->background_settings);
+	dialog->background_settings = NULL;
 
 	if (dialog->properties_dialog)
 		gtk_widget_destroy (dialog->properties_dialog);
@@ -193,7 +189,7 @@ panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_orientation_changed),
 				  dialog);
 
-	if (! panel_profile_is_writable_toplevel_orientation (dialog->toplevel)) {
+	if (! panel_profile_key_is_writable (dialog->toplevel, PANEL_TOPLEVEL_ORIENTATION_KEY)) {
 		gtk_widget_set_sensitive (dialog->orientation_combo, FALSE);
 		gtk_widget_set_sensitive (dialog->orientation_label, FALSE);
 		gtk_widget_show (dialog->writability_warn_general);
@@ -232,7 +228,7 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_size_changed),
 				  dialog);
 
-	if ( ! panel_profile_is_writable_toplevel_size (dialog->toplevel)) {
+	if ( ! panel_profile_key_is_writable (dialog->toplevel, PANEL_TOPLEVEL_SIZE_KEY)) {
 		gtk_widget_set_sensitive (dialog->size_spin, FALSE);
 		gtk_widget_set_sensitive (dialog->size_label, FALSE);
 		gtk_widget_set_sensitive (dialog->size_label_pixels, FALSE);
@@ -278,13 +274,14 @@ panel_properties_dialog_setup_icon_chooser (PanelPropertiesDialog *dialog,
 	if (!panel_profile_is_writable_attached_custom_icon (dialog->toplevel)) {
 		gtk_widget_set_sensitive (dialog->icon_chooser, FALSE);
 		gtk_widget_set_sensitive (dialog->icon_label, FALSE);
-		gtk_widget_show (dialog->writability_warn_general);
+		if (panel_toplevel_get_is_attached (dialog->toplevel))
+			gtk_widget_show (dialog->writability_warn_general);
 	}
 }
 
 /* Note: this is only for toggle buttons on the general page, if needed for togglebuttons
    elsewhere you must make this respect the writability warning thing for the right page */
-#define SETUP_TOGGLE_BUTTON(wid, n, p)                                                            \
+#define SETUP_TOGGLE_BUTTON(wid, n, p, key)                                                            \
 	static void                                                                               \
 	panel_properties_dialog_##n (PanelPropertiesDialog *dialog,                               \
 				     GtkToggleButton       *n)                                    \
@@ -301,16 +298,16 @@ panel_properties_dialog_setup_icon_chooser (PanelPropertiesDialog *dialog,
 					      panel_profile_get_toplevel_##p (dialog->toplevel)); \
 		g_signal_connect_swapped (dialog->n, "toggled",                                   \
 					  G_CALLBACK (panel_properties_dialog_##n), dialog);      \
-		if ( ! panel_profile_is_writable_toplevel_##p (dialog->toplevel)) {               \
+		if ( ! panel_profile_key_is_writable (dialog->toplevel, key)) {               \
 			gtk_widget_set_sensitive (dialog->n, FALSE);                              \
 			gtk_widget_show (dialog->writability_warn_general);			  \
 		}										  \
 	}
 
-SETUP_TOGGLE_BUTTON ("expand_toggle",      expand_toggle,      expand)
-SETUP_TOGGLE_BUTTON ("autohide_toggle",    autohide_toggle,    auto_hide)
-SETUP_TOGGLE_BUTTON ("hidebuttons_toggle", hidebuttons_toggle, enable_buttons)
-SETUP_TOGGLE_BUTTON ("arrows_toggle",      arrows_toggle,      enable_arrows)
+SETUP_TOGGLE_BUTTON ("expand_toggle",      expand_toggle,      expand,           PANEL_TOPLEVEL_EXPAND_KEY)
+SETUP_TOGGLE_BUTTON ("autohide_toggle",    autohide_toggle,    auto_hide,        PANEL_TOPLEVEL_AUTO_HIDE_KEY)
+SETUP_TOGGLE_BUTTON ("hidebuttons_toggle", hidebuttons_toggle, enable_buttons,   PANEL_TOPLEVEL_ENABLE_BUTTONS_KEY)
+SETUP_TOGGLE_BUTTON ("arrows_toggle",      arrows_toggle,      enable_arrows,    PANEL_TOPLEVEL_ENABLE_ARROWS_KEY)
 
 static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
@@ -344,7 +341,7 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_color_changed),
 				  dialog);
 
-	if ( ! panel_profile_is_writable_background_color (dialog->toplevel)) {
+	if ( ! panel_profile_background_key_is_writable (dialog->toplevel, "color")) {
 		gtk_widget_set_sensitive (dialog->color_button, FALSE);
 		gtk_widget_set_sensitive (dialog->color_label, FALSE);
 		gtk_widget_show (dialog->writability_warn_background);
@@ -394,7 +391,7 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_image_changed),
 				  dialog);
 
-	if ( ! panel_profile_is_writable_background_image (dialog->toplevel)) {
+	if ( ! panel_profile_background_key_is_writable (dialog->toplevel, "image")) {
 		gtk_widget_set_sensitive (dialog->image_chooser, FALSE);
 		gtk_widget_show (dialog->writability_warn_background);
 	}
@@ -442,7 +439,7 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_opacity_changed),
 				  dialog);
 
-	if ( ! panel_profile_is_writable_background_opacity (dialog->toplevel)) {
+	if ( ! panel_profile_background_key_is_writable (dialog->toplevel, "opacity")) {
 		gtk_widget_set_sensitive (dialog->opacity_scale, FALSE);
 		gtk_widget_set_sensitive (dialog->opacity_label, FALSE);
 		gtk_widget_set_sensitive (dialog->opacity_legend, FALSE);
@@ -526,7 +523,7 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_background_toggled),
 				  dialog);
 
-	if ( ! panel_profile_is_writable_background_type (dialog->toplevel)) {
+	if ( ! panel_profile_background_key_is_writable (dialog->toplevel, "type")) {
 		gtk_widget_set_sensitive (dialog->default_radio, FALSE);
 		gtk_widget_set_sensitive (dialog->color_radio, FALSE);
 		gtk_widget_set_sensitive (dialog->image_radio, FALSE);
@@ -540,7 +537,7 @@ panel_properties_update_arrows_toggle_visible (PanelPropertiesDialog *dialog,
 {
 	if (gtk_toggle_button_get_active (toggle))
 		gtk_widget_set_sensitive (dialog->arrows_toggle,
-					  panel_profile_is_writable_toplevel_enable_arrows (dialog->toplevel));
+					  panel_profile_key_is_writable (dialog->toplevel, PANEL_TOPLEVEL_ENABLE_ARROWS_KEY));
 	else
 		gtk_widget_set_sensitive (dialog->arrows_toggle, FALSE);
 }
@@ -581,21 +578,14 @@ panel_properties_dialog_destroy (PanelPropertiesDialog *dialog)
 
 static void
 panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
-					    MateConfValue            *value)
+					    PanelOrientation       orientation)
 {
-	PanelOrientation      orientation;
 	GtkTreeModel         *model;
 	GtkTreeIter           iter;
 	OrientationComboItem *item;
 	int                   max_size;
 	int                   spin_size;
 	int                   profile_size;
-
-	if (!value || value->type != MATECONF_VALUE_STRING)
-		return;
-
-	if (!panel_profile_map_orientation_string (mateconf_value_get_string (value), &orientation))
-		return;
 
 	/* change the maximum size of the panel */
 	//TODO: we should also do this when the monitor size changes
@@ -632,62 +622,39 @@ panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
 
 static void
 panel_properties_dialog_update_size (PanelPropertiesDialog *dialog,
-				     MateConfValue            *value)
+				     int size)
 {
-	if (!value || value->type != MATECONF_VALUE_INT)
-		return;
-
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
-				   mateconf_value_get_int (value));
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin), size);
 }
 
 static void
-panel_properties_dialog_toplevel_notify (MateConfClient           *client,
-					 guint                  cnxn_id,
-					 MateConfEntry            *entry,
+panel_properties_dialog_toplevel_notify (GSettings             *settings,
+					 gchar                 *key,
 					 PanelPropertiesDialog *dialog)
 {
-	MateConfValue *value;
-	const char *key;
 
-	key = panel_mateconf_basename (mateconf_entry_get_key (entry));
-	if (!key)
-		return;
-
-	value = mateconf_entry_get_value (entry);
-
-#define UPDATE_TOGGLE(p, n)                                                                        \
-	if (!strcmp (key, p)) {                                                                    \
-		if (value && value->type == MATECONF_VALUE_BOOL) {                                    \
-			gboolean val = mateconf_value_get_bool (value);                               \
-			if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->n)) != val)   \
-				gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->n), val); \
-		}                                                                                  \
+#define UPDATE_TOGGLE(p, n)                                                                \
+	if (!strcmp (key, p)) {                                                            \
+		gboolean val = g_settings_get_boolean (settings, key);                     \
+		if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->n)) != val)   \
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->n), val); \
 	}
 
 	if (!strcmp (key, "orientation"))
-		panel_properties_dialog_update_orientation (dialog, value);
+		panel_properties_dialog_update_orientation (dialog, g_settings_get_enum (settings, key));
 	else if (!strcmp (key, "size"))
-		panel_properties_dialog_update_size (dialog, value);
+		panel_properties_dialog_update_size (dialog, g_settings_get_int (settings, key));
 	else UPDATE_TOGGLE ("expand",         expand_toggle)
-	else UPDATE_TOGGLE ("auto_hide",      autohide_toggle)
-	else UPDATE_TOGGLE ("enable_buttons", hidebuttons_toggle)
-	else UPDATE_TOGGLE ("enable_arrows",  arrows_toggle)
+	else UPDATE_TOGGLE ("auto-hide",      autohide_toggle)
+	else UPDATE_TOGGLE ("enable-buttons", hidebuttons_toggle)
+	else UPDATE_TOGGLE ("enable-arrows",  arrows_toggle)
 }
 
 static void
 panel_properties_dialog_update_background_type (PanelPropertiesDialog *dialog,
-						MateConfValue            *value)
+						PanelBackgroundType    background_type)
 {
-	PanelBackgroundType  background_type;
 	GtkWidget           *active_radio;
-
-	if (!value || value->type != MATECONF_VALUE_STRING)
-		return;
-
-	if (!panel_profile_map_background_type_string (mateconf_value_get_string (value),
-						       &background_type))
-		return;
 
 	switch (background_type) {
 	case PANEL_BACK_NONE:
@@ -710,15 +677,12 @@ panel_properties_dialog_update_background_type (PanelPropertiesDialog *dialog,
 
 static void
 panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
-						 MateConfValue            *value)
+						 gchar                 *str_color)
 {
 	GdkColor new_color = { 0, };
 	GdkColor old_color;
 
-	if (!value || value->type != MATECONF_VALUE_STRING)
-		return;
-	
-	if (!gdk_color_parse (mateconf_value_get_string (value), &new_color))
+	if (!gdk_color_parse (str_color, &new_color))
 		return;
 
 	gtk_color_button_get_color (GTK_COLOR_BUTTON (dialog->color_button),
@@ -733,14 +697,11 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 
 static void
 panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog,
-						   MateConfValue            *value)
+						   gint                   opacity)
 {
 	gdouble percentage;
 
-	if (!value || value->type != MATECONF_VALUE_INT)
-		return;
-
-	percentage = ((gdouble) (mateconf_value_get_int (value) * 100)) / 65535;
+	percentage = ((gdouble) (opacity * 100)) / 65535;
 
 	if ((int) gtk_range_get_value (GTK_RANGE (dialog->opacity_scale)) != (int) percentage)
 		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
@@ -748,15 +709,10 @@ panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog
 
 static void
 panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
-						 MateConfValue            *value)
+						 gchar                 *text)
 {
-	const char *text;
 	char       *old_text;
 
-	if (!value || value->type != MATECONF_VALUE_STRING)
-		return;
-
-	text = mateconf_value_get_string (value);
 	old_text = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->image_chooser));
 
 	if (PANEL_GLIB_STR_EMPTY (text) && old_text)
@@ -771,28 +727,32 @@ panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
 }
 
 static void
-panel_properties_dialog_background_notify (MateConfClient           *client,
-					   guint                  cnxn_id,
-					   MateConfEntry            *entry,
+panel_properties_dialog_background_notify (GSettings             *settings,
+					   gchar                 *key,
 					   PanelPropertiesDialog *dialog)
 {
-	MateConfValue *value;
-	const char *key;
-
-	key = panel_mateconf_basename (mateconf_entry_get_key (entry));
-	if (!key)
-		return;
-
-	value = mateconf_entry_get_value (entry);
-
 	if (!strcmp (key, "type"))
-		panel_properties_dialog_update_background_type (dialog, value);
+	{
+		PanelBackgroundType type = g_settings_get_enum (settings, key);
+		panel_properties_dialog_update_background_type (dialog, type);
+	}
 	else if (!strcmp (key, "color"))
-		panel_properties_dialog_update_background_color (dialog, value);
+	{
+		char *color = g_settings_get_string (settings, key);
+		panel_properties_dialog_update_background_color (dialog, color);
+		g_free (color);
+	}
 	else if (!strcmp (key, "opacity"))
-		panel_properties_dialog_update_background_opacity (dialog, value);
+	{
+		gint opacity = g_settings_get_int (settings, key);
+		panel_properties_dialog_update_background_opacity (dialog, opacity);
+	}
 	else if (!strcmp (key, "image"))
-		panel_properties_dialog_update_background_image (dialog, value);
+	{
+		char *image = g_settings_get_string (settings, key);
+		panel_properties_dialog_update_background_image (dialog, image);
+		g_free (image);
+	}
 }
 
 static void
@@ -874,6 +834,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 			     GtkBuilder    *gui)
 {
 	PanelPropertiesDialog *dialog;
+	char                  *toplevel_settings_path;
 
 	dialog = g_new0 (PanelPropertiesDialog, 1);
 
@@ -913,24 +874,29 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 				  G_CALLBACK (panel_properties_update_arrows_toggle_visible),
 				  dialog);
 
-	dialog->toplevel_notify =
-		panel_profile_toplevel_notify_add (
-			dialog->toplevel,
-			NULL,
-			(MateConfClientNotifyFunc) panel_properties_dialog_toplevel_notify,
-			dialog);
+	g_object_get (toplevel, "settings-path", &toplevel_settings_path, NULL);
+	dialog->settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
+						     toplevel_settings_path);
+	gchar *toplevel_background_path;
+	toplevel_background_path = g_strdup_printf ("%sbackground/", toplevel_settings_path);
+	dialog->background_settings = g_settings_new_with_path (PANEL_TOPLEVEL_BACKGROUND_SCHEMA,
+								toplevel_background_path);
+	g_free (toplevel_background_path);
+
+	g_signal_connect (dialog->settings,
+			  "changed",
+			  G_CALLBACK (panel_properties_dialog_toplevel_notify),
+			  dialog);
 
 	panel_properties_dialog_setup_color_button      (dialog, gui);
 	panel_properties_dialog_setup_image_chooser     (dialog, gui);
 	panel_properties_dialog_setup_opacity_scale     (dialog, gui);
 	panel_properties_dialog_setup_background_radios (dialog, gui);
 
-	dialog->background_notify =
-		panel_profile_toplevel_notify_add (
-			dialog->toplevel,
-			"background",
-			(MateConfClientNotifyFunc) panel_properties_dialog_background_notify,
-			dialog);
+	g_signal_connect (dialog->background_settings,
+			  "changed",
+			  G_CALLBACK (panel_properties_dialog_background_notify),
+			  dialog);
 
 	panel_properties_dialog_update_for_attached (dialog,
 						     panel_toplevel_get_is_attached (dialog->toplevel));

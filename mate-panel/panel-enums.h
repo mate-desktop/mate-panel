@@ -26,17 +26,9 @@
 #define __PANEL_ENUMS_H__
 
 #include <glib.h>
+#include "panel-enums-gsettings.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef enum {
-	PANEL_ORIENTATION_TOP    = 1 << 0,
-	PANEL_ORIENTATION_RIGHT  = 1 << 1,
-	PANEL_ORIENTATION_BOTTOM = 1 << 2,
-	PANEL_ORIENTATION_LEFT   = 1 << 3
-} PanelOrientation;
+G_BEGIN_DECLS
 
 #define PANEL_HORIZONTAL_MASK (PANEL_ORIENTATION_TOP  | PANEL_ORIENTATION_BOTTOM)
 #define PANEL_VERTICAL_MASK   (PANEL_ORIENTATION_LEFT | PANEL_ORIENTATION_RIGHT)
@@ -59,52 +51,10 @@ typedef enum {
 } PanelState;
 
 typedef enum {
-	PANEL_ANIMATION_SLOW   = 0,
-	PANEL_ANIMATION_MEDIUM = 1,
-	PANEL_ANIMATION_FAST   = 2
-} PanelAnimationSpeed;
+	PANEL_GSETTINGS_TOPLEVELS,
+	PANEL_GSETTINGS_OBJECTS
+} PanelGSettingsKeyType;
 
-typedef enum {
-	PANEL_BACK_NONE  = 0,
-	PANEL_BACK_COLOR = 1,
-	PANEL_BACK_IMAGE = 2
-} PanelBackgroundType;
-
-typedef enum {
-	PANEL_MATECONF_TOPLEVELS,
-	PANEL_MATECONF_OBJECTS,
-	PANEL_MATECONF_APPLETS
-} PanelMateConfKeyType;
-
-typedef enum {
-	PANEL_OBJECT_DRAWER,
-	PANEL_OBJECT_MENU,
-	PANEL_OBJECT_LAUNCHER,
-	PANEL_OBJECT_APPLET,
-	PANEL_OBJECT_ACTION,
-	PANEL_OBJECT_MENU_BAR,
-	PANEL_OBJECT_SEPARATOR,
-	/* The following two are for backwards compatibility with 2.0.x */
-	PANEL_OBJECT_LOGOUT,
-	PANEL_OBJECT_LOCK
-} PanelObjectType;
-
-typedef enum {
-        PANEL_ACTION_NONE = 0,
-        PANEL_ACTION_LOCK,
-        PANEL_ACTION_LOGOUT,
-        PANEL_ACTION_RUN,
-        PANEL_ACTION_SEARCH,
-	PANEL_ACTION_FORCE_QUIT,
-	PANEL_ACTION_CONNECT_SERVER,
-	PANEL_ACTION_SHUTDOWN,
-	/* compatibility with MATE < 2.13.90 */
-        PANEL_ACTION_SCREENSHOT,
-        PANEL_ACTION_LAST
-} PanelActionButtonType;
-
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* __PANEL_ENUMS_H__ */

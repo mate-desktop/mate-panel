@@ -54,13 +54,9 @@
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-util.h"
+#include "panel-schemas.h"
 
 #define BOOKMARKS_FILENAME      ".gtk-bookmarks"
-#define DESKTOP_IS_HOME_DIR_DIR "/apps/caja/preferences"
-#define DESKTOP_IS_HOME_DIR_KEY "/apps/caja/preferences/desktop_is_home_dir"
-#define NAMES_DIR               "/apps/caja/desktop"
-#define HOME_NAME_KEY           "/apps/caja/desktop/home_icon_name"
-#define COMPUTER_NAME_KEY       "/apps/caja/desktop/computer_icon_name"
 #define MAX_ITEMS_OR_SUBMENU    8
 #define MAX_BOOKMARK_ITEMS      100
 
@@ -75,6 +71,9 @@ G_DEFINE_TYPE(PanelDesktopMenuItem, panel_desktop_menu_item, GTK_TYPE_IMAGE_MENU
 struct _PanelPlaceMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
+
+	GSettings   *caja_desktop_settings;
+	GSettings   *caja_prefs_settings;
 
 	GtkRecentManager *recent_manager;
 
@@ -1027,7 +1026,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 {
 	GtkWidget *places_menu;
 	GtkWidget *item;
-	char      *mateconf_name;
+	char      *gsettings_name;
 	char      *name;
 	char      *uri;
 	GFile     *file;
@@ -1048,9 +1047,8 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	g_free (name);
 	g_free (uri);
 
-	if (!mateconf_client_get_bool (panel_mateconf_get_client (),
-				    DESKTOP_IS_HOME_DIR_KEY,
-				    NULL)) {
+	if (!g_settings_get_boolean (place_item->priv->caja_prefs_settings,
+				     CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY)) {
 		file = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 		uri = g_file_get_uri (file);
 		g_object_unref (file);
@@ -1072,15 +1070,14 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);
 	add_menu_separator (places_menu);
 
-	mateconf_name = mateconf_client_get_string (panel_mateconf_get_client (),
-					      COMPUTER_NAME_KEY,
-					      NULL);
+	gsettings_name = g_settings_get_string (place_item->priv->caja_desktop_settings,
+					        CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY);
 	panel_menu_items_append_from_desktop (places_menu,
 					      "caja-computer.desktop",
-					      mateconf_name,
+					      gsettings_name,
                                               TRUE);
-	if (mateconf_name)
-		g_free (mateconf_name);
+	if (gsettings_name)
+		g_free (gsettings_name);
 
 	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
@@ -1130,9 +1127,8 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 }
 
 static void
-panel_place_menu_item_key_changed (MateConfClient *client,
-				   guint        cnxn_id,
-				   MateConfEntry  *entry,
+panel_place_menu_item_key_changed (GSettings   *settings,
+				   gchar       *key,
 				   GtkWidget   *place_item)
 {
 	panel_place_menu_item_recreate_menu (place_item);
@@ -1195,7 +1191,12 @@ panel_desktop_menu_item_append_menu (GtkWidget *menu,
 	if (add_separator)
 		add_menu_separator (menu);
 
+	/* FIXME replace this with MATE documentation system, when it will be ready
+	 * see: http://forums.mate-desktop.org/viewtopic.php?f=17&t=805
+	
 	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL, FALSE);
+	*/
+
 	panel_menu_items_append_from_desktop (menu, "mate-about.desktop", NULL, FALSE);
 
 	if (parent->priv->append_lock_logout)
@@ -1238,12 +1239,14 @@ panel_place_menu_item_finalize (GObject *object)
 {
 	PanelPlaceMenuItem *menuitem = (PanelPlaceMenuItem *) object;
 
-	mateconf_client_remove_dir (panel_mateconf_get_client (),
-				 DESKTOP_IS_HOME_DIR_DIR,
-				 NULL);
-	mateconf_client_remove_dir (panel_mateconf_get_client (),
-				 NAMES_DIR,
-				 NULL);
+	if (menuitem->priv->caja_desktop_settings) {
+		g_object_unref (menuitem->priv->caja_desktop_settings);
+		menuitem->priv->caja_desktop_settings = NULL;
+	}
+	if (menuitem->priv->caja_prefs_settings) {
+		g_object_unref (menuitem->priv->caja_prefs_settings);
+		menuitem->priv->caja_prefs_settings = NULL;
+	}
 
 	if (menuitem->priv->bookmarks_monitor != NULL) {
 		g_file_monitor_cancel (menuitem->priv->bookmarks_monitor);
@@ -1323,24 +1326,21 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 
 	menuitem->priv = PANEL_PLACE_MENU_ITEM_GET_PRIVATE (menuitem);
 
-	mateconf_client_add_dir (panel_mateconf_get_client (),
-			      DESKTOP_IS_HOME_DIR_DIR,
-			      MATECONF_CLIENT_PRELOAD_NONE,
-			      NULL);
-	mateconf_client_add_dir (panel_mateconf_get_client (),
-			      NAMES_DIR,
-			      MATECONF_CLIENT_PRELOAD_NONE,
-			      NULL);
+	menuitem->priv->caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
+	menuitem->priv->caja_prefs_settings = g_settings_new (CAJA_PREFS_SCHEMA);
 
-	panel_mateconf_notify_add_while_alive (HOME_NAME_KEY,
-					    (MateConfClientNotifyFunc) panel_place_menu_item_key_changed,
-					    G_OBJECT (menuitem));
-	panel_mateconf_notify_add_while_alive (DESKTOP_IS_HOME_DIR_KEY,
-					    (MateConfClientNotifyFunc) panel_place_menu_item_key_changed,
-					    G_OBJECT (menuitem));
-	panel_mateconf_notify_add_while_alive (COMPUTER_NAME_KEY,
-					    (MateConfClientNotifyFunc) panel_place_menu_item_key_changed,
-					    G_OBJECT (menuitem));
+	g_signal_connect (menuitem->priv->caja_desktop_settings,
+			  "changed::" CAJA_DESKTOP_HOME_ICON_NAME_KEY,
+			  G_CALLBACK (panel_place_menu_item_key_changed),
+			  G_OBJECT (menuitem));
+	g_signal_connect (menuitem->priv->caja_desktop_settings,
+			  "changed::" CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY,
+			  G_CALLBACK (panel_place_menu_item_key_changed),
+			  G_OBJECT (menuitem));
+	g_signal_connect (menuitem->priv->caja_prefs_settings,
+			  "changed::" CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY,
+			  G_CALLBACK (panel_place_menu_item_key_changed),
+			  G_OBJECT (menuitem));
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
