@@ -25,7 +25,6 @@
 #include <string.h>
 
 #include <mate-panel-applet.h>
-#include <mate-panel-applet-mateconf.h>
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>

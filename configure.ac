@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [1.4.0], [https://github.com/mate-desktop/mate-panel/issues],
+AC_INIT([mate-panel], [1.5.0], [https://github.com/mate-desktop/mate-panel/issues],
     [mate-panel], [http://www.mate-desktop.org])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
@@ -33,7 +33,6 @@ AM_PROG_CC_C_O
 
 AM_PATH_PYTHON
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
-AC_PATH_PROG(MATECONFTOOL, mateconftool-2)
 
 MATE_COMPILE_WARNINGS(maximum)
 
@@ -63,25 +62,29 @@ PANGO_REQUIRED=1.15.4
 GLIB_REQUIRED=2.25.12
 GTK_REQUIRED=2.19.7
 LIBMATEWNCK_REQUIRED=1.3.0
-MATECONF_REQUIRED=1.1.0
 LIBMATE_MENU_REQUIRED=1.1.0
-LIBECAL_REQUIRED=1.6.0
-LIBEDATASERVER_REQUIRED=1.2.0
-LIBEDATASERVERUI_REQUIRED=1.2.0
 CAIRO_REQUIRED=1.0.0
 MATEWEATHER_REQUIRED=1.1.0
 DBUS_GLIB_REQUIRED=0.80
+DCONF_REQUIRED=0.13
 
 dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-2.0)
 
 PKG_CHECK_MODULES(GMODULE, gmodule-2.0,[GMODULE_ADD="gmodule-2.0"],[GMODULE_ADD=""])
-PKG_CHECK_MODULES(PANEL, $GMODULE_ADD gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED mateconf-2.0 >= $MATECONF_REQUIRED libmate-menu >= $LIBMATE_MENU_REQUIRED libcanberra-gtk dbus-glib-1 >= $DBUS_GLIB_REQUIRED)
+PKG_CHECK_MODULES(PANEL, $GMODULE_ADD gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED gio-2.0 >= $GLIB_REQUIRED libmate-menu >= $LIBMATE_MENU_REQUIRED libcanberra-gtk dbus-glib-1 >= $DBUS_GLIB_REQUIRED dconf)
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
 
-PKG_CHECK_MODULES(LIBMATE_PANEL_APPLET, gtk+-2.0 >= $GTK_REQUIRED mateconf-2.0 >= $MATECONF_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED)
+PKG_CHECK_MODULES([DCONF], [dconf >= $DCONF_REQUIRED],
+   [AC_DEFINE([HAVE_DCONF_0_13], [1], [Use DCONF >= 0.13])],
+   [PKG_CHECK_MODULES([DCONF], [dconf >= 0.12],
+       [AC_DEFINE([HAVE_DCONF_0_12], [1], [Use DCONF 0.12])
+    ])
+])
+
+PKG_CHECK_MODULES(LIBMATE_PANEL_APPLET, gtk+-2.0 >= $GTK_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(LIBMATE_PANEL_APPLET_CFLAGS)
 AC_SUBST(LIBMATE_PANEL_APPLET_LIBS)
 
@@ -100,40 +103,11 @@ AC_SUBST(WNCKLET_LIBS)
 AC_CHECK_HEADERS(langinfo.h)
 AC_CHECK_FUNCS(nl_langinfo)
 
-AC_ARG_ENABLE(eds,
-	AC_HELP_STRING([--enable-eds],
-		[Enable evolution-data-server dependencies @<:@default=auto@:>@]
-	),,enable_eds=auto)
-LIBECAL_REQUIREMENT=
-HAVE_EDS=no
-if test "x$enable_eds" = "xyes"; then
-  LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED"
-  CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
-else
-  if test "x$enable_eds" != "xno"; then
-    AC_MSG_CHECKING(for evolution-data-server)
-    if $PKG_CONFIG --exists libecal-1.2 libedataserverui-1.2 evolution-data-server-1.2; then
-       AC_MSG_RESULT(yes)
-       LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED"
-       CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
-       HAVE_EDS=yes
-    else
-       AC_MSG_RESULT(no)
-    fi
-  fi
-fi
-if test -n "$LIBECAL_REQUIREMENT"; then
-  AC_DEFINE([HAVE_LIBECAL], 1,
-            [Defined when evolution-data-server libecal-1.2 and libedataserverui-1.2 are detected])
-fi
-AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
-AC_SUBST(CLOCK_EDS_ICONDIR)
-
 PKG_CHECK_MODULES(TZ, gio-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(TZ_CFLAGS)
 AC_SUBST(TZ_LIBS)
 
-PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED $LIBECAL_REQUIREMENT librsvg-2.0 dbus-glib-1 mateweather >= $MATEWEATHER_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED)
+PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED librsvg-2.0 dbus-glib-1 mateweather >= $MATEWEATHER_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED)
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
@@ -251,61 +225,6 @@ AC_SUBST([modulesdir],"\$(libdir)/mate-panel/modules")
 dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/mate-panel/applets")
 
-dnl
-dnl Temporary matecomponent checks here
-dnl
-
-LIB_MATE_PANEL_APPLET_MATECOMPONENT_LT_VERSION=1:1:0
-AC_SUBST(LIB_MATE_PANEL_APPLET_MATECOMPONENT_LT_VERSION)
-
-LIBMATECOMPONENTUI_REQUIRED=1.1.0
-MATECORBA_REQUIRED=1.1.0
-
-AC_ARG_ENABLE(matecomponent,
-	      AS_HELP_STRING([--enable-matecomponent],[Enable MateComponent compatibility modules (auto)]),
-	      enable_matecomponent=$enableval,
-	      enable_matecomponent=auto)
-
-MATECOMPONENT_CFLAGS=
-MATECOMPONENT_LIBS=
-LIBMATE_PANEL_APPLET_MATECOMPONENT_CFLAGS=
-LIBMATE_PANEL_APPLET_MATECOMPONENT_LIBS=
-MATECORBA_IDL=
-MATECOMPONENT_IDLDIR=
-MATECOMPONENT_ACT_IDLDIR=
-
-if test "x$enable_matecomponent" = "xno" ; then
-  HAVE_MATECOMPONENT=no
-else
-  HAVE_MATECOMPONENT=no
-  PKG_CHECK_MODULES(MATECOMPONENT, MateCORBA-2.0 libmatecomponentui-2.0, HAVE_MATECOMPONENT=yes, HAVE_MATECOMPONENT=no)
-
-  if test "x$enable_matecomponent" = "xyes" -a "x$HAVE_MATECOMPONENT" = "xno" ; then
-    AC_MSG_ERROR(MateComponent compatibility modules explicity enabled but not available)
-  fi
-
-  if test "x$HAVE_MATECOMPONENT" = "xyes"; then
-    PKG_CHECK_MODULES(PANEL_MODULE_MATECOMPONENT, MateCORBA-2.0 >= $MATECORBA_REQUIRED libmatecomponentui-2.0 >= $LIBMATECOMPONENTUI_REQUIRED)
-    PKG_CHECK_MODULES(LIBMATE_PANEL_APPLET_MATECOMPONENT, MateCORBA-2.0 >= $MATECORBA_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libmatecomponentui-2.0 >= $LIBMATECOMPONENTUI_REQUIRED mateconf-2.0 >= $MATECONF_REQUIRED)
-
-    dnl IDL directories
-    MATECORBA_IDL="`$PKG_CONFIG --variable=matecorba_idl MateCORBA-2.0`"
-    MATECOMPONENT_IDLDIR="`$PKG_CONFIG --variable=idldir libmatecomponent-2.0`"
-    MATECOMPONENT_ACT_IDLDIR="`$PKG_CONFIG --variable=idldir matecomponent-activation-2.0`"
-
-    AC_PATH_PROG(GIO_QUERYMODULES, gio-querymodules, no)
-  fi
-fi
-
-AM_CONDITIONAL(HAVE_MATECOMPONENT, test "x$HAVE_MATECOMPONENT" = "xyes")
-AC_SUBST(MATECOMPONENT_CFLAGS)
-AC_SUBST(MATECOMPONENT_LIBS)
-AC_SUBST(LIBMATE_PANEL_APPLET_MATECOMPONENT_CFLAGS)
-AC_SUBST(LIBMATE_PANEL_APPLET_MATECOMPONENT_LIBS)
-AC_SUBST(MATECORBA_IDL)
-AC_SUBST(MATECOMPONENT_IDLDIR)
-AC_SUBST(MATECOMPONENT_ACT_IDLDIR)
-
 
 dnl ****************************************************************************
 dnl * Ubuntu hacks
@@ -339,7 +258,7 @@ dnl mate-doc-utils stuff
 
 MATE_DOC_INIT
 
-AM_MATECONF_SOURCE_2
+GLIB_GSETTINGS
 
 dnl platform test
 case $host in
@@ -367,6 +286,7 @@ AC_SUBST(REBUILD)
 
 AC_OUTPUT([
 Makefile
+data/Makefile
 icons/Makefile
 icons/16x16/Makefile
 icons/22x22/Makefile
@@ -379,8 +299,8 @@ mate-panel/libegg/Makefile
 mate-panel/libmate-panel-applet-private/Makefile
 mate-panel/libpanel-util/Makefile
 mate-panel/mate-panel.desktop.in
-libmate-panel-applet/libmatepanelapplet-3.0.pc
-libmate-panel-applet/libmatepanelapplet-3.0-uninstalled.pc
+libmate-panel-applet/libmatepanelapplet-4.0.pc
+libmate-panel-applet/libmatepanelapplet-4.0-uninstalled.pc
 libmate-panel-applet/Makefile
 po/Makefile.in
 applets/Makefile
@@ -396,12 +316,6 @@ help/Makefile
 help/clock/Makefile
 help/fish/Makefile
 man/Makefile
-matecomponent/Makefile
-matecomponent/idl/Makefile
-matecomponent/libmate-panel-applet/libmatepanelapplet-2.0.pc
-matecomponent/libmate-panel-applet/libmatepanelapplet-2.0-uninstalled.pc
-matecomponent/libmate-panel-applet/Makefile
-matecomponent/panel-module/Makefile
 ])
 
 if echo foo | xgettext --from-code=UTF-8 -LC -o - - 2>/dev/null ; then
@@ -436,9 +350,7 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
         Ubuntu Counter Hack:           ${ENABLE_UBUNTU}
-        MateComponent applets support: ${HAVE_MATECOMPONENT}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
-        Evolution-Data-Server support: ${HAVE_EDS}
         NetworkManager support:        ${HAVE_NETWORK_MANAGER}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}

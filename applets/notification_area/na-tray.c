@@ -23,7 +23,6 @@
 #include <string.h>
 
 #include <mate-panel-applet.h>
-#include <mate-panel-applet-mateconf.h>
 
 #include <gtk/gtk.h>
 

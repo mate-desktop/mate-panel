@@ -5,12 +5,9 @@ SUBDIRS =			\
 	doc			\
 	help			\
 	icons			\
+	data			\
 	man			\
 	po
-
-if HAVE_MATECOMPONENT
-SUBDIRS += matecomponent
-endif
 
 ACLOCAL_AMFLAGS = -I m4
 
