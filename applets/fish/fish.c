@@ -22,6 +22,7 @@
  *      George Lebl  <jirka@5z.com>
  *      Mark McLoughlin <mark@skynet.ie>
  *      Vincent Untz <vuntz@gnome.org>
+ *      Stefano Karapetsas <stefano@karapetsas.com>
  */
 
 #include <config.h>
@@ -36,10 +37,10 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#include <gio/gio.h>
 
 #include <mate-panel-applet.h>
-#include <mate-panel-applet-mateconf.h>
-#include <mateconf/mateconf-client.h>
+#include <mate-panel-applet-gsettings.h>
 
 #define FISH_APPLET(o) \
 	(G_TYPE_CHECK_INSTANCE_CAST((o), fish_applet_get_type(), FishApplet))
@@ -48,17 +49,22 @@
 
 #define FISH_ICON "mate-panel-fish"
 
-#define N_FISH_PREFS 6
+#define FISH_SCHEMA      "org.mate.panel.applet.fish"
+#define FISH_NAME_KEY    "name"
+#define FISH_IMAGE_KEY   "image"
+#define FISH_COMMAND_KEY "command"
+#define FISH_FRAMES_KEY  "frames"
+#define FISH_SPEED_KEY   "speed"
+#define FISH_ROTATE_KEY  "rotate"
 
-#define LOCKDOWN_COMMANDLINE_KEY "/desktop/mate/lockdown/disable_command_line"
-#define N_FISH_LOCKDOWN 1
-
-#define N_FISH_LISTENERS (N_FISH_PREFS + N_FISH_LOCKDOWN)
+#define LOCKDOWN_SCHEMA                       "org.mate.lockdown"
+#define LOCKDOWN_DISABLE_COMMAND_LINE_KEY     "disable-command-line"
 
 typedef struct {
 	MatePanelApplet        applet;
 
-	MateConfClient       *client;
+	GSettings         *settings;
+	GSettings         *lockdown_settings;
 
 	char              *name;
 	char              *image;
@@ -100,8 +106,6 @@ typedef struct {
 	GIOChannel        *io_channel;
 
 	gboolean           april_fools;
-
-	guint              listeners [N_FISH_LISTENERS];
 } FishApplet;
 
 typedef struct {
@@ -201,14 +205,13 @@ static void name_value_changed(GtkEntry* entry, FishApplet* fish)
 	if (!text || !text [0])
 		return;
 
-	mate_panel_applet_mateconf_set_string (
-		MATE_PANEL_APPLET (fish), "name", text, NULL);
+	g_settings_set_string (fish->settings, FISH_NAME_KEY, text);
 }
 
 static void image_value_changed(GtkFileChooser* chooser, FishApplet* fish)
 {	char *path;
 	char *image;
-	char *path_mateconf;
+	char *path_gsettings;
 
 	path = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
@@ -217,13 +220,13 @@ static void image_value_changed(GtkFileChooser* chooser, FishApplet* fish)
 		return;
 	}
 
-	path_mateconf = get_image_path (fish);
-	if (!strcmp (path, path_mateconf)) {
+	path_gsettings = get_image_path (fish);
+	if (!strcmp (path, path_gsettings)) {
 		g_free (path);
-		g_free (path_mateconf);
+		g_free (path_gsettings);
 		return;
 	}
-	g_free (path_mateconf);
+	g_free (path_gsettings);
 
 	if (!strncmp (path, FISH_ICONDIR, strlen (FISH_ICONDIR))) {
 		image = path + strlen (FISH_ICONDIR);
@@ -232,8 +235,7 @@ static void image_value_changed(GtkFileChooser* chooser, FishApplet* fish)
 	} else
 		image = path;
 
-	mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (fish), "image",
-				       image, NULL);
+	g_settings_set_string (fish->settings, FISH_IMAGE_KEY, image);
 
 	g_free (path);
 }
@@ -245,8 +247,7 @@ static void command_value_changed(GtkEntry* entry, FishApplet *fish)
 	text = gtk_entry_get_text (entry);
 
 	if (!text || !text [0]) {
-		mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (fish),
-					       "command", "", NULL);
+		g_settings_set_string (fish->settings, FISH_COMMAND_KEY, "");
 		return;
 	}
 
@@ -279,29 +280,31 @@ static void command_value_changed(GtkEntry* entry, FishApplet *fish)
 		}
 	}
 
-	mate_panel_applet_mateconf_set_string (
-		MATE_PANEL_APPLET (fish), "command", text, NULL);
+	g_settings_set_string (fish->settings, FISH_COMMAND_KEY, text);
 }
 
 static void n_frames_value_changed(GtkSpinButton* button, FishApplet* fish)
 {
-        mate_panel_applet_mateconf_set_int (
-			MATE_PANEL_APPLET (fish), "frames",
-			gtk_spin_button_get_value_as_int (button), NULL);
+        g_settings_set_int (
+			fish->settings,
+			FISH_FRAMES_KEY,
+			gtk_spin_button_get_value_as_int (button));
 }
 
 static void speed_value_changed (GtkSpinButton* button, FishApplet* fish)
 {
-        mate_panel_applet_mateconf_set_float (
-			MATE_PANEL_APPLET (fish), "speed",
-			gtk_spin_button_get_value (button), NULL);
+        g_settings_set_double (
+			fish->settings,
+			FISH_SPEED_KEY,
+			gtk_spin_button_get_value (button));
 }
 
 static void rotate_value_changed(GtkToggleButton* toggle, FishApplet* fish)
 {
-	mate_panel_applet_mateconf_set_bool (
-			MATE_PANEL_APPLET (fish), "rotate",
-			gtk_toggle_button_get_active (toggle), NULL);
+		g_settings_set_boolean (
+			fish->settings,
+			FISH_ROTATE_KEY,
+			gtk_toggle_button_get_active (toggle));
 }
 
 static gboolean delete_event(GtkWidget* widget, FishApplet* fish)
@@ -323,17 +326,11 @@ static void handle_response(GtkWidget* widget, int id, FishApplet* fish)
 
 static void setup_sensitivity(FishApplet* fish, GtkBuilder* builder, const char* wid, const char* label, const char* label_post, const char* key)
 {
-	MatePanelApplet *applet = (MatePanelApplet *) fish;
-	char *fullkey;
 	GtkWidget *w;
 
-	fullkey = mate_panel_applet_mateconf_get_full_key (applet, key);
-
-	if (mateconf_client_key_is_writable (fish->client, fullkey, NULL)) {
-		g_free (fullkey);
+	if (g_settings_is_writable (fish->settings, key)) {
 		return;
 	}
-	g_free (fullkey);
 
 	w = GTK_WIDGET (gtk_builder_get_object (builder, wid));
 	g_assert (w != NULL);
@@ -426,7 +423,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 			   "name_entry" /* wid */,
 			   "name_label" /* label */,
 			   NULL /* label_post */,
-			   "name" /* key */);
+			   FISH_NAME_KEY /* key */);
 
 	fish->preview_image = GTK_WIDGET (gtk_builder_get_object (builder, "preview_image"));
 	if (fish->pixbuf)
@@ -458,7 +455,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 			   "image_chooser" /* wid */,
 			   "image_label" /* label */,
 			   NULL /* label_post */,
-			   "image" /* key */);
+			   FISH_IMAGE_KEY /* key */);
 
 	fish->command_label = GTK_WIDGET (gtk_builder_get_object (builder, "command_label"));
 	fish->command_entry = GTK_WIDGET (gtk_builder_get_object (builder, "command_entry"));
@@ -471,11 +468,9 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 			   "command_entry" /* wid */,
 			   "command_label" /* label */,
 			   NULL /* label_post */,
-			   "command" /* key */);
+			   FISH_COMMAND_KEY /* key */);
 
-	if (mateconf_client_get_bool (fish->client,
-				   LOCKDOWN_COMMANDLINE_KEY,
-				   NULL)) {
+	if (g_settings_get_boolean (fish->lockdown_settings, LOCKDOWN_DISABLE_COMMAND_LINE_KEY)) {
 		gtk_widget_set_sensitive (fish->command_label, FALSE);
 		gtk_widget_set_sensitive (fish->command_entry, FALSE);
 	}
@@ -491,7 +486,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 			   "frames_spin" /* wid */,
 			   "frames_label" /* label */,
 			   "frames_post_label" /* label_post */,
-			   "frames" /* key */);
+			   FISH_FRAMES_KEY /* key */);
 
 	fish->speed_spin = GTK_WIDGET (gtk_builder_get_object (builder, "speed_spin"));
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->speed_spin), fish->speed);
@@ -503,7 +498,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 			   "speed_spin" /* wid */,
 			   "speed_label" /* label */,
 			   "speed_post_label" /* label_post */,
-			   "speed" /* key */);
+			   FISH_SPEED_KEY /* key */);
 
 	fish->rotate_toggle = GTK_WIDGET (gtk_builder_get_object (builder, "rotate_toggle"));
 	gtk_toggle_button_set_active (
@@ -516,7 +511,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 			   "rotate_toggle" /* wid */,
 			   NULL /* label */,
 			   NULL /* label_post */,
-			   "rotate" /* key */);
+			   FISH_ROTATE_KEY /* key */);
 
 	g_signal_connect (fish->preferences_dialog, "delete_event",
 			  G_CALLBACK (delete_event), fish);
@@ -968,14 +963,11 @@ static void display_fortune_dialog(FishApplet* fish)
 	gtk_window_present (GTK_WINDOW (fish->fortune_dialog));
 }
 
-static void name_changed_notify(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, FishApplet* fish)
+static void name_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
-	const char *value;
+	char *value;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
-	value = mateconf_value_get_string (entry->value);
+	value = g_settings_get_string (settings, key);
 
 	if (!value [0] || (fish->name && !strcmp (fish->name, value)))
 		return;
@@ -991,16 +983,16 @@ static void name_changed_notify(MateConfClient* client, guint cnxn_id, MateConfE
 	if (fish->name_entry &&
 	    strcmp (gtk_entry_get_text (GTK_ENTRY (fish->name_entry)), fish->name))
 		gtk_entry_set_text (GTK_ENTRY (fish->name_entry), fish->name);
+
+	if (value)
+		g_free (value);
 }
 
-static void image_changed_notify(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, FishApplet* fish)
+static void image_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
-	const char *value;
+	char *value;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
-	value = mateconf_value_get_string (entry->value);
+	value = g_settings_get_string (settings, key);
 
 	if (!value [0] || (fish->image && !strcmp (fish->image, value)))
 		return;
@@ -1013,28 +1005,28 @@ static void image_changed_notify(MateConfClient* client, guint cnxn_id, MateConf
 	update_pixmap (fish);
 
 	if (fish->image_chooser) {
-		char *path_mateconf;
+		char *path_gsettings;
 		char *path_chooser;
 
-		path_mateconf = get_image_path (fish);
+		path_gsettings = get_image_path (fish);
 		path_chooser = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fish->image_chooser));
-		if (strcmp (path_mateconf, path_chooser))
+		if (strcmp (path_gsettings, path_chooser))
 			gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fish->image_chooser),
-						       path_mateconf);
+						       path_gsettings);
 
-		g_free (path_mateconf);
+		g_free (path_gsettings);
 		g_free (path_chooser);
 	}
+
+	if (value)
+		g_free (value);
 }
 
-static void command_changed_notify(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, FishApplet* fish)
+static void command_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
-	const char *value;
+	char *value;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_STRING)
-		return;
-
-	value = mateconf_value_get_string (entry->value);
+	value = g_settings_get_string (settings, key);
 
 	if (fish->command && !strcmp (fish->command, value))
 		return;
@@ -1046,16 +1038,16 @@ static void command_changed_notify(MateConfClient* client, guint cnxn_id, MateCo
 	if (fish->command_entry &&
 	    strcmp (gtk_entry_get_text (GTK_ENTRY (fish->command_entry)), fish->command))
 		gtk_entry_set_text (GTK_ENTRY (fish->command_entry), fish->command);
+
+	if (value)
+		g_free (value);
 }
 
-static void n_frames_changed_notify(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, FishApplet* fish)
+static void n_frames_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
 	int value;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_INT)
-		return;
-
-	value = mateconf_value_get_int (entry->value);
+	value = g_settings_get_int (settings, key);
 
 	if (fish->n_frames == value)
 		return;
@@ -1196,14 +1188,11 @@ static void setup_timeout(FishApplet *fish)
 				       fish);
 }
 
-static void speed_changed_notify(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, FishApplet* fish)
+static void speed_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
 	gdouble value;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_FLOAT)
-		return;
-
-	value = mateconf_value_get_float (entry->value);
+	value = g_settings_get_double (settings, key);
 
 	if (fish->speed == value)
 		return;
@@ -1216,14 +1205,11 @@ static void speed_changed_notify(MateConfClient* client, guint cnxn_id, MateConf
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->speed_spin), fish->speed);
 }
 
-static void rotate_changed_notify(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, FishApplet* fish)
+static void rotate_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
 	gboolean value;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-		return;
-
-	value = mateconf_value_get_bool (entry->value);
+	value = g_settings_get_boolean (settings, key);
 
 	if (fish->rotate == value)
 		return;
@@ -1239,14 +1225,11 @@ static void rotate_changed_notify(MateConfClient* client, guint cnxn_id, MateCon
 			GTK_TOGGLE_BUTTON (fish->rotate_toggle), fish->rotate);
 }
 
-static void fish_disable_commande_line_notify(MateConfClient* client, guint cnxn_id, MateConfEntry* entry, FishApplet* fish)
+static void fish_disable_commande_line_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
 	gboolean locked_down;
 
-	if (!entry->value || entry->value->type != MATECONF_VALUE_BOOL)
-		return;
-
-	locked_down = !mateconf_value_get_bool (entry->value);
+	locked_down = !g_settings_get_boolean (settings, key);
 
 	if (fish->command_label != NULL)
 		gtk_widget_set_sensitive (fish->command_label, locked_down);
@@ -1254,61 +1237,41 @@ static void fish_disable_commande_line_notify(MateConfClient* client, guint cnxn
 		gtk_widget_set_sensitive (fish->command_entry, locked_down);
 }
 
-static void setup_mateconf(FishApplet* fish)
+static void setup_gsettings(FishApplet* fish)
 {
 	MatePanelApplet *applet = (MatePanelApplet *) fish;
-	char        *key;
-	int          i = 0;
 
-	key = mate_panel_applet_mateconf_get_full_key (applet, "name");
-	fish->listeners [i++] = mateconf_client_notify_add (
-					fish->client, key,
-					(MateConfClientNotifyFunc) name_changed_notify,
-					fish, NULL, NULL);
-	g_free (key);
+	fish->settings = mate_panel_applet_settings_new (applet, FISH_SCHEMA);
+	fish->lockdown_settings = g_settings_new (LOCKDOWN_SCHEMA);
 
-	key = mate_panel_applet_mateconf_get_full_key (applet, "image");
-	fish->listeners [i++] = mateconf_client_notify_add (
-					fish->client, key,
-					(MateConfClientNotifyFunc) image_changed_notify,
-					fish, NULL, NULL);
-	g_free (key);
-
-	key = mate_panel_applet_mateconf_get_full_key (applet, "command");
-	fish->listeners [i++] = mateconf_client_notify_add (
-					fish->client, key,
-					(MateConfClientNotifyFunc) command_changed_notify,
-					fish, NULL, NULL);
-	g_free (key);
-
-	key = mate_panel_applet_mateconf_get_full_key (applet, "frames");
-	fish->listeners [i++] = mateconf_client_notify_add (
-					fish->client, key,
-					(MateConfClientNotifyFunc) n_frames_changed_notify,
-					fish, NULL, NULL);
-	g_free (key);
-
-	key = mate_panel_applet_mateconf_get_full_key (applet, "speed");
-	fish->listeners [i++] = mateconf_client_notify_add (
-					fish->client, key,
-					(MateConfClientNotifyFunc) speed_changed_notify,
-					fish, NULL, NULL);
-	g_free (key);
-
-	key = mate_panel_applet_mateconf_get_full_key (applet, "rotate");
-	fish->listeners [i++] = mateconf_client_notify_add (
-					fish->client, key,
-					(MateConfClientNotifyFunc) rotate_changed_notify,
-					fish, NULL, NULL);
-	g_free (key);
-
-	fish->listeners [i++] = mateconf_client_notify_add (
-					fish->client,
-					LOCKDOWN_COMMANDLINE_KEY,
-					(MateConfClientNotifyFunc) fish_disable_commande_line_notify,
-					fish, NULL, NULL);
-
-	g_assert (i == N_FISH_LISTENERS);
+	g_signal_connect (fish->settings,
+					  "changed::" FISH_NAME_KEY,
+					  G_CALLBACK (name_changed_notify),
+					  fish);
+	g_signal_connect (fish->settings,
+					  "changed::" FISH_IMAGE_KEY,
+					  G_CALLBACK (image_changed_notify),
+					  fish);
+	g_signal_connect (fish->settings,
+					  "changed::" FISH_COMMAND_KEY,
+					  G_CALLBACK (command_changed_notify),
+					  fish);
+	g_signal_connect (fish->settings,
+					  "changed::" FISH_FRAMES_KEY,
+					  G_CALLBACK (n_frames_changed_notify),
+					  fish);
+	g_signal_connect (fish->settings,
+					  "changed::" FISH_SPEED_KEY,
+					  G_CALLBACK (speed_changed_notify),
+					  fish);
+	g_signal_connect (fish->settings,
+					  "changed::" FISH_ROTATE_KEY,
+					  G_CALLBACK (rotate_changed_notify),
+					  fish);
+	g_signal_connect (fish->lockdown_settings,
+					  "changed::" LOCKDOWN_DISABLE_COMMAND_LINE_KEY,
+					  G_CALLBACK (fish_disable_commande_line_notify),
+					  fish);
 }
 
 static gboolean load_fish_image(FishApplet* fish)
@@ -1710,100 +1673,38 @@ static const GtkActionEntry fish_menu_verbs[] = {
 	  G_CALLBACK (display_about_dialog) }
 };
 
-static void fish_migrate_to_210(FishApplet* fish)
-{
-	char *new_image;
-
-	g_assert (fish->image);
-
-	if (!strncmp (fish->image, "fish/", 5)) {
-		new_image = g_strdup (fish->image + 5);
-		g_free (fish->image);
-		fish->image = new_image;
-		mate_panel_applet_mateconf_set_string (MATE_PANEL_APPLET (fish), "image",
-					       fish->image, NULL);
-	}
-}
-
 static gboolean fish_applet_fill(FishApplet* fish)
 {
 	MatePanelApplet* applet = (MatePanelApplet*) fish;
 	GtkActionGroup* action_group;
 	gchar* ui_path;
-	GError* error = NULL;
 
 	fish->orientation = mate_panel_applet_get_orient (applet);
 
-	mate_panel_applet_add_preferences(applet, "/schemas/apps/fish_applet/prefs", NULL);
+	setup_gsettings (fish);
 
-	setup_mateconf(fish);
-
-	fish->name = mate_panel_applet_mateconf_get_string(applet, "name", &error);
-
-	if (error)
-	{
-		g_warning ("Error getting 'name' preference: %s", error->message);
-		g_error_free (error);
-		error = NULL;
-	}
+	fish->name = g_settings_get_string (fish->settings, FISH_NAME_KEY);
 
 	if (!fish->name)
 	{
 		fish->name = g_strdup ("Wanda"); /* Fallback */
 	}
 
-	fish->image = mate_panel_applet_mateconf_get_string (applet, "image", &error);
-
-	if (error) {
-		g_warning ("Error getting 'image' preference: %s", error->message);
-		g_error_free (error);
-		error = NULL;
-	}
+	fish->image = g_settings_get_string (fish->settings, FISH_IMAGE_KEY);
 
 	if (!fish->image)
 		fish->image = g_strdup ("fishanim.png"); /* Fallback */
 
-	fish_migrate_to_210 (fish);
+	fish->command = g_settings_get_string (fish->settings, FISH_COMMAND_KEY);
 
-	fish->command = mate_panel_applet_mateconf_get_string (applet, "command", &error);
+	fish->n_frames = g_settings_get_int (fish->settings, FISH_FRAMES_KEY);
 
-	if (error) {
-		g_warning ("Error getting 'command' preference: %s", error->message);
-		g_error_free (error);
-		error = NULL;
-	}
-
-	fish->n_frames = mate_panel_applet_mateconf_get_int (applet, "frames", &error);
-
-	if (error) {
-		g_warning ("Error getting 'frames' preference: %s", error->message);
-		g_error_free (error);
-		error = NULL;
-
-		fish->n_frames = 3; /* Fallback */
-	}
 	if (fish->n_frames <= 0)
 		fish->n_frames = 1;
 
-	fish->speed = mate_panel_applet_mateconf_get_float (applet, "speed", &error);
+	fish->speed = g_settings_get_double (fish->settings, FISH_SPEED_KEY);
 
-	if (error) {
-		g_warning ("Error getting 'speed' preference: %s", error->message);
-		g_error_free (error);
-		error = NULL;
-
-		fish->speed = 1.0; /* Fallback */
-	}
-
-	fish->rotate = mate_panel_applet_mateconf_get_bool (applet, "rotate", &error);
-
-	if (error) {
-		g_warning ("Error getting 'rotate' preference: %s", error->message);
-		g_error_free (error);
-		error = NULL;
-
-		fish->rotate = FALSE; /* Fallback */
-	}
+	fish->rotate = g_settings_get_boolean (fish->settings, FISH_ROTATE_KEY);
 
 	action_group = gtk_action_group_new ("Fish Applet Actions");
 	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
@@ -1847,7 +1748,6 @@ static gboolean fishy_factory(MatePanelApplet* applet, const char* iid, gpointer
 static void fish_applet_destroy(GtkObject* object)
 {
 	FishApplet* fish = (FishApplet*) object;
-	int i;
 
 	if (fish->timeout)
 	{
@@ -1856,15 +1756,13 @@ static void fish_applet_destroy(GtkObject* object)
 
 	fish->timeout = 0;
 
-	for (i = 0; i < N_FISH_LISTENERS; i++)
-	{
-		if (fish->client && fish->listeners [i] != 0)
-		{
-			mateconf_client_notify_remove(fish->client, fish->listeners [i]);
-		}
+	if (fish->settings)
+		g_object_unref (fish->settings);
+	fish->settings = NULL;
 
-		fish->listeners [i] = 0;
-	}
+	if (fish->lockdown_settings)
+		g_object_unref (fish->lockdown_settings);
+	fish->lockdown_settings = NULL;
 
 	if (fish->name)
 		g_free (fish->name);
@@ -1877,10 +1775,6 @@ static void fish_applet_destroy(GtkObject* object)
 	if (fish->command)
 		g_free (fish->command);
 	fish->command = NULL;
-
-	if (fish->client)
-		g_object_unref (fish->client);
-	fish->client = NULL;
 
 	if (fish->pixmap)
 		g_object_unref (fish->pixmap);
@@ -1909,10 +1803,6 @@ static void fish_applet_destroy(GtkObject* object)
 
 static void fish_applet_instance_init(FishApplet* fish, FishAppletClass* klass)
 {
-	int i;
-
-	fish->client = mateconf_client_get_default();
-
 	fish->name     = NULL;
 	fish->image    = NULL;
 	fish->command  = NULL;
@@ -1957,9 +1847,6 @@ static void fish_applet_instance_init(FishApplet* fish, FishAppletClass* klass)
 
 	fish->source_id  = 0;
 	fish->io_channel = NULL;
-
-	for (i = 0; i < N_FISH_LISTENERS; i++)
-		fish->listeners [i] = 0;
 
 	fish->april_fools = FALSE;
 
