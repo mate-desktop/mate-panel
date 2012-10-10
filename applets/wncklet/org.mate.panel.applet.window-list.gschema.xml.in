@@ -1,0 +1,24 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+  <enum id="org.mate.panel.applet.window-list.GroupingType">
+    <value nick="never" value="0"/>
+    <value nick="auto" value="1"/>
+    <value nick="always" value="2"/>
+  </enum>
+  <schema id="org.mate.panel.applet.window-list">
+    <key name="display-all-workspaces" type="b">
+      <default>false</default>
+      <summary>Show windows from all workspaces</summary>
+      <description>If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace.</description>
+    </key>
+    <key name="group-windows" enum="org.mate.panel.applet.window-list.GroupingType">
+      <default>'never'</default>
+      <summary>When to group windows</summary>
+      <description>Decides when to group windows from the same application on the window list. Possible values are "never", "auto" and "always".</description>
+    </key>
+    <key name="move-unminimized-windows" type="b">
+      <default>true</default>
+      <summary>Move windows to current workspace when unminimized</summary>
+      <description>If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window.</description>
+    </key>
+  </schema>
+</schemalist>
