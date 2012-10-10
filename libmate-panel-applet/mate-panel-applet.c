@@ -37,8 +37,6 @@
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
-#include <mateconf/mateconf.h>
-#include <mateconf/mateconf-client.h>
 #include <X11/Xatom.h>
 
 #include "mate-panel-applet.h"
@@ -51,14 +49,13 @@
 struct _MatePanelAppletPrivate {
 	GtkWidget         *plug;
 	GtkWidget         *applet;
-	MateConfClient       *client;
 	GDBusConnection   *connection;
 
 	char              *id;
 	GClosure          *closure;
 	char              *object_path;
 	guint              object_id;
-	char              *prefs_key;
+	char              *prefs_path;
 
 	GtkUIManager      *ui_manager;
 	GtkActionGroup    *applet_action_group;
@@ -98,7 +95,7 @@ enum {
 	PROP_ID,
 	PROP_CLOSURE,
 	PROP_CONNECTION,
-	PROP_PREFS_KEY,
+	PROP_PREFS_PATH,
 	PROP_ORIENT,
 	PROP_SIZE,
 	PROP_BACKGROUND,
@@ -152,179 +149,33 @@ G_DEFINE_TYPE (MatePanelApplet, mate_panel_applet, GTK_TYPE_EVENT_BOX)
 #define MATE_PANEL_APPLET_INTERFACE   "org.mate.panel.applet.Applet"
 #define MATE_PANEL_APPLET_OBJECT_PATH "/org/mate/panel/applet/%s/%d"
 
-static void
-mate_panel_applet_associate_schemas_in_dir (MateConfClient  *client,
-				       const gchar  *prefs_key,
-				       const gchar  *schema_dir,
-				       GError      **error)
-{
-	GSList *list, *l;
-
-	list = mateconf_client_all_entries (client, schema_dir, error);
-
-	if (*error != NULL)
-		return;
-
-	for (l = list; l; l = l->next) {
-		MateConfEntry  *entry = l->data;
-		const gchar *schema_key;
-		MateConfEntry  *applet_entry;
-		const gchar *applet_schema_key;
-		gchar       *key;
-		gchar       *tmp;
-
-		schema_key = mateconf_entry_get_key (entry);
-		tmp = g_path_get_basename (schema_key);
-
-		if (strchr (tmp, '-'))
-			g_warning ("Applet key '%s' contains a hyphen. Please "
-				   "use underscores in mateconf keys\n", tmp);
-
-		key = g_strdup_printf ("%s/%s", prefs_key, tmp);
-		g_free (tmp);
-
-		/* Associating a schema is potentially expensive, so let's try
-		 * to avoid this by doing it only when needed. So we check if
-		 * the key is already correctly associated. */
-
-		applet_entry = mateconf_client_get_entry (client, key,
-						       NULL, TRUE, NULL);
-		if (applet_entry)
-			applet_schema_key = mateconf_entry_get_schema_name (applet_entry);
-		else
-			applet_schema_key = NULL;
-
-		if (g_strcmp0 (schema_key, applet_schema_key) != 0) {
-			mateconf_engine_associate_schema (client->engine,
-						       key, schema_key, error);
-
-			if (applet_entry == NULL ||
-			    mateconf_entry_get_value (applet_entry) == NULL ||
-			    mateconf_entry_get_is_default (applet_entry)) {
-				/* unset the key: mateconf_client_get_entry()
-				 * brought an invalid entry in the client
-				 * cache, and we want to fix this */
-				mateconf_client_unset (client, key, NULL);
-			}
-		}
-
-		g_free (key);
-
-		if (applet_entry)
-			mateconf_entry_unref (applet_entry);
-		mateconf_entry_unref (entry);
-
-		if (*error) {
-			g_slist_free (list);
-			return;
-		}
-	}
-
-	g_slist_free (list);
-
-	list = mateconf_client_all_dirs (client, schema_dir, error);
-
-	for (l = list; l; l = l->next) {
-		gchar *subdir = l->data;
-		gchar *prefs_subdir;
-		gchar *schema_subdir;
-		gchar *tmp;
-
-		tmp = g_path_get_basename (subdir);
-
-		prefs_subdir  = g_strdup_printf ("%s/%s", prefs_key, tmp);
-		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, tmp);
-
-		mate_panel_applet_associate_schemas_in_dir (client,
-						       prefs_subdir,
-						       schema_subdir,
-						       error);
-
-		g_free (prefs_subdir);
-		g_free (schema_subdir);
-		g_free (subdir);
-		g_free (tmp);
-
-		if (*error) {
-			g_slist_free (list);
-			return;
-		}
-	}
-
-	g_slist_free (list);
-}
-
-void
-mate_panel_applet_add_preferences (MatePanelApplet  *applet,
-			      const gchar  *schema_dir,
-			      GError      **opt_error)
-{
-	GError **error = NULL;
-	GError  *our_error = NULL;
-
-	g_return_if_fail (PANEL_IS_APPLET (applet));
-	g_return_if_fail (schema_dir != NULL);
-
-	if (!applet->priv->prefs_key)
-		return;
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
-
-	mate_panel_applet_associate_schemas_in_dir (applet->priv->client,
-					       applet->priv->prefs_key,
-					       schema_dir,
-					       error);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": failed to add preferences from '%s' : '%s'",
-			   schema_dir, our_error->message);
-		g_error_free (our_error);
-	}
-}
-
 char *
-mate_panel_applet_get_preferences_key (MatePanelApplet *applet)
+mate_panel_applet_get_preferences_path (MatePanelApplet *applet)
 {
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
-	if (!applet->priv->prefs_key)
+	if (!applet->priv->prefs_path)
 		return NULL;
 
-	return g_strdup (applet->priv->prefs_key);
+	return g_strdup (applet->priv->prefs_path);
 }
 
 static void
-mate_panel_applet_set_preferences_key (MatePanelApplet *applet,
-				  const char  *prefs_key)
+mate_panel_applet_set_preferences_path (MatePanelApplet *applet,
+				  const char  *prefs_path)
 {
-	if (applet->priv->prefs_key == prefs_key)
+	if (applet->priv->prefs_path == prefs_path)
 		return;
 
-	if (g_strcmp0 (applet->priv->prefs_key, prefs_key) == 0)
+	if (g_strcmp0 (applet->priv->prefs_path, prefs_path) == 0)
 		return;
 
-	if (applet->priv->prefs_key) {
-		mateconf_client_remove_dir (applet->priv->client,
-					 applet->priv->prefs_key,
-					 NULL);
+	if (prefs_path) {
+		applet->priv->prefs_path = g_strdup (prefs_path);
 
-		g_free (applet->priv->prefs_key);
-		applet->priv->prefs_key = NULL;
 	}
 
-	if (prefs_key) {
-		applet->priv->prefs_key = g_strdup (prefs_key);
-
-		mateconf_client_add_dir (applet->priv->client,
-				      applet->priv->prefs_key,
-				      MATECONF_CLIENT_PRELOAD_RECURSIVE,
-				      NULL);
-	}
-
-	g_object_notify (G_OBJECT (applet), "prefs-key");
+	g_object_notify (G_OBJECT (applet), "prefs-path");
 }
 
 MatePanelAppletFlags
@@ -878,11 +729,7 @@ mate_panel_applet_finalize (GObject *object)
 		applet->priv->object_path = NULL;
 	}
 
-	mate_panel_applet_set_preferences_key (applet, NULL);
-
-	if (applet->priv->client)
-		g_object_unref (applet->priv->client);
-	applet->priv->client = NULL;
+	mate_panel_applet_set_preferences_path (applet, NULL);
 
 	if (applet->priv->applet_action_group) {
 		g_object_unref (applet->priv->applet_action_group);
@@ -900,7 +747,7 @@ mate_panel_applet_finalize (GObject *object)
 	}
 
 	g_free (applet->priv->size_hints);
-	g_free (applet->priv->prefs_key);
+	g_free (applet->priv->prefs_path);
 	g_free (applet->priv->background);
 	g_free (applet->priv->id);
 
@@ -1650,8 +1497,8 @@ mate_panel_applet_get_property (GObject    *object,
 	case PROP_CONNECTION:
 		g_value_set_object (value, applet->priv->connection);
 		break;
-	case PROP_PREFS_KEY:
-		g_value_set_string (value, applet->priv->prefs_key);
+	case PROP_PREFS_PATH:
+		g_value_set_string (value, applet->priv->prefs_path);
 		break;
 	case PROP_ORIENT:
 		g_value_set_uint (value, applet->priv->orient);
@@ -1710,8 +1557,8 @@ mate_panel_applet_set_property (GObject      *object,
 	case PROP_CONNECTION:
 		applet->priv->connection = g_value_dup_object (value);
 		break;
-	case PROP_PREFS_KEY:
-		mate_panel_applet_set_preferences_key (applet, g_value_get_string (value));
+	case PROP_PREFS_PATH:
+		mate_panel_applet_set_preferences_path (applet, g_value_get_string (value));
 		break;
 	case PROP_ORIENT:
 		mate_panel_applet_set_orient (applet, g_value_get_uint (value));
@@ -1811,8 +1658,6 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	applet->priv->orient = MATE_PANEL_APPLET_ORIENT_UP;
 	applet->priv->size   = 24;
 
-	applet->priv->client = mateconf_client_get_default ();
-
 	applet->priv->panel_action_group = gtk_action_group_new ("PanelActions");
 	gtk_action_group_set_translation_domain (applet->priv->panel_action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions (applet->priv->panel_action_group,
@@ -1909,10 +1754,10 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 							      G_PARAM_CONSTRUCT_ONLY |
 							      G_PARAM_READWRITE));
 	g_object_class_install_property (gobject_class,
-					 PROP_PREFS_KEY,
-					 g_param_spec_string ("prefs-key",
-							      "PrefsKey",
-							      "MateConf Preferences Key",
+					 PROP_PREFS_PATH,
+					 g_param_spec_string ("prefs-path",
+							      "PrefsPath",
+							      "GSettings Preferences Path",
 							      NULL,
 							      G_PARAM_READWRITE));
 	g_object_class_install_property (gobject_class,
@@ -2064,9 +1909,9 @@ get_property_cb (GDBusConnection *connection,
 	MatePanelApplet *applet = MATE_PANEL_APPLET (user_data);
 	GVariant    *retval = NULL;
 
-	if (g_strcmp0 (property_name, "PrefsKey") == 0) {
-		retval = g_variant_new_string (applet->priv->prefs_key ?
-					       applet->priv->prefs_key : "");
+	if (g_strcmp0 (property_name, "PrefsPath") == 0) {
+		retval = g_variant_new_string (applet->priv->prefs_path ?
+					       applet->priv->prefs_path : "");
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		retval = g_variant_new_uint32 (applet->priv->orient);
 	} else if (g_strcmp0 (property_name, "Size") == 0) {
@@ -2107,8 +1952,8 @@ set_property_cb (GDBusConnection *connection,
 {
 	MatePanelApplet *applet = MATE_PANEL_APPLET (user_data);
 
-	if (g_strcmp0 (property_name, "PrefsKey") == 0) {
-		mate_panel_applet_set_preferences_key (applet, g_variant_get_string (value, NULL));
+	if (g_strcmp0 (property_name, "PrefsPath") == 0) {
+		mate_panel_applet_set_preferences_path (applet, g_variant_get_string (value, NULL));
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		mate_panel_applet_set_orient (applet, g_variant_get_uint32 (value));
 	} else if (g_strcmp0 (property_name, "Size") == 0) {
@@ -2139,7 +1984,7 @@ static const gchar introspection_xml[] =
 	      "<arg name='button' type='u' direction='in'/>"
 	      "<arg name='time' type='u' direction='in'/>"
 	    "</method>"
-	    "<property name='PrefsKey' type='s' access='readwrite'/>"
+	    "<property name='PrefsPath' type='s' access='readwrite'/>"
 	    "<property name='Orient' type='u' access='readwrite' />"
 	    "<property name='Size' type='u' access='readwrite'/>"
 	    "<property name='Background' type='s' access='readwrite'/>"

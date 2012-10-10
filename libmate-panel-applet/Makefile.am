@@ -1,4 +1,4 @@
-lib_LTLIBRARIES = libmate-panel-applet-3.la
+lib_LTLIBRARIES = libmate-panel-applet-4.la
 noinst_PROGRAMS = test-dbus-applet
 
 AM_CPPFLAGS =							\
@@ -9,34 +9,34 @@ AM_CPPFLAGS =							\
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-libmate_panel_appletincludedir = $(includedir)/mate-panel-3.0/libmate-panel-applet
+libmate_panel_appletincludedir = $(includedir)/mate-panel-4.0/libmate-panel-applet
 libmate_panel_appletinclude_HEADERS =	\
 	mate-panel-applet.h			\
-	mate-panel-applet-mateconf.h		\
+	mate-panel-applet-gsettings.h		\
 	mate-panel-applet-enums.h
 
-libmate_panel_applet_3_la_SOURCES =		\
+libmate_panel_applet_4_la_SOURCES =		\
 	$(BUILT_SOURCES)		\
 	mate-panel-applet.h			\
 	mate-panel-applet.c			\
 	mate-panel-applet-factory.h		\
 	mate-panel-applet-factory.c		\
-	mate-panel-applet-mateconf.c		\
-	mate-panel-applet-mateconf.h
+	mate-panel-applet-gsettings.c		\
+	mate-panel-applet-gsettings.h
 
-libmate_panel_applet_3_la_LIBADD  = \
+libmate_panel_applet_4_la_LIBADD  = \
 	$(LIBMATE_PANEL_APPLET_LIBS) \
 	$(X_LIBS)
 
-libmate_panel_applet_3_la_LDFLAGS = \
+libmate_panel_applet_4_la_LDFLAGS = \
 	-version-info $(LIB_MATE_PANEL_APPLET_LT_VERSION)	\
 	-no-undefined
 
 test_dbus_applet_LDADD =	\
 	$(LIBMATE_PANEL_APPLET_LIBS)	\
-	libmate-panel-applet-3.la
+	libmate-panel-applet-4.la
 
-$(libmate_panel_applet_3_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
+$(libmate_panel_applet_4_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
 
 mate-panel-applet-marshal.h: mate-panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=mate_panel_applet_marshal > $@
@@ -82,7 +82,7 @@ BUILT_SOURCES = \
 	mate-panel-applet-marshal.h
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libmatepanelapplet-3.0.pc
+pkgconfig_DATA = libmatepanelapplet-4.0.pc
 
 appletdir       = $(datadir)/mate-panel/applets
 applet_in_files = org.mate.panel.TestApplet.mate-panel-applet.in
@@ -93,8 +93,8 @@ noinst_DATA     = $(applet_in_files:.mate-panel-applet.in=.mate-panel-applet)
 EXTRA_DIST =						\
 	org.mate.panel.TestApplet.mate-panel-applet.in	\
 	mate-panel-applet-marshal.list			\
-	libmatepanelapplet-3.0.pc.in			\
-	libmatepanelapplet-3.0-uninstalled.pc.in
+	libmatepanelapplet-4.0.pc.in			\
+	libmatepanelapplet-4.0-uninstalled.pc.in
 
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
@@ -110,21 +110,21 @@ if HAVE_INTROSPECTION
 introspection_sources = 	\
 	mate-panel-applet.c		\
 	mate-panel-applet.h		\
-	mate-panel-applet-mateconf.c	\
-	mate-panel-applet-mateconf.h
+	mate-panel-applet-gsettings.c	\
+	mate-panel-applet-gsettings.h
 built_introspection_sources =	\
 	mate-panel-applet-enums.c	\
 	mate-panel-applet-enums.h
 
-MatePanelApplet-3.0.gir: libmate-panel-applet-3.la
-MatePanelApplet_3_0_gir_INCLUDES = GObject-2.0 Gtk-2.0 MateConf-2.0
-MatePanelApplet_3_0_gir_CFLAGS = $(AM_CPPFLAGS)
-MatePanelApplet_3_0_gir_LIBS = libmate-panel-applet-3.la
-MatePanelApplet_3_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
+MatePanelApplet-4.0.gir: libmate-panel-applet-4.la
+MatePanelApplet_4_0_gir_INCLUDES = GObject-2.0 Gtk-2.0 Gio-2.0
+MatePanelApplet_4_0_gir_CFLAGS = $(AM_CPPFLAGS)
+MatePanelApplet_4_0_gir_LIBS = libmate-panel-applet-4.la
+MatePanelApplet_4_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
 # When requiring gobject-introspection 0.9.5, use this:
-#MatePanelApplet_3_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libmatepanelapplet-3.0
-MatePanelApplet_3_0_gir_SCANNERFLAGS = --strip-prefix=MatePanel --pkg-export=libmatepanelapplet-3.0
-INTROSPECTION_GIRS += MatePanelApplet-3.0.gir
+#MatePanelApplet_4_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libmatepanelapplet-4.0
+MatePanelApplet_4_0_gir_SCANNERFLAGS = --strip-prefix=MatePanel --pkg-export=libmatepanelapplet-4.0
+INTROSPECTION_GIRS += MatePanelApplet-4.0.gir
 
 girdir = $(INTROSPECTION_GIRDIR)
 gir_DATA = $(INTROSPECTION_GIRS)

@@ -92,9 +92,7 @@ MatePanelAppletBackgroundType mate_panel_applet_get_background(MatePanelApplet* 
 
 void mate_panel_applet_set_background_widget(MatePanelApplet* applet, GtkWidget* widget);
 
-gchar* mate_panel_applet_get_preferences_key(MatePanelApplet* applet);
-
-void mate_panel_applet_add_preferences(MatePanelApplet* applet, const gchar* schema_dir, GError** opt_error);
+gchar* mate_panel_applet_get_preferences_path(MatePanelApplet* applet);
 
 MatePanelAppletFlags mate_panel_applet_get_flags(MatePanelApplet* applet);
 void mate_panel_applet_set_flags(MatePanelApplet* applet, MatePanelAppletFlags flags);
