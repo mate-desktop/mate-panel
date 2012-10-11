@@ -267,7 +267,7 @@ setup_options (void)
 	int                  j;
 	char                *prefs_path = NULL;
 	char                *unique_key = NULL;
-	gboolean            *unique_key_found = FALSE;
+	gboolean             unique_key_found = FALSE;
 	gchar              **dconf_paths;
 	GtkListStore        *model;
 	GtkTreeIter          iter;
