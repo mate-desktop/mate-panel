@@ -2,6 +2,7 @@ noinst_LTLIBRARIES = libpanel-util.la
 
 AM_CPPFLAGS =							\
 	$(PANEL_CFLAGS)						\
+	$(DCONF_CFLAGS)						\
 	-I.							\
 	-I$(srcdir)						\
 	-I$(top_builddir)/mate-panel/libpanel-util		\
