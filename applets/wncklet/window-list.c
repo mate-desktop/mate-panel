@@ -635,9 +635,9 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	/* Window grouping: */
 	button = get_grouping_button(tasklist, tasklist->grouping);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-	g_object_set_data(G_OBJECT(tasklist->never_group_radio), "group_value", MATEWNCK_TASKLIST_NEVER_GROUP);
-	g_object_set_data(G_OBJECT(tasklist->auto_group_radio), "group_value", MATEWNCK_TASKLIST_AUTO_GROUP);
-	g_object_set_data(G_OBJECT(tasklist->always_group_radio), "group_value", MATEWNCK_TASKLIST_ALWAYS_GROUP);
+	g_object_set_data(G_OBJECT(tasklist->never_group_radio), "group_value", GINT_TO_POINTER(MATEWNCK_TASKLIST_NEVER_GROUP));
+	g_object_set_data(G_OBJECT(tasklist->auto_group_radio), "group_value", GINT_TO_POINTER(MATEWNCK_TASKLIST_AUTO_GROUP));
+	g_object_set_data(G_OBJECT(tasklist->always_group_radio), "group_value", GINT_TO_POINTER(MATEWNCK_TASKLIST_ALWAYS_GROUP));
 
 	g_signal_connect(G_OBJECT(tasklist->never_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 	g_signal_connect(G_OBJECT(tasklist->auto_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
