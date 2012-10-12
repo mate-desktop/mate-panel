@@ -64,16 +64,14 @@ mate_panel_applet_settings_get_glist (GSettings *settings, gchar *key)
 void
 mate_panel_applet_settings_set_glist (GSettings *settings, gchar *key, GList *list)
 {
-    gchar **array;
+    GArray *array;
     GList *l;
-    gint i;
+    array = g_array_new (TRUE, TRUE, sizeof (gchar *));
     for (l = list; l; l = l->next) {
-        array[i] = g_strdup (l->data);
-        i++;
+        array = g_array_append_val (array, l->data);
     }
-    array[i] = NULL;
-    g_settings_set_strv (settings, key, (const gchar **) array);
-    g_strfreev (array);
+    g_settings_set_strv (settings, key, (const gchar **) array->data);
+    g_array_free (array, TRUE);
 }
 
 GSList*
@@ -95,14 +93,12 @@ mate_panel_applet_settings_get_gslist (GSettings *settings, gchar *key)
 void
 mate_panel_applet_settings_set_gslist (GSettings *settings, gchar *key, GSList *list)
 {
-    gchar **array;
+    GArray *array;
     GSList *l;
-    gint i;
+    array = g_array_new (TRUE, TRUE, sizeof (gchar *));
     for (l = list; l; l = l->next) {
-        array[i] = g_strdup (l->data);
-        i++;
+        array = g_array_append_val (array, l->data);
     }
-    array[i] = NULL;
-    g_settings_set_strv (settings, key, (const gchar **) array);
-    g_strfreev (array);
+    g_settings_set_strv (settings, key, (const gchar **) array->data);
+    g_array_free (array, TRUE);
 }
