@@ -8,6 +8,7 @@ libexec_SCRIPTS = mate-panel-add
 
 AM_CPPFLAGS = \
 	$(PANEL_CFLAGS) \
+	$(DCONF_CFLAGS) \
 	-I. \
 	-I$(srcdir) \
 	-I$(top_builddir)/mate-panel \
@@ -137,6 +138,7 @@ mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private.la \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
+	$(DCONF_LIBS) \
 	$(XRANDR_LIBS) \
 	$(X_LIBS) \
 	-lm
@@ -153,6 +155,7 @@ mate_desktop_item_edit_SOURCES = \
 mate_desktop_item_edit_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
+	$(DCONF_LIBS) \
 	-lX11
 
 mate_panel_test_applets_SOURCES = \
@@ -170,7 +173,8 @@ mate_panel_test_applets_CPPFLAGS = \
 mate_panel_test_applets_LDADD = \
 	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private-mini.la \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
-	$(PANEL_LIBS)
+	$(PANEL_LIBS) \
+	$(DCONF_LIBS)
 
 mate_panel_test_applets_LDFLAGS = -export-dynamic
 
