@@ -2022,5 +2022,15 @@ panel_run_dialog_present (GdkScreen *screen,
 				  G_CALLBACK (panel_run_dialog_static_dialog_destroyed),
 				  static_dialog);
 
+	gtk_window_present_with_time (GTK_WINDOW (static_dialog->run_dialog),
+				      activate_time);
+
 	g_object_unref (gui);
+}
+
+void
+panel_run_dialog_quit_on_destroy (void)
+{
+	g_signal_connect(static_dialog->run_dialog, "destroy", 
+			 G_CALLBACK(gtk_main_quit), NULL);
 }

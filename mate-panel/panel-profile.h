@@ -36,6 +36,7 @@
 
 G_BEGIN_DECLS
 
+void panel_profile_settings_load (void);
 void panel_profile_load (void);
 
 const char    *panel_profile_get_toplevel_id    (PanelToplevel     *toplevel);

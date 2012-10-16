@@ -30,6 +30,7 @@
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 #include "panel-reset.h"
+#include "panel-run-dialog.h"
 #include "xstuff.h"
 
 #include "nothing.cP"
@@ -41,6 +42,7 @@ GSList *panel_list = NULL;
 static char*    deprecated_profile;
 static gboolean replace = FALSE;
 static gboolean reset = FALSE;
+static gboolean run_dialog = FALSE;
 
 static const GOptionEntry options[] = {
   { "replace", 0, 0, G_OPTION_ARG_NONE, &replace, N_("Replace a currently running panel"), NULL },
@@ -48,6 +50,8 @@ static const GOptionEntry options[] = {
   { "profile", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING, &deprecated_profile, NULL, NULL },
   /* this feature was request in #mate irc channel */
   { "reset", 0, 0, G_OPTION_ARG_NONE, &reset, N_("Reset the panel configuration to default"), NULL },
+  /* open run dialog */
+  { "run-dialog", 0, 0, G_OPTION_ARG_NONE, &run_dialog, N_("Execute the run dialog"), NULL },
   { NULL }
 };
 
@@ -99,6 +103,21 @@ main (int argc, char **argv)
 		return 0;
 	}
 
+	/* open the run dialog and exit */
+	if (run_dialog == TRUE)
+	{
+		panel_multiscreen_init ();
+		panel_global_config_load ();
+		panel_lockdown_init ();
+		panel_profile_settings_load ();
+		panel_run_dialog_present (gdk_screen_get_default (),
+								  gtk_get_current_event_time ());
+		panel_run_dialog_quit_on_destroy ();
+		gtk_main ();
+		panel_lockdown_finalize ();
+		panel_cleanup_do ();
+		return 0;
+	}
 
 	if (!egg_get_desktop_file ()) {
 		g_set_application_name (_("Panel"));

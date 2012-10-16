@@ -1621,9 +1621,15 @@ panel_profile_ensure_toplevel_per_screen ()
 }
 
 void
-panel_profile_load (void)
+panel_profile_settings_load (void)
 {
 	profile_settings = g_settings_new ("org.mate.panel");
+}
+
+void
+panel_profile_load (void)
+{
+	panel_profile_settings_load();
 
 	panel_profile_load_list (profile_settings,
 				 PANEL_GSETTINGS_TOPLEVELS,
