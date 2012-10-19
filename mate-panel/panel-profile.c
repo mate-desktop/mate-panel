@@ -222,8 +222,8 @@ panel_profile_set_background_type (PanelToplevel       *toplevel,
 PanelBackgroundType
 panel_profile_get_background_type (PanelToplevel *toplevel)
 {
-	PanelBackgroundType background_type = PANEL_BACK_NONE;
-	g_settings_get_enum (toplevel->background_settings,
+	PanelBackgroundType background_type;
+	background_type = g_settings_get_enum (toplevel->background_settings,
 						 "type");
 	return background_type;
 }
