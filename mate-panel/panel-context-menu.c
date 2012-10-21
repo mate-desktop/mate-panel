@@ -81,6 +81,11 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 {
 	static GtkWidget *about = NULL;
 	char             *authors [] = {
+		/* MATE */
+		"Perberos <perberos@gmail.com>",
+		"Stefano Karapetsas <stefano@karapetsas.com>",
+		"Steve Zesch <stevezesch2@gmail.com>",
+		/* GNOME */
 		"Alex Larsson <alexl@redhat.com>",
 		"Anders Carlsson <andersca@gnu.org>",
 		"Arvind Samptur <arvind.samptur@wipro.com>",
