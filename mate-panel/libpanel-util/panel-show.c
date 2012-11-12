@@ -141,8 +141,8 @@ static gboolean _panel_show_handle_error(const gchar* uri, GdkScreen* screen, GE
 
 static gboolean panel_show_caja_search_uri(GdkScreen* screen, const gchar* uri, guint32 timestamp, GError** error)
 {
-	char* desktopfile;
-	GDesktopAppInfo* appinfo;
+	char* desktopfile = NULL;
+	GDesktopAppInfo* appinfo = NULL;
 	gboolean ret;
 
 	desktopfile = panel_g_lookup_in_applications_dirs("caja-folder-handler.desktop");

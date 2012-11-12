@@ -57,7 +57,7 @@ void           panel_profile_remove_from_list       (PanelGSettingsKeyType  type
 						     const char        *id);
 gboolean       panel_profile_id_lists_are_writable  (void);
 void           panel_profile_create_toplevel        (GdkScreen         *screen);
-PanelToplevel *panel_profile_load_toplevel          (char              *toplevel_id);
+PanelToplevel *panel_profile_load_toplevel          (const char        *toplevel_id);
 void           panel_profile_delete_toplevel        (PanelToplevel     *toplevel);
 char          *panel_profile_prepare_object         (PanelObjectType    object_type,
 						     PanelToplevel     *toplevel,

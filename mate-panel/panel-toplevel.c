@@ -3360,6 +3360,8 @@ panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 	screen = panel_toplevel_get_monitor_geometry (
 				toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
+        g_assert (screen != NULL);
+
 	if (!toplevel->priv->expand) {
 
 		if (toplevel->priv->x_centered)
