@@ -162,7 +162,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     existing_ids = panel_dconf_list_subdirs (dconf_path, TRUE);
 
     if (id) {
-        for (i = 0; existing_ids[i]; i) {
+        for (i = 0; existing_ids[i]; i++) {
                 if (!strcmp (existing_ids[i], id)) {
                     existing_id = TRUE;
                 }

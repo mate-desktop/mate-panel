@@ -549,7 +549,8 @@ static void group_windows_toggled(GtkToggleButton* button, TasklistData* tasklis
 {
 	if (gtk_toggle_button_get_active(button))
 	{
-		gint value = g_object_get_data(G_OBJECT(button), "group_value");
+		gint value;
+                g_object_get (G_OBJECT(button), "group_value", &value);
 		g_settings_set_enum (tasklist->settings, "group-windows", value);
 	}
 }

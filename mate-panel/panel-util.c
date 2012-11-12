@@ -654,7 +654,7 @@ panel_make_unique_desktop_uri (const char *dir,
 		p = strrchr (name, '-');
 		if (p) {
 			char *end;
-			strtol ((p + 1), &end, 10);
+			(void) strtol ((p + 1), &end, 10);
 			if (!*end)
 				*p = '\0';
 		}

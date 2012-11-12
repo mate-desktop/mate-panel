@@ -58,13 +58,10 @@ _panel_launch_handle_error (const gchar  *name,
 			    GError       *local_error,
 			    GError      **error)
 {
-	if (local_error == NULL)
-		return TRUE;
-
-	else if (g_error_matches (local_error,
-				  G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
-		g_error_free (local_error);
-		return TRUE;
+	if (g_error_matches (local_error,
+			     G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+	    g_error_free (local_error);
+	    return TRUE;
 	}
 
 	else if (error != NULL)
@@ -103,6 +100,9 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 					 &local_error);
 
 	g_object_unref (context);
+
+        if ((local_error == NULL) && (retval == TRUE))
+            return TRUE;
 
 	return _panel_launch_handle_error (g_app_info_get_name (appinfo),
 					   screen, local_error, error);
@@ -228,6 +228,9 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 	retval = gdk_spawn_on_screen (screen, NULL, argv, NULL,
 				      G_SPAWN_SEARCH_PATH,
 				      NULL, NULL, NULL, &local_error);
+
+        if (local_error == NULL && retval == TRUE)
+            return TRUE;
 
 	return _panel_launch_handle_error (fallback_exec,
 					   screen, local_error, error);
