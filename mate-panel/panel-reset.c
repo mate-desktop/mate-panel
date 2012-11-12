@@ -32,7 +32,8 @@
 #include "panel-schemas.h"
 #include <libpanel-util/panel-dconf.h>
 
-void panel_reset()
+void
+panel_reset()
 {
 	panel_dconf_recursive_reset (PANEL_GENERAL_PATH, NULL);
 	panel_dconf_recursive_reset (PANEL_TOPLEVEL_PATH, NULL);

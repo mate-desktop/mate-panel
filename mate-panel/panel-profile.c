@@ -76,7 +76,9 @@ typedef void        (*PanelProfileDestroyFunc) (const char        *id);
 static GSettings *profile_settings = NULL;
 
 static GQuark toplevel_id_quark = 0;
+#if 0
 static GQuark queued_changes_quark = 0;
+#endif
 static GQuark commit_timeout_quark = 0;
 
 static void panel_profile_object_id_list_update (gchar **objects);
@@ -848,8 +850,8 @@ void
 panel_profile_add_to_list (PanelGSettingsKeyType  type,
 						   const char        *id)
 {
-	char  *key;
-	char  *new_id;
+	char  *key = NULL;
+	char  *new_id = NULL;
 
 	new_id = id ? g_strdup (id) : panel_profile_find_new_id (type);
 
@@ -858,12 +860,13 @@ panel_profile_add_to_list (PanelGSettingsKeyType  type,
 	else if (type == PANEL_GSETTINGS_OBJECTS)
 		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
 
-	panel_gsettings_append_strv (profile_settings,
+        if ((key != NULL) && (new_id != NULL)) {
+	        panel_gsettings_append_strv (profile_settings,
 								 key,
 								 new_id);
-
-	g_free (key);
-	g_free (new_id);
+	        g_free (key);
+	        g_free (new_id);
+        }
 }
 
 void
@@ -1069,7 +1072,7 @@ get_toplevel_screen (char *toplevel_path)
 }
 
 PanelToplevel *
-panel_profile_load_toplevel (char *toplevel_id)
+panel_profile_load_toplevel (const char *toplevel_id)
 {
 	PanelToplevel *toplevel;
 	GdkScreen     *screen;
@@ -1236,7 +1239,6 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 				      gboolean         right_stick)
 {
 	PanelGSettingsKeyType  key_type;
-	const char        *key;
 	char              *id;
 	char              *settings_path;
 	GSettings         *settings;
@@ -1329,7 +1331,7 @@ static void
 panel_profile_delete_dir (PanelGSettingsKeyType  type,
 						  const char            *id)
 {
-	gchar *dir;
+	gchar *dir = NULL;
 
 	switch (type) {
 		case PANEL_GSETTINGS_TOPLEVELS:
@@ -1353,9 +1355,10 @@ panel_profile_delete_dir (PanelGSettingsKeyType  type,
 		g_free (subdir);
 	}
 
-	panel_dconf_recursive_reset (dir, NULL);
-
-	g_free (dir);
+        if (dir != NULL) {
+	        panel_dconf_recursive_reset (dir, NULL);
+	        g_free (dir);
+        }
 }
 
 static gboolean
@@ -1476,7 +1479,7 @@ panel_profile_toplevel_id_list_notify (GSettings *settings,
 
 	toplevel_ids = panel_gsettings_strv_to_gslist (toplevel_ids_strv);
 	toplevel_ids = panel_g_slist_make_unique (toplevel_ids,
-						  g_strcmp0,
+						  (GCompareFunc)g_strcmp0,
 						  FALSE);
 	g_strfreev (toplevel_ids_strv);
 
@@ -1516,7 +1519,7 @@ panel_profile_object_id_list_update (gchar **objects)
 
 	object_ids = panel_gsettings_strv_to_gslist (objects);
 	object_ids = panel_g_slist_make_unique (object_ids,
-						g_strcmp0,
+						(GCompareFunc)g_strcmp0,
 						FALSE);
 
 	existing_applets = mate_panel_applet_list_applets ();
@@ -1562,7 +1565,7 @@ panel_profile_load_list (GSettings              *settings,
 						 GCallback               notify_handler)
 {
 
-	gchar  *key;
+	gchar  *key = NULL;
 	gchar  *changed_signal;
 	gchar **list;
 	gint    i;
@@ -1572,6 +1575,7 @@ panel_profile_load_list (GSettings              *settings,
 	else if (type == PANEL_GSETTINGS_OBJECTS)
 		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
 
+        g_assert (key != NULL);
 	changed_signal = g_strdup_printf ("changed::%s", key);
 
 	g_signal_connect (settings, changed_signal, G_CALLBACK (notify_handler), NULL); 
@@ -1633,11 +1637,11 @@ panel_profile_load (void)
 
 	panel_profile_load_list (profile_settings,
 				 PANEL_GSETTINGS_TOPLEVELS,
-				 panel_profile_load_and_show_toplevel_startup,
+				 (PanelProfileLoadFunc)panel_profile_load_and_show_toplevel_startup,
 				 G_CALLBACK (panel_profile_toplevel_id_list_notify));
 	panel_profile_load_list (profile_settings,
 				 PANEL_GSETTINGS_OBJECTS,
-				 panel_profile_load_object,
+				 (PanelProfileLoadFunc)panel_profile_load_object,
 				 G_CALLBACK (panel_profile_object_id_list_notify));
 
 	panel_profile_ensure_toplevel_per_screen ();
