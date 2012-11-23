@@ -1083,7 +1083,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	add_menu_separator (places_menu);
 
 	panel_menu_items_append_from_desktop (places_menu,
-					      "network-scheme.desktop",
+					      "mate-network-scheme.desktop",
 					      NULL,
                                               TRUE);
 	panel_place_menu_item_append_remote_gio (place_item, places_menu);
