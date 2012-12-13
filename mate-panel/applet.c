@@ -1300,6 +1300,7 @@ mate_panel_applet_register (GtkWidget       *applet,
 					  locked_changed,
 					  G_CALLBACK (mate_panel_applet_locked_change_notify),
 					  G_OBJECT (applet));
+	g_free (locked_changed);
 
 	if (type == PANEL_OBJECT_DRAWER) {
 		Drawer *drawer = data;
