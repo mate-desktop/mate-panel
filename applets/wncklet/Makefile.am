@@ -90,11 +90,15 @@ gsettings_SCHEMAS = \
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
+convertdir = $(datadir)/MateConf/gsettings
+convert_DATA = wncklet-applet.convert
+
 EXTRA_DIST = \
 	org.mate.panel.Wncklet.mate-panel-applet.in.in \
 	$(service_in_files) \
 	$(xmlui_DATA) \
 	$(gsettings_SCHEMAS) \
+	$(convert_DATA) \
 	$(ui_DATA)
 
 CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA)
