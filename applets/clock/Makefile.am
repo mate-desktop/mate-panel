@@ -159,6 +159,9 @@ gsettings_SCHEMAS = org.mate.panel.applet.clock.gschema.xml
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
+convertdir = $(datadir)/MateConf/gsettings
+convert_DATA = clock-applet.convert
+
 EXTRA_DIST =						\
 	org.mate.panel.ClockApplet.mate-panel-applet.in.in	\
 	$(gsettings_SCHEMAS)				\
@@ -171,6 +174,7 @@ CLEANFILES =			\
 	$(BUILT_SOURCES)	\
 	$(applet_DATA) 		\
 	$(applet_DATA).in	\
+	$(convert_DATA)		\
 	$(service_DATA)		\
 	$(polkit_DATA)		\
 	$(dbus_services_DATA)
