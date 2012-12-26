@@ -81,6 +81,9 @@ gsettings_SCHEMAS = org.mate.panel.applet.fish.gschema.xml
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
+convertdir = $(datadir)/MateConf/gsettings
+convert_DATA = fish-applet.convert
+
 EXTRA_DIST = \
 	wanda.svg \
 	$(fishbitmaps_DATA) \
@@ -88,6 +91,7 @@ EXTRA_DIST = \
 	$(service_in_files) \
 	$(ui_DATA) \
 	$(xmlui_DATA) \
+	$(convert_DATA) \
 	$(gsettings_SCHEMAS)
 
 CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA)

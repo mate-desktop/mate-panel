@@ -12,3 +12,8 @@ gsettings_SCHEMAS = \
 	org.mate.panel.toplevel.gschema.xml
 
 @GSETTINGS_RULES@
+
+convertdir = $(datadir)/MateConf/gsettings
+convert_DATA = mate-panel.convert
+
+EXTRA_DIST = $(convert_DATA)
