@@ -549,9 +549,9 @@ static void group_windows_toggled(GtkToggleButton* button, TasklistData* tasklis
 {
 	if (gtk_toggle_button_get_active(button))
 	{
-		gint value;
-                g_object_get (G_OBJECT(button), "group_value", &value, NULL);
-		g_settings_set_enum (tasklist->settings, "group-windows", value);
+		gchar *value;
+		value = g_object_get_data (G_OBJECT (button), "group_value");
+		g_settings_set_string (tasklist->settings, "group-windows", value);
 	}
 }
 
@@ -636,9 +636,9 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	/* Window grouping: */
 	button = get_grouping_button(tasklist, tasklist->grouping);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-	g_object_set_data(G_OBJECT(tasklist->never_group_radio), "group_value", GINT_TO_POINTER(MATEWNCK_TASKLIST_NEVER_GROUP));
-	g_object_set_data(G_OBJECT(tasklist->auto_group_radio), "group_value", GINT_TO_POINTER(MATEWNCK_TASKLIST_AUTO_GROUP));
-	g_object_set_data(G_OBJECT(tasklist->always_group_radio), "group_value", GINT_TO_POINTER(MATEWNCK_TASKLIST_ALWAYS_GROUP));
+	g_object_set_data(G_OBJECT(tasklist->never_group_radio), "group_value", "never");
+	g_object_set_data(G_OBJECT(tasklist->auto_group_radio), "group_value", "auto");
+	g_object_set_data(G_OBJECT(tasklist->always_group_radio), "group_value", "always");
 
 	g_signal_connect(G_OBJECT(tasklist->never_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 	g_signal_connect(G_OBJECT(tasklist->auto_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
