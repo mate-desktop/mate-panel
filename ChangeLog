@@ -1,3 +1,746 @@
+commit c4e3fd2b67eaf5c76833579424be32bf7ab625fc
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sun Jan 20 19:31:18 2013 +0100
+
+    clock: Fix mateweather units
+
+ applets/clock/clock.c |   18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
+
+commit a650d5e14b2311bfb813ea34a793bc0eddd73ab4
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sat Jan 19 19:35:52 2013 +0100
+
+    wncklet: Fix window-list grouping preference
+    See https://github.com/mate-desktop/mate-panel/issues/70
+
+ applets/wncklet/window-list.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit 46a1fac8c934688032024188b0d58ace98668361
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Jan 4 12:04:14 2013 +0100
+
+    Add mateconf-gsettings-data-convert file
+    Patch by Yaakov Selkowitz <yselkowitz@users.sourceforge.net>
+
+ data/Makefile.am        |    5 +++++
+ data/mate-panel.convert |   15 +++++++++++++++
+ 2 files changed, 20 insertions(+)
+
+commit ccb01dcefdbe73d0950052ca0592f22b404dc97e
+Merge: 49678c6 f0aeb0b
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Dec 20 12:30:05 2012 -0800
+
+    Merge pull request #66 from ketheriel/master
+    
+    Fix null pointer in function
+
+commit f0aeb0b9d42789747546fc9350ea2d0c8c78f568
+Author: Nelson Marques <nmo.marques@gmail.com>
+Date:   Thu Dec 20 18:23:35 2012 +0000
+
+    Fix missing NULL pointer
+
+ applets/wncklet/window-list.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 49678c6e1d301405d43e77554d9a06ac14717f8a
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Dec 19 23:47:24 2012 +0100
+
+    Bump version to 1.5.3
+
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0cb02b751bc95014936837441006bbc098d3730c
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Dec 18 12:44:02 2012 +0100
+
+    Fix crash on deleting panels
+    https://github.com/mate-desktop/mate-panel/issues/65
+
+ mate-panel/panel-profile.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit c2ec565b1f6dd95520537482d3d0fd1a4b0e5323
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Dec 13 14:39:55 2012 +0100
+
+    mate-panel: Add a missing g_free
+
+ mate-panel/applet.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+commit 6c54e8633ccb398d669c20f988dbfc40af4819c1
+Merge: 5237036 0ed6744
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Dec 11 13:20:10 2012 -0800
+
+    Merge pull request #63 from cardpuncher/patch-3
+    
+    Fix the website URL
+
+commit 0ed6744f217864f0a8201c7ca5d7ecd197e089b6
+Author: cardpuncher <mauron@vmail.me>
+Date:   Tue Dec 11 22:11:33 2012 +0100
+
+    Fix the website URL
+
+ applets/fish/fish.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5237036d40a1ad3d0236711502a7d4a18f58355e
+Merge: 6df88f1 08f5ba5
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Nov 23 03:08:02 2012 -0800
+
+    Merge pull request #56 from bhull2010/master
+    
+    Fix for displaying the Network icon in the places menu
+
+commit 08f5ba581298fa38d633cdd8b260dd5ef5840fcc
+Author: Brent Hull <bhull2010@live.com>
+Date:   Thu Nov 22 21:46:13 2012 -0500
+
+    Fix network places menu item filename
+
+ mate-panel/panel-menu-items.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6df88f1083d89a62b389d2dbb2f95d2e54f019d6
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Sun Nov 18 20:42:35 2012 -0500
+
+    fixed incorrect fsf addresses.
+
+ applets/clock/calendar-window.c                    |    4 ++--
+ applets/clock/calendar-window.h                    |    4 ++--
+ applets/clock/clock-sunpos.c                       |    4 ++--
+ applets/clock/clock-utils.c                        |    4 ++--
+ applets/clock/clock-utils.h                        |    4 ++--
+ applets/clock/clock.c                              |    4 ++--
+ applets/clock/clock.h                              |    4 ++--
+ applets/clock/set-timezone.c                       |    2 +-
+ applets/clock/set-timezone.h                       |    2 +-
+ applets/clock/system-timezone.c                    |    2 +-
+ applets/clock/system-timezone.h                    |    2 +-
+ applets/clock/test-system-timezone.c               |    2 +-
+ applets/fish/fish.c                                |    4 ++--
+ applets/notification_area/fixedtip.c               |    4 ++--
+ applets/notification_area/fixedtip.h               |    4 ++--
+ applets/notification_area/main.c                   |    4 ++--
+ applets/notification_area/na-tray-child.c          |    4 ++--
+ applets/notification_area/na-tray-child.h          |    4 ++--
+ applets/notification_area/na-tray-manager.c        |    4 ++--
+ applets/notification_area/na-tray-manager.h        |    4 ++--
+ applets/notification_area/na-tray.c                |    4 ++--
+ applets/notification_area/na-tray.h                |    4 ++--
+ applets/notification_area/testtray.c               |    4 ++--
+ applets/wncklet/showdesktop.c                      |    4 ++--
+ applets/wncklet/showdesktop.h                      |    4 ++--
+ applets/wncklet/window-menu.c                      |    4 ++--
+ applets/wncklet/window-menu.h                      |    4 ++--
+ applets/wncklet/wncklet.c                          |    4 ++--
+ applets/wncklet/wncklet.h                          |    4 ++--
+ libmate-panel-applet/mate-panel-applet-factory.c   |    4 ++--
+ libmate-panel-applet/mate-panel-applet-factory.h   |    4 ++--
+ libmate-panel-applet/mate-panel-applet-gsettings.c |    4 ++--
+ libmate-panel-applet/mate-panel-applet-gsettings.h |    4 ++--
+ libmate-panel-applet/mate-panel-applet.c           |    4 ++--
+ libmate-panel-applet/mate-panel-applet.h           |    4 ++--
+ mate-panel/libegg/eggdesktopfile.c                 |    4 ++--
+ mate-panel/libegg/eggdesktopfile.h                 |    4 ++--
+ mate-panel/libegg/eggsmclient-private.h            |    4 ++--
+ mate-panel/libegg/eggsmclient-xsmp.c               |    4 ++--
+ mate-panel/libegg/eggsmclient.c                    |    4 ++--
+ mate-panel/libegg/eggsmclient.h                    |    4 ++--
+ .../mate-panel-applet-container.c                  |    4 ++--
+ .../mate-panel-applet-container.h                  |    4 ++--
+ .../mate-panel-applet-frame-dbus.c                 |    4 ++--
+ .../mate-panel-applet-frame-dbus.h                 |    4 ++--
+ .../mate-panel-applets-manager-dbus.c              |    4 ++--
+ .../mate-panel-applets-manager-dbus.h              |    4 ++--
+ mate-panel/libpanel-util/panel-cleanup.c           |    4 ++--
+ mate-panel/libpanel-util/panel-cleanup.h           |    4 ++--
+ mate-panel/libpanel-util/panel-dbus-service.c      |    4 ++--
+ mate-panel/libpanel-util/panel-dbus-service.h      |    4 ++--
+ mate-panel/libpanel-util/panel-dconf.c             |    4 ++--
+ mate-panel/libpanel-util/panel-dconf.h             |    4 ++--
+ mate-panel/libpanel-util/panel-error.c             |    4 ++--
+ mate-panel/libpanel-util/panel-error.h             |    4 ++--
+ mate-panel/libpanel-util/panel-glib.c              |    4 ++--
+ mate-panel/libpanel-util/panel-glib.h              |    4 ++--
+ mate-panel/libpanel-util/panel-gtk.c               |    4 ++--
+ mate-panel/libpanel-util/panel-gtk.h               |    4 ++--
+ mate-panel/libpanel-util/panel-icon-chooser.c      |    4 ++--
+ mate-panel/libpanel-util/panel-icon-chooser.h      |    4 ++--
+ mate-panel/libpanel-util/panel-keyfile.c           |    4 ++--
+ mate-panel/libpanel-util/panel-keyfile.h           |    4 ++--
+ mate-panel/libpanel-util/panel-launch.c            |    4 ++--
+ mate-panel/libpanel-util/panel-launch.h            |    4 ++--
+ mate-panel/libpanel-util/panel-list.c              |    4 ++--
+ mate-panel/libpanel-util/panel-list.h              |    4 ++--
+ mate-panel/libpanel-util/panel-session-manager.c   |    4 ++--
+ mate-panel/libpanel-util/panel-session-manager.h   |    4 ++--
+ mate-panel/libpanel-util/panel-show.c              |    4 ++--
+ mate-panel/libpanel-util/panel-show.h              |    4 ++--
+ mate-panel/libpanel-util/panel-xdg.c               |    4 ++--
+ mate-panel/libpanel-util/panel-xdg.h               |    4 ++--
+ mate-panel/mate-panel-applet-frame.c               |    4 ++--
+ mate-panel/mate-panel-applet-info.c                |    4 ++--
+ mate-panel/mate-panel-applets-manager.c            |    4 ++--
+ mate-panel/mate-panel-applets-manager.h            |    4 ++--
+ mate-panel/menu.c                                  |    4 ++--
+ mate-panel/menu.h                                  |    4 ++--
+ mate-panel/panel-a11y.c                            |    2 +-
+ mate-panel/panel-a11y.h                            |    2 +-
+ mate-panel/panel-action-button.c                   |    4 ++--
+ mate-panel/panel-action-button.h                   |    4 ++--
+ mate-panel/panel-action-protocol.c                 |    4 ++--
+ mate-panel/panel-action-protocol.h                 |    4 ++--
+ mate-panel/panel-addto.c                           |    4 ++--
+ mate-panel/panel-addto.h                           |    4 ++--
+ mate-panel/panel-background-monitor.c              |    4 ++--
+ mate-panel/panel-background-monitor.h              |    4 ++--
+ mate-panel/panel-background.c                      |    4 ++--
+ mate-panel/panel-background.h                      |    4 ++--
+ mate-panel/panel-bindings.c                        |    4 ++--
+ mate-panel/panel-bindings.h                        |    4 ++--
+ mate-panel/panel-config-global.c                   |    4 ++--
+ mate-panel/panel-config-global.h                   |    4 ++--
+ mate-panel/panel-context-menu.c                    |    4 ++--
+ mate-panel/panel-context-menu.h                    |    4 ++--
+ mate-panel/panel-ditem-editor.c                    |    4 ++--
+ mate-panel/panel-ditem-editor.h                    |    4 ++--
+ mate-panel/panel-enums-gsettings.h                 |    4 ++--
+ mate-panel/panel-enums.h                           |    4 ++--
+ mate-panel/panel-force-quit.c                      |    4 ++--
+ mate-panel/panel-force-quit.h                      |    4 ++--
+ mate-panel/panel-frame.c                           |    4 ++--
+ mate-panel/panel-frame.h                           |    4 ++--
+ mate-panel/panel-globals.h                         |    4 ++--
+ mate-panel/panel-gsettings.c                       |    4 ++--
+ mate-panel/panel-gsettings.h                       |    4 ++--
+ mate-panel/panel-layout.c                          |    4 ++--
+ mate-panel/panel-layout.h                          |    4 ++--
+ mate-panel/panel-lockdown.c                        |    4 ++--
+ mate-panel/panel-lockdown.h                        |    4 ++--
+ mate-panel/panel-menu-bar.c                        |    4 ++--
+ mate-panel/panel-menu-bar.h                        |    4 ++--
+ mate-panel/panel-menu-button.c                     |    4 ++--
+ mate-panel/panel-menu-button.h                     |    4 ++--
+ mate-panel/panel-menu-items.c                      |    4 ++--
+ mate-panel/panel-menu-items.h                      |    4 ++--
+ mate-panel/panel-modules.c                         |    4 ++--
+ mate-panel/panel-modules.h                         |    4 ++--
+ mate-panel/panel-multiscreen.c                     |    2 +-
+ mate-panel/panel-multiscreen.h                     |    2 +-
+ mate-panel/panel-profile.c                         |    4 ++--
+ mate-panel/panel-profile.h                         |    4 ++--
+ mate-panel/panel-properties-dialog.c               |    4 ++--
+ mate-panel/panel-properties-dialog.h               |    4 ++--
+ mate-panel/panel-recent.c                          |    4 ++--
+ mate-panel/panel-recent.h                          |    4 ++--
+ mate-panel/panel-reset.c                           |    4 ++--
+ mate-panel/panel-reset.h                           |    4 ++--
+ mate-panel/panel-run-dialog.c                      |    4 ++--
+ mate-panel/panel-run-dialog.h                      |    4 ++--
+ mate-panel/panel-separator.c                       |    4 ++--
+ mate-panel/panel-separator.h                       |    4 ++--
+ mate-panel/panel-session.c                         |    4 ++--
+ mate-panel/panel-session.h                         |    4 ++--
+ mate-panel/panel-shell.c                           |    4 ++--
+ mate-panel/panel-shell.h                           |    4 ++--
+ mate-panel/panel-stock-icons.c                     |    4 ++--
+ mate-panel/panel-stock-icons.h                     |    4 ++--
+ mate-panel/panel-struts.c                          |    4 ++--
+ mate-panel/panel-struts.h                          |    4 ++--
+ mate-panel/panel-toplevel.c                        |    4 ++--
+ mate-panel/panel-toplevel.h                        |    4 ++--
+ mate-panel/panel-xutils.c                          |    4 ++--
+ mate-panel/panel-xutils.h                          |    4 ++--
+ 146 files changed, 283 insertions(+), 283 deletions(-)
+
+commit 24ac184b8026e9628f8589938399c703101b6276
+Merge: cc96150 b94aaf8
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon Nov 12 07:03:23 2012 -0800
+
+    Merge pull request #52 from sbalneav/master
+    
+    Updates to mate-panel
+
+commit b94aaf81d04f87cfcfde76b68876fbc0d27a8deb
+Author: Scott Balneaves <sbalneav@alburg.net>
+Date:   Mon Nov 12 08:54:33 2012 -0600
+
+    Code audit: fix compile warnings, uninitialized pointer problems
+
+ applets/wncklet/window-list.c           |    3 ++-
+ mate-panel/libpanel-util/panel-launch.c |   17 ++++++++------
+ mate-panel/libpanel-util/panel-show.c   |    4 ++--
+ mate-panel/panel-layout.c               |    2 +-
+ mate-panel/panel-profile.c              |   38 +++++++++++++++++--------------
+ mate-panel/panel-profile.h              |    2 +-
+ mate-panel/panel-reset.c                |    3 ++-
+ mate-panel/panel-toplevel.c             |    2 ++
+ mate-panel/panel-util.c                 |    2 +-
+ 9 files changed, 42 insertions(+), 31 deletions(-)
+
+commit cc9615065c128be5924a12df50abfda0c6b74a3a
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sun Oct 21 18:25:14 2012 +0200
+
+    add MATE developers in panel about window
+
+ mate-panel/panel-context-menu.c |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 917457d02dd5288d42b9f0f7b735eb0ac5eb9405
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Oct 19 14:43:30 2012 +0200
+
+    bump minimum glib version to 2.26
+    g_settings_new_with_path is since that version
+
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e73116a9ea9bafa856a38601cfe90a1bf12e3628
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Oct 19 14:31:30 2012 +0200
+
+    fix load background type at panel start
+    close https://github.com/mate-desktop/mate-panel/issues/49
+
+ mate-panel/panel-profile.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 2c90f2b9d59544411a1f95f5f623ea6e75184c57
+Author: Nelson Marques <nmo.marques@gmail.com>
+Date:   Thu Oct 18 16:26:47 2012 +0100
+
+    remove MATE from Categories in .desktop file
+
+ mate-panel/mate-panel.desktop.in.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6c0aab96aa634383b3e01ce94304194b8a05cfd3
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Oct 16 23:53:34 2012 +0200
+
+    bump version to 1.5.2
+
+ NEWS         |    3 +++
+ configure.ac |    2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit b6c3c38db9d4c0abb201f2f8a109c69b575db6e9
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Oct 16 23:53:09 2012 +0200
+
+    add --run-dialog option to open run dialog
+
+ mate-panel/main.c             |   19 +++++++++++++++++++
+ mate-panel/panel-profile.c    |    8 +++++++-
+ mate-panel/panel-profile.h    |    1 +
+ mate-panel/panel-run-dialog.c |   10 ++++++++++
+ mate-panel/panel-run-dialog.h |    2 ++
+ 5 files changed, 39 insertions(+), 1 deletion(-)
+
+commit 2b3a21fb01f6a198642218c744541814f5a7152b
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sat Oct 13 09:46:13 2012 +0200
+
+    fix build with dconf >= 0.13
+
+ mate-panel/libpanel-util/panel-dconf.c |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 9a359133358ae402c98a7c90ac5b8de1f5706b02
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Oct 12 18:16:51 2012 +0200
+
+    bump version in configure.ac
+
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3aa881b8b74b72fd2840fc641a51801b390b044e
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Oct 12 17:56:34 2012 +0200
+
+    fix dconf requirements
+
+ configure.ac           |    3 +++
+ mate-panel/Makefile.am |    6 +++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+commit 8230a10b97810451abe1b3283f5adf627f33a8b1
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Oct 12 17:56:17 2012 +0200
+
+    fix mate-panel-applet-gsettings.c
+
+ libmate-panel-applet/mate-panel-applet-gsettings.c |   24 ++++++++------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
+
+commit c049c82bbdda4c016f5ee28bce86918b60315dd2
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Oct 12 17:55:09 2012 +0200
+
+    fix 64bit-portability-issue
+
+ applets/wncklet/window-list.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 2f38f0be5c92d7239ccc5f1690174a6440c4dca5
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 17:57:18 2012 +0200
+
+    fix some warnings
+
+ mate-panel/panel-profile.c      |    2 +-
+ mate-panel/panel-test-applets.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 0ffeaf53e92e366947ebb5424a5b15c1a8f39a5f
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 17:56:57 2012 +0200
+
+    fix dconf requirements
+
+ configure.ac                         |   13 +++++++------
+ mate-panel/libpanel-util/Makefile.am |    1 +
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+commit 718cd95fd268e87370aa4a4d8953dfe7d6291a94
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 12:59:50 2012 +0200
+
+    add info for default panel layout
+
+ NEWS |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit ff3c509ce0be53367ebd9dc6e047a1b5f6ed1d7e
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:08:57 2012 +0200
+
+    add wncklet schemas
+
+ ...rg.mate.panel.applet.window-list.gschema.xml.in |   24 ++++++++++++++++++++
+ ....panel.applet.workspace-switcher.gschema.xml.in |   19 ++++++++++++++++
+ 2 files changed, 43 insertions(+)
+
+commit b9c880c58aba32356ee1a4f1e5f45defd5dfb895
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:08:04 2012 +0200
+
+    update notification_area
+
+ Makefile.am                                   |    5 +-
+ NEWS                                          |    7 +-
+ applets/notification_area/Makefile.am         |    2 +-
+ applets/notification_area/main.c              |    1 -
+ applets/notification_area/na-tray.c           |    1 -
+ applets/wncklet/Makefile.am                   |   29 +---
+ applets/wncklet/window-list.c                 |  196 ++++++-------------------
+ applets/wncklet/window-list.schemas.in        |   77 ----------
+ applets/wncklet/workspace-switcher.c          |  160 +++++++-------------
+ applets/wncklet/workspace-switcher.schemas.in |   52 -------
+ configure.ac                                  |  120 ++-------------
+ po/POTFILES.in                                |    4 -
+ 12 files changed, 125 insertions(+), 529 deletions(-)
+
+commit 7a578190a730ddef00cfe770aa67608eb07213b5
+Merge: 665d1cb 18e3ea9
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:05:38 2012 +0200
+
+    Merge branch 'master' of github.com:mate-desktop/mate-panel
+
+commit 665d1cb131007c871431f1f8531dc13bb0d06a82
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:05:23 2012 +0200
+
+    migrate fish applet to gsettings
+
+ applets/fish/Makefile.am                           |   29 +-
+ applets/fish/fish.c                                |  353 +++++++-------------
+ applets/fish/fish.schemas.in                       |   91 -----
+ .../fish/org.mate.panel.applet.fish.gschema.xml.in |   34 ++
+ 4 files changed, 161 insertions(+), 346 deletions(-)
+
+commit cf41dc3d28c3daa30f04962718b468cf46830828
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:04:50 2012 +0200
+
+    migrate clock applet to gsettings
+    remove evolution code
+
+ applets/clock/Makefile.am                          |   39 +-
+ applets/clock/calendar-client.c                    | 2171 --------------------
+ applets/clock/calendar-client.h                    |  153 --
+ applets/clock/calendar-debug.h                     |   56 -
+ applets/clock/calendar-sources.c                   |  658 ------
+ applets/clock/calendar-sources.h                   |   70 -
+ applets/clock/calendar-window.c                    | 1616 +--------------
+ applets/clock/clock-face.c                         |    2 +-
+ applets/clock/clock-location.c                     |    8 +-
+ applets/clock/clock.c                              |  823 ++------
+ applets/clock/clock.h                              |    2 +-
+ applets/clock/clock.schemas.in                     |  313 ---
+ .../org.mate.panel.applet.clock.gschema.xml.in     |   88 +
+ 13 files changed, 307 insertions(+), 5692 deletions(-)
+
+commit 5052d39d3d10a57b2fe0e15b2e7833ef207d3a48
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:02:36 2012 +0200
+
+    remove old mateconf doc
+
+ ...nel-applet-Panel-Applet-MateConf-Utilities.html |  655 --------------------
+ .../tmpl/mate-panel-applet-mateconf.sgml           |  263 --------
+ 2 files changed, 918 deletions(-)
+
+commit 8d773c5db915bc75cc450db2216dee54f71b92c2
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:02:07 2012 +0200
+
+    migrate libmate-panel-applet to gsettings
+
+ libmate-panel-applet/Makefile.am                   |   46 +-
+ .../libmatepanelapplet-3.0-uninstalled.pc.in       |   11 -
+ libmate-panel-applet/libmatepanelapplet-3.0.pc.in  |   11 -
+ .../libmatepanelapplet-4.0-uninstalled.pc.in       |   11 +
+ libmate-panel-applet/libmatepanelapplet-4.0.pc.in  |   11 +
+ libmate-panel-applet/mate-panel-applet-gsettings.c |  108 +++++
+ libmate-panel-applet/mate-panel-applet-gsettings.h |   45 ++
+ libmate-panel-applet/mate-panel-applet-mateconf.c  |  457 --------------------
+ libmate-panel-applet/mate-panel-applet-mateconf.h  |   90 ----
+ libmate-panel-applet/mate-panel-applet.c           |  211 ++-------
+ libmate-panel-applet/mate-panel-applet.h           |    4 +-
+ 11 files changed, 227 insertions(+), 778 deletions(-)
+
+commit 876f39364e2106c8cb96fa4a9067359e5a350583
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Oct 11 00:01:30 2012 +0200
+
+    migrate mate-panel to gsettings
+
+ mate-panel/Makefile.am                             |   44 +-
+ mate-panel/applet.c                                |  125 +-
+ mate-panel/applet.h                                |    4 +-
+ mate-panel/button-widget.c                         |    2 +
+ mate-panel/drawer.c                                |  194 +-
+ mate-panel/drawer.h                                |    6 +-
+ mate-panel/launcher.c                              |   59 +-
+ mate-panel/launcher.h                              |   10 +-
+ .../mate-panel-applet-container.c                  |    2 +-
+ .../mate-panel-applet-frame-dbus.c                 |    2 +-
+ mate-panel/libpanel-util/Makefile.am               |    2 +
+ mate-panel/libpanel-util/panel-dconf.c             |  109 +
+ mate-panel/libpanel-util/panel-dconf.h             |   44 +
+ mate-panel/main.c                                  |   10 -
+ mate-panel/mate-desktop-item-edit.c                |    2 -
+ mate-panel/mate-panel-applet-frame.c               |   36 +-
+ mate-panel/mate-panel-applet-frame.h               |    2 +-
+ mate-panel/menu.c                                  |    9 +-
+ mate-panel/panel-action-button.c                   |  245 +--
+ mate-panel/panel-action-button.h                   |    9 +-
+ mate-panel/panel-addto.c                           |   50 +-
+ mate-panel/panel-bindings.c                        |  138 +-
+ mate-panel/panel-compatibility.c                   | 1167 -----------
+ mate-panel/panel-compatibility.h                   |   48 -
+ mate-panel/panel-compatibility.schemas             |  546 -----
+ mate-panel/panel-config-global.c                   |   68 +-
+ mate-panel/panel-default-setup.entries             |  657 ------
+ mate-panel/panel-enums-gsettings.h                 |   79 +
+ mate-panel/panel-enums.h                           |   62 +-
+ mate-panel/panel-general.schemas.in                |  127 --
+ mate-panel/panel-global.schemas.in                 |  276 ---
+ mate-panel/panel-gsettings.c                       |  178 ++
+ mate-panel/panel-gsettings.h                       |   53 +
+ mate-panel/panel-layout.c                          |  353 ++++
+ mate-panel/panel-layout.h                          |   38 +
+ mate-panel/panel-lockdown.c                        |  251 +--
+ mate-panel/panel-mateconf.c                        |  351 ----
+ mate-panel/panel-mateconf.h                        |   76 -
+ mate-panel/panel-menu-bar.c                        |    4 +-
+ mate-panel/panel-menu-bar.h                        |    2 +-
+ mate-panel/panel-menu-button.c                     |  203 +-
+ mate-panel/panel-menu-button.h                     |    4 +-
+ mate-panel/panel-menu-items.c                      |   84 +-
+ mate-panel/panel-object.schemas.in                 |  263 ---
+ mate-panel/panel-profile.c                         | 2116 ++++++--------------
+ mate-panel/panel-profile.h                         |   62 +-
+ mate-panel/panel-properties-dialog.c               |  202 +-
+ mate-panel/panel-reset.c                           |   21 +-
+ mate-panel/panel-run-dialog.c                      |   91 +-
+ mate-panel/panel-schemas.h                         |   90 +
+ mate-panel/panel-separator.c                       |    4 +-
+ mate-panel/panel-separator.h                       |    2 +-
+ mate-panel/panel-test-applets.c                    |   56 +-
+ mate-panel/panel-test-applets.ui                   |    6 +-
+ mate-panel/panel-toplevel.c                        |   44 +-
+ mate-panel/panel-toplevel.h                        |    5 +
+ mate-panel/panel-toplevel.schemas.in               |  434 ----
+ mate-panel/panel-util.c                            |   19 +-
+ mate-panel/panel.c                                 |   12 +-
+ 59 files changed, 2411 insertions(+), 6747 deletions(-)
+
+commit 66916b20f16f9f0aad4c527519b70ac3a72bbec7
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Oct 10 23:57:56 2012 +0200
+
+    add gsettings schemas
+
+ data/Makefile.am                            |   14 +++
+ data/org.mate.panel.gschema.xml.in          |   78 +++++++++++++++
+ data/org.mate.panel.object.gschema.xml.in   |   79 +++++++++++++++
+ data/org.mate.panel.toplevel.gschema.xml.in |  142 +++++++++++++++++++++++++++
+ data/panel-default-layout.mate              |   53 ++++++++++
+ 5 files changed, 366 insertions(+)
+
+commit 604337540f95368056cca6eb9d808ef4fcc19765
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Oct 10 23:56:54 2012 +0200
+
+    remove matecomponent
+
+ matecomponent/Makefile.am                          |    3 -
+ matecomponent/idl/MATE_Panel.idl                   |   51 -
+ matecomponent/idl/Makefile.am                      |    6 -
+ .../MATE_Panel_TestApplet.server.in                |   31 -
+ matecomponent/libmate-panel-applet/Makefile.am     |  129 --
+ matecomponent/libmate-panel-applet/TODO            |   14 -
+ .../libmatepanelapplet-2.0-uninstalled.pc.in       |   11 -
+ .../libmatepanelapplet-2.0.pc.in                   |   11 -
+ .../mate-panel-applet-marshal.list                 |    5 -
+ .../mate-panel-applet-mateconf.c                   |  458 -----
+ .../mate-panel-applet-mateconf.h                   |   90 -
+ .../mate-panel-applet-private.h                    |   40 -
+ .../libmate-panel-applet/mate-panel-applet-shell.c |  105 --
+ .../libmate-panel-applet/mate-panel-applet-shell.h |   62 -
+ .../libmate-panel-applet/mate-panel-applet.c       | 1830 --------------------
+ .../libmate-panel-applet/mate-panel-applet.h       |  226 ---
+ .../panel-test-applets-matecomponent.c             |  349 ----
+ .../panel-test-applets-matecomponent.ui            |  203 ---
+ .../test-matecomponent-applet.c                    |  204 ---
+ matecomponent/panel-module/MATE_Panel_Popup.xml    |   20 -
+ matecomponent/panel-module/Makefile.am             |   51 -
+ .../mate-panel-applet-frame-matecomponent.c        |  759 --------
+ .../mate-panel-applet-frame-matecomponent.h        |   65 -
+ .../mate-panel-applets-manager-matecomponent.c     |  250 ---
+ .../mate-panel-applets-manager-matecomponent.h     |   59 -
+ .../mate-panel-applets-matecomponent-module.c      |   48 -
+ 26 files changed, 5080 deletions(-)
+
+commit 18e3ea919cad33bf2048d42fa81e90cc91cb3b52
+Merge: 1b3eed0 5494eac
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Oct 9 12:30:15 2012 -0700
+
+    Merge pull request #46 from cardpuncher/patch-2
+    
+    Update applets/fish/fish.c
+
+commit 5494eacad9ca1903c733450008bf686514976fde
+Author: cardpuncher <mauron@vmail.me>
+Date:   Tue Oct 9 22:01:36 2012 +0300
+
+    Update applets/fish/fish.c
+    
+    Fix a typo in the documentation credits for Wanda. Now I guess I can start seeking psychiatric evaluation as advised in the about box :)
+
+ applets/fish/fish.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1b3eed07158197bf0de4e4689c08a6f09070d17a
+Merge: 497b587 0d83e96
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon Oct 8 15:47:23 2012 -0700
+
+    Merge pull request #45 from cardpuncher/patch-1
+    
+    Fix web site URL
+
+commit 0d83e96b30f0b20c6f86a08031d92de9e4e43c6f
+Author: cardpuncher <mauron@vmail.me>
+Date:   Mon Oct 8 23:28:14 2012 +0300
+
+    Fix web site URL
+    
+    The former URL was matsusoft.com.ar, if my understanding is correct mate-desktop.org is now the ONE TRUE URL :p
+
+ applets/clock/clock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 497b58752b465146c5890624fd1609de10ec0136
+Merge: 167cc3f 67d8e6c
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu Sep 6 03:02:04 2012 -0700
+
+    Merge pull request #40 from mrpdaemon/compile-fix
+    
+    Fix compile error
+
+commit 67d8e6c9dd804498044cc16ce8d31c28ecc59643
+Author: Mark Pariente <markpariente@gmail.com>
+Date:   Wed Sep 5 21:48:43 2012 -0700
+
+    Fix compile error
+    
+    applets/clock/calendar-client.c references MateConfClient without
+    including mateconf-client.h which caused a compile error on my
+    setup.
+
+ applets/clock/calendar-client.c |    2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 167cc3f3c0464fd7e1a90f2135efe05ebf532e1b
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Mon Aug 6 17:16:58 2012 -0400
+
+    Removed nyan.png from fish applet.
+
+ applets/fish/Makefile.am |    3 +--
+ applets/fish/nyan.png    |  Bin 1211 -> 0 bytes
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+commit 1e0ea2d78f879c85942ae7f6e081cb953961dc2d
+Merge: f716b5e 15d4a83
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Thu Jul 26 17:45:47 2012 -0700
+
+    Merge pull request #34 from NiceandGently/master
+    
+    incorrect-fsf-address and others
+
+commit 15d4a835a59f72f06bb7f48e93115bcc87a98242
+Author: Nice&Gently <chat-to-me@raveit.de>
+Date:   Thu Jul 26 19:23:58 2012 +0200
+
+    fix incorrect-fsf-address
+
+ mate-panel/mate-panel-add.in         |    2 +-
+ mate-panel/mate-panel-applet-frame.h |    5 ++---
+ mate-panel/mate-panel-applet-info.h  |    4 ++--
+ 3 files changed, 5 insertions(+), 6 deletions(-)
+
+commit f716b5e9b60d37bbbc83c20906e2dfe3bf203577
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Tue Jul 10 21:55:31 2012 -0400
+
+    Preparing for 1.4 release.
+
+ ChangeLog |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
 commit 97dbdf6c937f1221e7fc35e8f658bd07c9aa001b
 Merge: 4ac3c7f e72f974
 Author: Stefano Karapetsas <stefano@karapetsas.com>
