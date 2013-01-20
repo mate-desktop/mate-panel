@@ -2199,9 +2199,9 @@ temperature_unit_changed (GSettings    *settings,
 		GtkWidget *widget;
 		gint oldvalue;
 		widget = _clock_get_widget (cd, "temperature_combo");
-		oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 1;
+		oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 2;
 		if (oldvalue != cd->speed_unit)
-			gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->temperature_unit -1);
+			gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->temperature_unit - 2);
 	}
 	update_weather_locations (cd);
 }
@@ -2217,9 +2217,9 @@ speed_unit_changed (GSettings    *settings,
 		GtkWidget *widget;
 		gint oldvalue;
 		widget = _clock_get_widget (cd, "wind_speed_combo");
-		oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 1;
+		oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 2;
 		if (oldvalue != cd->speed_unit)
-			gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->speed_unit -1);
+			gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->speed_unit - 2);
 	}
 	update_weather_locations (cd);
 }
@@ -2893,7 +2893,7 @@ temperature_combo_changed (GtkComboBox *combo, ClockData *cd)
 	int old_value;
 	const gchar *str;
 
-	value = gtk_combo_box_get_active (combo) + 1;
+	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->temperature_unit;
 
 	if (value == old_value)
@@ -2909,7 +2909,7 @@ speed_combo_changed (GtkComboBox *combo, ClockData *cd)
 	int old_value;
 	const gchar *str;
 
-	value = gtk_combo_box_get_active (combo) + 1;
+	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->speed_unit;
 
 	if (value == old_value)
@@ -2923,7 +2923,6 @@ static void
 fill_prefs_window (ClockData *cd)
 {
         static const int temperatures[] = {
-                TEMP_UNIT_DEFAULT,
                 TEMP_UNIT_KELVIN,
                 TEMP_UNIT_CENTIGRADE,
                 TEMP_UNIT_FAHRENHEIT,
@@ -2931,7 +2930,6 @@ fill_prefs_window (ClockData *cd)
         };
 
         static const int speeds[] = {
-                SPEED_UNIT_DEFAULT,
                 SPEED_UNIT_MS,
                 SPEED_UNIT_KPH,
                 SPEED_UNIT_MPH,
@@ -3013,7 +3011,7 @@ fill_prefs_window (ClockData *cd)
 	
 	if (cd->temperature_unit > 0)
 		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
-					  cd->temperature_unit - 1);
+					  cd->temperature_unit - 2);
 	g_signal_connect (widget, "changed",
 			  G_CALLBACK (temperature_combo_changed), cd);
 
@@ -3031,7 +3029,7 @@ fill_prefs_window (ClockData *cd)
 
 	if (cd->speed_unit > 0)
 		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
-					  cd->speed_unit - 1);
+					  cd->speed_unit - 2);
 	g_signal_connect (widget, "changed",
                           G_CALLBACK (speed_combo_changed), cd);
 }
