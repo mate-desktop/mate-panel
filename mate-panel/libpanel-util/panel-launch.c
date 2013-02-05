@@ -80,10 +80,10 @@ dummy_child_watch (GPid     pid,
 		   gint     status,
 		   gpointer user_data)
 {
-  /* Nothing, this is just to ensure we don't double fork
-   * and break pkexec:
-   * https://bugzilla.gnome.org/show_bug.cgi?id=675789
-   */
+	/* Nothing, this is just to ensure we don't double fork
+	* and break pkexec:
+	* https://bugzilla.gnome.org/show_bug.cgi?id=675789
+	*/
 }
 
 static void
@@ -91,7 +91,7 @@ gather_pid_callback (GDesktopAppInfo   *gapp,
 		     GPid               pid,
 		     gpointer           data)
 {
-  g_child_watch_add (pid, dummy_child_watch, NULL);
+	g_child_watch_add (pid, dummy_child_watch, NULL);
 }
 
 gboolean
@@ -122,8 +122,8 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 
 	g_object_unref (context);
 
-        if ((local_error == NULL) && (retval == TRUE))
-            return TRUE;
+	if ((local_error == NULL) && (retval == TRUE))
+		return TRUE;
 
 	return _panel_launch_handle_error (g_app_info_get_name ((GAppInfo*) appinfo),
 					   screen, local_error, error);
@@ -254,7 +254,7 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
         if (local_error == NULL && retval == TRUE) {
 		g_child_watch_add (pid, dummy_child_watch, NULL);
 		}
-            return TRUE;
+		return TRUE;
 
 	return _panel_launch_handle_error (fallback_exec,
 					   screen, local_error, error);
