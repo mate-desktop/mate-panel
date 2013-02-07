@@ -115,6 +115,7 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 	tasklist->orientation = new_orient;
 
+	matewnck_tasklist_set_orientation (tasklist->tasklist, new_orient);
 	tasklist_update(tasklist);
 }
 
@@ -413,6 +414,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	}
 
 	tasklist->tasklist = matewnck_tasklist_new(NULL);
+
+	matewnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
 
 	matewnck_tasklist_set_icon_loader(MATEWNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
 
