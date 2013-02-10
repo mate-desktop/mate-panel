@@ -62,6 +62,7 @@ typedef struct {
 	GtkWidget* workspace_names_label;
 	GtkWidget* workspace_names_scroll;
 	GtkWidget* display_workspaces_toggle;
+	GtkWidget* wrap_workspaces_toggle;
 	GtkWidget* all_workspaces_radio;
 	GtkWidget* current_only_radio;
 	GtkWidget* num_rows_spin;	       /* for vertical layout this is cols */
@@ -74,6 +75,7 @@ typedef struct {
 	int n_rows;				/* for vertical layout this is cols */
 	MatewnckPagerDisplayMode display_mode;
 	gboolean display_all;
+	gboolean wrap_workspaces;
 
 	GSettings* settings;
 } PagerData;
@@ -251,6 +253,10 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 			{
 				index += n_columns;
 			}
+			else if (pager->wrap_workspaces && index == n_workspaces - 1)
+			{
+				index = 0;
+			}
 			else if ((index < n_workspaces - 1 && index + in_last_row != n_workspaces - 1) || (index == n_workspaces - 1 && in_last_row != 0))
 			{
 				index = (index % n_columns) + 1;
@@ -259,7 +265,13 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 
 		case GDK_SCROLL_RIGHT:
 			if (index < n_workspaces - 1)
+			{
 				index++;
+			}
+			else if (pager->wrap_workspaces)
+			{
+			        index = 0;
+			}
 			break;
 
 		case GDK_SCROLL_UP:
@@ -271,6 +283,10 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 			{
 				index = ((pager->n_rows - 1) * n_columns) + (index % n_columns) - 1;
 			}
+			else if (pager->wrap_workspaces)
+			{
+				index = n_workspaces - 1;
+			}
 
 			if (index >= n_workspaces)
 				index -= n_columns;
@@ -278,7 +294,13 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 
 		case GDK_SCROLL_LEFT:
 			if (index > 0)
+			{
 				index--;
+			}
+			else if (pager->wrap_workspaces)
+			{
+				index = n_workspaces - 1;
+			}
 			break;
 		default:
 			g_assert_not_reached();
@@ -394,6 +416,20 @@ static void all_workspaces_changed(GSettings* settings, gchar* key, PagerData* p
 	}
 }
 
+static void wrap_workspaces_changed(GSettings* settings, gchar* key, PagerData* pager)
+{
+	gboolean value = FALSE; /* Default value */
+
+	value = g_settings_get_boolean (settings, key);
+
+	pager->wrap_workspaces = value;
+
+	if (pager->wrap_workspaces_toggle && gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pager->wrap_workspaces_toggle)) != value)
+	{
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(pager->wrap_workspaces_toggle), value);
+	}
+}
+
 static void setup_gsettings(PagerData* pager)
 {
 	pager->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (pager->applet), WORKSPACE_SWITCHER_SCHEMA);
@@ -410,6 +446,11 @@ static void setup_gsettings(PagerData* pager)
 					  "changed::display-all-workspaces",
 					  G_CALLBACK (all_workspaces_changed),
 					  pager);
+	g_signal_connect (pager->settings,
+					  "changed::wrap-workspaces",
+					  G_CALLBACK (wrap_workspaces_changed),
+					  pager);
+
 }
 
 gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
@@ -418,6 +459,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	GtkActionGroup* action_group;
 	gchar* ui_path;
 	gboolean display_names;
+	gboolean wrap_workspaces;
 
 	pager = g_new0(PagerData, 1);
 
@@ -432,6 +474,8 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	pager->n_rows = CLAMP(pager->n_rows, 1, MAX_REASONABLE_ROWS);
 
 	display_names = g_settings_get_boolean(pager->settings, "display-workspace-names");
+
+	wrap_workspaces = g_settings_get_boolean(pager->settings, "wrap-workspaces");
 
 	if (display_names)
 	{
@@ -510,6 +554,7 @@ static void display_about_dialog(GtkAction* action, PagerData* pager)
 		"Steve Zesch <stevezesch2@gmail.com>",
 		"Stefano Karapetsas <stefano@karapetsas.com>",
 		"Alexander Larsson <alla@lysator.liu.se>",
+		"Moritz Bruder <muesli4@gmail.com>",
 		NULL
 	};
 
@@ -537,8 +582,12 @@ static void display_about_dialog(GtkAction* action, PagerData* pager)
 		NULL);
 }
 
+static void wrap_workspaces_toggled(GtkToggleButton* button, PagerData* pager)
+{
+	g_settings_set_boolean(pager->settings, "wrap-workspaces", gtk_toggle_button_get_active(button));
+}
 
-static void display_workspace_names_toggled(GtkToggleButton*button, PagerData* pager)
+static void display_workspace_names_toggled(GtkToggleButton* button, PagerData* pager)
 {
 	g_settings_set_boolean(pager->settings, "display-workspace-names", gtk_toggle_button_get_active(button));
 }
@@ -655,6 +704,7 @@ static void properties_dialog_destroyed(GtkWidget* widget, PagerData* pager)
 	pager->workspace_names_label = NULL;
 	pager->workspace_names_scroll = NULL;
 	pager->display_workspaces_toggle = NULL;
+	pager->wrap_workspaces_toggle = NULL;
 	pager->all_workspaces_radio = NULL;
 	pager->current_only_radio = NULL;
 	pager->num_rows_spin = NULL;
@@ -751,6 +801,9 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	pager->display_workspaces_toggle = WID("workspace_name_toggle");
 	setup_sensitivity(pager, builder, "workspace_name_toggle", NULL, NULL, pager->settings, "display-workspace-names" /* key */);
 
+	pager->wrap_workspaces_toggle = WID("workspace_wrap_toggle");
+	setup_sensitivity(pager, builder, "workspace_wrap_toggle", NULL, NULL, pager->settings, "wrap-workspaces" /* key */);
+
 	pager->all_workspaces_radio = WID("all_workspaces_radio");
 	pager->current_only_radio = WID("current_only_radio");
 	setup_sensitivity(pager, builder, "all_workspaces_radio", "current_only_radio", "label_row_col", pager->settings, "display-all-workspaces" /* key */);
@@ -767,6 +820,11 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 
 	g_object_unref (marco_general_settings);
 	g_object_unref (marco_workspaces_settings);
+
+
+	/* Wrap workspaces: */
+
+	g_signal_connect(G_OBJECT(pager->wrap_workspaces_toggle), "toggled" (GCallback) wrap_workspaces_toggled, pager);
 
 	/* Display workspace names: */
 
