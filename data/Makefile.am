@@ -13,6 +13,9 @@ gsettings_SCHEMAS = \
 
 @GSETTINGS_RULES@
 
+%.gschema.xml.in: %.gschema.xml.in.in Makefile
+	$(AM_V_GEN) $(SED) -e 's^\@GETTEXT_PACKAGE\@^$(GETTEXT_PACKAGE)^g' < $< > $@
+
 convertdir = $(datadir)/MateConf/gsettings
 convert_DATA = mate-panel.convert
 
