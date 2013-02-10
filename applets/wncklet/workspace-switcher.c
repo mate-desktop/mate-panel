@@ -424,7 +424,7 @@ static void wrap_workspaces_changed(GSettings* settings, gchar* key, PagerData* 
 
 	pager->wrap_workspaces = value;
 
-        if (pager->wrap_workspaces_toggle && gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pager->wrap_workspaces_toggle)) != value)
+	if (pager->wrap_workspaces_toggle && gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pager->wrap_workspaces_toggle)) != value)
 	{
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(pager->wrap_workspaces_toggle), value);
 	}
