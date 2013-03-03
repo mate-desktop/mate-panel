@@ -37,9 +37,9 @@ static DConfClient *
 panel_dconf_client_get (void)
 {
 #ifdef HAVE_DCONF_0_13
-        return dconf_client_new ();
-#else
         return dconf_client_new (NULL, NULL, NULL, NULL);
+#else
+        return dconf_client_new ();
 #endif
 }
 
@@ -52,9 +52,9 @@ panel_dconf_write_sync (const gchar  *key,
         DConfClient *client = panel_dconf_client_get ();
 
 #ifdef HAVE_DCONF_0_13
-        ret = dconf_client_write_sync (client, key, value, NULL, NULL, error);
-#else
         ret = dconf_client_write (client, key, value, NULL, NULL, error);
+#else
+        ret = dconf_client_write_sync (client, key, value, NULL, NULL, error);
 #endif
 
         g_object_unref (client);
@@ -70,9 +70,9 @@ panel_dconf_recursive_reset (const gchar  *dir,
         DConfClient *client = panel_dconf_client_get ();
 
 #ifdef HAVE_DCONF_0_13
-        ret = dconf_client_write_sync (client, dir, NULL, NULL, NULL, error);
-#else
         ret = dconf_client_write (client, dir, NULL, NULL, NULL, error);
+#else
+        ret = dconf_client_write_sync (client, dir, NULL, NULL, NULL, error);
 #endif
 
         g_object_unref (client);
