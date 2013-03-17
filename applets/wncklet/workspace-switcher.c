@@ -194,17 +194,34 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, PagerData* pager)
 {
+        /* taken from the TrashApplet */
+        GtkRcStyle *rc_style;
+        GtkStyle *style;
+
+        /* reset style */
+        gtk_widget_set_style (GTK_WIDGET (pager->pager), NULL);
+        rc_style = gtk_rc_style_new ();
+        gtk_widget_modify_style (GTK_WIDGET (pager->pager), rc_style);
+        g_object_unref (rc_style);
+
 	switch (type)
 	{
-		case PANEL_NO_BACKGROUND:
-			matewnck_pager_set_shadow_type(MATEWNCK_PAGER(pager->pager), GTK_SHADOW_IN);
-			break;
-		case PANEL_COLOR_BACKGROUND:
-			matewnck_pager_set_shadow_type(MATEWNCK_PAGER(pager->pager), GTK_SHADOW_NONE);
-			break;
-		case PANEL_PIXMAP_BACKGROUND:
-			matewnck_pager_set_shadow_type(MATEWNCK_PAGER(pager->pager), GTK_SHADOW_NONE);
-			break;
+                case PANEL_COLOR_BACKGROUND:
+                        gtk_widget_modify_bg (GTK_WIDGET (pager->pager), GTK_STATE_NORMAL, color);
+                        break;
+
+                case PANEL_PIXMAP_BACKGROUND:
+                        style = gtk_style_copy (gtk_widget_get_style (GTK_WIDGET (pager->pager)));
+                        if (style->bg_pixmap[GTK_STATE_NORMAL])
+                                g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+                        style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref(pixmap);
+                        gtk_widget_set_style (GTK_WIDGET (pager->pager), style);
+                        g_object_unref (style);
+                        break;
+
+                case PANEL_NO_BACKGROUND:
+                default:
+                        break;
 	}
 }
 
