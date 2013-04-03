@@ -839,6 +839,11 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 
 
 	/* Wrap workspaces: */
+	if (pager->wrap_workspaces_toggle)
+	{
+		/* make sure the toggle button resembles the value of wrap_workspaces */
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(pager->wrap_workspaces_toggle), pager->wrap_workspaces);
+	}
 
 	g_signal_connect(G_OBJECT(pager->wrap_workspaces_toggle), "toggled", (GCallback) wrap_workspaces_toggled, pager);
 
