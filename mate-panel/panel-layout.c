@@ -118,7 +118,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                   const char                *type_for_error_message)
 {
     gboolean    retval = FALSE;
-    const char *id;
+    char       *id;
     char       *unique_id = NULL;
     char       *path = NULL;
     GSettings  *settings = NULL;
@@ -162,6 +162,9 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     existing_ids = panel_dconf_list_subdirs (dconf_path, TRUE);
 
     if (id) {
+        if (set_screen_to > 0) {
+            id = g_strdup_printf ("%s-screen%d", id, set_screen_to);
+        }
         for (i = 0; existing_ids[i]; i++) {
                 if (!strcmp (existing_ids[i], id)) {
                     existing_id = TRUE;
