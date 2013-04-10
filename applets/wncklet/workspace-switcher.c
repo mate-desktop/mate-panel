@@ -476,7 +476,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	GtkActionGroup* action_group;
 	gchar* ui_path;
 	gboolean display_names;
-	gboolean wrap_workspaces;
 
 	pager = g_new0(PagerData, 1);
 
