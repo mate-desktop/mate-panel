@@ -492,7 +492,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 
 	display_names = g_settings_get_boolean(pager->settings, "display-workspace-names");
 
-	wrap_workspaces = g_settings_get_boolean(pager->settings, "wrap-workspaces");
+	pager->wrap_workspaces = g_settings_get_boolean(pager->settings, "wrap-workspaces");
 
 	if (display_names)
 	{
