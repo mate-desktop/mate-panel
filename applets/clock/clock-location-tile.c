@@ -488,7 +488,7 @@ format_time (struct tm   *now,
         hours = offset / 3600;
         minutes = labs (offset % 3600) / 60;
 
-	if (hours != 0 && minutes != 0) {
+	if (minutes != 0) {
 		tmp = g_strdup_printf ("%s <small>%s %+ld:%ld</small>", buf, tzname, hours, minutes);
 	}
 	else if (hours != 0) {
