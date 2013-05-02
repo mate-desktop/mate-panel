@@ -145,6 +145,24 @@ panel_properties_dialog_orientation_changed (PanelPropertiesDialog *dialog,
 }
 
 static void
+panel_properties_dialog_setup_orientation_combo_sensitivty (PanelPropertiesDialog *dialog, GtkToggleButton *n)
+{
+	gboolean expand;
+	expand = panel_profile_get_toplevel_expand (dialog->toplevel);
+
+	if (! panel_profile_key_is_writable (dialog->toplevel, PANEL_TOPLEVEL_ORIENTATION_KEY)) {
+		gtk_widget_set_sensitive (dialog->orientation_combo, FALSE);
+		gtk_widget_set_sensitive (dialog->orientation_label, FALSE);
+		gtk_widget_show (dialog->writability_warn_general);
+	}
+	else {
+		/* enable orientation only for non-expanded panels */
+		gtk_widget_set_sensitive (dialog->orientation_combo, expand);
+		gtk_widget_set_sensitive (dialog->orientation_label, expand);
+	}
+}
+
+static void
 panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
 						 GtkBuilder            *gui)
 {
@@ -189,11 +207,7 @@ panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_orientation_changed),
 				  dialog);
 
-	if (! panel_profile_key_is_writable (dialog->toplevel, PANEL_TOPLEVEL_ORIENTATION_KEY)) {
-		gtk_widget_set_sensitive (dialog->orientation_combo, FALSE);
-		gtk_widget_set_sensitive (dialog->orientation_label, FALSE);
-		gtk_widget_show (dialog->writability_warn_general);
-	}
+	panel_properties_dialog_setup_orientation_combo_sensitivty (dialog, NULL);
 }
 
 static void
@@ -867,6 +881,9 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	panel_properties_dialog_setup_autohide_toggle    (dialog, gui);
 	panel_properties_dialog_setup_hidebuttons_toggle (dialog, gui);
 	panel_properties_dialog_setup_arrows_toggle      (dialog, gui);
+
+	g_signal_connect_swapped (dialog->expand_toggle, "toggled",
+				  G_CALLBACK (panel_properties_dialog_setup_orientation_combo_sensitivty), dialog);
 
 	panel_properties_update_arrows_toggle_visible (
 		dialog, GTK_TOGGLE_BUTTON (dialog->hidebuttons_toggle));

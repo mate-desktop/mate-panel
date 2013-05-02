@@ -4669,7 +4669,7 @@ panel_toplevel_set_expand (PanelToplevel *toplevel,
 
 	toplevel->priv->expand = expand;
 
-	if (!toplevel->priv->expand) {
+	if (!toplevel->priv->expand && toplevel->priv->updated_geometry_initial) {
 		switch (toplevel->priv->orientation) {
 		case PANEL_ORIENTATION_TOP:
 			panel_toplevel_set_x (toplevel, 0, -1, TRUE);
