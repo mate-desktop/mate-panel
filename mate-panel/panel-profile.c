@@ -594,37 +594,35 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 										"orientation",
 										change->orientation);
 
-	if (!panel_toplevel_get_expand (toplevel)) {
-		if (change->x_changed)
-			g_settings_set_int (toplevel->queued_settings,
-								"x",
-								change->x);
+	if (change->x_changed)
+		g_settings_set_int (toplevel->queued_settings,
+							"x",
+							change->x);
 
-		if (change->x_right_changed)
-			g_settings_set_int (toplevel->queued_settings,
-								"x-right",
-								change->x_right);
+	if (change->x_right_changed)
+		g_settings_set_int (toplevel->queued_settings,
+							"x-right",
+							change->x_right);
 
-		if (change->x_centered_changed)
-			g_settings_set_boolean (toplevel->queued_settings,
-									"x-centered",
-									change->x_centered);
+	if (change->x_centered_changed)
+		g_settings_set_boolean (toplevel->queued_settings,
+								"x-centered",
+								change->x_centered);
 
-		if (change->y_changed)
-			g_settings_set_int (toplevel->queued_settings,
-								"y",
-								change->y);
+	if (change->y_changed)
+		g_settings_set_int (toplevel->queued_settings,
+							"y",
+							change->y);
 
-		if (change->y_bottom_changed)
-			g_settings_set_int (toplevel->queued_settings,
-								"y-bottom",
-								change->y_bottom);
+	if (change->y_bottom_changed)
+		g_settings_set_int (toplevel->queued_settings,
+							"y-bottom",
+							change->y_bottom);
 
-		if (change->y_centered_changed)
-			g_settings_set_boolean (toplevel->queued_settings,
-									"y-centered",
-									change->y_centered);
-	}
+	if (change->y_centered_changed)
+		g_settings_set_boolean (toplevel->queued_settings,
+								"y-centered",
+								change->y_centered);
 
 	commit_timeout = panel_profile_get_commit_timeout (G_OBJECT (toplevel));
 	if (!commit_timeout) {
