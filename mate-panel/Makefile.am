@@ -4,7 +4,6 @@ bin_PROGRAMS = \
 	mate-panel \
 	mate-desktop-item-edit \
 	mate-panel-test-applets
-libexec_SCRIPTS = mate-panel-add
 
 AM_CPPFLAGS = \
 	$(PANEL_CFLAGS) \
@@ -178,13 +177,6 @@ mate_panel_test_applets_LDADD = \
 
 mate_panel_test_applets_LDFLAGS = -export-dynamic
 
-mate-panel-add: mate-panel-add.in Makefile
-	$(AM_V_GEN)sed \
-		-e s!\@PYTHON\@!@PYTHON@! \
-		-e s!\@MATE_PANEL_APPLETS_DIR\@!$(appletsdir)! \
-		< $< > $@
-	$(AM_V_at)chmod a+x $@
-
 panel_enum_headers = \
 	$(top_srcdir)/mate-panel/panel-enums.h \
 	$(top_srcdir)/mate-panel/panel-enums-gsettings.h \
@@ -253,14 +245,12 @@ EXTRA_DIST = \
 	panel-marshal.list \
 	mate-panelrc \
 	$(entries_DATA) \
-	$(desktop_in_files) \
-	mate-panel-add.in
+	$(desktop_in_files)
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(sys_DATA) \
-	$(desktop_DATA) \
-	mate-panel-add
+	$(desktop_DATA)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
