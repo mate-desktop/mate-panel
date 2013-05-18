@@ -1690,14 +1690,13 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 }
 
-static void mate_panel_applet_constructed(GObject* object)
+static void
+mate_panel_applet_constructed (GObject* object)
 {
 	MatePanelApplet* applet = MATE_PANEL_APPLET(object);
 
-	/* Voy a renombrar la clase para que se pueda tener compatibilidad con todos
-	 * los estilos visuales de GTK2
-	 *
-	 * Issue #27
+	/* Rename the class to have compatibility with all GTK2 themes
+	 * https://github.com/perberos/Mate-Desktop-Environment/issues/27
 	 */
 	gtk_widget_set_name(GTK_WIDGET(applet), "PanelApplet");
 
