@@ -594,6 +594,7 @@ panel_background_set_gdk_color (PanelBackground *background,
 				GdkColor        *gdk_color)
 {
 	g_return_if_fail (gdk_color != NULL);
+	g_return_if_fail (background != NULL);
 
 	if (background->color.gdk.red   == gdk_color->red &&
 	    background->color.gdk.green == gdk_color->green &&
