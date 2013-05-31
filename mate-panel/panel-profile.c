@@ -813,6 +813,8 @@ panel_profile_background_change_notify (GSettings *settings,
 	PanelBackground *background;
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
+	if (panel_widget == NULL)
+		return;
 	background = &panel_widget->background;
 
 	if (!strcmp (key, "type")) {
