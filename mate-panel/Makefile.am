@@ -223,9 +223,6 @@ BUILT_SOURCES = \
 	panel-marshal.c \
 	panel-marshal.h
 
-rcdir = $(datadir)
-rc_DATA = mate-panelrc
-
 uidir = $(datadir)/mate-panel/ui
 ui_DATA = \
 	panel-properties-dialog.ui \
