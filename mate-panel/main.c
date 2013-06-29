@@ -111,7 +111,7 @@ main (int argc, char **argv)
 		panel_lockdown_init ();
 		panel_profile_settings_load ();
 		panel_run_dialog_present (gdk_screen_get_default (),
-		gtk_get_current_event_time ());
+		                          gtk_get_current_event_time ());
 		panel_run_dialog_quit_on_destroy ();
 		gtk_main ();
 		panel_lockdown_finalize ();
@@ -139,8 +139,8 @@ main (int argc, char **argv)
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
-			 (GFunc)panel_widget_add_forbidden,
-			 NULL);
+	                 (GFunc)panel_widget_add_forbidden,
+	                 NULL);
 
 	xstuff_init ();
 
