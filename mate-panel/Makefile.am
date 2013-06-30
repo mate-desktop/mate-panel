@@ -111,6 +111,7 @@ panel_headers = \
 	panel-bindings.h \
 	panel-layout.h \
 	panel-profile.h \
+	panel-enums-gsettings.h \
 	panel-enums.h \
 	panel-force-quit.h \
 	panel-lockdown.h \
@@ -240,7 +241,6 @@ EXTRA_DIST = \
 	nothing.cP \
 	nothing.h \
 	panel-marshal.list \
-	mate-panelrc \
 	$(entries_DATA) \
 	$(desktop_in_files)
 

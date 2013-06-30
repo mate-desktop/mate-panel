@@ -97,9 +97,10 @@ EXTRA_DIST = \
 	org.mate.panel.Wncklet.mate-panel-applet.in.in \
 	$(service_in_files) \
 	$(xmlui_DATA) \
-	$(gsettings_SCHEMAS) \
+	org.mate.panel.applet.window-list.gschema.xml.in.in \
+	org.mate.panel.applet.workspace-switcher.gschema.xml.in.in \
 	$(ui_DATA)
 
-CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA)
+CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)
 
 -include $(top_srcdir)/git.mk

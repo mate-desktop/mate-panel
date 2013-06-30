@@ -164,7 +164,7 @@ gsettings_SCHEMAS = org.mate.panel.applet.clock.gschema.xml
 
 EXTRA_DIST =						\
 	org.mate.panel.ClockApplet.mate-panel-applet.in.in	\
-	$(gsettings_SCHEMAS)				\
+	$(gsettings_SCHEMAS).in.in	\
 	$(xmlui_DATA)					\
 	$(ui_DATA)					\
 	clock-marshallers.list				\
@@ -176,6 +176,7 @@ CLEANFILES =			\
 	$(applet_DATA).in	\
 	$(service_DATA)		\
 	$(polkit_DATA)		\
-	$(dbus_services_DATA)
+	$(dbus_services_DATA)	\
+	$(gsettings_SCHEMAS)
 
 -include $(top_srcdir)/git.mk
