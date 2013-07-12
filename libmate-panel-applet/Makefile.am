@@ -126,10 +126,10 @@ MatePanelApplet_4_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources))
 MatePanelApplet_4_0_gir_SCANNERFLAGS = --strip-prefix=MatePanel --pkg-export=libmatepanelapplet-4.0
 INTROSPECTION_GIRS += MatePanelApplet-4.0.gir
 
-girdir = $(datadir)/gir-1.0/
+girdir = $(INTROSPECTION_GIRDIR)
 gir_DATA = $(INTROSPECTION_GIRS)
 
-typelibdir = ${libdir}/girepository-1.0
+typelibdir = $(INTROSPECTION_TYPELIBDIR)
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
 CLEANFILES += $(gir_DATA) $(typelib_DATA)
