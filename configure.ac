@@ -258,9 +258,9 @@ dnl gtk-doc stuff
 
 GTK_DOC_CHECK([1.0])
 
-dnl mate-doc-utils stuff
+dnl yelp-tools stuff
 
-MATE_DOC_INIT
+YELP_HELP_INIT
 
 GLIB_GSETTINGS
 

@@ -271,9 +271,9 @@ panel_show_help (GdkScreen    *screen,
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
 	if (link)
-		uri = g_strdup_printf ("ghelp:%s?%s", doc, link);
+		uri = g_strdup_printf ("help:%s?%s", doc, link);
 	else
-		uri = g_strdup_printf ("ghelp:%s", doc);
+		uri = g_strdup_printf ("help:%s", doc);
 
 	gtk_show_uri (screen, uri, gtk_get_current_event_time (), &local_error);
 

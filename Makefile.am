@@ -15,11 +15,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-introspection --disable-s
 
 EXTRA_DIST = \
 	COPYING-DOCS		\
-	HACKING			\
-	mate-doc-utils.make
-
-DISTCLEANFILES =		\
-	mate-doc-utils.make
+	HACKING
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/INSTALL \
@@ -36,7 +32,6 @@ MAINTAINERCLEANFILES = \
 	`find "$(srcdir)" -type f -name Makefile.in -print` \
 	$(srcdir)/configure \
 	$(srcdir)/gtk-doc.make \
-	$(srcdir)/m4/mate-doc-utils.m4 \
 	$(srcdir)/m4/gtk-doc.m4 \
 	$(srcdir)/m4/intltool.m4 \
 	$(srcdir)/m4/libtool.m4 \
