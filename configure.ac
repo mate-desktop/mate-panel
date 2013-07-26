@@ -88,7 +88,7 @@ case "$with_gtk" in
        ;;
   3.0) GTK_API_VERSION=3.0
        GTK_REQUIRED=3.0.0
-       LIBCANBERRA_API_VERSION=-gtk3
+       LIBCANBERRA_API_VERSION=3
        WEATHER_LIB=gweather
        WEATHER_REQUIRED=3.8.0
        ;;
