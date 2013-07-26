@@ -147,9 +147,9 @@ static void show_help(FishApplet* fish, const char* link_id)
 #define FISH_HELP_DOC "fish"
 
 	if (link_id)
-		uri = g_strdup_printf ("ghelp:%s?%s", FISH_HELP_DOC, link_id);
+		uri = g_strdup_printf ("help:%s?%s", FISH_HELP_DOC, link_id);
 	else
-		uri = g_strdup_printf ("ghelp:%s", FISH_HELP_DOC);
+		uri = g_strdup_printf ("help:%s", FISH_HELP_DOC);
 
 	gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (fish)), uri,
 		      gtk_get_current_event_time (), &error);
