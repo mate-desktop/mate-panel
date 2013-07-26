@@ -30,8 +30,8 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <libmatewnck/screen.h>
-#include <libmatewnck/util.h>
+#include <libwnck/screen.h>
+#include <libwnck/util.h>
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -92,16 +92,16 @@ void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* lin
 	}
 }
 
-MatewnckScreen* wncklet_get_screen(GtkWidget* applet)
+WnckScreen* wncklet_get_screen(GtkWidget* applet)
 {
 	int screen_num;
 
 	if (!gtk_widget_has_screen(applet))
-		return matewnck_screen_get_default();
+		return wnck_screen_get_default();
 
 	screen_num = gdk_screen_get_number(gtk_widget_get_screen(applet));
 
-	return matewnck_screen_get(screen_num);
+	return wnck_screen_get(screen_num);
 }
 
 void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback func, gpointer func_data, gpointer alive_object)
@@ -120,7 +120,7 @@ static gboolean wncklet_factory(MatePanelApplet* applet, const char* iid, gpoint
 
 	if (!type_registered)
 	{
-		matewnck_set_client_type(MATEWNCK_CLIENT_TYPE_PAGER);
+		wnck_set_client_type(WNCK_CLIENT_TYPE_PAGER);
 		type_registered = TRUE;
 	}
 

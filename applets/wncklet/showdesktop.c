@@ -30,7 +30,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
-#include <libmatewnck/screen.h>
+#include <libwnck/screen.h>
 
 #include "wncklet.h"
 #include "showdesktop.h"
@@ -50,7 +50,7 @@ typedef struct {
 	GtkOrientation orient;
 	int size;
 
-	MatewnckScreen* matewnck_screen;
+	WnckScreen* wnck_screen;
 
 	guint showing_desktop: 1;
 	guint button_activate;
@@ -68,7 +68,7 @@ static void update_button_display(ShowDesktopData* sdd);
 static void theme_changed_callback(GtkIconTheme* icon_theme, ShowDesktopData* sdd);
 
 static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd);
-static void show_desktop_changed_callback(MatewnckScreen* screen, ShowDesktopData* sdd);
+static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* sdd);
 
 /* this is when the panel orientation changes */
 
@@ -279,10 +279,10 @@ static void applet_destroyed(GtkWidget* applet, ShowDesktopData* sdd)
 		sdd->button_activate = 0;
 	}
 
-	if (sdd->matewnck_screen != NULL)
+	if (sdd->wnck_screen != NULL)
 	{
-		g_signal_handlers_disconnect_by_func(sdd->matewnck_screen, show_desktop_changed_callback, sdd);
-		sdd->matewnck_screen = NULL;
+		g_signal_handlers_disconnect_by_func(sdd->wnck_screen, show_desktop_changed_callback, sdd);
+		sdd->wnck_screen = NULL;
 	}
 
 	if (sdd->icon_theme != NULL)
@@ -341,21 +341,21 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 
 	sdd = (ShowDesktopData*) data;
 
-	if (sdd->matewnck_screen != NULL)
-		g_signal_handlers_disconnect_by_func(sdd->matewnck_screen, show_desktop_changed_callback, sdd);
+	if (sdd->wnck_screen != NULL)
+		g_signal_handlers_disconnect_by_func(sdd->wnck_screen, show_desktop_changed_callback, sdd);
 
 	if (sdd->icon_theme != NULL)
 		g_signal_handlers_disconnect_by_func(sdd->icon_theme, theme_changed_callback, sdd);
 
 	screen = gtk_widget_get_screen(sdd->applet);
-	sdd->matewnck_screen = matewnck_screen_get(gdk_screen_get_number (screen));
+	sdd->wnck_screen = wnck_screen_get(gdk_screen_get_number (screen));
 
-	if (sdd->matewnck_screen != NULL)
-		wncklet_connect_while_alive(sdd->matewnck_screen, "showing_desktop_changed", G_CALLBACK(show_desktop_changed_callback), sdd, sdd->applet);
+	if (sdd->wnck_screen != NULL)
+		wncklet_connect_while_alive(sdd->wnck_screen, "showing_desktop_changed", G_CALLBACK(show_desktop_changed_callback), sdd, sdd->applet);
 	else
-		g_warning("Could not get MatewnckScreen!");
+		g_warning("Could not get WnckScreen!");
 
-	show_desktop_changed_callback(sdd->matewnck_screen, sdd);
+	show_desktop_changed_callback(sdd->wnck_screen, sdd);
 
 	sdd->icon_theme = gtk_icon_theme_get_for_screen (screen);
 	wncklet_connect_while_alive(sdd->icon_theme, "changed", G_CALLBACK(theme_changed_callback), sdd, sdd->applet);
@@ -520,16 +520,16 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 		return;
 	}
 
-	if (sdd->matewnck_screen != NULL)
-		matewnck_screen_toggle_showing_desktop(sdd->matewnck_screen, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)));
+	if (sdd->wnck_screen != NULL)
+		wnck_screen_toggle_showing_desktop(sdd->wnck_screen, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)));
 
 	update_button_display (sdd);
 }
 
-static void show_desktop_changed_callback(MatewnckScreen* screen, ShowDesktopData* sdd)
+static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* sdd)
 {
-	if (sdd->matewnck_screen != NULL)
-		sdd->showing_desktop = matewnck_screen_get_showing_desktop(sdd->matewnck_screen);
+	if (sdd->wnck_screen != NULL)
+		sdd->showing_desktop = wnck_screen_get_showing_desktop(sdd->wnck_screen);
 
 	update_button_state (sdd);
 }

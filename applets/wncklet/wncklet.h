@@ -24,7 +24,7 @@
 #ifndef __WNCKLET_H__
 #define __WNCKLET_H__
 
-#include <libmatewnck/screen.h>
+#include <libwnck/screen.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -36,7 +36,7 @@ extern "C" {
 
 void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* link_id, const char* icon_name);
 
-MatewnckScreen* wncklet_get_screen(GtkWidget* applet);
+WnckScreen* wncklet_get_screen(GtkWidget* applet);
 
 void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback func, gpointer func_data, gpointer alive_object);
 
