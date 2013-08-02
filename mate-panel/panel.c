@@ -608,7 +608,7 @@ drop_urilist (PanelWidget *panel,
 		    g_ascii_strncasecmp (uri, "ftp:", strlen ("ftp:")) == 0 ||
 		    g_ascii_strncasecmp (uri, "gopher:", strlen ("gopher:")) == 0 ||
 		    g_ascii_strncasecmp (uri, "ghelp:", strlen ("ghelp:")) == 0 ||
-		    g_ascii_strncasecmp (uri, "help:", strlen ("ghelp:")) == 0 ||
+		    g_ascii_strncasecmp (uri, "help:", strlen ("help:")) == 0 ||
 		    g_ascii_strncasecmp (uri, "man:", strlen ("man:")) == 0 ||
 		    g_ascii_strncasecmp (uri, "info:", strlen ("info:")) == 0) {
 			/* FIXME: probably do this only on link,
