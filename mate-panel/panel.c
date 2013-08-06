@@ -17,7 +17,11 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#endif
 
 #include <libpanel-util/panel-glib.h>
 
@@ -392,7 +396,11 @@ panel_key_press_event (GtkWidget   *widget,
 	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
 	    event->keyval == GDK_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
+#if GTK_CHECK_VERSION (3, 0, 0)
+		return gtk_bindings_activate (G_OBJECT (widget),
+#else
 		return gtk_bindings_activate (GTK_OBJECT (widget),
+#endif
 					      event->keyval,
 					      event->state);
 
