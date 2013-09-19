@@ -510,6 +510,9 @@ load_icons_handler_again:
 	}
 
 	icon = icons_to_load->data;
+
+    g_message("Load icon <%p>", icon->image);
+
 	icons_to_load->data = NULL;
 	/* pop */
 	icons_to_load = g_list_delete_link (icons_to_load, icons_to_load);
@@ -1816,17 +1819,19 @@ find_in_load_list (GtkWidget *image)
 	return NULL;
 }
 
-static void
-image_menu_shown (GtkWidget *image, gpointer data)
+static gboolean
+image_menu_pre_load (gpointer data)
 {
 	IconToLoad *new_icon;
 	IconToLoad *icon;
+    GtkWidget *image;
 
 	icon = (IconToLoad *) data;
+    image = ((IconToLoad *)icon)->pixmap;
 
 	/* if we've already handled this */
 	if (gtk_image_get_storage_type (GTK_IMAGE (image)) != GTK_IMAGE_EMPTY)
-		return;
+		return FALSE;
 
 	if (find_in_load_list (image) == NULL) {
 		new_icon = icon_to_load_copy (icon);
@@ -1835,6 +1840,7 @@ image_menu_shown (GtkWidget *image, gpointer data)
 	}
 	if (load_icons_id == 0)
 		load_icons_id = g_idle_add (load_icons_handler, NULL);
+    return FALSE;
 }
 
 static void
@@ -1884,9 +1890,7 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (image_menu_item),
 				       image);
 
-	g_signal_connect_data (image, "map",
-			       G_CALLBACK (image_menu_shown), icon,
-			       (GClosureNotify) icon_to_load_free, 0);
+    g_idle_add(image_menu_pre_load, icon);
 
 	g_signal_connect (image, "destroy",
 			  G_CALLBACK (image_menu_destroy), NULL);
