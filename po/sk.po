@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Ján Ďanovský <dagsoftware@yahoo.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/\n"
 "POT-Creation-Date: 2013-02-10 23:10+0100\n"
-"PO-Revision-Date: 2013-02-10 22:12+0000\n"
-"Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>\n"
+"PO-Revision-Date: 2013-05-14 00:10+0000\n"
+"Last-Translator: Ján Ďanovský <dagsoftware@yahoo.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/MATE/language/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +35,7 @@ msgstr "Kalendár"
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #: ../applets/clock/clock.c:428
 msgid "%l:%M:%S %p"
-msgstr ""
+msgstr "%H:%M:%S%p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
@@ -42,7 +43,7 @@ msgstr ""
 #. 
 #: ../applets/clock/clock.c:428 ../applets/clock/clock-location-tile.c:520
 msgid "%l:%M %p"
-msgstr ""
+msgstr "%H:%M%p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
@@ -129,7 +130,7 @@ msgstr "Počítačové hodiny"
 #. * am/pm.
 #: ../applets/clock/clock.c:1526
 msgid "%I:%M:%S %p"
-msgstr ""
+msgstr "%H:%M:%S%p"
 
 #. Translators: This is a strftime format
 #. * string.
@@ -139,7 +140,7 @@ msgstr ""
 #. * am/pm.
 #: ../applets/clock/clock.c:1534
 msgid "%I:%M %p"
-msgstr ""
+msgstr "%H:%M%p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
@@ -229,7 +230,7 @@ msgstr "Aplet Hodiny zobrazuje aktuálny dátum a čas"
 #: ../applets/wncklet/workspace-switcher.c:578
 #: ../mate-panel/panel-context-menu.c:143
 msgid "translator-credits"
-msgstr "Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)\nMarcel Telka <marcel@telka.sk>\nPeter Tuhársky <tuharsky@misbb.sk>\nPavol Šimo <palo.simo@gmail.com>"
+msgstr "Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)\nMarcel Telka <marcel@telka.sk>\nPeter Tuhársky <tuharsky@misbb.sk>\nPavol Šimo <palo.simo@gmail.com>\nJán Ďanovský <dagsoftware@yahoo.com>"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
@@ -385,7 +386,7 @@ msgstr "Nastaviť miesto ako predvolené a použiť jeho časové pásmo pre ten
 #. * am/pm.
 #: ../applets/clock/clock-location-tile.c:457
 msgid "%l:%M <small>%p (%A)</small>"
-msgstr ""
+msgstr "%A, %H:%M%p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
@@ -402,7 +403,7 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * am/pm.
 #: ../applets/clock/clock-location-tile.c:474
 msgid "%l:%M <small>%p</small>"
-msgstr ""
+msgstr "%H:%M%p"
 
 #: ../applets/clock/clock-location-tile.c:613
 #, c-format
@@ -549,15 +550,15 @@ msgstr "Jednotka použitá na zobrazenie rýchlosti vetra."
 
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:1
 msgid "Clock Applet Factory"
-msgstr ""
+msgstr "Vytváracie rozhranie pre applet Hodiny"
 
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:2
 msgid "Factory for clock applet"
-msgstr ""
+msgstr "Vytváracie rozhranie pre applet Hodiny"
 
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:4
 msgid "Get the current time and date"
-msgstr ""
+msgstr "Získať aktuálny čas a dátum"
 
 #: ../applets/fish/fish.c:263
 #, c-format
@@ -762,15 +763,15 @@ msgstr "Ak je toto true, animácia ryby bude na zvislých paneloch otočená."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
-msgstr ""
+msgstr "Vytváracie rozhranie pre Wanda"
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:2
 msgid "From Whence That Stupid Fish Came"
-msgstr ""
+msgstr "Odkiaľ sa tá hlúpa ryba mohla vziať"
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:4
 msgid "Display a swimming fish or another animated creature"
-msgstr ""
+msgstr "Zobraziť plávajúcu rybu alebo iné animované stvorenie"
 
 #: ../applets/notification_area/main.c:124
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
@@ -783,15 +784,15 @@ msgstr "Oblasť upozornení panelu"
 
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:1
 msgid "Notification Area Factory"
-msgstr ""
+msgstr "Vytváracie rozhranie pre oblasť upozornení"
 
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:2
 msgid "Factory for notification area"
-msgstr ""
+msgstr "Vytváracie rozhranie pre oblasť upozornení"
 
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:4
 msgid "Area where notification icons appear"
-msgstr ""
+msgstr "Miesto, kde sa objavujú upozornenia"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:1
 msgid "Show windows from all workspaces"
@@ -857,21 +858,21 @@ msgstr "Pri zobrazení všetkých plôch určuje, koľko riadkov (pre horizontá
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:7
 msgid "Wrap around on scroll"
-msgstr ""
+msgstr "Previazať skrolovanie"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:8
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
-msgstr ""
+msgstr "Ak je toto true, prepínač plôch umožní previazať skrolovanie, to znamená, že umožní priamo prepnúť z poslednej plochy na prvú a opačne."
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
-msgstr ""
+msgstr "Vytváracie rozhranie pre applet navigácie v oknách"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:2
 msgid "Factory for the window navigation related applets"
-msgstr ""
+msgstr "Vytváracie rozhranie pre navigačné applety"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
 #: ../applets/wncklet/window-menu.c:81 ../applets/wncklet/window-menu.c:238
@@ -880,7 +881,7 @@ msgstr "Výber okna"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
-msgstr ""
+msgstr "Prepnúť medzi otvorenými oknami a menu"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
 #: ../applets/wncklet/workspace-switcher.c:571
@@ -889,7 +890,7 @@ msgstr "Prepínanie plôch"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
-msgstr ""
+msgstr "Prepnúť medzi plochami"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
 #: ../applets/wncklet/window-list.c:538
@@ -898,15 +899,15 @@ msgstr "Zoznam okien"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:8
 msgid "Switch between open windows using buttons"
-msgstr ""
+msgstr "Prepnúť medzi otvorenými oknami pomocou tlačítok"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:9
 msgid "Show Desktop"
-msgstr ""
+msgstr "Zobraziť plochu"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:10
 msgid "Hide application windows and show the desktop"
-msgstr ""
+msgstr "Skryť okná programov a zobraziť plochu"
 
 #: ../applets/wncklet/showdesktop.c:173
 #, c-format
@@ -941,7 +942,7 @@ msgstr "Váš správca okien nepodporuje tlačidlo pre zobrazenie plochy, alebo 
 
 #: ../applets/wncklet/window-list.c:167
 msgid "_System Monitor"
-msgstr ""
+msgstr "Monitor _systému"
 
 #: ../applets/wncklet/window-list.c:540
 msgid ""
@@ -1050,7 +1051,7 @@ msgstr "Z_obraziť názvy plôch"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Allow workspace _wrap around in switcher"
-msgstr ""
+msgstr "Povoliť previazanie v prepínači plôch"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Workspaces"
@@ -1089,11 +1090,11 @@ msgstr "Ak je true, automatické dopĺňanie v dialógovom okne \"Spustiť aplik
 
 #: ../data/org.mate.panel.gschema.xml.in.in.h:7
 msgid "History for \"Run Application\" dialog"
-msgstr ""
+msgstr "História dialógu \"Spustiť program\""
 
 #: ../data/org.mate.panel.gschema.xml.in.in.h:8
 msgid "This is the list of commands used in \"Run Application\" dialog."
-msgstr ""
+msgstr "Toto je zoznam príkazov použitých v dialógu \"Spustiť program\""
 
 #: ../data/org.mate.panel.gschema.xml.in.in.h:9
 msgid "Panel ID list"
@@ -1207,7 +1208,7 @@ msgstr "Typ objektu panelu"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:2
 msgid "The type of this panel object."
-msgstr ""
+msgstr "Typ objektu tohto panela"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:3
 msgid "Toplevel panel containing object"
@@ -1249,7 +1250,7 @@ msgstr "Ak je true, používateľ nemôže presunúť aplet bez toho, aby ho naj
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:11
 msgid "Applet IID"
-msgstr ""
+msgstr "IID appletu"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:12
 msgid ""
@@ -1257,7 +1258,7 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr ""
+msgstr "ID implementácie appletu - napr. \"ClockAppletFactory::ClockApplet\". Tento kľúč má zmysel iba ak má kľúč object_type hodnotu \"external-applet\" (alebo \"matecomponent-applet\")."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:13
 msgid "Panel attached to drawer"
@@ -1326,13 +1327,13 @@ msgstr "Cesta, z ktorej sa má vytvoriť obsah ponuky. Tento kľúč má zmysel 
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:25
 msgid "Draw arrow in menu button"
-msgstr ""
+msgstr "Nakresliť šípku v tlačítku menu"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:26
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
-msgstr ""
+msgstr "Ak je toto true, cez ikonu tlačítka sa vykreslí šípka. Ak je toto false, tlačítko má iba ikonu."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.in.h:27
 msgid "Launcher location"
@@ -1591,7 +1592,7 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr ""
+msgstr "Ktorý typ pozadia sa má pre tento panel použiť. Možné hodnoty sú \"none\" - použije sa východzí prvok GTK+ pre pozadie, \"color\" - použije sa farba zadaná v kľúči color, alebo \"image\" - použije sa obrázok zadaný v kľúči image."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:43
 msgid "Background color"
@@ -1656,45 +1657,45 @@ msgstr "Ak je true, obrázok na pozadí bude pre zvislé panely otočený."
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "Súbor nie je platným .desktop súborom"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr ""
+msgstr "Nerozpoznaná verzia súboru plochy '%s'"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:958
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "Spúšťa sa %s"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1100
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "Aplikácia neprijíma dokumenty v príkazovom riadku"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1168
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "Nerozpoznaná možnosť spustenia: %d"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1373
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "Položke pracovnej plochy typu Odkaz nie je možné odovzdať URI dokumentov"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1394
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Nespustiteľná položka"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "Zakázať spojenie k správcovi relácie"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Určte súbor obsahujúci uloženú konfiguráciu"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
@@ -1702,19 +1703,19 @@ msgstr "SÚBOR"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Určte ID správcu relácií"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
-msgstr ""
+msgstr "Možnosti správy relácie:"
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
+msgstr "Zobraziť možnosti správy relácie"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1729,7 +1730,7 @@ msgstr "Chyba"
 
 #: ../mate-panel/libpanel-util/panel-icon-chooser.c:382
 msgid "Choose an icon"
-msgstr ""
+msgstr "Vybrať ikonu"
 
 #: ../mate-panel/libpanel-util/panel-launch.c:45
 #, c-format
@@ -1864,12 +1865,12 @@ msgstr "Nahradiť aktuálne bežiaci panel"
 #. this feature was request in #mate irc channel
 #: ../mate-panel/main.c:52
 msgid "Reset the panel configuration to default"
-msgstr ""
+msgstr "Obnoviť nastavenie panelu do východzieho stavu"
 
 #. open run dialog
 #: ../mate-panel/main.c:54
 msgid "Execute the run dialog"
-msgstr ""
+msgstr "Spustiť dialóg Spustiť"
 
 #: ../mate-panel/menu.c:916
 msgid "Add this launcher to _panel"
@@ -2633,7 +2634,7 @@ msgstr "Zadajte IID appletu, ktorý chcete načítať"
 #: ../mate-panel/panel-test-applets.c:40
 msgid ""
 "Specify a gsettings path in which the applet preferences should be stored"
-msgstr ""
+msgstr "Zadajte umiestnenie gsettings, kde by mali byť uložené nastavenia appletu"
 
 #: ../mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
@@ -2695,7 +2696,7 @@ msgstr "_Aplet:"
 
 #: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Prefs Path:"
-msgstr ""
+msgstr "_Preferovaná ceta:"
 
 #: ../mate-panel/panel-toplevel.c:1141
 msgid "Hide Panel"
