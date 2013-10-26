@@ -26,7 +26,12 @@
 
 #include "na-tray-manager.h"
 
+#include <gtk/gtk.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
+#define GDK_WINDOW_XWINDOW GDK_WINDOW_XID
+#else
 #include <gdkconfig.h>
+#endif
 #include <glib/gi18n.h>
 #if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
@@ -34,7 +39,6 @@
 #elif defined (GDK_WINDOWING_WIN32)
 #include <gdk/gdkwin32.h>
 #endif
-#include <gtk/gtk.h>
 
 #include "na-marshal.h"
 
@@ -316,18 +320,28 @@ pending_message_free (PendingMessage *message)
   g_free (message);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+na_tray_manager_handle_message_data (NaTrayManager *manager,
+                                     XClientMessageEvent *xevent)
+#else
 static GdkFilterReturn
 na_tray_manager_handle_client_message_message_data (GdkXEvent *xev,
                                                     GdkEvent  *event,
                                                     gpointer   data)
+#endif
 {
+#if !GTK_CHECK_VERSION (3, 0, 0)
   XClientMessageEvent *xevent;
   NaTrayManager       *manager;
+#endif
   GList               *p;
   int                  len;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
   xevent  = (XClientMessageEvent *) xev;
   manager = data;
+#endif
 
   /* Try to see if we can find the pending message in the list */
   for (p = manager->messages; p; p = p->next)
@@ -363,7 +377,9 @@ na_tray_manager_handle_client_message_message_data (GdkXEvent *xev,
 	}
     }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
   return GDK_FILTER_REMOVE;
+#endif
 }
 
 static void
@@ -455,6 +471,7 @@ na_tray_manager_handle_cancel_message (NaTrayManager       *manager,
     }
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static GdkFilterReturn
 na_tray_manager_handle_client_message_opcode (GdkXEvent *xev,
                                               GdkEvent  *event,
@@ -487,6 +504,7 @@ na_tray_manager_handle_client_message_opcode (GdkXEvent *xev,
 
   return GDK_FILTER_CONTINUE;
 }
+#endif
 
 static GdkFilterReturn
 na_tray_manager_window_filter (GdkXEvent *xev,
@@ -507,6 +525,31 @@ na_tray_manager_window_filter (GdkXEvent *xev,
                                                (XClientMessageEvent *) xevent);
           return GDK_FILTER_REMOVE;
 	}
+#if GTK_CHECK_VERSION (3, 0, 0)
+      /* _NET_SYSTEM_TRAY_OPCODE: SYSTEM_TRAY_BEGIN_MESSAGE */
+      else if (xevent->xclient.message_type == manager->opcode_atom &&
+               xevent->xclient.data.l[1] == SYSTEM_TRAY_BEGIN_MESSAGE)
+        {
+          na_tray_manager_handle_begin_message (manager,
+                                                (XClientMessageEvent *) event);
+          return GDK_FILTER_REMOVE;
+        }
+      /* _NET_SYSTEM_TRAY_OPCODE: SYSTEM_TRAY_CANCEL_MESSAGE */
+      else if (xevent->xclient.message_type == manager->opcode_atom &&
+               xevent->xclient.data.l[1] == SYSTEM_TRAY_CANCEL_MESSAGE)
+        {
+          na_tray_manager_handle_cancel_message (manager,
+                                                 (XClientMessageEvent *) event);
+          return GDK_FILTER_REMOVE;
+        }
+      /* _NET_SYSTEM_TRAY_MESSAGE_DATA */
+      else if (xevent->xclient.message_type == manager->message_data_atom)
+        {
+          na_tray_manager_handle_message_data (manager,
+                                               (XClientMessageEvent *) event);
+          return GDK_FILTER_REMOVE;
+        }
+#endif
     }
   else if (xevent->type == SelectionClear)
     {
@@ -564,9 +607,12 @@ na_tray_manager_unmanage (NaTrayManager *manager)
                                            TRUE);
     }
 
+/* fixed in GTK3 */
+#if !GTK_CHECK_VERSION (3, 0, 0)
   //FIXME: we should also use gdk_remove_client_message_filter when it's
   //available
   // See bug #351254
+#endif
   gdk_window_remove_filter (window,
                             na_tray_manager_window_filter, manager);
 
@@ -647,10 +693,14 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
        * be embedded. In almost all cases, this will be the same as the visual
        * of the screen.
        */
+#if GTK_CHECK_VERSION (3, 0, 0)
+      xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual (manager->screen));
+#else
       GdkColormap *colormap;
 
       colormap = gdk_screen_get_default_colormap (manager->screen);
       xvisual = GDK_VISUAL_XVISUAL (gdk_colormap_get_visual (colormap));
+#endif
     }
 
   data[0] = XVisualIDFromVisual (xvisual);
@@ -749,6 +799,12 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
       message_data_atom = gdk_atom_intern ("_NET_SYSTEM_TRAY_MESSAGE_DATA",
                                            FALSE);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+      manager->message_data_atom = gdk_x11_atom_to_xatom_for_display (display,
+                                                                      message_data_atom);
+#endif
+
+
       /* Add a window filter */
 #if 0
       /* This is for when we lose the selection of _NET_SYSTEM_TRAY_Sx */
@@ -759,6 +815,7 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
       /* This is for SYSTEM_TRAY_REQUEST_DOCK and SelectionClear */
       gdk_window_add_filter (window,
                              na_tray_manager_window_filter, manager);
+#if !GTK_CHECK_VERSION (3, 0, 0)
       /* This is for SYSTEM_TRAY_BEGIN_MESSAGE and SYSTEM_TRAY_CANCEL_MESSAGE */
       gdk_display_add_client_message_filter (display, opcode_atom,
                                              na_tray_manager_handle_client_message_opcode,
@@ -767,6 +824,7 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
       gdk_display_add_client_message_filter (display, message_data_atom,
                                              na_tray_manager_handle_client_message_message_data,
                                              manager);
+#endif
       return TRUE;
     }
   else

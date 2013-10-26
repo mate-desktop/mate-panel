@@ -52,6 +52,9 @@ struct _NaTrayManager
 #ifdef GDK_WINDOWING_X11
   GdkAtom selection_atom;
   Atom    opcode_atom;
+#if GTK_CHECK_VERSION (3, 0, 0)
+  Atom message_data_atom;
+#endif
 #endif
 
   GtkWidget *invisible;

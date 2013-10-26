@@ -141,7 +141,11 @@ static const GtkActionEntry menu_actions [] = {
 	  G_CALLBACK (about_cb) }
 };
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, AppletData* data)
+#else
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, AppletData* data)
+#endif
 {
 	na_tray_force_redraw(data->tray);
 }
