@@ -27,6 +27,8 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
+#include <cairo.h>
+#include <cairo-gobject.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -78,7 +80,11 @@ struct _MatePanelAppletClass {
 
 	void (*change_size) (MatePanelApplet* applet, guint size);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	void (*change_background) (MatePanelApplet *applet, cairo_pattern_t *pattern);
+#else
 	void (*change_background) (MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap);
+#endif
 	void (*move_focus_out_of_applet) (MatePanelApplet* frame, GtkDirectionType direction);
 };
 
@@ -88,8 +94,11 @@ GtkWidget* mate_panel_applet_new(void);
 
 MatePanelAppletOrient mate_panel_applet_get_orient(MatePanelApplet* applet);
 guint mate_panel_applet_get_size(MatePanelApplet* applet);
+#if GTK_CHECK_VERSION (3, 0, 0)
+MatePanelAppletBackgroundType mate_panel_applet_get_background (MatePanelApplet *applet, /* return values */ GdkColor* color, cairo_pattern_t** pattern);
+#else
 MatePanelAppletBackgroundType mate_panel_applet_get_background(MatePanelApplet* applet, /* return values */ GdkColor* color, GdkPixmap** pixmap);
-
+#endif
 void mate_panel_applet_set_background_widget(MatePanelApplet* applet, GtkWidget* widget);
 
 gchar* mate_panel_applet_get_preferences_path(MatePanelApplet* applet);
