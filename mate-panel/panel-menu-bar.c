@@ -257,13 +257,37 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 		"class \"PanelMenuBar\" style \"panel-menubar-style\"");
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean panel_menu_bar_on_draw(GtkWidget* widget, cairo_t* cr, gpointer data)
+#else
 static gboolean panel_menu_bar_on_expose(GtkWidget* widget, GdkEventExpose* event, gpointer data)
+#endif
 {
 	PanelMenuBar* menubar = data;
 
 	if (gtk_widget_has_focus(GTK_WIDGET(menubar)))
 	{
-		gtk_paint_focus(gtk_widget_get_style(widget), gtk_widget_get_window(widget), gtk_widget_get_state(GTK_WIDGET(menubar)), NULL, widget, "menubar-applet", 0, 0, -1, -1);
+		gtk_paint_focus(gtk_widget_get_style(widget),
+#if GTK_CHECK_VERSION (3, 0, 0)
+						cr,
+#else
+						gtk_widget_get_window(widget),
+#endif
+						gtk_widget_get_state(GTK_WIDGET(menubar)),
+#if !GTK_CHECK_VERSION (3, 0, 0)
+						NULL,
+#endif
+						widget,
+						"menubar-applet",
+						0,
+						0,
+#if GTK_CHECK_VERSION (3, 0, 0)
+						gtk_widget_get_allocated_width (widget),
+						gtk_widget_get_allocated_height (widget));
+#else
+						-1,
+						-1);
+#endif
 	}
 
 	return FALSE;
@@ -295,7 +319,11 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 
 	g_signal_connect_after(menubar, "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), menubar);
 	g_signal_connect_after(menubar, "focus-out-event", G_CALLBACK(gtk_widget_queue_draw), menubar);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	g_signal_connect_after(menubar, "draw", G_CALLBACK(panel_menu_bar_on_draw), menubar);
+#else
 	g_signal_connect_after(menubar, "expose-event", G_CALLBACK(panel_menu_bar_on_expose), menubar);
+#endif
 
 	gtk_widget_set_can_focus(GTK_WIDGET(menubar), TRUE);
 
@@ -362,6 +390,7 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 	 */
 	menu_shell = GTK_MENU_SHELL(menubar);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	if (!menu_shell->active)
 	{
 		gtk_grab_add(GTK_WIDGET(menu_shell));
@@ -369,6 +398,7 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 		menu_shell->have_grab = TRUE;
 		menu_shell->active = TRUE;
 	}
+#endif
 
 	gtk_menu_shell_select_item(menu_shell, gtk_menu_get_attach_widget(menu));
 }

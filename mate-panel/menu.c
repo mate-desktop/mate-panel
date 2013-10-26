@@ -28,7 +28,12 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#endif
+
 
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-xdg.h>
@@ -837,10 +842,16 @@ restore_grabs(GtkWidget *w, gpointer data)
 		if (viewable)
 			xgrab_shell = parent;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+		parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
+#else
 		parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+#endif
 	}
 
 	/*only grab if this HAD a grab before*/
+	/* FIXME fix for GTK3 */
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
           {
 	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
@@ -859,6 +870,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 		  gdk_pointer_ungrab (GDK_CURRENT_TIME);
 	      }
          }
+#endif
 
 	gtk_grab_add (GTK_WIDGET (menu));
 }
@@ -1052,7 +1064,11 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       if (viewable)
 	xgrab_shell = parent;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+      parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
+#else
       parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+#endif
     }
 
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
@@ -1068,7 +1084,12 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	{
 	  if (gdk_keyboard_grab (window, TRUE,
 				 GDK_CURRENT_TIME) == 0)
-	    GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+	    {
+/* FIXME fix for GTK3 */
+#if !GTK_CHECK_VERSION (3, 0, 0)
+	      GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+#endif
+	    }
 	  else
 	    {
 	      gdk_pointer_ungrab (GDK_CURRENT_TIME);
@@ -1103,11 +1124,18 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 }
 
 static void
+#if GTK_CHECK_VERSION (3, 0, 0)
+image_menuitem_set_size_request (GtkWidget *menuitem,
+								 GtkIconSize icon_size)
+#else
 image_menuitem_size_request (GtkWidget      *menuitem,
 			     GtkRequisition *requisition,
 			     gpointer        data)
+#endif
 {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkIconSize icon_size = (GtkIconSize) GPOINTER_TO_INT (data);
+#endif
 	int         icon_height;
 	int         req_height;
 
@@ -1123,7 +1151,12 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 	req_height = icon_height;
 	req_height += (gtk_container_get_border_width (GTK_CONTAINER (menuitem)) +
 		       (gtk_widget_get_style (menuitem))->ythickness) * 2;
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_widget_set_size_request (menuitem, -1, req_height);
+#else
 	requisition->height = MAX (requisition->height, req_height);
+#endif
 }
 
 static char *
@@ -1196,9 +1229,13 @@ setup_menuitem (GtkWidget   *menuitem,
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 					       image);
 	} else if (icon_size != GTK_ICON_SIZE_INVALID)
+#if GTK_CHECK_VERSION (3, 0, 0)
+		image_menuitem_set_size_request (menuitem, icon_size);
+#else
 		g_signal_connect (menuitem, "size_request",
 				  G_CALLBACK (image_menuitem_size_request),
 				  GINT_TO_POINTER (icon_size));
+#endif
 
 	gtk_widget_show (menuitem);
 }
@@ -1591,8 +1628,16 @@ handle_matemenu_tree_changed (MateMenuTree *tree,
 {
 	guint idle_id;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GList *list, *l;
+	list = gtk_container_get_children (GTK_CONTAINER (menu));
+	for (l = list; l; l = l->next)
+		gtk_widget_destroy (l->data);
+	g_list_free (list);
+#else
 	while (GTK_MENU_SHELL (menu)->children)
                 gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
+#endif
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
@@ -1899,20 +1944,31 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 			      GdkEventKey *event)
 {
 	gboolean retval = FALSE;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkWidget *active_menu_item = NULL;
+#endif
 
 	if ((event->keyval == GDK_Menu) ||
 	    (event->keyval == GDK_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+		active_menu_item = gtk_menu_shell_get_selected_item (menu_shell);
+		if (active_menu_item && gtk_menu_item_get_submenu (GTK_MENU_ITEM (active_menu_item)) == NULL) {
+#else
 		if (menu_shell->active_menu_item &&
 		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
+#endif
 			GdkEventButton bevent;
 
 			bevent.button = 3;
 			bevent.time = GDK_CURRENT_TIME;
-			retval = show_item_menu (menu_shell->active_menu_item,
-						 &bevent);
+#if GTK_CHECK_VERSION (3, 0, 0)
+			retval = show_item_menu (active_menu_item, &bevent);
+#else
+			retval = show_item_menu (menu_shell->active_menu_item, &bevent);
+#endif
 		}
 
 	}

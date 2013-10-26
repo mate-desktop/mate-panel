@@ -90,6 +90,64 @@ struct _MatePanelAppletFramePrivate {
 	guint            has_handle : 1;
 };
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean
+mate_panel_applet_frame_draw (GtkWidget *widget,
+                         cairo_t   *cr)
+{
+        MatePanelAppletFrame *frame = MATE_PANEL_APPLET_FRAME (widget);
+	GtkStyleContext *context;
+	GtkStateFlags     state;
+	cairo_pattern_t  *bg_pattern;
+	PanelBackground  *background;
+
+        if (GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->draw)
+                GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->draw (widget, cr);
+
+	if (!frame->priv->has_handle)
+		return FALSE;
+
+	context = gtk_widget_get_style_context (widget);
+	state = gtk_widget_get_state_flags (widget);
+	gtk_style_context_save (context);
+	gtk_style_context_set_state (context, state);
+
+	cairo_save (cr);
+
+	/* Set the pattern transform so as to correctly render a patterned
+	 * background with the handle */
+	gtk_style_context_get (context, state,
+			       "background-image", &bg_pattern,
+			       NULL);
+	background = &frame->priv->panel->background;
+
+	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
+	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
+		cairo_matrix_t ptm;
+
+		cairo_matrix_init_translate (&ptm,
+					     frame->priv->handle_rect.x,
+					     frame->priv->handle_rect.y);
+		cairo_matrix_scale (&ptm,
+				    frame->priv->handle_rect.width,
+				    frame->priv->handle_rect.height);
+		cairo_pattern_set_matrix (bg_pattern, &ptm);
+		cairo_pattern_destroy (bg_pattern);
+	}
+
+	gtk_render_handle (context, cr,
+			   frame->priv->handle_rect.x,
+			   frame->priv->handle_rect.y,
+			   frame->priv->handle_rect.width,
+			   frame->priv->handle_rect.height);
+
+	cairo_restore (cr);
+
+	gtk_style_context_restore (context);
+
+        return FALSE;
+}
+#else
 static void
 mate_panel_applet_frame_paint (GtkWidget    *widget,
 			  GdkRectangle *area)
@@ -142,6 +200,7 @@ static gboolean mate_panel_applet_frame_expose(GtkWidget* widget, GdkEventExpose
 
 	return FALSE;
 }
+#endif
 
 static void
 mate_panel_applet_frame_update_background_size (MatePanelAppletFrame *frame,
@@ -165,6 +224,85 @@ mate_panel_applet_frame_update_background_size (MatePanelAppletFrame *frame,
 	mate_panel_applet_frame_change_background (frame, background->type);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+mate_panel_applet_frame_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	MatePanelAppletFrame *frame;
+	GtkBin           *bin;
+	GtkWidget        *child;
+	guint             border_width;
+
+	frame = MATE_PANEL_APPLET_FRAME (widget);
+	bin = GTK_BIN (widget);
+
+	if (!frame->priv->has_handle) {
+		GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->get_preferred_width (widget, minimal_width, natural_width);
+		return;
+	}
+
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_get_preferred_width (child, minimal_width, natural_width);
+
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+	*minimal_width += border_width;
+	*natural_width += border_width;
+
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
+		*minimal_width += HANDLE_SIZE;
+		*natural_width += HANDLE_SIZE;
+		break;
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
+mate_panel_applet_frame_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	MatePanelAppletFrame *frame;
+	GtkBin           *bin;
+	GtkWidget        *child;
+	guint             border_width;
+
+	frame = MATE_PANEL_APPLET_FRAME (widget);
+	bin = GTK_BIN (widget);
+
+	if (!frame->priv->has_handle) {
+		GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->get_preferred_height (widget, minimal_height, natural_height);
+		return;
+	}
+
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_get_preferred_height (child, minimal_height, natural_height);
+
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+	*minimal_height += border_width;
+	*natural_height += border_width;
+
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
+		*minimal_height += HANDLE_SIZE;
+		*natural_height += HANDLE_SIZE;
+		break;
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+#else
 static void
 mate_panel_applet_frame_size_request (GtkWidget      *widget,
 				 GtkRequisition *requisition)
@@ -209,6 +347,7 @@ mate_panel_applet_frame_size_request (GtkWidget      *widget,
 		break;
 	}
 }
+#endif
 
 static void
 mate_panel_applet_frame_size_allocate (GtkWidget     *widget,
@@ -401,8 +540,14 @@ mate_panel_applet_frame_class_init (MatePanelAppletFrameClass *klass)
 
 	gobject_class->finalize = mate_panel_applet_frame_finalize;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	widget_class->draw                 = mate_panel_applet_frame_draw;
+	widget_class->get_preferred_width  = mate_panel_applet_frame_get_preferred_width;
+	widget_class->get_preferred_height = mate_panel_applet_frame_get_preferred_height;
+#else
 	widget_class->expose_event         = mate_panel_applet_frame_expose;
 	widget_class->size_request         = mate_panel_applet_frame_size_request;
+#endif
 	widget_class->size_allocate        = mate_panel_applet_frame_size_allocate;
 	widget_class->button_press_event   = mate_panel_applet_frame_button_changed;
 	widget_class->button_release_event = mate_panel_applet_frame_button_changed;

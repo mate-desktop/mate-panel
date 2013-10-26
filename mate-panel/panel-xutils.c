@@ -27,6 +27,7 @@
 #include "panel-xutils.h"
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
@@ -50,7 +51,11 @@ panel_xutils_set_window_type (GdkWindow             *gdk_window,
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
 	display = GDK_WINDOW_XDISPLAY (gdk_window);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	window = GDK_WINDOW_XID (gdk_window);
+#else
 	window  = GDK_WINDOW_XWINDOW (gdk_window);
+#endif
 
 	if (net_wm_window_type == None)
 		net_wm_window_type = XInternAtom (display,
@@ -113,7 +118,11 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
 	display = GDK_WINDOW_XDISPLAY (gdk_window);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	window = GDK_WINDOW_XID (gdk_window);
+#else
 	window  = GDK_WINDOW_XWINDOW (gdk_window);
+#endif
 
 	if (net_wm_strut == None)
 		net_wm_strut = XInternAtom (display, "_NET_WM_STRUT", False);
@@ -164,7 +173,11 @@ panel_warp_pointer (GdkWindow *gdk_window,
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
 	display = GDK_WINDOW_XDISPLAY (gdk_window);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	window = GDK_WINDOW_XID (gdk_window);
+#else
 	window  = GDK_WINDOW_XWINDOW (gdk_window);
+#endif
 
 	gdk_error_trap_push ();
 	XWarpPointer (display, None, window, 0, 0, 0, 0, x, y);

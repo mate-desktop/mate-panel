@@ -338,7 +338,11 @@ panel_ditem_editor_set_property (GObject       *object,
 }
 
 static void
+#if GTK_CHECK_VERSION (3, 0, 0)
+panel_ditem_editor_dispose (GObject *object)
+#else
 panel_ditem_editor_destroy (GtkObject *object)
+#endif
 {
 	PanelDItemEditor *dialog;
 
@@ -366,20 +370,30 @@ panel_ditem_editor_destroy (GtkObject *object)
 		g_free (dialog->priv->uri);
 	dialog->priv->uri = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	G_OBJECT_CLASS (panel_ditem_editor_parent_class)->dispose (object);
+#else
 	GTK_OBJECT_CLASS (panel_ditem_editor_parent_class)->destroy (object);
+#endif
 }
 
 static void
 panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 {
 	GObjectClass *gobject_class = G_OBJECT_CLASS (class);
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkObjectClass *gtkobject_class = GTK_OBJECT_CLASS (class);
+#endif
 
 	gobject_class->constructor = panel_ditem_editor_constructor;
 	gobject_class->get_property = panel_ditem_editor_get_property;
         gobject_class->set_property = panel_ditem_editor_set_property;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gobject_class->dispose = panel_ditem_editor_dispose;
+#else
 	gtkobject_class->destroy = panel_ditem_editor_destroy;
+#endif
 
 	g_type_class_add_private (class,
 				  sizeof (PanelDItemEditorPrivate));
@@ -608,7 +622,9 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+#endif
 
 	priv->table = gtk_table_new (4, 3, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (priv->table), 5);

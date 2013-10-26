@@ -98,6 +98,9 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 {
 	GdkWindow *window;
 	GdkScreen *screen;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDisplay *display;
+#endif
 	XEvent    *xevent = (XEvent *) gdk_xevent;
 
 	if (xevent->type != ClientMessage)
@@ -106,11 +109,21 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (xevent->xclient.message_type != atom_mate_panel_action)
 		return GDK_FILTER_CONTINUE;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screen = gdk_event_get_screen (event);
+	display = gdk_screen_get_display (screen);
+	window = gdk_x11_window_lookup_for_display (display, xevent->xclient.window);
+#else
+	screen = gdk_drawable_get_screen (window);
 	window = gdk_window_lookup (xevent->xclient.window);
+#endif
 	if (!window)
 		return GDK_FILTER_CONTINUE;
 
-	screen = gdk_drawable_get_screen (window);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (window != gdk_screen_get_root_window (screen))
+		return GDK_FILTER_CONTINUE;
+#endif
 
 	if (xevent->xclient.data.l [0] == atom_mate_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
@@ -128,12 +141,16 @@ void
 panel_action_protocol_init (void)
 {
 	GdkDisplay *display;
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GdkAtom     gdk_atom_mate_panel_action;
+#endif
 
 	display = gdk_display_get_default ();
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	gdk_atom_mate_panel_action =
 		gdk_atom_intern_static_string ("_MATE_PANEL_ACTION");
+#endif
 
 	atom_mate_panel_action =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
@@ -152,7 +169,12 @@ panel_action_protocol_init (void)
 			     "_MATE_PANEL_ACTION_KILL_DIALOG",
 			     FALSE);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	/* We'll filter event sent on non-root windows later */
+	gdk_window_add_filter (NULL, panel_action_protocol_filter, NULL);
+#else
 	gdk_display_add_client_message_filter (
 		display, gdk_atom_mate_panel_action,
 		panel_action_protocol_filter, NULL);
+#endif
 }

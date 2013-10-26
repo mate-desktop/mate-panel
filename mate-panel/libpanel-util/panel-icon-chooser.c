@@ -141,7 +141,11 @@ panel_icon_chooser_set_property (GObject      *object,
 }
 
 static void
+#if GTK_CHECK_VERSION (3, 0, 0)
+panel_icon_chooser_dispose (GObject *object)
+#else
 panel_icon_chooser_destroy (GtkObject *object)
+#endif
 {
 	PanelIconChooser *chooser;
 
@@ -166,14 +170,20 @@ panel_icon_chooser_destroy (GtkObject *object)
 		g_free (chooser->priv->icon_theme_dir);
 	chooser->priv->icon_theme_dir = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	G_OBJECT_CLASS (panel_icon_chooser_parent_class)->dispose (object);
+#else
 	GTK_OBJECT_CLASS (panel_icon_chooser_parent_class)->destroy (object);
+#endif
 }
 
 static void
 panel_icon_chooser_class_init (PanelIconChooserClass *class)
 {
 	GObjectClass *gobject_class = G_OBJECT_CLASS (class);
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkObjectClass *gtkobject_class = GTK_OBJECT_CLASS (class);
+#endif
 	GtkWidgetClass *gtkwidget_class = GTK_WIDGET_CLASS (class);
 	GtkButtonClass *gtkbutton_class = GTK_BUTTON_CLASS (class);
 
@@ -181,7 +191,11 @@ panel_icon_chooser_class_init (PanelIconChooserClass *class)
 	gobject_class->get_property = panel_icon_chooser_get_property;
 	gobject_class->set_property = panel_icon_chooser_set_property;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gobject_class->dispose = panel_icon_chooser_dispose;
+#else
 	gtkobject_class->destroy = panel_icon_chooser_destroy;
+#endif
 
 	gtkwidget_class->style_set = _panel_icon_chooser_style_set;
 	gtkwidget_class->screen_changed = _panel_icon_chooser_screen_changed;
@@ -422,7 +436,11 @@ _panel_icon_chooser_clicked (GtkButton *button)
 
 			if (info) {
 				path = g_strdup (gtk_icon_info_get_filename (info));
+#if GTK_CHECK_VERSION (3, 8, 0)
+				g_object_unref (info);
+#else
 				gtk_icon_info_free (info);
+#endif
 			}
 		}
 

@@ -29,6 +29,12 @@
 #include <gio/gio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#define MATE_DESKTOP_USE_UNSTABLE_API
+#include <libmate-desktop/mate-desktop-utils.h>
+#endif
+#include <libmate-desktop/mate-gsettings.h>
+
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
@@ -428,7 +434,11 @@ void panel_lock_screen_action(GdkScreen* screen, const char* action)
 		return;
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (!mate_gdk_spawn_command_line_on_screen(screen, command, &error))
+#else
 	if (!gdk_spawn_command_line_on_screen(screen, command, &error))
+#endif
 	{
 		char* primary = g_strdup_printf(_("Could not execute '%s'"), command);
 		panel_error_dialog (NULL, screen, "cannot_exec_screensaver", TRUE, primary, error->message);
@@ -830,14 +840,16 @@ panel_util_get_file_display_for_common_files (GFile *file)
 	compare = g_file_new_for_path (g_get_home_dir ());
 	if (g_file_equal (file, compare)) {
 		GSettings *caja_desktop_settings;
-		char *caja_home_icon_name;
+		char *caja_home_icon_name = NULL;
 
 		g_object_unref (compare);
 
-		caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
-		caja_home_icon_name = g_settings_get_string (caja_desktop_settings,
-													 CAJA_DESKTOP_HOME_ICON_NAME_KEY);
-		g_object_unref (caja_desktop_settings);
+		if (mate_gsettings_schema_exists (CAJA_DESKTOP_SCHEMA)) {
+			caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
+			caja_home_icon_name = g_settings_get_string (caja_desktop_settings,
+														 CAJA_DESKTOP_HOME_ICON_NAME_KEY);
+			g_object_unref (caja_desktop_settings);
+		}
 		if (PANEL_GLIB_STR_EMPTY (caja_home_icon_name)) {
 			g_free (caja_home_icon_name);
 			return g_strdup (_("Home Folder"));

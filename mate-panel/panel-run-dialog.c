@@ -43,7 +43,7 @@
 #include <matemenu-tree.h>
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
-#include <libmate/mate-desktop-utils.h>
+#include <libmate-desktop/mate-desktop-utils.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -147,7 +147,7 @@ _panel_run_get_recent_programs_list (PanelRunDialog *dialog)
 
 static void
 _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
-				      GtkComboBoxEntry *entry,
+				      GtkComboBox      *entry,
 				      char             *lastcommand)
 {
 	GtkTreeModel *model;
@@ -360,6 +360,17 @@ dummy_child_watch (GPid         pid,
 	 */
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+/*
+ * Set the DISPLAY variable, to be use by g_spawn_async.
+ */
+static void
+set_environment (gpointer display)
+{
+	g_setenv ("DISPLAY", display, TRUE);
+}
+#endif
+
 static gboolean
 panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				 const char     *command,
@@ -371,6 +382,9 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	char      **argv;
 	int         argc;
 	GPid        pid;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	char       *display;
+#endif
 
 	if (!command_is_executable (locale_command, &argc, &argv))
 		return FALSE;
@@ -380,6 +394,20 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
 		mate_desktop_prepend_terminal_to_vector (&argc, &argv);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	display = gdk_screen_make_display_name (screen);
+
+	result = g_spawn_async (NULL, /* working directory */
+				argv,
+				NULL, /* envp */
+				G_SPAWN_SEARCH_PATH,
+				set_environment,
+				&display,
+				NULL,
+				&error);
+
+	g_free (display);
+#else
 	result = gdk_spawn_on_screen (screen,
 				      NULL, /* working directory */
 				      argv,
@@ -389,6 +417,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				      NULL, /* user data */
 				      &pid, /* child pid */
 				      &error);
+#endif
 
 	if (!result) {
 		char *primary;
@@ -419,7 +448,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	char     *disk;
 	char     *scheme;
 
-	command = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	command = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
 	command = g_strchug (command);
 
 	if (!command || !command [0]) {
@@ -428,6 +457,8 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	}
 
 	/* evil eggies, do not translate! */
+#if !GTK_CHECK_VERSION (3, 0, 0)
+	/* FIXME re-add once GTK3 support is fixed */
 	if (!strcmp (command, "free the fish")) {
 		start_screen_check ();
 
@@ -441,6 +472,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		gtk_widget_destroy (dialog->run_dialog);
 		return;
 	}
+#endif
 
 	error = NULL;
 	disk = g_locale_from_utf8 (command, -1, NULL, NULL, &error);
@@ -486,7 +518,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	if (result) {
 		/* only save working commands in history */
 		_panel_run_save_recent_programs_list
-			(dialog, GTK_COMBO_BOX_ENTRY (dialog->combobox), command);
+			(dialog, GTK_COMBO_BOX (dialog->combobox), command);
 
 		/* only close the dialog if we successfully showed or launched
 		 * something */
@@ -545,7 +577,7 @@ static void
 panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 				   const char     *file)
 {
-	char       *text;
+	const char *text;
 	char       *quoted, *temp;
 	GtkWidget  *entry;
 
@@ -555,7 +587,7 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 
 	quoted = quote_string (file);
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	text = gtk_entry_get_text (GTK_ENTRY (entry));
 	if (text && text [0]) {
 		temp = g_strconcat (text, " ", quoted, NULL);
 		gtk_entry_set_text (GTK_ENTRY (entry), temp);
@@ -563,7 +595,6 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	} else
 		gtk_entry_set_text (GTK_ENTRY (entry), quoted);
 
-	g_free (text);
 	g_free (quoted);
 }
 
@@ -671,7 +702,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		return FALSE;
 	}
 
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
 	found_icon = NULL;
 	found_name = NULL;
 	fuzzy = FALSE;
@@ -1506,7 +1537,7 @@ entry_event (GtkEditable    *entry,
 		return FALSE;
 
 	/* tab completion */
-	if (event->keyval == GDK_Tab) {
+	if (event->keyval == GDK_KEY_Tab) {
 		gtk_editable_get_selection_bounds (entry, &pos, &tmp);
 
 		if (dialog->completion_started &&
@@ -1602,7 +1633,7 @@ combobox_changed (GtkComboBox    *combobox,
 	char *start;
 	char *msg;
 
-	text = gtk_combo_box_get_active_text (combobox);
+	text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (combobox)))));
 
 	start = text;
 	while (*start != '\0' && g_ascii_isspace (*start))
@@ -1746,8 +1777,8 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->combobox),
 				 _panel_run_get_recent_programs_list (dialog));
-	gtk_combo_box_entry_set_text_column
-		(GTK_COMBO_BOX_ENTRY (dialog->combobox), 0);
+	gtk_combo_box_set_entry_text_column
+		(GTK_COMBO_BOX (dialog->combobox), 0);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
 
@@ -1787,7 +1818,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	char     *scheme;
 	char     *save_uri;
 
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
 
 	if (!text || !text [0]) {
 		g_free (text);

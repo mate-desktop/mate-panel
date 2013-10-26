@@ -495,15 +495,27 @@ panel_profile_is_writable_attached_tooltip (PanelToplevel *toplevel)
 
 static void
 get_background_color (PanelToplevel *toplevel,
-					  PanelColor  *color)
+#if GTK_CHECK_VERSION (3, 0, 0)
+					  GdkRGBA       *color)
+#else
+					  PanelColor    *color)
+#endif
 {
 	char       *color_str;
 	color_str = g_settings_get_string (toplevel->background_settings, "color");
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (!color_str || !gdk_rgba_parse (color, color_str)) {
+		color->red   = 0;
+		color->green = 0;
+		color->blue  = 0;
+	}
+#else
 	if (!color_str || !gdk_color_parse (color_str, &(color->gdk))) {
 		color->gdk.red   = 0;
 		color->gdk.green = 0;
 		color->gdk.blue  = 0;
 	}
+#endif
 	g_free (color_str);
 
 	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity");
@@ -529,7 +541,11 @@ panel_profile_load_background (PanelToplevel *toplevel)
 	PanelWidget         *panel_widget;
 	PanelBackground     *background;
 	PanelBackgroundType  background_type;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkRGBA              color;
+#else
 	PanelColor           color;
+#endif
 	char                *image;
 	gboolean             fit;
 	gboolean             stretch;
@@ -823,14 +839,26 @@ panel_profile_background_change_notify (GSettings *settings,
 		panel_background_set_type (background, background_type);
 		panel_toplevel_update_edges (toplevel);
 	} else if (!strcmp (key, "color")) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+		GdkRGBA color;
+		gchar *str;
+		str = g_settings_get_string (settings, key);
+		if (gdk_rgba_parse (&color, str))
+			panel_background_set_color (background, &color);
+		g_free (str);
+#else
 		GdkColor    gdk_color;
-		const char *str;
+		gchar *str;
 		str = g_settings_get_string (settings, key);
 		if (gdk_color_parse (str, &gdk_color))
 			panel_background_set_gdk_color (background, &gdk_color);
+		g_free (str);
+#endif
 	} else if (!strcmp (key, "opacity")) {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		panel_background_set_opacity (background,
 					      g_settings_get_int (settings, key));
+#endif
 	} else if (!strcmp (key, "image")) {
 		panel_background_set_image (background,
 					    g_settings_get_string (settings, key));

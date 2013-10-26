@@ -9,8 +9,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
+#include <gdk/gdkkeysyms-compat.h>
+#endif
 
 #include <libpanel-util/panel-list.h>
 
@@ -59,6 +63,14 @@ static guint panel_widget_signals [LAST_SIGNAL] = {0};
 static gboolean mate_panel_applet_in_drag = FALSE;
 static GtkWidget *saved_focus_widget = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void panel_widget_get_preferred_width (GtkWidget *widget,
+					 gint *minimum_width,
+					 gint *natural_width);
+static void panel_widget_get_preferred_height (GtkWidget *widget,
+					 gint *minimum_height,
+					 gint *natural_height);
+#endif
 static void panel_widget_size_request   (GtkWidget        *widget,
 					 GtkRequisition   *requisition);
 static void panel_widget_size_allocate  (GtkWidget        *widget,
@@ -67,7 +79,11 @@ static void panel_widget_cadd           (GtkContainer     *container,
 					 GtkWidget        *widget);
 static void panel_widget_cremove        (GtkContainer     *container,
 					 GtkWidget        *widget);
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void panel_widget_dispose        (GObject *obj);
+#else
 static void panel_widget_destroy        (GtkObject        *obj);
+#endif
 static void panel_widget_finalize       (GObject          *obj);
 static void panel_widget_realize        (GtkWidget        *widget);
 static void panel_widget_unrealize      (GtkWidget        *panel);
@@ -274,8 +290,12 @@ remove_all_move_bindings (PanelWidget *panel)
 static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GObjectClass *object_class = (GObjectClass*) class;
+#else
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
 	GObjectClass *gobject_class = (GObjectClass*) class;
+#endif
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
 
@@ -407,10 +427,20 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->tab_move = panel_widget_tab_move;
 	class->end_move = panel_widget_end_move;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	object_class->dispose = panel_widget_dispose;
+	object_class->finalize = panel_widget_finalize;
+#else
 	object_class->destroy = panel_widget_destroy;
 	gobject_class->finalize = panel_widget_finalize;
-	
+#endif
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	widget_class->get_preferred_width = panel_widget_get_preferred_width;
+	widget_class->get_preferred_height = panel_widget_get_preferred_height;
+#else
 	widget_class->size_request = panel_widget_size_request;
+#endif
 	widget_class->size_allocate = panel_widget_size_allocate;
 	widget_class->realize = panel_widget_realize;
 	widget_class->unrealize = panel_widget_unrealize;
@@ -1294,6 +1324,28 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 	}
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+panel_widget_get_preferred_width (GtkWidget *widget,
+								  gint *minimum_width,
+								  gint *natural_width)
+{
+	GtkRequisition req;
+	panel_widget_size_request (widget, &req);
+	*minimum_width = *natural_width = req.width;
+}
+
+static void
+panel_widget_get_preferred_height (GtkWidget *widget,
+								   gint *minimum_height,
+								   gint *natural_height)
+{
+	GtkRequisition req;
+	panel_widget_size_request (widget, &req);
+	*minimum_height = *natural_height = req.height;
+}
+#endif
+
 static void
 queue_resize_on_all_applets(PanelWidget *panel)
 {
@@ -1568,7 +1620,11 @@ panel_widget_style_set (GtkWidget *widget,
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
 			&style->bg [state],
+#if GTK_CHECK_VERSION (3, 0, 0)
+			style->background [state]);
+#else
 			style->bg_pixmap [state]);
+#endif
 	}
 }
 
@@ -1586,7 +1642,11 @@ panel_widget_state_changed (GtkWidget    *widget,
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
 			&style->bg [state],
+#if GTK_CHECK_VERSION (3, 0, 0)
+			style->background [state]);
+#else
 			style->bg_pixmap [state]);
+#endif
 	}
 }
 
@@ -1624,7 +1684,11 @@ panel_widget_realize (GtkWidget *widget)
 	panel_background_set_default_style (
 		&panel->background,
 		&style->bg [state],
+#if GTK_CHECK_VERSION (3, 0, 0)
+		style->background [state]);
+#else
 		style->bg_pixmap [state]);
+#endif
 
 	panel_background_realized (&panel->background, window);
 }
@@ -1694,7 +1758,11 @@ panel_widget_destroy_open_dialogs (PanelWidget *panel_widget)
 }
 
 static void
+#if GTK_CHECK_VERSION (3, 0, 0)
+panel_widget_dispose (GObject *obj)
+#else
 panel_widget_destroy (GtkObject *obj)
+#endif
 {
 	PanelWidget *panel;
 
@@ -1715,8 +1783,12 @@ panel_widget_destroy (GtkObject *obj)
 		panel->master_widget = NULL;
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	G_OBJECT_CLASS (panel_widget_parent_class)->dispose (obj);
+#else
 	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);
+#endif
 }
 
 static void
@@ -2328,8 +2400,12 @@ panel_widget_applet_key_press_event (GtkWidget   *widget,
 
 	if (!mate_panel_applet_in_drag)
 		return FALSE;
-	
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	return gtk_bindings_activate (G_OBJECT (panel),
+#else
 	return gtk_bindings_activate (GTK_OBJECT (panel),
+#endif
 				      ((GdkEventKey *)event)->keyval, 
 				      ((GdkEventKey *)event)->state);	
 }

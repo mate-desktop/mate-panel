@@ -39,6 +39,7 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <libmate-desktop/mate-gsettings.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -1047,7 +1048,8 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	g_free (name);
 	g_free (uri);
 
-	if (!g_settings_get_boolean (place_item->priv->caja_prefs_settings,
+	if (!place_item->priv->caja_prefs_settings ||
+		!g_settings_get_boolean (place_item->priv->caja_prefs_settings,
 				     CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY)) {
 		file = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 		uri = g_file_get_uri (file);
@@ -1070,14 +1072,16 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);
 	add_menu_separator (places_menu);
 
-	gsettings_name = g_settings_get_string (place_item->priv->caja_desktop_settings,
-					        CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY);
-	panel_menu_items_append_from_desktop (places_menu,
-					      "caja-computer.desktop",
-					      gsettings_name,
-                                              TRUE);
-	if (gsettings_name)
+	if (place_item->priv->caja_desktop_settings != NULL) {
+		gsettings_name = g_settings_get_string (place_item->priv->caja_desktop_settings,
+								CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY);
+		panel_menu_items_append_from_desktop (places_menu,
+							  "caja-computer.desktop",
+							  gsettings_name,
+							  TRUE);
+		if (gsettings_name)
 		g_free (gsettings_name);
+	}
 
 	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
@@ -1326,21 +1330,29 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 
 	menuitem->priv = PANEL_PLACE_MENU_ITEM_GET_PRIVATE (menuitem);
 
-	menuitem->priv->caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
-	menuitem->priv->caja_prefs_settings = g_settings_new (CAJA_PREFS_SCHEMA);
+	if (mate_gsettings_schema_exists (CAJA_DESKTOP_SCHEMA)) {
+		menuitem->priv->caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
+		g_signal_connect (menuitem->priv->caja_desktop_settings,
+				  "changed::" CAJA_DESKTOP_HOME_ICON_NAME_KEY,
+				  G_CALLBACK (panel_place_menu_item_key_changed),
+				  G_OBJECT (menuitem));
+		g_signal_connect (menuitem->priv->caja_desktop_settings,
+				  "changed::" CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY,
+				  G_CALLBACK (panel_place_menu_item_key_changed),
+				  G_OBJECT (menuitem));
+	}
+	else
+		menuitem->priv->caja_desktop_settings = NULL;
 
-	g_signal_connect (menuitem->priv->caja_desktop_settings,
-			  "changed::" CAJA_DESKTOP_HOME_ICON_NAME_KEY,
-			  G_CALLBACK (panel_place_menu_item_key_changed),
-			  G_OBJECT (menuitem));
-	g_signal_connect (menuitem->priv->caja_desktop_settings,
-			  "changed::" CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY,
-			  G_CALLBACK (panel_place_menu_item_key_changed),
-			  G_OBJECT (menuitem));
-	g_signal_connect (menuitem->priv->caja_prefs_settings,
-			  "changed::" CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY,
-			  G_CALLBACK (panel_place_menu_item_key_changed),
-			  G_OBJECT (menuitem));
+	if (mate_gsettings_schema_exists (CAJA_PREFS_SCHEMA)) {
+		menuitem->priv->caja_prefs_settings = g_settings_new (CAJA_PREFS_SCHEMA);
+		g_signal_connect (menuitem->priv->caja_prefs_settings,
+				  "changed::" CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY,
+				  G_CALLBACK (panel_place_menu_item_key_changed),
+				  G_OBJECT (menuitem));
+	}
+	else
+		menuitem->priv->caja_prefs_settings = NULL;
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 

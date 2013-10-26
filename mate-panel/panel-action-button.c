@@ -33,6 +33,11 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#define MATE_DESKTOP_USE_UNSTABLE_API
+#include <libmate-desktop/mate-desktop-utils.h>
+#endif
+
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-session-manager.h>
@@ -290,7 +295,11 @@ panel_action_connect_server (GtkWidget *widget)
 	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
 	error = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	mate_gdk_spawn_command_line_on_screen (screen, "caja-connect-server",
+#else
 	gdk_spawn_command_line_on_screen (screen, "caja-connect-server",
+#endif
 					  &error);
 
 	if (error) {

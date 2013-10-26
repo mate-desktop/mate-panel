@@ -21,6 +21,7 @@
  */
 
 #include <string.h>
+#include <gtk/gtkx.h>
 #include "mate-panel-applet-container.h"
 #include "panel-marshal.h"
 

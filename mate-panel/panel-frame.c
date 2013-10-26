@@ -68,6 +68,28 @@ panel_frame_size_request (GtkWidget      *widget,
 		requisition->width += style->ythickness;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+panel_frame_get_preferred_width (GtkWidget *widget,
+								    gint *minimum_width,
+								    gint *natural_width)
+{
+	GtkRequisition req;
+	panel_frame_size_request (widget, &req);
+	*minimum_width = *natural_width = req.width;
+}
+
+static void
+panel_frame_get_preferred_height (GtkWidget *widget,
+									 gint *minimum_height,
+									 gint *natural_height)
+{
+	GtkRequisition req;
+	panel_frame_size_request (widget, &req);
+	*minimum_height = *natural_height = req.height;
+}
+#endif
+
 static void
 panel_frame_size_allocate (GtkWidget     *widget,
 			   GtkAllocation *allocation)
@@ -122,13 +144,20 @@ panel_frame_size_allocate (GtkWidget     *widget,
 
 void
 panel_frame_draw (GtkWidget      *widget,
+#if GTK_CHECK_VERSION (3, 0, 0)
+		  cairo_t *cr,
+#endif
 		  PanelFrameEdge  edges)
 {
 	GdkWindow     *window;
 	GtkStyle      *style;
 	GtkStateType   state;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkColor      *dark, *light, *black;
+#else
 	GtkAllocation  allocation;
 	GdkGC         *dark, *light, *black;
+#endif
 	int            x, y, width, height;
 	int            xthickness, ythickness;
 
@@ -138,22 +167,103 @@ panel_frame_draw (GtkWidget      *widget,
 	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	x = 0;
+	y = 0;
+	width = gtk_widget_get_allocated_width (widget);
+	height = gtk_widget_get_allocated_height (widget);
+#else
 	gtk_widget_get_allocation (widget, &allocation);
-
-	dark  = style->dark_gc [state];
-	light = style->light_gc [state];
-	black = style->black_gc;
-
-	xthickness = style->xthickness;
-	ythickness = style->ythickness;
-
 	x      = allocation.x;
 	y      = allocation.y;
 	width  = allocation.width;
 	height = allocation.height;
+#endif
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	dark = &style->dark [state];
+	light = &style->light [state];
+	black = &style->black;
+#else
+	dark  = style->dark_gc [state];
+	light = style->light_gc [state];
+	black = style->black_gc;
+#endif
+
+	xthickness = style->xthickness;
+	ythickness = style->ythickness;
 
 	/* Copied from gtk_default_draw_shadow() */
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	cairo_set_line_width (cr, 1);
+
+	if (edges & PANEL_EDGE_BOTTOM && ythickness > 0) {
+		if (ythickness > 1) {
+			gdk_cairo_set_source_color (cr, dark);
+			cairo_move_to (cr, x + .5, y + height - 2 + .5);
+			cairo_line_to (cr, x + width - 1 - .5, y + height - 2 + .5);
+			cairo_stroke (cr);
+
+			gdk_cairo_set_source_color (cr, black);
+			cairo_move_to (cr, x + .5, y + height - 1 - .5);
+			cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+			cairo_stroke (cr);
+		} else {
+			gdk_cairo_set_source_color (cr, dark);
+			cairo_move_to (cr, x + .5, y + height - 1 - .5);
+			cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+			cairo_stroke (cr);
+		}
+	}
+
+	if (edges & PANEL_EDGE_RIGHT && xthickness > 0) {
+		if (xthickness > 1) {
+			gdk_cairo_set_source_color (cr, dark);
+			cairo_move_to (cr, x + width - 2 - .5, y + .5);
+			cairo_line_to (cr, x + width - 2 - .5, y + height - 1 - .5);
+			cairo_stroke (cr);
+
+			gdk_cairo_set_source_color (cr, black);
+			cairo_move_to (cr, x + width - 1 - .5, y + .5);
+			cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+			cairo_stroke (cr);
+		} else {
+			gdk_cairo_set_source_color (cr, dark);
+			cairo_move_to (cr, x + width - 1 - .5, y + .5);
+			cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+			cairo_stroke (cr);
+		}
+	}
+
+	if (edges & PANEL_EDGE_TOP && ythickness > 0) {
+		gdk_cairo_set_source_color (cr, light);
+		cairo_move_to (cr, x + .5, y + .5);
+		cairo_line_to (cr, x + width - 1 - .5, y + .5);
+		cairo_stroke (cr);
+
+		if (ythickness > 1) {
+			gdk_cairo_set_source_color (cr, &style->bg [state]);
+			cairo_move_to (cr, x + .5, y + 1 + .5);
+			cairo_line_to (cr, x + width - 1 - .5, y + 1 + .5);
+			cairo_stroke (cr);
+		}
+	}
+
+	if (edges & PANEL_EDGE_LEFT && xthickness > 0) {
+		gdk_cairo_set_source_color (cr, light);
+		cairo_move_to (cr, x + .5, y + .5);
+		cairo_line_to (cr, x + .5, y + height - 1 - .5);
+		cairo_stroke (cr);
+
+		if (xthickness > 1) {
+			gdk_cairo_set_source_color (cr, &style->bg [state]);
+			cairo_move_to (cr, x + 1 + .5, y + .5);
+			cairo_line_to (cr, x + 1 + .5, y + height - 1 - .5);
+			cairo_stroke (cr);
+		}
+	}
+#else
 	if (edges & PANEL_EDGE_BOTTOM && ythickness > 0) {
 		if (ythickness > 1) {
 			gdk_draw_line (window, dark,
@@ -202,9 +312,14 @@ panel_frame_draw (GtkWidget      *widget,
 				       style->bg_gc [state],
 				       x + 1, y, x + 1, y + height - 1);
 	}
+#endif
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean panel_frame_expose(GtkWidget* widget, cairo_t* cr)
+#else
 static gboolean panel_frame_expose(GtkWidget* widget, GdkEventExpose* event)
+#endif
 {
 	PanelFrame *frame = (PanelFrame *) widget;
 	gboolean    retval = FALSE;
@@ -212,12 +327,19 @@ static gboolean panel_frame_expose(GtkWidget* widget, GdkEventExpose* event)
 	if (!gtk_widget_is_drawable (widget))
 		return retval;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (GTK_WIDGET_CLASS (panel_frame_parent_class)->draw)
+		retval = GTK_WIDGET_CLASS (panel_frame_parent_class)->draw (widget, cr);
+#else
 	if (GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event)
-	{
 		retval = GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event (widget, event);
-	}
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	panel_frame_draw (widget, cr, frame->edges);
+#else
 	panel_frame_draw (widget, frame->edges);
+#endif
 
 	return retval;
 }
@@ -275,9 +397,15 @@ panel_frame_class_init (PanelFrameClass *klass)
 	gobject_class->set_property = panel_frame_set_property;
         gobject_class->get_property = panel_frame_get_property;
 
-	widget_class->size_request  = panel_frame_size_request;
 	widget_class->size_allocate = panel_frame_size_allocate;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	widget_class->get_preferred_width  = panel_frame_get_preferred_width;
+	widget_class->get_preferred_height = panel_frame_get_preferred_height;
+	widget_class->draw                 = panel_frame_expose;
+#else
+	widget_class->size_request  = panel_frame_size_request;
 	widget_class->expose_event  = panel_frame_expose;
+#endif
 
 	g_object_class_install_property (
 		gobject_class,

@@ -4,7 +4,11 @@
 
 #include <X11/Xlib.h>
 #include <cairo.h>
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#endif
 #include <canberra-gtk.h>
 
 #ifdef CA_CHECK_VERSION
@@ -16,6 +20,7 @@
 #include "panel-util.h"
 #include "nothing.h"
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static void
 pixbuf_reverse (GdkPixbuf *gp)
 {
@@ -1566,3 +1571,4 @@ panel_dialog_window_event (GtkWidget *window,
 
 	return FALSE;
 }
+#endif
