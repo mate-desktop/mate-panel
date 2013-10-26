@@ -19,8 +19,14 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 #include <gio/gio.h>
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+#define MATE_DESKTOP_USE_UNSTABLE_API
+#include <libmate-desktop/mate-desktop-utils.h>
+#endif
 
 #include "wncklet.h"
 #include "window-list.h"
@@ -55,7 +61,7 @@ typedef struct {
 	GSettings* settings;
 } TasklistData;
 
-static void callSystemMonitor(GtkAction* action, TasklistData* tasklist);
+static void call_system_monitor(GtkAction* action, TasklistData* tasklist);
 static void display_properties_dialog(GtkAction* action, TasklistData* tasklist);
 static void display_help_dialog(GtkAction* action, TasklistData* tasklist);
 static void display_about_dialog(GtkAction* action, TasklistData* tasklist);
@@ -121,7 +127,11 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 	tasklist_update(tasklist);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t* pattern, TasklistData* tasklist)
+#else
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, TasklistData* tasklist)
+#endif
 {
 	switch (type)
 	{
@@ -157,7 +167,7 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 
 /* TODO: this is sad, should be used a function to retrieve  applications from
  *  .desktop or some like that. */
-static const char* listOfSystemMonitors[] = {
+static const char* system_monitors[] = {
 	"mate-system-monitor",
 	"gnome-system-monitor",
 };
@@ -169,7 +179,7 @@ static const GtkActionEntry tasklist_menu_actions[] = {
 		N_("_System Monitor"),
 		NULL,
 		NULL,
-		G_CALLBACK(callSystemMonitor)
+		G_CALLBACK(call_system_monitor)
 	},
 	{
 		"TasklistPreferences",
@@ -415,7 +425,11 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
+#if WNCK_CHECK_VERSION (2, 91, 6)
+	tasklist->tasklist = wnck_tasklist_new();
+#else
 	tasklist->tasklist = wnck_tasklist_new(NULL);
+#endif
 
 #if WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
@@ -448,9 +462,9 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	char* programpath;
 	int i;
 
-	for (i = 0; i < G_N_ELEMENTS(listOfSystemMonitors); i += 1)
+	for (i = 0; i < G_N_ELEMENTS(system_monitors); i += 1)
 	{
-		programpath = g_find_program_in_path(listOfSystemMonitors[i]);
+		programpath = g_find_program_in_path(system_monitors[i]);
 		
 		if (programpath != NULL)
 		{
@@ -488,26 +502,33 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	return TRUE;
 }
 
-static void callSystemMonitor(GtkAction* action, TasklistData* tasklist)
+static void call_system_monitor(GtkAction* action, TasklistData* tasklist)
 {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	char* argv[2] = {NULL, NULL};
+#endif
 	char* programpath;
 	int i;
 
-	for (i = 0; i < G_N_ELEMENTS(listOfSystemMonitors); i += 1)
+	for (i = 0; i < G_N_ELEMENTS(system_monitors); i += 1)
 	{
-		programpath = g_find_program_in_path(listOfSystemMonitors[i]);
-		
+		programpath = g_find_program_in_path(system_monitors[i]);
+
 		if (programpath != NULL)
 		{
 			g_free(programpath);
-			
-			argv[0] = listOfSystemMonitors[i];
-			
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+			mate_gdk_spawn_command_line_on_screen(gtk_widget_get_screen(tasklist->applet),
+				      system_monitors[i],
+				      NULL);
+#else
+			argv[0] = system_monitors[i];
 			gdk_spawn_on_screen(gtk_widget_get_screen(tasklist->applet), NULL, argv, NULL,
 				      G_SPAWN_SEARCH_PATH,
 				      NULL, NULL, NULL, NULL);
-			
+#endif
+
 			return;
 		}
 	}

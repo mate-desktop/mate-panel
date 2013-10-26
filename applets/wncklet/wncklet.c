@@ -30,8 +30,8 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <libwnck/screen.h>
-#include <libwnck/util.h>
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "window-menu.h"

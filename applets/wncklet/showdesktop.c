@@ -30,7 +30,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
-#include <libwnck/screen.h>
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "showdesktop.h"

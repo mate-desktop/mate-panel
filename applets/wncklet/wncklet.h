@@ -24,7 +24,7 @@
 #ifndef __WNCKLET_H__
 #define __WNCKLET_H__
 
-#include <libwnck/screen.h>
+#include <libwnck/libwnck.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>

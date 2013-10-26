@@ -34,8 +34,12 @@
 
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <gdk/gdkkeysyms-compat.h>
+#endif
 
-#include <libwnck/selector.h>
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -115,12 +119,34 @@ static void window_menu_destroy(GtkWidget* widget, WindowMenu* window_menu)
 	g_free(window_menu);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean window_menu_on_draw(GtkWidget* widget, cairo_t* cr, gpointer data)
+#else
 static gboolean window_menu_on_expose(GtkWidget* widget, GdkEventExpose* event, gpointer data)
+#endif
 {
 	WindowMenu* window_menu = data;
 
 	if (gtk_widget_has_focus(window_menu->applet))
-		gtk_paint_focus(gtk_widget_get_style(widget), gtk_widget_get_window(widget), gtk_widget_get_state(widget), NULL, widget, "menu-applet", 0, 0, -1, -1);
+		gtk_paint_focus(gtk_widget_get_style(widget),
+#if GTK_CHECK_VERSION (3, 0, 0)
+						cr,
+#else
+						gtk_widget_get_window(widget),
+#endif
+						gtk_widget_get_state(widget),
+#if !GTK_CHECK_VERSION (3, 0, 0)
+						NULL,
+#endif
+						widget,
+						"menu-applet",
+						0, 0,
+#if GTK_CHECK_VERSION (3, 0, 0)
+						gtk_widget_get_allocated_width (widget),
+						gtk_widget_get_allocated_height (widget));
+#else
+						-1, -1);
+#endif
 
 	return FALSE;
 }
@@ -201,12 +227,14 @@ static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* even
 			 */
 			menu_shell = GTK_MENU_SHELL(selector);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 			if (!menu_shell->active)
 			{
 				gtk_grab_add(GTK_WIDGET(menu_shell));
 				menu_shell->have_grab = TRUE;
 				menu_shell->active = TRUE;
 			}
+#endif
 
 			gtk_menu_shell_select_first(menu_shell, FALSE);
 			return TRUE;
@@ -261,7 +289,11 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 
 	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);
 	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-out-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	g_signal_connect_after(G_OBJECT(window_menu->selector), "draw", G_CALLBACK(window_menu_on_draw), window_menu);
+#else
 	g_signal_connect_after(G_OBJECT(window_menu->selector), "expose-event", G_CALLBACK(window_menu_on_expose), window_menu);
+#endif
 
 	g_signal_connect(G_OBJECT(window_menu->selector), "button_press_event", G_CALLBACK(filter_button_press), window_menu);
 

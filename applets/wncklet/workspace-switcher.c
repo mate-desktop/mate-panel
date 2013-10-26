@@ -21,8 +21,11 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 #include <gio/gio.h>
+
+#include <libmate-desktop/mate-gsettings.h>
 
 #include "workspace-switcher.h"
 
@@ -192,7 +195,11 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 		gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, PagerData* pager)
+#else
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, PagerData* pager)
+#endif
 {
         /* taken from the TrashApplet */
         GtkRcStyle *rc_style;
@@ -204,6 +211,10 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
         gtk_widget_modify_style (GTK_WIDGET (pager->pager), rc_style);
         g_object_unref (rc_style);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
+		type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
+#else
 	switch (type)
 	{
                 case PANEL_COLOR_BACKGROUND:
@@ -223,6 +234,7 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
                 default:
                         break;
 	}
+#endif
 }
 
 static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, PagerData* pager)
@@ -517,7 +529,11 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
+#if WNCK_CHECK_VERSION (2, 91, 6)
+	pager->pager = wnck_pager_new();
+#else
 	pager->pager = wnck_pager_new(NULL);
+#endif
 	pager->screen = NULL;
 	pager->wm = PAGER_WM_UNKNOWN;
 	wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
@@ -669,10 +685,12 @@ static void workspace_destroyed(WnckScreen* screen, WnckWorkspace* space, PagerD
 
 static void num_workspaces_value_changed(GtkSpinButton* button, PagerData* pager)
 {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	/* Slow down a bit after the first change, since it's moving really to
 	 * fast. See bug #336731 for background.
 	 * FIXME: remove this if bug 410520 gets fixed. */
 	button->timer_step = 0.2;
+#endif
 
 	wnck_screen_change_workspace_count(pager->screen, gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pager->num_workspaces_spin)));
 }
@@ -747,6 +765,10 @@ static void close_dialog(GtkWidget* button, gpointer data)
 {
 	PagerData* pager = data;
 	GtkTreeViewColumn* col;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkCellArea *area;
+	GtkCellEditable *edit_widget;
+#endif
 
 	/* This is a hack. The "editable" signal for GtkCellRenderer is emitted
 	only on button press or focus cycle. Hence when the user changes the
@@ -757,8 +779,15 @@ static void close_dialog(GtkWidget* button, gpointer data)
 
 	col = gtk_tree_view_get_column(GTK_TREE_VIEW(pager->workspaces_tree), 0);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	area = gtk_cell_layout_get_area (GTK_CELL_LAYOUT (col));
+	edit_widget = gtk_cell_area_get_edit_widget (area);
+	if (edit_widget)
+		gtk_cell_editable_editing_done (edit_widget);
+#else
 	if (col->editable_widget != NULL && GTK_IS_CELL_EDITABLE(col->editable_widget))
 		gtk_cell_editable_editing_done(col->editable_widget);
+#endif
 
 	gtk_widget_destroy(pager->properties_dialog);
 }
@@ -770,7 +799,7 @@ setup_sensitivity(PagerData* pager, GtkBuilder* builder, const char* wid1, const
 {
 	GtkWidget* w;
 
-	if (g_settings_is_writable(settings, key))
+	if ((settings != NULL) && g_settings_is_writable(settings, key))
 	{
 		return;
 	}
@@ -803,11 +832,13 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	GtkTreeViewColumn* column;
 	GtkCellRenderer* cell;
 	int nr_ws, i;
-	GSettings *marco_general_settings;
-	GSettings *marco_workspaces_settings;
+	GSettings *marco_general_settings = NULL;
+	GSettings *marco_workspaces_settings = NULL;
 
-	marco_general_settings = g_settings_new (MARCO_GENERAL_SCHEMA);
-	marco_workspaces_settings = g_settings_new (MARCO_WORSKACES_SCHEMA);
+	if (mate_gsettings_schema_exists(MARCO_GENERAL_SCHEMA))
+		marco_general_settings = g_settings_new (MARCO_GENERAL_SCHEMA);
+	if (mate_gsettings_schema_exists(MARCO_WORSKACES_SCHEMA))
+		marco_workspaces_settings = g_settings_new (MARCO_WORSKACES_SCHEMA);
 
 	pager->workspaces_frame = WID("workspaces_frame");
 	pager->workspace_names_label = WID("workspace_names_label");
@@ -833,8 +864,10 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	pager->workspaces_tree = WID("workspaces_tree_view");
 	setup_sensitivity(pager, builder, "workspaces_tree_view", NULL, NULL, marco_workspaces_settings, WORKSPACE_NAME /* key */);
 
-	g_object_unref (marco_general_settings);
-	g_object_unref (marco_workspaces_settings);
+	if (marco_general_settings != NULL)
+		g_object_unref (marco_general_settings);
+	if (marco_workspaces_settings != NULL)
+		g_object_unref (marco_workspaces_settings);
 
 
 	/* Wrap workspaces: */
