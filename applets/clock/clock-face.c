@@ -27,7 +27,13 @@ static GHashTable *pixbuf_cache = NULL;
 G_DEFINE_TYPE (ClockFace, clock_face, GTK_TYPE_WIDGET)
 
 static void clock_face_finalize (GObject *);
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean clock_face_draw (GtkWidget *clock, cairo_t *cr);
+static void clock_face_get_preferred_width (GtkWidget *widget, gint *minimum_width, gint *natural_width);
+static void clock_face_get_preferred_height (GtkWidget *widget, gint *minimum_height, gint *natural_height);
+#else
 static gboolean clock_face_expose (GtkWidget *clock, GdkEventExpose *event);
+#endif
 static void clock_face_size_request (GtkWidget *clock,
 				     GtkRequisition *requisition);
 static void clock_face_size_allocate (GtkWidget     *clock,
@@ -70,8 +76,14 @@ clock_face_class_init (ClockFaceClass *class)
         widget_class = GTK_WIDGET_CLASS (class);
 
         /* GtkWidget signals */
-        widget_class->expose_event = clock_face_expose;
+#if GTK_CHECK_VERSION (3, 0, 0)
+        widget_class->draw = clock_face_draw;
+        widget_class->get_preferred_width  = clock_face_get_preferred_width;
+        widget_class->get_preferred_height = clock_face_get_preferred_height;
+#else
         widget_class->size_request = clock_face_size_request;
+        widget_class->expose_event = clock_face_expose;
+#endif
         widget_class->size_allocate = clock_face_size_allocate;
 
         /* GObject signals */
@@ -93,11 +105,20 @@ clock_face_init (ClockFace *this)
         gtk_widget_set_has_window (GTK_WIDGET (this), FALSE);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean
+clock_face_draw (GtkWidget *this, cairo_t *cr)
+#else
 static void
 draw (GtkWidget *this, cairo_t *cr)
+#endif
 {
         ClockFacePrivate *priv;
+#if GTK_CHECK_VERSION (3, 0, 0)
+        int width, height;
+#else
         GtkAllocation allocation;
+#endif
         double x, y;
         double radius;
         int hours, minutes, seconds;
@@ -106,6 +127,11 @@ draw (GtkWidget *this, cairo_t *cr)
         double hour_length, min_length, sec_length;
 
         priv = CLOCK_FACE_GET_PRIVATE (this);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+        if (GTK_WIDGET_CLASS (clock_face_parent_class)->draw)
+            GTK_WIDGET_CLASS (clock_face_parent_class)->draw (this, cr);
+#endif
 
         if (priv->size == CLOCK_FACE_LARGE) {
                 hour_length = 0.45;
@@ -117,6 +143,21 @@ draw (GtkWidget *this, cairo_t *cr)
                 sec_length = 0.8;   /* not drawn currently */
         }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+        width = gtk_widget_get_allocated_width (this);
+        height = gtk_widget_get_allocated_width (this);
+        x = width / 2;
+        y = height / 2;
+        radius = MIN (width / 2, height / 2) - 5;
+
+        /* clock back */
+        if (priv->face_pixbuf) {
+                cairo_save (cr);
+                gdk_cairo_set_source_pixbuf (cr, priv->face_pixbuf, 0, 0);
+                cairo_paint (cr);
+                cairo_restore (cr);
+        }
+#else
         gtk_widget_get_allocation (this, &allocation);
 
         x = allocation.x + allocation.width / 2;
@@ -142,6 +183,7 @@ draw (GtkWidget *this, cairo_t *cr)
         }
 
         cairo_restore (cr);
+#endif
 
         /* clock hands */
         hours = priv->time.tm_hour;
@@ -184,6 +226,7 @@ draw (GtkWidget *this, cairo_t *cr)
         }
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static gboolean
 clock_face_expose (GtkWidget *this, GdkEventExpose *event)
 {
@@ -203,6 +246,7 @@ clock_face_expose (GtkWidget *this, GdkEventExpose *event)
 
         return FALSE;
 }
+#endif
 
 static void
 clock_face_redraw_canvas (ClockFace *this)
@@ -247,6 +291,28 @@ clock_face_size_request (GtkWidget *this,
                 }
         }
 }
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+clock_face_get_preferred_width (GtkWidget *widget,
+                                gint *minimum_width,
+                                gint *natural_width)
+{
+        GtkRequisition req;
+        clock_face_size_request (widget, &req);
+        *minimum_width = *natural_width = req.width;
+}
+
+static void
+clock_face_get_preferred_height (GtkWidget *widget,
+                                 gint *minimum_height,
+                                 gint *natural_height)
+{
+        GtkRequisition req;
+        clock_face_size_request (widget, &req);
+        *minimum_height = *natural_height = req.height;
+}
+#endif
 
 static void
 clock_face_size_allocate (GtkWidget     *this,

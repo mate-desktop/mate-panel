@@ -765,7 +765,7 @@ close_on_escape (GtkWidget       *widget,
 		 GdkEventKey     *event,
 		 GtkToggleButton *toggle_button)
 {
-	if (event->keyval == GDK_Escape) {
+	if (event->keyval == GDK_KEY_Escape) {
 		gtk_toggle_button_set_active (toggle_button, FALSE);
 		return TRUE;
 	}
@@ -2114,7 +2114,11 @@ location_start_element (GMarkupParseContext *context,
 					  latitude, longitude, code, &prefs);
 
 	if (current && clock_location_is_current_timezone (loc))
+#if GTK_CHECK_VERSION (3, 0, 0)
+		clock_location_make_current (loc, GDK_WINDOW_XID (gtk_widget_get_window (cd->applet)),
+#else
 		clock_location_make_current (loc, GDK_WINDOW_XWINDOW (gtk_widget_get_window (cd->applet)),
+#endif
 					     NULL, NULL, NULL);
 
         data->cities = g_list_append (data->cities, loc);
@@ -2955,6 +2959,9 @@ fill_prefs_window (ClockData *cd)
 	GtkCellRenderer *renderer;
         GtkTreeViewColumn *col;
 	GtkListStore *store;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkTreeIter iter;
+#endif
         int i;
 
 	/* Set the 12 hour / 24 hour widget */
@@ -3017,9 +3024,15 @@ fill_prefs_window (ClockData *cd)
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
 
         for (i = 0; temperatures[i] != -1; i++)
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gtk_list_store_insert_with_values (store, &iter, -1,
+						   0, mateweather_prefs_get_temp_display_name (temperatures[i]),
+						   -1);
+#else
                 gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
                                            mateweather_prefs_get_temp_display_name (temperatures[i]));
-	
+#endif
+
 	if (cd->temperature_unit > 0)
 		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
 					  cd->temperature_unit - 2);
@@ -3035,8 +3048,14 @@ fill_prefs_window (ClockData *cd)
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
 
         for (i = 0; speeds[i] != -1; i++)
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gtk_list_store_insert_with_values (store, &iter, -1,
+						   0, mateweather_prefs_get_speed_display_name (speeds[i]),
+						   -1);
+#else
                 gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
                                            mateweather_prefs_get_speed_display_name (speeds[i]));
+#endif
 
 	if (cd->speed_unit > 0)
 		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),

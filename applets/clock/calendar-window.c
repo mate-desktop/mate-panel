@@ -33,7 +33,7 @@
 #include <gio/gio.h>
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
-#include <libmate/mate-desktop-utils.h>
+#include <libmate-desktop/mate-desktop-utils.h>
 
 #include "calendar-window.h"
 
@@ -359,7 +359,11 @@ calendar_window_set_property (GObject       *object,
 }
 
 static void
+#if GTK_CHECK_VERSION (3, 0, 0)
+calendar_window_dispose (GObject *object)
+#else
 calendar_window_destroy (GtkObject *object)
+#endif
 {
 	CalendarWindow *calwin;
 
@@ -369,20 +373,30 @@ calendar_window_destroy (GtkObject *object)
 		g_object_unref (calwin->priv->settings);
 	calwin->priv->settings = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	G_OBJECT_CLASS (calendar_window_parent_class)->dispose (object);
+#else
 	GTK_OBJECT_CLASS (calendar_window_parent_class)->destroy (object);
+#endif
 }
 
 static void
 calendar_window_class_init (CalendarWindowClass *klass)
 {
 	GObjectClass   *gobject_class   = G_OBJECT_CLASS (klass);
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkObjectClass *gtkobject_class = GTK_OBJECT_CLASS (klass);
+#endif
 
 	gobject_class->constructor = calendar_window_constructor;
 	gobject_class->get_property = calendar_window_get_property;
-        gobject_class->set_property = calendar_window_set_property;
+	gobject_class->set_property = calendar_window_set_property;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gobject_class->dispose = calendar_window_dispose;
+#else
 	gtkobject_class->destroy = calendar_window_destroy;
+#endif
 
 	g_type_class_add_private (klass, sizeof (CalendarWindowPrivate));
 

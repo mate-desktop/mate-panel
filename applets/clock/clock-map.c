@@ -56,13 +56,23 @@ typedef struct {
 } ClockMapPrivate;
 
 static void clock_map_finalize (GObject *);
-static void clock_map_size_request (GtkWidget *this,
-                                        GtkRequisition *requisition);
 static void clock_map_size_allocate (GtkWidget *this,
 					 GtkAllocation *allocation);
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean clock_map_draw (GtkWidget *this,
+				      cairo_t *cr);
+static void clock_map_get_preferred_width (GtkWidget *widget,
+					   gint *minimum_width,
+					   gint *natural_width);
+static void clock_map_get_preferred_height (GtkWidget *widget,
+					    gint *minimum_height,
+					    gint *natural_height);
+#else
 static gboolean clock_map_expose (GtkWidget *this,
 				      GdkEventExpose *expose);
-
+static void clock_map_size_request (GtkWidget *this,
+				    GtkRequisition *requisition);
+#endif
 static void clock_map_place_locations (ClockMap *this);
 static void clock_map_render_shadow (ClockMap *this);
 static void clock_map_display (ClockMap *this);
@@ -88,9 +98,16 @@ clock_map_class_init (ClockMapClass *this_class)
         g_obj_class->finalize = clock_map_finalize;
 
         /* GtkWidget signals */
-        widget_class->size_request = clock_map_size_request;
+
         widget_class->size_allocate = clock_map_size_allocate;
-	widget_class->expose_event = clock_map_expose;
+#if GTK_CHECK_VERSION (3, 0, 0)
+        widget_class->draw = clock_map_draw;
+	widget_class->get_preferred_width = clock_map_get_preferred_width;
+	widget_class->get_preferred_height = clock_map_get_preferred_height;
+#else
+        widget_class->expose_event = clock_map_expose;
+        widget_class->size_request = clock_map_size_request;
+#endif
 
         g_type_class_add_private (this_class, sizeof (ClockMapPrivate));
 
@@ -217,24 +234,42 @@ clock_map_refresh (ClockMap *this)
 }
 
 static gboolean
+#if GTK_CHECK_VERSION (3, 0, 0)
+clock_map_draw (GtkWidget *this, cairo_t *cr)
+#else
 clock_map_expose (GtkWidget *this, GdkEventExpose *event)
+#endif
 {
         ClockMapPrivate *priv = PRIVATE (this);
-	GdkWindow *window;
 	GtkStyle *style;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	int width, height;
+#else
+	GdkWindow *window;
 	GtkAllocation allocation;
 	GdkRectangle region;
         cairo_t *cr;
+#endif
 
-	window = gtk_widget_get_window (this);
 	style = gtk_widget_get_style (this);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
+	height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
+#else
+	window = gtk_widget_get_window (this);
 	gtk_widget_get_allocation (this, &allocation);
+#endif
 
 	if (!priv->shadow_map_pixbuf) {
                 g_warning ("Needed to refresh the map in expose event.");
 		clock_map_refresh (CLOCK_MAP (this));
         }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gdk_cairo_set_source_pixbuf (cr, priv->shadow_map_pixbuf, 0, 0);
+	cairo_rectangle (cr, 0, 0, width, height);
+	cairo_paint (cr);
+#else
         cr = gdk_cairo_create (window);
 
 	region.x = allocation.x;
@@ -254,8 +289,13 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
 			 region.height,
 			 GDK_RGB_DITHER_NORMAL,
 			 0, 0);
+#endif
 
         /* draw a simple outline */
+#if GTK_CHECK_VERSION (3, 0, 0)
+	cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
+	gdk_cairo_set_source_color (cr, &style->mid [GTK_STATE_ACTIVE]);
+#else
         cairo_rectangle (
                 cr,
                 allocation.x + 0.5, allocation.y + 0.5,
@@ -267,21 +307,42 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
                 style->mid [GTK_STATE_ACTIVE].red   / 65535.0,
                 style->mid [GTK_STATE_ACTIVE].green / 65535.0,
                 style->mid [GTK_STATE_ACTIVE].blue  / 65535.0);
+#endif
 
         cairo_set_line_width (cr, 1.0);
         cairo_stroke (cr);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
         cairo_destroy (cr);
+#endif
 
 	return FALSE;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+clock_map_get_preferred_width (GtkWidget *widget,
+                                gint *minimum_width,
+                                gint *natural_width)
+{
+        *minimum_width = *natural_width = 250;
+}
+
+static void
+clock_map_get_preferred_height (GtkWidget *widget,
+                                 gint *minimum_height,
+                                 gint *natural_height)
+{
+        *minimum_height = *natural_height = 125;
+}
+#else
 static void
 clock_map_size_request (GtkWidget *this, GtkRequisition *requisition)
 {
         requisition->width = 250;
         requisition->height = 125;
 }
+#endif
 
 static void
 clock_map_size_allocate (GtkWidget *this, GtkAllocation *allocation)
