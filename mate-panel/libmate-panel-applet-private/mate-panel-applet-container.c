@@ -21,7 +21,10 @@
  */
 
 #include <string.h>
+#include <gtk/gtk.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h>
+#endif
 #include "mate-panel-applet-container.h"
 #include "panel-marshal.h"
 
