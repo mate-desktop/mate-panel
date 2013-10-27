@@ -396,10 +396,10 @@ button_widget_expose (GtkWidget         *widget,
 	ButtonWidget *button_widget;
 	GtkButton *button;
 	GdkWindow *window;
-#if GTK_CHECK_VERSION (3, 0, 0)
-	GtkStateFlags state_flags;
 	int width;
 	int height;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStateFlags state_flags;
 #else
 	GtkAllocation allocation;
 #endif
