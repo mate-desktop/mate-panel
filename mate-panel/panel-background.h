@@ -66,9 +66,9 @@ struct _PanelBackground {
 	GdkPixbuf              *desktop;
 	gulong                  monitor_signal;
 
+	GdkWindow              *window;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_pattern_t        *default_pattern;
-	GdkWindow              *window;
 #else
 	GdkPixmap              *pixmap;
 	GdkColormap            *colormap;
