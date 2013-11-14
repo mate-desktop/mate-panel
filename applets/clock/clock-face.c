@@ -224,6 +224,9 @@ draw (GtkWidget *this, cairo_t *cr)
                 cairo_stroke (cr);
                 cairo_restore (cr);
         }
+#if GTK_CHECK_VERSION (3, 0, 0)
+        return FALSE;
+#endif
 }
 
 #if !GTK_CHECK_VERSION (3, 0, 0)
