@@ -329,14 +329,22 @@ static void setup_gsettings(TasklistData* tasklist)
 					  tasklist);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void applet_size_allocate(GtkWidget *widget, GtkAllocation *allocation, TasklistData *tasklist)
+#else
 static void applet_size_request(GtkWidget* widget, GtkRequisition* requisition, TasklistData* tasklist)
+#endif
 {
 	int len;
 	const int* size_hints;
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkRequisition child_req;
+#endif
 	WnckTasklist* wncktl = WNCK_TASKLIST(tasklist->tasklist);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_child_requisition(tasklist->applet, &child_req);
+#endif
 
 	size_hints = wnck_tasklist_get_size_hint_list(wncktl, &len);
 	g_assert(len % 2 == 0);
@@ -439,7 +447,11 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "destroy", G_CALLBACK(destroy_tasklist), tasklist);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	g_signal_connect(G_OBJECT(tasklist->applet), "size_allocate", G_CALLBACK(applet_size_allocate), tasklist);
+#else
 	g_signal_connect(G_OBJECT(tasklist->applet), "size_request", G_CALLBACK(applet_size_request), tasklist);
+#endif
 	tasklist_update(tasklist);
 	gtk_widget_show(tasklist->tasklist);
 
