@@ -194,7 +194,11 @@ kill_window_response (GtkDialog *dialog,
 		gdk_error_trap_push ();
 		XKillClient (display, window);
 		gdk_flush ();
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gdk_error_trap_pop_ignored ();
+#else
 		gdk_error_trap_pop ();
+#endif
 	}
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
