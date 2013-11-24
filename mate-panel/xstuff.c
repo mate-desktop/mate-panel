@@ -225,7 +225,11 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 	gdk_window_move_resize (window, x, y, w, h);
 
 	gdk_flush ();
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gdk_error_trap_pop_ignored ();
+#else
 	gdk_error_trap_pop ();
+#endif
 
 	g_object_set_data (G_OBJECT (window), "xstuff-cached-x", GINT_TO_POINTER (x));
 	g_object_set_data (G_OBJECT (window), "xstuff-cached-y", GINT_TO_POINTER (y));
