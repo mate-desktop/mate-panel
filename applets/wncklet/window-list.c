@@ -121,7 +121,7 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 	tasklist->orientation = new_orient;
 
-#if GTK_CHECK_VERSION (3, 0, 0) && WNCK_CHECK_VERSION (3, 4, 6)
+#if defined WNCK_CHECK_VERSION && WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (tasklist->tasklist, new_orient);
 #endif
 	tasklist_update(tasklist);
@@ -433,13 +433,13 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-#if GTK_CHECK_VERSION (3, 0, 0) && WNCK_CHECK_VERSION (2, 91, 6)
+#if defined WNCK_CHECK_VERSION && WNCK_CHECK_VERSION (2, 91, 6)
 	tasklist->tasklist = wnck_tasklist_new();
 #else
 	tasklist->tasklist = wnck_tasklist_new(NULL);
 #endif
 
-#if GTK_CHECK_VERSION (3, 0, 0) && WNCK_CHECK_VERSION (3, 4, 6)
+#if defined WNCK_CHECK_VERSION && WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
 #endif
 

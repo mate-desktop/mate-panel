@@ -1446,11 +1446,12 @@ panel_background_set_color_background_on_widget (PanelBackground *background,
 	color = panel_background_get_color (background);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	if (color->alpha < 1.) {
+		panel_background_get_pattern_for_widget (background, widget);
 #else
 	if (color->alpha != 0xffff) {
-#endif
 		panel_background_set_image_background_on_widget (background,
 								 widget);
+#endif
 		return;
 	}
 
