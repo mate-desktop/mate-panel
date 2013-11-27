@@ -529,8 +529,10 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-#if GTK_CHECK_VERSION (3, 0, 0) && WNCK_CHECK_VERSION (2, 91, 6)
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if WNCK_CHECK_VERSION (2, 91, 6)
 	pager->pager = wnck_pager_new();
+#endif
 #else
 	pager->pager = wnck_pager_new(NULL);
 #endif
