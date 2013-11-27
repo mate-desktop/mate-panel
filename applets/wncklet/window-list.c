@@ -121,8 +121,10 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 	tasklist->orientation = new_orient;
 
-#if GTK_CHECK_VERSION (3, 0, 0) && WNCK_CHECK_VERSION (3, 4, 6)
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (tasklist->tasklist, new_orient);
+#endif
 #endif
 	tasklist_update(tasklist);
 }
@@ -425,16 +427,19 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-#if GTK_CHECK_VERSION (3, 0, 0) && WNCK_CHECK_VERSION (2, 91, 6)
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if WNCK_CHECK_VERSION (2, 91, 6)
 	tasklist->tasklist = wnck_tasklist_new();
+#endif
 #else
 	tasklist->tasklist = wnck_tasklist_new(NULL);
 #endif
 
-#if GTK_CHECK_VERSION (3, 0, 0) && WNCK_CHECK_VERSION (3, 4, 6)
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
 #endif
-
+#endif
 	wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
 
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "destroy", G_CALLBACK(destroy_tasklist), tasklist);
