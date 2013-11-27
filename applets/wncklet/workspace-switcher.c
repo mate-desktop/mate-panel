@@ -529,7 +529,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-#if WNCK_CHECK_VERSION (2, 91, 6)
+#if defined WNCK_CHECK_VERSION && WNCK_CHECK_VERSION (2, 91, 6)
 	pager->pager = wnck_pager_new();
 #else
 	pager->pager = wnck_pager_new(NULL);
