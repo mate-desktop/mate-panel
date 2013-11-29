@@ -95,7 +95,7 @@ GtkWidget* mate_panel_applet_new(void);
 MatePanelAppletOrient mate_panel_applet_get_orient(MatePanelApplet* applet);
 guint mate_panel_applet_get_size(MatePanelApplet* applet);
 #if GTK_CHECK_VERSION (3, 0, 0)
-MatePanelAppletBackgroundType mate_panel_applet_get_background (MatePanelApplet *applet, /* return values */ GdkColor* color, cairo_pattern_t** pattern);
+MatePanelAppletBackgroundType mate_panel_applet_get_background (MatePanelApplet *applet, /* return values */ GdkRGBA* color, cairo_pattern_t** pattern);
 #else
 MatePanelAppletBackgroundType mate_panel_applet_get_background(MatePanelApplet* applet, /* return values */ GdkColor* color, GdkPixmap** pixmap);
 #endif

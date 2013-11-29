@@ -433,7 +433,11 @@ static gboolean
 set_background_color (PanelToplevel *toplevel,
 		      guint16       *dropped)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkRGBA color;
+#else
 	PanelColor color;
+#endif
 
 	if (!dropped)
 		return FALSE;
@@ -442,10 +446,17 @@ set_background_color (PanelToplevel *toplevel,
 	     ! panel_profile_background_key_is_writable (toplevel, "type"))
 		return FALSE;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	color.red   = dropped [0];
+	color.green = dropped [1];
+	color.blue  = dropped [2];
+	color.alpha = 1.;
+#else
 	color.gdk.red   = dropped [0];
 	color.gdk.green = dropped [1];
 	color.gdk.blue  = dropped [2];
 	color.alpha     = 65535;
+#endif
 
 	panel_profile_set_background_color (toplevel, &color);
 	panel_profile_set_background_type (toplevel, PANEL_BACK_COLOR);

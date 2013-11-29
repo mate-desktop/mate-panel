@@ -69,13 +69,14 @@ struct _PanelBackground {
 	GdkWindow              *window;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_pattern_t        *default_pattern;
+	GdkRGBA                 default_color;
 #else
 	GdkPixmap              *pixmap;
 	GdkColormap            *colormap;
 	GdkGC                  *gc;
 	GdkPixmap              *default_pixmap;
-#endif
 	GdkColor                default_color;
+#endif
 
 	guint                   fit_image : 1;
 	guint                   stretch_image : 1;
@@ -109,9 +110,9 @@ void  panel_background_set_type          (PanelBackground     *background,
 #if !GTK_CHECK_VERSION (3, 0, 0)
 void  panel_background_set_gdk_color     (PanelBackground     *background,
 					  GdkColor            *gdk_color);
+#endif
 void  panel_background_set_opacity       (PanelBackground     *background,
 					  guint16              opacity);
-#endif
 void  panel_background_set_color         (PanelBackground     *background,
 #if GTK_CHECK_VERSION (3, 0, 0)
 					  const GdkRGBA             *color);
@@ -127,10 +128,11 @@ void  panel_background_set_stretch       (PanelBackground     *background,
 void  panel_background_set_rotate        (PanelBackground     *background,
 					  gboolean             rotate_image);
 void  panel_background_set_default_style (PanelBackground     *background,
-					  GdkColor            *color,
 #if GTK_CHECK_VERSION (3, 0, 0)
+					  GdkRGBA             *color,
 					  cairo_pattern_t     *pattern);
 #else
+					  GdkColor            *color,
 					  GdkPixmap           *pixmap);
 #endif
 void  panel_background_realized          (PanelBackground     *background,

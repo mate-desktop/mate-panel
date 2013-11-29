@@ -232,20 +232,67 @@ panel_profile_get_background_type (PanelToplevel *toplevel)
 
 void
 panel_profile_set_background_color (PanelToplevel *toplevel,
+#if GTK_CHECK_VERSION (3, 0, 0)
+				    GdkRGBA       *color)
+#else
 				    PanelColor    *color)
+#endif
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	panel_profile_set_background_gdk_rgba_color (toplevel, color);
+#else
 	panel_profile_set_background_gdk_color (toplevel, &color->gdk);
+#endif
 	panel_profile_set_background_opacity (toplevel, color->alpha);
 }
 
 void
 panel_profile_get_background_color (PanelToplevel *toplevel,
+#if GTK_CHECK_VERSION (3, 0, 0)
+				    GdkRGBA       *color)
+#else
 				    PanelColor    *color)
+#endif
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	panel_profile_get_background_gdk_rgba_color (toplevel, color);
+	color->alpha = panel_profile_get_background_opacity (toplevel) / 65535.0;
+#else
 	panel_profile_get_background_gdk_color (toplevel, &(color->gdk));
 	color->alpha = panel_profile_get_background_opacity (toplevel);
+#endif
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+void
+panel_profile_set_background_gdk_rgba_color (PanelToplevel *toplevel,
+					GdkRGBA      *color)
+{
+	char        *color_str;
+
+	color_str = gdk_rgba_to_string (color);
+
+	g_settings_set_string(toplevel->background_settings, "color", color_str);
+
+	g_free (color_str);
+}
+
+void
+panel_profile_get_background_gdk_rgba_color (PanelToplevel *toplevel,
+					GdkRGBA      *color)
+{
+	char        *color_str;
+
+	color_str = g_settings_get_string (toplevel->background_settings, "color");
+	if (!color_str || !gdk_rgba_parse (color, color_str)) {
+		color->red   = 0.;
+		color->green = 0.;
+		color->blue  = 0.;
+	}
+
+	g_free (color_str);
+}
+#else
 void
 panel_profile_set_background_gdk_color (PanelToplevel *toplevel,
 					GdkColor      *gdk_color)
@@ -277,6 +324,7 @@ panel_profile_get_background_gdk_color (PanelToplevel *toplevel,
 
 	g_free (color_str);
 }
+#endif
 
 void
 panel_profile_set_background_opacity (PanelToplevel *toplevel,
@@ -518,7 +566,11 @@ get_background_color (PanelToplevel *toplevel,
 #endif
 	g_free (color_str);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity") / 65535.0;
+#else
 	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity");
+#endif
 }
 
 static char *
@@ -855,10 +907,8 @@ panel_profile_background_change_notify (GSettings *settings,
 		g_free (str);
 #endif
 	} else if (!strcmp (key, "opacity")) {
-#if !GTK_CHECK_VERSION (3, 0, 0)
 		panel_background_set_opacity (background,
 					      g_settings_get_int (settings, key));
-#endif
 	} else if (!strcmp (key, "image")) {
 		panel_background_set_image (background,
 					    g_settings_get_string (settings, key));

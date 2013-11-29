@@ -327,19 +327,32 @@ static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 				       GtkColorButton        *color_button)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkRGBA color;
+#else
 	GdkColor color;
+#endif
 
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_color_button_get_rgba (color_button, &color);
+	panel_profile_set_background_gdk_rgba_color (dialog->toplevel, &color);
+#else
 	gtk_color_button_get_color (color_button, &color);
 	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
+#endif
 }
 
 static void
 panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 					    GtkBuilder            *gui)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkRGBA color;
+#else
 	PanelColor color;
+#endif
 
 	dialog->color_button = PANEL_GTK_BUILDER_GET (gui, "color_button");
 	g_return_if_fail (dialog->color_button != NULL);
@@ -348,8 +361,13 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+				    &color);
+#else
 	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
 				    &(color.gdk));
+#endif
 
 	g_signal_connect_swapped (dialog->color_button, "color_set",
 				  G_CALLBACK (panel_properties_dialog_color_changed),
@@ -693,19 +711,36 @@ static void
 panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 						 gchar                 *str_color)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkRGBA new_color;
+	GdkRGBA old_color;
+#else
 	GdkColor new_color = { 0, };
 	GdkColor old_color;
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (!gdk_rgba_parse (&new_color, str_color))
+#else
 	if (!gdk_color_parse (str_color, &new_color))
+#endif
 		return;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_color_button_get_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+#else
 	gtk_color_button_get_color (GTK_COLOR_BUTTON (dialog->color_button),
+#endif
 				    &old_color);
 
 	if (old_color.red   != new_color.red ||
 	    old_color.green != new_color.green ||
 	    old_color.blue  != new_color.blue)
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+#else
 		gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
+#endif
 					    &new_color);
 }
 

@@ -1279,12 +1279,21 @@ mate_panel_applet_focus (GtkWidget        *widget,
 
 static gboolean
 mate_panel_applet_parse_color (const gchar *color_str,
-			  GdkColor    *color)
+#if GTK_CHECK_VERSION (3, 0, 0)
+			       GdkRGBA     *color)
+#else
+			       GdkColor    *color)
+#endif
 {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	int r, g, b;
+#endif
 
 	g_assert (color_str && color);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	return gdk_rgba_parse (color, color_str);
+#else
 	if (sscanf (color_str, "%4x%4x%4x", &r, &g, &b) != 3)
 		return FALSE;
 
@@ -1293,6 +1302,7 @@ mate_panel_applet_parse_color (const gchar *color_str,
 	color->blue  = b;
 
 	return TRUE;
+#endif
 }
 
 static gboolean
@@ -1335,11 +1345,11 @@ mate_panel_applet_parse_pixmap_str (const char *str,
 	if (tmp == elements [2])
 		goto ERROR_AND_FREE;
 
- 	g_strfreev (elements);
+	g_strfreev (elements);
 	return TRUE;
 
- ERROR_AND_FREE:
- 	g_strfreev (elements);
+ERROR_AND_FREE:
+	g_strfreev (elements);
 	return FALSE;
 }
 
@@ -1379,7 +1389,7 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_t *background;
 	cairo_surface_t *surface;
-	cairo_matrix_t matrix;
+	cairo_matrix_t   matrix;
 #else
 	gboolean         display_grabbed;
 	GdkPixmap       *pixmap;
@@ -1440,6 +1450,7 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 #if GTK_CHECK_VERSION(3, 0, 0)
 	width = gdk_window_get_width(window);
 	height = gdk_window_get_height(window);
+	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
 #else
 	gdk_drawable_get_size(GDK_DRAWABLE(window), &width, &height);
 #endif
@@ -1471,7 +1482,7 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 		cairo_matrix_scale (&matrix, width, height);
 		cairo_pattern_set_matrix (pattern, &matrix);
 		cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
-		}
+	}
 
 	cairo_destroy (cr);
 	cairo_surface_destroy (surface);
@@ -1499,15 +1510,16 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 
 static MatePanelAppletBackgroundType
 mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
-				       GdkColor     *color,
 #if GTK_CHECK_VERSION (3, 0, 0)
-				       cairo_pattern_t **pattern)
+					    GdkRGBA          *color,
+					    cairo_pattern_t **pattern)
 #else
-				       GdkPixmap   **pixmap)
+					    GdkColor         *color,
+					    GdkPixmap       **pixmap)
 #endif
 {
 	MatePanelAppletBackgroundType   retval;
-	char                      **elements;
+	char                          **elements;
 
 	retval = PANEL_NO_BACKGROUND;
 
@@ -1579,12 +1591,13 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 }
 
 MatePanelAppletBackgroundType
-mate_panel_applet_get_background (MatePanelApplet *applet,
-			     GdkColor *color,
+mate_panel_applet_get_background (MatePanelApplet  *applet,
 #if GTK_CHECK_VERSION (3, 0, 0)
-			     cairo_pattern_t **pattern)
+				  GdkRGBA          *color,
+				  cairo_pattern_t **pattern)
 #else
-			     GdkPixmap **pixmap)
+				  GdkColor         *color,
+				  GdkPixmap       **pixmap)
 #endif
 {
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), PANEL_NO_BACKGROUND);
@@ -1598,7 +1611,11 @@ mate_panel_applet_get_background (MatePanelApplet *applet,
 		*pixmap = NULL;
 #endif
 	if (color != NULL)
+#if GTK_CHECK_VERSION (3, 0, 0)
+		memset (color, 0, sizeof (GdkRGBA));
+#else
 		memset (color, 0, sizeof (GdkColor));
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	return mate_panel_applet_handle_background_string (applet, color, pattern);
@@ -1625,44 +1642,96 @@ mate_panel_applet_set_background_string (MatePanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "background");
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static GtkStyleProperties *
+_mate_panel_applet_get_widget_style_properties (GtkWidget *widget, gboolean create_if_needed)
+{
+	GtkStyleProperties *properties;
+
+	properties = g_object_get_data (G_OBJECT (widget), "panel-applet-style-props");
+	if (!properties && create_if_needed) {
+		properties = gtk_style_properties_new ();
+		g_object_set_data_full (G_OBJECT (widget), "panel-applet-style-props",
+					properties, (GDestroyNotify) g_object_unref);
+	}
+	return properties;
+}
+
+static void
+_mate_panel_applet_reset_widget_style_properties (GtkWidget *widget)
+{
+	GtkStyleProperties *properties;
+
+	properties = _mate_panel_applet_get_widget_style_properties (widget, FALSE);
+
+	if (properties)
+		gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
+						   GTK_STYLE_PROVIDER (properties));
+
+	g_object_set_data (G_OBJECT (widget), "panel-applet-style-props", NULL);
+}
+#endif
+
 static void
 mate_panel_applet_update_background_for_widget (GtkWidget                 *widget,
 					   MatePanelAppletBackgroundType  type,
-					   GdkColor                  *color,
 #if GTK_CHECK_VERSION (3, 0, 0)
+					   GdkRGBA                   *color,
 					   cairo_pattern_t           *pattern)
 #else
+					   GdkColor                  *color,
 					   GdkPixmap                 *pixmap)
 #endif
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStyleProperties *properties;
+#else
 	GtkRcStyle *rc_style;
 	GtkStyle   *style;
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_widget_reset_style (widget);
+	if (!pattern) {
+		_mate_panel_applet_reset_widget_style_properties (widget);
+		return;
+	}
+#else
 	/* reset style */
 	gtk_widget_set_style (widget, NULL);
 	rc_style = gtk_rc_style_new ();
 	gtk_widget_modify_style (widget, rc_style);
 	g_object_unref (rc_style);
+#endif
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
 		break;
 	case PANEL_COLOR_BACKGROUND:
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+					  "background-color", &color,
+					  "background-image", NULL,
+					  NULL);
+#else
 		gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
+#endif
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (gtk_widget_get_style (widget));
 #if GTK_CHECK_VERSION (3, 0, 0)
-		if (style->background[GTK_STATE_NORMAL])
-			cairo_pattern_destroy (style->background[GTK_STATE_NORMAL]);
-		style->background[GTK_STATE_NORMAL] = cairo_pattern_reference (pattern);
+		gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+					  /* background-color can't be NULL,
+					   * but is ignored anyway */
+					  "background-image", pattern,
+					  NULL);
 #else
+		style = gtk_style_copy (gtk_widget_get_style (widget));
 		if (style->bg_pixmap[GTK_STATE_NORMAL])
 			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
 		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-#endif
 		gtk_widget_set_style (widget, style);
 		g_object_unref (style);
+#endif
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1674,8 +1743,8 @@ static void
 mate_panel_applet_handle_background (MatePanelApplet *applet)
 {
 	MatePanelAppletBackgroundType  type;
-	GdkColor                   color;
 #if GTK_CHECK_VERSION (3, 0, 0)
+	GdkRGBA                    color;
 	cairo_pattern_t           *pattern;
 
 	type = mate_panel_applet_get_background (applet, &color, &pattern);
@@ -1684,6 +1753,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 		mate_panel_applet_update_background_for_widget (applet->priv->background_widget,
 							   type, &color, pattern);
 #else
+	GdkColor                   color;
 	GdkPixmap                 *pixmap;
 
 	type = mate_panel_applet_get_background (applet, &color, &pixmap);
@@ -2427,8 +2497,8 @@ mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 
 	if (widget) {
 		MatePanelAppletBackgroundType  type;
-		GdkColor                   color;
 #if GTK_CHECK_VERSION (3, 0, 0)
+		GdkRGBA                    color;
 		cairo_pattern_t           *pattern;
 		type = mate_panel_applet_get_background (applet, &color, &pattern);
 		mate_panel_applet_update_background_for_widget (widget, type,
@@ -2436,6 +2506,7 @@ mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 		if (type == PANEL_PIXMAP_BACKGROUND)
 			cairo_pattern_destroy (pattern);
 #else
+		GdkColor                   color;
 		GdkPixmap                 *pixmap;
 		type = mate_panel_applet_get_background (applet, &color, &pixmap);
 		mate_panel_applet_update_background_for_widget (widget, type,
