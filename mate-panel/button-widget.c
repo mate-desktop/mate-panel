@@ -513,8 +513,8 @@ button_widget_expose (GtkWidget         *widget,
 					 allocation.height,
 					 &x,
 					 &y,
-					 &width,
-					 &height);
+					 &w,
+					 &h);
 #endif
 
 		gtk_paint_arrow (style,
@@ -537,8 +537,8 @@ button_widget_expose (GtkWidget         *widget,
 #else
 				 allocation.x + x,
 				 allocation.y + y,
-				 width,
-				 height);
+				 w,
+				 h);
 #endif
 	}
 
@@ -573,8 +573,8 @@ button_widget_expose (GtkWidget         *widget,
 #else
 		x = allocation.x + focus_pad;
 		y = allocation.y + focus_pad;
-		width = allocation.width -  2 * focus_pad;
-		height = allocation.height - 2 * focus_pad;
+		w = allocation.width -  2 * focus_pad;
+		h = allocation.height - 2 * focus_pad;
 #endif
 		gtk_paint_focus (style,
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -588,7 +588,7 @@ button_widget_expose (GtkWidget         *widget,
 				 x, y, w, h);
 #else
 				 &event->area, widget, "button",
-				 x, y, width, height);
+				 x, y, w, h);
 #endif
 	}
 	
