@@ -27,8 +27,10 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
 #include <cairo.h>
 #include <cairo-gobject.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
