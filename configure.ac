@@ -97,6 +97,8 @@ case "$with_gtk" in
        ;;
 esac
 
+AC_SUBST(GTK_API_VERSION)
+
 dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-$GTK_API_VERSION)
