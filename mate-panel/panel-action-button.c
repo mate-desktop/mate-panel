@@ -804,7 +804,7 @@ panel_action_button_invoke_menu (PanelActionButton *button,
 
 		screen = gtk_widget_get_screen (GTK_WIDGET (button));
 
-		panel_show_help (screen, "user-guide",
+		panel_show_help (screen, "mate-user-guide",
 				 actions [button->priv->type].help_index, NULL);
 
 		return;

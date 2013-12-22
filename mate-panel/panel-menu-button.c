@@ -984,7 +984,7 @@ panel_menu_button_invoke_menu (PanelMenuButton *button,
 	screen = gtk_widget_get_screen (GTK_WIDGET (button));
 
 	if (!strcmp (callback_name, "help")) {
-		panel_show_help (screen, "user-guide", "gospanel-37", NULL);
+		panel_show_help (screen, "mate-user-guide", "gospanel-37", NULL);
 
 	} else if (!strcmp (callback_name, "edit")) {
                 GError *error = NULL;

@@ -547,7 +547,7 @@ panel_run_dialog_response (PanelRunDialog *dialog,
 		break;
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-				 "user-guide", "gospanel-23", NULL);
+				 "mate-user-guide", "gospanel-23", NULL);
 		break;
 	default:
 		break;
