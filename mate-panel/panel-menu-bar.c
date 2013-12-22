@@ -355,7 +355,7 @@ void panel_menu_bar_invoke_menu(PanelMenuBar* menubar, const char* callback_name
 
 	if (!strcmp(callback_name, "help"))
 	{
-		panel_show_help(screen, "user-guide", "menubar", NULL);
+		panel_show_help(screen, "mate-user-guide", "menubar", NULL);
 
 	}
 	else if (!strcmp(callback_name, "edit"))

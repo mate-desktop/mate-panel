@@ -592,7 +592,7 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 			help_id = "gospanel-28";
 		}
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (properties_dialog)),
-				 "user-guide", help_id, NULL);
+				 "mate-user-guide", help_id, NULL);
 		break;
 	default:
 		break;
