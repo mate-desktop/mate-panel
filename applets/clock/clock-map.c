@@ -252,10 +252,7 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
 #endif
 
 	style = gtk_widget_get_style (this);
-#if GTK_CHECK_VERSION (3, 0, 0)
-	width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
-	height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
-#else
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	window = gtk_widget_get_window (this);
 	gtk_widget_get_allocation (this, &allocation);
 #endif
@@ -266,6 +263,9 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
         }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
+	width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
+	height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
+
 	gdk_cairo_set_source_pixbuf (cr, priv->shadow_map_pixbuf, 0, 0);
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_paint (cr);
