@@ -53,7 +53,11 @@ panel_frame_size_request (GtkWidget      *widget,
 
 	child = gtk_bin_get_child (bin);
 	if (child && gtk_widget_get_visible (child))
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gtk_widget_get_preferred_size (child, requisition, NULL);
+#else
 		gtk_widget_size_request (child, requisition);
+#endif
 
 	requisition->width  += border_width;
 	requisition->height += border_width;

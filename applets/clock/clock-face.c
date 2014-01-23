@@ -267,7 +267,11 @@ clock_face_size_request (GtkWidget *this,
                 GtkRequisition req;
 
                 /* Tie our size to the height of the size_widget */
+#if GTK_CHECK_VERSION (3, 0, 0)
+                gtk_widget_get_preferred_size (GTK_WIDGET (priv->size_widget), &req, NULL);
+#else
                 gtk_widget_size_request (GTK_WIDGET (priv->size_widget), &req);
+#endif
 
                 /* Pad out our height by a little bit - this improves
                    the balance */

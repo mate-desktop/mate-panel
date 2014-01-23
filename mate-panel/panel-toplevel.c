@@ -2985,7 +2985,11 @@ panel_toplevel_check_resize (GtkContainer *container)
 	requisition.width  = -1;
 	requisition.height = -1;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_widget_get_preferred_size (widget, &requisition, NULL);
+#else
 	gtk_widget_size_request (widget, &requisition);
+#endif
 	gtk_widget_get_allocation (widget, &widget_allocation);
 
 	if (widget_allocation.width  != requisition.width ||
@@ -3016,7 +3020,11 @@ panel_toplevel_size_request (GtkWidget      *widget,
 
 	child = gtk_bin_get_child (bin);
 	if (child && gtk_widget_get_visible (child))
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gtk_widget_get_preferred_size (child, requisition, NULL);
+#else
 		gtk_widget_size_request (child, requisition);
+#endif
 
 	old_geometry = toplevel->priv->geometry;
 
