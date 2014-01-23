@@ -4611,13 +4611,13 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	int i;
 
 	/* This is a hack for the default resize grip on Ubuntu.
-	 * Once again, thank you Ubuntu.
-	 *
 	 * We need to add a --enable-ubuntu for this.
+	 * Now, it is also default in GTK3.
 	 */
-	#ifdef UBUNTU
-		gtk_window_set_has_resize_grip(&toplevel->window_instance, FALSE);
-	#endif
+#if defined(UBUNTU) || GTK_CHECK_VERSION (3, 0, 0)
+	gtk_window_set_has_resize_grip(&toplevel->window_instance, FALSE);
+#endif
+
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
 	toplevel->priv->expand          = TRUE;
