@@ -753,7 +753,7 @@ launcher_properties (Launcher  *launcher)
 }
 
 static gboolean
-lancher_properties_enabled (void)
+launcher_properties_enabled (void)
 {
 	if (panel_lockdown_get_locked_down () ||
 	    panel_lockdown_get_disable_command_line ())
@@ -796,7 +796,7 @@ load_launcher_applet (const char       *location,
 				   "properties",
 				   GTK_STOCK_PROPERTIES,
 				   _("_Properties"),
-				   lancher_properties_enabled);
+				   launcher_properties_enabled);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (launcher->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (launcher->button), TRUE);
