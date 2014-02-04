@@ -109,9 +109,25 @@ static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 
 static void panel_menu_bar_init(PanelMenuBar* menubar)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkCssProvider *provider;
+#endif
 	GtkWidget* image;
 
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE(menubar);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+		"PanelMenuBar {\n"
+		" border-width: 0px;\n"
+		"}",
+		-1, NULL);
+	gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (menubar)),
+		GTK_STYLE_PROVIDER (provider),
+		GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref (provider);
+#endif
 
 	menubar->priv->info = NULL;
 
@@ -248,6 +264,7 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 
 	g_object_class_install_property(gobject_class, PROP_ORIENTATION, g_param_spec_enum("orientation", "Orientation", "The PanelMenuBar orientation", PANEL_TYPE_ORIENTATION, PANEL_ORIENTATION_TOP, G_PARAM_READWRITE));
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	gtk_rc_parse_string (
 		"style \"panel-menubar-style\"\n"
 		"{\n"
@@ -255,6 +272,7 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 		"  GtkMenuBar::internal-padding = 0\n"
 		"}\n"
 		"class \"PanelMenuBar\" style \"panel-menubar-style\"");
+#endif
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
