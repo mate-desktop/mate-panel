@@ -100,6 +100,7 @@ struct _PanelMenuButtonPrivate {
 };
 
 static void panel_menu_button_disconnect_from_gsettings (PanelMenuButton *button);
+static void panel_menu_button_create_menu (PanelMenuButton *button);
 static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
 static void panel_menu_button_set_icon              (PanelMenuButton *button);
 
@@ -322,8 +323,11 @@ panel_menu_button_parent_set (GtkWidget *widget,
 	parent = gtk_widget_get_parent (widget);
 	g_return_if_fail (!parent || PANEL_IS_WIDGET (parent));
 
-	if (parent)
+	if (parent) {
 		button->priv->toplevel = PANEL_WIDGET (parent)->toplevel;
+        if (! button->priv->menu)
+            panel_menu_button_create_menu(button);
+    }
 	else
 		button->priv->toplevel = NULL;
 
@@ -377,18 +381,15 @@ panel_menu_button_menu_detacher	(PanelMenuButton *button)
 	button->priv->menu = NULL;
 }
 
-static GtkWidget *
+static void
 panel_menu_button_create_menu (PanelMenuButton *button)
 {
 	PanelWidget *panel_widget;
 
-	if (button->priv->menu)
-		return button->priv->menu;
-
-	if (!button->priv->toplevel)
-		return NULL;
-
-	panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
+	if (button->priv->toplevel)
+		panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
+    else
+        g_error("Button hasn't got a toplevel widget");
 
 	if (button->priv->use_menu_path          &&
 	    button->priv->path_root > FIRST_MENU &&
@@ -411,8 +412,6 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 	g_signal_connect_swapped (button->priv->menu, "deactivate",
 				  G_CALLBACK (panel_menu_button_menu_deactivated),
 				  button);
-
-	return button->priv->menu;
 }
 
 static void
@@ -420,7 +419,7 @@ panel_menu_button_recreate_menu (PanelMenuButton *button)
 {
 	if (button->priv->menu)
 		gtk_widget_destroy (button->priv->menu);
-	button->priv->menu = NULL;
+	panel_menu_button_create_menu(button);
 }
 
 void
@@ -431,8 +430,6 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	GdkScreen *screen;
 
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
-
-	panel_menu_button_create_menu (button);
 
 	panel_toplevel_push_autohide_disabler (button->priv->toplevel);
 
@@ -691,7 +688,7 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 	if (!retval                     &&
 	    button->priv->use_menu_path &&
 	    button->priv->menu_path     &&
-	    panel_menu_button_create_menu (button)) {
+	    button->priv->menu) {
 		directory = g_object_get_data (G_OBJECT (button->priv->menu),
 					       "panel-menu-tree-directory");
 
@@ -1077,12 +1074,8 @@ panel_menu_button_accessible_ref_child (AtkObject *obj,
 #endif
 		return NULL;
 
-	if (!(menu = panel_menu_button_create_menu (button)))
+	if (!(menu = button->priv->menu))
 		return NULL;
-	/*
-	 * This ensures that the menu is populated with all menu items
-	 */
-	g_signal_emit_by_name (menu, "show", NULL);
 
 	return g_object_ref (gtk_widget_get_accessible (menu));
 }
