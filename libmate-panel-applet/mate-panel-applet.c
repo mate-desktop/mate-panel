@@ -801,6 +801,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	MatePanelApplet    *applet;
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDevice      *device;
+#endif
 	GdkScreen      *screen;
 	int             menu_x = 0;
 	int             menu_y = 0;
@@ -811,7 +814,12 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 	applet = MATE_PANEL_APPLET (widget);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screen = gtk_widget_get_screen (widget);
+	gtk_menu_set_screen (menu, screen);
+#else
 	screen = gtk_window_get_screen (GTK_WINDOW (applet->priv->plug));
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
@@ -820,8 +828,12 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 #endif
 	gdk_window_get_origin (gtk_widget_get_window (widget),
 			       &menu_x, &menu_y);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
+	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &pointer_x, &pointer_y, NULL);
+#else
 	gtk_widget_get_pointer (widget, &pointer_x, &pointer_y);
-
+#endif
 	gtk_widget_get_allocation (widget, &allocation);
 
 	menu_x += allocation.x;
@@ -863,7 +875,11 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 	*x = menu_x;
 	*y = menu_y;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	*push_in = FALSE;
+#else
 	*push_in = TRUE;
+#endif
 }
 
 static void
@@ -921,9 +937,13 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 		 * selected.
 		 * We don't want to hog the pointer on our parent.
 		 */
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
+#else
 		gdk_display_pointer_ungrab
 			(gtk_widget_get_display (widget),
 			 GDK_CURRENT_TIME);
+#endif
 	} else {
 		xevent.xbutton.type = ButtonRelease;
 	}
