@@ -1161,15 +1161,21 @@ static gboolean mate_panel_applet_draw(GtkWidget* widget, cairo_t* cr)
 static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* event)
 #endif
 {
-#if !GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStyleContext *context;
+#else
 	GtkAllocation allocation;
 #endif
 	int border_width;
 	int focus_width = 0;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gdouble x, y, width, height;
+#else
 	int x, y, width, height;
+#endif
 
-	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
 #if !GTK_CHECK_VERSION (3, 0, 0)
+	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 #endif
 
@@ -1205,26 +1211,29 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 
 	width -= 2 * border_width;
 	height -= 2 * border_width;
+
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_save (context);
+
+	cairo_save (cr);
+	gtk_render_focus (context, cr, x, y, width, height);
+	cairo_restore (cr);
+
+	gtk_style_context_restore (context);
 #else
 	x = allocation.x;
 	y = allocation.y;
 
 	width  = allocation.width  - 2 * border_width;
 	height = allocation.height - 2 * border_width;
-#endif
 
 	gtk_paint_focus (gtk_widget_get_style (widget),
-#if GTK_CHECK_VERSION (3, 0, 0)
-			 cr,
-#else
 			 gtk_widget_get_window (widget),
-#endif
 			 gtk_widget_get_state (widget),
-#if !GTK_CHECK_VERSION (3, 0, 0)
 			 &event->area,
-#endif
 			 widget, "mate_panel_applet",
 			 x, y, width, height);
+#endif
 
 	return FALSE;
 }
@@ -1737,6 +1746,14 @@ mate_panel_applet_update_background_for_widget (GtkWidget                 *widge
 		g_assert_not_reached ();
 		break;
 	}
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	/* Note: this actually replaces the old properties, since it's the same
+	 * pointer */
+	gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+					GTK_STYLE_PROVIDER (properties),
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+#endif
 }
 
 static void
@@ -2495,7 +2512,11 @@ mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 {
 	applet->priv->background_widget = widget;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (widget && gtk_widget_get_realized (widget)) {
+#else
 	if (widget) {
+#endif
 		MatePanelAppletBackgroundType  type;
 #if GTK_CHECK_VERSION (3, 0, 0)
 		GdkRGBA                    color;
