@@ -1725,6 +1725,7 @@ mate_panel_applet_update_background_for_widget (GtkWidget                 *widge
 		_mate_panel_applet_reset_widget_style_properties (widget);
 		return;
 	}
+	properties = _mate_panel_applet_get_widget_style_properties (widget, TRUE);
 #else
 	/* reset style */
 	gtk_widget_set_style (widget, NULL);
