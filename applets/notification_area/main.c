@@ -64,9 +64,9 @@ static void help_cb(GtkAction* action, AppletData* data)
 {
 	GError* error = NULL;
 	char* uri;
-	#define NA_HELP_DOC "user-guide"
+	#define NA_HELP_DOC "mate-user-guide"
 
-	uri = g_strdup_printf("help:%s?%s", NA_HELP_DOC, "panels-notification-area");
+	uri = g_strdup_printf("help:%s/%s", NA_HELP_DOC, "panels-notification-area");
 
 	gtk_show_uri(gtk_widget_get_screen(GTK_WIDGET(data->applet)), uri, gtk_get_current_event_time(), &error);
 

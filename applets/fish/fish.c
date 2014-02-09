@@ -152,10 +152,10 @@ static void show_help(FishApplet* fish, const char* link_id)
 {
 	GError *error = NULL;
 	char   *uri;
-#define FISH_HELP_DOC "fish"
+#define FISH_HELP_DOC "mate-fish"
 
 	if (link_id)
-		uri = g_strdup_printf ("help:%s?%s", FISH_HELP_DOC, link_id);
+		uri = g_strdup_printf ("help:%s/%s", FISH_HELP_DOC, link_id);
 	else
 		uri = g_strdup_printf ("help:%s", FISH_HELP_DOC);
 

@@ -67,7 +67,7 @@ clock_utils_display_help (GtkWidget  *widget,
 	char   *uri;
 
 	if (link_id)
-		uri = g_strdup_printf ("help:%s?%s", doc_id, link_id);
+		uri = g_strdup_printf ("help:%s/%s", doc_id, link_id);
 	else
 		uri = g_strdup_printf ("help:%s", doc_id);
 

@@ -86,7 +86,7 @@ static void response_cb(GtkWidget* widget, int id, TasklistData* tasklist)
 {
 	if (id == GTK_RESPONSE_HELP)
 	{
-		wncklet_display_help(widget, "user-guide", "windowlist-prefs", WINDOW_LIST_ICON);
+		wncklet_display_help(widget, "mate-user-guide", "windowlist-prefs", WINDOW_LIST_ICON);
 	}
 	else
 	{
@@ -557,7 +557,7 @@ static void call_system_monitor(GtkAction* action, TasklistData* tasklist)
 
 static void display_help_dialog(GtkAction* action, TasklistData* tasklist)
 {
-	wncklet_display_help(tasklist->applet, "user-guide", "windowlist", WINDOW_LIST_ICON);
+	wncklet_display_help(tasklist->applet, "mate-user-guide", "windowlist", WINDOW_LIST_ICON);
 }
 
 static void display_about_dialog(GtkAction* action, TasklistData* tasklist)

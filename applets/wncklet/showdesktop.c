@@ -456,7 +456,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 static void display_help_dialog(GtkAction* action, ShowDesktopData* sdd)
 {
-	wncklet_display_help(sdd->applet, "user-guide", "gospanel-564", SHOW_DESKTOP_ICON);
+	wncklet_display_help(sdd->applet, "mate-user-guide", "gospanel-564", SHOW_DESKTOP_ICON);
 }
 
 static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)

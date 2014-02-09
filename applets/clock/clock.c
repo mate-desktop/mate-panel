@@ -2767,7 +2767,7 @@ static void
 prefs_help (GtkWidget *widget, ClockData *cd)
 {
 	clock_utils_display_help (cd->prefs_window,
-				  "clock", "clock-settings");
+				  "mate-clock", "clock-settings");
 }
 
 static void
@@ -3214,7 +3214,7 @@ static void
 display_help_dialog (GtkAction *action,
                      ClockData *cd)
 {
-	clock_utils_display_help (cd->applet, "clock", NULL);
+	clock_utils_display_help (cd->applet, "mate-clock", NULL);
 }
 
 static void display_about_dialog(GtkAction* action, ClockData* cd)

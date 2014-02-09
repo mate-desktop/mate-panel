@@ -347,8 +347,8 @@ doc/Makefile
 doc/reference/Makefile
 doc/reference/mate-panel-applet/Makefile
 help/Makefile
-help/clock/Makefile
-help/fish/Makefile
+help/mate-clock/Makefile
+help/mate-fish/Makefile
 man/Makefile
 ])
 
