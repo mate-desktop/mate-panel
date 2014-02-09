@@ -360,17 +360,6 @@ dummy_child_watch (GPid         pid,
 	 */
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-/*
- * Set the DISPLAY variable, to be use by g_spawn_async.
- */
-static void
-set_environment (gpointer display)
-{
-	g_setenv ("DISPLAY", display, TRUE);
-}
-#endif
-
 static gboolean
 panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				 const char     *command,
@@ -401,9 +390,9 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				argv,
 				NULL, /* envp */
 				G_SPAWN_SEARCH_PATH,
-				set_environment,
-				&display,
 				NULL,
+				&display,
+				&pid,
 				&error);
 
 	g_free (display);
