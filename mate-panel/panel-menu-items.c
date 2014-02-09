@@ -1195,11 +1195,7 @@ panel_desktop_menu_item_append_menu (GtkWidget *menu,
 	if (add_separator)
 		add_menu_separator (menu);
 
-	/* FIXME replace this with MATE documentation system, when it will be ready
-	 * see: http://forums.mate-desktop.org/viewtopic.php?f=17&t=805
-	
-	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL, FALSE);
-	*/
+	panel_menu_items_append_from_desktop (menu, "mate-user-guide.desktop", NULL, FALSE);
 
 	panel_menu_items_append_from_desktop (menu, "mate-about.desktop", NULL, FALSE);
 
