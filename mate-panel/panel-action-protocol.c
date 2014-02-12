@@ -167,7 +167,7 @@ panel_action_protocol_init (void)
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
 			     "_MATE_PANEL_ACTION",
 			     FALSE);
-	atom_mate_panel_action =
+	atom_gnome_panel_action =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
 			     "_GNOME_PANEL_ACTION",
 			     FALSE);
