@@ -59,6 +59,13 @@
 #define PANEL_OBJECT_LAUNCHER_LOCATION_KEY    "launcher-location"
 #define PANEL_OBJECT_ACTION_TYPE_KEY          "action-type"
 
+#define PANEL_MENU_BAR_SCHEMA                 "org.mate.panel.menubar"
+#define PANEL_MENU_BAR_SHOW_APPLICATIONS_KEY  "show-applications"
+#define PANEL_MENU_BAR_SHOW_PLACES_KEY        "show-places"
+#define PANEL_MENU_BAR_SHOW_DESKTOP_KEY       "show-desktop"
+#define PANEL_MENU_BAR_SHOW_ICON_KEY          "show-icon"
+#define PANEL_MENU_BAR_ICON_NAME_KEY          "icon-name"
+
 /* external schemas */
 
 #define CAJA_DESKTOP_SCHEMA                   "org.mate.caja.desktop"
