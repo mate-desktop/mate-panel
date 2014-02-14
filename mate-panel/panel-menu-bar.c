@@ -47,6 +47,7 @@
 #include "panel-stock-icons.h"
 #include "panel-typebuiltins.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 G_DEFINE_TYPE (PanelMenuBar, panel_menu_bar, GTK_TYPE_MENU_BAR)
 
@@ -60,6 +61,8 @@ struct _PanelMenuBarPrivate {
 	GtkWidget* applications_item;
 	GtkWidget* places_item;
 	GtkWidget* desktop_item;
+
+	GSettings* settings;
 
 	PanelOrientation orientation;
 };
@@ -107,12 +110,34 @@ static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 	g_signal_connect(GTK_MENU_SHELL (menubar), "deactivate", G_CALLBACK (panel_menu_bar_reinit_tooltip), menubar);
 }
 
+static void panel_menu_bar_update_visibility (GSettings* settings, gchar* key, PanelMenuBar* menubar)
+{
+	GtkWidget* image;
+	gchar *str;
+
+	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->applications_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_APPLICATIONS_KEY));
+	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->places_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_PLACES_KEY));
+	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->desktop_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_DESKTOP_KEY));
+
+	if (g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_ICON_KEY))
+	{
+		str = g_settings_get_string (settings, PANEL_MENU_BAR_ICON_NAME_KEY);
+		if (str != NULL && str[0] != 0)
+			image = gtk_image_new_from_icon_name(str, panel_menu_bar_icon_get_size());
+		else
+			image = gtk_image_new_from_icon_name(PANEL_ICON_MAIN_MENU, panel_menu_bar_icon_get_size());
+		g_free (str);
+	}
+	else
+		image = NULL;
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menubar->priv->applications_item), image);
+}
+
 static void panel_menu_bar_init(PanelMenuBar* menubar)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkCssProvider *provider;
 #endif
-	GtkWidget* image;
 
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE(menubar);
 
@@ -131,13 +156,12 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 
 	menubar->priv->info = NULL;
 
+	menubar->priv->settings = g_settings_new (PANEL_MENU_BAR_SCHEMA);
 
 	menubar->priv->applications_menu = create_applications_menu("mate-applications.menu", NULL, TRUE);
 
 	menubar->priv->applications_item = panel_image_menu_item_new();
 	gtk_menu_item_set_label(GTK_MENU_ITEM(menubar->priv->applications_item), _("Applications"));
-	image = gtk_image_new_from_icon_name(PANEL_ICON_MAIN_MENU, panel_menu_bar_icon_get_size());
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menubar->priv->applications_item), image);
 
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menubar->priv->applications_item), menubar->priv->applications_menu);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->applications_item);
@@ -149,6 +173,9 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->desktop_item);
 
 	panel_menu_bar_setup_tooltip(menubar);
+
+	panel_menu_bar_update_visibility(menubar->priv->settings, NULL, menubar);
+	g_signal_connect(menubar->priv->settings, "changed", G_CALLBACK (panel_menu_bar_update_visibility), menubar);
 
 	panel_menu_bar_update_text_gravity(menubar);
 	g_signal_connect(menubar, "screen-changed", G_CALLBACK(panel_menu_bar_update_text_gravity), NULL);
@@ -249,6 +276,19 @@ static void panel_menu_bar_size_allocate(GtkWidget* widget, GtkAllocation* alloc
 	panel_menu_bar_change_background(PANEL_MENU_BAR(widget));
 }
 
+static void panel_menu_bar_finalize (GObject* object)
+{
+	PanelMenuBar* menubar;
+
+	menubar = PANEL_MENU_BAR (object);
+
+	if (menubar->priv->settings != NULL)
+	{
+		g_object_unref (menubar->priv->settings);
+		menubar->priv->settings = NULL;
+	}
+}
+
 static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 {
 	GObjectClass* gobject_class = (GObjectClass*) klass;
@@ -256,6 +296,7 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 
 	gobject_class->get_property = panel_menu_bar_get_property;
 	gobject_class->set_property = panel_menu_bar_set_property;
+	gobject_class->finalize = panel_menu_bar_finalize;
 
 	widget_class->parent_set = panel_menu_bar_parent_set;
 	widget_class->size_allocate = panel_menu_bar_size_allocate;

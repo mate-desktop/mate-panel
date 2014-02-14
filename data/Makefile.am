@@ -9,7 +9,8 @@ gsettings_ENUM_FILES = $(top_srcdir)/mate-panel/panel-enums-gsettings.h
 panel_gschemas_in_in = \
 	org.mate.panel.gschema.xml.in.in \
 	org.mate.panel.object.gschema.xml.in.in \
-	org.mate.panel.toplevel.gschema.xml.in.in
+	org.mate.panel.toplevel.gschema.xml.in.in \
+	org.mate.panel.menubar.gschema.xml.in.in
 
 panel_gschemas_in = $(panel_gschemas_in_in:.xml.in.in=.xml.in)
 gsettings_SCHEMAS = $(panel_gschemas_in:.xml.in=.xml)

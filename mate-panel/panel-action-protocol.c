@@ -41,8 +41,11 @@
 #include "panel-menu-bar.h"
 
 static Atom atom_mate_panel_action            = None;
+static Atom atom_gnome_panel_action           = None;
 static Atom atom_mate_panel_action_main_menu  = None;
 static Atom atom_mate_panel_action_run_dialog = None;
+static Atom atom_gnome_panel_action_main_menu  = None;
+static Atom atom_gnome_panel_action_run_dialog = None;
 static Atom atom_mate_panel_action_kill_dialog = None;
 
 static void
@@ -106,7 +109,8 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (xevent->type != ClientMessage)
 		return GDK_FILTER_CONTINUE;
 
-	if (xevent->xclient.message_type != atom_mate_panel_action)
+	if ((xevent->xclient.message_type != atom_mate_panel_action) &&
+	   (xevent->xclient.message_type != atom_gnome_panel_action))
 		return GDK_FILTER_CONTINUE;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -129,6 +133,10 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
 	else if (xevent->xclient.data.l [0] == atom_mate_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
+	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
+		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
+	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_run_dialog)
+		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
 	else if (xevent->xclient.data.l [0] == atom_mate_panel_action_kill_dialog)
 		panel_action_protocol_kill_dialog (screen, xevent->xclient.data.l [1]);
 	else
@@ -143,6 +151,7 @@ panel_action_protocol_init (void)
 	GdkDisplay *display;
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	GdkAtom     gdk_atom_mate_panel_action;
+	GdkAtom     gdk_atom_gnome_panel_action;
 #endif
 
 	display = gdk_display_get_default ();
@@ -150,11 +159,17 @@ panel_action_protocol_init (void)
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	gdk_atom_mate_panel_action =
 		gdk_atom_intern_static_string ("_MATE_PANEL_ACTION");
+	gdk_atom_gnome_panel_action =
+		gdk_atom_intern_static_string ("_GNOME_PANEL_ACTION");
 #endif
 
 	atom_mate_panel_action =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
 			     "_MATE_PANEL_ACTION",
+			     FALSE);
+	atom_gnome_panel_action =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_GNOME_PANEL_ACTION",
 			     FALSE);
 	atom_mate_panel_action_main_menu =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
@@ -163,6 +178,14 @@ panel_action_protocol_init (void)
 	atom_mate_panel_action_run_dialog =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
 			     "_MATE_PANEL_ACTION_RUN_DIALOG",
+			     FALSE);
+	atom_gnome_panel_action_main_menu =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_GNOME_PANEL_ACTION_MAIN_MENU",
+			     FALSE);
+	atom_gnome_panel_action_run_dialog =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_GNOME_PANEL_ACTION_RUN_DIALOG",
 			     FALSE);
 	atom_mate_panel_action_kill_dialog =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
@@ -175,6 +198,9 @@ panel_action_protocol_init (void)
 #else
 	gdk_display_add_client_message_filter (
 		display, gdk_atom_mate_panel_action,
+		panel_action_protocol_filter, NULL);
+	gdk_display_add_client_message_filter (
+		display, gdk_atom_gnome_panel_action,
 		panel_action_protocol_filter, NULL);
 #endif
 }

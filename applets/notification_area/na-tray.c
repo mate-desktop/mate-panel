@@ -794,9 +794,7 @@ na_tray_size_allocate (GtkWidget        *widget,
                        GtkAllocation    *allocation)
 {
   gtk_widget_size_allocate (gtk_bin_get_child (GTK_BIN (widget)), allocation);
-#if GTK_CHECK_VERSION (3, 0, 0)
   gtk_widget_set_allocation (widget, allocation);
-#endif
 }
 
 static void

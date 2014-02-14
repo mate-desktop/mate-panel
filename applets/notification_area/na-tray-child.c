@@ -215,7 +215,7 @@ na_tray_child_expose_event (GtkWidget      *widget,
       cairo_paint (cr);
 #else
       gdk_cairo_region (cr, event->region);
-      cairo_fill (cr);
+      cairo_paint (cr);
       cairo_destroy (cr);
 #endif
     }
