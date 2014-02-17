@@ -118,8 +118,8 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	display = gdk_screen_get_display (screen);
 	window = gdk_x11_window_lookup_for_display (display, xevent->xclient.window);
 #else
-	screen = gdk_drawable_get_screen (window);
 	window = gdk_window_lookup (xevent->xclient.window);
+	screen = gdk_drawable_get_screen (window);
 #endif
 	if (!window)
 		return GDK_FILTER_CONTINUE;

@@ -115,6 +115,9 @@ static void panel_menu_bar_update_visibility (GSettings* settings, gchar* key, P
 	GtkWidget* image;
 	gchar *str;
 
+	if (!GTK_IS_WIDGET (menubar))
+		return;
+
 	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->applications_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_APPLICATIONS_KEY));
 	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->places_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_PLACES_KEY));
 	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->desktop_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_DESKTOP_KEY));

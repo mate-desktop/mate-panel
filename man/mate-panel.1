@@ -1,27 +1,47 @@
+.\" Man page for Mate-Panel
+.TH MATE-PANEL 1 "4 February 2014" "MATE Desktop Environment"
+.\" Please adjust this date when revising the manpage.
 .\"
-.\" mate-about manual page.
-.\" (C) 2010 Vincent Untz (vuntz@gnome.org)
-.\"
-.TH MATE-PANEL 1 "MATE"
-.SH NAME
-mate-panel \- Display the MATE panel
-.SH SYNOPSIS
-.B mate-panel [\-\-replace]
-.SH DESCRIPTION
-The \fImate-panel\fP program provides the panels of the the MATE
-desktop.
+.SH "NAME"
+mate-panel \- The Panel for the MATE Desktop Environment
+.SH "SYNOPSIS"
+.B mate-panel [OPTIONS]
+.SH "DESCRIPTION"
+The \fBmate-panel\fR program provides the panels for the the MATE Desktop Environment. It is the area on your desktop from which you can run applications and applets, and perform other tasks. New applets may also be installed ,added to, or removed from the panels.
 .PP
-The panels are the areas on the desktop that contain, among other items,
-the applications menu, application launchers, the notification area and
-the window list.
+By default, \fBmate-panel\fR typically creates a panel on the top of the screen with applets such as a Menu Bar, Notification Area, and Clock; While creating a second panel on the bottom of the screen with a Window List and a Workspace Switcher. Panels can be created, deleted, moved around the desktop, and to other monitors.
 .PP
-Small applications called \fBapplets\fP can also be embedded in the
-panels. The applets usually provide quick access to specific
-features.
-.SH OPTIONS
+This manual page documents the \fBmate-panel\fR command.
+.SH "OPTIONS"
 .TP
-.I --replace
-Replace an already running panel.
-.SH BUGS
-If you find bugs in the \fImate-panel\fP program, please report
-these on https://github.com/mate-desktop/mate-panel/issues.
+\fB\-\-replace\fR
+Replace a currently running instance of \fBmate-panel\fR.
+.TP
+\fB\-\-reset\fR
+Reset the panel configuration to the default setting.
+.TP
+\fB\-\-run\-dialog\fR
+Open the "Run Application" dialog, also accessible by pressing ALT+F2.
+.TP
+\fB\-\-display=DISPLAY\fR
+X display to use.
+.TP
+\fB\-?, \-h, \-\-help\fR
+Print standard command line options.
+.TP
+\fB\-\-help\-all\fR
+Print all command line options.
+.P
+This program also accepts the standard GTK options.
+.SH "BUGS"
+.SS Should you encounter any bugs, they may be reported at: 
+http://github.com/mate-desktop/mate-panel/issues
+.SH "AUTHORS"
+.SS This Man Page has been written for the MATE Desktop Environment by:
+Adam Erdman <hekel@archlinux.info> (2014)
+.SH "SEE ALSO"
+.SS 
+Mate Panel documentation can be found under "Help" by right-clicking on \fBmate-panel\fR. 
+Further information may also be available at: http://wiki.mate-desktop.org/docs
+.P
+.BR mate-panel-test-applets (1)
