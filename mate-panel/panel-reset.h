@@ -28,7 +28,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
-void panel_reset();
+void panel_reset(void);
 
 #ifdef __cplusplus
 }

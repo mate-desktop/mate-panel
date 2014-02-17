@@ -180,7 +180,8 @@ mate_panel_applet_locked_change_notify (GSettings *settings,
 	AppletInfo  *info;
 	PanelWidget *panel_widget;
 
-	g_assert (applet != NULL);
+	if (applet == NULL || !GTK_IS_WIDGET (applet))
+		return;
 
 	info = (AppletInfo  *) g_object_get_data (G_OBJECT (applet),
 						  "applet_info");
