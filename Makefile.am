@@ -14,6 +14,7 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-introspection --disable-scrollkeeper
 
 EXTRA_DIST = \
+	autogen.sh		\
 	COPYING-DOCS		\
 	HACKING
 
