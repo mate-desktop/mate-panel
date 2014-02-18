@@ -1,5 +1,5 @@
-default_layoutdir   = $(datadir)/mate-panel
-default_layout_DATA = panel-default-layout.mate
+layoutdir   = $(datadir)/mate-panel/layouts
+layout_DATA = default.layout
 
 @INTLTOOL_XML_NOMERGE_RULE@
 
@@ -26,7 +26,7 @@ convert_DATA = mate-panel.convert
 EXTRA_DIST = \
 	$(convert_DATA) \
 	$(panel_gschemas_in_in) \
-	panel-default-layout.mate
+	$(layout_DATA)
 
 CLEANFILES = \
 	$(panel_gschemas_in) \
