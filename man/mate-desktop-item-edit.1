@@ -1,19 +1,40 @@
-.TH "mate-desktop-item-edit" "1" 
-.SH "NAME" 
-mate-desktop-item-edit \(em  tool to edit .desktop file 
-.SH "SYNOPSIS" 
+.\" Man page for mate-desktop-item-edit
+.TH MATE-DESKTOP-ITEM-EDIT 1 "4 February 2014" "MATE Desktop Environment"
+.\" Please adjust this date when revising the manpage.
+.\"
+.SH "NAME"
+mate-desktop-item-edit \- A small tool to edit .desktop files.
+.SH "SYNOPSIS"
+.B mate-desktop-item-edit [OPTIONS] [FILE]
+.SH "DESCRIPTION"
 .PP 
-\fBmate-desktop-item-edit\fR [\fB\-\-create-new \fP]  [\fB\-\-help \fP]  
-.SH "DESCRIPTION" 
-.PP 
-\fBmate-desktop-item-edit\fR allows you to edit .desktop file. 
-.SH "OPTIONS" 
-.IP "\fB\-\-create-new\fP" 10 
-Create new file in the given directory. 
-.IP "\fB\-\-help\fP" 10 
-Display help 
-.SH "AUTHOR" 
-.PP 
-This manual page was written by Christian Marillat marillat@debian.org for 
-the \fBDebian GNU/Linux\fP system (but may be used by others). 
-.\" created by instant / docbook-to-man, Sun 03 Dec 2006, 23:24 
+Distributed with mate-panel, \fBmate-desktop-item-edit\fR allows you to edit .desktop files. 
+.SH "OPTIONS"
+.TP
+\fB\-\-create-new\fR 
+Create a new file in the given directory. 
+.TP
+\fB\-\-display=DISPLAY\fR
+X display to use.
+.TP
+\fB\-?, \-h, \-\-help\fR
+Print standard command line options.
+.TP
+\fB\-\-help\-all\fR
+Print all command line options.
+.P
+This program also accepts the standard GTK options.
+.SH "EXAMPLES"
+\fBmate-desktop-item-edit \-\-create\-new ~/Desktop/Icon.desktop\fR
+.RS 4
+Open a \fBmate-desktop-item-edit\fR dialog to create a launcher icon on the desktop named "Icon".
+.SH "BUGS"
+.SS Should you encounter any bugs, they may be reported at: 
+http://github.com/mate-desktop/mate-panel/issues
+.SH "AUTHORS"
+.SS This Man Page has been updated/re-written for the MATE Desktop Environment by:
+Adam Erdman <hekel@archlinux.info> (2014)
+.SH "HISTORY"
+This manual page was originally written by Christian Marillat <marillat@debian.org> for the Debian GNU/Linux system. (2006)
+.SH "SEE ALSO"
+.SS Further information may also be available at: http://wiki.mate-desktop.org/docs

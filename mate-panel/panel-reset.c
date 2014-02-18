@@ -30,17 +30,19 @@
 #include <glib.h>
 #include "panel-reset.h"
 #include "panel-schemas.h"
-#include <libpanel-util/panel-dconf.h>
 
 void
 panel_reset()
 {
-	panel_dconf_recursive_reset (PANEL_GENERAL_PATH, NULL);
-	panel_dconf_recursive_reset (PANEL_TOPLEVEL_PATH, NULL);
-	panel_dconf_recursive_reset (PANEL_OBJECT_PATH, NULL);
+	GSettings *settings;
 
-	/* TODO: send a dbus message to mate-panel, if active, to reload the panel
-	 * configuration */
+	settings = g_settings_new (PANEL_SCHEMA);
+	g_settings_set_strv (settings, PANEL_OBJECT_ID_LIST_KEY, NULL);
+	g_settings_sync ();
+	g_settings_set_strv (settings, PANEL_TOPLEVEL_ID_LIST_KEY, NULL);
+	g_settings_sync ();
+
+	g_object_unref (settings);
 }
 
 #endif /* !__PANEL_RESET_C__ */

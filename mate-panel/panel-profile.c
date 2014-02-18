@@ -82,6 +82,7 @@ static GQuark queued_changes_quark = 0;
 static GQuark commit_timeout_quark = 0;
 
 static void panel_profile_object_id_list_update (gchar **objects);
+static void panel_profile_ensure_toplevel_per_screen (void);
 
 static void
 panel_profile_set_toplevel_id (PanelToplevel *toplevel,
@@ -778,6 +779,8 @@ panel_profile_toplevel_change_notify (GSettings *settings,
 									  gchar *key,
 									  PanelToplevel *toplevel)
 {
+	if (toplevel == NULL || !PANEL_IS_TOPLEVEL (toplevel))
+		return;
 
 #define UPDATE_STRING(k, n)                                                     \
 		if (!strcmp (key, k)) {                                                 \
@@ -880,6 +883,8 @@ panel_profile_background_change_notify (GSettings *settings,
 	PanelWidget     *panel_widget;
 	PanelBackground *background;
 
+	if (toplevel == NULL || !PANEL_IS_TOPLEVEL (toplevel))
+		return;
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 	if (panel_widget == NULL)
 		return;
@@ -1593,6 +1598,10 @@ panel_profile_toplevel_id_list_notify (GSettings *settings,
 									  toplevel_ids,
 									  (PanelProfileGetIdFunc) panel_profile_get_toplevel_id,
 									  (PanelProfileDestroyFunc) panel_profile_destroy_toplevel);
+
+	/* if there are no panels, reset layout to default */
+	if (g_slist_length (toplevel_ids) == 0)
+		panel_profile_ensure_toplevel_per_screen ();
 
 	g_slist_free (existing_toplevels);
 	g_slist_free (toplevel_ids);

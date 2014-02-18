@@ -1117,6 +1117,9 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 {
 	PanelPlaceMenuItem *place_item;
 
+	if (!GTK_IS_WIDGET (widget))
+		return;
+
 	place_item = PANEL_PLACE_MENU_ITEM (widget);
 
 	if (place_item->priv->menu) {

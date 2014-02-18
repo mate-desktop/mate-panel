@@ -1,18 +1,46 @@
-.TH "mate-panel-test-applets" "1" 
-.SH "NAME" 
-mate-panel-test-applets \(em  display installed applets 
-.SH "SYNOPSIS" 
+.\" Man page for mate-panel-test-applets
+.TH MATE-PANEL-TEST-APPLETS 1 "4 February 2014" "MATE Desktop Environment"
+.\" Please adjust this date when revising the manpage.
+.SH "NAME"
+mate-panel-test-applets - display and test installed applets 
+.SH "SYNOPSIS"
 .PP 
-\fBmate-panel-test-applets\fR [\fB\-\-help \fP]  
+.B mate-panel-test-applets [OPTIONS]  
 .SH "DESCRIPTION" 
-.PP 
-\fBmate-panel-test-applets\fR display installed applets in a 
-dialog box and allow you to test them. 
-.SH "OPTIONS" 
-.IP "\fB\-\-help\fP" 10 
-Display help 
-.SH "AUTHOR" 
-.PP 
-This manual page was written by Christian Marillat marillat@debian.org for 
-the \fBDebian GNU/Linux\fP system (but may be used by others). 
-.\" created by instant / docbook-to-man, Sun 03 Dec 2006, 23:24 
+\fBmate-panel-test-applets\fR display installed applets in a dialog box and allow you to test them. 
+.SH "OPTIONS"
+.TP
+\fB\-\-iid\fR
+Specify an applet IID to load
+.TP
+\fB\-\-prefs-path\fR
+Specify a gsettings path in which the applet preferences should be stored
+.TP
+\fB\-\-size\fR
+Specify the initial size of the applet (xx-small, medium, large etc.)
+.TP
+\fB\-\-orient\fR
+Specify the initial orientation of the applet (top, bottom, left or right)
+.TP
+\fB\-\-display=DISPLAY\fR
+X display to use.
+.TP
+\fB\-?, \-h, \-\-help\fR
+Print standard command line options.
+.TP
+\fB\-\-help\-all\fR
+Print all command line options.
+.P
+This program also accepts the standard GTK options.
+.SH "BUGS"
+.SS Should you encounter any bugs, they may be reported at: 
+http://github.com/mate-desktop/mate-panel/issues
+.SH "AUTHORS"
+.SS This Man Page has been updated/re-written for the MATE Desktop Environment by:
+Adam Erdman <hekel@archlinux.info> (2014)
+.SH "HISTORY"
+This manual page was originally written by Christian Marillat <marillat@debian.org> for the Debian GNU/Linux system. (2006)
+.SH "SEE ALSO"
+.SS Further information may also be available at: http://wiki.mate-desktop.org/docs
+.P
+.BR mate-panel (1)
