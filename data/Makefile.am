@@ -1,5 +1,8 @@
 layoutdir   = $(datadir)/mate-panel/layouts
-layout_DATA = default.layout
+layout_DATA = \
+	default.layout \
+	linuxmint.layout \
+	opensuse.layout
 
 @INTLTOOL_XML_NOMERGE_RULE@
 
