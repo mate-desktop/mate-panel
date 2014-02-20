@@ -37,8 +37,7 @@
 #include "panel-schemas.h"
 #include "panel-enums.h"
 
-#define PANEL_LAYOUT_MATE_FILE PANELDATADIR "/panel-default-layout.mate"
-#define PANEL_LAYOUT_DIST_FILE PANELDATADIR "/panel-default-layout.dist"
+#define PANEL_LAYOUTS_DIR PANELDATADIR "/layouts/"
 
 typedef struct {
         const char *name;
@@ -91,15 +90,23 @@ static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
  * distributions
  */
 static gchar *
-panel_layout_filename () {
-    
-    if (g_file_test (PANEL_LAYOUT_DIST_FILE, G_FILE_TEST_IS_REGULAR)) {
-        return g_strdup (PANEL_LAYOUT_DIST_FILE);
-    }
-    else if (g_file_test (PANEL_LAYOUT_MATE_FILE, G_FILE_TEST_IS_REGULAR)) {
-        return g_strdup (PANEL_LAYOUT_MATE_FILE);
+panel_layout_filename ()
+{
+    GSettings *settings;
+    gchar *layout;
+    gchar *filename;
+
+    settings = g_settings_new (PANEL_SCHEMA);
+    layout = g_settings_get_string (settings, PANEL_DEFAULT_LAYOUT);
+    filename = g_strdup_printf (PANEL_LAYOUTS_DIR "%s.layout", layout);
+    g_free (layout);
+    g_object_unref (settings);
+
+    if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)) {
+        return filename;
     }
     else {
+        g_free (filename);
         return NULL;
     }
 }
@@ -341,7 +348,7 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
         
     }
     else {
-        g_warning ("Cant find a default layout file!");
+        g_warning ("Cant find the layout file!");
         /* FIXME implement a fallback panel */
     }
     

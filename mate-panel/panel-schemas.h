@@ -10,6 +10,7 @@
 #define PANEL_OBJECT_DEFAULT_PREFIX   "object"
 
 #define PANEL_SCHEMA                  "org.mate.panel"
+#define PANEL_DEFAULT_LAYOUT          "default-layout"
 #define PANEL_TOPLEVEL_ID_LIST_KEY    "toplevel-id-list"
 #define PANEL_OBJECT_ID_LIST_KEY      "object-id-list"
 #define PANEL_LOCKED_DOWN_KEY         "locked-down"

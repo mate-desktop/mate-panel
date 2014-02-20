@@ -25,6 +25,7 @@
 #include "panel-shell.h"
 #include "panel-multiscreen.h"
 #include "panel-session.h"
+#include "panel-schemas.h"
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
 #include "panel-lockdown.h"
@@ -40,6 +41,7 @@ GSList *panels = NULL;
 GSList *panel_list = NULL;
 
 static char*    deprecated_profile;
+static char*    layout;
 static gboolean replace = FALSE;
 static gboolean reset = FALSE;
 static gboolean run_dialog = FALSE;
@@ -52,6 +54,8 @@ static const GOptionEntry options[] = {
   { "reset", 0, 0, G_OPTION_ARG_NONE, &reset, N_("Reset the panel configuration to default"), NULL },
   /* open run dialog */
   { "run-dialog", 0, 0, G_OPTION_ARG_NONE, &run_dialog, N_("Execute the run dialog"), NULL },
+  /* default panels layout */
+  { "layout", 0, 0, G_OPTION_ARG_STRING, &layout, N_("Set the default panel layout"), NULL },
   { NULL }
 };
 
@@ -95,6 +99,19 @@ main (int argc, char **argv)
 	}
 
 	g_option_context_free (context);
+
+	/* set the default layout */
+	if (layout != NULL && layout[0] != 0)
+	{
+		GSettings *settings;
+		settings = g_settings_new (PANEL_SCHEMA);
+		g_settings_set_string (settings, PANEL_DEFAULT_LAYOUT, layout);
+		g_object_unref (settings);
+		g_message ("Panel layout set to '%s'", layout);
+		/* exit, except if reset argument is given */
+		if (!reset)
+			return 0;
+	}
 
 	/* reset the configuration and exit. */
 	if (reset == TRUE)
