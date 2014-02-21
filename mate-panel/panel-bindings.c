@@ -132,7 +132,9 @@ panel_binding_changed (GSettings *settings,
 	binding->keyval    = 0;
 	binding->modifiers = 0;
 
-	panel_binding_set_from_string (binding, g_settings_get_string (settings, key));
+	gchar *value = g_settings_get_string (settings, key);
+	panel_binding_set_from_string (binding, value);
+	g_free (value);
 
 	if (!binding->keyval)
 		return;
@@ -177,7 +179,9 @@ panel_bindings_mouse_modifier_changed (GSettings *settings,
 									   gchar *key,
 									   gpointer user_data)
 {
-	panel_bindings_mouse_modifier_set_from_string (g_settings_get_string (settings, key));
+	gchar *value = g_settings_get_string (settings, key);
+	panel_bindings_mouse_modifier_set_from_string (value);
+	g_free (value);
 }
 
 static void
