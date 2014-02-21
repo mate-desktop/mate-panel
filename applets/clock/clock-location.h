@@ -67,7 +67,6 @@ void clock_location_localtime (ClockLocation *loc, struct tm *tm);
 
 gboolean clock_location_is_current (ClockLocation *loc);
 void clock_location_make_current (ClockLocation *loc,
-				  guint          transient_parent_xid,
 				  GFunc          callback,
 				  gpointer       data,
 				  GDestroyNotify destroy);
