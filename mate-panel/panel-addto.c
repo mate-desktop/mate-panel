@@ -1036,7 +1036,9 @@ panel_addto_name_notify (GSettings        *settings,
 			 gchar            *key,
 			 PanelAddtoDialog *dialog)
 {
-	panel_addto_name_change (dialog, g_settings_get_string (settings, key));
+	gchar *name = g_settings_get_string (settings, key);
+	panel_addto_name_change (dialog, name);
+	g_free (name);
 }
 
 static gboolean
