@@ -304,6 +304,7 @@ set_tooltip_and_name (Drawer     *drawer,
 		      const char *tooltip)
 {
 	g_return_if_fail (drawer != NULL);
+	g_return_if_fail (drawer->toplevel != NULL);
 	g_return_if_fail (tooltip != NULL);
 
 	if (tooltip && !tooltip [0])
@@ -438,7 +439,7 @@ panel_drawer_custom_icon_changed (GSettings *settings,
 				  gchar     *key,
 				  Drawer    *drawer)
 {
-	const char *custom_icon;
+	char *custom_icon;
 	custom_icon = g_settings_get_string (settings, key);
 
 	if (custom_icon && custom_icon [0]) {
@@ -447,6 +448,8 @@ panel_drawer_custom_icon_changed (GSettings *settings,
 		if (use_custom_icon)
 			button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
 	}
+
+	g_free (custom_icon);
 }
 
 static void
@@ -454,8 +457,9 @@ panel_drawer_tooltip_changed (GSettings *settings,
 			      gchar     *key,
 			      Drawer      *drawer)
 {
-	set_tooltip_and_name (drawer,
-			      g_settings_get_string (settings, key));
+	gchar *tooltip = g_settings_get_string (settings, key);
+	set_tooltip_and_name (drawer, tooltip);
+	g_free (tooltip);
 }
 
 static void

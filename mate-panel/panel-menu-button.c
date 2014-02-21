@@ -584,14 +584,17 @@ panel_menu_button_gsettings_notify (GSettings     *settings,
 									PanelMenuButton *button)
 {
 	if (!strcmp (key, PANEL_OBJECT_MENU_PATH_KEY)) {
-		panel_menu_button_set_menu_path (button,
-							 g_settings_get_string (settings, key));
+		gchar *value = g_settings_get_string (settings, key);
+		panel_menu_button_set_menu_path (button, value);
+		g_free (value);
 	} else if (!strcmp (key, PANEL_OBJECT_CUSTOM_ICON_KEY)) {
-		panel_menu_button_set_custom_icon (button,
-							 g_settings_get_string (settings, key));
+		gchar *value = g_settings_get_string (settings, key);
+		panel_menu_button_set_custom_icon (button, value);
+		g_free (value);
 	} else if (!strcmp (key, PANEL_OBJECT_TOOLTIP_KEY)) {
-		panel_menu_button_set_tooltip (button,
-							 g_settings_get_string (settings, key));
+		gchar *value = g_settings_get_string (settings, key);
+		panel_menu_button_set_tooltip (button, value);
+		g_free (value);
 	} else if (!strcmp (key, PANEL_OBJECT_USE_MENU_PATH_KEY)) {
 		panel_menu_button_set_use_menu_path (button,
 							 g_settings_get_boolean (settings, key));

@@ -784,8 +784,9 @@ panel_profile_toplevel_change_notify (GSettings *settings,
 
 #define UPDATE_STRING(k, n)                                                     \
 		if (!strcmp (key, k)) {                                                 \
-			panel_toplevel_set_##n (toplevel,                                   \
-									g_settings_get_string (settings, key));     \
+			gchar *value = g_settings_get_string (settings, key);               \
+			panel_toplevel_set_##n (toplevel, value);                           \
+			g_free (value);                                                     \
 		}
 
 #define UPDATE_ENUM(k, n)                                                       \
@@ -915,8 +916,9 @@ panel_profile_background_change_notify (GSettings *settings,
 		panel_background_set_opacity (background,
 					      g_settings_get_int (settings, key));
 	} else if (!strcmp (key, "image")) {
-		panel_background_set_image (background,
-					    g_settings_get_string (settings, key));
+		gchar *value = g_settings_get_string (settings, key);
+		panel_background_set_image (background, value);
+		g_free (value);
 	} else if (!strcmp (key, "fit")) {
 		panel_background_set_fit (background,
 					  g_settings_get_boolean (settings, key));
