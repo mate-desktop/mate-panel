@@ -2118,12 +2118,7 @@ location_start_element (GMarkupParseContext *context,
 					  latitude, longitude, code, &prefs);
 
 	if (current && clock_location_is_current_timezone (loc))
-#if GTK_CHECK_VERSION (3, 0, 0)
-		clock_location_make_current (loc, GDK_WINDOW_XID (gtk_widget_get_window (cd->applet)),
-#else
-		clock_location_make_current (loc, GDK_WINDOW_XWINDOW (gtk_widget_get_window (cd->applet)),
-#endif
-					     NULL, NULL, NULL);
+		clock_location_make_current (loc, NULL, NULL, NULL);
 
         data->cities = g_list_append (data->cities, loc);
 }
