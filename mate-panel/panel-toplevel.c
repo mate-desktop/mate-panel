@@ -4105,6 +4105,26 @@ panel_toplevel_get_property (GObject    *object,
 	}
 }
 
+static GObject*
+panel_toplevel_constructor (GType                  type,
+                            guint                  n_construct_properties,
+                            GObjectConstructParam *construct_properties)
+{
+	GObject *object;
+
+	object = G_OBJECT_CLASS (panel_toplevel_parent_class)->constructor (type,
+                                                           n_construct_properties,
+                                                           construct_properties);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	PanelToplevel *toplevel = PANEL_TOPLEVEL(object);
+	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
+	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
+#endif
+
+	return object;
+}
+
 static void
 panel_toplevel_finalize (GObject *object)
 {
@@ -4169,6 +4189,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
         binding_set = gtk_binding_set_by_class (klass);
 
+	gobject_class->constructor  = panel_toplevel_constructor;
 	gobject_class->set_property = panel_toplevel_set_property;
         gobject_class->get_property = panel_toplevel_get_property;
 	gobject_class->finalize     = panel_toplevel_finalize;
