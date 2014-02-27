@@ -202,7 +202,11 @@ panel_background_monitor_get_for_screen (GdkScreen *screen)
 	if (!global_background_monitors) {
 		int n_screens;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+		n_screens = 1;
+#else
 		n_screens = gdk_display_get_n_screens (gdk_display_get_default ());
+#endif
 
 		global_background_monitors = g_new0 (PanelBackgroundMonitor *, n_screens);
 	}

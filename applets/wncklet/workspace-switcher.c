@@ -196,14 +196,16 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, PagerData* pager)
+static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t *pattern, PagerData* pager)
 #else
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, PagerData* pager)
 #endif
 {
         /* taken from the TrashApplet */
         GtkRcStyle *rc_style;
+#if !GTK_CHECK_VERSION (3, 0, 0)
         GtkStyle *style;
+#endif
 
         /* reset style */
         gtk_widget_set_style (GTK_WIDGET (pager->pager), NULL);

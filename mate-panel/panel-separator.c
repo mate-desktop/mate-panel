@@ -50,7 +50,9 @@ panel_separator_paint (GtkWidget    *widget,
 #endif
 {
 	PanelSeparator *separator;
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GdkWindow      *window;
+#endif
 	GtkStyle       *style;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	int             width;
@@ -61,7 +63,9 @@ panel_separator_paint (GtkWidget    *widget,
 
 	separator = PANEL_SEPARATOR (widget);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	window = gtk_widget_get_window (widget);
+#endif
 	style = gtk_widget_get_style (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	width = gtk_widget_get_allocated_width (widget);
@@ -200,8 +204,11 @@ panel_separator_size_allocate (GtkWidget     *widget,
 
 	background = &PANEL_SEPARATOR (widget)->priv->panel->background;
 
-	if (background->type == PANEL_BACK_NONE ||
-	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
+	if (background->type == PANEL_BACK_NONE
+#if !GTK_CHECK_VERSION (3, 0, 0)
+		|| (background->type == PANEL_BACK_COLOR && !background->has_alpha)
+#endif
+		)
 		return;
 
 	panel_separator_change_background (PANEL_SEPARATOR (widget));

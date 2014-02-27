@@ -1096,7 +1096,11 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	    }
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+      g_object_unref (cursor);
+#else
       gdk_cursor_unref (cursor);
+#endif
     }
 }
 

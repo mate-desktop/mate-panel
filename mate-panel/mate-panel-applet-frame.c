@@ -121,8 +121,11 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 			       NULL);
 	background = &frame->priv->panel->background;
 
-	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
-	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
+	if (bg_pattern && (background->type == PANEL_BACK_IMAGE
+#if !GTK_CHECK_VERSION (3, 0, 0)
+		|| (background->type == PANEL_BACK_COLOR && background->has_alpha)
+#endif
+		)) {
 		cairo_matrix_t ptm;
 
 		cairo_matrix_init_translate (&ptm,
@@ -218,7 +221,11 @@ mate_panel_applet_frame_update_background_size (MatePanelAppletFrame *frame,
 	background = &frame->priv->panel->background;
 
 	if (background->type == PANEL_BACK_NONE ||
-	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
+	   (background->type == PANEL_BACK_COLOR 
+#if !GTK_CHECK_VERSION (3, 0, 0)
+		&& !background->has_alpha
+#endif
+		))
 		return;
 
 	mate_panel_applet_frame_change_background (frame, background->type);
@@ -949,7 +956,7 @@ mate_panel_applet_frame_activating_free (MatePanelAppletFrameActivating *frame_a
 GdkScreen *
 panel_applet_frame_activating_get_screen (MatePanelAppletFrameActivating *frame_act)
 {
-	return gtk_widget_get_screen (frame_act->panel);
+	return gtk_widget_get_screen (GTK_WIDGET(frame_act->panel));
 }
 
 PanelOrientation
@@ -1034,7 +1041,11 @@ mate_panel_applet_frame_loading_failed (const char  *iid,
 
 	if (locked_down) {
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+#if GTK_CHECK_VERSION (3, 10, 0)
+					_("_OK"), LOADING_FAILED_RESPONSE_DONT_DELETE,
+#else
 					GTK_STOCK_OK, LOADING_FAILED_RESPONSE_DONT_DELETE,
+#endif
 					NULL);
 	} else {
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
@@ -1042,7 +1053,11 @@ mate_panel_applet_frame_loading_failed (const char  *iid,
 					  "from your configuration?"));
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 					PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE,
+#if GTK_CHECK_VERSION(3, 10, 0)
+					_("_Delete"), LOADING_FAILED_RESPONSE_DELETE,
+#else
 					GTK_STOCK_DELETE, LOADING_FAILED_RESPONSE_DELETE,
+#endif
 					NULL);
 	}
 

@@ -161,14 +161,22 @@ create_hig_frame (CalendarWindow *calwin,
 	char      *text;
         GtkWidget *expander;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+#else
         vbox = gtk_vbox_new (FALSE, 6);
+#endif
 
         bold_title = g_strdup_printf ("<b>%s</b>", title);
 	expander = gtk_expander_new (bold_title);
         g_free (bold_title);
 	gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
 	hbox = gtk_hbox_new (FALSE, 0);
+#endif
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), expander, FALSE, FALSE, 0);
 	gtk_widget_show_all (vbox);
@@ -241,7 +249,11 @@ calendar_window_fill (CalendarWindow *calwin)
         gtk_container_add (GTK_CONTAINER (calwin), frame);
         gtk_widget_show (frame);
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+#else
         vbox = gtk_vbox_new (FALSE, 6);
+#endif
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
         gtk_container_add (GTK_CONTAINER (frame), vbox);
         gtk_widget_show (vbox);

@@ -497,7 +497,11 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	gdk_pointer_grab (window, FALSE,
 			  GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			  NULL, cursor, time_);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	g_object_unref (cursor);
+#else
 	gdk_cursor_unref (cursor);
+#endif
 
 	if (grab_keyboard)
 		gdk_keyboard_grab (window, FALSE, time_);
@@ -821,7 +825,14 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	root_window = gdk_screen_get_root_window (screen);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDisplay *display = gdk_screen_get_display (screen);
+	GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
+	GdkDevice *pointer = gdk_device_manager_get_client_pointer (device_manager);
+	gdk_window_get_device_position (root_window, pointer, &new_x, &new_y, NULL);
+#else
 	gdk_window_get_pointer (root_window, &new_x, &new_y, NULL);
+#endif
 
 	switch (keyval) {
 	case GDK_Up:
@@ -1302,7 +1313,13 @@ static gboolean panel_toplevel_contains_pointer(PanelToplevel* toplevel)
 
 	screen = NULL;
 	x = y = -1;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
+	GdkDevice *pointer = gdk_device_manager_get_client_pointer (device_manager);
+	gdk_device_get_position (pointer, &screen, &x, &y);
+#else
 	gdk_display_get_pointer (display, &screen, &x, &y, NULL);
+#endif
 
 	if (screen != gtk_window_get_screen (GTK_WINDOW (toplevel)))
 		return FALSE;
@@ -3148,9 +3165,17 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 	PanelToplevel* toplevel = (PanelToplevel*) widget;
 	PanelFrameEdge edges;
 	gboolean        retval = FALSE;
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	GdkWindow      *window;
+#endif
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GtkStyleContext *style_context;
+	GtkStateFlags    state;
+#else
 	GtkStyle       *style;
 	GtkStateType    state;
+#endif
+
 #if GTK_CHECK_VERSION (3, 0, 0)
 	int             awidth;
 	int             aheight;
@@ -3181,9 +3206,17 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 	    toplevel->priv->attached)
 		return retval;
 
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	window = gtk_widget_get_window (widget);
+#endif
+
+#if GTK_CHECK_VERSION(3, 0, 0)
+	style_context = gtk_widget_get_style_context (widget);
+	state = gtk_widget_get_state_flags (widget);
+#else
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 	awidth = gtk_widget_get_allocated_width (widget);
 	aheight = gtk_widget_get_allocated_height (widget);
@@ -3198,7 +3231,7 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 #if GTK_CHECK_VERSION (3, 0, 0)
 		x = 0;
 		y = 0;
-		height = height;
+		height = aheight;
 #else
 		x      = allocation.x;
 		y      = allocation.y;
@@ -3206,8 +3239,20 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 #endif
 		width  = HANDLE_SIZE;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+		GtkBorder border;
+		gtk_style_context_get_padding (style_context, state, &border);
+/*		gtk-3.10 bugs ?
+		gtk_style_context_get(style_context, state,
+				      GTK_STYLE_PROPERTY_PADDING, &border,
+				      NULL);
+*/
+		xthickness = border.left;
+		ythickness = border.top;
+#else
 		xthickness = style->xthickness;
 		ythickness = style->ythickness;
+#endif
 
 		if (edges & PANEL_EDGE_TOP) {
 			y += ythickness;
@@ -3218,20 +3263,20 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 		if (edges & PANEL_EDGE_LEFT)
 			x += xthickness;
 
-		gtk_paint_handle (style,
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 0, 0)
+		gtk_render_handle(style_context,
 				  cr,
+				  x, y, width, height );
 #else
+		gtk_paint_handle (style,
 				  window,
-#endif
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_VERTICAL);
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 		x = awidth - HANDLE_SIZE;
@@ -3241,20 +3286,20 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 		if (edges & PANEL_EDGE_RIGHT)
 			x -= xthickness;
 
-		gtk_paint_handle (style,
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 0, 0)
+		gtk_render_handle(style_context,
 				  cr,
+				  x, y, width, height);
 #else
+		gtk_paint_handle (style,
 				  window,
-#endif
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_VERTICAL);
+#endif
 	} else {
 		int x, y, width, height;
 		int xthickness, ythickness;
@@ -3270,8 +3315,16 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 #endif
 		height = HANDLE_SIZE;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+		GtkBorder border;
+		gtk_style_context_get(style_context, state,
+				      &border, NULL);
+		xthickness = border.left;
+		ythickness = border.top;
+#else
 		xthickness = style->xthickness;
 		ythickness = style->ythickness;
+#endif
 
 		if (edges & PANEL_EDGE_LEFT) {
 			x += xthickness;
@@ -3282,20 +3335,20 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 		if (edges & PANEL_EDGE_TOP)
 			y += ythickness;
 
-		gtk_paint_handle (style,
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 0, 0)
+		gtk_render_handle(style_context,
 				  cr,
+				  x, y, width, height);
 #else
+		gtk_paint_handle (style,
 				  window,
-#endif
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_HORIZONTAL);
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 		y = aheight - HANDLE_SIZE;
@@ -3305,20 +3358,20 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 		if (edges & PANEL_EDGE_BOTTOM)
 			y -= ythickness;
 
-		gtk_paint_handle (style,
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 0, 0)
+		gtk_render_handle(style_context,
 				  cr,
+				  x, y, width, height);
 #else
+		gtk_paint_handle (style,
 				  window,
-#endif
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_HORIZONTAL);
+#endif
 	}
 
 	return retval;

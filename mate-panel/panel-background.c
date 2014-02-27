@@ -153,7 +153,10 @@ panel_background_prepare (PanelBackground *background)
 #endif
 		break;
 	case PANEL_BACK_COLOR:
-		if (background->has_alpha &&
+		if (
+#if !GTK_CHECK_VERSION (3, 0, 0)
+			background->has_alpha &&
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 		    background->composited_pattern)
 #else
@@ -459,11 +462,9 @@ panel_background_composite (PanelBackground *background)
 	case PANEL_BACK_NONE:
 		break;
 	case PANEL_BACK_COLOR:
+
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		if (background->has_alpha)
-#if GTK_CHECK_VERSION (3, 0, 0)
-			background->composited_pattern =
-				get_composited_pattern (background);
-#else
 			background->composited_image =
 				get_composited_pixbuf (background);
 #endif
@@ -471,12 +472,8 @@ panel_background_composite (PanelBackground *background)
 	case PANEL_BACK_IMAGE:
 #if GTK_CHECK_VERSION (3, 0, 0)
 		if (background->transformed_pattern) {
-			if (background->has_alpha)
-				background->composited_pattern =
-					get_composited_pattern (background);
-			else
-				background->composited_pattern =
-					cairo_pattern_reference (background->transformed_pattern);
+			background->composited_pattern =
+				get_composited_pattern (background);
 		}
 #else
 		if (background->transformed_image) {
@@ -600,6 +597,7 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 
 	if (background->rotate_image &&
 	    background->orientation == GTK_ORIENTATION_VERTICAL) {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		if (!background->has_alpha) {
 			guchar *dest;
 			guchar *src;
@@ -625,7 +623,9 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 				}
 
 			g_object_unref (scaled);
-		} else {
+		} else
+#endif
+		{
 			guint32 *dest;
 			guint32 *src;
 			int     x, y;
@@ -703,18 +703,14 @@ disconnect_background_monitor (PanelBackground *background)
 	background->desktop = NULL;
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_background_update_has_alpha (PanelBackground *background)
 {
 	gboolean has_alpha = FALSE;
 
 	if (background->type == PANEL_BACK_COLOR)
-#if GTK_CHECK_VERSION (3, 0, 0)
-		has_alpha = (background->color.alpha < 1.);
-#else
 		has_alpha = (background->color.alpha != 0xffff);
-#endif
-
 	else if (background->type == PANEL_BACK_IMAGE &&
 		 background->loaded_image)
 		has_alpha = gdk_pixbuf_get_has_alpha (background->loaded_image);
@@ -724,6 +720,7 @@ panel_background_update_has_alpha (PanelBackground *background)
 	if (!has_alpha)
 		disconnect_background_monitor (background);
 }
+#endif
 
 static void
 load_background_file (PanelBackground *background)
@@ -744,7 +741,9 @@ load_background_file (PanelBackground *background)
 		g_error_free (error);
 	}
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	panel_background_update_has_alpha (background);
+#endif
 }
 
 void
@@ -758,7 +757,9 @@ panel_background_set_type (PanelBackground     *background,
 
 	background->type = type;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	panel_background_update_has_alpha (background);
+#endif
 
 	panel_background_transform (background);
 }
@@ -793,15 +794,12 @@ panel_background_set_gdk_color (PanelBackground *background,
 }
 #endif
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_background_set_opacity_no_update (PanelBackground *background,
 				        guint16          opacity)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
-	background->color.alpha = opacity / 65535.0;
-#else
 	background->color.alpha = opacity;
-#endif
 	panel_background_update_has_alpha (background);
 }
 
@@ -809,17 +807,14 @@ void
 panel_background_set_opacity (PanelBackground *background,
 			      guint16          opacity)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
-	if (background->color.alpha == (opacity / 65535.0))
-#else
 	if (background->color.alpha == opacity)
-#endif
 		return;
 
 	free_transformed_resources (background);
 	panel_background_set_opacity_no_update (background, opacity);
 	panel_background_transform (background);
 }
+#endif
 
 static void
 panel_background_set_color_no_update (PanelBackground *background,
@@ -835,7 +830,6 @@ panel_background_set_color_no_update (PanelBackground *background,
 	if (gdk_rgba_equal (color, &background->color))
 		return;
 	background->color = *color;
-	panel_background_update_has_alpha (background);
 #else
 	panel_background_set_gdk_color_no_update (background, &(color->gdk));
 	panel_background_set_opacity_no_update (background, color->alpha);
@@ -853,7 +847,7 @@ panel_background_set_color (PanelBackground *background,
 	g_return_if_fail (color != NULL);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	if (gdk_rgba_equal (color, &background->color))
+	if (gdk_rgba_equal (color, &(background->color)))
 #else
 	if (background->color.gdk.red   == color->gdk.red &&
 	    background->color.gdk.green == color->gdk.green &&
@@ -883,7 +877,9 @@ panel_background_set_image_no_update (PanelBackground *background,
 	if (image && image [0])
 		background->image = g_strdup (image);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	panel_background_update_has_alpha (background);
+#endif
 }
 
 void
@@ -1130,7 +1126,11 @@ panel_background_change_region (PanelBackground *background,
 		/* only retransform the background if we have in
 		   fact changed size/orientation */
 		panel_background_transform (background);
-	else if (background->has_alpha || ! background->composited)
+	else if (
+#if !GTK_CHECK_VERSION (3, 0, 0)
+		background->has_alpha || 
+#endif
+		! background->composited)
 		/* only do compositing if we have some alpha
 		   value to worry about */
 		panel_background_composite (background);
@@ -1211,7 +1211,9 @@ panel_background_init (PanelBackground              *background,
 	background->stretch_image = FALSE;
 	background->rotate_image  = FALSE;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	background->has_alpha = FALSE;
+#endif
 
 	background->transformed = FALSE;
 	background->composited  = FALSE;
@@ -1273,8 +1275,11 @@ panel_background_make_string (PanelBackground *background,
 
 	effective_type = panel_background_effective_type (background);
 
-	if (effective_type == PANEL_BACK_IMAGE ||
-	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
+	if (effective_type == PANEL_BACK_IMAGE 
+#if !GTK_CHECK_VERSION (3, 0, 0)
+		|| (effective_type == PANEL_BACK_COLOR && background->has_alpha)
+#endif
+		) {
 #if GTK_CHECK_VERSION (3, 0, 0)
 		cairo_surface_t *surface;
 
@@ -1527,14 +1532,12 @@ panel_background_change_background_on_widget (PanelBackground *background,
 		_panel_background_reset_widget_style_properties (widget);
 		return;
 	case PANEL_BACK_COLOR:
-		if (!background->has_alpha) {
-			properties = _panel_background_get_widget_style_properties (widget, TRUE);
-			gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
-						  "background-color", &background->color,
-						  "background-image", NULL,
-						  NULL);
-			break;
-		}
+		properties = _panel_background_get_widget_style_properties (widget, TRUE);
+		gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+					  "background-color", &background->color,
+					  "background-image", NULL,
+					  NULL);
+		break;
 		// Color with alpha, fallback to image
 	case PANEL_BACK_IMAGE: {
 		cairo_pattern_t *pattern;

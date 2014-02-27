@@ -454,7 +454,11 @@ panel_multiscreen_init (void)
 		return;
 
 	display = gdk_display_get_default ();
+#if GTK_CHECK_VERSION (3, 10, 0)
+	screens = 1;
+#else
 	screens = gdk_display_get_n_screens (display);
+#endif
 
 	panel_multiscreen_init_randr (display);
 
@@ -505,7 +509,11 @@ panel_multiscreen_reinit (void)
 	display = gdk_display_get_default ();
 	/* Don't use the screens variable since in the future, we might
 	 * want to call this function when a screen appears/disappears. */
+#if GTK_CHECK_VERSION (3, 10, 0)
+	new_screens = 1;
+#else
 	new_screens = gdk_display_get_n_screens (display);
+#endif
 
 	for (i = 0; i < new_screens; i++) {
 		GdkScreen *screen;

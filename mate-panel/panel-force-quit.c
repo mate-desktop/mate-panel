@@ -63,7 +63,11 @@ display_popup_window (GdkScreen *screen)
 	gtk_container_add (GTK_CONTAINER (retval), frame);
 	gtk_widget_show (frame);
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
 	vbox = gtk_vbox_new (FALSE, 0);
+#endif
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
 	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	gtk_widget_show (vbox);
@@ -221,7 +225,11 @@ kill_window_question (gpointer window)
 						  "in it might get lost."));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+#if GTK_CHECK_VERSION (3, 10, 0)
+				_("_Cancel"),
+#else
 				GTK_STOCK_CANCEL,
+#endif
 				GTK_RESPONSE_CANCEL,
 				PANEL_STOCK_FORCE_QUIT,
 				GTK_RESPONSE_ACCEPT,
@@ -306,7 +314,11 @@ panel_force_quit (GdkScreen *screen,
 	cross = gdk_cursor_new (GDK_CROSS);
 	status = gdk_pointer_grab (root, FALSE, GDK_BUTTON_PRESS_MASK,
 				   NULL, cross, time);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	g_object_unref (cross);
+#else
 	gdk_cursor_unref (cross);
+#endif
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Pointer grab failed\n");
 		remove_popup (popup);

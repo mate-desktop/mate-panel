@@ -710,6 +710,7 @@ rad2dms (gfloat lat, gfloat lon)
 
 static GList *locations = NULL;
 
+#ifdef HAVE_NETWORK_MANAGER
 static void
 update_weather_infos (void)
 {
@@ -724,7 +725,6 @@ update_weather_infos (void)
 	}
 }
 
-#ifdef HAVE_NETWORK_MANAGER
 static void
 state_notify (DBusPendingCall *pending, gpointer data)
 {

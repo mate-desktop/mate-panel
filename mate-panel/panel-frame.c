@@ -153,7 +153,9 @@ panel_frame_draw (GtkWidget      *widget,
 #endif
 		  PanelFrameEdge  edges)
 {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GdkWindow     *window;
+#endif
 	GtkStyle      *style;
 	GtkStateType   state;
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -168,7 +170,9 @@ panel_frame_draw (GtkWidget      *widget,
 	if (edges == PANEL_EDGE_NONE)
 		return;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	window = gtk_widget_get_window (widget);
+#endif
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)

@@ -82,8 +82,9 @@ struct _PanelBackground {
 	guint                   stretch_image : 1;
 	guint                   rotate_image : 1;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	guint                   has_alpha : 1;
-
+#endif
 	guint                   loaded : 1;
 	guint                   transformed : 1;
 	guint                   composited : 1;

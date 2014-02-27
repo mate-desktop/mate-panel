@@ -112,7 +112,11 @@ test_applet_handle_size_change (TestApplet *applet,
 static void
 test_applet_handle_background_change (TestApplet                *applet,
 				      MatePanelAppletBackgroundType  type,
+#if GTK_CHECK_VERSION(3, 0, 0)
+				      GdkRGBA                   *color,
+#else
 				      GdkColor                  *color,
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 				      cairo_pattern_t           *pattern,
 #else
@@ -131,14 +135,20 @@ test_applet_handle_background_change (TestApplet                *applet,
 		gdk_window_set_back_pixmap (window, NULL, FALSE);
 #endif
 		break;
-	case PANEL_COLOR_BACKGROUND:
-		g_message ("Setting background to #%2x%2x%2x",
-			   color->red, color->green, color->blue);
+	case PANEL_COLOR_BACKGROUND: {
 #if GTK_CHECK_VERSION (3, 0, 0)
-		gdk_window_set_background_pattern (window, NULL);
+		gchar *color_str = gdk_rgba_to_string(color);
 #else
-		gdk_window_set_back_pixmap (window, NULL, FALSE);
+		gchar *color_str = gdk_color_to_string(color);
 #endif
+		g_message ("Setting background to %s", color_str);
+		g_free (color_str);
+#if GTK_CHECK_VERSION (3, 0, 0)
+		gdk_window_set_background_rgba (window, color);
+#else
+		gdk_window_set_background (window, color);
+#endif
+		}
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
 #if GTK_CHECK_VERSION (3, 0, 0)

@@ -182,10 +182,6 @@ struct _ClockData {
 	GSettings *settings;
 };
 
-/* Used to count the number of clock instances. It's there to know when we
- * should free resources that are shared. */
-static int clock_numbers = 0;
-
 static void  update_clock (ClockData * cd);
 static void  update_tooltip (ClockData * cd);
 static void  update_panel_weather (ClockData *cd);
@@ -939,7 +935,11 @@ create_clock_window (ClockData *cd)
         locations_box = calendar_window_get_locations_box (CALENDAR_WINDOW (cd->calendar_popup));
         gtk_widget_show (locations_box);
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+	cd->clock_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+#else
 	cd->clock_vbox = gtk_vbox_new (FALSE, 6);
+#endif
 	gtk_container_add (GTK_CONTAINER (locations_box), cd->clock_vbox);
 
 	cd->clock_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1088,7 +1088,11 @@ create_cities_section (ClockData *cd)
 		g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+        cd->cities_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+#else
         cd->cities_section = gtk_vbox_new (FALSE, 6);
+#endif
         gtk_container_set_border_width (GTK_CONTAINER (cd->cities_section), 0);
 
 	cities = cd->locations;
@@ -2482,8 +2486,8 @@ save_cities_store (ClockData *cd)
         ClockLocation *loc;
         GList *node = cd->locations;
         gint len = g_list_length(cd->locations);
-        gchar **array[len + 1];
-        gchar **array_reverse[len + 1];
+        gchar *array[len + 1];
+        gchar *array_reverse[len + 1];
         gint i = 0;
 
         while (node) {
@@ -2905,7 +2909,6 @@ temperature_combo_changed (GtkComboBox *combo, ClockData *cd)
 {
 	int value;
 	int old_value;
-	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->temperature_unit;
@@ -2921,7 +2924,6 @@ speed_combo_changed (GtkComboBox *combo, ClockData *cd)
 {
 	int value;
 	int old_value;
-	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->speed_unit;
