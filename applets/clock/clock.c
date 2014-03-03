@@ -2482,8 +2482,8 @@ save_cities_store (ClockData *cd)
         ClockLocation *loc;
         GList *node = cd->locations;
         gint len = g_list_length(cd->locations);
-        gchar **array[len + 1];
-        gchar **array_reverse[len + 1];
+        gchar *array[len + 1];
+        const gchar *array_reverse[len + 1];
         gint i = 0;
 
         while (node) {
@@ -2495,12 +2495,15 @@ save_cities_store (ClockData *cd)
         array[i] = NULL;
 
         for (i = 0; i <= (len - 1); i++) {
-                array_reverse [len - i - 1] = g_strdup (array [i]);
+                array_reverse [len - i - 1] = array [i];
         }
         array_reverse[i] = NULL;
 
-        g_settings_set_strv (cd->settings, KEY_CITIES, (const gchar **) array_reverse);
-        /* FIXME free arrays */
+        g_settings_set_strv (cd->settings, KEY_CITIES, array_reverse);
+
+        for (i = 0; i <= (len - 1); i++) {
+                g_free (array [i]);
+        }
 }
 
 static void
