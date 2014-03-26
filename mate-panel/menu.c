@@ -347,26 +347,7 @@ panel_make_menu_icon (GtkIconTheme *icon_theme,
 	}
 
 	if (pb == NULL) {
-		pb = gdk_pixbuf_new_from_file (file, NULL);
-		if (pb) {
-			gint width, height;
-
-			width = gdk_pixbuf_get_width (pb);
-			height = gdk_pixbuf_get_height (pb);
-
-			/* if we want 24 and we get 22, do nothing;
-			 * else scale */
-			if (!(size - 2 <= width && width <= size &&
-                              size - 2 <= height && height <= size)) {
-				GdkPixbuf *tmp;
-
-				tmp = gdk_pixbuf_scale_simple (pb, size, size,
-							       GDK_INTERP_BILINEAR);
-
-				g_object_unref (pb);
-				pb = tmp;
-			}
-		}
+		pb = gdk_pixbuf_new_from_file_at_size (file, size, size, NULL);
 
 		/* add icon to the hash table so we don't load it again */
 		loaded = TRUE;
@@ -376,32 +357,6 @@ panel_make_menu_icon (GtkIconTheme *icon_theme,
 		g_free (file);
 		g_free (key);
 		return NULL;
-	}
-
-	if (loaded &&
-	    (gdk_pixbuf_get_width (pb) != size &&
-	     gdk_pixbuf_get_height (pb) != size)) {
-		GdkPixbuf *pb2;
-		int        dest_width;
-		int        dest_height;
-		int        width;
-		int        height;
-
-		width  = gdk_pixbuf_get_width (pb);
-		height = gdk_pixbuf_get_height (pb);
-
-		if (height > width) {
-			dest_width  = (size * width) / height;
-			dest_height = size;
-		} else {
-			dest_width  = size;
-			dest_height = (size * height) / width;
-		}
-
-		pb2 = gdk_pixbuf_scale_simple (pb, dest_width, dest_height,
-					       GDK_INTERP_BILINEAR);
-		g_object_unref (G_OBJECT (pb));
-		pb = pb2;
 	}
 
 	if (loaded) {
