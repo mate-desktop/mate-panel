@@ -29,7 +29,7 @@
 #include <glib.h>
 #include <gio/gio.h>
 
-#include <libpanel-util/panel-dconf.h>
+#include <libmate-desktop/mate-dconf.h>
 
 #include "panel-layout.h"
 #include "panel-profile.h"
@@ -166,7 +166,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     }
 
     dconf_path = g_strdup_printf (PANEL_RESOURCE_PATH "/%s", dir);
-    existing_ids = panel_dconf_list_subdirs (dconf_path, TRUE);
+    existing_ids = mate_dconf_list_subdirs (dconf_path, TRUE);
 
     if (id) {
         if (set_screen_to > 0) {

@@ -32,7 +32,7 @@
 #include <gio/gio.h>
 
 #include <libpanel-util/panel-list.h>
-#include <libpanel-util/panel-dconf.h>
+#include <libmate-desktop/mate-dconf.h>
 
 #include "applet.h"
 #include "panel.h"
@@ -147,7 +147,7 @@ panel_profile_find_new_id (PanelGSettingsKeyType type)
 			break;
 	}
 
-	existing_ids = panel_dconf_list_subdirs (dir, TRUE);
+	existing_ids = mate_dconf_list_subdirs (dir, TRUE);
 
 	for (i = 0; !retval; i++) {
 		retval = g_strdup_printf ("%s_%d", prefix, i);
@@ -1440,18 +1440,18 @@ panel_profile_delete_dir (PanelGSettingsKeyType  type,
 	if (type == PANEL_GSETTINGS_TOPLEVELS) {
 		gchar *subdir;
 		subdir = g_strdup_printf (PANEL_TOPLEVEL_PATH "%s/background/", id);
-		panel_dconf_recursive_reset (subdir, NULL);
+		mate_dconf_recursive_reset (subdir, NULL);
 		g_free (subdir);
 	}
 	else if (type == PANEL_GSETTINGS_OBJECTS) {
 		gchar *subdir;
 		subdir = g_strdup_printf (PANEL_TOPLEVEL_PATH "%s/prefs/", id);
-		panel_dconf_recursive_reset (subdir, NULL);
+		mate_dconf_recursive_reset (subdir, NULL);
 		g_free (subdir);
 	}
 
         if (dir != NULL) {
-	        panel_dconf_recursive_reset (dir, NULL);
+	        mate_dconf_recursive_reset (dir, NULL);
 	        g_free (dir);
         }
 }
