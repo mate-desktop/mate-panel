@@ -33,6 +33,7 @@
 
 #include <libpanel-util/panel-list.h>
 #include <libmate-desktop/mate-dconf.h>
+#include <libmate-desktop/mate-gsettings.h>
 
 #include "applet.h"
 #include "panel.h"
@@ -41,7 +42,6 @@
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-lockdown.h"
-#include "panel-gsettings.h"
 #include "panel-schemas.h"
 
 typedef struct {
@@ -946,7 +946,7 @@ panel_profile_add_to_list (PanelGSettingsKeyType  type,
 		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
 
         if ((key != NULL) && (new_id != NULL)) {
-	        panel_gsettings_append_strv (profile_settings,
+	        mate_gsettings_append_strv (profile_settings,
 								 key,
 								 new_id);
 	        g_free (key);
@@ -964,7 +964,7 @@ panel_profile_remove_from_list (PanelGSettingsKeyType  type,
 	else if (type == PANEL_GSETTINGS_OBJECTS)
 		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
 	
-	panel_gsettings_remove_all_from_strv (profile_settings,
+	mate_gsettings_remove_all_from_strv (profile_settings,
 										  key,
 										  id);
 	g_free (key);
@@ -1572,7 +1572,7 @@ panel_profile_toplevel_id_list_notify (GSettings *settings,
 
 	toplevel_ids_strv = g_settings_get_strv (settings, key);
 
-	toplevel_ids = panel_gsettings_strv_to_gslist (toplevel_ids_strv);
+	toplevel_ids = mate_gsettings_strv_to_gslist (toplevel_ids_strv);
 	toplevel_ids = panel_g_slist_make_unique (toplevel_ids,
 						  (GCompareFunc)g_strcmp0,
 						  FALSE);
@@ -1616,7 +1616,7 @@ panel_profile_object_id_list_update (gchar **objects)
 	GSList *sublist = NULL, *l;
 	GSList *object_ids;
 
-	object_ids = panel_gsettings_strv_to_gslist (objects);
+	object_ids = mate_gsettings_strv_to_gslist (objects);
 	object_ids = panel_g_slist_make_unique (object_ids,
 						(GCompareFunc)g_strcmp0,
 						FALSE);
