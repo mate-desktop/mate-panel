@@ -1694,8 +1694,8 @@ panel_widget_state_changed (GtkWidget    *widget,
 #endif
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	panel_widget_set_background_default_style (widget);
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
+	panel_widget_set_background_default_style (widget);
 #else
 	GtkStyle     *style;
 	GtkStateType  state;
