@@ -52,6 +52,8 @@
 #include <gdk/gdkx.h>
 #include <gio/gio.h>
 
+#include <libmate-desktop/mate-aboutdialog.h>
+
 #include <libmateweather/mateweather-prefs.h>
 #include <libmateweather/mateweather-xml.h>
 #include <libmateweather/location-entry.h>
@@ -3228,7 +3230,7 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
 	char copyright[] = \
 		"Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.";
 
-	gtk_show_about_dialog(NULL,
+	mate_show_about_dialog(NULL,
 		"program-name", _("Clock"),
 		"authors", authors,
 		"comments", _("The Clock displays the current time and date"),

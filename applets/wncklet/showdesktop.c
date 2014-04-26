@@ -33,6 +33,8 @@
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 
+#include <libmate-desktop/mate-aboutdialog.h>
+
 #include "wncklet.h"
 #include "showdesktop.h"
 
@@ -479,7 +481,7 @@ static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)
 		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 
-	gtk_show_about_dialog(GTK_WINDOW(sdd->applet),
+	mate_show_about_dialog(GTK_WINDOW(sdd->applet),
 		"program-name", _("Show Desktop Button"),
 		"authors", authors,
 		"comments", _("This button lets you hide all windows and show the desktop."),

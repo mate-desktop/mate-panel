@@ -25,6 +25,7 @@
 #include <libwnck/libwnck.h>
 #include <gio/gio.h>
 
+#include <libmate-desktop/mate-aboutdialog.h>
 #include <libmate-desktop/mate-gsettings.h>
 
 #include "workspace-switcher.h"
@@ -603,7 +604,7 @@ static void display_about_dialog(GtkAction* action, PagerData* pager)
 		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 
-	gtk_show_about_dialog(GTK_WINDOW(pager->applet),
+	mate_show_about_dialog(GTK_WINDOW(pager->applet),
 		"program-name", _("Workspace Switcher"),
 		"authors", authors,
 		"comments", _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),

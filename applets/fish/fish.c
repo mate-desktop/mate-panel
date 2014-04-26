@@ -42,6 +42,7 @@
 #include <gdk/gdkkeysyms-compat.h>
 #endif
 #include <gio/gio.h>
+#include <libmate-desktop/mate-aboutdialog.h>
 
 #include <mate-panel-applet.h>
 #include <mate-panel-applet-gsettings.h>
@@ -571,7 +572,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 
 	descr = g_strdup_printf(about_format, fish->name);
 
-	gtk_show_about_dialog(NULL,
+	mate_show_about_dialog(NULL,
 		"program-name", _("Fish"),
 		"authors", authors,
 		"comments", descr,
