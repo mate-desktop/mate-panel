@@ -211,7 +211,7 @@ static void on_applet_realized(GtkWidget* widget, gpointer user_data)
 static inline void force_no_focus_padding(GtkWidget* widget)
 {
 	static gboolean first_time = TRUE;
-
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	if (first_time)
 	{
 		gtk_rc_parse_string ("\n"
@@ -226,7 +226,7 @@ static inline void force_no_focus_padding(GtkWidget* widget)
 
 		first_time = FALSE;
 	}
-
+#endif
 	/* El widget antes se llamaba na-tray
 	 *
 	 * Issue #27

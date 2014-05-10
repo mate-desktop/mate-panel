@@ -406,6 +406,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	sdd->button = gtk_toggle_button_new ();
 
 	gtk_widget_set_name (sdd->button, "showdesktop-button");
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	gtk_rc_parse_string ("\n"
 		"   style \"showdesktop-button-style\"\n"
 		"   {\n"
@@ -415,6 +416,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 		"\n"
 		"    widget \"*.showdesktop-button\" style \"showdesktop-button-style\"\n"
 		"\n");
+#endif
 
 	atk_obj = gtk_widget_get_accessible(sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));

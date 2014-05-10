@@ -1479,9 +1479,39 @@ static void update_pixmap(FishApplet* fish)
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean fish_applet_draw(GtkWidget* widget, cairo_t *cr, FishApplet* fish)
+{
+	int width, height;
+	int src_x, src_y;
+
+	g_return_val_if_fail (fish->surface != NULL, FALSE);
+
+	g_assert (fish->n_frames > 0);
+
+	width = cairo_xlib_surface_get_width (fish->surface);
+	height = cairo_xlib_surface_get_height (fish->surface);
+
+	src_x = 0;
+	src_y = 0;
+
+	if (fish->rotate) {
+        if (fish->orientation == MATE_PANEL_APPLET_ORIENT_RIGHT)
+			src_y = ((height * (fish->n_frames - 1 - fish->current_frame)) / fish->n_frames);
+        else if (fish->orientation == MATE_PANEL_APPLET_ORIENT_LEFT)
+			src_y = ((height * fish->current_frame) / fish->n_frames);
+		else
+			src_x = ((width * fish->current_frame) / fish->n_frames);
+	} else
+		src_x = ((width * fish->current_frame) / fish->n_frames);
+
+        cairo_save (cr);
+        cairo_set_source_surface (cr, fish->surface, -src_x, -src_y);
+        cairo_paint (cr);
+        cairo_restore (cr);
+
+        return FALSE;
+}
 #else
 static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* event, FishApplet* fish)
-#endif
 {
 	GdkWindow    *window;
 	GtkStyle     *style;
@@ -1489,11 +1519,7 @@ static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* even
 	int width, height;
 	int src_x, src_y;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	g_return_val_if_fail (fish->surface != NULL, FALSE);
-#else
 	g_return_val_if_fail (fish->pixmap != NULL, FALSE);
-#endif
 
 	g_assert (fish->n_frames > 0);
 
@@ -1501,16 +1527,9 @@ static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* even
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
-	width = cairo_xlib_surface_get_width (fish->surface);
-	height = cairo_xlib_surface_get_height (fish->surface);
-	src_x = 0;
-	src_y = 0;
-#else
 	gdk_drawable_get_size(fish->pixmap, &width, &height);
 	src_x = event->area.x;
 	src_y = event->area.y;
-#endif
 
 	if (fish->rotate) {
 		if (fish->orientation == MATE_PANEL_APPLET_ORIENT_RIGHT)
@@ -1522,22 +1541,16 @@ static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* even
 	} else
 		src_x += ((width * fish->current_frame) / fish->n_frames);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	cairo_save (cr);
-	cairo_set_source_surface (cr, fish->surface, -src_x, -src_y);
-	cairo_paint (cr);
-	cairo_restore (cr);
-#else
 	gdk_draw_drawable (window,
 			   style->fg_gc [state],
 			   fish->pixmap,
 			   src_x, src_y,
 			   event->area.x, event->area.y,
 			   event->area.width, event->area.height);
-#endif
 
         return FALSE;
 }
+#endif
 
 #if !GTK_CHECK_VERSION (3, 0, 0)
 static void fish_applet_size_request(GtkWidget* widget, GtkRequisition* requisition, FishApplet* fish)

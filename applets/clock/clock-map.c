@@ -236,40 +236,54 @@ clock_map_refresh (ClockMap *this)
 static gboolean
 #if GTK_CHECK_VERSION (3, 0, 0)
 clock_map_draw (GtkWidget *this, cairo_t *cr)
+{
+        ClockMapPrivate *priv = PRIVATE (this);
+	GtkStyleContext *context;
+	GdkRGBA  color;
+        int width, height;
+
+        context = gtk_widget_get_style_context (this);
+        gtk_style_context_get_color (context, GTK_STATE_FLAG_ACTIVE, &color);   
+
+	if (!priv->shadow_map_pixbuf) {
+                g_warning ("Needed to refresh the map in draw event.");
+		clock_map_refresh (CLOCK_MAP (this));
+        }
+
+        width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
+        height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
+
+        gdk_cairo_set_source_pixbuf (cr, priv->shadow_map_pixbuf, 0, 0);
+        cairo_rectangle (cr, 0, 0, width, height);
+        cairo_paint (cr);
+
+        /* draw a simple outline */
+        cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
+        gdk_cairo_set_source_rgba (cr, &color);
+        cairo_set_line_width (cr, 1.0);
+        cairo_stroke (cr);
+
+	return FALSE;
+}
 #else
 clock_map_expose (GtkWidget *this, GdkEventExpose *event)
-#endif
 {
         ClockMapPrivate *priv = PRIVATE (this);
 	GtkStyle *style;
-#if GTK_CHECK_VERSION (3, 0, 0)
-	int width, height;
-#else
 	GdkWindow *window;
 	GtkAllocation allocation;
 	GdkRectangle region;
         cairo_t *cr;
-#endif
 
 	style = gtk_widget_get_style (this);
-#if !GTK_CHECK_VERSION (3, 0, 0)
 	window = gtk_widget_get_window (this);
 	gtk_widget_get_allocation (this, &allocation);
-#endif
 
 	if (!priv->shadow_map_pixbuf) {
                 g_warning ("Needed to refresh the map in expose event.");
 		clock_map_refresh (CLOCK_MAP (this));
         }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
-	height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
-
-	gdk_cairo_set_source_pixbuf (cr, priv->shadow_map_pixbuf, 0, 0);
-	cairo_rectangle (cr, 0, 0, width, height);
-	cairo_paint (cr);
-#else
         cr = gdk_cairo_create (window);
 
 	region.x = allocation.x;
@@ -289,13 +303,8 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
 			 region.height,
 			 GDK_RGB_DITHER_NORMAL,
 			 0, 0);
-#endif
 
         /* draw a simple outline */
-#if GTK_CHECK_VERSION (3, 0, 0)
-	cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
-	gdk_cairo_set_source_color (cr, &style->mid [GTK_STATE_ACTIVE]);
-#else
         cairo_rectangle (
                 cr,
                 allocation.x + 0.5, allocation.y + 0.5,
@@ -307,17 +316,14 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
                 style->mid [GTK_STATE_ACTIVE].red   / 65535.0,
                 style->mid [GTK_STATE_ACTIVE].green / 65535.0,
                 style->mid [GTK_STATE_ACTIVE].blue  / 65535.0);
-#endif
 
         cairo_set_line_width (cr, 1.0);
         cairo_stroke (cr);
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
         cairo_destroy (cr);
-#endif
 
 	return FALSE;
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
