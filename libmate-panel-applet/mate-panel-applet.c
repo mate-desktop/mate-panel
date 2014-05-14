@@ -2055,6 +2055,11 @@ mate_panel_applet_init (MatePanelApplet *applet)
 
 
 	applet->priv->plug = gtk_plug_new (0);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
+	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
+#endif
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),
 				  applet);
