@@ -102,7 +102,10 @@ MatePanelAppletBackgroundType mate_panel_applet_get_background (MatePanelApplet 
 #else
 MatePanelAppletBackgroundType mate_panel_applet_get_background(MatePanelApplet* applet, /* return values */ GdkColor* color, GdkPixmap** pixmap);
 #endif
+
+#if !GTK_CHECK_VERSION (3, 0, 0)
 void mate_panel_applet_set_background_widget(MatePanelApplet* applet, GtkWidget* widget);
+#endif
 
 gchar* mate_panel_applet_get_preferences_path(MatePanelApplet* applet);
 

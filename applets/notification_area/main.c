@@ -252,7 +252,9 @@ static gboolean applet_factory(MatePanelApplet* applet, const gchar* iid, gpoint
 
 	mate_panel_applet_set_flags(applet, MATE_PANEL_APPLET_HAS_HANDLE | MATE_PANEL_APPLET_EXPAND_MINOR);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	mate_panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
+#endif
 
 	force_no_focus_padding(GTK_WIDGET(applet));
 

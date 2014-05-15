@@ -2408,8 +2408,10 @@ fill_clock_applet (MatePanelApplet *applet)
 			  G_CALLBACK (panel_button_change_pixel_size),
 			  cd);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	mate_panel_applet_set_background_widget (MATE_PANEL_APPLET (cd->applet),
 					    GTK_WIDGET (cd->applet));
+#endif
 
         action_group = gtk_action_group_new ("ClockApplet Menu Actions");
         gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);

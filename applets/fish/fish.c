@@ -1965,7 +1965,9 @@ static void fish_applet_instance_init(FishApplet* fish, FishAppletClass* klass)
 
 	mate_panel_applet_set_flags (MATE_PANEL_APPLET (fish), MATE_PANEL_APPLET_EXPAND_MINOR);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(fish), GTK_WIDGET(fish));
+#endif
 }
 
 static void fish_applet_class_init(FishAppletClass* klass)
