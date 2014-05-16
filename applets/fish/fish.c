@@ -850,10 +850,6 @@ static void display_fortune_dialog(FishApplet* fish)
 
 		gtk_window_set_icon_name (GTK_WINDOW (fish->fortune_dialog),
 					  FISH_ICON);
-#if !GTK_CHECK_VERSION (3, 0, 0)
-		gtk_dialog_set_has_separator (
-			GTK_DIALOG (fish->fortune_dialog), FALSE);
-#endif
 
 		gtk_dialog_set_default_response (
 			GTK_DIALOG (fish->fortune_dialog), GTK_RESPONSE_CLOSE);

@@ -622,10 +622,6 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-#endif
-
 	priv->table = gtk_table_new (4, 3, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (priv->table), 5);
 	gtk_table_set_row_spacings (GTK_TABLE (priv->table), 6);
