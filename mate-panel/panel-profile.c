@@ -257,7 +257,6 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
 	panel_profile_get_background_gdk_rgba_color (toplevel, color);
-	color->alpha = panel_profile_get_background_opacity (toplevel) / 65535.0;
 #else
 	panel_profile_get_background_gdk_color (toplevel, &(color->gdk));
 	color->alpha = panel_profile_get_background_opacity (toplevel);
@@ -289,6 +288,7 @@ panel_profile_get_background_gdk_rgba_color (PanelToplevel *toplevel,
 		color->red   = 0.;
 		color->green = 0.;
 		color->blue  = 0.;
+		color->alpha = 1.0;
 	}
 
 	g_free (color_str);
@@ -554,9 +554,10 @@ get_background_color (PanelToplevel *toplevel,
 	color_str = g_settings_get_string (toplevel->background_settings, "color");
 #if GTK_CHECK_VERSION (3, 0, 0)
 	if (!color_str || !gdk_rgba_parse (color, color_str)) {
-		color->red   = 0;
-		color->green = 0;
-		color->blue  = 0;
+		color->red   = 0.0;
+		color->green = 0.0;
+		color->blue  = 0.0;
+		color->alpha = 1.0;
 	}
 #else
 	if (!color_str || !gdk_color_parse (color_str, &(color->gdk))) {
@@ -567,9 +568,7 @@ get_background_color (PanelToplevel *toplevel,
 #endif
 	g_free (color_str);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity") / 65535.0;
-#else
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity");
 #endif
 }
@@ -912,9 +911,11 @@ panel_profile_background_change_notify (GSettings *settings,
 			panel_background_set_gdk_color (background, &gdk_color);
 		g_free (str);
 #endif
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	} else if (!strcmp (key, "opacity")) {
 		panel_background_set_opacity (background,
 					      g_settings_get_int (settings, key));
+#endif
 	} else if (!strcmp (key, "image")) {
 		gchar *value = g_settings_get_string (settings, key);
 		panel_background_set_image (background, value);
@@ -958,7 +959,7 @@ void
 panel_profile_remove_from_list (PanelGSettingsKeyType  type,
 								const char        *id)
 {
-	gchar *key;
+	gchar *key = NULL;
 	if (type == PANEL_GSETTINGS_TOPLEVELS)
 		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
 	else if (type == PANEL_GSETTINGS_OBJECTS)
@@ -1153,8 +1154,11 @@ get_toplevel_screen (char *toplevel_path)
 	g_object_unref (settings);
 
 	display = gdk_display_get_default ();
-
+#if GTK_CHECK_VERSION(3, 10, 0)
+	if (screen_n < 0 || screen_n >= 1) {
+#else
 	if (screen_n < 0 || screen_n >= gdk_display_get_n_screens (display)) {
+#endif
 #if 0
 		g_warning (_("Panel '%s' is set to be displayed on screen %d which "
 			     "is not currently available. Not loading this panel."),
@@ -1702,8 +1706,11 @@ panel_profile_ensure_toplevel_per_screen ()
 	toplevels = panel_toplevel_list_toplevels ();
 
 	display = gdk_display_get_default ();
-
+#if GTK_CHECK_VERSION(3, 10, 0)
+	n_screens = 1;
+#else
 	n_screens = gdk_display_get_n_screens (display);
+#endif
 	for (i = 0; i < n_screens; i++) {
 		GdkScreen *screen;
 

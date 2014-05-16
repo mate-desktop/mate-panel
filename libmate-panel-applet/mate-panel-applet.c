@@ -1428,7 +1428,7 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	int              width;
 	int              height;
 	cairo_t         *cr;
-	cairo_pattern_t *pattern;
+	cairo_pattern_t *pattern = NULL;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
@@ -1496,7 +1496,6 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_destroy (background);
-	pattern = NULL;
 #else
 	/* the pixmap has no colormap, and we need one */
 	gdk_drawable_set_colormap (GDK_DRAWABLE (pixmap),
@@ -1594,7 +1593,7 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 		}
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-		*pattern = mate_panel_applet_get_pattern_from_pixmap (applet, pixmap_id, x, y);
+		*pattern = cairo_pattern_reference(mate_panel_applet_get_pattern_from_pixmap (applet, pixmap_id, x, y));
 		if (!*pattern) {
 			g_warning ("Failed to get pattern %s", elements [1]);
 			g_strfreev (elements);
@@ -1632,8 +1631,12 @@ mate_panel_applet_get_background (MatePanelApplet  *applet,
 
 	/* initial sanity */
 #if GTK_CHECK_VERSION (3, 0, 0)
-	if (pattern != NULL)
-		*pattern = NULL;
+	if (pattern != NULL) {
+		if (*pattern) {
+			cairo_pattern_destroy (*pattern);
+			*pattern = NULL;
+		}
+	}
 #else
 	if (pixmap != NULL)
 		*pixmap = NULL;
@@ -1782,7 +1785,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 	MatePanelAppletBackgroundType  type;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA                    color;
-	cairo_pattern_t           *pattern;
+	cairo_pattern_t           *pattern = NULL;
 
 	type = mate_panel_applet_get_background (applet, &color, &pattern);
 
@@ -1820,9 +1823,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 			       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
 #endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-		cairo_pattern_destroy (pattern);
-#else
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		g_object_unref (pixmap);
 #endif
 		break;
@@ -1830,6 +1831,11 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 		g_assert_not_reached ();
 		break;
 	}
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (pattern)
+		cairo_pattern_destroy (pattern);
+#endif
 }
 
 static void
@@ -2540,11 +2546,11 @@ mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 		MatePanelAppletBackgroundType  type;
 #if GTK_CHECK_VERSION (3, 0, 0)
 		GdkRGBA                    color;
-		cairo_pattern_t           *pattern;
+		cairo_pattern_t           *pattern = NULL;
 		type = mate_panel_applet_get_background (applet, &color, &pattern);
 		mate_panel_applet_update_background_for_widget (widget, type,
 							   &color, pattern);
-		if (type == PANEL_PIXMAP_BACKGROUND)
+		if (pattern)
 			cairo_pattern_destroy (pattern);
 #else
 		GdkColor                   color;

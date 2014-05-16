@@ -73,9 +73,11 @@ typedef struct {
 	GtkWidget     *color_button;
 	GtkWidget     *color_label;
 	GtkWidget     *image_chooser;
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	GtkWidget     *opacity_scale;
 	GtkWidget     *opacity_label;
 	GtkWidget     *opacity_legend;
+#endif
 
 	GtkWidget     *writability_warn_general;
 	GtkWidget     *writability_warn_background;
@@ -336,7 +338,11 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
 #if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 4, 0)
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(color_button), &color);
+#elif GTK_CHECK_VERSION(3, 0, 0)
 	gtk_color_button_get_rgba (color_button, &color);
+#endif
 	panel_profile_set_background_gdk_rgba_color (dialog->toplevel, &color);
 #else
 	gtk_color_button_get_color (color_button, &color);
@@ -361,9 +367,14 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 4, 0)
+	gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dialog->color_button),
+				    &color);
+	gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog->color_button), TRUE);
+#elif GTK_CHECK_VERSION (3, 0, 0)
 	gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
 				    &color);
+    gtk_color_button_set_alpha GTK_COLOR_BUTTON (dialog->color_button), TRUE );
 #else
 	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
 				    &(color.gdk));
@@ -428,7 +439,7 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
-
+#if !GTK_CHECK_VERSION(3, 0, 0)
 static void
 panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog)
 {
@@ -478,6 +489,7 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
+#endif
 
 static void
 panel_properties_dialog_upd_sensitivity (PanelPropertiesDialog *dialog,
@@ -712,7 +724,7 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 						 gchar                 *str_color)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	GdkRGBA new_color;
+	GdkRGBA new_color = { 0.0, 0.0, 0.0, 1.0 };
 	GdkRGBA old_color;
 #else
 	GdkColor new_color = { 0, };
@@ -726,17 +738,26 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 #endif
 		return;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 4, 0)
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER (dialog->color_button),
+#elif GTK_CHECK_VERSION(3, 0, 0)
 	gtk_color_button_get_rgba (GTK_COLOR_BUTTON (dialog->color_button),
 #else
 	gtk_color_button_get_color (GTK_COLOR_BUTTON (dialog->color_button),
 #endif
 				    &old_color);
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+	if (!gdk_rgba_equal(&old_color, &new_color))
+#else
 	if (old_color.red   != new_color.red ||
 	    old_color.green != new_color.green ||
 	    old_color.blue  != new_color.blue)
-#if GTK_CHECK_VERSION (3, 0, 0)
+#endif
+
+#if GTK_CHECK_VERSION(3, 4, 0)
+		gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER(dialog->color_button),
+#elif GTK_CHECK_VERSION (3, 0, 0)
 		gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
 #else
 		gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
@@ -744,6 +765,7 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 					    &new_color);
 }
 
+#if !GTK_CHECK_VERSION(3, 0, 0)
 static void
 panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog,
 						   gint                   opacity)
@@ -755,6 +777,7 @@ panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog
 	if ((int) gtk_range_get_value (GTK_RANGE (dialog->opacity_scale)) != (int) percentage)
 		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
 }
+#endif
 
 static void
 panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
@@ -791,11 +814,13 @@ panel_properties_dialog_background_notify (GSettings             *settings,
 		panel_properties_dialog_update_background_color (dialog, color);
 		g_free (color);
 	}
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	else if (!strcmp (key, "opacity"))
 	{
 		gint opacity = g_settings_get_int (settings, key);
 		panel_properties_dialog_update_background_opacity (dialog, opacity);
 	}
+#endif
 	else if (!strcmp (key, "image"))
 	{
 		char *image = g_settings_get_string (settings, key);
@@ -942,7 +967,9 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	panel_properties_dialog_setup_color_button      (dialog, gui);
 	panel_properties_dialog_setup_image_chooser     (dialog, gui);
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	panel_properties_dialog_setup_opacity_scale     (dialog, gui);
+#endif
 	panel_properties_dialog_setup_background_radios (dialog, gui);
 
 	g_signal_connect (dialog->background_settings,

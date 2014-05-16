@@ -124,14 +124,14 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 #ifdef WNCK_CHECK_VERSION
 #if WNCK_CHECK_VERSION (3, 4, 6)
-	wnck_tasklist_set_orientation (tasklist->tasklist, new_orient);
+	wnck_tasklist_set_orientation (WNCK_TASKLIST(tasklist->tasklist), new_orient);
 #endif
 #endif
 	tasklist_update(tasklist);
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t* pattern, TasklistData* tasklist)
+static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t* pattern, TasklistData* tasklist)
 #else
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, TasklistData* tasklist)
 #endif
@@ -448,7 +448,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 #ifdef WNCK_CHECK_VERSION
 #if WNCK_CHECK_VERSION (3, 4, 6)
-	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
+	wnck_tasklist_set_orientation (WNCK_TASKLIST(tasklist->tasklist), tasklist->orientation);
 #endif
 #endif
 
@@ -630,7 +630,6 @@ static void display_all_workspaces_toggled(GtkToggleButton* button, TasklistData
 
 static void setup_sensitivity(TasklistData* tasklist, GtkBuilder* builder, const char* wid1, const char* wid2, const char* wid3, const char* key)
 {
-	MatePanelApplet* applet = MATE_PANEL_APPLET(tasklist->applet);
 	GtkWidget* w;
 
 	if (g_settings_is_writable(tasklist->settings, key))

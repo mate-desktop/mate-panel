@@ -1261,7 +1261,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		AppletData *ad = list->data;
 		GtkRequisition chreq;
 #if GTK_CHECK_VERSION (3, 0, 0)
-		gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
+		gtk_widget_get_preferred_size (ad->applet, NULL, &chreq);
 #else
 		gtk_widget_size_request(ad->applet, &chreq);
 #endif
@@ -1626,8 +1626,15 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	   !GTK_IS_WIDGET(widget) ||
 	   !gtk_widget_get_visible(widget))
 		return FALSE;
-
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkWindow *window = gtk_widget_get_window(widget);
+	GdkDisplay *display = gtk_widget_get_display(widget);
+	GdkDeviceManager *device_manager = gdk_display_get_device_manager(display);
+	GdkDevice *pointer = gdk_device_manager_get_client_pointer(device_manager);
+	gdk_window_get_device_position(window, pointer, &x, &y, NULL);
+#else
 	gtk_widget_get_pointer(widget, &x, &y);
+#endif
 
 	gtk_widget_get_allocation (widget, &allocation);
 	w = allocation.width;
@@ -1652,7 +1659,7 @@ panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 	GtkStyleContext *context;
 	GtkStateFlags state;
 	GdkRGBA bg_color;
-	cairo_pattern_t *bg_image;
+	cairo_pattern_t *bg_image = NULL;
 #else
 	GtkStyle     *style;
 	GtkStateType  state;
@@ -1663,8 +1670,10 @@ panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 		context = gtk_widget_get_style_context (widget);
 		state = gtk_widget_get_state_flags (widget);
 
-		gtk_style_context_get_background_color (context, state, &bg_color);
-		gtk_style_context_get (context, state, "background-image", &bg_image, NULL);
+		gtk_style_context_get (context, state,
+		    GTK_STYLE_PROPERTY_BACKGROUND_IMAGE, &bg_image,
+		    GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &bg_color,
+		    NULL);
 #else
 		style = gtk_widget_get_style (widget);
 		state = gtk_widget_get_state (widget);
@@ -2030,7 +2039,11 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 					   APPLET_EVENT_MASK, NULL,
 					   fleur_cursor, time_);
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+		g_object_unref (fleur_cursor);
+#else
 		gdk_cursor_unref (fleur_cursor);
+#endif
 		gdk_flush ();
 
 		if (status != GDK_GRAB_SUCCESS) {
@@ -2064,7 +2077,15 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkWindow *window = gtk_widget_get_window(GTK_WIDGET (panel));
+	GdkDisplay *display = gtk_widget_get_display(GTK_WIDGET (panel));
+	GdkDeviceManager *device_manager = gdk_display_get_device_manager(display);
+	GdkDevice *pointer = gdk_device_manager_get_client_pointer(device_manager);
+	gdk_window_get_device_position(window, pointer, &x, &y, NULL);
+#else
 	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
+#endif
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
 	
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -2286,8 +2307,16 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		}
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(panel));
+	GdkDisplay *display = gtk_widget_get_display(GTK_WIDGET(panel));
+	GdkDeviceManager *device_manager = gdk_display_get_device_manager(display);
+	GdkDevice *pointer = gdk_device_manager_get_client_pointer(device_manager);
+	gdk_window_get_device_position(window, pointer, NULL, NULL, &mods);
+#else
 	gdk_window_get_pointer(gtk_widget_get_window (GTK_WIDGET(panel)),
 			       NULL,NULL,&mods);
+#endif
 
 	movement = PANEL_SWITCH_MOVE;
 
@@ -2340,7 +2369,15 @@ move_timeout_handler(gpointer data)
 
 		widget = panel->currently_dragged_applet->applet;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+		GdkWindow *window = gtk_widget_get_window(widget);
+		GdkDisplay *display = gtk_widget_get_display(widget);
+		GdkDeviceManager *device_manager = gdk_display_get_device_manager(display);
+		GdkDevice *pointer = gdk_device_manager_get_client_pointer(device_manager);
+		gdk_window_get_device_position(window, pointer, &x, &y, NULL);
+#else
 		gtk_widget_get_pointer(widget, &x, &y);
+#endif
 
 		gtk_widget_get_allocation (widget, &allocation);
 		w = allocation.width;

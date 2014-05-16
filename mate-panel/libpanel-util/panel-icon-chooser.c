@@ -396,9 +396,17 @@ _panel_icon_chooser_clicked (GtkButton *button)
 	filechooser = gtk_file_chooser_dialog_new (_("Choose an icon"),
 						   parent,
 						   GTK_FILE_CHOOSER_ACTION_OPEN,
+#if GTK_CHECK_VERSION (3, 10, 0)
+						   _("_Cancel"),
+#else
 						   GTK_STOCK_CANCEL,
+#endif
 						   GTK_RESPONSE_CANCEL,
+#if GTK_CHECK_VERSION (3, 10, 0)
+						   _("_Open"),
+#else
 						   GTK_STOCK_OPEN,
+#endif
 						   GTK_RESPONSE_ACCEPT,
 						   NULL);
 	panel_gtk_file_chooser_add_image_preview (GTK_FILE_CHOOSER (filechooser));

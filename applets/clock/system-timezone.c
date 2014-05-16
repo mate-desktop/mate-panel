@@ -861,7 +861,6 @@ system_timezone_is_zone_file_valid (const char  *zone_file,
 {
         GError     *our_error;
         GIOChannel *channel;
-        GIOStatus   status;
         char        buffer[strlen (TZ_MAGIC)];
         gsize       read;
 
@@ -888,7 +887,7 @@ system_timezone_is_zone_file_valid (const char  *zone_file,
         our_error = NULL;
         channel = g_io_channel_new_file (zone_file, "r", &our_error);
         if (!our_error)
-                status = g_io_channel_read_chars (channel,
+                g_io_channel_read_chars (channel,
                                                   buffer, strlen (TZ_MAGIC),
                                                   &read, &our_error);
         if (channel)

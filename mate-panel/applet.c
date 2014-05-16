@@ -612,13 +612,21 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	screen = gtk_widget_get_screen (applet);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
+	gtk_widget_get_preferred_size (GTK_WIDGET (menu), NULL, &requisition);
 #else
 	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 #endif
 
 	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDisplay *display = gdk_screen_get_display (screen);
+	GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
+	GdkDevice *pointer = gdk_device_manager_get_client_pointer (device_manager);
+	GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (menu));
+	gdk_window_get_device_position(window, pointer, &pointer_x, &pointer_y, NULL);
+#else
 	gtk_widget_get_pointer (applet, &pointer_x, &pointer_y);
+#endif
 
 	gtk_widget_get_allocation (applet, &allocation);
 

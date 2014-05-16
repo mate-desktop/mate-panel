@@ -144,7 +144,7 @@ static const GtkActionEntry menu_actions [] = {
 };
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, AppletData* data)
+static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t *pattern, AppletData* data)
 #else
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, AppletData* data)
 #endif
