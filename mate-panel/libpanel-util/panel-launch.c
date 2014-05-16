@@ -264,7 +264,7 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 				G_SPAWN_SEARCH_PATH,
 				set_environment,
 				&display,
-				NULL,
+				&pid,
 				&local_error);
 				g_free (display);
 
