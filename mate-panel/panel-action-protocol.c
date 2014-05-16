@@ -149,19 +149,8 @@ void
 panel_action_protocol_init (void)
 {
 	GdkDisplay *display;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	GdkAtom     gdk_atom_mate_panel_action;
-	GdkAtom     gdk_atom_gnome_panel_action;
-#endif
 
 	display = gdk_display_get_default ();
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	gdk_atom_mate_panel_action =
-		gdk_atom_intern_static_string ("_MATE_PANEL_ACTION");
-	gdk_atom_gnome_panel_action =
-		gdk_atom_intern_static_string ("_GNOME_PANEL_ACTION");
-#endif
 
 	atom_mate_panel_action =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
@@ -192,15 +181,6 @@ panel_action_protocol_init (void)
 			     "_MATE_PANEL_ACTION_KILL_DIALOG",
 			     FALSE);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	/* We'll filter event sent on non-root windows later */
 	gdk_window_add_filter (NULL, panel_action_protocol_filter, NULL);
-#else
-	gdk_display_add_client_message_filter (
-		display, gdk_atom_mate_panel_action,
-		panel_action_protocol_filter, NULL);
-	gdk_display_add_client_message_filter (
-		display, gdk_atom_gnome_panel_action,
-		panel_action_protocol_filter, NULL);
-#endif
 }
