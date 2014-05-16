@@ -1461,12 +1461,10 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	}
 #endif
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 	width = gdk_window_get_width(window);
 	height = gdk_window_get_height(window);
+#if GTK_CHECK_VERSION(3, 0, 0)
 	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
-#else
-	gdk_drawable_get_size(GDK_DRAWABLE(window), &width, &height);
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
