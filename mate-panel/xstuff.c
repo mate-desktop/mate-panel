@@ -498,11 +498,7 @@ draw_zoom_animation (GdkScreen *gscreen,
 	int depth;
 
 	dpy = gdk_x11_display_get_xdisplay (gdk_screen_get_display (gscreen));
-#if GTK_CHECK_VERSION (3, 0, 0)
 	root_win = GDK_WINDOW_XID (gdk_screen_get_root_window (gscreen));
-#else
-	root_win = gdk_x11_drawable_get_xid (gdk_screen_get_root_window (gscreen));
-#endif
 	screen = gdk_screen_get_number (gscreen);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	depth = DefaultDepth(dpy,screen);
@@ -670,11 +666,7 @@ xstuff_get_current_workspace (GdkScreen *screen)
 	int     result;
 	int     retval;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	root_window = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
-#else
-	root_window = gdk_x11_drawable_get_xid (gdk_screen_get_root_window (screen));
-#endif
 
 	gdk_error_trap_push ();
 	result = XGetWindowProperty (GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen)),
@@ -719,20 +711,12 @@ xstuff_grab_key_on_all_screens (int      keycode,
 		if (grab)
 			XGrabKey (gdk_x11_display_get_xdisplay (display),
 				  keycode, modifiers,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				  GDK_WINDOW_XID (root),
-#else
-				  gdk_x11_drawable_get_xid (root),
-#endif
 				  True, GrabModeAsync, GrabModeAsync);
 		else
 			XUngrabKey (gdk_x11_display_get_xdisplay (display),
 				    keycode, modifiers,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				    GDK_WINDOW_XID (root));
-#else
-				    gdk_x11_drawable_get_xid (root));
-#endif
 	}
 }
 
