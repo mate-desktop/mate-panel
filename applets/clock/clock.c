@@ -186,7 +186,9 @@ struct _ClockData {
 
 /* Used to count the number of clock instances. It's there to know when we
  * should free resources that are shared. */
+/* FIXME unused variable, remove?
 static int clock_numbers = 0;
+*/
 
 static void  update_clock (ClockData * cd);
 static void  update_tooltip (ClockData * cd);
@@ -2907,7 +2909,6 @@ temperature_combo_changed (GtkComboBox *combo, ClockData *cd)
 {
 	int value;
 	int old_value;
-	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->temperature_unit;
@@ -2923,7 +2924,6 @@ speed_combo_changed (GtkComboBox *combo, ClockData *cd)
 {
 	int value;
 	int old_value;
-	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->speed_unit;
