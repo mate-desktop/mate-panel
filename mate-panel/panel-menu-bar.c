@@ -329,24 +329,23 @@ static gboolean panel_menu_bar_on_expose(GtkWidget* widget, GdkEventExpose* even
 
 	if (gtk_widget_has_focus(GTK_WIDGET(menubar)))
 	{
-		gtk_paint_focus(gtk_widget_get_style(widget),
 #if GTK_CHECK_VERSION (3, 0, 0)
+		gtk_render_focus(gtk_widget_get_style_context(widget),
 						cr,
+						0,
+						0,
+							gtk_widget_get_allocated_width (widget),
+							gtk_widget_get_allocated_height (widget));
+						
 #else
+		gtk_paint_focus(gtk_widget_get_style(widget),
 						gtk_widget_get_window(widget),
-#endif
 						gtk_widget_get_state(GTK_WIDGET(menubar)),
-#if !GTK_CHECK_VERSION (3, 0, 0)
 						NULL,
-#endif
 						widget,
 						"menubar-applet",
 						0,
 						0,
-#if GTK_CHECK_VERSION (3, 0, 0)
-						gtk_widget_get_allocated_width (widget),
-						gtk_widget_get_allocated_height (widget));
-#else
 						-1,
 						-1);
 #endif

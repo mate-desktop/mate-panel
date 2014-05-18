@@ -263,6 +263,11 @@ calculate_minimum_width (GtkWidget   *widget,
 	int	      width, height;
 	int	      focus_width = 0;
 	int	      focus_pad = 0;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStyleContext *style_context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
+#endif
 
 	context = gtk_widget_get_pango_context (widget);
 
@@ -273,12 +278,24 @@ calculate_minimum_width (GtkWidget   *widget,
 	g_object_unref (G_OBJECT (layout));
 	layout = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	state = gtk_widget_get_state_flags (widget);
+	style_context = gtk_widget_get_style_context (widget);
+	gtk_style_context_get_padding (style_context, state, &padding);
+	gtk_style_context_get_style (style_context,
+			             "focus-line-width", &focus_width,
+			             "focus-padding", &focus_pad,
+			             NULL);
+
+	width += 2 * (focus_width + focus_pad) + padding.left + padding.right;
+#else
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
 			      "focus-padding", &focus_pad,
 			      NULL);
 
 	width += 2 * (focus_width + focus_pad + gtk_widget_get_style (widget)->xthickness);
+#endif
 
 	return width;
 }
@@ -368,42 +385,72 @@ get_itime (time_t current_time)
 /* adapted from panel-toplevel.c */
 static int
 calculate_minimum_height (GtkWidget        *widget,
-                          MatePanelAppletOrient orientation)
+			  MatePanelAppletOrient  orientation)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStateFlags     state;
+	GtkStyleContext  *style_context;
+        const PangoFontDescription *font_desc;
+	GtkBorder         padding;
+#else
 	GtkStyle         *style;
-        PangoContext     *context;
-        PangoFontMetrics *metrics;
-        int               focus_width = 0;
-        int               focus_pad = 0;
-        int               ascent;
-        int               descent;
-        int               thickness;
+#endif
+	PangoContext     *context;
+	PangoFontMetrics *metrics;
+	int               focus_width = 0;
+	int               focus_pad = 0;
+	int               ascent;
+	int               descent;
+	int               thickness;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	state = gtk_widget_get_state_flags (widget);
+	style_context = gtk_widget_get_style_context (widget);
+        gtk_style_context_get (style_context, state, "font", &font_desc, NULL);
+#else
 	style = gtk_widget_get_style (widget);
-        context = gtk_widget_get_pango_context (widget);
-        metrics = pango_context_get_metrics (context,
-                                             style->font_desc,
-                                             pango_context_get_language (context));
+#endif
+	context = gtk_widget_get_pango_context (widget);
+	metrics = pango_context_get_metrics (context,
+#if GTK_CHECK_VERSION (3, 0, 0)
+					     font_desc,
+#else
+					     style->font_desc,
+#endif
+					     pango_context_get_language (context));
 
-        ascent  = pango_font_metrics_get_ascent  (metrics);
-        descent = pango_font_metrics_get_descent (metrics);
+	ascent  = pango_font_metrics_get_ascent  (metrics);
+	descent = pango_font_metrics_get_descent (metrics);
 
-        pango_font_metrics_unref (metrics);
+	pango_font_metrics_unref (metrics);
 
-        gtk_widget_style_get (widget,
-                              "focus-line-width", &focus_width,
-                              "focus-padding", &focus_pad,
-                              NULL);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_style_context_get_padding (style_context, state, &padding);
+#endif
+	gtk_widget_style_get (widget,
+			      "focus-line-width", &focus_width,
+			      "focus-padding", &focus_pad,
+			      NULL);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+        if (orientation == MATE_PANEL_APPLET_ORIENT_UP
+            || orientation == MATE_PANEL_APPLET_ORIENT_DOWN) {
+                thickness = padding.top + padding.bottom;
+        } else {
+                thickness = padding.left + padding.right;
+        }
+#else
         if (orientation == MATE_PANEL_APPLET_ORIENT_UP
             || orientation == MATE_PANEL_APPLET_ORIENT_DOWN) {
                 thickness = style->ythickness;
         } else {
                 thickness = style->xthickness;
         }
+#endif
 
-        return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
+	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
 }
+
 
 static gboolean
 use_two_line_format (ClockData *cd)
@@ -1262,6 +1309,7 @@ force_no_focus_padding (GtkWidget *widget)
 {
         static gboolean first_time = TRUE;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
         if (first_time) {
                 gtk_rc_parse_string ("\n"
                                      "   style \"clock-applet-button-style\"\n"
@@ -1274,6 +1322,7 @@ force_no_focus_padding (GtkWidget *widget)
                                      "\n");
                 first_time = FALSE;
         }
+#endif
 
         gtk_widget_set_name (widget, "clock-applet-button");
 }
