@@ -284,7 +284,9 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	window_menu->selector = wnck_selector_new();
 	gtk_container_add(GTK_CONTAINER(window_menu->applet), window_menu->selector);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(window_menu->applet), GTK_WIDGET(window_menu->selector));
+#endif
 
 	g_signal_connect(window_menu->applet, "key_press_event", G_CALLBACK(window_menu_key_press_event), window_menu);
 	g_signal_connect(window_menu->applet, "size-allocate", G_CALLBACK(window_menu_size_allocate), window_menu);
