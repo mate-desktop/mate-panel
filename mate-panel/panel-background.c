@@ -1296,8 +1296,7 @@ panel_background_make_string (PanelBackground *background,
 
 		retval = g_strdup_printf ("pixmap:%d,%d,%d", (guint32)cairo_xlib_surface_get_drawable (surface), x, y);
 #else
-		pixmap_xid = gdk_x11_drawable_get_xid (
-				GDK_DRAWABLE (background->pixmap));
+		pixmap_xid = GDK_WINDOW_XID (GDK_DRAWABLE (background->pixmap));
 
 		retval = g_strdup_printf ("pixmap:%d,%d,%d", pixmap_xid, x, y);
 #endif

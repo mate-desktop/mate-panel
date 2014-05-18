@@ -150,7 +150,7 @@ panel_profile_find_new_id (PanelGSettingsKeyType type)
 	existing_ids = mate_dconf_list_subdirs (dir, TRUE);
 
 	for (i = 0; !retval; i++) {
-		retval = g_strdup_printf ("%s_%d", prefix, i);
+		retval = g_strdup_printf ("%s-%d", prefix, i);
 
 		for (j = 0; existing_ids[j] != NULL; j++) {
 			if (g_strcmp0 (existing_ids[j], retval) == 0) {

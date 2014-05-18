@@ -1152,11 +1152,7 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 	req_height += (gtk_container_get_border_width (GTK_CONTAINER (menuitem)) +
 		       (gtk_widget_get_style (menuitem))->ythickness) * 2;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_set_size_request (menuitem, -1, req_height);
-#else
-	requisition->height = MAX (requisition->height, req_height);
-#endif
 }
 
 static char *

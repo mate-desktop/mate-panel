@@ -1262,10 +1262,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 			       GTK_STOCK_CLOSE,
 			       GTK_RESPONSE_CLOSE);
 	gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	gtk_dialog_set_has_separator (GTK_DIALOG (dialog->addto_dialog),
-				      FALSE);
-#endif
+
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog->addto_dialog),
 					 PANEL_ADDTO_RESPONSE_ADD);
 

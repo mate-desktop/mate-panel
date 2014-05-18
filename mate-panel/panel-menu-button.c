@@ -1059,11 +1059,7 @@ panel_menu_button_accessible_get_n_children (AtkObject *obj)
 {
 	g_return_val_if_fail (PANEL_IS_MENU_BUTTON_ACCESSIBLE (obj), 0);
 
-#if GTK_CHECK_VERSION (2, 21, 0)
 	return gtk_accessible_get_widget (GTK_ACCESSIBLE (obj)) ? 1 : 0;
-#else
-	return GTK_ACCESSIBLE (obj)->widget ? 1 : 0;
-#endif
 }
 
 static AtkObject *
@@ -1078,11 +1074,7 @@ panel_menu_button_accessible_ref_child (AtkObject *obj,
 	if (index != 0)
 		return NULL;
 
-#if GTK_CHECK_VERSION (2, 21, 0)
 	if (!(button = PANEL_MENU_BUTTON (gtk_accessible_get_widget (GTK_ACCESSIBLE (obj)))))
-#else
-	if (!(button = PANEL_MENU_BUTTON (GTK_ACCESSIBLE (obj)->widget)))
-#endif
 		return NULL;
 
 	if (!(menu = panel_menu_button_create_menu (button)))

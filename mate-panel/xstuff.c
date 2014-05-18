@@ -163,11 +163,7 @@ xstuff_is_compliant_wm (void)
 	int       size;
 
 	xdisplay = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
-#if GTK_CHECK_VERSION (3, 0, 0)
 	root_window = GDK_WINDOW_XID (gdk_get_default_root_window ());
-#else
-	root_window = GDK_WINDOW_XWINDOW (gdk_get_default_root_window ());
-#endif
 
         /* FIXME this is totally broken; should be using
          * gdk_net_wm_supports() on particular hints when we rely
@@ -215,11 +211,7 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 	gdk_error_trap_push ();
 
 	XSetWMNormalHints (GDK_WINDOW_XDISPLAY (window),
-#if GTK_CHECK_VERSION (3, 0, 0)
 			   GDK_WINDOW_XID (window),
-#else
-			   GDK_WINDOW_XWINDOW (window),
-#endif
 			   &size_hints);
 
 	gdk_window_move_resize (window, x, y, w, h);
@@ -251,11 +243,7 @@ xstuff_set_wmspec_dock_hints (GdkWindow *window,
 	}
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
-#if GTK_CHECK_VERSION (3, 0, 0)
                          GDK_WINDOW_XID (window),
-#else
-                         GDK_WINDOW_XWINDOW (window),
-#endif
 			 panel_atom_get ("_NET_WM_WINDOW_TYPE"),
                          XA_ATOM, 32, PropModeReplace,
                          (unsigned char *) atoms, 
@@ -277,11 +265,7 @@ xstuff_set_wmspec_strut (GdkWindow *window,
 	vals [3] = bottom;
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
-#if GTK_CHECK_VERSION (3, 0, 0)
                          GDK_WINDOW_XID (window),
-#else
-                         GDK_WINDOW_XWINDOW (window),
-#endif
 			 panel_atom_get ("_NET_WM_STRUT"),
                          XA_CARDINAL, 32, PropModeReplace,
                          (unsigned char *) vals, 4);
@@ -291,11 +275,7 @@ void
 xstuff_delete_property (GdkWindow *window, const char *name)
 {
 	Display *xdisplay = GDK_WINDOW_XDISPLAY (window);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	Window   xwindow  = GDK_WINDOW_XID (window);
-#else
-	Window   xwindow  = GDK_WINDOW_XWINDOW (window);
-#endif
 
         XDeleteProperty (xdisplay, xwindow,
 			 panel_atom_get (name));
@@ -518,11 +498,7 @@ draw_zoom_animation (GdkScreen *gscreen,
 	int depth;
 
 	dpy = gdk_x11_display_get_xdisplay (gdk_screen_get_display (gscreen));
-#if GTK_CHECK_VERSION (3, 0, 0)
 	root_win = GDK_WINDOW_XID (gdk_screen_get_root_window (gscreen));
-#else
-	root_win = gdk_x11_drawable_get_xid (gdk_screen_get_root_window (gscreen));
-#endif
 	screen = gdk_screen_get_number (gscreen);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	depth = DefaultDepth(dpy,screen);
@@ -690,11 +666,7 @@ xstuff_get_current_workspace (GdkScreen *screen)
 	int     result;
 	int     retval;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	root_window = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
-#else
-	root_window = gdk_x11_drawable_get_xid (gdk_screen_get_root_window (screen));
-#endif
 
 	gdk_error_trap_push ();
 	result = XGetWindowProperty (GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen)),
@@ -739,20 +711,12 @@ xstuff_grab_key_on_all_screens (int      keycode,
 		if (grab)
 			XGrabKey (gdk_x11_display_get_xdisplay (display),
 				  keycode, modifiers,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				  GDK_WINDOW_XID (root),
-#else
-				  gdk_x11_drawable_get_xid (root),
-#endif
 				  True, GrabModeAsync, GrabModeAsync);
 		else
 			XUngrabKey (gdk_x11_display_get_xdisplay (display),
 				    keycode, modifiers,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				    GDK_WINDOW_XID (root));
-#else
-				    gdk_x11_drawable_get_xid (root));
-#endif
 	}
 }
 

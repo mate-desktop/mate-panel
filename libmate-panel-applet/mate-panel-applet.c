@@ -561,11 +561,7 @@ mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 	display = gdk_screen_get_display (screen);
 
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	xroot	 = GDK_WINDOW_XID (root);
-#else
-	xroot	 = GDK_WINDOW_XWINDOW (root);
-#endif
 
 	mate_panel_applet_init_atoms (xdisplay);
 
@@ -948,15 +944,9 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 	}
 
 	xevent.xbutton.display     = GDK_WINDOW_XDISPLAY (window);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	xevent.xbutton.window      = GDK_WINDOW_XID (socket_window);
 	xevent.xbutton.root        = GDK_WINDOW_XID (gdk_screen_get_root_window
 							 (gdk_window_get_screen (window)));
-#else
-	xevent.xbutton.window      = GDK_WINDOW_XWINDOW (socket_window);
-	xevent.xbutton.root        = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window
-							 (gdk_drawable_get_screen (window)));
-#endif
 	/*
 	 * FIXME: the following might cause
 	 *        big problems for non-GTK apps
@@ -972,11 +962,7 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 	gdk_error_trap_push ();
 
 	XSendEvent (GDK_WINDOW_XDISPLAY (window),
-#if GTK_CHECK_VERSION (3, 0, 0)
 		    GDK_WINDOW_XID (socket_window),
-#else
-		    GDK_WINDOW_XWINDOW (socket_window),
-#endif
 		    False, NoEventMask, &xevent);
 
 	gdk_flush ();
@@ -1475,12 +1461,10 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	}
 #endif
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 	width = gdk_window_get_width(window);
 	height = gdk_window_get_height(window);
+#if GTK_CHECK_VERSION(3, 0, 0)
 	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
-#else
-	gdk_drawable_get_size(GDK_DRAWABLE(window), &width, &height);
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)

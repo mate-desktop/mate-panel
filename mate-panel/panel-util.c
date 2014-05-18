@@ -457,11 +457,7 @@ void panel_lock_screen(GdkScreen* screen)
 
 static char* panel_launcher_get_personal_path(void)
 {
-	#if GLIB_CHECK_VERSION(2, 6, 0)
 		return g_build_filename(g_get_user_config_dir(), "mate", "panel2.d", "default", "launchers", NULL);
-	#else // glib version < 2.6.0
-		return g_build_filename(g_get_home_dir(), ".config", "mate", "panel2.d", "default", "launchers", NULL);
-	#endif
 }
 
 gboolean

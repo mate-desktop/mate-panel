@@ -166,11 +166,7 @@ panel_background_monitor_connect_to_screen (PanelBackgroundMonitor *monitor,
 	    G_CALLBACK (panel_background_monitor_changed), monitor);
 
 	monitor->gdkwindow = gdk_screen_get_root_window (screen);
-#if GTK_CHECK_VERSION (3, 0, 0)
-	monitor->xwindow   = gdk_x11_window_get_xid (monitor->gdkwindow);
-#else
-	monitor->xwindow   = gdk_x11_drawable_get_xid (monitor->gdkwindow);
-#endif
+	monitor->xwindow   = GDK_WINDOW_XID (monitor->gdkwindow);
 
 	gdk_window_add_filter (
 		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);

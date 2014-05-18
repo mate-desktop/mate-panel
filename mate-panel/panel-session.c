@@ -80,9 +80,5 @@ panel_session_init (void)
 
 	/* We don't want the WM to try and save/restore our
 	 * window position */
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gdk_x11_set_sm_client_id (NULL);
-#else
-	gdk_set_sm_client_id (NULL);
-#endif
 }

@@ -133,11 +133,7 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	 */
 
 	xdisplay = GDK_SCREEN_XDISPLAY (screen);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	xroot = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
-#else
-	xroot = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window (screen));
-#endif
 
 #if (RANDR_MAJOR > 1 || (RANDR_MAJOR == 1 && RANDR_MINOR >= 3))
 	if (have_randr_1_3) {

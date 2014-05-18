@@ -186,7 +186,9 @@ struct _ClockData {
 
 /* Used to count the number of clock instances. It's there to know when we
  * should free resources that are shared. */
+/* FIXME unused variable, remove?
 static int clock_numbers = 0;
+*/
 
 static void  update_clock (ClockData * cd);
 static void  update_tooltip (ClockData * cd);
@@ -2907,7 +2909,6 @@ temperature_combo_changed (GtkComboBox *combo, ClockData *cd)
 {
 	int value;
 	int old_value;
-	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->temperature_unit;
@@ -2923,7 +2924,6 @@ speed_combo_changed (GtkComboBox *combo, ClockData *cd)
 {
 	int value;
 	int old_value;
-	const gchar *str;
 
 	value = gtk_combo_box_get_active (combo) + 2;
 	old_value = cd->speed_unit;
@@ -2960,9 +2960,7 @@ fill_prefs_window (ClockData *cd)
 	GtkCellRenderer *renderer;
         GtkTreeViewColumn *col;
 	GtkListStore *store;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkTreeIter iter;
-#endif
         int i;
 
 	/* Set the 12 hour / 24 hour widget */
@@ -3025,14 +3023,9 @@ fill_prefs_window (ClockData *cd)
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
 
         for (i = 0; temperatures[i] != -1; i++)
-#if GTK_CHECK_VERSION (3, 0, 0)
 		gtk_list_store_insert_with_values (store, &iter, -1,
 						   0, mateweather_prefs_get_temp_display_name (temperatures[i]),
 						   -1);
-#else
-                gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
-                                           mateweather_prefs_get_temp_display_name (temperatures[i]));
-#endif
 
 	if (cd->temperature_unit > 0)
 		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
@@ -3049,14 +3042,9 @@ fill_prefs_window (ClockData *cd)
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
 
         for (i = 0; speeds[i] != -1; i++)
-#if GTK_CHECK_VERSION (3, 0, 0)
 		gtk_list_store_insert_with_values (store, &iter, -1,
 						   0, mateweather_prefs_get_speed_display_name (speeds[i]),
 						   -1);
-#else
-                gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
-                                           mateweather_prefs_get_speed_display_name (speeds[i]));
-#endif
 
 	if (cd->speed_unit > 0)
 		gtk_combo_box_set_active (GTK_COMBO_BOX (widget),

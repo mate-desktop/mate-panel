@@ -162,15 +162,9 @@ create_tray_on_screen (GdkScreen *screen,
   label = gtk_label_new_with_mnemonic ("_Orientation:");
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-#if GTK_CHECK_VERSION (3, 0, 0)
   combo = gtk_combo_box_text_new ();
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), "Horizontal");
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), "Vertical");
-#else
-  combo = gtk_combo_box_new_text ();
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo), "Horizontal");
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo), "Vertical");
-#endif
   g_signal_connect (combo, "changed",
 		    G_CALLBACK (orientation_changed_cb), data);
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);

@@ -179,12 +179,8 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
 #endif
 
   gdk_window_get_origin (parent_window, &root_x, &root_y);
-#if GTK_CHECK_VERSION(3, 0, 0)
   parent_width = gdk_window_get_width(parent_window);
   parent_height = gdk_window_get_height(parent_window);
-#else
-  gdk_drawable_get_size(GDK_DRAWABLE(parent_window), &parent_width, &parent_height);
-#endif
 
   screen_width = gdk_screen_get_width (screen);
   screen_height = gdk_screen_get_height (screen);
