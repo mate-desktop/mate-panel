@@ -50,6 +50,8 @@ void clock_utils_display_help (GtkWidget  *widget,
 			       const char *doc_id,
 			       const char *link_id);
 
+GdkPixbuf * clock_utils_pixbuf_from_svg_file_at_size (const char *name, int width, int height);
+
 #ifdef __cplusplus
 }
 #endif
