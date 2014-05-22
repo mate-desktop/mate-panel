@@ -155,21 +155,32 @@ static gboolean window_menu_on_expose(GtkWidget* widget, GdkEventExpose* event, 
 
 static inline void force_no_focus_padding(GtkWidget* widget)
 {
-	gboolean first_time = TRUE;
+#if GTK_CHECK_VERSION (3, 0, 0)
+        GtkCssProvider *provider;
 
-	if (first_time)
-	{
-		gtk_rc_parse_string("\n"
-			"   style \"window-menu-applet-button-style\"\n"
-			"   {\n"
-			"      GtkWidget::focus-line-width=0\n"
-			"      GtkWidget::focus-padding=0\n"
-			"   }\n"
-			"\n"
-			"    widget \"*.PanelApplet-window-menu-applet-button\" style \"window-menu-applet-button-style\"\n"
-			"\n");
-		first_time = FALSE;
-	}
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#PanelApplet-window-menu-applet-button {\n"
+                                         " border-width: 0px;\n"
+                                         " -GtkWidget-focus-line-width: 0px;\n"
+                                         " -GtkWidget-focus-padding: 0px;\n"
+					 "}",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
+#else
+	gtk_rc_parse_string("\n"
+		"   style \"window-menu-applet-button-style\"\n"
+		"   {\n"
+		"      GtkWidget::focus-line-width=0\n"
+		"      GtkWidget::focus-padding=0\n"
+		"   }\n"
+		"\n"
+		"    widget \"*.PanelApplet-window-menu-applet-button\" style \"window-menu-applet-button-style\"\n"
+		"\n");
+#endif
 
 	gtk_widget_set_name(widget, "PanelApplet-window-menu-applet-button");
 }
