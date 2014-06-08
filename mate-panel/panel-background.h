@@ -55,6 +55,7 @@ struct _PanelBackground {
 	GtkOrientation          orientation;
 	GdkRectangle            region;
 #if GTK_CHECK_VERSION (3, 0, 0)
+	GtkWidget              *background_widget;
 	cairo_pattern_t        *transformed_pattern;
 	cairo_pattern_t        *composited_pattern;
 #else
@@ -134,6 +135,10 @@ void  panel_background_set_default_style (PanelBackground     *background,
 #else
 					  GdkColor            *color,
 					  GdkPixmap           *pixmap);
+#endif
+#if GTK_CHECK_VERSION (3, 0, 0)
+void  panel_background_set_background_widget	(PanelBackground     *background,
+					         GtkWidget           *widget);
 #endif
 void  panel_background_realized          (PanelBackground     *background,
 					  GdkWindow           *window);
