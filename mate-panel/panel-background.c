@@ -1527,15 +1527,12 @@ panel_background_change_background_on_widget (PanelBackground *background,
 		_panel_background_reset_widget_style_properties (widget);
 		return;
 	case PANEL_BACK_COLOR:
-		if (!background->has_alpha) {
 			properties = _panel_background_get_widget_style_properties (widget, TRUE);
 			gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
 						  "background-color", &background->color,
 						  "background-image", NULL,
 						  NULL);
-			break;
-		}
-		// Color with alpha, fallback to image
+            break;
 	case PANEL_BACK_IMAGE: {
 		cairo_pattern_t *pattern;
 

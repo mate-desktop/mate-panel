@@ -1812,7 +1812,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 		break;
 	default:
 		g_assert_not_reached ();
-		break;
+        break;
 	}
 }
 
@@ -2051,6 +2051,11 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	gtk_widget_set_events (GTK_WIDGET (applet),
 			       GDK_BUTTON_PRESS_MASK |
 			       GDK_BUTTON_RELEASE_MASK);
+#if GTK_CHECK_VERSION (3, 0, 0)
+    GtkStyleContext* context;
+    context = gtk_widget_get_style_context (GTK_WIDGET (applet));
+    gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+#endif
 
 	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 }
