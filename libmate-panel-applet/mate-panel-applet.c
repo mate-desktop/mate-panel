@@ -1778,7 +1778,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
     provider = gtk_css_provider_new ();
     gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
     gtk_css_provider_load_from_data (provider,
-                                          "#PanelPlug {\n"
+                                          "*{\n"
                                              " background-color: rgba(255,255,255,0.5);\n"
                                              " background-image: none;\n"
                          "}",
@@ -2058,7 +2058,10 @@ mate_panel_applet_init (MatePanelApplet *applet)
     GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
     GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
     gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
-    gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug)),GTK_STYLE_CLASS_BACKGROUND);
+    GtkStyleContext *context;
+    context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+    gtk_style_context_remove_class (context,GTK_STYLE_CLASS_BACKGROUND);
+    gtk_style_context_add_class (context, "panel");
 #endif
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),
