@@ -153,14 +153,13 @@ panel_background_prepare (PanelBackground *background)
 #endif
 		break;
 	case PANEL_BACK_COLOR:
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		if (background->has_alpha &&
-#if GTK_CHECK_VERSION (3, 0, 0)
-		    background->composited_pattern)
-#else
 		    background->composited_image)
-#endif
+
 			set_pixbuf_background (background);
 		else {
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 			gdk_window_set_background_rgba (background->window,
 							&background->color);
@@ -171,8 +170,8 @@ panel_background_prepare (PanelBackground *background)
 				FALSE, TRUE);
 			gdk_window_set_background (
 				background->window, &background->color.gdk);
+           }
 #endif
-		}
 		break;
 	case PANEL_BACK_IMAGE:
 		set_pixbuf_background (background);
@@ -461,11 +460,8 @@ panel_background_composite (PanelBackground *background)
 	case PANEL_BACK_NONE:
 		break;
 	case PANEL_BACK_COLOR:
-		if (background->has_alpha)
-#if GTK_CHECK_VERSION (3, 0, 0)
-			background->composited_pattern =
-				get_composited_pattern (background);
-#else
+#if !GTK_CHECK_VERSION (3, 0, 0)
+        if (background->has_alpha)
 			background->composited_image =
 				get_composited_pixbuf (background);
 #endif
@@ -1275,14 +1271,15 @@ panel_background_make_string (PanelBackground *background,
 
 	effective_type = panel_background_effective_type (background);
 
-	if (effective_type == PANEL_BACK_IMAGE ||
-	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
+    if (effective_type == PANEL_BACK_IMAGE
 #if GTK_CHECK_VERSION (3, 0, 0)
+        ){
 		cairo_surface_t *surface;
 
 		if (!background->composited_pattern)
 			return NULL;
 #else
+            || (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
 		GdkNativeWindow pixmap_xid;
 
 		if (!background->pixmap)
