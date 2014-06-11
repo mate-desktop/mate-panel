@@ -1781,7 +1781,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
     GtkStyleContext* context;
     GtkCssProvider  *provider;
     gchar* css_data;
-    context = gtk_widget_get_style_context (GTK_WIDGET(applet));
+    context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
     gtk_widget_reset_style(applet->priv->plug);
     switch (type) {
     case PANEL_NO_BACKGROUND:
@@ -1801,6 +1801,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
     gtk_style_context_add_provider (context,
                                     GTK_STYLE_PROVIDER (provider),
                                     GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_free(css_data);
         break;
     case PANEL_PIXMAP_BACKGROUND:
 
