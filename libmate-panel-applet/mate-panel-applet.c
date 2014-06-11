@@ -1795,7 +1795,6 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
                                         " background-image: none;\n"
                                         "}",gdk_rgba_to_string(&color));
     gtk_css_provider_load_from_data (provider,css_data,-1, NULL);
-    g_printf (css_data);
     gtk_style_context_remove_class(context,"panel");
     gtk_style_context_add_class (context, "-mate-custom-panel-background");
     gtk_style_context_add_provider (context,
@@ -1819,7 +1818,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
                                         GTK_STYLE_PROVIDER (provider),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 #endif
-            g_printf ("FIXME: Setting pattern is not implemented\n");
+            g_print ("FIXME: Setting pattern is not implemented\n");
             break;
         break;
     default:

@@ -467,7 +467,12 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 
 void panel_menu_bar_change_background(PanelMenuBar* menubar)
 {
-	panel_background_change_background_on_widget(&menubar->priv->panel->background, GTK_WIDGET(menubar));
+#if GTK_CHECK_VERSION (3, 0, 0)
+    GdkRGBA transparent = {0, 0, 0, 0};
+    gtk_widget_override_background_color(GTK_WIDGET(menubar),gtk_widget_get_state_flags(GTK_WIDGET(menubar)),&transparent);
+#else
+    panel_background_change_background_on_widget(&menubar->priv->panel->background, GTK_WIDGET(menubar));
+#endif
 }
 
 static void set_item_text_gravity(GtkWidget* item)
