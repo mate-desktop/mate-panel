@@ -1849,7 +1849,7 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 		break;
 	default:
 		g_assert_not_reached ();
-        break;
+		break;
 	}
 }
 
@@ -2075,7 +2075,7 @@ mate_panel_applet_init (MatePanelApplet *applet)
 
 
 
-    applet->priv->plug = gtk_plug_new (0);
+	applet->priv->plug = gtk_plug_new (0);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);

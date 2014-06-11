@@ -1228,7 +1228,7 @@ panel_background_init (PanelBackground              *background,
 	background->default_color.red   = 0.;
 	background->default_color.green = 0.;
 	background->default_color.blue  = 0.;
-    background->default_color.alpha = 1.;
+	background->default_color.alpha = 1.;
 #else
 	background->default_color.red   = 0;
 	background->default_color.green = 0;
