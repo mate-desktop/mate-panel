@@ -102,9 +102,9 @@ panel_background_prepare (PanelBackground *background)
 	PanelBackgroundType  effective_type;
 	GtkWidget           *widget = NULL;
 #if GTK_CHECK_VERSION (3, 0, 0)
-    GtkStyleContext* context;
-    GtkCssProvider  *provider;
-    gchar* css_data;
+	GtkStyleContext* context;
+	GtkCssProvider  *provider;
+	gchar* css_data;
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -116,10 +116,10 @@ panel_background_prepare (PanelBackground *background)
 
 	free_prepared_resources (background);
 
-    effective_type = panel_background_effective_type (background);
+	effective_type = panel_background_effective_type (background);
 
-    gdk_window_get_user_data (GDK_WINDOW (background->window),
-                  (gpointer) &widget);
+	gdk_window_get_user_data (GDK_WINDOW (background->window),
+				(gpointer) &widget);
 
 	switch (effective_type) {
 	case PANEL_BACK_NONE:
@@ -153,8 +153,8 @@ panel_background_prepare (PanelBackground *background)
 #endif
 		} else
 #if GTK_CHECK_VERSION (3, 0, 0)
-            gdk_window_set_background_rgba (
-                background->window, &background->default_color);
+			gdk_window_set_background_rgba (
+				background->window, &background->default_color);
 #else
 			gdk_window_set_background (
 				background->window, &background->default_color);
@@ -169,37 +169,38 @@ panel_background_prepare (PanelBackground *background)
 		else {
 #endif
 #if GTK_CHECK_VERSION (3, 0, 0)
-            context = gtk_widget_get_style_context (widget);
-            gtk_style_context_save (context);
-            provider = gtk_css_provider_new ();
-            css_data = g_strdup_printf(".-mate-custom-panel-background{\n"
-                                                " background-color: %s;\n"
-                                                " background-image: none;\n"
-                                                "}",gdk_rgba_to_string(&background->color));
-            gtk_css_provider_load_from_data (provider,css_data,-1, NULL);
-            gtk_widget_set_app_paintable(widget,TRUE);
-            gtk_style_context_remove_class(context,"panel");
-            gtk_style_context_add_class (context, "-mate-custom-panel-background");
-            gtk_style_context_add_provider (context,
-                                            GTK_STYLE_PROVIDER (provider),
-                                            GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-            g_free(css_data);
-            gtk_style_context_set_background (context, background->window);
-            gtk_style_context_restore (context);
-            panel_background_change_background_on_widget(background,background->background_widget);
+			context = gtk_widget_get_style_context (widget);
+			gtk_style_context_save (context);
+			provider = gtk_css_provider_new ();
+			css_data = g_strdup_printf(".-mate-custom-panel-background{\n"
+						" background-color: %s;\n"
+						" background-image: none;\n"
+						"}",
+						gdk_rgba_to_string(&background->color));
+			gtk_css_provider_load_from_data (provider,css_data,-1, NULL);
+			gtk_widget_set_app_paintable(widget,TRUE);
+			gtk_style_context_remove_class(context,"panel");
+			gtk_style_context_add_class (context, "-mate-custom-panel-background");
+			gtk_style_context_add_provider (context,
+ 							GTK_STYLE_PROVIDER (provider),
+							GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+			g_free(css_data);
+			gtk_style_context_set_background (context, background->window);
+			gtk_style_context_restore (context);
+			panel_background_change_background_on_widget(background,background->background_widget);
 #else
 			gdk_colormap_alloc_color (
-                background->colormap,
+ 				background->colormap,
 				&background->color.gdk,
 				FALSE, TRUE);
 			gdk_window_set_background (
 				background->window, &background->color.gdk);
-           }
+		}
 #endif
 		break;
 	case PANEL_BACK_IMAGE:
 		set_pixbuf_background (background);
-        panel_background_change_background_on_widget(background,background->background_widget);
+		panel_background_change_background_on_widget(background,background->background_widget);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -263,7 +264,7 @@ background_changed (PanelBackgroundMonitor *monitor,
 	if (tmp)
 		g_object_unref (tmp);
 
-    panel_background_composite (background);
+	panel_background_composite (background);
 }
 
 static GdkPixbuf *
@@ -392,7 +393,7 @@ composite_color_onto_desktop (PanelBackground *background)
 		background->desktop = get_desktop_pixbuf (background);
 
 	if (!background->desktop)
-        return NULL;
+		return NULL;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	surface = gdk_window_create_similar_surface (background->window,
@@ -405,7 +406,6 @@ composite_color_onto_desktop (PanelBackground *background)
 	}
 
 	cr = cairo_create (surface);
-
 	gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
 	cairo_paint (cr);
 
@@ -484,7 +484,7 @@ panel_background_composite (PanelBackground *background)
 		break;
 	case PANEL_BACK_COLOR:
 #if !GTK_CHECK_VERSION (3, 0, 0)
-        if (background->has_alpha)
+		if (background->has_alpha)
 			background->composited_image =
 				get_composited_pixbuf (background);
 #endif
@@ -743,7 +743,7 @@ panel_background_update_has_alpha (PanelBackground *background)
 	background->has_alpha = has_alpha;
 
 	if (!has_alpha)
-        disconnect_background_monitor (background);
+		disconnect_background_monitor (background);
 }
 
 static void
@@ -1044,9 +1044,10 @@ panel_background_set_default_style (PanelBackground *background,
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-void  panel_background_set_background_widget          (PanelBackground     *background,
-                      GtkWidget           *widget){
-      background->background_widget=widget;
+void  panel_background_set_background_widget (PanelBackground     *background,
+					      GtkWidget           *widget)
+{
+	background->background_widget=widget;
 }
 #endif
 
@@ -1077,7 +1078,7 @@ panel_background_realized (PanelBackground *background,
 		background->gc = gdk_gc_new (window);
 #endif
 
-    panel_background_prepare (background);
+	panel_background_prepare (background);
 }
 
 void
@@ -1158,10 +1159,10 @@ panel_background_change_region (PanelBackground *background,
 		/* only retransform the background if we have in
 		   fact changed size/orientation */
 		panel_background_transform (background);
-    else if (background->has_alpha || ! background->composited)
+	else if (background->has_alpha || ! background->composited)
 		/* only do compositing if we have some alpha
 		   value to worry about */
-        panel_background_composite (background);
+		panel_background_composite (background);
 	else if (need_to_reprepare)
 		/* at least we must prepare the background
 		   if the size changed */
@@ -1301,9 +1302,9 @@ panel_background_make_string (PanelBackground *background,
 
 	effective_type = panel_background_effective_type (background);
 
-    if (effective_type == PANEL_BACK_IMAGE
+	if (effective_type == PANEL_BACK_IMAGE
 #if GTK_CHECK_VERSION (3, 0, 0)
-        ){
+	    ){
 		cairo_surface_t *surface;
 
 		if (!background->composited_pattern)
@@ -1560,7 +1561,7 @@ panel_background_change_background_on_widget (PanelBackground *background,
 						  "background-color", &background->color,
 						  "background-image", NULL,
 						  NULL);
-            break;
+		break;
 	case PANEL_BACK_IMAGE: {
 		cairo_pattern_t *pattern;
 

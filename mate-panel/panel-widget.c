@@ -1695,7 +1695,7 @@ panel_widget_state_changed (GtkWidget    *widget,
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
-    panel_widget_set_background_default_style (widget);
+	panel_widget_set_background_default_style (widget);
 #else
 	GtkStyle     *style;
 	GtkStateType  state;
@@ -1716,7 +1716,7 @@ panel_widget_state_changed (GtkWidget    *widget,
 static void
 panel_widget_state_flags_changed (GtkWidget *widget, GtkStateFlags previous_state)
 {
-    panel_widget_set_background_default_style (widget);
+	panel_widget_set_background_default_style (widget);
 }
 #endif
 
@@ -1725,7 +1725,7 @@ toplevel_configure_event (GtkWidget         *widget,
 			  GdkEventConfigure *event,
 			  PanelWidget       *panel)
 {
-    panel_widget_set_background_region (panel);
+	panel_widget_set_background_region (panel);
 
 	return FALSE;
 }
@@ -1734,7 +1734,7 @@ static void
 panel_widget_realize (GtkWidget *widget)
 {
 	PanelWidget  *panel = (PanelWidget *) widget;
-    GdkWindow    *window;
+	GdkWindow    *window;
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyle     *style;
 	GtkStateType  state;
@@ -1745,18 +1745,18 @@ panel_widget_realize (GtkWidget *widget)
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 
-    window = gtk_widget_get_window (widget);
+	window = gtk_widget_get_window (widget);
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
 
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
-    gdk_window_ensure_native (window);
+	gdk_window_ensure_native (window);
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-    panel_widget_set_background_default_style (widget);
+	panel_widget_set_background_default_style (widget);
 #else
 	panel_background_set_default_style (
 		&panel->background,
@@ -1764,9 +1764,10 @@ panel_widget_realize (GtkWidget *widget)
 		style->bg_pixmap [state]);
 #endif
 #if GTK_CHECK_VERSION (3, 0, 0)
-      panel_background_set_background_widget(&panel->background,gtk_widget_get_toplevel(widget));
+	panel_background_set_background_widget(&panel->background,
+						gtk_widget_get_toplevel(widget));
 #endif
-      panel_background_realized (&panel->background, window);
+	panel_background_realized (&panel->background, window);
 }
 
 static void

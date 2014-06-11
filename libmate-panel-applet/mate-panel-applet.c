@@ -1660,10 +1660,10 @@ _mate_panel_applet_get_widget_style_properties (GtkWidget *widget, gboolean crea
 {
 	GtkStyleProperties *properties;
 
-    properties = g_object_get_data (G_OBJECT (widget), "panel-applet-style-props");
+	properties = g_object_get_data (G_OBJECT (widget), "panel-applet-style-props");
 	if (!properties && create_if_needed) {
-        properties = gtk_style_properties_new ();
-        g_object_set_data_full (G_OBJECT (widget), "panel-applet-style-props",
+		properties = gtk_style_properties_new ();
+		g_object_set_data_full (G_OBJECT (widget), "panel-applet-style-props",
 					properties, (GDestroyNotify) g_object_unref);
 	}
 	return properties;
@@ -1674,13 +1674,13 @@ _mate_panel_applet_reset_widget_style_properties (GtkWidget *widget)
 {
 	GtkStyleProperties *properties;
 
-    properties = _mate_panel_applet_get_widget_style_properties (widget, FALSE);
+	properties = _mate_panel_applet_get_widget_style_properties (widget, FALSE);
 
 	if (properties)
 		gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
-                           GTK_STYLE_PROVIDER (properties));
+						   GTK_STYLE_PROVIDER (properties));
 
-    g_object_set_data (G_OBJECT (widget), "panel-applet-style-props", NULL);
+	g_object_set_data (G_OBJECT (widget), "panel-applet-style-props", NULL);
 }
 #endif
 
@@ -1703,12 +1703,12 @@ mate_panel_applet_update_background_for_widget (GtkWidget                 *widge
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-    gtk_widget_reset_style (widget);
-    if (!pattern) {
-        _mate_panel_applet_reset_widget_style_properties (widget);
+	gtk_widget_reset_style (widget);
+	if (!pattern) {
+		_mate_panel_applet_reset_widget_style_properties (widget);
 		return;
 	}
-    properties = _mate_panel_applet_get_widget_style_properties (widget, TRUE);
+	properties = _mate_panel_applet_get_widget_style_properties (widget, TRUE);
 #else
 	/* reset style */
 	gtk_widget_set_style (widget, NULL);
@@ -1755,7 +1755,7 @@ mate_panel_applet_update_background_for_widget (GtkWidget                 *widge
 	/* Note: this actually replaces the old properties, since it's the same
 	 * pointer */
 	gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
-                    GTK_STYLE_PROVIDER (properties),
+					GTK_STYLE_PROVIDER (properties),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 #endif
 }
@@ -1772,60 +1772,44 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 
 /* not working by some reason, introduced hack below */
 #if 0
-    if (applet->priv->background_widget)
-        mate_panel_applet_update_background_for_widget (applet->priv->background_widget,
-                               type, &color, pattern);
+	if (applet->priv->background_widget)
+		mate_panel_applet_update_background_for_widget (applet->priv->background_widget,
+							   type, &color, pattern);
 #endif
 /* background hack via CSS properties */
-#if 1
-    GtkStyleContext* context;
-    GtkCssProvider  *provider;
-    gchar* css_data;
-    context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-    gtk_widget_reset_style(applet->priv->plug);
-    switch (type) {
-    case PANEL_NO_BACKGROUND:
-            gtk_style_context_remove_class(context,"-mate-custom-panel-background");
-            gtk_style_context_add_class (context, "panel");
-            break;
-    case PANEL_COLOR_BACKGROUND:
-    provider = gtk_css_provider_new ();
-    css_data = g_strdup_printf(".-mate-custom-panel-background{\n"
-                                        " background-color: %s;\n"
-                                        " background-image: none;\n"
-                                        "}",gdk_rgba_to_string(&color));
-    gtk_css_provider_load_from_data (provider,css_data,-1, NULL);
-    gtk_style_context_remove_class(context,"panel");
-    gtk_style_context_add_class (context, "-mate-custom-panel-background");
-    gtk_style_context_add_provider (context,
-                                    GTK_STYLE_PROVIDER (provider),
-                                    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    g_free(css_data);
-        break;
-    case PANEL_PIXMAP_BACKGROUND:
-
-/* Need massive API change (sending via d-bus not pattern, but filename)*/
-#if 0
-        provider = gtk_css_provider_new ();
-        css_data = g_strdup_printf(".-mate-custom-panel-background{\n"
-                                            " background-color: rgba(0,0,0,1);\n"
-                                            " background-image: s;\n"
-                                            "}");
-        gtk_css_provider_load_from_data (provider,css_data,-1, NULL);
-        gtk_style_context_remove_class(context,"panel");
-        gtk_style_context_add_class (context, "-mate-custom-panel-background");
-        gtk_style_context_add_provider (context,
-                                        GTK_STYLE_PROVIDER (provider),
-                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-#endif
-            g_print ("FIXME: Setting pattern is not implemented\n");
-            break;
-        break;
+	GtkStyleContext* context;
+	GtkCssProvider  *provider;
+	gchar* css_data;
+	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+	gtk_widget_reset_style(applet->priv->plug);
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		gtk_style_context_remove_class(context,"-mate-custom-panel-background");
+		gtk_style_context_add_class (context, "panel");
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		provider = gtk_css_provider_new ();
+		css_data = g_strdup_printf(".-mate-custom-panel-background{\n"
+						" background-color: %s;\n"
+						" background-image: none;\n"
+						"}",
+						gdk_rgba_to_string(&color));
+		gtk_css_provider_load_from_data (provider,css_data,-1, NULL);
+		gtk_style_context_remove_class(context,"panel");
+		gtk_style_context_add_class (context, "-mate-custom-panel-background");
+		gtk_style_context_add_provider (context,
+						GTK_STYLE_PROVIDER (provider),
+						GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+		g_free(css_data);
+			break;
+	case PANEL_PIXMAP_BACKGROUND:
+		/* Need massive API change (sending via d-bus not pattern, but filename)*/
+		g_print ("FIXME: Setting pattern is not implemented\n");
+		break;
     default:
         g_assert_not_reached ();
         break;
     }
-#endif
 #else
 	GdkColor                   color;
 	GdkPixmap                 *pixmap;
@@ -2093,13 +2077,13 @@ mate_panel_applet_init (MatePanelApplet *applet)
 
     applet->priv->plug = gtk_plug_new (0);
 #if GTK_CHECK_VERSION (3, 0, 0)
-    GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
-    GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
-    gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
-    GtkStyleContext *context;
-    context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-    gtk_style_context_remove_class (context,GTK_STYLE_CLASS_BACKGROUND);
-    gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
+	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
+	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
+	GtkStyleContext *context;
+	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+	gtk_style_context_remove_class (context,GTK_STYLE_CLASS_BACKGROUND);
+	gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
 #endif
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),
@@ -2107,8 +2091,9 @@ mate_panel_applet_init (MatePanelApplet *applet)
 
 	gtk_widget_set_events (GTK_WIDGET (applet),
 			       GDK_BUTTON_PRESS_MASK |
-                   GDK_BUTTON_RELEASE_MASK);
-    gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
+			       GDK_BUTTON_RELEASE_MASK);
+
+	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 }
 
 static void
@@ -2607,8 +2592,8 @@ guint32
 mate_panel_applet_get_xid (MatePanelApplet *applet,
 		      GdkScreen   *screen)
 {
-    gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
-    gtk_widget_show (applet->priv->plug);
+	gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
+	gtk_widget_show (applet->priv->plug);
 
 	return gtk_plug_get_id (GTK_PLUG (applet->priv->plug));
 }
