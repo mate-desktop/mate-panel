@@ -1749,11 +1749,11 @@ panel_widget_realize (GtkWidget *widget)
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
-#endif
 
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
 	gdk_window_ensure_native (window);
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	panel_widget_set_background_default_style (widget);
@@ -1763,7 +1763,10 @@ panel_widget_realize (GtkWidget *widget)
 		&style->bg [state],
 		style->bg_pixmap [state]);
 #endif
-
+#if GTK_CHECK_VERSION (3, 0, 0)
+	panel_background_set_background_widget(&panel->background,
+						gtk_widget_get_toplevel(widget));
+#endif
 	panel_background_realized (&panel->background, window);
 }
 
