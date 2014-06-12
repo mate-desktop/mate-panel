@@ -1770,9 +1770,46 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 
 	type = mate_panel_applet_get_background (applet, &color, &pattern);
 
+/* not working by some reason, introduced hack below */
+#if 0
 	if (applet->priv->background_widget)
 		mate_panel_applet_update_background_for_widget (applet->priv->background_widget,
 							   type, &color, pattern);
+#endif
+/* background hack via CSS properties */
+	GtkStyleContext* context;
+	GtkCssProvider  *provider;
+	gchar* css_data;
+	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+	gtk_widget_reset_style(applet->priv->plug);
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		gtk_style_context_remove_class(context,"-mate-custom-panel-background");
+		gtk_style_context_add_class (context, "panel");
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		provider = gtk_css_provider_new ();
+		css_data = g_strdup_printf(".-mate-custom-panel-background{\n"
+						" background-color: %s;\n"
+						" background-image: none;\n"
+						"}",
+						gdk_rgba_to_string(&color));
+		gtk_css_provider_load_from_data (provider,css_data,-1, NULL);
+		gtk_style_context_remove_class(context,"panel");
+		gtk_style_context_add_class (context, "-mate-custom-panel-background");
+		gtk_style_context_add_provider (context,
+						GTK_STYLE_PROVIDER (provider),
+						GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+		g_free(css_data);
+			break;
+	case PANEL_PIXMAP_BACKGROUND:
+		/* Need massive API change (sending via d-bus not pattern, but filename)*/
+		g_print ("FIXME: Setting pattern is not implemented\n");
+		break;
+    default:
+        g_assert_not_reached ();
+        break;
+    }
 #else
 	GdkColor                   color;
 	GdkPixmap                 *pixmap;
@@ -2043,6 +2080,10 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
+	GtkStyleContext *context;
+	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+	gtk_style_context_remove_class (context,GTK_STYLE_CLASS_BACKGROUND);
+	gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
 #endif
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),
