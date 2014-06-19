@@ -50,23 +50,23 @@ panel_separator_paint (GtkWidget    *widget,
 #endif
 {
 	PanelSeparator *separator;
-	GdkWindow      *window;
 	GtkStyle       *style;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	int             width;
 	int             height;
 #else
+	GdkWindow      *window;
 	GtkAllocation   allocation;
 #endif
 
 	separator = PANEL_SEPARATOR (widget);
 
-	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
 #else
+	window = gtk_widget_get_window (widget);
 	gtk_widget_get_allocation (widget, &allocation);
 #endif
 
@@ -321,6 +321,9 @@ panel_separator_create (PanelToplevel *toplevel,
 void
 panel_separator_change_background (PanelSeparator *separator)
 {
-	panel_background_change_background_on_widget (&separator->priv->panel->background,
-						      GTK_WIDGET (separator));
+#if GTK_CHECK_VERSION (3, 0, 0)
+	panel_background_apply_css(GTK_WIDGET(separator));
+#else
+	panel_background_change_background_on_widget(&separator->priv->panel->background, GTK_WIDGET(separator));
+#endif
 }

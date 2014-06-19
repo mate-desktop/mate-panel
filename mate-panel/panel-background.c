@@ -96,6 +96,28 @@ set_pixbuf_background (PanelBackground *background)
 #endif
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+void panel_background_apply_css (GtkWidget* widget)
+{
+	GtkStyleContext* context;
+	GtkCssProvider  *provider;
+
+	context = gtk_widget_get_style_context (widget);
+	gtk_widget_reset_style(widget);
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+					 ".-mate-custom-panel-background{\n"
+					 " background-color: rgba (0, 0, 0, 0);\n"
+					 " background-image: none;\n"
+					 "}",
+					 -1, NULL);
+	gtk_style_context_add_class (context, "-mate-custom-panel-background");
+	gtk_style_context_add_provider (context,
+					GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+#endif
+
 static gboolean
 panel_background_prepare (PanelBackground *background)
 {
@@ -112,6 +134,8 @@ panel_background_prepare (PanelBackground *background)
 	free_prepared_resources (background);
 
 	effective_type = panel_background_effective_type (background);
+
+
 
 	switch (effective_type) {
 	case PANEL_BACK_NONE:
@@ -155,7 +179,7 @@ panel_background_prepare (PanelBackground *background)
 	case PANEL_BACK_COLOR:
 		if (background->has_alpha &&
 #if GTK_CHECK_VERSION (3, 0, 0)
-		    background->composited_pattern)
+		    !gdk_window_check_composited_wm(background->window))
 #else
 		    background->composited_image)
 #endif
@@ -187,6 +211,7 @@ panel_background_prepare (PanelBackground *background)
 	 * make sure that all drawing has been completed before
 	 * the applet looks at the pixmap. */
 #if GTK_CHECK_VERSION (3, 0, 0)
+
 	gdk_display_sync (gdk_window_get_display (background->window));
 #else
 	gdk_display_sync (gdk_drawable_get_display (background->window));
@@ -195,8 +220,10 @@ panel_background_prepare (PanelBackground *background)
 	gdk_window_get_user_data (GDK_WINDOW (background->window),
 				  (gpointer) &widget);
 
-	if (GTK_IS_WIDGET (widget))
-	  gtk_widget_queue_draw (widget);
+	if (GTK_IS_WIDGET (widget)) {
+		gtk_widget_set_app_paintable(widget,TRUE);
+		gtk_widget_queue_draw (widget);
+	}
 
 	background->prepared = TRUE;
 
@@ -222,6 +249,13 @@ free_composited_resources (PanelBackground *background)
 	background->composited_image = NULL;
 #endif
 }
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void _panel_background_transparency(GdkScreen* screen,PanelBackground* background)
+{
+	panel_background_composite(background);
+}
+#endif
 
 static void
 background_changed (PanelBackgroundMonitor *monitor,
@@ -263,7 +297,11 @@ get_desktop_pixbuf (PanelBackground *background)
 			background->monitor, "changed",
                         G_CALLBACK (background_changed), background);
 	}
-
+#if GTK_CHECK_VERSION (3, 0, 0)
+	g_signal_connect(gdk_window_get_screen(background->window), "composited-changed",
+			 G_CALLBACK(_panel_background_transparency),
+			 background);
+#endif
 	desktop = panel_background_monitor_get_region (
 				background->monitor,
 				background->region.x,
@@ -319,20 +357,23 @@ composite_image_onto_desktop (PanelBackground *background)
 #endif
 
 	cr = cairo_create (surface);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if(!gdk_window_check_composited_wm(background->window)){
+#endif
 	cairo_set_source_rgb (cr, 1, 1, 1);
 	cairo_paint (cr);
 
 	gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_fill (cr);
-
 #if GTK_CHECK_VERSION (3, 0, 0)
-	cairo_set_source (cr, background->transformed_pattern);
-#else
+	}
+#endif
+
 	gdk_cairo_set_source_pixbuf (cr, background->transformed_image, 0, 0);
 	pattern = cairo_get_source (cr);
 	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-#endif
+
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_fill (cr);
 
@@ -382,9 +423,14 @@ composite_color_onto_desktop (PanelBackground *background)
 	}
 
 	cr = cairo_create (surface);
-	gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
-	cairo_paint (cr);
-
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if(!gdk_window_check_composited_wm(background->window)){
+#endif
+		gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
+		cairo_paint (cr);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	}
+#endif
 	gdk_cairo_set_source_rgba (cr, &background->color);
 	cairo_paint (cr);
 
@@ -431,10 +477,7 @@ get_composited_pixbuf (PanelBackground *background)
 		break;
 	case PANEL_BACK_IMAGE:
 		retval = composite_image_onto_desktop (background);
-#if GTK_CHECK_VERSION (3, 0, 0)
-		if (!retval && background->transformed_pattern);
-			retval = cairo_pattern_reference (background->transformed_pattern);
-#else
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		if (!retval)
 			retval = g_object_ref (background->transformed_image);
 #endif
@@ -461,33 +504,27 @@ panel_background_composite (PanelBackground *background)
 	case PANEL_BACK_COLOR:
 		if (background->has_alpha)
 #if GTK_CHECK_VERSION (3, 0, 0)
-			background->composited_pattern =
-				get_composited_pattern (background);
+				background->composited_pattern =
+					get_composited_pattern (background);
 #else
 			background->composited_image =
 				get_composited_pixbuf (background);
 #endif
 		break;
 	case PANEL_BACK_IMAGE:
+        if (background->transformed_image) {
 #if GTK_CHECK_VERSION (3, 0, 0)
-		if (background->transformed_pattern) {
-			if (background->has_alpha)
-				background->composited_pattern =
-					get_composited_pattern (background);
-			else
-				background->composited_pattern =
-					cairo_pattern_reference (background->transformed_pattern);
-		}
+			background->composited_pattern =
+				get_composited_pattern (background);
 #else
-		if (background->transformed_image) {
 			if (background->has_alpha)
 				background->composited_image =
 					get_composited_pixbuf (background);
 			else
 				background->composited_image =
 					g_object_ref (background->transformed_image);
-		}
 #endif
+		}
 		break;
 	default:
 		g_assert_not_reached ();
@@ -511,28 +548,14 @@ free_transformed_resources (PanelBackground *background)
 	if (background->type != PANEL_BACK_IMAGE)
 		return;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	if (background->transformed_pattern)
-		cairo_pattern_destroy (background->transformed_pattern);
-	background->transformed_pattern = NULL;
-#else
 	if (background->transformed_image)
 		g_object_unref (background->transformed_image);
 	background->transformed_image = NULL;
-#endif
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-static cairo_pattern_t *
-get_scaled_and_rotated_pattern (PanelBackground *background)
-#else
 static GdkPixbuf *
 get_scaled_and_rotated_pixbuf (PanelBackground *background)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
-	cairo_pattern_t *pattern;
-#endif
 	GdkPixbuf *scaled;
 	GdkPixbuf *retval;
 	int        orig_width, orig_height;
@@ -650,17 +673,7 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 	} else
 		retval = scaled;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	cairo_t *cr = gdk_cairo_create (background->window ? background->window : gdk_get_default_root_window());
-	gdk_cairo_set_source_pixbuf (cr, retval, 0, 0);
-	g_object_unref (retval);
-	pattern = cairo_pattern_reference (cairo_get_source (cr));
-	cairo_destroy (cr);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-	return pattern;
-#else
 	return retval;
-#endif
 }
 
 static gboolean
@@ -672,13 +685,8 @@ panel_background_transform (PanelBackground *background)
 	free_transformed_resources (background);
 
 	if (background->type == PANEL_BACK_IMAGE)
-#if GTK_CHECK_VERSION (3, 0, 0)
-		background->transformed_pattern =
-			get_scaled_and_rotated_pattern (background);
-#else
 		background->transformed_image =
 			get_scaled_and_rotated_pixbuf (background);
-#endif
 
 	background->transformed = TRUE;
 
@@ -1017,10 +1025,10 @@ panel_background_set_default_style (PanelBackground *background,
 
 	background->default_pixmap = pixmap;
 #endif
-
 	if (background->type == PANEL_BACK_NONE)
 		panel_background_prepare (background);
 }
+
 
 void
 panel_background_realized (PanelBackground *background,
@@ -1048,7 +1056,12 @@ panel_background_realized (PanelBackground *background,
 	if (!background->gc)
 		background->gc = gdk_gc_new (window);
 #endif
-
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GtkWidget* widget;
+	gdk_window_get_user_data (GDK_WINDOW (background->window),
+                (gpointer) &widget);
+	panel_background_apply_css(gtk_widget_get_toplevel(widget));
+#endif
 	panel_background_prepare (background);
 }
 
@@ -1170,11 +1183,10 @@ panel_background_init (PanelBackground              *background,
 	background->region.y          = -1;
 	background->region.width      = -1;
 	background->region.height     = -1;
+	background->transformed_image = NULL;
 #if GTK_CHECK_VERSION (3, 0, 0)
-	background->transformed_pattern = NULL;
 	background->composited_pattern = NULL;
 #else
-	background->transformed_image = NULL;
 	background->composited_image  = NULL;
 #endif
 
@@ -1274,13 +1286,15 @@ panel_background_make_string (PanelBackground *background,
 	effective_type = panel_background_effective_type (background);
 
 	if (effective_type == PANEL_BACK_IMAGE ||
-	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
+	    (effective_type == PANEL_BACK_COLOR && background->has_alpha
 #if GTK_CHECK_VERSION (3, 0, 0)
+	    && (!gdk_window_check_composited_wm(background->window)))) {
 		cairo_surface_t *surface;
 
 		if (!background->composited_pattern)
 			return NULL;
 #else
+	    )) {
 		GdkNativeWindow pixmap_xid;
 
 		if (!background->pixmap)
@@ -1526,15 +1540,12 @@ panel_background_change_background_on_widget (PanelBackground *background,
 		_panel_background_reset_widget_style_properties (widget);
 		return;
 	case PANEL_BACK_COLOR:
-		if (!background->has_alpha) {
 			properties = _panel_background_get_widget_style_properties (widget, TRUE);
 			gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
 						  "background-color", &background->color,
 						  "background-image", NULL,
 						  NULL);
-			break;
-		}
-		// Color with alpha, fallback to image
+		break;
 	case PANEL_BACK_IMAGE: {
 		cairo_pattern_t *pattern;
 

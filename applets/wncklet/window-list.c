@@ -139,8 +139,10 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 	switch (type)
 	{
 		case PANEL_NO_BACKGROUND:
+#if !GTK_CHECK_VERSION (3, 0 ,0)
 			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NORMAL);
 			break;
+#endif
 		case PANEL_COLOR_BACKGROUND:
 		case PANEL_PIXMAP_BACKGROUND:
 			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NONE);

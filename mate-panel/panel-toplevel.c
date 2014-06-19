@@ -4940,6 +4940,18 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 
 	toplevel->priv->orientation = orientation;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GtkStyleContext* context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
+	if (orientation & PANEL_HORIZONTAL_MASK) {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	} else {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	}
+	gtk_widget_reset_style (GTK_WIDGET (toplevel));
+#endif
+
 	panel_toplevel_update_hide_buttons (toplevel);
 
 	panel_widget_set_orientation (

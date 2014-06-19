@@ -1662,6 +1662,8 @@ panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 #if GTK_CHECK_VERSION (3, 0, 0)
 		context = gtk_widget_get_style_context (widget);
 		state = gtk_widget_get_state_flags (widget);
+		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
+		gtk_style_context_add_class(context,"mate-panel-menu-bar");
 
 		gtk_style_context_get_background_color (context, state, &bg_color);
 		gtk_style_context_get (context, state, "background-image", &bg_image, NULL);
@@ -1749,11 +1751,11 @@ panel_widget_realize (GtkWidget *widget)
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
-#endif
 
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
 	gdk_window_ensure_native (window);
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	panel_widget_set_background_default_style (widget);
