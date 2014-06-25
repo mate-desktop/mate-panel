@@ -450,7 +450,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 #ifdef WNCK_CHECK_VERSION
 #if WNCK_CHECK_VERSION (3, 4, 6)
-	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
+	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
+	wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), TRUE);
 #endif
 #endif
 

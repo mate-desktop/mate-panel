@@ -237,7 +237,8 @@ container_child_background_set (GObject      *source_object,
 	mate_panel_applet_container_child_set_finish (container, res, NULL);
 
 	if (frame->priv->bg_cancellable)
-		g_object_unref (frame->priv->bg_cancellable);
+		g_clear_object (&frame->priv->bg_cancellable);
+
 	frame->priv->bg_cancellable = NULL;
 }
 
