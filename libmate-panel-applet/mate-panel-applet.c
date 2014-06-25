@@ -2211,7 +2211,9 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 					 g_param_spec_uint ("orient",
 							    "Orient",
 							    "Panel Applet Orientation",
-							    0, G_MAXUINT, 0, /* FIXME */
+							    MATE_PANEL_APPLET_ORIENT_FIRST,
+							    MATE_PANEL_APPLET_ORIENT_LAST,
+							    MATE_PANEL_APPLET_ORIENT_UP,
 							    G_PARAM_READWRITE));
 	g_object_class_install_property (gobject_class,
 					 PROP_SIZE,
@@ -2232,7 +2234,9 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 					 g_param_spec_uint ("flags",
 							    "Flags",
 							    "Panel Applet flags",
-							    0, G_MAXUINT, 0, /* FIXME */
+							    MATE_PANEL_APPLET_FLAGS_NONE,
+							    MATE_PANEL_APPLET_FLAGS_ALL,
+							    MATE_PANEL_APPLET_FLAGS_NONE,
 							    G_PARAM_READWRITE));
 	g_object_class_install_property (gobject_class,
 					 PROP_SIZE_HINTS,
