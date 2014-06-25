@@ -86,6 +86,8 @@ typedef struct {
 
 static GQuark panel_properties_dialog_quark = 0;
 
+static void panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog);
+
 static void
 panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 {
@@ -338,6 +340,7 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_color_button_get_rgba (color_button, &color);
 	panel_profile_set_background_gdk_rgba_color (dialog->toplevel, &color);
+	panel_properties_dialog_opacity_changed(dialog);
 #else
 	gtk_color_button_get_color (color_button, &color);
 	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
@@ -791,11 +794,13 @@ panel_properties_dialog_background_notify (GSettings             *settings,
 		panel_properties_dialog_update_background_color (dialog, color);
 		g_free (color);
 	}
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	else if (!strcmp (key, "opacity"))
 	{
 		gint opacity = g_settings_get_int (settings, key);
 		panel_properties_dialog_update_background_opacity (dialog, opacity);
 	}
+#endif
 	else if (!strcmp (key, "image"))
 	{
 		char *image = g_settings_get_string (settings, key);
