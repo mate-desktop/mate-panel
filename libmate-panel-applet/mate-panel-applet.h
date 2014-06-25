@@ -84,7 +84,7 @@ struct _MatePanelAppletClass {
 	void (*change_size) (MatePanelApplet* applet, guint size);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	void (*change_background) (MatePanelApplet *applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern);
+	void (*change_background) (MatePanelApplet *applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t *pattern);
 #else
 	void (*change_background) (MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap);
 #endif

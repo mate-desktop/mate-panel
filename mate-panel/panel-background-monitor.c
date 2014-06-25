@@ -84,6 +84,13 @@ static PanelBackgroundMonitor **global_background_monitors = NULL;
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+gboolean gdk_window_check_composited_wm(GdkWindow* window)
+{
+	return gdk_screen_is_composited(gdk_window_get_screen(window));
+}
+#endif
+
 static void
 panel_background_monitor_finalize (GObject *object)
 {
