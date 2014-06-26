@@ -36,6 +36,8 @@
 #include <libpanel-util/panel-icon-chooser.h>
 #include <libpanel-util/panel-show.h>
 
+#include <libmate-desktop/mate-colorbutton.h>
+
 #include "nothing.h"
 #include "panel-profile.h"
 #include "panel-schemas.h"
@@ -327,7 +329,7 @@ SETUP_TOGGLE_BUTTON ("arrows_toggle",      arrows_toggle,      enable_arrows,   
 
 static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
-				       GtkColorButton        *color_button)
+				       MateColorButton        *color_button)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
@@ -338,11 +340,11 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gtk_color_button_get_rgba (color_button, &color);
+	mate_color_button_get_rgba (color_button, &color);
 	panel_profile_set_background_gdk_rgba_color (dialog->toplevel, &color);
 	panel_properties_dialog_opacity_changed(dialog);
 #else
-	gtk_color_button_get_color (color_button, &color);
+	mate_color_button_get_color (color_button, &color);
 	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
 #endif
 }
@@ -365,11 +367,11 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+	mate_color_button_set_rgba (MATE_COLOR_BUTTON (dialog->color_button),
 				    &color);
 #else
-	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
-				    &(color.gdk));
+	mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
+				     &(color.gdk));
 #endif
 
 	g_signal_connect_swapped (dialog->color_button, "color_set",
@@ -730,9 +732,9 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 		return;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gtk_color_button_get_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+	mate_color_button_get_rgba (MATE_COLOR_BUTTON (dialog->color_button),
 #else
-	gtk_color_button_get_color (GTK_COLOR_BUTTON (dialog->color_button),
+	mate_color_button_get_color (MATE_COLOR_BUTTON (dialog->color_button),
 #endif
 				    &old_color);
 
@@ -740,9 +742,9 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 	    old_color.green != new_color.green ||
 	    old_color.blue  != new_color.blue)
 #if GTK_CHECK_VERSION (3, 0, 0)
-		gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+		mate_color_button_set_rgba (MATE_COLOR_BUTTON (dialog->color_button),
 #else
-		gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
+		mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
 #endif
 					    &new_color);
 }
