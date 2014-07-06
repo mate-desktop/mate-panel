@@ -1833,11 +1833,7 @@ static gboolean fishy_factory(MatePanelApplet* applet, const char* iid, gpointer
 	return retval;
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void fish_applet_dispose (GObject *object)
-#else
-static void fish_applet_destroy(GtkObject* object)
-#endif
 {
 	FishApplet* fish = (FishApplet*) object;
 
@@ -1896,11 +1892,7 @@ static void fish_applet_destroy(GtkObject* object)
 
 	fish_close_channel (fish);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	G_OBJECT_CLASS (parent_class)->dispose (object);
-#else
-	GTK_OBJECT_CLASS (parent_class)->destroy (object);
-#endif
 }
 
 static void fish_applet_instance_init(FishApplet* fish, FishAppletClass* klass)
@@ -1964,21 +1956,13 @@ static void fish_applet_instance_init(FishApplet* fish, FishAppletClass* klass)
 static void fish_applet_class_init(FishAppletClass* klass)
 {
 	MatePanelAppletClass* applet_class = (MatePanelAppletClass*) klass;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GObjectClass *gobject_class        = (GObjectClass *) klass;
-#else
-	GtkObjectClass* gtkobject_class    = (GtkObjectClass*) klass;
-#endif
 
 	parent_class = g_type_class_peek_parent(klass);
 
 	applet_class->change_orient = fish_applet_change_orient;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gobject_class->dispose = fish_applet_dispose;
-#else
-	gtkobject_class->destroy = fish_applet_destroy;
-#endif
 
 	init_fools_day();
 }

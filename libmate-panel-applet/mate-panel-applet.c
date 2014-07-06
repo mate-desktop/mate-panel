@@ -2064,9 +2064,6 @@ static void
 mate_panel_applet_class_init (MatePanelAppletClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	GtkObjectClass *object_class = (GtkObjectClass *) klass;
-#endif
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 	GtkBindingSet *binding_set;
 
@@ -2236,11 +2233,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 			      1,
 			      GTK_TYPE_DIRECTION_TYPE);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	binding_set = gtk_binding_set_by_class (gobject_class);
-#else
-	binding_set = gtk_binding_set_by_class (object_class);
-#endif
 	add_tab_bindings (binding_set, 0, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);

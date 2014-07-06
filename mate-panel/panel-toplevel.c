@@ -3084,11 +3084,7 @@ panel_toplevel_unrealize (GtkWidget *widget)
 }
 
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
 panel_toplevel_dispose (GObject *widget)
-#else
-panel_toplevel_destroy (GtkObject *widget)
-#endif
 {
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 
@@ -3102,12 +3098,7 @@ panel_toplevel_destroy (GtkObject *widget)
 
 	panel_toplevel_disconnect_timeouts (toplevel);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	G_OBJECT_CLASS (panel_toplevel_parent_class)->dispose (widget);
-#else
-	if (GTK_OBJECT_CLASS (panel_toplevel_parent_class)->destroy)
-		GTK_OBJECT_CLASS (panel_toplevel_parent_class)->destroy (widget);
-#endif
 }
 
 static void
@@ -4414,9 +4405,6 @@ static void
 panel_toplevel_class_init (PanelToplevelClass *klass)
 {
 	GObjectClass      *gobject_class   = (GObjectClass      *) klass;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	GtkObjectClass    *gtkobject_class = (GtkObjectClass    *) klass;
-#endif
 	GtkWidgetClass    *widget_class    = (GtkWidgetClass    *) klass;
 	GtkContainerClass *container_class = (GtkContainerClass *) klass;
 	GtkBindingSet     *binding_set;
@@ -4428,11 +4416,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
         gobject_class->get_property = panel_toplevel_get_property;
 	gobject_class->finalize     = panel_toplevel_finalize;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gobject_class->dispose = panel_toplevel_dispose;
-#else
-	gtkobject_class->destroy = panel_toplevel_destroy;
-#endif
 
 	widget_class->realize              = panel_toplevel_realize;
 	widget_class->unrealize            = panel_toplevel_unrealize;

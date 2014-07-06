@@ -281,7 +281,7 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 
 		g_signal_connect (G_OBJECT(goat_darea),"destroy",
 				  G_CALLBACK (destroy_egg),NULL);
-		g_signal_connect (GTK_OBJECT(goat_darea),"expose_event",
+		g_signal_connect (G_OBJECT(goat_darea),"expose_event",
 				  G_CALLBACK (goat_expose),NULL);
 		g_signal_connect_after (G_OBJECT(goat_darea),"realize",
 					G_CALLBACK (goat_realize),NULL);
@@ -1429,7 +1429,7 @@ start_geginv (void)
 			  G_CALLBACK (inv_key_release), NULL);
 	g_signal_connect (G_OBJECT (geginv), "realize",
 			  G_CALLBACK (geginv_realized), NULL);
-	g_signal_connect (GTK_OBJECT (geginv_canvas), "expose_event",
+	g_signal_connect (G_OBJECT (geginv_canvas), "expose_event",
 			  G_CALLBACK (inv_expose), NULL);
 
 	g_slist_foreach (inv_shots, (GFunc)g_free, NULL);
