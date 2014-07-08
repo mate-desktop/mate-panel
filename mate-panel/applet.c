@@ -65,8 +65,6 @@ mate_panel_applet_set_dnd_enabled (AppletInfo *info,
 		break;
 	case PANEL_OBJECT_APPLET:
 		break;
-	case PANEL_OBJECT_LOGOUT:
-	case PANEL_OBJECT_LOCK:
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_set_dnd_enabled (PANEL_ACTION_BUTTON (info->widget),
 						     dnd_enabled);
@@ -263,8 +261,6 @@ applet_callback_callback (GtkWidget      *widget,
 			PANEL_MENU_BUTTON (menu->info->widget), menu->name);
 		break;
 	case PANEL_OBJECT_ACTION:
-	case PANEL_OBJECT_LOGOUT:
-	case PANEL_OBJECT_LOCK:
 		panel_action_button_invoke_menu (
 			PANEL_ACTION_BUTTON (menu->info->widget), menu->name);
 		break;
