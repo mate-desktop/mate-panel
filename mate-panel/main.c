@@ -40,7 +40,6 @@
 GSList *panels = NULL;
 GSList *panel_list = NULL;
 
-static char*    deprecated_profile;
 static char*    layout;
 static gboolean replace = FALSE;
 static gboolean reset = FALSE;
@@ -48,8 +47,6 @@ static gboolean run_dialog = FALSE;
 
 static const GOptionEntry options[] = {
   { "replace", 0, 0, G_OPTION_ARG_NONE, &replace, N_("Replace a currently running panel"), NULL },
-  /* keep this for compatibilty with old MATE < 2.10 */
-  { "profile", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING, &deprecated_profile, NULL, NULL },
   /* this feature was request in #mate irc channel */
   { "reset", 0, 0, G_OPTION_ARG_NONE, &reset, N_("Reset the panel configuration to default"), NULL },
   /* open run dialog */

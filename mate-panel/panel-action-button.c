@@ -713,18 +713,16 @@ panel_action_button_load (PanelActionButtonType  type,
 			  const char            *id)
 {
 	PanelActionButton *button;
-	PanelObjectType    object_type;
 
 	g_return_if_fail (panel != NULL);
 
 	button = g_object_new (PANEL_TYPE_ACTION_BUTTON, "action-type", type, NULL);
 
-	object_type = PANEL_OBJECT_ACTION;
 
 	button->priv->info = mate_panel_applet_register (GTK_WIDGET (button),
 						    NULL, NULL,
 						    panel, locked, position,
-						    exactpos, object_type, id);
+						    exactpos, PANEL_OBJECT_ACTION, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
