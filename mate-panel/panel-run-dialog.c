@@ -42,9 +42,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <matemenu-tree.h>
 
-#define MATE_DESKTOP_USE_UNSTABLE_API
-#include <libmate-desktop/mate-desktop-utils.h>
-
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>
@@ -378,7 +375,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
 
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
-		mate_desktop_prepend_terminal_to_vector (&argc, &argv);
+		prepend_terminal_to_vector (&argc, &argv);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	result = g_spawn_async (NULL, /* working directory */
