@@ -33,6 +33,7 @@ typedef struct {
 	GtkWidget* tasklist;
 
 	gboolean include_all_workspaces;
+        gboolean enable_scroll_wheel;
 	MatewnckTasklistGroupingType grouping;
 	gboolean move_unminimized_windows;
 
@@ -51,6 +52,7 @@ typedef struct {
 	GtkWidget* minimized_windows_label;
 	GtkWidget* move_minimized_radio;
 	GtkWidget* change_workspace_radio;
+        GtkWidget* enable_scroll_wheel_check;
 
 	GSettings* settings;
 } TasklistData;
@@ -73,6 +75,7 @@ static void tasklist_update(TasklistData* tasklist)
 
 	matewnck_tasklist_set_grouping(MATEWNCK_TASKLIST(tasklist->tasklist), tasklist->grouping);
 	matewnck_tasklist_set_include_all_workspaces(MATEWNCK_TASKLIST(tasklist->tasklist), tasklist->include_all_workspaces);
+        matewnck_tasklist_set_scroll_wheel(MATEWNCK_TASKLIST(tasklist->tasklist), tasklist->enable_scroll_wheel);
 	matewnck_tasklist_set_switch_workspace_on_unminimize(MATEWNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
 }
 
@@ -219,6 +222,11 @@ static void tasklist_properties_update_content_radio(TasklistData* tasklist)
 	gtk_widget_set_sensitive(tasklist->change_workspace_radio, tasklist->include_all_workspaces);
 }
 
+static void tasklist_update_scroll_check (TasklistData *tasklist)
+{
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->enable_scroll_wheel_check), tasklist->enable_scroll_wheel);
+}
+
 static void display_all_workspaces_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
 {
 	gboolean value;
@@ -229,6 +237,18 @@ static void display_all_workspaces_changed(GSettings* settings, gchar* key, Task
 	tasklist_update(tasklist);
 
 	tasklist_properties_update_content_radio(tasklist);
+}
+
+static void enable_scroll_wheel_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
+{
+	gboolean value;
+
+	value = g_settings_get_boolean(settings, key);
+
+	tasklist->enable_scroll_wheel = (value != 0);
+	tasklist_update(tasklist);
+
+	tasklist_update_scroll_check(tasklist);
 }
 
 static GtkWidget* get_grouping_button(TasklistData* tasklist, MatewnckTasklistGroupingType type)
@@ -306,6 +326,10 @@ static void setup_gsettings(TasklistData* tasklist)
 	g_signal_connect (tasklist->settings,
 					  "changed::display-all-workspaces",
 					  G_CALLBACK (display_all_workspaces_changed),
+					  tasklist);
+	g_signal_connect (tasklist->settings,
+					  "changed::enable-scroll-wheel",
+					  G_CALLBACK (enable_scroll_wheel_changed),
 					  tasklist);
 	g_signal_connect (tasklist->settings,
 					  "changed::group-windows",
@@ -393,6 +417,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	setup_gsettings(tasklist);
 
 	tasklist->include_all_workspaces = g_settings_get_boolean (tasklist->settings, "display-all-workspaces");
+
+	tasklist->enable_scroll_wheel = g_settings_get_boolean (tasklist->settings, "enable-scroll-wheel");
 
 	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
 
@@ -580,6 +606,11 @@ static void display_all_workspaces_toggled(GtkToggleButton* button, TasklistData
 	g_settings_set_boolean(tasklist->settings, "display-all-workspaces", gtk_toggle_button_get_active(button));
 }
 
+static void enable_scroll_wheel_toggled(GtkToggleButton* button, TasklistData* tasklist)
+{
+	g_settings_set_boolean(tasklist->settings, "enable-scroll-wheel", gtk_toggle_button_get_active(button));
+}
+
 #define WID(s) GTK_WIDGET(gtk_builder_get_object(builder, s))
 
 static void setup_sensitivity(TasklistData* tasklist, GtkBuilder* builder, const char* wid1, const char* wid2, const char* wid3, const char* key)
@@ -636,6 +667,8 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 
 	setup_sensitivity(tasklist, builder, "move_minimized_radio", "change_workspace_radio", NULL, "move-unminimized-windows" /* key */);
 
+        tasklist->enable_scroll_wheel_check = WID("enable_scroll_wheel_check");
+
 	/* Window grouping: */
 	button = get_grouping_button(tasklist, tasklist->grouping);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -665,6 +698,10 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	/* Tasklist content: */
 	tasklist_properties_update_content_radio (tasklist);
 	g_signal_connect(G_OBJECT(tasklist->show_all_radio), "toggled", (GCallback) display_all_workspaces_toggled, tasklist);
+
+        /* Behavioural settings: */
+        tasklist_update_scroll_check(tasklist);
+        g_signal_connect(G_OBJECT(tasklist->enable_scroll_wheel_check), "toggled", (GCallback) enable_scroll_wheel_toggled, tasklist);
 
 	g_signal_connect_swapped(WID("done_button"), "clicked", (GCallback) gtk_widget_hide, tasklist->properties_dialog);
 	g_signal_connect(tasklist->properties_dialog, "response", G_CALLBACK(response_cb), tasklist);
