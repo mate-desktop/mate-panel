@@ -1392,6 +1392,7 @@ panel_profile_delete_object (AppletInfo *applet_info)
 
 	panel_profile_remove_from_list (type, id);
 }
+int screennum=0;
 
 static void
 panel_profile_load_object (char *id)
@@ -1399,6 +1400,7 @@ panel_profile_load_object (char *id)
 	PanelObjectType  object_type;
 	char            *object_path;
 	char            *toplevel_id;
+	char             newtoplevel_id[14];
 	int              position;
 	gboolean         right_stick;
 	gboolean         locked;
@@ -1410,8 +1412,32 @@ panel_profile_load_object (char *id)
 	object_type = g_settings_get_enum (settings, PANEL_OBJECT_TYPE_KEY);
 	position = g_settings_get_int (settings, PANEL_OBJECT_POSITION_KEY);
 	toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
+
 	right_stick = g_settings_get_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
 	locked = g_settings_get_boolean (settings, PANEL_OBJECT_LOCKED_KEY);
+
+        /* BEGIN This prevents all the panel items stacking N times on N X screen setups. */
+
+	strcpy(newtoplevel_id,toplevel_id);
+
+	if( ! strcmp(id,"menu-bar") ) {
+	  /* We make the possibly wrong assumption that each screen only has one menu bar
+	     This is how we know to increment the screen number.  */
+	  /*printf("MENU BAR toplevel_id=%s\t\t\tnewtoplevel_id=%s\t\tid=%s\t\tscreennum=%i\n",toplevel_id,newtoplevel_id,id,screennum);*/
+	    ++screennum;
+	}
+
+	if ( screennum >1 ) {
+	  sprintf(newtoplevel_id,"-screen%i",screennum-1);
+	  /* If the screen number is >1 then add -screen# to end of toplevel_id if it doesn't already have it */
+	  if (strstr(toplevel_id,newtoplevel_id) == NULL) {
+	    strcat(toplevel_id,newtoplevel_id);
+	  }
+	}
+
+       	/*printf("XXX toplevel_id=%s\t\t\tnewtoplevel_id=%s\t\tid=%s\t\tscreennum=%i\n",toplevel_id,newtoplevel_id,id,screennum);*/
+
+        /* END This prevents all the panel items stacking N times on N X screen setups. */
 
 	mate_panel_applet_queue_applet_to_load (id,
 					   object_type,
