@@ -814,10 +814,10 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	screen = gtk_widget_get_screen (widget);
-	gtk_menu_set_screen (menu, screen);
 #else
 	screen = gtk_window_get_screen (GTK_WINDOW (applet->priv->plug));
 #endif
+	gtk_menu_set_screen (menu, screen);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
