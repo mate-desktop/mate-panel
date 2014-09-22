@@ -1,0 +1,77 @@
+[Toplevel top]
+expand=true
+orientation=top
+size=24
+
+[Toplevel bottom]
+expand=true
+orientation=bottom
+size=24
+
+[Object menu-bar]
+object-type=menu-bar
+toplevel-id=top
+position=0
+locked=true
+
+[Object firefox]
+locked=True
+position=10
+launcher-location=/usr/share/applications/firefox.desktop
+toplevel-id=top
+object-type=launcher
+menu-path=applications:/
+
+[Object notification-area]
+object-type=applet
+applet-iid=NotificationAreaAppletFactory::NotificationArea
+toplevel-id=top
+position=30
+panel-right-stick=true
+locked=true
+
+[Object clock]
+object-type=applet
+applet-iid=ClockAppletFactory::ClockApplet
+toplevel-id=top
+position=20
+panel-right-stick=true
+locked=true
+
+[Object shutdown]
+action-type=shutdown
+object-type=action
+position=10
+panel-right-stick=true
+toplevel-id=top
+locked=true
+
+[Object show-desktop]
+object-type=applet
+applet-iid=WnckletFactory::ShowDesktopApplet
+toplevel-id=bottom
+position=0
+locked=true
+
+[Object window-list]
+object-type=applet
+applet-iid=WnckletFactory::WindowListApplet
+toplevel-id=bottom
+position=20
+locked=true
+
+[Object workspace-switcher]
+object-type=applet
+applet-iid=WnckletFactory::WorkspaceSwitcherApplet
+toplevel-id=bottom
+position=10
+panel-right-stick=true
+locked=true
+
+[Object trashapplet]
+locked=True
+position=0
+toplevel-id=bottom
+applet-iid=TrashAppletFactory::TrashApplet
+object-type=applet
+panel-right-stick=true
