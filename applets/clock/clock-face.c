@@ -15,10 +15,9 @@
 #include <math.h>
 #include <time.h>
 
-#include <librsvg/rsvg.h>
-
 #include "clock-face.h"
 #include "clock-location.h"
+#include "clock-utils.h"
 
 static GHashTable *pixbuf_cache = NULL;
 
@@ -506,18 +505,13 @@ clock_face_load_face (ClockFace *this, gint width, gint height)
 	name = g_strconcat (ICONDIR, "/clock-face-", size_string[priv->size],
                             "-", daytime_string[priv->timeofday], ".svg",
                             NULL);
-	priv->face_pixbuf = rsvg_pixbuf_from_file_at_size (name,
-                                                           width, height,
-                                                           NULL);
+	priv->face_pixbuf = clock_utils_pixbuf_from_svg_file_at_size (name, width, height);
 	g_free (name);
 
 	if (!priv->face_pixbuf) {
                 name = g_strconcat (ICONDIR, "/clock-face-",
                                     size_string[priv->size], ".svg", NULL);
-                priv->face_pixbuf = rsvg_pixbuf_from_file_at_size (name,
-                                                                   width,
-                                                                   height,
-                                                                   NULL);
+                priv->face_pixbuf = clock_utils_pixbuf_from_svg_file_at_size (name, width, height);
                 g_free (name);
         }
 

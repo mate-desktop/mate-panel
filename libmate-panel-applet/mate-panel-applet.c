@@ -120,6 +120,9 @@ static void       mate_panel_applet_menu_cmd_move       (GtkAction         *acti
 static void       mate_panel_applet_menu_cmd_lock       (GtkAction         *action,
 						    MatePanelApplet       *applet);
 static void       mate_panel_applet_register_object     (MatePanelApplet       *applet);
+#if GTK_CHECK_VERSION (3, 0, 0)
+void	_mate_panel_applet_apply_css	(GtkWidget* widget, MatePanelAppletBackgroundType type);
+#endif
 
 static const gchar panel_menu_ui[] =
 	"<ui>\n"
@@ -561,11 +564,7 @@ mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 	display = gdk_screen_get_display (screen);
 
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	xroot	 = GDK_WINDOW_XID (root);
-#else
-	xroot	 = GDK_WINDOW_XWINDOW (root);
-#endif
 
 	mate_panel_applet_init_atoms (xdisplay);
 
@@ -815,10 +814,10 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	screen = gtk_widget_get_screen (widget);
-	gtk_menu_set_screen (menu, screen);
 #else
 	screen = gtk_window_get_screen (GTK_WINDOW (applet->priv->plug));
 #endif
+	gtk_menu_set_screen (menu, screen);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
@@ -948,15 +947,9 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 	}
 
 	xevent.xbutton.display     = GDK_WINDOW_XDISPLAY (window);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	xevent.xbutton.window      = GDK_WINDOW_XID (socket_window);
 	xevent.xbutton.root        = GDK_WINDOW_XID (gdk_screen_get_root_window
 							 (gdk_window_get_screen (window)));
-#else
-	xevent.xbutton.window      = GDK_WINDOW_XWINDOW (socket_window);
-	xevent.xbutton.root        = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window
-							 (gdk_drawable_get_screen (window)));
-#endif
 	/*
 	 * FIXME: the following might cause
 	 *        big problems for non-GTK apps
@@ -972,11 +965,7 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 	gdk_error_trap_push ();
 
 	XSendEvent (GDK_WINDOW_XDISPLAY (window),
-#if GTK_CHECK_VERSION (3, 0, 0)
 		    GDK_WINDOW_XID (socket_window),
-#else
-		    GDK_WINDOW_XWINDOW (socket_window),
-#endif
 		    False, NoEventMask, &xevent);
 
 	gdk_flush ();
@@ -1475,12 +1464,10 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	}
 #endif
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 	width = gdk_window_get_width(window);
 	height = gdk_window_get_height(window);
-	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
-#else
-	gdk_drawable_get_size(GDK_DRAWABLE(window), &width, &height);
+#if GTK_CHECK_VERSION(3, 0, 0)
+	surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -1506,10 +1493,6 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	if (cairo_status (cr) == CAIRO_STATUS_SUCCESS) {
 		pattern = cairo_pattern_create_for_surface (surface);
-		cairo_matrix_init_translate (&matrix, 0, 0);
-		cairo_matrix_scale (&matrix, width, height);
-		cairo_pattern_set_matrix (pattern, &matrix);
-		cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
 	}
 
 	cairo_destroy (cr);
@@ -1786,9 +1769,14 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 
 	type = mate_panel_applet_get_background (applet, &color, &pattern);
 
+
 	if (applet->priv->background_widget)
+	{
 		mate_panel_applet_update_background_for_widget (applet->priv->background_widget,
 							   type, &color, pattern);
+		_mate_panel_applet_apply_css(applet->priv->background_widget,type);
+	}
+
 #else
 	GdkColor                   color;
 	GdkPixmap                 *pixmap;
@@ -1854,6 +1842,33 @@ mate_panel_applet_move_focus_out_of_applet (MatePanelApplet      *applet,
 	gtk_widget_child_focus (toplevel, dir);
 	applet->priv->moving_focus_out = FALSE;
 }
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+mate_panel_applet_change_background(MatePanelApplet *applet,
+				    MatePanelAppletBackgroundType type,
+				    GdkRGBA* color,
+				    cairo_pattern_t *pattern)
+{
+	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(applet));
+	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
+	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		gdk_window_set_background_pattern(window,NULL);
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		gdk_window_set_background_rgba(window,color);
+		break;
+	case PANEL_PIXMAP_BACKGROUND:
+		gdk_window_set_background_pattern(window,pattern);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+#endif
 
 static void
 mate_panel_applet_get_property (GObject    *object,
@@ -2025,6 +2040,40 @@ mate_panel_applet_setup (MatePanelApplet *applet)
 	}
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundType type)
+{
+	GtkStyleContext* context;
+	GtkCssProvider  *provider;
+
+	context = gtk_widget_get_style_context (widget);
+	gtk_widget_reset_style(widget);
+
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		gtk_style_context_remove_class(context,"-mate-custom-panel-background");
+		break;
+	case PANEL_COLOR_BACKGROUND:
+	case PANEL_PIXMAP_BACKGROUND:
+		provider = gtk_css_provider_new ();
+		gtk_css_provider_load_from_data (provider,
+						".-mate-custom-panel-background{\n"
+						" background-color: rgba (0, 0, 0, 0);\n"
+						" background-image: none;\n"
+						"}",
+						-1, NULL);
+		gtk_style_context_add_class (context, "-mate-custom-panel-background");
+		gtk_style_context_add_provider (context,
+						GTK_STYLE_PROVIDER (provider),
+						GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+#endif
+
 static void
 mate_panel_applet_init (MatePanelApplet *applet)
 {
@@ -2055,6 +2104,17 @@ mate_panel_applet_init (MatePanelApplet *applet)
 
 
 	applet->priv->plug = gtk_plug_new (0);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
+	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
+	GtkStyleContext *context;
+	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+	gtk_style_context_remove_class (context,GTK_STYLE_CLASS_BACKGROUND);
+	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
+	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+	gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
+#endif
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),
 				  applet);
@@ -2093,7 +2153,9 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	gobject_class->set_property = mate_panel_applet_set_property;
 	gobject_class->constructed = mate_panel_applet_constructed;
 	klass->move_focus_out_of_applet = mate_panel_applet_move_focus_out_of_applet;
-
+#if GTK_CHECK_VERSION (3, 0, 0)
+	klass->change_background = mate_panel_applet_change_background;
+#endif
 	widget_class->button_press_event = mate_panel_applet_button_press;
 	widget_class->button_release_event = mate_panel_applet_button_release;
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -2149,7 +2211,9 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 					 g_param_spec_uint ("orient",
 							    "Orient",
 							    "Panel Applet Orientation",
-							    0, G_MAXUINT, 0, /* FIXME */
+							    MATE_PANEL_APPLET_ORIENT_FIRST,
+							    MATE_PANEL_APPLET_ORIENT_LAST,
+							    MATE_PANEL_APPLET_ORIENT_UP,
 							    G_PARAM_READWRITE));
 	g_object_class_install_property (gobject_class,
 					 PROP_SIZE,
@@ -2170,7 +2234,9 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 					 g_param_spec_uint ("flags",
 							    "Flags",
 							    "Panel Applet flags",
-							    0, G_MAXUINT, 0, /* FIXME */
+							    MATE_PANEL_APPLET_FLAGS_NONE,
+							    MATE_PANEL_APPLET_FLAGS_ALL,
+							    MATE_PANEL_APPLET_FLAGS_NONE,
 							    G_PARAM_READWRITE));
 	g_object_class_install_property (gobject_class,
 					 PROP_SIZE_HINTS,
@@ -2229,10 +2295,11 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
                               G_TYPE_NONE,
 			      3,
 			      PANEL_TYPE_MATE_PANEL_APPLET_BACKGROUND_TYPE,
-			      GDK_TYPE_COLOR,
 #if GTK_CHECK_VERSION (3, 0, 0)
+			      GDK_TYPE_RGBA,
 			      CAIRO_GOBJECT_TYPE_PATTERN);
 #else
+			      GDK_TYPE_COLOR,
 			      GDK_TYPE_PIXMAP);
 #endif
 
@@ -2544,6 +2611,8 @@ mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 		type = mate_panel_applet_get_background (applet, &color, &pattern);
 		mate_panel_applet_update_background_for_widget (widget, type,
 							   &color, pattern);
+		_mate_panel_applet_apply_css(widget,type);
+
 		if (type == PANEL_PIXMAP_BACKGROUND)
 			cairo_pattern_destroy (pattern);
 #else

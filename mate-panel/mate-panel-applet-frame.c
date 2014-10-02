@@ -135,11 +135,16 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 		cairo_pattern_destroy (bg_pattern);
 	}
 
+	cairo_rectangle (cr,
+		frame->priv->handle_rect.x,
+		frame->priv->handle_rect.y,
+		frame->priv->handle_rect.width,
+		frame->priv->handle_rect.height);
+	cairo_clip (cr);
 	gtk_render_handle (context, cr,
-			   frame->priv->handle_rect.x,
-			   frame->priv->handle_rect.y,
-			   frame->priv->handle_rect.width,
-			   frame->priv->handle_rect.height);
+			   0, 0,
+			   gtk_widget_get_allocated_width (widget),
+			   gtk_widget_get_allocated_height (widget));
 
 	cairo_restore (cr);
 
@@ -624,6 +629,7 @@ mate_panel_applet_frame_change_background (MatePanelAppletFrame    *frame,
 
 	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	if (frame->priv->has_handle) {
 		PanelBackground *background;
 
@@ -631,6 +637,7 @@ mate_panel_applet_frame_change_background (MatePanelAppletFrame    *frame,
 		panel_background_change_background_on_widget (background,
 							      GTK_WIDGET (frame));
 	}
+#endif
 
 	MATE_PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame, type);
 }
@@ -949,7 +956,7 @@ mate_panel_applet_frame_activating_free (MatePanelAppletFrameActivating *frame_a
 GdkScreen *
 panel_applet_frame_activating_get_screen (MatePanelAppletFrameActivating *frame_act)
 {
-	return gtk_widget_get_screen (frame_act->panel);
+    return gtk_widget_get_screen (GTK_WIDGET(frame_act->panel));
 }
 
 PanelOrientation

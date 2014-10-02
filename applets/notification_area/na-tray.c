@@ -247,12 +247,16 @@ tray_removed (NaTrayManager *manager,
               TraysScreen   *trays_screen)
 {
   NaTray *tray;
+  NaTrayPrivate *priv;
 
   tray = g_hash_table_lookup (trays_screen->icon_table, icon);
   if (tray == NULL)
     return;
 
+  priv = tray->priv;
   g_assert (tray->priv->trays_screen == trays_screen);
+
+  gtk_container_remove (GTK_CONTAINER (priv->box), icon);
 
   g_hash_table_remove (trays_screen->icon_table, icon);
   /* this will also destroy the tip associated to this icon */

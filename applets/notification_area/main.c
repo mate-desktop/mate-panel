@@ -29,6 +29,8 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
+#include <libmate-desktop/mate-aboutdialog.h>
+
 #include "na-tray-manager.h"
 #include "na-tray.h"
 #include "fixedtip.h"
@@ -120,7 +122,7 @@ static void about_cb(GtkAction* action, AppletData* data)
 		"Copyright \xc2\xa9 2003-2006 Vincent Untz\n"
 		"Copyright \xc2\xa9 2011 Perberos";
 
-	gtk_show_about_dialog(NULL,
+	mate_show_about_dialog(NULL,
 		"program-name", _("Notification Area"),
 		"authors", authors,
 		//"comments", _(comments),

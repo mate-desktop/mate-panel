@@ -27,11 +27,6 @@
 #include "na-tray-manager.h"
 
 #include <gtk/gtk.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
-#define GDK_WINDOW_XWINDOW GDK_WINDOW_XID
-#else
-#include <gdkconfig.h>
-#endif
 #include <glib/gi18n.h>
 #if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
@@ -646,7 +641,7 @@ na_tray_manager_set_orientation_property (NaTrayManager *manager)
 		SYSTEM_TRAY_ORIENTATION_VERT;
 
   XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
-		   GDK_WINDOW_XWINDOW (window),
+		   GDK_WINDOW_XID (window),
                    orientation_atom,
 		   XA_CARDINAL, 32,
 		   PropModeReplace,
@@ -706,7 +701,7 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
   data[0] = XVisualIDFromVisual (xvisual);
 
   XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
-                   GDK_WINDOW_XWINDOW (window),
+                   GDK_WINDOW_XID (window),
                    visual_atom,
                    XA_VISUALID, 32,
                    PropModeReplace,
@@ -784,7 +779,7 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
       xev.data.l[0] = timestamp;
       xev.data.l[1] = gdk_x11_atom_to_xatom_for_display (display,
                                                          manager->selection_atom);
-      xev.data.l[2] = GDK_WINDOW_XWINDOW (window);
+      xev.data.l[2] = GDK_WINDOW_XID (window);
       xev.data.l[3] = 0;	/* manager specific data */
       xev.data.l[4] = 0;	/* manager specific data */
 

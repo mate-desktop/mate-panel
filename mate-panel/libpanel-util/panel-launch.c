@@ -240,9 +240,7 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 	GError   *local_error;
 	gboolean  retval;
 	GPid      pid;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	char     *display;
-#endif
 
 	g_return_val_if_fail (desktop_file != NULL, FALSE);
 	g_return_val_if_fail (fallback_exec != NULL, FALSE);
@@ -259,7 +257,6 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 		local_error = NULL;
 	}
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	display = gdk_screen_make_display_name (screen);
 	retval = g_spawn_async (NULL, /* working directory */
 				argv,
@@ -267,14 +264,9 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 				G_SPAWN_SEARCH_PATH,
 				set_environment,
 				&display,
-				NULL,
+				&pid,
 				&local_error);
 				g_free (display);
-#else
-	retval = gdk_spawn_on_screen (screen, NULL, argv, NULL,
-		       		  G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
-				      NULL, NULL, &pid, &local_error);
-#endif
 
         if (local_error == NULL && retval == TRUE) {
 		g_child_watch_add (pid, dummy_child_watch, NULL);

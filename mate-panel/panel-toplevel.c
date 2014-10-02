@@ -1475,8 +1475,11 @@ void panel_toplevel_update_edges(PanelToplevel* toplevel)
 
 	background = &toplevel->priv->panel_widget->background;
 
+
 	/* We don't want any bevels with a color/image background */
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
+#endif
 		if (toplevel->priv->geometry.y > 0)
 			edges |= PANEL_EDGE_TOP;
 
@@ -1515,7 +1518,9 @@ void panel_toplevel_update_edges(PanelToplevel* toplevel)
 			inner_frame = TRUE;
 			edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
 		}
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	}
+#endif
 
 	if (!inner_frame) {
 		inner_edges = PANEL_EDGE_NONE;
@@ -2973,7 +2978,9 @@ static void
 panel_toplevel_check_resize (GtkContainer *container)
 {
 	GtkAllocation   allocation;
+#if !GTK_CHECK_VERSION(3, 0, 0)
 	GtkAllocation   widget_allocation;
+#endif
 	GtkRequisition  requisition;
 	GtkWidget      *widget;
 
@@ -2990,13 +2997,11 @@ panel_toplevel_check_resize (GtkContainer *container)
 #else
 	gtk_widget_size_request (widget, &requisition);
 #endif
-	gtk_widget_get_allocation (widget, &widget_allocation);
+	gtk_widget_get_allocation (widget, &allocation);
 
-	if (widget_allocation.width  != requisition.width ||
-	    widget_allocation.height != requisition.height)
-		return;
+	allocation.width = requisition.width;
+	allocation.height = requisition.height;
 
-	allocation = widget_allocation;
 	gtk_widget_size_allocate (widget, &allocation);
 }
 
@@ -3148,13 +3153,16 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 	PanelToplevel* toplevel = (PanelToplevel*) widget;
 	PanelFrameEdge edges;
 	gboolean        retval = FALSE;
-	GdkWindow      *window;
-	GtkStyle       *style;
-	GtkStateType    state;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	int             awidth;
 	int             aheight;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
 #else
+	GdkWindow      *window;
+	GtkStyle       *style;
+	GtkStateType    state;
 	GtkAllocation   allocation;
 #endif
 
@@ -3181,57 +3189,77 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 	    toplevel->priv->attached)
 		return retval;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	state = gtk_widget_get_state_flags (widget);
+	awidth = gtk_widget_get_allocated_width (widget);
+	aheight = gtk_widget_get_allocated_height (widget);
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_get_padding (context, state, &padding);
+	gtk_style_context_save (context);
+	gtk_style_context_set_state (context, state);
+#else
 	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
-#if GTK_CHECK_VERSION (3, 0, 0)
-	awidth = gtk_widget_get_allocated_width (widget);
-	aheight = gtk_widget_get_allocated_height (widget);
-#else
 	gtk_widget_get_allocation (widget, &allocation);
 #endif
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		int x, y, width, height;
-		int xthickness, ythickness;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 		x = 0;
 		y = 0;
 		height = height;
 #else
+		int xthickness, ythickness;
 		x      = allocation.x;
 		y      = allocation.y;
 		height = allocation.height;
 #endif
 		width  = HANDLE_SIZE;
 
+#if !GTK_CHECK_VERSION(3, 0, 0)
 		xthickness = style->xthickness;
 		ythickness = style->ythickness;
+#endif
 
 		if (edges & PANEL_EDGE_TOP) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+			y += padding.top;
+			height -= padding.top;
+#else
 			y += ythickness;
 			height -= ythickness;
+#endif
 		}
 		if (edges & PANEL_EDGE_BOTTOM)
-			height -= ythickness;
-		if (edges & PANEL_EDGE_LEFT)
-			x += xthickness;
-
-		gtk_paint_handle (style,
 #if GTK_CHECK_VERSION (3, 0, 0)
-				  cr,
+			height -= padding.bottom;
 #else
-				  window,
+			height -= ythickness;
 #endif
+		if (edges & PANEL_EDGE_LEFT)
+#if GTK_CHECK_VERSION (3, 0, 0)
+			x += padding.left;
+#else
+			x += xthickness;
+#endif
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+		cairo_save (cr);
+		gtk_render_handle (context, cr, x, y, width, height);
+		cairo_restore (cr);
+#else
+		gtk_paint_handle (style,
+				  window,
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_VERTICAL);
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 		x = awidth - HANDLE_SIZE;
@@ -3239,63 +3267,83 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 		x = allocation.width - HANDLE_SIZE;
 #endif
 		if (edges & PANEL_EDGE_RIGHT)
-			x -= xthickness;
-
-		gtk_paint_handle (style,
 #if GTK_CHECK_VERSION (3, 0, 0)
-				  cr,
+			x -= padding.right;
 #else
-				  window,
+			x -= xthickness;
 #endif
+
+#if GTK_CHECK_VERSION(3, 0, 0)
+		cairo_save (cr);
+		gtk_render_handle (context, cr, x, y, width, height);
+		cairo_restore (cr);
+#else
+		gtk_paint_handle (style,
+				  window,
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_VERTICAL);
+#endif
 	} else {
 		int x, y, width, height;
-		int xthickness, ythickness;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 		x      = 0;
 		y      = 0;
 		width  = awidth;
 #else
+		int xthickness, ythickness;
+
 		x      = allocation.x;
 		y      = allocation.y;
 		width  = allocation.width;
 #endif
 		height = HANDLE_SIZE;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		xthickness = style->xthickness;
 		ythickness = style->ythickness;
+#endif
 
 		if (edges & PANEL_EDGE_LEFT) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+			x += padding.left;
+			width -= padding.left;
+#else
 			x += xthickness;
 			width -= xthickness;
+#endif
 		}
 		if (edges & PANEL_EDGE_RIGHT)
-			width -= xthickness;
-		if (edges & PANEL_EDGE_TOP)
-			y += ythickness;
-
-		gtk_paint_handle (style,
 #if GTK_CHECK_VERSION (3, 0, 0)
-				  cr,
+			width -= padding.right;
 #else
-				  window,
+			width -= xthickness;
 #endif
+		if (edges & PANEL_EDGE_TOP)
+#if GTK_CHECK_VERSION (3, 0, 0)
+			y += padding.top;
+#else
+			y += ythickness;
+#endif
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+		cairo_save (cr);
+		gtk_render_handle (context, cr, x, y, width, height);
+		cairo_restore (cr);
+#else
+		gtk_paint_handle (style,
+				  window,
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_HORIZONTAL);
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 		y = aheight - HANDLE_SIZE;
@@ -3303,23 +3351,31 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 		y = allocation.height - HANDLE_SIZE;
 #endif
 		if (edges & PANEL_EDGE_BOTTOM)
-			y -= ythickness;
-
-		gtk_paint_handle (style,
 #if GTK_CHECK_VERSION (3, 0, 0)
-				  cr,
+			y -= padding.bottom;
 #else
-				  window,
+			y -= ythickness;
 #endif
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+		cairo_save (cr);
+		gtk_render_handle (context, cr, x, y, width, height);
+		cairo_restore (cr);
+#else
+		gtk_paint_handle (style,
+				  window,
 				  state,
 				  GTK_SHADOW_OUT,
-#if !GTK_CHECK_VERSION (3, 0, 0)
 				  &event->area,
-#endif
 				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_HORIZONTAL);
+#endif
 	}
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_style_context_restore (context);
+#endif
 
 	return retval;
 }
@@ -4939,6 +4995,18 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	}
 
 	toplevel->priv->orientation = orientation;
+
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GtkStyleContext* context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
+	if (orientation & PANEL_HORIZONTAL_MASK) {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	} else {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	}
+	gtk_widget_reset_style (GTK_WIDGET (toplevel));
+#endif
 
 	panel_toplevel_update_hide_buttons (toplevel);
 

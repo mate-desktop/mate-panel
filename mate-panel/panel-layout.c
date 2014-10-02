@@ -29,11 +29,11 @@
 #include <glib.h>
 #include <gio/gio.h>
 
-#include <libpanel-util/panel-dconf.h>
+#include <libmate-desktop/mate-dconf.h>
+#include <libmate-desktop/mate-gsettings.h>
 
 #include "panel-layout.h"
 #include "panel-profile.h"
-#include "panel-gsettings.h"
 #include "panel-schemas.h"
 #include "panel-enums.h"
 
@@ -150,7 +150,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     if (!*id)
         id = NULL;
 
-    if (id && !panel_gsettings_is_valid_keyname (id, &error)) {
+    if (id && !mate_gsettings_is_valid_keyname (id, &error)) {
         g_warning ("Invalid id name in layout '%s' (%s)", id, error->message);
         g_error_free (error);
         return FALSE;
@@ -166,7 +166,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     }
 
     dconf_path = g_strdup_printf (PANEL_RESOURCE_PATH "/%s", dir);
-    existing_ids = panel_dconf_list_subdirs (dconf_path, TRUE);
+    existing_ids = mate_dconf_list_subdirs (dconf_path, TRUE);
 
     if (id) {
         if (set_screen_to > 0) {
@@ -256,7 +256,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
 
         GSettings *panel_settings;
         panel_settings = g_settings_new (PANEL_SCHEMA);
-        panel_gsettings_append_strv (panel_settings,
+        mate_gsettings_append_strv (panel_settings,
                                      id_list_key,
                                      unique_id);
         g_object_unref (panel_settings);

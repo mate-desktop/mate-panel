@@ -255,11 +255,7 @@ handle_button_press_event (GtkWidget *popup,
 	window = find_managed_window (event->display, event->subwindow);
 
 	if (window != None) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 		if (!gdk_x11_window_lookup_for_display (gdk_x11_lookup_xdisplay (event->display), window))
-#else
-		if (!gdk_xid_table_lookup_for_display (gdk_x11_lookup_xdisplay (event->display), window))
-#endif
 			kill_window_question ((gpointer) window);
 	}
 }

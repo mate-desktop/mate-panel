@@ -84,6 +84,13 @@ static PanelBackgroundMonitor **global_background_monitors = NULL;
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+gboolean gdk_window_check_composited_wm(GdkWindow* window)
+{
+	return gdk_screen_is_composited(gdk_window_get_screen(window));
+}
+#endif
+
 static void
 panel_background_monitor_finalize (GObject *object)
 {
@@ -166,11 +173,7 @@ panel_background_monitor_connect_to_screen (PanelBackgroundMonitor *monitor,
 	    G_CALLBACK (panel_background_monitor_changed), monitor);
 
 	monitor->gdkwindow = gdk_screen_get_root_window (screen);
-#if GTK_CHECK_VERSION (3, 0, 0)
-	monitor->xwindow   = gdk_x11_window_get_xid (monitor->gdkwindow);
-#else
-	monitor->xwindow   = gdk_x11_drawable_get_xid (monitor->gdkwindow);
-#endif
+	monitor->xwindow   = GDK_WINDOW_XID (monitor->gdkwindow);
 
 	gdk_window_add_filter (
 		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);

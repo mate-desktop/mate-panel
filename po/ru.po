@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Alexei Sorokin <sor.alexei@hotbox.ru>, 2012-2013.
+# Alexander <alex.grushetskiy@gmail.com>, 2014
+# Alexei Sorokin <sor.alexei@meowr.ru>, 2012-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
-"Report-Msgid-Bugs-To: https://github.com/mate-desktop/\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-10 23:10+0100\n"
-"PO-Revision-Date: 2013-03-11 19:36+0000\n"
-"Last-Translator: Alexei Sorokin <sor.alexei@hotbox.ru>\n"
+"PO-Revision-Date: 2014-05-29 07:17+0000\n"
+"Last-Translator: Alexander <alex.grushetskiy@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/MATE/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +41,6 @@ msgstr "%l:%M:%S %p"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#. 
 #: ../applets/clock/clock.c:428 ../applets/clock/clock-location-tile.c:520
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
@@ -66,7 +66,6 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#. 
 #: ../applets/clock/clock.c:433 ../applets/clock/clock.c:1547
 #: ../applets/clock/clock-location-tile.c:480
 #: ../applets/clock/clock-location-tile.c:527
@@ -85,7 +84,6 @@ msgstr "%a, %e %b"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#. 
 #: ../applets/clock/clock.c:451
 #, c-format
 msgid ""
@@ -96,7 +94,6 @@ msgstr "%1$s\n%2$s"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#. 
 #: ../applets/clock/clock.c:459
 #, c-format
 msgid "%1$s, %2$s"
@@ -558,7 +555,7 @@ msgstr "Фабрика для апплета часов"
 
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:4
 msgid "Get the current time and date"
-msgstr "Получить значения текущих времени и даты"
+msgstr "Показывает текущие время и дату"
 
 #: ../applets/fish/fish.c:263
 #, c-format
@@ -771,7 +768,7 @@ msgstr "Откуда эта глупая рыба пришла"
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:4
 msgid "Display a swimming fish or another animated creature"
-msgstr "Показывает плавающую рыбу или другое анимированное создание"
+msgstr "Показывает плавающую рыбку, которая по щелчку выдаёт цитату"
 
 #: ../applets/notification_area/main.c:124
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
@@ -792,7 +789,7 @@ msgstr "Фабрика для области уведомления"
 
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:4
 msgid "Area where notification icons appear"
-msgstr "Область, где появляются значки уведомления"
+msgstr "Область, где появляются значки уведомлений"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:1
 msgid "Show windows from all workspaces"
@@ -881,7 +878,7 @@ msgstr "Переключатель окон"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
-msgstr "Переключаться между открытыми окнами через меню"
+msgstr "Кнопка переключения между открытыми окнами"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
 #: ../applets/wncklet/workspace-switcher.c:571
@@ -899,7 +896,7 @@ msgstr "Список окон"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:8
 msgid "Switch between open windows using buttons"
-msgstr "Переключаться между открытыми окнами через кнопки"
+msgstr "Область, где размещаются кнопки открытых окон"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:9
 msgid "Show Desktop"
@@ -2001,11 +1998,11 @@ msgstr "Соединиться с сервером…"
 
 #: ../mate-panel/panel-action-button.c:386
 msgid "Connect to a remote computer or shared disk"
-msgstr "Соединиться с удалённому сервером или общим хранилищем"
+msgstr "Соединиться с удалённым сервером или общим хранилищем"
 
 #: ../mate-panel/panel-action-button.c:394
 msgid "Shut Down..."
-msgstr "Выключить…"
+msgstr "Кнопка выключения"
 
 #: ../mate-panel/panel-action-button.c:395
 msgid "Shut down the computer"
@@ -2021,7 +2018,7 @@ msgstr "Создать кнопку запуска"
 
 #: ../mate-panel/panel-addto.c:126
 msgid "Application Launcher..."
-msgstr "Кнопка запуска…"
+msgstr "Кнопка запуска приложения"
 
 #: ../mate-panel/panel-addto.c:127
 msgid "Copy a launcher from the applications menu"
@@ -2029,7 +2026,7 @@ msgstr "Скопировать кнопку запуска из меню при�
 
 #: ../mate-panel/panel-addto.c:141 ../mate-panel/panel-menu-button.c:1098
 msgid "Main Menu"
-msgstr "Главное меню"
+msgstr "Главное меню MATE"
 
 #: ../mate-panel/panel-addto.c:142
 msgid "The main MATE menu"
@@ -2037,11 +2034,11 @@ msgstr "Главное меню среды MATE"
 
 #: ../mate-panel/panel-addto.c:152
 msgid "Menu Bar"
-msgstr "Строка меню"
+msgstr "Главное меню - Строка"
 
 #: ../mate-panel/panel-addto.c:153
 msgid "A custom menu bar"
-msgstr "Пользовательская строка меню"
+msgstr "Пользовательская строка меню \"Приложения | Переход | Система\""
 
 #: ../mate-panel/panel-addto.c:163
 msgid "Separator"
@@ -2329,7 +2326,6 @@ msgstr "Система"
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#. 
 #: ../mate-panel/panel-menu-items.c:1567
 msgctxt "panel:showusername"
 msgid "1"
@@ -2800,7 +2796,6 @@ msgstr "Поиск"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#. 
 #: ../mate-panel/panel-util.c:1074
 #, c-format
 msgid "%1$s: %2$s"

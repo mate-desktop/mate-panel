@@ -35,7 +35,6 @@ panel_sources = \
 	drawer.c \
 	panel-config-global.c \
 	panel-util.c \
-	panel-gsettings.c \
 	panel-properties-dialog.c \
 	panel-run-dialog.c \
 	menu.c \
@@ -84,7 +83,6 @@ panel_headers = \
 	panel-util.h \
 	panel-properties-dialog.h \
 	panel-config-global.h \
-	panel-gsettings.h \
 	panel-run-dialog.h \
 	menu.h \
 	panel-context-menu.h \

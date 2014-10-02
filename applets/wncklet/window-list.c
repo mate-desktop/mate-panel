@@ -23,6 +23,7 @@
 #include <libwnck/libwnck.h>
 #include <gio/gio.h>
 
+#include <libmate-desktop/mate-aboutdialog.h>
 #if GTK_CHECK_VERSION (3, 0, 0)
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
@@ -138,8 +139,10 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 	switch (type)
 	{
 		case PANEL_NO_BACKGROUND:
+#if !GTK_CHECK_VERSION (3, 0 ,0)
 			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NORMAL);
 			break;
+#endif
 		case PANEL_COLOR_BACKGROUND:
 		case PANEL_PIXMAP_BACKGROUND:
 			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NONE);
@@ -447,7 +450,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 #ifdef WNCK_CHECK_VERSION
 #if WNCK_CHECK_VERSION (3, 4, 6)
-	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
+	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
+	wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), TRUE);
 #endif
 #endif
 
@@ -579,7 +583,7 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 
-	gtk_show_about_dialog(GTK_WINDOW(tasklist->applet),
+	mate_show_about_dialog(GTK_WINDOW(tasklist->applet),
 		"program-name", _("Window List"),
 		"authors", authors,
 		"comments", _("The Window List shows a list of all windows in a set of buttons and lets you browse them."),

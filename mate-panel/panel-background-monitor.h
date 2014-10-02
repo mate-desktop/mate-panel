@@ -49,6 +49,9 @@
 typedef struct _PanelBackgroundMonitorClass PanelBackgroundMonitorClass;
 typedef struct _PanelBackgroundMonitor      PanelBackgroundMonitor;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+gboolean                gdk_window_check_composited_wm          (GdkWindow* window);
+#endif
 GType                   panel_background_monitor_get_type       (void);
 PanelBackgroundMonitor *panel_background_monitor_get_for_screen (GdkScreen *screen);
 GdkPixbuf              *panel_background_monitor_get_region     (PanelBackgroundMonitor *monitor,

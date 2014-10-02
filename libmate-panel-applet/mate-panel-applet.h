@@ -42,6 +42,8 @@ typedef enum {
 	MATE_PANEL_APPLET_ORIENT_DOWN,
 	MATE_PANEL_APPLET_ORIENT_LEFT,
 	MATE_PANEL_APPLET_ORIENT_RIGHT
+#define MATE_PANEL_APPLET_ORIENT_FIRST MATE_PANEL_APPLET_ORIENT_UP
+#define MATE_PANEL_APPLET_ORIENT_LAST  MATE_PANEL_APPLET_ORIENT_RIGHT
 } MatePanelAppletOrient;
 
 #define PANEL_TYPE_APPLET              (mate_panel_applet_get_type ())
@@ -62,6 +64,7 @@ typedef enum {
 	MATE_PANEL_APPLET_EXPAND_MAJOR = 1 << 0,
 	MATE_PANEL_APPLET_EXPAND_MINOR = 1 << 1,
 	MATE_PANEL_APPLET_HAS_HANDLE   = 1 << 2
+#define MATE_PANEL_APPLET_FLAGS_ALL (MATE_PANEL_APPLET_EXPAND_MAJOR|MATE_PANEL_APPLET_EXPAND_MINOR|MATE_PANEL_APPLET_HAS_HANDLE)
 } MatePanelAppletFlags;
 
 typedef struct _MatePanelApplet        MatePanelApplet;
@@ -84,7 +87,7 @@ struct _MatePanelAppletClass {
 	void (*change_size) (MatePanelApplet* applet, guint size);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	void (*change_background) (MatePanelApplet *applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern);
+	void (*change_background) (MatePanelApplet *applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t *pattern);
 #else
 	void (*change_background) (MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap);
 #endif

@@ -42,6 +42,7 @@
 #include <gdk/gdkkeysyms-compat.h>
 #endif
 #include <gio/gio.h>
+#include <libmate-desktop/mate-aboutdialog.h>
 
 #include <mate-panel-applet.h>
 #include <mate-panel-applet-gsettings.h>
@@ -571,7 +572,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 
 	descr = g_strdup_printf(about_format, fish->name);
 
-	gtk_show_about_dialog(NULL,
+	mate_show_about_dialog(NULL,
 		"program-name", _("Fish"),
 		"authors", authors,
 		"comments", descr,
@@ -849,10 +850,6 @@ static void display_fortune_dialog(FishApplet* fish)
 
 		gtk_window_set_icon_name (GTK_WINDOW (fish->fortune_dialog),
 					  FISH_ICON);
-#if !GTK_CHECK_VERSION (3, 0, 0)
-		gtk_dialog_set_has_separator (
-			GTK_DIALOG (fish->fortune_dialog), FALSE);
-#endif
 
 		gtk_dialog_set_default_response (
 			GTK_DIALOG (fish->fortune_dialog), GTK_RESPONSE_CLOSE);

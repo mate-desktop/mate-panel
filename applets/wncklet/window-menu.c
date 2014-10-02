@@ -38,6 +38,8 @@
 #include <gdk/gdkkeysyms-compat.h>
 #endif
 
+#include <libmate-desktop/mate-aboutdialog.h>
+
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 
@@ -81,7 +83,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		"Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
 		"Copyright \xc2\xa9 2000 Helix Code, Inc.";
 
-	gtk_show_about_dialog(GTK_WINDOW(window_menu->applet),
+	mate_show_about_dialog(GTK_WINDOW(window_menu->applet),
 		"program-name", _("Window Selector"),
 		"authors", authors,
 		"comments", _("The Window Selector shows a list of all windows in a menu and lets you browse them."),

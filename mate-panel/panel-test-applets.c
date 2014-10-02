@@ -15,7 +15,7 @@
 #include <gio/gio.h>
 
 #include <libpanel-util/panel-cleanup.h>
-#include <libpanel-util/panel-dconf.h>
+#include <libmate-desktop/mate-dconf.h>
 
 #include <libmate-panel-applet-private/mate-panel-applet-container.h>
 #include <libmate-panel-applet-private/mate-panel-applets-manager-dbus.h>
@@ -311,7 +311,7 @@ setup_options (void)
 	{
 		unique_key = g_strdup_printf ("mate-panel-test-applet-%d", i);
 		unique_key_found = TRUE;
-		dconf_paths = panel_dconf_list_subdirs ("/tmp/", TRUE);
+		dconf_paths = mate_dconf_list_subdirs ("/tmp/", TRUE);
 		for (j = 0; dconf_paths[j] != NULL; j++)
 		{
 			if (g_strcmp0(unique_key, dconf_paths[j]) == 0) {
