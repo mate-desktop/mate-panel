@@ -33,6 +33,7 @@
 #if GTK_CHECK_VERSION (3, 0, 0)
 #include <gdk/gdkkeysyms-compat.h>
 #endif
+#include <libmate-desktop/mate-gsettings.h>
 
 
 #include <libpanel-util/panel-keyfile.h>
@@ -94,11 +95,15 @@ static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 
 static inline gboolean desktop_is_home_dir(void)
 {
-	gboolean retval;
+	gboolean retval = FALSE;
 	GSettings *settings;
-	settings = g_settings_new (CAJA_PREFS_SCHEMA);
-	retval = g_settings_get_boolean (settings, CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY);
-	g_object_unref (settings);
+
+	if (mate_gsettings_schema_exists (CAJA_PREFS_SCHEMA)) {
+		settings = g_settings_new (CAJA_PREFS_SCHEMA);
+		retval = g_settings_get_boolean (settings, CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY);
+		g_object_unref (settings);
+	}
+
 	return retval;
 }
 
