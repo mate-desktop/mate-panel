@@ -37,6 +37,7 @@
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
 #endif
+#include <libmate-desktop/mate-gsettings.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
@@ -211,12 +212,14 @@ static void
 panel_action_logout (GtkWidget *widget)
 {
 	PanelSessionManager *manager;
-	gboolean             prompt;
+	gboolean             prompt = TRUE;
 
-	GSettings *msm_settings;
-	msm_settings = g_settings_new (MATE_SESSION_SCHEMA);
-	prompt = g_settings_get_boolean (msm_settings, MATE_SESSION_LOGOUT_PROMPT_KEY);
-	g_object_unref (msm_settings);
+	if (mate_gsettings_schema_exists (MATE_SESSION_SCHEMA)) {
+		GSettings *msm_settings;
+		msm_settings = g_settings_new (MATE_SESSION_SCHEMA);
+		prompt = g_settings_get_boolean (msm_settings, MATE_SESSION_LOGOUT_PROMPT_KEY);
+		g_object_unref (msm_settings);
+	}
 
 	manager = panel_session_manager_get ();
 
