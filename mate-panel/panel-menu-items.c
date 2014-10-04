@@ -1027,7 +1027,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 {
 	GtkWidget *places_menu;
 	GtkWidget *item;
-	char      *gsettings_name;
+	char      *gsettings_name = NULL;
 	char      *name;
 	char      *uri;
 	GFile     *file;
@@ -1072,27 +1072,39 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);
 	add_menu_separator (places_menu);
 
-	if (place_item->priv->caja_desktop_settings != NULL) {
+	if (place_item->priv->caja_desktop_settings != NULL)
 		gsettings_name = g_settings_get_string (place_item->priv->caja_desktop_settings,
 								CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY);
-		panel_menu_items_append_from_desktop (places_menu,
-							  "caja-computer.desktop",
-							  gsettings_name,
-							  TRUE);
-		if (gsettings_name)
+
+	if (PANEL_GLIB_STR_EMPTY (gsettings_name))
+		gsettings_name = g_strdup (_("Computer"));
+
+	panel_menu_items_append_place_item (
+			PANEL_ICON_COMPUTER, NULL,
+			gsettings_name,
+			_("Browse all local and remote disks and folders accessible from this computer"),
+			places_menu,
+			G_CALLBACK (activate_uri),
+			"computer://");
+
+	if (gsettings_name)
 		g_free (gsettings_name);
-	}
 
 	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
 
-	panel_menu_items_append_from_desktop (places_menu,
-					      "mate-network-scheme.desktop",
-					      NULL,
-                                              TRUE);
+	panel_menu_items_append_place_item (
+			PANEL_ICON_NETWORK, NULL,
+			_("Network"),
+			_("Browse bookmarked and local network locations"),
+			places_menu,
+			G_CALLBACK (activate_uri),
+			"network://");
 	panel_place_menu_item_append_remote_gio (place_item, places_menu);
 
-	if (panel_is_program_in_path ("caja-connect-server")) {
+	if (panel_is_program_in_path ("caja-connect-server") ||
+	    panel_is_program_in_path ("nautilus-connect-server") ||
+	    panel_is_program_in_path ("nemo-connect-server")) {
 		item = panel_menu_items_create_action_item (PANEL_ACTION_CONNECT_SERVER);
 		if (item != NULL)
 			gtk_menu_shell_append (GTK_MENU_SHELL (places_menu),
@@ -1101,10 +1113,16 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 
 	add_menu_separator (places_menu);
 
-	panel_menu_items_append_from_desktop (places_menu,
-					      "mate-search-tool.desktop",
-					      NULL,
-                                              FALSE);
+	if (panel_is_program_in_path ("mate-search-tool"))
+		panel_menu_items_append_from_desktop (places_menu,
+						      "mate-search-tool.desktop",
+						      NULL,
+						      FALSE);
+	else
+		panel_menu_items_append_from_desktop (places_menu,
+						      "gnome-search-tool.desktop",
+						      NULL,
+						      FALSE);
 
 	panel_recent_append_documents_menu (places_menu,
 					    place_item->priv->recent_manager);

@@ -293,17 +293,26 @@ static void
 panel_action_connect_server (GtkWidget *widget)
 {
 	GdkScreen *screen;
+	char      *command;
 	GError    *error;
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
 	error = NULL;
 
+	if (panel_is_program_in_path ("caja-connect-server"))
+		command = g_strdup ("caja-connect-server");
+	else if (panel_is_program_in_path ("nautilus-connect-server"))
+		command = g_strdup ("nautilus-connect-server");
+	else
+		command = g_strdup ("nemo-connect-server");
+
 #if GTK_CHECK_VERSION (3, 0, 0)
-	mate_gdk_spawn_command_line_on_screen (screen, "caja-connect-server",
+	mate_gdk_spawn_command_line_on_screen (screen, command,
 #else
-	gdk_spawn_command_line_on_screen (screen, "caja-connect-server",
+	gdk_spawn_command_line_on_screen (screen, command,
 #endif
 					  &error);
+	g_free (command);
 
 	if (error) {
 		panel_error_dialog (NULL, screen,
