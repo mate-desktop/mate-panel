@@ -1280,6 +1280,7 @@ panel_profile_load_toplevel (const char *toplevel_id)
 					  G_CALLBACK (panel_profile_background_change_notify),
 					  toplevel);
 
+	g_free (toplevel_path);
 	g_free (toplevel_background_path);
 
 	panel_setup (toplevel);
