@@ -390,6 +390,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 	gtk_widget_set_can_focus(GTK_WIDGET(menubar), TRUE);
 
 	panel_widget_set_applet_expandable(panel, GTK_WIDGET(menubar), FALSE, TRUE);
+	panel_menu_bar_update_visibility(menubar->priv->settings, NULL, menubar);
 }
 
 void panel_menu_bar_load_from_gsettings (PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
