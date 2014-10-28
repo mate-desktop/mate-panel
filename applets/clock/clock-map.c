@@ -33,7 +33,7 @@ static char *marker_files[MARKER_NB] = {
         ICONDIR "/clock-map-location-current.png"
 };
 
-static guint signals[LAST_SIGNAL];
+static guint signals[LAST_SIGNAL] = { 0 };
 
 typedef struct {
         time_t last_refresh;

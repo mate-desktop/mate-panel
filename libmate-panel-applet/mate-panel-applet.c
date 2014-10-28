@@ -92,7 +92,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static guint mate_panel_applet_signals[LAST_SIGNAL];
+static guint mate_panel_applet_signals[LAST_SIGNAL] = { 0 };
 
 enum {
 	PROP_0,
