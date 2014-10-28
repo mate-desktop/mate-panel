@@ -65,7 +65,7 @@ typedef struct
 #endif
 } PendingMessage;
 
-static guint manager_signals[LAST_SIGNAL];
+static guint manager_signals[LAST_SIGNAL] = { 0 };
 
 #define SYSTEM_TRAY_REQUEST_DOCK    0
 #define SYSTEM_TRAY_BEGIN_MESSAGE   1

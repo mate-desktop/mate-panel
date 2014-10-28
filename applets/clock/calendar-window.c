@@ -46,11 +46,11 @@
 #define KEY_LOCATIONS_EXPANDED      "expand-locations"
 
 enum {
-EDIT_LOCATIONS,
-LAST_SIGNAL
+	EDIT_LOCATIONS,
+	LAST_SIGNAL
 };
 
-static guint signals[LAST_SIGNAL];
+static guint signals[LAST_SIGNAL] = { 0 };
 
 struct _CalendarWindowPrivate {
 	GtkWidget  *calendar;
