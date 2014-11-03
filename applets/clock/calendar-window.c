@@ -185,9 +185,7 @@ create_hig_frame (CalendarWindow *calwin,
         GtkWidget *vbox;
         GtkWidget *label;
         GtkWidget *hbox;
-        GtkWidget *button;
         char      *bold_title;
-	char      *text;
         GtkWidget *expander;
 
         vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -215,7 +213,16 @@ create_hig_frame (CalendarWindow *calwin,
 	g_signal_connect (hbox, "add", G_CALLBACK (add_child), expander);
 
         if (button_label) {
+                GtkWidget *button_box;
+                GtkWidget *button;
+                gchar *text;
+
+                button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+                gtk_widget_show (button_box);
+
                 button = gtk_button_new ();
+                gtk_container_add (GTK_CONTAINER (button_box), button);
+
                 text = g_markup_printf_escaped ("<small>%s</small>", button_label);
                 label = gtk_label_new (text);
                 g_free (text);
@@ -224,9 +231,13 @@ create_hig_frame (CalendarWindow *calwin,
 
                 gtk_widget_show_all (button);
 
-                gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+                gtk_box_pack_end (GTK_BOX (hbox), button_box, FALSE, FALSE, 0);
 
                 g_signal_connect_swapped (button, "clicked", callback, calwin);
+
+                g_object_bind_property (expander, "expanded",
+                                        button_box, "visible",
+                                        G_BINDING_DEFAULT|G_BINDING_SYNC_CREATE);
         }
 
 	g_settings_bind (calwin->priv->settings, key, expander, "expanded",
