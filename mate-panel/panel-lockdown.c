@@ -179,8 +179,8 @@ panel_lockdown_init (void)
 
         panel_lockdown.disable_log_out =
                 panel_lockdown_load_bool (&panel_lockdown,
-                                          panel_lockdown.panel_settings,
-                                          PANEL_DISABLE_LOG_OUT_KEY,
+                                          panel_lockdown.lockdown_settings,
+                                          LOCKDOWN_DISABLE_LOG_OUT_KEY,
                                           G_CALLBACK (disable_log_out_notify));
 
         panel_lockdown.disable_force_quit =

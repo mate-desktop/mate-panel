@@ -14,7 +14,6 @@
 #define PANEL_TOPLEVEL_ID_LIST_KEY    "toplevel-id-list"
 #define PANEL_OBJECT_ID_LIST_KEY      "object-id-list"
 #define PANEL_LOCKED_DOWN_KEY         "locked-down"
-#define PANEL_DISABLE_LOG_OUT_KEY     "disable-log-out"
 #define PANEL_DISABLE_FORCE_QUIT_KEY  "disable-force-quit"
 #define PANEL_DISABLED_APPLETS_KEY    "disabled-applets"
 
@@ -82,6 +81,7 @@
 #define LOCKDOWN_SCHEMA                       "org.mate.lockdown"
 #define LOCKDOWN_DISABLE_COMMAND_LINE_KEY     "disable-command-line"
 #define LOCKDOWN_DISABLE_LOCK_SCREEN_KEY      "disable-lock-screen"
+#define LOCKDOWN_DISABLE_LOG_OUT_KEY          "disable-log-out"
 
 #define MARCO_SCHEMA                          "org.mate.Marco.general"
 #define MARCO_MOUSE_BUTTON_MODIFIER_KEY       "mouse-button-modifier"
