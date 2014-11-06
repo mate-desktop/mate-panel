@@ -622,13 +622,13 @@ fuzzy_command_match (const char *cmd1,
 
 	/* same for the user command */
 	tokens = g_strsplit (cmd2, " ", -1);
-	word2 = g_path_get_basename (tokens [0]);
 	if (!tokens || !tokens [0]) {
 		g_free (word1);
 		g_strfreev (tokens);
 		return FALSE;
 	}
 
+	word2 = g_path_get_basename (tokens [0]);
 	g_strfreev (tokens);
 
 	if (!strcmp (word1, word2)) {

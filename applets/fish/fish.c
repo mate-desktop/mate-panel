@@ -1129,8 +1129,8 @@ static char* get_location(void)
 			count++;
 
 	if (count != 2) {
-		return NULL;
 		g_free (buffer);
+		return NULL;
 	}
 
 	memcpy (location, &buffer [i + 2], len - i - 2);

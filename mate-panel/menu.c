@@ -801,6 +801,7 @@ menu_escape_underscores_and_prepend (const char *text)
 
 		if (c == (gunichar)-1) {
 			g_warning ("Invalid input string for underscore escaping");
+			g_string_free (escaped_text, TRUE);
 			return g_strdup (text);
 		} else if (c == '_') {
 			g_string_insert_c (escaped_text,

@@ -545,6 +545,7 @@ clock_face_load_face (ClockFace *this, gint width, gint height)
         priv->face_pixbuf = g_hash_table_lookup (pixbuf_cache, cache_name);
         if (priv->face_pixbuf) {
                 g_object_ref (priv->face_pixbuf);
+                g_free (cache_name);
                 return;
         }
 

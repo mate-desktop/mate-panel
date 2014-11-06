@@ -466,7 +466,7 @@ create_launcher (const char *location)
 			g_error_free (error);
 
 		g_key_file_free (key_file);
-
+		g_free (new_location);
 		return NULL; /*button is null*/
 	}
 

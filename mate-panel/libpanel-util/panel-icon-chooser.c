@@ -459,6 +459,7 @@ _panel_icon_chooser_clicked (GtkButton *button)
 		path = g_build_filename (DATADIR, "icons", NULL);
 		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (filechooser),
 						     path);
+		g_free (path);
 	}
 
 	gtk_window_set_destroy_with_parent (GTK_WINDOW (filechooser), TRUE);

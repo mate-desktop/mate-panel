@@ -790,6 +790,7 @@ guess_icon_from_exec (GtkIconTheme *icon_theme,
 		return NULL;
 	}
 
+	g_free (path);
 	return icon_name;
 }
 

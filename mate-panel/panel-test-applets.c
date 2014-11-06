@@ -309,6 +309,7 @@ setup_options (void)
 
 	for (i = 0; !unique_key_found; i++)
 	{
+		g_free (unique_key);
 		unique_key = g_strdup_printf ("mate-panel-test-applet-%d", i);
 		unique_key_found = TRUE;
 		dconf_paths = mate_dconf_list_subdirs ("/tmp/", TRUE);
