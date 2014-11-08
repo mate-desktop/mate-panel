@@ -49,7 +49,8 @@ void panel_launcher_create_from_info (PanelToplevel *toplevel,
 				      const char    *icon);
 
 void		launcher_launch    		(Launcher  *launcher,
-						 GtkWidget *widget);
+						 GtkWidget *widget,
+						 const gchar *action);
 
 void		launcher_properties		(Launcher  *launcher);
 

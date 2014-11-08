@@ -239,9 +239,15 @@ applet_callback_callback (GtkWidget      *widget,
 	switch (menu->info->type) {
 	case PANEL_OBJECT_LAUNCHER:
 		if (!strcmp (menu->name, "launch"))
-			launcher_launch (menu->info->data, widget);
+			launcher_launch (menu->info->data, widget, NULL);
 		else if (!strcmp (menu->name, "properties"))
 			launcher_properties (menu->info->data);
+#if GLIB_CHECK_VERSION (2, 38, 0)
+		else if (g_str_has_prefix (menu->name, "launch-action_")) {
+			const gchar *action = menu->name + (sizeof("launch-action_") - 1);
+			launcher_launch (menu->info->data, widget, action);
+		}
+#endif
 		break;
 	case PANEL_OBJECT_DRAWER:
 		if (strcmp (menu->name, "add") == 0) {
@@ -351,6 +357,25 @@ mate_panel_applet_add_callback (AppletInfo          *info,
 	info->user_menu = g_list_append (info->user_menu, menu);
 
 	mate_panel_applet_recreate_menu (info);
+}
+
+void
+mate_panel_applet_clear_user_menu (AppletInfo *info)
+{
+	GList *l;
+
+	for (l = info->user_menu; l != NULL; l = l->next) {
+		AppletUserMenu *umenu = l->data;
+
+		g_free (umenu->name);
+		g_free (umenu->stock_item);
+		g_free (umenu->text);
+
+		g_free (umenu);
+	}
+
+	g_list_free (info->user_menu);
+	info->user_menu = NULL;
 }
 
 static void
@@ -749,8 +774,6 @@ static void
 mate_panel_applet_destroy (GtkWidget  *widget,
 		      AppletInfo *info)
 {
-	GList *l;
-
 	g_return_if_fail (info != NULL);
 
 	info->widget = NULL;
@@ -792,18 +815,7 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 		info->data_destroy (info->data);
 	info->data = NULL;
 
-	for (l = info->user_menu; l != NULL; l = l->next) {
-		AppletUserMenu *umenu = l->data;
-
-		g_free (umenu->name);
-		g_free (umenu->stock_item);
-		g_free (umenu->text);
-
-		g_free (umenu);
-	}
-
-	g_list_free (info->user_menu);
-	info->user_menu = NULL;
+	mate_panel_applet_clear_user_menu (info);
 
 	g_free (info->id);
 	info->id = NULL;

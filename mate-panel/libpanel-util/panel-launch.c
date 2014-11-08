@@ -98,6 +98,7 @@ gboolean
 panel_app_info_launch_uris (GAppInfo   *appinfo,
 			    GList      *uris,
 			    GdkScreen  *screen,
+			    const gchar *action,
 			    guint32     timestamp,
 			    GError    **error)
 {
@@ -114,11 +115,21 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 	gdk_app_launch_context_set_timestamp (context, timestamp);
 
 	local_error = NULL;
-	retval = g_desktop_app_info_launch_uris_as_manager ((GDesktopAppInfo*)appinfo, uris,
-						   (GAppLaunchContext *) context,
-						   G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
-						   NULL, NULL, gather_pid_callback, appinfo,
-						   &local_error);
+
+#if GLIB_CHECK_VERSION (2, 38, 0)
+	if (action == NULL) {
+#endif
+		retval = g_desktop_app_info_launch_uris_as_manager ((GDesktopAppInfo*)appinfo, uris,
+							   (GAppLaunchContext *) context,
+							   G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
+							   NULL, NULL, gather_pid_callback, appinfo,
+							   &local_error);
+#if GLIB_CHECK_VERSION (2, 38, 0)
+	} else {
+		g_desktop_app_info_launch_action ((GDesktopAppInfo*)appinfo, action, context);
+		retval = TRUE;
+	}
+#endif
 
 	g_object_unref (context);
 
@@ -148,7 +159,7 @@ panel_app_info_launch_uri (GAppInfo     *appinfo,
 		uris = g_list_prepend (uris, (gpointer) uri);
 
 	retval = panel_app_info_launch_uris (appinfo, uris,
-					     screen, timestamp, error);
+					     screen, NULL, timestamp, error);
 
 	g_list_free (uris);
 
@@ -159,6 +170,7 @@ gboolean
 panel_launch_key_file (GKeyFile   *keyfile,
 		       GList      *uri_list,
 		       GdkScreen  *screen,
+		       const gchar *action,
 		       GError    **error)
 {
 	GDesktopAppInfo *appinfo;
@@ -174,7 +186,7 @@ panel_launch_key_file (GKeyFile   *keyfile,
 		return FALSE;
 
 	retval = panel_app_info_launch_uris (G_APP_INFO (appinfo),
-					     uri_list, screen,
+					     uri_list, screen, action,
 					     gtk_get_current_event_time (),
 					     error);
 
@@ -212,7 +224,7 @@ panel_launch_desktop_file (const char  *desktop_file,
 	if (appinfo == NULL)
 		return FALSE;
 
-	retval = panel_app_info_launch_uris (G_APP_INFO (appinfo), NULL, screen,
+	retval = panel_app_info_launch_uris (G_APP_INFO (appinfo), NULL, screen, NULL,
 					     gtk_get_current_event_time (),
 					     error);
 

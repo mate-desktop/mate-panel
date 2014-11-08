@@ -35,6 +35,7 @@ extern "C" {
 gboolean panel_app_info_launch_uris (GAppInfo   *appinfo,
 				     GList      *uris,
 				     GdkScreen  *screen,
+				     const gchar *action,
 				     guint32     timestamp,
 				     GError    **error);
 
@@ -47,6 +48,7 @@ gboolean panel_app_info_launch_uri (GAppInfo     *appinfo,
 gboolean panel_launch_key_file (GKeyFile   *keyfile,
 				GList      *uri_list,
 				GdkScreen  *screen,
+				const gchar *action,
 				GError    **error);
 
 gboolean panel_launch_desktop_file (const char  *desktop_file,

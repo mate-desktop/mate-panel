@@ -44,6 +44,9 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
+static gboolean
+launcher_properties_enabled (void);
+
 static GdkScreen *
 launcher_get_screen (Launcher *launcher)
 {
@@ -128,9 +131,10 @@ launch_url (Launcher *launcher)
 
 void
 launcher_launch (Launcher  *launcher,
-		 GtkWidget *widget)
+		 GtkWidget *widget,
+		 const gchar *action)
 {
-	char *type;
+	char *type = NULL;
 
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->key_file != NULL);
@@ -140,15 +144,17 @@ launcher_launch (Launcher  *launcher,
 				     button_widget_get_pixbuf (BUTTON_WIDGET (widget)),
 				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
 				     NULL);
-	
-	type = panel_key_file_get_string (launcher->key_file, "Type");
+	if (action == NULL) {
+		type = panel_key_file_get_string (launcher->key_file, "Type");
+	}
+
 	if (type && !strcmp (type, "Link"))
 		launch_url (launcher);
 	else {
 		GError *error = NULL;
 
 		panel_launch_key_file (launcher->key_file, NULL,
-				       launcher_get_screen (launcher), &error);
+				       launcher_get_screen (launcher), action, &error);
 		if (error) {
 			GtkWidget *error_dialog;
 
@@ -212,7 +218,7 @@ drag_data_received_cb (GtkWidget        *widget,
 	file_list = g_list_reverse (file_list);
 
 	panel_launch_key_file (launcher->key_file, file_list,
-			       launcher_get_screen (launcher), &error);
+			       launcher_get_screen (launcher), NULL, &error);
 
 	g_list_free (file_list);
 	g_strfreev (uris);
@@ -525,8 +531,54 @@ setup_button (Launcher *launcher)
 	char *str;
 	char *icon;
 	char *unescaped_str;
-	
+
+#if GLIB_CHECK_VERSION (2, 38, 0)
+	gchar **actions;
+	gsize actions_length = 0;
+#endif
+
 	g_return_if_fail (launcher != NULL);
+
+	mate_panel_applet_clear_user_menu (launcher->info);
+
+	mate_panel_applet_add_callback (launcher->info,
+				   "launch",
+				   GTK_STOCK_EXECUTE,
+				   _("_Launch"),
+				   NULL);
+
+#if GLIB_CHECK_VERSION (2, 38, 0)
+	actions = g_key_file_get_string_list (launcher->key_file, G_KEY_FILE_DESKTOP_GROUP,
+				    "Actions", &actions_length, NULL);
+
+	if (actions) {
+		gsize i = 0;
+		for(i=0; i<actions_length; i++) {
+			gchar *action = actions[i];
+			gchar *group = g_strdup_printf("Desktop Action %s", action);
+			gchar *callback = g_strdup_printf("launch-action_%s", action);
+			gchar *action_name = g_key_file_get_locale_string (launcher->key_file, group, "Name", NULL, NULL);
+
+			mate_panel_applet_add_callback (launcher->info,
+						   callback,
+						   NULL,
+						   action_name,
+						   NULL);
+
+			g_free (callback);
+			g_free (action_name);
+			g_free (group);
+		}
+		g_strfreev (actions);
+	}
+#endif
+
+	mate_panel_applet_add_callback (launcher->info,
+				   "properties",
+				   GTK_STOCK_PROPERTIES,
+				   _("_Properties"),
+				   launcher_properties_enabled);
+
 
 	name = panel_key_file_get_locale_string (launcher->key_file, "Name");
 	comment = panel_key_file_get_locale_string (launcher->key_file,
@@ -785,18 +837,6 @@ load_launcher_applet (const char       *location,
 		free_launcher (launcher);
 		return NULL;
 	}
-
-	mate_panel_applet_add_callback (launcher->info,
-				   "launch",
-				   GTK_STOCK_EXECUTE,
-				   _("_Launch"),
-				   NULL);
-
-	mate_panel_applet_add_callback (launcher->info,
-				   "properties",
-				   GTK_STOCK_PROPERTIES,
-				   _("_Properties"),
-				   launcher_properties_enabled);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (launcher->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (launcher->button), TRUE);

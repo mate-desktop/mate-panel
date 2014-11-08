@@ -84,6 +84,8 @@ void            mate_panel_applet_add_callback    (AppletInfo          *info,
 					      const gchar         *menuitem_text,
 					      CallbackEnabledFunc  is_enabled_func);
 
+void mate_panel_applet_clear_user_menu (AppletInfo *info);
+
 AppletUserMenu *mate_panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
 
