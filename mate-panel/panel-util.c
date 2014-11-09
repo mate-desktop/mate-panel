@@ -256,6 +256,28 @@ panel_uri_exists (const char *uri)
 	return ret;
 }
 
+GIcon *
+panel_gicon_from_icon_name (const char *icon_name) {
+	GIcon *icon = NULL;
+	if (g_path_is_absolute(icon_name)) {
+		if (!g_file_test (icon_name, G_FILE_TEST_EXISTS)) {
+			gchar *name = g_path_get_basename (icon_name);
+			icon = g_themed_icon_new (name);
+			g_free (name);
+		} else {
+			GFile *gfile = g_file_new_for_path (icon_name);
+			icon = g_file_icon_new (gfile);
+			g_object_unref (gfile);
+		}
+	}
+	else {
+		gchar *name = panel_xdg_icon_remove_extension (icon_name);
+		icon = g_themed_icon_new (name);
+		g_free (name);
+	}
+	return icon;
+}
+
 char *
 panel_find_icon (GtkIconTheme  *icon_theme,
 		 const char    *icon_name,

@@ -33,6 +33,7 @@
 
 static GtkIconSize panel_menu_icon_size = 0;
 static GtkIconSize panel_menu_bar_icon_size = 0;
+static GtkIconSize panel_add_to_icon_size = 0;
 
 GtkIconSize
 panel_menu_icon_get_size (void)
@@ -44,6 +45,11 @@ GtkIconSize
 panel_menu_bar_icon_get_size (void)
 {
 	return panel_menu_bar_icon_size;
+}
+
+GtkIconSize panel_add_to_icon_get_size(void)
+{
+	return panel_add_to_icon_size;
 }
 
 typedef struct {
@@ -130,6 +136,10 @@ panel_init_stock_icons_and_items (void)
 	panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar",
 							   PANEL_DEFAULT_MENU_BAR_ICON_SIZE,
 							   PANEL_DEFAULT_MENU_BAR_ICON_SIZE);
+
+	panel_add_to_icon_size = gtk_icon_size_register ("panel-add-to",
+							 PANEL_ADD_TO_DEFAULT_ICON_SIZE,
+							 PANEL_ADD_TO_DEFAULT_ICON_SIZE);
 
 	factory = gtk_icon_factory_new ();
 	gtk_icon_factory_add_default (factory);

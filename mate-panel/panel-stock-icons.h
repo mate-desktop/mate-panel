@@ -38,6 +38,8 @@ extern "C" {
  * Applications item in the menu bar */
 #define PANEL_DEFAULT_MENU_BAR_ICON_SIZE 	24
 
+#define PANEL_ADD_TO_DEFAULT_ICON_SIZE          32
+
 /* stock icons */
 #define PANEL_STOCK_FORCE_QUIT          "mate-panel-force-quit"
 
@@ -54,6 +56,7 @@ extern "C" {
 void        panel_init_stock_icons_and_items (void);
 GtkIconSize panel_menu_icon_get_size         (void);
 GtkIconSize panel_menu_bar_icon_get_size     (void);
+GtkIconSize panel_add_to_icon_get_size       (void);
 
 #ifdef __cplusplus
 }

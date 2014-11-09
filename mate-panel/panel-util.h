@@ -27,6 +27,7 @@ void            panel_lock_screen_action           (GdkScreen    *screen,
                                                     const char   *action);
 gboolean        panel_lock_screen_action_available (const char   *action);
 
+GIcon *         panel_gicon_from_icon_name (const char *icon_name);
 char *          panel_find_icon         (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
 					 int            size);
