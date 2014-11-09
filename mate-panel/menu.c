@@ -55,31 +55,6 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
-typedef struct {
-	GtkWidget    *pixmap;
-	const char   *stock_id;
-	GIcon        *gicon;
-	char         *image;
-	char         *fallback_image;
-	GtkIconTheme *icon_theme;
-	GtkIconSize   icon_size;
-} IconToLoad;
-
-typedef struct {
-	GtkWidget   *image;
-	const char  *stock_id;
-	GIcon       *gicon;
-	GdkPixbuf   *pixbuf;
-	GtkIconSize  icon_size;
-} IconToAdd;
-
-static guint load_icons_id = 0;
-static GHashTable *loaded_icons = NULL;
-static GList *icons_to_load = NULL;
-static GList *icons_to_add = NULL;
-
-static GSList *image_menu_items = NULL;
-
 static GtkWidget *populate_menu_from_directory (GtkWidget          *menu,
 						MateMenuTreeDirectory *directory);
 
@@ -192,47 +167,10 @@ menuitem_to_screen (GtkWidget *menuitem)
 	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
 
-static void
-reload_image_menu_items (void)
-{
-	GSList* l;
-
-	for (l = image_menu_items; l; l = l->next) {
-		GtkWidget *image = l->data;
-		gboolean   is_mapped;
-
-		is_mapped = gtk_widget_get_mapped (image);
-
-		if (is_mapped)
-			gtk_widget_unmap (image);
-
-		gtk_image_set_from_pixbuf (GTK_IMAGE (image), NULL);
-
-		if (is_mapped)
-			gtk_widget_map (image);
-
-	}
-}
-
-static void
-icon_theme_changed (GtkIconTheme *icon_theme,
-		    gpointer      data)
-{
-	reload_image_menu_items ();
-}
-
 GtkWidget *
 panel_create_menu (void)
 {
 	GtkWidget       *retval;
-	static gboolean  registered_icon_theme_changer = FALSE;
-
-	if (!registered_icon_theme_changer) {
-		registered_icon_theme_changer = TRUE;
-
-		g_signal_connect (gtk_icon_theme_get_default (), "changed",
-				  G_CALLBACK (icon_theme_changed), NULL);
-	}
 
 	retval = gtk_menu_new ();
 	gtk_widget_set_name (retval, "mate-panel-main-menu");
@@ -259,336 +197,6 @@ create_empty_menu (void)
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	return retval;
-}
-
-static void
-icon_to_load_free (IconToLoad *icon)
-{
-	if (!icon)
-		return;
-
-	if (icon->pixmap)
-		g_object_unref (icon->pixmap);
-	icon->pixmap = NULL;
-
-	if (icon->gicon)
-		g_object_unref (icon->gicon);
-	icon->gicon = NULL;
-
-	g_free (icon->image);          icon->image = NULL;
-	g_free (icon->fallback_image); icon->fallback_image = NULL;
-	g_free (icon);
-}
-
-static IconToLoad *
-icon_to_load_copy (IconToLoad *icon)
-{
-	IconToLoad *retval;
-
-	if (!icon)
-		return NULL;
-
-	retval = g_new0 (IconToLoad, 1);
-
-	retval->pixmap         = g_object_ref (icon->pixmap);
-	if (icon->gicon)
-		retval->gicon  = g_object_ref (icon->gicon);
-	else
-		retval->gicon  = NULL;
-	retval->image          = g_strdup (icon->image);
-	retval->fallback_image = g_strdup (icon->fallback_image);
-	retval->stock_id       = icon->stock_id;
-	retval->icon_size      = icon->icon_size;
-
-	return retval;
-}
-
-static void
-remove_pixmap_from_loaded (gpointer data, GObject *where_the_object_was)
-{
-	char *key = data;
-
-	if (loaded_icons != NULL)
-		g_hash_table_remove (loaded_icons, key);
-
-	g_free (key);
-}
-
-GdkPixbuf *
-panel_make_menu_icon (GtkIconTheme *icon_theme,
-		      const char   *icon,
-		      const char   *fallback,
-		      int           size,
-		      gboolean     *long_operation)
-{
-	GdkPixbuf *pb;
-	char *file, *key;
-	gboolean loaded;
-
-	g_return_val_if_fail (size > 0, NULL);
-
-	file = NULL;
-	if (icon != NULL)
-		file = panel_find_icon (icon_theme, icon, size);
-	if (file == NULL && fallback != NULL)
-		file = panel_find_icon (icon_theme, fallback, size);
-
-	if (file == NULL)
-		return NULL;
-
-	if (long_operation != NULL)
-		*long_operation = TRUE;
-
-	pb = NULL;
-
-	loaded = FALSE;
-
-	key = g_strdup_printf ("%d:%s", size, file);
-
-	if (loaded_icons != NULL &&
-	    (pb = g_hash_table_lookup (loaded_icons, key)) != NULL) {
-		if (pb != NULL)
-			g_object_ref (G_OBJECT (pb));
-	}
-
-	if (pb == NULL) {
-		pb = gdk_pixbuf_new_from_file (file, NULL);
-		if (pb) {
-			gint width, height;
-
-			width = gdk_pixbuf_get_width (pb);
-			height = gdk_pixbuf_get_height (pb);
-
-			/* if we want 24 and we get 22, do nothing;
-			 * else scale */
-			if (!(size - 2 <= width && width <= size &&
-                              size - 2 <= height && height <= size)) {
-				GdkPixbuf *tmp;
-
-				tmp = gdk_pixbuf_scale_simple (pb, size, size,
-							       GDK_INTERP_BILINEAR);
-
-				g_object_unref (pb);
-				pb = tmp;
-			}
-		}
-
-		/* add icon to the hash table so we don't load it again */
-		loaded = TRUE;
-	}
-
-	if (pb == NULL) {
-		g_free (file);
-		g_free (key);
-		return NULL;
-	}
-
-	if (loaded &&
-	    (gdk_pixbuf_get_width (pb) != size &&
-	     gdk_pixbuf_get_height (pb) != size)) {
-		GdkPixbuf *pb2;
-		int        dest_width;
-		int        dest_height;
-		int        width;
-		int        height;
-
-		width  = gdk_pixbuf_get_width (pb);
-		height = gdk_pixbuf_get_height (pb);
-
-		if (height > width) {
-			dest_width  = (size * width) / height;
-			dest_height = size;
-		} else {
-			dest_width  = size;
-			dest_height = (size * height) / width;
-		}
-
-		pb2 = gdk_pixbuf_scale_simple (pb, dest_width, dest_height,
-					       GDK_INTERP_BILINEAR);
-		g_object_unref (G_OBJECT (pb));
-		pb = pb2;
-	}
-
-	if (loaded) {
-		if (loaded_icons == NULL)
-			loaded_icons = g_hash_table_new_full
-				(g_str_hash, g_str_equal,
-				 (GDestroyNotify) g_free,
-				 (GDestroyNotify) g_object_unref);
-		g_hash_table_replace (loaded_icons,
-				      g_strdup (key),
-				      g_object_ref (G_OBJECT (pb)));
-		g_object_weak_ref (G_OBJECT (pb),
-				   (GWeakNotify) remove_pixmap_from_loaded,
-				   g_strdup (key));
-	} else {
-		/* we didn't load from disk */
-		if (long_operation != NULL)
-			*long_operation = FALSE;
-	}
-
-	g_free (file);
-	g_free (key);
-
-	return pb;
-}
-
-static void
-menu_item_style_set (GtkImage *image,
-		     gpointer  data)
-{
-	GtkWidget   *widget;
-	GdkPixbuf   *pixbuf;
-	GtkIconSize  icon_size = (GtkIconSize) GPOINTER_TO_INT (data);
-	int          icon_height;
-	gboolean     is_mapped;
-
-	if (!gtk_icon_size_lookup (icon_size, NULL, &icon_height))
-		return;
-
-	pixbuf = gtk_image_get_pixbuf (image);
-	if (!pixbuf)
-		return;
-
-	if (gdk_pixbuf_get_height (pixbuf) == icon_height)
-		return;
-
-	widget = GTK_WIDGET (image);
-
-	is_mapped = gtk_widget_get_mapped (widget);
-	if (is_mapped)
-		gtk_widget_unmap (widget);
-
-	gtk_image_set_from_pixbuf (image, NULL);
-
-	if (is_mapped)
-		gtk_widget_map (widget);
-}
-
-static void
-do_icons_to_add (void)
-{
-	while (icons_to_add) {
-		IconToAdd *icon_to_add = icons_to_add->data;
-
-		icons_to_add = g_list_delete_link (icons_to_add, icons_to_add);
-
-		if (icon_to_add->stock_id) {
-			gtk_image_set_from_stock (
-				GTK_IMAGE (icon_to_add->image),
-				icon_to_add->stock_id,
-				icon_to_add->icon_size);
-		} else if (icon_to_add->gicon) {
-			gtk_image_set_from_gicon (
-				GTK_IMAGE (icon_to_add->image),
-				icon_to_add->gicon,
-				icon_to_add->icon_size);
-		} else {
-			g_assert (icon_to_add->pixbuf);
-
-			gtk_image_set_from_pixbuf (
-				GTK_IMAGE (icon_to_add->image),
-				icon_to_add->pixbuf);
-
-			g_signal_connect (icon_to_add->image, "style-set",
-					  G_CALLBACK (menu_item_style_set),
-					  GINT_TO_POINTER (icon_to_add->icon_size));
-
-			g_object_unref (icon_to_add->pixbuf);
-		}
-
-		if (icon_to_add->gicon)
-			g_object_unref (icon_to_add->gicon);
-		g_object_unref (icon_to_add->image);
-		g_free (icon_to_add);
-	}
-}
-
-static gboolean
-load_icons_handler (gpointer data)
-{
-	IconToLoad *icon;
-	gboolean    long_operation = FALSE;
-
-load_icons_handler_again:
-
-	if (!icons_to_load) {
-		load_icons_id = 0;
-		do_icons_to_add ();
-
-		return FALSE;
-	}
-
-	icon = icons_to_load->data;
-	icons_to_load->data = NULL;
-	/* pop */
-	icons_to_load = g_list_delete_link (icons_to_load, icons_to_load);
-
-	/* if not visible anymore, just ignore */
-	if ( ! gtk_widget_get_visible (icon->pixmap)) {
-		icon_to_load_free (icon);
-		/* we didn't do anything long/hard, so just do this again,
-		 * this is fun, don't go back to main loop */
-		goto load_icons_handler_again;
-	}
-
-	if (icon->stock_id || icon->gicon) {
-		IconToAdd *icon_to_add;
-
-		icon_to_add            = g_new (IconToAdd, 1);
-		icon_to_add->image     = g_object_ref (icon->pixmap);
-		icon_to_add->stock_id  = icon->stock_id;
-		icon_to_add->pixbuf    = NULL;
-		icon_to_add->icon_size = icon->icon_size;
-		if (icon->gicon)
-			icon_to_add->gicon = g_object_ref (icon->gicon);
-		else
-			icon_to_add->gicon = NULL;
-
-		icons_to_add = g_list_prepend (icons_to_add, icon_to_add);
-	} else {
-		IconToAdd *icon_to_add;
-		GdkPixbuf *pb;
-		int        icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
-
-		gtk_icon_size_lookup (icon->icon_size, NULL, &icon_height);
-
-		pb = panel_make_menu_icon (icon->icon_theme,
-					   icon->image,
-					   icon->fallback_image,
-					   icon_height,
-					   &long_operation);
-		if (!pb) {
-			icon_to_load_free (icon);
-			if (long_operation)
-				/* this may have been a long operation so jump back to
-				 * the main loop for a while */
-				return TRUE;
-			else
-				/* we didn't do anything long/hard, so just do this again,
-				 * this is fun, don't go back to main loop */
-				goto load_icons_handler_again;
-		}
-
-		icon_to_add            = g_new (IconToAdd, 1);
-		icon_to_add->image     = g_object_ref (icon->pixmap);
-		icon_to_add->stock_id  = NULL;
-		icon_to_add->gicon     = NULL;
-		icon_to_add->pixbuf    = pb;
-		icon_to_add->icon_size = icon->icon_size;
-
-		icons_to_add = g_list_prepend (icons_to_add, icon_to_add);
-	}
-
-	icon_to_load_free (icon);
-
-	if (!long_operation)
-		/* we didn't do anything long/hard, so just do this again,
-		 * this is fun, don't go back to main loop */
-		goto load_icons_handler_again;
-
-	/* if still more we'll come back */
-	return TRUE;
 }
 
 static void
@@ -1128,38 +736,6 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 	g_free (uri_list);
 }
 
-static void
-#if GTK_CHECK_VERSION (3, 0, 0)
-image_menuitem_set_size_request (GtkWidget *menuitem,
-								 GtkIconSize icon_size)
-#else
-image_menuitem_size_request (GtkWidget      *menuitem,
-			     GtkRequisition *requisition,
-			     gpointer        data)
-#endif
-{
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	GtkIconSize icon_size = (GtkIconSize) GPOINTER_TO_INT (data);
-#endif
-	int         icon_height;
-	int         req_height;
-
-	if (!gtk_icon_size_lookup (icon_size, NULL, &icon_height))
-		return;
-
-	/* If we don't have a pixmap for this menuitem
-	 * at least make sure its the same height as
-	 * the rest.
-	 * This is a bit ugly, since we should keep this in sync with what's in
-	 * gtk_menu_item_size_request()
-	 */
-	req_height = icon_height;
-	req_height += (gtk_container_get_border_width (GTK_CONTAINER (menuitem)) +
-		       (gtk_widget_get_style (menuitem))->ythickness) * 2;
-
-	gtk_widget_set_size_request (menuitem, -1, req_height);
-}
-
 static char *
 menu_escape_underscores_and_prepend (const char *text)
 {
@@ -1222,21 +798,10 @@ setup_menuitem (GtkWidget   *menuitem,
 	gtk_container_add (GTK_CONTAINER (menuitem), label);
 
 	if (image) {
-		g_object_set_data_full (G_OBJECT (menuitem),
-					"Panel:Image",
-					g_object_ref (image),
-					(GDestroyNotify) g_object_unref);
 		gtk_widget_show (image);
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 					       image);
-	} else if (icon_size != GTK_ICON_SIZE_INVALID)
-#if GTK_CHECK_VERSION (3, 0, 0)
-		image_menuitem_set_size_request (menuitem, icon_size);
-#else
-		g_signal_connect (menuitem, "size_request",
-				  G_CALLBACK (image_menuitem_size_request),
-				  GINT_TO_POINTER (icon_size));
-#endif
+	}
 
 	gtk_widget_show (menuitem);
 }
@@ -1850,45 +1415,6 @@ GtkWidget* create_main_menu(PanelWidget* panel)
 	return main_menu;
 }
 
-static GList *
-find_in_load_list (GtkWidget *image)
-{
-	GList *li;
-	for (li = icons_to_load; li != NULL; li = li->next) {
-		IconToLoad *icon = li->data;
-		if (icon->pixmap == image)
-			return li;
-	}
-	return NULL;
-}
-
-static void
-image_menu_shown (GtkWidget *image, gpointer data)
-{
-	IconToLoad *new_icon;
-	IconToLoad *icon;
-
-	icon = (IconToLoad *) data;
-
-	/* if we've already handled this */
-	if (gtk_image_get_storage_type (GTK_IMAGE (image)) != GTK_IMAGE_EMPTY)
-		return;
-
-	if (find_in_load_list (image) == NULL) {
-		new_icon = icon_to_load_copy (icon);
-		new_icon->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (image));
-		icons_to_load = g_list_append (icons_to_load, new_icon);
-	}
-	if (load_icons_id == 0)
-		load_icons_id = g_idle_add (load_icons_handler, NULL);
-}
-
-static void
-image_menu_destroy (GtkWidget *image, gpointer data)
-{
-	image_menu_items = g_slist_remove (image_menu_items, image);
-}
-
 static void
 panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 				GtkIconSize  icon_size,
@@ -1897,47 +1423,32 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 				const char  *image_filename,
 				const char  *fallback_image_filename)
 {
-	IconToLoad *icon;
 	GtkWidget *image;
 	int        icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
-
-	icon = g_new (IconToLoad, 1);
 
 	gtk_icon_size_lookup (icon_size, NULL, &icon_height);
 
 	image = gtk_image_new ();
-	gtk_widget_set_size_request (image, icon_height, icon_height);
+	g_object_set (image, "icon-size", icon_size, NULL);
+	gtk_image_set_pixel_size (GTK_IMAGE(image), icon_height);
 
-	/* this takes over the floating ref */
-	icon->pixmap = g_object_ref_sink (G_OBJECT (image));
+	GIcon *icon = NULL;
 
-	icon->stock_id       = stock_id;
-	if (gicon)
-		icon->gicon  = g_object_ref (gicon);
-	else
-		icon->gicon  = NULL;
-	icon->image          = g_strdup (image_filename);
-	icon->fallback_image = g_strdup (fallback_image_filename);
-	icon->icon_size      = icon_size;
+	if (gicon != NULL) {
+		icon = g_object_ref (gicon);
+	} else if (stock_id != NULL ) {
+		icon = g_themed_icon_new (stock_id);
+	} else if (image_filename != NULL) {
+		icon = panel_gicon_from_icon_name (image_filename);
+	}
+
+	gtk_image_set_from_gicon (GTK_IMAGE(image), icon, icon_size);
+	g_object_unref (icon);
 
 	gtk_widget_show (image);
 
-	g_object_set_data_full (G_OBJECT (image_menu_item),
-				"Panel:Image",
-				g_object_ref (image),
-				(GDestroyNotify) g_object_unref);
-
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (image_menu_item),
 				       image);
-
-	g_signal_connect_data (image, "map",
-			       G_CALLBACK (image_menu_shown), icon,
-			       (GClosureNotify) icon_to_load_free, 0);
-
-	g_signal_connect (image, "destroy",
-			  G_CALLBACK (image_menu_destroy), NULL);
-
-	image_menu_items = g_slist_prepend (image_menu_items, image);
 }
 
 static gboolean

@@ -123,6 +123,7 @@ main (int argc, char **argv)
 	/* open the run dialog and exit */
 	if (run_dialog == TRUE)
 	{
+		panel_init_stock_icons_and_items ();
 		panel_multiscreen_init ();
 		panel_global_config_load ();
 		panel_lockdown_init ();

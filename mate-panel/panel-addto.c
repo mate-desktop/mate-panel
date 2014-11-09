@@ -50,6 +50,7 @@
 #include "panel-addto.h"
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
+#include "panel-stock-icons.h"
 
 typedef struct {
 	PanelWidget *panel_widget;
@@ -183,7 +184,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 };
 
 enum {
-	COLUMN_ICON,
+	COLUMN_ICON_NAME,
 	COLUMN_TEXT,
 	COLUMN_DATA,
 	COLUMN_SEARCH,
@@ -266,18 +267,6 @@ panel_addto_make_text (const char *name,
 	return result;
 }
 
-#define ICON_SIZE 32
-
-static GdkPixbuf *
-panel_addto_make_pixbuf (const char *filename)
-{
-	//FIXME: size shouldn't be fixed but should depend on the font size
-	return panel_load_icon (gtk_icon_theme_get_default (),
-				filename,
-				ICON_SIZE, ICON_SIZE, ICON_SIZE,
-				NULL);
-}
-
 static void
 panel_addto_drag_data_get_cb (GtkWidget        *widget,
 			      GdkDragContext   *context,
@@ -301,7 +290,7 @@ panel_addto_drag_begin_cb (GtkWidget      *widget,
 	GtkTreePath  *path;
 	GtkTreeIter   iter;
 	GtkTreeIter   filter_iter;
-	GdkPixbuf    *pixbuf;
+	gchar         *icon_name;
 
 	filter_model = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
 
@@ -313,11 +302,11 @@ panel_addto_drag_begin_cb (GtkWidget      *widget,
 
 	child_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filter_model));
 	gtk_tree_model_get (child_model, &iter,
-	                    COLUMN_ICON, &pixbuf,
+	                    COLUMN_ICON_NAME, &icon_name,
 	                    -1);
 
-	gtk_drag_set_icon_pixbuf (context, pixbuf, 0, 0);
-	g_object_unref (pixbuf);
+	gtk_drag_set_icon_name (context, icon_name, 0, 0);
+	g_free (icon_name);
 }
 
 static void
@@ -426,38 +415,28 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 			 PanelAddtoItemInfo *applet)
 {
 	char *text;
-	GdkPixbuf *pixbuf;
 	GtkTreeIter iter;
 
 	if (applet == NULL) {
 		gtk_list_store_append (model, &iter);
 		gtk_list_store_set (model, &iter,
-				    COLUMN_ICON, NULL,
+				    COLUMN_ICON_NAME, NULL,
 				    COLUMN_TEXT, NULL,
 				    COLUMN_DATA, NULL,
 				    COLUMN_SEARCH, NULL,
 				    -1);
 	} else {
-		pixbuf = NULL;
-
-		if (applet->icon != NULL) {
-			pixbuf = panel_addto_make_pixbuf (applet->icon);
-		}
-
 		gtk_list_store_append (model, &iter);
 
 		text = panel_addto_make_text (applet->name,
 					      applet->description);
 
 		gtk_list_store_set (model, &iter,
-				    COLUMN_ICON, pixbuf,
+				    COLUMN_ICON_NAME, applet->icon,
 				    COLUMN_TEXT, text,
 				    COLUMN_DATA, applet,
 				    COLUMN_SEARCH, applet->name,
 				    -1);
-
-		if (pixbuf)
-			g_object_unref (pixbuf);
 
 		g_free (text);
 	}
@@ -504,7 +483,7 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 					    (GCompareFunc) panel_addto_applet_info_sort_func);
 
 	model = gtk_list_store_new (NUMBER_COLUMNS,
-				    GDK_TYPE_PIXBUF,
+				    G_TYPE_STRING,
 				    G_TYPE_STRING,
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
@@ -652,7 +631,6 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 	PanelAddtoAppList *data;
 	GtkTreeIter        iter;
 	char              *text;
-	GdkPixbuf         *pixbuf;
 	GSList            *app;
 
 	for (app = app_list; app != NULL; app = app->next) {
@@ -661,16 +639,12 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 
 		text = panel_addto_make_text (data->item_info.name,
 					      data->item_info.description);
-		pixbuf = panel_addto_make_pixbuf (data->item_info.icon);
 		gtk_tree_store_set (store, &iter,
-				    COLUMN_ICON, pixbuf,
+				    COLUMN_ICON_NAME, data->item_info.icon,
 				    COLUMN_TEXT, text,
 				    COLUMN_DATA, &(data->item_info),
 				    COLUMN_SEARCH, data->item_info.name,
 				    -1);
-
-		if (pixbuf)
-			g_object_unref (pixbuf);
 
 		g_free (text);
 
@@ -690,7 +664,7 @@ static void panel_addto_make_application_model(PanelAddtoDialog* dialog)
 	if (dialog->filter_application_model != NULL)
 		return;
 
-	store = gtk_tree_store_new(NUMBER_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_STRING);
+	store = gtk_tree_store_new(NUMBER_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_STRING);
 
 	tree = matemenu_tree_lookup("mate-applications.menu", MATEMENU_TREE_FLAGS_NONE);
 	matemenu_tree_set_sort_key(tree, MATEMENU_TREE_SORT_DISPLAY_NAME);
@@ -713,7 +687,7 @@ static void panel_addto_make_application_model(PanelAddtoDialog* dialog)
 		GtkTreeIter iter;
 
 		gtk_tree_store_append(store, &iter, NULL);
-		gtk_tree_store_set(store, &iter, COLUMN_ICON, NULL, COLUMN_TEXT, NULL, COLUMN_DATA, NULL, COLUMN_SEARCH, NULL, -1);
+		gtk_tree_store_set(store, &iter, COLUMN_ICON_NAME, NULL, COLUMN_TEXT, NULL, COLUMN_DATA, NULL, COLUMN_SEARCH, NULL, -1);
 
 		panel_addto_make_application_list(&dialog->settings_list, root, "mate-settings.menu");
 		panel_addto_populate_application_model(store, NULL, dialog->settings_list);
@@ -1332,12 +1306,13 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	renderer = g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
 				 "xpad", 4,
 				 "ypad", 4,
+				 "stock-size", panel_add_to_icon_get_size(),
 				 NULL);
 
 	gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (dialog->tree_view),
 						     -1, NULL,
 						     renderer,
-						     "pixbuf", COLUMN_ICON,
+						     "icon_name", COLUMN_ICON_NAME,
 						     NULL);
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (renderer, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
