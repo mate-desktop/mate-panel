@@ -259,6 +259,11 @@ panel_uri_exists (const char *uri)
 GIcon *
 panel_gicon_from_icon_name (const char *icon_name) {
 	GIcon *icon = NULL;
+
+	if (icon_name == NULL) {
+		return NULL;
+	}
+
 	if (g_path_is_absolute(icon_name)) {
 		if (!g_file_test (icon_name, G_FILE_TEST_EXISTS)) {
 			gchar *name = g_path_get_basename (icon_name);
