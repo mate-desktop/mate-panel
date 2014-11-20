@@ -166,7 +166,7 @@ panel_g_list_resort_item (GList        *list,
 
 	dl = g_list_find (list, data);
 
-	if (dl != NULL)
+	if (dl == NULL)
 		return list;
 
 	while (dl->next &&
