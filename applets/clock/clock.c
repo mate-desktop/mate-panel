@@ -2483,28 +2483,16 @@ loc_to_string (ClockLocation *loc)
 static void
 save_cities_store (ClockData *cd)
 {
-        ClockLocation *loc;
-        GList *node = cd->locations;
-        gint len = g_list_length(cd->locations);
-        gchar **array[len + 1];
-        gchar **array_reverse[len + 1];
-        gint i = 0;
+        GList *locs = NULL;
+        GList *node;
 
-        while (node) {
-                loc = CLOCK_LOCATION (node->data);
-                array[i] = loc_to_string (loc);
-                i++;
-                node = node->next;
+        for (node = cd->locations; node != NULL; node = node->next) {
+                locs = g_list_prepend (locs, loc_to_string (CLOCK_LOCATION (node->data)));
         }
-        array[i] = NULL;
 
-        for (i = 0; i <= (len - 1); i++) {
-                array_reverse [len - i - 1] = g_strdup (array [i]);
-        }
-        array_reverse[i] = NULL;
-
-        g_settings_set_strv (cd->settings, KEY_CITIES, (const gchar **) array_reverse);
-        /* FIXME free arrays */
+        locs = g_list_reverse (locs);
+        mate_panel_applet_settings_set_glist (cd->settings, KEY_CITIES, locs);
+        g_list_free_full (locs, g_free);
 }
 
 static void
