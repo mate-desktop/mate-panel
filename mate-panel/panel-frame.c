@@ -75,8 +75,8 @@ panel_frame_size_request (GtkWidget      *widget,
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_frame_get_preferred_width (GtkWidget *widget,
-								    gint *minimum_width,
-								    gint *natural_width)
+				 gint *minimum_width,
+				 gint *natural_width)
 {
 	GtkRequisition req;
 	panel_frame_size_request (widget, &req);
@@ -85,8 +85,8 @@ panel_frame_get_preferred_width (GtkWidget *widget,
 
 static void
 panel_frame_get_preferred_height (GtkWidget *widget,
-									 gint *minimum_height,
-									 gint *natural_height)
+				  gint *minimum_height,
+				  gint *natural_height)
 {
 	GtkRequisition req;
 	panel_frame_size_request (widget, &req);
