@@ -686,14 +686,39 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
     {
+#if GTK_CHECK_VERSION (3, 0, 0)
+      gboolean status;
+      GdkDisplay *display;
+      GdkDevice *pointer;
+      GdkDeviceManager *device_manager;
+#endif
       GdkWindow *window = gtk_widget_get_window (xgrab_shell);
       GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+      display = gdk_window_get_display (window);
+      device_manager = gdk_display_get_device_manager (display);
+      pointer = gdk_device_manager_get_client_pointer (device_manager);
+
+      /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
+         or GDK_OWNERSHIP_APPLICATION */
+      status = gdk_device_grab (pointer, window,
+                                GDK_OWNERSHIP_WINDOW, TRUE,
+                                GDK_BUTTON_PRESS_MASK
+                                | GDK_BUTTON_RELEASE_MASK
+                                | GDK_ENTER_NOTIFY_MASK
+                                | GDK_LEAVE_NOTIFY_MASK
+                                | GDK_POINTER_MOTION_MASK,
+                                cursor, GDK_CURRENT_TIME);
+
+      if (!status)
+#else
       if ((gdk_pointer_grab (window, TRUE,
 			     GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
 			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
 			     GDK_POINTER_MOTION_MASK,
 			     NULL, cursor, GDK_CURRENT_TIME) == 0))
+#endif
 	{
 	  if (gdk_keyboard_grab (window, TRUE,
 				 GDK_CURRENT_TIME) == 0)
@@ -705,13 +730,17 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	    }
 	  else
 	    {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	      gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+	    }
+	}
+
+      g_object_unref (cursor);
+#else
 	      gdk_pointer_ungrab (GDK_CURRENT_TIME);
 	    }
 	}
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-      g_object_unref (cursor);
-#else
       gdk_cursor_unref (cursor);
 #endif
     }
