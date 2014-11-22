@@ -472,10 +472,10 @@ button_event_in_rect (GdkEventButton *event,
 
 static gboolean
 mate_panel_applet_frame_button_changed (GtkWidget      *widget,
-				   GdkEventButton *event)
+					GdkEventButton *event)
 {
 	MatePanelAppletFrame *frame;
-	gboolean          handled = FALSE;
+	gboolean              handled = FALSE;
 
 	frame = MATE_PANEL_APPLET_FRAME (widget);
 
