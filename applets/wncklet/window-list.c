@@ -342,16 +342,16 @@ static void applet_size_request(GtkWidget* widget, GtkRequisition* requisition, 
 {
 	int len;
 	const int* size_hints;
-#if !GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 0, 0)
+	size_hints = wnck_tasklist_get_size_hint_list (WNCK_TASKLIST (tasklist->tasklist), &len);
+#else
 	GtkRequisition child_req;
-#endif
 	WnckTasklist* wncktl = WNCK_TASKLIST(tasklist->tasklist);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_child_requisition(tasklist->applet, &child_req);
-#endif
 
 	size_hints = wnck_tasklist_get_size_hint_list(wncktl, &len);
+#endif
 	g_assert(len % 2 == 0);
 
 	mate_panel_applet_set_size_hints(MATE_PANEL_APPLET(tasklist->applet), size_hints, len, 0);
