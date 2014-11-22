@@ -2032,7 +2032,11 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 					   APPLET_EVENT_MASK, NULL,
 					   fleur_cursor, time_);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+		g_object_unref (fleur_cursor);
+#else
 		gdk_cursor_unref (fleur_cursor);
+#endif
 		gdk_flush ();
 
 		if (status != GDK_GRAB_SUCCESS) {

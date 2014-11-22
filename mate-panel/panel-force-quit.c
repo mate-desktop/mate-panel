@@ -302,7 +302,11 @@ panel_force_quit (GdkScreen *screen,
 	cross = gdk_cursor_new (GDK_CROSS);
 	status = gdk_pointer_grab (root, FALSE, GDK_BUTTON_PRESS_MASK,
 				   NULL, cross, time);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	g_object_unref (cross);
+#else
 	gdk_cursor_unref (cross);
+#endif
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Pointer grab failed\n");
 		remove_popup (popup);

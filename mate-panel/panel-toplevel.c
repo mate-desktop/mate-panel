@@ -497,7 +497,11 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	gdk_pointer_grab (window, FALSE,
 			  GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			  NULL, cursor, time_);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	g_object_unref (cursor);
+#else
 	gdk_cursor_unref (cursor);
+#endif
 
 	if (grab_keyboard)
 		gdk_keyboard_grab (window, FALSE, time_);
