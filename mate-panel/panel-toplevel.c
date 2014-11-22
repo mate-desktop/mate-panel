@@ -1296,9 +1296,17 @@ static gboolean panel_toplevel_contains_pointer(PanelToplevel* toplevel)
 	GdkDisplay *display;
 	GdkScreen  *screen;
 	GtkWidget  *widget;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDeviceManager *device_manager;
+	GdkDevice *pointer;
+#endif
 	int         x, y;
 
 	display = gdk_display_get_default ();
+#if GTK_CHECK_VERSION (3, 0, 0)
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+#endif
 	widget  = GTK_WIDGET (toplevel);
 
 	if (!gtk_widget_get_realized (widget))
@@ -1306,7 +1314,11 @@ static gboolean panel_toplevel_contains_pointer(PanelToplevel* toplevel)
 
 	screen = NULL;
 	x = y = -1;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gdk_device_get_position (pointer, &screen, &x, &y);
+#else
 	gdk_display_get_pointer (display, &screen, &x, &y, NULL);
+#endif
 
 	if (screen != gtk_window_get_screen (GTK_WINDOW (toplevel)))
 		return FALSE;
