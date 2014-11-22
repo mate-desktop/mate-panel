@@ -335,41 +335,51 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-static gboolean panel_menu_bar_on_draw(GtkWidget* widget, cairo_t* cr, gpointer data)
+static gboolean panel_menu_bar_on_draw (GtkWidget* widget, cairo_t* cr, gpointer data)
+{
+	PanelMenuBar* menubar = data;
+
+	if (gtk_widget_has_focus(GTK_WIDGET(menubar))) {
+		GtkStyleContext *context;
+
+		context = gtk_widget_get_style_context (widget);
+		gtk_style_context_save (context);
+		gtk_style_context_set_state (context, gtk_widget_get_state_flags (widget));
+
+		cairo_save (cr);
+		gtk_render_focus (context, cr,
+				  0, 0,
+				  gtk_widget_get_allocated_width (widget),
+				  gtk_widget_get_allocated_height (widget));
+		cairo_restore (cr);
+
+		gtk_style_context_restore (context);
+        }
+	return FALSE;
+}
+
 #else
-static gboolean panel_menu_bar_on_expose(GtkWidget* widget, GdkEventExpose* event, gpointer data)
-#endif
+static gboolean panel_menu_bar_on_expose (GtkWidget* widget, GdkEventExpose* event, gpointer data)
 {
 	PanelMenuBar* menubar = data;
 
 	if (gtk_widget_has_focus(GTK_WIDGET(menubar)))
 	{
 		gtk_paint_focus(gtk_widget_get_style(widget),
-#if GTK_CHECK_VERSION (3, 0, 0)
-						cr,
-#else
-						gtk_widget_get_window(widget),
-#endif
-						gtk_widget_get_state(GTK_WIDGET(menubar)),
-#if !GTK_CHECK_VERSION (3, 0, 0)
-						NULL,
-#endif
-						widget,
-						"menubar-applet",
-						0,
-						0,
-#if GTK_CHECK_VERSION (3, 0, 0)
-						gtk_widget_get_allocated_width (widget),
-						gtk_widget_get_allocated_height (widget));
-#else
-						-1,
-						-1);
-#endif
+				gtk_widget_get_window(widget),
+				gtk_widget_get_state(GTK_WIDGET(menubar)),
+				NULL,
+				widget,
+				"menubar-applet",
+				0,
+				0,
+				-1,
+				-1);
 	}
 
 	return FALSE;
 }
-
+#endif
 static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
 {
 	PanelMenuBar* menubar;
