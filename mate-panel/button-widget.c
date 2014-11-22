@@ -240,6 +240,17 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 							(GtkIconSize) -1, NULL);
 			g_free (error);
 		}
+
+		/* We need to add a child to the button to get the right allocation of the pixbuf.
+		 * When the button is created without a pixbuf, get_preferred_width/height are
+		 * called the first time when the widget is allocated and 0x0 size is cached by
+		 * gtksizerequest. Since the widget doesn't change its size when a pixbuf is set,
+		 * gtk_widget_queue_resize() always uses the cached values instead of calling
+		 * get_preferred_width_height() again. So the actual size, based on pixbuf size,
+		 * is never used. We are overriding the draw() method, so having a child doesn't
+		 * affect the widget rendering anyway.
+		 */
+		gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_pixbuf (button->priv->pixbuf));
 	}
 
 	button->priv->pixbuf_hc = make_hc_pixbuf (button->priv->pixbuf);
