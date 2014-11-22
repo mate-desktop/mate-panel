@@ -476,6 +476,11 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 {
 	MatePanelAppletFrame *frame;
 	gboolean              handled = FALSE;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDisplay *display;
+	GdkDevice *pointer;
+	GdkDeviceManager *device_manager;
+#endif
 
 	frame = MATE_PANEL_APPLET_FRAME (widget);
 
@@ -504,6 +509,12 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 	case 3:
 		if (event->type == GDK_BUTTON_PRESS ||
 		    event->type == GDK_2BUTTON_PRESS) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+			display = gtk_widget_get_display (widget);
+			device_manager = gdk_display_get_device_manager (display);
+			pointer = gdk_device_manager_get_client_pointer (device_manager);
+			gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+#endif
 			gdk_pointer_ungrab (GDK_CURRENT_TIME);
 
 			MATE_PANEL_APPLET_FRAME_GET_CLASS (frame)->popup_menu (frame,

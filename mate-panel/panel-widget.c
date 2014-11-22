@@ -2025,16 +2025,28 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 	if (window) {
 		GdkGrabStatus  status;
 		GdkCursor     *fleur_cursor;
+#if GTK_CHECK_VERSION (3, 0, 0)
+		GdkDisplay *display;
+		GdkDevice *pointer;
+		GdkDeviceManager *device_manager;
 
+		fleur_cursor = gdk_cursor_new (GDK_FLEUR);
+
+		display = gdk_window_get_display (window);
+		device_manager = gdk_display_get_device_manager (display);
+		pointer = gdk_device_manager_get_client_pointer (device_manager);
+		status = gdk_device_grab (pointer, window,
+					  GDK_OWNERSHIP_NONE, FALSE,
+					  APPLET_EVENT_MASK,
+					  fleur_cursor, time_);
+
+		g_object_unref (fleur_cursor);
+#else
 		fleur_cursor = gdk_cursor_new (GDK_FLEUR);
 
 		status = gdk_pointer_grab (window, FALSE,
 					   APPLET_EVENT_MASK, NULL,
 					   fleur_cursor, time_);
-
-#if GTK_CHECK_VERSION (3, 0, 0)
-		g_object_unref (fleur_cursor);
-#else
 		gdk_cursor_unref (fleur_cursor);
 #endif
 		gdk_flush ();
@@ -2050,11 +2062,25 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 void
 panel_widget_applet_drag_end (PanelWidget *panel)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDisplay *display;
+	GdkDevice *pointer;
+	GdkDeviceManager *device_manager;
+#endif
+
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 
 	if (panel->currently_dragged_applet == NULL)
 		return;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	display = gtk_widget_get_display (GTK_WIDGET (panel));
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+
+	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+#else
 	gdk_pointer_ungrab (GDK_CURRENT_TIME);
+#endif
 	gtk_grab_remove (panel->currently_dragged_applet->applet);
 	panel_widget_applet_drag_end_no_grab (panel);
 	panel_toplevel_pop_autohide_disabler (panel->toplevel);
