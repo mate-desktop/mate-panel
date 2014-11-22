@@ -155,6 +155,21 @@ static gboolean window_menu_on_expose(GtkWidget* widget, GdkEventExpose* event, 
 
 static inline void force_no_focus_padding(GtkWidget* widget)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkCssProvider *provider;
+
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+					 "#window-menu-applet-button {\n"
+					 " border-width: 0px;\n"
+					 " -GtkWidget-focus-line-width: 0px;\n"
+					 " -GtkWidget-focus-padding: 0px; }",
+					 -1, NULL);
+	gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+					GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref (provider);
+#else
 	gboolean first_time = TRUE;
 
 	if (first_time)
@@ -170,9 +185,32 @@ static inline void force_no_focus_padding(GtkWidget* widget)
 			"\n");
 		first_time = FALSE;
 	}
+#endif
 
 	gtk_widget_set_name(widget, "PanelApplet-window-menu-applet-button");
 }
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+static inline void
+force_no_shadow_and_padding (GtkWidget *widget)
+{
+        GtkCssProvider *provider;
+
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#window-menu-applet-selector {\n"
+                                         " border-width: 0px;\n"
+                                         " -GtkMenuBar-internal-padding: 0px;\n"
+                                         " -GtkMenuBar-shadow-type: none; }",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
+
+        gtk_widget_set_name (widget, "window-menu-applet-selector");
+}
+#endif
 
 static void window_menu_size_allocate(MatePanelApplet* applet, GtkAllocation* allocation, WindowMenu* window_menu)
 {
@@ -282,6 +320,9 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	g_object_unref(action_group);
 
 	window_menu->selector = wnck_selector_new();
+#if GTK_CHECK_VERSION (3, 0, 0)
+	force_no_shadow_and_padding (window_menu->selector);
+#endif
 	gtk_container_add(GTK_CONTAINER(window_menu->applet), window_menu->selector);
 
 	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(window_menu->applet), GTK_WIDGET(window_menu->selector));
