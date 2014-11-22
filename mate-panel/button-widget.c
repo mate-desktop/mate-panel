@@ -610,8 +610,8 @@ button_widget_size_request (GtkWidget      *widget,
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
 button_widget_get_preferred_width (GtkWidget *widget,
-								   gint *minimum_width,
-								   gint *natural_width)
+				   gint *minimum_width,
+				   gint *natural_width)
 {
 	GtkRequisition req;
 	button_widget_size_request (widget, &req);
@@ -620,8 +620,8 @@ button_widget_get_preferred_width (GtkWidget *widget,
 
 static void
 button_widget_get_preferred_height (GtkWidget *widget,
-									gint *minimum_height,
-									gint *natural_height)
+				    gint *minimum_height,
+				    gint *natural_height)
 {
 	GtkRequisition req;
 	button_widget_size_request (widget, &req);
