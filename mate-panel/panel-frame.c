@@ -35,6 +35,77 @@ enum {
 	PROP_EDGES
 };
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+panel_frame_get_preferred_width (GtkWidget *widget,
+				 gint *minimal_width,
+				 gint *natural_width)
+{
+	PanelFrame *frame = (PanelFrame *) widget;
+	GtkBin     *bin   = (GtkBin *) widget;
+	GtkStyle   *style;
+	GtkWidget  *child;
+	int         border_width;
+
+	style = gtk_widget_get_style (widget);
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
+	*minimal_width = 1;
+	*natural_width = 1;
+
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_get_preferred_width (child, minimal_width, natural_width);
+
+	*minimal_width += border_width;
+	*natural_width += border_width;
+
+	if (frame->edges & PANEL_EDGE_LEFT) {
+		*minimal_width += style->ythickness;
+		*natural_width += style->ythickness;
+	}
+	if (frame->edges & PANEL_EDGE_RIGHT) {
+		*minimal_width += style->ythickness;
+		*natural_width += style->ythickness;
+	}
+}
+
+static void
+panel_frame_get_preferred_height (GtkWidget *widget,
+				  gint *minimal_height,
+				  gint *natural_height)
+{
+	PanelFrame *frame = (PanelFrame *) widget;
+	GtkBin     *bin   = (GtkBin *) widget;
+	GtkStyle   *style;
+	GtkWidget  *child;
+	int         border_width;
+
+	style = gtk_widget_get_style (widget);
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
+	*minimal_height = 1;
+	*natural_height = 1;
+
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_get_preferred_height (child, minimal_height, natural_height);
+
+	*minimal_height += border_width;
+	*natural_height += border_width;
+
+
+	if (frame->edges & PANEL_EDGE_TOP) {
+		*minimal_height += style->xthickness;
+		*natural_height += style->xthickness;
+	}
+	if (frame->edges & PANEL_EDGE_BOTTOM) {
+		*minimal_height += style->xthickness;
+		*natural_height += style->xthickness;
+	}
+}
+
+#else
 static void
 panel_frame_size_request (GtkWidget      *widget,
 			  GtkRequisition *requisition)
@@ -53,11 +124,7 @@ panel_frame_size_request (GtkWidget      *widget,
 
 	child = gtk_bin_get_child (bin);
 	if (child && gtk_widget_get_visible (child))
-#if GTK_CHECK_VERSION (3, 0, 0)
-		gtk_widget_get_preferred_size (child, requisition, NULL);
-#else
 		gtk_widget_size_request (child, requisition);
-#endif
 
 	requisition->width  += border_width;
 	requisition->height += border_width;
@@ -70,27 +137,6 @@ panel_frame_size_request (GtkWidget      *widget,
 		requisition->width += style->ythickness;
 	if (frame->edges & PANEL_EDGE_RIGHT)
 		requisition->width += style->ythickness;
-}
-
-#if GTK_CHECK_VERSION (3, 0, 0)
-static void
-panel_frame_get_preferred_width (GtkWidget *widget,
-				 gint *minimum_width,
-				 gint *natural_width)
-{
-	GtkRequisition req;
-	panel_frame_size_request (widget, &req);
-	*minimum_width = *natural_width = req.width;
-}
-
-static void
-panel_frame_get_preferred_height (GtkWidget *widget,
-				  gint *minimum_height,
-				  gint *natural_height)
-{
-	GtkRequisition req;
-	panel_frame_size_request (widget, &req);
-	*minimum_height = *natural_height = req.height;
 }
 #endif
 

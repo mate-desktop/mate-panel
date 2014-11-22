@@ -321,7 +321,7 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
-clock_map_get_preferred_width (GtkWidget *widget,
+clock_map_get_preferred_width (GtkWidget *this,
                                 gint *minimum_width,
                                 gint *natural_width)
 {
@@ -329,7 +329,7 @@ clock_map_get_preferred_width (GtkWidget *widget,
 }
 
 static void
-clock_map_get_preferred_height (GtkWidget *widget,
+clock_map_get_preferred_height (GtkWidget *this,
                                  gint *minimum_height,
                                  gint *natural_height)
 {
