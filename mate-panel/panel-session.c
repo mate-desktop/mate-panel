@@ -28,9 +28,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
 #include <gdk/gdkx.h>
-#endif
 
 #include <libegg/eggsmclient.h>
 
