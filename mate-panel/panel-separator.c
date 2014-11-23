@@ -78,13 +78,23 @@ panel_separator_paint (GtkWidget    *widget,
 	cairo_save (cr);
 
 	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
+		int x;
+
+		x = (width - padding.left - padding.right) / 2 + padding.left;
+		x = MIN (x, width - padding.right);
+
 		gtk_render_line (context, cr,
-				 (width - padding.left) / 2, 0,
-				 (width - padding.left) / 2, height - 1);
+				 x, padding.top,
+				 x, height - padding.bottom);
 	} else {
+		int y;
+
+		y = (height - padding.top - padding.bottom) / 2 + padding.top;
+		y = MIN (y, height - padding.bottom);
+
 		gtk_render_line (context, cr,
-				 0, (height - padding.top) / 2,
-				 width - 1, (height - padding.top) / 2);
+				 padding.left, y,
+				 width - padding.right, y);
 	}
 	cairo_restore (cr);
 
