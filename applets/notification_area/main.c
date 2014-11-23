@@ -210,6 +210,21 @@ static void on_applet_realized(GtkWidget* widget, gpointer user_data)
 
 static inline void force_no_focus_padding(GtkWidget* widget)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkCssProvider *provider;
+
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+					 "#na-tray {\n"
+					 " -GtkWidget-focus-line-width: 0px;\n"
+					 " -GtkWidget-focus-padding: 0px; }",
+					 -1, NULL);
+
+	gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+					GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref (provider);
+#else
 	static gboolean first_time = TRUE;
 
 	if (first_time)
@@ -231,6 +246,8 @@ static inline void force_no_focus_padding(GtkWidget* widget)
 	 *
 	 * Issue #27
 	 */
+#endif
+
 	gtk_widget_set_name(widget, "PanelAppletNaTray");
 }
 
