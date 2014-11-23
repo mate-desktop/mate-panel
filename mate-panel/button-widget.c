@@ -235,9 +235,15 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 		if (error) {
 			//FIXME: this is not rendered at button->priv->size
 			button->priv->pixbuf =
+#if GTK_CHECK_VERSION (3, 0, 0)
+				gtk_widget_render_icon_pixbuf (GTK_WIDGET (button),
+							       GTK_STOCK_MISSING_IMAGE,
+							       (GtkIconSize) -1);
+#else
 				gtk_widget_render_icon (GTK_WIDGET (button),
 							GTK_STOCK_MISSING_IMAGE,
 							(GtkIconSize) -1, NULL);
+#endif
 			g_free (error);
 		}
 
