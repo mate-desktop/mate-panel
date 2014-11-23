@@ -49,69 +49,71 @@ panel_separator_paint (GtkWidget    *widget,
 		       GdkRectangle *area)
 #endif
 {
-	PanelSeparator *separator;
-	GtkStyle       *style;
+	PanelSeparator  *separator;
 #if GTK_CHECK_VERSION (3, 0, 0)
-	int             width;
-	int             height;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
+	int              width;
+	int              height;
 #else
-	GdkWindow      *window;
-	GtkAllocation   allocation;
+	GtkStyle        *style;
+	GdkWindow       *window;
+	GtkAllocation    allocation;
 #endif
 
 	separator = PANEL_SEPARATOR (widget);
 
-	style = gtk_widget_get_style (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)
+	state = gtk_widget_get_state_flags (widget);
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
+
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_get_padding (context, state, &padding);
+
+	gtk_style_context_save (context);
+	gtk_style_context_set_state (context, state);
+
+	cairo_save (cr);
+
+	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
+		gtk_render_line (context, cr,
+				 (width - padding.left) / 2, 0,
+				 (width - padding.left) / 2, height - 1);
+	} else {
+		gtk_render_line (context, cr,
+				 0, (height - padding.top) / 2,
+				 width - 1, (height - padding.top) / 2);
+	}
+	cairo_restore (cr);
+
+	gtk_style_context_restore (context);
+}
 #else
+	style = gtk_widget_get_style (widget);
 	window = gtk_widget_get_window (widget);
 	gtk_widget_get_allocation (widget, &allocation);
-#endif
 
 	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
 		gtk_paint_vline (style,
-#if GTK_CHECK_VERSION (3, 0, 0)
-				 cr,
-#else
 				 window,
-#endif
 				 gtk_widget_get_state (widget),
-#if !GTK_CHECK_VERSION (3, 0, 0)
-				 area,
-#endif
-				 widget, "separator",
+				 area, widget, "separator",
 				 style->xthickness,
-#if GTK_CHECK_VERSION (3, 0, 0)
-				 height - style->xthickness,
-				 (width - style->xthickness) / 2);
-#else
 				 allocation.height - style->xthickness,
 				 (allocation.width - style->xthickness) / 2);
-#endif
 	} else {
 		gtk_paint_hline (style,
-#if GTK_CHECK_VERSION (3, 0, 0)
-				 cr,
-#else
 				 window,
-#endif
 				 gtk_widget_get_state (widget),
-#if !GTK_CHECK_VERSION (3, 0, 0)
-				 area,
-#endif
-				 widget, "separator",
+				 area, widget, "separator",
 				 style->ythickness,
-#if GTK_CHECK_VERSION (3, 0, 0)
-				 width - style->ythickness,
-				 (height - style->ythickness) / 2);
-#else
 				 allocation.width - style->ythickness,
 				 (allocation.height  - style->ythickness) / 2);
-#endif
 	}
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean panel_separator_draw(GtkWidget* widget, cairo_t* cr)
