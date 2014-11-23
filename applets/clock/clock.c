@@ -1261,7 +1261,21 @@ static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
         static gboolean first_time = TRUE;
+#if GTK_CHECK_VERSION (3, 0, 0)
+        GtkCssProvider  *provider;
 
+        if (first_time) {
+                provider = gtk_css_provider_new ();
+                gtk_css_provider_load_from_data (provider,
+                                         "#clock-applet-button {\n"
+                                         " -GtkWidget-focus-line-width: 0px;\n"
+                                         " -GtkWidget-focus-padding: 0px; }",
+                                         -1, NULL);
+                gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+                g_object_unref (provider);
+#else
         if (first_time) {
                 gtk_rc_parse_string ("\n"
                                      "   style \"clock-applet-button-style\"\n"
@@ -1272,6 +1286,7 @@ force_no_focus_padding (GtkWidget *widget)
                                      "\n"
                                      "    widget \"*.clock-applet-button\" style \"clock-applet-button-style\"\n"
                                      "\n");
+#endif
                 first_time = FALSE;
         }
 
