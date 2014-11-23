@@ -169,7 +169,7 @@ static void update_icon(ShowDesktopData* sdd)
 		break;
 	}
 
-	icon_size = sdd->size - 2 * (focus_width + focus_pad) + thickness;
+	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
 #else
 	gtk_widget_style_get (sdd->button, "focus-line-width", &focus_width, "focus-padding", &focus_pad, NULL);
 
@@ -185,7 +185,7 @@ static void update_icon(ShowDesktopData* sdd)
 			break;
 	}
 
-	icon_size = sdd->size - 2 * (focus_width + focus_pad + thickness);
+	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
 #endif
 
 	if (icon_size < 22)
