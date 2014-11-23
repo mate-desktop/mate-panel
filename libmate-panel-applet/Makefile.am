@@ -121,9 +121,7 @@ MatePanelApplet_4_0_gir_INCLUDES = GObject-2.0 Gtk-$(GTK_API_VERSION) Gio-2.0
 MatePanelApplet_4_0_gir_CFLAGS = $(AM_CPPFLAGS) -I$(srcdir)
 MatePanelApplet_4_0_gir_LIBS = libmate-panel-applet-4.la
 MatePanelApplet_4_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
-# When requiring gobject-introspection 0.9.5, use this:
-#MatePanelApplet_4_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libmatepanelapplet-4.0
-MatePanelApplet_4_0_gir_SCANNERFLAGS = --strip-prefix=MatePanel --pkg-export=libmatepanelapplet-4.0
+MatePanelApplet_4_0_gir_SCANNERFLAGS = --identifier-prefix=MatePanel --symbol-prefix=mate-panel --pkg-export=libmatepanelapplet-4.0
 INTROSPECTION_GIRS += MatePanelApplet-4.0.gir
 
 girdir = $(INTROSPECTION_GIRDIR)

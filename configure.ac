@@ -37,7 +37,7 @@ AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 MATE_COMPILE_WARNINGS(maximum)
 
 # Check for introspection
-GOBJECT_INTROSPECTION_CHECK([0.6.7])
+GOBJECT_INTROSPECTION_CHECK([0.9.5])
 
 m4_pattern_allow([AM_V_GEN])dnl Make autoconf not complain about the rule below
 PANEL_INTLTOOL_MATE_PANEL_APPLET_RULE='%.mate-panel-applet: %.mate-panel-applet.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; $(AM_V_GEN) LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'
