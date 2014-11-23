@@ -122,36 +122,53 @@ static void window_menu_destroy(GtkWidget* widget, WindowMenu* window_menu)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-static gboolean window_menu_on_draw(GtkWidget* widget, cairo_t* cr, gpointer data)
+static gboolean window_menu_on_draw (GtkWidget* widget,
+				     cairo_t*   cr,
+				     gpointer   data)
+{
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	WindowMenu      *window_menu = data;
+
+	if (!gtk_widget_has_focus (window_menu->applet))
+		return FALSE;
+
+	state = gtk_widget_get_state_flags (widget);
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_save (context);
+	gtk_style_context_set_state (context, state);
+
+	cairo_save (cr);
+	gtk_render_focus (context, cr,
+			  0., 0.,
+			  gtk_widget_get_allocated_width (widget),
+			  gtk_widget_get_allocated_height (widget));
+			  cairo_restore (cr);
+
+	gtk_style_context_restore (context);
+
+	return FALSE;
+}
 #else
-static gboolean window_menu_on_expose(GtkWidget* widget, GdkEventExpose* event, gpointer data)
-#endif
+static gboolean window_menu_on_expose (GtkWidget*      widget,
+				       GdkEventExpose* event,
+				       gpointer        data)
 {
 	WindowMenu* window_menu = data;
 
 	if (gtk_widget_has_focus(window_menu->applet))
 		gtk_paint_focus(gtk_widget_get_style(widget),
-#if GTK_CHECK_VERSION (3, 0, 0)
-						cr,
-#else
 						gtk_widget_get_window(widget),
-#endif
 						gtk_widget_get_state(widget),
-#if !GTK_CHECK_VERSION (3, 0, 0)
 						NULL,
-#endif
 						widget,
 						"menu-applet",
 						0, 0,
-#if GTK_CHECK_VERSION (3, 0, 0)
-						gtk_widget_get_allocated_width (widget),
-						gtk_widget_get_allocated_height (widget));
-#else
 						-1, -1);
-#endif
 
 	return FALSE;
 }
+#endif
 
 static inline void force_no_focus_padding(GtkWidget* widget)
 {
