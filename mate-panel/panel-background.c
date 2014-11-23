@@ -341,7 +341,7 @@ composite_image_onto_desktop (PanelBackground *background)
 	surface = gdk_window_create_similar_surface (background->window,
 						     CAIRO_CONTENT_COLOR_ALPHA,
 						     width, height);
-	if (cairo_surface_status (surface)) {
+	if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS) {
 		cairo_surface_destroy (surface);
 		return NULL;
 	}
