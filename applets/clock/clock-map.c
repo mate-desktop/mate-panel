@@ -662,7 +662,8 @@ clock_map_display (ClockMap *this)
 {
         ClockMapPrivate *priv = PRIVATE (this);
 
-        clock_map_render_shadow (this);
+        if (priv->width > 0 || priv->height > 0)
+                clock_map_render_shadow (this);
 	gtk_widget_queue_draw (GTK_WIDGET (this));
 
         time (&priv->last_refresh);
