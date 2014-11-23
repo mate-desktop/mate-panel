@@ -104,6 +104,7 @@ remove_popup (GtkWidget *popup)
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay       *display;
 	GdkDevice        *pointer;
+	GdkDevice        *keyboard;
 	GdkDeviceManager *device_manager;
 #endif
 
@@ -117,12 +118,14 @@ remove_popup (GtkWidget *popup)
 	display = gdk_window_get_display (root);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
 
 	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+	gdk_device_ungrab (keyboard, GDK_CURRENT_TIME);
 #else
 	gdk_pointer_ungrab (GDK_CURRENT_TIME);
-#endif
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+#endif
 }
 
 static gboolean
@@ -309,6 +312,7 @@ panel_force_quit (GdkScreen *screen,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay *display;
 	GdkDevice *pointer;
+	GdkDevice *keyboard;
 	GdkDeviceManager *device_manager;
 #endif
 
@@ -323,6 +327,7 @@ panel_force_quit (GdkScreen *screen,
 	display = gdk_window_get_display (root);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
 
 	status = gdk_device_grab (pointer, root,
 				  GDK_OWNERSHIP_NONE, FALSE,
@@ -330,12 +335,22 @@ panel_force_quit (GdkScreen *screen,
 				  cross, time);
 
 	g_object_unref (cross);
+
+	status = gdk_device_grab (keyboard, root,
+				  GDK_OWNERSHIP_NONE, FALSE,
+				  GDK_KEY_PRESS | GDK_KEY_RELEASE,
+				  NULL, time);
+
+	if (status != GDK_GRAB_SUCCESS) {
+		g_warning ("Pointer grab failed\n");
+		remove_popup (popup);
+		return;
+	}
 #else
 	status = gdk_pointer_grab (root, FALSE, GDK_BUTTON_PRESS_MASK,
 				   NULL, cross, time);
 
 	gdk_cursor_unref (cross);
-#endif
 
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Pointer grab failed\n");
@@ -349,6 +364,6 @@ panel_force_quit (GdkScreen *screen,
 		remove_popup (popup);
 		return;
 	}
-
+#endif
 	gdk_flush ();
 }

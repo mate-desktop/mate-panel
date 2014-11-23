@@ -444,6 +444,7 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay *display;
 	GdkDevice *pointer;
+	GdkDevice *keyboard;
 	GdkDeviceManager *device_manager;
 #endif
 
@@ -503,6 +504,7 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	display = gdk_window_get_display (window);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
 
 	gdk_device_grab (pointer, window,
 			 GDK_OWNERSHIP_NONE, FALSE,
@@ -510,17 +512,24 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 			 cursor, time_);
 
 	g_object_unref (cursor);
+
+	if (grab_keyboard)
+		gdk_device_grab (keyboard, window,
+				 GDK_OWNERSHIP_NONE, FALSE,
+				 GDK_KEY_PRESS | GDK_KEY_RELEASE,
+				 NULL, time_);
+}
 #else
 	gdk_pointer_grab (window, FALSE,
 			  GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			  NULL, cursor, time_);
 
 	gdk_cursor_unref (cursor);
-#endif
 
 	if (grab_keyboard)
 		gdk_keyboard_grab (window, FALSE, time_);
 }
+#endif
 
 static void panel_toplevel_end_grab_op (PanelToplevel* toplevel, guint32 time_)
 {
@@ -528,6 +537,7 @@ static void panel_toplevel_end_grab_op (PanelToplevel* toplevel, guint32 time_)
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay *display;
 	GdkDevice *pointer;
+	GdkDevice *keyboard;
 	GdkDeviceManager *device_manager;
 #endif
 
@@ -544,12 +554,14 @@ static void panel_toplevel_end_grab_op (PanelToplevel* toplevel, guint32 time_)
 	display = gtk_widget_get_display (widget);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
 
 	gdk_device_ungrab (pointer, time_);
+	gdk_device_ungrab (keyboard, time_);
 #else
 	gdk_pointer_ungrab (time_);
-#endif
 	gdk_keyboard_ungrab (time_);
+#endif
 }
 
 static void panel_toplevel_cancel_grab_op(PanelToplevel* toplevel, guint32 time_)
