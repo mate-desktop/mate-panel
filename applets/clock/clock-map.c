@@ -241,17 +241,23 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
 #endif
 {
         ClockMapPrivate *priv = PRIVATE (this);
-	GtkStyle *style;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	int width, height;
+	GtkStyleContext *context;
+	GdkRGBA color;
+
+	context = gtk_widget_get_style_context (this);
+	gtk_style_context_get_color (context, GTK_STATE_FLAG_ACTIVE, &color);
 #else
+	GtkStyle *style;
 	GdkWindow *window;
 	GtkAllocation allocation;
 	GdkRectangle region;
         cairo_t *cr;
-#endif
 
 	style = gtk_widget_get_style (this);
+#endif
+
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	window = gtk_widget_get_window (this);
 	gtk_widget_get_allocation (this, &allocation);
@@ -294,7 +300,7 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
         /* draw a simple outline */
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
-	gdk_cairo_set_source_color (cr, &style->mid [GTK_STATE_ACTIVE]);
+	gdk_cairo_set_source_rgba (cr, &color);
 #else
         cairo_rectangle (
                 cr,
