@@ -38,9 +38,6 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
-#include <gdk/gdkkeysyms-compat.h>
-#endif
 #include <gio/gio.h>
 #include <libmate-desktop/mate-aboutdialog.h>
 
@@ -1619,12 +1616,12 @@ static void change_water(FishApplet* fish)
 static gboolean handle_keypress(GtkWidget* widget, GdkEventKey* event, FishApplet* fish)
 {
 	switch (event->keyval) {
-	case GDK_space:
-	case GDK_KP_Space:
-	case GDK_Return:
-	case GDK_KP_Enter:
-	case GDK_ISO_Enter:
-	case GDK_3270_Enter:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
+	case GDK_KEY_Return:
+	case GDK_KEY_KP_Enter:
+	case GDK_KEY_ISO_Enter:
+	case GDK_KEY_3270_Enter:
 		if (fish->april_fools) {
 			change_water (fish);
 			return TRUE;
