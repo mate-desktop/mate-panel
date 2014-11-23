@@ -35,6 +35,10 @@
 #include "panel-icon-names.h"
 #include "panel-stock-icons.h"
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
+#endif
+
 static GdkFilterReturn popup_filter (GdkXEvent *gdk_xevent,
 				     GdkEvent  *event,
 				     GtkWidget *popup);

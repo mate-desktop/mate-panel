@@ -85,6 +85,10 @@
 #define KEY_TEMPERATURE_UNIT	"temperature-unit"
 #define KEY_SPEED_UNIT		"speed-unit"
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
+#endif
+
 enum {
 	COL_CITY_NAME = 0,
 	COL_CITY_TZ,
