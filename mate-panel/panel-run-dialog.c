@@ -226,6 +226,16 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	g_free (dialog);
 }
 
+static const char *
+panel_run_dialog_get_combo_text (PanelRunDialog *dialog)
+{
+	GtkWidget *entry;
+
+	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
+
+	return gtk_entry_get_text (GTK_ENTRY (entry));
+}
+
 static void
 panel_run_dialog_set_default_icon (PanelRunDialog *dialog, gboolean set_drag)
 {
@@ -417,7 +427,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	char     *disk;
 	char     *scheme;
 
-	command = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
+	command = g_strdup (panel_run_dialog_get_combo_text (dialog));
 	command = g_strchug (command);
 
 	if (!command || !command [0]) {
@@ -671,7 +681,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		return FALSE;
 	}
 
-	text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
+	text = g_strdup (panel_run_dialog_get_combo_text (dialog));
 	found_icon = NULL;
 	found_name = NULL;
 	fuzzy = FALSE;
@@ -1545,7 +1555,7 @@ combobox_changed (GtkComboBox    *combobox,
 	char *start;
 	char *msg;
 
-	text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (combobox)))));
+	text = g_strdup (panel_run_dialog_get_combo_text (dialog));
 
 	start = text;
 	while (*start != '\0' && g_ascii_isspace (*start))
@@ -1730,7 +1740,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	char     *scheme;
 	char     *save_uri;
 
-	text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
+	text = g_strdup (panel_run_dialog_get_combo_text (dialog));
 
 	if (!text || !text [0]) {
 		g_free (text);
