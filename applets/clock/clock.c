@@ -392,10 +392,10 @@ calculate_minimum_height (GtkWidget        *widget,
                           MatePanelAppletOrient orientation)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	GtkStyleContext *style_context;
 	GtkStateFlags    state;
-	GtkBorder        padding;
+	GtkStyleContext *style_context;
 	const PangoFontDescription *font_desc;
+	GtkBorder        padding;
 #else
 	GtkStyle         *style;
 #endif
