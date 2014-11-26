@@ -634,6 +634,22 @@ system_timezone_read_etc_localtime_softlink (void)
                 return NULL;
 
         file = g_file_read_link (ETC_LOCALTIME, NULL);
+
+        if (*file != '/') {
+                GFile *gf1;
+                GFile *gf2;
+
+                /* Resolve relative path. */
+                gf1 = g_file_new_for_path (ETC_LOCALTIME);
+                gf2 = g_file_get_parent (gf1);
+                g_object_unref (gf1);
+                gf1 = g_file_resolve_relative_path (gf2, file);
+                g_object_unref (gf2);
+                g_free (file);
+                file = g_file_get_path (gf1);
+                g_object_unref (gf1);
+        }
+
         tz = system_timezone_strip_path_if_valid (file);
         g_free (file);
 
