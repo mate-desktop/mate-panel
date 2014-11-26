@@ -330,8 +330,7 @@ mate_panel_applet_frame_dbus_finalize (GObject *object)
 	MatePanelAppletFrameDBus *frame = MATE_PANEL_APPLET_FRAME_DBUS (object);
 
 	if (frame->priv->bg_cancellable)
-		g_object_unref (frame->priv->bg_cancellable);
-	frame->priv->bg_cancellable = NULL;
+		g_cancellable_cancel (frame->priv->bg_cancellable);
 
 	G_OBJECT_CLASS (mate_panel_applet_frame_dbus_parent_class)->finalize (object);
 }
