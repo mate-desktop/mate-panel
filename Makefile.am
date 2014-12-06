@@ -11,7 +11,7 @@ SUBDIRS =			\
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-introspection --disable-scrollkeeper
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-introspection
 
 EXTRA_DIST = \
 	autogen.sh		\
