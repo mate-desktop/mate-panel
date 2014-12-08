@@ -1,5 +1,21 @@
+1.9.4
+  * Gtk3, Fix deprecated use of gdk pointer api
+  * Gtk3, Port all GtkStyle to GtkStyleContext
+  * Gtk3, Port gtk_rc_parse_string to GtkCssProvider
+  * Gtk3, Several small fixes
+  * Several more fixes from monsta
+  * GDK_KEY_* is also in Gtk+2.24
+  * showdesktop: Fix the size of the icon
+  * clock: Check allocated size before creating the shadow pixbuf
+  * applet: Disconnect show and deactivate menu signals before destroying the applet menu
+  * Add a gtkimage with the current pixbuf to button-widget
+  * Fix implicit declaration of function of gdk_x11_set_sm_client_id
+  * panel-addto: Remove the vbox as it is redundant.
+  * na: Fix handling of SYSTEM_TRAY_CANCEL_MESSAGE
+
 1.9.3
-  *
+  * Use gtk icon cache instead of custom one
+  * Several small fixes by monsta
 
 1.8.0
   * Added support for multiple layouts, stored in $(datadir)/mate-panel/layouts
