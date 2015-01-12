@@ -33,10 +33,8 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
-#endif
 #include <libmate-desktop/mate-gsettings.h>
 
 #include <libpanel-util/panel-error.h>
@@ -306,12 +304,7 @@ panel_action_connect_server (GtkWidget *widget)
 	else
 		command = g_strdup ("nemo-connect-server");
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	mate_gdk_spawn_command_line_on_screen (screen, command,
-#else
-	gdk_spawn_command_line_on_screen (screen, command,
-#endif
-					  &error);
+	mate_gdk_spawn_command_line_on_screen (screen, command, &error);
 	g_free (command);
 
 	if (error) {

@@ -29,10 +29,8 @@
 #include <gio/gio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
-#endif
 #include <libmate-desktop/mate-gsettings.h>
 
 #include <libpanel-util/panel-error.h>
@@ -465,11 +463,7 @@ void panel_lock_screen_action(GdkScreen* screen, const char* action)
 		return;
 	}
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (!mate_gdk_spawn_command_line_on_screen(screen, command, &error))
-#else
-	if (!gdk_spawn_command_line_on_screen(screen, command, &error))
-#endif
 	{
 		char* primary = g_strdup_printf(_("Could not execute '%s'"), command);
 		panel_error_dialog (NULL, screen, "cannot_exec_screensaver", TRUE, primary, error->message);
