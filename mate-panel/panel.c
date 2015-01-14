@@ -1365,7 +1365,7 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
 				NULL);
 
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 				gtk_window_get_screen (GTK_WINDOW (toplevel)));

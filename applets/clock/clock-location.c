@@ -17,12 +17,6 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
-#ifdef HAVE_NETWORK_MANAGER
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-#include <NetworkManager/NetworkManager.h>
-#endif
-
 #include "clock-location.h"
 #include "clock-marshallers.h"
 #include "set-timezone.h"
@@ -72,9 +66,8 @@ static guint location_signals[LAST_SIGNAL] = { 0 };
 static void clock_location_finalize (GObject *);
 static void clock_location_set_tz (ClockLocation *this);
 static void clock_location_unset_tz (ClockLocation *this);
+static gboolean update_weather_info (ClockLocation *loc);
 static void setup_weather_updates (ClockLocation *loc);
-static void add_to_network_monitor (ClockLocation *loc);
-static void remove_from_network_monitor (ClockLocation *loc);
 
 static gchar *clock_location_get_valid_weather_code (const gchar *code);
 
@@ -176,9 +169,23 @@ clock_location_class_init (ClockLocationClass *this_class)
 }
 
 static void
+network_changed (GNetworkMonitor *monitor,
+                 gboolean         available,
+                 ClockLocation   *loc)
+{
+        ClockLocationPrivate *priv = PRIVATE (loc);
+
+        if (available) {
+                priv->weather_retry_time = WEATHER_TIMEOUT_BASE;
+                update_weather_info (loc);
+        }
+}
+
+static void
 clock_location_init (ClockLocation *this)
 {
         ClockLocationPrivate *priv = PRIVATE (this);
+	GNetworkMonitor *monitor;
 
         priv->name = NULL;
         priv->city = NULL;
@@ -192,6 +199,10 @@ clock_location_init (ClockLocation *this)
         priv->latitude = 0;
         priv->longitude = 0;
 
+        monitor = g_network_monitor_get_default();
+        g_signal_connect (monitor, "network-changed",
+                          G_CALLBACK (network_changed), this);
+
 	priv->temperature_unit = TEMP_UNIT_CENTIGRADE;
 	priv->speed_unit = SPEED_UNIT_MS;
 }
@@ -200,8 +211,12 @@ static void
 clock_location_finalize (GObject *g_obj)
 {
         ClockLocationPrivate *priv = PRIVATE (g_obj);
+	GNetworkMonitor      *monitor;
 
-	remove_from_network_monitor (CLOCK_LOCATION (g_obj));
+	monitor = g_network_monitor_get_default ();
+	g_signal_handlers_disconnect_by_func (monitor,
+	                                      G_CALLBACK (network_changed),
+	                                      CLOCK_LOCATION (g_obj));
 
         if (priv->name) {
                 g_free (priv->name);
@@ -624,8 +639,6 @@ clock_location_get_weather_info (ClockLocation *loc)
 	return priv->weather_info;
 }
 
-static gboolean update_weather_info (gpointer data);
-
 static void
 set_weather_update_timeout (ClockLocation *loc)
 {
@@ -667,9 +680,8 @@ weather_info_updated (WeatherInfo *info, gpointer data)
 }
 
 static gboolean
-update_weather_info (gpointer data)
+update_weather_info (ClockLocation *loc)
 {
-	ClockLocation *loc = data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
 	WeatherPrefs prefs = {
 		FORECAST_STATE,
@@ -712,132 +724,6 @@ rad2dms (gfloat lat, gfloat lon)
 	return g_strdup_printf ("%02d-%02d%c %02d-%02d%c",
 				(int)deg, (int)min, h,
 				(int)deg2, (int)min2, h2);
-}
-
-static GList *locations = NULL;
-
-static void
-update_weather_infos (void)
-{
-	GList *l;
-
-	for (l = locations; l; l = l->next) {
-		ClockLocation *loc = l->data;
-		ClockLocationPrivate *priv = PRIVATE (loc);
-
-		priv->weather_retry_time = WEATHER_TIMEOUT_BASE;
-		update_weather_info (loc);
-	}
-}
-
-#ifdef HAVE_NETWORK_MANAGER
-static void
-state_notify (DBusPendingCall *pending, gpointer data)
-{
-	DBusMessage *msg = dbus_pending_call_steal_reply (pending);
-
-	if (!msg)
-		return;
-
-	if (dbus_message_get_type (msg) == DBUS_MESSAGE_TYPE_METHOD_RETURN) {
-		dbus_uint32_t result;
-
-		if (dbus_message_get_args (msg, NULL, 
-					   DBUS_TYPE_UINT32, &result,
-					   DBUS_TYPE_INVALID)) {
-			if (result == NM_STATE_CONNECTED) {
-				update_weather_infos ();
-			}
-		}
-	}
-
-	dbus_message_unref (msg);
-}
-
-static void 
-check_network (DBusConnection *connection)
-{
-	DBusMessage *message;
-	DBusPendingCall *reply;
-
-	message = dbus_message_new_method_call (NM_DBUS_SERVICE,
-						NM_DBUS_PATH,
-						NM_DBUS_INTERFACE,
-						"state");
-	if (dbus_connection_send_with_reply (connection, message, &reply, -1)) {
-		dbus_pending_call_set_notify (reply, state_notify, NULL, NULL);
-		dbus_pending_call_unref (reply);
-	}
-	
-	dbus_message_unref (message);
-}
-
-static DBusHandlerResult
-filter_func (DBusConnection *connection,
-             DBusMessage    *message,
-             void           *user_data)
-{
-	if (dbus_message_is_signal (message,
-				    NM_DBUS_INTERFACE, 
-				    "StateChanged")) {
-		check_network (connection);
-
-		return DBUS_HANDLER_RESULT_HANDLED;
-	}
-
-	return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
-}
-
-static void
-setup_network_monitor (void)
-{
-        GError *error;
-	DBusError derror;
-        static DBusGConnection *bus = NULL;
-	DBusConnection *dbus;
-
-        if (bus == NULL) {
-                error = NULL;
-                bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-                if (bus == NULL) {
-                        g_warning ("Couldn't connect to system bus: %s",
-                                   error->message);
-                        g_error_free (error);
-
-			return;
-                }
-
-		dbus_error_init (&derror);
-		dbus = dbus_g_connection_get_connection (bus);
-                dbus_connection_add_filter (dbus, filter_func, NULL, NULL);
-                dbus_bus_add_match (dbus,
-                                    "type='signal',"
-				    "interface='" NM_DBUS_INTERFACE "'",
-                                    &derror);
-		if (dbus_error_is_set (&derror)) {
-			g_warning ("Couldn't register signal handler: %s: %s",
-				   derror.name, derror.message);
-			dbus_error_free (&derror);
-		}
-        }
-}
-#endif
-
-static void
-add_to_network_monitor (ClockLocation *loc)
-{
-#ifdef HAVE_NETWORK_MANAGER
-	setup_network_monitor ();
-#endif
-
-	if (!g_list_find (locations, loc))
-		locations = g_list_prepend (locations, loc);
-}
-
-static void
-remove_from_network_monitor (ClockLocation *loc)
-{
-	locations = g_list_remove (locations, loc);
 }
 
 static void
@@ -885,8 +771,6 @@ setup_weather_updates (ClockLocation *loc)
 
 	weather_location_free (wl);
 	g_free (dms);
-
-	add_to_network_monitor (loc);
 }
 
 void

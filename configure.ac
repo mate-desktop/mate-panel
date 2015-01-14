@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [1.9.3], [https://github.com/mate-desktop/mate-panel/issues],
+AC_INIT([mate-panel], [1.9.4], [https://github.com/mate-desktop/mate-panel/issues],
     [mate-panel], [http://www.mate-desktop.org])
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-xz tar-ustar -Wno-portability check-news])
@@ -146,17 +146,6 @@ AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
 DBUS_REQUIRED=1.1.2
-NETWORK_MANAGER_REQUIRED=0.6
-
-AC_ARG_ENABLE(network_manager, AS_HELP_STRING([--enable-network-manager],[Enable NetworkManager support (auto)]),enable_network_manager=$enableval,enable_network_manager=auto)
-if test "x$enable_network_manager" = "xno" ; then
-  HAVE_NETWORK_MANAGER=no
-else
-  PKG_CHECK_MODULES(NETWORK_MANAGER, NetworkManager >= $NETWORK_MANAGER_REQUIRED, HAVE_NETWORK_MANAGER=yes, HAVE_NETWORK_MANAGER=no)
-fi
-if test "x$HAVE_NETWORK_MANAGER" = "xyes" ; then
-    AC_DEFINE(HAVE_NETWORK_MANAGER, 1, [Defined if NetworkManager support is enabled])
-fi
 
 # Make it possible to compile the applets in-process
 PANEL_INPROCESS_NONE=
@@ -386,7 +375,6 @@ echo "
         Gtk+ version:                  ${GTK_API_VERSION}
         Ubuntu Counter Hack:           ${ENABLE_UBUNTU}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
-        NetworkManager support:        ${HAVE_NETWORK_MANAGER}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}
