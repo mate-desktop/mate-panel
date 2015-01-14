@@ -635,7 +635,7 @@ system_timezone_read_etc_localtime_softlink (void)
 
         file = g_file_read_link (ETC_LOCALTIME, NULL);
 
-        if (*file != '/') {
+        if (!g_path_is_absolute (file)) {
                 GFile *gf1;
                 GFile *gf2;
 
