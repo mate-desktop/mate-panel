@@ -177,7 +177,7 @@ static inline void force_no_focus_padding(GtkWidget* widget)
 
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
-					 "#window-menu-applet-button {\n"
+					 "#PanelApplet-window-menu-applet-button {\n"
 					 " border-width: 0px;\n"
 					 " -GtkWidget-focus-line-width: 0px;\n"
 					 " -GtkWidget-focus-padding: 0px; }",
