@@ -188,6 +188,7 @@ na_tray_applet_unrealize (GtkWidget *widget)
   GTK_WIDGET_CLASS (na_tray_applet_parent_class)->unrealize (widget);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 static inline gboolean
 style_context_lookup_color (GtkStyleContext *context,
                             const gchar     *color_name,
@@ -245,6 +246,7 @@ na_tray_applet_style_updated (GtkWidget *widget)
   gtk_widget_style_get (widget, "icon-size", &icon_size, NULL);
   na_tray_set_icon_size (applet->priv->tray, icon_size);
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
@@ -313,7 +315,9 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
 
   widget_class->realize = na_tray_applet_realize;
   widget_class->unrealize = na_tray_applet_unrealize;
+#if GTK_CHECK_VERSION (3, 0, 0)
   widget_class->style_updated = na_tray_applet_style_updated;
+#endif
   applet_class->change_background = na_tray_applet_change_background;
   applet_class->change_orient = na_tray_applet_change_orient;
 
