@@ -870,7 +870,7 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
   na_tray_manager_set_padding_property (manager);
   na_tray_manager_set_icon_size_property (manager);
   na_tray_manager_set_colors_property (manager);
-  
+
   window = gtk_widget_get_window (invisible);
 
   timestamp = gdk_x11_get_server_time (window);
