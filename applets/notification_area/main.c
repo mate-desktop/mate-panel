@@ -45,6 +45,18 @@ struct _NaTrayAppletPrivate
 
 G_DEFINE_TYPE (NaTrayApplet, na_tray_applet, PANEL_TYPE_APPLET)
 
+static void (*parent_class_realize) (GtkWidget *widget);
+static void (*parent_class_unrealize) (GtkWidget *widget);
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void (*parent_class_style_updated) (GtkWidget *widget);
+static void (*parent_class_change_background)(MatePanelApplet* panel_applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t* pattern);
+#else
+static void (*parent_class_change_background)(MatePanelApplet* panel_applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap);
+#endif
+static void (*parent_class_change_orient)(MatePanelApplet       *panel_applet, MatePanelAppletOrient  orient);
+
+
+
 static GtkOrientation
 get_gtk_orientation_from_applet_orient (MatePanelAppletOrient orient)
 {
@@ -152,7 +164,8 @@ na_tray_applet_realize (GtkWidget *widget)
   NaTrayApplet      *applet = NA_TRAY_APPLET (widget);
   MatePanelAppletOrient  orient;
 
-  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->realize (widget);
+  if (parent_class_realize)
+    parent_class_realize (widget);
 
   g_assert (applet->priv->tray == NULL);
 
@@ -185,7 +198,8 @@ na_tray_applet_unrealize (GtkWidget *widget)
   gtk_widget_destroy (GTK_WIDGET (applet->priv->tray));
   applet->priv->tray = NULL;
 
-  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->unrealize (widget);
+  if (parent_class_unrealize)
+    parent_class_unrealize (widget);
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -219,7 +233,8 @@ na_tray_applet_style_updated (GtkWidget *widget)
   gint             padding;
   gint             icon_size;
 
-  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->style_updated (widget);
+  if (parent_class_style_updated)
+    parent_class_style_updated (widget);
 
   if (!applet->priv->tray)
     return;
@@ -250,13 +265,21 @@ na_tray_applet_style_updated (GtkWidget *widget)
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
-na_tray_applet_change_background(MatePanelApplet* panel_applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t* pattern)
+na_tray_applet_change_background(MatePanelApplet* panel_applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t* pattern)
 #else
 static void
 na_tray_applet_change_background(MatePanelApplet* panel_applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap)
 #endif
 {
   NaTrayApplet *applet = NA_TRAY_APPLET (panel_applet);
+
+  if (parent_class_change_background) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+    parent_class_change_background (panel_applet, type, color, pattern);
+#else
+    parent_class_change_background (panel_applet, type, color, pixmap);
+#endif
+  }
 
   if (!applet->priv->tray)
     return;
@@ -269,6 +292,9 @@ na_tray_applet_change_orient (MatePanelApplet       *panel_applet,
                               MatePanelAppletOrient  orient)
 {
   NaTrayApplet *applet = NA_TRAY_APPLET (panel_applet);
+
+  if (parent_class_change_orient)
+    parent_class_change_orient (panel_applet, orient);
 
   if (!applet->priv->tray)
     return;
@@ -313,12 +339,19 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
   GtkWidgetClass   *widget_class = GTK_WIDGET_CLASS (class);
   MatePanelAppletClass *applet_class = MATE_PANEL_APPLET_CLASS (class);
 
+  parent_class_realize = widget_class->realize;
   widget_class->realize = na_tray_applet_realize;
+
+  parent_class_unrealize = widget_class->unrealize;
   widget_class->unrealize = na_tray_applet_unrealize;
 #if GTK_CHECK_VERSION (3, 0, 0)
+  parent_class_style_updated = widget_class->style_updated;
   widget_class->style_updated = na_tray_applet_style_updated;
 #endif
+  parent_class_change_background = applet_class->change_background;
   applet_class->change_background = na_tray_applet_change_background;
+
+  parent_class_change_orient = applet_class->change_orient;
   applet_class->change_orient = na_tray_applet_change_orient;
 
   gtk_widget_class_install_style_property (
