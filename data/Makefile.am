@@ -3,6 +3,7 @@ layout_DATA = \
 	default.layout \
 	fedora.layout \
 	linuxmint.layout \
+	mageia.layout \
 	opensuse.layout \
 	ubuntu.layout
 
