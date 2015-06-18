@@ -1615,6 +1615,9 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
 	GtkWidget     *widget;
 	GtkAllocation allocation;
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GdkDevice      *device;
+#endif
 	int           x,y;
 	int           w,h;
 
@@ -1627,7 +1630,12 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	   !gtk_widget_get_visible(widget))
 		return FALSE;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
+	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
+#else
 	gtk_widget_get_pointer(widget, &x, &y);
+#endif
 
 	gtk_widget_get_allocation (widget, &allocation);
 	w = allocation.width;
@@ -2091,12 +2099,20 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 int
 panel_widget_get_cursorloc (PanelWidget *panel)
 {
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GdkDevice      *device;
+#endif
 	int x, y;
 	gboolean rtl;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET(panel))));
+	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(panel)), device, &x, &y, NULL);
+#else
 	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
+#endif
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
 	
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -2353,6 +2369,9 @@ static int
 move_timeout_handler(gpointer data)
 {
 	PanelWidget   *panel = data;
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GdkDevice      *device;
+#endif
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(data),FALSE);
 
@@ -2372,7 +2391,12 @@ move_timeout_handler(gpointer data)
 
 		widget = panel->currently_dragged_applet->applet;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+		device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
+		gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
+#else
 		gtk_widget_get_pointer(widget, &x, &y);
+#endif
 
 		gtk_widget_get_allocation (widget, &allocation);
 		w = allocation.width;
