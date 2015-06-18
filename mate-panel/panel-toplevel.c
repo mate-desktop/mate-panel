@@ -861,12 +861,20 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 {
 	GdkScreen *screen;
 	GdkWindow *root_window;
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GdkDevice      *device;
+#endif
 	int        new_x, new_y;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	root_window = gdk_screen_get_root_window (screen);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET(root_window))));
+	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(root_window)), device, &new_x, &new_y, NULL);
+#else
 	gdk_window_get_pointer (root_window, &new_x, &new_y, NULL);
+#endif
 
 	switch (keyval) {
 	case GDK_Up:
