@@ -700,7 +700,11 @@ xstuff_grab_key_on_all_screens (int      keycode,
 	int         i;
 
 	display   = gdk_display_get_default ();
+#if GTK_CHECK_VERSION(3, 10, 0)
+	n_screens = 1; /* gdk-3.10, The number of screens is always 1 */
+#else
 	n_screens = gdk_display_get_n_screens (display);
+#endif
 
 	for (i = 0; i < n_screens; i++) {
 		GdkWindow *root;
