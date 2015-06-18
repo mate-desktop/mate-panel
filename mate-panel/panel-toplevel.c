@@ -1175,6 +1175,28 @@ static void panel_toplevel_hide_button_clicked(PanelToplevel* toplevel, GtkButto
 		panel_toplevel_unhide (toplevel);
 }
 
+static void
+set_arrow_type (GtkImage     *image,
+                GtkArrowType  arrow_type)
+{
+  switch (arrow_type)
+    {
+    case GTK_ARROW_NONE:
+    case GTK_ARROW_DOWN:
+      gtk_image_set_from_icon_name (image, "pan-down-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    case GTK_ARROW_UP:
+      gtk_image_set_from_icon_name (image, "pan-up-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    case GTK_ARROW_LEFT:
+      gtk_image_set_from_icon_name (image, "pan-start-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    case GTK_ARROW_RIGHT:
+      gtk_image_set_from_icon_name (image, "pan-end-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    }
+}
+
 static GtkWidget *
 panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 				GtkArrowType   arrow_type,
@@ -1215,8 +1237,18 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 		break;
 	}
 
+#if GTK_CHECK_VERSION(3, 14, 0)
+	arrow = gtk_image_new ();
+	set_arrow_type (GTK_IMAGE (arrow), arrow_type);
+#else
 	arrow = gtk_arrow_new (arrow_type, GTK_SHADOW_NONE);
+#endif
+#if GTK_CHECK_VERSION(3, 12, 0)
+	gtk_widget_set_margin_start(GTK_WIDGET(arrow), 0);
+	gtk_widget_set_margin_end(GTK_WIDGET(arrow), 0);
+#else
 	gtk_misc_set_padding (GTK_MISC (arrow), 0, 0);
+#endif
 	gtk_container_add (GTK_CONTAINER (button), arrow);
 	gtk_widget_show (arrow);
 
@@ -2757,7 +2789,11 @@ panel_toplevel_reverse_arrow (PanelToplevel *toplevel,
 
 	g_object_set_data (G_OBJECT (button), "arrow-type", GINT_TO_POINTER (arrow_type));
 
+#if GTK_CHECK_VERSION(3, 14, 0)
+	set_arrow_type (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))), arrow_type);
+#else
 	gtk_arrow_set (GTK_ARROW (gtk_bin_get_child (GTK_BIN (button))), arrow_type, GTK_SHADOW_NONE);
+#endif
 }
 
 static void
