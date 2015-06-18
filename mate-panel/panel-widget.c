@@ -2014,9 +2014,8 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		GdkDevice *pointer;
 		GdkDeviceManager *device_manager;
 
-		fleur_cursor = gdk_cursor_new (GDK_FLEUR);
-
 		display = gdk_window_get_display (window);
+		fleur_cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
 		device_manager = gdk_display_get_device_manager (display);
 		pointer = gdk_device_manager_get_client_pointer (device_manager);
 		status = gdk_device_grab (pointer, window,
