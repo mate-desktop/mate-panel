@@ -31,6 +31,12 @@
 #include "panel-icon-chooser.h"
 
 #define PANEL_ICON_CHOOSER_ICON_SIZE GTK_ICON_SIZE_DIALOG
+#if GTK_CHECK_VERSION(3, 10, 0)
+#undef  GTK_STOCK_CANCEL
+#undef  GTK_STOCK_OPEN
+#define GTK_STOCK_CANCEL     "_Cancel"
+#define GTK_STOCK_OPEN       "document-open"
+#endif
 
 struct _PanelIconChooserPrivate
 {
