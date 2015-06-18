@@ -410,8 +410,12 @@ calculate_minimum_height (GtkWidget        *widget,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	state = gtk_widget_get_state_flags (widget);
 	style_context = gtk_widget_get_style_context (widget);
-	font_desc = gtk_style_context_get_font (style_context, state);
 
+#if GTK_CHECK_VERSION (3, 8, 0)
+	gtk_style_context_get(style_context, state, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
+#else
+	font_desc = gtk_style_context_get_font (style_context, state);
+#endif
 	pango_context = gtk_widget_get_pango_context (widget);
 	metrics = pango_context_get_metrics (pango_context,
 					     font_desc,
