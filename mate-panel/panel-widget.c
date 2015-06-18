@@ -2255,6 +2255,9 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	int pos;
 	int movement;
 	GtkWidget *applet;
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GdkDevice      *device;
+#endif
 	GSList *forb;
 	GdkModifierType mods;
 	AppletData *ad;
@@ -2310,8 +2313,13 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		}
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET(panel))));
+	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(panel)), device, NULL, NULL, &mods);
+#else
 	gdk_window_get_pointer(gtk_widget_get_window (GTK_WIDGET(panel)),
 			       NULL,NULL,&mods);
+#endif
 
 	movement = PANEL_SWITCH_MOVE;
 
