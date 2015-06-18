@@ -435,18 +435,18 @@ button_widget_expose (GtkWidget         *widget,
 #endif
 {
 	ButtonWidget *button_widget;
-	GtkButton *button;
-	GdkWindow *window;
 	int width;
 	int height;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	GtkStateFlags state_flags;
 #else
+	GtkButton *button;
+	GdkWindow *window;
 	GtkAllocation allocation;
 	GtkStyle *style;
-#endif
 	GdkRectangle area, image_bound;
+#endif
 	int off;
 	int x, y, w, h;
 	GdkPixbuf *pb = NULL;
@@ -464,13 +464,13 @@ button_widget_expose (GtkWidget         *widget,
 	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
 		return FALSE;
 
-	button = GTK_BUTTON (widget);
-	window = gtk_widget_get_window (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	state_flags = gtk_widget_get_state_flags (widget);
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
 #else
+	button = GTK_BUTTON (widget);
+	window = gtk_widget_get_window (widget);
 	gtk_widget_get_allocation (widget, &allocation);
 #endif
 
@@ -541,13 +541,11 @@ button_widget_expose (GtkWidget         *widget,
 	context = gtk_widget_get_style_context (widget);
 
 	if (button_widget->priv->arrow) {
-		GtkArrowType arrow_type;
-
 		gdouble angle, size;
 		gtk_style_context_save (context);
 		gtk_style_context_set_state (context, state_flags);
 
-		arrow_type = calc_arrow (button_widget->priv->orientation,
+		calc_arrow (button_widget->priv->orientation,
 					 width, height,
 					 &x, &y,
 					 &angle, &size);
@@ -691,7 +689,9 @@ button_widget_size_allocate (GtkWidget     *widget,
 			     GtkAllocation *allocation)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkButton    *button = GTK_BUTTON (widget);
+#endif
 	int           size;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -764,12 +764,14 @@ static gboolean
 button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	gboolean in_button;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStateFlags state_flags;
+#endif
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	GtkStateFlags state_flags;
-	in_button = state_flags & GTK_STATE_FLAG_PRELIGHT;
+	in_button = FALSE;
 #else
 	in_button = GTK_BUTTON (widget)->in_button;
 #endif
@@ -790,12 +792,14 @@ static gboolean
 button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	gboolean in_button;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStateFlags state_flags;
+#endif
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	GtkStateFlags state_flags;
-	in_button = state_flags & GTK_STATE_FLAG_PRELIGHT;
+	in_button = FALSE;
 #else
 	in_button = GTK_BUTTON (widget)->in_button;
 #endif
