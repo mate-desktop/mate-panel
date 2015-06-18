@@ -27,14 +27,10 @@
 
 #include <glib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
 void panel_action_protocol_init (void);
 
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* __PANEL_ACTION_PROTOCOL_H__ */
