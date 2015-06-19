@@ -394,7 +394,7 @@ panel_properties_dialog_image_changed (PanelPropertiesDialog *dialog)
 
 	/* FIXME: This is an ugly workaround for GTK+ bug #327243.
 	 * FIXME: Note that GTK+ 2.12 and file-set signal might help. */
-	if (!dialog->selection_emitted < 2 && !image) {
+	if (! (dialog->selection_emitted < 2) && !image) {
 		dialog->selection_emitted++;
 		return;
 	}
@@ -749,6 +749,7 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 					    &new_color);
 }
 
+#if !GTK_CHECK_VERSION(3, 0, 0)
 static void
 panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog,
 						   gint                   opacity)
@@ -760,6 +761,7 @@ panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog
 	if ((int) gtk_range_get_value (GTK_RANGE (dialog->opacity_scale)) != (int) percentage)
 		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
 }
+#endif
 
 static void
 panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
