@@ -2,10 +2,11 @@
 
 HELP_ID = mate-panel
 
-HELP_FILES = 		\
-	index.docbook	\
-	legal.xml		\
-	gosoverview.xml	\
+HELP_FILES =            \
+	index.docbook       \
+	legal.xml           \
+	goseditmainmenu.xml \
+	gosoverview.xml     \
 	gospanel.xml
 
 HELP_MEDIA =								\
