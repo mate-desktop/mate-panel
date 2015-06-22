@@ -1,0 +1,69 @@
+<!-- -*- indent-tabs-mode: nil -*- -->
+
+  <section id="overview-workspaces">
+    <title>Workspaces</title>
+
+    <indexterm>
+      <primary>workspaces</primary>
+    </indexterm>
+    <para>Workspaces allow you to manage which windows are on your screen. You can imagine workspaces as being virtual screens, which you can switch between at any time. Every workspace contains the same desktop, the same panels, and the same menus. However, you can run different applications, and open different windows in each workspace. The applications in each workspace will remain there when you switch to other workspaces.</para>
+
+    <para>By default, four workspaces are available. You can switch between them with the <application>Workspace Switcher</application> applet at the right of the <link linkend="bottom-panel">bottom panel</link>. This shows a representation of your workspaces, by default a row of four rectangles. Click on one to switch to that workspace. In <xref linkend="gosoverview-FIG-42"/>, <application>Workspace Switcher</application> contains four workspaces. The first three workspaces contain open windows. The last workspace does not contain currently open windows. The currently active workspace is highlighted.</para>
+    
+    <figure id="gosoverview-FIG-42">
+      <title>Workspaces Displayed in Workspace Switcher</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="figures/workspace_switcher_applet.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase>Workspace Switcher. The context describes the graphic.</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>    
+    
+     <para>Each workspace can have any number of applications open in it. The number of workspaces can be customized: see <xref linkend="workspace-add"/>.</para>
+     
+     <tip><para>Workspaces enable you to organize the MATE Desktop when you run many
+applications at the same time. One way to use workspaces is to allocate a specific function to each workspace: one for email, one for web browsing, one for graphic design, etc. However, everyone has their own preference and you are in no way restricted to only using workspaces like this.</para></tip>
+    
+    <section id="gosoverview-41">
+      <title>Switching Between Workspaces</title>
+      <indexterm>
+        <primary>workspaces</primary>
+        <secondary>switching between</secondary>
+      </indexterm>
+      <para>You can switch between workspaces in any of the following ways:</para>
+      <itemizedlist>
+        <listitem>
+          <para>In the <application>Workspace Switcher</application> applet in the bottom panel, click on the workspace where you want to work.</para>
+        </listitem>
+        <listitem>
+          <para>Move the mouse pointer over the <application>Workspace Switcher</application> applet in the bottom panel, and scroll the mouse wheel.</para>
+        </listitem>        
+        <listitem>
+          <para>Press <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>right arrow</keycap></keycombo> to switch to the workspace on the right of the current
+workspace.</para>
+        </listitem>
+        <listitem>
+          <para>Press <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>left arrow</keycap></keycombo> to switch to the workspace on the left of the current
+workspace.</para>
+        </listitem>
+      </itemizedlist>
+      <note><para>The arrow shortcut keys work according to how your workspaces are set out in the <application>Workspace Switcher</application> applet. If you change your panel so workspaces are displayed vertically instead of horizontally, use <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>up arrow</keycap></keycombo> and <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>down arrow</keycap></keycombo> to switch workspaces.</para></note>
+    </section>
+    <section id="workspace-add">
+      <title>Adding Workspaces</title>
+      <!-- preserve id for backwards compatibility: 2.12 -->
+      <anchor id="gosoverview-40"/>         
+      <indexterm>
+        <primary>workspaces</primary>
+        <secondary>specifying number of</secondary>
+      </indexterm>
+      <para>To add workspaces to the MATE Desktop, right-click on the <application>Workspace Switcher</application> applet, then choose <guimenuitem>Preferences</guimenuitem>. The <guilabel>Workspace Switcher Preferences</guilabel> dialog
+is displayed. Use the <guilabel>Number of workspaces</guilabel> spin box to
+specify the number of workspaces that you require.</para>
+    </section>
+  </section>

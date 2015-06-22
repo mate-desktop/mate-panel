@@ -338,6 +338,7 @@ doc/reference/mate-panel-applet/Makefile
 help/Makefile
 help/mate-clock/Makefile
 help/mate-fish/Makefile
+help/mate-panel/Makefile
 man/Makefile
 ])
 

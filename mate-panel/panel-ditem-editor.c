@@ -1473,7 +1473,7 @@ response_cb (GtkDialog *dialog,
 	switch (response_id) {
 	case GTK_RESPONSE_HELP:
 		if (!panel_show_help (gtk_window_get_screen (GTK_WINDOW (dialog)),
-				      "mate-user-guide", "gospanel-52", &error)) {
+				      "mate-panel", "gospanel-52", &error)) {
 			g_signal_emit (G_OBJECT (dialog),
 				       ditem_edit_signals[ERROR_REPORTED], 0,
 				       _("Could not display help document"),
