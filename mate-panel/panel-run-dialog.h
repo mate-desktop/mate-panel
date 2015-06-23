@@ -27,17 +27,13 @@
 
 #include <gtk/gtk.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
 void panel_run_dialog_present           (GdkScreen  *screen,
 					 guint32    activate_time);
 
 void panel_run_dialog_quit_on_destroy (void);
 
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* __PANEL_RUN_DIALOG_H__ */
