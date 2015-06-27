@@ -25,6 +25,6 @@ HELP_MEDIA =								\
 	figures/show_desktop_button.png			\
 	figures/workspace_switcher_applet.png
 
-#HELP_LINGUAS = ar bg cs de el es eu fi fr gl hu id it ja ko oc pa pt pt_BR ru sv th uk zh_CN
+HELP_LINGUAS = ar bg cs de el es eu fi fr gl hu id it ja ko oc pa pt pt_BR ru sv th uk zh_CN
 
 -include $(top_srcdir)/git.mk
