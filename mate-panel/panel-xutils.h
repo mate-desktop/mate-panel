@@ -37,14 +37,6 @@
 extern "C" {
 #endif
 
-typedef enum {
-	PANEL_XUTILS_TYPE_NORMAL,
-	PANEL_XUTILS_TYPE_DOCK
-} PanelXUtilsWindowType;
-
-void panel_xutils_set_window_type (GdkWindow             *gdk_window,
-				   PanelXUtilsWindowType  type);
-
 void panel_xutils_set_strut       (GdkWindow             *gdk_window,
 				   PanelOrientation       orientation,
 				   guint32                strut,
