@@ -32,6 +32,8 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
+#include <X11/extensions/XInput2.h>
+
 #include "panel-icon-names.h"
 #include "panel-stock-icons.h"
 
@@ -261,22 +263,23 @@ kill_window_question (gpointer window)
 
 static void 
 handle_button_press_event (GtkWidget *popup,
-			   XKeyEvent *event)
+			   Display *display,
+			   Window subwindow)
 {
 	Window window;
 
 	remove_popup (popup);
 
-	if (event->subwindow == None)
+	if (subwindow == None)
 		return;
 
 	if (wm_state_atom == None)
-		wm_state_atom = XInternAtom (event->display, "WM_STATE", FALSE);
+		wm_state_atom = XInternAtom (display, "WM_STATE", FALSE);
 
-	window = find_managed_window (event->display, event->subwindow);
+	window = find_managed_window (display, subwindow);
 
 	if (window != None) {
-		if (!gdk_x11_window_lookup_for_display (gdk_x11_lookup_xdisplay (event->display), window))
+		if (!gdk_x11_window_lookup_for_display (gdk_x11_lookup_xdisplay (display), window))
 			kill_window_question ((gpointer) window);
 	}
 }
@@ -287,14 +290,31 @@ popup_filter (GdkXEvent *gdk_xevent,
 	      GtkWidget *popup)
 {
 	XEvent *xevent = (XEvent *) gdk_xevent;
+	XIEvent *xiev;
+	XIDeviceEvent *xidev;
 
 	switch (xevent->type) {
 	case ButtonPress:
-		handle_button_press_event (popup, &xevent->xkey);
+		handle_button_press_event (popup, xevent->xbutton.display, xevent->xbutton.subwindow);
 		return GDK_FILTER_REMOVE;
 	case KeyPress:
 		if (xevent->xkey.keycode == XKeysymToKeycode (xevent->xany.display, XK_Escape)) {
 			remove_popup (popup);
+			return GDK_FILTER_REMOVE;
+		}
+		break;
+	case GenericEvent:
+		xiev = (XIEvent *) xevent->xcookie.data;
+		xidev = (XIDeviceEvent *) xiev;
+		switch (xiev->evtype) {
+		case XI_KeyPress:
+			if (xidev->detail == XKeysymToKeycode (xevent->xany.display, XK_Escape)) {
+				remove_popup (popup);
+				return GDK_FILTER_REMOVE;
+			}
+			break;
+		case XI_ButtonPress:
+			handle_button_press_event (popup, xidev->display, xidev->child);
 			return GDK_FILTER_REMOVE;
 		}
 		break;
@@ -342,7 +362,7 @@ panel_force_quit (GdkScreen *screen,
 
 	status = gdk_device_grab (keyboard, root,
 				  GDK_OWNERSHIP_NONE, FALSE,
-				  GDK_KEY_PRESS | GDK_KEY_RELEASE,
+				  GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK,
 				  NULL, time);
 
 	if (status != GDK_GRAB_SUCCESS) {
