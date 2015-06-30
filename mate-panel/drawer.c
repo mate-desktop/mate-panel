@@ -20,12 +20,6 @@
 #include <gdk/gdkkeysyms.h>
 #if GTK_CHECK_VERSION (3, 0, 0)
 #include <gdk/gdkkeysyms-compat.h>
-#undef  GTK_STOCK_ADD
-#undef  GTK_STOCK_PROPERTIES
-#undef  GTK_STOCK_HELP
-#define GTK_STOCK_ADD        "list-add"
-#define GTK_STOCK_PROPERTIES "document-properties"
-#define GTK_STOCK_HELP       "help-browser"
 #endif
 #include <gio/gio.h>
 

@@ -363,12 +363,6 @@ setup_an_item (AppletUserMenu *menu,
 	       GtkWidget      *submenu,
 	       int             is_submenu)
 {
-#if GTK_CHECK_VERSION(3, 10, 0)
-	/* Drop menu item image
-	 * See: https://docs.google.com/document/d/1KCVPoYQBqMbDP11tHPpjW6uaEHrvLUmcDPqKAppCY8o/pub
-	 * */
-	menu->menuitem = gtk_menu_item_new_with_mnemonic(menu->text);
-#else
 	GtkWidget *image = NULL;
 
 	menu->menuitem = gtk_image_menu_item_new_with_mnemonic (menu->text);
@@ -378,7 +372,6 @@ setup_an_item (AppletUserMenu *menu,
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu->menuitem),
 					       image);
 	}
-#endif
 	gtk_widget_show (menu->menuitem);
 
 	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
@@ -512,6 +505,7 @@ mate_panel_applet_create_menu (AppletInfo *info)
 	}
 
 	if (!panel_lockdown_get_locked_down ()) {
+		GtkWidget *image;
 		gboolean   locked;
 		gboolean   lockable;
 		gboolean   movable;
@@ -529,19 +523,11 @@ mate_panel_applet_create_menu (AppletInfo *info)
 			gtk_widget_show (menuitem);
 		}
 
-#if GTK_CHECK_VERSION(3, 10, 0)
-		/* Drop menu item image
-		 * See: https://docs.google.com/document/d/1KCVPoYQBqMbDP11tHPpjW6uaEHrvLUmcDPqKAppCY8o/pub
-		 * */
-		menuitem = gtk_menu_item_new_with_mnemonic (_("_Remove From Panel"));
-#else
-		GtkWidget *image;
 		menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 						  GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 					       image);
-#endif
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_widget_show (menuitem);

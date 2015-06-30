@@ -22,10 +22,6 @@
 #if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
 #include <gdk/gdkkeysyms-compat.h>
-#undef  GTK_STOCK_CANCEL
-#undef  GTK_STOCK_DELETE
-#define GTK_STOCK_CANCEL       "_Cancel"
-#define GTK_STOCK_DELETE       "edit-delete"
 #endif
 
 #include <libpanel-util/panel-glib.h>
