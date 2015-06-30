@@ -234,18 +234,12 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 					 &error);
 		if (error) {
 			//FIXME: this is not rendered at button->priv->size
-#if GTK_CHECK_VERSION (3, 10, 0)
 			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
 			button->priv->pixbuf = gtk_icon_theme_load_icon (icon_theme,
-							       "gtk-missing-image",
+							       GTK_STOCK_MISSING_IMAGE,
 							       GTK_ICON_SIZE_BUTTON,
 							       GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
 							       NULL);
-#else
-			button->priv->pixbuf = gtk_widget_render_icon (GTK_WIDGET (button),
-							GTK_STOCK_MISSING_IMAGE,
-							(GtkIconSize) -1, NULL);
-#endif
 			g_free (error);
 		}
 
