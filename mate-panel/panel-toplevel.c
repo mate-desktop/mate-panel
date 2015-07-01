@@ -3794,6 +3794,9 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 
 	if (toplevel->priv->attached) {
 		/* Re-map unmapped attached toplevels */
+		if (!gtk_widget_get_visible (GTK_WIDGET (toplevel)))
+			gtk_widget_set_visible (GTK_WIDGET (toplevel), TRUE);
+
 		if (!gtk_widget_get_mapped (GTK_WIDGET (toplevel)))
 			gtk_widget_map (GTK_WIDGET (toplevel));
 
