@@ -581,7 +581,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 
 static void display_help_dialog(GtkAction* action, PagerData* pager)
 {
-	wncklet_display_help(pager->applet, "mate-user-guide", "overview-workspaces", WORKSPACE_SWITCHER_ICON);
+	wncklet_display_help(pager->applet, "mate-help", "overview-workspaces", WORKSPACE_SWITCHER_ICON);
 }
 
 static void display_about_dialog(GtkAction* action, PagerData* pager)
@@ -761,7 +761,7 @@ static gboolean delete_event(GtkWidget* widget, gpointer data)
 static void response_cb(GtkWidget* widget, int id, PagerData* pager)
 {
 	if (id == GTK_RESPONSE_HELP)
-		wncklet_display_help(widget, "mate-user-guide", "overview-workspaces", WORKSPACE_SWITCHER_ICON);
+		wncklet_display_help(widget, "mate-help", "overview-workspaces", WORKSPACE_SWITCHER_ICON);
 	else
 		gtk_widget_destroy(widget);
 }

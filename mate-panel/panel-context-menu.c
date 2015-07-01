@@ -56,7 +56,7 @@ panel_context_menu_show_help (GtkWidget *w,
 			      gpointer data)
 {
 	panel_show_help (gtk_widget_get_screen (w),
-			 "mate-user-guide", "gospanel-1", NULL);
+			 "mate-help", "gospanel-1", NULL);
 }
 
 static gboolean
