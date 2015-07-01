@@ -57,7 +57,7 @@ typedef struct {
 
 static void window_menu_help(GtkAction* action, WindowMenu* window_menu)
 {
-	wncklet_display_help(window_menu->applet, "mate-user-guide", "panel-windowselector", WINDOW_MENU_ICON);
+	wncklet_display_help(window_menu->applet, "mate-help", "panel-windowselector", WINDOW_MENU_ICON);
 }
 
 static void window_menu_about(GtkAction* action, WindowMenu* window_menu)

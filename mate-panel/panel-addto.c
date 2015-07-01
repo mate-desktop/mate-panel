@@ -774,7 +774,7 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 	switch (response_id) {
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (dialog->addto_dialog)),
-				 "mate-user-guide", "gospanel-15", NULL);
+				 "mate-help", "gospanel-15", NULL);
 		break;
 
 	case PANEL_ADDTO_RESPONSE_ADD:

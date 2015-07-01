@@ -66,7 +66,7 @@ static void help_cb(GtkAction* action, AppletData* data)
 {
 	GError* error = NULL;
 	char* uri;
-	#define NA_HELP_DOC "mate-user-guide"
+	#define NA_HELP_DOC "mate-help"
 
 	uri = g_strdup_printf("help:%s/%s", NA_HELP_DOC, "panels-notification-area");
 
