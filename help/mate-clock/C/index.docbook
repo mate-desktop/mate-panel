@@ -2,15 +2,15 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "2.5.3.1">
-  <!ENTITY manrevision "2.7">
-  <!ENTITY date "January 2010">
+  <!ENTITY appletversion "1.10.1">
+  <!ENTITY manrevision "2.8">
+  <!ENTITY date "July 2015">
   <!ENTITY applet "Clock">
 ]>
 <!--
       (Do not remove this comment block.)
   Maintained by the MATE Documentation Project
-  http://developer.gnome.org/projects/gdp
+  http://wiki.mate-desktop.org/dev-doc:doc-team-guide
   Template version: 2.0 beta
   Template last modified Feb 11, 2002
 
@@ -21,6 +21,10 @@
 <!-- appropriate code -->
   <articleinfo>
 	 <title>&applet; Manual</title>
+     <copyright>
+      <year>2015</year>
+      <holder>MATE Documentation Project</holder>
+     </copyright>
 	 <copyright>
 		<year>2009</year>
 		<year>2010</year>
@@ -50,6 +54,9 @@
 	 <publisher role="maintainer">
 		<publishername> MATE Documentation Project </publishername>
 	 </publisher>
+	 <publisher>
+		<publishername> GNOME Documentation Project </publishername>
+	 </publisher>
 
 &legal;
 <!-- This file  contains link to license for the documentation (GNU FDL), and
@@ -57,11 +64,16 @@
      any of this. -->
 
 	 <authorgroup>
+		<author role="maintainer">
+		  <firstname>MATE Documentation Project</firstname>
+		  <surname></surname>
+		  <affiliation><orgname>MATE Desktop</orgname></affiliation>
+		</author>
 		<author>
 		  <firstname>Paul </firstname>
 		  <surname> Cutler</surname>
 		  <affiliation>
-			 <orgname>MATE Documentation Project</orgname>
+			 <orgname>GNOME Documentation Project</orgname>
 			 <address> <email>pcutler@gnome.org</email> </address>
 		  </affiliation>
 		</author>
@@ -69,7 +81,7 @@
 		  <firstname>Sun </firstname>
 		  <surname>Microsystems</surname>
 		  <affiliation>
-			 <orgname>MATE Documentation Project</orgname>
+			 <orgname>GNOME Documentation Project</orgname>
 			 <address></address>
 		  </affiliation>
 		</author>
@@ -77,7 +89,7 @@
 		  <firstname>Dan </firstname>
 		  <surname> Mueth</surname>
 		  <affiliation>
-			 <orgname>MATE Documentation Project</orgname>
+			 <orgname>GNOME Documentation Project</orgname>
 			 <address> <email>d-mueth@uchicago.edu</email> </address>
 		  </affiliation>
 		</author>
@@ -95,7 +107,7 @@
 -->
 	 </authorgroup>
 
-	 <releaseinfo revision="2.28" role="review">
+	 <releaseinfo revision="1.10.1" role="review">
 	 </releaseinfo>
 
 	 <revhistory>
@@ -104,8 +116,15 @@
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber>
 		  <date>&date;</date>
 		  <revdescription>
-			 <para role="author">Paul Cutler</para>
+			 <para role="author">MATE Documentation Team</para>
 			 <para role="publisher">MATE Documentation Project</para>
+		  </revdescription>
+		</revision>
+		  <revnumber>&applet; Applet Manual V2.7;</revnumber>
+		  <date>&date;</date>
+		  <revdescription>
+			 <para role="author">Paul Cutler</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -113,7 +132,7 @@
 		  <date>&date;</date>
 		  <revdescription>
 			 <para role="author">Paul Cutler</para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -121,7 +140,7 @@
 		  <date>February 2004</date>
 		  <revdescription>
 			 <para role="author">Sun Microsystems</para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -129,7 +148,7 @@
 		  <date>September 2003</date>
 		  <revdescription>
 			 <para role="author">Sun Microsystems</para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -137,7 +156,7 @@
 		  <date>January 2003</date>
 		  <revdescription>
 			 <para role="author">Sun Microsystems</para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -145,7 +164,7 @@
 		  <date>August 2002</date>
 		  <revdescription>
 			 <para role="author">Sun Microsystems</para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -153,7 +172,7 @@
 		  <date>June 2002</date>
 		  <revdescription>
 			 <para role="author">Sun Microsystems</para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -161,7 +180,7 @@
 		  <date>March 2002</date>
 		  <revdescription>
 			 <para role="author">Sun Microsystems</para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision>
@@ -170,7 +189,7 @@
 		  <revdescription>
 			 <para role="author">Dan Mueth
 				<email>d-mueth@uchicago.edu</email></para>
-			 <para role="publisher">MATE Documentation Project</para>
+			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 	 </revhistory>
