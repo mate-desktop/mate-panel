@@ -32,7 +32,8 @@
 #include "na-tray.h"
 
 #define ICON_SPACING 1
-#define MIN_BOX_SIZE 3
+#define MIN_TABLE_SIZE 3
+#define MIN_ICON_SIZE 26
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 #define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
@@ -52,7 +53,7 @@ struct _NaTrayPrivate
   GdkScreen   *screen;
   TraysScreen *trays_screen;
 
-  GtkWidget *box;
+  GtkWidget *table;
   GtkWidget *frame;
 
   guint idle_redraw_id;
@@ -200,7 +201,7 @@ find_icon_position (NaTray    *tray,
   role_position = find_role_position (role);
   g_object_set_data (G_OBJECT (icon), "role-position", GINT_TO_POINTER (role_position));
 
-  children = gtk_container_get_children (GTK_CONTAINER (priv->box));
+  children = gtk_container_get_children (GTK_CONTAINER (priv->table));
   for (l = g_list_last (children); l; l = l->prev)
     {
       GtkWidget *child = l->data;
@@ -222,6 +223,92 @@ find_icon_position (NaTray    *tray,
   return position;
 }
 
+typedef struct _PackData {
+  GtkOrientation orient;
+  guint n_rows;
+  guint n_cols;
+  guint index;
+} PackData;
+
+static void repack_icon_with_data(GtkWidget *icon,
+                                  NaTray *tray,
+                                  PackData *data)
+{
+  NaTrayPrivate *priv;
+  priv = tray->priv;
+  guint row, col;
+  guint left, right, top, bottom;
+
+  /* row / col number depends on whether we are horizontal or vertical */
+  if (data->orient == GTK_ORIENTATION_HORIZONTAL) {
+    col = data->index / data->n_rows;
+    row = data->index %  data->n_rows;
+  } else {
+    row = data->index / data->n_cols;
+    col = data->index %  data->n_cols;
+  }
+  /* only update icon position if has changed from current */
+  gtk_container_child_get (GTK_CONTAINER (priv->table),
+                           icon,
+                           "left-attach", &left,
+                           "right-attach", &right,
+                           "top-attach", &top,
+                           "bottom-attach", &bottom,
+                           NULL);
+  if (left != col || right != col + 1 ||
+      top != row || bottom != row + 1)
+  {
+    gtk_container_child_set (GTK_CONTAINER (priv->table),
+                             icon,
+                             "left-attach", col,
+                             "right-attach", col + 1,
+                             "top-attach", row,
+                             "bottom-attach", row + 1,
+                             NULL);
+  }
+  /* increment to index of next icon */
+  data->index++;
+}
+
+static void
+repack_icon_table(TraysScreen *trays_screen)
+{
+  NaTray *tray;
+  NaTrayPrivate *priv;
+  guint rows, cols;
+  PackData pack_data;
+
+  tray = get_tray (trays_screen);
+  if (tray == NULL)
+    return;
+
+  priv = tray->priv;
+
+  if (trays_screen->icon_table)
+  {
+    if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
+      rows = MAX (1, GTK_WIDGET (tray)->allocation.height / MIN_ICON_SIZE);
+      cols = MAX (1, g_hash_table_size (trays_screen->icon_table) / rows);
+      if (g_hash_table_size (trays_screen->icon_table) % rows)
+        cols++;
+    } else {
+      cols = MAX (1, GTK_WIDGET (tray)->allocation.width / MIN_ICON_SIZE);
+      rows = MAX (1, g_hash_table_size (trays_screen->icon_table) / cols);
+      if (g_hash_table_size (trays_screen->icon_table) % cols)
+        rows++;
+    }
+    gtk_table_resize (GTK_TABLE (priv->table), rows, cols);
+    pack_data.n_rows = rows;
+    pack_data.n_cols = cols;
+    pack_data.orient = priv->orientation;
+    pack_data.index = 0;
+
+    g_hash_table_foreach (trays_screen->icon_table,
+                         (GHFunc)repack_icon_with_data,
+                         &pack_data);
+  }
+}
+
 static void
 tray_added (NaTrayManager *manager,
             GtkWidget     *icon,
@@ -229,7 +316,7 @@ tray_added (NaTrayManager *manager,
 {
   NaTray *tray;
   NaTrayPrivate *priv;
-  int position;
+  guint rows, cols;
 
   tray = get_tray (trays_screen);
   if (tray == NULL)
@@ -241,9 +328,23 @@ tray_added (NaTrayManager *manager,
 
   g_hash_table_insert (trays_screen->icon_table, icon, tray);
 
-  position = find_icon_position (tray, icon);
-  gtk_box_pack_start (GTK_BOX (priv->box), icon, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (priv->box), icon, position);
+  /* append to table */
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
+    rows = MAX (1, GTK_WIDGET (tray)->allocation.height / MIN_ICON_SIZE);
+    cols = MAX (1, g_hash_table_size (trays_screen->icon_table) / rows);
+    if (g_hash_table_size (trays_screen->icon_table) % rows)
+      cols++;
+  } else {
+    cols = MAX (1, GTK_WIDGET (tray)->allocation.width / MIN_ICON_SIZE);
+    rows = MAX (1, g_hash_table_size (trays_screen->icon_table) / cols);
+    if (g_hash_table_size (trays_screen->icon_table) % cols)
+      rows++;
+  }
+  gtk_table_resize (GTK_TABLE (priv->table), rows, cols);
+  gtk_table_attach_defaults (GTK_TABLE (priv->table),
+                             icon,
+                             cols - 1, cols,
+                             rows - 1, rows);
 
   gtk_widget_show (icon);
 }
@@ -263,9 +364,10 @@ tray_removed (NaTrayManager *manager,
   priv = tray->priv;
   g_assert (tray->priv->trays_screen == trays_screen);
 
-  gtk_container_remove (GTK_CONTAINER (priv->box), icon);
-
   g_hash_table_remove (trays_screen->icon_table, icon);
+  repack_icon_table (trays_screen);
+  gtk_container_remove (GTK_CONTAINER (priv->table), icon);
+
   /* this will also destroy the tip associated to this icon */
   g_hash_table_remove (trays_screen->tip_table, icon);
 }
@@ -508,8 +610,6 @@ update_size_and_orientation (NaTray *tray)
 {
   NaTrayPrivate *priv = tray->priv;
 
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (priv->box), priv->orientation);
-
   /* This only happens when setting the property during object construction */
   if (!priv->trays_screen)
     return;
@@ -525,13 +625,15 @@ update_size_and_orientation (NaTray *tray)
   switch (priv->orientation)
     {
     case GTK_ORIENTATION_VERTICAL:
-      /* Give box a min size so the frame doesn't look dumb */
-      gtk_widget_set_size_request (priv->box, MIN_BOX_SIZE, -1);
+      /* Give table a min size so the frame doesn't look dumb */
+      gtk_widget_set_size_request (priv->table, MIN_TABLE_SIZE, -1);
       break;
     case GTK_ORIENTATION_HORIZONTAL:
-      gtk_widget_set_size_request (priv->box, -1, MIN_BOX_SIZE);
+      gtk_widget_set_size_request (priv->table, -1, MIN_TABLE_SIZE);
       break;
     }
+
+  repack_icon_table (priv->trays_screen);
 }
 
 /* Children with alpha channels have been set to be composited by calling
@@ -579,19 +681,19 @@ static void
 na_tray_draw_box (GtkWidget *box,
                   cairo_t   *cr)
 #else
-na_tray_expose_box (GtkWidget      *box,
-                    GdkEventExpose *event)
+na_tray_expose_table (GtkWidget      *table,
+                      GdkEventExpose *event)
 #endif
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-  gtk_container_foreach (GTK_CONTAINER (box), na_tray_draw_icon, cr);
+  gtk_container_foreach (GTK_CONTAINER (table), na_tray_draw_icon, cr);
 #else
-  cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (box));
+  cairo_t *cr = gdk_cairo_create (table->window);
 
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  gtk_container_foreach (GTK_CONTAINER (box), na_tray_expose_icon, cr);
+  gtk_container_foreach (GTK_CONTAINER (table), na_tray_expose_icon, cr);
 
   cairo_destroy (cr);
 #endif
@@ -611,18 +713,18 @@ na_tray_init (NaTray *tray)
   gtk_container_add (GTK_CONTAINER (tray), priv->frame);
   gtk_widget_show (priv->frame);
 
+  priv->table = gtk_table_new (0, 0, TRUE);
 #if GTK_CHECK_VERSION (3, 0, 0)
-  priv->box = gtk_box_new (priv->orientation, ICON_SPACING);
-  g_signal_connect (priv->box, "draw",
-                    G_CALLBACK (na_tray_draw_box), NULL);
+  g_signal_connect (priv->table, "draw",
+                    G_CALLBACK (na_tray_draw_table), NULL);
 #else
-  priv->box = g_object_new (na_box_get_type (), NULL);
-  g_signal_connect (priv->box, "expose-event",
-                    G_CALLBACK (na_tray_expose_box), tray);
-  gtk_box_set_spacing (GTK_BOX (priv->box), ICON_SPACING);
+  g_signal_connect (priv->table, "expose-event",
+                    G_CALLBACK (na_tray_expose_table), tray);
 #endif
-  gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
-  gtk_widget_show (priv->box);
+  gtk_table_set_row_spacings (GTK_TABLE (priv->table), ICON_SPACING);
+  gtk_table_set_col_spacings (GTK_TABLE (priv->table), ICON_SPACING);
+  gtk_container_add (GTK_CONTAINER (priv->frame), priv->table);
+  gtk_widget_show (priv->table);
 }
 
 static GObject *
@@ -805,8 +907,12 @@ static void
 na_tray_size_allocate (GtkWidget        *widget,
                        GtkAllocation    *allocation)
 {
+  NaTray *tray = NA_TRAY (widget);
+
+  widget->allocation = *allocation;
   gtk_widget_size_allocate (gtk_bin_get_child (GTK_BIN (widget)), allocation);
   gtk_widget_set_allocation (widget, allocation);
+  repack_icon_table (tray->priv->trays_screen);
 }
 
 static void
@@ -888,7 +994,7 @@ idle_redraw_cb (NaTray *tray)
 {
   NaTrayPrivate *priv = tray->priv;
 
-  gtk_container_foreach (GTK_CONTAINER (priv->box), (GtkCallback)na_tray_child_force_redraw, tray);
+  gtk_container_foreach (GTK_CONTAINER (priv->table), (GtkCallback)na_tray_child_force_redraw, tray);
   
   priv->idle_redraw_id = 0;
 
