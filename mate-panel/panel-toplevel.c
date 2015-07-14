@@ -3117,9 +3117,6 @@ static void
 panel_toplevel_check_resize (GtkContainer *container)
 {
 	GtkAllocation   allocation;
-#if !GTK_CHECK_VERSION(3, 0, 0)
-	GtkAllocation   widget_allocation;
-#endif
 	GtkRequisition  requisition;
 	GtkWidget      *widget;
 
