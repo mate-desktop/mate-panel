@@ -34,9 +34,6 @@
 
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
-#include <gdk/gdkkeysyms-compat.h>
-#endif
 
 #include <libmate-desktop/mate-aboutdialog.h>
 
@@ -246,12 +243,12 @@ static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* even
 
 	switch (event->keyval)
 	{
-		case GDK_KP_Enter:
-		case GDK_ISO_Enter:
-		case GDK_3270_Enter:
-		case GDK_Return:
-		case GDK_space:
-		case GDK_KP_Space:
+		case GDK_KEY_KP_Enter:
+		case GDK_KEY_ISO_Enter:
+		case GDK_KEY_3270_Enter:
+		case GDK_KEY_Return:
+		case GDK_KEY_space:
+		case GDK_KEY_KP_Space:
 			selector = WNCK_SELECTOR(window_menu->selector);
 			/*
 			 * We need to call _gtk_menu_shell_activate() here as is done in

@@ -30,9 +30,6 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
-#include <gdk/gdkkeysyms-compat.h>
-#endif
 #include <libmate-desktop/mate-gsettings.h>
 
 
@@ -1503,8 +1500,8 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 	GtkWidget *active_menu_item = NULL;
 #endif
 
-	if ((event->keyval == GDK_Menu) ||
-	    (event->keyval == GDK_F10 &&
+	if ((event->keyval == GDK_KEY_Menu) ||
+	    (event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 

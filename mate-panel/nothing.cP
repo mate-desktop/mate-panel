@@ -7,7 +7,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #if GTK_CHECK_VERSION (3, 0, 0)
-#include <gdk/gdkkeysyms-compat.h>
 #define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
 #endif
 #include <canberra-gtk.h>
@@ -1177,20 +1176,20 @@ static gboolean
 inv_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	switch (event->keyval) {
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 	case GDK_Pointer_Left:
 		inv_left_pressed = TRUE;
 		inv_left_released = FALSE;
 		return TRUE;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 	case GDK_Pointer_Right:
 		inv_right_pressed = TRUE;
 		inv_right_released = FALSE;
 		return TRUE;
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		inv_fire_pressed = TRUE;
 		inv_fire_released = FALSE;
 		return TRUE;
@@ -1204,26 +1203,26 @@ static gboolean
 inv_key_release (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	switch (event->keyval) {
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 	case GDK_Pointer_Left:
 		inv_left_released = TRUE;
 		return TRUE;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 	case GDK_Pointer_Right:
 		inv_right_released = TRUE;
 		return TRUE;
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		inv_fire_released = TRUE;
 		return TRUE;
-	case GDK_q:
-	case GDK_Q:
+	case GDK_KEY_q:
+	case GDK_KEY_Q:
 		gtk_widget_destroy (widget);
 		return TRUE;
-	case GDK_p:
-	case GDK_P:
+	case GDK_KEY_p:
+	case GDK_KEY_P:
 		inv_paused = ! inv_paused;
 		inv_show_status ();
 		return TRUE;
@@ -1550,17 +1549,17 @@ panel_dialog_window_event (GtkWidget *window,
 	case GDK_KEY_PRESS:
 		if((event->key.state & GDK_CONTROL_MASK) && foo < 4) {
 			switch (event->key.keyval) {
-			case GDK_r:
-			case GDK_R:
+			case GDK_KEY_r:
+			case GDK_KEY_R:
 				if(foo == 3) { doblah (window); } foo = 0; break;
-			case GDK_a:
-			case GDK_A:
+			case GDK_KEY_a:
+			case GDK_KEY_A:
 				if(foo == 2) { foo++; } else { foo = 0; } break;
-			case GDK_e:
-			case GDK_E:
+			case GDK_KEY_e:
+			case GDK_KEY_E:
 				if(foo == 1) { foo++; } else { foo = 0; } break;
-			case GDK_f:
-			case GDK_F:
+			case GDK_KEY_f:
+			case GDK_KEY_F:
 				if(foo == 0) { foo++; } else { foo = 0; } break;
 			default:
 				foo = 0;

@@ -33,9 +33,6 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
-#include <gdk/gdkkeysyms-compat.h>
-#endif
 #include <glib/gi18n.h>
 
 #include "panel-profile.h"
@@ -868,20 +865,20 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 	gdk_window_get_pointer (root_window, &new_x, &new_y, NULL);
 
 	switch (keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
 		new_y -= increment;
 		break;
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 		new_x -= increment;
 		break;
-	case GDK_Down:
-	case GDK_KP_Down:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
 		new_y += increment;
 		break;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		new_x += increment;
 		break;
 	default:
@@ -916,20 +913,20 @@ static gboolean panel_toplevel_move_keyboard_expanded(PanelToplevel* toplevel, G
 	PanelOrientation new_orientation;
 
 	switch (event->keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
 		new_orientation = PANEL_ORIENTATION_TOP;
 		break;
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 		new_orientation = PANEL_ORIENTATION_LEFT;
 		break;
-	case GDK_Down:
-	case GDK_KP_Down:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
 		new_orientation = PANEL_ORIENTATION_BOTTOM;
 		break;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		new_orientation = PANEL_ORIENTATION_RIGHT;
 		break;
 	default:
@@ -947,26 +944,26 @@ static gboolean panel_toplevel_initial_resize_keypress(PanelToplevel* toplevel, 
 	PanelGrabOpType grab_op;
 
 	switch (event->keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
 		if (!(toplevel->priv->orientation & PANEL_HORIZONTAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_UP;
 		break;
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 		if (!(toplevel->priv->orientation & PANEL_VERTICAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_LEFT;
 		break;
-	case GDK_Down:
-	case GDK_KP_Down:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
 		if (!(toplevel->priv->orientation & PANEL_HORIZONTAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_DOWN;
 		break;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		if (!(toplevel->priv->orientation & PANEL_VERTICAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_RIGHT;
@@ -987,14 +984,14 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 	gboolean retval = FALSE;
 
 	switch (event->keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
-	case GDK_Left:
-	case GDK_KP_Left:
-	case GDK_Down:
-	case GDK_KP_Down:
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		switch (toplevel->priv->grab_op) {
 		case PANEL_GRAB_OP_MOVE:
 			if (toplevel->priv->expand)
@@ -1019,12 +1016,12 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 			break;
 		}
 		break;
-	case GDK_Escape:
+	case GDK_KEY_Escape:
 		panel_toplevel_cancel_grab_op (toplevel, event->time);
-	case GDK_Return: /* drop through*/
-	case GDK_KP_Enter:
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_Return: /* drop through*/
+	case GDK_KEY_KP_Enter:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		panel_toplevel_end_grab_op (toplevel, event->time);
 		retval = TRUE;
 	default: /* drop through*/
@@ -4805,7 +4802,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_TYPE_BOOLEAN,
 			      0);
 
-	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_F10, GDK_CONTROL_MASK,
                                      "popup_panel_menu", 0);
 
 	panel_bindings_set_entries (binding_set);

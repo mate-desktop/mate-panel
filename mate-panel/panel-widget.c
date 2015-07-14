@@ -13,7 +13,6 @@
 #include <gdk/gdkkeysyms.h>
 #if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
-#include <gdk/gdkkeysyms-compat.h>
 #endif
 
 #include <libpanel-util/panel-list.h>
@@ -152,10 +151,10 @@ add_tab_bindings (GtkBindingSet    *binding_set,
    	          GdkModifierType   modifiers,
 		  gboolean          next)
 {
-	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Tab, modifiers,
 				      "tab_move", 1,
 				      G_TYPE_BOOLEAN, next);
-  	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Tab, modifiers,
 				      "tab_move", 1,
 				      G_TYPE_BOOLEAN, next);
 }
@@ -165,16 +164,16 @@ add_move_bindings (GtkBindingSet    *binding_set,
 		   GdkModifierType   modifiers,
 		   const gchar      *name)
 {
-	gtk_binding_entry_add_signal (binding_set, GDK_Up, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Up, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_UP);
-	gtk_binding_entry_add_signal (binding_set, GDK_Down, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Down, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_DOWN);
-	gtk_binding_entry_add_signal (binding_set, GDK_Left, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Left, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_LEFT);
-	gtk_binding_entry_add_signal (binding_set, GDK_Right, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Right, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_RIGHT);
 }
@@ -199,19 +198,19 @@ add_all_move_bindings (PanelWidget *panel)
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_Escape, 0,
+                                      GDK_KEY_Escape, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_KP_Enter, 0,
+                                      GDK_KEY_KP_Enter, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_Return, 0,
+                                      GDK_KEY_Return, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_KP_Space, 0,
+                                      GDK_KEY_KP_Space, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_space, 0,
+                                      GDK_KEY_space, 0,
                                       "end_move", 0);
 
 	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->toplevel));
@@ -258,18 +257,18 @@ remove_tab_bindings (GtkBindingSet    *binding_set,
 		     GdkModifierType   modifiers,
 		     gboolean          next)
 {
-	gtk_binding_entry_remove (binding_set, GDK_Tab, modifiers);
-  	gtk_binding_entry_remove (binding_set, GDK_KP_Tab, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Tab, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Tab, modifiers);
 }
 
 static void
 remove_move_bindings (GtkBindingSet    *binding_set,
 		      GdkModifierType   modifiers)
 {
-	gtk_binding_entry_remove (binding_set, GDK_Up, modifiers);
-	gtk_binding_entry_remove (binding_set, GDK_Down, modifiers);
-	gtk_binding_entry_remove (binding_set, GDK_Left, modifiers);
-	gtk_binding_entry_remove (binding_set, GDK_Right, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Up, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Down, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Left, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Right, modifiers);
 }
 
 static void
@@ -291,11 +290,11 @@ remove_all_move_bindings (PanelWidget *panel)
 	remove_tab_bindings (binding_set, 0, TRUE);
 	remove_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 
-	gtk_binding_entry_remove (binding_set, GDK_Escape, 0);
-	gtk_binding_entry_remove (binding_set, GDK_KP_Enter, 0);
-	gtk_binding_entry_remove (binding_set, GDK_Return, 0);
-	gtk_binding_entry_remove (binding_set, GDK_KP_Space, 0);
-	gtk_binding_entry_remove (binding_set, GDK_space, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Escape, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Enter, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Return, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Space, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_space, 0);
 }
 
 static void

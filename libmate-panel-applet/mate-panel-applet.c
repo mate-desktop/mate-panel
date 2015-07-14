@@ -40,7 +40,6 @@
 #include <gtk/gtk.h>
 #if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h>
-#include <gdk/gdkkeysyms-compat.h>
 #endif
 #include <X11/Xatom.h>
 
@@ -1910,10 +1909,10 @@ add_tab_bindings (GtkBindingSet   *binding_set,
 		  GdkModifierType  modifiers,
 		  GtkDirectionType direction)
 {
-	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Tab, modifiers,
 				      "move_focus_out_of_applet", 1,
 				      GTK_TYPE_DIRECTION_TYPE, direction);
-	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Tab, modifiers,
 				      "move_focus_out_of_applet", 1,
 				      GTK_TYPE_DIRECTION_TYPE, direction);
 }
