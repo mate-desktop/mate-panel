@@ -53,7 +53,7 @@ struct _NaTrayPrivate
   GdkScreen   *screen;
   TraysScreen *trays_screen;
 
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *frame;
 
   guint idle_redraw_id;
@@ -201,7 +201,7 @@ find_icon_position (NaTray    *tray,
   role_position = find_role_position (role);
   g_object_set_data (G_OBJECT (icon), "role-position", GINT_TO_POINTER (role_position));
 
-  children = gtk_container_get_children (GTK_CONTAINER (priv->table));
+  children = gtk_container_get_children (GTK_CONTAINER (priv->grid));
   for (l = g_list_last (children); l; l = l->prev)
     {
       GtkWidget *child = l->data;
@@ -248,7 +248,7 @@ static void repack_icon_with_data(GtkWidget *icon,
     col = data->index %  data->n_cols;
   }
   /* only update icon position if has changed from current */
-  gtk_container_child_get (GTK_CONTAINER (priv->table),
+  gtk_container_child_get (GTK_CONTAINER (priv->grid),
                            icon,
                            "left-attach", &left,
                            "right-attach", &right,
@@ -258,7 +258,7 @@ static void repack_icon_with_data(GtkWidget *icon,
   if (left != col || right != col + 1 ||
       top != row || bottom != row + 1)
   {
-    gtk_container_child_set (GTK_CONTAINER (priv->table),
+    gtk_container_child_set (GTK_CONTAINER (priv->grid),
                              icon,
                              "left-attach", col,
                              "right-attach", col + 1,
@@ -297,7 +297,13 @@ repack_icon_table(TraysScreen *trays_screen)
       if (g_hash_table_size (trays_screen->icon_table) % cols)
         rows++;
     }
-    gtk_table_resize (GTK_TABLE (priv->table), rows, cols);
+
+#if GTK_CHECK_VERSION (3, 4, 0)
+    /* gtk grid resizes automatically */
+#else
+    gtk_table_resize (GTK_TABLE (priv->grid), rows, cols);
+#endif
+
     pack_data.n_rows = rows;
     pack_data.n_cols = cols;
     pack_data.orient = priv->orientation;
@@ -340,11 +346,20 @@ tray_added (NaTrayManager *manager,
     if (g_hash_table_size (trays_screen->icon_table) % cols)
       rows++;
   }
-  gtk_table_resize (GTK_TABLE (priv->table), rows, cols);
-  gtk_table_attach_defaults (GTK_TABLE (priv->table),
+
+#if GTK_CHECK_VERSION (3, 4, 0)
+  /* gtk grid resizes automatically */
+  gtk_grid_attach (GTK_GRID (priv->grid),
+                   icon,
+                   cols - 1, cols,
+                   rows - 1, rows);
+#else
+  gtk_table_resize (GTK_TABLE (priv->grid), rows, cols);
+  gtk_table_attach_defaults (GTK_TABLE (priv->grid),
                              icon,
                              cols - 1, cols,
                              rows - 1, rows);
+#endif
 
   gtk_widget_show (icon);
 }
@@ -366,7 +381,7 @@ tray_removed (NaTrayManager *manager,
 
   g_hash_table_remove (trays_screen->icon_table, icon);
   repack_icon_table (trays_screen);
-  gtk_container_remove (GTK_CONTAINER (priv->table), icon);
+  gtk_container_remove (GTK_CONTAINER (priv->grid), icon);
 
   /* this will also destroy the tip associated to this icon */
   g_hash_table_remove (trays_screen->tip_table, icon);
@@ -626,10 +641,10 @@ update_size_and_orientation (NaTray *tray)
     {
     case GTK_ORIENTATION_VERTICAL:
       /* Give table a min size so the frame doesn't look dumb */
-      gtk_widget_set_size_request (priv->table, MIN_TABLE_SIZE, -1);
+      gtk_widget_set_size_request (priv->grid, MIN_TABLE_SIZE, -1);
       break;
     case GTK_ORIENTATION_HORIZONTAL:
-      gtk_widget_set_size_request (priv->table, -1, MIN_TABLE_SIZE);
+      gtk_widget_set_size_request (priv->grid, -1, MIN_TABLE_SIZE);
       break;
     }
 
@@ -678,22 +693,22 @@ na_tray_expose_icon (GtkWidget *widget,
 
 static void
 #if GTK_CHECK_VERSION (3, 0, 0)
-na_tray_draw_box (GtkWidget *box,
+na_tray_draw_grid (GtkWidget *grid,
                   cairo_t   *cr)
 #else
-na_tray_expose_table (GtkWidget      *table,
+na_tray_expose_grid (GtkWidget      *grid,
                       GdkEventExpose *event)
 #endif
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-  gtk_container_foreach (GTK_CONTAINER (table), na_tray_draw_icon, cr);
+  gtk_container_foreach (GTK_CONTAINER (grid), na_tray_draw_icon, cr);
 #else
-  cairo_t *cr = gdk_cairo_create (table->window);
+  cairo_t *cr = gdk_cairo_create (grid->window);
 
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  gtk_container_foreach (GTK_CONTAINER (table), na_tray_expose_icon, cr);
+  gtk_container_foreach (GTK_CONTAINER (grid), na_tray_expose_icon, cr);
 
   cairo_destroy (cr);
 #endif
@@ -713,18 +728,30 @@ na_tray_init (NaTray *tray)
   gtk_container_add (GTK_CONTAINER (tray), priv->frame);
   gtk_widget_show (priv->frame);
 
-  priv->table = gtk_table_new (0, 0, TRUE);
-#if GTK_CHECK_VERSION (3, 0, 0)
-  g_signal_connect (priv->table, "draw",
-                    G_CALLBACK (na_tray_draw_table), NULL);
+#if GTK_CHECK_VERSION (3, 4, 0)
+  priv->grid = gtk_grid_new ();
 #else
-  g_signal_connect (priv->table, "expose-event",
-                    G_CALLBACK (na_tray_expose_table), tray);
+  priv->grid = gtk_table_new (0, 0, TRUE);
 #endif
-  gtk_table_set_row_spacings (GTK_TABLE (priv->table), ICON_SPACING);
-  gtk_table_set_col_spacings (GTK_TABLE (priv->table), ICON_SPACING);
-  gtk_container_add (GTK_CONTAINER (priv->frame), priv->table);
-  gtk_widget_show (priv->table);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+  g_signal_connect (priv->grid, "draw",
+                    G_CALLBACK (na_tray_draw_grid), NULL);
+#else
+  g_signal_connect (priv->grid, "expose-event",
+                    G_CALLBACK (na_tray_expose_grid), tray);
+#endif
+
+#if GTK_CHECK_VERSION (3, 4, 0)
+  gtk_grid_set_row_spacings (GTK_GRID (priv->grid), ICON_SPACING);
+  gtk_grid_set_col_spacings (GTK_GRID (priv->grid), ICON_SPACING);
+#else
+  gtk_table_set_row_spacings (GTK_TABLE (priv->grid), ICON_SPACING);
+  gtk_table_set_col_spacings (GTK_TABLE (priv->grid), ICON_SPACING);
+#endif
+
+  gtk_container_add (GTK_CONTAINER (priv->frame), priv->grid);
+  gtk_widget_show (priv->grid);
 }
 
 static GObject *
@@ -994,7 +1021,7 @@ idle_redraw_cb (NaTray *tray)
 {
   NaTrayPrivate *priv = tray->priv;
 
-  gtk_container_foreach (GTK_CONTAINER (priv->table), (GtkCallback)na_tray_child_force_redraw, tray);
+  gtk_container_foreach (GTK_CONTAINER (priv->grid), (GtkCallback)na_tray_child_force_redraw, tray);
   
   priv->idle_redraw_id = 0;
 
