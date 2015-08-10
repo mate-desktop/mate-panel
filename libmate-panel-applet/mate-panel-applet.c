@@ -2005,6 +2005,7 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	applet->priv->size   = 24;
 
 	applet->priv->panel_action_group = gtk_action_group_new ("PanelActions");
+	_MATE_PANEL_APPLET_SETUP_GETTEXT(FALSE);
 	gtk_action_group_set_translation_domain (applet->priv->panel_action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions (applet->priv->panel_action_group,
 				      menu_entries,
