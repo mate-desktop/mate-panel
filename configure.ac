@@ -236,7 +236,7 @@ AC_SUBST(X_LIBS)
 
 dnl X RANDR extension
 
-PKG_CHECK_MODULES(XRANDR, xrandr >= 1.2.0, have_randr=yes, have_randr=no)
+PKG_CHECK_MODULES(XRANDR, xrandr >= 1.3.0, have_randr=yes, have_randr=no)
 if test "x$have_randr" = "xyes"; then
   AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
 fi

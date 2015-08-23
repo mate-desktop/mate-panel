@@ -46,7 +46,6 @@ static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
 static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
-static gboolean       have_randr_1_3 = FALSE;
 static guint          reinit_id   = 0;
 
 #ifdef HAVE_RANDR
@@ -59,32 +58,30 @@ _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 	if (primary)
 		return output == primary;
 
-	if (have_randr_1_3) {
-		Atom           connector_type_atom;
-		Atom           actual_type;
-		int            actual_format;
-		unsigned long  nitems;
-		unsigned long  bytes_after;
-		unsigned char *prop;
-		char          *connector_type;
-		gboolean       retval;
+	Atom           connector_type_atom;
+	Atom           actual_type;
+	int            actual_format;
+	unsigned long  nitems;
+	unsigned long  bytes_after;
+	unsigned char *prop;
+	char          *connector_type;
+	gboolean       retval;
 
-		connector_type_atom = XInternAtom (xdisplay, "ConnectorType", False);
+	connector_type_atom = XInternAtom (xdisplay, "ConnectorType", False);
 
-		if (XRRGetOutputProperty (xdisplay, output, connector_type_atom,
-					  0, 100, False, False, None,
-					  &actual_type, &actual_format,
-					  &nitems, &bytes_after, &prop) == Success) {
-			if (actual_type == XA_ATOM && nitems == 1 && actual_format == 32) {
-				connector_type = XGetAtomName (xdisplay, prop[0]);
-				retval = g_strcmp0 (connector_type, "Panel") == 0;
-				XFree (connector_type);
-				return retval;
-			}
+	if (XRRGetOutputProperty (xdisplay, output, connector_type_atom,
+				  0, 100, False, False, None,
+				  &actual_type, &actual_format,
+				  &nitems, &bytes_after, &prop) == Success) {
+		if (actual_type == XA_ATOM && nitems == 1 && actual_format == 32) {
+			connector_type = XGetAtomName (xdisplay, prop[0]);
+			retval = g_strcmp0 (connector_type, "Panel") == 0;
+			XFree (connector_type);
+			return retval;
 		}
 	}
 
-	/* Pre-1.3 fallback:
+	/* Fallback (see https://bugs.freedesktop.org/show_bug.cgi?id=26736)
 	 * "LVDS" is the oh-so-intuitive name that X gives to laptop LCDs.
 	 * It can actually be LVDS0, LVDS-0, Lvds, etc.
 	 */
@@ -104,7 +101,6 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	RROutput            primary;
 	GArray             *geometries;
 	int                 i;
-	gboolean            driver_is_pre_randr_1_2;
 
 	if (!have_randr)
 		return FALSE;
@@ -135,48 +131,30 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	xdisplay = GDK_SCREEN_XDISPLAY (screen);
 	xroot = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
 
-#if (RANDR_MAJOR > 1 || (RANDR_MAJOR == 1 && RANDR_MINOR >= 3))
-	if (have_randr_1_3) {
-		resources = XRRGetScreenResourcesCurrent (xdisplay, xroot);
-		if (resources->noutput == 0) {
-			/* This might happen if nothing tried to get randr
-			 * resources from the server before, so we need an
-			 * active probe. See comment #27 in
-			 * https://bugzilla.gnome.org/show_bug.cgi?id=597101 */
-			XRRFreeScreenResources (resources);
-			resources = XRRGetScreenResources (xdisplay, xroot);
-		}
-	} else
+	resources = XRRGetScreenResourcesCurrent (xdisplay, xroot);
+	if (resources->noutput == 0) {
+		/* This might happen if nothing tried to get randr
+		 * resources from the server before, so we need an
+		 * active probe. See comment #27 in
+		 * https://bugzilla.gnome.org/show_bug.cgi?id=597101 */
+		XRRFreeScreenResources (resources);
 		resources = XRRGetScreenResources (xdisplay, xroot);
-#else
-	resources = XRRGetScreenResources (xdisplay, xroot);
-#endif
+	}
 
 	if (!resources)
 		return FALSE;
 
-	primary = None;
-#if (RANDR_MAJOR > 1 || (RANDR_MAJOR == 1 && RANDR_MINOR >= 3))
-	if (have_randr_1_3)
-		primary = XRRGetOutputPrimary (xdisplay, xroot);
-#endif
+	primary = XRRGetOutputPrimary (xdisplay, xroot);
 
 	geometries = g_array_sized_new (FALSE, FALSE,
 					sizeof (GdkRectangle),
 					resources->noutput);
-
-	driver_is_pre_randr_1_2 = FALSE;
 
 	for (i = 0; i < resources->noutput; i++) {
 		XRROutputInfo *output;
 
 		output = XRRGetOutputInfo (xdisplay, resources,
 					   resources->outputs[i]);
-
-		/* Drivers before RANDR 1.2 return "default" for the output
-		 * name */
-		if (g_strcmp0 (output->name, "default") == 0)
-			driver_is_pre_randr_1_2 = TRUE;
 
 		if (output->connection != RR_Disconnected &&
 		    output->crtc != 0) {
@@ -205,13 +183,6 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	}
 
 	XRRFreeScreenResources (resources);
-
-	if (driver_is_pre_randr_1_2) {
-		/* Drivers before RANDR 1.2 don't provide useful info about
-		 * outputs */
-		g_array_free (geometries, TRUE);
-		return FALSE;
-	}
 
 	if (geometries->len == 0) {
 		/* This can happen in at least one case:
@@ -418,7 +389,6 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 #endif
 
 	have_randr = FALSE;
-	have_randr_1_3 = FALSE;
 
 #ifdef HAVE_RANDR
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
@@ -431,11 +401,8 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 		int major, minor;
 
 		XRRQueryVersion (xdisplay, &major, &minor);
-		if ((major == 1 && minor >= 2) || major > 1)
-			have_randr = TRUE;
-
 		if ((major == 1 && minor >= 3) || major > 1)
-			have_randr_1_3 = TRUE;
+			have_randr = TRUE;
 	}
 #endif
 }
