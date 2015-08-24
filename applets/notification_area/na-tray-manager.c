@@ -28,12 +28,8 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
-#elif defined (GDK_WINDOWING_WIN32)
-#include <gdk/gdkwin32.h>
-#endif
 
 #include "na-marshal.h"
 
@@ -191,14 +187,6 @@ na_tray_manager_class_init (NaTrayManagerClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
-
-#if defined (GDK_WINDOWING_X11)
-  /* Nothing */
-#elif defined (GDK_WINDOWING_WIN32)
-  g_warning ("Port NaTrayManager to Win32");
-#else
-  g_warning ("Port NaTrayManager to this GTK+ backend");
-#endif
 }
 
 static void
