@@ -362,7 +362,9 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				 const char     *command,
 				 const char     *locale_command)
 {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GdkScreen  *screen;
+#endif
 	gboolean    result;
 	GError     *error = NULL;
 	char      **argv;
@@ -371,8 +373,6 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 
 	if (!command_is_executable (locale_command, &argc, &argv))
 		return FALSE;
-
-	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
 
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
 		mate_desktop_prepend_terminal_to_vector (&argc, &argv);
@@ -387,6 +387,8 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				&pid,
 				&error);
 #else
+	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
+
 	result = gdk_spawn_on_screen (screen,
 				      NULL, /* working directory */
 				      argv,

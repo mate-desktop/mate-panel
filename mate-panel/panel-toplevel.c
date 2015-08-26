@@ -496,9 +496,9 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
 
-	cursor = gdk_cursor_new (cursor_type);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	display = gdk_window_get_display (window);
+	cursor = gdk_cursor_new_for_display (display, cursor_type);
+#if GTK_CHECK_VERSION (3, 0, 0)
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
 	keyboard = gdk_device_get_associated_device (pointer);
@@ -857,12 +857,20 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 {
 	GdkScreen *screen;
 	GdkWindow *root_window;
+#if GTK_CHECK_VERSION(3, 0, 0)
+	GdkDevice      *device;
+#endif
 	int        new_x, new_y;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	root_window = gdk_screen_get_root_window (screen);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET(root_window))));
+	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(root_window)), device, &new_x, &new_y, NULL);
+#else
 	gdk_window_get_pointer (root_window, &new_x, &new_y, NULL);
+#endif
 
 	switch (keyval) {
 	case GDK_KEY_Up:
@@ -1167,6 +1175,28 @@ static void panel_toplevel_hide_button_clicked(PanelToplevel* toplevel, GtkButto
 		panel_toplevel_unhide (toplevel);
 }
 
+static void
+set_arrow_type (GtkImage     *image,
+                GtkArrowType  arrow_type)
+{
+  switch (arrow_type)
+    {
+    case GTK_ARROW_NONE:
+    case GTK_ARROW_DOWN:
+      gtk_image_set_from_icon_name (image, "pan-down-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    case GTK_ARROW_UP:
+      gtk_image_set_from_icon_name (image, "pan-up-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    case GTK_ARROW_LEFT:
+      gtk_image_set_from_icon_name (image, "pan-start-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    case GTK_ARROW_RIGHT:
+      gtk_image_set_from_icon_name (image, "pan-end-symbolic", GTK_ICON_SIZE_BUTTON);
+      break;
+    }
+}
+
 static GtkWidget *
 panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 				GtkArrowType   arrow_type,
@@ -1207,8 +1237,18 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 		break;
 	}
 
+#if GTK_CHECK_VERSION(3, 14, 0)
+	arrow = gtk_image_new ();
+	set_arrow_type (GTK_IMAGE (arrow), arrow_type);
+#else
 	arrow = gtk_arrow_new (arrow_type, GTK_SHADOW_NONE);
+#endif
+#if GTK_CHECK_VERSION(3, 12, 0)
+	gtk_widget_set_margin_start(GTK_WIDGET(arrow), 0);
+	gtk_widget_set_margin_end(GTK_WIDGET(arrow), 0);
+#else
 	gtk_misc_set_padding (GTK_MISC (arrow), 0, 0);
+#endif
 	gtk_container_add (GTK_CONTAINER (button), arrow);
 	gtk_widget_show (arrow);
 
@@ -2349,7 +2389,7 @@ calculate_minimum_height (GtkWidget        *widget,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	state = gtk_widget_get_state_flags (widget);
 	style_context = gtk_widget_get_style_context (widget);
-	font_desc = gtk_style_context_get_font (style_context, state);
+	gtk_style_context_get(style_context, state, GTK_STYLE_PROPERTY_FONT, &font_desc, NULL);
 
 	pango_context = gtk_widget_get_pango_context (widget);
 	metrics = pango_context_get_metrics (pango_context,
@@ -2749,7 +2789,11 @@ panel_toplevel_reverse_arrow (PanelToplevel *toplevel,
 
 	g_object_set_data (G_OBJECT (button), "arrow-type", GINT_TO_POINTER (arrow_type));
 
+#if GTK_CHECK_VERSION(3, 14, 0)
+	set_arrow_type (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))), arrow_type);
+#else
 	gtk_arrow_set (GTK_ARROW (gtk_bin_get_child (GTK_BIN (button))), arrow_type, GTK_SHADOW_NONE);
+#endif
 }
 
 static void
