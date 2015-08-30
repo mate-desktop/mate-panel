@@ -876,6 +876,17 @@ create_calendar (ClockData *cd)
 			  G_CALLBACK (delete_event), cd->panel_button);
 	g_signal_connect (window, "key_press_event",
 			  G_CALLBACK (close_on_escape), cd->panel_button);
+			  
+        /*Name this window so the default theme can be overridden in panel theme,
+        otherwise default GtkWindow bg will be pulled in and override transparency */ 
+        gtk_widget_set_name(window, "MatePanelPopupWindow");
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+        /* Make transparency possible in the theme */              
+        GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(window));
+        GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+        gtk_widget_set_visual(GTK_WIDGET(window), visual);
+#endif
 
 	return window;
 }
