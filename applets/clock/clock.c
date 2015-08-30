@@ -863,8 +863,9 @@ create_calendar (ClockData *cd)
 				      cd->orient == MATE_PANEL_APPLET_ORIENT_UP);
 	g_free (prefs_path);
 
-	calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
-					cd->showweek);
+/*HACK-disable week numbers as they are confusing with transparent themes */
+	/*calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
+					cd->showweek); */
 
         gtk_window_set_screen (GTK_WINDOW (window),
 			       gtk_widget_get_screen (cd->applet));
