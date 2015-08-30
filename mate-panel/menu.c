@@ -1016,9 +1016,8 @@ create_fake_menu (MateMenuTreeDirectory *directory)
 
 	g_signal_connect (menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-
-	return menu;
-}
+			  
+			  
 /*HACK Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 #if GTK_CHECK_VERSION (3, 0, 0) 
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
@@ -1026,6 +1025,8 @@ create_fake_menu (MateMenuTreeDirectory *directory)
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
 #endif
+	return menu;
+}
 GtkWidget *
 panel_image_menu_item_new (void)
 {
