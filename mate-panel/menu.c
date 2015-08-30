@@ -1019,7 +1019,13 @@ create_fake_menu (MateMenuTreeDirectory *directory)
 
 	return menu;
 }
-
+/*HACK Fix any failures of compiz/other wm's to communicate with gtk for transparency */
+#if GTK_CHECK_VERSION (3, 0, 0) 
+	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
+	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
+	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
+#endif
 GtkWidget *
 panel_image_menu_item_new (void)
 {
@@ -1327,7 +1333,14 @@ create_applications_menu (const char *menu_file,
 			  G_CALLBACK (remove_matemenu_tree_monitor), tree);
 
 	matemenu_tree_unref (tree);
-
+	
+/*HACK Fix any failures of compiz/other wm's to communicate with gtk for transparency */
+#if GTK_CHECK_VERSION (3, 0, 0) 
+	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
+	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
+	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
+#endif
 	return menu;
 }
 
