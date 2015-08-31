@@ -439,7 +439,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	}
 
 #ifdef WNCK_CHECK_VERSION
-#if WNCK_CHECK_VERSION (2, 91, 6)
+#if WNCK_CHECK_VERSION (3, 0, 0)
 	tasklist->tasklist = wnck_tasklist_new();
 #else
 	tasklist->tasklist = wnck_tasklist_new(NULL);

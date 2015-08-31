@@ -531,7 +531,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	}
 
 #ifdef WNCK_CHECK_VERSION
-#if WNCK_CHECK_VERSION (2, 91, 6)
+#if WNCK_CHECK_VERSION (3, 0, 0)
 	pager->pager = wnck_pager_new();
 #else
 	pager->pager = wnck_pager_new(NULL);
