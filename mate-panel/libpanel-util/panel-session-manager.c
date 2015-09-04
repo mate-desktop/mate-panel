@@ -65,9 +65,9 @@ panel_session_manager_constructor (GType                  type,
 
 
 	panel_dbus_service_define_service (PANEL_DBUS_SERVICE (obj),
-					   "org.mate.SessionManager",
-					   "/org/mate/SessionManager",
-					   "org.mate.SessionManager");
+					   "org.gnome.SessionManager",
+					   "/org/gnome/SessionManager",
+					   "org.gnome.SessionManager");
 
 	error = NULL;
 	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (obj),
