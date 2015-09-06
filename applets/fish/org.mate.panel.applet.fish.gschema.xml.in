@@ -1,0 +1,34 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+  <schema id="org.mate.panel.applet.fish">
+    <key name="name" type="s">
+      <default>'Wanda'</default>
+      <summary>The fish's name</summary>
+      <description>A fish without a name is a pretty dull fish. Bring your fish to life by naming him.</description>
+    </key>
+    <key name="image" type="s">
+      <default>'wanda.png'</default>
+      <summary>The fish's animation pixmap</summary>
+      <description>This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory.</description>
+    </key>
+    <key name="command" type="s">
+      <default>'fortune'</default>
+      <summary>Command to execute on click</summary>
+      <description>This key specifies the command that will be tried to execute when the fish is clicked.</description>
+    </key>
+    <key name="frames" type="i">
+      <default>8</default>
+      <summary>Frames in fish's animation</summary>
+      <description>This key specifies the number of frames that will be displayed in the fish's animation.</description>
+    </key>
+    <key name="speed" type="d">
+      <default>0.3</default>
+      <summary>Pause per frame</summary>
+      <description>This key specifies the number of seconds each frame will be displayed.</description>
+    </key>
+    <key name="rotate" type="b">
+      <default>false</default>
+      <summary>Rotate on vertical panels</summary>
+      <description>If true, the fish's animation will be displayed rotated on vertical panels.</description>
+    </key>
+  </schema>
+</schemalist>

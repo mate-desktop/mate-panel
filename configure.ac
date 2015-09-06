@@ -21,7 +21,7 @@ AC_SUBST(LIB_MATE_PANEL_APPLET_LT_VERSION)
 AM_MAINTAINER_MODE
 MATE_MAINTAINER_MODE_DEFINES
 
-IT_PROG_INTLTOOL([0.40.0])
+IT_PROG_INTLTOOL([0.50.1])
 
 AC_PROG_CC
 AC_STDC_HEADERS
@@ -308,6 +308,10 @@ AC_SUBST(REBUILD)
 AC_OUTPUT([
 Makefile
 data/Makefile
+data/org.mate.panel.gschema.xml
+data/org.mate.panel.menubar.gschema.xml
+data/org.mate.panel.object.gschema.xml
+data/org.mate.panel.toplevel.gschema.xml
 icons/Makefile
 icons/16x16/Makefile
 icons/22x22/Makefile
@@ -326,10 +330,14 @@ libmate-panel-applet/Makefile
 po/Makefile.in
 applets/Makefile
 applets/clock/Makefile
+applets/clock/org.mate.panel.applet.clock.gschema.xml
 applets/clock/pixmaps/Makefile
 applets/fish/Makefile
+applets/fish/org.mate.panel.applet.fish.gschema.xml
 applets/notification_area/Makefile
 applets/wncklet/Makefile
+applets/wncklet/org.mate.panel.applet.window-list.gschema.xml
+applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml
 doc/Makefile
 doc/reference/Makefile
 doc/reference/mate-panel-applet/Makefile
