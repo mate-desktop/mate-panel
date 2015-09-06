@@ -1,0 +1,24 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+  <schema id="org.mate.panel.applet.workspace-switcher">
+    <key name="display-workspace-names" type="b">
+      <default>false</default>
+      <summary>Display workspace names</summary>
+      <description>If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Marco.</description>
+    </key>
+    <key name="display-all-workspaces" type="b">
+      <default>true</default>
+      <summary>Display all workspaces</summary>
+      <description>If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace.</description>
+    </key>
+    <key name="num-rows" type="i">
+      <default>1</default>
+      <summary>Rows in workspace switcher</summary>
+      <description>This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true.</description>
+    </key>
+    <key name="wrap-workspaces" type="b">
+      <default>false</default>
+      <summary>Wrap around on scroll</summary>
+      <description>If true, the workspace switcher will allow wrap-around, which means switching from the first to the last workspace and vice versa via scrolling.</description>
+    </key>
+  </schema>
+</schemalist>

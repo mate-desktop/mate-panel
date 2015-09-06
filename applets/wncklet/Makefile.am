@@ -84,21 +84,19 @@ xmlui_DATA  = \
 	showdesktop-menu.xml \
 	window-list-menu.xml
 
-gsettings_SCHEMAS = \
-	org.mate.panel.applet.window-list.gschema.xml \
-	org.mate.panel.applet.workspace-switcher.gschema.xml
+wncklet_gschemas_in = \
+	org.mate.panel.applet.window-list.gschema.xml.in \
+	org.mate.panel.applet.workspace-switcher.gschema.xml.in
+gsettings_SCHEMAS = $(wncklet_gschemas_in:.xml.in=.xml)
+
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
-
-%.gschema.xml.in: %.gschema.xml.in.in Makefile
-	$(AM_V_GEN) $(SED) -e 's^\@GETTEXT_PACKAGE\@^$(GETTEXT_PACKAGE)^g' < $< > $@
 
 EXTRA_DIST = \
 	org.mate.panel.Wncklet.mate-panel-applet.in.in \
 	$(service_in_files) \
 	$(xmlui_DATA) \
-	org.mate.panel.applet.window-list.gschema.xml.in.in \
-	org.mate.panel.applet.workspace-switcher.gschema.xml.in.in \
+	$(wncklet_gschemas_in) \
 	$(ui_DATA)
 
 CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)

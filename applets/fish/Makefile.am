@@ -77,12 +77,10 @@ ui_DATA = fish.ui
 xmluidir = $(datadir)/mate-panel/ui
 xmlui_DATA = fish-menu.xml
 
-gsettings_SCHEMAS = org.mate.panel.applet.fish.gschema.xml
+fish_gschemas_in = org.mate.panel.applet.fish.gschema.xml.in
+gsettings_SCHEMAS = $(fish_gschemas_in:.xml.in=.xml)
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
-
-%.gschema.xml.in: %.gschema.xml.in.in Makefile
-	$(AM_V_GEN) $(SED) -e 's^\@GETTEXT_PACKAGE\@^$(GETTEXT_PACKAGE)^g' < $< > $@
 
 EXTRA_DIST = \
 	wanda.svg \
@@ -91,7 +89,7 @@ EXTRA_DIST = \
 	$(service_in_files) \
 	$(ui_DATA) \
 	$(xmlui_DATA) \
-	$(gsettings_SCHEMAS).in.in
+	$(fish_gschemas_in)
 
 CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)
 

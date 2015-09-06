@@ -155,16 +155,15 @@ ui_DATA		= clock.ui
 xmluidir 	= $(datadir)/mate-panel/ui
 xmlui_DATA	= clock-menu.xml
 
-gsettings_SCHEMAS = org.mate.panel.applet.clock.gschema.xml
+clock_gschemas_in = org.mate.panel.applet.clock.gschema.xml.in
+gsettings_SCHEMAS = $(clock_gschemas_in:.xml.in=.xml)
+
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
-%.gschema.xml.in: %.gschema.xml.in.in Makefile
-	$(AM_V_GEN) $(SED) -e 's^\@GETTEXT_PACKAGE\@^$(GETTEXT_PACKAGE)^g' < $< > $@
-
 EXTRA_DIST =						\
 	org.mate.panel.ClockApplet.mate-panel-applet.in.in	\
-	$(gsettings_SCHEMAS).in.in	\
+	$(clock_gschemas_in)				\
 	$(xmlui_DATA)					\
 	$(ui_DATA)					\
 	clock-marshallers.list				\
