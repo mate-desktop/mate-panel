@@ -178,6 +178,7 @@ struct _ClockData {
 
         GtkWidget *showseconds_check;
         GtkWidget *showdate_check;
+        GtkWidget *showweeks_check;
         GtkWidget *custom_hbox;
         GtkWidget *custom_label;
         GtkWidget *custom_entry;
@@ -3056,6 +3057,11 @@ fill_prefs_window (ClockData *cd)
 	g_settings_bind (cd->settings, KEY_SHOW_SECONDS, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
+        /* Set the "Show Week Numbers" checkbox */
+	widget = _clock_get_widget (cd, "weeks_check");
+	g_settings_bind (cd->settings, KEY_SHOW_WEEK, widget, "active",
+	G_SETTINGS_BIND_DEFAULT);
+	 
 	/* Set the "Show weather" checkbox */
 	widget = _clock_get_widget (cd, "weather_check");
 	g_settings_bind (cd->settings, KEY_SHOW_WEATHER, widget, "active",
