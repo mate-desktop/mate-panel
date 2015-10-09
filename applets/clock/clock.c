@@ -178,6 +178,7 @@ struct _ClockData {
 
         GtkWidget *showseconds_check;
         GtkWidget *showdate_check;
+         GtkWidget *showweeks_check;
         GtkWidget *custom_hbox;
         GtkWidget *custom_label;
         GtkWidget *custom_entry;
@@ -864,7 +865,7 @@ create_calendar (ClockData *cd)
 	g_free (prefs_path);
 
 	calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
-					cd->showweek);
+					cd->showweek); 
 
         gtk_window_set_screen (GTK_WINDOW (window),
 			       gtk_widget_get_screen (cd->applet));
@@ -876,6 +877,22 @@ create_calendar (ClockData *cd)
 			  G_CALLBACK (delete_event), cd->panel_button);
 	g_signal_connect (window, "key_press_event",
 			  G_CALLBACK (close_on_escape), cd->panel_button);
+			  
+        /*HACK*/
+        /*Name this window so the default theme can be overridden in panel theme,
+         otherwise default GtkWindow bg will be pulled in and override transparency */ 
+
+        gtk_widget_set_name(window, "MatePanelPopupWindow");
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+
+        /* Make transparency possible in the theme */              
+           
+        GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(window));
+	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(window), visual);
+   
+#endif
 
 	return window;
 }
@@ -3045,6 +3062,11 @@ fill_prefs_window (ClockData *cd)
 	g_settings_bind (cd->settings, KEY_SHOW_SECONDS, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
+	 /* Set the "Show Week Numbers" checkbox */
+	 widget = _clock_get_widget (cd, "weeks_check");
+	 g_settings_bind (cd->settings, KEY_SHOW_WEEK, widget, "active",
+	  G_SETTINGS_BIND_DEFAULT);
+	 
 	/* Set the "Show weather" checkbox */
 	widget = _clock_get_widget (cd, "weather_check");
 	g_settings_bind (cd->settings, KEY_SHOW_WEATHER, widget, "active",
