@@ -1199,6 +1199,17 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 	   "position" properties of an applet that may in fact be locked down.
 	   So check if these are writable before attempting to write them */
 
+	locked = panel_widget_get_applet_locked (panel_widget, applet_info->widget) ? 1 : 0;
+	if (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY) ? 1 : 0 != locked)
+		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY, locked);
+
+	if (locked) {
+		// Until position calculations are refactored to fix the issue of the panel applets
+		// getting reordered on resolution changes...
+		// .. don't save position/right-stick on locked applets
+		return;
+	}
+
 	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
 	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) &&
 	    (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) ? 1 : 0) != right_stick)
@@ -1211,10 +1222,6 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_POSITION_KEY) &&
 	    g_settings_get_int (applet_info->settings, PANEL_OBJECT_POSITION_KEY) != position)
 		g_settings_set_int (applet_info->settings, PANEL_OBJECT_POSITION_KEY, position);
-
-	locked = panel_widget_get_applet_locked (panel_widget, applet_info->widget) ? 1 : 0;
-	if (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY) ? 1 : 0 != locked)
-		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY, locked);
 }
 
 const char *
