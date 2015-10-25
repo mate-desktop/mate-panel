@@ -1090,6 +1090,8 @@ panel_run_dialog_setup_program_list (PanelRunDialog *dialog,
 	dialog->program_label = PANEL_GTK_BUILDER_GET (gui, "program_label");
 	dialog->main_box = PANEL_GTK_BUILDER_GET (gui, "main_box");
 
+	gtk_widget_set_can_focus (dialog->program_label, FALSE);
+
 	/* Ref the box so it doesn't get destroyed when it is
 	 * removed from the visible area of the dialog box.
 	 */
