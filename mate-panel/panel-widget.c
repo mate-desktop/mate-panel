@@ -2816,9 +2816,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	panel_widget_reset_saved_focus (old_panel);
 	if (gtk_container_get_focus_child (GTK_CONTAINER (old_panel)) == applet)
 		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->toplevel));
-
-	gtk_container_remove (GTK_CONTAINER(old_panel), applet);
-	gtk_container_add (GTK_CONTAINER(new_panel), applet);
+	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
 
 	if (info && info->type == PANEL_OBJECT_APPLET)
 		mate_panel_applet_frame_set_panel (MATE_PANEL_APPLET_FRAME (ad->applet), new_panel);
