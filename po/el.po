@@ -12,39 +12,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-10 23:10+0100\n"
-"PO-Revision-Date: 2014-02-18 14:11+0000\n"
-"Last-Translator: thunk <thunk77@gmail.com>\n"
-"Language-Team: Greek (http://www.transifex.com/projects/p/MATE/language/el/)\n"
+"POT-Creation-Date: 2015-11-03 17:10+0300\n"
+"PO-Revision-Date: 2015-11-03 14:12+0000\n"
+"Last-Translator: Vlad Orlov <monsta@inbox.ru>\n"
+"Language-Team: Greek (http://www.transifex.com/mate/MATE/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:220 ../applets/clock/clock.ui.h:26
+#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.ui.h:27
 msgid "Locations"
 msgstr "Τοποθεσίες"
 
-#: ../applets/clock/calendar-window.c:220
+#: ../applets/clock/calendar-window.c:226
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: ../applets/clock/calendar-window.c:446
+#: ../applets/clock/calendar-window.c:451
 msgid "Calendar"
 msgstr "Ημερολόγιο"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:428
+#: ../applets/clock/clock.c:488
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:428 ../applets/clock/clock-location-tile.c:520
+#: ../applets/clock/clock.c:488 ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -55,7 +55,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:433 ../applets/clock/clock.c:1541
+#: ../applets/clock/clock.c:493 ../applets/clock/clock.c:1631
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -69,9 +69,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:433 ../applets/clock/clock.c:1547
-#: ../applets/clock/clock-location-tile.c:480
-#: ../applets/clock/clock-location-tile.c:527
+#: ../applets/clock/clock.c:493 ../applets/clock/clock.c:1637
+#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -80,14 +80,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:444
+#: ../applets/clock/clock.c:504
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:451
+#: ../applets/clock/clock.c:511
 #, c-format
 msgid ""
 "%1$s\n"
@@ -97,7 +97,7 @@ msgstr "%1$s\n%2$s"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:459
+#: ../applets/clock/clock.c:519
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -106,19 +106,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:633
+#: ../applets/clock/clock.c:693
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:662
+#: ../applets/clock/clock.c:722
 msgid "Click to hide month calendar"
 msgstr "Πατήστε για να αποκρύψετε το μηνιαίο ημερολόγιο"
 
-#: ../applets/clock/clock.c:665
+#: ../applets/clock/clock.c:725
 msgid "Click to view month calendar"
 msgstr "Πατήστε για να δείτε το μηνιαίο ημερολόγιο"
 
-#: ../applets/clock/clock.c:1379
+#: ../applets/clock/clock.c:1469
 msgid "Computer Clock"
 msgstr "Ρολόι υπολογιστή"
 
@@ -128,7 +128,7 @@ msgstr "Ρολόι υπολογιστή"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1526
+#: ../applets/clock/clock.c:1616
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -138,97 +138,97 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1534
+#: ../applets/clock/clock.c:1624
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1580
+#: ../applets/clock/clock.c:1670
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1611
+#: ../applets/clock/clock.c:1701
 msgid "Set System Time..."
 msgstr "Ρύθμιση ώρας συστήματος..."
 
-#: ../applets/clock/clock.c:1612
+#: ../applets/clock/clock.c:1702
 msgid "Set System Time"
 msgstr "Ρύθμιση ώρας συστήματος"
 
-#: ../applets/clock/clock.c:1627
+#: ../applets/clock/clock.c:1717
 msgid "Failed to set the system time"
 msgstr "Αποτυχία ρύθμισης ώρας συστήματος"
 
-#: ../applets/clock/clock.c:1825 ../applets/fish/fish.c:1665
-#: ../applets/wncklet/window-list.c:175
-#: ../applets/wncklet/workspace-switcher.c:329
+#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1753
+#: ../applets/wncklet/window-list.c:192
+#: ../applets/wncklet/workspace-switcher.c:359
 msgid "_Preferences"
 msgstr "_Προτιμήσεις"
 
-#: ../applets/clock/clock.c:1828 ../applets/fish/fish.c:1668
-#: ../applets/notification_area/main.c:136
-#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:183
-#: ../applets/wncklet/window-menu.c:98
-#: ../applets/wncklet/workspace-switcher.c:337 ../mate-panel/drawer.c:553
-#: ../mate-panel/panel-action-button.c:718
-#: ../mate-panel/panel-context-menu.c:290 ../mate-panel/panel-menu-bar.c:288
-#: ../mate-panel/panel-menu-button.c:662
+#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1756
+#: ../applets/notification_area/main.c:152
+#: ../applets/wncklet/showdesktop.c:252 ../applets/wncklet/window-list.c:200
+#: ../applets/wncklet/window-menu.c:101
+#: ../applets/wncklet/workspace-switcher.c:367 ../mate-panel/drawer.c:558
+#: ../mate-panel/panel-action-button.c:734
+#: ../mate-panel/panel-context-menu.c:296 ../mate-panel/panel-menu-bar.c:384
+#: ../mate-panel/panel-menu-button.c:670
 msgid "_Help"
 msgstr "_Βοήθεια"
 
-#: ../applets/clock/clock.c:1831 ../applets/fish/fish.c:1671
-#: ../applets/notification_area/main.c:139
-#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:191
-#: ../applets/wncklet/window-menu.c:106
-#: ../applets/wncklet/workspace-switcher.c:345
+#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1759
+#: ../applets/notification_area/main.c:155
+#: ../applets/wncklet/showdesktop.c:260 ../applets/wncklet/window-list.c:208
+#: ../applets/wncklet/window-menu.c:109
+#: ../applets/wncklet/workspace-switcher.c:375
 msgid "_About"
 msgstr "_Περί"
 
-#: ../applets/clock/clock.c:1834
+#: ../applets/clock/clock.c:1924
 msgid "Copy _Time"
 msgstr "Αντιγραφή ώρ_ας"
 
-#: ../applets/clock/clock.c:1837
+#: ../applets/clock/clock.c:1927
 msgid "Copy _Date"
 msgstr "Αντιγραφή _ημερομηνίας"
 
-#: ../applets/clock/clock.c:1840
+#: ../applets/clock/clock.c:1930
 msgid "Ad_just Date & Time"
 msgstr "Προσα_ρμογή ώρας/ημερομηνίας"
 
-#: ../applets/clock/clock.c:2785
+#: ../applets/clock/clock.c:2873
 msgid "Choose Location"
 msgstr "Επιλογή τοποθεσίας"
 
-#: ../applets/clock/clock.c:2864
+#: ../applets/clock/clock.c:2952
 msgid "Edit Location"
 msgstr "Επεξεργασία τοποθεσίας"
 
-#: ../applets/clock/clock.c:2987
+#: ../applets/clock/clock.c:3079
 msgid "City Name"
 msgstr "Όνομα πόλης"
 
-#: ../applets/clock/clock.c:2991
+#: ../applets/clock/clock.c:3083
 msgid "City Time Zone"
 msgstr "Ζώνη αλλαγής ώρας πόλης"
 
-#: ../applets/clock/clock.c:3203
+#: ../applets/clock/clock.c:3297
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Ρολόι"
 
-#: ../applets/clock/clock.c:3205
+#: ../applets/clock/clock.c:3299
 msgid "The Clock displays the current time and date"
 msgstr "Το ρολόι προβάλλει την τρέχουσα ημερομηνία και ώρα"
 
-#: ../applets/clock/clock.c:3209 ../applets/fish/fish.c:573
-#: ../applets/notification_area/main.c:130
-#: ../applets/wncklet/showdesktop.c:489 ../applets/wncklet/window-list.c:545
-#: ../applets/wncklet/window-menu.c:88
-#: ../applets/wncklet/workspace-switcher.c:578
-#: ../mate-panel/panel-context-menu.c:143
+#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:579
+#: ../applets/notification_area/main.c:146
+#: ../applets/wncklet/showdesktop.c:536 ../applets/wncklet/window-list.c:594
+#: ../applets/wncklet/window-menu.c:91
+#: ../applets/wncklet/workspace-switcher.c:615
+#: ../mate-panel/panel-context-menu.c:149
 msgid "translator-credits"
 msgstr "Ελληνική μεταφραστική ομάδα MATE\n Σπύρος Παπαδημητρίου <spapadim+@cs.cmu.edu>, 1999\n Συμεών (σίμος) Ξενιτέλλης <simos@hellug.gr>, 2000, 2001, 2002\n Σαράντης Πασχάλης <paskalis@di.uoa.gr>, 2000\n Κώστας Παπαδήμας <pkst@gnome.org>, 2002-2009\n Φώτης Τσάμης <ftsamis@gmail.com>, 2009\n Θάνος Λευτέρης <alefteris@gmail.com>, 2009\n\nΓια περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα http://www.mate.gr/"
 
@@ -321,43 +321,47 @@ msgid "Show seco_nds"
 msgstr "Προβολή _δευτερολέπτων"
 
 #: ../applets/clock/clock.ui.h:23
+msgid "Show wee_k numbers in calendar"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:24
 msgid "Show _weather"
 msgstr "Προβολή _καιρού"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:25
 msgid "Show _temperature"
 msgstr "Προβολή _θερμοκρασίας"
 
-#: ../applets/clock/clock.ui.h:25 ../applets/fish/fish.ui.h:2
+#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
 #: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "General"
 msgstr "Γενικά"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:28
 msgid "Display"
 msgstr "Εμφάνιση"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:29
 msgid "_Visibility unit:"
 msgstr "Μονάδα ορα_τότητας:"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:30
 msgid "_Pressure unit:"
 msgstr "Μονάδα βαρομετρικής _πίεσης:"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:31
 msgid "_Wind speed unit:"
 msgstr "Μονάδα ταχύτητας α_νέμου:"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:32
 msgid "_Temperature unit:"
 msgstr "Μονάδα _θερμοκρασίας:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:33
 msgid "Weather"
 msgstr "Καιρός"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:34
 msgid "Time _Settings"
 msgstr "_Ρυθμίσεις ώρας"
 
@@ -365,15 +369,15 @@ msgstr "_Ρυθμίσεις ώρας"
 msgid "Failed to set the system timezone"
 msgstr "Αποτυχία ρύθμισης της ζώνης αλλαγής ώρας"
 
-#: ../applets/clock/clock-location-tile.c:244
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>Ρύθμιση...</small>"
 
-#: ../applets/clock/clock-location-tile.c:245
+#: ../applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>Ρύθμιση</small>"
 
-#: ../applets/clock/clock-location-tile.c:321
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr "Καθορισμός τοποθεσίας ως τρέχουσα τοποθεσία και χρήση της ζώνης ώρας της για αυτό τον υπολογιστή"
@@ -384,7 +388,7 @@ msgstr "Καθορισμός τοποθεσίας ως τρέχουσα τοπο
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:444
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -393,7 +397,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:465
+#: ../applets/clock/clock-location-tile.c:452
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -401,50 +405,50 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:474
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:613
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:625
-#: ../applets/clock/clock-location-tile.c:634
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "Άγνωστο"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:627
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, μοιάζει με %s"
 
-#: ../applets/clock/clock-location-tile.c:650
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Ανατολή ηλίου: %s / Δύση ηλίου: %s"
 
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:167
-#: ../applets/notification_area/main.c:84 ../applets/wncklet/wncklet.c:71
+#: ../applets/clock/clock-utils.c:96 ../applets/fish/fish.c:173
+#: ../applets/notification_area/main.c:100 ../applets/wncklet/wncklet.c:71
 #: ../mate-panel/libpanel-util/panel-show.c:226
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Δεν είναι δυνατή η προβολή του αρχείου βοήθειας '%s'"
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:193
-#: ../applets/notification_area/main.c:98 ../applets/wncklet/wncklet.c:88
+#: ../applets/clock/clock-utils.c:125 ../applets/fish/fish.c:199
+#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "Σφάλμα στην προβολή του αρχείου βοήθειας"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:1
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:1
 msgid "Hour format"
 msgstr "Τύπος ώρας"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:2
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:2
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values"
 " are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set"
@@ -456,11 +460,11 @@ msgid ""
 " the custom_format key."
 msgstr "Αυτό το κλειδί καθορίζει τη μορφή ώρας που θα χρησιμοποιείται από τη μικροεφαρμογή ρολογιού . Πιθανές τιμές είναι \"12-hour\", \"24-hour\", \"internet\", \"unix\" και \"custom\". Αν ορισθεί σε \"internet\", το ρολόι θα  εμφανίζει την ώρα διαδικτύου. Η ώρα διαδικτύου χωρίζει την ημέρα σε 1000 \".beats\". Δεν υπάρχουν ζώνες ώρας σε αυτό το σύστημα και έτσι η ώρα σε όλο τον κόσμο είναι η ίδια. Αν ορισθεί σε \"unix\", το ρολόι θα εμφανίζει την ώρα σε δευτερόλεπτα από την Epoch, π.χ. 1970-01-01. Αν ορισθεί σε \"custom\", το ρολόι θα εμφανίζει την ώρα σύμφωνα με την μορφή που έχει καθοριστεί στο κλειδί custom_format."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:3
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
 msgstr "Προσαρμοσμένη μορφή του ρολογιού"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:4
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:4
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -468,83 +472,83 @@ msgid ""
 "information."
 msgstr "Αυτό το κλειδί καθορίζει τη μορφή που θα χρησιμοποιείται από τη μικροεφαρμογή ρολογιού όταν το κλειδί μορφής έχει ορισθεί σε \"custom\". Μπορείτε να χρησιμοποιήσετε conversion specifiers που είναι κατανοητοί από το strftime() για να λάβετε μια συγκεκριμένη μορφή. Δείτε το εγχειρίδιο του strftime() για περισσότερες πληροφορίες."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:5
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
 msgstr "Εμφάνιση ώρας με δευτερόλεπτα"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:6
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:6
 msgid "If true, display seconds in time."
 msgstr "Αν αληθές, εμφάνιση δευτερολέπτων στην ώρα."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:7
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:7
 msgid "Show date in clock"
 msgstr "Εμφάνιση ημερομηνίας στο ρολόι"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:8
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:8
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Αν αληθές, εμφανίζει εκτός από την ώρα και την ημερομηνία στο ρολόι."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:9
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:9
 msgid "Show date in tooltip"
 msgstr "Εμφάνιση ημερομηνίας στη συμβουλή οθόνης"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:10
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Αν αληθές, προβάλλει την ώρα σαν συμβουλή όταν περνάει το ποντίκι πάνω από το ρολόι."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:11
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
 msgstr "Εμφάνιση καιρού στο ρολόι"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:12
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:12
 msgid "If true, display a weather icon."
 msgstr "Αν αληθές, εμφάνιση του εικονιδίου καιρού."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:13
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:13
 msgid "Show temperature in clock"
 msgstr "Εμφάνιση θερμοκρασίας στο ρολόι"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:14
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:14
 msgid "If true, show the temperature next to the weather icon."
 msgstr "Αν αληθές, εμφάνιση της θερμοκρασίας δίπλα από το εικονίδιο του καιρού."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:15
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:15
 msgid "Show week numbers in calendar"
 msgstr "Εμφάνιση αριθμού εβδομάδων στο ημερολόγιο"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:16
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:16
 msgid "If true, show week numbers in the calendar."
 msgstr "Αν αληθές, εμφάνιση αριθμών εβδομάδας στο ημερολόγιο."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:17
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:17
 msgid "Expand list of locations"
 msgstr "Ανάπτυξη της λίστας τοποθεσιών"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:18
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:18
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "Αν αληθές, ανάπτυξη της λίστας των τοποθεσιών στο παράθυρο του ημερολογίου."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:19
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:19
 msgid "List of locations"
 msgstr "Λίστα τοποθεσιών"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:20
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:20
 msgid "A list of locations to display in the calendar window."
 msgstr "Μια λίστα από τοποθεσίες για εμφάνιση στο παράθυρο του ημερολογίου."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:21
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:21
 msgid "Temperature unit"
 msgstr "Μονάδα θερμοκρασίας"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:22
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:22
 msgid "The unit to use when showing temperatures."
 msgstr "Η μονάδα μέτρησης στην προβολή των θερμοκρασιών."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:23
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:23
 msgid "Speed unit"
 msgstr "Μονάδα ταχύτητας"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:24
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:24
 msgid "The unit to use when showing wind speed."
 msgstr "Η μονάδα μέτρησης στην προβολή ταχύτητας ανέμου."
 
@@ -560,7 +564,7 @@ msgstr "Εργοστάσιο για τη μικροεφαρμογή ρολογι
 msgid "Get the current time and date"
 msgstr "Λήψη τρέχουσας ώρας και ημερομηνίας"
 
-#: ../applets/fish/fish.c:263
+#: ../applets/fish/fish.c:269
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -569,17 +573,17 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr "Προειδοποίηση: Η εντολή φαίνεται να είναι κάτι πραγματικά χρήσιμο.\nΩστόσο, μιας και αυτή είναι μια άχρηστη μικροεφαρμογή, ίσως να μη\nθέλετε να το κάνετε. Είμαστε σθεναρά αντίθετοι στη χρήση του\n%s για οτιδήποτε θα μπορούσε να κάνει τη μικροεφαρμογή \"πρακτική\" ή χρήσιμη."
 
-#: ../applets/fish/fish.c:435
+#: ../applets/fish/fish.c:441
 msgid "Images"
 msgstr "Εικόνες"
 
-#: ../applets/fish/fish.c:541 ../applets/fish/fish.c:584
-#: ../applets/fish/fish.c:690
+#: ../applets/fish/fish.c:547 ../applets/fish/fish.c:590
+#: ../applets/fish/fish.c:696
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s το Ψάρι"
 
-#: ../applets/fish/fish.c:542
+#: ../applets/fish/fish.c:548
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -587,30 +591,30 @@ msgid ""
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr "Το %s δεν έχει καμία απολύτως χρησιμότητα. Απλώς καταναλώνει χώρο στο δίσκο και χρόνο μεταγλώττισης, και εάν εκτελεσθεί καταλαμβάνει επίσης πολύτιμο χώρο στον πίνακα εφαρμογών και στη μνήμη. Όποιος βρεθεί να χρησιμοποιεί αυτή τη μικροεφαρμογή, πρέπει να υποβληθεί εγκαίρως σε ψυχολογική εξέταση."
 
-#: ../applets/fish/fish.c:561
+#: ../applets/fish/fish.c:567
 msgid "(with minor help from George)"
 msgstr "(με λίγη βοήθεια από το George)"
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:573
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Ψάρι"
 
-#: ../applets/fish/fish.c:585
+#: ../applets/fish/fish.c:591
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s το Ψάρι, ένα σύγχρονο μαντείο"
 
-#: ../applets/fish/fish.c:651
+#: ../applets/fish/fish.c:657
 msgid "Unable to locate the command to execute"
 msgstr "Αδυναμία εντοπισμού εντολής για εκτέλεση"
 
-#: ../applets/fish/fish.c:695
+#: ../applets/fish/fish.c:701
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s το Ψάρι λέει:"
 
-#: ../applets/fish/fish.c:758
+#: ../applets/fish/fish.c:764
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -618,16 +622,16 @@ msgid ""
 "Details: %s"
 msgstr "Αδύνατη ανάγνωσης αποτελέσματος εντολής\n\nΛεπτομέρειες: %s"
 
-#: ../applets/fish/fish.c:823
+#: ../applets/fish/fish.c:844
 msgid "_Speak again"
 msgstr "_Μίλα ξανά"
 
-#: ../applets/fish/fish.c:907
+#: ../applets/fish/fish.c:926
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Η καθορισμένη εντολή δεν λειτουργεί και αντικαταστάθηκε με: %s"
 
-#: ../applets/fish/fish.c:930
+#: ../applets/fish/fish.c:966
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -635,7 +639,7 @@ msgid ""
 "Details: %s"
 msgstr "Αδύνατη εκτέλεση '%s'\n\nΛεπτομέρειες: %s"
 
-#: ../applets/fish/fish.c:946
+#: ../applets/fish/fish.c:982
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -643,15 +647,15 @@ msgid ""
 "Details: %s"
 msgstr "Αδυναμία ανάγνωσης από '%s'\n\nΛεπτομέρειες: %s"
 
-#: ../applets/fish/fish.c:1519
+#: ../applets/fish/fish.c:1602
 msgid "The water needs changing"
 msgstr "Το νερό θέλει αλλαγή"
 
-#: ../applets/fish/fish.c:1521
+#: ../applets/fish/fish.c:1604
 msgid "Look at today's date!"
 msgstr "Δείτε την σημερινή ημερομηνία!"
 
-#: ../applets/fish/fish.c:1604
+#: ../applets/fish/fish.c:1687
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s το ψάρι, το μέντιουμ της τύχης"
@@ -704,59 +708,59 @@ msgstr "δευτερόλεπτα"
 msgid "_Rotate on vertical panels"
 msgstr "_Περιστροφή στους κατακόρυφους πίνακες εφαρμογών"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:1
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:1
 msgid "The fish's name"
 msgstr "Το όνομα του ψαριού"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:2
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:2
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr "Ένα ψάρι χωρίς όνομα είναι ένα χαζό ψάρι. Δώστε ζωή στο ψάρι σας βαπτίζοντας το."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:3
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
 msgstr "Η κινούμενη εικόνα pixmap του ψαριού"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:4
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:4
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr "Αυτό το κλειδί καθορίζει το όνομα αρχείου της εικόνας που θα χρησιμοποιηθεί για το κινούμενο σχέδιο της μικροεφαρμογής του ψαριού."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:5
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
 msgstr "Εντολή προς εκτέλεση στο κλικ"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:6
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:6
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr "Αυτό το κλειδί καθορίζει την εντολή προς εκτέλεση όταν το ψάρι πατηθεί."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:7
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
 msgstr "Ο αριθμός των καρέ στην κίνηση του ψαριού"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:8
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:8
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
 msgstr "Αυτό το κλειδί καθορίζει τον αριθμό των καρέ στην κίνηση του ψαριού."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:9
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
 msgid "Pause per frame"
 msgstr "Παύση ανά καρέ"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:10
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr "Αυτό το κλειδί καθορίζει τον αριθμό των δευτερολέπτων που θα προβάλλεται το κάθε καρέ."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:11
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
 msgid "Rotate on vertical panels"
 msgstr "Περιστροφή στους κάθετους πίνακες εφαρμογών"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:12
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "Αν αληθές, η εικόνα παρασκηνίου θα περιστρέφεται αν ο πίνακας εφαρμογών προσανατολίζεται κάθετα."
@@ -773,12 +777,12 @@ msgstr "Από που κρατά η σκούφια αυτού του ηλίθι�
 msgid "Display a swimming fish or another animated creature"
 msgstr "Εμφανίζει ένα ψάρι που κολυμπάει ή κάποιο άλλο κινούμενο πλάσμα"
 
-#: ../applets/notification_area/main.c:124
+#: ../applets/notification_area/main.c:140
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Περιοχή ειδοποίησης"
 
-#: ../applets/notification_area/main.c:245
+#: ../applets/notification_area/main.c:389
 msgid "Panel Notification Area"
 msgstr "Περιοχή Ειδοποίησης πίνακα εφαρμογών"
 
@@ -794,73 +798,73 @@ msgstr "Εργοστάσιο για την περιοχή ειδοποίησης
 msgid "Area where notification icons appear"
 msgstr "Περιοχή όπου θα εμφανίζονται εικονίδια ειδοποίησης"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:1
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
 msgstr "Προβάλλει τα παράθυρα από όλους τους χώρους εργασίας"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:2
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
 msgstr "Αν αληθές, η λίστα εργασιών θα προβάλλει τα παράθυρα από όλους τους χώρους εργασίας, αλλιώς θα εμφανίζει μόνο τα παράθυρα του τρέχοντος χώρου εργασίας."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:3
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
 msgstr "Πότε θα ομαδοποιούνται τα παράθυρα"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:4
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:4
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr "Αποφασίζει αν θα ομαδοποιούνται παράθυρα από την ίδια εφαρμογή στη λίστα παραθύρων. Έγκυρες τιμές είναι \"never\", \"auto\" και \"always\"."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:5
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
 msgstr "Μετακίνηση παραθύρων στην τρέχουσα περιοχή εργασίας κατά την επαναφορά τους"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:6
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr "Αν αληθές, κατά την επαναφορά παραθύρου, θα το εμφανίζει στον τρέχοντα χώρο εργασίας. Αλλιώς, αλλαγή στο χώρο εργασίας του παραθύρου."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:1
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
 msgstr "Εμφάνιση ονομάτων χώρων εργασίας"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:2
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:2
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
 msgstr "Αν αληθές, οι χώροι εργασίας στην εφαρμογή εναλλαγής χώρων εργασίας θα εμφανίζουν τα ονόματά τους, αλλιώς θα εμφανίζουν τα περιεχόμενα του χώρου."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:3
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
 msgstr "Προβολή όλων των χώρων εργασίας"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:4
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr "Αν αληθές, η εφαρμογή εναλλαγής χώρων εργασίας θα εμφανίζει όλους τους χώρους εργασίας, αλλιώς θα εμφανίζει μόνο τον τρέχοντα χώρο."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:5
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
 msgstr "Γραμμές στην εφαρμογή εναλλαγής χώρων εργασίας"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:6
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:6
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
 msgstr "Κατά την προβολή όλων των χώρων εργασίας αυτό καθορίζει σε πόσες γραμμές (για οριζόντια διάταξη) ή στήλες (για κάθετη διάταξη) θα εμφανίζει η εφαρμογή εναλλαγής χώρων εργασίας τους χώρους. Το κλειδί έχει χρησιμότητα μόνο αν το κλειδί display_all_workspaces είναι αληθές."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:7
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
 msgstr "Κυκλική επαναφορά κατά την κύλιση με το ποντίκι"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:8
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:8
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
@@ -875,7 +879,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "Εργοστάσιο για τη δημιουργία μικροεφαρμογών σχετικά με την πλοήγηση παραθύρων"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:81 ../applets/wncklet/window-menu.c:238
+#: ../applets/wncklet/window-menu.c:84 ../applets/wncklet/window-menu.c:298
 msgid "Window Selector"
 msgstr "Επιλογέας παραθύρων"
 
@@ -884,7 +888,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Εναλλαγή μεταξύ ανοικτών παραθύρων με τη χρήση μενού"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:571
+#: ../applets/wncklet/workspace-switcher.c:608
 msgid "Workspace Switcher"
 msgstr "Εφαρμογή εναλλαγής χώρων εργασίας"
 
@@ -893,7 +897,7 @@ msgid "Switch between workspaces"
 msgstr "Εναλλαγή μεταξύ χώρων εργασίας"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:538
+#: ../applets/wncklet/window-list.c:587
 msgid "Window List"
 msgstr "Λίστα παραθύρων"
 
@@ -909,42 +913,42 @@ msgstr "Εμφάνιση Επιφάνειας Εργασίας"
 msgid "Hide application windows and show the desktop"
 msgstr "Απόκρυψη των παραθύρων και εμφάνιση της επιφάνειας εργασίας"
 
-#: ../applets/wncklet/showdesktop.c:173
+#: ../applets/wncklet/showdesktop.c:203
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Αποτυχία φόρτωσης %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:173
+#: ../applets/wncklet/showdesktop.c:203
 msgid "Icon not found"
 msgstr "Το εικονίδιο δε βρέθηκε"
 
-#: ../applets/wncklet/showdesktop.c:246
+#: ../applets/wncklet/showdesktop.c:276
 msgid "Click here to restore hidden windows."
 msgstr "Πατήστε εδώ για επαναφορά των κρυμμένων παραθύρων."
 
-#: ../applets/wncklet/showdesktop.c:250
+#: ../applets/wncklet/showdesktop.c:280
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Πατήστε εδώ για απόκρυψη των παραθύρων και εμφάνιση της επιφάνειας εργασίας."
 
-#: ../applets/wncklet/showdesktop.c:417 ../applets/wncklet/showdesktop.c:482
+#: ../applets/wncklet/showdesktop.c:464 ../applets/wncklet/showdesktop.c:529
 msgid "Show Desktop Button"
 msgstr "Κουμπί εμφάνισης επιφάνειας εργασίας"
 
-#: ../applets/wncklet/showdesktop.c:484
+#: ../applets/wncklet/showdesktop.c:531
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Αυτό το κουμπί επιτρέπει την απόκρυψη όλων των παραθύρων και εμφάνιση της επιφάνειας εργασίας."
 
-#: ../applets/wncklet/showdesktop.c:510
+#: ../applets/wncklet/showdesktop.c:557
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
 msgstr "Ο διαχειριστής παραθύρων δεν υποστηρίζει τη λειτουργία κουμπιού εμφάνισης επιφάνειας εργασίας ή δεν τρέχετε ένα διαχειριστή παραθύρων."
 
-#: ../applets/wncklet/window-list.c:167
+#: ../applets/wncklet/window-list.c:184
 msgid "_System Monitor"
 msgstr "Παρακολούθηση _συστήματος"
 
-#: ../applets/wncklet/window-list.c:540
+#: ../applets/wncklet/window-list.c:589
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -994,24 +998,24 @@ msgstr "Επαναφορά στον τρέχοντα _χώρο εργασίας"
 msgid "Restore to na_tive workspace"
 msgstr "Επαναφορά στο αρχι_κό χώρο εργασίας"
 
-#: ../applets/wncklet/window-menu.c:83
+#: ../applets/wncklet/window-menu.c:86
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr "Ο Επιλογέας Παραθύρου εμφανίζει μια λίστα από όλα τα παράθυρα σε ένα μενού και σας επιτρέπει να τα ξεφυλλίσετε."
 
-#: ../applets/wncklet/workspace-switcher.c:192
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:196
+#: ../applets/wncklet/workspace-switcher.c:924
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "γραμμές"
 
-#: ../applets/wncklet/workspace-switcher.c:192
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:196
+#: ../applets/wncklet/workspace-switcher.c:924
 msgid "columns"
 msgstr "στήλες"
 
-#: ../applets/wncklet/workspace-switcher.c:573
+#: ../applets/wncklet/workspace-switcher.c:610
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1057,124 +1061,132 @@ msgstr "Να επιτρέπεται η κυκλική επαναφορά των 
 msgid "Workspaces"
 msgstr "Χώροι εργασίας"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:1
+#: ../data/org.mate.panel.gschema.xml.in.h:1
+msgid "Default panel layout"
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:2
+msgid "The default panels layout to use when panels are created or resetted."
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:3
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Ενεργοποίηση της λίστας προγραμμάτων στο διάλογο \"Εκτέλεση εφαρμογής\""
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:2
+#: ../data/org.mate.panel.gschema.xml.in.h:4
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr "Αν αληθές, γίνεται διαθέσιμη η λίστα \"Γνωστές Εφαρμογές\" στο διάλογο \"Εκτέλεση προγράμματος\". Το αν θα αναπτύσσεται ή όχι η λίστα όταν εμφανίζεται ο διάλογος, εξαρτάται από τη ρύθμιση show_program_list."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:3
+#: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Ανάπτυξη της λίστας προγραμμάτων στο διάλογο \"Εκτέλεση εφαρμογής\""
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:4
+#: ../data/org.mate.panel.gschema.xml.in.h:6
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr "Αν αληθές, αναπτύσσεται η λίστα \"Γνωστές Εφαρμογές\" στο διάλογο \"Εκτέλεση προγράμματος\" όταν αυτός ανοίγει. Αυτή η ρύθμιση έχει νόημα μόνο αν το κλειδί enable_program_list είναι αληθές."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:5
+#: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Ενεργοποίηση της λίστας προγραμμάτων στο διάλογο \"Εκτέλεση εφαρμογής\""
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:6
+#: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr "Αν αληθές, θα είναι διαθέσιμη η αυτόματη συμπλήρωση στο διάλογο \"Εκτέλεση εφαρμογής\"."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:7
+#: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
 msgstr "Ιστορικό για το διάλογο \"Εκτέλεση Εφαρμογής\""
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:8
+#: ../data/org.mate.panel.gschema.xml.in.h:10
 msgid "This is the list of commands used in \"Run Application\" dialog."
 msgstr "Αυτή είναι η λίστα με τις εντολές που χρησιμοποιούνται στον διάλογο \"Εκτέλεση Εφαρμογής\""
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:9
+#: ../data/org.mate.panel.gschema.xml.in.h:11
 msgid "Panel ID list"
 msgstr "Λίστα ταυτότητας πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:10
+#: ../data/org.mate.panel.gschema.xml.in.h:12
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "Μια λίστα από IDs πίνακα εφαρμογών. Κάθε ID πιστοποιεί ένα ανεξάρτητο πίνακα εφαρμογών. Οι ρυθμίσεις για κάθε έναν από αυτούς τους πίνακες εφαρμογών αποθηκεύονται στο /apps/panel/toplevels/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:11
+#: ../data/org.mate.panel.gschema.xml.in.h:13
 msgid "Panel object ID list"
 msgstr "Μια λίστα IDs αντικειμένων πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:14
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "Μια λίστα IDs αντικειμένων πίνακα εφαρμογών. Κάθε ID πιστοποιεί ένα ανεξάρτητο αντικείμενο πίνακα εφαρμογών (π.χ. ένα εκκινητή, κουμπί εκτέλεσης ή κουμπί μενού). Οι ρυθμίσεις για κάθε από αυτά τα αντικείμενα αποθηκεύονται στο /apps/panel/objects/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Enable tooltips"
 msgstr "Ενεργοποίηση συμβουλών οθόνης"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Αν αληθές, οι συμβουλές οθόνης εμφανίζονται για τα αντικείμενα στους πίνακες εφαρμογών."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:15
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "Ενεργοποίηση κινούμενων σχεδίων"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid "Autoclose drawer"
 msgstr "Αυτόματο κλείσιμο συρταριού"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "Αν αληθές, το συρτάρι θα κλείνει αυτόματα όταν ο χρήστης κάνει κλικ σε έναν εκκινητή που βρίσκεται στο συρτάρι."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "Confirm panel removal"
 msgstr "Επιβεβαίωση αφαίρεσης πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "Αν αληθές, εμφανίζεται ένας διάλογος που ζητά την επιβεβαίωση αν ο χρήστης θέλει να αφαιρέσει τον πίνακα εφαρμογών."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Highlight launchers on mouseover"
 msgstr "Επισήμανση εκκινητών με το πέρασμα του ποντικιού"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "Αν αληθές, θα επισημαίνεται ο εκκινητής όταν ο χρήστης μετακινεί το ποντίκι από πάνω του."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Complete panel lockdown"
 msgstr "Ολοκληρωτικό κλείδωμα πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "Αν αληθές, ο πίνακας εφαρμογών δεν θα επιτρέπει αλλαγές στη ρύθμιση του. Οι ξεχωριστές μικροεφαρμογές θα πρέπει να κλειδωθούν ξεχωριστά. Ο πίνακας εφαρμογών θα πρέπει να επανεκκινήσει για να εφαρμοστούν οι αλλαγές."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Applet IIDs to disable from loading"
 msgstr "IIDs μικροεφαρμογών για απενεργοποίηση από τη φόρτωση"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1182,77 +1194,107 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "Μια λίστα από IIDs μικροεφαρμογών που ο πίνακας εφαρμογών θα αγνοήσει. Με αυτό τον τρόπο θα απενεργοποιήσετε κάποιες μικροεφαρμογές από το να φορτώνονται και να φαίνονται στο μενού. Για παράδειγμα για να απενεργοποιήσετε τη μικροεφαρμογή mini-commander προσθέστε στη λίστα 'OAFIID:MATE_MiniCommanderApplet'. Ο πίνακας εφαρμογών θα πρέπει να επανεκκινήσει για να εφαρμοστούν οι αλλαγές."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:26
-msgid "Disable Logging Out"
-msgstr "Απενεργοποίηση Αποσύνδεσης"
-
-#: ../data/org.mate.panel.gschema.xml.in.in.h:27
-msgid ""
-"If true, the panel will not allow a user to log out, by removing access to "
-"the log out menu entries."
-msgstr "Αν αληθές, ο πίνακας εφαρμογών δεν θα επιτρέπει σε ένα χρήστη να αποσυνδέεται, με το να αρνείται την πρόσβαση στο μενού αποσύνδεσης."
-
-#: ../data/org.mate.panel.gschema.xml.in.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Disable Force Quit"
 msgstr "Απενεργοποίηση Εξαναγκασμού εξόδου"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr "Αν αληθές, ο πίνακας εφαρμογών δεν θα επιτρέπει σε ένα χρήστη να εξαναγκάσει μια εφαρμογή σε έξοδο, με το να αρνείται την πρόσβαση στο κουμπί εξαναγκασμού εξόδου."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:1
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:1
+msgid "Show applications menu"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:2
+msgid "If true, show applications item in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:3
+msgid "Show places menu"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:4
+msgid "If true, show places item in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:5
+msgid "Show desktop menu"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:6
+msgid "If true, show desktop item in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:7
+msgid "Show icon"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:8
+msgid "If true, show icon in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:9
+msgid "Icon to show in menu bar"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:10
+msgid "Set the theme icon name to use in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.object.gschema.xml.in.h:1
 msgid "Panel object type"
 msgstr "Τύπος αντικειμένου πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:2
+#: ../data/org.mate.panel.object.gschema.xml.in.h:2
 msgid "The type of this panel object."
 msgstr "Ο τύπος του αντικειμένου του πίνακα."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:3
+#: ../data/org.mate.panel.object.gschema.xml.in.h:3
 msgid "Toplevel panel containing object"
 msgstr "Πίνακας εφαρμογών υψηλού επιπέδου που περιέχει το αντικείμενο"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:4
+#: ../data/org.mate.panel.object.gschema.xml.in.h:4
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "Το αναγνωριστικό του πίνακα εφαρμογών άνω επιπέδου που περιέχει το αντικείμενο."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:5
+#: ../data/org.mate.panel.object.gschema.xml.in.h:5
 msgid "Object's position on the panel"
 msgstr "Η θέση του αντικειμένου στον πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:6
+#: ../data/org.mate.panel.object.gschema.xml.in.h:6
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr "Η τοποθεσία του αντικειμένου πίνακα εφαρμογών. Η θέση καθορίζεται από τον αριθμό των εικονοστοιχείων από την αριστερή γωνία πίνακα εφαρμογών (ή την επάνω αν είναι κάθετο)."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:7
+#: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
 msgstr "Μετάφραση θέσης σε σχέση με την κάτω/δεξιά γωνία"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:8
+#: ../data/org.mate.panel.object.gschema.xml.in.h:8
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
 msgstr "Αν αληθές, η θέση του αντικειμένου μεταφράζεται σε σχέση με τη δεξιά (ή την κάτω αν είναι κάθετο) γωνία του πίνακα εφαρμογών."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:9
+#: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
 msgstr "Κλείδωμα αντικειμένου στον πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:10
+#: ../data/org.mate.panel.object.gschema.xml.in.h:10
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
 msgstr "Αν αληθές, τότε ο χρήστης δε θα μπορεί να μετακινεί τη μικροεφαρμογή αν δεν ξεκλειδώσει πρώτα τα αντικείμενο χρησιμοποιώντας το αντικείμενο μενού \"Ξεκλείδωμα\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:11
+#: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
 msgstr "Applet IID"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:12
+#: ../data/org.mate.panel.object.gschema.xml.in.h:12
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1260,138 +1302,138 @@ msgid ""
 "applet\")."
 msgstr "Η ταυτότητα υλοποίησης της μικροεφαρμογής - π.χ. \"ClockAppletFactory::ClockApplet\". Αυτό το κλειδί είναι σχετικό μόνο εάν το κλειδί object_type είναι \"external-applet\" (ή το παρωχημένο \"matecomponent-applet\")."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:13
+#: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
 msgstr "Ο πίνακας εφαρμογών που έχει συνδεθεί σε αυτό το συρτάρι"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:14
+#: ../data/org.mate.panel.object.gschema.xml.in.h:14
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr "Το αναγνωριστικό του πίνακα εφαρμογών που συνδέεται με αυτό το συρτάρι. Αυτό το κλειδί έχει χρησιμότητα μόνο αν το κλειδί object_type είναι \"drawer-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:15
+#: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
 msgstr "Η συμβουλή οθόνης που εμφανίζεται για το συρτάρι ή το μενού"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:16
+#: ../data/org.mate.panel.object.gschema.xml.in.h:16
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
 msgstr "Το κείμενο που θα εμφανίζεται σε μια συμβουλή οθόνης για αυτό το μενού. Αυτό το κλειδί έχει σημασία μόνο αν το object_type key είναι \"drawer-object\" ή \"menu-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:17
+#: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
 msgstr "Χρήση προσαρμοσμένου εικονιδίου για το κουμπί αντικειμένου"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:18
+#: ../data/org.mate.panel.object.gschema.xml.in.h:18
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr "Αν αληθές, το κλειδί custom_icon χρησιμοποιείται σαν προσαρμοσμένο εικονίδιο για το κουμπί. Αν ψευδές, το κλειδί custom_icon αγνοείται. Το κλειδί έχει χρησιμότητα μόνο αν το κλειδί object_type είναι \"menu-object\" ή \"drawer-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:19
+#: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
 msgstr "Το εικονίδιο που χρησιμοποιείται για το κουμπί αντικειμένου"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:20
+#: ../data/org.mate.panel.object.gschema.xml.in.h:20
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr "Η τοποθεσία του αρχείου εικόνας που χρησιμοποιείται ως εικονίδιο για το κουμπί αντικειμένου. Αυτό το κλειδί έχει χρησιμότητα μόνο αν το κλειδί object_type είναι \"drawer-object\" ή \"menu-object\" και το κλειδί use_custom_icon είναι αληθές."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:21
+#: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
 msgstr "Χρήση προσαρμοσμένης διαδρομής για τα περιεχόμενα του μενού"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:22
+#: ../data/org.mate.panel.object.gschema.xml.in.h:22
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr "Αν αληθές, το κλειδί menu_path χρησιμοποιείται σαν τη διαδρομή από την οποία θα κατασκευαστούν τα περιεχόμενα του μενού. Αν ψευδές, το κλειδί menu_path θα αγνοηθεί. Το κλειδί έχει χρησιμότητα μόνο όταν το κλειδί object_type είναι \"menu-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:23
+#: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
 msgstr "Διαδρομή περιεχομένου μενού"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:24
+#: ../data/org.mate.panel.object.gschema.xml.in.h:24
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr "Η διαδρομή από την οποία κατασκευάζονται τα περιεχόμενα του μενού. Αυτό το κλειδί έχει χρησιμότητα μόνο αν το κλειδί use_menu_path είναι αληθές και το κλειδί object_type είναι \"menu-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:25
+#: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
 msgstr "Ζωγράφισμα βέλους στο κουμπί του καταλόγου εφαρμογών"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:26
+#: ../data/org.mate.panel.object.gschema.xml.in.h:26
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
 msgstr "Αν ρυθμιστεί σε \"αληθινό\", ένα βέλος θα ζωγραφιστεί πάνω από το εικονίδιο στο κουμπί του καταλόγου εφαρμογών. αν ρυθμιστεί σε \"λανθασμένο\", το κουμπί του καταλόγου εφαρμογών θα έχει πάνω του μόνο το εικονίδιο."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:27
+#: ../data/org.mate.panel.object.gschema.xml.in.h:27
 msgid "Launcher location"
 msgstr "Τοποθεσία εκκινητή"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:28
+#: ../data/org.mate.panel.object.gschema.xml.in.h:28
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr "Η τοποθεσία του αρχείου .desktop που περιγράφει τον εκκινητή. Αυτό το κλειδί έχει χρησιμότητα μόνο αν το κλειδί object_type είναι \"launcher-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:29
+#: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
 msgstr "Τύπος ενέργειας κουμπιού"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:30
+#: ../data/org.mate.panel.object.gschema.xml.in.h:30
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr "Ο τύπος της ενέργειας που εκπροσωπεί το κουμπί. Οι πιθανές τιμές είναι οι \"lock\", \"logout\", \"run\", \"search\" και \"screenshot\". Αυτό το κλειδί έχει χρησιμότητα μόνο αν το κλειδί object_type είναι \"action-applet\"."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:1
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
 msgstr "Ένα όνομα με το οποίο θα αναγνωρίζεται αυτός ο πίνακας εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:2
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:2
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr "Αυτό είναι ένα ανθρωπίνως αναγνώσιμο όνομα το οποίο θα χρησιμοποιείται για την αναγνώριση του πίνακα εφαρμογών. Ο κύριος σκοπός του είναι να δείχνει τον τίτλο του παραθύρου ο οποίος είναι χρήσιμος για την περιήγηση μεταξύ πινάκων εφαρμογών."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:3
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
 msgstr "Οθόνη X στην οποία εμφανίζεται ο πίνακας εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:4
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:4
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr "Με μια εγκατάσταση πολλαπλών οθονών μπορεί να έχετε πίνακα εφαρμογών σε κάθε ξεχωριστή οθόνη. Αυτό το κλειδί αναπαριστά την τρέχουσα οθόνη στην οποία προβάλλεται ο πίνακας εφαρμογών."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:5
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Η οθόνη Xinerama στην οποία εμφανίζεται ο πίνακας εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:6
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:6
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr "Σε μια ρύθμιση Xinerama, μπορείτε να έχετε ένα πίνακα εφαρμογών σε κάθε ξεχωριστή οθόνη. Αυτό το κλειδί καθορίζει την τρέχουσα οθόνη στην οποία εμφανίζεται ο πίνακας εφαρμογών."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:7
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
 msgstr "Ανάπτυξη ώστε να καταληφθεί όλο το πλάτος της οθόνης"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:8
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:8
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge."
@@ -1399,11 +1441,11 @@ msgid ""
 "launchers and buttons on the panel."
 msgstr "Αν αληθές, ο πίνακας εφαρμογών θα καταλαμβάνει ολόκληρο το πλάτος της οθόνης (ή ο ύψος αν είναι κάθετος πίνακας εφαρμογών). Σε αυτή τη λειτουργία ο πίνακας εφαρμογών μπορεί να τοποθετηθεί μόνο στην άκρη της οθόνης. Αν ψευδές, ο πίνακας εφαρμογών θα είναι τόσο μεγάλο όσο χρειάζεται για να φιλοξενήσει τους εκκινητές και κουμπιά του πίνακα εφαρμογών."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:9
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
 msgstr "Προσανατολισμός πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:10
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:10
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", "
 "\"left\", \"right\". In expanded mode the key specifies which screen edge "
@@ -1415,11 +1457,11 @@ msgid ""
 "panel."
 msgstr "Ο προσανατολισμός του πίνακα εφαρμογών. Οι πιθανές τιμές είναι \"top\", \"bottom\", \"left\", \"right\". Σε λειτουργία ανάπτυξης το κλειδί καθορίζει σε ποιά γωνία της οθόνης βρίσκεται ο πίνακας εφαρμογών. Σε λειτουργία μη ανάπτυξης η διαφορά μεταξύ \"top\" και \"bottom\" δεν έχει μεγάλη σημασία μιας και τα δύο αναφέρουν ότι πρόκειται για οριζόντιο πίνακα εφαρμογών - αλλά δίνουν μια χρήσιμη συμβουλή για τον τρόπο συμπεριφοράς μερικών αντικειμένων. Για παράδειγμα σε ένα \"top\" πίνακα εφαρμογών ένα κουμπί μενού θα αναδύει το μενού του προς τα κάτω, ενώ σε ένα \"bottom\" πίνακα εφαρμογών το μενού θα αναδύεται προς τα πάνω."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:11
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
 msgstr "Μέγεθος πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:12
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:12
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1427,33 +1469,33 @@ msgid ""
 "(or width)."
 msgstr "Το ύψος (πλάτος για έναν κάθετο πίνακα εφαρμογών) του πίνακα εφαρμογών. Ο πίνακας εφαρμογών θα καθορίζει ένα ελάχιστο μέγεθος βασισμένο στο μέγεθος γραμματοσειράς και άλλα χαρακτηριστικά. Το μέγιστο μέγεθος είναι καθορισμένο στο ένα τέταρτο του ύψους της οθόνης (ή του πλάτους)."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:13
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
 msgstr "Συντεταγμένη X του πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:14
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:14
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr "Η τοποθεσία του πίνακα εφαρμογών σε σχέση με τον άξονα x. Το κλειδί έχει χρησιμότητα σε λειτουργία μη-ανάπτυξης. Σε λειτουργία ανάπτυξης το κλειδί αγνοείται και ο πίνακας εφαρμογών τοποθετείται στη γωνία της οθόνης που καθορίζεται από το κλειδί προσανατολισμού."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:15
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
 msgstr "Συντεταγμένη Y του πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:16
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:16
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr "Η τοποθεσία του πίνακα εφαρμογών σε σχέση με τον άξονα y. Το κλειδί έχει χρησιμότητα σε λειτουργία μη-ανάπτυξης. Σε λειτουργία ανάπτυξης το κλειδί αγνοείται και ο πίνακας εφαρμογών τοποθετείται στη γωνία της οθόνης που καθορίζεται από το κλειδί προσανατολισμού."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:17
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr "Συντεταγμένη X του πίνακα εφαρμογών, ξεκινώντας από τα δεξιά της οθόνης"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:18
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:18
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1463,11 +1505,11 @@ msgid ""
 "the orientation key."
 msgstr "Η τοποθεσία του πίνακα εφαρμογών σε σχέση με τον άξονα x, ξεκινώντας από το δεξί μέρος της οθόνης. Αν ορισθεί σε -1, η τιμή αγνοείται και χρησιμοποιείται η τιμή του κλειδιού x. Αν η τιμή είναι μεγαλύτερη από 0, τότε η τιμή του κλειδιού x αγνοείται. Το κλειδί έχει χρησιμότητα σε λειτουργία μη-ανάπτυξης. Σε λειτουργία ανάπτυξης το κλειδί αγνοείται και ο πίνακας εφαρμογών τοποθετείται στη γωνία της οθόνης που καθορίζεται από το κλειδί προσανατολισμού."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:19
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Συντεταγμένη Υ του πίνακα εφαρμογών, ξεκινώντας από το κάτω μέρος της οθόνης"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:20
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:20
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1477,11 +1519,11 @@ msgid ""
 "the orientation key."
 msgstr "Η τοποθεσία του πίνακα εφαρμογών σε σχέση με τον άξονα y, ξεκινώντας από το κάτω μέρος της οθόνης. Αν ορισθεί σε -1, η τιμή αγνοείται και χρησιμοποιείται η τιμή του κλειδιού y. Αν η τιμή είναι μεγαλύτερη από 0, τότε η τιμή του κλειδιού y αγνοείται. Το κλειδί έχει χρησιμότητα σε λειτουργία μη-ανάπτυξης. Σε λειτουργία ανάπτυξης το κλειδί αγνοείται και ο πίνακας εφαρμογών τοποθετείται στη γωνία της οθόνης που καθορίζεται από το κλειδί προσανατολισμού."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:21
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
 msgstr "Κεντράρισμα του πίνακα εφαρμογών στον άξονα x"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:22
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:22
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -1489,11 +1531,11 @@ msgid ""
 "and x_right keys specify the location of the panel."
 msgstr "Αν αληθές, τα κλειδιά x και x_right θα αγνοηθούν και ο πίνακας εφαρμογών θα τοποθετηθεί στο κέντρο του άξονα x της οθόνης. Αν ο πίνακας εφαρμογών αλλάξει μέγεθος, θα παραμείνει σε αυτή τη θέση - π.χ ο πίνακας εφαρμογών θα μεγαλώσει και από τις δυο πλευρές. Αν ψευδές, τα κλειδιά x και x_right καθορίζουν την τοποθεσία του πίνακα εφαρμογών."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:23
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
 msgstr "Κεντράρισμα του πίνακα εφαρμογών στον άξονα y"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:24
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:24
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -1501,92 +1543,92 @@ msgid ""
 "and y_bottom keys specify the location of the panel."
 msgstr "Αν αληθές, τα κλειδιά y και y_bottom θα αγνοηθούν και ο πίνακας εφαρμογών θα τοποθετηθεί στο κέντρο του άξονα y της οθόνης. Αν ο πίνακας εφαρμογών αλλάξει μέγεθος, θα παραμείνει σε αυτή τη θέση - π.χ ο πίνακας εφαρμογών θα μεγαλώσει και από τις δυο πλευρές. Αν ψευδές, τα κλειδιά y και y_bottom καθορίζουν την τοποθεσία του πίνακα εφαρμογών."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:25
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
 msgstr "Αυτόματη απόκρυψη του πίνακα εφαρμογών στη γωνία"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:26
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:26
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr "Αν αληθές , ο πίνακας εφαρμογών θα αποκρύβεται αυτόματα στη γωνία της οθόνης όταν ο δρομέας φεύγει από την περιοχή του πίνακα εφαρμογών. Η μετακίνηση του δρομέα σε αυτή τη γωνία ξανά θα προκαλέσει την επανεμφάνιση του πίνακα εφαρμογών."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:28
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr "Αν αληθές, η απόκρυψη και η επανεμφάνιση αυτού του πίνακα εφαρμογών θα κινείται σταδιακά αντί να φαίνεται ακαριαία."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:29
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
 msgstr "Ενεργοποίηση κουμπιών απόκρυψης"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:30
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:30
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr "Αν αληθές, θα τοποθετηθούν κουμπιά σε κάθε πλευρά του πίνακα εφαρμογών που μπορεί να χρησιμοποιηθούν για τη μετακίνηση του πίνακα εφαρμογών στην άκρη της οθόνης, αφήνοντας μόνο ένα κουμπί ορατό."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:31
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
 msgstr "Ενεργοποίηση βελών στα κουμπιά απόκρυψης"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:32
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:32
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr "Αν αληθές, θα τοποθετηθούν βέλη στα κουμπιά απόκρυψης. Αυτή η προτίμηση έχει νόημα αν το κλειδί enable_buttons είναι αληθές."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:33
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
 msgstr "Καθυστέρηση αυτόματης απόκρυψης πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:34
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr "Καθορίζει την καθυστέρηση της απόκρυψης του πίνακα εφαρμογών σε χιλ. δευτερολέπτου μετά την αποχώρηση του δρομέα από την περιοχή του πίνακα εφαρμογών. Το κλειδί έχει χρησιμότητα μόνο αν είναι αληθές το κλειδί auto_hide."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:35
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
 msgstr "Καθυστέρηση επανεμφάνισης πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:36
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:36
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr "Καθορίζει την καθυστέρηση της επανεμφάνισης του πίνακα εφαρμογών σε χιλ. δευτερολέπτου μετά την είσοδο του δρομέα στην περιοχή του πίνακα εφαρμογών. Το κλειδί έχει χρησιμότητα μόνο αν είναι αληθές το κλειδί auto_hide."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:37
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
 msgstr "Αριθμός ορατών εικονοστοιχείων σε έναν κρυφό πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:38
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:38
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
 msgstr "Καθορίζει τον αριθμό των εικονοστοιχείων που θα είναι ορατά όταν ο πίνακας εφαρμογών έχει αποκρυφθεί αυτόματα στη γωνία. Το κλειδί έχει χρησιμότητα μόνο αν είναι αληθές το κλειδί auto_hide."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:39
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
 msgstr "Ταχύτητα κινούμενων εικόνων"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:40
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:40
 msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr "Η ταχύτητα με την οποία οι κινήσεις του πίνακα εφαρμογών θα πραγματοποιούνται. Οι πιθανές τιμές είναι \"slow\", \"medium\" και \"fast\". Αυτό το κλειδί έχει σημασία μόνο αν είναι αληθές το κλειδί enable_animations."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:41
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
 msgstr "Τύπος παρασκηνίου"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:42
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -1594,61 +1636,61 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr "Ποιός τύπος παρασκηνίου θα χρησιμοποιείται για αυτό τον πίνακα εφαρμογών. Οι δυνατές τιμές είναι «none» (κανένα) - χρησιμοποιείται το προεπιλεγμένο GTK+ γραφικό συστατικό παρασκηνίου, «color» (χρώμα) - χρησιμοποιείται ένα κλειδί χρώματος ως χρώμα παρασκηνίου ή «image» (εικόνα) - η εικόνα που καθορίζεται από το κλειδί εικόνας θα χρησιμοποιείται ως παρασκήνιο."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:43
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
 msgstr "Χρώμα παρασκηνίου"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:44
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Καθορίζει το χρώμα παρασκηνίου του πίνακα εφαρμογών σε μορφή #RGB."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:45
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:45
 msgid "Background color opacity"
 msgstr "Διαφάνεια χρώματος παρασκηνίου"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:46
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:46
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
 msgstr "Καθορίζει την αδιαφάνεια της μορφής χρώματος παρασκηνίου. Αν το χρώμα δεν είναι εντελώς αδιαφανές (μια τιμή μικρότερη από 65535), τότε το χρώμα θα είναι σύνθετο στην εικόνα παρασκηνίου."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:47
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
 msgstr "Εικόνα παρασκηνίου"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:48
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:48
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr "Καθορίζει το αρχείο που θα χρησιμοποιηθεί για την εικόνα παρασκηνίου. Αν η εικόνα περιέχει ένα κανάλι άλφα, θα γίνει σύνθεση στην εικόνα παρασκηνίου."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:49
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
 msgstr "Σμίκρυνση εικόνας να χωράει στον πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:50
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:50
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr "Αν αληθές, η εικόνα θα προσαρμόζεται (διατηρώντας το συντελεστή της εικόνας) στο ύψος του πίνακα εφαρμογών (αν οριζόντια)."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:51
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
 msgstr "Τέντωμα εικόνας στον πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:52
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:52
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr "Αν αληθές, η εικόνα θα προσαρμοστεί στις διαστάσεις του πίνακα εφαρμογών. Ο συντελεστής διαστάσεων της εικόνας θα αλλοιωθεί."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:53
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
 msgstr "Περιστροφή της εικόνας στους κάθετους πίνακες εφαρμογών"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:54
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:54
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
@@ -1664,27 +1706,27 @@ msgstr "Το αρχείο δεν είναι ένα έγκυρο αρχείο .de
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Μη αναγνωρίσιμη έκδοση αρχείου desktop '%s'"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:958
+#: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
 msgstr "Εκκινείται %s"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1100
+#: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "Η εφαρμογή δεν δέχεται έγγραφα από την γραμμή εντολών"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1168
+#: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Μη αναγνωρίσιμη επιλογή εκκίνησης: %d"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1373
+#: ../mate-panel/libegg/eggdesktopfile.c:1365
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "Αδυναμία ορισμού URI εγγράφου σε 'Type=Link' εγγραφή επιφάνειας εργασίας"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1394
+#: ../mate-panel/libegg/eggdesktopfile.c:1386
 #, c-format
 msgid "Not a launchable item"
 msgstr "Μη εκκινήσιμο αντικείμενο"
@@ -1723,12 +1765,12 @@ msgstr "Προβολή επιλογών διαχείρισης συνεδρία�
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:82
-#: ../mate-panel/mate-panel-applet-frame.c:741
-#: ../mate-panel/mate-panel-applet-frame.c:917
+#: ../mate-panel/mate-panel-applet-frame.c:904
+#: ../mate-panel/mate-panel-applet-frame.c:1080
 msgid "Error"
 msgstr "Σφάλμα"
 
-#: ../mate-panel/libpanel-util/panel-icon-chooser.c:382
+#: ../mate-panel/libpanel-util/panel-icon-chooser.c:381
 msgid "Choose an icon"
 msgstr "Επιλογή εικονιδίου"
 
@@ -1750,38 +1792,38 @@ msgstr "Αδυναμία ανοίγματος τοποθεσίας '%s'"
 msgid "No application to handle search folders is installed."
 msgstr "Δεν έχει εγκατασταθεί εφαρμογή για χρήση φακέλων αναζήτησης."
 
-#: ../mate-panel/applet.c:441
+#: ../mate-panel/applet.c:443
 msgid "???"
 msgstr ";;;"
 
-#: ../mate-panel/applet.c:520 ../libmate-panel-applet/mate-panel-applet.c:133
+#: ../mate-panel/applet.c:522 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Αφαίρεση από τον πίνακα εφαρμογών"
 
-#: ../mate-panel/applet.c:531 ../libmate-panel-applet/mate-panel-applet.c:136
+#: ../mate-panel/applet.c:533 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "_Μετακίνηση"
 
-#: ../mate-panel/applet.c:548 ../libmate-panel-applet/mate-panel-applet.c:142
+#: ../mate-panel/applet.c:550 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "Κ_λείδωμα στον πίνακα εφαρμογών"
 
-#: ../mate-panel/applet.c:1335
+#: ../mate-panel/applet.c:1375
 msgid "Cannot find an empty spot"
 msgstr "Δε βρέθηκε ελεύθερη τοποθεσία"
 
-#: ../mate-panel/drawer.c:340 ../mate-panel/panel-addto.c:174
-#: ../mate-panel/panel-toplevel.c:1570
+#: ../mate-panel/drawer.c:342 ../mate-panel/panel-addto.c:180
+#: ../mate-panel/panel-toplevel.c:1671
 msgid "Drawer"
 msgstr "Συρτάρι"
 
-#: ../mate-panel/drawer.c:541
+#: ../mate-panel/drawer.c:546
 msgid "_Add to Drawer..."
 msgstr "_Προσθήκη στο συρτάρι..."
 
-#: ../mate-panel/drawer.c:547 ../mate-panel/launcher.c:798
-#: ../mate-panel/panel-action-button.c:188
-#: ../mate-panel/panel-context-menu.c:221
+#: ../mate-panel/drawer.c:552 ../mate-panel/launcher.c:798
+#: ../mate-panel/panel-action-button.c:192
+#: ../mate-panel/panel-context-menu.c:227
 msgid "_Properties"
 msgstr "_Ιδιότητες"
 
@@ -1811,7 +1853,7 @@ msgstr "Ιδιότητες καταλόγου"
 msgid "Launcher Properties"
 msgstr "Ιδιότητες εκκινητή"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:123
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:138
 msgid "Panel"
 msgstr "Πίνακας εφαρμογών"
 
@@ -1852,47 +1894,52 @@ msgstr "Ε_κκίνηση"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Το πλήκτρο %s δεν έχει ορισθεί, αδυναμία φόρτωσης εκκινητή\n"
 
-#: ../mate-panel/launcher.c:957 ../mate-panel/panel-ditem-editor.c:1361
-#: ../mate-panel/panel-ditem-editor.c:1395
-#: ../mate-panel/panel-ditem-editor.c:1426
+#: ../mate-panel/launcher.c:957 ../mate-panel/panel-ditem-editor.c:1362
+#: ../mate-panel/panel-ditem-editor.c:1396
+#: ../mate-panel/panel-ditem-editor.c:1427
 msgid "Could not save launcher"
 msgstr "Αδυναμία αποθήκευσης εκκινητή"
 
-#: ../mate-panel/main.c:48
+#: ../mate-panel/main.c:49
 msgid "Replace a currently running panel"
 msgstr "Αντικατάσταση ενός πίνακα εφαρμογών που εκτελείται"
 
 #. this feature was request in #mate irc channel
-#: ../mate-panel/main.c:52
+#: ../mate-panel/main.c:51
 msgid "Reset the panel configuration to default"
 msgstr "Επαναφορά ρυθμίσεων πλαισίου στις προεπιλογές"
 
 #. open run dialog
-#: ../mate-panel/main.c:54
+#: ../mate-panel/main.c:53
 msgid "Execute the run dialog"
 msgstr "Εκκίνηση διαλόγου εκτέλεσης"
 
-#: ../mate-panel/menu.c:916
+#. default panels layout
+#: ../mate-panel/main.c:55
+msgid "Set the default panel layout"
+msgstr ""
+
+#: ../mate-panel/menu.c:538
 msgid "Add this launcher to _panel"
 msgstr "Προσθήκη του εκκινητή στον _πίνακα εφαρμογών"
 
-#: ../mate-panel/menu.c:923
+#: ../mate-panel/menu.c:545
 msgid "Add this launcher to _desktop"
 msgstr "Προσθήκη του εκκινητή στην _επιφάνεια εργασίας"
 
-#: ../mate-panel/menu.c:935
+#: ../mate-panel/menu.c:557
 msgid "_Entire menu"
 msgstr "_Ολόκληρο το μενού"
 
-#: ../mate-panel/menu.c:940
+#: ../mate-panel/menu.c:562
 msgid "Add this as _drawer to panel"
 msgstr "Προσθήκη του παρόντος ως _συρτάρι στον πίνακα εφαρμογών"
 
-#: ../mate-panel/menu.c:947
+#: ../mate-panel/menu.c:569
 msgid "Add this as _menu to panel"
 msgstr "Προσθήκη του παρόντος ως _μενού στον πίνακα εφαρμογών"
 
-#: ../mate-panel/nothing.cP:609
+#: ../mate-panel/nothing.cP:614
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>ΤΕΛΟΣ ΠΑΙΧΝΙΔΙΟΥ</b> στο επίπεδο %d!"
@@ -1901,427 +1948,444 @@ msgstr "<b>ΤΕΛΟΣ ΠΑΙΧΝΙΔΙΟΥ</b> στο επίπεδο %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../mate-panel/nothing.cP:616
+#: ../mate-panel/nothing.cP:621
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../mate-panel/nothing.cP:617
+#: ../mate-panel/nothing.cP:622
 msgid "Press 'q' to quit"
 msgstr "Πατήστε 'q' για έξοδο"
 
-#: ../mate-panel/nothing.cP:622
+#: ../mate-panel/nothing.cP:627
 msgid "Paused"
 msgstr "Σε παύση"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../mate-panel/nothing.cP:625 ../mate-panel/nothing.cP:636
+#: ../mate-panel/nothing.cP:630 ../mate-panel/nothing.cP:641
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../mate-panel/nothing.cP:626
+#: ../mate-panel/nothing.cP:631
 msgid "Press 'p' to unpause"
 msgstr "Πατήστε 'p' για άρση παύσης"
 
-#: ../mate-panel/nothing.cP:632
+#: ../mate-panel/nothing.cP:637
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Επίπεδο: %s,  Ζωές: %s"
 
-#: ../mate-panel/nothing.cP:637
+#: ../mate-panel/nothing.cP:642
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr "Left/Right για μετακίνηση, Space για πυροβολισμό, 'p' για παύση, 'q' για έξοδο"
 
-#: ../mate-panel/nothing.cP:1385
+#: ../mate-panel/nothing.cP:1390
 msgid "Killer GEGLs from Outer Space"
 msgstr "Φονικά GEGLs από το διάστημα"
 
-#: ../mate-panel/panel-action-button.c:176
+#: ../mate-panel/panel-action-button.c:180
 msgid "_Activate Screensaver"
 msgstr "_Ενεργοποίηση προφύλαξης οθόνης"
 
-#: ../mate-panel/panel-action-button.c:182
+#: ../mate-panel/panel-action-button.c:186
 msgid "_Lock Screen"
 msgstr "_Κλείδωμα οθόνης"
 
-#: ../mate-panel/panel-action-button.c:300
+#: ../mate-panel/panel-action-button.c:314
 msgid "Could not connect to server"
 msgstr "Αδυναμία σύνδεσης στον εξυπηρετητή"
 
-#: ../mate-panel/panel-action-button.c:331
+#: ../mate-panel/panel-action-button.c:345
 msgid "Lock Screen"
 msgstr "Κλείδωμα οθόνης"
 
-#: ../mate-panel/panel-action-button.c:332
+#: ../mate-panel/panel-action-button.c:346
 msgid "Protect your computer from unauthorized use"
 msgstr "Προστασία του υπολογιστή από μη εξουσιοδοτημένη χρήση"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../mate-panel/panel-action-button.c:346
+#: ../mate-panel/panel-action-button.c:360
 msgid "Log Out..."
 msgstr "Αποσύνδεση..."
 
-#: ../mate-panel/panel-action-button.c:347
+#: ../mate-panel/panel-action-button.c:361
 msgid "Log out of this session to log in as a different user"
 msgstr "Αποσυνδεθείτε από αυτή τη συνεδρία για να συνδεθείτε ως διαφορετικός χρήστης"
 
-#: ../mate-panel/panel-action-button.c:356
+#: ../mate-panel/panel-action-button.c:370
 msgid "Run Application..."
 msgstr "Εκτέλεση Εφαρμογής..."
 
-#: ../mate-panel/panel-action-button.c:357
+#: ../mate-panel/panel-action-button.c:371
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Εκτελεί ένα πρόγραμμα με την εισαγωγή εντολής ή μέσω της επιλογής του από λίστα"
 
-#: ../mate-panel/panel-action-button.c:366
+#: ../mate-panel/panel-action-button.c:380
 msgid "Search for Files..."
 msgstr "Αναζήτηση για αρχεία..."
 
-#: ../mate-panel/panel-action-button.c:367
+#: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Εντοπισμός εγγράφων και φακέλων σε αυτό τον υπολογιστή κατά όνομα ή περιεχόμενο"
 
-#: ../mate-panel/panel-action-button.c:375
-#: ../mate-panel/panel-force-quit.c:229
+#: ../mate-panel/panel-action-button.c:389
+#: ../mate-panel/panel-force-quit.c:256
 msgid "Force Quit"
 msgstr "Εξαναγκασμός εξόδου"
 
-#: ../mate-panel/panel-action-button.c:376
+#: ../mate-panel/panel-action-button.c:390
 msgid "Force a misbehaving application to quit"
 msgstr "Εξαναγκασμός σε έξοδο μιας εφαρμογής με κακή συμπεριφορά"
 
 #. FIXME icon
-#: ../mate-panel/panel-action-button.c:385
+#: ../mate-panel/panel-action-button.c:399
 msgid "Connect to Server..."
 msgstr "Σύνδεση στον εξυπηρετητή..."
 
-#: ../mate-panel/panel-action-button.c:386
+#: ../mate-panel/panel-action-button.c:400
 msgid "Connect to a remote computer or shared disk"
 msgstr "Σύνδεση σε ένα απομακρυσμένο υπολογιστή ή σε ένα κοινόχρηστο δίσκο"
 
-#: ../mate-panel/panel-action-button.c:394
+#: ../mate-panel/panel-action-button.c:408
 msgid "Shut Down..."
 msgstr "Κλείσιμο..."
 
-#: ../mate-panel/panel-action-button.c:395
+#: ../mate-panel/panel-action-button.c:409
 msgid "Shut down the computer"
 msgstr "Κλείσιμο του υπολογιστή"
 
-#: ../mate-panel/panel-addto.c:115
+#: ../mate-panel/panel-addto.c:121
 msgid "Custom Application Launcher"
 msgstr "Εκκινητής προσαρμοσμένης εφαρμογής"
 
-#: ../mate-panel/panel-addto.c:116
+#: ../mate-panel/panel-addto.c:122
 msgid "Create a new launcher"
 msgstr "Δημιουργία ενός νέου εκκινητή"
 
-#: ../mate-panel/panel-addto.c:126
+#: ../mate-panel/panel-addto.c:132
 msgid "Application Launcher..."
 msgstr "Εκκινητής εφαρμογής..."
 
-#: ../mate-panel/panel-addto.c:127
+#: ../mate-panel/panel-addto.c:133
 msgid "Copy a launcher from the applications menu"
 msgstr "Αντιγραφή ενός εκκινητή από το μενού των εφαρμογών"
 
-#: ../mate-panel/panel-addto.c:141 ../mate-panel/panel-menu-button.c:1098
+#: ../mate-panel/panel-addto.c:147 ../mate-panel/panel-menu-button.c:1098
 msgid "Main Menu"
 msgstr "Κύριο μενού"
 
-#: ../mate-panel/panel-addto.c:142
+#: ../mate-panel/panel-addto.c:148
 msgid "The main MATE menu"
 msgstr "Το κυρίως μενού του MATE"
 
-#: ../mate-panel/panel-addto.c:152
+#: ../mate-panel/panel-addto.c:158
 msgid "Menu Bar"
 msgstr "Εργαλειοθήκη μενού"
 
-#: ../mate-panel/panel-addto.c:153
+#: ../mate-panel/panel-addto.c:159
 msgid "A custom menu bar"
 msgstr "Μια προσαρμοσμένη μπάρα μενού"
 
-#: ../mate-panel/panel-addto.c:163
+#: ../mate-panel/panel-addto.c:169
 msgid "Separator"
 msgstr "Διαχωριστικό"
 
-#: ../mate-panel/panel-addto.c:164
+#: ../mate-panel/panel-addto.c:170
 msgid "A separator to organize the panel items"
 msgstr "Ένα διαχωριστικό, για την οργάνωση αντικειμένων του πίνακα εφαρμογών"
 
-#: ../mate-panel/panel-addto.c:175
+#: ../mate-panel/panel-addto.c:181
 msgid "A pop out drawer to store other items in"
 msgstr "Ένα αναδυόμενο συρτάρι για να αποθηκεύονται αντικείμενα σε αυτό"
 
-#: ../mate-panel/panel-addto.c:256
+#: ../mate-panel/panel-addto.c:262
 msgid "(empty)"
 msgstr "(κενό)"
 
-#: ../mate-panel/panel-addto.c:1014
+#: ../mate-panel/panel-addto.c:993
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Βρείτε ένα αντ_ικείμενο για προσθήκη στο \"%s\":"
 
-#: ../mate-panel/panel-addto.c:1018
+#: ../mate-panel/panel-addto.c:997
 #, c-format
 msgid "Add to Drawer"
 msgstr "Προσθήκη στο συρτάρι"
 
-#: ../mate-panel/panel-addto.c:1020
+#: ../mate-panel/panel-addto.c:999
 msgid "Find an _item to add to the drawer:"
 msgstr "Βρείτε ένα αντ_ικείμενο για προσθήκη στο συρτάρι:"
 
-#: ../mate-panel/panel-addto.c:1022
+#: ../mate-panel/panel-addto.c:1001
 #, c-format
 msgid "Add to Panel"
 msgstr "Προσθήκη στον πίνακα εφαρμογών"
 
-#: ../mate-panel/panel-addto.c:1024
+#: ../mate-panel/panel-addto.c:1003
 msgid "Find an _item to add to the panel:"
 msgstr "Βρείτε ένα αντ_ικείμενο για προσθήκη στον πίνακα εφαρμογών:"
 
-#: ../mate-panel/mate-panel-applet-frame.c:710
+#: ../mate-panel/mate-panel-applet-frame.c:873
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "Το \"%s\" τερματίστηκε απρόσμενα"
 
-#: ../mate-panel/mate-panel-applet-frame.c:712
+#: ../mate-panel/mate-panel-applet-frame.c:875
 msgid "Panel object has quit unexpectedly"
 msgstr "Το αντικειμένου πίνακα εφαρμογών τερματίστηκε απρόσμενα"
 
-#: ../mate-panel/mate-panel-applet-frame.c:719
+#: ../mate-panel/mate-panel-applet-frame.c:882
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Αν φορτώσετε ξανά ένα αντικείμενο πίνακα εφαρμογών, θα προστεθεί αυτόματα πίσω στο πίνακα εφαρμογών."
 
-#: ../mate-panel/mate-panel-applet-frame.c:725
+#: ../mate-panel/mate-panel-applet-frame.c:888
 msgid "_Don't Reload"
 msgstr "Να _μη γίνει επαναφόρτωση"
 
-#: ../mate-panel/mate-panel-applet-frame.c:726
+#: ../mate-panel/mate-panel-applet-frame.c:889
 msgid "_Reload"
 msgstr "Ε_παναφόρτωση"
 
-#: ../mate-panel/mate-panel-applet-frame.c:880
+#: ../mate-panel/mate-panel-applet-frame.c:1043
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Ο πίνακας εφαρμογών αντιμετώπισε ένα πρόβλημα κατά τη φόρτωση του \"%s\"."
 
-#: ../mate-panel/mate-panel-applet-frame.c:896
+#: ../mate-panel/mate-panel-applet-frame.c:1059
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Θέλετε να αφαιρέσετε τη μικροεφαρμογή από τη ρύθμιση σας;"
 
-#: ../mate-panel/panel-context-menu.c:109
+#: ../mate-panel/panel-context-menu.c:114
 msgid "And many, many others..."
 msgstr "Και πολλοί, πολλοί άλλοι..."
 
-#: ../mate-panel/panel-context-menu.c:135
+#: ../mate-panel/panel-context-menu.c:140
 msgid "The MATE Panel"
 msgstr "Ο πίνακας εφαρμογών του MATE"
 
-#: ../mate-panel/panel-context-menu.c:138
+#: ../mate-panel/panel-context-menu.c:144
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr "Το παρόν πρόγραμμα είναι υπεύθυνο για την εκκίνηση άλλων εφαρμογών και παρέχει χρήσιμα εργαλεία."
 
-#: ../mate-panel/panel-context-menu.c:142
+#: ../mate-panel/panel-context-menu.c:148
 msgid "About the MATE Panel"
 msgstr "Περί του πίνακα εφαρμογών του MATE"
 
-#: ../mate-panel/panel-context-menu.c:176
+#: ../mate-panel/panel-context-menu.c:182
 msgid "Cannot delete this panel"
 msgstr "Αποτυχία διαγραφής αυτού του πίνακα εφαρμογών"
 
-#: ../mate-panel/panel-context-menu.c:177
+#: ../mate-panel/panel-context-menu.c:183
 msgid "You must always have at least one panel."
 msgstr "Θα πρέπει να υπάρχει τουλάχιστον ένας πίνακας εφαρμογών."
 
-#: ../mate-panel/panel-context-menu.c:210
+#: ../mate-panel/panel-context-menu.c:216
 msgid "_Add to Panel..."
 msgstr "_Προσθήκη στον πίνακα εφαρμογών..."
 
-#: ../mate-panel/panel-context-menu.c:231
+#: ../mate-panel/panel-context-menu.c:237
 msgid "_Delete This Panel"
 msgstr "_Αφαίρεση αυτού του πίνακα εφαρμογών"
 
-#: ../mate-panel/panel-context-menu.c:246
+#: ../mate-panel/panel-context-menu.c:252
 msgid "_New Panel"
 msgstr "_Νέος πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-context-menu.c:298
+#: ../mate-panel/panel-context-menu.c:304
 msgid "A_bout Panels"
 msgstr "_Περί πίνακα εφαρμογών"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:118
 msgid "Application"
 msgstr "Εφαρμογή"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:120
 msgid "Application in Terminal"
 msgstr "Εφαρμογή σε τερματικό"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:122
 msgid "Location"
 msgstr "Τοποθεσία"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:622
+#: ../mate-panel/panel-ditem-editor.c:623
 msgid "_Type:"
 msgstr "_Τύπος:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:629
+#: ../mate-panel/panel-ditem-editor.c:630
 msgid "_Name:"
 msgstr "Ό_νομα:"
 
-#: ../mate-panel/panel-ditem-editor.c:656
+#: ../mate-panel/panel-ditem-editor.c:657
 msgid "_Browse..."
 msgstr "_Περιήγηση..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:663
+#: ../mate-panel/panel-ditem-editor.c:664
 msgid "Co_mment:"
 msgstr "_Σχόλιο:"
 
-#: ../mate-panel/panel-ditem-editor.c:1012
+#: ../mate-panel/panel-ditem-editor.c:1013
 msgid "Choose an application..."
 msgstr "Επιλογή μιας εφαρμογής..."
 
-#: ../mate-panel/panel-ditem-editor.c:1016
+#: ../mate-panel/panel-ditem-editor.c:1017
 msgid "Choose a file..."
 msgstr "Επιλογή ενός αρχείου..."
 
-#: ../mate-panel/panel-ditem-editor.c:1181
-#: ../mate-panel/panel-ditem-editor.c:1190
+#: ../mate-panel/panel-ditem-editor.c:1182
+#: ../mate-panel/panel-ditem-editor.c:1191
 msgid "Comm_and:"
 msgstr "_Εντολή:"
 
-#: ../mate-panel/panel-ditem-editor.c:1199
+#: ../mate-panel/panel-ditem-editor.c:1200
 msgid "_Location:"
 msgstr "_Τοποθεσία:"
 
-#: ../mate-panel/panel-ditem-editor.c:1362
+#: ../mate-panel/panel-ditem-editor.c:1363
 msgid "The name of the launcher is not set."
 msgstr "Το όνομα του εκκινητή δεν έχει ορισθεί."
 
-#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1367
 msgid "Could not save directory properties"
 msgstr "Αδυναμία αποθήκευσης ιδιοτήτων καταλόγου"
 
-#: ../mate-panel/panel-ditem-editor.c:1367
+#: ../mate-panel/panel-ditem-editor.c:1368
 msgid "The name of the directory is not set."
 msgstr "Το όνομα του καταλόγου δεν έχει ορισθεί."
 
-#: ../mate-panel/panel-ditem-editor.c:1383
+#: ../mate-panel/panel-ditem-editor.c:1384
 msgid "The command of the launcher is not set."
 msgstr "Η εντολή του εκκινητή δεν έχει ορισθεί."
 
-#: ../mate-panel/panel-ditem-editor.c:1386
+#: ../mate-panel/panel-ditem-editor.c:1387
 msgid "The location of the launcher is not set."
 msgstr "Η τοποθεσία του εκκινητή δεν έχει ορισθεί."
 
-#: ../mate-panel/panel-ditem-editor.c:1463
+#: ../mate-panel/panel-ditem-editor.c:1464
 msgid "Could not display help document"
 msgstr "Δεν είναι δυνατή η προβολή του αρχείου βοήθειας"
 
-#: ../mate-panel/panel-force-quit.c:77
+#: ../mate-panel/panel-force-quit.c:83
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "Κλικ σε ένα παράθυρο για να εξαναγκάσετε την εφαρμογή σε έξοδο. Για ακύρωση πατήστε <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:212
+#: ../mate-panel/panel-force-quit.c:239
 msgid "Force this application to exit?"
 msgstr "Εξαναγκασμός σε έξοδο αυτής της εφαρμογής;"
 
-#: ../mate-panel/panel-force-quit.c:215
+#: ../mate-panel/panel-force-quit.c:242
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr "Αν επιλέξετε τον εξαναγκασμό τερματισμού της εφαρμογής, οποιαδήποτε ανοικτά  έγγραφα πιθανόν θα χαθούν."
 
-#: ../mate-panel/panel-menu-bar.c:96
+#: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
 msgstr "Εύρεση και εκτέλεση εγκατεστημένων εφαρμογών"
 
-#: ../mate-panel/panel-menu-bar.c:97
+#: ../mate-panel/panel-menu-bar.c:100
 msgid "Access documents, folders and network places"
 msgstr "Πρόσβαση σε έγγραφα, φακέλους και τοποθεσίες δικτύου"
 
-#: ../mate-panel/panel-menu-bar.c:98
+#: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Αλλαγή της εμφάνισης και της συμπεριφοράς της επιφάνειας εργασίας, λήψη βοήθειας, ή αποσύνδεση"
 
-#: ../mate-panel/panel-menu-bar.c:122
+#: ../mate-panel/panel-menu-bar.c:167
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: ../mate-panel/panel-menu-bar.c:293 ../mate-panel/panel-menu-button.c:668
+#: ../mate-panel/panel-menu-bar.c:389 ../mate-panel/panel-menu-button.c:676
 msgid "_Edit Menus"
 msgstr "Επε_ξεργασία μενού"
 
-#: ../mate-panel/panel-menu-items.c:472
+#: ../mate-panel/panel-menu-items.c:473
 msgid "Bookmarks"
 msgstr "Σελιδοδείκτες"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:539
+#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:557
 #, c-format
 msgid "Open '%s'"
 msgstr "Άνοιγμα '%s'"
 
-#: ../mate-panel/panel-menu-items.c:566
+#: ../mate-panel/panel-menu-items.c:567
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Αδυναμία σάρωσης %s για αλλαγές μέσων"
 
-#: ../mate-panel/panel-menu-items.c:609
+#: ../mate-panel/panel-menu-items.c:610
 #, c-format
 msgid "Rescan %s"
 msgstr "Σάρωση ξανά %s"
 
-#: ../mate-panel/panel-menu-items.c:646
+#: ../mate-panel/panel-menu-items.c:647
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Αδυναμία προσάρτησης %s"
 
-#: ../mate-panel/panel-menu-items.c:709
+#: ../mate-panel/panel-menu-items.c:710
 #, c-format
 msgid "Mount %s"
 msgstr "Προσάρτηση %s"
 
-#: ../mate-panel/panel-menu-items.c:917
+#: ../mate-panel/panel-menu-items.c:918
 msgid "Removable Media"
 msgstr "Αφαιρούμενα μέσα"
 
-#: ../mate-panel/panel-menu-items.c:1004
+#: ../mate-panel/panel-menu-items.c:1005
 msgid "Network Places"
 msgstr "Τοποθεσίες δικτύου"
 
-#: ../mate-panel/panel-menu-items.c:1043
+#: ../mate-panel/panel-menu-items.c:1044
 msgid "Open your personal folder"
 msgstr "Άνοιγμα του προσωπικού σας φακέλου"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../mate-panel/panel-menu-items.c:1061
+#: ../mate-panel/panel-menu-items.c:1063
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
-#: ../mate-panel/panel-menu-items.c:1062
+#: ../mate-panel/panel-menu-items.c:1064
 msgid "Open the contents of your desktop in a folder"
 msgstr "Άνοιγμα των περιεχομένων της επιφάνειας εργασίας σας σε ένα φάκελο"
 
-#: ../mate-panel/panel-menu-items.c:1454
+#: ../mate-panel/panel-menu-items.c:1080
+msgid "Computer"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1085
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1098
+msgid "Network"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1099
+msgid "Browse bookmarked and local network locations"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1489
 msgid "Places"
 msgstr "Τοποθεσίες"
 
-#: ../mate-panel/panel-menu-items.c:1482
+#: ../mate-panel/panel-menu-items.c:1517
 msgid "System"
 msgstr "Σύστημα"
 
@@ -2329,7 +2393,7 @@ msgstr "Σύστημα"
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: ../mate-panel/panel-menu-items.c:1567
+#: ../mate-panel/panel-menu-items.c:1602
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "Αποσύνδεση %s"
@@ -2338,60 +2402,60 @@ msgstr "Αποσύνδεση %s"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1579
+#: ../mate-panel/panel-menu-items.c:1614
 #, c-format
 msgid "Log Out %s..."
 msgstr "Αποσύνδεση %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1583
+#: ../mate-panel/panel-menu-items.c:1618
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Αποσύνδεση %s από αυτή τη συνεδρία για σύνδεση ως διαφορετικός χρήστης"
 
-#: ../mate-panel/panel-profile.c:1074
+#: ../mate-panel/panel-profile.c:1172
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr "Ο πίνακας εφαρμογών '%s' έχει ορισθεί να εμφανίζεται στην οθόνη %d που αυτή τη στιγμή δεν είναι διαθέσιμη. Δε φορτώνεται αυτός ο πίνακας εφαρμογών."
 
-#: ../mate-panel/panel-properties-dialog.c:119
+#: ../mate-panel/panel-properties-dialog.c:123
 #: ../mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Κορυφή"
 
-#: ../mate-panel/panel-properties-dialog.c:120
+#: ../mate-panel/panel-properties-dialog.c:124
 #: ../mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Κάτω"
 
-#: ../mate-panel/panel-properties-dialog.c:121
+#: ../mate-panel/panel-properties-dialog.c:125
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Αριστερά"
 
-#: ../mate-panel/panel-properties-dialog.c:122
+#: ../mate-panel/panel-properties-dialog.c:126
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Δεξιά"
 
-#: ../mate-panel/panel-properties-dialog.c:826
+#: ../mate-panel/panel-properties-dialog.c:884
 msgid "Drawer Properties"
 msgstr "Ιδιότητες συρταριού"
 
-#: ../mate-panel/panel-properties-dialog.c:947
-#: ../mate-panel/panel-run-dialog.c:2019
+#: ../mate-panel/panel-properties-dialog.c:1011
+#: ../mate-panel/panel-run-dialog.c:1993
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Αποτυχία φόρτωσης αρχείου '%s': %s."
 
-#: ../mate-panel/panel-properties-dialog.c:953
+#: ../mate-panel/panel-properties-dialog.c:1017
 msgid "Could not display properties dialog"
 msgstr "Αδυναμία εμφάνισης διαλόγου ιδιοτήτων"
 
@@ -2534,35 +2598,35 @@ msgstr "Εκκαθάριση πρόσφατων εγγράφων..."
 msgid "Clear all items from the recent documents list"
 msgstr "Εκκαθάριση όλων των αντικειμένων από τη λίστα προσφάτων εγγράφων"
 
-#: ../mate-panel/panel-run-dialog.c:396
+#: ../mate-panel/panel-run-dialog.c:404
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Αδύνατη η εκτέλεση της εντολής '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:451
+#: ../mate-panel/panel-run-dialog.c:462
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Αδυναμία μετατροπής '%s' από UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1254
+#: ../mate-panel/panel-run-dialog.c:1209
 msgid "Choose a file to append to the command..."
 msgstr "Επιλέξτε ένα αρχείο για συσχέτιση με την εντολή..."
 
-#: ../mate-panel/panel-run-dialog.c:1632 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1587 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Επιλογή μιας εφαρμογής για την προβολή της περιγραφής της."
 
-#: ../mate-panel/panel-run-dialog.c:1670
+#: ../mate-panel/panel-run-dialog.c:1625
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Θα εκτελεστεί η εντολή: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1703
+#: ../mate-panel/panel-run-dialog.c:1658
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Η λίστα URI στο διάλογο εκτέλεσης έχει εσφαλμένη μορφή (%d) ή μάκρος (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:2024
+#: ../mate-panel/panel-run-dialog.c:1998
 msgid "Could not display run dialog"
 msgstr "Αδυναμία εμφάνισης διαλόγου εκτέλεσης"
 
@@ -2604,7 +2668,7 @@ msgstr "Λίστα γνωστών εφαρμογών"
 msgid "Show list of known _applications"
 msgstr "Εμφάνιση λίστας γνωστών ε_φαρμογών"
 
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:90
+#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:96
 msgid "_Run"
 msgstr "_Εκτέλεση"
 
@@ -2614,15 +2678,15 @@ msgid ""
 "command entry field."
 msgstr "Πατήστε αυτό το κουμπί για να εκτελέσετε την επιλεγμένη εφαρμογή ή την εντολή στο πεδίο καταχώρησης εντολής."
 
-#: ../mate-panel/panel-stock-icons.c:91
+#: ../mate-panel/panel-stock-icons.c:97
 msgid "_Force quit"
 msgstr "_Βίαιο κλείσιμο"
 
-#: ../mate-panel/panel-stock-icons.c:92
+#: ../mate-panel/panel-stock-icons.c:98
 msgid "C_lear"
 msgstr "Ε_κκαθάριση"
 
-#: ../mate-panel/panel-stock-icons.c:93
+#: ../mate-panel/panel-stock-icons.c:99
 msgid "D_on't Delete"
 msgstr "Να _μη γίνει διαγραφή"
 
@@ -2697,101 +2761,101 @@ msgstr "Μικροε_φαρμογή:"
 msgid "_Prefs Path:"
 msgstr "_Διαδρομή Προτιμήσεων:"
 
-#: ../mate-panel/panel-toplevel.c:1141
+#: ../mate-panel/panel-toplevel.c:1215
 msgid "Hide Panel"
 msgstr "Απόκρυψη πίνακα εφαρμογών"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1541
+#: ../mate-panel/panel-toplevel.c:1642
 msgid "Top Expanded Edge Panel"
 msgstr "Γωνιακός πίνακας εφαρμογών αναπτυσσόμενος προς τα πάνω"
 
-#: ../mate-panel/panel-toplevel.c:1542
+#: ../mate-panel/panel-toplevel.c:1643
 msgid "Top Centered Panel"
 msgstr "Κεντραρισμένος προς τα πάνω πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1543
+#: ../mate-panel/panel-toplevel.c:1644
 msgid "Top Floating Panel"
 msgstr "Άνω πλωτός πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1544
+#: ../mate-panel/panel-toplevel.c:1645
 msgid "Top Edge Panel"
 msgstr "Άνω ακραίος πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1548
+#: ../mate-panel/panel-toplevel.c:1649
 msgid "Bottom Expanded Edge Panel"
 msgstr "Γωνιακός πίνακας εφαρμογών αναπτυσσόμενος προς τα κάτω"
 
-#: ../mate-panel/panel-toplevel.c:1549
+#: ../mate-panel/panel-toplevel.c:1650
 msgid "Bottom Centered Panel"
 msgstr "Κάτω κεντραρισμένος πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1550
+#: ../mate-panel/panel-toplevel.c:1651
 msgid "Bottom Floating Panel"
 msgstr "Κάτω πλωτός πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1551
+#: ../mate-panel/panel-toplevel.c:1652
 msgid "Bottom Edge Panel"
 msgstr "Κάτω ακραίος πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1555
+#: ../mate-panel/panel-toplevel.c:1656
 msgid "Left Expanded Edge Panel"
 msgstr "Γωνιακός πίνακας εφαρμογών αναπτυσσόμενος προς τα αριστερά"
 
-#: ../mate-panel/panel-toplevel.c:1556
+#: ../mate-panel/panel-toplevel.c:1657
 msgid "Left Centered Panel"
 msgstr "Αριστερά κεντραρισμένος πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1557
+#: ../mate-panel/panel-toplevel.c:1658
 msgid "Left Floating Panel"
 msgstr "Αριστερά πλωτός πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1558
+#: ../mate-panel/panel-toplevel.c:1659
 msgid "Left Edge Panel"
 msgstr "Αριστερός ακραίος πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1562
+#: ../mate-panel/panel-toplevel.c:1663
 msgid "Right Expanded Edge Panel"
 msgstr "Γωνιακός πίνακας εφαρμογών αναπτυσσόμενος προς τα αριστερά"
 
-#: ../mate-panel/panel-toplevel.c:1563
+#: ../mate-panel/panel-toplevel.c:1664
 msgid "Right Centered Panel"
 msgstr "Δεξιός κεντραρισμένο πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1564
+#: ../mate-panel/panel-toplevel.c:1665
 msgid "Right Floating Panel"
 msgstr "Δεξιός πλωτός ο πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-toplevel.c:1565
+#: ../mate-panel/panel-toplevel.c:1666
 msgid "Right Edge Panel"
 msgstr "Δεξιός ακραίος πίνακας εφαρμογών"
 
-#: ../mate-panel/panel-util.c:315
+#: ../mate-panel/panel-util.c:354
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Δεν βρέθηκε το εικονίδιο '%s'"
 
-#: ../mate-panel/panel-util.c:433
+#: ../mate-panel/panel-util.c:472
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Αδύνατη η εκτέλεση του '%s'"
 
-#: ../mate-panel/panel-util.c:665
+#: ../mate-panel/panel-util.c:700
 msgid "file"
 msgstr "αρχείο"
 
-#: ../mate-panel/panel-util.c:843
+#: ../mate-panel/panel-util.c:881
 msgid "Home Folder"
 msgstr "Προσωπικός φάκελος"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:855
+#: ../mate-panel/panel-util.c:893
 msgid "File System"
 msgstr "Σύστημα αρχείων"
 
-#: ../mate-panel/panel-util.c:1028
+#: ../mate-panel/panel-util.c:1066
 msgid "Search"
 msgstr "Αναζήτηση"
 
@@ -2799,31 +2863,31 @@ msgstr "Αναζήτηση"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1074
+#: ../mate-panel/panel-util.c:1112
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:472
+#: ../mate-panel/panel.c:490
 #, c-format
 msgid "Open URL: %s"
 msgstr "Άνοιγμα URL: %s"
 
-#: ../mate-panel/panel.c:1321
+#: ../mate-panel/panel.c:1340
 msgid "Delete this drawer?"
 msgstr "Αφαίρεση αυτού του συρταριού;"
 
-#: ../mate-panel/panel.c:1322
+#: ../mate-panel/panel.c:1341
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "Όταν ένα συρτάρι αφαιρείται, οι ρυθμίσεις του\nκαι το συρτάρι χάνονται."
 
-#: ../mate-panel/panel.c:1325
+#: ../mate-panel/panel.c:1344
 msgid "Delete this panel?"
 msgstr "Αφαίρεση αυτού του πίνακα εφαρμογών;"
 
-#: ../mate-panel/panel.c:1326
+#: ../mate-panel/panel.c:1345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."

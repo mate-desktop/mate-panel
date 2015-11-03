@@ -8,39 +8,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-10 23:10+0100\n"
-"PO-Revision-Date: 2014-02-25 13:21+0000\n"
-"Last-Translator: ప్రవీణ్ ఇళ్ళ <mail2ipn@gmail.com>\n"
-"Language-Team: Telugu (http://www.transifex.com/projects/p/MATE/language/te/)\n"
+"POT-Creation-Date: 2015-11-03 17:10+0300\n"
+"PO-Revision-Date: 2015-11-03 14:12+0000\n"
+"Last-Translator: Vlad Orlov <monsta@inbox.ru>\n"
+"Language-Team: Telugu (http://www.transifex.com/mate/MATE/language/te/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: te\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:220 ../applets/clock/clock.ui.h:26
+#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.ui.h:27
 msgid "Locations"
 msgstr "స్థానములు"
 
-#: ../applets/clock/calendar-window.c:220
+#: ../applets/clock/calendar-window.c:226
 msgid "Edit"
 msgstr "సవరించు"
 
-#: ../applets/clock/calendar-window.c:446
+#: ../applets/clock/calendar-window.c:451
 msgid "Calendar"
 msgstr "క్యాలెండర్"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:428
+#: ../applets/clock/clock.c:488
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:428 ../applets/clock/clock-location-tile.c:520
+#: ../applets/clock/clock.c:488 ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -51,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:433 ../applets/clock/clock.c:1541
+#: ../applets/clock/clock.c:493 ../applets/clock/clock.c:1631
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -65,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:433 ../applets/clock/clock.c:1547
-#: ../applets/clock/clock-location-tile.c:480
-#: ../applets/clock/clock-location-tile.c:527
+#: ../applets/clock/clock.c:493 ../applets/clock/clock.c:1637
+#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -76,14 +76,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:444
+#: ../applets/clock/clock.c:504
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:451
+#: ../applets/clock/clock.c:511
 #, c-format
 msgid ""
 "%1$s\n"
@@ -93,7 +93,7 @@ msgstr "%1$s\n%2$s"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:459
+#: ../applets/clock/clock.c:519
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -102,19 +102,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:633
+#: ../applets/clock/clock.c:693
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:662
+#: ../applets/clock/clock.c:722
 msgid "Click to hide month calendar"
 msgstr "మాస క్యాలెడర్ ను మరుగుపరచుటకు నొక్కండి"
 
-#: ../applets/clock/clock.c:665
+#: ../applets/clock/clock.c:725
 msgid "Click to view month calendar"
 msgstr "మాస క్యాలండర్ ను దర్శించుటకు నొక్కండి"
 
-#: ../applets/clock/clock.c:1379
+#: ../applets/clock/clock.c:1469
 msgid "Computer Clock"
 msgstr "కంప్యూటర్ గడియారం"
 
@@ -124,7 +124,7 @@ msgstr "కంప్యూటర్ గడియారం"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1526
+#: ../applets/clock/clock.c:1616
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -134,97 +134,97 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1534
+#: ../applets/clock/clock.c:1624
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1580
+#: ../applets/clock/clock.c:1670
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1611
+#: ../applets/clock/clock.c:1701
 msgid "Set System Time..."
 msgstr "సిస్టమ్ సమయాన్ని అమర్చుము..."
 
-#: ../applets/clock/clock.c:1612
+#: ../applets/clock/clock.c:1702
 msgid "Set System Time"
 msgstr "సిస్టమ్ సమయాన్ని అమర్చుము"
 
-#: ../applets/clock/clock.c:1627
+#: ../applets/clock/clock.c:1717
 msgid "Failed to set the system time"
 msgstr "సిస్టమ్ సమయాన్ని అమర్చుటలో విఫలమైంది"
 
-#: ../applets/clock/clock.c:1825 ../applets/fish/fish.c:1665
-#: ../applets/wncklet/window-list.c:175
-#: ../applets/wncklet/workspace-switcher.c:329
+#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1753
+#: ../applets/wncklet/window-list.c:192
+#: ../applets/wncklet/workspace-switcher.c:359
 msgid "_Preferences"
 msgstr "అభిరుచులు (_P)"
 
-#: ../applets/clock/clock.c:1828 ../applets/fish/fish.c:1668
-#: ../applets/notification_area/main.c:136
-#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:183
-#: ../applets/wncklet/window-menu.c:98
-#: ../applets/wncklet/workspace-switcher.c:337 ../mate-panel/drawer.c:553
-#: ../mate-panel/panel-action-button.c:718
-#: ../mate-panel/panel-context-menu.c:290 ../mate-panel/panel-menu-bar.c:288
-#: ../mate-panel/panel-menu-button.c:662
+#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1756
+#: ../applets/notification_area/main.c:152
+#: ../applets/wncklet/showdesktop.c:252 ../applets/wncklet/window-list.c:200
+#: ../applets/wncklet/window-menu.c:101
+#: ../applets/wncklet/workspace-switcher.c:367 ../mate-panel/drawer.c:558
+#: ../mate-panel/panel-action-button.c:734
+#: ../mate-panel/panel-context-menu.c:296 ../mate-panel/panel-menu-bar.c:384
+#: ../mate-panel/panel-menu-button.c:670
 msgid "_Help"
 msgstr "సహాయం (_H)"
 
-#: ../applets/clock/clock.c:1831 ../applets/fish/fish.c:1671
-#: ../applets/notification_area/main.c:139
-#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:191
-#: ../applets/wncklet/window-menu.c:106
-#: ../applets/wncklet/workspace-switcher.c:345
+#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1759
+#: ../applets/notification_area/main.c:155
+#: ../applets/wncklet/showdesktop.c:260 ../applets/wncklet/window-list.c:208
+#: ../applets/wncklet/window-menu.c:109
+#: ../applets/wncklet/workspace-switcher.c:375
 msgid "_About"
 msgstr "గురించి (_A)"
 
-#: ../applets/clock/clock.c:1834
+#: ../applets/clock/clock.c:1924
 msgid "Copy _Time"
 msgstr "సమయం నకలు (_T)"
 
-#: ../applets/clock/clock.c:1837
+#: ../applets/clock/clock.c:1927
 msgid "Copy _Date"
 msgstr "తారీఖు నకలు (_D)"
 
-#: ../applets/clock/clock.c:1840
+#: ../applets/clock/clock.c:1930
 msgid "Ad_just Date & Time"
 msgstr "సమయం మరియు కాలాన్ని పొసగించు (_j)"
 
-#: ../applets/clock/clock.c:2785
+#: ../applets/clock/clock.c:2873
 msgid "Choose Location"
 msgstr "స్థానమును యెంపికచేయుము"
 
-#: ../applets/clock/clock.c:2864
+#: ../applets/clock/clock.c:2952
 msgid "Edit Location"
 msgstr "స్థానమును సరికూర్చుము"
 
-#: ../applets/clock/clock.c:2987
+#: ../applets/clock/clock.c:3079
 msgid "City Name"
 msgstr "పట్టణం నామము"
 
-#: ../applets/clock/clock.c:2991
+#: ../applets/clock/clock.c:3083
 msgid "City Time Zone"
 msgstr "పట్టణం సమయక్షేత్రం"
 
-#: ../applets/clock/clock.c:3203
+#: ../applets/clock/clock.c:3297
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "గడియారం"
 
-#: ../applets/clock/clock.c:3205
+#: ../applets/clock/clock.c:3299
 msgid "The Clock displays the current time and date"
 msgstr "ఈ గడియారం వర్తమాన సమయం మరియు తారీఖులను ప్రదర్శిస్తుంది."
 
-#: ../applets/clock/clock.c:3209 ../applets/fish/fish.c:573
-#: ../applets/notification_area/main.c:130
-#: ../applets/wncklet/showdesktop.c:489 ../applets/wncklet/window-list.c:545
-#: ../applets/wncklet/window-menu.c:88
-#: ../applets/wncklet/workspace-switcher.c:578
-#: ../mate-panel/panel-context-menu.c:143
+#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:579
+#: ../applets/notification_area/main.c:146
+#: ../applets/wncklet/showdesktop.c:536 ../applets/wncklet/window-list.c:594
+#: ../applets/wncklet/window-menu.c:91
+#: ../applets/wncklet/workspace-switcher.c:615
+#: ../mate-panel/panel-context-menu.c:149
 msgid "translator-credits"
 msgstr "Prajasakti Localisation Team <localisation@prajasakti.com>, 2005.KrishnaBabu K <kkrothap@redhat.com> 2008."
 
@@ -317,43 +317,47 @@ msgid "Show seco_nds"
 msgstr "సెకన్లను చూపుము (_n)"
 
 #: ../applets/clock/clock.ui.h:23
+msgid "Show wee_k numbers in calendar"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:24
 msgid "Show _weather"
 msgstr "వాతావరణం చూపుము (_w)"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:25
 msgid "Show _temperature"
 msgstr "ఉష్ణోగ్రతను చూపుము (_t)"
 
-#: ../applets/clock/clock.ui.h:25 ../applets/fish/fish.ui.h:2
+#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
 #: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "General"
 msgstr "సాధారణ"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:28
 msgid "Display"
 msgstr "ప్రదర్శన"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:29
 msgid "_Visibility unit:"
 msgstr "దృశ్య ప్రమాణం (_V):"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:30
 msgid "_Pressure unit:"
 msgstr "పీడనం ప్రమాణం (_P):"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:31
 msgid "_Wind speed unit:"
 msgstr "గాలి వేగం ప్రమాణం (_W):"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:32
 msgid "_Temperature unit:"
 msgstr "ఉష్ణోగ్రత ప్రమాణం (_T):"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:33
 msgid "Weather"
 msgstr "వాతావరణం"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:34
 msgid "Time _Settings"
 msgstr "సమయం అమరికలు (_S)"
 
@@ -361,15 +365,15 @@ msgstr "సమయం అమరికలు (_S)"
 msgid "Failed to set the system timezone"
 msgstr "సిస్టమ్ సమయక్షేత్రం అమర్చుటలో విఫలం"
 
-#: ../applets/clock/clock-location-tile.c:244
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>అమర్చు...</small>"
 
-#: ../applets/clock/clock-location-tile.c:245
+#: ../applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>అమర్చు</small>"
 
-#: ../applets/clock/clock-location-tile.c:321
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr "ఒక స్థానమును ప్రస్తుత స్థానముగా అమర్చుము మరియు దాని సమయక్షేత్రమును ఈ కంప్యూటరుకు వుపయోగించుము"
@@ -380,7 +384,7 @@ msgstr "ఒక స్థానమును ప్రస్తుత స్థా
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:444
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -389,7 +393,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:465
+#: ../applets/clock/clock-location-tile.c:452
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -397,50 +401,50 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:474
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:613
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:625
-#: ../applets/clock/clock-location-tile.c:634
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "తెలియని"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:627
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, ఇలా ఉంది %s"
 
-#: ../applets/clock/clock-location-tile.c:650
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "సూర్యోదయం: %s / సూర్యాస్తమయం: %s"
 
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:167
-#: ../applets/notification_area/main.c:84 ../applets/wncklet/wncklet.c:71
+#: ../applets/clock/clock-utils.c:96 ../applets/fish/fish.c:173
+#: ../applets/notification_area/main.c:100 ../applets/wncklet/wncklet.c:71
 #: ../mate-panel/libpanel-util/panel-show.c:226
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "సహాయ పత్రమును ప్రదర్శించలేకపోయింది '%s'"
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:193
-#: ../applets/notification_area/main.c:98 ../applets/wncklet/wncklet.c:88
+#: ../applets/clock/clock-utils.c:125 ../applets/fish/fish.c:199
+#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "సహాయ పత్రమును ప్రదర్శించుటలో దోషము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:1
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:1
 msgid "Hour format"
 msgstr "గంటల వారీ రూపలావణ్యం"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:2
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:2
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values"
 " are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set"
@@ -452,11 +456,11 @@ msgid ""
 " the custom_format key."
 msgstr "ఈ కీ గడియారం ఆప్లెట్ ఉపయోగించే గంటల విధానాన్ని తెలియజేస్తుంది.సాద్యమగు విలువలు \"12-hour\", \"24-hour\", \"internet\", \"unix\" మరియు \"custom\".\"internet\" కు అనుసందానిస్తే గడియారం ఇంటర్నెట్ సమయం చూపిస్తుంది.ఇంటర్నెట్ సమయం రోజు ను 1000 \".beats\" గా విభజిస్తుంది. ఈ సిస్టమ్ నందు ఏ సమయక్షేత్రాలు లేవు, కనుక సమయం ప్రపంచం అంతటికి ఒకే విధంగా ఉంటుంది.\"unix\" కి అమర్చినట్లైతే, గడియారం సమయాన్ని Epoch, అంటే 1970-01-01 నుండి సెకన్లలో ప్రదర్శిస్తుంది.\"custom\" కి అమర్చినట్లైతే,గడియారం సమయాన్ని custom_format కీ లో తెలిపిన విధానాన్ని అనుసరించి ప్రదర్శిస్తుంది."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:3
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
 msgstr "గడియారం యొక్క మలచిన రూపలావణ్యం"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:4
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:4
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -464,83 +468,83 @@ msgid ""
 "information."
 msgstr "ఫార్మాట్ కీ ని\"custom\" కు అమర్చినప్పుడు గడియారం ఆప్లెట్ ఉపయోగించే విధానాన్ని ఈ కీ తెలియజేస్తుంది.మీరు ప్రత్యేకమైన విధానాన్ని పొందుటకు మీరు strftime() ద్వారా అర్ధంచేసుకోబడే మార్పు పద్దతులను మీరు ఉపయోగించుకోవచ్చు. ఎక్కువ సమాచారం కొరకు strftime() మాన్యువల్ ను చూడుము."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:5
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
 msgstr "సమయాన్ని సెకనులతో చూపుము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:6
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:6
 msgid "If true, display seconds in time."
 msgstr "వాస్తవమైతే, సమయంలో సెకన్లను కూడా ప్రదర్శించు."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:7
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:7
 msgid "Show date in clock"
 msgstr "తేదీ ని గడియారం నందు చూపుము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:8
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:8
 msgid "If true, display date in the clock, in addition to time."
 msgstr "వాస్తవమైతే, సమయమేగాకుండా, గడియారంలో తారీఖును కూడా ప్రదర్శించు."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:9
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:9
 msgid "Show date in tooltip"
 msgstr "తేదీ ని టూల్‌టిప్ నందు చూపుము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:10
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "వాస్తవమైతే, సూచీ గడియారం పైన ఉంచినప్పుడు తేదీ ని టూల్‌టిప్ నందు చూపుము."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:11
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
 msgstr "వాతావరణం ను గడియారం నందు చూపుము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:12
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:12
 msgid "If true, display a weather icon."
 msgstr "వాస్తవమైతే, వాతావరణ ప్రతిమను ప్రదర్శించు."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:13
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:13
 msgid "Show temperature in clock"
 msgstr "ఉష్ణోగ్రత ని గడియారం నందు చూపుము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:14
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:14
 msgid "If true, show the temperature next to the weather icon."
 msgstr "వాస్తవమైతే, ఉష్ణోగ్రతను వాతావరణ ప్రతిమ కి తరువాత చూపుము."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:15
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:15
 msgid "Show week numbers in calendar"
 msgstr "క్యాలండర్ నందు వారపు సంఖ్యలను చూపుము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:16
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:16
 msgid "If true, show week numbers in the calendar."
 msgstr "వాస్తవమైతే, వారపు సంఖ్యలను క్యాలెండర్ నందు చూపుము."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:17
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:17
 msgid "Expand list of locations"
 msgstr "స్థానముల జాబితాను విస్తరింపుము"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:18
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:18
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "వాస్తవమైతే, స్థానముల జాబితాను క్యాలెండర్ విండోలో విస్తరింపుము."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:19
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:19
 msgid "List of locations"
 msgstr "స్థానముల జాబితా"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:20
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:20
 msgid "A list of locations to display in the calendar window."
 msgstr "కాలెండర్ విండో నందు చూపించుటకు స్థానముల జాబితా."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:21
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:21
 msgid "Temperature unit"
 msgstr "ఉష్ణోగ్రత ప్రమాణం"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:22
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:22
 msgid "The unit to use when showing temperatures."
 msgstr "ఉష్ణోగ్రతలను చూపునపుడు ఉపయోగించవలిసిన ప్రమాణం."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:23
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:23
 msgid "Speed unit"
 msgstr "వేగం ప్రమాణం"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.in.h:24
+#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:24
 msgid "The unit to use when showing wind speed."
 msgstr "గాలి వేగం ను చూపునపుడు ఉపయోగించవలిసిన ప్రమాణం."
 
@@ -556,7 +560,7 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:263
+#: ../applets/fish/fish.c:269
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -565,17 +569,17 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr "హెచ్చరిక:  ఈ ఆదేశం వాస్తవంగా ఉపయోగపడేదిగా వుంది.\nఇది పనికిమాలిన యాప్లెట్ అయినందున మీరుదీన్ని\nవాడదలచుకొని వుండరు.\nయాప్లెట్ ను పనికొచ్చేవిధంగా లేదా \"ఆచరణాత్మకంగా\" చేసే %sను మీరు దేనికీ వాడరాదని మా సలహా."
 
-#: ../applets/fish/fish.c:435
+#: ../applets/fish/fish.c:441
 msgid "Images"
 msgstr "చిత్రాలు"
 
-#: ../applets/fish/fish.c:541 ../applets/fish/fish.c:584
-#: ../applets/fish/fish.c:690
+#: ../applets/fish/fish.c:547 ../applets/fish/fish.c:590
+#: ../applets/fish/fish.c:696
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s చేప"
 
-#: ../applets/fish/fish.c:542
+#: ../applets/fish/fish.c:548
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -583,30 +587,30 @@ msgid ""
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr "%s ఎదైనా గాని ఉపయోగంగా లేదు.ఇది డిస్కు స్థలాన్ని మరియు కంపైలేషన్ సమయాన్ని తీసుకొంటోంది, మరియు ఒక వేళ లొడైనా కూడా విలువైన పానల్ స్థలాన్ని మరియు మెమొరీని తీసుకొంటోంది. ఎవరైనా దీనిని ఉపయోగిస్తున్నట్లు కనపడితే వారని తక్షణమే మానసికవైద్యుని దగ్గరకు పంపుటమంచిది."
 
-#: ../applets/fish/fish.c:561
+#: ../applets/fish/fish.c:567
 msgid "(with minor help from George)"
 msgstr "(చిన్న సహాయం తో జార్జ్  నుండి)"
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:573
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "చాప"
 
-#: ../applets/fish/fish.c:585
+#: ../applets/fish/fish.c:591
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s చేప, సమకాలీన మార్గనిర్థేశి"
 
-#: ../applets/fish/fish.c:651
+#: ../applets/fish/fish.c:657
 msgid "Unable to locate the command to execute"
 msgstr "నిర్వర్తించవలసిన ఆదేశం దొరుకుటలేదు"
 
-#: ../applets/fish/fish.c:695
+#: ../applets/fish/fish.c:701
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s చేప ఇలా అంటుంది:"
 
-#: ../applets/fish/fish.c:758
+#: ../applets/fish/fish.c:764
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -614,16 +618,16 @@ msgid ""
 "Details: %s"
 msgstr "ఆదేశం నుండి అవుట్‌పుట్ ను చదవలేకపోతోంది\n\nవివరాలు: %s"
 
-#: ../applets/fish/fish.c:823
+#: ../applets/fish/fish.c:844
 msgid "_Speak again"
 msgstr "మరలా మాట్లాడు (_S)"
 
-#: ../applets/fish/fish.c:907
+#: ../applets/fish/fish.c:926
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "ఆకృతీకరించ బడినటువంటి ఆదేశం పనిచేయట్లేదు మరియు దీని చేత పునఃస్థాపించబడింది:%s"
 
-#: ../applets/fish/fish.c:930
+#: ../applets/fish/fish.c:966
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -631,7 +635,7 @@ msgid ""
 "Details: %s"
 msgstr "నిర్వర్తించలేకపోతోంది. '%s'\n\nవివరాలు: %s"
 
-#: ../applets/fish/fish.c:946
+#: ../applets/fish/fish.c:982
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -639,15 +643,15 @@ msgid ""
 "Details: %s"
 msgstr "'%s' నుండి చదవలేక పోతోంది\n\nవివరాలు: %s"
 
-#: ../applets/fish/fish.c:1519
+#: ../applets/fish/fish.c:1602
 msgid "The water needs changing"
 msgstr "నీరు మార్చవలసి ఉంది"
 
-#: ../applets/fish/fish.c:1521
+#: ../applets/fish/fish.c:1604
 msgid "Look at today's date!"
 msgstr "ఈ రోజు తేదీ ని చూడు!"
 
-#: ../applets/fish/fish.c:1604
+#: ../applets/fish/fish.c:1687
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s చేప, ఇదో భవిష్యవాణి"
@@ -700,59 +704,59 @@ msgstr "సెకనులు"
 msgid "_Rotate on vertical panels"
 msgstr "నిలువు ప్యానెల్ పై పరిభ్రమణం (_R)"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:1
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:1
 msgid "The fish's name"
 msgstr "చాప యొక్క నామము"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:2
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:2
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr "నామము లేని చాపా బాగా దీనము గా ఉంది.దానికి నామము పెట్టుట ద్వారా మీ చాపకు జీవితాన్ని ఇవ్వండి."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:3
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
 msgstr "చాప యొక్క యానిమేషన్(సజీవంగాభ్రమింపచేయు) పిక్స్ మాప్"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:4
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:4
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr "పిక్సమాప్ సంచయానికి సంభందించిన చాప ఆప్లెట్ లోని యానిమేషన్(సజీవంగాభ్రమింపచేయు) ప్రదర్శనకు ఉపయోగపడు పిక్స్ మాప్ యొక్క దస్త్రనామము ను ఈ కీ తెలియజేస్తుంది."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:5
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
 msgstr "నొక్కుట ద్వారా ఎగ్జిక్యూట్ చేయవలిసిన ఆదేశం"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:6
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:6
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr "చాప నొక్కబడినప్పుడు ఎగ్జక్యూట్ అవటానికి ప్రయత్నించే ఆదేశాన్ని ఈ కీ తెలియజేస్తుంది."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:7
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
 msgstr "చాప యానిమేషన్(సజీవంగాభ్రమింపచేయు) లోని ఫ్రేములు"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:8
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:8
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
 msgstr "చాప యొక్క యానిమేషన్(సజీవంగాభ్రమింపజేయు) లో ఎన్ని ఫ్రేములు ప్రదర్శితమవ్వాలో ఈ కీ తెలియజేస్తుంది."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:9
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
 msgid "Pause per frame"
 msgstr "ఫ్రేము కి ఆగు"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:10
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr "ఒక్కో ఫ్రేము ఎన్ని సెకన్లు ప్రదర్శితమవ్వాలో ఈ కీ తెలియజేస్తుంది."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:11
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
 msgid "Rotate on vertical panels"
 msgstr "నిటారుగా ఉన్న ప్యానల్సు పై తిరుగు"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.in.h:12
+#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "నిజమైతే, చాప యొక్క యానిమేషన్(సజీవంగాభ్రమింపచేయు) నిటారుగా ఉన్న ప్యానల్సు పై తిరుగుతూ ప్రదర్శితమవుతుంది."
@@ -769,12 +773,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:124
+#: ../applets/notification_area/main.c:140
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "ప్రకటన ప్రదేశం"
 
-#: ../applets/notification_area/main.c:245
+#: ../applets/notification_area/main.c:389
 msgid "Panel Notification Area"
 msgstr "ప్యానెల్ తాఖీదు ఇచ్చు వైశాల్యం"
 
@@ -790,73 +794,73 @@ msgstr ""
 msgid "Area where notification icons appear"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:1
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
 msgstr "విండోలను అన్ని కార్యక్షేత్రములనుండి చూపుము"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:2
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
 msgstr "నిజమైతే,విండో జాబితా అన్ని కార్యక్షేత్రల నుండి విండోలను చూపిస్తుంది. లేదంటే అది ప్రస్తుతకార్యక్షేత్రం నుండి మాత్రమే విండోలను చూపిస్తుంది."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:3
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
 msgstr "విండోలను ఎప్పుడు సమూహం చేయాలి"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:4
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:4
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr "విండోజాబితాలో ఒకే రకమైన అప్లకేషన్ నుండి వచ్చిన విండోలను ఎప్పుడు సమూహం చేయాలో నిర్ణయిస్తుంది. సాధ్యమైన విలువలు \"ఎప్పటికివద్దు\", \"స్వయంచాలకంగా\" మరియు \"ఎల్లప్పుడు\"."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:5
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
 msgstr "ఎప్పుడైతే విండోలు చిన్నవిగా ఉండవో వాటిని ప్రస్తుత కార్యక్షేత్రమునకు కదుపుము"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.in.h:6
+#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr "నిజమైతే, ఎప్పుడైతే విండోను చిన్నది చేయవో అప్పుడు దానిని, ప్రస్తుత కార్యక్షేత్రానికి కదుపుము. లేదంటే, ఆ విండో కార్యక్షేత్రానికి మారుము."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:1
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
 msgstr "కార్యక్షేత్ర నామాలను ప్రదర్శింపుము"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:2
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:2
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
 msgstr "నిజమైతే, కార్యక్షేత్రం మార్చుదానిలో గల కార్యక్షేత్రాలు కార్యక్షేత్రల యొక్క నామాలను ప్రదర్శిస్తాయి. లేదంటే అని కార్యక్షేత్రం లోని విండోలను ప్రదర్శిస్తాయి.ఈ అమరిక విండో నిర్వాహిక మెటాసిటి అయితే మాత్రమే పనిచేస్తుంది."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:3
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
 msgstr "అన్ని కార్యక్షేత్రాలను ప్రదర్శింపుము"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:4
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr "నిజమైతే, ఆ కార్యక్షేత్రం మార్చునది అన్ని కార్యక్షేత్రాలను చూపుతుంది.లేదంటే అది ప్రస్తుత కార్యక్షేత్రం మాత్రమే చూపుతుంది."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:5
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
 msgstr "కార్యక్షేత్రం మార్చదానిలో గల అడ్డువరుసలు"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:6
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:6
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
 msgstr "కార్యక్షేత్రం మార్చునది దానిలో గల కార్యక్షేత్రలను ఎన్ని అడ్డువరుసలలో(అడ్డ నమూనా కొరకు) లేదా నిలువువరుసలలో (నిలువు నమూనా కొరకు) చూపిస్తుందో ఈ కీ తెలియజేస్తుంది.ఈ కీ display_all_workspaces కీ నిజమైతే మాత్రమే సంభందితంగా ఉంటుంది."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:7
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.in.h:8
+#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:8
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
@@ -871,7 +875,7 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:81 ../applets/wncklet/window-menu.c:238
+#: ../applets/wncklet/window-menu.c:84 ../applets/wncklet/window-menu.c:298
 msgid "Window Selector"
 msgstr "గవాక్షములను ఎంపికచేయునది"
 
@@ -880,7 +884,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:571
+#: ../applets/wncklet/workspace-switcher.c:608
 msgid "Workspace Switcher"
 msgstr "పని ప్రదేశములు మార్చునది"
 
@@ -889,7 +893,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:538
+#: ../applets/wncklet/window-list.c:587
 msgid "Window List"
 msgstr "గవాక్ష చిట్టా"
 
@@ -905,42 +909,42 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:173
+#: ../applets/wncklet/showdesktop.c:203
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%sను నింపుట విఫలం : %s\n"
 
-#: ../applets/wncklet/showdesktop.c:173
+#: ../applets/wncklet/showdesktop.c:203
 msgid "Icon not found"
 msgstr "ప్రతిమ కనబడలేదు"
 
-#: ../applets/wncklet/showdesktop.c:246
+#: ../applets/wncklet/showdesktop.c:276
 msgid "Click here to restore hidden windows."
 msgstr "దాగి ఉన్న గవాక్షములను వెలికి తీయుటకు ఇక్కడ నొక్కు."
 
-#: ../applets/wncklet/showdesktop.c:250
+#: ../applets/wncklet/showdesktop.c:280
 msgid "Click here to hide all windows and show the desktop."
 msgstr "అన్ని గవాక్షములు మరుగున పరచి రంగస్థలాన్ని చూపుటకు ఇక్కడ నొక్కు."
 
-#: ../applets/wncklet/showdesktop.c:417 ../applets/wncklet/showdesktop.c:482
+#: ../applets/wncklet/showdesktop.c:464 ../applets/wncklet/showdesktop.c:529
 msgid "Show Desktop Button"
 msgstr "రంగస్థలం చూపెడి మీట"
 
-#: ../applets/wncklet/showdesktop.c:484
+#: ../applets/wncklet/showdesktop.c:531
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ఈ మీట అన్ని గవాక్షములను మరుగున పరుచి రంగస్థలాన్ని చూపిస్తుంది."
 
-#: ../applets/wncklet/showdesktop.c:510
+#: ../applets/wncklet/showdesktop.c:557
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
 msgstr "మీ గవాక్ష అభికర్తకి రంగస్థల చూపెడి మీట సహకారం లేదు, లేదా మీరు గవాక్ష అభికర్తను వాడుతున్నట్లు లేదు."
 
-#: ../applets/wncklet/window-list.c:167
+#: ../applets/wncklet/window-list.c:184
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:540
+#: ../applets/wncklet/window-list.c:589
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -990,24 +994,24 @@ msgstr "ప్రస్తుత కార్యక్షేత్రమున�
 msgid "Restore to na_tive workspace"
 msgstr "స్వంత కార్యక్షేత్రముకు తిరిగిఉంచు (_t)"
 
-#: ../applets/wncklet/window-menu.c:83
+#: ../applets/wncklet/window-menu.c:86
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr "గవాక్షమును ఎంపికచేయునది చిట్టాలోని అన్ని గవాక్షాలను చూపుతుంది మరియు వాటినన్నింటినీ అన్వేషించే అవకాశంకల్పిస్తుంది."
 
-#: ../applets/wncklet/workspace-switcher.c:192
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:196
+#: ../applets/wncklet/workspace-switcher.c:924
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "అడ్డపట్టీ"
 
-#: ../applets/wncklet/workspace-switcher.c:192
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:196
+#: ../applets/wncklet/workspace-switcher.c:924
 msgid "columns"
 msgstr "నిలువుపట్టీ"
 
-#: ../applets/wncklet/workspace-switcher.c:573
+#: ../applets/wncklet/workspace-switcher.c:610
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1053,124 +1057,132 @@ msgstr ""
 msgid "Workspaces"
 msgstr "కార్యక్షేత్రలు"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:1
+#: ../data/org.mate.panel.gschema.xml.in.h:1
+msgid "Default panel layout"
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:2
+msgid "The default panels layout to use when panels are created or resetted."
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:3
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "ప్రోగ్రామ్ జాబితా ను \"అనువర్తనము నడుపుము\" డైలాగ్ లో చేతనం చేయి"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:2
+#: ../data/org.mate.panel.gschema.xml.in.h:4
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr "నిజమైతే, \"అనువర్తనము నడుపుము\" డైలాగ్ నందు జాబితాచేసిన \"తెలిసిన అనువర్తనములు\" అందుబాటులో ఉంచు. డైలాగ్ తెరిచినప్పుడు జాబితా విస్తరించబడినా లేదా విస్తరించబడకపోయినా show_program_list కీ చేత నియంత్రించ బడుతుంది. "
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:3
+#: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "ప్రోగ్రామ్ జాబితాను \"అనువర్తనము నడుపుము\" డైలాగ్ లో విస్తరింపుము"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:4
+#: ../data/org.mate.panel.gschema.xml.in.h:6
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr "నిజమైతే, \"తెలిసిన అనువర్తనములు\" ఏవైతే\"అనువర్తనము నడుపు\" డైలాగ్ లో జాబితాచేయబడినవో అవి డైలాగ్ తెరవగానే విస్తరింపబడతాయి.ఈ కీ enable_program_list కీ నిజమైతే మాత్రమే సంభందితంగా ఉంటుంది."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:5
+#: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "స్వయంచాలకముగింపు \" అప్లకేషన్ నడుపుము\" డైలాగ్ లో చేతనం చేయి"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:6
+#: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr "నిజమైతే, స్వయంచాలకముగింపు ను\"అప్లకేషన్ నడుపుము\" డైలాగ్ నందు అందుబాటు లో ఉంచు."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:7
+#: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:8
+#: ../data/org.mate.panel.gschema.xml.in.h:10
 msgid "This is the list of commands used in \"Run Application\" dialog."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:9
+#: ../data/org.mate.panel.gschema.xml.in.h:11
 msgid "Panel ID list"
 msgstr "పానల్ ID జాబితా"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:10
+#: ../data/org.mate.panel.gschema.xml.in.h:12
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "పానల్ ID ల యొక్క జాబితా.ప్రతి ID ఒక స్వతంత్ర గరిష్ఠస్థాయి పానల్ ను గుర్తిస్తుంది.ఈ పానల్ లోని ప్రతి దానికి గల అమరికలు /apps/panel/toplevels/$(id) నందు నిల్వఉంచబడతాయి."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:11
+#: ../data/org.mate.panel.gschema.xml.in.h:13
 msgid "Panel object ID list"
 msgstr "పానల్ ఆబ్జెక్టు ID జాబితా"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:14
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "పానల్ ఆబ్జక్టు ID ల జాబితా.ప్రతి ID ఒక స్వతంత్ర పానల్ ఆబ్జక్టు(ఉ.దా. ఒక లాంచర్, యాక్షన్ బటన్ లేదా మెనూబటన్/బార్) ను గుర్తిస్తుంది.ఈ ఆబ్జక్టు ల ప్రతిదాని అమరికలు /apps/panel/objects/$(id) నందు నిల్వఉంచ బడతాయి."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Enable tooltips"
 msgstr "టూల్‌టిప్ లను చేతనంచేయి"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "నిజమైతే, టూల్‌టిప్ప లు పానల్ లోని ఆబ్జక్టులకు చూపబడతాయి."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:15
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "యానిమేషన్(సజీవంగాభ్రమింపచేయు) ను అచేతనం చేయి"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid "Autoclose drawer"
 msgstr "స్వయంచాలకంగా మూసివేయబడు డ్రాయరు"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "నిజమైతే, ఎప్పుడైతే వినియోగదారుడు ఒక లాంచర్ ను దానలో నొక్కుతాడో అప్పుడు డ్రాయర్ స్వయంచాలకంగా మూసుకుపోతుంది."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "Confirm panel removal"
 msgstr "పానల్ తొలగింపును నిశ్చయించు"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "నిజమైతే, వినియోగదారుడు పానల్ తొలగించాలని కొరుకుంటున్నాడో లేదో నిశ్చయించుకొవటకు ఒక డైలాగ్ చూపబడుతుంది."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Highlight launchers on mouseover"
 msgstr "మౌస్ పైన ఉంచగానే లాంచర్లను ఉద్దీపనం చేయి"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "If true, a launcher is highlighted when the user moves the pointer over it."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Complete panel lockdown"
 msgstr "పూర్తి పానల్ ను లాక్‌డౌన్ చేయండి"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "నిజమైతే, పానల్ ఆకృతీకరణ కు ఏ మార్పులను కూడా పానల్ అనుమతించదు. ఏమైనప్పటికి ఒంటరి ఆప్లెట్లు ప్రత్యేకంగా లాక్‌డ్ డౌన్ చేయవలసిరావచ్చు.ఇది ప్రభావితం కావటానికి పానల్ ను పునఃప్రారంభించ వలసిరావచ్చు."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Applet IIDs to disable from loading"
 msgstr "లోడింగ్ నుండి అచేతనం చేయుటకు ఆప్లెట్ IIDs"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1178,77 +1190,107 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "పానల్ వదిలివేసే ఆప్లెట్ IIDs యొక్క జాబితా.ఈ విధంగా ఆయా ఆప్లెట్ల ను మెనూ నందు లోడుచేయుట లేదా చూపించుట మీరు అచేతనం చేయవచ్చు.ఉదాహరణకు mini-commander ఆప్లెట్ ను అచేతనం చేయుటకు 'OAFIID:MATE_MinicommanderApplet' ను ఈ జాబితా కు కలుపండి.ఇది ప్రభావితం అగుటకు పానల్ తప్పనిసరిగా పునఃప్రారంభించాలి."
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:26
-msgid "Disable Logging Out"
-msgstr "లాగింగ్ అవుట్ ను అచేతనంచేయి"
-
-#: ../data/org.mate.panel.gschema.xml.in.in.h:27
-msgid ""
-"If true, the panel will not allow a user to log out, by removing access to "
-"the log out menu entries."
-msgstr "నిజమైతే, పానల్ లాగ్అవుట్ మెనూ ప్రవేశాలను వాడనీయకుండా చేసి, వినియోగదారిని లాగ్అవుట్ చేయుటకు అనుమతినివ్వదు."
-
-#: ../data/org.mate.panel.gschema.xml.in.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Disable Force Quit"
 msgstr "బలవంతపు నిష్క్రమణను అచేతనం చేయి"
 
-#: ../data/org.mate.panel.gschema.xml.in.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr "నిజమైతే, పానల్ బలవంతపు నిష్క్రమణ బటన్ కు ప్రవేశం తీసివేయుట ద్వారా వినియోగదారున్ని ఒక అనువర్తనమును బలవంతంగా నిష్క్రమింప చేయుటకు అనుమతినివ్వదు."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:1
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:1
+msgid "Show applications menu"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:2
+msgid "If true, show applications item in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:3
+msgid "Show places menu"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:4
+msgid "If true, show places item in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:5
+msgid "Show desktop menu"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:6
+msgid "If true, show desktop item in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:7
+msgid "Show icon"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:8
+msgid "If true, show icon in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:9
+msgid "Icon to show in menu bar"
+msgstr ""
+
+#: ../data/org.mate.panel.menubar.gschema.xml.in.h:10
+msgid "Set the theme icon name to use in menu bar."
+msgstr ""
+
+#: ../data/org.mate.panel.object.gschema.xml.in.h:1
 msgid "Panel object type"
 msgstr "పానల్ ఆబ్జక్టు రకం"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:2
+#: ../data/org.mate.panel.object.gschema.xml.in.h:2
 msgid "The type of this panel object."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:3
+#: ../data/org.mate.panel.object.gschema.xml.in.h:3
 msgid "Toplevel panel containing object"
 msgstr "ఉన్నతస్థాయి పానల్ కలిగిఉండే ఆబ్జక్టు"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:4
+#: ../data/org.mate.panel.object.gschema.xml.in.h:4
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "ఈ ఆబ్జక్టు ను కలిగిఉన్న అత్యున్నత స్థాయి పానల్ ను గుర్తించునది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:5
+#: ../data/org.mate.panel.object.gschema.xml.in.h:5
 msgid "Object's position on the panel"
 msgstr "పానల్ పైన ఆబ్జక్టు యొక్క స్థానము"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:6
+#: ../data/org.mate.panel.object.gschema.xml.in.h:6
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr "ఈ పానల్ ఆబ్జక్టు యొక్క స్థానము.ఆ స్థానము పానల్ ఎడమ (లేదా నిలువుగానైతే పైన) అంచు నుండి గల పిగ్జెల్సు సంఖ్య ద్వారా తెలుపబడుతుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:7
+#: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
 msgstr "స్థానంను క్రింది/కుడి అంచుకి సారూప్యంగా స్థానాంతరము చేయుము"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:8
+#: ../data/org.mate.panel.object.gschema.xml.in.h:8
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
 msgstr "నిజమైతే, ఆబ్జక్టు యోక్క స్థానము పానల్ యొక్క కుడి(లేదా నిలువుగా అయితే క్రింది) అంచుకి సారూప్యంగా స్థానాంతరము చేయబడుతుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:9
+#: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
 msgstr "ఆబ్జక్టు ను పానల్ కు లాక్ చేయుము"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:10
+#: ../data/org.mate.panel.object.gschema.xml.in.h:10
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
 msgstr "నిజమైతే,వినియోగదారుడు ముందుగా మెనూఅంశం \"అన్‌లాక్\" ను ఉపయోగించి ఆబ్జెక్టును అన్‌లాక్ చేయకుండా ఆప్లెట్ ను కదపలేడు."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:11
+#: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:12
+#: ../data/org.mate.panel.object.gschema.xml.in.h:12
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1256,138 +1298,138 @@ msgid ""
 "applet\")."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:13
+#: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
 msgstr "పానల్ డ్రాయర్ కు అటించబడింది"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:14
+#: ../data/org.mate.panel.object.gschema.xml.in.h:14
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr "ఈ డ్రాయర్ కి అతికించిన పానల్ ను గుర్తించేది. object_type కీ \"drawer-object\" అయితేనే ఈ కీ సారూప్యంగా ఉంటుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:15
+#: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
 msgstr "డ్రాయర్ లేదా మెనూ కొరకు ప్రదర్శితమయ్యే టూల్‌టిప్"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:16
+#: ../data/org.mate.panel.object.gschema.xml.in.h:16
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
 msgstr "ఈ డ్రాయర్ లేదా మెనూ కొరకు ప్రదర్శితమయ్యే టూల్‌టిప్ లోని టెక్స్ట్ .ఈ కీ సారూప్యతతో ఉండేది object_type కీ \"drawer-object\" లేదా \"menu-object\" అయితే మాత్రమే."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:17
+#: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
 msgstr "ఆబ్జక్టు యొక్క బటన్ కు వినియోగదారి ప్రతిమను ఉంపయోగించు"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:18
+#: ../data/org.mate.panel.object.gschema.xml.in.h:18
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr "నిజమైతే, ఆ custom_icon కీ బటన్ కొరకు వినియోగదారి ప్రతిమ గా ఉపయోగించబడుతుంది.వాస్తవం కాకపోతే, ఆ custom_icon కీ వదిలివేయబడుతుంది.ఈ కీ object_type కీ \"menu-object\" లేదా \"drawer-object\" అయితే మాత్రమే సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:19
+#: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
 msgstr "ఆబ్జక్ట యొక్క బటన్ కు ఉపయోగించే ప్రతిమ"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:20
+#: ../data/org.mate.panel.object.gschema.xml.in.h:20
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr "ఆబ్జక్టు యొక్క బటన్ కు ప్రతిమ గా ఉపయోగించిన చిత్ర దస్త్రం యొక్క స్థానము.object_type కీ \"drawer-object\" లేదా \"menu-object\" అయ్యి మరియు use_custom_icon కీ నిజమైతే మాత్రమే ఈ కీ సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:21
+#: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
 msgstr "మెనూ విషయసంగ్రహాల కొరకు వినియోగదారి పాత్ ను ఉపయోగించు"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:22
+#: ../data/org.mate.panel.object.gschema.xml.in.h:22
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr "నిజమైతే, ఆ menu_path కీ పాత్ గా ఉపయోగించబడుతుంది దేనినుండి అయితే మెనూ విషయసంగ్రహాలు నిర్మించబడతాయో.వాస్తవం కాకపోతే, ఆ menu_path కీ వదిలివేయబడుతుంది.ఈ కీ object_type కీ \"menu-object\" అయితే మాత్రమే సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:23
+#: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
 msgstr "మెనూ విషయసంగ్రహం పాత్"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:24
+#: ../data/org.mate.panel.object.gschema.xml.in.h:24
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr "మెనూ అంశాలను నిర్మించినటువంటి మార్గం.use_menu_path కీ నిజమై మరియు object_type కీ \"menu-object\" అయితేనే ఈ కీ సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:25
+#: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:26
+#: ../data/org.mate.panel.object.gschema.xml.in.h:26
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:27
+#: ../data/org.mate.panel.object.gschema.xml.in.h:27
 msgid "Launcher location"
 msgstr "లాంచర్ స్థానము"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:28
+#: ../data/org.mate.panel.object.gschema.xml.in.h:28
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr "లాంచర్ ను వివరించు .desktop దస్త్రం యొక్క స్థానము. object_type కీ \"launcher-object\" అయితే మాత్రమే ఈ కీ సారుప్యంగా ఉంటుంది."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:29
+#: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
 msgstr "యాక్షన్ బటన్ రకం"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.in.h:30
+#: ../data/org.mate.panel.object.gschema.xml.in.h:30
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr "ఈ బటన్ ప్రతిబింబింపచేసే క్రియా రూపం. సాధ్యమగు విలువలు \"lock\", \"logout\", \"run\". \"search\" మరియు \"screenshot\". object_type కీ \"action-applet\" అయితే మాత్రమే ఈ కీ సారూప్యంగా ఉంటుంది.\"run\", :\"lock:"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:1
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
 msgstr "పానల్ ను గుర్తించుటకు నామము"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:2
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:2
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr "మానవుడు చదవగల ఈ నామాన్ని మీరు పానల్ ను గుర్తించుటకు ఉపయోగించగలరు.దీని ప్రధాన ఉపయోగార్ధం పానల్ విండోకి శీర్షికగా ఉండుట ద్వారా పానల్సు మద్య మారుతూ ఉన్నప్పడు ఉపయోగపడుట."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:3
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
 msgstr "ఎక్కడైతే పానల్ ప్రదర్శింతమౌతుందో ఆ X తెర"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:4
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:4
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr "బహుళ-తెర అమరిక ద్వారా, మీరు ప్రతి విడి తెరపైన పానల్సు ను కలిగిఉండవచ్చు. ఈ కీ పానల్ ప్రదర్శితమువుతున్న ప్రస్తుత తెరను గుర్తిస్తుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:5
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "ఎక్కడైతే పానల్ ప్రదర్శింతమౌతుందో ఆ Xinerama మానిటర్"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:6
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:6
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr "xinerama అమర్పులో, మీరు ప్రతి విడి మానిటర్ నందు పానల్ కలిగిఉండొచ్చు.ఈ కీ పానల్ ప్రదర్శింపబడుతున్న ప్రస్తుత మానిటర్ ను గుర్తిస్తుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:7
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
 msgstr "మొత్తం తెర వెడల్పును ఆక్రమించుకొనుటకు విస్తరింపుము"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:8
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:8
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge."
@@ -1395,11 +1437,11 @@ msgid ""
 "launchers and buttons on the panel."
 msgstr "నిజమేతే, పానల్ మొత్త తెర వెడల్పును ఆక్రమిస్తుంది(అదే నిలును పానల్ అయితే ఎత్తుని). ఈ రీతి లో పానల్ తెర అంచు వద్ద మాత్రమే ఉంచబడుతుంది. నిజంకానిచో, పానల్ దాని పై ఆప్లెట్లను, లాంచర్లను మరియు బటన్లను ఉంచగలిగే అంత పెద్దదిగా మాత్రమే ఉంటుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:9
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
 msgstr "పానల్ సర్దబాటు"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:10
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:10
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", "
 "\"left\", \"right\". In expanded mode the key specifies which screen edge "
@@ -1411,11 +1453,11 @@ msgid ""
 "panel."
 msgstr "పానల్ యొక్క సర్దుబాటు.సాద్యమగు విలువలు \"పైకి\", \"క్రిందకి\", \"ఎడమ\", \"కుడీ\".విస్తరణ రీతినందు ఈ కీ పానల్ ఏ తెరఅంచు పైన ఉందో తెలుపుతుంది. un-expanded రీతినందు \"పైన\" మరియు \"క్రింద\" మద్యగల తేడా ముఖ్యంకాదు  - రెండూ ఇది అడ్డంగాఉన్న పానల్ అని సూచిస్తాయి - అయినప్పటికీ కొన్ని పానల్ ఆబ్జక్టులు ఎలా ప్రవర్తించాలో చెప్పే ఉపయోగకరమైన మెళుకువ ఇస్తుంది. ఉదాహరణకు, \"పైన\" పానల్ మెనూ బటన్ మెనూను పానల్ క్రిందికి ఉంచుతుంది, అదే \"క్రింది\" పానల్ అయితే ఆ మెనూ పానల్ పైకి ఉంచబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:11
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
 msgstr "పానల్ పరిమాణం"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:12
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:12
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1423,33 +1465,33 @@ msgid ""
 "(or width)."
 msgstr "పానల్ యొక్క ఎత్తు (నిలువు పానల్‌కైతే వెడల్పు).ఫాంట్ పరిమాణం మరియు ఇతర సూచికలను ఆధారంగా తీసుకుని రన్‌టైమ్ నందు పానల్ నిర్ధారించబడుతుంది.గరిష్ఠ పరిమాణం తెరయొక్క ఎత్తు(లేదా వెడల్పు) కు ఒక పావుభాగం వద్ద నిర్దేశించ బడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:13
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
 msgstr "పానల్ యొక్క X కో-ఆర్డినేట్"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:14
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:14
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr "x-యాక్సిస్ తో కూడిన పానల్ స్థానము.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి నందు ఈ కీ వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెర అంచు వద్ద ఉంచబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:15
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
 msgstr "పానల్ యొక్క Y కో-ఆర్డినేట్"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:16
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:16
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr "y-యాక్సిస్ తో కూడిన పానల్ స్థానము.ఆ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది. విస్తరణ రీతి నందు ఈ కీ వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెరఅంచు వద్ద ఉంచబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:17
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr "పానల్ యొక్క X కొ-ఆర్డినేట్, తెర యొక్క కుడివైపు నుండి ప్రారంభమౌతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:18
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:18
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1459,11 +1501,11 @@ msgid ""
 "the orientation key."
 msgstr "x-యాక్సిస్ తో కూడి పానల్ యొక్క స్థానము, తెర యొక్క కుడి నుండి ప్రారంభించబడుతుంది. -1 కి అమర్చినట్లైతే, ఆ విలువ వదిలివేయబడుతుంది మరియు x కీ యొక్క విలువ ఉపయోగించబడుతుంది. విలవ 0 కన్నా పెద్దదైతే, x కీ విలువ వదిలివేయబడుతుంది.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి నందు ఈ కీ వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెర అంచున ఉంచబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:19
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "పానల్ యోక్క Y కో-ఆర్డినేట్, తెర యొక్క క్రిందిభాగం నుండి ప్రారంభించబడుతుంది"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:20
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:20
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1473,11 +1515,11 @@ msgid ""
 "the orientation key."
 msgstr "y-యాక్సిస్ తో కూడిన పానల్ స్థానము, తెర క్రింది నుండి ప్రారంభించబడినది.ఒకవేళ -1 అమర్చినట్లైతే, ఆ విలువ వదిలివేయబడుతుంది మరియు y కీ యొక్క విలువ ఉపయోగించబడుతుంది.ఒకవేళ విలువ 0 కన్నా ఎక్కువైతే, అప్పుడు y కీ విలువ వదిలివేయబడుతుంది.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి నందు ఈ కీ వదిలివేయబడుతుంది మరియు సర్దుబాటు కీ ద్వారా తెలుపబడిన తెరు అంచువద్ద ఉంచబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:21
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
 msgstr "x-యాక్సిస్ పై గల మద్య పానల్"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:22
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:22
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -1485,11 +1527,11 @@ msgid ""
 "and x_right keys specify the location of the panel."
 msgstr "నిజమైతే, x మరియు x_right కీలు వదిలివేయబడతాయి మరియు పానల్ x-యాక్సిస్ మద్యన ఉంచబడుతుంది.ఒక వేళ పానల్ పరిమాణం మార్చనా దాని స్థానం అలాగే ఉంటుంది -i.e పానల్ రెండువైపులా పెరుగుతుంది.నిజంకానిచో,x మరియు x_right కీలు పానల్ స్థానాన్ని తెలుపుతాయి."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:23
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
 msgstr "y-యాక్సిస్ పై గల మద్య పానల్"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:24
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:24
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -1497,92 +1539,92 @@ msgid ""
 "and y_bottom keys specify the location of the panel."
 msgstr "నిజమైతే, y మరియు y_bottom కీలు కలుపబడతాయి మరియు పానల్ తెరయొక్క y-యాక్సిస్ కు మద్య ఉంచబడుతుంది.పానల్ పరిమాణంమర్చినా దాని స్థానం అలాగే ఉంటుంది - i.e పానల్ రెడు వైపులా పెరుగుతుంది. నిజంకానిచో, y మరియు y_bottom కీలు పానల్ స్థానాన్ని తెలియజేస్తాయి."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:25
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
 msgstr "స్వయంచాలకంగా మూలనదాగే ప్యానెల్"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:26
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:26
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr "నిజమైతే, సూచిక పానల్ వదిలివేళ్ళగానే పానల్ స్వయంచాలకంగా స్క్రీన్ యొక్క మూలన దాగిఉంచబడుతుంది.సూచిక ను మూలకు తీసుకుపోవుట ద్వారా పానల్ ను తిరిగిఉంచుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:28
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr "నిజమేతే, పానల్ ను దాగిఉంచుట మరియు వెలికిఉంచుట అనునది సత్వరం జరుగుదానికన్నా ఎక్కువగా యానిమేట్ చేయబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:29
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
 msgstr "మరుగునఉన్న బటన్సు ను చేతనంచేయుము"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:30
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:30
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr "నిజమైతే, పానల్ యొక్క రెండు పక్కల పానల్ ను తెరఅంచు చివరివరకు కదుపుటకు ఉపయోగపడగల బటన్లు, ఒక బటన్ మాత్రమే కనబడునట్లుగా ఉంచబడతాయి,"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:31
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
 msgstr "మరుగునఉన్న బటన్సుపై బాణాలను చేతనం చేయుము"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:32
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:32
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr "నిజమైతే, మరుగునఉన్న బటన్ల పై బాణాలు ఉంచబడతాయి.ఈ కీ enable_buttons కీ నిజమైతే మాత్రమే సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:33
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
 msgstr "పానల్ స్వయంచాకంగాదాగిఉండుటకి ఆలస్యం"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:34
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr "పానల్ స్వయంచాలకంగా మరుగుపరచక మునుపు సూచిక పానల్ ప్రదేశంలో ప్రవేశించిన తర్వాత జరిగిన ఆలస్యాన్ని మిల్లీసెకన్లలో తెలియజెస్తుంది.ఈ కీ auto_hide కీ నిజమైతేనే సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:35
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
 msgstr "పానల్ స్వయంచాకంగాదాగిఉండుటకి ఆలస్యం"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:36
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:36
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr "పానల్ స్వయంచాలకంగా తిరిగి-చూపించబడక ముందు సూచిక పానల్ ప్రదేశంలో ప్రవేశించిన తర్వాత జరిగిన ఆలస్యాన్ని మిల్లీసెంకన్లలో తెలుపుతుంది.ఈ కీ auto_hide కీ నిజమైతేనే సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:37
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
 msgstr "దాగిఉన్నప్పుడు కనిపించు పిగ్జెల్సు"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:38
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:38
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
 msgstr "పానల్ స్వయంచాలకంగా మూలన మరుగుపరిచినప్పుడు కనబడే పిగ్జెల్సు సంఖ్యను తెలియజేస్తుంది.ఈ కీ auto_hide కీ నిజమైతే మాత్రమే సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:39
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
 msgstr "యానిమేషన్ వేగం"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:40
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:40
 msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr "పానల్ యానిమేషన్లు అవసరమయ్యే దానిలో వేగం.సాధ్యమగు విలువలు \"నిదానం\", \"మధ్యమం\" మరియు \"త్వరితం\".ఈ కీ enable_animations కీ నిజమైనప్పుడు మాత్రమే సారూప్యతతో ఉంటుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:41
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
 msgstr "బ్యాక్‌గ్రౌండ్ రకం"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:42
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -1590,61 +1632,61 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:43
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
 msgstr "బ్యాక్‌గ్రౌండ్ వర్ణము"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:44
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "పానల్ కొరకు బ్యాక్‌గ్రౌండ్ వర్ణమును #RGB విధానం లో తెలుపుతుంది"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:45
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:45
 msgid "Background color opacity"
 msgstr "బ్యాక్‌గ్రౌండ్ వర్ణపు ఒపాసిటి"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:46
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:46
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
 msgstr "బ్యాక్‌గ్రౌండ్ వర్ణపు విధానం ఒపాసిటీ ని తెలియజేస్తుంది.ఒకవేళ వర్ణము పూర్తిగా ఒపాక్యూ కాకపోతే(65535 కన్నా తక్కువ విలువైతే), ఆ వర్ణము డెస్కుటాప్ బ్యాక్‌గ్రౌండ్ చిత్రం పైకి వర్ణరంజితం చేయబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:47
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
 msgstr "బ్యాక్‌గ్రౌండ్ చిత్రం"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:48
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:48
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr "బ్యాక్‌గ్రౌండ్ చిత్రం కొరకు ఉపయోగించబడు దస్త్రం ను తెలియజేస్తుంది.చిత్రం ఆల్ఫా చానల్ ను కలిగిఉంటే అది డెస్కటాప్ బ్యాక్‌గ్రౌండ్ చిత్రం పైకి వర్ణరంజితం చేయబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:49
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
 msgstr "చిత్రమును పానల్ కు తగ్గదిగా ఉంచుము"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:50
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:50
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr "నిజమైతే, పానల్ ఎత్తుకు (అడ్డంగా ఉంటే) చిత్రం స్కేలింగ్  (అనుకున్న చిత్ర నిష్పత్తిని వదిలి) చేయబడుతుంది."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:51
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
 msgstr "చిత్రాన్ని పానల్ కు సాగదీయండి"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:52
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:52
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr "నిజమైతే, పానల్ కొలతలకి చిత్రం స్కేల్ చేయబడుతుంది. చిత్రం కు ఉండవలిసిన నిష్పత్తి ఉంచబడదు."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:53
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
 msgstr "చిత్రాన్ని నిలువు పానల్సు పైన భ్రమణం చెందించు"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.in.h:54
+#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:54
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
@@ -1660,27 +1702,27 @@ msgstr "ఫైల్లు చెల్లునటువంటి .desktop ఫ�
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "గుర్తించబడని డెస్కుటాప్ ఫైల్ వర్షన్ '%s'"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:958
+#: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
 msgstr "%s ప్రారంభించుచున్నది"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1100
+#: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "ఆదేశ వరుసపై అనువర్తనము పత్రములను ఆమోదించదు"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1168
+#: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "గుర్తించబడని ఆరంభించు ఐచ్చికము: %d"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1373
+#: ../mate-panel/libegg/eggdesktopfile.c:1365
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "పత్రము URIలను 'Type=Link' డెస్కుటాప్ ప్రవేశమునకు పంపలేదు"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1394
+#: ../mate-panel/libegg/eggdesktopfile.c:1386
 #, c-format
 msgid "Not a launchable item"
 msgstr "ఆరంభించదగు అంశముకాదు"
@@ -1719,12 +1761,12 @@ msgstr "సెషన్ నిర్వహణ ఐచ్చికములను 
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:82
-#: ../mate-panel/mate-panel-applet-frame.c:741
-#: ../mate-panel/mate-panel-applet-frame.c:917
+#: ../mate-panel/mate-panel-applet-frame.c:904
+#: ../mate-panel/mate-panel-applet-frame.c:1080
 msgid "Error"
 msgstr "దోషం"
 
-#: ../mate-panel/libpanel-util/panel-icon-chooser.c:382
+#: ../mate-panel/libpanel-util/panel-icon-chooser.c:381
 msgid "Choose an icon"
 msgstr "స్థానమును యెంపికచేయుము"
 
@@ -1746,38 +1788,38 @@ msgstr "స్థానము '%s' ను తెరువ బడలేదు"
 msgid "No application to handle search folders is installed."
 msgstr "శోధన ఫోల్డర్లను సంభాలించుటకు యే అనువర్తనము సంస్థాపించిలేదు."
 
-#: ../mate-panel/applet.c:441
+#: ../mate-panel/applet.c:443
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:520 ../libmate-panel-applet/mate-panel-applet.c:133
+#: ../mate-panel/applet.c:522 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "ప్యానెల్ నుండి తీసివేయు (_R)"
 
-#: ../mate-panel/applet.c:531 ../libmate-panel-applet/mate-panel-applet.c:136
+#: ../mate-panel/applet.c:533 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "కదిపించు (_M)"
 
-#: ../mate-panel/applet.c:548 ../libmate-panel-applet/mate-panel-applet.c:142
+#: ../mate-panel/applet.c:550 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "పానల్ కు స్థిరపరుచు (_k)"
 
-#: ../mate-panel/applet.c:1335
+#: ../mate-panel/applet.c:1375
 msgid "Cannot find an empty spot"
 msgstr "ఖాళీ ప్రాంతం కనుగొనబడలేదు"
 
-#: ../mate-panel/drawer.c:340 ../mate-panel/panel-addto.c:174
-#: ../mate-panel/panel-toplevel.c:1570
+#: ../mate-panel/drawer.c:342 ../mate-panel/panel-addto.c:180
+#: ../mate-panel/panel-toplevel.c:1671
 msgid "Drawer"
 msgstr "సొరుగు"
 
-#: ../mate-panel/drawer.c:541
+#: ../mate-panel/drawer.c:546
 msgid "_Add to Drawer..."
 msgstr "డ్రాయర్ కు కలుపు (_A)..."
 
-#: ../mate-panel/drawer.c:547 ../mate-panel/launcher.c:798
-#: ../mate-panel/panel-action-button.c:188
-#: ../mate-panel/panel-context-menu.c:221
+#: ../mate-panel/drawer.c:552 ../mate-panel/launcher.c:798
+#: ../mate-panel/panel-action-button.c:192
+#: ../mate-panel/panel-context-menu.c:227
 msgid "_Properties"
 msgstr "లక్షణాలు (_P)"
 
@@ -1807,7 +1849,7 @@ msgstr "సంచయం లక్షణాలు"
 msgid "Launcher Properties"
 msgstr "ప్రయోగవేదిక లక్షణాలు"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:123
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:138
 msgid "Panel"
 msgstr "పానల్"
 
@@ -1848,47 +1890,52 @@ msgstr "దించు (_L)"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "కీ %s అమర్చబడలేదు, లాంచర్(అనువర్తనమును దించేది) ను లోడ్ చేయలేము\n"
 
-#: ../mate-panel/launcher.c:957 ../mate-panel/panel-ditem-editor.c:1361
-#: ../mate-panel/panel-ditem-editor.c:1395
-#: ../mate-panel/panel-ditem-editor.c:1426
+#: ../mate-panel/launcher.c:957 ../mate-panel/panel-ditem-editor.c:1362
+#: ../mate-panel/panel-ditem-editor.c:1396
+#: ../mate-panel/panel-ditem-editor.c:1427
 msgid "Could not save launcher"
 msgstr "లాంచర్(అనువర్తనమును దించేది) ను భద్రపరచలేకపోయింది"
 
-#: ../mate-panel/main.c:48
+#: ../mate-panel/main.c:49
 msgid "Replace a currently running panel"
 msgstr "ప్రస్తుతము నడుస్తున్న ప్యానల్‌ను పునఃస్థాపించుము"
 
 #. this feature was request in #mate irc channel
-#: ../mate-panel/main.c:52
+#: ../mate-panel/main.c:51
 msgid "Reset the panel configuration to default"
 msgstr ""
 
 #. open run dialog
-#: ../mate-panel/main.c:54
+#: ../mate-panel/main.c:53
 msgid "Execute the run dialog"
 msgstr ""
 
-#: ../mate-panel/menu.c:916
+#. default panels layout
+#: ../mate-panel/main.c:55
+msgid "Set the default panel layout"
+msgstr ""
+
+#: ../mate-panel/menu.c:538
 msgid "Add this launcher to _panel"
 msgstr "ఈ లాంచర్ ను పానల్ కు కలుపుము(_p)"
 
-#: ../mate-panel/menu.c:923
+#: ../mate-panel/menu.c:545
 msgid "Add this launcher to _desktop"
 msgstr "ఈ లాంచర్ ను డెస్కుటాప్ కు కలుపుము (_d)"
 
-#: ../mate-panel/menu.c:935
+#: ../mate-panel/menu.c:557
 msgid "_Entire menu"
 msgstr "మెనూ మొత్తం (_E)"
 
-#: ../mate-panel/menu.c:940
+#: ../mate-panel/menu.c:562
 msgid "Add this as _drawer to panel"
 msgstr "దీనిని డ్రాయర్ లా పానల్ కు కలపండి (_d)"
 
-#: ../mate-panel/menu.c:947
+#: ../mate-panel/menu.c:569
 msgid "Add this as _menu to panel"
 msgstr "దీనిని మెనూ లాగా పానల్ కు కలపండి  (_m)"
 
-#: ../mate-panel/nothing.cP:609
+#: ../mate-panel/nothing.cP:614
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>ఆట అయిపోయింది</b> %d స్థాయి లో!"
@@ -1897,427 +1944,444 @@ msgstr "<b>ఆట అయిపోయింది</b> %d స్థాయి ల�
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../mate-panel/nothing.cP:616
+#: ../mate-panel/nothing.cP:621
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../mate-panel/nothing.cP:617
+#: ../mate-panel/nothing.cP:622
 msgid "Press 'q' to quit"
 msgstr "నిష్క్రమించుటకు 'q' ను నొక్కండి"
 
-#: ../mate-panel/nothing.cP:622
+#: ../mate-panel/nothing.cP:627
 msgid "Paused"
 msgstr "నిలుపబడింది"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../mate-panel/nothing.cP:625 ../mate-panel/nothing.cP:636
+#: ../mate-panel/nothing.cP:630 ../mate-panel/nothing.cP:641
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../mate-panel/nothing.cP:626
+#: ../mate-panel/nothing.cP:631
 msgid "Press 'p' to unpause"
 msgstr "మరలాకొనసాగించుటకు 'p' ను నొక్కండి"
 
-#: ../mate-panel/nothing.cP:632
+#: ../mate-panel/nothing.cP:637
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "స్థాయి: %s,  ప్రాణాలు:%s"
 
-#: ../mate-panel/nothing.cP:637
+#: ../mate-panel/nothing.cP:642
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr "కదులుటకు ఎడమ/కుడి, పేల్చుటకు స్పేస్, నిలిపివేయుటకు 'p', నిష్క్రమించుటకు 'q'"
 
-#: ../mate-panel/nothing.cP:1385
+#: ../mate-panel/nothing.cP:1390
 msgid "Killer GEGLs from Outer Space"
 msgstr "బయట స్థలము నుండి హంతకు GEGLS"
 
-#: ../mate-panel/panel-action-button.c:176
+#: ../mate-panel/panel-action-button.c:180
 msgid "_Activate Screensaver"
 msgstr "క్రియాశీల తెరకాపరి  (_A)"
 
-#: ../mate-panel/panel-action-button.c:182
+#: ../mate-panel/panel-action-button.c:186
 msgid "_Lock Screen"
 msgstr "తెరకు తాళంవేయి (_L)"
 
-#: ../mate-panel/panel-action-button.c:300
+#: ../mate-panel/panel-action-button.c:314
 msgid "Could not connect to server"
 msgstr "సేవిక కు అనుసంధానించ లేకపోయింది"
 
-#: ../mate-panel/panel-action-button.c:331
+#: ../mate-panel/panel-action-button.c:345
 msgid "Lock Screen"
 msgstr "తెరకు తాళంవేయి"
 
-#: ../mate-panel/panel-action-button.c:332
+#: ../mate-panel/panel-action-button.c:346
 msgid "Protect your computer from unauthorized use"
 msgstr "మీ కంప్యూటర్ ను దుర్వినియోగం కాకుండా రక్షించుకోండి"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../mate-panel/panel-action-button.c:346
+#: ../mate-panel/panel-action-button.c:360
 msgid "Log Out..."
 msgstr "లాగ్అవుట్..."
 
-#: ../mate-panel/panel-action-button.c:347
+#: ../mate-panel/panel-action-button.c:361
 msgid "Log out of this session to log in as a different user"
 msgstr "మరో వినియోగదారుని గా ప్రవేశించుటకు ఈ భాగము నుండి లాగ్ అవుట్ అవ్వండి"
 
-#: ../mate-panel/panel-action-button.c:356
+#: ../mate-panel/panel-action-button.c:370
 msgid "Run Application..."
 msgstr "అనువర్తనమును నడుపు..."
 
-#: ../mate-panel/panel-action-button.c:357
+#: ../mate-panel/panel-action-button.c:371
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "ఒక ఆదేశాన్ని టైపుచేయడం ద్వారా లేదా జాబితా నుండి ఎంచుకోవడం ద్వారా అనువర్తనమును నడపండి"
 
-#: ../mate-panel/panel-action-button.c:366
+#: ../mate-panel/panel-action-button.c:380
 msgid "Search for Files..."
 msgstr "దస్త్రములను వెతుకు..."
 
-#: ../mate-panel/panel-action-button.c:367
+#: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "నామము లేదా విషయము ద్వారా ఈ కంప్యూటర్‌నందలి పత్రములను మరియు సంచయాలను గుర్తించుము"
 
-#: ../mate-panel/panel-action-button.c:375
-#: ../mate-panel/panel-force-quit.c:229
+#: ../mate-panel/panel-action-button.c:389
+#: ../mate-panel/panel-force-quit.c:256
 msgid "Force Quit"
 msgstr "బలవంతంగా త్యజించు"
 
-#: ../mate-panel/panel-action-button.c:376
+#: ../mate-panel/panel-action-button.c:390
 msgid "Force a misbehaving application to quit"
 msgstr "సత్ప్రవర్తనలేని అనువర్తనమును బలవంతంగా త్యజించు"
 
 #. FIXME icon
-#: ../mate-panel/panel-action-button.c:385
+#: ../mate-panel/panel-action-button.c:399
 msgid "Connect to Server..."
 msgstr "సేవికకు అనుసంధానం కండి..."
 
-#: ../mate-panel/panel-action-button.c:386
+#: ../mate-panel/panel-action-button.c:400
 msgid "Connect to a remote computer or shared disk"
 msgstr "దూరస్థ కంప్యూటర్ కు గాని లేదా భాగస్వామ్య డిస్కుకు గాని అనుసంధానించండి"
 
-#: ../mate-panel/panel-action-button.c:394
+#: ../mate-panel/panel-action-button.c:408
 msgid "Shut Down..."
 msgstr "మూసి వేయి..."
 
-#: ../mate-panel/panel-action-button.c:395
+#: ../mate-panel/panel-action-button.c:409
 msgid "Shut down the computer"
 msgstr "కంప్యూటర్ ను మూసివేయి"
 
-#: ../mate-panel/panel-addto.c:115
+#: ../mate-panel/panel-addto.c:121
 msgid "Custom Application Launcher"
 msgstr "మలచిన అనువర్తనము ప్రయోగ వేదిక"
 
-#: ../mate-panel/panel-addto.c:116
+#: ../mate-panel/panel-addto.c:122
 msgid "Create a new launcher"
 msgstr "క్రొత్త  ప్రయోగవేదికను సృష్టించు"
 
-#: ../mate-panel/panel-addto.c:126
+#: ../mate-panel/panel-addto.c:132
 msgid "Application Launcher..."
 msgstr "అనువర్తనము ప్రయోగవేదిక..."
 
-#: ../mate-panel/panel-addto.c:127
+#: ../mate-panel/panel-addto.c:133
 msgid "Copy a launcher from the applications menu"
 msgstr "అనువర్తనము మెనూ నుంచి లాంచర్ ను నకలుతీయి"
 
-#: ../mate-panel/panel-addto.c:141 ../mate-panel/panel-menu-button.c:1098
+#: ../mate-panel/panel-addto.c:147 ../mate-panel/panel-menu-button.c:1098
 msgid "Main Menu"
 msgstr "ప్రధాన జాబితా"
 
-#: ../mate-panel/panel-addto.c:142
+#: ../mate-panel/panel-addto.c:148
 msgid "The main MATE menu"
 msgstr "ప్రధాన గ్నోమ్ జాబితా"
 
-#: ../mate-panel/panel-addto.c:152
+#: ../mate-panel/panel-addto.c:158
 msgid "Menu Bar"
 msgstr "మెనూ పట్టీ"
 
-#: ../mate-panel/panel-addto.c:153
+#: ../mate-panel/panel-addto.c:159
 msgid "A custom menu bar"
 msgstr "మలచిన జాబితా పట్టీ"
 
-#: ../mate-panel/panel-addto.c:163
+#: ../mate-panel/panel-addto.c:169
 msgid "Separator"
 msgstr "విచ్చేదని"
 
-#: ../mate-panel/panel-addto.c:164
+#: ../mate-panel/panel-addto.c:170
 msgid "A separator to organize the panel items"
 msgstr "పానల్ అంశాలను నిర్వహించుటకు ఒక విచ్చేదని"
 
-#: ../mate-panel/panel-addto.c:175
+#: ../mate-panel/panel-addto.c:181
 msgid "A pop out drawer to store other items in"
 msgstr "ఇతర అంశాలను నిల్వ చేయుటకు ప్రత్యేక్షమయ్యే సొరుగు"
 
-#: ../mate-panel/panel-addto.c:256
+#: ../mate-panel/panel-addto.c:262
 msgid "(empty)"
 msgstr "(ఖాళీ)"
 
-#: ../mate-panel/panel-addto.c:1014
+#: ../mate-panel/panel-addto.c:993
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" కు కలుపుటకు ఒక అంశాన్ని కనుగొనండి (_i):"
 
-#: ../mate-panel/panel-addto.c:1018
+#: ../mate-panel/panel-addto.c:997
 #, c-format
 msgid "Add to Drawer"
 msgstr "డ్రాయర్ కు కలపండి"
 
-#: ../mate-panel/panel-addto.c:1020
+#: ../mate-panel/panel-addto.c:999
 msgid "Find an _item to add to the drawer:"
 msgstr "డ్రాయర్ కు కలుపుటకు ఒక అంశాన్ని కనుగొనండి (_i):"
 
-#: ../mate-panel/panel-addto.c:1022
+#: ../mate-panel/panel-addto.c:1001
 #, c-format
 msgid "Add to Panel"
 msgstr "పానల్ కు కలపండి"
 
-#: ../mate-panel/panel-addto.c:1024
+#: ../mate-panel/panel-addto.c:1003
 msgid "Find an _item to add to the panel:"
 msgstr "పానల్ కు కలుపుటకు ఒక అంశాన్ని కనుగొనండి (_i):"
 
-#: ../mate-panel/mate-panel-applet-frame.c:710
+#: ../mate-panel/mate-panel-applet-frame.c:873
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" అనుకోకుండా నిష్క్రమించింది"
 
-#: ../mate-panel/mate-panel-applet-frame.c:712
+#: ../mate-panel/mate-panel-applet-frame.c:875
 msgid "Panel object has quit unexpectedly"
 msgstr "పానల్ ఆబ్జక్టు అనుకోకుండా నిష్క్రమించింది"
 
-#: ../mate-panel/mate-panel-applet-frame.c:719
+#: ../mate-panel/mate-panel-applet-frame.c:882
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "మీరు పానల్ ఆబ్జక్టును తిరిగిలోడు చేసినట్లైతే, అది స్వయంచాలకంగా పానల్ కు తిరిగి కలుపబడుతుంది."
 
-#: ../mate-panel/mate-panel-applet-frame.c:725
+#: ../mate-panel/mate-panel-applet-frame.c:888
 msgid "_Don't Reload"
 msgstr "తిరిగిలోడు చేయవద్దు (_D)"
 
-#: ../mate-panel/mate-panel-applet-frame.c:726
+#: ../mate-panel/mate-panel-applet-frame.c:889
 msgid "_Reload"
 msgstr "తిరిగిలోడుచేయి (_R)"
 
-#: ../mate-panel/mate-panel-applet-frame.c:880
+#: ../mate-panel/mate-panel-applet-frame.c:1043
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\"నింపుటలో ప్యానెల్ సమస్యలు ఎదుర్కొంటున్నది."
 
-#: ../mate-panel/mate-panel-applet-frame.c:896
+#: ../mate-panel/mate-panel-applet-frame.c:1059
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "ఈ యాప్లెట్ ను రూపకరణలోనుండి తొలగించాలా?"
 
-#: ../mate-panel/panel-context-menu.c:109
+#: ../mate-panel/panel-context-menu.c:114
 msgid "And many, many others..."
 msgstr "మరియు చాలా, చాలా ఇతరమైనవి..."
 
-#: ../mate-panel/panel-context-menu.c:135
+#: ../mate-panel/panel-context-menu.c:140
 msgid "The MATE Panel"
 msgstr "గ్నోమ్ ప్యానెల్"
 
-#: ../mate-panel/panel-context-menu.c:138
+#: ../mate-panel/panel-context-menu.c:144
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr "ఇతర అనువర్తనములు దించుట మరియు ఉపయోగకరమైన ఉపయోగాలను ఇవ్వుట ఈ ప్రోగ్రామ్ భాద్యత."
 
-#: ../mate-panel/panel-context-menu.c:142
+#: ../mate-panel/panel-context-menu.c:148
 msgid "About the MATE Panel"
 msgstr "గ్నోమ్ ప్యానెల్ గురించి"
 
-#: ../mate-panel/panel-context-menu.c:176
+#: ../mate-panel/panel-context-menu.c:182
 msgid "Cannot delete this panel"
 msgstr "ఈ ప్యానల్ ను తొలిగంచలేము"
 
-#: ../mate-panel/panel-context-menu.c:177
+#: ../mate-panel/panel-context-menu.c:183
 msgid "You must always have at least one panel."
 msgstr "మీరు ఎల్లప్పుడు తప్పనిసరిగా ఒక పానల్ ను కలిగిఉండాలి."
 
-#: ../mate-panel/panel-context-menu.c:210
+#: ../mate-panel/panel-context-menu.c:216
 msgid "_Add to Panel..."
 msgstr "ప్యానెల్ కు జతచేయి (_A)..."
 
-#: ../mate-panel/panel-context-menu.c:231
+#: ../mate-panel/panel-context-menu.c:237
 msgid "_Delete This Panel"
 msgstr "ఈ ప్యానెల్ ను తొలగించు (_D)"
 
-#: ../mate-panel/panel-context-menu.c:246
+#: ../mate-panel/panel-context-menu.c:252
 msgid "_New Panel"
 msgstr "కొత్త ప్యానెల్ (_N)"
 
-#: ../mate-panel/panel-context-menu.c:298
+#: ../mate-panel/panel-context-menu.c:304
 msgid "A_bout Panels"
 msgstr "ప్యానెల్స్ గురించి (_b)"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:118
 msgid "Application"
 msgstr "అనువర్తనము"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:120
 msgid "Application in Terminal"
 msgstr "టెర్మినల్ లోని అనువర్తనము"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:122
 msgid "Location"
 msgstr "స్థానము"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:622
+#: ../mate-panel/panel-ditem-editor.c:623
 msgid "_Type:"
 msgstr "రకం (_T):"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:629
+#: ../mate-panel/panel-ditem-editor.c:630
 msgid "_Name:"
 msgstr "నామము (_N):"
 
-#: ../mate-panel/panel-ditem-editor.c:656
+#: ../mate-panel/panel-ditem-editor.c:657
 msgid "_Browse..."
 msgstr "అన్వేషించు (_B)..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:663
+#: ../mate-panel/panel-ditem-editor.c:664
 msgid "Co_mment:"
 msgstr "వ్యాక్య (_m):"
 
-#: ../mate-panel/panel-ditem-editor.c:1012
+#: ../mate-panel/panel-ditem-editor.c:1013
 msgid "Choose an application..."
 msgstr "ఒక అనువర్తనమును ఎంచుకొనుము..."
 
-#: ../mate-panel/panel-ditem-editor.c:1016
+#: ../mate-panel/panel-ditem-editor.c:1017
 msgid "Choose a file..."
 msgstr "ఒక దస్త్రాన్ని ఎంచుకొనుము..."
 
-#: ../mate-panel/panel-ditem-editor.c:1181
-#: ../mate-panel/panel-ditem-editor.c:1190
+#: ../mate-panel/panel-ditem-editor.c:1182
+#: ../mate-panel/panel-ditem-editor.c:1191
 msgid "Comm_and:"
 msgstr "ఆదేశం (_a):"
 
-#: ../mate-panel/panel-ditem-editor.c:1199
+#: ../mate-panel/panel-ditem-editor.c:1200
 msgid "_Location:"
 msgstr "స్థానము (_L):"
 
-#: ../mate-panel/panel-ditem-editor.c:1362
+#: ../mate-panel/panel-ditem-editor.c:1363
 msgid "The name of the launcher is not set."
 msgstr "లాంచర్ యొక్క నామము పెట్టబడి లేదు."
 
-#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1367
 msgid "Could not save directory properties"
 msgstr "సంచయం లక్షణాలను భద్రపరచలేక పోయింది"
 
-#: ../mate-panel/panel-ditem-editor.c:1367
+#: ../mate-panel/panel-ditem-editor.c:1368
 msgid "The name of the directory is not set."
 msgstr "సంచయం యొక్క నామము పెట్టిలేదు"
 
-#: ../mate-panel/panel-ditem-editor.c:1383
+#: ../mate-panel/panel-ditem-editor.c:1384
 msgid "The command of the launcher is not set."
 msgstr "లాంచర్ యొక్క ఆదేశం అమర్చబడిలేదు."
 
-#: ../mate-panel/panel-ditem-editor.c:1386
+#: ../mate-panel/panel-ditem-editor.c:1387
 msgid "The location of the launcher is not set."
 msgstr "లాంచర్ యొక్క స్థానము అమర్చబడిలేదు."
 
-#: ../mate-panel/panel-ditem-editor.c:1463
+#: ../mate-panel/panel-ditem-editor.c:1464
 msgid "Could not display help document"
 msgstr "సహాయ పత్రమును ప్రదర్శించలేకపోయింది"
 
-#: ../mate-panel/panel-force-quit.c:77
+#: ../mate-panel/panel-force-quit.c:83
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "ఈ అనువర్తనమును బలవంతంగా త్యజించాలంటే గవాక్షముమీద నొక్కుము. రద్దుచేయాలంటే <ESC>ను నొక్కుము."
 
-#: ../mate-panel/panel-force-quit.c:212
+#: ../mate-panel/panel-force-quit.c:239
 msgid "Force this application to exit?"
 msgstr "బయటకు వచ్చుటకు ఈ అనువర్తనమును బలవంతపెడతారా?"
 
-#: ../mate-panel/panel-force-quit.c:215
+#: ../mate-panel/panel-force-quit.c:242
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr "మీరు బయటకు వచ్చుటకు అనువర్తనముని బలవంతపెట్టాలని ఎంచుకుంటే, దానిలోని తెరిచివున్న పత్రములనందలి దాయనిమార్పులు పోతాయి."
 
-#: ../mate-panel/panel-menu-bar.c:96
+#: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
 msgstr "సంస్థపించిన అనువర్తనములను అన్వేషించు మరియు నడుపుము"
 
-#: ../mate-panel/panel-menu-bar.c:97
+#: ../mate-panel/panel-menu-bar.c:100
 msgid "Access documents, folders and network places"
 msgstr "పత్రములను, సంచయాలను మరియు నెట్వర్కు స్థానాలను వాడుకొనము"
 
-#: ../mate-panel/panel-menu-bar.c:98
+#: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "డెస్కుటాప్ కనపడువిధానాన్ని మరియు స్వభావాన్ని మార్చుము, సహాయం పొందుము, లేదా లాగ్ అవుట్"
 
-#: ../mate-panel/panel-menu-bar.c:122
+#: ../mate-panel/panel-menu-bar.c:167
 msgid "Applications"
 msgstr "అనువర్తనములు"
 
-#: ../mate-panel/panel-menu-bar.c:293 ../mate-panel/panel-menu-button.c:668
+#: ../mate-panel/panel-menu-bar.c:389 ../mate-panel/panel-menu-button.c:676
 msgid "_Edit Menus"
 msgstr "మెనూ లను సరిచేయు (_E)"
 
-#: ../mate-panel/panel-menu-items.c:472
+#: ../mate-panel/panel-menu-items.c:473
 msgid "Bookmarks"
 msgstr "బుక్‌మార్క్"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:539
+#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:557
 #, c-format
 msgid "Open '%s'"
 msgstr "తెరువు '%s'"
 
-#: ../mate-panel/panel-menu-items.c:566
+#: ../mate-panel/panel-menu-items.c:567
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "మాధ్యమం మార్పుల కొరకు %s ను స్కాన్ చేయలేకపోయింది"
 
-#: ../mate-panel/panel-menu-items.c:609
+#: ../mate-panel/panel-menu-items.c:610
 #, c-format
 msgid "Rescan %s"
 msgstr "పునఃస్కాన్ %s"
 
-#: ../mate-panel/panel-menu-items.c:646
+#: ../mate-panel/panel-menu-items.c:647
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s మౌంటు కాలేదు"
 
-#: ../mate-panel/panel-menu-items.c:709
+#: ../mate-panel/panel-menu-items.c:710
 #, c-format
 msgid "Mount %s"
 msgstr "మౌంట్ %s"
 
-#: ../mate-panel/panel-menu-items.c:917
+#: ../mate-panel/panel-menu-items.c:918
 msgid "Removable Media"
 msgstr "తొలగించబడు మాధ్యమం"
 
-#: ../mate-panel/panel-menu-items.c:1004
+#: ../mate-panel/panel-menu-items.c:1005
 msgid "Network Places"
 msgstr "నెట్వర్కు స్థలములు"
 
-#: ../mate-panel/panel-menu-items.c:1043
+#: ../mate-panel/panel-menu-items.c:1044
 msgid "Open your personal folder"
 msgstr "మీ వ్యక్తిగత సంచయాన్ని తెరువుము"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../mate-panel/panel-menu-items.c:1061
+#: ../mate-panel/panel-menu-items.c:1063
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "డెస్కుటాప్"
 
-#: ../mate-panel/panel-menu-items.c:1062
+#: ../mate-panel/panel-menu-items.c:1064
 msgid "Open the contents of your desktop in a folder"
 msgstr "మీ డెస్కుటాప్ విషయసంగ్రహాలను ఒక సంచయంనందు తెరువుము"
 
-#: ../mate-panel/panel-menu-items.c:1454
+#: ../mate-panel/panel-menu-items.c:1080
+msgid "Computer"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1085
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1098
+msgid "Network"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1099
+msgid "Browse bookmarked and local network locations"
+msgstr ""
+
+#: ../mate-panel/panel-menu-items.c:1489
 msgid "Places"
 msgstr "స్థలములు"
 
-#: ../mate-panel/panel-menu-items.c:1482
+#: ../mate-panel/panel-menu-items.c:1517
 msgid "System"
 msgstr "సిస్టమ్"
 
@@ -2325,7 +2389,7 @@ msgstr "సిస్టమ్"
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: ../mate-panel/panel-menu-items.c:1567
+#: ../mate-panel/panel-menu-items.c:1602
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2334,60 +2398,60 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1579
+#: ../mate-panel/panel-menu-items.c:1614
 #, c-format
 msgid "Log Out %s..."
 msgstr "లాగ్ అవుట్ %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1583
+#: ../mate-panel/panel-menu-items.c:1618
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "మరో వినియోగదారు ప్రవేశించుటకు ఈ విభాగం యోక్క %s నుండి లాగ్ అవుట్ అవ్వండి"
 
-#: ../mate-panel/panel-profile.c:1074
+#: ../mate-panel/panel-profile.c:1172
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr "ప్యానెల్ '%s'  %d తెరమీద ప్రదర్శించుటకు అమర్చియున్నది, అది ప్రస్తుతం అందుబాటులో లేదు. ప్యానెల్ తో నింపుటలేదు."
 
-#: ../mate-panel/panel-properties-dialog.c:119
+#: ../mate-panel/panel-properties-dialog.c:123
 #: ../mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "పైన"
 
-#: ../mate-panel/panel-properties-dialog.c:120
+#: ../mate-panel/panel-properties-dialog.c:124
 #: ../mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "క్రింద"
 
-#: ../mate-panel/panel-properties-dialog.c:121
+#: ../mate-panel/panel-properties-dialog.c:125
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "ఎడమ"
 
-#: ../mate-panel/panel-properties-dialog.c:122
+#: ../mate-panel/panel-properties-dialog.c:126
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "కుడి"
 
-#: ../mate-panel/panel-properties-dialog.c:826
+#: ../mate-panel/panel-properties-dialog.c:884
 msgid "Drawer Properties"
 msgstr "డ్రాయర్ లక్షణాలు"
 
-#: ../mate-panel/panel-properties-dialog.c:947
-#: ../mate-panel/panel-run-dialog.c:2019
+#: ../mate-panel/panel-properties-dialog.c:1011
+#: ../mate-panel/panel-run-dialog.c:1993
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "దస్త్రము '%s'ను లోడు చేయలేక పోయింది: %s."
 
-#: ../mate-panel/panel-properties-dialog.c:953
+#: ../mate-panel/panel-properties-dialog.c:1017
 msgid "Could not display properties dialog"
 msgstr "లక్షణాల డైలాగ్ ను ప్రదర్శించలేక పోయింది"
 
@@ -2530,35 +2594,35 @@ msgstr "ఇటీవలి పత్రములను శుభ్రముచ�
 msgid "Clear all items from the recent documents list"
 msgstr "ఇటీవలి పత్రముల జాబితా నుండి అన్ని అంశాలను తీసివేయుము"
 
-#: ../mate-panel/panel-run-dialog.c:396
+#: ../mate-panel/panel-run-dialog.c:404
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' ఆదేశాన్ని నడుపలేకపోయింది"
 
-#: ../mate-panel/panel-run-dialog.c:451
+#: ../mate-panel/panel-run-dialog.c:462
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' ను UTF-8 నుండి మార్చలేము"
 
-#: ../mate-panel/panel-run-dialog.c:1254
+#: ../mate-panel/panel-run-dialog.c:1209
 msgid "Choose a file to append to the command..."
 msgstr "ఈ ఆదేశమును జతచేయుటకు దస్త్రమును ఎంపికచేయండి..."
 
-#: ../mate-panel/panel-run-dialog.c:1632 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1587 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "వివరణ చూడుటకు ఒక అనువర్తనమును ఎంచుకొనుము."
 
-#: ../mate-panel/panel-run-dialog.c:1670
+#: ../mate-panel/panel-run-dialog.c:1625
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "ఆదేశాన్ని నడుపుతుంది: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1703
+#: ../mate-panel/panel-run-dialog.c:1658
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "రన్ డైలాగ్ పైన వదిలిన URI జాబితా తప్పు విధానాన్ని (%d) లేదా పొడవును (%d) ను కలిగిఉంది\n"
 
-#: ../mate-panel/panel-run-dialog.c:2024
+#: ../mate-panel/panel-run-dialog.c:1998
 msgid "Could not display run dialog"
 msgstr "రన్ డైలాగ్ ను ప్రదర్శించలేకపోయింది"
 
@@ -2600,7 +2664,7 @@ msgstr "తెలిసిన అప్లికెషన్ల యొక్క 
 msgid "Show list of known _applications"
 msgstr "తెలిసిన అనువర్తనములు జాబితాను చూపుము (_a)"
 
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:90
+#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:96
 msgid "_Run"
 msgstr "నడుపుము (_R)"
 
@@ -2610,15 +2674,15 @@ msgid ""
 "command entry field."
 msgstr "ఎంపికచేసిన అనువర్తనమును లేదా ఆదేశ ప్రవేశ క్షేత్రంలోని ఆదేశాన్ని ను నడుపుటకు ఈ బటన్ ను నొక్కండి."
 
-#: ../mate-panel/panel-stock-icons.c:91
+#: ../mate-panel/panel-stock-icons.c:97
 msgid "_Force quit"
 msgstr "బలవంతంగా త్యజించు (_F)"
 
-#: ../mate-panel/panel-stock-icons.c:92
+#: ../mate-panel/panel-stock-icons.c:98
 msgid "C_lear"
 msgstr "శుభ్రపరచు (_l)"
 
-#: ../mate-panel/panel-stock-icons.c:93
+#: ../mate-panel/panel-stock-icons.c:99
 msgid "D_on't Delete"
 msgstr "తొలగించవద్దు (_o)"
 
@@ -2693,101 +2757,101 @@ msgstr "ఆప్లెట్ (_A):"
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1141
+#: ../mate-panel/panel-toplevel.c:1215
 msgid "Hide Panel"
 msgstr "ప్యానెల్ ను మరుగుపర్చు"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1541
+#: ../mate-panel/panel-toplevel.c:1642
 msgid "Top Expanded Edge Panel"
 msgstr "ఎగువన విస్తరించిన అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1542
+#: ../mate-panel/panel-toplevel.c:1643
 msgid "Top Centered Panel"
 msgstr "ఎగువన మధ్యనున్న ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1543
+#: ../mate-panel/panel-toplevel.c:1644
 msgid "Top Floating Panel"
 msgstr "ఎగువన తేలుతున్న ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1544
+#: ../mate-panel/panel-toplevel.c:1645
 msgid "Top Edge Panel"
 msgstr "ఎగువ అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1548
+#: ../mate-panel/panel-toplevel.c:1649
 msgid "Bottom Expanded Edge Panel"
 msgstr "దిగువ విస్తరించిన అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1549
+#: ../mate-panel/panel-toplevel.c:1650
 msgid "Bottom Centered Panel"
 msgstr "దిగువ మధ్య ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1550
+#: ../mate-panel/panel-toplevel.c:1651
 msgid "Bottom Floating Panel"
 msgstr "దిగువ తేలుతున్న ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1551
+#: ../mate-panel/panel-toplevel.c:1652
 msgid "Bottom Edge Panel"
 msgstr "దిగువ అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1555
+#: ../mate-panel/panel-toplevel.c:1656
 msgid "Left Expanded Edge Panel"
 msgstr "ఎడమ విస్తరించిన అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1556
+#: ../mate-panel/panel-toplevel.c:1657
 msgid "Left Centered Panel"
 msgstr "ఎడమ మధ్య ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1557
+#: ../mate-panel/panel-toplevel.c:1658
 msgid "Left Floating Panel"
 msgstr "ఎడమ తేలుతున్న ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1558
+#: ../mate-panel/panel-toplevel.c:1659
 msgid "Left Edge Panel"
 msgstr "ఎడమ అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1562
+#: ../mate-panel/panel-toplevel.c:1663
 msgid "Right Expanded Edge Panel"
 msgstr "కుడివైపు విస్తరించిన అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1563
+#: ../mate-panel/panel-toplevel.c:1664
 msgid "Right Centered Panel"
 msgstr "కుడివైపు మధ్య ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1564
+#: ../mate-panel/panel-toplevel.c:1665
 msgid "Right Floating Panel"
 msgstr "కుడివైపు తేలుతున్న ప్యానెల్"
 
-#: ../mate-panel/panel-toplevel.c:1565
+#: ../mate-panel/panel-toplevel.c:1666
 msgid "Right Edge Panel"
 msgstr "కుడివైపు అంచు ప్యానెల్"
 
-#: ../mate-panel/panel-util.c:315
+#: ../mate-panel/panel-util.c:354
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "ప్రతిమ '%s' కనబడలేదు"
 
-#: ../mate-panel/panel-util.c:433
+#: ../mate-panel/panel-util.c:472
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' ను ఎగ్జిక్యూట్ చేయలేకపోయింది"
 
-#: ../mate-panel/panel-util.c:665
+#: ../mate-panel/panel-util.c:700
 msgid "file"
 msgstr "దస్త్రం"
 
-#: ../mate-panel/panel-util.c:843
+#: ../mate-panel/panel-util.c:881
 msgid "Home Folder"
 msgstr "నివాస సంచయం"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:855
+#: ../mate-panel/panel-util.c:893
 msgid "File System"
 msgstr "దస్త్ర వ్యవస్థ"
 
-#: ../mate-panel/panel-util.c:1028
+#: ../mate-panel/panel-util.c:1066
 msgid "Search"
 msgstr "శోధించు"
 
@@ -2795,31 +2859,31 @@ msgstr "శోధించు"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1074
+#: ../mate-panel/panel-util.c:1112
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:472
+#: ../mate-panel/panel.c:490
 #, c-format
 msgid "Open URL: %s"
 msgstr " URLను తెరువు: %s"
 
-#: ../mate-panel/panel.c:1321
+#: ../mate-panel/panel.c:1340
 msgid "Delete this drawer?"
 msgstr "ఈ ప్యానెల్ ను తొలగించు"
 
-#: ../mate-panel/panel.c:1322
+#: ../mate-panel/panel.c:1341
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "డ్రాయర్ ను తొలగించినచో డ్రాయర్ మరియు దాని\nఅమరికలను కోల్పోతారు."
 
-#: ../mate-panel/panel.c:1325
+#: ../mate-panel/panel.c:1344
 msgid "Delete this panel?"
 msgstr "ఈ ప్యానెల్ ను తొలగించు"
 
-#: ../mate-panel/panel.c:1326
+#: ../mate-panel/panel.c:1345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
