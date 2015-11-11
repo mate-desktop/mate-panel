@@ -41,7 +41,7 @@
 #define NEVER_SENSITIVE "never_sensitive"
 #define MARCO_GENERAL_SCHEMA "org.mate.Marco.general"
 #define NUM_WORKSPACES "num-workspaces"
-#define MARCO_WORSKACES_SCHEMA "org.mate.Marco.workspace-names"
+#define MARCO_WORKSPACES_SCHEMA "org.mate.Marco.workspace-names"
 #define WORKSPACE_NAME "name-1"
 
 #define WORKSPACE_SWITCHER_ICON "mate-panel-workspace-switcher"
@@ -842,8 +842,8 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 
 	if (mate_gsettings_schema_exists(MARCO_GENERAL_SCHEMA))
 		marco_general_settings = g_settings_new (MARCO_GENERAL_SCHEMA);
-	if (mate_gsettings_schema_exists(MARCO_WORSKACES_SCHEMA))
-		marco_workspaces_settings = g_settings_new (MARCO_WORSKACES_SCHEMA);
+	if (mate_gsettings_schema_exists(MARCO_WORKSPACES_SCHEMA))
+		marco_workspaces_settings = g_settings_new (MARCO_WORKSPACES_SCHEMA);
 
 	pager->workspaces_frame = WID("workspaces_frame");
 	pager->workspace_names_label = WID("workspace_names_label");
