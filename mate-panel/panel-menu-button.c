@@ -272,11 +272,11 @@ panel_menu_button_set_property (GObject      *object,
 
 	switch (prop_id) {
 	case PROP_MENU_PATH:
-                panel_menu_button_set_menu_path (button, g_value_get_string (value));
-                break;
+		panel_menu_button_set_menu_path (button, g_value_get_string (value));
+		break;
 	case PROP_CUSTOM_ICON:
-                panel_menu_button_set_custom_icon (button, g_value_get_string (value));
-                break;
+		panel_menu_button_set_custom_icon (button, g_value_get_string (value));
+		break;
 	case PROP_TOOLTIP:
 		panel_menu_button_set_tooltip (button, g_value_get_string (value));
 		break;
