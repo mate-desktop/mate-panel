@@ -310,6 +310,14 @@ zoom_timeout (GtkWidget *window)
 }
 
 static gboolean
+idle_destroy (gpointer data)
+{
+	gtk_widget_destroy (GTK_WIDGET (data));
+
+	return FALSE;
+}
+
+static gboolean
 #if GTK_CHECK_VERSION (3, 0, 0)
 zoom_draw (GtkWidget *widget,
 	     cairo_t *cr,
@@ -328,12 +336,13 @@ zoom_expose (GtkWidget      *widget,
 			g_source_remove (zoom->timeout_id);
 		zoom->timeout_id = 0;
 
+		gtk_widget_hide (widget);
+		g_idle_add (idle_destroy, widget);
+
 		g_object_unref (zoom->pixbuf);
 		zoom->pixbuf = NULL;
 
 		g_slice_free (CompositedZoomData, zoom);
-
-		gtk_widget_destroy (widget);
 	} else {
 		GdkPixbuf *scaled;
 		int width, height;
