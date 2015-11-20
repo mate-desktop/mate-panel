@@ -1657,6 +1657,7 @@ panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 		state = gtk_widget_get_state_flags (widget);
 		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 		gtk_style_context_add_class(context,"mate-panel-menu-bar");
+		panel_background_apply_css (widget, &PANEL_WIDGET (widget)->background);
 
 		gtk_style_context_get_background_color (context, state, &bg_color);
 		gtk_style_context_get (context, state, "background-image", &bg_image, NULL);

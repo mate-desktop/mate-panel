@@ -163,7 +163,7 @@ void panel_background_change_background_on_widget (PanelBackground *background,
 						   GtkWidget       *widget);
 
 #else
-void panel_background_apply_css(GtkWidget* widget);
+void panel_background_apply_css(GtkWidget* widget, PanelBackground *background);
 #endif
 
 #endif /* __PANEL_BACKGROUND_H__ */
