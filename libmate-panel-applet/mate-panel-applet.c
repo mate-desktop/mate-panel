@@ -1979,33 +1979,39 @@ mate_panel_applet_setup (MatePanelApplet *applet)
 void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundType type)
 {
 	GtkStyleContext* context;
-	GtkCssProvider  *provider;
 
 	context = gtk_widget_get_style_context (widget);
-	gtk_widget_reset_style(widget);
+	gtk_widget_reset_style (widget);
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
-		gtk_style_context_remove_class(context,"mate-custom-panel-background");
+		gtk_style_context_remove_class (context, "mate-custom-panel-background");
 		break;
 	case PANEL_COLOR_BACKGROUND:
 	case PANEL_PIXMAP_BACKGROUND:
-		provider = gtk_css_provider_new ();
-		gtk_css_provider_load_from_data (provider,
-						".mate-custom-panel-background{\n"
-						" background-color: rgba (0, 0, 0, 0);\n"
-						" background-image: none;\n"
-						"}",
-						-1, NULL);
 		gtk_style_context_add_class (context, "mate-custom-panel-background");
-		gtk_style_context_add_provider (context,
-						GTK_STYLE_PROVIDER (provider),
-						GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 		break;
 	default:
 		g_assert_not_reached ();
 		break;
 	}
+}
+
+void _mate_panel_applet_prepare_css (GtkStyleContext *context)
+{
+	GtkCssProvider  *provider;
+
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+					 ".mate-custom-panel-background{\n"
+					 " background-color: rgba (0, 0, 0, 0);\n"
+					 " background-image: none;\n"
+					 "}",
+					 -1, NULL);
+	gtk_style_context_add_provider (context,
+					GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref (provider);
 }
 #endif
 
@@ -2045,10 +2051,10 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
 	GtkStyleContext *context;
 	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-	gtk_style_context_remove_class (context,GTK_STYLE_CLASS_BACKGROUND);
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
 	gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
+	_mate_panel_applet_prepare_css(context);
 #endif
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),

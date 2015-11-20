@@ -350,7 +350,7 @@ void
 panel_separator_change_background (PanelSeparator *separator)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	panel_background_apply_css(GTK_WIDGET(separator));
+	panel_background_apply_css(GTK_WIDGET(separator), &separator->priv->panel->background);
 #else
 	panel_background_change_background_on_widget(&separator->priv->panel->background, GTK_WIDGET(separator));
 #endif

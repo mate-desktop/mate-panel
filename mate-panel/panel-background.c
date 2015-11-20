@@ -97,13 +97,34 @@ set_pixbuf_background (PanelBackground *background)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-void panel_background_apply_css (GtkWidget* widget)
+void panel_background_apply_css (GtkWidget* widget, PanelBackground *background)
 {
-	GtkStyleContext* context;
-	GtkCssProvider  *provider;
+	GtkStyleContext     *context;
+	PanelBackgroundType  effective_type;
 
 	context = gtk_widget_get_style_context (widget);
-	gtk_widget_reset_style(widget);
+	effective_type = panel_background_effective_type (background);
+	gtk_widget_reset_style (widget);
+
+	switch (effective_type) {
+	case PANEL_BACK_NONE:
+		gtk_style_context_remove_class (context, "mate-custom-panel-background");
+		break;
+	case PANEL_BACK_COLOR:
+	case PANEL_BACK_IMAGE:
+		gtk_style_context_add_class (context, "mate-custom-panel-background");
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
+panel_background_prepare_css ()
+{
+	GtkCssProvider      *provider;
+
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
 					 ".mate-custom-panel-background{\n"
@@ -111,10 +132,10 @@ void panel_background_apply_css (GtkWidget* widget)
 					 " background-image: none;\n"
 					 "}",
 					 -1, NULL);
-	gtk_style_context_add_class (context, "mate-custom-panel-background");
-	gtk_style_context_add_provider (context,
-					GTK_STYLE_PROVIDER (provider),
-					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+						   GTK_STYLE_PROVIDER (provider),
+						   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref (provider);
 }
 #endif
 
@@ -221,6 +242,9 @@ panel_background_prepare (PanelBackground *background)
 				  (gpointer) &widget);
 
 	if (GTK_IS_WIDGET (widget)) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+		panel_background_apply_css (gtk_widget_get_toplevel(widget), background);
+#endif
 		gtk_widget_set_app_paintable(widget,TRUE);
 		gtk_widget_queue_draw (widget);
 	}
@@ -1057,10 +1081,7 @@ panel_background_realized (PanelBackground *background,
 		background->gc = gdk_gc_new (window);
 #endif
 #if GTK_CHECK_VERSION(3, 0, 0)
-	GtkWidget* widget;
-	gdk_window_get_user_data (GDK_WINDOW (background->window),
-                (gpointer) &widget);
-	panel_background_apply_css(gtk_widget_get_toplevel(widget));
+	panel_background_prepare_css ();
 #endif
 	panel_background_prepare (background);
 }
