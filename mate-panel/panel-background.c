@@ -104,7 +104,6 @@ void panel_background_apply_css (GtkWidget* widget, PanelBackground *background)
 
 	context = gtk_widget_get_style_context (widget);
 	effective_type = panel_background_effective_type (background);
-	gtk_widget_reset_style (widget);
 
 	switch (effective_type) {
 	case PANEL_BACK_NONE:
