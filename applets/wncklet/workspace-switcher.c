@@ -489,6 +489,9 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	GtkActionGroup* action_group;
 	gchar* ui_path;
 	gboolean display_names;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkCssProvider *provider;
+#endif
 
 	pager = g_new0(PagerData, 1);
 
@@ -543,6 +546,17 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	pager->wm = PAGER_WM_UNKNOWN;
 	wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+                                         "WnckPager:selected {\n"
+                                         "background-color: #4A90D9; }",
+                                         -1, NULL);
+	gtk_style_context_add_provider (gtk_widget_get_style_context (pager->pager),
+					GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+	g_object_unref (provider);
+#endif
 	g_signal_connect(G_OBJECT(pager->pager), "destroy", G_CALLBACK(destroy_pager), pager);
 
 	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
