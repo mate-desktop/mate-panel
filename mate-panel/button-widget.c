@@ -623,10 +623,9 @@ button_widget_expose (GtkWidget         *widget,
 		}
 
 	if (gtk_widget_has_focus (widget)) {
-		gint focus_width, focus_pad;
+		gint focus_pad;
 
 		gtk_widget_style_get (widget,
-				      "focus-line-width", &focus_width,
 				      "focus-padding", &focus_pad,
 				      NULL);
 
