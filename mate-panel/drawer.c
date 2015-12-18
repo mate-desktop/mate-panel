@@ -308,13 +308,11 @@ set_tooltip_and_name (Drawer     *drawer,
 {
 	g_return_if_fail (drawer != NULL);
 	g_return_if_fail (drawer->toplevel != NULL);
-	g_return_if_fail (tooltip != NULL);
 
-	if (tooltip && !tooltip [0])
-		tooltip = NULL;
-
-	panel_toplevel_set_name (drawer->toplevel, tooltip);
-	panel_util_set_tooltip_text (drawer->button, tooltip);
+	if (tooltip != NULL && tooltip [0] != '\0') {
+		panel_toplevel_set_name (drawer->toplevel, tooltip);
+		panel_util_set_tooltip_text (drawer->button, tooltip);
+	}
 }
 
 static Drawer *
