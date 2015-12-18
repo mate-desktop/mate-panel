@@ -429,18 +429,18 @@ button_widget_expose (GtkWidget         *widget,
 #endif
 {
 	ButtonWidget *button_widget;
-	GtkButton *button;
-	GdkWindow *window;
 	int width;
 	int height;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	GtkStateFlags state_flags;
 #else
+	GtkButton *button;
+	GdkWindow *window;
 	GtkAllocation allocation;
 	GtkStyle *style;
-#endif
 	GdkRectangle area, image_bound;
+#endif
 	int off;
 	int x, y, w, h;
 	GdkPixbuf *pb = NULL;
@@ -458,14 +458,14 @@ button_widget_expose (GtkWidget         *widget,
 	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
 		return FALSE;
 
-	button = GTK_BUTTON (widget);
-	window = gtk_widget_get_window (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	state_flags = gtk_widget_get_state_flags (widget);
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
 #else
 	gtk_widget_get_allocation (widget, &allocation);
+	button = GTK_BUTTON (widget);
+	window = gtk_widget_get_window (widget);
 #endif
 
 	/* offset for pressed buttons */
@@ -535,13 +535,11 @@ button_widget_expose (GtkWidget         *widget,
 	context = gtk_widget_get_style_context (widget);
 
 	if (button_widget->priv->arrow) {
-		GtkArrowType arrow_type;
-
 		gdouble angle, size;
 		gtk_style_context_save (context);
 		gtk_style_context_set_state (context, state_flags);
 
-		arrow_type = calc_arrow (button_widget->priv->orientation,
+		calc_arrow (button_widget->priv->orientation,
 					 width, height,
 					 &x, &y,
 					 &angle, &size);
@@ -583,9 +581,6 @@ button_widget_expose (GtkWidget         *widget,
 
 		gtk_style_context_restore (context);
 	}
-
-	return FALSE;
-}
 #else
 	style = gtk_widget_get_style (widget);
 
@@ -640,10 +635,10 @@ button_widget_expose (GtkWidget         *widget,
 				 &event->area, widget, "button",
 				 x, y, width, height);
 	}
-	
+#endif
+
 	return FALSE;
 }
-#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
@@ -694,7 +689,6 @@ button_widget_size_allocate (GtkWidget     *widget,
 			     GtkAllocation *allocation)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
-	GtkButton    *button = GTK_BUTTON (widget);
 	int           size;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -725,6 +719,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_set_allocation (widget, allocation);
+	GtkButton *button = GTK_BUTTON (widget);
 
 	if (gtk_widget_get_realized (widget)) {
 		gdk_window_move_resize (button->event_window, 
