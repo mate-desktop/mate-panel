@@ -771,12 +771,14 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	GtkStateFlags state_flags;
+	GtkStateFlags state_flags = gtk_widget_get_state_flags (widget);
 	in_button = state_flags & GTK_STATE_FLAG_PRELIGHT;
 #else
 	in_button = GTK_BUTTON (widget)->in_button;
 #endif
+
 	GTK_WIDGET_CLASS (button_widget_parent_class)->enter_notify_event (widget, event);
+
 #if GTK_CHECK_VERSION (3, 0, 0)
 	state_flags = gtk_widget_get_state_flags (widget);
 	if (in_button != (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
@@ -797,12 +799,14 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	GtkStateFlags state_flags;
+	GtkStateFlags state_flags = gtk_widget_get_state_flags (widget);
 	in_button = state_flags & GTK_STATE_FLAG_PRELIGHT;
 #else
 	in_button = GTK_BUTTON (widget)->in_button;
 #endif
+
 	GTK_WIDGET_CLASS (button_widget_parent_class)->leave_notify_event (widget, event);
+
 #if GTK_CHECK_VERSION (3, 0, 0)
 	state_flags = gtk_widget_get_state_flags (widget);
 	if (in_button != (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
