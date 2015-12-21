@@ -128,8 +128,8 @@ panel_profile_find_new_id (PanelGSettingsKeyType type)
 {
 	gchar      **existing_ids;
 	char        *retval = NULL;
-	char        *prefix;
-	char        *dir;
+	char        *prefix = NULL;
+	char        *dir = NULL;
 	int          i;
 	int          j;
 
@@ -143,7 +143,6 @@ panel_profile_find_new_id (PanelGSettingsKeyType type)
 			dir = PANEL_OBJECT_PATH;
 			break;
 		default:
-			prefix = dir = NULL;
 			g_assert_not_reached ();
 			break;
 	}
@@ -944,60 +943,44 @@ panel_profile_background_change_notify (GSettings *settings,
 	}
 }
 
+static const char *
+key_from_type (PanelGSettingsKeyType type) {
+	if (type == PANEL_GSETTINGS_TOPLEVELS)
+		return PANEL_TOPLEVEL_ID_LIST_KEY;
+	else if (type == PANEL_GSETTINGS_OBJECTS)
+		return PANEL_OBJECT_ID_LIST_KEY;
+
+	g_assert_not_reached ();
+	return NULL;
+}
+
 void
 panel_profile_add_to_list (PanelGSettingsKeyType  type,
 						   const char        *id)
 {
-	char  *key = NULL;
-	char  *new_id = NULL;
+	char *new_id = id ? g_strdup (id) : panel_profile_find_new_id (type);
 
-	new_id = id ? g_strdup (id) : panel_profile_find_new_id (type);
-
-	if (type == PANEL_GSETTINGS_TOPLEVELS)
-		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
-	else if (type == PANEL_GSETTINGS_OBJECTS)
-		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
-
-        if ((key != NULL) && (new_id != NULL)) {
-	        mate_gsettings_append_strv (profile_settings,
-								 key,
-								 new_id);
-	        g_free (key);
-	        g_free (new_id);
-        }
+    if (new_id != NULL) {
+		mate_gsettings_append_strv (profile_settings,
+		                            key_from_type (type),
+		                            new_id);
+		g_free (new_id);
+    }
 }
 
 void
 panel_profile_remove_from_list (PanelGSettingsKeyType  type,
 								const char        *id)
 {
-	const gchar *key = NULL;
-
-	if (type == PANEL_GSETTINGS_TOPLEVELS)
-		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
-	else if (type == PANEL_GSETTINGS_OBJECTS)
-		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
-
-	if (key != NULL)	
-		mate_gsettings_remove_all_from_strv (profile_settings,
-											  key,
-											  id);
-
-	g_free (key);
+	mate_gsettings_remove_all_from_strv (profile_settings,
+	                                     key_from_type (type),
+	                                     id);
 }
 
 static gboolean
 panel_profile_id_list_is_writable (PanelGSettingsKeyType type)
 {
-	gboolean is_writable;
-	gchar  *key;
-	if (type == PANEL_GSETTINGS_TOPLEVELS)
-		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
-	else if (type == PANEL_GSETTINGS_OBJECTS)
-		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
-	is_writable = g_settings_is_writable (profile_settings, key);
-	g_free (key);
-	return is_writable;
+	return g_settings_is_writable (profile_settings, key_from_type (type));
 }
 
 gboolean
@@ -1452,6 +1435,9 @@ panel_profile_delete_dir (PanelGSettingsKeyType  type,
 		case PANEL_GSETTINGS_OBJECTS:
 			dir = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 			break;
+		default:
+			g_assert_not_reached ();
+			break;
 	}
 
 	if (type == PANEL_GSETTINGS_TOPLEVELS) {
@@ -1681,30 +1667,23 @@ panel_profile_load_list (GSettings              *settings,
 						 GCallback               notify_handler)
 {
 
-	gchar  *key = NULL;
+	const gchar *key = key_from_type (type);
 	gchar  *changed_signal;
 	gchar **list;
 	gint    i;
 
-	if (type == PANEL_GSETTINGS_TOPLEVELS)
-		key = g_strdup (PANEL_TOPLEVEL_ID_LIST_KEY);
-	else if (type == PANEL_GSETTINGS_OBJECTS)
-		key = g_strdup (PANEL_OBJECT_ID_LIST_KEY);
-
-        g_assert (key != NULL);
 	changed_signal = g_strdup_printf ("changed::%s", key);
-
 	g_signal_connect (settings, changed_signal, G_CALLBACK (notify_handler), NULL); 
+	g_free (changed_signal);
 
 	list = g_settings_get_strv (settings, key);
 
 	for (i = 0; list[i]; i++) {
 		load_handler (list[i]);
 	}
+
 	if (list)
 		g_strfreev (list);
-	g_free (changed_signal);
-	g_free (key);
 }
 
 static void
