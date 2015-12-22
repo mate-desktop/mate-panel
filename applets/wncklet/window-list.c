@@ -23,11 +23,9 @@
 #include <libwnck/libwnck.h>
 #include <gio/gio.h>
 
-#include <libmate-desktop/mate-aboutdialog.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
 #define MATE_DESKTOP_USE_UNSTABLE_API
+#include <libmate-desktop/mate-aboutdialog.h>
 #include <libmate-desktop/mate-desktop-utils.h>
-#endif
 
 #include "wncklet.h"
 #include "window-list.h"
@@ -528,10 +526,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 static void call_system_monitor(GtkAction* action, TasklistData* tasklist)
 {
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	char* argv[2] = {NULL, NULL};
-#endif
-	char* programpath;
+	char *programpath;
 	int i;
 
 	for (i = 0; i < G_N_ELEMENTS(system_monitors); i += 1)
@@ -542,17 +537,9 @@ static void call_system_monitor(GtkAction* action, TasklistData* tasklist)
 		{
 			g_free(programpath);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 			mate_gdk_spawn_command_line_on_screen(gtk_widget_get_screen(tasklist->applet),
 				      system_monitors[i],
 				      NULL);
-#else
-			argv[0] = system_monitors[i];
-			gdk_spawn_on_screen(gtk_widget_get_screen(tasklist->applet), NULL, argv, NULL,
-				      G_SPAWN_SEARCH_PATH,
-				      NULL, NULL, NULL, NULL);
-#endif
-
 			return;
 		}
 	}
