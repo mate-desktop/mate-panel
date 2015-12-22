@@ -594,18 +594,6 @@ static void group_windows_toggled(GtkToggleButton* button, TasklistData* tasklis
 	}
 }
 
-/*static void group_button_toggled(GtkToggleButton* button, TasklistData* tasklist)
-{
-	if (gtk_toggle_button_get_active(button))
-	{
-		char* str = g_object_get_data(G_OBJECT(button), "group_value");
-
-		printf("str: %s\n", str);
-		// Add later!
-		//mate_panel_applet_mate_conf_set_string(MATE_PANEL_APPLET(tasklist->applet), "group_button", str, NULL);
-	}
-}*/
-
 static void move_minimized_toggled(GtkToggleButton* button, TasklistData* tasklist)
 {
 	g_settings_set_boolean(tasklist->settings, "move-unminimized-windows", gtk_toggle_button_get_active(button));
@@ -666,10 +654,6 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	tasklist->move_minimized_radio = WID("move_minimized_radio");
 	tasklist->change_workspace_radio = WID("change_workspace_radio");
 
-	/*tasklist->style_group_radio = WID("style_button_radio");
-	tasklist->icon_group_radio = WID("icon_only_radio");
-	tasklist->text_group_radio = WID("text_only_radio");*/
-
 	setup_sensitivity(tasklist, builder, "move_minimized_radio", "change_workspace_radio", NULL, "move-unminimized-windows" /* key */);
 
 	/* Window grouping: */
@@ -682,17 +666,6 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	g_signal_connect(G_OBJECT(tasklist->never_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 	g_signal_connect(G_OBJECT(tasklist->auto_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 	g_signal_connect(G_OBJECT(tasklist->always_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
-
-	/* Button list */
-	//button = get_grouping_button(tasklist, tasklist->grouping);
-	//gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-	/*g_object_set_data(G_OBJECT(tasklist->style_group_radio), "group_value", "style");
-	g_object_set_data(G_OBJECT(tasklist->icon_group_radio), "group_value", "icon");
-	g_object_set_data(G_OBJECT(tasklist->text_group_radio), "group_value", "text");
-
-	g_signal_connect(G_OBJECT(tasklist->style_group_radio), "toggled", (GCallback) group_button_toggled, tasklist);
-	g_signal_connect(G_OBJECT(tasklist->icon_group_radio), "toggled", (GCallback) group_button_toggled, tasklist);
-	g_signal_connect(G_OBJECT(tasklist->text_group_radio), "toggled", (GCallback) group_button_toggled, tasklist);*/
 
 	/* move window when unminimizing: */
 	tasklist_update_unminimization_radio(tasklist);
