@@ -5078,6 +5078,11 @@ panel_toplevel_set_expand (PanelToplevel *toplevel,
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
+	if (toplevel->priv->attached && expand) {
+		g_warning ("attempt to expand attached toplevel; ignoring");
+		return;
+	}
+
 	expand = expand != FALSE;
 
 	if (toplevel->priv->expand == expand)
