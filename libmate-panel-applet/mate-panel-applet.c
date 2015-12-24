@@ -374,18 +374,6 @@ mate_panel_applet_set_orient (MatePanelApplet      *applet,
 	g_object_notify (G_OBJECT (applet), "orient");
 }
 
-#if 0
-/* Locked should not be public API: it's not useful for applet writers to know
- * if the applet is locked (as opposed to locked_down). */
-static gboolean
-mate_panel_applet_get_locked (MatePanelApplet *applet)
-{
-	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
-
-	return applet->priv->locked;
-}
-#endif
-
 static void
 mate_panel_applet_set_locked (MatePanelApplet *applet,
 			 gboolean     locked)
