@@ -1377,17 +1377,22 @@ mate_panel_applet_create_foreign_surface_for_display (GdkDisplay *display,
                                                       GdkVisual  *visual,
                                                       Window      xid)
 {
-        Window window;
-        gint x, y;
-        guint width, height, border, depth;
+	Status result = 0;
+	Window window;
+	gint x, y;
+	guint width, height, border, depth;
 
-        if (!XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
-                           &x, &y, &width, &height, &border, &depth))
-                return NULL;
+	gdk_error_trap_push ();
+	result = XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
+	                       &x, &y, &width, &height, &border, &depth);
+	gdk_error_trap_pop_ignored ();
 
-        return cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
-                                          xid, gdk_x11_visual_get_xvisual (visual),
-                                          width, height);
+	if (result == 0)
+		return NULL;
+
+	return cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
+	                                  xid, gdk_x11_visual_get_xvisual (visual),
+	                                  width, height);
 }
 
 static cairo_pattern_t *
@@ -1432,11 +1437,9 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	window = gtk_widget_get_window (GTK_WIDGET (applet));
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gdk_error_trap_push ();
 	background = mate_panel_applet_create_foreign_surface_for_display (gdk_window_get_display (window),
 									   gdk_window_get_visual (window),
 									   xid);
-	gdk_error_trap_pop_ignored ();
 
 	/* background can be NULL if the user changes the background very fast.
 	 * We'll get the next update, so it's not a big deal. */
