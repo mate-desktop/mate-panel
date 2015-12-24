@@ -1419,7 +1419,6 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_t *background;
 	cairo_surface_t *surface;
-	cairo_matrix_t   matrix;
 #else
 	gboolean         display_grabbed;
 	GdkPixmap       *pixmap;
