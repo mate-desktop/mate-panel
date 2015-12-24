@@ -24,7 +24,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <unistd.h>
@@ -1451,7 +1451,7 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	gdk_error_trap_pop_ignored ();
 
 	/* background can be NULL if the user changes the background very fast.
-	* We'll get the next update, so it's not a big deal. */
+	 * We'll get the next update, so it's not a big deal. */
 	if (!background || cairo_surface_status (background) != CAIRO_STATUS_SUCCESS) {
 		if (background)
 			cairo_surface_destroy (background);
