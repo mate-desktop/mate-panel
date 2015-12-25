@@ -479,7 +479,7 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 void panel_menu_bar_change_background(PanelMenuBar* menubar)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	panel_background_apply_css(GTK_WIDGET(menubar));
+	panel_background_apply_css(GTK_WIDGET(menubar), &menubar->priv->panel->background);
 #else
 	panel_background_change_background_on_widget(&menubar->priv->panel->background, GTK_WIDGET(menubar));
 #endif

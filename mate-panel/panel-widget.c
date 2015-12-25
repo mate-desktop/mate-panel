@@ -1587,10 +1587,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}
-	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
-		panel->thick = allocation->height;
-	else
-		panel->thick = allocation->width;
 
 	panel_widget_set_background_region (panel);
 }
@@ -1657,6 +1653,7 @@ panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 		state = gtk_widget_get_state_flags (widget);
 		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 		gtk_style_context_add_class(context,"mate-panel-menu-bar");
+		panel_background_apply_css (widget, &PANEL_WIDGET (widget)->background);
 
 		gtk_style_context_get_background_color (context, state, &bg_color);
 		gtk_style_context_get (context, state, "background-image", &bg_image, NULL);
@@ -1862,7 +1859,6 @@ panel_widget_init (PanelWidget *panel)
 	
 	panel->packed        = FALSE;
 	panel->orient        = GTK_ORIENTATION_HORIZONTAL;
-	panel->thick         = PANEL_MINIMUM_WIDTH;
 	panel->size          = G_MAXINT;
 	panel->applet_list   = NULL;
 	panel->master_widget = NULL;
@@ -2740,7 +2736,6 @@ panel_widget_add (PanelWidget *panel,
 		ad->pos = pos;
 		ad->constrained = pos;
 		ad->drag_off = 0;
-		ad->no_die = 0;
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
@@ -2811,8 +2806,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 	gtk_widget_queue_resize (GTK_WIDGET (new_panel));
 	gtk_widget_queue_resize (GTK_WIDGET (old_panel));
 
-	ad->no_die++;
-
 	panel_widget_reset_saved_focus (old_panel);
 	if (gtk_container_get_focus_child (GTK_CONTAINER (old_panel)) == applet)
 		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->toplevel));
@@ -2835,8 +2828,6 @@ panel_widget_reparent (PanelWidget *old_panel,
  	gtk_window_present (GTK_WINDOW (new_panel->toplevel));
 
 	gdk_flush();
-
-	ad->no_die--;
 
 	emit_applet_moved (new_panel, ad);
 

@@ -72,10 +72,6 @@ struct _AppletData
 	int		drag_off; /* offset on the applet where drag
 				     was started */
 
-	int		no_die; /* if >0 never send the about to die
-				   signal, an int and not a bool for
-				   nesting reasons */
-
 	/* Valid size ranges for expanded applets */
 	int *           size_hints;
 	int             size_hints_len;
@@ -100,8 +96,6 @@ struct _PanelWidget
 	int             sz;
 
 	AppletData     *currently_dragged_applet;
-
-	int             thick;
 
 	PanelBackground background;
 

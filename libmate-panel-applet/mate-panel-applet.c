@@ -24,7 +24,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <unistd.h>
@@ -373,18 +373,6 @@ mate_panel_applet_set_orient (MatePanelApplet      *applet,
 
 	g_object_notify (G_OBJECT (applet), "orient");
 }
-
-#if 0
-/* Locked should not be public API: it's not useful for applet writers to know
- * if the applet is locked (as opposed to locked_down). */
-static gboolean
-mate_panel_applet_get_locked (MatePanelApplet *applet)
-{
-	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
-
-	return applet->priv->locked;
-}
-#endif
 
 static void
 mate_panel_applet_set_locked (MatePanelApplet *applet,
@@ -1389,17 +1377,22 @@ mate_panel_applet_create_foreign_surface_for_display (GdkDisplay *display,
                                                       GdkVisual  *visual,
                                                       Window      xid)
 {
-        Window window;
-        gint x, y;
-        guint width, height, border, depth;
+	Status result = 0;
+	Window window;
+	gint x, y;
+	guint width, height, border, depth;
 
-        if (!XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
-                           &x, &y, &width, &height, &border, &depth))
-                return NULL;
+	gdk_error_trap_push ();
+	result = XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
+	                       &x, &y, &width, &height, &border, &depth);
+	gdk_error_trap_pop_ignored ();
 
-        return cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
-                                          xid, gdk_x11_visual_get_xvisual (visual),
-                                          width, height);
+	if (result == 0)
+		return NULL;
+
+	return cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
+	                                  xid, gdk_x11_visual_get_xvisual (visual),
+	                                  width, height);
 }
 
 static cairo_pattern_t *
@@ -1419,7 +1412,6 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_t *background;
 	cairo_surface_t *surface;
-	cairo_matrix_t   matrix;
 #else
 	gboolean         display_grabbed;
 	GdkPixmap       *pixmap;
@@ -1445,14 +1437,12 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	window = gtk_widget_get_window (GTK_WIDGET (applet));
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gdk_error_trap_push ();
 	background = mate_panel_applet_create_foreign_surface_for_display (gdk_window_get_display (window),
 									   gdk_window_get_visual (window),
 									   xid);
-	gdk_error_trap_pop_ignored ();
 
 	/* background can be NULL if the user changes the background very fast.
-	* We'll get the next update, so it's not a big deal. */
+	 * We'll get the next update, so it's not a big deal. */
 	if (!background || cairo_surface_status (background) != CAIRO_STATUS_SUCCESS) {
 		if (background)
 			cairo_surface_destroy (background);
@@ -1979,33 +1969,38 @@ mate_panel_applet_setup (MatePanelApplet *applet)
 void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundType type)
 {
 	GtkStyleContext* context;
-	GtkCssProvider  *provider;
 
 	context = gtk_widget_get_style_context (widget);
-	gtk_widget_reset_style(widget);
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
-		gtk_style_context_remove_class(context,"mate-custom-panel-background");
+		gtk_style_context_remove_class (context, "mate-custom-panel-background");
 		break;
 	case PANEL_COLOR_BACKGROUND:
 	case PANEL_PIXMAP_BACKGROUND:
-		provider = gtk_css_provider_new ();
-		gtk_css_provider_load_from_data (provider,
-						".mate-custom-panel-background{\n"
-						" background-color: rgba (0, 0, 0, 0);\n"
-						" background-image: none;\n"
-						"}",
-						-1, NULL);
 		gtk_style_context_add_class (context, "mate-custom-panel-background");
-		gtk_style_context_add_provider (context,
-						GTK_STYLE_PROVIDER (provider),
-						GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 		break;
 	default:
 		g_assert_not_reached ();
 		break;
 	}
+}
+
+void _mate_panel_applet_prepare_css (GtkStyleContext *context)
+{
+	GtkCssProvider  *provider;
+
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+					 ".mate-custom-panel-background{\n"
+					 " background-color: rgba (0, 0, 0, 0);\n"
+					 " background-image: none;\n"
+					 "}",
+					 -1, NULL);
+	gtk_style_context_add_provider (context,
+					GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref (provider);
 }
 #endif
 
@@ -2045,10 +2040,10 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
 	GtkStyleContext *context;
 	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-	gtk_style_context_remove_class (context,GTK_STYLE_CLASS_BACKGROUND);
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
 	gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
+	_mate_panel_applet_prepare_css(context);
 #endif
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),

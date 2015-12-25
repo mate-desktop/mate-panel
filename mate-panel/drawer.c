@@ -47,20 +47,26 @@ toplevel_destroyed (GtkWidget *widget,
 		    Drawer    *drawer)
 {
 	drawer->toplevel = NULL;
-	gtk_widget_destroy (drawer->button);
+
+	if (drawer->button) {
+		gtk_widget_destroy (drawer->button);
+		drawer->button = NULL;
+	}
 }
 
 static void
 destroy_drawer (GtkWidget *widget,
 		Drawer    *drawer)
 {
-	if (drawer->toplevel)
+	if (drawer->toplevel) {
 		gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
-	drawer->toplevel = NULL;
+		drawer->toplevel = NULL;
+	}
 
-	if (drawer->close_timeout_id)
+	if (drawer->close_timeout_id) {
 		g_source_remove (drawer->close_timeout_id);
-	drawer->close_timeout_id = 0;
+		drawer->close_timeout_id = 0;
+	}
 }
 
 static void
@@ -302,13 +308,11 @@ set_tooltip_and_name (Drawer     *drawer,
 {
 	g_return_if_fail (drawer != NULL);
 	g_return_if_fail (drawer->toplevel != NULL);
-	g_return_if_fail (tooltip != NULL);
 
-	if (tooltip && !tooltip [0])
-		tooltip = NULL;
-
-	panel_toplevel_set_name (drawer->toplevel, tooltip);
-	panel_util_set_tooltip_text (drawer->button, tooltip);
+	if (tooltip != NULL && tooltip [0] != '\0') {
+		panel_toplevel_set_name (drawer->toplevel, tooltip);
+		panel_util_set_tooltip_text (drawer->button, tooltip);
+	}
 }
 
 static Drawer *
@@ -413,37 +417,20 @@ drawer_button_size_allocated (GtkWidget     *widget,
 }
 
 static void
-panel_drawer_use_custom_icon_changed (GSettings *settings,
+panel_drawer_custom_icon_changed (GSettings *settings,
 				      gchar     *key,
 				      Drawer      *drawer)
 {
-	gboolean  use_custom_icon;
-	char     *custom_icon = NULL;
+	g_return_if_fail (drawer != NULL);
+	g_return_if_fail (drawer->button != NULL);
 
-	use_custom_icon = g_settings_get_boolean (settings, key);
+	gboolean use_custom_icon = g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY);
+	char *custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
 
-	if (use_custom_icon) {
-		custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
-	}
-
-	button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
-
-	g_free (custom_icon);
-}
-
-static void
-panel_drawer_custom_icon_changed (GSettings *settings,
-				  gchar     *key,
-				  Drawer    *drawer)
-{
-	char *custom_icon;
-	custom_icon = g_settings_get_string (settings, key);
-
-	if (custom_icon && custom_icon [0]) {
-		gboolean    use_custom_icon;
-		use_custom_icon = g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY);
-		if (use_custom_icon)
-			button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
+	if (use_custom_icon && custom_icon != NULL && custom_icon [0] != '\0') {
+		button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
+	} else {
+		button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), PANEL_ICON_DRAWER);
 	}
 
 	g_free (custom_icon);
@@ -464,7 +451,7 @@ panel_drawer_connect_to_gsettings (Drawer *drawer)
 {
 	g_signal_connect (drawer->info->settings,
 			  "changed::" PANEL_OBJECT_USE_CUSTOM_ICON_KEY,
-			  G_CALLBACK (panel_drawer_use_custom_icon_changed),
+			  G_CALLBACK (panel_drawer_custom_icon_changed),
 			  drawer);
 	g_signal_connect (drawer->info->settings,
 			  "changed::" PANEL_OBJECT_CUSTOM_ICON_KEY,

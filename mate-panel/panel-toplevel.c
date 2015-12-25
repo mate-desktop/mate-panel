@@ -1175,6 +1175,7 @@ static void panel_toplevel_hide_button_clicked(PanelToplevel* toplevel, GtkButto
 		panel_toplevel_unhide (toplevel);
 }
 
+#if GTK_CHECK_VERSION(3, 14, 0)
 static void
 set_arrow_type (GtkImage     *image,
                 GtkArrowType  arrow_type)
@@ -1196,6 +1197,7 @@ set_arrow_type (GtkImage     *image,
       break;
     }
 }
+#endif
 
 static GtkWidget *
 panel_toplevel_add_hide_button (PanelToplevel *toplevel,
@@ -3349,7 +3351,6 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 	PanelToplevel*   toplevel = (PanelToplevel*) widget;
 	PanelFrameEdge   edges;
 	gboolean         retval = FALSE;
-	GdkWindow       *window;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	int              awidth;
 	int              aheight;
@@ -3357,6 +3358,7 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 	GtkStateFlags    state;
 	GtkBorder        padding;
 #else
+	GdkWindow       *window;
 	GtkStyle         *style;
 	GtkStateType      state;
 	GtkAllocation     allocation;
@@ -3386,7 +3388,6 @@ static gboolean panel_toplevel_expose(GtkWidget* widget, GdkEventExpose* event)
 		return retval;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	window = gtk_widget_get_window (widget);
 	state = gtk_widget_get_state_flags (widget);
 	awidth = gtk_widget_get_allocated_width (widget);
 	aheight = gtk_widget_get_allocated_height (widget);
@@ -5077,6 +5078,11 @@ panel_toplevel_set_expand (PanelToplevel *toplevel,
 			   gboolean       expand)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (toplevel->priv->attached && expand) {
+		g_warning ("attempt to expand attached toplevel; ignoring");
+		return;
+	}
 
 	expand = expand != FALSE;
 

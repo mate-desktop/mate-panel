@@ -33,9 +33,6 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
-#define MATE_DESKTOP_USE_UNSTABLE_API
-#include <libmate-desktop/mate-desktop-utils.h>
-
 #include "calendar-window.h"
 
 #include "clock.h"
