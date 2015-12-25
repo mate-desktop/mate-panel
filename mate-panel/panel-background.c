@@ -554,7 +554,11 @@ panel_background_composite (PanelBackground *background)
 		break;
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)     /*panel user background fix for gtk3.18+*/
+	background->composited = FALSE; /*this is actually WRONG but fixes rendering of user selected color BG*/
+#else
 	background->composited = TRUE;
+#endif
 
 	panel_background_prepare (background);
 
