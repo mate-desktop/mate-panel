@@ -554,7 +554,13 @@ panel_background_composite (PanelBackground *background)
 		break;
 	}
 
+#if GTK_CHECK_VERSION (3, 18, 0)
+    /* FIXME, Hack, panel user background fix for gtk+-3.18+ */
+    /* this is actually WRONG but fixes rendering of user selected color BG */
+	background->composited = FALSE;
+#else
 	background->composited = TRUE;
+#endif
 
 	panel_background_prepare (background);
 
