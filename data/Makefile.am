@@ -25,11 +25,7 @@ gsettings_SCHEMAS = $(panel_gschemas_in:.xml.in=.xml)
 
 @GSETTINGS_RULES@
 
-convertdir = $(datadir)/MateConf/gsettings
-convert_DATA = mate-panel.convert
-
 EXTRA_DIST = \
-	$(convert_DATA) \
 	$(panel_gschemas_in) \
 	$(layout_DATA)
 
