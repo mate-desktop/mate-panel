@@ -39,6 +39,7 @@ CLOCK_CPPFLAGS =						\
 	$(AM_CPPFLAGS)						\
 	$(LIBMATE_PANEL_APPLET_CFLAGS)				\
 	$(CLOCK_CFLAGS)						\
+	$(NETWORK_MANAGER_CFLAGS)				\
 	-I$(srcdir)/../../libmate-panel-applet			\
 	-I$(top_builddir)/libmate-panel-applet			\
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
@@ -51,6 +52,7 @@ CLOCK_LDADD =						\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
 	$(CLOCK_LIBS)					\
 	$(LIBMATE_PANEL_APPLET_LIBS)				\
+	$(NETWORK_MANAGER_LIBS)					\
 	libsystem-timezone.la				\
 	-lm
 

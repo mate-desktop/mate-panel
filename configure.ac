@@ -156,6 +156,8 @@ else
 fi
 if test "x$HAVE_NETWORK_MANAGER" = "xyes" ; then
     AC_DEFINE(HAVE_NETWORK_MANAGER, 1, [Defined if NetworkManager support is enabled])
+    AC_SUBST(NETWORK_MANAGER_CFLAGS)
+    AC_SUBST(NETWORK_MANAGER_LIBS)
 fi
 
 # Make it possible to compile the applets in-process
