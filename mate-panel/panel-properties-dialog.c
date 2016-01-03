@@ -911,6 +911,9 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	gtk_window_set_screen (GTK_WINDOW (dialog->properties_dialog),
 			       gtk_window_get_screen (GTK_WINDOW (toplevel)));
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_widget_realize (dialog->properties_dialog); /*fix gtk3.20 window position */
+#endif			       
 
 	dialog->writability_warn_general = PANEL_GTK_BUILDER_GET (gui, "writability_warn_general");
 	dialog->writability_warn_background = PANEL_GTK_BUILDER_GET (gui, "writability_warn_background");

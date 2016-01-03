@@ -913,6 +913,7 @@ position_calendar_popup (ClockData *cd)
 	gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_preferred_size (cd->calendar_popup, &req, NULL);
+	gtk_widget_realize (cd->calendar_popup); /*fix gtk3.20 window position */
 #else
 	gtk_widget_size_request (cd->calendar_popup, &req);
 #endif
@@ -3258,6 +3259,9 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 
         gtk_window_set_screen (GTK_WINDOW (cd->prefs_window),
                                gtk_widget_get_screen (cd->applet));
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_widget_realize (cd->prefs_window); /*fix gtk3.20 window position */
+#endif                               
 	gtk_window_present (GTK_WINDOW (cd->prefs_window));
 
         refresh_click_timeout_time_only (cd);
