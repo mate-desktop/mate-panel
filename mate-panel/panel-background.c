@@ -1061,14 +1061,15 @@ panel_background_realized (PanelBackground *background,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	if (background->window)
-#else
-	if (background->window && background->colormap && background->gc)
-#endif
 		return;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	background->window = g_object_ref (window);
+
+	panel_background_prepare_css ();
 #else
+	if (background->window && background->colormap && background->gc)
+		return;
+
 	if (!background->window)
 		background->window = g_object_ref (window);
 
@@ -1079,9 +1080,7 @@ panel_background_realized (PanelBackground *background,
 	if (!background->gc)
 		background->gc = gdk_gc_new (window);
 #endif
-#if GTK_CHECK_VERSION(3, 0, 0)
-	panel_background_prepare_css ();
-#endif
+
 	panel_background_prepare (background);
 }
 
