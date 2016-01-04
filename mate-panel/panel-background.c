@@ -1412,57 +1412,19 @@ panel_background_set_no_background_on_widget (PanelBackground *background,
 }
 #endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-static cairo_pattern_t *
-panel_background_get_pattern_for_widget (PanelBackground *background,
-					 GtkWidget       *widget)
-#else
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_background_set_image_background_on_widget (PanelBackground *background,
 
 						 GtkWidget       *widget)
-#endif
 {
 	GtkAllocation    allocation;
 	cairo_t         *cr;
 	cairo_pattern_t *pattern;
-#if GTK_CHECK_VERSION (3, 0, 0)
-	cairo_surface_t *surface;
-	cairo_surface_t *bg_surface;
-	cairo_matrix_t   matrix;
-#else
 	const GdkPixmap *bg_pixmap;
 	GdkPixmap       *pixmap;
 	GtkStyle        *style;
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	if (!background->composited_pattern)
-		return NULL;
-
-	if (cairo_pattern_get_surface (background->composited_pattern, &bg_surface) != CAIRO_STATUS_SUCCESS)
-		return NULL;
-
-	gtk_widget_get_allocation (widget, &allocation);
-	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
-					      allocation.width, allocation.height);
-
-	cr = cairo_create (surface);
-	cairo_set_source_surface (cr, bg_surface, -allocation.x, -allocation.y);
-	cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
-	cairo_fill (cr);
-	cairo_destroy (cr);
-
-	pattern = cairo_pattern_create_for_surface (surface);
-	cairo_matrix_init_translate (&matrix, 0, 0);
-	cairo_matrix_scale (&matrix, allocation.width, allocation.height);
-	cairo_pattern_set_matrix (pattern, &matrix);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
-
-	cairo_surface_destroy (surface);
-
-	return pattern;
-#else
 	bg_pixmap = panel_background_get_pixmap (background);
 	if (!bg_pixmap)
 		return;
@@ -1494,8 +1456,8 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 	g_object_unref (style);
 
 	g_object_unref (pixmap);
-#endif
 }
+#endif
 
 #if !GTK_CHECK_VERSION (3, 0, 0)
 static void
