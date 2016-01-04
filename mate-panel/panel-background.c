@@ -1410,9 +1410,23 @@ panel_background_set_no_background_on_widget (PanelBackground *background,
 	gtk_widget_modify_style (widget, rc_style);
 	g_object_unref (rc_style);
 }
-#endif
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
+static void
+panel_background_set_color_background_on_widget (PanelBackground *background,
+						 GtkWidget       *widget)
+{
+	const PanelColor *color;
+
+	color = panel_background_get_color (background);
+	if (color->alpha != 0xffff) {
+		panel_background_set_image_background_on_widget (background,
+								 widget);
+		return;
+	}
+
+	gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &color->gdk);
+}
+
 static void
 panel_background_set_image_background_on_widget (PanelBackground *background,
 
@@ -1456,24 +1470,6 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 	g_object_unref (style);
 
 	g_object_unref (pixmap);
-}
-#endif
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-static void
-panel_background_set_color_background_on_widget (PanelBackground *background,
-						 GtkWidget       *widget)
-{
-	const PanelColor *color;
-
-	color = panel_background_get_color (background);
-	if (color->alpha != 0xffff) {
-		panel_background_set_image_background_on_widget (background,
-								 widget);
-		return;
-	}
-
-	gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &color->gdk);
 }
 
 void
