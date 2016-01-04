@@ -649,7 +649,7 @@ mate_panel_applet_frame_change_background (MatePanelAppletFrame    *frame,
 
 		background = &PANEL_WIDGET (parent)->background;
 #if GTK_CHECK_VERSION (3, 0, 0)
-		panel_background_apply_css (GTK_WIDGET (frame), background);
+		panel_background_apply_css (background, GTK_WIDGET (frame));
 #else
 		panel_background_change_background_on_widget (background,
 							      GTK_WIDGET (frame));

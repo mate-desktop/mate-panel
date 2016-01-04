@@ -96,7 +96,7 @@ set_pixbuf_background (PanelBackground *background)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-void panel_background_apply_css (GtkWidget* widget, PanelBackground *background)
+void panel_background_apply_css (PanelBackground *background, GtkWidget *widget)
 {
 	GtkStyleContext     *context;
 	PanelBackgroundType  effective_type;
@@ -238,7 +238,7 @@ panel_background_prepare (PanelBackground *background)
 
 	if (GTK_IS_WIDGET (widget)) {
 #if GTK_CHECK_VERSION (3, 0, 0)
-		panel_background_apply_css (gtk_widget_get_toplevel(widget), background);
+		panel_background_apply_css (background, gtk_widget_get_toplevel(widget));
 #endif
 		gtk_widget_set_app_paintable(widget,TRUE);
 		gtk_widget_queue_draw (widget);
