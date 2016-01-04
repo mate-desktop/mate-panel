@@ -154,8 +154,6 @@ panel_background_prepare (PanelBackground *background)
 
 	effective_type = panel_background_effective_type (background);
 
-
-
 	switch (effective_type) {
 	case PANEL_BACK_NONE:
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -230,7 +228,6 @@ panel_background_prepare (PanelBackground *background)
 	 * make sure that all drawing has been completed before
 	 * the applet looks at the pixmap. */
 #if GTK_CHECK_VERSION (3, 0, 0)
-
 	gdk_display_sync (gdk_window_get_display (background->window));
 #else
 	gdk_display_sync (gdk_drawable_get_display (background->window));
