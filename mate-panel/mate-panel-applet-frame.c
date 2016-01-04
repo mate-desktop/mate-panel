@@ -99,14 +99,14 @@ static gboolean
 mate_panel_applet_frame_draw (GtkWidget *widget,
                          cairo_t   *cr)
 {
-        MatePanelAppletFrame *frame = MATE_PANEL_APPLET_FRAME (widget);
+	MatePanelAppletFrame *frame = MATE_PANEL_APPLET_FRAME (widget);
 	GtkStyleContext *context;
 	GtkStateFlags     state;
 	cairo_pattern_t  *bg_pattern;
 	PanelBackground  *background;
 
-        if (GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->draw)
-                GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->draw (widget, cr);
+	if (GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->draw)
+		GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->draw (widget, cr);
 
 	if (!frame->priv->has_handle)
 		return FALSE;
@@ -154,7 +154,7 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 
 	gtk_style_context_restore (context);
 
-        return FALSE;
+	return FALSE;
 }
 #else
 static void
@@ -549,7 +549,7 @@ mate_panel_applet_frame_finalize (GObject *object)
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
 
-        G_OBJECT_CLASS (mate_panel_applet_frame_parent_class)->finalize (object);
+	G_OBJECT_CLASS (mate_panel_applet_frame_parent_class)->finalize (object);
 }
 
 static void
