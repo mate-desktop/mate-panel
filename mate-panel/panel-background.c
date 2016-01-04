@@ -1328,7 +1328,7 @@ panel_background_make_string (PanelBackground *background,
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-		if (cairo_pattern_get_surface (background->composited_pattern, &surface))
+		if (cairo_pattern_get_surface (background->composited_pattern, &surface) != CAIRO_STATUS_SUCCESS)
 			return NULL;
 
 		if (cairo_surface_get_type (surface) != CAIRO_SURFACE_TYPE_XLIB)
