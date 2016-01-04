@@ -512,7 +512,12 @@ static void set_item_text_angle_and_alignment(GtkWidget* item, double text_angle
 
 	gtk_label_set_angle (GTK_LABEL (label), text_angle);
 
+#if GTK_CHECK_VERSION (3, 16, 0)
+	gtk_label_set_xalign (GTK_LABEL (label), xalign);
+	gtk_label_set_yalign (GTK_LABEL (label), yalign);
+#else
 	gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
+#endif
 }
 
 static void panel_menu_bar_update_orientation(PanelMenuBar* menubar)
