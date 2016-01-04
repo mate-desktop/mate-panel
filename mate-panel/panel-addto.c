@@ -1260,7 +1260,12 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	gtk_box_pack_start (GTK_BOX (inner_vbox), find_hbox, FALSE, FALSE, 0);
 
 	dialog->label = gtk_label_new_with_mnemonic ("");
+#if GTK_CHECK_VERSION (3, 16, 0)
+	gtk_label_set_xalign (GTK_LABEL (dialog->label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (dialog->label), 0.5);
+#else
 	gtk_misc_set_alignment (GTK_MISC (dialog->label), 0.0, 0.5);
+#endif
 	gtk_label_set_use_markup (GTK_LABEL (dialog->label), TRUE);
 
 	gtk_box_pack_start (GTK_BOX (find_hbox), dialog->label,

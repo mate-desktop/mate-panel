@@ -136,7 +136,12 @@ na_fixed_tip_init (NaFixedTip *fixedtip)
 
   label = gtk_label_new (NULL);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+#if GTK_CHECK_VERSION (3, 16, 0)
+  gtk_label_set_xalign (GTK_LABEL (label), 0.5);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
+#else
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+#endif
   gtk_widget_show (label);
   gtk_container_add (GTK_CONTAINER (fixedtip), label);
   fixedtip->priv->label = label;
