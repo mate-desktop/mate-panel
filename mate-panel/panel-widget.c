@@ -1677,18 +1677,18 @@ panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 }
 #endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
 panel_widget_style_updated (GtkWidget *widget)
-#else
-panel_widget_state_changed (GtkWidget    *widget,
-			    GtkStateType  previous_state)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
 	panel_widget_set_background_default_style (widget);
+}
 #else
+static void
+panel_widget_state_changed (GtkWidget    *widget,
+			    GtkStateType  previous_state)
+{
 	GtkStyle     *style;
 	GtkStateType  state;
 
@@ -1701,8 +1701,8 @@ panel_widget_state_changed (GtkWidget    *widget,
 			&style->bg [state],
 			style->bg_pixmap [state]);
 	}
-#endif
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
