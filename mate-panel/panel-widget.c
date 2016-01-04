@@ -1658,33 +1658,22 @@ panel_widget_set_background_default_style (GtkWidget *widget)
 			cairo_pattern_destroy (bg_image);
 	}
 }
-#else
+
 static void
-panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
+panel_widget_state_flags_changed (GtkWidget *widget, GtkStateFlags previous_state)
 {
-	GtkStyle     *style;
-	GtkStateType  state;
-
-	if (gtk_widget_get_realized (widget)) {
-		style = gtk_widget_get_style (widget);
-		state = gtk_widget_get_state (widget);
-
-		panel_background_set_default_style (
-			&PANEL_WIDGET (widget)->background,
-			&style->bg [state],
-			style->bg_pixmap [state]);
-	}
+	panel_widget_set_background_default_style (widget);
 }
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_widget_style_updated (GtkWidget *widget)
 {
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
 	panel_widget_set_background_default_style (widget);
 }
+
 #else
+
 static void
 panel_widget_state_changed (GtkWidget    *widget,
 			    GtkStateType  previous_state)
@@ -1702,13 +1691,22 @@ panel_widget_state_changed (GtkWidget    *widget,
 			style->bg_pixmap [state]);
 	}
 }
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
-panel_widget_state_flags_changed (GtkWidget *widget, GtkStateFlags previous_state)
+panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 {
-	panel_widget_set_background_default_style (widget);
+	GtkStyle     *style;
+	GtkStateType  state;
+
+	if (gtk_widget_get_realized (widget)) {
+		style = gtk_widget_get_style (widget);
+		state = gtk_widget_get_state (widget);
+
+		panel_background_set_default_style (
+			&PANEL_WIDGET (widget)->background,
+			&style->bg [state],
+			style->bg_pixmap [state]);
+	}
 }
 #endif
 
