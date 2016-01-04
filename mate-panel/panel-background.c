@@ -440,14 +440,12 @@ composite_color_onto_desktop (PanelBackground *background)
 	}
 
 	cr = cairo_create (surface);
-#if GTK_CHECK_VERSION (3, 0, 0)
+
 	if(!gdk_window_check_composited_wm(background->window)){
-#endif
 		gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
 		cairo_paint (cr);
-#if GTK_CHECK_VERSION(3, 0, 0)
 	}
-#endif
+
 	gdk_cairo_set_source_rgba (cr, &background->color);
 	cairo_paint (cr);
 
