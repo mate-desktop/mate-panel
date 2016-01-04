@@ -46,7 +46,6 @@ static void load_background_file (PanelBackground *background);
 static void
 free_prepared_resources (PanelBackground *background)
 {
-	background->prepared = FALSE;
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	switch (background->type) {
 	case PANEL_BACK_NONE:
@@ -247,8 +246,6 @@ panel_background_prepare (PanelBackground *background)
 		gtk_widget_set_app_paintable(widget,TRUE);
 		gtk_widget_queue_draw (widget);
 	}
-
-	background->prepared = TRUE;
 
 	background->notify_changed (background, background->user_data);
 
@@ -1253,7 +1250,6 @@ panel_background_init (PanelBackground              *background,
 
 	background->transformed = FALSE;
 	background->composited  = FALSE;
-	background->prepared    = FALSE;
 }
 
 void
