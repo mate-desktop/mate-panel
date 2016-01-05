@@ -75,14 +75,10 @@ free_prepared_resources (PanelBackground *background)
 #endif
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static void
 set_pixbuf_background (PanelBackground *background)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
-	g_assert (background->composited_pattern != NULL);
-
-	gdk_window_set_background_pattern (background->window, background->composited_pattern);
-#else
 	g_assert (background->composited_image != NULL);
 
 	gdk_pixbuf_render_pixmap_and_mask_for_colormap (
@@ -92,8 +88,8 @@ set_pixbuf_background (PanelBackground *background)
 
 	gdk_window_set_back_pixmap (
 		background->window, background->pixmap, FALSE);
-#endif
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 void panel_background_apply_css (PanelBackground *background, GtkWidget *widget)
