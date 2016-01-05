@@ -1308,21 +1308,14 @@ panel_background_make_string (PanelBackground *background,
 
 	effective_type = panel_background_effective_type (background);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 	if (effective_type == PANEL_BACK_IMAGE ||
 	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 		cairo_surface_t *surface;
 
 		if (!background->composited_pattern)
 			return NULL;
-#else
-		GdkNativeWindow pixmap_xid;
 
-		if (!background->pixmap)
-			return NULL;
-#endif
-
-#if GTK_CHECK_VERSION (3, 0, 0)
 		if (cairo_pattern_get_surface (background->composited_pattern, &surface) != CAIRO_STATUS_SUCCESS)
 			return NULL;
 
@@ -1330,19 +1323,24 @@ panel_background_make_string (PanelBackground *background,
 			return NULL;
 
 		retval = g_strdup_printf ("pixmap:%d,%d,%d", (guint32)cairo_xlib_surface_get_drawable (surface), x, y);
-#else
-		pixmap_xid = GDK_WINDOW_XID (GDK_DRAWABLE (background->pixmap));
-
-		retval = g_strdup_printf ("pixmap:%d,%d,%d", pixmap_xid, x, y);
-#endif
 	} else if (effective_type == PANEL_BACK_COLOR) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 		gchar *rgba = gdk_rgba_to_string (&background->color);
 		retval = g_strdup_printf (
 				"color:%s",
 				rgba);
 		g_free (rgba);
 #else
+	if (effective_type == PANEL_BACK_IMAGE ||
+	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
+		GdkNativeWindow pixmap_xid;
+
+		if (!background->pixmap)
+			return NULL;
+
+		pixmap_xid = GDK_WINDOW_XID (GDK_DRAWABLE (background->pixmap));
+
+		retval = g_strdup_printf ("pixmap:%d,%d,%d", pixmap_xid, x, y);
+	} else if (effective_type == PANEL_BACK_COLOR) {
 		retval = g_strdup_printf (
 				"color:%.4x%.4x%.4x",
 				background->color.gdk.red,
