@@ -726,9 +726,7 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 	mate_color_button_get_rgba (MATE_COLOR_BUTTON (dialog->color_button),
 				    &old_color);
 
-	if (old_color.red   != new_color.red ||
-	    old_color.green != new_color.green ||
-	    old_color.blue  != new_color.blue)
+	if (!gdk_rgba_equal (&old_color, &new_color))
 		mate_color_button_set_rgba (MATE_COLOR_BUTTON (dialog->color_button),
 					    &new_color);
 #else
@@ -741,9 +739,7 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 	mate_color_button_get_color (MATE_COLOR_BUTTON (dialog->color_button),
 				    &old_color);
 
-	if (old_color.red   != new_color.red ||
-	    old_color.green != new_color.green ||
-	    old_color.blue  != new_color.blue)
+	if (!gdk_color_equal (&old_color, &new_color))
 		mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
 					    &new_color);
 #endif
