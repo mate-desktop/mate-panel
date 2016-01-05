@@ -1,5 +1,5 @@
 /*
- * mate-panel-applet-container.c: a container for applets.
+ * panel-applet-container.h: a container for applets.
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  *
@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef __MATE_PANEL_APPLET_CONTAINER_H__
-#define __MATE_PANEL_APPLET_CONTAINER_H__
+#ifndef __PANEL_APPLET_CONTAINER_H__
+#define __PANEL_APPLET_CONTAINER_H__
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -116,4 +116,4 @@ GVariant  *mate_panel_applet_container_child_get_finish        (MatePanelAppletC
 }
 #endif
 
-#endif /* __MATE_PANEL_APPLET_CONTAINER_H__ */
+#endif /* __PANEL_APPLET_CONTAINER_H__ */

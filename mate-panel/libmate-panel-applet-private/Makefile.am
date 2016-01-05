@@ -17,18 +17,18 @@ AM_CPPFLAGS =							\
 AM_CFLAGS = $(WARN_CFLAGS)
 
 libmate_panel_applet_private_la_SOURCES =	\
-	mate-panel-applets-manager-dbus.c	\
-	mate-panel-applets-manager-dbus.h	\
-	mate-panel-applet-container.c	\
-	mate-panel-applet-container.h	\
-	mate-panel-applet-frame-dbus.c	\
-	mate-panel-applet-frame-dbus.h
+	panel-applets-manager-dbus.c	\
+	panel-applets-manager-dbus.h	\
+	panel-applet-container.c	\
+	panel-applet-container.h	\
+	panel-applet-frame-dbus.c	\
+	panel-applet-frame-dbus.h
 
 libmate_panel_applet_private_mini_la_SOURCES =\
-	mate-panel-applet-mini.c		\
-	mate-panel-applets-manager-dbus.c	\
-	mate-panel-applets-manager-dbus.h	\
-	mate-panel-applet-container.c	\
-	mate-panel-applet-container.h
+	panel-applet-mini.c		\
+	panel-applets-manager-dbus.c	\
+	panel-applets-manager-dbus.h	\
+	panel-applet-container.c	\
+	panel-applet-container.h
 
 -include $(top_srcdir)/git.mk

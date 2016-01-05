@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /*
- * mate-panel-applet-frame-dbus.c: panel side container for applets
+ * panel-applet-frame-dbus.c: panel side container for applets
  *
  * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
@@ -29,12 +29,11 @@
 
 #include <string.h>
 
-#include <mate-panel-applet-frame.h>
-#include <mate-panel-applets-manager.h>
+#include <panel-applet-frame.h>
+#include <panel-applets-manager.h>
 
-#include "mate-panel-applet-container.h"
-
-#include "mate-panel-applet-frame-dbus.h"
+#include "panel-applet-container.h"
+#include "panel-applet-frame-dbus.h"
 
 G_DEFINE_TYPE (MatePanelAppletFrameDBus,
 	       mate_panel_applet_frame_dbus,

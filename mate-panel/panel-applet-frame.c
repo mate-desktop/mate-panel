@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /*
- * mate-panel-applet-frame.c: panel side container for applets
+ * panel-applet-frame.c: panel side container for applets
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
@@ -33,7 +33,7 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
-#include "mate-panel-applets-manager.h"
+#include "panel-applets-manager.h"
 #include "panel-profile.h"
 #include "panel.h"
 #include "applet.h"
@@ -44,7 +44,7 @@
 #include "xstuff.h"
 #include "panel-schemas.h"
 
-#include "mate-panel-applet-frame.h"
+#include "panel-applet-frame.h"
 
 #define PANEL_RESPONSE_DELETE       0
 #define PANEL_RESPONSE_DONT_RELOAD  1

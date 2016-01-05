@@ -1,5 +1,5 @@
 /*
- * mate-panel-applet-container.c: a container for applets.
+ * panel-applet-container.c: a container for applets.
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  *
@@ -25,7 +25,7 @@
 #if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h>
 #endif
-#include "mate-panel-applet-container.h"
+#include "panel-applet-container.h"
 #include "panel-marshal.h"
 
 struct _MatePanelAppletContainerPrivate {

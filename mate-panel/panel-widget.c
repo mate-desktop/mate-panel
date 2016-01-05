@@ -24,7 +24,7 @@
 #include "panel-util.h"
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
-#include "mate-panel-applet-frame.h"
+#include "panel-applet-frame.h"
 #include "panel-globals.h"
 #include "panel-profile.h"
 #include "panel-lockdown.h"

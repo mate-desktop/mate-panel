@@ -40,8 +40,8 @@ panel_sources = \
 	menu.c \
 	panel-context-menu.c \
 	launcher.c \
-	mate-panel-applet-frame.c \
-	mate-panel-applets-manager.c \
+	panel-applet-frame.c \
+	panel-applets-manager.c \
 	panel-shell.c \
 	panel-background.c \
 	panel-background-monitor.c \
@@ -67,7 +67,7 @@ panel_sources = \
 	panel-addto.c \
 	panel-ditem-editor.c \
 	panel-modules.c \
-	mate-panel-applet-info.c \
+	panel-applet-info.c \
 	panel-reset.c
 
 panel_headers = \
@@ -87,8 +87,8 @@ panel_headers = \
 	menu.h \
 	panel-context-menu.h \
 	launcher.h \
-	mate-panel-applet-frame.h \
-	mate-panel-applets-manager.h \
+	panel-applet-frame.h \
+	panel-applets-manager.h \
 	panel-shell.h \
 	panel-background.h \
 	panel-background-monitor.h \
@@ -117,7 +117,7 @@ panel_headers = \
 	panel-ditem-editor.h \
 	panel-icon-names.h \
 	panel-modules.h \
-	mate-panel-applet-info.h \
+	panel-applet-info.h \
 	panel-reset.h \
 	panel-schemas.h
 
@@ -158,8 +158,8 @@ mate_desktop_item_edit_LDADD = \
 
 mate_panel_test_applets_SOURCES = \
 	panel-modules.c \
-	mate-panel-applet-info.c \
-	mate-panel-applets-manager.c \
+	panel-applet-info.c \
+	panel-applets-manager.c \
 	panel-marshal.c \
 	panel-test-applets.c
 

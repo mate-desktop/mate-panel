@@ -23,13 +23,11 @@
  */
 
 #include <config.h>
-
 #include <gio/gio.h>
 
-#include <libmate-panel-applet-private/mate-panel-applets-manager-dbus.h>
+#include <libmate-panel-applet-private/panel-applets-manager-dbus.h>
 
-#include "mate-panel-applets-manager.h"
-
+#include "panel-applets-manager.h"
 #include "panel-modules.h"
 
 static void
