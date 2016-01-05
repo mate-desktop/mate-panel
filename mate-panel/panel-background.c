@@ -414,18 +414,11 @@ composite_image_onto_desktop (PanelBackground *background)
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static cairo_pattern_t *
-#else
-static GdkPixbuf *
-#endif
 composite_color_onto_desktop (PanelBackground *background)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_t *surface;
 	cairo_pattern_t *pattern;
 	cairo_t *cr;
-#else
-	guint32 color;
-#endif
 
 	if (!background->desktop)
 		background->desktop = get_desktop_pixbuf (background);
@@ -433,7 +426,6 @@ composite_color_onto_desktop (PanelBackground *background)
 	if (!background->desktop)
 		return NULL;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	surface = gdk_window_create_similar_surface (background->window,
 						     CAIRO_CONTENT_COLOR_ALPHA,
 						     background->region.width,
@@ -459,7 +451,19 @@ composite_color_onto_desktop (PanelBackground *background)
 	cairo_surface_destroy (surface);
 
 	return pattern;
+}
 #else
+static GdkPixbuf *
+composite_color_onto_desktop (PanelBackground *background)
+{
+	guint32 color;
+
+	if (!background->desktop)
+		background->desktop = get_desktop_pixbuf (background);
+
+	if (!background->desktop)
+		return NULL;
+
 	color = ((background->color.gdk.red & 0xff00) << 8) +
 		 (background->color.gdk.green & 0xff00) +
 		 (background->color.gdk.blue >> 8);
@@ -471,8 +475,8 @@ composite_color_onto_desktop (PanelBackground *background)
 			GDK_INTERP_NEAREST,
 			(255 - (background->color.alpha >> 8)),
 			255, color, color);
-#endif
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static cairo_pattern_t *
