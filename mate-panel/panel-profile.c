@@ -368,9 +368,7 @@ panel_profile_set_background_image (PanelToplevel *toplevel,
 char *
 panel_profile_get_background_image (PanelToplevel *toplevel)
 {
-	char *retval;
-	retval = g_settings_get_string (toplevel->background_settings, "image");
-	return retval;
+	return g_settings_get_string (toplevel->background_settings, "image");
 }
 
 void
@@ -386,9 +384,7 @@ panel_profile_set_toplevel_name (PanelToplevel *toplevel,
 char *
 panel_profile_get_toplevel_name (PanelToplevel *toplevel)
 {
-	char *retval;
-	retval = g_settings_get_string (toplevel->settings, "name");
-	return retval;
+	return g_settings_get_string (toplevel->settings, "name");
 }
 
 void
