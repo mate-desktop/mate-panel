@@ -341,8 +341,8 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	mate_color_button_get_rgba (color_button, &color);
-	panel_profile_set_background_gdk_rgba_color (dialog->toplevel, &color);
-	panel_properties_dialog_opacity_changed(dialog);
+	panel_profile_set_background_gdk_rgba (dialog->toplevel, &color);
+	panel_properties_dialog_opacity_changed (dialog);
 #else
 	mate_color_button_get_color (color_button, &color);
 	panel_profile_set_background_gdk_color (dialog->toplevel, &color);

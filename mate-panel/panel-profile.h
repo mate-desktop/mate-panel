@@ -123,9 +123,9 @@ void        panel_profile_get_background_color        (PanelToplevel       *topl
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-void        panel_profile_set_background_gdk_rgba_color    (PanelToplevel       *toplevel,
+void        panel_profile_set_background_gdk_rgba    (PanelToplevel       *toplevel,
 						       GdkRGBA            *color);
-void        panel_profile_get_background_gdk_rgba_color    (PanelToplevel       *toplevel,
+void        panel_profile_get_background_gdk_rgba    (PanelToplevel       *toplevel,
 						       GdkRGBA            *color);
 #else
 void        panel_profile_set_background_gdk_color    (PanelToplevel       *toplevel,

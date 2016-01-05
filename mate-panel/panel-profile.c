@@ -240,7 +240,7 @@ panel_profile_set_background_color (PanelToplevel *toplevel,
 #endif
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	panel_profile_set_background_gdk_rgba_color (toplevel, color);
+	panel_profile_set_background_gdk_rgba (toplevel, color);
 #else
 	panel_profile_set_background_gdk_color (toplevel, &color->gdk);
 	panel_profile_set_background_opacity (toplevel, color->alpha);
@@ -256,7 +256,7 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 #endif
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	panel_profile_get_background_gdk_rgba_color (toplevel, color);
+	panel_profile_get_background_gdk_rgba (toplevel, color);
 #else
 	panel_profile_get_background_gdk_color (toplevel, &(color->gdk));
 	color->alpha = panel_profile_get_background_opacity (toplevel);
@@ -265,7 +265,7 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 void
-panel_profile_set_background_gdk_rgba_color (PanelToplevel *toplevel,
+panel_profile_set_background_gdk_rgba (PanelToplevel *toplevel,
 					GdkRGBA      *color)
 {
 	char        *color_str;
@@ -278,7 +278,7 @@ panel_profile_set_background_gdk_rgba_color (PanelToplevel *toplevel,
 }
 
 void
-panel_profile_get_background_gdk_rgba_color (PanelToplevel *toplevel,
+panel_profile_get_background_gdk_rgba (PanelToplevel *toplevel,
 					GdkRGBA      *color)
 {
 	char        *color_str;
