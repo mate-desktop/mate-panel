@@ -1309,15 +1309,13 @@ panel_background_make_string (PanelBackground *background,
 	effective_type = panel_background_effective_type (background);
 
 	if (effective_type == PANEL_BACK_IMAGE ||
-	    (effective_type == PANEL_BACK_COLOR && background->has_alpha
+	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	    && (!gdk_window_check_composited_wm(background->window)))) {
 		cairo_surface_t *surface;
 
 		if (!background->composited_pattern)
 			return NULL;
 #else
-	    )) {
 		GdkNativeWindow pixmap_xid;
 
 		if (!background->pixmap)
