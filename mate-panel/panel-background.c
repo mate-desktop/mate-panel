@@ -155,8 +155,8 @@ panel_background_prepare (PanelBackground *background)
 	effective_type = panel_background_effective_type (background);
 
 	switch (effective_type) {
-	case PANEL_BACK_NONE:
 #if GTK_CHECK_VERSION (3, 0, 0)
+	case PANEL_BACK_NONE:
 		if (background->default_pattern) {
 			/* the theme background-image pattern must be scaled by
 			* the width & height of the panel so that when the
@@ -173,7 +173,31 @@ panel_background_prepare (PanelBackground *background)
 
 			gdk_window_set_background_pattern (background->window,
 						       background->default_pattern);
+		} else
+			gdk_window_set_background_rgba (
+				background->window, &background->default_color);
+		break;
+
+	case PANEL_BACK_COLOR:
+		if (background->has_alpha &&
+		    background->composited_pattern)
+			gdk_window_set_background_pattern (background->window,
+			                                   background->composited_pattern);
+		else {
+			gdk_window_set_background_rgba (background->window,
+			                                &background->color);
+		}
+		break;
+
+	case PANEL_BACK_IMAGE:
+		g_assert (background->composited_pattern != NULL);
+		gdk_window_set_background_pattern (background->window,
+		                                   background->composited_pattern);
+		break;
+
 #else
+
+	case PANEL_BACK_NONE:
 		if (background->default_pixmap) {
 			if (background->default_pixmap != (GdkPixmap*) GDK_PARENT_RELATIVE)
 				gdk_window_set_back_pixmap (background->window,
@@ -183,41 +207,30 @@ panel_background_prepare (PanelBackground *background)
 				gdk_window_set_back_pixmap (background->window,
 							    NULL,
 							    TRUE);
-#endif
 		} else
-#if GTK_CHECK_VERSION (3, 0, 0)
-			gdk_window_set_background_rgba (
-				background->window, &background->default_color);
-#else
 			gdk_window_set_background (
 				background->window, &background->default_color);
-#endif
 		break;
+
 	case PANEL_BACK_COLOR:
 		if (background->has_alpha &&
-#if GTK_CHECK_VERSION (3, 0, 0)
-		    !gdk_window_check_composited_wm(background->window))
-#else
 		    background->composited_image)
-#endif
 			set_pixbuf_background (background);
 		else {
-#if GTK_CHECK_VERSION (3, 0, 0)
-			gdk_window_set_background_rgba (background->window,
-							&background->color);
-#else
 			gdk_colormap_alloc_color (
 				background->colormap,
 				&background->color.gdk,
 				FALSE, TRUE);
 			gdk_window_set_background (
 				background->window, &background->color.gdk);
-#endif
 		}
 		break;
+
 	case PANEL_BACK_IMAGE:
 		set_pixbuf_background (background);
 		break;
+#endif
+
 	default:
 		g_assert_not_reached ();
 		break;
