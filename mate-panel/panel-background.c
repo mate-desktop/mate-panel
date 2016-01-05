@@ -863,6 +863,7 @@ panel_background_set_color_no_update (PanelBackground *background,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	if (gdk_rgba_equal (color, &background->color))
 		return;
+
 	background->color = *color;
 	panel_background_update_has_alpha (background);
 #else
@@ -884,13 +885,10 @@ panel_background_set_color (PanelBackground *background,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	if (gdk_rgba_equal (color, &background->color))
 #else
-	if (background->color.gdk.red   == color->gdk.red &&
-	    background->color.gdk.green == color->gdk.green &&
-	    background->color.gdk.blue  == color->gdk.blue &&
-	    background->color.alpha  == color->alpha)
+	if (gdk_color_equal (&color->gdk, &background->color.gdk) &&
+	    color->alpha == background->color.alpha)
 #endif
 		return;
-
 
 	free_transformed_resources (background);
 	panel_background_set_color_no_update (background, color);
