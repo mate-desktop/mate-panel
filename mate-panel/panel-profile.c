@@ -268,11 +268,11 @@ void
 panel_profile_set_background_gdk_rgba (PanelToplevel *toplevel,
 					GdkRGBA      *color)
 {
-	char        *color_str;
+	char *color_str;
 
 	color_str = gdk_rgba_to_string (color);
 
-	g_settings_set_string(toplevel->background_settings, "color", color_str);
+	g_settings_set_string (toplevel->background_settings, "color", color_str);
 
 	g_free (color_str);
 }
@@ -281,7 +281,7 @@ void
 panel_profile_get_background_gdk_rgba (PanelToplevel *toplevel,
 					GdkRGBA      *color)
 {
-	char        *color_str;
+	char *color_str;
 
 	color_str = g_settings_get_string (toplevel->background_settings, "color");
 	if (!color_str || !gdk_rgba_parse (color, color_str)) {
@@ -298,14 +298,14 @@ void
 panel_profile_set_background_gdk_color (PanelToplevel *toplevel,
 					GdkColor      *gdk_color)
 {
-	char        *color_str;
+	char *color_str;
 
 	color_str = g_strdup_printf ("#%02x%02x%02x",
 				     gdk_color->red   / 256,
 				     gdk_color->green / 256,
 				     gdk_color->blue  / 256);
 
-	g_settings_set_string(toplevel->background_settings, "color", color_str);
+	g_settings_set_string (toplevel->background_settings, "color", color_str);
 
 	g_free (color_str);
 }
@@ -314,7 +314,7 @@ void
 panel_profile_get_background_gdk_color (PanelToplevel *toplevel,
 					GdkColor      *gdk_color)
 {
-	char        *color_str;
+	char *color_str;
 
 	color_str = g_settings_get_string (toplevel->background_settings, "color");
 	if (!color_str || !gdk_color_parse (color_str, gdk_color)) {
@@ -333,9 +333,9 @@ panel_profile_set_background_opacity (PanelToplevel *toplevel,
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
-	panel_profile_get_background_color(toplevel,&color);
-	color.alpha=opacity/65535.0;
-	panel_profile_set_background_color(toplevel,&color);
+	panel_profile_get_background_color (toplevel, &color);
+	color.alpha = opacity / 65535.0;
+	panel_profile_set_background_color (toplevel, &color);
 #else
 	g_settings_set_int (toplevel->background_settings, "opacity", opacity);
 #endif
@@ -346,10 +346,10 @@ panel_profile_get_background_opacity (PanelToplevel *toplevel)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
-	panel_profile_get_background_color(toplevel,&color);
-	return (guint16)round(color.alpha*65535);
+	panel_profile_get_background_color (toplevel, &color);
+	return (guint16) round (color.alpha * 65535);
 #else
-	guint16      opacity;
+	guint16 opacity;
 	opacity = g_settings_get_int (toplevel->background_settings, "opacity");
 	return opacity;
 #endif
@@ -368,7 +368,7 @@ panel_profile_set_background_image (PanelToplevel *toplevel,
 char *
 panel_profile_get_background_image (PanelToplevel *toplevel)
 {
-	char        *retval;
+	char *retval;
 	retval = g_settings_get_string (toplevel->background_settings, "image");
 	return retval;
 }
@@ -386,7 +386,7 @@ panel_profile_set_toplevel_name (PanelToplevel *toplevel,
 char *
 panel_profile_get_toplevel_name (PanelToplevel *toplevel)
 {
-	char        *retval;
+	char *retval;
 	retval = g_settings_get_string (toplevel->settings, "name");
 	return retval;
 }
@@ -401,7 +401,7 @@ panel_profile_set_toplevel_orientation (PanelToplevel    *toplevel,
 PanelOrientation
 panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 {
-	PanelOrientation  orientation;
+	PanelOrientation orientation;
 	orientation = g_settings_get_enum (toplevel->settings, "orientation");
 	return orientation;
 }
@@ -592,7 +592,7 @@ get_background_image (PanelToplevel *toplevel,
 		      gboolean     *stretch,
 		      gboolean     *rotate)
 {
-	char       *image;
+	char *image;
 	image = g_settings_get_string (toplevel->background_settings, "image");
 	*fit = g_settings_get_boolean (toplevel->background_settings, "fit");
 	*stretch = g_settings_get_boolean (toplevel->background_settings, "stretch");
@@ -651,7 +651,7 @@ static void
 panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 					      ToplevelLocationChange *change)
 {
-	guint           commit_timeout;
+	guint commit_timeout;
 
 	g_settings_delay (toplevel->queued_settings);
 
@@ -898,9 +898,11 @@ panel_profile_background_change_notify (GSettings *settings,
 
 	if (toplevel == NULL || !PANEL_IS_TOPLEVEL (toplevel))
 		return;
+
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 	if (panel_widget == NULL)
 		return;
+
 	background = &panel_widget->background;
 
 	if (!strcmp (key, "type")) {
@@ -917,7 +919,7 @@ panel_profile_background_change_notify (GSettings *settings,
 			panel_background_set_color (background, &color);
 		g_free (str);
 #else
-		GdkColor    gdk_color;
+		GdkColor gdk_color;
 		gchar *str;
 		str = g_settings_get_string (settings, key);
 		if (gdk_color_parse (str, &gdk_color))
@@ -1577,7 +1579,7 @@ panel_profile_toplevel_id_list_notify (GSettings *settings,
 
 	toplevel_ids = mate_gsettings_strv_to_gslist (toplevel_ids_strv);
 	toplevel_ids = panel_g_slist_make_unique (toplevel_ids,
-						  (GCompareFunc)g_strcmp0,
+						  (GCompareFunc) g_strcmp0,
 						  FALSE);
 	g_strfreev (toplevel_ids_strv);
 
@@ -1621,7 +1623,7 @@ panel_profile_object_id_list_update (gchar **objects)
 
 	object_ids = mate_gsettings_strv_to_gslist (objects);
 	object_ids = panel_g_slist_make_unique (object_ids,
-						(GCompareFunc)g_strcmp0,
+						(GCompareFunc) g_strcmp0,
 						FALSE);
 
 	existing_applets = mate_panel_applet_list_applets ();
