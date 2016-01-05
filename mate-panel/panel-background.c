@@ -383,18 +383,15 @@ composite_image_onto_desktop (PanelBackground *background)
 #endif
 
 	cr = cairo_create (surface);
-#if GTK_CHECK_VERSION (3, 0, 0)
-	if(!gdk_window_check_composited_wm(background->window)){
-#endif
-	cairo_set_source_rgb (cr, 1, 1, 1);
-	cairo_paint (cr);
 
-	gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
-	cairo_rectangle (cr, 0, 0, width, height);
-	cairo_fill (cr);
-#if GTK_CHECK_VERSION (3, 0, 0)
+	if (background->has_alpha) {
+		cairo_set_source_rgb (cr, 1, 1, 1);
+		cairo_paint (cr);
+
+		gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
+		cairo_rectangle (cr, 0, 0, width, height);
+		cairo_fill (cr);
 	}
-#endif
 
 	gdk_cairo_set_source_pixbuf (cr, background->transformed_image, 0, 0);
 	pattern = cairo_get_source (cr);
