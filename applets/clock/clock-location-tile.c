@@ -319,8 +319,8 @@ clock_location_tile_fill (ClockLocationTile *this)
 
 	priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gtk_widget_set_valign (priv->current_marker, GTK_ALIGN_END);
-	gtk_widget_set_halign (priv->current_marker, GTK_ALIGN_CENTER);
+	gtk_widget_set_halign (priv->current_marker, GTK_ALIGN_END);
+	gtk_widget_set_valign (priv->current_marker, GTK_ALIGN_CENTER);
 #else
 	gtk_misc_set_alignment (GTK_MISC (priv->current_marker), 1.0, 0.5);
 #endif
