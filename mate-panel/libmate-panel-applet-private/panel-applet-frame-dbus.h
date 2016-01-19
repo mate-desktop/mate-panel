@@ -1,5 +1,5 @@
 /*
- * mate-panel-applet-frame-dbus.h: panel side container for applets
+ * panel-applet-frame-dbus.h: panel side container for applets
  *
  * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
  * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
@@ -23,10 +23,10 @@
  *	Mark McLoughlin <mark@skynet.ie>
  */
 
-#ifndef __MATE_PANEL_APPLET_FRAME_DBUS_H__
-#define __MATE_PANEL_APPLET_FRAME_DBUS_H__
+#ifndef __PANEL_APPLET_FRAME_DBUS_H__
+#define __PANEL_APPLET_FRAME_DBUS_H__
 
-#include <mate-panel-applet-frame.h>
+#include <panel-applet-frame.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,4 +62,4 @@ gboolean  mate_panel_applet_frame_dbus_load               (const gchar          
 }
 #endif
 
-#endif /* __MATE_PANEL_APPLET_FRAME_DBUS_H__ */
+#endif /* __PANEL_APPLET_FRAME_DBUS_H__ */

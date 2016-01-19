@@ -33,9 +33,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-static Atom net_wm_window_type        = None;
-static Atom net_wm_window_type_dock   = None;
-static Atom net_wm_window_type_normal = None;
 static Atom net_wm_strut              = None;
 static Atom net_wm_strut_partial      = None;
 

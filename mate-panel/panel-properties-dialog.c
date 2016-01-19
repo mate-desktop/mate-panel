@@ -341,8 +341,8 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	mate_color_button_get_rgba (color_button, &color);
-	panel_profile_set_background_gdk_rgba_color (dialog->toplevel, &color);
-	panel_properties_dialog_opacity_changed(dialog);
+	panel_profile_set_background_gdk_rgba (dialog->toplevel, &color);
+	panel_properties_dialog_opacity_changed (dialog);
 #else
 	mate_color_button_get_color (color_button, &color);
 	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
@@ -719,34 +719,30 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA new_color;
 	GdkRGBA old_color;
+
+	if (!gdk_rgba_parse (&new_color, str_color))
+		return;
+
+	mate_color_button_get_rgba (MATE_COLOR_BUTTON (dialog->color_button),
+				    &old_color);
+
+	if (!gdk_rgba_equal (&old_color, &new_color))
+		mate_color_button_set_rgba (MATE_COLOR_BUTTON (dialog->color_button),
+					    &new_color);
 #else
 	GdkColor new_color = { 0, };
 	GdkColor old_color;
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	if (!gdk_rgba_parse (&new_color, str_color))
-#else
 	if (!gdk_color_parse (str_color, &new_color))
-#endif
 		return;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	mate_color_button_get_rgba (MATE_COLOR_BUTTON (dialog->color_button),
-#else
 	mate_color_button_get_color (MATE_COLOR_BUTTON (dialog->color_button),
-#endif
 				    &old_color);
 
-	if (old_color.red   != new_color.red ||
-	    old_color.green != new_color.green ||
-	    old_color.blue  != new_color.blue)
-#if GTK_CHECK_VERSION (3, 0, 0)
-		mate_color_button_set_rgba (MATE_COLOR_BUTTON (dialog->color_button),
-#else
+	if (!gdk_color_equal (&old_color, &new_color))
 		mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
-#endif
 					    &new_color);
+#endif
 }
 
 #if !GTK_CHECK_VERSION(3, 0, 0)

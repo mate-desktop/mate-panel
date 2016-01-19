@@ -17,8 +17,8 @@
 #include <libpanel-util/panel-cleanup.h>
 #include <libmate-desktop/mate-dconf.h>
 
-#include <libmate-panel-applet-private/mate-panel-applet-container.h>
-#include <libmate-panel-applet-private/mate-panel-applets-manager-dbus.h>
+#include <libmate-panel-applet-private/panel-applet-container.h>
+#include <libmate-panel-applet-private/panel-applets-manager-dbus.h>
 
 #include "panel-modules.h"
 

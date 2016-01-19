@@ -41,30 +41,24 @@ struct _PanelSeparatorPrivate {
 
 G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
 
-static void
-panel_separator_paint (GtkWidget    *widget,
 #if GTK_CHECK_VERSION (3, 0, 0)
-		       cairo_t *cr)
-#else
-		       GdkRectangle *area)
-#endif
+static gboolean
+panel_separator_draw (GtkWidget *widget, cairo_t *cr)
 {
 	PanelSeparator  *separator;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	GtkStateFlags    state;
 	GtkBorder        padding;
 	int              width;
 	int              height;
-#else
-	GtkStyle        *style;
-	GdkWindow       *window;
-	GtkAllocation    allocation;
-#endif
 
 	separator = PANEL_SEPARATOR (widget);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
+	if (!gtk_widget_is_drawable(widget))
+		return FALSE;
+
+	GTK_WIDGET_CLASS(panel_separator_parent_class)->draw(widget, cr);
+
 	state = gtk_widget_get_state_flags (widget);
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
@@ -99,8 +93,27 @@ panel_separator_paint (GtkWidget    *widget,
 	cairo_restore (cr);
 
 	gtk_style_context_restore (context);
+
+	return FALSE;
 }
+
 #else
+
+static gboolean
+panel_separator_expose_event (GtkWidget *widget, GdkEventExpose *event)
+{
+	PanelSeparator  *separator;
+	GtkStyle        *style;
+	GdkWindow       *window;
+	GtkAllocation    allocation;
+
+	separator = PANEL_SEPARATOR (widget);
+
+	if (!gtk_widget_is_drawable(widget))
+		return FALSE;
+
+	GTK_WIDGET_CLASS(panel_separator_parent_class)->expose_event(widget, event);
+
 	style = gtk_widget_get_style (widget);
 	window = gtk_widget_get_window (widget);
 	gtk_widget_get_allocation (widget, &allocation);
@@ -109,7 +122,7 @@ panel_separator_paint (GtkWidget    *widget,
 		gtk_paint_vline (style,
 				 window,
 				 gtk_widget_get_state (widget),
-				 area, widget, "separator",
+				 &event->area, widget, "separator",
 				 style->xthickness,
 				 allocation.height - style->xthickness,
 				 (allocation.width - style->xthickness) / 2);
@@ -117,33 +130,15 @@ panel_separator_paint (GtkWidget    *widget,
 		gtk_paint_hline (style,
 				 window,
 				 gtk_widget_get_state (widget),
-				 area, widget, "separator",
+				 &event->area, widget, "separator",
 				 style->ythickness,
 				 allocation.width - style->ythickness,
 				 (allocation.height  - style->ythickness) / 2);
 	}
-}
-#endif
-
-#if GTK_CHECK_VERSION (3, 0, 0)
-static gboolean panel_separator_draw(GtkWidget* widget, cairo_t* cr)
-#else
-static gboolean panel_separator_expose_event(GtkWidget* widget, GdkEventExpose* event)
-#endif
-{
-	if (gtk_widget_is_drawable(widget))
-	{
-#if GTK_CHECK_VERSION (3, 0, 0)
-		GTK_WIDGET_CLASS(panel_separator_parent_class)->draw(widget, cr);
-		panel_separator_paint(widget, cr);
-#else
-		GTK_WIDGET_CLASS(panel_separator_parent_class)->expose_event(widget, event);
-		panel_separator_paint(widget, &event->area);
-#endif
-	}
 
 	return FALSE;
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void
@@ -350,7 +345,7 @@ void
 panel_separator_change_background (PanelSeparator *separator)
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
-	panel_background_apply_css(GTK_WIDGET(separator), &separator->priv->panel->background);
+	panel_background_apply_css(&separator->priv->panel->background, GTK_WIDGET(separator));
 #else
 	panel_background_change_background_on_widget(&separator->priv->panel->background, GTK_WIDGET(separator));
 #endif

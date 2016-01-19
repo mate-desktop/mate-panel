@@ -1,5 +1,5 @@
 /*
- * mate-panel-applet-info.c
+ * panel-applet-info.c
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
@@ -22,7 +22,7 @@
 
 #include <config.h>
 
-#include "mate-panel-applet-info.h"
+#include "panel-applet-info.h"
 
 struct _MatePanelAppletInfo {
 	gchar  *iid;

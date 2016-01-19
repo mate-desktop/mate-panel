@@ -1,5 +1,5 @@
 /*
- * mate-panel-applets-manager-dbus.c
+ * panel-applets-manager-dbus.c
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
@@ -26,11 +26,10 @@
 #include <gmodule.h>
 #include <string.h>
 
-#include <mate-panel-applets-manager.h>
+#include <panel-applets-manager.h>
 
-#include "mate-panel-applet-frame-dbus.h"
-
-#include "mate-panel-applets-manager-dbus.h"
+#include "panel-applet-frame-dbus.h"
+#include "panel-applets-manager-dbus.h"
 
 G_DEFINE_TYPE_WITH_CODE (MatePanelAppletsManagerDBus,
 			 mate_panel_applets_manager_dbus,

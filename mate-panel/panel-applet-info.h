@@ -1,5 +1,5 @@
 /*
- * mate-panel-applet-info.h
+ * panel-applet-info.h
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
@@ -20,8 +20,8 @@
  * MA  02110-1301, USA.
  */
 
-#ifndef __MATE_PANEL_APPLET_INFO_H__
-#define __MATE_PANEL_APPLET_INFO_H__
+#ifndef __PANEL_APPLET_INFO_H__
+#define __PANEL_APPLET_INFO_H__
 
 #include <glib.h>
 
@@ -48,4 +48,4 @@ const gchar * const *mate_panel_applet_info_get_old_ids                 (MatePan
 }
 #endif
 
-#endif /* __MATE_PANEL_APPLET_INFO_H__ */
+#endif /* __PANEL_APPLET_INFO_H__ */

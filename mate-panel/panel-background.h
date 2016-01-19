@@ -86,7 +86,6 @@ struct _PanelBackground {
 	guint                   loaded : 1;
 	guint                   transformed : 1;
 	guint                   composited : 1;
-	guint                   prepared : 1;
 };
 
 void  panel_background_init              (PanelBackground     *background,
@@ -158,12 +157,11 @@ const GdkPixmap     *panel_background_get_pixmap (PanelBackground *background);
 PanelBackgroundType
       panel_background_effective_type    (PanelBackground     *background);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 0, 0)
+void panel_background_apply_css(PanelBackground *background, GtkWidget *widget);
+#else
 void panel_background_change_background_on_widget (PanelBackground *background,
 						   GtkWidget       *widget);
-
-#else
-void panel_background_apply_css(GtkWidget* widget, PanelBackground *background);
 #endif
 
 #endif /* __PANEL_BACKGROUND_H__ */

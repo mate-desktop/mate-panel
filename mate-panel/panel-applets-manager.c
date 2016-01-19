@@ -1,5 +1,5 @@
 /*
- * mate-panel-applets-manager.c
+ * panel-applets-manager.c
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
@@ -28,7 +28,7 @@
 
 #include "panel-modules.h"
 
-#include "mate-panel-applets-manager.h"
+#include "panel-applets-manager.h"
 
 G_DEFINE_ABSTRACT_TYPE (MatePanelAppletsManager, mate_panel_applets_manager, G_TYPE_OBJECT)
 

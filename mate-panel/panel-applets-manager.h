@@ -1,5 +1,5 @@
 /*
- * mate-panel-applets-manager.h
+ * panel-applets-manager.h
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
@@ -20,13 +20,13 @@
  * 02110-1301, USA.
  */
 
-#ifndef __MATE_PANEL_APPLETS_MANAGER_H__
-#define __MATE_PANEL_APPLETS_MANAGER_H__
+#ifndef __PANEL_APPLETS_MANAGER_H__
+#define __PANEL_APPLETS_MANAGER_H__
 
 #include <glib-object.h>
 
-#include "mate-panel-applet-frame.h"
-#include "mate-panel-applet-info.h"
+#include "panel-applet-frame.h"
+#include "panel-applet-info.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -91,4 +91,4 @@ gboolean          mate_panel_applets_manager_load_applet                 (const 
 }
 #endif
 
-#endif /* __MATE_PANEL_APPLETS_MANAGER_H__ */
+#endif /* __PANEL_APPLETS_MANAGER_H__ */

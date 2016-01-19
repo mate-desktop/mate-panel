@@ -24,7 +24,7 @@
 #include "panel-util.h"
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
-#include "mate-panel-applet-frame.h"
+#include "panel-applet-frame.h"
 #include "panel-globals.h"
 #include "panel-profile.h"
 #include "panel-lockdown.h"
@@ -1630,65 +1630,54 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
 panel_widget_set_background_default_style (GtkWidget *widget)
-#else
-panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	GtkStateFlags state;
 	GdkRGBA bg_color;
 	cairo_pattern_t *bg_image;
-#else
-	GtkStyle     *style;
-	GtkStateType  state;
-#endif
 
 	if (gtk_widget_get_realized (widget)) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 		context = gtk_widget_get_style_context (widget);
 		state = gtk_widget_get_state_flags (widget);
 		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 		gtk_style_context_add_class(context,"mate-panel-menu-bar");
-		panel_background_apply_css (widget, &PANEL_WIDGET (widget)->background);
+		panel_background_apply_css (&PANEL_WIDGET (widget)->background, widget);
 
 		gtk_style_context_get_background_color (context, state, &bg_color);
 		gtk_style_context_get (context, state, "background-image", &bg_image, NULL);
-#else
-		style = gtk_widget_get_style (widget);
-		state = gtk_widget_get_state (widget);
-#endif
 
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
-#if GTK_CHECK_VERSION (3, 0, 0)
 			&bg_color,
 			bg_image);
 
-			if (bg_image)
-				cairo_pattern_destroy (bg_image);
-#else
-			&style->bg [state],
-			style->bg_pixmap [state]);
-#endif
+		if (bg_image)
+			cairo_pattern_destroy (bg_image);
 	}
 }
 
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
-panel_widget_style_updated (GtkWidget *widget)
-#else
-panel_widget_state_changed (GtkWidget    *widget,
-			    GtkStateType  previous_state)
-#endif
+panel_widget_state_flags_changed (GtkWidget *widget, GtkStateFlags previous_state)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
+	panel_widget_set_background_default_style (widget);
+}
+
+static void
+panel_widget_style_updated (GtkWidget *widget)
+{
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
 	panel_widget_set_background_default_style (widget);
+}
+
 #else
+
+static void
+panel_widget_state_changed (GtkWidget    *widget,
+			    GtkStateType  previous_state)
+{
 	GtkStyle     *style;
 	GtkStateType  state;
 
@@ -1701,14 +1690,23 @@ panel_widget_state_changed (GtkWidget    *widget,
 			&style->bg [state],
 			style->bg_pixmap [state]);
 	}
-#endif
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
-panel_widget_state_flags_changed (GtkWidget *widget, GtkStateFlags previous_state)
+panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
 {
-	panel_widget_set_background_default_style (widget);
+	GtkStyle     *style;
+	GtkStateType  state;
+
+	if (gtk_widget_get_realized (widget)) {
+		style = gtk_widget_get_style (widget);
+		state = gtk_widget_get_state (widget);
+
+		panel_background_set_default_style (
+			&PANEL_WIDGET (widget)->background,
+			&style->bg [state],
+			style->bg_pixmap [state]);
+	}
 }
 #endif
 

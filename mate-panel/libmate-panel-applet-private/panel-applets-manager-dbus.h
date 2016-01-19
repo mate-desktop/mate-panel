@@ -1,5 +1,5 @@
 /*
- * mate-panel-applets-manager-dbus.h
+ * panel-applets-manager-dbus.h
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
@@ -20,10 +20,10 @@
  * 02110-1301, USA.
  */
 
-#ifndef __MATE_PANEL_APPLETS_MANAGER_DBUS_H__
-#define __MATE_PANEL_APPLETS_MANAGER_DBUS_H__
+#ifndef __PANEL_APPLETS_MANAGER_DBUS_H__
+#define __PANEL_APPLETS_MANAGER_DBUS_H__
 
-#include <mate-panel-applets-manager.h>
+#include <panel-applets-manager.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,4 +57,4 @@ GType mate_panel_applets_manager_dbus_get_type (void);
 }
 #endif
 
-#endif /* __MATE_PANEL_APPLETS_MANAGER_DBUS_H__ */
+#endif /* __PANEL_APPLETS_MANAGER_DBUS_H__ */

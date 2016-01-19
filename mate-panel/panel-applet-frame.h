@@ -1,5 +1,5 @@
 /*
- * mate-panel-applet-frame.h: panel side container for applets
+ * panel-applet-frame.h: panel side container for applets
  *
  * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
  *
@@ -21,8 +21,8 @@
  *	Mark McLoughlin <mark@skynet.ie>
  */
 
-#ifndef __MATE_PANEL_APPLET_FRAME_H__
-#define __MATE_PANEL_APPLET_FRAME_H__
+#ifndef __PANEL_APPLET_FRAME_H__
+#define __PANEL_APPLET_FRAME_H__
 
 #include <gtk/gtk.h>
 
@@ -143,5 +143,5 @@ void  _mate_panel_applet_frame_applet_lock           (MatePanelAppletFrame *fram
 }
 #endif
 
-#endif /* __MATE_PANEL_APPLET_FRAME_H__ */
+#endif /* __PANEL_APPLET_FRAME_H__ */
 
