@@ -76,7 +76,12 @@ display_popup_window (GdkScreen *screen)
 
 	image = gtk_image_new_from_icon_name (PANEL_ICON_FORCE_QUIT,
 					      GTK_ICON_SIZE_DIALOG);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_widget_set_halign (image, GTK_ALIGN_CENTER);
+	gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
+#else
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
+#endif
 	gtk_box_pack_start (GTK_BOX (vbox), image, TRUE, TRUE, 4);
 	gtk_widget_show (image);
 

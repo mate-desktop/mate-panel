@@ -5000,6 +5000,15 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	 * happens with "alternative" window managers such as Sawfish or XFWM4.
 	 */
 	g_signal_connect(GTK_WIDGET(toplevel), "delete-event", G_CALLBACK(gtk_true), NULL);
+	
+#if GTK_CHECK_VERSION (3, 0, 0) 	
+	/*ensure the panel BG can always be themed*/
+	/*Without this gtk3.19/20 cannot set the BG color and resetting the bg to system is not immediately applied*/
+	GtkStyleContext *context;
+	context = gtk_widget_get_style_context (toplevel);
+	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
+	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+#endif	
 }
 
 PanelWidget *
