@@ -608,7 +608,6 @@ static void display_all_workspaces_toggled(GtkToggleButton* button, TasklistData
 
 static void setup_sensitivity(TasklistData* tasklist, GtkBuilder* builder, const char* wid1, const char* wid2, const char* wid3, const char* key)
 {
-	MatePanelApplet* applet = MATE_PANEL_APPLET(tasklist->applet);
 	GtkWidget* w;
 
 	if (g_settings_is_writable(tasklist->settings, key))
