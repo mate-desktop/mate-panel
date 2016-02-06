@@ -371,6 +371,10 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
                             G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_type_class_add_private (class, sizeof (NaTrayAppletPrivate));
+
+#if GTK_CHECK_VERSION (3, 19, 0)
+  gtk_widget_class_set_css_name (widget_class, "na-tray-applet");
+#endif
 }
 
 static void
