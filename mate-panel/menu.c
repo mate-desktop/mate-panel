@@ -691,7 +691,8 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       GdkDeviceManager *device_manager;
 #endif
       GdkWindow *window = gtk_widget_get_window (xgrab_shell);
-      GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
+      GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+                                                      GDK_ARROW);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
       display = gdk_window_get_display (window);
