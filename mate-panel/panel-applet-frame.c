@@ -518,8 +518,9 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 			device_manager = gdk_display_get_device_manager (display);
 			pointer = gdk_device_manager_get_client_pointer (device_manager);
 			gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-#endif
+#else
 			gdk_pointer_ungrab (GDK_CURRENT_TIME);
+#endif
 
 			MATE_PANEL_APPLET_FRAME_GET_CLASS (frame)->popup_menu (frame,
 									  event->button,
