@@ -236,7 +236,7 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 			//FIXME: this is not rendered at button->priv->size
 			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
 			button->priv->pixbuf = gtk_icon_theme_load_icon (icon_theme,
-							       GTK_STOCK_MISSING_IMAGE,
+							       "image-missing",
 							       GTK_ICON_SIZE_BUTTON,
 							       GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
 							       NULL);
