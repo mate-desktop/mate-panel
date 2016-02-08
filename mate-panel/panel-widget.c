@@ -2011,9 +2011,13 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		GdkDisplay *display;
 		GdkDevice *pointer;
 		GdkDeviceManager *device_manager;
+#endif
 
+		fleur_cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+		                                           GDK_FLEUR);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
 		display = gdk_window_get_display (window);
-		fleur_cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
 		device_manager = gdk_display_get_device_manager (display);
 		pointer = gdk_device_manager_get_client_pointer (device_manager);
 		status = gdk_device_grab (pointer, window,
@@ -2023,8 +2027,6 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 
 		g_object_unref (fleur_cursor);
 #else
-		fleur_cursor = gdk_cursor_new (GDK_FLEUR);
-
 		status = gdk_pointer_grab (window, FALSE,
 					   APPLET_EVENT_MASK, NULL,
 					   fleur_cursor, time_);

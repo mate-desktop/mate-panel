@@ -438,8 +438,8 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	GdkWindow     *window;
 	GdkCursorType  cursor_type;
 	GdkCursor     *cursor;
-	GdkDisplay *display;
 #if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDisplay *display;
 	GdkDevice *pointer;
 	GdkDevice *keyboard;
 	GdkDeviceManager *device_manager;
@@ -496,9 +496,11 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
 
-	display = gdk_window_get_display (window);
-	cursor = gdk_cursor_new_for_display (display, cursor_type);
+
+	cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+	                                     cursor_type);
 #if GTK_CHECK_VERSION (3, 0, 0)
+	display = gdk_window_get_display (window);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
 	keyboard = gdk_device_get_associated_device (pointer);
