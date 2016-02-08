@@ -122,7 +122,7 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 #ifdef WNCK_CHECK_VERSION
 #if WNCK_CHECK_VERSION (3, 4, 6)
-	wnck_tasklist_set_orientation (tasklist->tasklist, new_orient);
+	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), new_orient);
 #endif
 #endif
 	tasklist_update(tasklist);
