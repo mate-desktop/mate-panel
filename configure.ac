@@ -254,22 +254,6 @@ dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/mate-panel/applets")
 
 
-dnl ****************************************************************************
-dnl * Ubuntu hacks
-dnl ****************************************************************************
-AC_ARG_ENABLE(ubuntu,
-	AS_HELP_STRING([--enable-ubuntu], [Enable Ubuntu Counter Hacks]), enable_ubuntu=yes, enable_ubuntu=no)
-
-if test "x$enable_ubuntu" = "xyes" ; then
-	# we define a UBUNTU on code
-	PANEL_CFLAGS="$PANEL_CFLAGS -DUBUNTU"
-
-	ENABLE_UBUNTU=yes
-else
-	ENABLE_UBUNTU=no
-fi
-
-
 dnl  Language Support
 
 GETTEXT_PACKAGE=mate-panel
@@ -386,7 +370,6 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
         Gtk+ version:                  ${GTK_API_VERSION}
-        Ubuntu Counter Hack:           ${ENABLE_UBUNTU}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}
