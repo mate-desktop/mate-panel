@@ -5005,7 +5005,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	/*ensure the panel BG can always be themed*/
 	/*Without this gtk3.19/20 cannot set the BG color and resetting the bg to system is not immediately applied*/
 	GtkStyleContext *context;
-	context = gtk_widget_get_style_context (toplevel);
+	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
 #endif	
