@@ -208,7 +208,7 @@ static void update_icon(ShowDesktopData* sdd)
 			error = NULL;
 		}
 
-		gtk_image_set_from_stock(GTK_IMAGE (sdd->image), GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_SMALL_TOOLBAR);
+		gtk_image_set_from_icon_name (GTK_IMAGE (sdd->image), "image-missing", GTK_ICON_SIZE_SMALL_TOOLBAR);
 		return;
 	}
 
