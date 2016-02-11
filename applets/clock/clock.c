@@ -140,7 +140,9 @@ struct _ClockData {
 
 	GtkListStore *cities_store;
         GtkWidget *cities_section;
+#if !GTK_CHECK_VERSION (3, 0, 0)
         GtkWidget *map_section;
+#endif
         GtkWidget *map_widget;
 
         /* Window to set the time */
@@ -240,13 +242,6 @@ clock_box_init (ClockBox *box)
 static void
 clock_box_class_init (ClockBoxClass *klass)
 {
-#if GTK_CHECK_VERSION (3, 19, 0)
-	GtkWidgetClass *widget_class;
-
-	widget_class = GTK_WIDGET_CLASS (klass);
-
-	gtk_widget_class_set_css_name (widget_class, "clock-box");
-#endif
 }
 
 /* Clock */
@@ -1224,7 +1219,11 @@ create_map_section (ClockData *cd)
         ClockMap *map;
 
         if (cd->map_widget) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+                gtk_widget_destroy (cd->map_widget);
+#else
                 gtk_widget_destroy (GTK_WIDGET (cd->map_section));
+#endif
                 cd->map_widget = NULL;
         }
 
@@ -1232,9 +1231,20 @@ create_map_section (ClockData *cd)
         g_signal_connect (map, "need-locations",
                           G_CALLBACK (map_need_locations_cb), cd);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
         cd->map_section = gtk_alignment_new (0, 0, 1, 1);
+#endif
         cd->map_widget = GTK_WIDGET (map);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_widget_set_margin_top (cd->map_widget, 1);
+        gtk_widget_set_margin_bottom (cd->map_widget, 1);
+        gtk_widget_set_margin_start (cd->map_widget, 1);
+        gtk_widget_set_margin_end (cd->map_widget, 1);
+
+        gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_widget, TRUE, TRUE, 0);
+        gtk_widget_show (cd->map_widget);
+#else
         gtk_container_add (GTK_CONTAINER (cd->map_section), cd->map_widget);
 
         gtk_alignment_set_padding (GTK_ALIGNMENT (cd->map_section), 1, 1, 1, 1);
@@ -1242,6 +1252,7 @@ create_map_section (ClockData *cd)
         gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_section, FALSE, FALSE, 0);
         gtk_widget_show (cd->map_widget);
         gtk_widget_show (cd->map_section);
+#endif
 }
 
 static void
@@ -1252,7 +1263,9 @@ update_calendar_popup (ClockData *cd)
                         gtk_widget_destroy (cd->calendar_popup);
                         cd->calendar_popup = NULL;
                         cd->cities_section = NULL;
+#if !GTK_CHECK_VERSION (3, 0, 0)
                         cd->map_section = NULL;
+#endif
                         cd->map_widget = NULL;
 			cd->clock_vbox = NULL;
 

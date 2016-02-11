@@ -264,10 +264,14 @@ static void
 clock_location_tile_fill (ClockLocationTile *this)
 {
         ClockLocationTilePrivate *priv = PRIVATE (this);
-	GtkWidget *align;
+#if !GTK_CHECK_VERSION (3, 0, 0)
+        GtkWidget *align;
+#endif
         GtkWidget *strut;
         GtkWidget *box;
+#if !GTK_CHECK_VERSION (3, 0, 0)
         GtkWidget *alignment;
+#endif
         GtkWidget *tile;
         GtkWidget *head_section;
 
@@ -281,13 +285,23 @@ clock_location_tile_fill (ClockLocationTile *this)
         g_signal_connect (priv->box, "leave-notify-event",
                           G_CALLBACK (enter_or_leave_tile), this);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
         alignment = gtk_alignment_new (0, 0, 1, 0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 3, 3, 3, 0);
+#endif
 
         tile = gtk_hbox_new (FALSE, 6);
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_widget_set_margin_top (tile, 3);
+        gtk_widget_set_margin_bottom (tile, 3);
+        gtk_widget_set_margin_start (tile, 3);
+#endif
         head_section = gtk_vbox_new (FALSE, 0);
 
         priv->city_label = gtk_label_new (NULL);
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_widget_set_margin_end (priv->city_label, 3);
+#endif
 #if GTK_CHECK_VERSION (3, 16, 0)
         gtk_label_set_xalign (GTK_LABEL (priv->city_label), 0.0);
         gtk_label_set_yalign (GTK_LABEL (priv->city_label), 0.0);
@@ -295,12 +309,19 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_misc_set_alignment (GTK_MISC (priv->city_label), 0, 0);
 #endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_box_pack_start (GTK_BOX (head_section), priv->city_label, FALSE, FALSE, 0);
+#else
         align = gtk_alignment_new (0, 0, 0, 0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 0, 3);
         gtk_container_add (GTK_CONTAINER (align), priv->city_label);
         gtk_box_pack_start (GTK_BOX (head_section), align, FALSE, FALSE, 0);
+#endif
 
         priv->time_label = gtk_label_new (NULL);
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_widget_set_margin_end (priv->time_label, 3);
+#endif
 #if GTK_CHECK_VERSION (3, 16, 0)
         gtk_label_set_xalign (GTK_LABEL (priv->time_label), 0.0);
         gtk_label_set_yalign (GTK_LABEL (priv->time_label), 0.0);
@@ -309,12 +330,20 @@ clock_location_tile_fill (ClockLocationTile *this)
 #endif
 
         priv->weather_icon = gtk_image_new ();
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_widget_set_valign (priv->weather_icon, GTK_ALIGN_START);
+#else
         align = gtk_alignment_new (0, 0, 0, 0);
         gtk_container_add (GTK_CONTAINER (align), priv->weather_icon);
+#endif
 
         box = gtk_hbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (head_section), box, FALSE, FALSE, 0);
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_box_pack_start (GTK_BOX (box), priv->weather_icon, FALSE, FALSE, 0);
+#else
         gtk_box_pack_start (GTK_BOX (box), align, FALSE, FALSE, 0);
+#endif
         gtk_box_pack_start (GTK_BOX (box), priv->time_label, FALSE, FALSE, 0);
 
         priv->current_button = gtk_button_new ();
@@ -376,8 +405,12 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (tile), priv->clock_face, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (tile), head_section, TRUE, TRUE, 0);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_container_add (GTK_CONTAINER (priv->box), tile);
+#else
         gtk_container_add (GTK_CONTAINER (alignment), tile);
         gtk_container_add (GTK_CONTAINER (priv->box), alignment);
+#endif
         gtk_container_add (GTK_CONTAINER (this), priv->box);
 }
 
@@ -722,7 +755,11 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
 
         if (pixbuf) {
                 gtk_image_set_from_pixbuf (GTK_IMAGE (priv->weather_icon), pixbuf);
+#if GTK_CHECK_VERSION (3, 0, 0)
+                gtk_widget_set_margin_end (priv->weather_icon, 6);
+#else
                 gtk_alignment_set_padding (GTK_ALIGNMENT (gtk_widget_get_parent (priv->weather_icon)), 0, 0, 0, 6);
+#endif
         }
 }
 

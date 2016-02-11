@@ -156,7 +156,9 @@ create_hig_frame (CalendarWindow *calwin,
                   GCallback   callback)
 {
         GtkWidget *vbox;
+#if !GTK_CHECK_VERSION (3, 0, 0)
         GtkWidget *alignment;
+#endif
         GtkWidget *label;
         GtkWidget *hbox;
         GtkWidget *button;
@@ -195,11 +197,17 @@ create_hig_frame (CalendarWindow *calwin,
                 gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
                 gtk_container_add (GTK_CONTAINER (button), label);
 
-		alignment = gtk_alignment_new (1, 0, 0, 0);
+#if GTK_CHECK_VERSION (3, 0, 0)
+                gtk_widget_show_all (button);
+
+                gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+#else
+                alignment = gtk_alignment_new (1, 0, 0, 0);
                 gtk_container_add (GTK_CONTAINER (alignment), button);
-        	gtk_widget_show_all (alignment);
+                gtk_widget_show_all (alignment);
 
                 gtk_container_add (GTK_CONTAINER (hbox), alignment);
+#endif
 
                 g_signal_connect_swapped (button, "clicked", callback, calwin);
         }
