@@ -282,10 +282,13 @@ na_tray_applet_change_orient (MatePanelApplet       *panel_applet,
                            get_gtk_orientation_from_applet_orient (orient));
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 19, 0)
+/* deprecated with gtk+-3.19.0 */
+#else
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
   GtkCssProvider *provider;
 
   provider = gtk_css_provider_new ();
@@ -299,7 +302,12 @@ force_no_focus_padding (GtkWidget *widget)
                                   GTK_STYLE_PROVIDER (provider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   g_object_unref (provider);
+}
+#endif
 #else
+static inline void
+force_no_focus_padding (GtkWidget *widget)
+{
   gtk_rc_parse_string ("\n"
 			"   style \"na-tray-style\"\n"
 			"   {\n"
@@ -309,8 +317,8 @@ force_no_focus_padding (GtkWidget *widget)
 			"\n"
 			"    class \"NaTrayApplet\" style \"na-tray-style\"\n"
 			"\n");
-#endif
 }
+#endif
 
 static void
 na_tray_applet_class_init (NaTrayAppletClass *class)
@@ -378,8 +386,11 @@ na_tray_applet_init (NaTrayApplet *applet)
   mate_panel_applet_set_background_widget (MATE_PANEL_APPLET (applet),
                                       GTK_WIDGET (applet));
 #endif
-
+#if GTK_CHECK_VERSION (3, 19, 0)
+/* deprecated with gtk+-3.19.0 */
+#else
   force_no_focus_padding (GTK_WIDGET (applet));
+#endif
 }
 
 static gboolean
