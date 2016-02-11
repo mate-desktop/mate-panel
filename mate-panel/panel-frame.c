@@ -236,7 +236,8 @@ panel_frame_draw (GtkWidget      *widget,
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext  *context;
 	GtkStateFlags     state;
-	GdkRGBA           bg, dark, light;
+	GdkRGBA          *bg;
+	GdkRGBA           dark, light;
 	GtkSymbolicColor *c1, *c2;
 	GtkBorder         padding;
 #else
@@ -260,7 +261,9 @@ panel_frame_draw (GtkWidget      *widget,
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
 
-	gtk_style_context_get_background_color (context, state, &bg);
+	gtk_style_context_get (context, state,
+	                       "background-color", &bg,
+	                       NULL);
 
 	c1 = gtk_symbolic_color_new_literal (&bg);
 
@@ -344,7 +347,7 @@ panel_frame_draw (GtkWidget      *widget,
 		cairo_stroke (cr);
 
 		if (padding.top > 1) {
-			gdk_cairo_set_source_rgba (cr, &bg);
+			gdk_cairo_set_source_rgba (cr, bg);
 			cairo_move_to (cr, x + .5, y + 1 + .5);
 			cairo_line_to (cr, x + width - 1 - .5, y + 1 + .5);
 			cairo_stroke (cr);
@@ -358,7 +361,7 @@ panel_frame_draw (GtkWidget      *widget,
 		cairo_stroke (cr);
 
 		if (padding.left > 1) {
-			gdk_cairo_set_source_rgba (cr, &bg);
+			gdk_cairo_set_source_rgba (cr, bg);
 			cairo_move_to (cr, x + 1 + .5, y + .5);
 			cairo_line_to (cr, x + 1 + .5, y + height - 1 - .5);
 			cairo_stroke (cr);
