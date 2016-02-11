@@ -223,6 +223,9 @@ na_tray_applet_style_updated (GtkWidget *widget)
 
   context = gtk_widget_get_style_context (widget);
 
+  gtk_style_context_save (context);
+  gtk_style_context_set_state (context, GTK_STATE_FLAG_NORMAL);
+
   gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
 
   if (!gtk_style_context_lookup_color (context, "error_color", &error))
@@ -231,6 +234,8 @@ na_tray_applet_style_updated (GtkWidget *widget)
     warning = fg;
   if (!gtk_style_context_lookup_color (context, "success_color", &success))
     success = fg;
+
+  gtk_style_context_restore (context);
 
   na_tray_set_colors (applet->priv->tray, &fg, &error, &warning, &success);
 
