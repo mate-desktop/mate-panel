@@ -113,6 +113,39 @@ na_tray_child_style_set (GtkWidget *widget,
    */
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+na_tray_child_get_preferred_width (GtkWidget *widget,
+                                   gint      *minimal_width,
+                                  gint      *natural_width)
+{
+  GTK_WIDGET_CLASS (na_tray_child_parent_class)->get_preferred_width (widget,
+                                                                      minimal_width,
+                                                                      natural_width);
+
+  if (*minimal_width < 16)
+    *minimal_width = 16;
+
+  if (*natural_width < 16)
+    *natural_width = 16;
+}
+
+static void
+na_tray_child_get_preferred_height (GtkWidget *widget,
+                                    gint      *minimal_height,
+                                    gint      *natural_height)
+{
+  GTK_WIDGET_CLASS (na_tray_child_parent_class)->get_preferred_height (widget,
+                                                                       minimal_height,
+                                                                       natural_height);
+
+  if (*minimal_height < 16)
+    *minimal_height = 16;
+
+  if (*natural_height < 16)
+    *natural_height = 16;
+}
+#else
 #if 0
 /* This is adapted from code that was commented out in na-tray-manager.c; the
  * code in na-tray-manager.c wouldn't have worked reliably, this will. So maybe
@@ -140,6 +173,7 @@ na_tray_child_size_request (GtkWidget      *widget,
       request->height = nh;
     }
 }
+#endif
 #endif
 
 static void
@@ -272,6 +306,10 @@ na_tray_child_class_init (NaTrayChildClass *klass)
   gobject_class->finalize = na_tray_child_finalize;
   widget_class->style_set = na_tray_child_style_set;
   widget_class->realize = na_tray_child_realize;
+#if GTK_CHECK_VERSION (3, 0, 0)
+  widget_class->get_preferred_width = na_tray_child_get_preferred_width;
+  widget_class->get_preferred_height = na_tray_child_get_preferred_height;
+#endif
   widget_class->size_allocate = na_tray_child_size_allocate;
 #if GTK_CHECK_VERSION (3, 0, 0)
   widget_class->draw = na_tray_child_draw;
