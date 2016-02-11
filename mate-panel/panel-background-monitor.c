@@ -80,7 +80,11 @@ struct _PanelBackgroundMonitor {
 
 G_DEFINE_TYPE (PanelBackgroundMonitor, panel_background_monitor, G_TYPE_OBJECT)
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static PanelBackgroundMonitor *global_background_monitor = NULL;
+#else
 static PanelBackgroundMonitor **global_background_monitors = NULL;
+#endif
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
@@ -198,6 +202,18 @@ panel_background_monitor_new (GdkScreen *screen)
 PanelBackgroundMonitor *
 panel_background_monitor_get_for_screen (GdkScreen *screen)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (!global_background_monitor) {
+		global_background_monitor = panel_background_monitor_new (screen);
+
+		g_object_add_weak_pointer (G_OBJECT (global_background_monitor),
+		                           (void **) &global_background_monitor);
+
+		return global_background_monitor;
+	}
+
+	return g_object_ref (global_background_monitor);
+#else
 	int screen_number;
 
 	screen_number = gdk_screen_get_number (screen);
@@ -222,6 +238,7 @@ panel_background_monitor_get_for_screen (GdkScreen *screen)
 	}
 
 	return g_object_ref (global_background_monitors [screen_number]);
+#endif
 }
 
 static void

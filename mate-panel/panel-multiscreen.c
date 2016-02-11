@@ -417,7 +417,11 @@ panel_multiscreen_init (void)
 		return;
 
 	display = gdk_display_get_default ();
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screens = 1;
+#else
 	screens = gdk_display_get_n_screens (display);
+#endif
 
 	panel_multiscreen_init_randr (display);
 
@@ -449,10 +453,15 @@ panel_multiscreen_init (void)
 void
 panel_multiscreen_reinit (void)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GdkScreen *screen;
+	GList     *toplevels, *l;
+#else
 	GdkDisplay *display;
 	GList      *toplevels, *l;
 	int         new_screens;
 	int         i;
+#endif
 
 	if (monitors)
 		g_free (monitors);
@@ -465,6 +474,10 @@ panel_multiscreen_reinit (void)
 		g_free (geometries);
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screen = gdk_screen_get_default ();
+	g_signal_handlers_disconnect_by_func (screen, panel_multiscreen_queue_reinit, NULL);
+#else
 	display = gdk_display_get_default ();
 	/* Don't use the screens variable since in the future, we might
 	 * want to call this function when a screen appears/disappears. */
@@ -478,6 +491,7 @@ panel_multiscreen_reinit (void)
 						      panel_multiscreen_queue_reinit,
 						      NULL);
 	}
+#endif
 
 	initialized = FALSE;
 	panel_multiscreen_init ();
