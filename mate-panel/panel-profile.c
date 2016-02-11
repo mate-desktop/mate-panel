@@ -1151,7 +1151,11 @@ get_toplevel_screen (char *toplevel_path)
 
 	display = gdk_display_get_default ();
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (screen_n < 0) {
+#else
 	if (screen_n < 0 || screen_n >= gdk_display_get_n_screens (display)) {
+#endif
 #if 0
 		g_warning (_("Panel '%s' is set to be displayed on screen %d which "
 			     "is not currently available. Not loading this panel."),
@@ -1691,16 +1695,27 @@ panel_profile_ensure_toplevel_per_screen ()
 	GSList     *empty_screens = NULL;
 	GSList     *l;
 	GdkDisplay *display;
+	GdkScreen  *screen;
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	int         n_screens, i;
+#endif
 
 	toplevels = panel_toplevel_list_toplevels ();
 
 	display = gdk_display_get_default ();
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screen = gdk_display_get_default_screen (display);
+
+	for (l = toplevels; l; l = l->next)
+		if (gtk_window_get_screen (l->data) == screen)
+			break;
+
+	if (!l)
+		empty_screens = g_slist_prepend (empty_screens, screen);
+#else
 	n_screens = gdk_display_get_n_screens (display);
 	for (i = 0; i < n_screens; i++) {
-		GdkScreen *screen;
-
 		screen = gdk_display_get_screen (display, i);
 
 		for (l = toplevels; l; l = l->next)
@@ -1710,6 +1725,7 @@ panel_profile_ensure_toplevel_per_screen ()
 		if (!l)
 			empty_screens = g_slist_prepend (empty_screens, screen);
 	}
+#endif
 
 	for (l = empty_screens; l; l = l->next)
 		panel_layout_apply_default_from_gkeyfile (l->data);
