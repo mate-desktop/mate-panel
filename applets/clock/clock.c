@@ -1351,11 +1351,12 @@ clock_update_text_gravity (GtkWidget *label)
 	pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 19, 0)
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
         static gboolean first_time = TRUE;
-#if GTK_CHECK_VERSION (3, 0, 0)
         GtkCssProvider  *provider;
 
         if (first_time) {
@@ -1369,7 +1370,17 @@ force_no_focus_padding (GtkWidget *widget)
                                         GTK_STYLE_PROVIDER (provider),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
                 g_object_unref (provider);
+                first_time = FALSE;
+        }
+
+        gtk_widget_set_name (widget, "clock-applet-button");
+}
+#endif
 #else
+static inline void
+force_no_focus_padding (GtkWidget *widget)
+{
+        static gboolean first_time = TRUE;
         if (first_time) {
                 gtk_rc_parse_string ("\n"
                                      "   style \"clock-applet-button-style\"\n"
@@ -1380,12 +1391,12 @@ force_no_focus_padding (GtkWidget *widget)
                                      "\n"
                                      "    widget \"*.clock-applet-button\" style \"clock-applet-button-style\"\n"
                                      "\n");
-#endif
                 first_time = FALSE;
         }
 
         gtk_widget_set_name (widget, "clock-applet-button");
 }
+#endif
 
 static GtkWidget *
 create_main_clock_button (void)
@@ -1395,7 +1406,11 @@ create_main_clock_button (void)
         button = gtk_toggle_button_new ();
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
+#if GTK_CHECK_VERSION (3, 19, 0)
+        gtk_widget_set_name (button, "clock-applet-button");
+#else
         force_no_focus_padding (button);
+#endif
 
         return button;
 }
