@@ -232,7 +232,6 @@ panel_frame_draw (GtkWidget      *widget,
 		  PanelFrameEdge  edges)
 {
 	PanelFrame       *frame = (PanelFrame *) widget;
-	GdkWindow        *window;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext  *context;
 	GtkStateFlags     state;
@@ -240,6 +239,7 @@ panel_frame_draw (GtkWidget      *widget,
 	GdkRGBA           dark, light;
 	GtkBorder         padding;
 #else
+	GdkWindow        *window;
 	GtkStyle         *style;
 	GtkStateType      state;
 	GtkAllocation     allocation;
@@ -252,7 +252,6 @@ panel_frame_draw (GtkWidget      *widget,
 	if (edges == PANEL_EDGE_NONE)
 		return;
 
-	window = gtk_widget_get_window (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	context = gtk_widget_get_style_context (widget);
 	state = gtk_widget_get_state_flags (widget);
@@ -269,6 +268,7 @@ panel_frame_draw (GtkWidget      *widget,
 
 	gtk_style_context_get_padding (context, state, &padding);
 #else
+	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
 
