@@ -21,12 +21,20 @@ extern "C" {
 
 typedef struct
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+        GtkBin parent;
+#else
         GtkAlignment parent;
+#endif
 } ClockLocationTile;
 
 typedef struct
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+        GtkBinClass parent_class;
+#else
         GtkAlignmentClass parent_class;
+#endif
 
 	void (* tile_pressed) (ClockLocationTile *tile);
         int  (* need_clock_format) (ClockLocationTile *tile);
