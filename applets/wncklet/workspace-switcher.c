@@ -198,9 +198,17 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, PagerData* pager)
+{
+        GtkStyleContext *new_context;
+        gtk_widget_reset_style (GTK_WIDGET (pager->pager));
+        new_context = gtk_style_context_new ();
+        gtk_style_context_set_path (new_context, gtk_widget_get_path (GTK_WIDGET (pager->pager)));
+        g_object_unref (new_context);
+
+        wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
+                type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
 #else
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, PagerData* pager)
-#endif
 {
         /* taken from the TrashApplet */
         GtkRcStyle *rc_style;
@@ -212,10 +220,6 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
         gtk_widget_modify_style (GTK_WIDGET (pager->pager), rc_style);
         g_object_unref (rc_style);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
-		type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
-#else
 	switch (type)
 	{
                 case PANEL_COLOR_BACKGROUND:
