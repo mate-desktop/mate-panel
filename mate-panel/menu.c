@@ -681,7 +681,11 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 #endif
     }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  if (xgrab_shell)
+#else
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
+#endif
     {
 #if GTK_CHECK_VERSION (3, 0, 0)
       gboolean status;
@@ -697,8 +701,8 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 #if GTK_CHECK_VERSION (3, 0, 0)
       display = gdk_window_get_display (window);
       device_manager = gdk_display_get_device_manager (display);
-      keyboard = gdk_device_get_associated_device (pointer);
       pointer = gdk_device_manager_get_client_pointer (device_manager);
+      keyboard = gdk_device_get_associated_device (pointer);
 
       /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
          or GDK_OWNERSHIP_APPLICATION Idem for the
@@ -732,7 +736,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 #endif
 /* FIXME fix for GTK3 */
 #if !GTK_CHECK_VERSION (3, 0, 0)
-	      GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+          GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
 #endif
 	    }
 	  else
