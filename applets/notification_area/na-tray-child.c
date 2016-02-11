@@ -235,7 +235,9 @@ na_tray_child_expose_event (GtkWidget      *widget,
 #endif
 {
   NaTrayChild *child = NA_TRAY_CHILD (widget);
+#if !GTK_CHECK_VERSION (3, 0, 0)
   GdkWindow *window = gtk_widget_get_window (widget);
+#endif
 
   if (na_tray_child_has_alpha (child))
     {
