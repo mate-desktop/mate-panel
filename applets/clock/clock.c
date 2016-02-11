@@ -268,8 +268,10 @@ calculate_minimum_width (GtkWidget   *widget,
 	PangoContext *pango_context;
 	PangoLayout  *layout;
 	int	      width, height;
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	int	      focus_width = 0;
 	int	      focus_pad = 0;
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *style_context;
 	GtkStateFlags    state;
@@ -289,12 +291,17 @@ calculate_minimum_width (GtkWidget   *widget,
 	state = gtk_widget_get_state_flags (widget);
 	style_context = gtk_widget_get_style_context (widget);
 	gtk_style_context_get_padding (style_context, state, &padding);
+#if GTK_CHECK_VERSION (3, 19, 0)
+
+	width += padding.left + padding.right;
+#else
 	gtk_style_context_get_style (style_context,
 				     "focus-line-width", &focus_width,
 				     "focus-padding", &focus_pad,
 				     NULL);
 
 width += 2 * (focus_width + focus_pad) + padding.left + padding.right;
+#endif
 #else
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
