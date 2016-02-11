@@ -1986,7 +1986,7 @@ void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundTy
 	}
 }
 
-void _mate_panel_applet_prepare_css (GtkStyleContext *context)
+static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 {
 	GtkCssProvider  *provider;
 
