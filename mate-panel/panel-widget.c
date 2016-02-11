@@ -1640,23 +1640,26 @@ panel_widget_set_background_default_style (GtkWidget *widget)
 {
 	GtkStyleContext *context;
 	GtkStateFlags state;
-	GdkRGBA bg_color;
+	GdkRGBA *bg_color;
 	cairo_pattern_t *bg_image;
+	PanelBackground *background;
 
 	if (gtk_widget_get_realized (widget)) {
 		context = gtk_widget_get_style_context (widget);
 		state = gtk_widget_get_state_flags (widget);
+		background = &PANEL_WIDGET (widget)->background;
 		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 		gtk_style_context_add_class(context,"mate-panel-menu-bar");
 		panel_background_apply_css (&PANEL_WIDGET (widget)->background, widget);
 
-		gtk_style_context_get_background_color (context, state, &bg_color);
-		gtk_style_context_get (context, state, "background-image", &bg_image, NULL);
+		gtk_style_context_get (context, state,
+		                       "background-color", &bg_color,
+		                       "background-image", &bg_image,
+		                       NULL);
 
-		panel_background_set_default_style (
-			&PANEL_WIDGET (widget)->background,
-			&bg_color,
-			bg_image);
+		panel_background_set_default_style (background,
+		                                    bg_color,
+		                                    bg_image);
 
 		if (bg_image)
 			cairo_pattern_destroy (bg_image);
