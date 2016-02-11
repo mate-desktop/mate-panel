@@ -23,9 +23,9 @@
  */
 
 #include <config.h>
+#include <libpanel-util/panel-color.h>
 
 #include "panel-frame.h"
-
 #include "panel-typebuiltins.h"
 
 G_DEFINE_TYPE (PanelFrame, panel_frame, GTK_TYPE_BIN)
@@ -238,7 +238,6 @@ panel_frame_draw (GtkWidget      *widget,
 	GtkStateFlags     state;
 	GdkRGBA          *bg;
 	GdkRGBA           dark, light;
-	GtkSymbolicColor *c1, *c2;
 	GtkBorder         padding;
 #else
 	GtkStyle         *style;
@@ -265,17 +264,8 @@ panel_frame_draw (GtkWidget      *widget,
 	                       "background-color", &bg,
 	                       NULL);
 
-	c1 = gtk_symbolic_color_new_literal (&bg);
-
-	c2 = gtk_symbolic_color_new_shade (c1, 0.7);
-	gtk_symbolic_color_resolve (c2, NULL, &dark);
-	gtk_symbolic_color_unref (c2);
-
-	c2 = gtk_symbolic_color_new_shade (c1, 1.3);
-	gtk_symbolic_color_resolve (c2, NULL, &light);
-	gtk_symbolic_color_unref (c2);
-
-	gtk_symbolic_color_unref (c1);
+	gtk_style_shade (bg, &dark, 0.7);
+	gtk_style_shade (bg, &light, 1.3);
 
 	gtk_style_context_get_padding (context, state, &padding);
 #else
