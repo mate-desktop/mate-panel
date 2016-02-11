@@ -922,10 +922,17 @@ na_tray_set_icon_size (NaTray *tray,
 
 void
 na_tray_set_colors (NaTray   *tray,
+#if GTK_CHECK_VERSION (3, 0, 0)
+                    GdkRGBA  *fg,
+                    GdkRGBA  *error,
+                    GdkRGBA  *warning,
+                    GdkRGBA  *success)
+#else
                     GdkColor *fg,
                     GdkColor *error,
                     GdkColor *warning,
                     GdkColor *success)
+#endif
 {
   NaTrayPrivate *priv = tray->priv;
 
