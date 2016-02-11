@@ -1482,8 +1482,10 @@ static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* even
 #endif
 {
 	GdkWindow    *window;
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyle     *style;
 	GtkStateType  state;
+#endif
 	int width, height;
 	int src_x, src_y;
 
@@ -1496,8 +1498,10 @@ static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* even
 	g_assert (fish->n_frames > 0);
 
 	window = gtk_widget_get_window (widget);
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
+#endif
 
 #if GTK_CHECK_VERSION(3, 0, 0)
 	width = cairo_xlib_surface_get_width (fish->surface);
