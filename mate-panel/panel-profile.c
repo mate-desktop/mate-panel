@@ -1137,10 +1137,10 @@ panel_profile_delete_toplevel (PanelToplevel *toplevel)
 	panel_profile_remove_from_list (PANEL_GSETTINGS_TOPLEVELS, toplevel_id);
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static GdkScreen *
 get_toplevel_screen (char *toplevel_path)
 {
-
 	GdkDisplay *display;
 	GSettings  *settings;
 	int         screen_n;
@@ -1166,6 +1166,7 @@ get_toplevel_screen (char *toplevel_path)
 
 	return gdk_display_get_screen (display, screen_n);
 }
+#endif
 
 PanelToplevel *
 panel_profile_load_toplevel (const char *toplevel_id)
@@ -1180,7 +1181,13 @@ panel_profile_load_toplevel (const char *toplevel_id)
 
 	toplevel_path = g_strdup_printf ("%s%s/", PANEL_TOPLEVEL_PATH, toplevel_id);
 
-	if (!(screen = get_toplevel_screen (toplevel_path))) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screen = gdk_display_get_default_screen (gdk_display_get_default ());
+#else
+	screen = get_toplevel_screen (toplevel_path);
+#endif
+
+	if (screen == NULL) {
 		g_free (toplevel_path);
 		return NULL;
 	}
