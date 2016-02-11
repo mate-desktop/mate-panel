@@ -132,8 +132,16 @@ static void update_properties_for_wm(PagerData* pager)
 			g_assert_not_reached();
 	}
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (pager->properties_dialog) {
+	        gtk_widget_hide (pager->properties_dialog);
+	        gtk_widget_unrealize (pager->properties_dialog);
+	        gtk_widget_show (pager->properties_dialog);
+	}
+#else
 	if (pager->properties_dialog)
 		gtk_window_reshow_with_initial_size(GTK_WINDOW(pager->properties_dialog));
+#endif
 }
 
 static void window_manager_changed(WnckScreen* screen, PagerData* pager)
