@@ -412,7 +412,9 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	gchar* ui_path;
 	AtkObject* atk_obj;
 #if GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	GtkCssProvider *provider;
+#endif
 #endif
 
 	mate_panel_applet_set_flags(applet, MATE_PANEL_APPLET_EXPAND_MINOR);
@@ -444,6 +446,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 	gtk_widget_set_name (sdd->button, "showdesktop-button");
 #if GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
 					 "#showdesktop-button {\n"
@@ -455,6 +458,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 					g_object_unref (provider);
+#endif
 #else
 	gtk_rc_parse_string ("\n"
 		"   style \"showdesktop-button-style\"\n"
