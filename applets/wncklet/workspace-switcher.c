@@ -250,6 +250,7 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 #endif
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, PagerData* pager)
 {
 	GdkScrollDirection absolute_direction;
@@ -353,6 +354,7 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 
 	return TRUE;
 }
+#endif
 
 static void destroy_pager(GtkWidget* widget, PagerData* pager)
 {
@@ -577,7 +579,9 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	g_signal_connect(G_OBJECT(pager->applet), "realize", G_CALLBACK(applet_realized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "unrealize", G_CALLBACK(applet_unrealized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "change_orient", G_CALLBACK(applet_change_orient), pager);
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	g_signal_connect(G_OBJECT(pager->applet), "scroll-event", G_CALLBACK(applet_scroll), pager);
+#endif
 	g_signal_connect(G_OBJECT(pager->applet), "change_background", G_CALLBACK(applet_change_background), pager);
 
 	gtk_widget_show(pager->applet);
