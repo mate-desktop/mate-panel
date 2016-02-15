@@ -231,37 +231,39 @@ panel_profile_get_background_type (PanelToplevel *toplevel)
 	return background_type;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 void
 panel_profile_set_background_color (PanelToplevel *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				    GdkRGBA       *color)
-#else
-				    PanelColor    *color)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel_profile_set_background_gdk_rgba (toplevel, color);
+}
 #else
+void
+panel_profile_set_background_color (PanelToplevel *toplevel,
+				    PanelColor    *color)
+{
 	panel_profile_set_background_gdk_color (toplevel, &color->gdk);
 	panel_profile_set_background_opacity (toplevel, color->alpha);
-#endif
 }
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 void
 panel_profile_get_background_color (PanelToplevel *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				    GdkRGBA       *color)
-#else
-				    PanelColor    *color)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel_profile_get_background_gdk_rgba (toplevel, color);
+}
 #else
+void
+panel_profile_get_background_color (PanelToplevel *toplevel,
+				    PanelColor    *color)
+{
 	panel_profile_get_background_gdk_color (toplevel, &(color->gdk));
 	color->alpha = panel_profile_get_background_opacity (toplevel);
-#endif
 }
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 void
@@ -327,33 +329,42 @@ panel_profile_get_background_gdk_color (PanelToplevel *toplevel,
 }
 #endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 void
 panel_profile_set_background_opacity (PanelToplevel *toplevel,
 				      guint16        opacity)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
 	panel_profile_get_background_color (toplevel, &color);
 	color.alpha = opacity / 65535.0;
 	panel_profile_set_background_color (toplevel, &color);
-#else
-	g_settings_set_int (toplevel->background_settings, "opacity", opacity);
-#endif
 }
+#else
+void
+panel_profile_set_background_opacity (PanelToplevel *toplevel,
+				      guint16        opacity)
+{
+	g_settings_set_int (toplevel->background_settings, "opacity", opacity);
+}
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 guint16
 panel_profile_get_background_opacity (PanelToplevel *toplevel)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
 	panel_profile_get_background_color (toplevel, &color);
 	return (guint16) round (color.alpha * 65535);
+}
 #else
+guint16
+panel_profile_get_background_opacity (PanelToplevel *toplevel)
+{
 	guint16 opacity;
 	opacity = g_settings_get_int (toplevel->background_settings, "opacity");
 	return opacity;
-#endif
 }
+#endif
 
 void
 panel_profile_set_background_image (PanelToplevel *toplevel,
@@ -551,36 +562,40 @@ panel_profile_is_writable_attached_tooltip (PanelToplevel *toplevel)
 	return is_writable;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 get_background_color (PanelToplevel *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 					  GdkRGBA       *color)
-#else
-					  PanelColor    *color)
-#endif
 {
 	char       *color_str;
 	color_str = g_settings_get_string (toplevel->background_settings, "color");
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (!color_str || !gdk_rgba_parse (color, color_str)) {
 		color->red   = 0;
 		color->green = 0;
 		color->blue  = 0;
 		color->alpha  = 1;
 	}
+
+	g_free (color_str);
+}
 #else
+static void
+get_background_color (PanelToplevel *toplevel,
+					  PanelColor    *color)
+{
+	char       *color_str;
+	color_str = g_settings_get_string (toplevel->background_settings, "color");
 	if (!color_str || !gdk_color_parse (color_str, &(color->gdk))) {
 		color->gdk.red   = 0;
 		color->gdk.green = 0;
 		color->gdk.blue  = 0;
 	}
-#endif
+
 	g_free (color_str);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
 	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity");
-#endif
 }
+#endif
 
 static char *
 get_background_image (PanelToplevel *toplevel,
