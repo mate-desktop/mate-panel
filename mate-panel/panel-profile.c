@@ -1151,11 +1151,7 @@ get_toplevel_screen (char *toplevel_path)
 
 	display = gdk_display_get_default ();
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-	if (screen_n < 0) {
-#else
 	if (screen_n < 0 || screen_n >= gdk_display_get_n_screens (display)) {
-#endif
 #if 0
 		g_warning (_("Panel '%s' is set to be displayed on screen %d which "
 			     "is not currently available. Not loading this panel."),
