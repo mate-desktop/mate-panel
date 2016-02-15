@@ -232,7 +232,7 @@ panel_icon_chooser_init (PanelIconChooser *chooser)
 
 	chooser->priv = priv;
 
-	priv->fallback_icon_name = g_strdup ("gtk-missing-image");
+	priv->fallback_icon_name = g_strdup ("image-missing");
 	priv->icon = NULL;
 	priv->icon_theme_dir = NULL;
 
