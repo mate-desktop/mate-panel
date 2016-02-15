@@ -207,7 +207,7 @@ panel_icon_chooser_class_init (PanelIconChooserClass *class)
 		PROP_FALLBACK_ICON,
 		g_param_spec_string ("fallback-icon-name",
 				     "Fallback Icon Name",
-				     "Icon name of the icon displayed (but not returned) if the current icon does not exit",
+				     "Icon name of the icon displayed (but not returned) if the current icon does not exist",
 				     NULL,
 				     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
