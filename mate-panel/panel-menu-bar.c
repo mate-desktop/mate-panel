@@ -114,6 +114,8 @@ static void panel_menu_bar_update_visibility (GSettings* settings, gchar* key, P
 {
 	GtkWidget* image;
 	gchar *str;
+	GtkIconSize icon_size;
+	gint icon_height;
 
 	if (!GTK_IS_WIDGET (menubar))
 		return;
@@ -125,15 +127,18 @@ static void panel_menu_bar_update_visibility (GSettings* settings, gchar* key, P
 	if (g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_ICON_KEY))
 	{
 		str = g_settings_get_string (settings, PANEL_MENU_BAR_ICON_NAME_KEY);
+		icon_size = panel_menu_bar_icon_get_size ();
+		gtk_icon_size_lookup (icon_size, NULL, &icon_height);
 		if (str != NULL && str[0] != 0)
-			image = gtk_image_new_from_icon_name(str, panel_menu_bar_icon_get_size());
+			image = gtk_image_new_from_icon_name(str, icon_size);
 		else
-			image = gtk_image_new_from_icon_name(PANEL_ICON_MAIN_MENU, panel_menu_bar_icon_get_size());
+			image = gtk_image_new_from_icon_name(PANEL_ICON_MAIN_MENU, icon_size);
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item), image);
+		gtk_image_set_pixel_size (GTK_IMAGE (image), icon_height);
 		g_free (str);
 	}
 	else
-		image = NULL;
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menubar->priv->applications_item), image);
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item), NULL);
 }
 
 static void panel_menu_bar_init(PanelMenuBar* menubar)
