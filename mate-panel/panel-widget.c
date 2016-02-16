@@ -2517,7 +2517,11 @@ panel_widget_applet_key_press_event (GtkWidget   *widget,
 	if (!mate_panel_applet_in_drag)
 		return FALSE;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 	return gtk_bindings_activate (G_OBJECT (panel),
+#else
+	return gtk_bindings_activate (GTK_OBJECT (panel),
+#endif
 				      ((GdkEventKey *)event)->keyval, 
 				      ((GdkEventKey *)event)->state);	
 }
