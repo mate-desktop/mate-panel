@@ -125,7 +125,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                   const char                *type_for_error_message)
 {
     gboolean    retval = FALSE;
-    char       *id;
+    const char *id;
     char       *unique_id = NULL;
     char       *path = NULL;
     GSettings  *settings = NULL;

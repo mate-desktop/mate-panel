@@ -66,7 +66,7 @@ static guint location_signals[LAST_SIGNAL] = { 0 };
 static void clock_location_finalize (GObject *);
 static void clock_location_set_tz (ClockLocation *this);
 static void clock_location_unset_tz (ClockLocation *this);
-static gboolean update_weather_info (ClockLocation *loc);
+static gboolean update_weather_info (gpointer data);
 static void setup_weather_updates (ClockLocation *loc);
 
 static gchar *clock_location_get_valid_weather_code (const gchar *code);
@@ -680,8 +680,9 @@ weather_info_updated (WeatherInfo *info, gpointer data)
 }
 
 static gboolean
-update_weather_info (ClockLocation *loc)
+update_weather_info (gpointer data)
 {
+	ClockLocation *loc = (ClockLocation *) data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
 	WeatherPrefs prefs = {
 		FORECAST_STATE,
