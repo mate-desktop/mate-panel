@@ -5,17 +5,18 @@
 # Translators:
 # Atilla Öntaş <tarakbumba@gmail.com>, 2014
 # Atilla Öntaş <tarakbumba@gmail.com>, 2014
+# Butterfly <gokhanlnx@gmail.com>, 2015
 # mauron, 2012-2013
-# mauron, 2013
+# mauron, 2013,2015
 # mauron, 2012
 # Mehmet <mehmet337402@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 17:10+0300\n"
-"PO-Revision-Date: 2015-11-03 14:12+0000\n"
-"Last-Translator: Vlad Orlov <monsta@inbox.ru>\n"
+"POT-Creation-Date: 2015-12-14 13:57+0300\n"
+"PO-Revision-Date: 2016-01-19 11:25+0000\n"
+"Last-Translator: mauron\n"
 "Language-Team: Turkish (http://www.transifex.com/mate/MATE/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -323,7 +324,7 @@ msgstr "_Saniyeleri göster"
 
 #: ../applets/clock/clock.ui.h:23
 msgid "Show wee_k numbers in calendar"
-msgstr ""
+msgstr "Ta_kvimde hafta numaralarını göster"
 
 #: ../applets/clock/clock.ui.h:24
 msgid "Show _weather"
@@ -1064,11 +1065,11 @@ msgstr "Çalışma Alanları"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:1
 msgid "Default panel layout"
-msgstr ""
+msgstr "Varsayılan panel düzeni"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:2
 msgid "The default panels layout to use when panels are created or resetted."
-msgstr ""
+msgstr "Panel oluşturulduğunda ya da sıfırlandığında kullanılan varsayılan panel düzeni"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:3
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1207,43 +1208,43 @@ msgstr "Eğer seçiliyse, panel, bir uygulama kapatılırken zorla çıkış yap
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:1
 msgid "Show applications menu"
-msgstr ""
+msgstr "Uygulamalar menüsünü göster"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:2
 msgid "If true, show applications item in menu bar."
-msgstr ""
+msgstr "Eğer doğru ise, menü çubuğunda uygulamalar öğesini gösterir."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:3
 msgid "Show places menu"
-msgstr ""
+msgstr "Yerler menüsünü göster"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:4
 msgid "If true, show places item in menu bar."
-msgstr ""
+msgstr "Eğer doğru ise, menü çubuğunda yerler öğesini gösterir"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:5
 msgid "Show desktop menu"
-msgstr ""
+msgstr "Masaüstü menüsünü göster"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:6
 msgid "If true, show desktop item in menu bar."
-msgstr ""
+msgstr "Eğer doğru ise, menü çubuğunda masaüstü öğesini gösterir"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:7
 msgid "Show icon"
-msgstr ""
+msgstr "Simge göster"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:8
 msgid "If true, show icon in menu bar."
-msgstr ""
+msgstr "Eğer doğru ise, menü çubuğunda simge gösterir."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:9
 msgid "Icon to show in menu bar"
-msgstr ""
+msgstr "Menü çubuğunda gösterilmek için simge"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:10
 msgid "Set the theme icon name to use in menu bar."
-msgstr ""
+msgstr "Menü çubuğunda gösterilecek simge teması adını ayarla."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:1
 msgid "Panel object type"
@@ -1766,8 +1767,8 @@ msgstr "Oturum yönetimi seçeneklerini göster"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:82
-#: ../mate-panel/mate-panel-applet-frame.c:904
-#: ../mate-panel/mate-panel-applet-frame.c:1080
+#: ../mate-panel/mate-panel-applet-frame.c:918
+#: ../mate-panel/mate-panel-applet-frame.c:1094
 msgid "Error"
 msgstr "Hata"
 
@@ -1918,7 +1919,7 @@ msgstr "Çalıştırma diyaloğunu başlat"
 #. default panels layout
 #: ../mate-panel/main.c:55
 msgid "Set the default panel layout"
-msgstr ""
+msgstr "Varsayılan panel düzenini ayarla"
 
 #: ../mate-panel/menu.c:538
 msgid "Add this launcher to _panel"
@@ -2130,35 +2131,41 @@ msgstr "Panele Ekle"
 msgid "Find an _item to add to the panel:"
 msgstr "Panele eklemek için bir öğe _bul:"
 
-#: ../mate-panel/mate-panel-applet-frame.c:873
+#: ../mate-panel/mate-panel-applet-frame.c:879
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" beklenmedik bir şekilde kapandı"
 
-#: ../mate-panel/mate-panel-applet-frame.c:875
+#: ../mate-panel/mate-panel-applet-frame.c:881
 msgid "Panel object has quit unexpectedly"
 msgstr "Panel nesnesi beklenmedik bir şekilde kapandı"
 
-#: ../mate-panel/mate-panel-applet-frame.c:882
+#: ../mate-panel/mate-panel-applet-frame.c:888
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Eğer bir panel nesnesini yeniden yüklerseniz, o nesne kendiliğinden panele tekrar eklenecektir."
 
-#: ../mate-panel/mate-panel-applet-frame.c:888
+#: ../mate-panel/mate-panel-applet-frame.c:895
+msgid "D_elete"
+msgstr "S_il"
+
+#: ../mate-panel/mate-panel-applet-frame.c:896
+#: ../mate-panel/mate-panel-applet-frame.c:901
 msgid "_Don't Reload"
 msgstr "Tekrar Yükle_me"
 
-#: ../mate-panel/mate-panel-applet-frame.c:889
+#: ../mate-panel/mate-panel-applet-frame.c:897
+#: ../mate-panel/mate-panel-applet-frame.c:902
 msgid "_Reload"
 msgstr "Tekrar _Yükle"
 
-#: ../mate-panel/mate-panel-applet-frame.c:1043
+#: ../mate-panel/mate-panel-applet-frame.c:1057
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" yüklenirken panelde bir sorunla karşılaşıldı."
 
-#: ../mate-panel/mate-panel-applet-frame.c:1059
+#: ../mate-panel/mate-panel-applet-frame.c:1073
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Bu uygulamacığı ayarlarınızdan silmek istiyor musunuz?"
 
@@ -2367,20 +2374,20 @@ msgstr "Masaüstünüzün içeriğini bir dizin içerisinde açın"
 
 #: ../mate-panel/panel-menu-items.c:1080
 msgid "Computer"
-msgstr ""
+msgstr "Bilgisayar"
 
 #: ../mate-panel/panel-menu-items.c:1085
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr ""
+msgstr "Bu bilgisayardan erişilebilen, tüm yerel ve uzak disklere ve dizinlere gözatın"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Network"
-msgstr ""
+msgstr "Ağ"
 
 #: ../mate-panel/panel-menu-items.c:1099
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "Yerimlerine ve yerel ağ konumlarına gözatın"
 
 #: ../mate-panel/panel-menu-items.c:1489
 msgid "Places"
