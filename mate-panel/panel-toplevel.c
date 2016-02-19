@@ -4500,6 +4500,10 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
 	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
 
+#if GTK_CHECK_VERSION (3, 19, 0)
+	gtk_widget_class_set_css_name (widget_class, "PanelToplevel");
+#endif
+
 	container_class->check_resize = panel_toplevel_check_resize;
 
 	klass->hiding           = NULL;
