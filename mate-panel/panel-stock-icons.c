@@ -30,6 +30,7 @@
 #include <gtk/gtk.h>
 
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 static GtkIconSize panel_menu_icon_size = 0;
 static GtkIconSize panel_menu_bar_icon_size = 0;
@@ -128,14 +129,33 @@ void
 panel_init_stock_icons_and_items (void)
 {
 	GtkIconFactory *factory;
+	GSettings      *settings;
+	gint		icon_size;
 
-	panel_menu_icon_size = gtk_icon_size_register ("panel-menu",
-						       PANEL_DEFAULT_MENU_ICON_SIZE,
-						       PANEL_DEFAULT_MENU_ICON_SIZE);
+	settings = g_settings_new (PANEL_MENU_BAR_SCHEMA);
 
-	panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar",
-							   PANEL_DEFAULT_MENU_BAR_ICON_SIZE,
-							   PANEL_DEFAULT_MENU_BAR_ICON_SIZE);
+	icon_size = g_settings_get_enum (settings, "item-icon-size");
+	if (icon_size <= 0) {
+		panel_menu_icon_size = gtk_icon_size_register ("panel-menu",
+							       PANEL_DEFAULT_MENU_ICON_SIZE,
+							       PANEL_DEFAULT_MENU_ICON_SIZE);
+	} else {
+		/* underscores to prevent themes from altering these settings */
+		panel_menu_icon_size = gtk_icon_size_register ("__panel-menu",
+							       icon_size,
+							       icon_size);
+	}
+
+	icon_size = g_settings_get_enum (settings, "icon-size");
+	if (icon_size <= 0) {
+		panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar",
+								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE,
+								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE);
+	} else {
+		panel_menu_bar_icon_size = gtk_icon_size_register ("__panel-foobar",
+								   icon_size,
+								   icon_size);
+	}
 
 	panel_add_to_icon_size = gtk_icon_size_register ("panel-add-to",
 							 PANEL_ADD_TO_DEFAULT_ICON_SIZE,
@@ -148,4 +168,5 @@ panel_init_stock_icons_and_items (void)
 	panel_init_stock_items (factory);
 
 	g_object_unref (factory);
+	g_object_unref (settings);
 }
