@@ -561,6 +561,10 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
+	GtkStyleContext *context;
+	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
+	gtk_style_context_add_class (context, "wnck-pager");
+
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
                                          "WnckPager:selected {\n"
