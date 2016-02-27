@@ -36,12 +36,11 @@ void		setup_menuitem		  (GtkWidget        *menuitem,
 					   GtkIconSize       icon_size,
 					   GtkWidget        *pixmap,
 					   const char       *title);
-void            setup_menu_item_with_icon (GtkWidget        *item,
-					   GtkIconSize       icon_size,
-					   const char       *icon_name,
-					   const char       *stock_id,
-					   GIcon            *gicon,
-					   const char       *title);
+void            setup_menuitem_with_icon (GtkWidget         *menuitem,
+					  GtkIconSize       icon_size,
+					  GIcon             *gicon,
+					  const char        *image_filename,
+					  const char        *title);
 
 GtkWidget      *create_empty_menu         (void);
 GtkWidget      *create_applications_menu  (const char  *menu_file,

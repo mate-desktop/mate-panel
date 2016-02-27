@@ -438,8 +438,8 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	GdkWindow     *window;
 	GdkCursorType  cursor_type;
 	GdkCursor     *cursor;
-	GdkDisplay *display;
 #if GTK_CHECK_VERSION (3, 0, 0)
+	GdkDisplay *display;
 	GdkDevice *pointer;
 	GdkDevice *keyboard;
 	GdkDeviceManager *device_manager;
@@ -496,9 +496,11 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
 
-	display = gdk_window_get_display (window);
-	cursor = gdk_cursor_new_for_display (display, cursor_type);
+
+	cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+	                                     cursor_type);
 #if GTK_CHECK_VERSION (3, 0, 0)
+	display = gdk_window_get_display (window);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
 	keyboard = gdk_device_get_associated_device (pointer);
@@ -2382,8 +2384,10 @@ calculate_minimum_height (GtkWidget        *widget,
 #endif
 	PangoContext     *pango_context;
 	PangoFontMetrics *metrics;
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	int               focus_width = 0;
 	int               focus_pad = 0;
+#endif
 	int               ascent;
 	int               descent;
 	int               thickness;
@@ -2411,17 +2415,23 @@ calculate_minimum_height (GtkWidget        *widget,
 
 	pango_font_metrics_unref (metrics);
 
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
 			      "focus-padding", &focus_pad,
 			      NULL);
+#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	thickness = orientation & PANEL_HORIZONTAL_MASK ?
 		padding.top + padding.bottom :
 		padding.left + padding.right;
 
+#if GTK_CHECK_VERSION (3, 19, 0)
+	return PANGO_PIXELS (ascent + descent) + thickness;
+#else
 	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad) + thickness;
+#endif
 }
 #else
 	thickness = orientation & PANEL_HORIZONTAL_MASK ?
@@ -3805,7 +3815,11 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	deltax = toplevel->priv->animation_end_x - cur_x;
 	deltay = toplevel->priv->animation_end_y - cur_y;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_widget_get_preferred_size (GTK_WIDGET (toplevel), &requisition, NULL);
+#else
 	gtk_widget_get_requisition (GTK_WIDGET (toplevel), &requisition);
+#endif
 
 	if (toplevel->priv->animation_end_width != -1)
 		deltaw = toplevel->priv->animation_end_width - requisition.width;
@@ -4486,6 +4500,10 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
 	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
 
+#if GTK_CHECK_VERSION (3, 19, 0)
+	gtk_widget_class_set_css_name (widget_class, "PanelToplevel");
+#endif
+
 	container_class->check_resize = panel_toplevel_check_resize;
 
 	klass->hiding           = NULL;
@@ -4895,14 +4913,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 {
 	int i;
 
-	/* This is a hack for the default resize grip on Ubuntu.
-	 * We need to add a --enable-ubuntu for this.
-	 * Now, it is also default in GTK3.
-	 */
-#if defined(UBUNTU) || GTK_CHECK_VERSION (3, 0, 0)
-	gtk_window_set_has_resize_grip(&toplevel->window_instance, FALSE);
-#endif
-
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
 	toplevel->priv->expand          = TRUE;
@@ -5005,7 +5015,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	/*ensure the panel BG can always be themed*/
 	/*Without this gtk3.19/20 cannot set the BG color and resetting the bg to system is not immediately applied*/
 	GtkStyleContext *context;
-	context = gtk_widget_get_style_context (toplevel);
+	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
 #endif	

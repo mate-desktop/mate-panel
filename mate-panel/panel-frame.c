@@ -23,9 +23,9 @@
  */
 
 #include <config.h>
+#include <libpanel-util/panel-color.h>
 
 #include "panel-frame.h"
-
 #include "panel-typebuiltins.h"
 
 G_DEFINE_TYPE (PanelFrame, panel_frame, GTK_TYPE_BIN)
@@ -232,14 +232,14 @@ panel_frame_draw (GtkWidget      *widget,
 		  PanelFrameEdge  edges)
 {
 	PanelFrame       *frame = (PanelFrame *) widget;
-	GdkWindow        *window;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext  *context;
 	GtkStateFlags     state;
-	GdkRGBA           bg, dark, light;
-	GtkSymbolicColor *c1, *c2;
+	GdkRGBA          *bg;
+	GdkRGBA           dark, light;
 	GtkBorder         padding;
 #else
+	GdkWindow        *window;
 	GtkStyle         *style;
 	GtkStateType      state;
 	GtkAllocation     allocation;
@@ -252,7 +252,6 @@ panel_frame_draw (GtkWidget      *widget,
 	if (edges == PANEL_EDGE_NONE)
 		return;
 
-	window = gtk_widget_get_window (widget);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	context = gtk_widget_get_style_context (widget);
 	state = gtk_widget_get_state_flags (widget);
@@ -260,22 +259,16 @@ panel_frame_draw (GtkWidget      *widget,
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
 
-	gtk_style_context_get_background_color (context, state, &bg);
+	gtk_style_context_get (context, state,
+	                       "background-color", &bg,
+	                       NULL);
 
-	c1 = gtk_symbolic_color_new_literal (&bg);
-
-	c2 = gtk_symbolic_color_new_shade (c1, 0.7);
-	gtk_symbolic_color_resolve (c2, NULL, &dark);
-	gtk_symbolic_color_unref (c2);
-
-	c2 = gtk_symbolic_color_new_shade (c1, 1.3);
-	gtk_symbolic_color_resolve (c2, NULL, &light);
-	gtk_symbolic_color_unref (c2);
-
-	gtk_symbolic_color_unref (c1);
+	gtk_style_shade (bg, &dark, 0.7);
+	gtk_style_shade (bg, &light, 1.3);
 
 	gtk_style_context_get_padding (context, state, &padding);
 #else
+	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
 
@@ -344,7 +337,7 @@ panel_frame_draw (GtkWidget      *widget,
 		cairo_stroke (cr);
 
 		if (padding.top > 1) {
-			gdk_cairo_set_source_rgba (cr, &bg);
+			gdk_cairo_set_source_rgba (cr, bg);
 			cairo_move_to (cr, x + .5, y + 1 + .5);
 			cairo_line_to (cr, x + width - 1 - .5, y + 1 + .5);
 			cairo_stroke (cr);
@@ -358,7 +351,7 @@ panel_frame_draw (GtkWidget      *widget,
 		cairo_stroke (cr);
 
 		if (padding.left > 1) {
-			gdk_cairo_set_source_rgba (cr, &bg);
+			gdk_cairo_set_source_rgba (cr, bg);
 			cairo_move_to (cr, x + 1 + .5, y + .5);
 			cairo_line_to (cr, x + 1 + .5, y + height - 1 - .5);
 			cairo_stroke (cr);
@@ -506,6 +499,9 @@ panel_frame_class_init (PanelFrameClass *klass)
 #else
 	widget_class->size_request  = panel_frame_size_request;
 	widget_class->expose_event  = panel_frame_expose;
+#endif
+#if GTK_CHECK_VERSION (3, 19, 0)
+	gtk_widget_class_set_css_name (widget_class, "PanelFrame");
 #endif
 
 	g_object_class_install_property (

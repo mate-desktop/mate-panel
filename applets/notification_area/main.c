@@ -203,33 +203,15 @@ na_tray_applet_unrealize (GtkWidget *widget)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-static inline gboolean
-style_context_lookup_color (GtkStyleContext *context,
-                            const gchar     *color_name,
-                            GdkColor        *color)
-{
-  GdkRGBA rgba;
-
-  if (!gtk_style_context_lookup_color (context, color_name, &rgba))
-    return FALSE;
-
-  color->red   = rgba.red * 65535;
-  color->green = rgba.green * 65535;
-  color->blue  = rgba.blue * 65535;
-
-  return TRUE;
-}
-
 static void
 na_tray_applet_style_updated (GtkWidget *widget)
 {
   NaTrayApplet    *applet = NA_TRAY_APPLET (widget);
   GtkStyleContext *context;
-  GdkRGBA          rgba;
-  GdkColor         fg;
-  GdkColor         error;
-  GdkColor         warning;
-  GdkColor         success;
+  GdkRGBA          fg;
+  GdkRGBA          error;
+  GdkRGBA          warning;
+  GdkRGBA          success;
   gint             padding;
   gint             icon_size;
 
@@ -241,17 +223,19 @@ na_tray_applet_style_updated (GtkWidget *widget)
 
   context = gtk_widget_get_style_context (widget);
 
-  gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &rgba);
-  fg.red   = rgba.red * 65535;
-  fg.green = rgba.green * 65535;
-  fg.blue  = rgba.blue * 65535;
+  gtk_style_context_save (context);
+  gtk_style_context_set_state (context, GTK_STATE_FLAG_NORMAL);
 
-  if (!style_context_lookup_color (context, "error_color", &error))
+  gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
+
+  if (!gtk_style_context_lookup_color (context, "error_color", &error))
     error = fg;
-  if (!style_context_lookup_color (context, "warning_color", &warning))
+  if (!gtk_style_context_lookup_color (context, "warning_color", &warning))
     warning = fg;
-  if (!style_context_lookup_color (context, "success_color", &success))
+  if (!gtk_style_context_lookup_color (context, "success_color", &success))
     success = fg;
+
+  gtk_style_context_restore (context);
 
   na_tray_set_colors (applet->priv->tray, &fg, &error, &warning, &success);
 
@@ -303,10 +287,13 @@ na_tray_applet_change_orient (MatePanelApplet       *panel_applet,
                            get_gtk_orientation_from_applet_orient (orient));
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 19, 0)
+/* deprecated with gtk+-3.19.0 */
+#else
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
   GtkCssProvider *provider;
 
   provider = gtk_css_provider_new ();
@@ -320,7 +307,12 @@ force_no_focus_padding (GtkWidget *widget)
                                   GTK_STYLE_PROVIDER (provider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   g_object_unref (provider);
+}
+#endif
 #else
+static inline void
+force_no_focus_padding (GtkWidget *widget)
+{
   gtk_rc_parse_string ("\n"
 			"   style \"na-tray-style\"\n"
 			"   {\n"
@@ -330,8 +322,8 @@ force_no_focus_padding (GtkWidget *widget)
 			"\n"
 			"    class \"NaTrayApplet\" style \"na-tray-style\"\n"
 			"\n");
-#endif
 }
+#endif
 
 static void
 na_tray_applet_class_init (NaTrayAppletClass *class)
@@ -371,6 +363,10 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
                             G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_type_class_add_private (class, sizeof (NaTrayAppletPrivate));
+
+#if GTK_CHECK_VERSION (3, 19, 0)
+  gtk_widget_class_set_css_name (widget_class, "na-tray-applet");
+#endif
 }
 
 static void
@@ -395,8 +391,11 @@ na_tray_applet_init (NaTrayApplet *applet)
   mate_panel_applet_set_background_widget (MATE_PANEL_APPLET (applet),
                                       GTK_WIDGET (applet));
 #endif
-
+#if GTK_CHECK_VERSION (3, 19, 0)
+/* deprecated with gtk+-3.19.0 */
+#else
   force_no_focus_padding (GTK_WIDGET (applet));
+#endif
 }
 
 static gboolean

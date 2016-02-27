@@ -1019,6 +1019,7 @@ mate_panel_applet_popup_menu (GtkWidget *widget)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 19, 0)
 static void
 mate_panel_applet_get_preferred_width (GtkWidget *widget,
 				       int       *minimum_width,
@@ -1066,6 +1067,7 @@ mate_panel_applet_get_preferred_height (GtkWidget *widget,
 	*minimum_height += 2 * focus_width;
 	*natural_height += 2 * focus_width;
 }
+#endif
 
 static GtkSizeRequestMode
 mate_panel_applet_get_request_mode (GtkWidget *widget)
@@ -1113,12 +1115,15 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 	GtkBin        *bin;
 	GtkWidget     *child;
 	int            border_width;
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	int            focus_width = 0;
+#endif
 	MatePanelApplet   *applet;
 
 	if (!mate_panel_applet_can_focus (widget)) {
 		GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->size_allocate (widget, allocation);
 	} else {
+#if !GTK_CHECK_VERSION (3, 19, 0)
 		/*
 		 * We are deliberately ignoring focus-padding here to
 		 * save valuable panel real estate.
@@ -1126,14 +1131,20 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 		gtk_widget_style_get (widget,
 				      "focus-line-width", &focus_width,
 				      NULL);
+#endif
 
 		border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
 		gtk_widget_set_allocation (widget, allocation);
 		bin = GTK_BIN (widget);
 
+#if GTK_CHECK_VERSION (3, 19, 0)
+		child_allocation.x = 0;
+		child_allocation.y = 0;
+#else
 		child_allocation.x = focus_width;
 		child_allocation.y = focus_width;
+#endif
 
 		child_allocation.width  = MAX (allocation->width  - border_width * 2, 0);
 		child_allocation.height = MAX (allocation->height - border_width * 2, 0);
@@ -1145,8 +1156,10 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 						child_allocation.width,
 						child_allocation.height);
 
+#if !GTK_CHECK_VERSION (3, 19, 0)
 		child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
 		child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
+#endif
 
 		child = gtk_bin_get_child (bin);
 		if (child)
@@ -1176,7 +1189,9 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 	GtkAllocation allocation;
 #endif
 	int border_width;
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	int focus_width = 0;
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 	gdouble x, y, width, height;
 #else
@@ -1204,6 +1219,7 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 	gtk_widget_get_allocation(widget, &allocation);
 #endif
 
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	/*
 	 * We are deliberately ignoring focus-padding here to
 	 * save valuable panel real estate.
@@ -1211,6 +1227,7 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 	gtk_widget_style_get (widget,
 		"focus-line-width", &focus_width,
 		NULL);
+#endif
 
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
@@ -1986,7 +2003,7 @@ void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundTy
 	}
 }
 
-void _mate_panel_applet_prepare_css (GtkStyleContext *context)
+static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 {
 	GtkCssProvider  *provider;
 
@@ -2087,8 +2104,10 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	widget_class->button_release_event = mate_panel_applet_button_release;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	widget_class->get_request_mode = mate_panel_applet_get_request_mode;
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	widget_class->get_preferred_width = mate_panel_applet_get_preferred_width;
 	widget_class->get_preferred_height = mate_panel_applet_get_preferred_height;
+#endif
 	widget_class->draw = mate_panel_applet_draw;
 #else
 	widget_class->size_request = mate_panel_applet_size_request;
@@ -2247,6 +2266,10 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
+
+#if GTK_CHECK_VERSION (3, 19, 0)
+	gtk_widget_class_set_css_name (widget_class, "PanelApplet");
+#endif
 }
 
 GtkWidget* mate_panel_applet_new(void)

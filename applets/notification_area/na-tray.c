@@ -53,7 +53,9 @@ struct _NaTrayPrivate
   TraysScreen *trays_screen;
 
   GtkWidget *box;
+#if !GTK_CHECK_VERSION (3, 0, 0)
   GtkWidget *frame;
+#endif
 
   guint idle_redraw_id;
 
@@ -608,21 +610,22 @@ na_tray_init (NaTray *tray)
   priv->screen = NULL;
   priv->orientation = GTK_ORIENTATION_HORIZONTAL;
 
-  priv->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_container_add (GTK_CONTAINER (tray), priv->frame);
-  gtk_widget_show (priv->frame);
-
 #if GTK_CHECK_VERSION (3, 0, 0)
   priv->box = gtk_box_new (priv->orientation, ICON_SPACING);
   g_signal_connect (priv->box, "draw",
                     G_CALLBACK (na_tray_draw_box), NULL);
+  gtk_container_add (GTK_CONTAINER (tray), priv->box);
 #else
+  priv->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+  gtk_container_add (GTK_CONTAINER (tray), priv->frame);
+  gtk_widget_show (priv->frame);
+
   priv->box = g_object_new (na_box_get_type (), NULL);
   g_signal_connect (priv->box, "expose-event",
                     G_CALLBACK (na_tray_expose_box), tray);
   gtk_box_set_spacing (GTK_BOX (priv->box), ICON_SPACING);
-#endif
   gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
+#endif
   gtk_widget_show (priv->box);
 }
 
@@ -646,12 +649,16 @@ na_tray_constructor (GType type,
 
   if (!initialized)
     {
+#if GTK_CHECK_VERSION (3, 0, 0)
+      trays_screens = g_new0 (TraysScreen, 1);
+#else
       GdkDisplay *display;
       int n_screens;
 
       display = gdk_display_get_default ();
       n_screens = gdk_display_get_n_screens (display);
       trays_screens = g_new0 (TraysScreen, n_screens);
+#endif
       initialized = TRUE;
     }
 
@@ -918,10 +925,17 @@ na_tray_set_icon_size (NaTray *tray,
 
 void
 na_tray_set_colors (NaTray   *tray,
+#if GTK_CHECK_VERSION (3, 0, 0)
+                    GdkRGBA  *fg,
+                    GdkRGBA  *error,
+                    GdkRGBA  *warning,
+                    GdkRGBA  *success)
+#else
                     GdkColor *fg,
                     GdkColor *error,
                     GdkColor *warning,
                     GdkColor *success)
+#endif
 {
   NaTrayPrivate *priv = tray->priv;
 

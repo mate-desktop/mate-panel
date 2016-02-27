@@ -236,13 +236,14 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 			//FIXME: this is not rendered at button->priv->size
 			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
 			button->priv->pixbuf = gtk_icon_theme_load_icon (icon_theme,
-							       GTK_STOCK_MISSING_IMAGE,
+							       "image-missing",
 							       GTK_ICON_SIZE_BUTTON,
 							       GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
 							       NULL);
 			g_free (error);
 		}
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		/* We need to add a child to the button to get the right allocation of the pixbuf.
 		 * When the button is created without a pixbuf, get_preferred_width/height are
 		 * called the first time when the widget is allocated and 0x0 size is cached by
@@ -252,6 +253,7 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 		 * is never used. We are overriding the draw() method, so having a child doesn't
 		 * affect the widget rendering anyway.
 		 */
+#endif
 		gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_pixbuf (button->priv->pixbuf));
 	}
 
@@ -562,11 +564,14 @@ button_widget_expose (GtkWidget         *widget,
 	}
 
 	if (gtk_widget_has_focus (widget)) {
+#if !GTK_CHECK_VERSION (3, 19, 0)
 		gint focus_pad;
+#endif
 
 		gtk_style_context_save (context);
 		gtk_style_context_set_state (context, state_flags);
 
+#if !GTK_CHECK_VERSION (3, 19, 0)
 		gtk_widget_style_get (widget,
 				      "focus-padding", &focus_pad,
 				      NULL);
@@ -574,9 +579,14 @@ button_widget_expose (GtkWidget         *widget,
 		y = focus_pad;
 		w = width - 2 * focus_pad;
 		h = height - 2 * focus_pad;
+#endif
 
 		cairo_save (cr);
+#if GTK_CHECK_VERSION (3, 19, 0)
+		gtk_render_focus (context, cr, 0, 0, width, height);
+#else
 		gtk_render_focus (context, cr, x, y, w, h);
+#endif
 		cairo_restore (cr);
 
 		gtk_style_context_restore (context);
@@ -646,14 +656,18 @@ button_widget_get_preferred_width (GtkWidget *widget,
 				   gint *minimal_width,
 				   gint *natural_width)
 {
-	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+ 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+	GtkWidget *parent;
+	int size;
 
-	if (button_widget->priv->pixbuf == NULL ) {
-		*minimal_width = *natural_width = 1;
-		return;
-	}
+	parent = gtk_widget_get_parent (widget);
 
-	*minimal_width = *natural_width = gdk_pixbuf_get_width  (button_widget->priv->pixbuf);
+	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
+		size = gtk_widget_get_allocated_height (parent);
+	else
+		size = gtk_widget_get_allocated_width (parent);
+
+	*minimal_width = *natural_width = size;
 }
 
 static void
@@ -662,13 +676,17 @@ button_widget_get_preferred_height (GtkWidget *widget,
 				    gint *natural_height)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+	GtkWidget *parent;
+	int size;
 
-	if (button_widget->priv->pixbuf == NULL ) {
-		*minimal_height = *natural_height = 1;
-		return;
-	}
+	parent = gtk_widget_get_parent (widget);
 
-	*minimal_height = *natural_height = gdk_pixbuf_get_height (button_widget->priv->pixbuf);
+	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
+		size = gtk_widget_get_allocated_height (parent);
+	else
+		size = gtk_widget_get_allocated_width (parent);
+
+	*minimal_height = *natural_height = size;
 }
 #else
 static void

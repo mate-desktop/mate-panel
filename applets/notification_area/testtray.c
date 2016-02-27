@@ -29,6 +29,11 @@
 
 #define NOTIFICATION_AREA_ICON "mate-panel-notification-area"
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#define gtk_hbox_new(X,Y) gtk_box_new(GTK_ORIENTATION_HORIZONTAL,Y)
+#define gtk_vbox_new(X,Y) gtk_box_new(GTK_ORIENTATION_VERTICAL,Y)
+#endif
+
 static guint n_windows = 0;
 
 typedef struct
@@ -210,19 +215,28 @@ main (int argc, char *argv[])
 {
   GdkDisplay *display;
   GdkScreen *screen;
+#if !GTK_CHECK_VERSION (3, 0, 0)
   int n_screens, i;
+#endif
 
   gtk_init (&argc, &argv);
 
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 
   display = gdk_display_get_default ();
+#if GTK_CHECK_VERSION (3, 0, 0)
+  screen = gdk_display_get_default_screen (display);
+
+  create_tray_on_screen (screen, FALSE);
+#else
   n_screens =  gdk_display_get_n_screens (display);
   for (i = 0; i < n_screens; ++i) {
     screen = gdk_display_get_screen (display, i);
-
     create_tray_on_screen (screen, FALSE);
+
+  create_tray_on_screen (screen, FALSE);
   }
+#endif
   
   gtk_main ();
 

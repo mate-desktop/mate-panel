@@ -451,6 +451,10 @@ panel_widget_class_init (PanelWidgetClass *class)
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
+
+#if GTK_CHECK_VERSION (3, 19, 0)
+	gtk_widget_class_set_css_name (widget_class, "PanelWidget");
+#endif
 }
 
 static void
@@ -1636,23 +1640,26 @@ panel_widget_set_background_default_style (GtkWidget *widget)
 {
 	GtkStyleContext *context;
 	GtkStateFlags state;
-	GdkRGBA bg_color;
+	GdkRGBA *bg_color;
 	cairo_pattern_t *bg_image;
+	PanelBackground *background;
 
 	if (gtk_widget_get_realized (widget)) {
 		context = gtk_widget_get_style_context (widget);
 		state = gtk_widget_get_state_flags (widget);
+		background = &PANEL_WIDGET (widget)->background;
 		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 		gtk_style_context_add_class(context,"mate-panel-menu-bar");
 		panel_background_apply_css (&PANEL_WIDGET (widget)->background, widget);
 
-		gtk_style_context_get_background_color (context, state, &bg_color);
-		gtk_style_context_get (context, state, "background-image", &bg_image, NULL);
+		gtk_style_context_get (context, state,
+		                       "background-color", &bg_color,
+		                       "background-image", &bg_image,
+		                       NULL);
 
-		panel_background_set_default_style (
-			&PANEL_WIDGET (widget)->background,
-			&bg_color,
-			bg_image);
+		panel_background_set_default_style (background,
+		                                    bg_color,
+		                                    bg_image);
 
 		if (bg_image)
 			cairo_pattern_destroy (bg_image);
@@ -2007,9 +2014,13 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		GdkDisplay *display;
 		GdkDevice *pointer;
 		GdkDeviceManager *device_manager;
+#endif
 
+		fleur_cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+		                                           GDK_FLEUR);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
 		display = gdk_window_get_display (window);
-		fleur_cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
 		device_manager = gdk_display_get_device_manager (display);
 		pointer = gdk_device_manager_get_client_pointer (device_manager);
 		status = gdk_device_grab (pointer, window,
@@ -2019,8 +2030,6 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 
 		g_object_unref (fleur_cursor);
 #else
-		fleur_cursor = gdk_cursor_new (GDK_FLEUR);
-
 		status = gdk_pointer_grab (window, FALSE,
 					   APPLET_EVENT_MASK, NULL,
 					   fleur_cursor, time_);
@@ -2508,7 +2517,11 @@ panel_widget_applet_key_press_event (GtkWidget   *widget,
 	if (!mate_panel_applet_in_drag)
 		return FALSE;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 	return gtk_bindings_activate (G_OBJECT (panel),
+#else
+	return gtk_bindings_activate (GTK_OBJECT (panel),
+#endif
 				      ((GdkEventKey *)event)->keyval, 
 				      ((GdkEventKey *)event)->state);	
 }

@@ -246,8 +246,8 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 		item = gtk_image_menu_item_new ();
 	}
 
-	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-				   icon, NULL, NULL, name);
+	setup_menuitem_with_icon (item, panel_menu_icon_get_size (),
+				  NULL, icon, name);
 
 	panel_util_set_tooltip_text (item, comment);
 
@@ -292,10 +292,10 @@ panel_menu_items_append_place_item (const char *icon_name,
 	char      *user_data;
 
 	item = panel_image_menu_item_new ();
-	setup_menu_item_with_icon (item,
-				   panel_menu_icon_get_size (),
-				   icon_name, NULL, gicon,
-				   title);
+	setup_menuitem_with_icon (item,
+				  panel_menu_icon_get_size (),
+				  gicon, icon_name,
+				  title);
 
 	panel_util_set_tooltip_text (item, tooltip);
 
@@ -323,11 +323,11 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 		return NULL;
 
 	item = gtk_image_menu_item_new ();
-        setup_menu_item_with_icon (item,
-				   panel_menu_icon_get_size (),
-				   panel_action_get_icon_name (action_type),
-				   NULL, NULL,
-				   label ? label : panel_action_get_text (action_type));
+        setup_menuitem_with_icon (item,
+				  panel_menu_icon_get_size (),
+				  NULL,
+				  panel_action_get_icon_name (action_type),
+				  label ? label : panel_action_get_text (action_type));
 
 	panel_util_set_tooltip_text (item,
 				     tooltip ?
@@ -468,9 +468,9 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		GtkWidget *item;
 
 		item = gtk_image_menu_item_new ();
-		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   PANEL_ICON_BOOKMARKS, NULL, NULL,
-					   _("Bookmarks"));
+		setup_menuitem_with_icon (item, panel_menu_icon_get_size (),
+					  NULL, PANEL_ICON_BOOKMARKS,
+					  _("Bookmarks"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_widget_show (item);
@@ -601,10 +601,10 @@ panel_menu_item_append_drive (GtkWidget *menu,
 	title = g_drive_get_name (drive);
 
 	item = panel_image_menu_item_new ();
-	setup_menu_item_with_icon (item,
-				   panel_menu_icon_get_size (),
-				   NULL, NULL, icon,
-				   title);
+	setup_menuitem_with_icon (item,
+				  panel_menu_icon_get_size (),
+				  icon, NULL,
+				  title);
 	g_object_unref (icon);
 
 	tooltip = g_strdup_printf (_("Rescan %s"), title);
@@ -701,10 +701,10 @@ panel_menu_item_append_volume (GtkWidget *menu,
 	title = g_volume_get_name (volume);
 
 	item = panel_image_menu_item_new ();
-	setup_menu_item_with_icon (item,
-				   panel_menu_icon_get_size (),
-				   NULL, NULL, icon,
-				   title);
+	setup_menuitem_with_icon (item,
+				  panel_menu_icon_get_size (),
+				  icon, NULL,
+				  title);
 	g_object_unref (icon);
 
 	tooltip = g_strdup_printf (_("Mount %s"), title);
@@ -912,9 +912,9 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 		GtkWidget  *item;
 
 		item = gtk_image_menu_item_new ();
-		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   PANEL_ICON_REMOVABLE_MEDIA,
-					   NULL, NULL,
+		setup_menuitem_with_icon (item, panel_menu_icon_get_size (),
+					  NULL,
+					  PANEL_ICON_REMOVABLE_MEDIA,
 					   _("Removable Media"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -999,10 +999,10 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 		GtkWidget  *item;
 
 		item = panel_image_menu_item_new ();
-		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   PANEL_ICON_NETWORK_SERVER,
-					   NULL, NULL,
-					   _("Network Places"));
+		setup_menuitem_with_icon (item, panel_menu_icon_get_size (),
+					  NULL,
+					  PANEL_ICON_NETWORK_SERVER,
+					  _("Network Places"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_widget_show (item);

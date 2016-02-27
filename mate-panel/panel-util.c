@@ -112,7 +112,9 @@ panel_push_window_busy (GtkWidget *window)
 
 		win = gtk_widget_get_window (window);
 		if (win != NULL) {
-			GdkCursor *cursor = gdk_cursor_new (GDK_WATCH);
+			GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+			                                                GDK_WATCH);
+
 			gdk_window_set_cursor (win, cursor);
 #if GTK_CHECK_VERSION (3, 0, 0)
 			g_object_unref (cursor);

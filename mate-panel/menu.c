@@ -55,13 +55,6 @@
 static GtkWidget *populate_menu_from_directory (GtkWidget          *menu,
 						MateMenuTreeDirectory *directory);
 
-static void panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
-					    GtkIconSize  icon_size,
-					    const char  *stock_id,
-					    GIcon       *gicon,
-					    const char  *image_filename,
-					    const char  *fallback_image_filename);
-
 static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
 
@@ -681,7 +674,11 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 #endif
     }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  if (xgrab_shell)
+#else
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
+#endif
     {
 #if GTK_CHECK_VERSION (3, 0, 0)
       gboolean status;
@@ -691,13 +688,14 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       GdkDeviceManager *device_manager;
 #endif
       GdkWindow *window = gtk_widget_get_window (xgrab_shell);
-      GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
+      GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+                                                      GDK_ARROW);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
       display = gdk_window_get_display (window);
       device_manager = gdk_display_get_device_manager (display);
-      keyboard = gdk_device_get_associated_device (pointer);
       pointer = gdk_device_manager_get_client_pointer (device_manager);
+      keyboard = gdk_device_get_associated_device (pointer);
 
       /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
          or GDK_OWNERSHIP_APPLICATION Idem for the
@@ -731,7 +729,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 #endif
 /* FIXME fix for GTK3 */
 #if !GTK_CHECK_VERSION (3, 0, 0)
-	      GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+          GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
 #endif
 	    }
 	  else
@@ -813,6 +811,32 @@ menu_escape_underscores_and_prepend (const char *text)
 }
 
 void
+setup_menuitem_with_icon (GtkWidget   *menuitem,
+			  GtkIconSize  icon_size,
+			  GIcon       *gicon,
+			  const char  *image_filename,
+			  const char  *title)
+{
+	GtkWidget *image;
+	GIcon *icon = NULL;
+
+	image = gtk_image_new ();
+	g_object_set (image, "icon-size", icon_size, NULL);
+
+	if (gicon)
+		icon = g_object_ref (gicon);
+	else if (image_filename)
+		icon = panel_gicon_from_icon_name (image_filename);
+
+	gtk_image_set_from_gicon (GTK_IMAGE(image), icon, icon_size);
+	g_object_unref (icon);
+
+	gtk_widget_show (image);
+
+	setup_menuitem (menuitem, icon_size, image, title);
+}
+
+void
 setup_menuitem (GtkWidget   *menuitem,
 		GtkIconSize  icon_size,
 		GtkWidget   *image,
@@ -843,9 +867,13 @@ setup_menuitem (GtkWidget   *menuitem,
 	gtk_container_add (GTK_CONTAINER (menuitem), label);
 
 	if (image) {
+		gint icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
+
+		gtk_icon_size_lookup (icon_size, NULL, &icon_height);
 		gtk_widget_show (image);
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 					       image);
+		gtk_image_set_pixel_size (GTK_IMAGE(image), icon_height);
 	}
 
 	gtk_widget_show (menuitem);
@@ -1058,16 +1086,11 @@ create_submenu_entry (GtkWidget          *menu,
 	else
 		menuitem = gtk_image_menu_item_new ();
 
-	panel_load_menu_image_deferred (menuitem,
-					panel_menu_icon_get_size (),
-					NULL, NULL,
-					matemenu_tree_directory_get_icon (directory),
-					PANEL_ICON_FOLDER);
-
-	setup_menuitem (menuitem,
-			panel_menu_icon_get_size (),
-			NULL,
-			matemenu_tree_directory_get_name (directory));
+	setup_menuitem_with_icon (menuitem,
+				  panel_menu_icon_get_size (),
+				  NULL,
+				  matemenu_tree_directory_get_icon (directory),
+				  matemenu_tree_directory_get_name (directory));
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
@@ -1144,18 +1167,13 @@ create_menuitem (GtkWidget          *menu,
 					matemenu_tree_item_ref (alias_directory),
 					(GDestroyNotify) matemenu_tree_item_unref);
 
-	panel_load_menu_image_deferred (menuitem,
-					panel_menu_icon_get_size (),
-					NULL, NULL,
-					alias_directory ? matemenu_tree_directory_get_icon (alias_directory) :
-							  matemenu_tree_entry_get_icon (entry),
-					PANEL_STOCK_DEFAULT_ICON);
-
-	setup_menuitem (menuitem,
-			panel_menu_icon_get_size (),
-			NULL,
-			alias_directory ? matemenu_tree_directory_get_name (alias_directory) :
-					  matemenu_tree_entry_get_display_name (entry));
+	setup_menuitem_with_icon (menuitem,
+				  panel_menu_icon_get_size (),
+				  NULL,
+				  alias_directory ? matemenu_tree_directory_get_icon (alias_directory) :
+						    matemenu_tree_entry_get_icon (entry),
+				  alias_directory ? matemenu_tree_directory_get_name (alias_directory) :
+						    matemenu_tree_entry_get_display_name (entry));
 
 	if (alias_directory &&
 	    matemenu_tree_directory_get_comment (alias_directory))
@@ -1407,22 +1425,6 @@ populate_menu_from_directory (GtkWidget          *menu,
 	return menu;
 }
 
-void
-setup_menu_item_with_icon (GtkWidget   *item,
-			   GtkIconSize  icon_size,
-			   const char  *icon_name,
-			   const char  *stock_id,
-			   GIcon       *gicon,
-			   const char  *title)
-{
-	if (icon_name || gicon || stock_id)
-		panel_load_menu_image_deferred (item, icon_size,
-						stock_id, gicon,
-						icon_name, NULL);
-
-	setup_menuitem (item, icon_size, NULL, title);
-}
-
 static void
 main_menu_append (GtkWidget *main_menu,
 		  gpointer   data)
@@ -1472,42 +1474,6 @@ GtkWidget* create_main_menu(PanelWidget* panel)
 	g_object_set_data(G_OBJECT(main_menu), "panel-menu-append-callback-data", panel);
 
 	return main_menu;
-}
-
-static void
-panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
-				GtkIconSize  icon_size,
-				const char  *stock_id,
-				GIcon       *gicon,
-				const char  *image_filename,
-				const char  *fallback_image_filename)
-{
-	GtkWidget *image;
-	int        icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
-
-	gtk_icon_size_lookup (icon_size, NULL, &icon_height);
-
-	image = gtk_image_new ();
-	g_object_set (image, "icon-size", icon_size, NULL);
-	gtk_image_set_pixel_size (GTK_IMAGE(image), icon_height);
-
-	GIcon *icon = NULL;
-
-	if (gicon != NULL) {
-		icon = g_object_ref (gicon);
-	} else if (stock_id != NULL ) {
-		icon = g_themed_icon_new (stock_id);
-	} else if (image_filename != NULL) {
-		icon = panel_gicon_from_icon_name (image_filename);
-	}
-
-	gtk_image_set_from_gicon (GTK_IMAGE(image), icon, icon_size);
-	g_object_unref (icon);
-
-	gtk_widget_show (image);
-
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (image_menu_item),
-				       image);
 }
 
 static gboolean

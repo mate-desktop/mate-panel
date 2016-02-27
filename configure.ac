@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [1.13.0], [https://github.com/mate-desktop/mate-panel/issues],
+AC_INIT([mate-panel], [1.13.1], [https://github.com/mate-desktop/mate-panel/issues],
     [mate-panel], [http://www.mate-desktop.org])
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-xz tar-ustar -Wno-portability check-news])
@@ -69,6 +69,7 @@ CAIRO_REQUIRED=1.0.0
 DBUS_GLIB_REQUIRED=0.80
 DCONF_NEW_REQUIRED=0.13.4
 DCONF_OLD_REQUIRED=0.10.0
+LIBRSVG_REQUIRED=2.36.2
 
 # GTK library
 
@@ -145,7 +146,7 @@ PKG_CHECK_MODULES(TZ, gio-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(TZ_CFLAGS)
 AC_SUBST(TZ_LIBS)
 
-PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-$GTK_API_VERSION >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED librsvg-2.0 dbus-glib-1 $WEATHER_LIB >= $WEATHER_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED)
+PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-$GTK_API_VERSION >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED librsvg-2.0 >= $LIBRSVG_REQUIRED dbus-glib-1 $WEATHER_LIB >= $WEATHER_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED)
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
@@ -251,22 +252,6 @@ AC_SUBST([modulesdir],"\$(libdir)/mate-panel/modules")
 
 dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/mate-panel/applets")
-
-
-dnl ****************************************************************************
-dnl * Ubuntu hacks
-dnl ****************************************************************************
-AC_ARG_ENABLE(ubuntu,
-	AS_HELP_STRING([--enable-ubuntu], [Enable Ubuntu Counter Hacks]), enable_ubuntu=yes, enable_ubuntu=no)
-
-if test "x$enable_ubuntu" = "xyes" ; then
-	# we define a UBUNTU on code
-	PANEL_CFLAGS="$PANEL_CFLAGS -DUBUNTU"
-
-	ENABLE_UBUNTU=yes
-else
-	ENABLE_UBUNTU=no
-fi
 
 
 dnl  Language Support
@@ -385,7 +370,6 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
         Gtk+ version:                  ${GTK_API_VERSION}
-        Ubuntu Counter Hack:           ${ENABLE_UBUNTU}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}

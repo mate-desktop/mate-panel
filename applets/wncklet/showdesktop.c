@@ -144,8 +144,10 @@ static void update_icon(ShowDesktopData* sdd)
 	GdkPixbuf* scaled;
 	int icon_size;
 	GError* error;
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	int focus_width = 0;
 	int focus_pad = 0;
+#endif
 	int thickness = 0;
 
 	if (!sdd->icon_theme)
@@ -155,10 +157,12 @@ static void update_icon(ShowDesktopData* sdd)
 	state = gtk_widget_get_state_flags (sdd->button);
 	context = gtk_widget_get_style_context (sdd->button);
 	gtk_style_context_get_padding (context, state, &padding);
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	gtk_style_context_get_style (context,
 			             "focus-line-width", &focus_width,
 			             "focus-padding", &focus_pad,
 			             NULL);
+#endif
 
 	switch (sdd->orient) {
 	case GTK_ORIENTATION_HORIZONTAL:
@@ -168,8 +172,11 @@ static void update_icon(ShowDesktopData* sdd)
 		thickness = padding.left + padding.right;
 		break;
 	}
-
+#if GTK_CHECK_VERSION (3, 19, 0)
+	icon_size = sdd->size - thickness;
+#else
 	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
+#endif
 #else
 	gtk_widget_style_get (sdd->button, "focus-line-width", &focus_width, "focus-padding", &focus_pad, NULL);
 
@@ -208,7 +215,7 @@ static void update_icon(ShowDesktopData* sdd)
 			error = NULL;
 		}
 
-		gtk_image_set_from_stock(GTK_IMAGE (sdd->image), GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_SMALL_TOOLBAR);
+		gtk_image_set_from_icon_name (GTK_IMAGE (sdd->image), "image-missing", GTK_ICON_SIZE_SMALL_TOOLBAR);
 		return;
 	}
 
@@ -405,7 +412,9 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	gchar* ui_path;
 	AtkObject* atk_obj;
 #if GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	GtkCssProvider *provider;
+#endif
 #endif
 
 	mate_panel_applet_set_flags(applet, MATE_PANEL_APPLET_EXPAND_MINOR);
@@ -437,6 +446,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 	gtk_widget_set_name (sdd->button, "showdesktop-button");
 #if GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
 					 "#showdesktop-button {\n"
@@ -448,6 +458,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 					g_object_unref (provider);
+#endif
 #else
 	gtk_rc_parse_string ("\n"
 		"   style \"showdesktop-button-style\"\n"

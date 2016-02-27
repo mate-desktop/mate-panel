@@ -140,7 +140,9 @@ struct _ClockData {
 
 	GtkListStore *cities_store;
         GtkWidget *cities_section;
+#if !GTK_CHECK_VERSION (3, 0, 0)
         GtkWidget *map_section;
+#endif
         GtkWidget *map_widget;
 
         /* Window to set the time */
@@ -266,8 +268,10 @@ calculate_minimum_width (GtkWidget   *widget,
 	PangoContext *pango_context;
 	PangoLayout  *layout;
 	int	      width, height;
+#if !GTK_CHECK_VERSION (3, 19, 0)
 	int	      focus_width = 0;
 	int	      focus_pad = 0;
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *style_context;
 	GtkStateFlags    state;
@@ -287,12 +291,17 @@ calculate_minimum_width (GtkWidget   *widget,
 	state = gtk_widget_get_state_flags (widget);
 	style_context = gtk_widget_get_style_context (widget);
 	gtk_style_context_get_padding (style_context, state, &padding);
+#if GTK_CHECK_VERSION (3, 19, 0)
+
+	width += padding.left + padding.right;
+#else
 	gtk_style_context_get_style (style_context,
 				     "focus-line-width", &focus_width,
 				     "focus-padding", &focus_pad,
 				     NULL);
 
 width += 2 * (focus_width + focus_pad) + padding.left + padding.right;
+#endif
 #else
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
@@ -1217,7 +1226,11 @@ create_map_section (ClockData *cd)
         ClockMap *map;
 
         if (cd->map_widget) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+                gtk_widget_destroy (cd->map_widget);
+#else
                 gtk_widget_destroy (GTK_WIDGET (cd->map_section));
+#endif
                 cd->map_widget = NULL;
         }
 
@@ -1225,9 +1238,20 @@ create_map_section (ClockData *cd)
         g_signal_connect (map, "need-locations",
                           G_CALLBACK (map_need_locations_cb), cd);
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
         cd->map_section = gtk_alignment_new (0, 0, 1, 1);
+#endif
         cd->map_widget = GTK_WIDGET (map);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+        gtk_widget_set_margin_top (cd->map_widget, 1);
+        gtk_widget_set_margin_bottom (cd->map_widget, 1);
+        gtk_widget_set_margin_start (cd->map_widget, 1);
+        gtk_widget_set_margin_end (cd->map_widget, 1);
+
+        gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_widget, TRUE, TRUE, 0);
+        gtk_widget_show (cd->map_widget);
+#else
         gtk_container_add (GTK_CONTAINER (cd->map_section), cd->map_widget);
 
         gtk_alignment_set_padding (GTK_ALIGNMENT (cd->map_section), 1, 1, 1, 1);
@@ -1235,6 +1259,7 @@ create_map_section (ClockData *cd)
         gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_section, FALSE, FALSE, 0);
         gtk_widget_show (cd->map_widget);
         gtk_widget_show (cd->map_section);
+#endif
 }
 
 static void
@@ -1245,7 +1270,9 @@ update_calendar_popup (ClockData *cd)
                         gtk_widget_destroy (cd->calendar_popup);
                         cd->calendar_popup = NULL;
                         cd->cities_section = NULL;
+#if !GTK_CHECK_VERSION (3, 0, 0)
                         cd->map_section = NULL;
+#endif
                         cd->map_widget = NULL;
 			cd->clock_vbox = NULL;
 
@@ -1324,11 +1351,12 @@ clock_update_text_gravity (GtkWidget *label)
 	pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 19, 0)
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
         static gboolean first_time = TRUE;
-#if GTK_CHECK_VERSION (3, 0, 0)
         GtkCssProvider  *provider;
 
         if (first_time) {
@@ -1342,7 +1370,17 @@ force_no_focus_padding (GtkWidget *widget)
                                         GTK_STYLE_PROVIDER (provider),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
                 g_object_unref (provider);
+                first_time = FALSE;
+        }
+
+        gtk_widget_set_name (widget, "clock-applet-button");
+}
+#endif
 #else
+static inline void
+force_no_focus_padding (GtkWidget *widget)
+{
+        static gboolean first_time = TRUE;
         if (first_time) {
                 gtk_rc_parse_string ("\n"
                                      "   style \"clock-applet-button-style\"\n"
@@ -1353,12 +1391,12 @@ force_no_focus_padding (GtkWidget *widget)
                                      "\n"
                                      "    widget \"*.clock-applet-button\" style \"clock-applet-button-style\"\n"
                                      "\n");
-#endif
                 first_time = FALSE;
         }
 
         gtk_widget_set_name (widget, "clock-applet-button");
 }
+#endif
 
 static GtkWidget *
 create_main_clock_button (void)
@@ -1368,7 +1406,11 @@ create_main_clock_button (void)
         button = gtk_toggle_button_new ();
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
+#if GTK_CHECK_VERSION (3, 19, 0)
+        gtk_widget_set_name (button, "clock-applet-button");
+#else
         force_no_focus_padding (button);
+#endif
 
         return button;
 }

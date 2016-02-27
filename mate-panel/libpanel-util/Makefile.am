@@ -16,6 +16,8 @@ libpanel_util_la_SOURCES =		\
 	panel-cleanup.h			\
 	panel-dbus-service.c		\
 	panel-dbus-service.h		\
+	panel-color.c			\
+	panel-color.h			\
 	panel-error.c			\
 	panel-error.h			\
 	panel-glib.c			\

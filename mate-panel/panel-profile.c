@@ -231,39 +231,21 @@ panel_profile_get_background_type (PanelToplevel *toplevel)
 	return background_type;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 void
 panel_profile_set_background_color (PanelToplevel *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				    GdkRGBA       *color)
-#else
-				    PanelColor    *color)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel_profile_set_background_gdk_rgba (toplevel, color);
-#else
-	panel_profile_set_background_gdk_color (toplevel, &color->gdk);
-	panel_profile_set_background_opacity (toplevel, color->alpha);
-#endif
 }
 
 void
 panel_profile_get_background_color (PanelToplevel *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				    GdkRGBA       *color)
-#else
-				    PanelColor    *color)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel_profile_get_background_gdk_rgba (toplevel, color);
-#else
-	panel_profile_get_background_gdk_color (toplevel, &(color->gdk));
-	color->alpha = panel_profile_get_background_opacity (toplevel);
-#endif
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 void
 panel_profile_set_background_gdk_rgba (PanelToplevel *toplevel,
 					GdkRGBA      *color)
@@ -293,7 +275,41 @@ panel_profile_get_background_gdk_rgba (PanelToplevel *toplevel,
 
 	g_free (color_str);
 }
+
+void
+panel_profile_set_background_opacity (PanelToplevel *toplevel,
+				      guint16        opacity)
+{
+	GdkRGBA color;
+	panel_profile_get_background_color (toplevel, &color);
+	color.alpha = opacity / 65535.0;
+	panel_profile_set_background_color (toplevel, &color);
+}
+
+guint16
+panel_profile_get_background_opacity (PanelToplevel *toplevel)
+{
+	GdkRGBA color;
+	panel_profile_get_background_color (toplevel, &color);
+	return (guint16) round (color.alpha * 65535);
+}
 #else
+void
+panel_profile_set_background_color (PanelToplevel *toplevel,
+				    PanelColor    *color)
+{
+	panel_profile_set_background_gdk_color (toplevel, &color->gdk);
+	panel_profile_set_background_opacity (toplevel, color->alpha);
+}
+
+void
+panel_profile_get_background_color (PanelToplevel *toplevel,
+				    PanelColor    *color)
+{
+	panel_profile_get_background_gdk_color (toplevel, &(color->gdk));
+	color->alpha = panel_profile_get_background_opacity (toplevel);
+}
+
 void
 panel_profile_set_background_gdk_color (PanelToplevel *toplevel,
 					GdkColor      *gdk_color)
@@ -325,35 +341,22 @@ panel_profile_get_background_gdk_color (PanelToplevel *toplevel,
 
 	g_free (color_str);
 }
-#endif
 
 void
 panel_profile_set_background_opacity (PanelToplevel *toplevel,
 				      guint16        opacity)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
-	GdkRGBA color;
-	panel_profile_get_background_color (toplevel, &color);
-	color.alpha = opacity / 65535.0;
-	panel_profile_set_background_color (toplevel, &color);
-#else
 	g_settings_set_int (toplevel->background_settings, "opacity", opacity);
-#endif
 }
 
 guint16
 panel_profile_get_background_opacity (PanelToplevel *toplevel)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
-	GdkRGBA color;
-	panel_profile_get_background_color (toplevel, &color);
-	return (guint16) round (color.alpha * 65535);
-#else
 	guint16 opacity;
 	opacity = g_settings_get_int (toplevel->background_settings, "opacity");
 	return opacity;
-#endif
 }
+#endif
 
 void
 panel_profile_set_background_image (PanelToplevel *toplevel,
@@ -551,36 +554,40 @@ panel_profile_is_writable_attached_tooltip (PanelToplevel *toplevel)
 	return is_writable;
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 get_background_color (PanelToplevel *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 					  GdkRGBA       *color)
-#else
-					  PanelColor    *color)
-#endif
 {
 	char       *color_str;
 	color_str = g_settings_get_string (toplevel->background_settings, "color");
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (!color_str || !gdk_rgba_parse (color, color_str)) {
 		color->red   = 0;
 		color->green = 0;
 		color->blue  = 0;
 		color->alpha  = 1;
 	}
+
+	g_free (color_str);
+}
 #else
+static void
+get_background_color (PanelToplevel *toplevel,
+					  PanelColor    *color)
+{
+	char       *color_str;
+	color_str = g_settings_get_string (toplevel->background_settings, "color");
 	if (!color_str || !gdk_color_parse (color_str, &(color->gdk))) {
 		color->gdk.red   = 0;
 		color->gdk.green = 0;
 		color->gdk.blue  = 0;
 	}
-#endif
+
 	g_free (color_str);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
 	color->alpha = g_settings_get_int (toplevel->background_settings, "opacity");
-#endif
 }
+#endif
 
 static char *
 get_background_image (PanelToplevel *toplevel,
@@ -1137,10 +1144,10 @@ panel_profile_delete_toplevel (PanelToplevel *toplevel)
 	panel_profile_remove_from_list (PANEL_GSETTINGS_TOPLEVELS, toplevel_id);
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static GdkScreen *
 get_toplevel_screen (char *toplevel_path)
 {
-
 	GdkDisplay *display;
 	GSettings  *settings;
 	int         screen_n;
@@ -1162,6 +1169,7 @@ get_toplevel_screen (char *toplevel_path)
 
 	return gdk_display_get_screen (display, screen_n);
 }
+#endif
 
 PanelToplevel *
 panel_profile_load_toplevel (const char *toplevel_id)
@@ -1176,7 +1184,13 @@ panel_profile_load_toplevel (const char *toplevel_id)
 
 	toplevel_path = g_strdup_printf ("%s%s/", PANEL_TOPLEVEL_PATH, toplevel_id);
 
-	if (!(screen = get_toplevel_screen (toplevel_path))) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screen = gdk_display_get_default_screen (gdk_display_get_default ());
+#else
+	screen = get_toplevel_screen (toplevel_path);
+#endif
+
+	if (screen == NULL) {
 		g_free (toplevel_path);
 		return NULL;
 	}
@@ -1573,7 +1587,7 @@ panel_profile_toplevel_id_list_notify (GSettings *settings,
 
 	toplevel_ids_strv = g_settings_get_strv (settings, key);
 
-	toplevel_ids = mate_gsettings_strv_to_gslist (toplevel_ids_strv);
+	toplevel_ids = mate_gsettings_strv_to_gslist ((const gchar **) toplevel_ids_strv);
 	toplevel_ids = panel_g_slist_make_unique (toplevel_ids,
 						  (GCompareFunc) g_strcmp0,
 						  FALSE);
@@ -1617,7 +1631,7 @@ panel_profile_object_id_list_update (gchar **objects)
 	GSList *sublist = NULL, *l;
 	GSList *object_ids;
 
-	object_ids = mate_gsettings_strv_to_gslist (objects);
+	object_ids = mate_gsettings_strv_to_gslist ((const gchar **) objects);
 	object_ids = panel_g_slist_make_unique (object_ids,
 						(GCompareFunc) g_strcmp0,
 						FALSE);
@@ -1691,16 +1705,27 @@ panel_profile_ensure_toplevel_per_screen ()
 	GSList     *empty_screens = NULL;
 	GSList     *l;
 	GdkDisplay *display;
+	GdkScreen  *screen;
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	int         n_screens, i;
+#endif
 
 	toplevels = panel_toplevel_list_toplevels ();
 
 	display = gdk_display_get_default ();
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	screen = gdk_display_get_default_screen (display);
+
+	for (l = toplevels; l; l = l->next)
+		if (gtk_window_get_screen (l->data) == screen)
+			break;
+
+	if (!l)
+		empty_screens = g_slist_prepend (empty_screens, screen);
+#else
 	n_screens = gdk_display_get_n_screens (display);
 	for (i = 0; i < n_screens; i++) {
-		GdkScreen *screen;
-
 		screen = gdk_display_get_screen (display, i);
 
 		for (l = toplevels; l; l = l->next)
@@ -1710,6 +1735,7 @@ panel_profile_ensure_toplevel_per_screen ()
 		if (!l)
 			empty_screens = g_slist_prepend (empty_screens, screen);
 	}
+#endif
 
 	for (l = empty_screens; l; l = l->next)
 		panel_layout_apply_default_from_gkeyfile (l->data);
