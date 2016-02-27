@@ -1746,9 +1746,15 @@ panel_widget_realize (GtkWidget *widget)
 #if !GTK_CHECK_VERSION (3, 0, 0)
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
+#else
 
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
+	gdk_window_ensure_native (window);
+
+		/* For auto-hidden panels with a colored background, we need native
+	 * windows to avoid some uglyness on unhide */
+	/*Also required to show the background at all with gtk3.20*/
 	gdk_window_ensure_native (window);
 #endif
 
