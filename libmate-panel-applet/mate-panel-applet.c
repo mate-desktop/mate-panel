@@ -1801,9 +1801,15 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 		break;
 	case PANEL_COLOR_BACKGROUND:
 		gdk_window_set_background_rgba(window,color);
+#if GTK_CHECK_VERSION (3, 19, 0)
+    	gdk_window_ensure_native (window);
+#endif
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
 		gdk_window_set_background_pattern(window,pattern);
+#if GTK_CHECK_VERSION (3, 19, 0)
+		gdk_window_ensure_native (window);
+#endif
 		break;
 	default:
 		g_assert_not_reached ();
