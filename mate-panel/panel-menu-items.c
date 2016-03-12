@@ -75,6 +75,7 @@ struct _PanelPlaceMenuItemPrivate {
 
 	GSettings   *caja_desktop_settings;
 	GSettings   *caja_prefs_settings;
+	GSettings   *menubar_settings;
 
 	GtkRecentManager *recent_manager;
 
@@ -351,7 +352,7 @@ panel_menu_items_create_action_item (PanelActionButtonType action_type)
 }
 
 static void
-panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
+panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, int max_items_or_submenu)
 {
 	typedef struct {
 		char *full_uri;
@@ -378,7 +379,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 	/* We use a hard limit to avoid having users shooting their
 	 * own feet, and to avoid crashing the system if a misbehaving
-	 * application creates a big bookmars file.
+	 * application creates a big bookmarks file.
 	 */
 	for (i = 0; i < MAX_BOOKMARK_ITEMS; i++) {
 		char      *contents;
@@ -462,7 +463,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 	add_bookmarks = g_slist_reverse (add_bookmarks);
 
-	if (g_slist_length (add_bookmarks) <= MAX_ITEMS_OR_SUBMENU) {
+	if (g_slist_length (add_bookmarks) <= max_items_or_submenu) {
 		add_menu = menu;
 	} else {
 		GtkWidget *item;
@@ -906,7 +907,7 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	/* now that we have everything, add the items inline or in a submenu */
 	items = g_slist_reverse (items);
 
-	if (g_slist_length (items) <= MAX_ITEMS_OR_SUBMENU) {
+	if (g_slist_length (items) <= g_settings_get_int (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU)) {
 		add_menu = menu;
 	} else {
 		GtkWidget  *item;
@@ -993,7 +994,7 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 	}
 	add_mounts = g_slist_reverse (add_mounts);
 
-	if (g_slist_length (add_mounts) <= MAX_ITEMS_OR_SUBMENU) {
+	if (g_slist_length (add_mounts) <= g_settings_get_int (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU)) {
 		add_menu = menu;
 	} else {
 		GtkWidget  *item;
@@ -1069,7 +1070,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 		g_free (uri);
 	}
 
-	panel_place_menu_item_append_gtk_bookmarks (places_menu);
+	panel_place_menu_item_append_gtk_bookmarks (places_menu, g_settings_get_int (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU));
 	add_menu_separator (places_menu);
 
 	if (place_item->priv->caja_desktop_settings != NULL)
@@ -1376,6 +1377,16 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 	}
 	else
 		menuitem->priv->caja_prefs_settings = NULL;
+
+	if (mate_gsettings_schema_exists (PANEL_MENU_BAR_SCHEMA)) {
+		menuitem->priv->menubar_settings = g_settings_new (PANEL_MENU_BAR_SCHEMA);
+		g_signal_connect (menuitem->priv->menubar_settings,
+				"changed::" PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU,
+				G_CALLBACK (panel_place_menu_item_key_changed),
+				G_OBJECT (menuitem));
+	}
+	else
+		menuitem->priv->menubar_settings = NULL;
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
