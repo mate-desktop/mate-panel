@@ -58,7 +58,6 @@
 #include "panel-schemas.h"
 
 #define BOOKMARKS_FILENAME      ".gtk-bookmarks"
-#define MAX_ITEMS_OR_SUBMENU    8
 #define MAX_BOOKMARK_ITEMS      100
 
 G_DEFINE_TYPE(PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
@@ -352,7 +351,7 @@ panel_menu_items_create_action_item (PanelActionButtonType action_type)
 }
 
 static void
-panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, int max_items_or_submenu)
+panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_submenu)
 {
 	typedef struct {
 		char *full_uri;
@@ -907,7 +906,7 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	/* now that we have everything, add the items inline or in a submenu */
 	items = g_slist_reverse (items);
 
-	if (g_slist_length (items) <= g_settings_get_int (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU)) {
+	if (g_slist_length (items) <= g_settings_get_uint (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU)) {
 		add_menu = menu;
 	} else {
 		GtkWidget  *item;
@@ -994,7 +993,7 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 	}
 	add_mounts = g_slist_reverse (add_mounts);
 
-	if (g_slist_length (add_mounts) <= g_settings_get_int (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU)) {
+	if (g_slist_length (add_mounts) <= g_settings_get_uint (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU)) {
 		add_menu = menu;
 	} else {
 		GtkWidget  *item;
@@ -1070,7 +1069,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 		g_free (uri);
 	}
 
-	panel_place_menu_item_append_gtk_bookmarks (places_menu, g_settings_get_int (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU));
+	panel_place_menu_item_append_gtk_bookmarks (places_menu, g_settings_get_uint (place_item->priv->menubar_settings, PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU));
 	add_menu_separator (places_menu);
 
 	if (place_item->priv->caja_desktop_settings != NULL)
@@ -1276,6 +1275,9 @@ panel_place_menu_item_finalize (GObject *object)
 		menuitem->priv->caja_prefs_settings = NULL;
 	}
 
+	g_object_unref (menuitem->priv->menubar_settings);
+	menuitem->priv->menubar_settings = NULL;
+
 	if (menuitem->priv->bookmarks_monitor != NULL) {
 		g_file_monitor_cancel (menuitem->priv->bookmarks_monitor);
 		g_object_unref (menuitem->priv->bookmarks_monitor);
@@ -1378,15 +1380,11 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 	else
 		menuitem->priv->caja_prefs_settings = NULL;
 
-	if (mate_gsettings_schema_exists (PANEL_MENU_BAR_SCHEMA)) {
-		menuitem->priv->menubar_settings = g_settings_new (PANEL_MENU_BAR_SCHEMA);
-		g_signal_connect (menuitem->priv->menubar_settings,
-				"changed::" PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU,
-				G_CALLBACK (panel_place_menu_item_key_changed),
-				G_OBJECT (menuitem));
-	}
-	else
-		menuitem->priv->menubar_settings = NULL;
+	menuitem->priv->menubar_settings = g_settings_new (PANEL_MENU_BAR_SCHEMA);
+	g_signal_connect (menuitem->priv->menubar_settings,
+			"changed::" PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU,
+			G_CALLBACK (panel_place_menu_item_key_changed),
+			G_OBJECT (menuitem));
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
