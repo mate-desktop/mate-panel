@@ -567,6 +567,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
+                                         "wnck-pager:selected,\n"
                                          "WnckPager:selected {\n"
                                          "background-color: #4A90D9; }",
                                          -1, NULL);
