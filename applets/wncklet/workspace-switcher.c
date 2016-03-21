@@ -563,14 +563,16 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
+	gtk_style_context_add_class (context, "wnck-applet");
+	context = gtk_widget_get_style_context (pager->pager);
 	gtk_style_context_add_class (context, "wnck-pager");
 
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
-                                         "WnckPager:selected {\n"
+                                         ".wnck-pager:selected {\n"
                                          "background-color: #4A90D9; }",
                                          -1, NULL);
-	gtk_style_context_add_provider (gtk_widget_get_style_context (pager->pager),
+	gtk_style_context_add_provider (context,
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
 	g_object_unref (provider);
