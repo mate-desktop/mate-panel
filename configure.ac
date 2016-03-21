@@ -103,7 +103,7 @@ case "$with_gtk" in
 esac
 
 AC_SUBST(GTK_API_VERSION)
-
+AM_CONDITIONAL([HAVE_GTK3], [test "x$GTK_API_VERSION" = "x3.0"])
 dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-$GTK_API_VERSION)
