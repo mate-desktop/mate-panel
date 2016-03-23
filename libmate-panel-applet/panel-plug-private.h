@@ -18,6 +18,9 @@
 #ifndef PANEL_PLUG_PRIVATE_H
 #define PANEL_PLUG_PRIVATE_H
 
+#include <gtk/gtk.h>
+#if GTK_CHECK_VERSION (3, 19, 0) && GLIB_CHECK_VERSION (2, 44, 0)
+
 #include <gtk/gtkx.h>
 
 G_BEGIN_DECLS
@@ -29,4 +32,5 @@ GtkWidget *panel_plug_new (void);
 
 G_END_DECLS
 
+#endif
 #endif

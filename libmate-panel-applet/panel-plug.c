@@ -15,6 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <gtk/gtk.h>
+#if GTK_CHECK_VERSION (3, 19, 0) && GLIB_CHECK_VERSION (2, 44, 0)
 #include "config.h"
 
 #include "panel-plug-private.h"
@@ -98,3 +100,4 @@ panel_plug_new (void)
 {
   return g_object_new (PANEL_TYPE_PLUG, NULL);
 }
+#endif
