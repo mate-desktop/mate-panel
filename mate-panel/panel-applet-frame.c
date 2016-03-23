@@ -123,8 +123,12 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 	gtk_style_context_get (context, state,
 			       "background-image", &bg_pattern,
 			       NULL);
-	background = &frame->priv->panel->background;
 
+#if GTK_CHECK_VERSION (3, 18, 0)
+	background = &frame->priv->panel->toplevel->background;
+#else
+	background = &frame->priv->panel->background;
+#endif
 	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
 	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
 		cairo_matrix_t ptm;
@@ -223,9 +227,11 @@ mate_panel_applet_frame_update_background_size (MatePanelAppletFrame *frame,
 	    old_allocation->width  == new_allocation->width &&
 	    old_allocation->height == new_allocation->height)
 		return;
-
+#if GTK_CHECK_VERSION (3, 18, 0)
+	background = &frame->priv->panel->toplevel->background;
+#else
 	background = &frame->priv->panel->background;
-
+#endif
 	if (background->type == PANEL_BACK_NONE ||
 	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
 		return;
@@ -647,8 +653,11 @@ mate_panel_applet_frame_change_background (MatePanelAppletFrame    *frame,
 
 	if (frame->priv->has_handle) {
 		PanelBackground *background;
-
+#if GTK_CHECK_VERSION (3, 18, 0)
+		background = &PANEL_WIDGET (parent)->toplevel->background;
+#else
 		background = &PANEL_WIDGET (parent)->background;
+#endif
 #if GTK_CHECK_VERSION (3, 0, 0)
 		panel_background_apply_css (background, GTK_WIDGET (frame));
 #else
@@ -744,7 +753,11 @@ _mate_panel_applet_frame_update_flags (MatePanelAppletFrame *frame,
 		 * it */
 		PanelBackground *background;
 
+#if GTK_CHECK_VERSION (3, 18, 0)
+		background = &frame->priv->panel->toplevel->background;
+#else
 		background = &frame->priv->panel->background;
+#endif
 		mate_panel_applet_frame_change_background (frame, background->type);
 	}
 }
@@ -800,8 +813,11 @@ _mate_panel_applet_frame_get_background_string (MatePanelAppletFrame    *frame,
 			break;
 		}
 	}
-
+#if GTK_CHECK_VERSION (3, 18, 0)
+	return panel_background_make_string (&panel->toplevel->background, x, y);
+#else
 	return panel_background_make_string (&panel->background, x, y);
+#endif
 }
 
 static void

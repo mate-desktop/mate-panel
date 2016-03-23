@@ -274,8 +274,11 @@ static void panel_menu_bar_size_allocate(GtkWidget* widget, GtkAllocation* alloc
 		return;
 	}
 
+#if GTK_CHECK_VERSION (3, 18, 0)
+	background = &PANEL_MENU_BAR(widget)->priv->panel->toplevel->background;
+#else
 	background = &PANEL_MENU_BAR(widget)->priv->panel->background;
-
+#endif
 	if (background->type == PANEL_BACK_NONE || (background->type == PANEL_BACK_COLOR && !background->has_alpha))
 	{
 		return;
@@ -483,7 +486,9 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 
 void panel_menu_bar_change_background(PanelMenuBar* menubar)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 18, 0)
+	panel_background_apply_css(&menubar->priv->panel->toplevel->background, GTK_WIDGET(menubar));
+#elif GTK_CHECK_VERSION (3, 0, 0)
 	panel_background_apply_css(&menubar->priv->panel->background, GTK_WIDGET(menubar));
 #else
 	panel_background_change_background_on_widget(&menubar->priv->panel->background, GTK_WIDGET(menubar));
