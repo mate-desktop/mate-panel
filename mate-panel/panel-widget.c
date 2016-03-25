@@ -80,21 +80,27 @@ static void panel_widget_cremove        (GtkContainer     *container,
 					 GtkWidget        *widget);
 static void panel_widget_dispose        (GObject *obj);
 static void panel_widget_finalize       (GObject          *obj);
+
+#if GTK_CHECK_VERSION (3, 18, 0)
+#elif GTK_CHECK_VERSION (3, 0, 0)
 static void panel_widget_realize        (GtkWidget        *widget);
 static void panel_widget_unrealize      (GtkWidget        *panel);
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void panel_widget_state_flags_changed (GtkWidget *widget,
 					     GtkStateFlags previous_state);
 static void panel_widget_style_updated (GtkWidget *widget);
 #else
+static void panel_widget_realize        (GtkWidget        *widget);
+static void panel_widget_unrealize      (GtkWidget        *panel);
 static void panel_widget_state_changed  (GtkWidget        *widget,
 					 GtkStateType      previous_state);
 static void panel_widget_style_set      (GtkWidget        *widget,
 					 GtkStyle         *previous_style);
 #endif
 
+#if !GTK_CHECK_VERSION (3, 18, 0)
 static void panel_widget_background_changed (PanelBackground *background,
 					     PanelWidget     *panel);
+#endif
 
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
@@ -438,23 +444,24 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->size_request = panel_widget_size_request;
 #endif
 	widget_class->size_allocate = panel_widget_size_allocate;
+#if GTK_CHECK_VERSION (3, 19, 0)
+	gtk_widget_class_set_css_name (widget_class, "PanelWidget");
+#endif
+#if GTK_CHECK_VERSION (3, 18, 0)
+#elif GTK_CHECK_VERSION (3, 0, 0)
 	widget_class->realize = panel_widget_realize;
 	widget_class->unrealize = panel_widget_unrealize;
-	widget_class->focus = panel_widget_real_focus;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	widget_class->state_flags_changed = panel_widget_state_flags_changed;
 	widget_class->style_updated = panel_widget_style_updated;
 #else
+	widget_class->realize = panel_widget_realize;
+	widget_class->unrealize = panel_widget_unrealize;
 	widget_class->state_changed = panel_widget_state_changed;
 	widget_class->style_set = panel_widget_style_set;
 #endif
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
-
-#if GTK_CHECK_VERSION (3, 19, 0)
-	gtk_widget_class_set_css_name (widget_class, "PanelWidget");
-#endif
 }
 
 static void
@@ -1365,7 +1372,7 @@ queue_resize_on_all_applets(PanelWidget *panel)
 		gtk_widget_queue_resize (ad->applet);
 	}
 }
-
+#if !GTK_CHECK_VERSION(3, 18, 0)
 static void
 panel_widget_set_background_region (PanelWidget *panel)
 {
@@ -1388,7 +1395,7 @@ panel_widget_set_background_region (PanelWidget *panel)
 		allocation.width,
 		allocation.height);
 }
-
+#endif
 static void
 panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
@@ -1592,7 +1599,9 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		}
 	}
 
+#if !GTK_CHECK_VERSION(3, 18, 0)
 	panel_widget_set_background_region (panel);
+#endif
 }
 
 gboolean
@@ -1634,7 +1643,8 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 18, 0)
+#elif GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_widget_set_background_default_style (GtkWidget *widget)
 {
@@ -1648,11 +1658,7 @@ panel_widget_set_background_default_style (GtkWidget *widget)
 		context = gtk_widget_get_style_context (widget);
 		state = gtk_widget_get_state_flags (widget);
 		background = &PANEL_WIDGET (widget)->background;
-#if GTK_CHECK_VERSION (3, 19, 0)
-		gtk_style_context_add_class(context,GTK_STYLE_CLASS_BACKGROUND);
-#else
 		panel_background_apply_css (&PANEL_WIDGET (widget)->background, widget);
-#endif	
 		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 		gtk_style_context_add_class(context,"mate-panel-menu-bar");		
 
@@ -1726,11 +1732,13 @@ toplevel_configure_event (GtkWidget         *widget,
 			  GdkEventConfigure *event,
 			  PanelWidget       *panel)
 {
+#if !GTK_CHECK_VERSION(3, 18, 0)
 	panel_widget_set_background_region (panel);
-
+#endif
 	return FALSE;
 }
 
+#if !GTK_CHECK_VERSION(3, 18, 0)
 static void
 panel_widget_realize (GtkWidget *widget)
 {
@@ -1754,10 +1762,7 @@ panel_widget_realize (GtkWidget *widget)
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
 #endif
-#if GTK_CHECK_VERSION (3, 19, 0)
-	/* Also required to show the background at all with gtk3.20*/
-	gdk_window_ensure_native (window);
-#endif	
+
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	panel_widget_set_background_default_style (widget);
@@ -1770,7 +1775,7 @@ panel_widget_realize (GtkWidget *widget)
 
 	panel_background_realized (&panel->background, window);
 }
-
+#endif
 static void
 panel_widget_unrealize (GtkWidget *widget)
 {
@@ -1794,9 +1799,9 @@ panel_widget_finalize (GObject *obj)
 	g_return_if_fail (PANEL_IS_WIDGET (obj));
 
 	panel = PANEL_WIDGET (obj);
-
+#if !GTK_CHECK_VERSION(3, 18, 0)
 	panel_background_free (&panel->background);
-
+#endif
 	if (panel->applets_hints != NULL)
 		g_free (panel->applets_hints);
 	panel->applets_hints = NULL;
@@ -1880,10 +1885,11 @@ panel_widget_init (PanelWidget *panel)
 	panel->nb_applets_size_hints = 0;
 	panel->applets_hints = NULL;
 	panel->applets_using_hint = NULL;
-
+#if !GTK_CHECK_VERSION(3, 18, 0)
 	panel_background_init (&panel->background,
 			       (PanelBackgroundChangedNotify) panel_widget_background_changed,
 			       panel);
+#endif
 
 	panels = g_slist_append (panels, panel);
 }
@@ -2888,6 +2894,14 @@ panel_widget_set_size (PanelWidget *panel_widget,
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
 
+#if GTK_CHECK_VERSION (3, 18, 0)
+void
+panel_widget_emit_background_changed (PanelWidget *panel)
+{
+	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
+}
+
+#else
 static void
 panel_widget_background_changed (PanelBackground *background,
 				 PanelWidget     *panel)
@@ -2898,7 +2912,7 @@ panel_widget_background_changed (PanelBackground *background,
 		       panel_widget_signals [BACK_CHANGE_SIGNAL],
 		       0);
 }
-
+#endif
 static void 
 panel_widget_push_move_applet (PanelWidget     *panel,
                                GtkDirectionType dir)
