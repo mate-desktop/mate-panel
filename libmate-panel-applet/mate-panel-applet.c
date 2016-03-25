@@ -47,7 +47,7 @@
 #include "mate-panel-applet-factory.h"
 #include "mate-panel-applet-marshal.h"
 #include "mate-panel-applet-enums.h"
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 18, 0)
 #include "panel-plug-private.h"
 #endif
 #define MATE_PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, MatePanelAppletPrivate))
@@ -71,7 +71,7 @@ struct _MatePanelAppletPrivate {
 	MatePanelAppletOrient  orient;
 	guint              size;
 	char              *background;
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 	GtkWidget         *background_widget;
 #endif
 
@@ -1023,7 +1023,7 @@ mate_panel_applet_popup_menu (GtkWidget *widget)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 static void
 mate_panel_applet_get_preferred_width (GtkWidget *widget,
 				       int       *minimum_width,
@@ -1119,7 +1119,7 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 	GtkBin        *bin;
 	GtkWidget     *child;
 	int            border_width;
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 	int            focus_width = 0;
 #endif
 	MatePanelApplet   *applet;
@@ -1127,7 +1127,7 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 	if (!mate_panel_applet_can_focus (widget)) {
 		GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->size_allocate (widget, allocation);
 	} else {
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 		/*
 		 * We are deliberately ignoring focus-padding here to
 		 * save valuable panel real estate.
@@ -1142,7 +1142,7 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 		gtk_widget_set_allocation (widget, allocation);
 		bin = GTK_BIN (widget);
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 18, 0)
 		child_allocation.x = 0;
 		child_allocation.y = 0;
 #else
@@ -1160,7 +1160,7 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 						child_allocation.width,
 						child_allocation.height);
 
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 		child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
 		child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
 #endif
@@ -1193,7 +1193,7 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 	GtkAllocation allocation;
 #endif
 	int border_width;
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 	int focus_width = 0;
 #endif
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -1223,7 +1223,7 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 	gtk_widget_get_allocation(widget, &allocation);
 #endif
 
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 	/*
 	 * We are deliberately ignoring focus-padding here to
 	 * save valuable panel real estate.
@@ -1817,7 +1817,7 @@ mate_panel_applet_move_focus_out_of_applet (MatePanelApplet      *applet,
 	applet->priv->moving_focus_out = FALSE;
 }
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 18, 0)
 static void
 mate_panel_applet_change_background(MatePanelApplet *applet,
 				    MatePanelAppletBackgroundType type,
@@ -2166,7 +2166,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	widget_class->button_release_event = mate_panel_applet_button_release;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	widget_class->get_request_mode = mate_panel_applet_get_request_mode;
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 	widget_class->get_preferred_width = mate_panel_applet_get_preferred_width;
 	widget_class->get_preferred_height = mate_panel_applet_get_preferred_height;
 #endif
@@ -2614,7 +2614,7 @@ int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process
  **/
 
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 18, 0)
 
 void
 mate_panel_applet_set_background_widget (MatePanelApplet *applet,
