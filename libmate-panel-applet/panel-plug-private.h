@@ -19,7 +19,7 @@
 #define PANEL_PLUG_PRIVATE_H
 
 #include <gtk/gtk.h>
-#if GTK_CHECK_VERSION (3, 19, 0) && GLIB_CHECK_VERSION (2, 44, 0)
+#if GTK_CHECK_VERSION (3, 18, 0) && GLIB_CHECK_VERSION (2, 44, 0)
 
 #include <gtk/gtkx.h>
 
