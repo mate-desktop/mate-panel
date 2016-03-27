@@ -1,10 +1,21 @@
 1.13.2
+  * GTK+3.18: Apply panelplug rework
+  * GTK+3.18/3.20: move background handling toplevel
+  * GTK+3.18: revert hack not needed with moved bg code
+  * GTK+3.20: adjust CSS classes for WnckPager
+  * use GTK+3.20 custom bg fixixes only for > gtk+-3.18 and > glib-2.42
+  * GTK+3.20: Prevent transparent panel on BG change
+  * GTK+3.20: fix custom BG change on applets
+  * Make MAX_ITEMS_OR_SUBMENU configurable
+  * GTK+3.20: preserve default background
+  * GTK+3.20: force custom BG drawing on applets
+  * GTK+3.20: make custom background work on main panel
 
 1.13.1
   * menubar and menitem size is now selectable via gesettings, default is 22px
   * GTK+-3.20: a bunch of new css names and style classes are added
   * GTK+-3.0 workspace-switcher: Remove switching workspace on scroll events,
-  * This is now done by WnckPager itself.
+    This is now done by WnckPager itself.
   * GTK+3: a lot of deprecation and fixes
   * fixes some build warnings
   * icon chooser: use proper icon name for missing icon
