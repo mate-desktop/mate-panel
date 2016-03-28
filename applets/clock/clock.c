@@ -674,6 +674,8 @@ update_clock (ClockData * cd)
 static void
 update_tooltip (ClockData * cd)
 {
+        char *tip;
+        char *old_tip;
         if (!cd->showdate) {
 		struct tm *tm;
 		char date[256];
@@ -681,7 +683,6 @@ update_tooltip (ClockData * cd)
                 char *zone;
                 time_t now_t;
                 struct tm now;
-                char *tip;
 
 		tm = localtime (&cd->current_time);
 
@@ -714,17 +715,23 @@ update_tooltip (ClockData * cd)
 
                 tip = g_strdup_printf (utf8, zone);
 
-                gtk_widget_set_tooltip_text (cd->panel_button, tip);
                 g_free (utf8);
-                g_free (tip);
         } else {
-		if (cd->calendar_popup)
-			gtk_widget_set_tooltip_text (cd->panel_button,
-						     _("Click to hide month calendar"));
-		else
-			gtk_widget_set_tooltip_text (cd->panel_button,
-						     _("Click to view month calendar"));
+                if (cd->calendar_popup)
+                        tip = _("Click to hide month calendar");
+                else
+                        tip = _("Click to view month calendar");
         }
+
+        /* Update only when the new tip is different.
+         * This can prevent problems with OpenGL on some drivers */
+        old_tip = gtk_widget_get_tooltip_text (cd->panel_button);
+        if (g_strcmp0 (old_tip, tip))
+            gtk_widget_set_tooltip_text (cd->panel_button, tip);
+
+        g_free (old_tip);
+        if (!cd->showdate)
+                g_free (tip);
 }
 
 static void
