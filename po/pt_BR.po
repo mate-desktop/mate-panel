@@ -7,6 +7,7 @@
 # Fabrizzio Alphonsus Soares <fabrizzio.soares@gmail.com>, 2012
 # Fabrizzio Alphonsus Soares <fabrizzio.soares@gmail.com>, 2012
 # Gilberto Coutinho <gilberto.jsc@gmail.com>, 2015
+# Marcelo Ghelman <marcelo.ghelman@gmail.com>, 2016
 # Marcus Vinícius Marques, 2014
 # Matheus Macabu <mkbu95@gmail.com>, 2013
 # Matheus  Martins, 2013
@@ -17,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-13 20:30+0300\n"
-"PO-Revision-Date: 2016-03-13 17:33+0000\n"
-"Last-Translator: monsta <monsta@inbox.ru>\n"
+"POT-Creation-Date: 2016-03-27 23:23+0300\n"
+"PO-Revision-Date: 2016-03-29 14:32+0000\n"
+"Last-Translator: Marcelo Ghelman <marcelo.ghelman@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/mate/MATE/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -178,7 +179,7 @@ msgstr "_Preferências"
 #: ../applets/wncklet/window-menu.c:101
 #: ../applets/wncklet/workspace-switcher.c:381 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:734
-#: ../mate-panel/panel-context-menu.c:296 ../mate-panel/panel-menu-bar.c:389
+#: ../mate-panel/panel-context-menu.c:296 ../mate-panel/panel-menu-bar.c:392
 #: ../mate-panel/panel-menu-button.c:670
 msgid "_Help"
 msgstr "Aj_uda"
@@ -232,7 +233,7 @@ msgstr "O Relógio mostra a hora e a data atuais"
 #: ../applets/notification_area/main.c:146
 #: ../applets/wncklet/showdesktop.c:547 ../applets/wncklet/window-list.c:581
 #: ../applets/wncklet/window-menu.c:91
-#: ../applets/wncklet/workspace-switcher.c:649
+#: ../applets/wncklet/workspace-switcher.c:651
 #: ../mate-panel/panel-context-menu.c:149
 msgid "translator-credits"
 msgstr "Elvis Pfützenreuter <epx@netville.com.br>\nAldo Oliveira <america103@gmail.com>\nSandro Nunes Henrique <sandro@conectiva.com.br>\nRodrigo Stulzer Lopes <rodrigo@conectiva.com.br>\nRicardo Soares Guimarães <ricardo@conectiva.com.br>\nGustavo Maciel Dias Vieira <gustavo@sagui.org>\nAlexandre Folle de Menezes <afmenez@terra.com.br>\nEvandro Fernandes Giovanini <evandrofg@ig.com.br>\nGustavo Noronha Silva <kov@debian.org>\nWelther José O. Esteves <weltherjoe@yahoo.com.br>\nRaphael Higino <In Memoriam>\nEvandro Fernandes Giovanini <evandrofg@ig.com.br>\nOg Maciel <ogmaciel@gnome.org>\nLeonardo Ferreira Fontenelle <leonardof@gnome.org>\nVladimir Melo <vmelo@gnome.org>\nFábio Nogueira <deb-user-ba@ubuntu.com>\nAndré Gondim <andregondim@ubuntu.com>\nHenrique P. Machado <hpmachado@gnome.org>"
@@ -893,7 +894,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Alternar entre janelas abertas usando um menu"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:642
+#: ../applets/wncklet/workspace-switcher.c:644
 msgid "Workspace Switcher"
 msgstr "Alternador de espaços de trabalho"
 
@@ -1010,17 +1011,17 @@ msgid ""
 msgstr "O Seletor de janelas mostra uma lista de todas as janelas em um menu e permite que você navegue nelas."
 
 #: ../applets/wncklet/workspace-switcher.c:204
-#: ../applets/wncklet/workspace-switcher.c:958
+#: ../applets/wncklet/workspace-switcher.c:960
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "linhas"
 
 #: ../applets/wncklet/workspace-switcher.c:204
-#: ../applets/wncklet/workspace-switcher.c:958
+#: ../applets/wncklet/workspace-switcher.c:960
 msgid "columns"
 msgstr "colunas"
 
-#: ../applets/wncklet/workspace-switcher.c:644
+#: ../applets/wncklet/workspace-switcher.c:646
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1271,13 +1272,13 @@ msgstr "Defina o tamanho de um ícone usado na barra de menus. O painel deve ser
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:15
 msgid "Threshold of menu items before submenu is created"
-msgstr ""
+msgstr "Limite de itens de menu antes de ser criado um submenu"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:16
 msgid ""
 "Maximum number of menu items (i.e. bookmarks) that are displayed without "
 "being put in a submenu."
-msgstr ""
+msgstr "Número máximo de itens de menu (favoritos) que são exibidos sem ser colocados em um submenu."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:1
 msgid "Panel object type"
@@ -1800,8 +1801,8 @@ msgstr "Mostra as opções do gerenciamento de sessão"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:82
-#: ../mate-panel/panel-applet-frame.c:919
-#: ../mate-panel/panel-applet-frame.c:1095
+#: ../mate-panel/panel-applet-frame.c:935
+#: ../mate-panel/panel-applet-frame.c:1111
 msgid "Error"
 msgstr "Erro"
 
@@ -1831,15 +1832,15 @@ msgstr "Nenhum aplicativo para manipular pesquisas de pastas está instalado."
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:522 ../libmate-panel-applet/mate-panel-applet.c:139
+#: ../mate-panel/applet.c:522 ../libmate-panel-applet/mate-panel-applet.c:143
 msgid "_Remove From Panel"
 msgstr "_Remover do painel"
 
-#: ../mate-panel/applet.c:533 ../libmate-panel-applet/mate-panel-applet.c:142
+#: ../mate-panel/applet.c:533 ../libmate-panel-applet/mate-panel-applet.c:146
 msgid "_Move"
 msgstr "_Mover"
 
-#: ../mate-panel/applet.c:550 ../libmate-panel-applet/mate-panel-applet.c:148
+#: ../mate-panel/applet.c:550 ../libmate-panel-applet/mate-panel-applet.c:152
 msgid "Loc_k To Panel"
 msgstr "Blo_quear movimentação"
 
@@ -1848,7 +1849,7 @@ msgid "Cannot find an empty spot"
 msgstr "Não foi possível localizar uma posição livre"
 
 #: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:180
-#: ../mate-panel/panel-toplevel.c:1675
+#: ../mate-panel/panel-toplevel.c:1677
 msgid "Drawer"
 msgstr "Gaveta"
 
@@ -2164,41 +2165,41 @@ msgstr "Adicionar ao painel"
 msgid "Find an _item to add to the panel:"
 msgstr "Localizar um _item para adicionar ao painel:"
 
-#: ../mate-panel/panel-applet-frame.c:880
+#: ../mate-panel/panel-applet-frame.c:896
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" saiu inesperadamente"
 
-#: ../mate-panel/panel-applet-frame.c:882
+#: ../mate-panel/panel-applet-frame.c:898
 msgid "Panel object has quit unexpectedly"
 msgstr "O objeto do painel saiu inesperadamente"
 
-#: ../mate-panel/panel-applet-frame.c:889
+#: ../mate-panel/panel-applet-frame.c:905
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Se você recarregar um objeto do painel, ele será adicionado ao painel automaticamente."
 
-#: ../mate-panel/panel-applet-frame.c:896
+#: ../mate-panel/panel-applet-frame.c:912
 msgid "D_elete"
 msgstr "D_eletar"
 
-#: ../mate-panel/panel-applet-frame.c:897
-#: ../mate-panel/panel-applet-frame.c:902
+#: ../mate-panel/panel-applet-frame.c:913
+#: ../mate-panel/panel-applet-frame.c:918
 msgid "_Don't Reload"
 msgstr "Nã_o recarregar"
 
-#: ../mate-panel/panel-applet-frame.c:898
-#: ../mate-panel/panel-applet-frame.c:903
+#: ../mate-panel/panel-applet-frame.c:914
+#: ../mate-panel/panel-applet-frame.c:919
 msgid "_Reload"
 msgstr "_Recarregar"
 
-#: ../mate-panel/panel-applet-frame.c:1058
+#: ../mate-panel/panel-applet-frame.c:1074
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "O painel encontrou um problema ao carregar \"%s\"."
 
-#: ../mate-panel/panel-applet-frame.c:1074
+#: ../mate-panel/panel-applet-frame.c:1090
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Você quer excluir o miniaplicativo da sua configuração?"
 
@@ -2347,7 +2348,7 @@ msgstr "Personalize sua área de trabalho, obtenha ajuda ou encerre sua sessão"
 msgid "Applications"
 msgstr "Aplicativos"
 
-#: ../mate-panel/panel-menu-bar.c:394 ../mate-panel/panel-menu-button.c:676
+#: ../mate-panel/panel-menu-bar.c:397 ../mate-panel/panel-menu-button.c:676
 msgid "_Edit Menus"
 msgstr "_Editar menus"
 
@@ -2356,7 +2357,7 @@ msgid "Bookmarks"
 msgstr "Marcadores"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:561
+#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:566
 #, c-format
 msgid "Open '%s'"
 msgstr "Abre \"%s\""
@@ -2455,7 +2456,7 @@ msgstr "Encerrar sessão de %s..."
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Encerra a sessão de %s para que outro usuário possa inicie sua sessão"
 
-#: ../mate-panel/panel-profile.c:1163
+#: ../mate-panel/panel-profile.c:1170
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2808,67 +2809,67 @@ msgstr "Ocultar painel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1646
+#: ../mate-panel/panel-toplevel.c:1648
 msgid "Top Expanded Edge Panel"
 msgstr "Painel de canto superior estendido"
 
-#: ../mate-panel/panel-toplevel.c:1647
+#: ../mate-panel/panel-toplevel.c:1649
 msgid "Top Centered Panel"
 msgstr "Painel central superior"
 
-#: ../mate-panel/panel-toplevel.c:1648
+#: ../mate-panel/panel-toplevel.c:1650
 msgid "Top Floating Panel"
 msgstr "Painel flutuante superior"
 
-#: ../mate-panel/panel-toplevel.c:1649
+#: ../mate-panel/panel-toplevel.c:1651
 msgid "Top Edge Panel"
 msgstr "Painel de canto superior"
 
-#: ../mate-panel/panel-toplevel.c:1653
+#: ../mate-panel/panel-toplevel.c:1655
 msgid "Bottom Expanded Edge Panel"
 msgstr "Painel de canto inferior expandido"
 
-#: ../mate-panel/panel-toplevel.c:1654
+#: ../mate-panel/panel-toplevel.c:1656
 msgid "Bottom Centered Panel"
 msgstr "Painel central inferior"
 
-#: ../mate-panel/panel-toplevel.c:1655
+#: ../mate-panel/panel-toplevel.c:1657
 msgid "Bottom Floating Panel"
 msgstr "Painel flutuante inferior"
 
-#: ../mate-panel/panel-toplevel.c:1656
+#: ../mate-panel/panel-toplevel.c:1658
 msgid "Bottom Edge Panel"
 msgstr "Painel de canto inferior"
 
-#: ../mate-panel/panel-toplevel.c:1660
+#: ../mate-panel/panel-toplevel.c:1662
 msgid "Left Expanded Edge Panel"
 msgstr "Painel de canto esquerdo expandido"
 
-#: ../mate-panel/panel-toplevel.c:1661
+#: ../mate-panel/panel-toplevel.c:1663
 msgid "Left Centered Panel"
 msgstr "Painel central esquerdo"
 
-#: ../mate-panel/panel-toplevel.c:1662
+#: ../mate-panel/panel-toplevel.c:1664
 msgid "Left Floating Panel"
 msgstr "Painel flutuante esquerdo"
 
-#: ../mate-panel/panel-toplevel.c:1663
+#: ../mate-panel/panel-toplevel.c:1665
 msgid "Left Edge Panel"
 msgstr "Painel de canto esquerdo"
 
-#: ../mate-panel/panel-toplevel.c:1667
+#: ../mate-panel/panel-toplevel.c:1669
 msgid "Right Expanded Edge Panel"
 msgstr "Painel de canto direito expandido"
 
-#: ../mate-panel/panel-toplevel.c:1668
+#: ../mate-panel/panel-toplevel.c:1670
 msgid "Right Centered Panel"
 msgstr "Painel central direito"
 
-#: ../mate-panel/panel-toplevel.c:1669
+#: ../mate-panel/panel-toplevel.c:1671
 msgid "Right Floating Panel"
 msgstr "Painel flutuante direito"
 
-#: ../mate-panel/panel-toplevel.c:1670
+#: ../mate-panel/panel-toplevel.c:1672
 msgid "Right Edge Panel"
 msgstr "Painel de canto direito"
 
@@ -2909,26 +2910,26 @@ msgstr "Pesquisar"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:494
+#: ../mate-panel/panel.c:499
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abre o URL: %s"
 
-#: ../mate-panel/panel.c:1344
+#: ../mate-panel/panel.c:1349
 msgid "Delete this drawer?"
 msgstr "Você deseja excluir essa gaveta?"
 
-#: ../mate-panel/panel.c:1345
+#: ../mate-panel/panel.c:1350
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "Quando uma gaveta é excluída, ela e suas\nconfigurações são perdidas."
 
-#: ../mate-panel/panel.c:1348
+#: ../mate-panel/panel.c:1353
 msgid "Delete this panel?"
 msgstr "Você deseja excluir esse painel?"
 
-#: ../mate-panel/panel.c:1349
+#: ../mate-panel/panel.c:1354
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
