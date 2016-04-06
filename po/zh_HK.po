@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-27 23:23+0300\n"
+"POT-Creation-Date: 2016-03-13 20:30+0300\n"
 "PO-Revision-Date: 2016-03-13 17:33+0000\n"
 "Last-Translator: monsta <monsta@inbox.ru>\n"
 "Language-Team: Chinese (Hong Kong) (http://www.transifex.com/mate/MATE/language/zh_HK/)\n"
@@ -168,7 +168,7 @@ msgstr "偏好設定(_P)"
 #: ../applets/wncklet/window-menu.c:101
 #: ../applets/wncklet/workspace-switcher.c:381 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:734
-#: ../mate-panel/panel-context-menu.c:296 ../mate-panel/panel-menu-bar.c:392
+#: ../mate-panel/panel-context-menu.c:296 ../mate-panel/panel-menu-bar.c:389
 #: ../mate-panel/panel-menu-button.c:670
 msgid "_Help"
 msgstr "求助(_H)"
@@ -222,7 +222,7 @@ msgstr "時鐘程式可顯示目前的時間及日期"
 #: ../applets/notification_area/main.c:146
 #: ../applets/wncklet/showdesktop.c:547 ../applets/wncklet/window-list.c:581
 #: ../applets/wncklet/window-menu.c:91
-#: ../applets/wncklet/workspace-switcher.c:651
+#: ../applets/wncklet/workspace-switcher.c:649
 #: ../mate-panel/panel-context-menu.c:149
 msgid "translator-credits"
 msgstr "如對翻譯有任何意見，請送一封電子郵件給\n以下地址，MATE 翻譯隊伍會盡快回覆你：\nzh-l10n@lists.linux.org.tw\n\nWoodman Tuen <wmtuen@gmail.com>, 2005-07\nAbel Cheung <abel@oaka.org>, 2001-04\nKevin Kee <kevin@oaka.org>, 2004\nChih-Wei Huang <cwhuang@linux.org.tw>, 2000\nJing-Jong Shyue <shyue@sonoma.com.tw>, 2000\nYuan-Chung Cheng <platin@linux.org.tw>, 1999"
@@ -883,7 +883,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:644
+#: ../applets/wncklet/workspace-switcher.c:642
 msgid "Workspace Switcher"
 msgstr "工作區切換程式"
 
@@ -1000,17 +1000,17 @@ msgid ""
 msgstr "「視窗選擇程式」會在選單中顯示視窗清單以供瀏覽。"
 
 #: ../applets/wncklet/workspace-switcher.c:204
-#: ../applets/wncklet/workspace-switcher.c:960
+#: ../applets/wncklet/workspace-switcher.c:958
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "列"
 
 #: ../applets/wncklet/workspace-switcher.c:204
-#: ../applets/wncklet/workspace-switcher.c:960
+#: ../applets/wncklet/workspace-switcher.c:958
 msgid "columns"
 msgstr "行"
 
-#: ../applets/wncklet/workspace-switcher.c:646
+#: ../applets/wncklet/workspace-switcher.c:644
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1790,8 +1790,8 @@ msgstr "顯示作業階段管理選項"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:82
-#: ../mate-panel/panel-applet-frame.c:935
-#: ../mate-panel/panel-applet-frame.c:1111
+#: ../mate-panel/panel-applet-frame.c:919
+#: ../mate-panel/panel-applet-frame.c:1095
 msgid "Error"
 msgstr "錯誤"
 
@@ -1821,15 +1821,15 @@ msgstr "尚未安裝用來處理搜尋資料夾的應用程式。"
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:522 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:522 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "從面板中移除(_R)"
 
-#: ../mate-panel/applet.c:533 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:533 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: ../mate-panel/applet.c:550 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:550 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "在面板鎖定(_L)"
 
@@ -1838,7 +1838,7 @@ msgid "Cannot find an empty spot"
 msgstr "沒有空位"
 
 #: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:180
-#: ../mate-panel/panel-toplevel.c:1677
+#: ../mate-panel/panel-toplevel.c:1675
 msgid "Drawer"
 msgstr "抽屜"
 
@@ -2154,41 +2154,41 @@ msgstr "加入面板"
 msgid "Find an _item to add to the panel:"
 msgstr "尋找加入至面板的項目(_I):"
 
-#: ../mate-panel/panel-applet-frame.c:896
+#: ../mate-panel/panel-applet-frame.c:880
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "‘%s’在無法預計的情況下離開"
 
-#: ../mate-panel/panel-applet-frame.c:898
+#: ../mate-panel/panel-applet-frame.c:882
 msgid "Panel object has quit unexpectedly"
 msgstr "面板物件在無法預計的情況下離開"
 
-#: ../mate-panel/panel-applet-frame.c:905
+#: ../mate-panel/panel-applet-frame.c:889
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "如果重新載入面版物件，它會自動地加入到面板中。"
 
-#: ../mate-panel/panel-applet-frame.c:912
+#: ../mate-panel/panel-applet-frame.c:896
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:913
-#: ../mate-panel/panel-applet-frame.c:918
+#: ../mate-panel/panel-applet-frame.c:897
+#: ../mate-panel/panel-applet-frame.c:902
 msgid "_Don't Reload"
 msgstr "不要重新載入(_D)"
 
-#: ../mate-panel/panel-applet-frame.c:914
-#: ../mate-panel/panel-applet-frame.c:919
+#: ../mate-panel/panel-applet-frame.c:898
+#: ../mate-panel/panel-applet-frame.c:903
 msgid "_Reload"
 msgstr "重新載入(_R)"
 
-#: ../mate-panel/panel-applet-frame.c:1074
+#: ../mate-panel/panel-applet-frame.c:1058
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "載入“%s”時面板出現問題。"
 
-#: ../mate-panel/panel-applet-frame.c:1090
+#: ../mate-panel/panel-applet-frame.c:1074
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "是否要在你的設定中刪除面板程式？"
 
@@ -2337,7 +2337,7 @@ msgstr "更改桌面的外觀及運作方式，取得協助或登出"
 msgid "Applications"
 msgstr "應用程式"
 
-#: ../mate-panel/panel-menu-bar.c:397 ../mate-panel/panel-menu-button.c:676
+#: ../mate-panel/panel-menu-bar.c:394 ../mate-panel/panel-menu-button.c:676
 msgid "_Edit Menus"
 msgstr "編輯選單(_E)"
 
@@ -2346,7 +2346,7 @@ msgid "Bookmarks"
 msgstr "書籤"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:566
+#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:561
 #, c-format
 msgid "Open '%s'"
 msgstr "開啟「%s」"
@@ -2445,7 +2445,7 @@ msgstr "登出 %s..."
 msgid "Log out %s of this session to log in as a different user"
 msgstr "登出 %s 這個作業階段，然後以其它使用者登入"
 
-#: ../mate-panel/panel-profile.c:1170
+#: ../mate-panel/panel-profile.c:1163
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2798,67 +2798,67 @@ msgstr "隱藏本面板"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1648
+#: ../mate-panel/panel-toplevel.c:1646
 msgid "Top Expanded Edge Panel"
 msgstr "頂部擴大邊界面板"
 
-#: ../mate-panel/panel-toplevel.c:1649
+#: ../mate-panel/panel-toplevel.c:1647
 msgid "Top Centered Panel"
 msgstr "頂部置中面板"
 
-#: ../mate-panel/panel-toplevel.c:1650
+#: ../mate-panel/panel-toplevel.c:1648
 msgid "Top Floating Panel"
 msgstr "頂部浮動面板"
 
-#: ../mate-panel/panel-toplevel.c:1651
+#: ../mate-panel/panel-toplevel.c:1649
 msgid "Top Edge Panel"
 msgstr "頂部邊界面板"
 
-#: ../mate-panel/panel-toplevel.c:1655
+#: ../mate-panel/panel-toplevel.c:1653
 msgid "Bottom Expanded Edge Panel"
 msgstr "底部擴大邊界面板"
 
-#: ../mate-panel/panel-toplevel.c:1656
+#: ../mate-panel/panel-toplevel.c:1654
 msgid "Bottom Centered Panel"
 msgstr "底部置中面板"
 
-#: ../mate-panel/panel-toplevel.c:1657
+#: ../mate-panel/panel-toplevel.c:1655
 msgid "Bottom Floating Panel"
 msgstr "底部浮動面板"
 
-#: ../mate-panel/panel-toplevel.c:1658
+#: ../mate-panel/panel-toplevel.c:1656
 msgid "Bottom Edge Panel"
 msgstr "底部邊界面板"
 
-#: ../mate-panel/panel-toplevel.c:1662
+#: ../mate-panel/panel-toplevel.c:1660
 msgid "Left Expanded Edge Panel"
 msgstr "左邊擴大邊界面板"
 
-#: ../mate-panel/panel-toplevel.c:1663
+#: ../mate-panel/panel-toplevel.c:1661
 msgid "Left Centered Panel"
 msgstr "左邊置中面板"
 
-#: ../mate-panel/panel-toplevel.c:1664
+#: ../mate-panel/panel-toplevel.c:1662
 msgid "Left Floating Panel"
 msgstr "左邊浮動面板"
 
-#: ../mate-panel/panel-toplevel.c:1665
+#: ../mate-panel/panel-toplevel.c:1663
 msgid "Left Edge Panel"
 msgstr "左邊邊界面板"
 
-#: ../mate-panel/panel-toplevel.c:1669
+#: ../mate-panel/panel-toplevel.c:1667
 msgid "Right Expanded Edge Panel"
 msgstr "右邊擴大邊界面板"
 
-#: ../mate-panel/panel-toplevel.c:1670
+#: ../mate-panel/panel-toplevel.c:1668
 msgid "Right Centered Panel"
 msgstr "右邊置中面板"
 
-#: ../mate-panel/panel-toplevel.c:1671
+#: ../mate-panel/panel-toplevel.c:1669
 msgid "Right Floating Panel"
 msgstr "右邊浮動面板"
 
-#: ../mate-panel/panel-toplevel.c:1672
+#: ../mate-panel/panel-toplevel.c:1670
 msgid "Right Edge Panel"
 msgstr "右邊邊界面板"
 
@@ -2899,26 +2899,26 @@ msgstr "搜尋"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:499
+#: ../mate-panel/panel.c:494
 #, c-format
 msgid "Open URL: %s"
 msgstr "開啟 URL：%s"
 
-#: ../mate-panel/panel.c:1349
+#: ../mate-panel/panel.c:1344
 msgid "Delete this drawer?"
 msgstr "刪除這抽屜？"
 
-#: ../mate-panel/panel.c:1350
+#: ../mate-panel/panel.c:1345
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "當刪除抽屜後，抽屜及其設定都會消失。"
 
-#: ../mate-panel/panel.c:1353
+#: ../mate-panel/panel.c:1348
 msgid "Delete this panel?"
 msgstr "刪除本面板？"
 
-#: ../mate-panel/panel.c:1354
+#: ../mate-panel/panel.c:1349
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
