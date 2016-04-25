@@ -47,8 +47,13 @@ ClockLocationTile *clock_location_tile_new (ClockLocation *loc,
 
 ClockLocation *clock_location_tile_get_location (ClockLocationTile *this);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+void weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTooltip *tip,
+				 ClockFormat clock_format);
+#else
 void weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkTooltip *tip,
 				 ClockFormat clock_format);
+#endif
 
 void clock_location_tile_refresh (ClockLocationTile *this,
                                   gboolean           force_refresh);

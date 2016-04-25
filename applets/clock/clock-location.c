@@ -43,12 +43,21 @@ typedef struct {
         gfloat longitude;
 
         gchar *weather_code;
+#if GTK_CHECK_VERSION (3, 0, 0)
+        GWeatherInfo *weather_info;
+#else
         WeatherInfo *weather_info;
+#endif
         guint weather_timeout;
         guint weather_retry_time;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GWeatherTemperatureUnit temperature_unit;
+	GWeatherSpeedUnit speed_unit;
+#else
 	TempUnit temperature_unit;
 	SpeedUnit speed_unit;
+#endif
 } ClockLocationPrivate;
 
 #define WEATHER_TIMEOUT_BASE 30
@@ -97,17 +106,29 @@ clock_location_find_and_ref (GList       *locations,
                         break;
         }
 
-        if (l != NULL)
+        if (l != NULL) {
                 return g_object_ref (CLOCK_LOCATION (l->data));
-        else
+	}
+        else {
                 return NULL;
+	}
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+ClockLocation *
+clock_location_new (const gchar *name, const gchar *city,
+		    const gchar *timezone,
+		    gfloat latitude, gfloat longitude,
+		    const gchar *code,
+		    GWeatherTemperatureUnit temperature_unit,
+		    GWeatherSpeedUnit speed_unit)
+#else
 ClockLocation *
 clock_location_new (const gchar *name, const gchar *city,
 		    const gchar *timezone,
 		    gfloat latitude, gfloat longitude,
 		    const gchar *code, WeatherPrefs *prefs)
+#endif
 {
         ClockLocation *this;
         ClockLocationPrivate *priv;
@@ -128,10 +149,15 @@ clock_location_new (const gchar *name, const gchar *city,
 
         priv->weather_code = clock_location_get_valid_weather_code (code);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	priv->temperature_unit = temperature_unit;
+	priv->speed_unit = speed_unit;
+#else
 	if (prefs) {
 		priv->temperature_unit = prefs->temperature_unit;
 		priv->speed_unit = prefs->speed_unit;
 	}
+#endif
 
         setup_weather_updates (this);
 
@@ -203,8 +229,13 @@ clock_location_init (ClockLocation *this)
         g_signal_connect (monitor, "network-changed",
                           G_CALLBACK (network_changed), this);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	priv->temperature_unit = GWEATHER_TEMP_UNIT_CENTIGRADE;
+	priv->speed_unit = GWEATHER_SPEED_UNIT_MS;
+#else
 	priv->temperature_unit = TEMP_UNIT_CENTIGRADE;
 	priv->speed_unit = SPEED_UNIT_MS;
+#endif
 }
 
 static void
@@ -249,7 +280,11 @@ clock_location_finalize (GObject *g_obj)
         }
 
         if (priv->weather_info) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+                g_object_unref (priv->weather_info);
+#else
                 weather_info_free (priv->weather_info);
+#endif
                 priv->weather_info = NULL;
         }
 
@@ -264,6 +299,7 @@ clock_location_finalize (GObject *g_obj)
 const gchar *
 clock_location_get_display_name (ClockLocation *loc)
 {
+	g_return_val_if_fail (loc != NULL, NULL);
         ClockLocationPrivate *priv = PRIVATE (loc);
 
         if (priv->name && priv->name[0])
@@ -275,6 +311,8 @@ clock_location_get_display_name (ClockLocation *loc)
 const gchar *
 clock_location_get_name (ClockLocation *loc)
 {
+	g_return_val_if_fail (loc != NULL, NULL);
+
         ClockLocationPrivate *priv = PRIVATE (loc);
 
         return priv->name;
@@ -296,6 +334,8 @@ clock_location_set_name (ClockLocation *loc, const gchar *name)
 const gchar *
 clock_location_get_city (ClockLocation *loc)
 {
+	g_return_val_if_fail (loc != NULL, NULL);
+
         ClockLocationPrivate *priv = PRIVATE (loc);
 
         return priv->city;
@@ -314,9 +354,10 @@ clock_location_set_city (ClockLocation *loc, const gchar *city)
         priv->city = g_strdup (city);
 }
 
-gchar *
+const gchar *
 clock_location_get_timezone (ClockLocation *loc)
 {
+	g_return_val_if_fail (loc != NULL, NULL);
         ClockLocationPrivate *priv = PRIVATE (loc);
 
         return priv->timezone;
@@ -347,6 +388,8 @@ void
 clock_location_get_coords (ClockLocation *loc, gfloat *latitude,
                                gfloat *longitude)
 {
+	g_return_if_fail (loc != NULL);
+
         ClockLocationPrivate *priv = PRIVATE (loc);
 
         *latitude = priv->latitude;
@@ -445,6 +488,8 @@ clock_location_localtime (ClockLocation *loc, struct tm *tm)
 gboolean
 clock_location_is_current_timezone (ClockLocation *loc)
 {
+	g_return_val_if_fail (loc != NULL, FALSE);
+
         ClockLocationPrivate *priv = PRIVATE (loc);
 	const char *zone;
 
@@ -631,9 +676,17 @@ clock_location_set_weather_code (ClockLocation *loc, const gchar *code)
 	setup_weather_updates (loc);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+GWeatherInfo *
+clock_location_get_weather_info (ClockLocation *loc)
+#else
 WeatherInfo *
 clock_location_get_weather_info (ClockLocation *loc)
+#endif
+
 {
+	g_return_val_if_fail(loc != NULL, NULL);
+
         ClockLocationPrivate *priv = PRIVATE (loc);
 
 	return priv->weather_info;
@@ -645,7 +698,11 @@ set_weather_update_timeout (ClockLocation *loc)
 	ClockLocationPrivate *priv = PRIVATE (loc);
 	guint timeout;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (!gweather_info_network_error (priv->weather_info)) {
+#else
 	if (!weather_info_network_error (priv->weather_info)) {
+#endif
 		/* The last update succeeded; set the next update to
 		 * happen in half an hour, and reset the retry timer.
 		 */
@@ -668,8 +725,13 @@ set_weather_update_timeout (ClockLocation *loc)
 		g_timeout_add_seconds (timeout, update_weather_info, loc);
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+weather_info_updated (GWeatherInfo *info, gpointer data)
+#else
 static void
 weather_info_updated (WeatherInfo *info, gpointer data)
+#endif
 {
 	ClockLocation *loc = data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
@@ -684,6 +746,11 @@ update_weather_info (gpointer data)
 {
 	ClockLocation *loc = (ClockLocation *) data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gweather_info_abort (priv->weather_info);
+	gweather_info_update (priv->weather_info);
+#else
 	WeatherPrefs prefs = {
 		FORECAST_STATE,
 		FALSE,
@@ -704,10 +771,11 @@ update_weather_info (gpointer data)
 	weather_info_abort (priv->weather_info);
         weather_info_update (priv->weather_info,
                              &prefs, weather_info_updated, loc);
-
+#endif
 	return TRUE;
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static gchar *
 rad2dms (gfloat lat, gfloat lon)
 {
@@ -726,11 +794,15 @@ rad2dms (gfloat lat, gfloat lon)
 				(int)deg, (int)min, h,
 				(int)deg2, (int)min2, h2);
 }
+#endif
 
 static void
 setup_weather_updates (ClockLocation *loc)
 {
 	ClockLocationPrivate *priv = PRIVATE (loc);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GWeatherLocation *wl;
+#else
 	WeatherLocation *wl;
 	WeatherPrefs prefs = {
 		FORECAST_STATE,
@@ -743,12 +815,20 @@ setup_weather_updates (ClockLocation *loc)
 	};
 
 	gchar *dms;
+#endif
 
+
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	prefs.temperature_unit = priv->temperature_unit;
 	prefs.speed_unit = priv->speed_unit;
+#endif
 
         if (priv->weather_info) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+                g_object_unref (priv->weather_info);
+#else
                 weather_info_free (priv->weather_info);
+#endif
                 priv->weather_info = NULL;
         }
 
@@ -761,28 +841,54 @@ setup_weather_updates (ClockLocation *loc)
 	    strcmp (priv->weather_code, WEATHER_EMPTY_CODE) == 0)
 		return;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	wl = gweather_location_new_detached (priv->city, priv->weather_code, priv->latitude, priv->longitude);
+#else
 	dms = rad2dms (priv->latitude, priv->longitude);
 	wl = weather_location_new (priv->city, priv->weather_code,
 				   NULL, NULL, dms, NULL, NULL);
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	priv->weather_info = gweather_info_new (wl, GWEATHER_FORECAST_STATE);
+	gweather_info_set_enabled_providers (priv->weather_info, GWEATHER_PROVIDER_ALL); /*fixme: select providers */
+	g_signal_connect (priv->weather_info, "updated",
+                      G_CALLBACK (weather_info_updated), loc);
+#else
 	priv->weather_info =
 		weather_info_new (wl, &prefs, weather_info_updated, loc);
+#endif
 
 	set_weather_update_timeout (loc);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gweather_location_unref (wl);
+#else
 	weather_location_free (wl);
 	g_free (dms);
+#endif
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+void
+clock_location_set_weather_prefs (ClockLocation *loc,
+				  GWeatherTemperatureUnit temperature_unit,
+				  GWeatherSpeedUnit speed_unit)
+#else
 void
 clock_location_set_weather_prefs (ClockLocation *loc,
 				  WeatherPrefs *prefs)
+#endif
 {
 	ClockLocationPrivate *priv = PRIVATE (loc);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	priv->temperature_unit = temperature_unit;
+	priv->speed_unit = speed_unit;
+#else
 	priv->temperature_unit = prefs->temperature_unit;
 	priv->speed_unit = prefs->speed_unit;
+#endif
 
 	update_weather_info (loc);
 }
-
