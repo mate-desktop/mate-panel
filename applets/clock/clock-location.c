@@ -747,6 +747,8 @@ update_weather_info (gpointer data)
 	ClockLocation *loc = (ClockLocation *) data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
 
+	g_return_val_if_fail(priv->weather_info != NULL, TRUE);
+
 #if GTK_CHECK_VERSION (3, 0, 0)
 	gweather_info_abort (priv->weather_info);
 	gweather_info_update (priv->weather_info);

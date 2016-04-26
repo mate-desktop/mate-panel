@@ -97,7 +97,7 @@ case "$with_gtk" in
        LIBWNCK_API_VERSION=3.0
        LIBWNCK_REQUIRED=3.0.0
        WEATHER_LIB=gweather-3.0
-       WEATHER_REQUIRED=3.18.0
+       WEATHER_REQUIRED=3.14.0
        ;;
 esac
 
