@@ -658,7 +658,7 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 #if GTK_CHECK_VERSION (3, 0, 0)
         icon_name = gweather_info_get_icon_name (info);
 #else
-       	icon_name = weather_info_get_icon_name (info);
+	icon_name = weather_info_get_icon_name (info);
 #endif
         theme = gtk_icon_theme_get_default ();
         pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 48,

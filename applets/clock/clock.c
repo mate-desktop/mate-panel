@@ -2112,7 +2112,6 @@ location_weather_updated_cb (ClockLocation *location,
 	ClockData *cd = data;
 	const gchar *icon_name;
 	gchar *temp;
-	GtkIconTheme *theme;
 	GdkPixbuf *pixbuf;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -2126,14 +2125,26 @@ location_weather_updated_cb (ClockLocation *location,
 		return;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	icon_name = gweather_info_get_icon_name (info);
+	time_t sunrise = 0;
+	if (gweather_info_get_value_sunrise (info, &sunrise)) {
+		icon_name = gweather_info_get_icon_name (info);
+	} else {
+		icon_name = NULL;
+	}
 #else
 	icon_name = weather_info_get_icon_name (info);
 #endif
-	/* FIXME: mmh, screen please? Also, don't hardcode to 16 */
-	theme = gtk_icon_theme_get_default ();
-	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
+
+	if (icon_name) {
+		GtkIconTheme *theme;
+		/* FIXME: mmh, screen please? Also, don't hardcode to 16 */
+		theme = gtk_icon_theme_get_default ();
+
+		pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
 					   GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+	} else {
+		pixbuf = NULL;
+	}
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	temp = gweather_info_get_temp_summary (info);
@@ -2141,9 +2152,15 @@ location_weather_updated_cb (ClockLocation *location,
 	temp = weather_info_get_temp_summary (info);
 #endif
 
-	gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), pixbuf);
+	if (pixbuf) {
+		gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), pixbuf);
+	} else {
+		gtk_image_clear (GTK_IMAGE (cd->panel_weather_icon));
+	}
 	gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temp);
 
+	if (pixbuf)
+		g_object_unref (pixbuf);
 	g_free (temp);  // pull: memory leak
 }
 
