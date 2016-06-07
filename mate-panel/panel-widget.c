@@ -460,6 +460,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->style_set = panel_widget_style_set;
 #endif
 
+	widget_class->focus = panel_widget_real_focus;
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
 }
