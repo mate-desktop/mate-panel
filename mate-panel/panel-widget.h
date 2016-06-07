@@ -206,6 +206,9 @@ void            panel_widget_focus              (PanelWidget *panel);
 
 PanelOrientation panel_widget_get_applet_orientation (PanelWidget *panel);
 
+#if GTK_CHECK_VERSION (3, 18, 0)
+void     panel_widget_emit_background_changed (PanelWidget *panel);
+#endif
 
 void     panel_widget_set_applet_size_constrained (PanelWidget *panel,
 						   GtkWidget   *applet,
