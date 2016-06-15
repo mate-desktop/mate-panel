@@ -3327,6 +3327,7 @@ panel_toplevel_get_preferred_height (GtkWidget *widget,
 #endif
 
 #if GTK_CHECK_VERSION (3, 18, 0)
+static void
 set_background_region (PanelToplevel *toplevel)
 {
 	GtkWidget *widget;
