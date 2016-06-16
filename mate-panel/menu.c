@@ -685,7 +685,11 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       GdkDisplay *display;
       GdkDevice *pointer;
       GdkDevice *keyboard;
+#if GTK_CHECK_VERSION(3, 20, 0)
+      GdkSeat *seat;
+#else
       GdkDeviceManager *device_manager;
+#endif
 #endif
       GdkWindow *window = gtk_widget_get_window (xgrab_shell);
       GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
@@ -693,8 +697,13 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 
 #if GTK_CHECK_VERSION (3, 0, 0)
       display = gdk_window_get_display (window);
+#if GTK_CHECK_VERSION(3, 20, 0)
+      seat = gdk_display_get_default_seat (display);
+      pointer = gdk_seat_get_pointer (seat);
+#else
       device_manager = gdk_display_get_device_manager (display);
       pointer = gdk_device_manager_get_client_pointer (device_manager);
+#endif
       keyboard = gdk_device_get_associated_device (pointer);
 
       /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
