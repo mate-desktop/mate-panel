@@ -116,7 +116,11 @@ remove_popup (GtkWidget *popup)
 	GdkDisplay       *display;
 	GdkDevice        *pointer;
 	GdkDevice        *keyboard;
+#if GTK_CHECK_VERSION (3, 20, 0)
+	GdkSeat          *seat;
+#else
 	GdkDeviceManager *device_manager;
+#endif
 #endif
 
 	root = gdk_screen_get_root_window (
@@ -127,8 +131,13 @@ remove_popup (GtkWidget *popup)
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 	display = gdk_window_get_display (root);
+#if GTK_CHECK_VERSION (3, 20, 0)
+	seat = gdk_display_get_default_seat (display);
+	pointer = gdk_seat_get_pointer (seat);
+#else
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+#endif
 	keyboard = gdk_device_get_associated_device (pointer);
 
 	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
@@ -339,10 +348,14 @@ panel_force_quit (GdkScreen *screen,
 	GtkWidget     *popup;
 	GdkWindow     *root;
 #if GTK_CHECK_VERSION (3, 0, 0)
-	GdkDisplay *display;
-	GdkDevice *pointer;
-	GdkDevice *keyboard;
+	GdkDisplay    *display;
+	GdkDevice     *pointer;
+	GdkDevice     *keyboard;
+#if GTK_CHECK_VERSION (3, 20, 0)
+	GdkSeat       *seat;
+#else
 	GdkDeviceManager *device_manager;
+#endif
 #endif
 
 	popup = display_popup_window (screen);
@@ -354,8 +367,13 @@ panel_force_quit (GdkScreen *screen,
 	                                    GDK_CROSS);
 #if GTK_CHECK_VERSION (3, 0, 0)
 	display = gdk_window_get_display (root);
+#if GTK_CHECK_VERSION (3, 20, 0)
+	seat = gdk_display_get_default_seat (display);
+	pointer = gdk_seat_get_pointer (seat);
+#else
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+#endif
 	keyboard = gdk_device_get_associated_device (pointer);
 
 	status = gdk_device_grab (pointer, root,

@@ -520,8 +520,8 @@ mate_panel_applet_create_menu (AppletInfo *info)
 		}
 
 		menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
-		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
-						  GTK_ICON_SIZE_MENU);
+		image = gtk_image_new_from_icon_name ("list-remove",
+						      GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 					       image);
 		g_signal_connect (menuitem, "activate",
@@ -635,9 +635,12 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 #endif
 
 	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION(3, 20, 0)
+	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (applet)));
+	gdk_window_get_device_position (gtk_widget_get_window (applet), device, &pointer_x, &pointer_y, NULL);
+#elif GTK_CHECK_VERSION (3, 0, 0)
 	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (applet)));
-	gdk_window_get_device_position(gtk_widget_get_window (applet), device, &pointer_x, &pointer_y, NULL);
+	gdk_window_get_device_position (gtk_widget_get_window (applet), device, &pointer_x, &pointer_y, NULL);
 #else
 	gtk_widget_get_pointer (applet, &pointer_x, &pointer_y);
 #endif
