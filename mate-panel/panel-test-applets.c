@@ -351,7 +351,7 @@ main (int argc, char **argv)
 			g_printerr ("%s\n", error->message);
 			g_error_free (error);
 		} else
-			g_printerr ("Cannot initiliaze GTK+.\n");
+			g_printerr ("Cannot initialize GTK+.\n");
 
 		return 1;
 	}
