@@ -43,9 +43,9 @@
 
 #define KEY_LOCATIONS_EXPANDED      "expand-locations"
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-#define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
-#define gtk_hbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_HORIZONTAL, Y)
+#if !GTK_CHECK_VERSION (3, 0, 0)
+#define gtk_box_new(GTK_ORIENTATION_HORIZONTAL, b) gtk_hbox_new(FALSE, b)
+#define gtk_box_new(GTK_ORIENTATION_VERTICAL, b) gtk_vbox_new(FALSE, b)
 #endif
 
 enum {
@@ -166,14 +166,14 @@ create_hig_frame (CalendarWindow *calwin,
 	char      *text;
         GtkWidget *expander;
 
-        vbox = gtk_vbox_new (FALSE, 6);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
         bold_title = g_strdup_printf ("<b>%s</b>", title);
 	expander = gtk_expander_new (bold_title);
         g_free (bold_title);
 	gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
 
-	hbox = gtk_hbox_new (FALSE, 0);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), expander, FALSE, FALSE, 0);
 	gtk_widget_show_all (vbox);
@@ -252,7 +252,7 @@ calendar_window_fill (CalendarWindow *calwin)
         gtk_container_add (GTK_CONTAINER (calwin), frame);
         gtk_widget_show (frame);
 
-        vbox = gtk_vbox_new (FALSE, 6);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
         gtk_container_add (GTK_CONTAINER (frame), vbox);
         gtk_widget_show (vbox);
