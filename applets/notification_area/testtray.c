@@ -29,11 +29,6 @@
 
 #define NOTIFICATION_AREA_ICON "mate-panel-notification-area"
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-#define gtk_hbox_new(X,Y) gtk_box_new(GTK_ORIENTATION_HORIZONTAL,Y)
-#define gtk_vbox_new(X,Y) gtk_box_new(GTK_ORIENTATION_VERTICAL,Y)
-#endif
-
 static guint n_windows = 0;
 
 typedef struct
@@ -155,14 +150,22 @@ create_tray_on_screen (GdkScreen *screen,
   data->window = window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_object_weak_ref (G_OBJECT (window), (GWeakNotify) maybe_quit, NULL);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+#else
   vbox = gtk_vbox_new (FALSE, 6);
+#endif
   gtk_container_add (GTK_CONTAINER (window), vbox);
 
   button = gtk_button_new_with_mnemonic ("_Add another tray");
   g_signal_connect (button, "clicked", G_CALLBACK (add_tray_cb), data);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+#else
   hbox = gtk_hbox_new (FALSE, 12);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new_with_mnemonic ("_Orientation:");
 #if GTK_CHECK_VERSION (3, 16, 0)

@@ -22,11 +22,6 @@
 #include "set-timezone.h"
 #include "system-timezone.h"
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-#define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
-#define gtk_hbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_HORIZONTAL, Y)
-#endif
-
 G_DEFINE_TYPE (ClockLocation, clock_location, G_TYPE_OBJECT)
 
 typedef struct {

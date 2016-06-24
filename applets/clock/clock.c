@@ -85,10 +85,6 @@
 #define KEY_TEMPERATURE_UNIT	"temperature-unit"
 #define KEY_SPEED_UNIT		"speed-unit"
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-#define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
-#endif
-
 enum {
 	COL_CITY_NAME = 0,
 	COL_CITY_TZ,
@@ -1019,7 +1015,11 @@ create_clock_window (ClockData *cd)
         locations_box = calendar_window_get_locations_box (CALENDAR_WINDOW (cd->calendar_popup));
         gtk_widget_show (locations_box);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	cd->clock_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+#else
 	cd->clock_vbox = gtk_vbox_new (FALSE, 6);
+#endif
 	gtk_container_add (GTK_CONTAINER (locations_box), cd->clock_vbox);
 
 	cd->clock_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1168,7 +1168,11 @@ create_cities_section (ClockData *cd)
 		g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+        cd->cities_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+#else
         cd->cities_section = gtk_vbox_new (FALSE, 6);
+#endif
         gtk_container_set_border_width (GTK_CONTAINER (cd->cities_section), 0);
 
 	cities = cd->locations;

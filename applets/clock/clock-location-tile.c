@@ -17,14 +17,12 @@
 #include "clock-marshallers.h"
 #include "set-timezone.h"
 
-#if GTK_CHECK_VERSION (3, 0, 0)
-#define gtk_hbox_new(X,Y) gtk_box_new(GTK_ORIENTATION_HORIZONTAL,Y)
-#define gtk_vbox_new(X,Y) gtk_box_new(GTK_ORIENTATION_VERTICAL,Y)
-#endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
 G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
 #else
+#define gtk_box_new(GTK_ORIENTATION_HORIZONTAL, b) gtk_hbox_new(FALSE, b)
+#define gtk_box_new(GTK_ORIENTATION_VERTICAL, b) gtk_vbox_new(FALSE, b)
 G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_ALIGNMENT)
 #endif
 
@@ -290,13 +288,13 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 3, 3, 3, 0);
 #endif
 
-        tile = gtk_hbox_new (FALSE, 6);
+        tile = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 #if GTK_CHECK_VERSION (3, 0, 0)
         gtk_widget_set_margin_top (tile, 3);
         gtk_widget_set_margin_bottom (tile, 3);
         gtk_widget_set_margin_start (tile, 3);
 #endif
-        head_section = gtk_vbox_new (FALSE, 0);
+        head_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
         priv->city_label = gtk_label_new (NULL);
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -337,7 +335,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_container_add (GTK_CONTAINER (align), priv->weather_icon);
 #endif
 
-        box = gtk_hbox_new (FALSE, 0);
+        box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
         gtk_box_pack_start (GTK_BOX (head_section), box, FALSE, FALSE, 0);
 #if GTK_CHECK_VERSION (3, 0, 0)
         gtk_box_pack_start (GTK_BOX (box), priv->weather_icon, FALSE, FALSE, 0);

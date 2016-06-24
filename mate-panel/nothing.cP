@@ -6,9 +6,6 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
-#define gtk_vbox_new(X, Y) gtk_box_new(GTK_ORIENTATION_VERTICAL, Y)
-#endif
 #include <canberra-gtk.h>
 
 #ifdef CA_CHECK_VERSION
@@ -1397,7 +1394,11 @@ start_geginv (void)
 	gtk_widget_set_double_buffered (GTK_WIDGET (geginv_canvas), FALSE);
 	gtk_widget_set_size_request (geginv_canvas, inv_width, inv_height);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
 	vbox = gtk_vbox_new (FALSE, 0);
+#endif
 	gtk_container_add (GTK_CONTAINER (geginv), vbox);
 	gtk_box_pack_start (GTK_BOX (vbox), geginv_canvas, TRUE, TRUE, 0);
 
