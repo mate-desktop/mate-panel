@@ -62,7 +62,11 @@ struct _PanelDItemEditorPrivate
 	PanelDitemSaveUri save_uri;
 	gpointer          save_uri_data;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	GtkWidget *grid;
+#else
 	GtkWidget *table;
+#endif
 	GtkWidget *type_label;
 	GtkWidget *type_combo;
 	GtkWidget *name_label;
@@ -516,6 +520,19 @@ label_new_with_mnemonic (const char *text)
 }
 
 static inline void
+#if GTK_CHECK_VERSION (3, 0, 0)
+grid_attach_label (GtkGrid *grid, GtkWidget *label, int left, int top, int width, int height)
+{
+	gtk_grid_attach (grid, label, left, top, width, height);
+}
+
+static inline void
+grid_attach_entry (GtkGrid *grid, GtkWidget *entry, int left, int top, int width, int height)
+{
+	gtk_widget_set_hexpand (entry, TRUE);
+	gtk_grid_attach (grid, entry, left, top, width, height);
+}
+#else
 table_attach_label (GtkTable  *table,
 		    GtkWidget *label,
 		    int        left,
@@ -540,6 +557,7 @@ table_attach_entry (GtkTable  *table,
 			  GTK_EXPAND | GTK_FILL | GTK_SHRINK, GTK_FILL,
 			  0, 0);
 }
+#endif
 
 static void
 setup_combo (GtkWidget            *combo_box,
@@ -612,6 +630,14 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+	priv->grid = gtk_grid_new ();
+	gtk_container_set_border_width (GTK_CONTAINER (priv->grid), 5);
+	gtk_grid_set_row_spacing (GTK_GRID (priv->grid), 6);
+	gtk_grid_set_column_spacing (GTK_GRID (priv->grid), 12);
+	gtk_box_pack_start (GTK_BOX (dialog_vbox), priv->grid, TRUE, TRUE, 0);
+	gtk_widget_show (priv->grid);
+#else
 	priv->table = gtk_table_new (4, 3, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (priv->table), 5);
 	gtk_table_set_row_spacings (GTK_TABLE (priv->table), 6);
@@ -619,6 +645,7 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	gtk_box_pack_start (GTK_BOX (dialog_vbox),
 			    priv->table, TRUE, TRUE, 0);
 	gtk_widget_show (priv->table);
+#endif
 
 	/* Type */
 	priv->type_label = label_new_with_mnemonic (_("_Type:"));
@@ -638,9 +665,13 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	priv->icon_chooser = panel_icon_chooser_new (NULL);
 	panel_icon_chooser_set_fallback_icon_name (PANEL_ICON_CHOOSER (priv->icon_chooser),
 						   PANEL_ICON_LAUNCHER);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_grid_attach (GTK_GRID (priv->grid), priv->icon_chooser, 0, 0, 1, 2);
+#else
 	gtk_table_attach (GTK_TABLE (priv->table), priv->icon_chooser,
 			  0, 1, 0, 2,
 			  0, 0, 0, 0);
+#endif
 	gtk_widget_show (priv->icon_chooser);
 
 	/* Command */
@@ -741,6 +772,19 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 		GtkTreeModel         *model;
 		PanelDItemEditorType  buf_type;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+		grid_attach_label (GTK_GRID (priv->grid), priv->type_label, 1, 0, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->type_combo, 2, 0, 1, 1);
+
+		grid_attach_label (GTK_GRID (priv->grid), priv->name_label, 1, 1, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->name_entry, 2, 1, 1, 1);
+
+		grid_attach_label (GTK_GRID (priv->grid), priv->command_label, 1, 2, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->command_hbox, 2, 2, 1, 1);
+
+		grid_attach_label (GTK_GRID (priv->grid), priv->comment_label, 1, 3, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->comment_entry, 2, 3, 1, 1);
+#else
 		table_attach_label (GTK_TABLE (priv->table), priv->type_label,
 				    1, 2, 0, 1);
 		table_attach_entry (GTK_TABLE (priv->table), priv->type_combo,
@@ -760,6 +804,7 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 				    1, 2, 3, 4);
 		table_attach_entry (GTK_TABLE (priv->table), priv->comment_entry,
 				    2, 3, 3, 4);
+#endif
 
 		/* FIXME: hack hack hack */
 		model = gtk_combo_box_get_model (GTK_COMBO_BOX (priv->type_combo));
@@ -775,6 +820,22 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 			}
 		} while (gtk_tree_model_iter_next (model, &iter));
 	} else if (type == PANEL_DITEM_EDITOR_TYPE_DIRECTORY) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+		grid_attach_label (GTK_GRID (priv->grid), priv->name_label, 1, 0, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->name_entry, 2, 0, 1, 1);
+
+		grid_attach_label (GTK_GRID (priv->grid), priv->comment_label, 1, 1, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->comment_entry, 2, 1, 1, 1);
+	} else {
+		grid_attach_label (GTK_GRID (priv->grid), priv->name_label, 1, 0, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->name_entry, 2, 0, 1, 1);
+
+		grid_attach_label (GTK_GRID (priv->grid), priv->command_label, 1, 1, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->command_hbox, 2, 1, 1, 1);
+
+		grid_attach_label (GTK_GRID (priv->grid), priv->comment_label, 1, 2, 1, 1);
+		grid_attach_entry (GTK_GRID (priv->grid), priv->comment_entry, 2, 2, 1, 1);
+#else
 		table_attach_label (GTK_TABLE (priv->table), priv->name_label,
 				    1, 2, 0, 1);
 		table_attach_entry (GTK_TABLE (priv->table), priv->name_entry,
@@ -799,6 +860,7 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 				    1, 2, 2, 3);
 		table_attach_entry (GTK_TABLE (priv->table), priv->comment_entry,
 				    2, 3, 2, 3);
+#endif
 	}
 
 	type_combo_changed (dialog);
@@ -812,8 +874,12 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 	focus_chain = g_list_prepend (focus_chain, priv->command_hbox);
 	focus_chain = g_list_prepend (focus_chain, priv->comment_entry);
 	focus_chain = g_list_reverse (focus_chain);
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_container_set_focus_chain (GTK_CONTAINER (priv->grid), focus_chain);
+#else
 	gtk_container_set_focus_chain (GTK_CONTAINER (priv->table),
 				       focus_chain);
+#endif
 	g_list_free (focus_chain);
 
 	gtk_widget_grab_focus (priv->name_entry);
