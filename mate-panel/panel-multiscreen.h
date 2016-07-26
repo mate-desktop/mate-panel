@@ -52,7 +52,5 @@ void    panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
 						 gboolean  *rightmost,
 						 gboolean  *topmost,
 						 gboolean  *bottommost);
-char  **panel_make_environment_for_screen       (GdkScreen *screen,
-						 char     **envp);
 
 #endif /* __PANEL_MULTISCREEN_H__ */

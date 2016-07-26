@@ -56,9 +56,6 @@ if test "x$enable_deprecation_flags" = "xyes"; then
    AC_SUBST(DISABLE_DEPRECATED_CFLAGS)
 fi
 
-AC_CHECK_HEADERS(crt_externs.h)
-AC_CHECK_FUNCS(_NSGetEnviron)
-
 LIBMATE_DESKTOP_REQUIRED=1.9.3
 GDK_PIXBUF_REQUIRED=2.7.1
 PANGO_REQUIRED=1.15.4
