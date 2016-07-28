@@ -39,7 +39,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
-#include <libmate-desktop/mate-aboutdialog.h>
 
 #include <mate-panel-applet.h>
 #include <mate-panel-applet-gsettings.h>
@@ -561,7 +560,8 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 	char* authors[3];
 	char* descr;
 	char copyright[] = \
-		"Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.";
+		"Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.\n"
+		"Copyright \xc2\xa9 2012-2016 MATE developers";
 
 	authors[0] = g_strdup_printf(author_format, fish->name);
 	authors[1] = _("(with minor help from George)");
@@ -569,7 +569,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 
 	descr = g_strdup_printf(about_format, fish->name);
 
-	mate_show_about_dialog(NULL,
+	gtk_show_about_dialog(NULL,
 		"program-name", _("Fish"),
 		"authors", authors,
 		"comments", descr,
