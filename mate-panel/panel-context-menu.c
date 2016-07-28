@@ -34,8 +34,6 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <libmate-desktop/mate-aboutdialog.h>
-
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-show.h>
 
@@ -132,15 +130,12 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 	for (i = 0; authors [i]; i++)
 		authors [i] = _(authors [i]);
 
-	/* Note: we don't use gtk_show_about_dialog() since some applets can
-	 * be loaded in this process and we don't want to share the about
-	 * dialog */
-	about = mate_about_dialog_new ();
+	about = gtk_about_dialog_new ();
 	g_object_set (about,
 		      "program-name",  _("The MATE Panel"),
 		      "version", VERSION,
 		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.\n"
-		                   "Copyright \xc2\xa9 2011-2014 MATE Developers.",
+		                   "Copyright \xc2\xa9 2011-2016 MATE Developers.",
 		      "comments", _("This program is responsible for launching other "
 				    "applications and provides useful utilities."),
 		      "authors", authors,
