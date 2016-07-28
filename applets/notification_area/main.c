@@ -29,8 +29,6 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#include <libmate-desktop/mate-aboutdialog.h>
-
 #include "main.h"
 #include "na-tray-manager.h"
 #include "na-tray.h"
@@ -134,9 +132,10 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 	const char copyright[] = \
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.\n"
 		"Copyright \xc2\xa9 2003-2006 Vincent Untz\n"
-		"Copyright \xc2\xa9 2011 Perberos";
+		"Copyright \xc2\xa9 2011 Perberos\n"
+		"Copyright \xc2\xa9 2012-2016 MATE developers";
 
-	mate_show_about_dialog(NULL,
+	gtk_show_about_dialog(NULL,
 		"program-name", _("Notification Area"),
 		"authors", authors,
 		//"comments", _(comments),
