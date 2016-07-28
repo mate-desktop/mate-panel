@@ -1012,15 +1012,25 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
 
 	error = NULL;
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_builder_add_from_file (gui,
+				   BUILDERDIR "/panel-properties-dialog-gtk3.ui",
+				   &error);
+#else
 	gtk_builder_add_from_file (gui,
 				   BUILDERDIR "/panel-properties-dialog.ui",
 				   &error);
+#endif
 
         if (error) {
 		char *secondary;
 
 		secondary = g_strdup_printf (_("Unable to load file '%s': %s."),
+#if GTK_CHECK_VERSION (3, 0, 0)
+					     BUILDERDIR"/panel-properties-dialog-gtk3.ui",
+#else
 					     BUILDERDIR"/panel-properties-dialog.ui",
+#endif
 					     error->message);
 		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
