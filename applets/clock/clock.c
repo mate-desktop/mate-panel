@@ -646,8 +646,6 @@ update_clock (ClockData * cd)
 	gboolean use_markup;
         char *utf8;
 
-        use_markup = FALSE;
-
 	time (&cd->current_time);
         utf8 = format_time (cd);
 
