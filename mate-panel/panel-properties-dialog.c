@@ -327,7 +327,11 @@ SETUP_TOGGLE_BUTTON ("arrows_toggle",      arrows_toggle,      enable_arrows,   
 
 static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
+#if GTK_CHECK_VERSION (3, 0, 0)
+				       GtkColorChooser       *color_button)
+#else
 				       GtkColorButton        *color_button)
+#endif
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
@@ -338,7 +342,7 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gtk_color_button_get_rgba (color_button, &color);
+	gtk_color_chooser_get_rgba (color_button, &color);
 	panel_profile_set_background_gdk_rgba (dialog->toplevel, &color);
 	panel_properties_dialog_opacity_changed (dialog);
 #else
@@ -365,8 +369,8 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-	gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
-				    &color);
+	gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
+				     &color);
 #else
 	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
 				     &(color.gdk));
@@ -721,11 +725,11 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 	if (!gdk_rgba_parse (&new_color, str_color))
 		return;
 
-	gtk_color_button_get_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+	gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 				    &old_color);
 
 	if (!gdk_rgba_equal (&old_color, &new_color))
-		gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+		gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 					    &new_color);
 #else
 	GdkColor new_color = { 0, };
