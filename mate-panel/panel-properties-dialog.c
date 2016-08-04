@@ -36,6 +36,10 @@
 #include <libpanel-util/panel-icon-chooser.h>
 #include <libpanel-util/panel-show.h>
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
+#include <libmate-desktop/mate-colorbutton.h>
+#endif
+
 #include "nothing.h"
 #include "panel-profile.h"
 #include "panel-schemas.h"
@@ -330,7 +334,7 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 #if GTK_CHECK_VERSION (3, 0, 0)
 				       GtkColorChooser       *color_button)
 #else
-				       GtkColorButton        *color_button)
+				       MateColorButton       *color_button)
 #endif
 {
 #if GTK_CHECK_VERSION (3, 0, 0)
@@ -346,7 +350,7 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 	panel_profile_set_background_gdk_rgba (dialog->toplevel, &color);
 	panel_properties_dialog_opacity_changed (dialog);
 #else
-	gtk_color_button_get_color (color_button, &color);
+	mate_color_button_get_color (color_button, &color);
 	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
 #endif
 }
@@ -372,7 +376,7 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 	gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 				     &color);
 #else
-	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
+	mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
 				     &(color.gdk));
 #endif
 
@@ -738,11 +742,11 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 	if (!gdk_color_parse (str_color, &new_color))
 		return;
 
-	gtk_color_button_get_color (GTK_COLOR_BUTTON (dialog->color_button),
+	mate_color_button_get_color (MATE_COLOR_BUTTON (dialog->color_button),
 				    &old_color);
 
 	if (!gdk_color_equal (&old_color, &new_color))
-		gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
+		mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
 					    &new_color);
 #endif
 }
