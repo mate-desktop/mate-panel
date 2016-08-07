@@ -446,7 +446,7 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	GdkDisplay *display;
 	GdkDevice *pointer;
 	GdkDevice *keyboard;
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat *seat;
 #else
 	GdkDeviceManager *device_manager;
@@ -550,7 +550,7 @@ static void panel_toplevel_end_grab_op (PanelToplevel* toplevel, guint32 time_)
 	GdkDisplay *display;
 	GdkDevice *pointer;
 	GdkDevice *keyboard;
-#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat *seat;
 #else
 	GdkDeviceManager *device_manager;
