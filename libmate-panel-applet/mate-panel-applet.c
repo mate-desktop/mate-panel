@@ -936,6 +936,23 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
 
 	if (event->type == GDK_BUTTON_PRESS) {
+#if GTK_CHECK_VERSION (3, 0, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
+		GdkDisplay *display;
+		GdkSeat *seat;
+
+		xevent.xbutton.type = ButtonPress;
+
+		display = gdk_display_get_default ();
+		seat = gdk_display_get_default_seat (display);
+
+		/* X does an automatic pointer grab on button press
+		 * if we have both button press and release events
+		 * selected.
+		 * We don't want to hog the pointer on our parent.
+		 */
+		gdk_seat_ungrab (seat);
+#else
 		xevent.xbutton.type = ButtonPress;
 
 		/* X does an automatic pointer grab on button press
@@ -943,9 +960,16 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 		 * selected.
 		 * We don't want to hog the pointer on our parent.
 		 */
-#if GTK_CHECK_VERSION (3, 0, 0)
 		gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
+#endif
 #else
+		xevent.xbutton.type = ButtonPress;
+
+		/* X does an automatic pointer grab on button press
+		 * if we have both button press and release events
+		 * selected.
+		 * We don't want to hog the pointer on our parent.
+		 */
 		gdk_display_pointer_ungrab
 			(gtk_widget_get_display (widget),
 			 GDK_CURRENT_TIME);
