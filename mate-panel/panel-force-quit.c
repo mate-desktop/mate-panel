@@ -114,11 +114,11 @@ remove_popup (GtkWidget *popup)
 	GdkWindow        *root;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay       *display;
-	GdkDevice        *pointer;
-	GdkDevice        *keyboard;
 #if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat          *seat;
 #else
+	GdkDevice        *pointer;
+	GdkDevice        *keyboard;
 	GdkDeviceManager *device_manager;
 #endif
 #endif
@@ -133,15 +133,16 @@ remove_popup (GtkWidget *popup)
 	display = gdk_window_get_display (root);
 #if GTK_CHECK_VERSION (3, 20, 0)
 	seat = gdk_display_get_default_seat (display);
-	pointer = gdk_seat_get_pointer (seat);
+
+	gdk_seat_ungrab (seat);
 #else
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
-#endif
 	keyboard = gdk_device_get_associated_device (pointer);
 
 	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
 	gdk_device_ungrab (keyboard, GDK_CURRENT_TIME);
+#endif
 #else
 	gdk_pointer_ungrab (GDK_CURRENT_TIME);
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
