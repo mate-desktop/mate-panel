@@ -2095,10 +2095,10 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		GdkCursor     *fleur_cursor;
 #if GTK_CHECK_VERSION (3, 0, 0)
 		GdkDisplay *display;
-		GdkDevice *pointer;
 #if GTK_CHECK_VERSION(3, 20, 0)
 		GdkSeat *seat;
 #else
+		GdkDevice *pointer;
 		GdkDeviceManager *device_manager;
 #endif
 #endif
@@ -2110,15 +2110,17 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		display = gdk_window_get_display (window);
 #if GTK_CHECK_VERSION(3, 20, 0)
 		seat = gdk_display_get_default_seat (display);
-		pointer = gdk_seat_get_pointer (seat);
+
+		status = gdk_seat_grab (seat, window, GDK_SEAT_CAPABILITY_POINTER,
+		                        FALSE, fleur_cursor, NULL, NULL, NULL);
 #else
 		device_manager = gdk_display_get_device_manager (display);
 		pointer = gdk_device_manager_get_client_pointer (device_manager);
-#endif
 		status = gdk_device_grab (pointer, window,
 					  GDK_OWNERSHIP_NONE, FALSE,
 					  APPLET_EVENT_MASK,
 					  fleur_cursor, time_);
+#endif
 
 		g_object_unref (fleur_cursor);
 #else
@@ -2142,7 +2144,6 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 {
 #if GTK_CHECK_VERSION(3, 20, 0)
 	GdkDisplay *display;
-	GdkDevice *pointer;
 	GdkSeat *seat;
 #elif GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay *display;
@@ -2157,9 +2158,8 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 #if GTK_CHECK_VERSION(3, 20, 0)
 	display = gtk_widget_get_display (GTK_WIDGET (panel));
 	seat = gdk_display_get_default_seat (display);
-	pointer = gdk_seat_get_pointer (seat);
 
-	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+	gdk_seat_ungrab (seat);
 #elif GTK_CHECK_VERSION (3, 0, 0)
 	display = gtk_widget_get_display (GTK_WIDGET (panel));
 	device_manager = gdk_display_get_device_manager (display);
