@@ -488,10 +488,10 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 	gboolean              handled = FALSE;
 #if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay *display;
-	GdkDevice *pointer;
 #if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat *seat;
 #else
+	GdkDevice *pointer;
 	GdkDeviceManager *device_manager;
 #endif
 #endif
@@ -526,8 +526,7 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 #if GTK_CHECK_VERSION(3, 20, 0)
 			display = gtk_widget_get_display (widget);
 			seat = gdk_display_get_default_seat (display);
-			pointer = gdk_seat_get_pointer (seat);
-			gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+			gdk_seat_ungrab (seat);
 #elif GTK_CHECK_VERSION (3, 0, 0)
 			display = gtk_widget_get_display (widget);
 			device_manager = gdk_display_get_device_manager (display);
