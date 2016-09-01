@@ -7,14 +7,15 @@
 # Anton Toni Agung <vdrive6@gmail.com>, 2015
 # airinuxazis <azis.naufal@gmail.com>, 2012
 # Ibnu Daru Aji, 2013
+# La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com>, 2016
 # Willy Sudiarto Raharjo <willysr@slackware-id.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-27 23:23+0300\n"
-"PO-Revision-Date: 2016-03-28 15:46+0000\n"
-"Last-Translator: Willy Sudiarto Raharjo <willysr@slackware-id.org>\n"
+"POT-Creation-Date: 2016-08-05 10:55+0300\n"
+"PO-Revision-Date: 2016-08-21 16:57+0000\n"
+"Last-Translator: La Ode Muh. Fadlun Akbar <fadlun.net@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/mate/MATE/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,29 +23,29 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../applets/clock/calendar-window.c:231 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:235 ../applets/clock/clock.ui.h:27
 msgid "Locations"
 msgstr "Lokasi"
 
-#: ../applets/clock/calendar-window.c:231
+#: ../applets/clock/calendar-window.c:235
 msgid "Edit"
 msgstr "Sunting"
 
-#: ../applets/clock/calendar-window.c:456
+#: ../applets/clock/calendar-window.c:465
 msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:497
+#: ../applets/clock/clock.c:491
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:497 ../applets/clock/clock-location-tile.c:564
+#: ../applets/clock/clock.c:491 ../applets/clock/clock-location-tile.c:562
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
@@ -55,7 +56,7 @@ msgstr "%H:%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:502 ../applets/clock/clock.c:1673
+#: ../applets/clock/clock.c:496 ../applets/clock/clock.c:1673
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -69,9 +70,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:502 ../applets/clock/clock.c:1679
-#: ../applets/clock/clock-location-tile.c:524
-#: ../applets/clock/clock-location-tile.c:571
+#: ../applets/clock/clock.c:496 ../applets/clock/clock.c:1679
+#: ../applets/clock/clock-location-tile.c:522
+#: ../applets/clock/clock-location-tile.c:569
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -80,14 +81,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:513
+#: ../applets/clock/clock.c:507
 msgid "%a %b %e"
 msgstr "%a %d %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:520
+#: ../applets/clock/clock.c:514
 #, c-format
 msgid ""
 "%1$s\n"
@@ -97,7 +98,7 @@ msgstr "%1$s\n%2$s"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:528
+#: ../applets/clock/clock.c:522
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -106,15 +107,15 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:702
+#: ../applets/clock/clock.c:694
 msgid "%A %B %d (%%s)"
 msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:731
+#: ../applets/clock/clock.c:723
 msgid "Click to hide month calendar"
 msgstr "Klik untuk menyembunyikan kalender bulan"
 
-#: ../applets/clock/clock.c:734
+#: ../applets/clock/clock.c:726
 msgid "Click to view month calendar"
 msgstr "Klik untuk melihat kalender bulanan"
 
@@ -162,27 +163,27 @@ msgid "Failed to set the system time"
 msgstr "Gagal menyetel waktu sistem"
 
 #: ../applets/clock/clock.c:1957 ../applets/fish/fish.c:1762
-#: ../applets/wncklet/window-list.c:190
-#: ../applets/wncklet/workspace-switcher.c:373
+#: ../applets/wncklet/window-list.c:189
+#: ../applets/wncklet/workspace-switcher.c:372
 msgid "_Preferences"
 msgstr "_Preferensi"
 
 #: ../applets/clock/clock.c:1960 ../applets/fish/fish.c:1765
-#: ../applets/notification_area/main.c:152
-#: ../applets/wncklet/showdesktop.c:259 ../applets/wncklet/window-list.c:198
-#: ../applets/wncklet/window-menu.c:101
-#: ../applets/wncklet/workspace-switcher.c:381 ../mate-panel/drawer.c:545
+#: ../applets/notification_area/main.c:151
+#: ../applets/wncklet/showdesktop.c:257 ../applets/wncklet/window-list.c:197
+#: ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:380 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:734
-#: ../mate-panel/panel-context-menu.c:296 ../mate-panel/panel-menu-bar.c:392
+#: ../mate-panel/panel-context-menu.c:291 ../mate-panel/panel-menu-bar.c:392
 #: ../mate-panel/panel-menu-button.c:670
 msgid "_Help"
 msgstr "Ba_ntuan"
 
 #: ../applets/clock/clock.c:1963 ../applets/fish/fish.c:1768
-#: ../applets/notification_area/main.c:155
-#: ../applets/wncklet/showdesktop.c:267 ../applets/wncklet/window-list.c:206
-#: ../applets/wncklet/window-menu.c:109
-#: ../applets/wncklet/workspace-switcher.c:389
+#: ../applets/notification_area/main.c:154
+#: ../applets/wncklet/showdesktop.c:265 ../applets/wncklet/window-list.c:205
+#: ../applets/wncklet/window-menu.c:108
+#: ../applets/wncklet/workspace-switcher.c:388
 msgid "_About"
 msgstr "Tent_ang"
 
@@ -214,21 +215,21 @@ msgstr "Nama Kota"
 msgid "City Time Zone"
 msgstr "Zona Waktu Kota"
 
-#: ../applets/clock/clock.c:3339
+#: ../applets/clock/clock.c:3340
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Jam"
 
-#: ../applets/clock/clock.c:3341
+#: ../applets/clock/clock.c:3342
 msgid "The Clock displays the current time and date"
 msgstr "Program Jam ini untuk menunjukkan waktu dan tanggal sekarang"
 
-#: ../applets/clock/clock.c:3345 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:146
-#: ../applets/wncklet/showdesktop.c:547 ../applets/wncklet/window-list.c:581
-#: ../applets/wncklet/window-menu.c:91
+#: ../applets/clock/clock.c:3346 ../applets/fish/fish.c:579
+#: ../applets/notification_area/main.c:145
+#: ../applets/wncklet/showdesktop.c:546 ../applets/wncklet/window-list.c:566
+#: ../applets/wncklet/window-menu.c:90
 #: ../applets/wncklet/workspace-switcher.c:651
-#: ../mate-panel/panel-context-menu.c:149
+#: ../mate-panel/panel-context-menu.c:144
 msgid "translator-credits"
 msgstr "Ahmad Riza H Nst  <rizahnst@gnome.org>, 2006.\nMohammad DAMT <mdamt@bisnisweb.com>.\nErwin Sanjaya <erwin@boens.net>.\nDirgita <dirgitadevina@yahoo.co.id>, 2010."
 
@@ -334,6 +335,7 @@ msgstr "Tampilkan _temperatur"
 
 #: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
 #: ../mate-panel/panel-properties-dialog.ui.h:11
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:11
 msgid "General"
 msgstr "Umum"
 
@@ -365,19 +367,19 @@ msgstr "Cuaca"
 msgid "Time _Settings"
 msgstr "Pengaturan _Waktu"
 
-#: ../applets/clock/clock-location-tile.c:192
+#: ../applets/clock/clock-location-tile.c:188
 msgid "Failed to set the system timezone"
 msgstr "Gagal menyetel zona waktu sistem"
 
-#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:236
 msgid "<small>Set...</small>"
 msgstr "<small>Setel...</small>"
 
-#: ../applets/clock/clock-location-tile.c:241
+#: ../applets/clock/clock-location-tile.c:237
 msgid "<small>Set</small>"
 msgstr "<small>Setel</small>"
 
-#: ../applets/clock/clock-location-tile.c:356
+#: ../applets/clock/clock-location-tile.c:354
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr "Menjadikan lokasi sebagai lokasi sekarang serta memakai zona waktunya untuk komputer ini"
@@ -388,7 +390,7 @@ msgstr "Menjadikan lokasi sebagai lokasi sekarang serta memakai zona waktunya un
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:501
+#: ../applets/clock/clock-location-tile.c:499
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -397,7 +399,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:509
+#: ../applets/clock/clock-location-tile.c:507
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -405,42 +407,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:518
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:657
+#: ../applets/clock/clock-location-tile.c:655
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:669
-#: ../applets/clock/clock-location-tile.c:678
+#: ../applets/clock/clock-location-tile.c:667
+#: ../applets/clock/clock-location-tile.c:676
 msgid "Unknown"
 msgstr "Tak dikenal"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:671
+#: ../applets/clock/clock-location-tile.c:669
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, rasanya seperti %s"
 
-#: ../applets/clock/clock-location-tile.c:694
+#: ../applets/clock/clock-location-tile.c:692
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Matahari Terbit: %s / Matahari Terbenam: %s"
 
-#: ../applets/clock/clock-utils.c:95 ../applets/fish/fish.c:173
-#: ../applets/notification_area/main.c:100 ../applets/wncklet/wncklet.c:71
+#: ../applets/clock/clock-utils.c:95 ../applets/fish/fish.c:172
+#: ../applets/notification_area/main.c:98 ../applets/wncklet/wncklet.c:71
 #: ../mate-panel/libpanel-util/panel-show.c:226
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Tidak dapat membuka dokumen bantuan '%s'"
 
-#: ../applets/clock/clock-utils.c:124 ../applets/fish/fish.c:199
-#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:88
+#: ../applets/clock/clock-utils.c:124 ../applets/fish/fish.c:198
+#: ../applets/notification_area/main.c:112 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "Galat sewaktu membuka dokumen bantuan"
 
@@ -564,7 +566,7 @@ msgstr "Pabrik untuk applet jam."
 msgid "Get the current time and date"
 msgstr "Mendapatkan waktu dan tanggal saat ini."
 
-#: ../applets/fish/fish.c:269
+#: ../applets/fish/fish.c:268
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -573,17 +575,17 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr "Peringatan: Perintah yang diberikan sepertinya perintah yang berguna.\nMengingat aplet ini hanyalah aplet yang tidak bermanfaat,\nAnda mungkin tidak menginginkan ini.\nKami menyarankan Anda untuk tidak memakai %s untuk sesuatu\nyang mungkin membuat aplet ini berguna."
 
-#: ../applets/fish/fish.c:441
+#: ../applets/fish/fish.c:440
 msgid "Images"
 msgstr "Gambar"
 
-#: ../applets/fish/fish.c:547 ../applets/fish/fish.c:590
+#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
 #: ../applets/fish/fish.c:696
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s si Ikan"
 
-#: ../applets/fish/fish.c:548
+#: ../applets/fish/fish.c:547
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -677,6 +679,7 @@ msgid "Animation"
 msgstr "Animasi"
 
 #: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:14
 msgid "    "
 msgstr "    "
 
@@ -777,12 +780,12 @@ msgstr "From Whence That Stupid Fish Came"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Menampilkan ikan yang berenang atau hewan lain."
 
-#: ../applets/notification_area/main.c:140
+#: ../applets/notification_area/main.c:139
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Area Notifikasi"
 
-#: ../applets/notification_area/main.c:385
+#: ../applets/notification_area/main.c:384
 msgid "Panel Notification Area"
 msgstr "Panel Area Notifikasi"
 
@@ -879,7 +882,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "Pabrik untuk applet yang berkaitan dengan navigasi window"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:84 ../applets/wncklet/window-menu.c:309
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:308
 msgid "Window Selector"
 msgstr "Pemilih Jendela"
 
@@ -897,7 +900,7 @@ msgid "Switch between workspaces"
 msgstr "Berpindah antar daerah kerja"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:574
+#: ../applets/wncklet/window-list.c:559
 msgid "Window List"
 msgstr "Daftar Jendela"
 
@@ -913,42 +916,42 @@ msgstr "Menampilkan Desktop"
 msgid "Hide application windows and show the desktop"
 msgstr "Menyembunyikan jendela aplikasi dan menampilkan desktop"
 
-#: ../applets/wncklet/showdesktop.c:210
+#: ../applets/wncklet/showdesktop.c:208
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Gagal memuat %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:210
+#: ../applets/wncklet/showdesktop.c:208
 msgid "Icon not found"
 msgstr "Ikon tidak ditemukan"
 
-#: ../applets/wncklet/showdesktop.c:283
+#: ../applets/wncklet/showdesktop.c:281
 msgid "Click here to restore hidden windows."
 msgstr "Klik di sini untuk membuka kembali jendela yang disembunyikan."
 
-#: ../applets/wncklet/showdesktop.c:287
+#: ../applets/wncklet/showdesktop.c:285
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klik di sini untuk menyembunyikan semua jendela."
 
-#: ../applets/wncklet/showdesktop.c:475 ../applets/wncklet/showdesktop.c:540
+#: ../applets/wncklet/showdesktop.c:473 ../applets/wncklet/showdesktop.c:539
 msgid "Show Desktop Button"
 msgstr "Tombol Tampilkan Desktop"
 
-#: ../applets/wncklet/showdesktop.c:542
+#: ../applets/wncklet/showdesktop.c:541
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Tombol ini untuk menyembunyikan semua jendela dan menampilkan desktop."
 
-#: ../applets/wncklet/showdesktop.c:568
+#: ../applets/wncklet/showdesktop.c:567
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
 msgstr "Manajer jendela Anda tidak mendukung tombol \"tampilkan desktop\", atau Anda sama sekali tidak menjalankan manajer jendela."
 
-#: ../applets/wncklet/window-list.c:182
+#: ../applets/wncklet/window-list.c:181
 msgid "_System Monitor"
 msgstr "Monitor _Sistem"
 
-#: ../applets/wncklet/window-list.c:576
+#: ../applets/wncklet/window-list.c:561
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -998,19 +1001,19 @@ msgstr "Kembali ke area _kerja aktif"
 msgid "Restore to na_tive workspace"
 msgstr "_Kembali ke area kerja asal"
 
-#: ../applets/wncklet/window-menu.c:86
+#: ../applets/wncklet/window-menu.c:85
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr "Pemilih Jendela menampilkan daftar semua jendela program dalam bentuk menu dan Anda bisa menelusurinya satu demi satu."
 
-#: ../applets/wncklet/workspace-switcher.c:204
+#: ../applets/wncklet/workspace-switcher.c:203
 #: ../applets/wncklet/workspace-switcher.c:960
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "baris"
 
-#: ../applets/wncklet/workspace-switcher.c:204
+#: ../applets/wncklet/workspace-switcher.c:203
 #: ../applets/wncklet/workspace-switcher.c:960
 msgid "columns"
 msgstr "kolom"
@@ -1795,8 +1798,8 @@ msgstr "Menampilkan opsi manajemen sesi"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:82
-#: ../mate-panel/panel-applet-frame.c:935
-#: ../mate-panel/panel-applet-frame.c:1111
+#: ../mate-panel/panel-applet-frame.c:944
+#: ../mate-panel/panel-applet-frame.c:1120
 msgid "Error"
 msgstr "Galat"
 
@@ -1838,12 +1841,12 @@ msgstr "_Pindahkan"
 msgid "Loc_k To Panel"
 msgstr "_Kunci Pada Panel"
 
-#: ../mate-panel/applet.c:1375
+#: ../mate-panel/applet.c:1378
 msgid "Cannot find an empty spot"
 msgstr "Tidak dapat menemukan daerah kosong"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:180
-#: ../mate-panel/panel-toplevel.c:1677
+#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:175
+#: ../mate-panel/panel-toplevel.c:1714
 msgid "Drawer"
 msgstr "Laci"
 
@@ -1853,7 +1856,7 @@ msgstr "T_ambah ke Laci..."
 
 #: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:798
 #: ../mate-panel/panel-action-button.c:192
-#: ../mate-panel/panel-context-menu.c:227
+#: ../mate-panel/panel-context-menu.c:222
 msgid "_Properties"
 msgstr "_Properti"
 
@@ -1924,9 +1927,9 @@ msgstr "_Luncurkan"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Key %s tidak ditentukan, tidak dapat membuka peluncur\n"
 
-#: ../mate-panel/launcher.c:957 ../mate-panel/panel-ditem-editor.c:1367
-#: ../mate-panel/panel-ditem-editor.c:1401
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/launcher.c:957 ../mate-panel/panel-ditem-editor.c:1433
+#: ../mate-panel/panel-ditem-editor.c:1467
+#: ../mate-panel/panel-ditem-editor.c:1498
 msgid "Could not save launcher"
 msgstr "Tidak dapat menyimpan peluncur"
 
@@ -1969,7 +1972,7 @@ msgstr "Tambahkan sebagai laci pa_da panel"
 msgid "Add this as _menu to panel"
 msgstr "Tambahkan sebagai _menu pada panel"
 
-#: ../mate-panel/nothing.cP:614
+#: ../mate-panel/nothing.cP:611
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>PERMAINAN BERAKHIR</b> pada level %d!"
@@ -1978,40 +1981,40 @@ msgstr "<b>PERMAINAN BERAKHIR</b> pada level %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../mate-panel/nothing.cP:621
+#: ../mate-panel/nothing.cP:618
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../mate-panel/nothing.cP:622
+#: ../mate-panel/nothing.cP:619
 msgid "Press 'q' to quit"
 msgstr "Tekan 'q' untuk keluar"
 
-#: ../mate-panel/nothing.cP:627
+#: ../mate-panel/nothing.cP:624
 msgid "Paused"
 msgstr "Ditahan"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../mate-panel/nothing.cP:630 ../mate-panel/nothing.cP:641
+#: ../mate-panel/nothing.cP:627 ../mate-panel/nothing.cP:638
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../mate-panel/nothing.cP:631
+#: ../mate-panel/nothing.cP:628
 msgid "Press 'p' to unpause"
 msgstr "Tekan 'p' untuk lanjut bermain"
 
-#: ../mate-panel/nothing.cP:637
+#: ../mate-panel/nothing.cP:634
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Tingkat: %s,  Nyawa: %s"
 
-#: ../mate-panel/nothing.cP:642
+#: ../mate-panel/nothing.cP:639
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr "Kiri/Kanan untuk bergerak, Spasi untuk menembak, 'p' untuk jeda, 'q' untuk berhenti"
 
-#: ../mate-panel/nothing.cP:1390
+#: ../mate-panel/nothing.cP:1387
 msgid "Killer GEGLs from Outer Space"
 msgstr "Sang Pembunuh GEGL dari Luar Angkasa"
 
@@ -2063,7 +2066,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "Mencari dokumen atau folder yang terdapat dalam komputer ini berdasarkan nama atau isinya"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:261
+#: ../mate-panel/panel-force-quit.c:270
 msgid "Force Quit"
 msgstr "Tutup Paksa"
 
@@ -2088,154 +2091,154 @@ msgstr "Matikan Komputer..."
 msgid "Shut down the computer"
 msgstr "Mematikan komputer"
 
-#: ../mate-panel/panel-addto.c:121
+#: ../mate-panel/panel-addto.c:116
 msgid "Custom Application Launcher"
 msgstr "Peluncur Aplikasi Pribadi"
 
-#: ../mate-panel/panel-addto.c:122
+#: ../mate-panel/panel-addto.c:117
 msgid "Create a new launcher"
 msgstr "Membuat peluncur program"
 
-#: ../mate-panel/panel-addto.c:132
+#: ../mate-panel/panel-addto.c:127
 msgid "Application Launcher..."
 msgstr "Peluncur Aplikasi..."
 
-#: ../mate-panel/panel-addto.c:133
+#: ../mate-panel/panel-addto.c:128
 msgid "Copy a launcher from the applications menu"
 msgstr "Menyalin peluncur dari menu aplikasi"
 
-#: ../mate-panel/panel-addto.c:147 ../mate-panel/panel-menu-button.c:1098
+#: ../mate-panel/panel-addto.c:142 ../mate-panel/panel-menu-button.c:1098
 msgid "Main Menu"
 msgstr "Menu Utama"
 
-#: ../mate-panel/panel-addto.c:148
+#: ../mate-panel/panel-addto.c:143
 msgid "The main MATE menu"
 msgstr "Menu utama MATE"
 
-#: ../mate-panel/panel-addto.c:158
+#: ../mate-panel/panel-addto.c:153
 msgid "Menu Bar"
 msgstr "Baris Menu"
 
-#: ../mate-panel/panel-addto.c:159
+#: ../mate-panel/panel-addto.c:154
 msgid "A custom menu bar"
 msgstr "Baris menu pribadi"
 
-#: ../mate-panel/panel-addto.c:169
+#: ../mate-panel/panel-addto.c:164
 msgid "Separator"
 msgstr "Pemisah"
 
-#: ../mate-panel/panel-addto.c:170
+#: ../mate-panel/panel-addto.c:165
 msgid "A separator to organize the panel items"
 msgstr "Pemisah untuk mengelompokkan objek-objek pada panel"
 
-#: ../mate-panel/panel-addto.c:181
+#: ../mate-panel/panel-addto.c:176
 msgid "A pop out drawer to store other items in"
 msgstr "Laci tempat menyimpan objek"
 
-#: ../mate-panel/panel-addto.c:262
+#: ../mate-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(kosong)"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:988
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Cari objek untuk d_itambahkan ke \"%s\":"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:992
 #, c-format
 msgid "Add to Drawer"
 msgstr "Tambah ke Laci"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:994
 msgid "Find an _item to add to the drawer:"
 msgstr "Cari objek untuk d_itambahkan ke laci:"
 
-#: ../mate-panel/panel-addto.c:1001
+#: ../mate-panel/panel-addto.c:996
 #, c-format
 msgid "Add to Panel"
 msgstr "Tambah ke Panel"
 
-#: ../mate-panel/panel-addto.c:1003
+#: ../mate-panel/panel-addto.c:998
 msgid "Find an _item to add to the panel:"
 msgstr "Cari objek untuk d_itambahkan ke panel:"
 
-#: ../mate-panel/panel-applet-frame.c:896
+#: ../mate-panel/panel-applet-frame.c:905
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" mati mendadak"
 
-#: ../mate-panel/panel-applet-frame.c:898
+#: ../mate-panel/panel-applet-frame.c:907
 msgid "Panel object has quit unexpectedly"
 msgstr "Objek panel ini mati mendadak"
 
-#: ../mate-panel/panel-applet-frame.c:905
+#: ../mate-panel/panel-applet-frame.c:914
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Bila Anda membuka ulang objek panel, maka ia akan dimasukkan kembali ke dalam panel secara otomatis"
 
-#: ../mate-panel/panel-applet-frame.c:912
+#: ../mate-panel/panel-applet-frame.c:921
 msgid "D_elete"
 msgstr "H_apus"
 
-#: ../mate-panel/panel-applet-frame.c:913
-#: ../mate-panel/panel-applet-frame.c:918
+#: ../mate-panel/panel-applet-frame.c:922
+#: ../mate-panel/panel-applet-frame.c:927
 msgid "_Don't Reload"
 msgstr "_Jangan Muat Ulang"
 
-#: ../mate-panel/panel-applet-frame.c:914
-#: ../mate-panel/panel-applet-frame.c:919
+#: ../mate-panel/panel-applet-frame.c:923
+#: ../mate-panel/panel-applet-frame.c:928
 msgid "_Reload"
 msgstr "_Muat Ulang"
 
-#: ../mate-panel/panel-applet-frame.c:1074
+#: ../mate-panel/panel-applet-frame.c:1083
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Terjadi masalah saat panel mencoba membuka \"%s\""
 
-#: ../mate-panel/panel-applet-frame.c:1090
+#: ../mate-panel/panel-applet-frame.c:1099
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Apakah Anda ingin menghapus aplet dari konfigurasi Anda?"
 
-#: ../mate-panel/panel-context-menu.c:114
+#: ../mate-panel/panel-context-menu.c:112
 msgid "And many, many others..."
 msgstr "Dan masih banyak lagi yang lainnya..."
 
-#: ../mate-panel/panel-context-menu.c:140
+#: ../mate-panel/panel-context-menu.c:135
 msgid "The MATE Panel"
 msgstr "Panel MATE"
 
-#: ../mate-panel/panel-context-menu.c:144
+#: ../mate-panel/panel-context-menu.c:139
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr "Program ini bertanggung jawab untuk meluncurkan aplikasi lain dan menyediakan berbagai utilitas yang bermanfaat."
 
-#: ../mate-panel/panel-context-menu.c:148
+#: ../mate-panel/panel-context-menu.c:143
 msgid "About the MATE Panel"
 msgstr "Tentang Panel MATE"
 
-#: ../mate-panel/panel-context-menu.c:182
+#: ../mate-panel/panel-context-menu.c:177
 msgid "Cannot delete this panel"
 msgstr "Panel ini tidak dapat dihapus"
 
-#: ../mate-panel/panel-context-menu.c:183
+#: ../mate-panel/panel-context-menu.c:178
 msgid "You must always have at least one panel."
 msgstr "Paling tidak, Anda harus memiliki satu panel."
 
-#: ../mate-panel/panel-context-menu.c:216
+#: ../mate-panel/panel-context-menu.c:211
 msgid "_Add to Panel..."
 msgstr "T_ambah ke Panel..."
 
-#: ../mate-panel/panel-context-menu.c:237
+#: ../mate-panel/panel-context-menu.c:232
 msgid "_Delete This Panel"
 msgstr "_Hapus Panel Ini"
 
-#: ../mate-panel/panel-context-menu.c:252
+#: ../mate-panel/panel-context-menu.c:247
 msgid "_New Panel"
 msgstr "Pa_nel Baru"
 
-#: ../mate-panel/panel-context-menu.c:304
+#: ../mate-panel/panel-context-menu.c:299
 msgid "A_bout Panels"
 msgstr "_Tentang Panel"
 
@@ -2252,62 +2255,62 @@ msgid "Location"
 msgstr "Lokasi"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:628
+#: ../mate-panel/panel-ditem-editor.c:651
 msgid "_Type:"
 msgstr "_Jenis:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:635
+#: ../mate-panel/panel-ditem-editor.c:658
 msgid "_Name:"
 msgstr "_Nama:"
 
-#: ../mate-panel/panel-ditem-editor.c:662
+#: ../mate-panel/panel-ditem-editor.c:693
 msgid "_Browse..."
 msgstr "_Telusur..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:669
+#: ../mate-panel/panel-ditem-editor.c:700
 msgid "Co_mment:"
 msgstr "Ko_mentar:"
 
-#: ../mate-panel/panel-ditem-editor.c:1018
+#: ../mate-panel/panel-ditem-editor.c:1084
 msgid "Choose an application..."
 msgstr "Pilih aplikasi..."
 
-#: ../mate-panel/panel-ditem-editor.c:1022
+#: ../mate-panel/panel-ditem-editor.c:1088
 msgid "Choose a file..."
 msgstr "Pilih berkas..."
 
-#: ../mate-panel/panel-ditem-editor.c:1187
-#: ../mate-panel/panel-ditem-editor.c:1196
+#: ../mate-panel/panel-ditem-editor.c:1253
+#: ../mate-panel/panel-ditem-editor.c:1262
 msgid "Comm_and:"
 msgstr "Perint_ah:"
 
-#: ../mate-panel/panel-ditem-editor.c:1205
+#: ../mate-panel/panel-ditem-editor.c:1271
 msgid "_Location:"
 msgstr "_Lokasi:"
 
-#: ../mate-panel/panel-ditem-editor.c:1368
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "The name of the launcher is not set."
 msgstr "Nama peluncur belum diisi."
 
-#: ../mate-panel/panel-ditem-editor.c:1372
+#: ../mate-panel/panel-ditem-editor.c:1438
 msgid "Could not save directory properties"
 msgstr "Tidak dapat menyimpan properti direktori"
 
-#: ../mate-panel/panel-ditem-editor.c:1373
+#: ../mate-panel/panel-ditem-editor.c:1439
 msgid "The name of the directory is not set."
 msgstr "Nama direktori belum diisi."
 
-#: ../mate-panel/panel-ditem-editor.c:1389
+#: ../mate-panel/panel-ditem-editor.c:1455
 msgid "The command of the launcher is not set."
 msgstr "Perintah yang hendak dipakai belum diisi."
 
-#: ../mate-panel/panel-ditem-editor.c:1392
+#: ../mate-panel/panel-ditem-editor.c:1458
 msgid "The location of the launcher is not set."
 msgstr "Lokasi peluncur belum diisi."
 
-#: ../mate-panel/panel-ditem-editor.c:1469
+#: ../mate-panel/panel-ditem-editor.c:1535
 msgid "Could not display help document"
 msgstr "Tidak dapat membuka dokumen bantuan"
 
@@ -2316,11 +2319,11 @@ msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "Klik pada sebuah jendela program untuk memaksanya mati. Tekan <ESC> untuk jika tidak jadi."
 
-#: ../mate-panel/panel-force-quit.c:244
+#: ../mate-panel/panel-force-quit.c:253
 msgid "Force this application to exit?"
 msgstr "Paksa aplikasi ini untuk ditutup?"
 
-#: ../mate-panel/panel-force-quit.c:247
+#: ../mate-panel/panel-force-quit.c:256
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2481,119 +2484,144 @@ msgctxt "Orientation"
 msgid "Right"
 msgstr "Kanan"
 
-#: ../mate-panel/panel-properties-dialog.c:880
+#: ../mate-panel/panel-properties-dialog.c:895
 msgid "Drawer Properties"
 msgstr "Properti Laci"
 
-#: ../mate-panel/panel-properties-dialog.c:1007
+#: ../mate-panel/panel-properties-dialog.c:1028
 #: ../mate-panel/panel-run-dialog.c:1993
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Tidak dapat memuat berkas '%s': %s."
 
-#: ../mate-panel/panel-properties-dialog.c:1013
+#: ../mate-panel/panel-properties-dialog.c:1038
 msgid "Could not display properties dialog"
 msgstr "Tidak dapat menampilkan dialog properti"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:1
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:1
 msgid "Panel Properties"
 msgstr "Properti Panel"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:2
 msgid "Some of these properties are locked down"
 msgstr "Ada beberapa properti ini yang dikunci"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:3
 msgid "_Icon:"
 msgstr "_Ikon:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:4
 msgid "pixels"
 msgstr "piksel"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:5
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:6
 #: ../mate-panel/panel-test-applets.ui.h:3
 msgid "_Size:"
 msgstr "_Ukuran:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:6
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:5
 #: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Orientation:"
 msgstr "_Orientasi:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:7
 msgid "E_xpand"
 msgstr "_Perlebar"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:8
 msgid "_Autohide"
 msgstr "Sembunyi otom_atis"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:9
 msgid "Show hide _buttons"
 msgstr "Tom_bol penyembunyi"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:10
 msgid "Arro_ws on hide buttons"
 msgstr "Panah pada tombo_l"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:12
 msgid "_None (use system theme)"
 msgstr "_Nihil (gunakan tema sistem)"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:13
 msgid "Solid c_olor"
 msgstr "_Warna:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:15
 msgid "Pick a color"
 msgstr "Pilih warna"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:18
 msgid "S_tyle:"
 msgstr "_Gaya:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:17
 msgid "Co_lor:"
 msgstr "_Warna:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:16
 msgid "<small>Transparent</small>"
 msgstr "<small>Transparan</small>"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:19
 msgid "<small>Opaque</small>"
 msgstr "<small>Solid</small>"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:20
 msgid "Background _image:"
 msgstr "Gambar _latar belakang:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:21
 msgid "Select background"
 msgstr "Pilih latar belakang"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:22
 msgid "Background"
 msgstr "Latar Belakang"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:23
 msgid "Image Background Details"
 msgstr "Detail Latar Belakang"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:24
 msgid "_Tile"
 msgstr "_Ubin"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:25
 msgid "_Scale"
 msgstr "_Skala"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:26
 msgid "St_retch"
 msgstr "_Bentang"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:27
 msgid "Rotate image when panel is _vertical"
 msgstr "Putar gambar pada panel _vertikal"
 
@@ -2797,73 +2825,73 @@ msgstr "_Aplet:"
 msgid "_Prefs Path:"
 msgstr "Lokasi _Pilihan:"
 
-#: ../mate-panel/panel-toplevel.c:1219
+#: ../mate-panel/panel-toplevel.c:1248
 msgid "Hide Panel"
 msgstr "Sembunyikan Panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1648
+#: ../mate-panel/panel-toplevel.c:1685
 msgid "Top Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Atas"
 
-#: ../mate-panel/panel-toplevel.c:1649
+#: ../mate-panel/panel-toplevel.c:1686
 msgid "Top Centered Panel"
 msgstr "Panel Tengah Atas"
 
-#: ../mate-panel/panel-toplevel.c:1650
+#: ../mate-panel/panel-toplevel.c:1687
 msgid "Top Floating Panel"
 msgstr "Panel Mengambang Atas"
 
-#: ../mate-panel/panel-toplevel.c:1651
+#: ../mate-panel/panel-toplevel.c:1688
 msgid "Top Edge Panel"
 msgstr "Panel Tepi Atas"
 
-#: ../mate-panel/panel-toplevel.c:1655
+#: ../mate-panel/panel-toplevel.c:1692
 msgid "Bottom Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Bawah"
 
-#: ../mate-panel/panel-toplevel.c:1656
+#: ../mate-panel/panel-toplevel.c:1693
 msgid "Bottom Centered Panel"
 msgstr "Panel Tengah Bawah"
 
-#: ../mate-panel/panel-toplevel.c:1657
+#: ../mate-panel/panel-toplevel.c:1694
 msgid "Bottom Floating Panel"
 msgstr "Panel Mengambang Bawah"
 
-#: ../mate-panel/panel-toplevel.c:1658
+#: ../mate-panel/panel-toplevel.c:1695
 msgid "Bottom Edge Panel"
 msgstr "Panel Tepi Bawah"
 
-#: ../mate-panel/panel-toplevel.c:1662
+#: ../mate-panel/panel-toplevel.c:1699
 msgid "Left Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Kiri"
 
-#: ../mate-panel/panel-toplevel.c:1663
+#: ../mate-panel/panel-toplevel.c:1700
 msgid "Left Centered Panel"
 msgstr "Panel Tengah Kiri"
 
-#: ../mate-panel/panel-toplevel.c:1664
+#: ../mate-panel/panel-toplevel.c:1701
 msgid "Left Floating Panel"
 msgstr "Panel Mengambang Kiri"
 
-#: ../mate-panel/panel-toplevel.c:1665
+#: ../mate-panel/panel-toplevel.c:1702
 msgid "Left Edge Panel"
 msgstr "Panel Tepi Kiri"
 
-#: ../mate-panel/panel-toplevel.c:1669
+#: ../mate-panel/panel-toplevel.c:1706
 msgid "Right Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Kanan"
 
-#: ../mate-panel/panel-toplevel.c:1670
+#: ../mate-panel/panel-toplevel.c:1707
 msgid "Right Centered Panel"
 msgstr "Panel Tengah Kanan"
 
-#: ../mate-panel/panel-toplevel.c:1671
+#: ../mate-panel/panel-toplevel.c:1708
 msgid "Right Floating Panel"
 msgstr "Panel Mengambang Kanan"
 
-#: ../mate-panel/panel-toplevel.c:1672
+#: ../mate-panel/panel-toplevel.c:1709
 msgid "Right Edge Panel"
 msgstr "Panel Tepi Kanan"
 
