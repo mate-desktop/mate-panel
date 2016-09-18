@@ -1,50 +1,20 @@
-1.15.1
-
+1.16.0
+  * Use GtkAboutDialog instead of MateAboutDialog
+  * GTK+3: use GtkColorButton/GtkColorChooser in properties dialog
+  * GTK+3: fix a lot of deprecations
+  * Some more fixes and cleanups
   * Translations update
-  * Gtk+-2 properties-dialog: use Mate-ColorButton for gtk2 build
-  * GTK+-3 properties-dialog: port to GtkColorChooser
-  * properties-dialog: drop usage of MateColorButton
-  * Fix FTBFS with Gtk 3.18
-  * Gtk+3 UI: add panel-properties-dialog-gtk3.ui
-  * GTK+-3.0 panel-properties: port to GtkGrid
-  * GTK+-3 panel: don't set panel's initial size to G_MAXINT
-  * GTK+-3 panel-toplevel: port to GtkGrid
-  * GTK+-3 panel-ditem-editor: replace gtktable with gtkgrid
-  * clock: remove useless duplication
-  * panel-context-menu: use GtkAbout and update copyright
-  * clock: use GtkAbout and update copyright
-  * window-list: use GtkAbout and update copyright
-  * show-desktop: use GtkAbout and update copyright
-  * workspace-switcher: use GtkAbout and update copyright
-  * window-menu applet: use GtkAbout and update copyright
-  * na: : use GtkAbout and update copyright
-  * fish: use GtkAbout and update copyright
-  * multiscreen: drop unused function
-  * distcheck: explicitly use currently selected GTK+ version
-  * clock: fix UI issues introduced in 882f8f4
-  * use gtk_box_new instead of gtk_{h,v}box_new properly
-  * fixes for opensuse.layout
-  * fix some warnings and deprecations
-  * Gtk3: rename panel_widget_size_request() to panel_widget_get_preferred_size()
-  * Gtk3: fix no explicit return value type for set_background_region()
-  * po: drop languages not present on Transifex
-  * po: actually add new language from Transifex
-  * panel-test-applets: fix typo
 
-1.15.0
-
-  * bump version
+1.14.2
+  * Some fixes for opensuse.layout
+  * Some more fixes and cleanups
+  * Translations update
+  * Make distcheck use currently selected GTK+ version
 
 1.14.1
-
+  * Fix missing focus for panel widgets (needed for Orca to work)
+  * Some more fixes and cleanups
   * Translations update
-  * fix missing focus for panel widgets
-  * panel-widget: add missing function declaration for GTK+ >= 3.18
-  * added missing variable initialization
-  * restore correct applet finalizing code
-  * Revert "Cancel background settings upon MatePanelAppletFrameDBus destruction.
-  * na-try-child: add missing include for GTK_Version_Check
-  * configure: remove unused python-related directive
 
 1.14.0
   * Drop MateConf migration script
