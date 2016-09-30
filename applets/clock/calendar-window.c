@@ -86,12 +86,41 @@ static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 		  				   const char *key,
                   				   GCallback   callback);
 
+static void calendar_mark_today(GtkCalendar *calendar)
+{
+	time_t now;
+	struct tm tm1;
+	guint year, month, day;
+
+	gtk_calendar_get_date(calendar, &year, &month, &day);
+	time(&now);
+	localtime_r (&now, &tm1);
+	if ((tm1.tm_mon == month) && (tm1.tm_year + 1900 == year)) {
+		gtk_calendar_mark_day (GTK_CALENDAR (calendar), tm1.tm_mday);
+	} else {
+		gtk_calendar_unmark_day (GTK_CALENDAR (calendar), tm1.tm_mday);
+	}
+}
+
+static gboolean calendar_update(gpointer user_data)
+{
+	GtkCalendar *calendar = user_data;
+	calendar_mark_today(calendar);
+	return G_SOURCE_REMOVE;
+}
+
+static void calendar_month_changed_cb(GtkCalendar *calendar, gpointer user_data)
+{
+	gtk_calendar_clear_marks(calendar);
+	g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, calendar_update, user_data, NULL);
+}
+
 static GtkWidget *
 calendar_window_create_calendar (CalendarWindow *calwin)
 {
 	GtkWidget                 *calendar;
 	GtkCalendarDisplayOptions  options;
-        struct tm                 *tm;
+	struct tm                  tm1;
 
 	calendar = gtk_calendar_new ();
 	options = gtk_calendar_get_display_options (GTK_CALENDAR (calendar));
@@ -101,12 +130,14 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 		options &= ~(GTK_CALENDAR_SHOW_WEEK_NUMBERS);
 	gtk_calendar_set_display_options (GTK_CALENDAR (calendar), options);
 
-	tm = localtime (calwin->priv->current_time);
+	localtime_r (calwin->priv->current_time, &tm1);
+	gtk_calendar_select_month (GTK_CALENDAR (calendar),
+				   tm1.tm_mon, tm1.tm_year + 1900);
+	gtk_calendar_select_day (GTK_CALENDAR (calendar), tm1.tm_mday);
+	calendar_mark_today (GTK_CALENDAR(calendar));
 
-        gtk_calendar_select_month (GTK_CALENDAR (calendar),
-                                   tm->tm_mon,
-                                   tm->tm_year + 1900);
-        gtk_calendar_select_day (GTK_CALENDAR (calendar), tm->tm_mday);
+	g_signal_connect(calendar, "month-changed",
+			 G_CALLBACK(calendar_month_changed_cb), calendar);
 
 	return calendar;
 }
