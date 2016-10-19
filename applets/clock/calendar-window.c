@@ -123,6 +123,9 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 	struct tm                  tm1;
 
 	calendar = gtk_calendar_new ();
+	#if GTK_CHECK_VERSION (3, 0, 0)
+	gtk_widget_set_size_request(GTK_WIDGET(calendar), 260, 100);
+	#endif
 	options = gtk_calendar_get_display_options (GTK_CALENDAR (calendar));
 	if (calwin->priv->show_weeks)
 		options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
