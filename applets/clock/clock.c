@@ -53,7 +53,6 @@
 #include <gio/gio.h>
 
 #include <libmateweather/mateweather-prefs.h>
-#include <libmateweather/mateweather-xml.h>
 #include <libmateweather/location-entry.h>
 #include <libmateweather/timezone-menu.h>
 
