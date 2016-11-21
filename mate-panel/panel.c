@@ -19,9 +19,7 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
-#endif
 
 #include <libpanel-util/panel-glib.h>
 
@@ -404,11 +402,7 @@ panel_key_press_event (GtkWidget   *widget,
 	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
 	    event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
-#if GTK_CHECK_VERSION (3, 0, 0)
 		return gtk_bindings_activate (G_OBJECT (widget),
-#else
-		return gtk_bindings_activate (GTK_OBJECT (widget),
-#endif
 					      event->keyval,
 					      event->state);
 
@@ -440,11 +434,7 @@ static gboolean
 set_background_color (PanelToplevel *toplevel,
 		      guint16       *dropped)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
-#else
-	PanelColor color;
-#endif
 
 	if (!dropped)
 		return FALSE;
@@ -453,17 +443,10 @@ set_background_color (PanelToplevel *toplevel,
 	     ! panel_profile_background_key_is_writable (toplevel, "type"))
 		return FALSE;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	color.red   = dropped [0];
 	color.green = dropped [1];
 	color.blue  = dropped [2];
 	color.alpha = 1.;
-#else
-	color.gdk.red   = dropped [0];
-	color.gdk.green = dropped [1];
-	color.gdk.blue  = dropped [2];
-	color.alpha     = 65535;
-#endif
 
 	panel_profile_set_background_color (toplevel, &color);
 	panel_profile_set_background_type (toplevel, PANEL_BACK_COLOR);

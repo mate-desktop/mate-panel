@@ -80,11 +80,7 @@ typedef struct {
 	GtkWidget         *drawing_area;
 	GtkRequisition     requisition;
 	GdkRectangle       prev_allocation;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_t   *surface;
-#else
-	GdkPixmap         *pixmap;
-#endif
 	guint              timeout;
 	int                current_frame;
 	gboolean           in_applet;
@@ -797,7 +793,6 @@ static gboolean fish_read_output(GIOChannel* source, GIOCondition condition, gpo
 	return (status != G_IO_STATUS_EOF);
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 /*
  * Set the DISPLAY variable, to be use by g_spawn_async.
  */
@@ -806,7 +801,6 @@ set_environment (gpointer display)
 {
 	g_setenv ("DISPLAY", display, TRUE);
 }
-#endif
 
 static void display_fortune_dialog(FishApplet* fish)
 {
@@ -816,10 +810,8 @@ static void display_fortune_dialog(FishApplet* fish)
 	const char  *charset;
 	int          argc;
 	char       **argv;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkScreen *screen;
 	char *display;
-#endif
 
 	/* if there is still a pipe, close it */
 	if (fish->source_id)
@@ -942,7 +934,6 @@ static void display_fortune_dialog(FishApplet* fish)
 
 	clear_fortune_text (fish);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 	display = gdk_screen_make_display_name (screen);
 	g_spawn_async_with_pipes (NULL, /* working directory */
@@ -957,13 +948,6 @@ static void display_fortune_dialog(FishApplet* fish)
 							  NULL, /* stderr */
 							  &error);
 	g_free (display);
-#else
-	gdk_spawn_on_screen_with_pipes (gtk_widget_get_screen (GTK_WIDGET (fish)),
-					NULL, argv, NULL,
-					G_SPAWN_SEARCH_PATH|G_SPAWN_STDERR_TO_DEV_NULL,
-					NULL, NULL, NULL, NULL, &output, NULL,
-					&error);
-#endif
 
 	if (error) {
 		char *message;
@@ -1407,28 +1391,17 @@ static void update_pixmap(FishApplet* fish)
 	if (width == 0 || height == 0)
 		return;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (fish->surface)
 		cairo_surface_destroy (fish->surface);
 	fish->surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
 													   CAIRO_CONTENT_COLOR_ALPHA,
 													   width, height);
-#else
-	if (fish->pixmap)
-		g_object_unref (fish->pixmap);
-	fish->pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
-				       width, height, -1);
-#endif
 
 	gtk_widget_queue_resize (widget);
 
 	g_assert (pixbuf_width != -1 && pixbuf_height != -1);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	cr = cairo_create (fish->surface);
-#else
-	cr = gdk_cairo_create (fish->pixmap);
-#endif
 
 	cairo_set_source_rgb (cr, 1, 1, 1);
 	cairo_paint (cr);
@@ -1475,44 +1448,19 @@ static void update_pixmap(FishApplet* fish)
 	cairo_destroy (cr);
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean fish_applet_draw(GtkWidget* widget, cairo_t *cr, FishApplet* fish)
-#else
-static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* event, FishApplet* fish)
-#endif
 {
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	GdkWindow    *window;
-	GtkStyle     *style;
-	GtkStateType  state;
-#endif
 	int width, height;
 	int src_x, src_y;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	g_return_val_if_fail (fish->surface != NULL, FALSE);
-#else
-	g_return_val_if_fail (fish->pixmap != NULL, FALSE);
-#endif
 
 	g_assert (fish->n_frames > 0);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	window = gtk_widget_get_window (widget);
-	style = gtk_widget_get_style (widget);
-	state = gtk_widget_get_state (widget);
-#endif
-
-#if GTK_CHECK_VERSION(3, 0, 0)
 	width = cairo_xlib_surface_get_width (fish->surface);
 	height = cairo_xlib_surface_get_height (fish->surface);
 	src_x = 0;
 	src_y = 0;
-#else
-	gdk_drawable_get_size(fish->pixmap, &width, &height);
-	src_x = event->area.x;
-	src_y = event->area.y;
-#endif
 
 	if (fish->rotate) {
 		if (fish->orientation == MATE_PANEL_APPLET_ORIENT_RIGHT)
@@ -1524,29 +1472,13 @@ static gboolean fish_applet_expose_event(GtkWidget* widget, GdkEventExpose* even
 	} else
 		src_x += ((width * fish->current_frame) / fish->n_frames);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_save (cr);
 	cairo_set_source_surface (cr, fish->surface, -src_x, -src_y);
 	cairo_paint (cr);
 	cairo_restore (cr);
-#else
-	gdk_draw_drawable (window,
-			   style->fg_gc [state],
-			   fish->pixmap,
-			   src_x, src_y,
-			   event->area.x, event->area.y,
-			   event->area.width, event->area.height);
-#endif
 
         return FALSE;
 }
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-static void fish_applet_size_request(GtkWidget* widget, GtkRequisition* requisition, FishApplet* fish)
-{
-	*requisition = fish->requisition;
-}
-#endif
 
 static void fish_applet_size_allocate(GtkWidget* widget, GtkAllocation* allocation, FishApplet* fish)
 {
@@ -1563,25 +1495,15 @@ static void fish_applet_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 
 static void fish_applet_realize(GtkWidget* widget, FishApplet* fish)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (!fish->surface)
-#else
-	if (!fish->pixmap)
-#endif
 		update_pixmap (fish);
 }
 
 static void fish_applet_unrealize(GtkWidget* widget, FishApplet* fish)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (fish->surface)
 		cairo_surface_destroy (fish->surface);
 	fish->surface = NULL;
-#else
-	if (fish->pixmap)
-		g_object_unref (fish->pixmap);
-	fish->pixmap = NULL;
-#endif
 }
 
 static void fish_applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient orientation)
@@ -1593,11 +1515,7 @@ static void fish_applet_change_orient(MatePanelApplet* applet, MatePanelAppletOr
 
 	fish->orientation = orientation;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (fish->surface)
-#else
-	if (fish->pixmap)
-#endif
 		update_pixmap (fish);
 }
 
@@ -1718,15 +1636,8 @@ static void setup_fish_widget(FishApplet* fish)
 			  G_CALLBACK (fish_applet_unrealize), fish);
 	g_signal_connect (fish->drawing_area, "size-allocate",
 			  G_CALLBACK (fish_applet_size_allocate), fish);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	g_signal_connect (fish->drawing_area, "draw",
 			  G_CALLBACK (fish_applet_draw), fish);
-#else
-	g_signal_connect (fish->drawing_area, "expose-event",
-			  G_CALLBACK (fish_applet_expose_event), fish);
-	g_signal_connect (fish->drawing_area, "size-request",
-			  G_CALLBACK (fish_applet_size_request), fish);
-#endif
 
 	gtk_widget_add_events (widget, GDK_ENTER_NOTIFY_MASK |
 				       GDK_LEAVE_NOTIFY_MASK |
@@ -1873,15 +1784,9 @@ static void fish_applet_dispose (GObject *object)
 		g_free (fish->command);
 	fish->command = NULL;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (fish->surface)
 		cairo_surface_destroy (fish->surface);
 	fish->surface = NULL;
-#else
-	if (fish->pixmap)
-		g_object_unref (fish->pixmap);
-	fish->pixmap = NULL;
-#endif
 
 	if (fish->pixbuf)
 		g_object_unref (fish->pixbuf);
@@ -1917,11 +1822,7 @@ static void fish_applet_instance_init(FishApplet* fish, FishAppletClass* klass)
 
 	fish->frame         = NULL;
 	fish->drawing_area  = NULL;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	fish->surface       = NULL;
-#else
-	fish->pixmap        = NULL;
-#endif
 	fish->timeout       = 0;
 	fish->current_frame = 0;
 	fish->in_applet     = FALSE;

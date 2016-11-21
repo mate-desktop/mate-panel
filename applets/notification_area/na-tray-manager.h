@@ -50,9 +50,7 @@ struct _NaTrayManager
 #ifdef GDK_WINDOWING_X11
   GdkAtom selection_atom;
   Atom    opcode_atom;
-#if GTK_CHECK_VERSION (3, 0, 0)
   Atom message_data_atom;
-#endif
 #endif
 
   GtkWidget *invisible;
@@ -60,17 +58,10 @@ struct _NaTrayManager
   GtkOrientation orientation;
   gint padding;
   gint icon_size;
-#if GTK_CHECK_VERSION (3, 0, 0)
   GdkRGBA fg;
   GdkRGBA error;
   GdkRGBA warning;
   GdkRGBA success;
-#else
-  GdkColor fg;
-  GdkColor error;
-  GdkColor warning;
-  GdkColor success;
-#endif
 
   GList *messages;
   GHashTable *socket_table;
@@ -112,18 +103,10 @@ void            na_tray_manager_set_padding     (NaTrayManager      *manager,
 void            na_tray_manager_set_icon_size   (NaTrayManager      *manager,
 						 gint                padding);
 void            na_tray_manager_set_colors      (NaTrayManager      *manager,
-#if GTK_CHECK_VERSION (3, 0, 0)
 						 GdkRGBA            *fg,
 						 GdkRGBA            *error,
 						 GdkRGBA            *warning,
 						 GdkRGBA            *success);
-#else
-						 GdkColor           *fg,
-						 GdkColor           *error,
-						 GdkColor           *warning,
-						 GdkColor           *success);
-#endif
-
 
 G_END_DECLS
 

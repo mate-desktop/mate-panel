@@ -131,16 +131,11 @@ static void update_properties_for_wm(PagerData* pager)
 			g_assert_not_reached();
 	}
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (pager->properties_dialog) {
 	        gtk_widget_hide (pager->properties_dialog);
 	        gtk_widget_unrealize (pager->properties_dialog);
 	        gtk_widget_show (pager->properties_dialog);
 	}
-#else
-	if (pager->properties_dialog)
-		gtk_window_reshow_with_initial_size(GTK_WINDOW(pager->properties_dialog));
-#endif
 }
 
 static void window_manager_changed(WnckScreen* screen, PagerData* pager)
@@ -203,7 +198,6 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 		gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t *pattern, PagerData* pager)
 {
         GtkStyleContext *new_context;
@@ -214,146 +208,7 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 
         wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
                 type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
-#else
-static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, PagerData* pager)
-{
-        /* taken from the TrashApplet */
-        GtkRcStyle *rc_style;
-        GtkStyle *style;
-
-        /* reset style */
-        gtk_widget_set_style (GTK_WIDGET (pager->pager), NULL);
-        rc_style = gtk_rc_style_new ();
-        gtk_widget_modify_style (GTK_WIDGET (pager->pager), rc_style);
-        g_object_unref (rc_style);
-
-	switch (type)
-	{
-                case PANEL_COLOR_BACKGROUND:
-                        gtk_widget_modify_bg (GTK_WIDGET (pager->pager), GTK_STATE_NORMAL, color);
-                        break;
-
-                case PANEL_PIXMAP_BACKGROUND:
-                        style = gtk_style_copy (gtk_widget_get_style (GTK_WIDGET (pager->pager)));
-                        if (style->bg_pixmap[GTK_STATE_NORMAL])
-                                g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-                        style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref(pixmap);
-                        gtk_widget_set_style (GTK_WIDGET (pager->pager), style);
-                        g_object_unref (style);
-                        break;
-
-                case PANEL_NO_BACKGROUND:
-                default:
-                        break;
-	}
-#endif
 }
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, PagerData* pager)
-{
-	GdkScrollDirection absolute_direction;
-	int index;
-	int n_workspaces;
-	int n_columns;
-	int in_last_row;
-
-	if (event->type != GDK_SCROLL)
-		return FALSE;
-
-	index = wnck_workspace_get_number(wnck_screen_get_active_workspace(pager->screen));
-	n_workspaces = wnck_screen_get_workspace_count(pager->screen);
-	n_columns = n_workspaces / pager->n_rows;
-
-	if (n_workspaces % pager->n_rows != 0)
-		n_columns++;
-
-	in_last_row    = n_workspaces % n_columns;
-
-	absolute_direction = event->direction;
-
-	if (gtk_widget_get_direction(GTK_WIDGET(applet)) == GTK_TEXT_DIR_RTL)
-	{
-		switch (event->direction)
-		{
-			case GDK_SCROLL_DOWN:
-			case GDK_SCROLL_UP:
-				break;
-			case GDK_SCROLL_RIGHT:
-				absolute_direction = GDK_SCROLL_LEFT;
-				break;
-			case GDK_SCROLL_LEFT:
-				absolute_direction = GDK_SCROLL_RIGHT;
-				break;
-		}
-	}
-
-	switch (absolute_direction)
-	{
-		case GDK_SCROLL_DOWN:
-			if (index + n_columns < n_workspaces)
-			{
-				index += n_columns;
-			}
-			else if (pager->wrap_workspaces && index == n_workspaces - 1)
-			{
-				index = 0;
-			}
-			else if ((index < n_workspaces - 1 && index + in_last_row != n_workspaces - 1) || (index == n_workspaces - 1 && in_last_row != 0))
-			{
-				index = (index % n_columns) + 1;
-			}
-			break;
-
-		case GDK_SCROLL_RIGHT:
-			if (index < n_workspaces - 1)
-			{
-				index++;
-			}
-			else if (pager->wrap_workspaces)
-			{
-			        index = 0;
-			}
-			break;
-
-		case GDK_SCROLL_UP:
-			if (index - n_columns >= 0)
-			{
-				index -= n_columns;
-			}
-			else if (index > 0)
-			{
-				index = ((pager->n_rows - 1) * n_columns) + (index % n_columns) - 1;
-			}
-			else if (pager->wrap_workspaces)
-			{
-				index = n_workspaces - 1;
-			}
-
-			if (index >= n_workspaces)
-				index -= n_columns;
-			break;
-
-		case GDK_SCROLL_LEFT:
-			if (index > 0)
-			{
-				index--;
-			}
-			else if (pager->wrap_workspaces)
-			{
-				index = n_workspaces - 1;
-			}
-			break;
-		default:
-			g_assert_not_reached();
-			break;
-	}
-
-	wnck_workspace_activate(wnck_screen_get_workspace(pager->screen, index), event->time);
-
-	return TRUE;
-}
-#endif
 
 static void destroy_pager(GtkWidget* widget, PagerData* pager)
 {
@@ -502,9 +357,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	GtkActionGroup* action_group;
 	gchar* ui_path;
 	gboolean display_names;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkCssProvider *provider;
-#endif
 
 	pager = g_new0(PagerData, 1);
 
@@ -546,20 +399,11 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-#ifdef WNCK_CHECK_VERSION
-#if WNCK_CHECK_VERSION (3, 0, 0)
 	pager->pager = wnck_pager_new();
-#else
-	pager->pager = wnck_pager_new(NULL);
-#endif
-#else
-	pager->pager = wnck_pager_new(NULL);
-#endif
 	pager->screen = NULL;
 	pager->wm = PAGER_WM_UNKNOWN;
 	wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
 	gtk_style_context_add_class (context, "wnck-applet");
@@ -575,7 +419,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
 	g_object_unref (provider);
-#endif
+
 	g_signal_connect(G_OBJECT(pager->pager), "destroy", G_CALLBACK(destroy_pager), pager);
 
 	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
@@ -584,9 +428,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	g_signal_connect(G_OBJECT(pager->applet), "realize", G_CALLBACK(applet_realized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "unrealize", G_CALLBACK(applet_unrealized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "change_orient", G_CALLBACK(applet_change_orient), pager);
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	g_signal_connect(G_OBJECT(pager->applet), "scroll-event", G_CALLBACK(applet_scroll), pager);
-#endif
 	g_signal_connect(G_OBJECT(pager->applet), "change_background", G_CALLBACK(applet_change_background), pager);
 
 	gtk_widget_show(pager->applet);
@@ -726,13 +567,6 @@ static void workspace_destroyed(WnckScreen* screen, WnckWorkspace* space, PagerD
 
 static void num_workspaces_value_changed(GtkSpinButton* button, PagerData* pager)
 {
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	/* Slow down a bit after the first change, since it's moving really to
-	 * fast. See bug #336731 for background.
-	 * FIXME: remove this if bug 410520 gets fixed. */
-	button->timer_step = 0.2;
-#endif
-
 	wnck_screen_change_workspace_count(pager->screen, gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pager->num_workspaces_spin)));
 }
 
@@ -806,10 +640,8 @@ static void close_dialog(GtkWidget* button, gpointer data)
 {
 	PagerData* pager = data;
 	GtkTreeViewColumn* col;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkCellArea *area;
 	GtkCellEditable *edit_widget;
-#endif
 
 	/* This is a hack. The "editable" signal for GtkCellRenderer is emitted
 	only on button press or focus cycle. Hence when the user changes the
@@ -820,15 +652,10 @@ static void close_dialog(GtkWidget* button, gpointer data)
 
 	col = gtk_tree_view_get_column(GTK_TREE_VIEW(pager->workspaces_tree), 0);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	area = gtk_cell_layout_get_area (GTK_CELL_LAYOUT (col));
 	edit_widget = gtk_cell_area_get_edit_widget (area);
 	if (edit_widget)
 		gtk_cell_editable_editing_done (edit_widget);
-#else
-	if (col->editable_widget != NULL && GTK_IS_CELL_EDITABLE(col->editable_widget))
-		gtk_cell_editable_editing_done(col->editable_widget);
-#endif
 
 	gtk_widget_destroy(pager->properties_dialog);
 }

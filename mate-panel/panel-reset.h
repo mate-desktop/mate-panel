@@ -22,8 +22,6 @@
 #ifndef __PANEL_RESET_H__
 #define __PANEL_RESET_H__
 
-#include <gtk/gtk.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */

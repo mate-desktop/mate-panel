@@ -110,29 +110,14 @@ PanelBackgroundType
 	    panel_profile_get_background_type         (PanelToplevel       *toplevel);
 
 void        panel_profile_set_background_color        (PanelToplevel       *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 						       GdkRGBA             *color);
-#else
-						       PanelColor          *color);
-#endif
 void        panel_profile_get_background_color        (PanelToplevel       *toplevel,
-#if GTK_CHECK_VERSION (3, 0, 0)
 						       GdkRGBA             *color);
-#else
-						       PanelColor          *color);
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 void        panel_profile_set_background_gdk_rgba    (PanelToplevel       *toplevel,
 						       GdkRGBA            *color);
 void        panel_profile_get_background_gdk_rgba    (PanelToplevel       *toplevel,
 						       GdkRGBA            *color);
-#else
-void        panel_profile_set_background_gdk_color    (PanelToplevel       *toplevel,
-						       GdkColor            *gdk_color);
-void        panel_profile_get_background_gdk_color    (PanelToplevel       *toplevel,
-						       GdkColor            *gdk_color);
-#endif
 
 void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
 						       guint16              opacity);

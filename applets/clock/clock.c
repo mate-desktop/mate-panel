@@ -133,9 +133,6 @@ struct _ClockData {
 
         GtkListStore *cities_store;
         GtkWidget *cities_section;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-        GtkWidget *map_section;
-#endif
         GtkWidget *map_widget;
 
         /* Window to set the time */
@@ -265,11 +262,9 @@ calculate_minimum_width (GtkWidget   *widget,
         int              focus_width = 0;
         int              focus_pad = 0;
 #endif
-#if GTK_CHECK_VERSION (3, 0, 0)
         GtkStyleContext *style_context;
         GtkStateFlags    state;
         GtkBorder        padding;
-#endif
 
         pango_context = gtk_widget_get_pango_context (widget);
 
@@ -280,12 +275,10 @@ calculate_minimum_width (GtkWidget   *widget,
         g_object_unref (G_OBJECT (layout));
         layout = NULL;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         state = gtk_widget_get_state_flags (widget);
         style_context = gtk_widget_get_style_context (widget);
         gtk_style_context_get_padding (style_context, state, &padding);
 #if GTK_CHECK_VERSION (3, 20, 0)
-
         width += padding.left + padding.right;
 #else
         gtk_style_context_get_style (style_context,
@@ -295,15 +288,6 @@ calculate_minimum_width (GtkWidget   *widget,
 
         width += 2 * (focus_width + focus_pad) + padding.left + padding.right;
 #endif
-#else
-        gtk_widget_style_get (widget,
-                              "focus-line-width", &focus_width,
-                              "focus-padding", &focus_pad,
-                              NULL);
-
-        width += 2 * (focus_width + focus_pad + gtk_widget_get_style (widget)->xthickness);
-#endif
-
         return width;
 }
 
@@ -394,14 +378,10 @@ static int
 calculate_minimum_height (GtkWidget        *widget,
                           MatePanelAppletOrient orientation)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
         GtkStateFlags    state;
         GtkStyleContext *style_context;
         const PangoFontDescription *font_desc;
         GtkBorder        padding;
-#else
-        GtkStyle         *style;
-#endif
         PangoContext     *pango_context;
         PangoFontMetrics *metrics;
         int               focus_width = 0;
@@ -410,7 +390,6 @@ calculate_minimum_height (GtkWidget        *widget,
         int               descent;
         int               thickness;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         state = gtk_widget_get_state_flags (widget);
         style_context = gtk_widget_get_style_context (widget);
 
@@ -419,45 +398,23 @@ calculate_minimum_height (GtkWidget        *widget,
         metrics = pango_context_get_metrics (pango_context,
                                              font_desc,
                                              pango_context_get_language (pango_context));
-#else
-        style = gtk_widget_get_style (widget);
-        pango_context = gtk_widget_get_pango_context (widget);
-        metrics = pango_context_get_metrics (pango_context,
-                                             style->font_desc,
-                                             pango_context_get_language (pango_context));
-#endif
 
         ascent  = pango_font_metrics_get_ascent  (metrics);
         descent = pango_font_metrics_get_descent (metrics);
 
         pango_font_metrics_unref (metrics);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         gtk_style_context_get_padding (style_context, state, &padding);
         gtk_style_context_get_style (style_context,
                                      "focus-line-width", &focus_width,
                                      "focus-padding", &focus_pad,
                                      NULL);
-#else
-        gtk_widget_style_get (widget,
-                              "focus-line-width", &focus_width,
-                              "focus-padding", &focus_pad,
-                              NULL);
-#endif
 
         if (orientation == MATE_PANEL_APPLET_ORIENT_UP
             || orientation == MATE_PANEL_APPLET_ORIENT_DOWN) {
-#if GTK_CHECK_VERSION (3, 0, 0)
                 thickness = padding.top + padding.bottom;
-#else
-                thickness = style->ythickness;
-#endif
         } else {
-#if GTK_CHECK_VERSION (3, 0, 0)
                 thickness = padding.left + padding.right;
-#else
-                thickness = style->xthickness;
-#endif
         }
 
         return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad) + thickness;
@@ -885,7 +842,6 @@ create_calendar (ClockData *cd)
         g_signal_connect (window, "key_press_event",
                           G_CALLBACK (close_on_escape), cd->panel_button);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         /*Name this window so the default theme can be overridden in panel theme,
         otherwise default GtkWindow bg will be pulled in and override transparency */
         gtk_widget_set_name(window, "MatePanelPopupWindow");
@@ -894,7 +850,6 @@ create_calendar (ClockData *cd)
         GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(window));
         GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
         gtk_widget_set_visual(GTK_WIDGET(window), visual);
-#endif
 
         return window;
 }
@@ -918,11 +873,7 @@ position_calendar_popup (ClockData *cd)
                                &x, &y);
 
         gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
-#if GTK_CHECK_VERSION (3, 0, 0)
         gtk_widget_get_preferred_size (cd->calendar_popup, &req, NULL);
-#else
-        gtk_widget_size_request (cd->calendar_popup, &req);
-#endif
         w = req.width;
         h = req.height;
 
@@ -1017,11 +968,7 @@ create_clock_window (ClockData *cd)
         locations_box = calendar_window_get_locations_box (CALENDAR_WINDOW (cd->calendar_popup));
         gtk_widget_show (locations_box);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         cd->clock_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-#else
-        cd->clock_vbox = gtk_vbox_new (FALSE, 6);
-#endif
         gtk_container_add (GTK_CONTAINER (locations_box), cd->clock_vbox);
 
         cd->clock_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1170,11 +1117,7 @@ create_cities_section (ClockData *cd)
                 g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         cd->cities_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-#else
-        cd->cities_section = gtk_vbox_new (FALSE, 6);
-#endif
         gtk_container_set_border_width (GTK_CONTAINER (cd->cities_section), 0);
 
         cities = cd->locations;
@@ -1232,11 +1175,7 @@ create_map_section (ClockData *cd)
         ClockMap *map;
 
         if (cd->map_widget) {
-#if GTK_CHECK_VERSION (3, 0, 0)
                 gtk_widget_destroy (cd->map_widget);
-#else
-                gtk_widget_destroy (GTK_WIDGET (cd->map_section));
-#endif
                 cd->map_widget = NULL;
         }
 
@@ -1244,12 +1183,8 @@ create_map_section (ClockData *cd)
         g_signal_connect (map, "need-locations",
                           G_CALLBACK (map_need_locations_cb), cd);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-        cd->map_section = gtk_alignment_new (0, 0, 1, 1);
-#endif
         cd->map_widget = GTK_WIDGET (map);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         gtk_widget_set_margin_top (cd->map_widget, 1);
         gtk_widget_set_margin_bottom (cd->map_widget, 1);
         gtk_widget_set_margin_start (cd->map_widget, 1);
@@ -1257,15 +1192,6 @@ create_map_section (ClockData *cd)
 
         gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_widget, TRUE, TRUE, 0);
         gtk_widget_show (cd->map_widget);
-#else
-        gtk_container_add (GTK_CONTAINER (cd->map_section), cd->map_widget);
-
-        gtk_alignment_set_padding (GTK_ALIGNMENT (cd->map_section), 1, 1, 1, 1);
-
-        gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_section, FALSE, FALSE, 0);
-        gtk_widget_show (cd->map_widget);
-        gtk_widget_show (cd->map_section);
-#endif
 }
 
 static void
@@ -1276,9 +1202,6 @@ update_calendar_popup (ClockData *cd)
                         gtk_widget_destroy (cd->calendar_popup);
                         cd->calendar_popup = NULL;
                         cd->cities_section = NULL;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-                        cd->map_section = NULL;
-#endif
                         cd->map_widget = NULL;
                         cd->clock_vbox = NULL;
 
@@ -1357,7 +1280,6 @@ clock_update_text_gravity (GtkWidget *label)
         pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 #if !GTK_CHECK_VERSION (3, 20, 0)
 static inline void
 force_no_focus_padding (GtkWidget *widget)
@@ -1376,27 +1298,6 @@ force_no_focus_padding (GtkWidget *widget)
                                         GTK_STYLE_PROVIDER (provider),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
                 g_object_unref (provider);
-                first_time = FALSE;
-        }
-
-        gtk_widget_set_name (widget, "clock-applet-button");
-}
-#endif
-#else
-static inline void
-force_no_focus_padding (GtkWidget *widget)
-{
-        static gboolean first_time = TRUE;
-        if (first_time) {
-                gtk_rc_parse_string ("\n"
-                                     "   style \"clock-applet-button-style\"\n"
-                                     "   {\n"
-                                     "      GtkWidget::focus-line-width=0\n"
-                                     "      GtkWidget::focus-padding=0\n"
-                                     "   }\n"
-                                     "\n"
-                                     "    widget \"*.clock-applet-button\" style \"clock-applet-button-style\"\n"
-                                     "\n");
                 first_time = FALSE;
         }
 

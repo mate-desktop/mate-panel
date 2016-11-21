@@ -143,13 +143,10 @@ static void panel_menu_bar_update_visibility (GSettings* settings, gchar* key, P
 
 static void panel_menu_bar_init(PanelMenuBar* menubar)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkCssProvider *provider;
-#endif
 
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE(menubar);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
 		"PanelMenuBar {\n"
@@ -160,7 +157,6 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 		GTK_STYLE_PROVIDER (provider),
 		GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
-#endif
 
 	menubar->priv->info = NULL;
 
@@ -315,19 +311,8 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 	g_type_class_add_private(klass, sizeof(PanelMenuBarPrivate));
 
 	g_object_class_install_property(gobject_class, PROP_ORIENTATION, g_param_spec_enum("orientation", "Orientation", "The PanelMenuBar orientation", PANEL_TYPE_ORIENTATION, PANEL_ORIENTATION_TOP, G_PARAM_READWRITE));
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	gtk_rc_parse_string (
-		"style \"panel-menubar-style\"\n"
-		"{\n"
-		"  GtkMenuBar::shadow-type = none\n"
-		"  GtkMenuBar::internal-padding = 0\n"
-		"}\n"
-		"class \"PanelMenuBar\" style \"panel-menubar-style\"");
-#endif
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean panel_menu_bar_on_draw (GtkWidget* widget, cairo_t* cr, gpointer data)
 {
 	PanelMenuBar* menubar = data;
@@ -351,28 +336,6 @@ static gboolean panel_menu_bar_on_draw (GtkWidget* widget, cairo_t* cr, gpointer
 	return FALSE;
 }
 
-#else
-static gboolean panel_menu_bar_on_expose (GtkWidget* widget, GdkEventExpose* event, gpointer data)
-{
-	PanelMenuBar* menubar = data;
-
-	if (gtk_widget_has_focus(GTK_WIDGET(menubar)))
-	{
-		gtk_paint_focus(gtk_widget_get_style(widget),
-				gtk_widget_get_window(widget),
-				gtk_widget_get_state(GTK_WIDGET(menubar)),
-				NULL,
-				widget,
-				"menubar-applet",
-				0,
-				0,
-				-1,
-				-1);
-	}
-
-	return FALSE;
-}
-#endif
 static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
 {
 	PanelMenuBar* menubar;
@@ -399,11 +362,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 
 	g_signal_connect_after(menubar, "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), menubar);
 	g_signal_connect_after(menubar, "focus-out-event", G_CALLBACK(gtk_widget_queue_draw), menubar);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	g_signal_connect_after(menubar, "draw", G_CALLBACK(panel_menu_bar_on_draw), menubar);
-#else
-	g_signal_connect_after(menubar, "expose-event", G_CALLBACK(panel_menu_bar_on_expose), menubar);
-#endif
 
 	gtk_widget_set_can_focus(GTK_WIDGET(menubar), TRUE);
 
@@ -471,16 +430,6 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 	 */
 	menu_shell = GTK_MENU_SHELL(menubar);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	if (!menu_shell->active)
-	{
-		gtk_grab_add(GTK_WIDGET(menu_shell));
-
-		menu_shell->have_grab = TRUE;
-		menu_shell->active = TRUE;
-	}
-#endif
-
 	gtk_menu_shell_select_item(menu_shell, gtk_menu_get_attach_widget(menu));
 }
 
@@ -488,10 +437,8 @@ void panel_menu_bar_change_background(PanelMenuBar* menubar)
 {
 #if GTK_CHECK_VERSION (3, 18, 0)
 	panel_background_apply_css(&menubar->priv->panel->toplevel->background, GTK_WIDGET(menubar));
-#elif GTK_CHECK_VERSION (3, 0, 0)
-	panel_background_apply_css(&menubar->priv->panel->background, GTK_WIDGET(menubar));
 #else
-	panel_background_change_background_on_widget(&menubar->priv->panel->background, GTK_WIDGET(menubar));
+	panel_background_apply_css(&menubar->priv->panel->background, GTK_WIDGET(menubar));
 #endif
 }
 

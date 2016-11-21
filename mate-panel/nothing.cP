@@ -17,7 +17,8 @@
 #include "panel-util.h"
 #include "nothing.h"
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
+/* FIXME fix for GTK+3 */
+#if 0
 static void
 pixbuf_reverse (GdkPixbuf *gp)
 {
@@ -1394,11 +1395,7 @@ start_geginv (void)
 	gtk_widget_set_double_buffered (GTK_WIDGET (geginv_canvas), FALSE);
 	gtk_widget_set_size_request (geginv_canvas, inv_width, inv_height);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-#else
-	vbox = gtk_vbox_new (FALSE, 0);
-#endif
 	gtk_container_add (GTK_CONTAINER (geginv), vbox);
 	gtk_box_pack_start (GTK_BOX (vbox), geginv_canvas, TRUE, TRUE, 0);
 

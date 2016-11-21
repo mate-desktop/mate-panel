@@ -70,7 +70,7 @@ panel_context_menu_check_for_screen (GtkWidget *w,
 		times++;
 		if (times == 3) {
 			times = 0;
-#if !GTK_CHECK_VERSION (3, 0, 0)
+#if 0
 			/* FIXME re-add once GTK3 support is fixed */
 			start_screen_check ();
 #endif
@@ -310,7 +310,6 @@ panel_context_menu_create (PanelWidget *panel)
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
 
 /* Set up theme and transparency support */
-#if GTK_CHECK_VERSION (3, 0, 0) 
 	GtkWidget *toplevel = gtk_widget_get_toplevel (retval);
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
@@ -321,7 +320,6 @@ panel_context_menu_create (PanelWidget *panel)
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
-#endif
 
 	return retval;
 }

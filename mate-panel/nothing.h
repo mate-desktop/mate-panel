@@ -7,7 +7,8 @@
 extern "C" {
 #endif
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
+/* FIXME fix for GTK+3 */
+#if 0
 void         start_screen_check      (void);
 void	     start_geginv            (void);
 gboolean     panel_dialog_window_event (GtkWidget *window,

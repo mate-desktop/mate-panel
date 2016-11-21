@@ -117,7 +117,6 @@ static void window_menu_destroy(GtkWidget* widget, WindowMenu* window_menu)
 	g_free(window_menu);
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean window_menu_on_draw (GtkWidget* widget,
 				     cairo_t*   cr,
 				     gpointer   data)
@@ -145,28 +144,7 @@ static gboolean window_menu_on_draw (GtkWidget* widget,
 
 	return FALSE;
 }
-#else
-static gboolean window_menu_on_expose (GtkWidget*      widget,
-				       GdkEventExpose* event,
-				       gpointer        data)
-{
-	WindowMenu* window_menu = data;
 
-	if (gtk_widget_has_focus(window_menu->applet))
-		gtk_paint_focus(gtk_widget_get_style(widget),
-						gtk_widget_get_window(widget),
-						gtk_widget_get_state(widget),
-						NULL,
-						widget,
-						"menu-applet",
-						0, 0,
-						-1, -1);
-
-	return FALSE;
-}
-#endif
-
-#if GTK_CHECK_VERSION (3, 0, 0)
 #if !GTK_CHECK_VERSION (3, 20, 0)
 static inline void force_no_focus_padding(GtkWidget* widget)
 {
@@ -183,28 +161,6 @@ static inline void force_no_focus_padding(GtkWidget* widget)
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
-
-	gtk_widget_set_name(widget, "PanelApplet-window-menu-applet-button");
-}
-#endif
-#else
-static inline void force_no_focus_padding(GtkWidget* widget)
-{
-	gboolean first_time = TRUE;
-
-	if (first_time)
-	{
-		gtk_rc_parse_string("\n"
-			"   style \"window-menu-applet-button-style\"\n"
-			"   {\n"
-			"      GtkWidget::focus-line-width=0\n"
-			"      GtkWidget::focus-padding=0\n"
-			"   }\n"
-			"\n"
-			"    widget \"*.PanelApplet-window-menu-applet-button\" style \"window-menu-applet-button-style\"\n"
-			"\n");
-		first_time = FALSE;
-	}
 
 	gtk_widget_set_name(widget, "PanelApplet-window-menu-applet-button");
 }
@@ -265,15 +221,6 @@ static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* even
 			 */
 			menu_shell = GTK_MENU_SHELL(selector);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-			if (!menu_shell->active)
-			{
-				gtk_grab_add(GTK_WIDGET(menu_shell));
-				menu_shell->have_grab = TRUE;
-				menu_shell->active = TRUE;
-			}
-#endif
-
 			gtk_menu_shell_select_first(menu_shell, FALSE);
 			return TRUE;
 		default:
@@ -331,11 +278,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 
 	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);
 	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-out-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	g_signal_connect_after(G_OBJECT(window_menu->selector), "draw", G_CALLBACK(window_menu_on_draw), window_menu);
-#else
-	g_signal_connect_after(G_OBJECT(window_menu->selector), "expose-event", G_CALLBACK(window_menu_on_expose), window_menu);
-#endif
 
 	g_signal_connect(G_OBJECT(window_menu->selector), "button_press_event", G_CALLBACK(filter_button_press), window_menu);
 

@@ -119,27 +119,17 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 	tasklist->orientation = new_orient;
 
-#ifdef WNCK_CHECK_VERSION
 #if WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), new_orient);
-#endif
 #endif
 	tasklist_update(tasklist);
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, cairo_pattern_t* pattern, TasklistData* tasklist)
-#else
-static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBackgroundType type, GdkColor* color, GdkPixmap* pixmap, TasklistData* tasklist)
-#endif
 {
 	switch (type)
 	{
 		case PANEL_NO_BACKGROUND:
-#if !GTK_CHECK_VERSION (3, 0 ,0)
-			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NORMAL);
-			break;
-#endif
 		case PANEL_COLOR_BACKGROUND:
 		case PANEL_PIXMAP_BACKGROUND:
 			wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), GTK_RELIEF_NONE);
@@ -424,21 +414,11 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-#ifdef WNCK_CHECK_VERSION
-#if WNCK_CHECK_VERSION (3, 0, 0)
 	tasklist->tasklist = wnck_tasklist_new();
-#else
-	tasklist->tasklist = wnck_tasklist_new(NULL);
-#endif
-#else
-	tasklist->tasklist = wnck_tasklist_new(NULL);
-#endif
 
-#ifdef WNCK_CHECK_VERSION
 #if WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
 	wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), TRUE);
-#endif
 #endif
 
 	wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);

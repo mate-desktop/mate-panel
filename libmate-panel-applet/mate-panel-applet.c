@@ -38,9 +38,7 @@
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h>
-#endif
 #include <X11/Xatom.h>
 
 #include "mate-panel-applet.h"
@@ -123,9 +121,7 @@ static void       mate_panel_applet_menu_cmd_move       (GtkAction         *acti
 static void       mate_panel_applet_menu_cmd_lock       (GtkAction         *action,
 						    MatePanelApplet       *applet);
 static void       mate_panel_applet_register_object     (MatePanelApplet       *applet);
-#if GTK_CHECK_VERSION (3, 0, 0)
 void	_mate_panel_applet_apply_css	(GtkWidget* widget, MatePanelAppletBackgroundType type);
-#endif
 
 static const gchar panel_menu_ui[] =
 	"<ui>\n"
@@ -790,9 +786,7 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	MatePanelApplet    *applet;
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDevice      *device;
-#endif
 	GdkScreen      *screen;
 	int             menu_x = 0;
 	int             menu_y = 0;
@@ -803,28 +797,18 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 	applet = MATE_PANEL_APPLET (widget);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	screen = gtk_widget_get_screen (widget);
-#else
-	screen = gtk_window_get_screen (GTK_WINDOW (applet->priv->plug));
-#endif
 	gtk_menu_set_screen (menu, screen);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
-#else
-	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-#endif
 	gdk_window_get_origin (gtk_widget_get_window (widget),
 			       &menu_x, &menu_y);
 #if GTK_CHECK_VERSION (3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 	gdk_window_get_device_position (gtk_widget_get_window (widget), device, &pointer_x, &pointer_y, NULL);
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
 	gdk_window_get_device_position (gtk_widget_get_window (widget), device, &pointer_x, &pointer_y, NULL);
-#else
-	gtk_widget_get_pointer (widget, &pointer_x, &pointer_y);
 #endif
 	gtk_widget_get_allocation (widget, &allocation);
 
@@ -867,11 +851,7 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 	*x = menu_x;
 	*y = menu_y;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	*push_in = FALSE;
-#else
-	*push_in = TRUE;
-#endif
 }
 
 static void
@@ -885,7 +865,6 @@ mate_panel_applet_menu_popup (MatePanelApplet *applet,
 					  "/MatePanelAppletPopup");
 
 /* Set up theme and transparency support */
-#if GTK_CHECK_VERSION (3, 0, 0) 
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
@@ -896,7 +875,6 @@ mate_panel_applet_menu_popup (MatePanelApplet *applet,
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
-#endif					  
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL, NULL,
 			(GtkMenuPositionFunc) mate_panel_applet_position_menu,
@@ -936,7 +914,6 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
 
 	if (event->type == GDK_BUTTON_PRESS) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 #if GTK_CHECK_VERSION (3, 20, 0)
 		GdkDisplay *display;
 		GdkSeat *seat;
@@ -961,18 +938,6 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 		 * We don't want to hog the pointer on our parent.
 		 */
 		gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
-#endif
-#else
-		xevent.xbutton.type = ButtonPress;
-
-		/* X does an automatic pointer grab on button press
-		 * if we have both button press and release events
-		 * selected.
-		 * We don't want to hog the pointer on our parent.
-		 */
-		gdk_display_pointer_ungrab
-			(gtk_widget_get_display (widget),
-			 GDK_CURRENT_TIME);
 #endif
 	} else {
 		xevent.xbutton.type = ButtonRelease;
@@ -1001,11 +966,7 @@ mate_panel_applet_button_event (GtkWidget      *widget,
 		    False, NoEventMask, &xevent);
 
 	gdk_flush ();
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gdk_error_trap_pop_ignored ();
-#else
-	gdk_error_trap_pop ();
-#endif
 
 	return TRUE;
 }
@@ -1049,7 +1010,6 @@ mate_panel_applet_popup_menu (GtkWidget *widget)
 	return TRUE;
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 #if !GTK_CHECK_VERSION (3, 18, 0)
 static void
 mate_panel_applet_get_preferred_width (GtkWidget *widget,
@@ -1113,30 +1073,6 @@ mate_panel_applet_get_request_mode (GtkWidget *widget)
 
 	return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
 }
-#else
-static void
-mate_panel_applet_size_request (GtkWidget *widget, GtkRequisition *requisition)
-{
-	int focus_width = 0;
-
-	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->size_request (widget,
-									 requisition);
-
-	if (!mate_panel_applet_can_focus (widget))
-		return;
-
-	/*
-	 * We are deliberately ignoring focus-padding here to
-	 * save valuable panel real estate.
-	 */
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      NULL);
-
-	requisition->width  += 2 * focus_width;
-	requisition->height += 2 * focus_width;
-}
-#endif
 
 static void
 mate_panel_applet_size_allocate (GtkWidget     *widget,
@@ -1208,47 +1144,22 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 	}
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean mate_panel_applet_draw(GtkWidget* widget, cairo_t* cr)
-#else
-static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* event)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
-#else
-	GtkAllocation allocation;
-#endif
 	int border_width;
 #if !GTK_CHECK_VERSION (3, 18, 0)
 	int focus_width = 0;
 #endif
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gdouble x, y, width, height;
-#else
-	int x, y, width, height;
-#endif
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
-	g_return_val_if_fail (event != NULL, FALSE);
-#endif
-
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->draw(widget, cr);
-#else
-	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->expose_event(widget, event);
-#endif
 
         if (!gtk_widget_has_focus (widget))
 		return FALSE;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
-#else
-	gtk_widget_get_allocation(widget, &allocation);
-#endif
 
 #if !GTK_CHECK_VERSION (3, 18, 0)
 	/*
@@ -1262,7 +1173,6 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	x = 0;
 	y = 0;
 
@@ -1277,20 +1187,6 @@ static gboolean mate_panel_applet_expose(GtkWidget* widget, GdkEventExpose* even
 	cairo_restore (cr);
 
 	gtk_style_context_restore (context);
-#else
-	x = allocation.x;
-	y = allocation.y;
-
-	width  = allocation.width  - 2 * border_width;
-	height = allocation.height - 2 * border_width;
-
-	gtk_paint_focus (gtk_widget_get_style (widget),
-			 gtk_widget_get_window (widget),
-			 gtk_widget_get_state (widget),
-			 &event->area,
-			 widget, "mate_panel_applet",
-			 x, y, width, height);
-#endif
 
 	return FALSE;
 }
@@ -1345,39 +1241,16 @@ mate_panel_applet_focus (GtkWidget        *widget,
 
 static gboolean
 mate_panel_applet_parse_color (const gchar *color_str,
-#if GTK_CHECK_VERSION (3, 0, 0)
 			       GdkRGBA     *color)
-#else
-			       GdkColor    *color)
-#endif
 {
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	int r, g, b;
-#endif
-
 	g_assert (color_str && color);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	return gdk_rgba_parse (color, color_str);
-#else
-	if (sscanf (color_str, "%4x%4x%4x", &r, &g, &b) != 3)
-		return FALSE;
-
-	color->red   = r;
-	color->green = g;
-	color->blue  = b;
-
-	return TRUE;
-#endif
 }
 
 static gboolean
 mate_panel_applet_parse_pixmap_str (const char *str,
-#if GTK_CHECK_VERSION (3, 0, 0)
 			       Window          *xid,
-#else
-			       GdkNativeWindow *xid,
-#endif
 			       int             *x,
 			       int             *y)
 {
@@ -1419,7 +1292,6 @@ ERROR_AND_FREE:
 	return FALSE;
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static cairo_surface_t *
 mate_panel_applet_create_foreign_surface_for_display (GdkDisplay *display,
                                                       GdkVisual  *visual,
@@ -1445,27 +1317,12 @@ mate_panel_applet_create_foreign_surface_for_display (GdkDisplay *display,
 
 static cairo_pattern_t *
 mate_panel_applet_get_pattern_from_pixmap (MatePanelApplet *applet,
-#else
-static GdkPixmap *
-mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
-#endif
-#if GTK_CHECK_VERSION (3, 0, 0)
 			 Window           xid,
-#else
-			 GdkNativeWindow  xid,
-#endif
 			 int              x,
 			 int              y)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_t *background;
 	cairo_surface_t *surface;
-#else
-	gboolean         display_grabbed;
-	GdkPixmap       *pixmap;
-	GdkDisplay      *display;
-	GdkPixmap       *retval;
-#endif
 	GdkWindow       *window;
 	int              width;
 	int              height;
@@ -1477,14 +1334,8 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	if (!gtk_widget_get_realized (GTK_WIDGET (applet)))
 		return NULL;
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	display = gdk_display_get_default ();
-	display_grabbed = FALSE;
-#endif
-
 	window = gtk_widget_get_window (GTK_WIDGET (applet));
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	background = mate_panel_applet_create_foreign_surface_for_display (gdk_window_get_display (window),
 									   gdk_window_get_visual (window),
 									   xid);
@@ -1496,52 +1347,21 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 			cairo_surface_destroy (background);
 		return NULL;
 	}
-#else
-	pixmap = gdk_pixmap_lookup_for_display (display, xid);
-	if (pixmap)
-		g_object_ref (pixmap);
-	else {
-		display_grabbed = TRUE;
-		gdk_x11_display_grab (display);
-		pixmap = gdk_pixmap_foreign_new_for_display (display, xid);
-	}
-
-	/* This can happen if the user changes the background very fast.
-	 * We'll get the next update, so it's not a big deal. */
-	if (pixmap == NULL) {
-		if (display_grabbed)
-			gdk_x11_display_ungrab (display);
-		return NULL;
-	}
-#endif
 
 	width = gdk_window_get_width(window);
 	height = gdk_window_get_height(window);
-#if GTK_CHECK_VERSION(3, 0, 0)
 	surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gdk_error_trap_push ();
 	cr = cairo_create (surface);
 	cairo_set_source_surface (cr, background, -x, -y);
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_fill (cr);
 	gdk_error_trap_pop_ignored ();
-#else
-	retval = gdk_pixmap_new (window, width, height, -1);
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_surface_destroy (background);
 	pattern = NULL;
-#else
-	/* the pixmap has no colormap, and we need one */
-	gdk_drawable_set_colormap (GDK_DRAWABLE (pixmap),
-				   gdk_drawable_get_colormap (window));
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (cairo_status (cr) == CAIRO_STATUS_SUCCESS) {
 		pattern = cairo_pattern_create_for_surface (surface);
 	}
@@ -1550,35 +1370,12 @@ mate_panel_applet_get_pixmap (MatePanelApplet     *applet,
 	cairo_surface_destroy (surface);
 
 	return pattern;
-#else
-	cr = gdk_cairo_create (GDK_DRAWABLE (retval));
-	gdk_cairo_set_source_pixmap (cr, pixmap, -x, -y);
-	pattern = cairo_get_source (cr);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-
-	cairo_rectangle (cr, 0, 0, width, height);
-	cairo_fill (cr);
-
-	cairo_destroy (cr);
-
-	g_object_unref (pixmap);
-
-	if (display_grabbed)
-		gdk_x11_display_ungrab (display);
-
-	return retval;
-#endif
 }
 
 static MatePanelAppletBackgroundType
 mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
-#if GTK_CHECK_VERSION (3, 0, 0)
 					    GdkRGBA          *color,
 					    cairo_pattern_t **pattern)
-#else
-					    GdkColor         *color,
-					    GdkPixmap       **pixmap)
-#endif
 {
 	MatePanelAppletBackgroundType   retval;
 	char                          **elements;
@@ -1606,18 +1403,10 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 		retval = PANEL_COLOR_BACKGROUND;
 
 	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 		Window pixmap_id;
-#else
-		GdkNativeWindow pixmap_id;
-#endif
 		int             x, y;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 		g_return_val_if_fail (pattern != NULL, PANEL_NO_BACKGROUND);
-#else
-		g_return_val_if_fail (pixmap != NULL, PANEL_NO_BACKGROUND);
-#endif
 
 		if (!mate_panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
 			g_warning ("Incomplete '%s' background type received: %s",
@@ -1627,21 +1416,12 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 			return PANEL_NO_BACKGROUND;
 		}
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 		*pattern = mate_panel_applet_get_pattern_from_pixmap (applet, pixmap_id, x, y);
 		if (!*pattern) {
 			g_warning ("Failed to get pattern %s", elements [1]);
 			g_strfreev (elements);
 			return PANEL_NO_BACKGROUND;
 		}
-#else
-		*pixmap = mate_panel_applet_get_pixmap (applet, pixmap_id, x, y);
-		if (!*pixmap) {
-			g_warning ("Failed to get pixmap %s", elements [1]);
-			g_strfreev (elements);
-			return PANEL_NO_BACKGROUND;
-		}
-#endif
 
 		retval = PANEL_PIXMAP_BACKGROUND;
 	} else
@@ -1654,36 +1434,18 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 
 MatePanelAppletBackgroundType
 mate_panel_applet_get_background (MatePanelApplet  *applet,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				  GdkRGBA          *color,
 				  cairo_pattern_t **pattern)
-#else
-				  GdkColor         *color,
-				  GdkPixmap       **pixmap)
-#endif
 {
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), PANEL_NO_BACKGROUND);
 
 	/* initial sanity */
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (pattern != NULL)
 		*pattern = NULL;
-#else
-	if (pixmap != NULL)
-		*pixmap = NULL;
-#endif
 	if (color != NULL)
-#if GTK_CHECK_VERSION (3, 0, 0)
 		memset (color, 0, sizeof (GdkRGBA));
-#else
-		memset (color, 0, sizeof (GdkColor));
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	return mate_panel_applet_handle_background_string (applet, color, pattern);
-#else
-	return mate_panel_applet_handle_background_string (applet, color, pixmap);
-#endif
 }
 
 static void
@@ -1704,44 +1466,6 @@ mate_panel_applet_set_background_string (MatePanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "background");
 }
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-static void
-mate_panel_applet_update_background_for_widget (GtkWidget                 *widget,
-					   MatePanelAppletBackgroundType  type,
-					   GdkColor                  *color,
-					   GdkPixmap                 *pixmap)
-{
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
-
-	/* reset style */
-	gtk_widget_set_style (widget, NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (widget, rc_style);
-	g_object_unref (rc_style);
-
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (gtk_widget_get_style (widget));
-		if (style->bg_pixmap[GTK_STATE_NORMAL])
-			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (widget, style);
-		g_object_unref (style);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-}
-#endif
-
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 mate_panel_applet_handle_background (MatePanelApplet *applet)
 {
@@ -1778,48 +1502,6 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 		break;
 	}
 }
-#else
-static void
-mate_panel_applet_handle_background (MatePanelApplet *applet)
-{
-	MatePanelAppletBackgroundType  type;
-
-	GdkColor                   color;
-	GdkPixmap                 *pixmap;
-
-	type = mate_panel_applet_get_background (applet, &color, &pixmap);
-
-	if (applet->priv->background_widget)
-		mate_panel_applet_update_background_for_widget (applet->priv->background_widget,
-							   type, &color, pixmap);
-
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		g_signal_emit (G_OBJECT (applet),
-			       mate_panel_applet_signals [CHANGE_BACKGROUND],
-			       0, PANEL_NO_BACKGROUND, NULL, NULL);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		g_signal_emit (G_OBJECT (applet),
-			       mate_panel_applet_signals [CHANGE_BACKGROUND],
-			       0, PANEL_COLOR_BACKGROUND, &color, NULL);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		g_signal_emit (G_OBJECT (applet),
-			       mate_panel_applet_signals [CHANGE_BACKGROUND],
-
-			       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
-
-		g_object_unref (pixmap);
-
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-}
-
-#endif
 
 static void
 mate_panel_applet_realize (GtkWidget *widget)
@@ -1871,9 +1553,7 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 		break;
 	}
 }
-
-#elif GTK_CHECK_VERSION (3, 0, 0)
-
+#else
 static void
 mate_panel_applet_change_background(MatePanelApplet *applet,
 				    MatePanelAppletBackgroundType type,
@@ -1898,7 +1578,6 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 		break;
 	}
 }
-
 #endif
 
 static void
@@ -2071,7 +1750,6 @@ mate_panel_applet_setup (MatePanelApplet *applet)
 	}
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundType type)
 {
 	GtkStyleContext* context;
@@ -2108,7 +1786,6 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
 }
-#endif
 
 static void
 mate_panel_applet_init (MatePanelApplet *applet)
@@ -2140,7 +1817,6 @@ mate_panel_applet_init (MatePanelApplet *applet)
 
 
 	applet->priv->plug = gtk_plug_new (0);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
@@ -2150,7 +1826,7 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
 	gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
 	_mate_panel_applet_prepare_css(context);
-#endif
+
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 				  G_CALLBACK (mate_panel_applet_setup),
 				  applet);
@@ -2186,22 +1862,15 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	gobject_class->set_property = mate_panel_applet_set_property;
 	gobject_class->constructed = mate_panel_applet_constructed;
 	klass->move_focus_out_of_applet = mate_panel_applet_move_focus_out_of_applet;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	klass->change_background = mate_panel_applet_change_background;
-#endif
 	widget_class->button_press_event = mate_panel_applet_button_press;
 	widget_class->button_release_event = mate_panel_applet_button_release;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	widget_class->get_request_mode = mate_panel_applet_get_request_mode;
 #if !GTK_CHECK_VERSION (3, 18, 0)
 	widget_class->get_preferred_width = mate_panel_applet_get_preferred_width;
 	widget_class->get_preferred_height = mate_panel_applet_get_preferred_height;
 #endif
 	widget_class->draw = mate_panel_applet_draw;
-#else
-	widget_class->size_request = mate_panel_applet_size_request;
-	widget_class->expose_event = mate_panel_applet_expose;
-#endif
 	widget_class->size_allocate = mate_panel_applet_size_allocate;
 	widget_class->focus = mate_panel_applet_focus;
 	widget_class->realize = mate_panel_applet_realize;
@@ -2330,13 +1999,8 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
                               G_TYPE_NONE,
 			      3,
 			      PANEL_TYPE_MATE_PANEL_APPLET_BACKGROUND_TYPE,
-#if GTK_CHECK_VERSION (3, 0, 0)
 			      GDK_TYPE_RGBA,
 			      CAIRO_GOBJECT_TYPE_PATTERN);
-#else
-			      GDK_TYPE_COLOR,
-			      GDK_TYPE_PIXMAP);
-#endif
 
 	mate_panel_applet_signals [MOVE_FOCUS_OUT_OF_APPLET] =
                 g_signal_new ("move_focus_out_of_applet",
@@ -2640,16 +2304,13 @@ int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process
  * Deprecated: 3.20: Do not use this API. Since 3.20 this function does nothing.
  **/
 
-
 #if GTK_CHECK_VERSION (3, 18, 0)
-
 void
 mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 				    GtkWidget   *widget)
 {
 }
-
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 void
 mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 				    GtkWidget   *widget)
@@ -2667,30 +2328,6 @@ mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 			cairo_pattern_destroy (pattern);
 	}
 }
-
-#else
-void
-mate_panel_applet_set_background_widget (MatePanelApplet *applet,
-				    GtkWidget   *widget)
-{
-	applet->priv->background_widget = widget;
-
-
-	if (widget) {
-
-		MatePanelAppletBackgroundType  type;
-
-		GdkColor                   color;
-		GdkPixmap                 *pixmap;
-		type = mate_panel_applet_get_background (applet, &color, &pixmap);
-		mate_panel_applet_update_background_for_widget (widget, type,
-							   &color, pixmap);
-		if (type == PANEL_PIXMAP_BACKGROUND)
-			g_object_unref (pixmap);
-
-	}
-}
-
 #endif
 
 guint32

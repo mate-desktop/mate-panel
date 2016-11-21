@@ -51,7 +51,6 @@ button_press_handler (GtkWidget      *fixedtip,
   return FALSE;
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean
 na_fixed_tip_draw (GtkWidget *widget, cairo_t *cr)
 {
@@ -79,31 +78,12 @@ na_fixed_tip_draw (GtkWidget *widget, cairo_t *cr)
 
   return FALSE;
 }
-#else
-static gboolean
-expose_handler (GtkWidget *fixedtip)
-{
-  GtkRequisition req;
-
-  gtk_widget_size_request (fixedtip, &req);
-
-  gtk_paint_flat_box (gtk_widget_get_style (fixedtip),
-                      gtk_widget_get_window (fixedtip),
-                      GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-                      NULL, fixedtip, "tooltip",
-                      0, 0, req.width, req.height);
-
-  return FALSE;
-}
-#endif
 
 static void
 na_fixed_tip_class_init (NaFixedTipClass *class)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
   widget_class->draw = na_fixed_tip_draw;
-#endif
 
   fixedtip_signals[CLICKED] =
     g_signal_new ("clicked",
@@ -146,11 +126,6 @@ na_fixed_tip_init (NaFixedTip *fixedtip)
   gtk_container_add (GTK_CONTAINER (fixedtip), label);
   fixedtip->priv->label = label;
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-  g_signal_connect (fixedtip, "expose_event",
-                    G_CALLBACK (expose_handler), NULL);
-#endif
-
   gtk_widget_add_events (GTK_WIDGET (fixedtip), GDK_BUTTON_PRESS_MASK);
 
   g_signal_connect (fixedtip, "button_press_event",
@@ -177,11 +152,7 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
 
   gtk_window_set_screen (GTK_WINDOW (fixedtip), screen);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   gtk_widget_get_preferred_size (GTK_WIDGET (fixedtip), &req, NULL);
-#else
-  gtk_widget_size_request (GTK_WIDGET (fixedtip), &req);
-#endif
 
   gdk_window_get_origin (parent_window, &root_x, &root_y);
   parent_width = gdk_window_get_width(parent_window);

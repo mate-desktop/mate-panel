@@ -565,7 +565,6 @@ mate_panel_applet_create_menu (AppletInfo *info)
 	}
 
 /* Set up theme and transparency support */
-#if GTK_CHECK_VERSION (3, 0, 0) 
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
@@ -576,7 +575,7 @@ mate_panel_applet_create_menu (AppletInfo *info)
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
-#endif
+
 	return menu;
 }
 
@@ -612,9 +611,7 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 {
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
-#if GTK_CHECK_VERSION(3, 0, 0)
 	GdkDevice      *device;
-#endif
 	GdkScreen      *screen;
 	GtkWidget      *parent;
 	int             menu_x = 0;
@@ -628,21 +625,15 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 	screen = gtk_widget_get_screen (applet);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
-#else
-	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-#endif
 
 	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
 #if GTK_CHECK_VERSION(3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (applet)));
 	gdk_window_get_device_position (gtk_widget_get_window (applet), device, &pointer_x, &pointer_y, NULL);
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (applet)));
 	gdk_window_get_device_position (gtk_widget_get_window (applet), device, &pointer_x, &pointer_y, NULL);
-#else
-	gtk_widget_get_pointer (applet, &pointer_x, &pointer_y);
 #endif
 	gtk_widget_get_allocation (applet, &allocation);
 
@@ -685,11 +676,7 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 
 	*x = menu_x;
 	*y = menu_y;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	*push_in = FALSE;
-#else
-	*push_in = TRUE;
-#endif
 }
 
 static void

@@ -19,8 +19,8 @@
 #define PANEL_PLUG_PRIVATE_H
 
 #include <gtk/gtk.h>
-#if GTK_CHECK_VERSION (3, 18, 0)
 
+#if GTK_CHECK_VERSION (3, 18, 0)
 #include <gtk/gtkx.h>
 
 G_BEGIN_DECLS

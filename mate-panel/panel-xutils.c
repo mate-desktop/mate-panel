@@ -27,7 +27,6 @@
 #include "panel-xutils.h"
 
 #include <glib.h>
-#include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
@@ -102,11 +101,7 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 	XChangeProperty (display, window, net_wm_strut_partial,
 			 XA_CARDINAL, 32, PropModeReplace,
 			 (guchar *) &struts, 12);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gdk_error_trap_pop_ignored ();
-#else
-	gdk_error_trap_pop ();
-#endif
 }
 
 void
@@ -124,11 +119,7 @@ panel_warp_pointer (GdkWindow *gdk_window,
 
 	gdk_error_trap_push ();
 	XWarpPointer (display, None, window, 0, 0, 0, 0, x, y);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gdk_error_trap_pop_ignored ();
-#else
-	gdk_error_trap_pop ();
-#endif
 }
 
 guint

@@ -1248,18 +1248,10 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	g_signal_connect (dialog->addto_dialog, "destroy",
 			  G_CALLBACK (panel_addto_dialog_destroy), dialog);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-#else
-	inner_vbox = gtk_vbox_new (FALSE, 6);
-#endif
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), inner_vbox, TRUE, TRUE, 0);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	find_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-#else
-	find_hbox = gtk_hbox_new (FALSE, 6);
-#endif
 	gtk_box_pack_start (GTK_BOX (inner_vbox), find_hbox, FALSE, FALSE, 0);
 
 	dialog->label = gtk_label_new_with_mnemonic ("");

@@ -130,13 +130,9 @@ static void button_size_allocated(GtkWidget* button, GtkAllocation* allocation, 
 
 static void update_icon(ShowDesktopData* sdd)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	GtkStateFlags    state;
 	GtkBorder        padding;
-#else
-	GtkStyle* style;
-#endif
 	int width, height;
 	GdkPixbuf* icon;
 	GdkPixbuf* scaled;
@@ -151,7 +147,6 @@ static void update_icon(ShowDesktopData* sdd)
 	if (!sdd->icon_theme)
 		return;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	state = gtk_widget_get_state_flags (sdd->button);
 	context = gtk_widget_get_style_context (sdd->button);
 	gtk_style_context_get_padding (context, state, &padding);
@@ -173,23 +168,6 @@ static void update_icon(ShowDesktopData* sdd)
 #if GTK_CHECK_VERSION (3, 20, 0)
 	icon_size = sdd->size - thickness;
 #else
-	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
-#endif
-#else
-	gtk_widget_style_get (sdd->button, "focus-line-width", &focus_width, "focus-padding", &focus_pad, NULL);
-
-	style = gtk_widget_get_style(sdd->button);
-
-	switch (sdd->orient)
-	{
-		case GTK_ORIENTATION_HORIZONTAL:
-			thickness = style->ythickness;
-			break;
-		case GTK_ORIENTATION_VERTICAL:
-			thickness = style->xthickness;
-			break;
-	}
-
 	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
 #endif
 
@@ -409,10 +387,8 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	GtkActionGroup* action_group;
 	gchar* ui_path;
 	AtkObject* atk_obj;
-#if GTK_CHECK_VERSION (3, 0, 0)
 #if !GTK_CHECK_VERSION (3, 20, 0)
 	GtkCssProvider *provider;
-#endif
 #endif
 
 	mate_panel_applet_set_flags(applet, MATE_PANEL_APPLET_EXPAND_MINOR);
@@ -443,7 +419,6 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	sdd->button = gtk_toggle_button_new ();
 
 	gtk_widget_set_name (sdd->button, "showdesktop-button");
-#if GTK_CHECK_VERSION (3, 0, 0)
 #if !GTK_CHECK_VERSION (3, 20, 0)
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
@@ -456,17 +431,6 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 					g_object_unref (provider);
-#endif
-#else
-	gtk_rc_parse_string ("\n"
-		"   style \"showdesktop-button-style\"\n"
-		"   {\n"
-		"      GtkWidget::focus-line-width=0\n"
-		"      GtkWidget::focus-padding=0\n"
-		"   }\n"
-		"\n"
-		"    widget \"*.showdesktop-button\" style \"showdesktop-button-style\"\n"
-		"\n");
 #endif
 
 	atk_obj = gtk_widget_get_accessible(sdd->button);

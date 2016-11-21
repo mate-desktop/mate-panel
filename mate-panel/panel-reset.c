@@ -27,7 +27,7 @@
 #define __PANEL_RESET_C__
 
 #include <stdlib.h>
-#include <glib.h>
+#include <gio/gio.h>
 #include "panel-reset.h"
 #include "panel-schemas.h"
 

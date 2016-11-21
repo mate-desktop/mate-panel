@@ -48,9 +48,6 @@ struct _NaTrayPrivate
   TraysScreen *trays_screen;
 
   GtkWidget *box;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-  GtkWidget *frame;
-#endif
 
   guint idle_redraw_id;
 
@@ -85,27 +82,6 @@ static gboolean     initialized   = FALSE;
 static TraysScreen *trays_screens = NULL;
 
 static void icon_tip_show_next (IconTip *icontip);
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-/* NaBox, an instantiable GtkBox */
-
-typedef GtkBox      NaBox;
-typedef GtkBoxClass NaBoxClass;
-
-static GType na_box_get_type (void);
-
-G_DEFINE_TYPE (NaBox, na_box, GTK_TYPE_BOX)
-
-static void
-na_box_init (NaBox *box)
-{
-}
-
-static void
-na_box_class_init (NaBoxClass *klass)
-{
-}
-#endif
 
 /* NaTray */
 
@@ -536,11 +512,7 @@ update_size_and_orientation (NaTray *tray)
  * gdk_window_set_composited(). We need to paint these children ourselves.
  */
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
 na_tray_draw_icon (GtkWidget *widget,
-#else
-na_tray_expose_icon (GtkWidget *widget,
-#endif
 		     gpointer   data)
 {
   cairo_t *cr = (cairo_t *) data;
@@ -551,7 +523,6 @@ na_tray_expose_icon (GtkWidget *widget,
 
       gtk_widget_get_allocation (widget, &allocation);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
       cairo_save (cr);
       gdk_cairo_set_source_window (cr,
                                    gtk_widget_get_window (widget),
@@ -559,40 +530,16 @@ na_tray_expose_icon (GtkWidget *widget,
                                    allocation.y);
       cairo_rectangle (cr, allocation.x, allocation.y, allocation.width, allocation.height);
       cairo_clip (cr);
-#else
-      gdk_cairo_set_source_pixmap (cr,
-                                   gtk_widget_get_window (widget),
-				   allocation.x,
-				   allocation.y);
-#endif
       cairo_paint (cr);
-#if GTK_CHECK_VERSION (3, 0, 0)
       cairo_restore (cr);
-#endif
     }
 }
 
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
 na_tray_draw_box (GtkWidget *box,
                   cairo_t   *cr)
-#else
-na_tray_expose_box (GtkWidget      *box,
-                    GdkEventExpose *event)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
   gtk_container_foreach (GTK_CONTAINER (box), na_tray_draw_icon, cr);
-#else
-  cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (box));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
-  gtk_container_foreach (GTK_CONTAINER (box), na_tray_expose_icon, cr);
-
-  cairo_destroy (cr);
-#endif
 }
 
 static void
@@ -605,22 +552,10 @@ na_tray_init (NaTray *tray)
   priv->screen = NULL;
   priv->orientation = GTK_ORIENTATION_HORIZONTAL;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   priv->box = gtk_box_new (priv->orientation, ICON_SPACING);
   g_signal_connect (priv->box, "draw",
                     G_CALLBACK (na_tray_draw_box), NULL);
   gtk_container_add (GTK_CONTAINER (tray), priv->box);
-#else
-  priv->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_container_add (GTK_CONTAINER (tray), priv->frame);
-  gtk_widget_show (priv->frame);
-
-  priv->box = g_object_new (na_box_get_type (), NULL);
-  g_signal_connect (priv->box, "expose-event",
-                    G_CALLBACK (na_tray_expose_box), tray);
-  gtk_box_set_spacing (GTK_BOX (priv->box), ICON_SPACING);
-  gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
-#endif
   gtk_widget_show (priv->box);
 }
 
@@ -644,16 +579,7 @@ na_tray_constructor (GType type,
 
   if (!initialized)
     {
-#if GTK_CHECK_VERSION (3, 0, 0)
       trays_screens = g_new0 (TraysScreen, 1);
-#else
-      GdkDisplay *display;
-      int n_screens;
-
-      display = gdk_display_get_default ();
-      n_screens = gdk_display_get_n_screens (display);
-      trays_screens = g_new0 (TraysScreen, n_screens);
-#endif
       initialized = TRUE;
     }
 
@@ -775,7 +701,6 @@ na_tray_set_property (GObject      *object,
     }
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 na_tray_get_preferred_width (GtkWidget *widget,
                              gint      *minimal_width,
@@ -795,14 +720,6 @@ na_tray_get_preferred_height (GtkWidget *widget,
                                    minimal_height,
                                    natural_height);
 }
-#else
-static void
-na_tray_size_request (GtkWidget        *widget,
-                      GtkRequisition   *requisition)
-{
-  gtk_widget_size_request (gtk_bin_get_child (GTK_BIN (widget)), requisition);
-}
-#endif
 
 static void
 na_tray_size_allocate (GtkWidget        *widget,
@@ -822,12 +739,8 @@ na_tray_class_init (NaTrayClass *klass)
   gobject_class->set_property = na_tray_set_property;
   gobject_class->dispose = na_tray_dispose;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   widget_class->get_preferred_width = na_tray_get_preferred_width;
   widget_class->get_preferred_height = na_tray_get_preferred_height;
-#else
-  widget_class->size_request = na_tray_size_request;
-#endif
   widget_class->size_allocate = na_tray_size_allocate;
 
   g_object_class_install_property
@@ -920,17 +833,10 @@ na_tray_set_icon_size (NaTray *tray,
 
 void
 na_tray_set_colors (NaTray   *tray,
-#if GTK_CHECK_VERSION (3, 0, 0)
                     GdkRGBA  *fg,
                     GdkRGBA  *error,
                     GdkRGBA  *warning,
                     GdkRGBA  *success)
-#else
-                    GdkColor *fg,
-                    GdkColor *error,
-                    GdkColor *warning,
-                    GdkColor *success)
-#endif
 {
   NaTrayPrivate *priv = tray->priv;
 

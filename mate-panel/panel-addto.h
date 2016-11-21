@@ -25,6 +25,9 @@
 #ifndef __PANEL_ADDTO_H__
 #define __PANEL_ADDTO_H__
 
+#include <gtk/gtk.h>
+#include "panel-widget.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

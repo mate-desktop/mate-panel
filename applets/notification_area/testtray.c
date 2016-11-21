@@ -150,22 +150,14 @@ create_tray_on_screen (GdkScreen *screen,
   data->window = window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_object_weak_ref (G_OBJECT (window), (GWeakNotify) maybe_quit, NULL);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-#else
-  vbox = gtk_vbox_new (FALSE, 6);
-#endif
   gtk_container_add (GTK_CONTAINER (window), vbox);
 
   button = gtk_button_new_with_mnemonic ("_Add another tray");
   g_signal_connect (button, "clicked", G_CALLBACK (add_tray_cb), data);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-#else
-  hbox = gtk_hbox_new (FALSE, 12);
-#endif
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new_with_mnemonic ("_Orientation:");
 #if GTK_CHECK_VERSION (3, 16, 0)
@@ -218,28 +210,15 @@ main (int argc, char *argv[])
 {
   GdkDisplay *display;
   GdkScreen *screen;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-  int n_screens, i;
-#endif
 
   gtk_init (&argc, &argv);
 
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 
   display = gdk_display_get_default ();
-#if GTK_CHECK_VERSION (3, 0, 0)
   screen = gdk_display_get_default_screen (display);
 
   create_tray_on_screen (screen, FALSE);
-#else
-  n_screens =  gdk_display_get_n_screens (display);
-  for (i = 0; i < n_screens; ++i) {
-    screen = gdk_display_get_screen (display, i);
-    create_tray_on_screen (screen, FALSE);
-
-  create_tray_on_screen (screen, FALSE);
-  }
-#endif
   
   gtk_main ();
 

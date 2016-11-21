@@ -31,7 +31,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <libmate-desktop/mate-gsettings.h>
-
+#include <matemenu-tree.h>
 
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-xdg.h>
@@ -445,16 +445,12 @@ restore_grabs(GtkWidget *w, gpointer data)
 		if (viewable)
 			xgrab_shell = parent;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 		parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
-#else
-		parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
-#endif
 	}
 
 	/*only grab if this HAD a grab before*/
 	/* FIXME fix for GTK3 */
-#if !GTK_CHECK_VERSION (3, 0, 0)
+#if 0
 	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
           {
 	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
@@ -667,20 +663,11 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       if (viewable)
 	xgrab_shell = parent;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
       parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
-#else
-      parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
-#endif
     }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   if (xgrab_shell)
-#else
-  if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
-#endif
     {
-#if GTK_CHECK_VERSION (3, 0, 0)
       gboolean status;
       GdkDisplay *display;
       GdkDevice *pointer;
@@ -690,12 +677,10 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 #else
       GdkDeviceManager *device_manager;
 #endif
-#endif
       GdkWindow *window = gtk_widget_get_window (xgrab_shell);
       GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
                                                       GDK_ARROW);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
       display = gdk_window_get_display (window);
 #if GTK_CHECK_VERSION(3, 20, 0)
       seat = gdk_display_get_default_seat (display);
@@ -725,37 +710,18 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 			       GDK_KEY_PRESS | GDK_KEY_RELEASE,
 			       NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
 	    {
-#else
-      if ((gdk_pointer_grab (window, TRUE,
-			     GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
-			     GDK_POINTER_MOTION_MASK,
-			     NULL, cursor, GDK_CURRENT_TIME) == 0))
-	{
-	  if (gdk_keyboard_grab (window, TRUE,
-				 GDK_CURRENT_TIME) == 0)
-	    {
-#endif
 /* FIXME fix for GTK3 */
-#if !GTK_CHECK_VERSION (3, 0, 0)
+#if 0
           GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
 #endif
 	    }
 	  else
 	    {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	      gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
 	    }
 	}
 
       g_object_unref (cursor);
-#else
-	      gdk_pointer_ungrab (GDK_CURRENT_TIME);
-	    }
-	}
-
-      gdk_cursor_unref (cursor);
-#endif
     }
 }
 
@@ -1061,12 +1027,11 @@ create_fake_menu (MateMenuTreeDirectory *directory)
 			  
 			  
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
-#if GTK_CHECK_VERSION (3, 0, 0) 
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
-#endif
+
 	return menu;
 }
 GtkWidget *
@@ -1273,16 +1238,11 @@ handle_matemenu_tree_changed (MateMenuTree *tree,
 {
 	guint idle_id;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GList *list, *l;
 	list = gtk_container_get_children (GTK_CONTAINER (menu));
 	for (l = list; l; l = l->next)
 		gtk_widget_destroy (l->data);
 	g_list_free (list);
-#else
-	while (GTK_MENU_SHELL (menu)->children)
-                gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
-#endif
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
@@ -1368,12 +1328,11 @@ create_applications_menu (const char *menu_file,
 	matemenu_tree_unref (tree);
 	
 /*HACK Fix any failures of compiz/other wm's to communicate with gtk for transparency */
-#if GTK_CHECK_VERSION (3, 0, 0) 
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
-#endif
+
 	return menu;
 }
 
@@ -1490,31 +1449,20 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 			      GdkEventKey *event)
 {
 	gboolean retval = FALSE;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkWidget *active_menu_item = NULL;
-#endif
 
 	if ((event->keyval == GDK_KEY_Menu) ||
 	    (event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 		active_menu_item = gtk_menu_shell_get_selected_item (menu_shell);
 		if (active_menu_item && gtk_menu_item_get_submenu (GTK_MENU_ITEM (active_menu_item)) == NULL) {
-#else
-		if (menu_shell->active_menu_item &&
-		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
-#endif
 			GdkEventButton bevent;
 
 			bevent.button = 3;
 			bevent.time = GDK_CURRENT_TIME;
-#if GTK_CHECK_VERSION (3, 0, 0)
 			retval = show_item_menu (active_menu_item, &bevent);
-#else
-			retval = show_item_menu (menu_shell->active_menu_item, &bevent);
-#endif
 		}
 
 	}

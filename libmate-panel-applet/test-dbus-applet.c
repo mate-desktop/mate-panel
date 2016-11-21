@@ -113,11 +113,7 @@ static void
 test_applet_handle_background_change (TestApplet                *applet,
 				      MatePanelAppletBackgroundType  type,
 				      GdkColor                  *color,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				      cairo_pattern_t           *pattern,
-#else
-				      GdkPixmap                 *pixmap,
-#endif
 				      gpointer                   dummy)
 {
 	GdkWindow *window = gtk_widget_get_window (applet->label);
@@ -125,29 +121,16 @@ test_applet_handle_background_change (TestApplet                *applet,
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
 		g_message ("Setting background to default");
-#if GTK_CHECK_VERSION (3, 0, 0)
 		gdk_window_set_background_pattern (window, NULL);
-#else
-		gdk_window_set_back_pixmap (window, NULL, FALSE);
-#endif
 		break;
 	case PANEL_COLOR_BACKGROUND:
 		g_message ("Setting background to #%2x%2x%2x",
 			   color->red, color->green, color->blue);
-#if GTK_CHECK_VERSION (3, 0, 0)
 		gdk_window_set_background_pattern (window, NULL);
-#else
-		gdk_window_set_back_pixmap (window, NULL, FALSE);
-#endif
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
-#if GTK_CHECK_VERSION (3, 0, 0)
 		g_message ("Setting background to '%p'", pattern);
 		gdk_window_set_background_pattern (window, pattern);
-#else
-		g_message ("Setting background to '%p'", pixmap);
-		gdk_window_set_back_pixmap (window, pixmap, FALSE);
-#endif
 		break;
 	default:
 		g_assert_not_reached ();

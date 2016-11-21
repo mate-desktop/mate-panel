@@ -11,9 +11,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#if GTK_CHECK_VERSION (3, 0, 0)
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
-#endif
 
 #include <libpanel-util/panel-list.h>
 
@@ -62,7 +60,6 @@ static guint panel_widget_signals [LAST_SIGNAL] = {0};
 static gboolean mate_panel_applet_in_drag = FALSE;
 static GtkWidget *saved_focus_widget = NULL;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void panel_widget_get_preferred_size (GtkWidget	  *widget,
 					     GtkRequisition *minimum_size,
 					     GtkRequisition *natural_size);
@@ -72,10 +69,6 @@ static void panel_widget_get_preferred_width (GtkWidget *widget,
 static void panel_widget_get_preferred_height (GtkWidget *widget,
 					       gint *minimum_height,
 					       gint *natural_height);
-#else
-static void panel_widget_size_request   (GtkWidget        *widget,
-					 GtkRequisition   *requisition);
-#endif
 static void panel_widget_size_allocate  (GtkWidget        *widget,
 					 GtkAllocation    *allocation);
 static void panel_widget_cadd           (GtkContainer     *container,
@@ -85,23 +78,12 @@ static void panel_widget_cremove        (GtkContainer     *container,
 static void panel_widget_dispose        (GObject *obj);
 static void panel_widget_finalize       (GObject          *obj);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 static void panel_widget_realize        (GtkWidget        *widget);
 static void panel_widget_unrealize      (GtkWidget        *panel);
 static void panel_widget_state_flags_changed (GtkWidget *widget,
 					     GtkStateFlags previous_state);
 static void panel_widget_style_updated (GtkWidget *widget);
-#else
-static void panel_widget_realize        (GtkWidget        *widget);
-static void panel_widget_unrealize      (GtkWidget        *panel);
-static void panel_widget_state_changed  (GtkWidget        *widget,
-					 GtkStateType      previous_state);
-static void panel_widget_style_set      (GtkWidget        *widget,
-					 GtkStyle         *previous_style);
-#endif
-
-#if !GTK_CHECK_VERSION (3, 18, 0)
 static void panel_widget_background_changed (PanelBackground *background,
 					     PanelWidget     *panel);
 #endif
@@ -138,11 +120,9 @@ static void
 emit_applet_moved (PanelWidget *panel_widget,
 		   AppletData  *applet)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	/* we always want to queue a draw after moving, so do it here instead
 	* of after the signal emission in all callers */
 	gtk_widget_queue_draw (applet->applet);
-#endif
 	g_signal_emit (panel_widget,
 		       panel_widget_signals [APPLET_MOVE_SIGNAL], 0,
 		       applet->applet);
@@ -441,27 +421,17 @@ panel_widget_class_init (PanelWidgetClass *class)
 	object_class->dispose = panel_widget_dispose;
 	object_class->finalize = panel_widget_finalize;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	widget_class->get_preferred_width = panel_widget_get_preferred_width;
 	widget_class->get_preferred_height = panel_widget_get_preferred_height;
-#else
-	widget_class->size_request = panel_widget_size_request;
-#endif
 	widget_class->size_allocate = panel_widget_size_allocate;
 #if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelWidget");
 #endif
-#if GTK_CHECK_VERSION (3, 18, 0)
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 	widget_class->realize = panel_widget_realize;
 	widget_class->unrealize = panel_widget_unrealize;
 	widget_class->state_flags_changed = panel_widget_state_flags_changed;
 	widget_class->style_updated = panel_widget_style_updated;
-#else
-	widget_class->realize = panel_widget_realize;
-	widget_class->unrealize = panel_widget_unrealize;
-	widget_class->state_changed = panel_widget_state_changed;
-	widget_class->style_set = panel_widget_style_set;
 #endif
 
 	widget_class->focus = panel_widget_real_focus;
@@ -1236,13 +1206,9 @@ panel_widget_right_stick(PanelWidget *panel,int old_size)
 }
 
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
 panel_widget_get_preferred_size(GtkWidget	     *widget,
 				GtkRequisition *minimum_size,
 				GtkRequisition *natural_size)
-#else
-panel_widget_size_request(GtkWidget *widget, GtkRequisition *minimum_size)
-#endif
 {
 	PanelWidget *panel;
 	GList *list;
@@ -1261,34 +1227,26 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *minimum_size)
 		minimum_size->height = 0;
 		minimum_size->width = panel->sz;
 	}
-#if GTK_CHECK_VERSION (3, 0, 0)
 	natural_size->width = minimum_size->width;
 	natural_size->height = minimum_size->height;
-#endif
 
 	ad_with_hints = NULL;
 
 	for (list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
 		GtkRequisition child_min_size;
-#if GTK_CHECK_VERSION (3, 0, 0)
 		GtkRequisition child_natural_size;
 		gtk_widget_get_preferred_size(ad->applet,
 		                              &child_min_size,
 		                              &child_natural_size);
-#else
-		gtk_widget_size_request(ad->applet, &child_min_size);
-#endif
 
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			if (minimum_size->height < child_min_size.height &&
 			    !ad->size_constrained)
 				minimum_size->height = child_min_size.height;
-#if GTK_CHECK_VERSION (3, 0, 0)
 			if (natural_size->height < child_natural_size.height &&
 			    !ad->size_constrained)
 				natural_size->height = child_natural_size.height;
-#endif
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
 				ad_with_hints = g_list_prepend (ad_with_hints,
@@ -1297,19 +1255,15 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *minimum_size)
 			else if (panel->packed)
 			{
 				minimum_size->width += child_min_size.width;
-#if GTK_CHECK_VERSION (3, 0, 0)
 				natural_size->width += child_natural_size.width;
-#endif
 			}
 		} else {
 			if (minimum_size->width < child_min_size.width &&
 			    !ad->size_constrained)
 				minimum_size->width = child_min_size.width;
-#if GTK_CHECK_VERSION (3, 0, 0)
 			if (natural_size->width < child_min_size.width &&
 			    !ad->size_constrained)
 				natural_size->width = child_min_size.width;
-#endif
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
 				ad_with_hints = g_list_prepend (ad_with_hints,
@@ -1318,9 +1272,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *minimum_size)
 			else if (panel->packed)
 			{
 				minimum_size->height += child_min_size.height;
-#if GTK_CHECK_VERSION (3, 0, 0)
 				natural_size->height += child_natural_size.height;
-#endif
 			}
 		}
 	}
@@ -1336,14 +1288,10 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *minimum_size)
 	if (!panel->packed) {
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			minimum_size->width = panel->size;
-#if GTK_CHECK_VERSION (3, 0, 0)
 			natural_size->width = panel->size;
-#endif
 		} else {
 			minimum_size->height = panel->size;
-#if GTK_CHECK_VERSION (3, 0, 0)
 			natural_size->height = panel->size;
-#endif
 		}
 	} else {
 		/* put the list in the correct order: this is important
@@ -1377,27 +1325,22 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *minimum_size)
 			minimum_size->width = 12;
 		if (minimum_size->height < 12)
 			minimum_size->height = 12;
-#if GTK_CHECK_VERSION (3, 0, 0)
 		if (natural_size->width < 12 && !dont_fill)
 			natural_size->width = 12;
 		if (natural_size->height < 12)
 			natural_size->height = 12;
-#endif
 	} else {
 		if (minimum_size->width < 12)
 			minimum_size->width = 12;
 		if (minimum_size->height < 12 && !dont_fill)
 			minimum_size->height = 12;
-#if GTK_CHECK_VERSION (3, 0, 0)
 		if (natural_size->width < 12)
 			natural_size->width = 12;
 		if (natural_size->height < 12 && !dont_fill)
 			natural_size->height = 12;
-#endif
 	}
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_widget_get_preferred_width(GtkWidget *widget,
 				 gint	   *minimum_width,
@@ -1419,7 +1362,6 @@ panel_widget_get_preferred_height(GtkWidget *widget,
 	*minimum_height = req_min.height;
 	*natural_height = req_natural.height;
 }
-#endif
 
 static void
 queue_resize_on_all_applets(PanelWidget *panel)
@@ -1499,11 +1441,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			AppletData *ad = list->data;
 			GtkAllocation challoc;
 			GtkRequisition chreq;
-#if GTK_CHECK_VERSION (3, 0, 0)
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
-#else
-			gtk_widget_get_child_requisition(ad->applet, &chreq);
-#endif
 
 			ad->constrained = i;
 			
@@ -1554,11 +1492,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			AppletData *ad = list->data;
 			GtkRequisition chreq;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
-#else
-			gtk_widget_get_child_requisition(ad->applet, &chreq);
-#endif
 
 			if (!ad->expand_major || !ad->size_hints) {
 				if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -1628,11 +1562,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			AppletData *ad = list->data;
 			GtkAllocation challoc;
 			GtkRequisition chreq;
-#if GTK_CHECK_VERSION (3, 0, 0)
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
-#else
-			gtk_widget_get_child_requisition (ad->applet, &chreq);
-#endif
+
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
@@ -1668,9 +1599,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
 	GtkWidget     *widget;
 	GtkAllocation allocation;
-#if GTK_CHECK_VERSION(3, 0, 0)
 	GdkDevice      *device;
-#endif
 	int           x,y;
 	int           w,h;
 
@@ -1686,11 +1615,9 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 #if GTK_CHECK_VERSION(3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
-#elif GTK_CHECK_VERSION(3, 0, 0)
+#else
 	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
 	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
-#else
-	gtk_widget_get_pointer(widget, &x, &y);
 #endif
 
 	gtk_widget_get_allocation (widget, &allocation);
@@ -1705,8 +1632,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
-#if GTK_CHECK_VERSION (3, 18, 0)
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#if !GTK_CHECK_VERSION (3, 18, 0)
 static void
 panel_widget_set_background_default_style (GtkWidget *widget)
 {
@@ -1750,43 +1676,6 @@ panel_widget_style_updated (GtkWidget *widget)
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
 	panel_widget_set_background_default_style (widget);
 }
-
-#else
-
-static void
-panel_widget_state_changed (GtkWidget    *widget,
-			    GtkStateType  previous_state)
-{
-	GtkStyle     *style;
-	GtkStateType  state;
-
-	if (gtk_widget_get_realized (widget)) {
-		style = gtk_widget_get_style (widget);
-		state = gtk_widget_get_state (widget);
-
-		panel_background_set_default_style (
-			&PANEL_WIDGET (widget)->background,
-			&style->bg [state],
-			style->bg_pixmap [state]);
-	}
-}
-
-static void
-panel_widget_style_set (GtkWidget *widget, GtkStyle  *previous_style)
-{
-	GtkStyle     *style;
-	GtkStateType  state;
-
-	if (gtk_widget_get_realized (widget)) {
-		style = gtk_widget_get_style (widget);
-		state = gtk_widget_get_state (widget);
-
-		panel_background_set_default_style (
-			&PANEL_WIDGET (widget)->background,
-			&style->bg [state],
-			style->bg_pixmap [state]);
-	}
-}
 #endif
 
 static gboolean
@@ -1806,10 +1695,6 @@ panel_widget_realize (GtkWidget *widget)
 {
 	PanelWidget  *panel = (PanelWidget *) widget;
 	GdkWindow    *window;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	GtkStyle     *style;
-	GtkStateType  state;
-#endif
 
 	g_signal_connect (panel->toplevel, "configure-event",
 			  G_CALLBACK (toplevel_configure_event), panel);
@@ -1817,23 +1702,8 @@ panel_widget_realize (GtkWidget *widget)
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 
 	window = gtk_widget_get_window (widget);
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	style = gtk_widget_get_style (widget);
-	state = gtk_widget_get_state (widget);
 
-	/* For auto-hidden panels with a colored background, we need native
-	 * windows to avoid some uglyness on unhide */
-#endif
-
-
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel_widget_set_background_default_style (widget);
-#else
-	panel_background_set_default_style (
-		&panel->background,
-		&style->bg [state],
-		style->bg_pixmap [state]);
-#endif
 
 	panel_background_realized (&panel->background, window);
 }
@@ -1939,11 +1809,7 @@ panel_widget_init (PanelWidget *panel)
 	
 	panel->packed        = FALSE;
 	panel->orient        = GTK_ORIENTATION_HORIZONTAL;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel->size          = 0;
-#else
-	panel->size          = G_MAXINT;
-#endif
 	panel->applet_list   = NULL;
 	panel->master_widget = NULL;
 	panel->drop_widget   = widget;
@@ -1957,7 +1823,6 @@ panel_widget_init (PanelWidget *panel)
 			       (PanelBackgroundChangedNotify) panel_widget_background_changed,
 			       panel);
 #endif
-
 	panels = g_slist_append (panels, panel);
 }
 
@@ -1978,14 +1843,7 @@ panel_widget_new (PanelToplevel  *toplevel,
 	panel->sz = sz;
 
 	panel->packed = packed;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel->size = 0;
-#else
-	if (packed)
-		panel->size = 0;
-	else
-		panel->size = G_MAXINT;
-#endif
 
 	panel->toplevel    = toplevel;
 	panel->drop_widget = GTK_WIDGET (toplevel);
@@ -2094,7 +1952,6 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 	if (window) {
 		GdkGrabStatus  status;
 		GdkCursor     *fleur_cursor;
-#if GTK_CHECK_VERSION (3, 0, 0)
 		GdkDisplay *display;
 #if GTK_CHECK_VERSION(3, 20, 0)
 		GdkSeat *seat;
@@ -2102,12 +1959,9 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		GdkDevice *pointer;
 		GdkDeviceManager *device_manager;
 #endif
-#endif
-
 		fleur_cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
 		                                           GDK_FLEUR);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 		display = gdk_window_get_display (window);
 #if GTK_CHECK_VERSION(3, 20, 0)
 		seat = gdk_display_get_default_seat (display);
@@ -2124,12 +1978,6 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 #endif
 
 		g_object_unref (fleur_cursor);
-#else
-		status = gdk_pointer_grab (window, FALSE,
-					   APPLET_EVENT_MASK, NULL,
-					   fleur_cursor, time_);
-		gdk_cursor_unref (fleur_cursor);
-#endif
 		gdk_flush ();
 
 		if (status != GDK_GRAB_SUCCESS) {
@@ -2146,7 +1994,7 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 #if GTK_CHECK_VERSION(3, 20, 0)
 	GdkDisplay *display;
 	GdkSeat *seat;
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 	GdkDisplay *display;
 	GdkDevice *pointer;
 	GdkDeviceManager *device_manager;
@@ -2161,14 +2009,12 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 	seat = gdk_display_get_default_seat (display);
 
 	gdk_seat_ungrab (seat);
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 	display = gtk_widget_get_display (GTK_WIDGET (panel));
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
 
 	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-#else
-	gdk_pointer_ungrab (GDK_CURRENT_TIME);
 #endif
 	gtk_grab_remove (panel->currently_dragged_applet->applet);
 	panel_widget_applet_drag_end_no_grab (panel);
@@ -2180,9 +2026,7 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 int
 panel_widget_get_cursorloc (PanelWidget *panel)
 {
-#if GTK_CHECK_VERSION(3, 0, 0)
 	GdkDevice      *device;
-#endif
 	int x, y;
 	gboolean rtl;
 
@@ -2191,11 +2035,9 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 #if GTK_CHECK_VERSION (3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET(panel))));
 	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(panel)), device, &x, &y, NULL);
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET(panel))));
 	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(panel)), device, &x, &y, NULL);
-#else
-	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
 #endif
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
 	
@@ -2363,9 +2205,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	int pos;
 	int movement;
 	GtkWidget *applet;
-#if GTK_CHECK_VERSION(3, 0, 0)
 	GdkDevice      *device;
-#endif
 	GSList *forb;
 	GdkModifierType mods;
 	AppletData *ad;
@@ -2424,12 +2264,9 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 #if GTK_CHECK_VERSION (3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET (panel))));
 	gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET(panel)), device, NULL, NULL, &mods);
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET (panel))));
 	gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET(panel)), device, NULL, NULL, &mods);
-#else
-	gdk_window_get_pointer (gtk_widget_get_window (GTK_WIDGET(panel)),
-				NULL, NULL, &mods);
 #endif
 
 	movement = PANEL_SWITCH_MOVE;
@@ -2464,9 +2301,7 @@ static int
 move_timeout_handler(gpointer data)
 {
 	PanelWidget   *panel = data;
-#if GTK_CHECK_VERSION(3, 0, 0)
 	GdkDevice      *device;
-#endif
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(data),FALSE);
 
@@ -2489,11 +2324,9 @@ move_timeout_handler(gpointer data)
 #if GTK_CHECK_VERSION (3, 20, 0)
 		device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 		gdk_window_get_device_position (gtk_widget_get_window (widget), device, &x, &y, NULL);
-#elif GTK_CHECK_VERSION (3, 0, 0)
+#else
 		device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
 		gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
-#else
-		gtk_widget_get_pointer(widget, &x, &y);
 #endif
 
 		gtk_widget_get_allocation (widget, &allocation);
@@ -2629,11 +2462,7 @@ panel_widget_applet_key_press_event (GtkWidget   *widget,
 	if (!mate_panel_applet_in_drag)
 		return FALSE;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	return gtk_bindings_activate (G_OBJECT (panel),
-#else
-	return gtk_bindings_activate (GTK_OBJECT (panel),
-#endif
 				      ((GdkEventKey *)event)->keyval, 
 				      ((GdkEventKey *)event)->state);	
 }
@@ -3003,7 +2832,6 @@ panel_widget_emit_background_changed (PanelWidget *panel)
 {
 	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
 }
-
 #else
 static void
 panel_widget_background_changed (PanelBackground *background,

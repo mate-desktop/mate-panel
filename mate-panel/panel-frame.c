@@ -35,7 +35,6 @@ enum {
 	PROP_EDGES
 };
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 panel_frame_get_preferred_width (GtkWidget *widget,
 				 gint *minimal_width,
@@ -109,53 +108,14 @@ panel_frame_get_preferred_height (GtkWidget *widget,
 	}
 }
 
-#else
-static void
-panel_frame_size_request (GtkWidget      *widget,
-			  GtkRequisition *requisition)
-{
-	PanelFrame *frame = (PanelFrame *) widget;
-	GtkBin     *bin   = (GtkBin *) widget;
-	GtkStyle   *style;
-	GtkWidget  *child;
-	int         border_width;
-
-	style = gtk_widget_get_style (widget);
-	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
-	requisition->width = 1;
-	requisition->height = 1;
-
-	child = gtk_bin_get_child (bin);
-	if (child && gtk_widget_get_visible (child))
-		gtk_widget_size_request (child, requisition);
-
-	requisition->width  += border_width;
-	requisition->height += border_width;
-
-	if (frame->edges & PANEL_EDGE_TOP)
-		requisition->height += style->xthickness;
-	if (frame->edges & PANEL_EDGE_BOTTOM)
-		requisition->height += style->xthickness;
-	if (frame->edges & PANEL_EDGE_LEFT)
-		requisition->width += style->ythickness;
-	if (frame->edges & PANEL_EDGE_RIGHT)
-		requisition->width += style->ythickness;
-}
-#endif
-
 static void
 panel_frame_size_allocate (GtkWidget     *widget,
 			   GtkAllocation *allocation)
 {
 	PanelFrame      *frame = (PanelFrame *) widget;
 	GtkBin          *bin   = (GtkBin *) widget;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext *context;
 	GtkBorder        padding;
-#else
-	GtkStyle        *style;
-#endif
 	GtkAllocation    child_allocation;
 	GtkAllocation    child_allocation_current;
 	GtkWidget       *child;
@@ -163,12 +123,8 @@ panel_frame_size_allocate (GtkWidget     *widget,
 
 	gtk_widget_set_allocation (widget, allocation);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	context = gtk_widget_get_style_context (widget);
 	gtk_style_context_get_padding (context, gtk_widget_get_state_flags (widget), &padding);
-#else
-	style = gtk_widget_get_style (widget);
-#endif
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
 	child_allocation.x      = allocation->x + border_width;
@@ -177,38 +133,20 @@ panel_frame_size_allocate (GtkWidget     *widget,
 	child_allocation.height = allocation->height - 2 * border_width;
 
 	if (frame->edges & PANEL_EDGE_LEFT) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 		child_allocation.x     += padding.left;
 		child_allocation.width -= padding.left;
-#else
-		child_allocation.x     += style->xthickness;
-		child_allocation.width -= style->xthickness;
-#endif
 	}
 
 	if (frame->edges & PANEL_EDGE_TOP) {
-#if GTK_CHECK_VERSION (3, 0, 0)
 		child_allocation.y      += padding.top;
 		child_allocation.height -= padding.top;
-#else
-		child_allocation.y      += style->ythickness;
-		child_allocation.height -= style->ythickness;
-#endif
 	}
 
 	if (frame->edges & PANEL_EDGE_RIGHT)
-#if GTK_CHECK_VERSION (3, 0, 0)
 		child_allocation.width -= padding.left;
-#else
-		child_allocation.width -= style->xthickness;
-#endif
 
 	if (frame->edges & PANEL_EDGE_BOTTOM)
-#if GTK_CHECK_VERSION (3, 0, 0)
 		child_allocation.height -= padding.top;
-#else
-		child_allocation.height -= style->ythickness;
-#endif
 
 	child = gtk_bin_get_child (bin);
 	gtk_widget_get_allocation (child, &child_allocation_current);
@@ -226,33 +164,21 @@ panel_frame_size_allocate (GtkWidget     *widget,
 
 void
 panel_frame_draw (GtkWidget      *widget,
-#if GTK_CHECK_VERSION (3, 0, 0)
 		  cairo_t *cr,
-#endif
 		  PanelFrameEdge  edges)
 {
 	PanelFrame       *frame = (PanelFrame *) widget;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkStyleContext  *context;
 	GtkStateFlags     state;
 	GdkRGBA          *bg;
 	GdkRGBA           dark, light;
 	GtkBorder         padding;
-#else
-	GdkWindow        *window;
-	GtkStyle         *style;
-	GtkStateType      state;
-	GtkAllocation     allocation;
-	GdkGC            *dark, *light, *black;
-	int               xthickness, ythickness;
-#endif
 	int               x, y, width, height;
 
 
 	if (edges == PANEL_EDGE_NONE)
 		return;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	context = gtk_widget_get_style_context (widget);
 	state = gtk_widget_get_state_flags (widget);
 
@@ -267,29 +193,11 @@ panel_frame_draw (GtkWidget      *widget,
 	gtk_style_shade (bg, &light, 1.3);
 
 	gtk_style_context_get_padding (context, state, &padding);
-#else
-	window = gtk_widget_get_window (widget);
-	style = gtk_widget_get_style (widget);
-	state = gtk_widget_get_state (widget);
 
-	gtk_widget_get_allocation (widget, &allocation);
-	x      = allocation.x;
-	y      = allocation.y;
-	width  = allocation.width;
-	height = allocation.height;
-
-	dark  = style->dark_gc [state];
-	light = style->light_gc [state];
-	black = style->black_gc;
-
-	xthickness = style->xthickness;
-	ythickness = style->ythickness;
-#endif
 	/* Copied from gtk_default_draw_shadow() */
 
 	x = y = 0;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	cairo_set_line_width (cr, 1);
 
 	if (frame->edges & PANEL_EDGE_BOTTOM && padding.bottom > 0) {
@@ -357,63 +265,9 @@ panel_frame_draw (GtkWidget      *widget,
 			cairo_stroke (cr);
 		}
 	}
-#else
-	if (frame->edges & PANEL_EDGE_BOTTOM && ythickness > 0) {
-		if (ythickness > 1) {
-			gdk_draw_line (window, dark,
-				       x, y + height - 2,
-				       x + width - 1, y + height - 2);
-			gdk_draw_line (window, black,
-				       x, y + height - 1,
-				       x + width - 1, y + height - 1);
-		} else
-			gdk_draw_line (window, dark,
-				       x, y + height - 1,
-				       x + width - 1, y + height - 1);
-	}
-
-	if (frame->edges & PANEL_EDGE_RIGHT && xthickness > 0) {
-		if (xthickness > 1) {
-			gdk_draw_line (window, dark,
-				       x + width - 2, y,
-				       x + width - 2, y + height - 1);
-
-			gdk_draw_line (window, black,
-				       x + width - 1, y,
-				       x + width - 1, y + height - 1);
-		} else
-			gdk_draw_line (window, dark,
-				       x + width - 1, y,
-				       x + width - 1, y + height - 1);
-	}
-
-	if (frame->edges & PANEL_EDGE_TOP && ythickness > 0) {
-		gdk_draw_line (window, light,
-			       x, y, x + width - 1, y);
-
-		if (ythickness > 1)
-			gdk_draw_line (window,
-				       style->bg_gc [state],
-				       x, y + 1, x + width - 1, y + 1);
-	}
-
-	if (frame->edges & PANEL_EDGE_LEFT && xthickness > 0) {
-		gdk_draw_line (window, light,
-			       x, y, x, y + height - 1);
-
-		if (xthickness > 1)
-			gdk_draw_line (window,
-				       style->bg_gc [state],
-				       x + 1, y, x + 1, y + height - 1);
-	}
-#endif
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static gboolean panel_frame_expose(GtkWidget* widget, cairo_t* cr)
-#else
-static gboolean panel_frame_expose(GtkWidget* widget, GdkEventExpose* event)
-#endif
 {
 	PanelFrame *frame = (PanelFrame *) widget;
 	gboolean    retval = FALSE;
@@ -421,19 +275,10 @@ static gboolean panel_frame_expose(GtkWidget* widget, GdkEventExpose* event)
 	if (!gtk_widget_is_drawable (widget))
 		return retval;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	if (GTK_WIDGET_CLASS (panel_frame_parent_class)->draw)
 		retval = GTK_WIDGET_CLASS (panel_frame_parent_class)->draw (widget, cr);
-#else
-	if (GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event)
-		retval = GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event (widget, event);
-#endif
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	panel_frame_draw (widget, cr, frame->edges);
-#else
-	panel_frame_draw (widget, frame->edges);
-#endif
 
 	return retval;
 }
@@ -492,14 +337,9 @@ panel_frame_class_init (PanelFrameClass *klass)
         gobject_class->get_property = panel_frame_get_property;
 
 	widget_class->size_allocate = panel_frame_size_allocate;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	widget_class->get_preferred_width  = panel_frame_get_preferred_width;
 	widget_class->get_preferred_height = panel_frame_get_preferred_height;
 	widget_class->draw                 = panel_frame_expose;
-#else
-	widget_class->size_request  = panel_frame_size_request;
-	widget_class->expose_event  = panel_frame_expose;
-#endif
 #if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelFrame");
 #endif

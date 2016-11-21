@@ -1,6 +1,5 @@
 #include "panel-color.h"
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 /**
  * rgb_to_hls:
  * @r: on input, red; on output, hue
@@ -197,7 +196,3 @@ gtk_style_shade (GdkRGBA *a, GdkRGBA *b, gdouble k)
 	b->green = green;
 	b->blue = blue;
 }
-#else
-
-#endif
-

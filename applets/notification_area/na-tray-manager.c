@@ -97,7 +97,6 @@ na_tray_manager_init (NaTrayManager *manager)
   manager->padding = 0;
   manager->icon_size = 0;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   manager->fg.red = 0.0;
   manager->fg.green = 0.0;
   manager->fg.blue = 0.0;
@@ -117,23 +116,6 @@ na_tray_manager_init (NaTrayManager *manager)
   manager->success.green = 1.0;
   manager->success.blue = 0.0;
   manager->success.alpha = 1.0;
-#else
-  manager->fg.red = 0;
-  manager->fg.green = 0;
-  manager->fg.blue = 0;
-
-  manager->error.red = 0xffff;
-  manager->error.green = 0;
-  manager->error.blue = 0;
-
-  manager->warning.red = 0xffff;
-  manager->warning.green = 0xffff;
-  manager->warning.blue = 0;
-
-  manager->success.red = 0;
-  manager->success.green = 0xffff;
-  manager->success.blue = 0;
-#endif
 }
 
 static void
@@ -344,28 +326,12 @@ pending_message_free (PendingMessage *message)
   g_free (message);
 }
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 static void
 na_tray_manager_handle_message_data (NaTrayManager *manager,
                                      XClientMessageEvent *xevent)
-#else
-static GdkFilterReturn
-na_tray_manager_handle_client_message_message_data (GdkXEvent *xev,
-                                                    GdkEvent  *event,
-                                                    gpointer   data)
-#endif
 {
-#if !GTK_CHECK_VERSION (3, 0, 0)
-  XClientMessageEvent *xevent;
-  NaTrayManager       *manager;
-#endif
   GList               *p;
   int                  len;
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-  xevent  = (XClientMessageEvent *) xev;
-  manager = data;
-#endif
 
   /* Try to see if we can find the pending message in the list */
   for (p = manager->messages; p; p = p->next)
@@ -400,10 +366,6 @@ na_tray_manager_handle_client_message_message_data (GdkXEvent *xev,
           break;
 	}
     }
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-  return GDK_FILTER_REMOVE;
-#endif
 }
 
 static void
@@ -498,41 +460,6 @@ na_tray_manager_handle_cancel_message (NaTrayManager       *manager,
     }
 }
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-static GdkFilterReturn
-na_tray_manager_handle_client_message_opcode (GdkXEvent *xev,
-                                              GdkEvent  *event,
-                                              gpointer   data)
-{
-  XClientMessageEvent *xevent;
-  NaTrayManager       *manager;
-
-  xevent  = (XClientMessageEvent *) xev;
-  manager = data;
-
-  switch (xevent->data.l[1])
-    {
-    case SYSTEM_TRAY_REQUEST_DOCK:
-      /* Ignore this one since we don't know on which window this was received
-       * and so we can't know for which screen this is. It will be handled
-       * in na_tray_manager_window_filter() since we also receive it there */
-      break;
-
-    case SYSTEM_TRAY_BEGIN_MESSAGE:
-      na_tray_manager_handle_begin_message (manager, xevent);
-      return GDK_FILTER_REMOVE;
-
-    case SYSTEM_TRAY_CANCEL_MESSAGE:
-      na_tray_manager_handle_cancel_message (manager, xevent);
-      return GDK_FILTER_REMOVE;
-    default:
-      break;
-    }
-
-  return GDK_FILTER_CONTINUE;
-}
-#endif
-
 static GdkFilterReturn
 na_tray_manager_window_filter (GdkXEvent *xev,
                                GdkEvent  *event,
@@ -552,7 +479,6 @@ na_tray_manager_window_filter (GdkXEvent *xev,
                                                (XClientMessageEvent *) xevent);
           return GDK_FILTER_REMOVE;
 	}
-#if GTK_CHECK_VERSION (3, 0, 0)
       /* _NET_SYSTEM_TRAY_OPCODE: SYSTEM_TRAY_BEGIN_MESSAGE */
       else if (xevent->xclient.message_type == manager->opcode_atom &&
                xevent->xclient.data.l[1] == SYSTEM_TRAY_BEGIN_MESSAGE)
@@ -576,7 +502,6 @@ na_tray_manager_window_filter (GdkXEvent *xev,
                                                (XClientMessageEvent *) event);
           return GDK_FILTER_REMOVE;
         }
-#endif
     }
   else if (xevent->type == SelectionClear)
     {
@@ -634,12 +559,6 @@ na_tray_manager_unmanage (NaTrayManager *manager)
                                            TRUE);
     }
 
-/* fixed in GTK3 */
-#if !GTK_CHECK_VERSION (3, 0, 0)
-  //FIXME: we should also use gdk_remove_client_message_filter when it's
-  //available
-  // See bug #351254
-#endif
   gdk_window_remove_filter (window,
                             na_tray_manager_window_filter, manager);
 
@@ -716,14 +635,7 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
        * be embedded. In almost all cases, this will be the same as the visual
        * of the screen.
        */
-#if GTK_CHECK_VERSION (3, 0, 0)
       xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual (manager->screen));
-#else
-      GdkColormap *colormap;
-
-      colormap = gdk_screen_get_default_colormap (manager->screen);
-      xvisual = GDK_VISUAL_XVISUAL (gdk_colormap_get_visual (colormap));
-#endif
     }
 
   data[0] = XVisualIDFromVisual (xvisual);
@@ -810,7 +722,6 @@ na_tray_manager_set_colors_property (NaTrayManager *manager)
   atom = gdk_x11_get_xatom_by_name_for_display (display,
                                                 "_NET_SYSTEM_TRAY_COLORS");
 
-#if GTK_CHECK_VERSION (3, 0, 0)
   data[0] = manager->fg.red * 65535;
   data[1] = manager->fg.green * 65535;
   data[2] = manager->fg.blue * 65535;
@@ -823,20 +734,6 @@ na_tray_manager_set_colors_property (NaTrayManager *manager)
   data[9] = manager->success.red * 65535;
   data[10] = manager->success.green * 65535;
   data[11] = manager->success.blue * 65535;
-#else
-  data[0] = manager->fg.red;
-  data[1] = manager->fg.green;
-  data[2] = manager->fg.blue;
-  data[3] = manager->error.red;
-  data[4] = manager->error.green;
-  data[5] = manager->error.blue;
-  data[6] = manager->warning.red;
-  data[7] = manager->warning.green;
-  data[8] = manager->warning.blue;
-  data[9] = manager->success.red;
-  data[10] = manager->success.green;
-  data[11] = manager->success.blue;
-#endif
 
   XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
                    GDK_WINDOW_XID (window),
@@ -935,11 +832,8 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
       message_data_atom = gdk_atom_intern ("_NET_SYSTEM_TRAY_MESSAGE_DATA",
                                            FALSE);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
       manager->message_data_atom = gdk_x11_atom_to_xatom_for_display (display,
                                                                       message_data_atom);
-#endif
-
 
       /* Add a window filter */
 #if 0
@@ -951,16 +845,6 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
       /* This is for SYSTEM_TRAY_REQUEST_DOCK and SelectionClear */
       gdk_window_add_filter (window,
                              na_tray_manager_window_filter, manager);
-#if !GTK_CHECK_VERSION (3, 0, 0)
-      /* This is for SYSTEM_TRAY_BEGIN_MESSAGE and SYSTEM_TRAY_CANCEL_MESSAGE */
-      gdk_display_add_client_message_filter (display, opcode_atom,
-                                             na_tray_manager_handle_client_message_opcode,
-                                             manager);
-      /* This is for _NET_SYSTEM_TRAY_MESSAGE_DATA */
-      gdk_display_add_client_message_filter (display, message_data_atom,
-                                             na_tray_manager_handle_client_message_message_data,
-                                             manager);
-#endif
       return TRUE;
     }
   else
@@ -1074,7 +958,6 @@ na_tray_manager_set_icon_size (NaTrayManager *manager,
 
 void
 na_tray_manager_set_colors (NaTrayManager *manager,
-#if GTK_CHECK_VERSION (3, 0, 0)
                             GdkRGBA       *fg,
                             GdkRGBA       *error,
                             GdkRGBA       *warning,
@@ -1086,19 +969,6 @@ na_tray_manager_set_colors (NaTrayManager *manager,
       !gdk_rgba_equal (&manager->error, error) ||
       !gdk_rgba_equal (&manager->warning, warning) ||
       !gdk_rgba_equal (&manager->success, success))
-#else
-                            GdkColor      *fg,
-                            GdkColor      *error,
-                            GdkColor      *warning,
-                            GdkColor      *success)
-{
-  g_return_if_fail (NA_IS_TRAY_MANAGER (manager));
-
-  if (!gdk_color_equal (&manager->fg, fg) ||
-      !gdk_color_equal (&manager->error, error) ||
-      !gdk_color_equal (&manager->warning, warning) ||
-      !gdk_color_equal (&manager->success, success))
-#endif
     {
       manager->fg = *fg;
       manager->error = *error;

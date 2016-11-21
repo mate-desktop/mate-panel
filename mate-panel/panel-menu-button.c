@@ -359,12 +359,8 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 {
 	panel_toplevel_pop_autohide_disabler (button->priv->toplevel);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_unset_state_flags (GTK_WIDGET (button),
 				      GTK_STATE_FLAG_PRELIGHT);
-#else
-	GTK_BUTTON (button)->in_button = FALSE;
-#endif
 	button_widget_set_ignore_leave (BUTTON_WIDGET (button), FALSE);
 }
 

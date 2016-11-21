@@ -23,17 +23,11 @@
  */
 
 #include <config.h>
-
 #include <stdlib.h>
-
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
-
 #include <libegg/eggsmclient.h>
 
 #include "panel-shell.h"
-
 #include "panel-session.h"
 
 static gboolean do_not_restart = FALSE;

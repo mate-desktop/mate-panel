@@ -13,8 +13,7 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
 DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-gtk-doc \
-	--disable-introspection \
-	--with-gtk=$(GTK_API_VERSION)
+	--disable-introspection
 
 EXTRA_DIST = \
 	autogen.sh		\

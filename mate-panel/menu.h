@@ -25,7 +25,6 @@
 
 #include "panel-widget.h"
 #include "applet.h"
-#include <matemenu-tree.h>
 #include <gio/gio.h>
 
 #ifdef __cplusplus

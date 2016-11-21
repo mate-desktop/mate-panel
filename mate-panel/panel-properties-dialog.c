@@ -36,10 +36,6 @@
 #include <libpanel-util/panel-icon-chooser.h>
 #include <libpanel-util/panel-show.h>
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
-#include <libmate-desktop/mate-colorbutton.h>
-#endif
-
 #include "nothing.h"
 #include "panel-profile.h"
 #include "panel-schemas.h"
@@ -331,39 +327,22 @@ SETUP_TOGGLE_BUTTON ("arrows_toggle",      arrows_toggle,      enable_arrows,   
 
 static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				       GtkColorChooser       *color_button)
-#else
-				       MateColorButton       *color_button)
-#endif
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
-#else
-	GdkColor color;
-#endif
 
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_color_chooser_get_rgba (color_button, &color);
 	panel_profile_set_background_gdk_rgba (dialog->toplevel, &color);
 	panel_properties_dialog_opacity_changed (dialog);
-#else
-	mate_color_button_get_color (color_button, &color);
-	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
-#endif
 }
 
 static void
 panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 					    GtkBuilder            *gui)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA color;
-#else
-	PanelColor color;
-#endif
 
 	dialog->color_button = PANEL_GTK_BUILDER_GET (gui, "color_button");
 	g_return_if_fail (dialog->color_button != NULL);
@@ -372,13 +351,8 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 				     &color);
-#else
-	mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
-				     &(color.gdk));
-#endif
 
 	g_signal_connect_swapped (dialog->color_button, "color_set",
 				  G_CALLBACK (panel_properties_dialog_color_changed),
@@ -722,7 +696,6 @@ static void
 panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 						 gchar                 *str_color)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkRGBA new_color;
 	GdkRGBA old_color;
 
@@ -735,35 +708,7 @@ panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 	if (!gdk_rgba_equal (&old_color, &new_color))
 		gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 					    &new_color);
-#else
-	GdkColor new_color = { 0, };
-	GdkColor old_color;
-
-	if (!gdk_color_parse (str_color, &new_color))
-		return;
-
-	mate_color_button_get_color (MATE_COLOR_BUTTON (dialog->color_button),
-				    &old_color);
-
-	if (!gdk_color_equal (&old_color, &new_color))
-		mate_color_button_set_color (MATE_COLOR_BUTTON (dialog->color_button),
-					    &new_color);
-#endif
 }
-
-#if !GTK_CHECK_VERSION(3, 0, 0)
-static void
-panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog,
-						   gint                   opacity)
-{
-	gdouble percentage;
-
-	percentage = ((gdouble) (opacity * 100)) / 65535;
-
-	if ((int) gtk_range_get_value (GTK_RANGE (dialog->opacity_scale)) != (int) percentage)
-		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
-}
-#endif
 
 static void
 panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
@@ -800,13 +745,6 @@ panel_properties_dialog_background_notify (GSettings             *settings,
 		panel_properties_dialog_update_background_color (dialog, color);
 		g_free (color);
 	}
-#if !GTK_CHECK_VERSION(3, 0, 0)
-	else if (!strcmp (key, "opacity"))
-	{
-		gint opacity = g_settings_get_int (settings, key);
-		panel_properties_dialog_update_background_opacity (dialog, opacity);
-	}
-#endif
 	else if (!strcmp (key, "image"))
 	{
 		char *image = g_settings_get_string (settings, key);
@@ -819,11 +757,7 @@ static void
 panel_properties_dialog_remove_orientation_combo (PanelPropertiesDialog *dialog)
 {
 	GtkContainer *container = GTK_CONTAINER (dialog->general_table);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GtkGrid      *grid      = GTK_GRID (dialog->general_table);
-#else
-	GtkTable     *table     = GTK_TABLE (dialog->general_table);
-#endif
 
 	g_object_ref (dialog->size_label);
 	g_object_ref (dialog->size_widgets);
@@ -837,17 +771,10 @@ panel_properties_dialog_remove_orientation_combo (PanelPropertiesDialog *dialog)
 	gtk_container_remove (container, dialog->icon_label);
 	gtk_container_remove (container, dialog->icon_align);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_grid_attach (grid, dialog->size_label,   0, 1, 1, 1);
 	gtk_grid_attach (grid, dialog->size_widgets, 1, 1, 1, 1);
 	gtk_grid_attach (grid, dialog->icon_label,   0, 2, 1, 1);
 	gtk_grid_attach (grid, dialog->icon_align,   1, 2, 1, 1);
-#else
-	gtk_table_attach_defaults (table, dialog->size_label,   0, 1, 1, 2);
-	gtk_table_attach_defaults (table, dialog->size_widgets, 1, 2, 1, 2);
-	gtk_table_attach_defaults (table, dialog->icon_label,   0, 1, 2, 3);
-	gtk_table_attach_defaults (table, dialog->icon_align,   1, 2, 2, 3);
-#endif
 
 	dialog->orientation_label = NULL;
 	dialog->orientation_combo = NULL;
@@ -855,10 +782,6 @@ panel_properties_dialog_remove_orientation_combo (PanelPropertiesDialog *dialog)
 	g_object_unref (dialog->size_widgets);
 	g_object_unref (dialog->icon_label);
 	g_object_unref (dialog->icon_align);
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	gtk_table_resize (table, 3, 2);
-#endif
 }
 
 static void
@@ -872,10 +795,6 @@ panel_properties_dialog_remove_icon_chooser (PanelPropertiesDialog *dialog)
 	dialog->icon_label = NULL;
 	dialog->icon_align = NULL;
 	dialog->icon_chooser = NULL;
-
-#if !GTK_CHECK_VERSION (3, 0, 0)
-	gtk_table_resize (GTK_TABLE (dialog->general_table), 3, 2);
-#endif
 }
 
 static void
@@ -983,7 +902,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	panel_widget_register_open_dialog (panel_toplevel_get_panel_widget (dialog->toplevel),
 					   dialog->properties_dialog);
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
+#if 0
 	/* FIXME re-add once GTK3 support is fixed */
 	g_signal_connect (dialog->properties_dialog, "event",
 			  G_CALLBACK (config_event),
@@ -1018,25 +937,15 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
 
 	error = NULL;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_builder_add_from_file (gui,
 				   BUILDERDIR "/panel-properties-dialog-gtk3.ui",
 				   &error);
-#else
-	gtk_builder_add_from_file (gui,
-				   BUILDERDIR "/panel-properties-dialog.ui",
-				   &error);
-#endif
 
         if (error) {
 		char *secondary;
 
 		secondary = g_strdup_printf (_("Unable to load file '%s': %s."),
-#if GTK_CHECK_VERSION (3, 0, 0)
 					     BUILDERDIR"/panel-properties-dialog-gtk3.ui",
-#else
-					     BUILDERDIR"/panel-properties-dialog.ui",
-#endif
 					     error->message);
 		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),

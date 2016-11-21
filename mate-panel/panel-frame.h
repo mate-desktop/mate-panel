@@ -60,9 +60,7 @@ void            panel_frame_set_edges (PanelFrame     *toplevel,
 PanelFrameEdge  panel_frame_get_edges (PanelFrame     *toplevel);
 
 void            panel_frame_draw      (GtkWidget      *widget,
-#if GTK_CHECK_VERSION (3, 0, 0)
 				       cairo_t        *cr,
-#endif
 				       PanelFrameEdge  edges);
 
 #ifdef __cplusplus

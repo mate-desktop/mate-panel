@@ -29,7 +29,7 @@
 
 #include <glib.h>
 #include <glib-object.h>
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #define PANEL_TYPE_BACKGROUND_MONITOR         (panel_background_monitor_get_type ())
 #define PANEL_BACKGROUND_MONITOR(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o),      \
@@ -49,9 +49,8 @@
 typedef struct _PanelBackgroundMonitorClass PanelBackgroundMonitorClass;
 typedef struct _PanelBackgroundMonitor      PanelBackgroundMonitor;
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 gboolean                gdk_window_check_composited_wm          (GdkWindow* window);
-#endif
+
 GType                   panel_background_monitor_get_type       (void);
 PanelBackgroundMonitor *panel_background_monitor_get_for_screen (GdkScreen *screen);
 GdkPixbuf              *panel_background_monitor_get_region     (PanelBackgroundMonitor *monitor,

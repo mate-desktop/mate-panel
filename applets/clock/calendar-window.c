@@ -123,9 +123,7 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 	struct tm                  tm1;
 
 	calendar = gtk_calendar_new ();
-	#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_set_size_request(GTK_WIDGET(calendar), 260, 100);
-	#endif
 	options = gtk_calendar_get_display_options (GTK_CALENDAR (calendar));
 	if (calwin->priv->show_weeks)
 		options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
@@ -185,9 +183,6 @@ create_hig_frame (CalendarWindow *calwin,
                   GCallback   callback)
 {
         GtkWidget *vbox;
-#if !GTK_CHECK_VERSION (3, 0, 0)
-        GtkWidget *alignment;
-#endif
         GtkWidget *label;
         GtkWidget *hbox;
         GtkWidget *button;
@@ -195,22 +190,14 @@ create_hig_frame (CalendarWindow *calwin,
 	char      *text;
         GtkWidget *expander;
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-#else
-        vbox = gtk_vbox_new (FALSE, 6);
-#endif
 
         bold_title = g_strdup_printf ("<b>%s</b>", title);
 	expander = gtk_expander_new (bold_title);
         g_free (bold_title);
 	gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-#else
-	hbox = gtk_hbox_new (FALSE, 0);
-#endif
 
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), expander, FALSE, FALSE, 0);
@@ -235,17 +222,9 @@ create_hig_frame (CalendarWindow *calwin,
                 gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
                 gtk_container_add (GTK_CONTAINER (button), label);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
                 gtk_widget_show_all (button);
 
                 gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-#else
-                alignment = gtk_alignment_new (1, 0, 0, 0);
-                gtk_container_add (GTK_CONTAINER (alignment), button);
-                gtk_widget_show_all (alignment);
-
-                gtk_container_add (GTK_CONTAINER (hbox), alignment);
-#endif
 
                 g_signal_connect_swapped (button, "clicked", callback, calwin);
         }
@@ -290,11 +269,7 @@ calendar_window_fill (CalendarWindow *calwin)
         gtk_container_add (GTK_CONTAINER (calwin), frame);
         gtk_widget_show (frame);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
         vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-#else
-        vbox = gtk_vbox_new (FALSE, 6);
-#endif
 
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
         gtk_container_add (GTK_CONTAINER (frame), vbox);

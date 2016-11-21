@@ -65,17 +65,10 @@ void            na_tray_set_padding     (NaTray        *tray,
 void            na_tray_set_icon_size   (NaTray        *tray,
 					 gint           icon_size);
 void            na_tray_set_colors      (NaTray        *tray,
-#if GTK_CHECK_VERSION (3, 0, 0)
 					 GdkRGBA       *fg,
 					 GdkRGBA       *error,
 					 GdkRGBA       *warning,
 					 GdkRGBA       *success);
-#else
-					 GdkColor      *fg,
-					 GdkColor      *error,
-					 GdkColor      *warning,
-					 GdkColor      *success);
-#endif
 void		na_tray_force_redraw	(NaTray        *tray);
 
 G_END_DECLS

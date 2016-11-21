@@ -116,11 +116,7 @@ panel_push_window_busy (GtkWidget *window)
 			                                                GDK_WATCH);
 
 			gdk_window_set_cursor (win, cursor);
-#if GTK_CHECK_VERSION (3, 0, 0)
 			g_object_unref (cursor);
-#else
-			gdk_cursor_unref (cursor);
-#endif
 			gdk_flush ();
 		}
 	}
@@ -325,11 +321,7 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 
 	if (info) {
 		retval = g_strdup (gtk_icon_info_get_filename (info));
-#if GTK_CHECK_VERSION (3, 8, 0)
 		g_object_unref (info);
-#else
-		gtk_icon_info_free (info);
-#endif
 	} else
 		retval = NULL;
 

@@ -421,11 +421,7 @@ _panel_icon_chooser_clicked (GtkButton *button)
 
 			if (info) {
 				path = g_strdup (gtk_icon_info_get_filename (info));
-#if GTK_CHECK_VERSION (3, 8, 0)
 				g_object_unref (info);
-#else
-				gtk_icon_info_free (info);
-#endif
 			}
 		}
 

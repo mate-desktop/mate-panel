@@ -65,23 +65,15 @@ display_popup_window (GdkScreen *screen)
 	gtk_container_add (GTK_CONTAINER (retval), frame);
 	gtk_widget_show (frame);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-#else
-	vbox = gtk_vbox_new (FALSE, 0);
-#endif
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
 	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	gtk_widget_show (vbox);
 
 	image = gtk_image_new_from_icon_name (PANEL_ICON_FORCE_QUIT,
 					      GTK_ICON_SIZE_DIALOG);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	gtk_widget_set_halign (image, GTK_ALIGN_CENTER);
 	gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
-#else
-	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
-#endif
 	gtk_box_pack_start (GTK_BOX (vbox), image, TRUE, TRUE, 4);
 	gtk_widget_show (image);
 
@@ -112,7 +104,6 @@ static void
 remove_popup (GtkWidget *popup)
 {
 	GdkWindow        *root;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay       *display;
 #if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat          *seat;
@@ -121,15 +112,12 @@ remove_popup (GtkWidget *popup)
 	GdkDevice        *keyboard;
 	GdkDeviceManager *device_manager;
 #endif
-#endif
-
 	root = gdk_screen_get_root_window (
 			gtk_window_get_screen (GTK_WINDOW (popup)));
 	gdk_window_remove_filter (root, (GdkFilterFunc) popup_filter, popup);
 
 	gtk_widget_destroy (popup);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	display = gdk_window_get_display (root);
 #if GTK_CHECK_VERSION (3, 20, 0)
 	seat = gdk_display_get_default_seat (display);
@@ -142,10 +130,6 @@ remove_popup (GtkWidget *popup)
 
 	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
 	gdk_device_ungrab (keyboard, GDK_CURRENT_TIME);
-#endif
-#else
-	gdk_pointer_ungrab (GDK_CURRENT_TIME);
-	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 #endif
 }
 
@@ -232,11 +216,7 @@ kill_window_response (GtkDialog *dialog,
 		gdk_error_trap_push ();
 		XKillClient (display, window);
 		gdk_flush ();
-#if GTK_CHECK_VERSION (3, 0, 0)
 		gdk_error_trap_pop_ignored ();
-#else
-		gdk_error_trap_pop ();
-#endif
 	}
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -348,7 +328,6 @@ panel_force_quit (GdkScreen *screen,
 	GdkCursor     *cross;
 	GtkWidget     *popup;
 	GdkWindow     *root;
-#if GTK_CHECK_VERSION (3, 0, 0)
 	GdkDisplay    *display;
 	GdkDevice     *pointer;
 	GdkDevice     *keyboard;
@@ -356,7 +335,6 @@ panel_force_quit (GdkScreen *screen,
 	GdkSeat       *seat;
 #else
 	GdkDeviceManager *device_manager;
-#endif
 #endif
 
 	popup = display_popup_window (screen);
@@ -366,7 +344,6 @@ panel_force_quit (GdkScreen *screen,
 	gdk_window_add_filter (root, (GdkFilterFunc) popup_filter, popup);
 	cross = gdk_cursor_new_for_display (gdk_display_get_default (),
 	                                    GDK_CROSS);
-#if GTK_CHECK_VERSION (3, 0, 0)
 	display = gdk_window_get_display (root);
 #if GTK_CHECK_VERSION (3, 20, 0)
 	seat = gdk_display_get_default_seat (display);
@@ -394,24 +371,6 @@ panel_force_quit (GdkScreen *screen,
 		remove_popup (popup);
 		return;
 	}
-#else
-	status = gdk_pointer_grab (root, FALSE, GDK_BUTTON_PRESS_MASK,
-				   NULL, cross, time);
 
-	gdk_cursor_unref (cross);
-
-	if (status != GDK_GRAB_SUCCESS) {
-		g_warning ("Pointer grab failed\n");
-		remove_popup (popup);
-		return;
-	}
-
-	status = gdk_keyboard_grab (root, FALSE, time);
-	if (status != GDK_GRAB_SUCCESS) {
-		g_warning ("Keyboard grab failed\n");
-		remove_popup (popup);
-		return;
-	}
-#endif
 	gdk_flush ();
 }

@@ -271,12 +271,7 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		GtkIconTheme *icon_theme = gtk_icon_theme_get_default ();
 		GtkIconInfo *icon_info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
 		pixbuf = gtk_icon_info_load_icon (icon_info, NULL);
-#if GTK_CHECK_VERSION (3, 8, 0)
 		g_object_unref (icon_info);
-#else
-		gtk_icon_info_free (icon_info);
-#endif
-
 	}
 
 	if (pixbuf) {
@@ -291,11 +286,7 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		//(ditto for the drag icon?)
 		gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), pixbuf);
 
-#if GTK_CHECK_VERSION (3, 2, 0)
 		gtk_drag_source_set_icon_gicon (dialog->run_dialog, dialog->icon);
-#else
-		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);
-#endif
 		g_object_unref (pixbuf);
 	} else {
 		panel_run_dialog_set_default_icon (dialog, TRUE);
@@ -436,8 +427,8 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	}
 
 	/* evil eggies, do not translate! */
-#if !GTK_CHECK_VERSION (3, 0, 0)
 	/* FIXME re-add once GTK3 support is fixed */
+#if 0
 	if (!strcmp (command, "free the fish")) {
 		start_screen_check ();
 
@@ -1833,14 +1824,8 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 }
 
 static void
-#if GTK_CHECK_VERSION (3, 0, 0)
 panel_run_dialog_style_updated (GtkWidget *widget,
 				PanelRunDialog *dialog)
-#else
-panel_run_dialog_style_set (GtkWidget      *widget,
-			    GtkStyle       *prev_style,
-			    PanelRunDialog *dialog)
-#endif
 {
   if (dialog->icon) {
 	  GIcon *icon;
@@ -1871,15 +1856,9 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 {
 	dialog->pixmap = PANEL_GTK_BUILDER_GET (gui, "icon_pixmap");
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 	g_signal_connect (dialog->pixmap, "style-updated",
 			  G_CALLBACK (panel_run_dialog_style_updated),
 			  dialog);
-#else
-	g_signal_connect (dialog->pixmap, "style-set",
-			  G_CALLBACK (panel_run_dialog_style_set),
-			  dialog);
-#endif
 	g_signal_connect (dialog->pixmap, "screen-changed",
 			  G_CALLBACK (panel_run_dialog_screen_changed),
 			  dialog);
@@ -1940,15 +1919,9 @@ panel_run_dialog_new (GdkScreen  *screen,
 static void
 panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog)
 {
-#if GTK_CHECK_VERSION (3, 0, 0)
 	g_signal_handlers_disconnect_by_func (dialog->pixmap,
 					      G_CALLBACK (panel_run_dialog_style_updated),
 					      dialog);
-#else
-	g_signal_handlers_disconnect_by_func (dialog->pixmap,
-			                      G_CALLBACK (panel_run_dialog_style_set),
-			                      dialog);
-#endif
 	g_signal_handlers_disconnect_by_func (dialog->pixmap,
 			                      G_CALLBACK (panel_run_dialog_screen_changed),
 			                      dialog);
