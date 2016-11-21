@@ -710,7 +710,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 	int           size;
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-    GTK_WIDGET_CLASS (button_widget_parent_class)->size_allocate (widget, allocation);
+	GTK_WIDGET_CLASS (button_widget_parent_class)->size_allocate (widget, allocation);
 #endif
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)

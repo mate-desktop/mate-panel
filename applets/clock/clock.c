@@ -258,8 +258,8 @@ static int
 calculate_minimum_width (GtkWidget   *widget,
                          const gchar *text)
 {
-        PangoContext *pango_context;
-        PangoLayout  *layout;
+        PangoContext    *pango_context;
+        PangoLayout     *layout;
         int              width, height;
 #if !GTK_CHECK_VERSION (3, 19, 0)
         int              focus_width = 0;
@@ -293,7 +293,7 @@ calculate_minimum_width (GtkWidget   *widget,
                                      "focus-padding", &focus_pad,
                                      NULL);
 
-width += 2 * (focus_width + focus_pad) + padding.left + padding.right;
+        width += 2 * (focus_width + focus_pad) + padding.left + padding.right;
 #endif
 #else
         gtk_widget_style_get (widget,

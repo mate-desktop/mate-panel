@@ -3015,6 +3015,7 @@ panel_widget_background_changed (PanelBackground *background,
 		       0);
 }
 #endif
+
 static void 
 panel_widget_push_move_applet (PanelWidget     *panel,
                                GtkDirectionType dir)
