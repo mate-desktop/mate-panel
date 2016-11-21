@@ -938,14 +938,14 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 
 	error = NULL;
 	gtk_builder_add_from_file (gui,
-				   BUILDERDIR "/panel-properties-dialog-gtk3.ui",
+				   BUILDERDIR "/panel-properties-dialog.ui",
 				   &error);
 
         if (error) {
 		char *secondary;
 
 		secondary = g_strdup_printf (_("Unable to load file '%s': %s."),
-					     BUILDERDIR"/panel-properties-dialog-gtk3.ui",
+					     BUILDERDIR"/panel-properties-dialog.ui",
 					     error->message);
 		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),

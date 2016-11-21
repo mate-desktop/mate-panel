@@ -224,7 +224,7 @@ BUILT_SOURCES = \
 
 uidir = $(datadir)/mate-panel/ui
 ui_DATA = \
-	panel-properties-dialog-gtk3.ui \
+	panel-properties-dialog.ui \
 	panel-run-dialog.ui \
 	panel-test-applets.ui
 
