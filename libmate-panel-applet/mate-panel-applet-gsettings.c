@@ -38,9 +38,10 @@ mate_panel_applet_settings_new (MatePanelApplet *applet, gchar *schema)
 
     path = mate_panel_applet_get_preferences_path (applet);
 
-    if (path)
+    if (path) {
         settings = g_settings_new_with_path (schema, path);
         g_free (path);
+    }
 
     return settings;
 }
