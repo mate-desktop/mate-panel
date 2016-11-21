@@ -1837,7 +1837,7 @@ panel_widget_realize (GtkWidget *widget)
 
 	panel_background_realized (&panel->background, window);
 }
-#endif
+
 static void
 panel_widget_unrealize (GtkWidget *widget)
 {
@@ -1852,6 +1852,7 @@ panel_widget_unrealize (GtkWidget *widget)
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->unrealize (widget);
 }
+#endif
 
 static void
 panel_widget_finalize (GObject *obj)
