@@ -43,13 +43,7 @@ EggSMClient *egg_sm_client_xsmp_new      (void);
 #ifdef EGG_SM_CLIENT_BACKEND_DBUS
 GType        egg_sm_client_dbus_get_type (void);
 EggSMClient *egg_sm_client_dbus_new      (void);
-# endif
-#elif defined (GDK_WINDOWING_WIN32)
-GType        egg_sm_client_win32_get_type (void);
-EggSMClient *egg_sm_client_win32_new      (void);
-#elif defined (GDK_WINDOWING_QUARTZ)
-GType        egg_sm_client_osx_get_type (void);
-EggSMClient *egg_sm_client_osx_new      (void);
+#endif
 #endif
 
 #ifdef __cplusplus
