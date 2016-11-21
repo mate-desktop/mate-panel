@@ -287,7 +287,7 @@ na_tray_applet_change_orient (MatePanelApplet       *panel_applet,
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 /* deprecated with gtk+-3.19.0 */
 #else
 static inline void
@@ -363,7 +363,7 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
 
   g_type_class_add_private (class, sizeof (NaTrayAppletPrivate));
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
   gtk_widget_class_set_css_name (widget_class, "na-tray-applet");
 #endif
 }
@@ -390,7 +390,7 @@ na_tray_applet_init (NaTrayApplet *applet)
   mate_panel_applet_set_background_widget (MATE_PANEL_APPLET (applet),
                                       GTK_WIDGET (applet));
 #endif
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 /* deprecated with gtk+-3.19.0 */
 #else
   force_no_focus_padding (GTK_WIDGET (applet));

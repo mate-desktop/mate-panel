@@ -448,7 +448,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->size_request = panel_widget_size_request;
 #endif
 	widget_class->size_allocate = panel_widget_size_allocate;
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelWidget");
 #endif
 #if GTK_CHECK_VERSION (3, 18, 0)

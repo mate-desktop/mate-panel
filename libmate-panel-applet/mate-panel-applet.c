@@ -2356,7 +2356,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelApplet");
 #endif
 }

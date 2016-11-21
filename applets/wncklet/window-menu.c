@@ -167,7 +167,7 @@ static gboolean window_menu_on_expose (GtkWidget*      widget,
 #endif
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 20, 0)
 static inline void force_no_focus_padding(GtkWidget* widget)
 {
 	GtkCssProvider *provider;
@@ -300,7 +300,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	window_menu = g_new0(WindowMenu, 1);
 
 	window_menu->applet = GTK_WIDGET(applet);
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_set_name (window_menu->applet, "window-menu-applet-button");
 #else
 	force_no_focus_padding(window_menu->applet);

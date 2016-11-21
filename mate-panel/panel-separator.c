@@ -263,7 +263,7 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 	widget_class->size_allocate = panel_separator_size_allocate;
 	widget_class->parent_set    = panel_separator_parent_set;
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelSeparator");
 #endif
 

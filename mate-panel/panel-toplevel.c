@@ -2439,7 +2439,7 @@ calculate_minimum_height (GtkWidget        *widget,
 #endif
 	PangoContext     *pango_context;
 	PangoFontMetrics *metrics;
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 20, 0)
 	int               focus_width = 0;
 	int               focus_pad = 0;
 #endif
@@ -2470,7 +2470,7 @@ calculate_minimum_height (GtkWidget        *widget,
 
 	pango_font_metrics_unref (metrics);
 
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
 			      "focus-padding", &focus_pad,
@@ -2482,7 +2482,7 @@ calculate_minimum_height (GtkWidget        *widget,
 		padding.top + padding.bottom :
 		padding.left + padding.right;
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	return PANGO_PIXELS (ascent + descent) + thickness;
 #else
 	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad) + thickness;
@@ -4697,7 +4697,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
 	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelToplevel");
 #endif
 

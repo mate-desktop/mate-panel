@@ -500,7 +500,7 @@ panel_frame_class_init (PanelFrameClass *klass)
 	widget_class->size_request  = panel_frame_size_request;
 	widget_class->expose_event  = panel_frame_expose;
 #endif
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelFrame");
 #endif
 

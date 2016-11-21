@@ -385,7 +385,7 @@ mate_panel_applet_frame_dbus_class_init (MatePanelAppletFrameDBusClass *class)
 	frame_class->change_size = mate_panel_applet_frame_dbus_change_size;
 	frame_class->change_background = mate_panel_applet_frame_dbus_change_background;
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 	GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (class);
 	gtk_widget_class_set_css_name (widget_class, "MatePanelAppletFrameDBus");
 #endif

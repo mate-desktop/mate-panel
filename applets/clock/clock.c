@@ -261,7 +261,7 @@ calculate_minimum_width (GtkWidget   *widget,
         PangoContext    *pango_context;
         PangoLayout     *layout;
         int              width, height;
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 20, 0)
         int              focus_width = 0;
         int              focus_pad = 0;
 #endif
@@ -284,7 +284,7 @@ calculate_minimum_width (GtkWidget   *widget,
         state = gtk_widget_get_state_flags (widget);
         style_context = gtk_widget_get_style_context (widget);
         gtk_style_context_get_padding (style_context, state, &padding);
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
 
         width += padding.left + padding.right;
 #else
@@ -1358,7 +1358,7 @@ clock_update_text_gravity (GtkWidget *label)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if !GTK_CHECK_VERSION (3, 20, 0)
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
@@ -1412,7 +1412,7 @@ create_main_clock_button (void)
         button = gtk_toggle_button_new ();
         gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
-#if GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 20, 0)
         gtk_widget_set_name (button, "clock-applet-button");
 #else
         force_no_focus_padding (button);
