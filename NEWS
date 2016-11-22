@@ -1,4 +1,18 @@
 1.17.0
+  * sync with transiflex
+  * rename .ui file of panel properties dialog to the original name
+  * move to GTK+3 (>= 3.14), drop GTK+2 code and --with-gtk build option
+  * build: require libmateweather 1.16.0
+  * build: require dconf >= 0.13.4
+  * libmate-panel-applet: remove redundant GLib version check in panel-plug
+  * panel-widget: panel_widget_unrealize is used only with GTK+ < 3.18
+  * libmate-panel-applet: add missing brackets
+  * build: require libmate-menu 1.10
+  * check for stable release of GTK+3, not for development one
+  * libegg: remove win32 & quartz leftovers
+  * clock: update tooltip only when new text is different
+  * GTK+-3 Calendar Window: force minimum size
+  * clock-applet: mark current day
 
 1.16.0
   * Use GtkAboutDialog instead of MateAboutDialog
