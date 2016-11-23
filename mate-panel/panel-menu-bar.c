@@ -352,12 +352,12 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 		return;
 	}
 
-	mate_panel_applet_add_callback(menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
+	mate_panel_applet_add_callback(menubar->priv->info, "help", _("_Help"), NULL);
 
 	/* Menu editors */
 	if (!panel_lockdown_get_locked_down () && (panel_is_program_in_path("mozo") || panel_is_program_in_path("matemenu-simple-editor")))
 	{
-		mate_panel_applet_add_callback (menubar->priv->info, "edit", NULL, _("_Edit Menus"), NULL);
+		mate_panel_applet_add_callback (menubar->priv->info, "edit", _("_Edit Menus"), NULL);
 	}
 
 	g_signal_connect_after(menubar, "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), menubar);

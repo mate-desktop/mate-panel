@@ -663,12 +663,12 @@ panel_menu_button_load (const char  *menu_path,
 
 	button->priv->applet_id = g_strdup (info->id);
 
-	mate_panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
+	mate_panel_applet_add_callback (info, "help", _("_Help"), NULL);
 
         if (!panel_lockdown_get_locked_down () &&
             (panel_is_program_in_path ("mozo") ||
 	    panel_is_program_in_path ("matemenu-simple-editor")))
-		mate_panel_applet_add_callback (info, "edit", NULL,
+		mate_panel_applet_add_callback (info, "edit",
 					   _("_Edit Menus"), NULL);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
