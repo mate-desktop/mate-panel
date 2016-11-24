@@ -1124,13 +1124,11 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 
 	if (data->type == PANEL_ADDTO_LAUNCHER_MENU) {
 		gtk_button_set_label (GTK_BUTTON (dialog->add_button),
-				      GTK_STOCK_GO_FORWARD);
+				      _("_Forward"));
 	} else {
 		gtk_button_set_label (GTK_BUTTON (dialog->add_button),
-				      GTK_STOCK_ADD);
+				      _("_Add"));
 	}
-	gtk_button_set_use_stock (GTK_BUTTON (dialog->add_button),
-				  TRUE);
 
 	/* only allow dragging applets if we can add applets */
 	if (panel_profile_id_lists_are_writable ()) {
@@ -1222,15 +1220,15 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 
 	dialog->addto_dialog = gtk_dialog_new ();
 	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-			       GTK_STOCK_HELP, GTK_RESPONSE_HELP);
+			       _("_Help"), GTK_RESPONSE_HELP);
 	dialog->back_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-						     GTK_STOCK_GO_BACK,
+						     _("_Back"),
 						     PANEL_ADDTO_RESPONSE_BACK);
 	dialog->add_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-						     GTK_STOCK_ADD,
+						     _("_Add"),
 						     PANEL_ADDTO_RESPONSE_ADD);
 	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-			       GTK_STOCK_CLOSE,
+			       _("_Close"),
 			       GTK_RESPONSE_CLOSE);
 	gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
 
