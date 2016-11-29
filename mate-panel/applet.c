@@ -760,6 +760,17 @@ applet_button_press (GtkWidget      *widget,
 		     GdkEventButton *event,
 		     AppletInfo     *info)
 {
+#if GTK_CHECK_VERSION (3, 0, 0)
+	gboolean     applet_locked;
+	PanelWidget *panel_widget;
+
+	panel_widget = mate_panel_applet_get_panel_widget (info);
+	applet_locked = panel_widget_get_applet_locked (panel_widget,
+							info->widget);
+
+	if (!applet_locked) mate_panel_applet_set_dnd_enabled (info, TRUE);
+#endif
+
 	if (event->button == 3)
 		return applet_do_popup_menu (widget, event, info);
 
