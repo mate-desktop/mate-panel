@@ -521,6 +521,12 @@ get_property (GObject      *source_object,
       return NULL;
     }
 
+  if (g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_INVALID_ARGS))
+    {
+      g_error_free (error);
+      return NULL;
+    }
+
   if (error)
     {
       g_warning ("%s", error->message);
