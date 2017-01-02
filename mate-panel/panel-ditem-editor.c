@@ -869,8 +869,7 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 					   exec_or_uri);
 
 		icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (dialog)));
-		icon = guess_icon_from_exec (icon_theme,
-					     dialog->priv->key_file);
+		icon = guess_icon_from_exec (icon_theme, exec_or_uri);
 		if (icon) {
 			char *current;
 
@@ -1635,7 +1634,6 @@ panel_ditem_editor_load_uri (PanelDItemEditor  *dialog,
 
 static GtkWidget *
 panel_ditem_editor_new_full (GtkWindow   *parent,
-			     GKeyFile    *key_file,
 			     const char  *uri,
 			     const char  *title,
 			     gboolean     type_directory)
@@ -1644,7 +1642,6 @@ panel_ditem_editor_new_full (GtkWindow   *parent,
 
 	dialog = g_object_new (PANEL_TYPE_DITEM_EDITOR,
 			       "title", title,
-			       "keyfile", key_file,
 			       "uri", uri,
 			       "type-directory", type_directory,
 			       NULL);
@@ -1657,21 +1654,19 @@ panel_ditem_editor_new_full (GtkWindow   *parent,
 
 GtkWidget *
 panel_ditem_editor_new (GtkWindow   *parent,
-			GKeyFile    *key_file,
 			const char  *uri,
 			const char  *title)
 {
-	return panel_ditem_editor_new_full (parent, key_file, uri,
+	return panel_ditem_editor_new_full (parent, uri,
 					    title, FALSE);
 }
 
 GtkWidget *
 panel_ditem_editor_new_directory (GtkWindow   *parent,
-				  GKeyFile    *key_file,
 				  const char  *uri,
 				  const char  *title)
 {
-	return panel_ditem_editor_new_full (parent, key_file, uri,
+	return panel_ditem_editor_new_full (parent, uri,
 					    title, TRUE);
 }
 

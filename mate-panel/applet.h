@@ -36,7 +36,7 @@ typedef gboolean (* CallbackEnabledFunc) (void);
 
 typedef struct {
 	char                *name;
-	char                *stock_item;
+	GIcon               *gicon;
 	char                *text;
 
 	CallbackEnabledFunc  is_enabled_func;
@@ -83,6 +83,8 @@ void            mate_panel_applet_add_callback    (AppletInfo          *info,
 					      const gchar         *stock_item,
 					      const gchar         *menuitem_text,
 					      CallbackEnabledFunc  is_enabled_func);
+
+void mate_panel_applet_clear_user_menu (AppletInfo *info);
 
 AppletUserMenu *mate_panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);

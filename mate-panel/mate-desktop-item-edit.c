@@ -140,7 +140,7 @@ main (int argc, char * argv[])
 
 			if (type == G_FILE_TYPE_DIRECTORY && create_new) {
 
-				dlg = panel_ditem_editor_new (NULL, NULL, NULL,
+				dlg = panel_ditem_editor_new (NULL, NULL,
 							     _("Create Launcher"));
 				g_object_set_data_full (G_OBJECT (dlg), "dir",
 							g_strdup (path),
@@ -164,14 +164,13 @@ main (int argc, char * argv[])
 					   		".directory")
 				   && !create_new) {
 				dlg = panel_ditem_editor_new_directory (NULL,
-									NULL,
 									uri,
 									_("Directory Properties"));
 			} else if (type == G_FILE_TYPE_REGULAR
 				   && g_str_has_suffix (desktops [i],
 					   		".desktop")
 				   && !create_new) {
-				dlg = panel_ditem_editor_new (NULL, NULL, uri,
+				dlg = panel_ditem_editor_new (NULL, uri,
 							      _("Launcher Properties"));
 			} else if (type == G_FILE_TYPE_REGULAR
 				   && create_new) {
@@ -188,13 +187,13 @@ main (int argc, char * argv[])
 		} else if (g_str_has_suffix (desktops [i], ".directory")) {
 			/* a non-existant file.  Well we can still edit that
 			 * sort of.  We will just create it new */
-			dlg = panel_ditem_editor_new_directory (NULL, NULL, uri,
+			dlg = panel_ditem_editor_new_directory (NULL, uri,
 								_("Directory Properties"));
 
 		} else if (g_str_has_suffix (desktops [i], ".desktop")) {
 			/* a non-existant file.  Well we can still edit that
 			 * sort of.  We will just create it new */
-			dlg = panel_ditem_editor_new (NULL, NULL, uri,
+			dlg = panel_ditem_editor_new (NULL, uri,
 						      _("Create Launcher"));
 
 		} else {

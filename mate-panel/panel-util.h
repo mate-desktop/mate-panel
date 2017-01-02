@@ -55,7 +55,7 @@ GdkPixbuf *panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 					       int            height);
 
 char *guess_icon_from_exec (GtkIconTheme *icon_theme,
-			    GKeyFile     *key_file);
+			    const gchar  *exec);
 
 const char *panel_util_get_vfs_method_display_name (const char *method);
 char *panel_util_get_label_for_uri (const char *text_uri);

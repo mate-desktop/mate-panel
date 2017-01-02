@@ -159,7 +159,7 @@ static gboolean panel_show_caja_search_uri(GdkScreen* screen, const gchar* uri, 
 		return FALSE;
 	}
 
-	ret = panel_app_info_launch_uri((GAppInfo*) appinfo, uri, screen, timestamp, error);
+	ret = panel_app_info_launch_uri(appinfo, uri, screen, timestamp, error);
 	g_object_unref(appinfo);
 
 	return ret;
@@ -191,8 +191,11 @@ panel_show_uri_force_mime_type (GdkScreen    *screen,
 				GError      **error)
 {
 	GFile    *file;
-	GAppInfo *app;
+	GAppInfo *appinfo;
 	gboolean  ret;
+	GdkDisplay *display;
+	GdkAppLaunchContext *context;
+	GList    *uris;
 
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (uri != NULL, FALSE);
@@ -200,18 +203,23 @@ panel_show_uri_force_mime_type (GdkScreen    *screen,
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
 	file = g_file_new_for_uri (uri);
-	app = g_app_info_get_default_for_type (mime_type,
+	appinfo = g_app_info_get_default_for_type (mime_type,
 					       !g_file_is_native (file));
 	g_object_unref (file);
 
-	if (app == NULL) {
+	if (appinfo == NULL) {
 		/* no application for the mime type, so let's fallback on
 		 * automatic detection */
 		return panel_show_uri (screen, uri, timestamp, error);
 	}
 
-	ret = panel_app_info_launch_uri (app, uri, screen, timestamp, error);
-	g_object_unref (app);
+	uris = g_list_append (NULL, (gpointer)uri);
+	display = gdk_screen_get_display (screen);
+	context = gdk_display_get_app_launch_context (display);
+	ret = g_app_info_launch_uris (appinfo, uris, G_APP_LAUNCH_CONTEXT(context), error);
+	g_object_unref (context);
+	g_list_free (uris);
+	g_object_unref (appinfo);
 
 	return ret;
 }
