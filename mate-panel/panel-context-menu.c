@@ -37,7 +37,6 @@
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-show.h>
 
-#include "nothing.h"
 #include "panel-util.h"
 #include "panel.h"
 #include "menu.h"
@@ -55,28 +54,6 @@ panel_context_menu_show_help (GtkWidget *w,
 {
 	panel_show_help (gtk_widget_get_screen (w),
 			 "mate-user-guide", "gospanel-1", NULL);
-}
-
-static gboolean
-panel_context_menu_check_for_screen (GtkWidget *w,
-				     GdkEvent *ev,
-				     gpointer data)
-{
-	static int times = 0;
-	if (ev->type != GDK_KEY_PRESS)
-		return FALSE;
-	if (ev->key.keyval == GDK_KEY_f ||
-	    ev->key.keyval == GDK_KEY_F) {
-		times++;
-		if (times == 3) {
-			times = 0;
-#if 0
-			/* FIXME re-add once GTK3 support is fixed */
-			start_screen_check ();
-#endif
-		}
-	}
-	return FALSE;
 }
 
 static void
@@ -150,9 +127,6 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 	g_signal_connect (about, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &about);
-	g_signal_connect (about, "event",
-			  G_CALLBACK (panel_context_menu_check_for_screen),
-			  NULL);
 
 	g_signal_connect (about, "response",
 			  G_CALLBACK (gtk_widget_destroy),

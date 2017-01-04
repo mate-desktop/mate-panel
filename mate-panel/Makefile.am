@@ -236,8 +236,6 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = \
 	$(ui_DATA) \
-	nothing.cP \
-	nothing.h \
 	panel-marshal.list \
 	$(entries_DATA) \
 	$(desktop_in_files)

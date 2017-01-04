@@ -64,12 +64,6 @@ panel_error_dialog (GtkWindow  *parent,
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 							  "%s", secondary_text);
 
-	/* FIXME: we're losing this feature
-	gtk_widget_add_events (dialog, GDK_KEY_PRESS_MASK);
-	g_signal_connect (dialog, "event",
-			  G_CALLBACK (panel_dialog_window_event), NULL);
-	*/
-
 	if (screen)
 		gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
