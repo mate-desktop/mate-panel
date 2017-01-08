@@ -182,8 +182,6 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 							       NULL);
 			g_free (error);
 		}
-
-		gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_pixbuf (button->priv->pixbuf));
 	}
 
 	button->priv->pixbuf_hc = make_hc_pixbuf (button->priv->pixbuf);
