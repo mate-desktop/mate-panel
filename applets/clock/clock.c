@@ -1361,7 +1361,27 @@ clock_update_text_gravity (GtkWidget *label)
 }
 
 #if GTK_CHECK_VERSION (3, 0, 0)
-#if !GTK_CHECK_VERSION (3, 19, 0)
+#if GTK_CHECK_VERSION (3, 19, 0)
+static inline void
+force_no_button_padding (GtkWidget *widget)
+{
+        GtkCssProvider  *provider;
+
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#clock-applet-button {\n"
+                                         " padding: 0px;\n"
+                                         " margin: 0px;\n }",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
+
+
+        gtk_widget_set_name (widget, "clock-applet-button");
+}
+#else
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
@@ -1416,7 +1436,7 @@ create_main_clock_button (void)
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
 #if GTK_CHECK_VERSION (3, 19, 0)
-        gtk_widget_set_name (button, "clock-applet-button");
+        force_no_button_padding (button);
 #else
         force_no_focus_padding (button);
 #endif
