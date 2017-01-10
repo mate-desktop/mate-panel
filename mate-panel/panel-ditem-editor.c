@@ -653,22 +653,22 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 				       priv->comment_entry);
 
 	priv->help_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						   GTK_STOCK_HELP,
+						   _("_Help"),
 						   GTK_RESPONSE_HELP);
 	priv->revert_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						     GTK_STOCK_REVERT_TO_SAVED,
+						     _("_Revert"),
 						     REVERT_BUTTON);
 	gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
 					   REVERT_BUTTON,
 					   FALSE);
 	priv->close_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						    GTK_STOCK_CLOSE,
+						    _("_Close"),
 						    GTK_RESPONSE_CLOSE);
 	priv->cancel_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						     GTK_STOCK_CANCEL,
+						     _("_Cancel"),
 						     GTK_RESPONSE_CANCEL);
 	priv->ok_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						 GTK_STOCK_OK,
+						 _("_OK"),
 						 GTK_RESPONSE_OK);
 
 	/* FIXME: There needs to be a way to edit ALL keys/sections */
@@ -1007,9 +1007,9 @@ command_browse_button_clicked (PanelDItemEditor *dialog)
 
 	chooser = gtk_file_chooser_dialog_new ("", GTK_WINDOW (dialog),
 					       GTK_FILE_CHOOSER_ACTION_OPEN,
-					       GTK_STOCK_CANCEL,
+					       _("_Cancel"),
 					       GTK_RESPONSE_CANCEL,
-					       GTK_STOCK_OPEN,
+					       _("_Open"),
 					       GTK_RESPONSE_ACCEPT,
 					       NULL);
 	gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);

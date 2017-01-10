@@ -329,7 +329,6 @@ mate_panel_applet_get_callback (GList      *user_menu,
 void
 mate_panel_applet_add_callback (AppletInfo          *info,
 			   const char          *callback_name,
-			   const char          *stock_item,
 			   const char          *menuitem_text,
 			   CallbackEnabledFunc  is_enabled_func)
 {
@@ -341,7 +340,6 @@ mate_panel_applet_add_callback (AppletInfo          *info,
 
 	menu                  = g_new0 (AppletUserMenu, 1);
 	menu->name            = g_strdup (callback_name);
-	menu->stock_item      = g_strdup (stock_item);
 	menu->text            = g_strdup (menuitem_text);
 	menu->is_enabled_func = is_enabled_func;
 	menu->sensitive       = TRUE;
@@ -359,15 +357,7 @@ setup_an_item (AppletUserMenu *menu,
 	       GtkWidget      *submenu,
 	       int             is_submenu)
 {
-	GtkWidget *image = NULL;
-
-	menu->menuitem = gtk_image_menu_item_new_with_mnemonic (menu->text);
-	if (menu->stock_item && menu->stock_item [0]) {
-		image = gtk_image_new_from_stock (menu->stock_item,
-						  GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu->menuitem),
-					       image);
-	}
+	menu->menuitem = gtk_menu_item_new_with_mnemonic (menu->text);
 	gtk_widget_show (menu->menuitem);
 
 	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
@@ -439,7 +429,6 @@ add_to_submenus (AppletInfo *info,
 	if (s_menu == NULL) {
 		s_menu = g_new0 (AppletUserMenu,1);
 		s_menu->name = g_strdup (t);
-		s_menu->stock_item = NULL;
 		s_menu->text = g_strdup (_("???"));
 		s_menu->sensitive = TRUE;
 		s_menu->info = info;
@@ -501,7 +490,6 @@ mate_panel_applet_create_menu (AppletInfo *info)
 	}
 
 	if (!panel_lockdown_get_locked_down ()) {
-		GtkWidget *image;
 		gboolean   locked;
 		gboolean   lockable;
 		gboolean   movable;
@@ -519,11 +507,7 @@ mate_panel_applet_create_menu (AppletInfo *info)
 			gtk_widget_show (menuitem);
 		}
 
-		menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
-		image = gtk_image_new_from_icon_name ("list-remove",
-						      GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-					       image);
+		menuitem = gtk_menu_item_new_with_mnemonic (_("_Remove From Panel"));
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_widget_show (menuitem);
@@ -816,7 +800,6 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 		AppletUserMenu *umenu = l->data;
 
 		g_free (umenu->name);
-		g_free (umenu->stock_item);
 		g_free (umenu->text);
 
 		g_free (umenu);

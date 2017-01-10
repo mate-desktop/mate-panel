@@ -788,13 +788,11 @@ load_launcher_applet (const char       *location,
 
 	mate_panel_applet_add_callback (launcher->info,
 				   "launch",
-				   GTK_STOCK_EXECUTE,
 				   _("_Launch"),
 				   NULL);
 
 	mate_panel_applet_add_callback (launcher->info,
 				   "properties",
-				   GTK_STOCK_PROPERTIES,
 				   _("_Properties"),
 				   launcher_properties_enabled);
 
