@@ -1286,7 +1286,6 @@ clock_update_text_gravity (GtkWidget *label)
 static inline void
 force_no_button_padding (GtkWidget *widget)
 {
-        static gboolean first_time = TRUE;
         GtkCssProvider  *provider;
 
         provider = gtk_css_provider_new ();
