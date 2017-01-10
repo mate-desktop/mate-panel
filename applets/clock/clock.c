@@ -1256,6 +1256,8 @@ do_not_eat_button_press (GtkWidget      *widget,
    jumping when proportional fonts are used.  We must take care to
    call "unfix_size" whenever options are changed or such where
    we'd want to forget the fixed size */
+/*FIXME-this cannot be used because size request gsignal invalid for label */
+/*
 static void
 clock_size_request (GtkWidget *clock, GtkRequisition *req, gpointer data)
 {
@@ -1268,7 +1270,7 @@ clock_size_request (GtkWidget *clock, GtkRequisition *req, gpointer data)
         req->width = cd->fixed_width;
         req->height = cd->fixed_height;
 }
-
+*/
 static void
 clock_update_text_gravity (GtkWidget *label)
 {
@@ -1328,9 +1330,12 @@ create_main_clock_label (ClockData *cd)
         GtkWidget *label;
 
         label = gtk_label_new (NULL);
+/*Fixme-this is invalid for labels with any recent GTK3 version, maybe all of them*/
+/*
         g_signal_connect (label, "size_request",
                           G_CALLBACK (clock_size_request),
                           cd);
+*/
         g_signal_connect_swapped (label, "style_set",
                                   G_CALLBACK (unfix_size),
                                   cd);
