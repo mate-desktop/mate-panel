@@ -1,6 +1,27 @@
-1.17.1
+### mate-panel 1.17.1
 
-1.17.0
+  * support desktop actions
+  * pre-bump version
+  * window-list.c: Fix indent
+  * GTK 3.20/3.22: fix warnings from show-desktop button Force zero padding, 
+    margin, border to stop underallocation warnings.
+  * GTK 3.20/22: fix warnings from tasklist buttons Force padding and margins 
+    to zero. Borders don't seem to throw warnings here
+  * Remove unused variable
+  * GTK 3.20/22 Clock button: force zero padding and margin Stops negative 
+    allocation warnings unless theme sets a border
+  * Clock: remove non-working signal, fix warning Comment out size-request 
+    signal for label, this no longer works if it ever did. Then comment out 
+    function this leaves unused.
+  * Gtk-WARNING: Allocating size to GtkAlignment..
+  * build: don't require canberra, it's not used
+  * remove ancient code leftovers
+  * xstuff: remove unused code
+  * build: require libmateweather >= 1.17.0 (GTK+3 only)
+  * Fix: the panel does not display the icon on the mouse with dnd
+
+### mate-panel 1.17.0
+
   * sync with transiflex
   * rename .ui file of panel properties dialog to the original name
   * move to GTK+3 (>= 3.14), drop GTK+2 code and --with-gtk build option
@@ -16,25 +37,29 @@
   * GTK+-3 Calendar Window: force minimum size
   * clock-applet: mark current day
 
-1.16.0
+### mate-panel 1.16.0
+
   * Use GtkAboutDialog instead of MateAboutDialog
   * GTK+3: use GtkColorButton/GtkColorChooser in properties dialog
   * GTK+3: fix a lot of deprecations
   * Some more fixes and cleanups
   * Translations update
 
-1.14.2
+### mate-panel 1.14.2
+
   * Some fixes for opensuse.layout
   * Some more fixes and cleanups
   * Translations update
   * Make distcheck use currently selected GTK+ version
 
-1.14.1
+### mate-panel 1.14.1
+
   * Fix missing focus for panel widgets (needed for Orca to work)
   * Some more fixes and cleanups
   * Translations update
 
-1.14.0
+### mate-panel 1.14.0
+
   * Drop MateConf migration script
   * Add separate "Delete" button in reload applet dialog, and
     make "Don't Reload" button do what it says (it won't delete
@@ -53,18 +78,21 @@
   * Translations update
   * Add Changelog generation
 
-1.12.2
+### mate-panel 1.12.2
+
   * Drawer applet: fix occasional stretching of drawer's panel
     over the entire screen
   * Drawer applet: fix occasional crash on applet removing
   * GTK+3: fix infinite loop with some themes
   * Some more fixes
 
-1.12.1
+### mate-panel 1.12.1
+
   * GTK+3: fix background in some themes
   * Some more fixes
 
-1.12.0
+### mate-panel 1.12.0
+
   * Require xrandr 1.3
   * Add option to enable/disable week numbers in calendar
   * Fix positions of locked applets on screen resolution change
@@ -74,7 +102,8 @@
   * Multiple GTK+3 fixes
   * Some more fixes and cleanups
 
-1.10.1
+### mate-panel 1.10.1
+
   * Fish and clock applets: help fixes
   * Drawer applet: fix opening after adding applets to it
   * Force Quit applet: fix desktop freezing with GTK+3
@@ -82,7 +111,8 @@
   * Some code cleanup
   * Translations updates
 
-1.10.0
+### mate-panel 1.10.0
+
   * Gtk3, Fix deprecated use of gdk pointer api
   * Gtk3, Port all GtkStyle to GtkStyleContext
   * Gtk3, Port gtk_rc_parse_string to GtkCssProvider
@@ -99,14 +129,16 @@
   * Use gtk icon cache instead of custom one
   * Several small fixes by monsta
 
-1.8.0
+### mate-panel 1.8.0
+
   * Added support for multiple layouts, stored in $(datadir)/mate-panel/layouts
   * Added --layout parameter
   * Add hook to support run dialog and main menu opening with metacity
   * Switch to libwnck
   * Use yelp-tools instead of mate-doc-utils
 
-1.6.0
+### mate-panel 1.6.0
+
   * add --run-dialog option to open run dialog
   * migration to gsettings
   * panel-menu-button: supports changed notify for new "has-arrow" key
