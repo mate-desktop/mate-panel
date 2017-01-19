@@ -1,3 +1,8 @@
+SUBDIRS =				\
+	libstatus-notifier-watcher	\
+	status-notifier			\
+	system-tray
+
 noinst_LTLIBRARIES = libtray.la
 noinst_PROGRAMS = testtray
 
@@ -10,28 +15,29 @@ AM_CPPFLAGS =							\
 	-DMATELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DG_LOG_DOMAIN=\""notification-area-applet"\"		\
 	-DNOTIFICATION_AREA_MENU_UI_DIR=\""$(uidir)"\"		\
+	-DPROVIDE_WATCHER_SERVICE=1				\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-libtray_la_SOURCES =		\
-	fixedtip.h		\
-	fixedtip.c		\
-	na-marshal.c		\
-	na-marshal.h		\
-	na-tray.c		\
-	na-tray.h		\
-	na-tray-child.c		\
-	na-tray-child.h		\
-	na-tray-manager.c	\
-	na-tray-manager.h
+libtray_la_SOURCES =				\
+	na-box.c				\
+	na-box.h				\
+	na-host.c				\
+	na-host.h				\
+	na-item.c				\
+	na-item.h
+
+libtray_la_LIBADD =							\
+	libstatus-notifier-watcher/libstatus-notifier-watcher.la	\
+	status-notifier/libstatus-notifier.la				\
+	system-tray/libsystem-tray.la
 
 NOTIFICATION_AREA_SOURCES = main.c main.h
 
 NOTIFICATION_AREA_LDADD =				\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
 	libtray.la \
-	$(X_LIBS)					\
 	$(NOTIFICATION_AREA_LIBS)			\
 	$(LIBMATE_PANEL_APPLET_LIBS)
 
@@ -39,7 +45,6 @@ NOTIFICATION_AREA_LDADD =				\
 testtray_SOURCES = testtray.c
 testtray_LDADD =			\
 	libtray.la \
-	$(X_LIBS)			\
 	$(NOTIFICATION_AREA_LIBS)
 
 if NOTIFICATION_AREA_INPROCESS
@@ -61,15 +66,6 @@ notification_area_applet_SOURCES = $(NOTIFICATION_AREA_SOURCES)
 notification_area_applet_LDADD = $(NOTIFICATION_AREA_LDADD)
 notification_area_applet_CFLAGS = $(AM_CFLAGS)
 endif
-
-na-marshal.h: na-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=_na_marshal > $@
-
-na-marshal.c: na-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)echo "#include \"na-marshal.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) $< --body --prefix=_na_marshal >> $@
-
-BUILT_SOURCES = na-marshal.c na-marshal.h
 
 appletdir       = $(datadir)/mate-panel/applets
 applet_in_files = org.mate.panel.NotificationAreaApplet.mate-panel-applet.in
@@ -101,8 +97,7 @@ ui_DATA = notification-area-menu.xml
 EXTRA_DIST =								\
 	org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in	\
 	$(ui_DATA)							\
-	$(service_in_files)						\
-	na-marshal.list
+	$(service_in_files)
 
 CLEANFILES =			\
 	$(applet_DATA) 		\

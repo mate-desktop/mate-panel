@@ -36,6 +36,7 @@ AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_36],
 	[Warn on use of APIs deprecated before GLib 2.36])
 
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+AC_PATH_PROG([GDBUS_CODEGEN], [gdbus-codegen])
 
 MATE_COMPILE_WARNINGS(maximum)
 
@@ -55,6 +56,8 @@ if test "x$enable_deprecation_flags" = "xyes"; then
    DISABLE_DEPRECATED_CFLAGS=$DISABLE_DEPRECATED
    AC_SUBST(DISABLE_DEPRECATED_CFLAGS)
 fi
+
+LT_LIB_M
 
 LIBMATE_DESKTOP_REQUIRED=1.17.0
 GDK_PIXBUF_REQUIRED=2.7.1
@@ -283,6 +286,9 @@ applets/clock/pixmaps/Makefile
 applets/fish/Makefile
 applets/fish/org.mate.panel.applet.fish.gschema.xml
 applets/notification_area/Makefile
+applets/notification_area/libstatus-notifier-watcher/Makefile
+applets/notification_area/status-notifier/Makefile
+applets/notification_area/system-tray/Makefile
 applets/wncklet/Makefile
 applets/wncklet/org.mate.panel.applet.window-list.gschema.xml
 applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml
