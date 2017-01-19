@@ -29,6 +29,8 @@
 #endif
 #include <gtk/gtk.h>
 
+#include "na-host.h"
+
 G_BEGIN_DECLS
 
 #define NA_TYPE_TRAY			(na_tray_get_type ())
@@ -44,32 +46,23 @@ typedef struct _NaTrayClass	NaTrayClass;
 
 struct _NaTray
 {
-  GtkBin parent_instance;
+  GObject parent_instance;
 
   NaTrayPrivate *priv;
 };
 
 struct _NaTrayClass
 {
-  GtkBinClass parent_class;
+  GObjectClass parent_class;
 };
 
 GType           na_tray_get_type        (void);
-NaTray         *na_tray_new_for_screen  (GdkScreen     *screen,
+NaHost         *na_tray_new_for_screen  (GdkScreen     *screen,
 					 GtkOrientation orientation);
-void            na_tray_set_orientation	(NaTray        *tray,
-					 GtkOrientation orientation);
-GtkOrientation  na_tray_get_orientation (NaTray        *tray);
 void            na_tray_set_padding     (NaTray        *tray,
 					 gint           padding);
 void            na_tray_set_icon_size   (NaTray        *tray,
 					 gint           icon_size);
-void            na_tray_set_colors      (NaTray        *tray,
-					 GdkRGBA       *fg,
-					 GdkRGBA       *error,
-					 GdkRGBA       *warning,
-					 GdkRGBA       *success);
-void		na_tray_force_redraw	(NaTray        *tray);
 
 G_END_DECLS
 

@@ -49,6 +49,8 @@ struct _NaTrayChild
   guint has_alpha : 1;
   guint composited : 1;
   guint parent_relative_bg : 1;
+
+  gchar *id;
 };
 
 struct _NaTrayChildClass

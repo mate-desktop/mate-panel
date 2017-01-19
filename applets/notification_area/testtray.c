@@ -23,9 +23,14 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <signal.h>
+#include <glib-unix.h>
 #include <gtk/gtk.h>
-#include "na-tray-manager.h"
-#include "na-tray.h"
+#include "system-tray/na-tray-manager.h"
+#ifdef PROVIDE_WATCHER_SERVICE
+# include "libstatus-notifier-watcher/gf-status-notifier-watcher.h"
+#endif
+#include "na-box.h"
 
 #define NOTIFICATION_AREA_ICON "mate-panel-notification-area"
 
@@ -36,8 +41,7 @@ typedef struct
   GdkScreen *screen;
   guint screen_num;
   GtkWidget *window;
-  NaTray *tray;
-  GtkWidget *box;
+  GtkWidget *traybox;
   GtkLabel *count_label;
 } TrayData;
 
@@ -56,7 +60,7 @@ update_child_count (TrayData *data)
   if (!gtk_widget_get_realized (data->window))
     return;
 
-  gtk_container_foreach (GTK_CONTAINER (data->box), (GtkCallback) do_add, &n_children);
+  gtk_container_foreach (GTK_CONTAINER (data->traybox), (GtkCallback) do_add, &n_children);
 
   g_snprintf (text, sizeof (text), "%u icons", n_children);
   gtk_label_set_text (data->count_label, text);
@@ -66,7 +70,7 @@ static void
 tray_added_cb (GtkContainer *box, GtkWidget *icon, TrayData *data)
 {
   g_print ("[Screen %u tray %p] Child %p added to tray: \"%s\"\n",
-	   data->screen_num, data->tray, icon, "XXX");//na_tray_child_get_title (icon));
+	   data->screen_num, data->traybox, icon, "XXX");//na_tray_child_get_title (icon));
 
   update_child_count (data);
 }
@@ -75,7 +79,7 @@ static void
 tray_removed_cb (GtkContainer *box, GtkWidget *icon, TrayData *data)
 {
   g_print ("[Screen %u tray %p] Child %p removed from tray\n",
-	   data->screen_num, data->tray, icon);
+	   data->screen_num, data->traybox, icon);
 
   update_child_count (data);
 }
@@ -85,9 +89,9 @@ static void orientation_changed_cb (GtkComboBox *combo, TrayData *data)
   GtkOrientation orientation = (GtkOrientation) gtk_combo_box_get_active (combo);
 
   g_print ("[Screen %u tray %p] Setting orientation to \"%s\"\n",
-	   data->screen_num, data->tray, orientation == 0 ? "horizontal" : "vertical");
+	   data->screen_num, data->traybox, orientation == 0 ? "horizontal" : "vertical");
 
-  na_tray_set_orientation (data->tray, orientation);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (data->traybox), orientation);
 }
 
 static void
@@ -184,12 +188,11 @@ create_tray_on_screen (GdkScreen *screen,
 #endif
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  data->tray = na_tray_new_for_screen (screen, GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (data->tray), TRUE, TRUE, 0);
+  data->traybox = na_box_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (data->traybox), TRUE, TRUE, 0);
 
-  data->box = gtk_bin_get_child (GTK_BIN (gtk_bin_get_child (GTK_BIN (data->tray))));
-  g_signal_connect_after (data->box, "add", G_CALLBACK (tray_added_cb), data);
-  g_signal_connect_after (data->box, "remove", G_CALLBACK (tray_removed_cb), data);
+  g_signal_connect_after (data->traybox, "add", G_CALLBACK (tray_added_cb), data);
+  g_signal_connect_after (data->traybox, "remove", G_CALLBACK (tray_removed_cb), data);
 
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
 
@@ -205,13 +208,65 @@ create_tray_on_screen (GdkScreen *screen,
   return data;
 }
 
+static gboolean
+signal_handler (gpointer data G_GNUC_UNUSED)
+{
+  gtk_main_quit ();
+
+  return FALSE;
+}
+
+#ifdef PROVIDE_WATCHER_SERVICE
+static GfStatusNotifierWatcher *
+status_notifier_watcher_maybe_new (void)
+{
+  GDBusProxy *proxy;
+  GError *error = NULL;
+  GfStatusNotifierWatcher *service = NULL;
+
+  /* check if the service already exists
+   * FIXME: is that a not-too-stupid way of doing it?  bah, so long as it works.
+   *        it's for testing purposes only anyway. */
+  proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                         G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS |
+                                         G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+                                         NULL,
+                                         "org.kde.StatusNotifierWatcher",
+                                         "/StatusNotifierWatcher",
+                                         "org.kde.StatusNotifierWatcher",
+                                         NULL, &error);
+  if (proxy)
+    g_object_unref (proxy);
+  else
+    {
+      g_warning ("Failed to connect to org.kde.StatusNotifierWatcher (%s), starting our own.",
+                 error->message);
+      g_clear_error (&error);
+
+      service = gf_status_notifier_watcher_new ();
+    }
+
+  return service;
+}
+#endif
+
 int
 main (int argc, char *argv[])
 {
   GdkDisplay *display;
   GdkScreen *screen;
+#ifdef PROVIDE_WATCHER_SERVICE
+  GfStatusNotifierWatcher *service;
+#endif
 
   gtk_init (&argc, &argv);
+
+  g_unix_signal_add (SIGTERM, signal_handler, NULL);
+  g_unix_signal_add (SIGINT, signal_handler, NULL);
+
+#ifdef PROVIDE_WATCHER_SERVICE
+  service = status_notifier_watcher_maybe_new ();
+#endif
 
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 
@@ -221,6 +276,11 @@ main (int argc, char *argv[])
   create_tray_on_screen (screen, FALSE);
   
   gtk_main ();
+
+#ifdef PROVIDE_WATCHER_SERVICE
+  if (service)
+    g_object_unref (service);
+#endif
 
   return 0;
 }
