@@ -190,8 +190,6 @@ sn_item_button_press_event (GtkWidget      *widget,
 {
   SnItem *item;
   SnItemPrivate *priv;
-  GdkDisplay *display;
-  GdkSeat *seat;
   gint x;
   gint y;
 
@@ -200,14 +198,16 @@ sn_item_button_press_event (GtkWidget      *widget,
 
   item = SN_ITEM (widget);
   priv = sn_item_get_instance_private (item);
-  display = gdk_display_get_default ();
-  seat = gdk_display_get_default_seat (display);
 
   sn_item_get_action_coordinates (item, &x, &y);
 
   if (event->button == 2)
     {
-      gdk_seat_ungrab (seat);
+#if GTK_CHECK_VERSION (3, 20, 0)
+      gdk_seat_ungrab (gdk_device_get_seat (event->device));
+#else
+      gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
+#endif
       SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
     }
   else if (event->button == 3)
@@ -221,7 +221,11 @@ sn_item_button_press_event (GtkWidget      *widget,
         }
       else
         {
-          gdk_seat_ungrab (seat);
+#if GTK_CHECK_VERSION (3, 20, 0)
+          gdk_seat_ungrab (gdk_device_get_seat (event->device));
+#else
+          gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
+#endif
           SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
         }
     }
