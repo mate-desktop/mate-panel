@@ -667,7 +667,7 @@ panel_menu_button_load (const char  *menu_path,
 
         if (!panel_lockdown_get_locked_down () &&
             (panel_is_program_in_path ("mozo") ||
-	    panel_is_program_in_path ("matemenu-simple-editor")))
+	    panel_is_program_in_path ("menulibre")))
 		mate_panel_applet_add_callback (info, "edit", NULL,
 					   _("_Edit Menus"), NULL);
 
@@ -988,14 +988,14 @@ panel_menu_button_invoke_menu (PanelMenuButton *button,
 	} else if (!strcmp (callback_name, "edit")) {
                 GError *error = NULL;
 
-		panel_launch_desktop_file_with_fallback ("mozo.desktop",
-							 "mozo",
+		panel_launch_desktop_file_with_fallback ("menulibre.desktop",
+							 "menulibre",
 							 screen, &error);
 		if (error) {
 			g_error_free (error);
 			panel_launch_desktop_file_with_fallback (
-						"matemenu-simple-editor.desktop",
-						"matemenu-simple-editor",
+						"mozo.desktop",
+						"mozo",
 						screen, NULL);
 		}
 	}
