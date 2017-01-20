@@ -19,7 +19,6 @@
 #define SN_COMPAT_GTK_H
 
 #include "sn-compat-gtk-3.16.h"
-#include "sn-compat-gtk-3.20.h"
 #include "sn-compat-gtk-3.22.h"
 
 #endif
