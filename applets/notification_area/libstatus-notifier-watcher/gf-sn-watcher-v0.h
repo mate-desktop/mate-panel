@@ -22,10 +22,19 @@
 
 G_BEGIN_DECLS
 
-#define GF_TYPE_SN_WATCHER_V0 gf_sn_watcher_v0_get_type ()
-G_DECLARE_FINAL_TYPE (GfSnWatcherV0, gf_sn_watcher_v0,
-                      GF, SN_WATCHER_V0, GfSnWatcherV0GenSkeleton)
+#define GF_TYPE_SN_WATCHER_V0     (gf_sn_watcher_v0_get_type ())
+#define GF_SN_WATCHER_V0(obj)     (G_TYPE_CHECK_INSTANCE_CAST ((obj), GF_TYPE_SN_WATCHER_V0, GfSnWatcherV0))
+#define GF_IS_SN_WATCHER_V0(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GF_TYPE_SN_WATCHER_V0))
 
+typedef struct _GfSnWatcherV0       GfSnWatcherV0;
+typedef struct _GfSnWatcherV0Class  GfSnWatcherV0Class;
+
+struct _GfSnWatcherV0Class
+{
+  GfSnWatcherV0GenSkeletonClass parent_class;
+};
+
+GType gf_sn_watcher_v0_get_type (void);
 GfSnWatcherV0 *gf_sn_watcher_v0_new (void);
 
 G_END_DECLS

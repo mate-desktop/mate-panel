@@ -22,10 +22,19 @@
 
 G_BEGIN_DECLS
 
-#define GF_TYPE_STATUS_NOTIFIER_WATCHER gf_status_notifier_watcher_get_type ()
-G_DECLARE_FINAL_TYPE (GfStatusNotifierWatcher, gf_status_notifier_watcher,
-                      GF, STATUS_NOTIFIER_WATCHER, GObject)
+#define GF_TYPE_STATUS_NOTIFIER_WATCHER     (gf_status_notifier_watcher_get_type ())
+#define GF_STATUS_NOTIFIER_WATCHER(obj)     (G_TYPE_CHECK_INSTANCE_CAST ((obj), GF_TYPE_STATUS_NOTIFIER_WATCHER, GfStatusNotifierWatcher))
+#define GF_IS_STATUS_NOTIFIER_WATCHER(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GF_TYPE_STATUS_NOTIFIER_WATCHER))
 
+typedef struct _GfStatusNotifierWatcher       GfStatusNotifierWatcher;
+typedef struct _GfStatusNotifierWatcherClass  GfStatusNotifierWatcherClass;
+
+struct _GfStatusNotifierWatcherClass
+{
+  GObjectClass parent_class;
+};
+
+GType gf_status_notifier_watcher_get_type (void);
 GfStatusNotifierWatcher *gf_status_notifier_watcher_new (void);
 
 G_END_DECLS

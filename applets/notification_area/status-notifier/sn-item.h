@@ -22,14 +22,29 @@
 
 G_BEGIN_DECLS
 
-#define SN_TYPE_ITEM sn_item_get_type ()
-G_DECLARE_DERIVABLE_TYPE (SnItem, sn_item, SN, ITEM, GtkButton)
+#define SN_TYPE_ITEM            (sn_item_get_type ())
+#define SN_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SN_TYPE_ITEM, SnItem))
+#define SN_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SN_TYPE_ITEM, SnItemClass))
+#define SN_IS_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SN_TYPE_ITEM))
+#define SN_IS_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SN_TYPE_ITEM))
+#define SN_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SN_TYPE_ITEM, SnItemClass))
 
 typedef enum
 {
   SN_ITEM_ORIENTATION_HORIZONTAL,
   SN_ITEM_ORIENTATION_VERTICAL
 } SnItemOrientation;
+
+typedef struct _SnItem        SnItem;
+typedef struct _SnItemPrivate SnItemPrivate;
+typedef struct _SnItemClass   SnItemClass;
+
+struct _SnItem
+{
+  GtkButtonClass parent_instance;
+
+  SnItemPrivate *priv;
+};
 
 struct _SnItemClass
 {
@@ -60,6 +75,7 @@ struct _SnItemClass
                                         SnItemOrientation  orientation);
 };
 
+GType           sn_item_get_type        (void);
 const gchar    *sn_item_get_bus_name    (SnItem *item);
 const gchar    *sn_item_get_object_path (SnItem *item);
 
