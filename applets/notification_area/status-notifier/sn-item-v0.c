@@ -1206,9 +1206,7 @@ sn_item_v0_size_allocate (GtkWidget      *widget,
   GTK_WIDGET_CLASS (sn_item_v0_parent_class)->size_allocate (widget, allocation);
 
   /* FIXME: this leads to grow-only size, unless there's underallocation.
-   *        not a problem in the panel, but one in the test app.
-   * NOTE: actually, it *can* shrink, as we request a little less for padding
-   *       around, but that only allows shrinking by steps of 2 */
+   *        not a problem in the panel, but one in the test app. */
   if (v0->icon_size <= 0)
     {
       gint prev_effective_icon_size = v0->effective_icon_size;
@@ -1217,10 +1215,6 @@ sn_item_v0_size_allocate (GtkWidget      *widget,
         v0->effective_icon_size = allocation->height;
       else
         v0->effective_icon_size = allocation->width;
-
-      /* leave some padding around */
-      if (v0->effective_icon_size > 2)
-        v0->effective_icon_size -= 2;
 
       if (v0->effective_icon_size != prev_effective_icon_size)
         queue_update (SN_ITEM_V0 (widget));
