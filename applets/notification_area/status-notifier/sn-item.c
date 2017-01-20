@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include "sn-compat-gtk.h"
+
 #include "sn-dbus-menu.h"
 #include "sn-item.h"
 
