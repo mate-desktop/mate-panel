@@ -57,7 +57,7 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 static void na_item_init (NaItemInterface *iface);
 
-G_DEFINE_ABSTRACT_TYPE_WITH_CODE (SnItem, sn_item, GTK_TYPE_BUTTON,
+G_DEFINE_ABSTRACT_TYPE_WITH_CODE (SnItem, sn_item, SN_TYPE_FLAT_BUTTON,
                                   G_IMPLEMENT_INTERFACE (GTK_TYPE_ORIENTABLE,
                                                          NULL)
                                   G_IMPLEMENT_INTERFACE (NA_TYPE_ITEM,
