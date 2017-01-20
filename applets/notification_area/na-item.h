@@ -37,13 +37,6 @@ typedef enum
   NA_ITEM_CATEGORY_COMMUNICATIONS,
   NA_ITEM_CATEGORY_SYSTEM_SERVICES,
   NA_ITEM_CATEGORY_HARDWARE,
-  /* FIXME: use proper categories for system tray stuff, too.
-   *        See na_tray_child_get_category() in na-tray-child.c */
-  NA_ITEM_CATEGORY_FAKE_BATTERY,
-  NA_ITEM_CATEGORY_FAKE_NETWORK,
-  NA_ITEM_CATEGORY_FAKE_BLUETOOTH,
-  NA_ITEM_CATEGORY_FAKE_VOLUME,
-  NA_ITEM_CATEGORY_FAKE_KEYBOARD,
 } NaItemCategory;
 
 struct _NaItemInterface

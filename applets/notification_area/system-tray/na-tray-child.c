@@ -315,6 +315,25 @@ na_tray_child_set_property (GObject      *object,
     }
 }
 
+/* Hack to keep order of some known system-tray elements.  For a wm_class
+ * match, give it category @category and ID @id.
+ *
+ * TODO: improve this to play well if one of those elements were to start
+ *       using SNI instead */
+static const struct
+{
+  const gchar *const wm_class;
+  const gchar *const id;
+  NaItemCategory category;
+} wmclass_categories[] = {
+  /* order is LTR, so higher category and higher ASCII ordering on the right */
+  { "Mate-power-manager",         "~01-battery",   NA_ITEM_CATEGORY_HARDWARE },
+  { "Nm-applet",                  "~02-network",   NA_ITEM_CATEGORY_HARDWARE },
+  { "Bluetooth-applet",           "~03-bluetooth", NA_ITEM_CATEGORY_HARDWARE },
+  { "Mate-volume-control-applet", "~04-volume",    NA_ITEM_CATEGORY_HARDWARE },
+  { "keyboard",                   "~05-keyboard",  NA_ITEM_CATEGORY_HARDWARE },
+};
+
 static const gchar *
 na_tray_child_get_id (NaItem *item)
 {
@@ -323,10 +342,23 @@ na_tray_child_get_id (NaItem *item)
   if (! child->id)
     {
       char *res_name = NULL;
+      char *res_class = NULL;
+      guint i;
 
-      na_tray_child_get_wm_class (child, &res_name, NULL);
-      child->id = g_strdup_printf ("%s-%lu", res_name, child->icon_window);
-      g_free (res_name);
+      na_tray_child_get_wm_class (child, &res_name, &res_class);
+
+      for (i = 0; i < G_N_ELEMENTS (wmclass_categories) && ! child->id; i++)
+	{
+	  if (g_strcmp0 (res_class, wmclass_categories[i].wm_class) == 0)
+	    child->id = g_strdup (wmclass_categories[i].id);
+	}
+
+      if (! child->id)
+	child->id = res_name;
+      else
+	g_free (res_name);
+
+      g_free (res_class);
     }
 
   return child->id;
@@ -335,37 +367,6 @@ na_tray_child_get_id (NaItem *item)
 static NaItemCategory
 na_tray_child_get_category (NaItem *item)
 {
-  const struct
-  {
-    const gchar *wm_class;
-    NaItemCategory category;
-  } wmclass_categories[] = {
-/* FIXME: get the same order as it used to be, without fake categories.
- * from right to left:
-const char *ordered_roles[] = {
-  "keyboard",
-  "volume",
-  "bluetooth",
-  "network",
-  "battery",
-  NULL
-};
-
-const char *wmclass_roles[] = {
-  "Bluetooth-applet", "bluetooth",
-  "Mate-volume-control-applet", "volume",
-  "Nm-applet", "network",
-  "Mate-power-manager", "battery",
-  "keyboard", "keyboard",
-  NULL,
-};
-*/
-    { "Bluetooth-applet", NA_ITEM_CATEGORY_FAKE_BLUETOOTH },
-    { "Mate-volume-control-applet", NA_ITEM_CATEGORY_FAKE_VOLUME },
-    { "Nm-applet", NA_ITEM_CATEGORY_FAKE_NETWORK },
-    { "Mate-power-manager", NA_ITEM_CATEGORY_FAKE_BATTERY },
-    { "keyboard", NA_ITEM_CATEGORY_FAKE_KEYBOARD }
-  };
   guint i;
   NaItemCategory category = NA_ITEM_CATEGORY_APPLICATION_STATUS;
   char *res_class = NULL;
