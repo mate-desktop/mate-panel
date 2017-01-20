@@ -22,6 +22,8 @@ libstatus_notifier_la_SOURCES =		\
 	sn-dbus-menu.h			\
 	sn-dbus-menu-item.c		\
 	sn-dbus-menu-item.h		\
+	sn-flat-button.c		\
+	sn-flat-button.h		\
 	sn-host-v0.c			\
 	sn-host-v0.h			\
 	sn-image-menu-item.c		\

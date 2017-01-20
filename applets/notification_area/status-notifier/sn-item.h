@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "sn-flat-button.h"
+
 G_BEGIN_DECLS
 
 #define SN_TYPE_ITEM            (sn_item_get_type ())
@@ -41,14 +43,14 @@ typedef struct _SnItemClass   SnItemClass;
 
 struct _SnItem
 {
-  GtkButtonClass parent_instance;
+  SnFlatButtonClass parent_instance;
 
   SnItemPrivate *priv;
 };
 
 struct _SnItemClass
 {
-  GtkButtonClass parent_class;
+  SnFlatButtonClass parent_class;
 
   void          (* ready)              (SnItem            *item);
 
