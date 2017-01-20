@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include "sn-compat-gtk.h"
+
 #include "sn-image-menu-item.h"
 
 #define SPACING 6
