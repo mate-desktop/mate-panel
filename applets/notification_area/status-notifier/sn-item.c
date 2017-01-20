@@ -22,7 +22,7 @@
 
 #include "na-item.h"
 
-typedef struct
+struct _SnItemPrivate
 {
   gchar          *bus_name;
   gchar          *object_path;
@@ -30,7 +30,7 @@ typedef struct
   GtkOrientation  orientation;
 
   GtkMenu        *menu;
-} SnItemPrivate;
+};
 
 enum
 {
@@ -56,18 +56,12 @@ static guint signals[LAST_SIGNAL] = { 0 };
 static void na_item_init (NaItemInterface *iface);
 
 G_DEFINE_ABSTRACT_TYPE_WITH_CODE (SnItem, sn_item, GTK_TYPE_BUTTON,
-                                  //~ G_ADD_PRIVATE (SnItem);
                                   G_IMPLEMENT_INTERFACE (GTK_TYPE_ORIENTABLE,
                                                          NULL)
                                   G_IMPLEMENT_INTERFACE (NA_TYPE_ITEM,
                                                          na_item_init))
 
-/* FIXME: apparently if requesting < 2.38, G_ADD_PRIVATE() or the default
- * sn_item_get_instance_private() does NOT work, and returns some garbage
- * (either get_instance_private() works but G_ADD_PRIVATE() didn't do nothing,
- *  or the other way around, but it leads to using incorrect memory) */
-#define sn_item_get_instance_private(i) \
-  (G_TYPE_INSTANCE_GET_PRIVATE ((i), SN_TYPE_ITEM, SnItemPrivate))
+#define sn_item_get_instance_private(i) (SN_ITEM (i)->priv)
 
 static void
 sn_item_dispose (GObject *object)
@@ -461,6 +455,8 @@ sn_item_class_init (SnItemClass *item_class)
 static void
 sn_item_init (SnItem *item)
 {
+  item->priv = G_TYPE_INSTANCE_GET_PRIVATE (item, SN_TYPE_ITEM, SnItemPrivate);
+
   gtk_widget_add_events (GTK_WIDGET (item), GDK_SCROLL_MASK);
 }
 

@@ -22,8 +22,19 @@
 
 G_BEGIN_DECLS
 
-#define SN_TYPE_ITEM_V0 sn_item_v0_get_type ()
-G_DECLARE_FINAL_TYPE (SnItemV0, sn_item_v0, SN, ITEM_V0, SnItem)
+#define SN_TYPE_ITEM_V0     (sn_item_v0_get_type ())
+#define SN_ITEM_V0(obj)     (G_TYPE_CHECK_INSTANCE_CAST ((obj), SN_TYPE_ITEM_V0, SnItemV0))
+#define SN_IS_ITEM_V0(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SN_TYPE_ITEM_V0))
+
+typedef struct _SnItemV0      SnItemV0;
+typedef struct _SnItemV0Class SnItemV0Class;
+
+struct _SnItemV0Class
+{
+  SnItemClass parent_class;
+};
+
+GType sn_item_v0_get_type (void);
 
 SnItem *sn_item_v0_new (const gchar *bus_name,
                         const gchar *object_path);

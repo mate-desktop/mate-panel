@@ -22,9 +22,19 @@
 
 G_BEGIN_DECLS
 
-#define SN_TYPE_IMAGE_MENU_ITEM sn_image_menu_item_get_type ()
-G_DECLARE_FINAL_TYPE (SnImageMenuItem, sn_image_menu_item,
-                      SN, IMAGE_MENU_ITEM, GtkMenuItem)
+#define SN_TYPE_IMAGE_MENU_ITEM     (sn_image_menu_item_get_type ())
+#define SN_IMAGE_MENU_ITEM(obj)     (G_TYPE_CHECK_INSTANCE_CAST ((obj), SN_TYPE_IMAGE_MENU_ITEM, SnImageMenuItem))
+#define SN_IS_IMAGE_MENU_ITEM(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SN_TYPE_IMAGE_MENU_ITEM))
+
+typedef struct _SnImageMenuItem      SnImageMenuItem;
+typedef struct _SnImageMenuItemClass SnImageMenuItemClass;
+
+struct _SnImageMenuItemClass
+{
+  GtkMenuItemClass parent_class;
+};
+
+GType      sn_image_menu_item_get_type                   (void);
 
 GtkWidget *sn_image_menu_item_new                        (void);
 

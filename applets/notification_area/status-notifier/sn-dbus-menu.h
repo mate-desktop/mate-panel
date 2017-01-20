@@ -22,8 +22,19 @@
 
 G_BEGIN_DECLS
 
-#define SN_TYPE_DBUS_MENU sn_dbus_menu_get_type ()
-G_DECLARE_FINAL_TYPE (SnDBusMenu, sn_dbus_menu, SN, DBUS_MENU, GtkMenu)
+#define SN_TYPE_DBUS_MENU     (sn_dbus_menu_get_type ())
+#define SN_DBUS_MENU(obj)     (G_TYPE_CHECK_INSTANCE_CAST ((obj), SN_TYPE_DBUS_MENU, SnDBusMenu))
+#define SN_IS_DBUS_MENU(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SN_TYPE_DBUS_MENU))
+
+typedef struct _SnDBusMenu      SnDBusMenu;
+typedef struct _SnDBusMenuClass SnDBusMenuClass;
+
+struct _SnDBusMenuClass
+{
+  GtkMenuClass parent_class;
+};
+
+GType sn_dbus_menu_get_type (void);
 
 GtkMenu *sn_dbus_menu_new (const gchar *bus_name,
                            const gchar *object_path);
