@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include "sn-compat-gtk.h"
-
 #include "sn-image-menu-item.h"
 
 #define SPACING 6
@@ -175,7 +173,11 @@ sn_image_menu_item_init (SnImageMenuItem *item)
 
   item->accel_label = gtk_accel_label_new ("");
   gtk_box_pack_end (GTK_BOX (item->box), item->accel_label, TRUE, TRUE, 0);
+#if GTK_CHECK_VERSION (3, 16, 0)
   gtk_label_set_xalign (GTK_LABEL (item->accel_label), 0.0);
+#else
+  gtk_misc_set_alignment (GTK_MISC (item->accel_label), 0.0, 0.5);
+#endif
   gtk_widget_show (item->accel_label);
 
   accel_label = GTK_ACCEL_LABEL (item->accel_label);
