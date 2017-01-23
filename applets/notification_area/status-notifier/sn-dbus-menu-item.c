@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include "sn-dbus-menu-item.h"
-#include "sn-image-menu-item.h"
 
 static GdkPixbuf *
 pxibuf_new (GVariant *variant)
@@ -178,30 +177,28 @@ sn_dbus_menu_item_new (GVariant *props)
       if (g_strcmp0 (item->toggle_type, "checkmark") == 0)
         {
           item->item = gtk_check_menu_item_new ();
-          gtk_menu_item_set_use_underline (GTK_MENU_ITEM (item->item), TRUE);
         }
       else if (g_strcmp0 (item->toggle_type, "radio") == 0)
         {
           item->item = gtk_radio_menu_item_new (NULL);
-          gtk_menu_item_set_use_underline (GTK_MENU_ITEM (item->item), TRUE);
         }
       else
         {
-          SnImageMenuItem *image_item;
-
-          item->item = sn_image_menu_item_new ();
-          image_item = SN_IMAGE_MENU_ITEM (item->item);
+          GtkWidget *image = NULL;
 
           if (item->icon_name)
             {
-              sn_image_menu_item_set_image_from_icon_name (image_item,
-                                                           item->icon_name);
+              image = gtk_image_new_from_icon_name (item->icon_name,
+                                                    GTK_ICON_SIZE_MENU);
             }
           else if (item->icon_data)
             {
-              sn_image_menu_item_set_image_from_icon_pixbuf (image_item,
-                                                             item->icon_data);
+              image = gtk_image_new_from_pixbuf (item->icon_data);
             }
+
+          item->item = gtk_image_menu_item_new ();
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+                                         image);
         }
 
       if (g_strcmp0 (item->children_display, "submenu") == 0)
@@ -215,6 +212,7 @@ sn_dbus_menu_item_new (GVariant *props)
           g_object_ref_sink (item->submenu);
         }
 
+      gtk_menu_item_set_use_underline (GTK_MENU_ITEM (item->item), TRUE);
       gtk_menu_item_set_label (GTK_MENU_ITEM (item->item), item->label);
 
       if (item->shortcuts)
@@ -305,41 +303,42 @@ sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
         }
       else if (g_strcmp0 (prop, "icon-name") == 0)
         {
-          SnImageMenuItem *image_item;
+          GtkWidget *image;
 
           g_free (item->icon_name);
           item->icon_name = g_variant_dup_string (value, NULL);
 
-          image_item = SN_IMAGE_MENU_ITEM (item->item);
-
           if (item->icon_name)
             {
-              sn_image_menu_item_set_image_from_icon_name (image_item,
-                                                           item->icon_name);
+              image = gtk_image_new_from_icon_name (item->icon_name,
+                                                    GTK_ICON_SIZE_MENU);
             }
           else
             {
-              sn_image_menu_item_unset_image (image_item);
+              image = NULL;
             }
+
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+                                         image);
         }
       else if (g_strcmp0 (prop, "icon-data") == 0)
         {
-          SnImageMenuItem *image_item;
+          GtkWidget *image;
 
           g_clear_object (&item->icon_data);
           item->icon_data = pxibuf_new (value);
 
-          image_item = SN_IMAGE_MENU_ITEM (item->item);
-
           if (item->icon_data)
             {
-              sn_image_menu_item_set_image_from_icon_pixbuf (image_item,
-                                                             item->icon_data);
+              image = gtk_image_new_from_pixbuf (item->icon_data);
             }
           else
             {
-              sn_image_menu_item_unset_image (image_item);
+              image = NULL;
             }
+
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+                                         image);
         }
       else if (g_strcmp0 (prop, "label") == 0)
         {
@@ -428,14 +427,20 @@ sn_dbus_menu_item_remove_props (SnDBusMenuItem *item,
       else if (g_strcmp0 (prop, "icon-name") == 0)
         {
           g_clear_pointer (&item->icon_name, g_free);
-          if (SN_IS_IMAGE_MENU_ITEM (item->item))
-            sn_image_menu_item_unset_image (SN_IMAGE_MENU_ITEM (item->item));
+          if (GTK_IS_IMAGE_MENU_ITEM (item->item))
+            {
+              gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+                                             NULL);
+            }
         }
       else if (g_strcmp0 (prop, "icon-data") == 0)
         {
           g_clear_object (&item->icon_data);
-          if (SN_IS_IMAGE_MENU_ITEM (item->item))
-            sn_image_menu_item_unset_image (SN_IMAGE_MENU_ITEM (item->item));
+          if (GTK_IS_IMAGE_MENU_ITEM (item->item))
+            {
+              gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+                                             NULL);
+            }
         }
       else if (g_strcmp0 (prop, "label") == 0)
         {
