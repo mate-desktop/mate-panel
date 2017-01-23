@@ -102,6 +102,8 @@ scale_surface (SnIconPixmap   *pixmap,
   cairo_surface_t *scaled;
   cairo_t *cr;
 
+  g_return_val_if_fail (pixmap != NULL, NULL);
+
   ratio = pixmap->width / (gdouble) pixmap->height;
   if (orientation == GTK_ORIENTATION_HORIZONTAL)
     {
@@ -174,7 +176,7 @@ get_surface (SnItemV0       *v0,
 {
   GList *pixmaps;
   cairo_surface_t *surface;
-  SnIconPixmap *best;
+  SnIconPixmap *best = NULL;
   GList *l;
 
   g_assert (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL);
