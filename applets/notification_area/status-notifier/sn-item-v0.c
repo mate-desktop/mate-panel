@@ -193,6 +193,44 @@ get_surface (SnItemV0       *v0,
     return cairo_surface_reference (pixmap->surface);
 }
 
+static GdkPixbuf *
+get_icon_by_name (const gchar *icon_name,
+                  gint         requested_size)
+{
+  GtkIconTheme *icon_theme;
+  gint *sizes;
+  gint i;
+  gint chosen_size = 0;
+
+  g_return_val_if_fail (icon_name != NULL && icon_name[0] != '\0', NULL);
+  g_return_val_if_fail (requested_size > 0, NULL);
+
+  icon_theme = gtk_icon_theme_get_default ();
+  gtk_icon_theme_rescan_if_needed (icon_theme);
+
+  sizes = gtk_icon_theme_get_icon_sizes (icon_theme, icon_name);
+  for (i = 0; sizes[i] != 0; i++)
+    {
+      if (sizes[i] == requested_size ||
+          sizes[i] == -1) /* scalable */
+        {
+          /* perfect match, stop here */
+          chosen_size = requested_size;
+          break;
+        }
+      else if (sizes[i] < requested_size && sizes[i] > chosen_size)
+        chosen_size = sizes[i];
+    }
+  g_free (sizes);
+
+  if (chosen_size == 0)
+    chosen_size = requested_size;
+
+  return gtk_icon_theme_load_icon (icon_theme, icon_name,
+                                   chosen_size, GTK_ICON_LOOKUP_FORCE_SIZE,
+                                   NULL);
+}
+
 static void
 update (SnItemV0 *v0)
 {
@@ -213,13 +251,11 @@ update (SnItemV0 *v0)
 
   if (v0->icon_name != NULL && v0->icon_name[0] != '\0')
     {
-      GtkIconTheme *icon_theme;
+      GdkPixbuf *pixbuf;
 
-      icon_theme = gtk_icon_theme_get_default ();
-
-      gtk_icon_theme_rescan_if_needed (icon_theme);
-      gtk_image_set_from_icon_name (image, v0->icon_name, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (image, icon_size);
+      pixbuf = get_icon_by_name (v0->icon_name, icon_size);
+      gtk_image_set_from_pixbuf (image, pixbuf);
+      g_object_unref (pixbuf);
     }
   else if (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL)
     {
