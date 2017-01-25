@@ -153,79 +153,44 @@ compare_size (gconstpointer a,
     return p1->width - p2->width;
 }
 
-static GList *
-get_pixmaps_sorted (SnItemV0       *v0,
-                    GtkOrientation  orientation,
-                    gint            size)
-{
-  GList *pixmaps;
-  guint i;
-
-  pixmaps = NULL;
-  for (i = 0; v0->icon_pixmap[i] != NULL; i++)
-    pixmaps = g_list_prepend (pixmaps, v0->icon_pixmap[i]);
-
-  return g_list_sort_with_data (pixmaps, compare_size,
-                                GUINT_TO_POINTER (orientation));
-}
-
 static cairo_surface_t *
 get_surface (SnItemV0       *v0,
              GtkOrientation  orientation,
              gint            size)
 {
-  GList *pixmaps;
-  cairo_surface_t *surface;
-  SnIconPixmap *best = NULL;
+  gint i;
+  GList *pixmaps = NULL;
+  SnIconPixmap *pixmap = NULL;
   GList *l;
 
   g_assert (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL);
 
-  pixmaps = get_pixmaps_sorted (v0, orientation, size);
-  surface = NULL;
+  for (i = 0; v0->icon_pixmap[i] != NULL; i++)
+    pixmaps = g_list_prepend (pixmaps, v0->icon_pixmap[i]);
 
+  pixmaps = g_list_sort_with_data (pixmaps, compare_size,
+                                   GUINT_TO_POINTER (orientation));
+
+  pixmap = (SnIconPixmap *) pixmaps->data;
   for (l = pixmaps; l != NULL; l = l->next)
     {
-      SnIconPixmap *pixmap;
+      SnIconPixmap *p = (SnIconPixmap *) l->data;
 
-      pixmap = (SnIconPixmap *) l->data;
-
-      if (orientation == GTK_ORIENTATION_HORIZONTAL)
+      if (p->height > size && p->width > size)
         {
-          if (pixmap->height == size)
-            {
-              surface = pixmap->surface;
-              break;
-            }
-          else if (pixmap->height > size)
-            {
-              best = pixmap;
-              break;
-            }
+          break;
         }
-      else
-        {
-          if (pixmap->width == size)
-            {
-              surface = pixmap->surface;
-              break;
-            }
-          else if (pixmap->width > size)
-            {
-              best = pixmap;
-              break;
-            }
-        }
-
-      best = pixmap;
+      pixmap = p;
     }
 
   g_list_free (pixmaps);
 
-  if (surface != NULL)
-    return cairo_surface_reference (surface);
-
-  return scale_surface (best, orientation, size);
+  if (pixmap == NULL || pixmap->surface == NULL)
+    return NULL;
+  else if (pixmap->height > size || pixmap->width > size)
+    return scale_surface (pixmap, orientation, size);
+  else
+    return cairo_surface_reference (pixmap->surface);
 }
 
 static void
@@ -246,7 +211,7 @@ update (SnItemV0 *v0)
   else
     icon_size = MAX (1, v0->effective_icon_size);
 
-  if (v0->icon_name != NULL && *v0->icon_name != '\0')
+  if (v0->icon_name != NULL && v0->icon_name[0] != '\0')
     {
       GtkIconTheme *icon_theme;
 
@@ -263,8 +228,11 @@ update (SnItemV0 *v0)
       surface = get_surface (v0,
                              gtk_orientable_get_orientation (GTK_ORIENTABLE (v0)),
                              icon_size);
-      gtk_image_set_from_surface (image, surface);
-      cairo_surface_destroy (surface);
+      if (surface != NULL)
+        {
+          gtk_image_set_from_surface (image, surface);
+          cairo_surface_destroy (surface);
+        }
     }
   else
     {
