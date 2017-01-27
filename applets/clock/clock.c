@@ -1330,6 +1330,7 @@ do_not_eat_button_press (GtkWidget      *widget,
 	return FALSE;
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 /* Don't request smaller size then the last one we did, this avoids
    jumping when proportional fonts are used.  We must take care to
    call "unfix_size" whenever options are changed or such where
@@ -1346,6 +1347,7 @@ clock_size_request (GtkWidget *clock, GtkRequisition *req, gpointer data)
 	req->width = cd->fixed_width;
 	req->height = cd->fixed_height;
 }
+#endif
 
 static void
 clock_update_text_gravity (GtkWidget *label)
@@ -1428,9 +1430,12 @@ create_main_clock_label (ClockData *cd)
         GtkWidget *label;
 
         label = gtk_label_new (NULL);
+
+#if !GTK_CHECK_VERSION (3, 0, 0)
 	g_signal_connect (label, "size_request",
 			  G_CALLBACK (clock_size_request),
 			  cd);
+#endif
 	g_signal_connect_swapped (label, "style_set",
 				  G_CALLBACK (unfix_size),
 				  cd);
