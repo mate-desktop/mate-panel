@@ -253,8 +253,8 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 		 * is never used. We are overriding the draw() method, so having a child doesn't
 		 * affect the widget rendering anyway.
 		 */
-#endif
 		gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_pixbuf (button->priv->pixbuf));
+#endif
 	}
 
 	button->priv->pixbuf_hc = make_hc_pixbuf (button->priv->pixbuf);
