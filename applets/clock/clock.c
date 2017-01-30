@@ -384,8 +384,10 @@ calculate_minimum_height (GtkWidget        *widget,
         GtkBorder        padding;
         PangoContext     *pango_context;
         PangoFontMetrics *metrics;
+#if !GTK_CHECK_VERSION (3, 20, 0)
         int               focus_width = 0;
         int               focus_pad = 0;
+#endif
         int               ascent;
         int               descent;
         int               thickness;
@@ -405,10 +407,12 @@ calculate_minimum_height (GtkWidget        *widget,
         pango_font_metrics_unref (metrics);
 
         gtk_style_context_get_padding (style_context, state, &padding);
+#if !GTK_CHECK_VERSION (3, 20, 0)
         gtk_style_context_get_style (style_context,
                                      "focus-line-width", &focus_width,
                                      "focus-padding", &focus_pad,
                                      NULL);
+#endif
 
         if (orientation == MATE_PANEL_APPLET_ORIENT_UP
             || orientation == MATE_PANEL_APPLET_ORIENT_DOWN) {
@@ -417,7 +421,11 @@ calculate_minimum_height (GtkWidget        *widget,
                 thickness = padding.left + padding.right;
         }
 
+#if GTK_CHECK_VERSION (3, 20, 0)
+        return PANGO_PIXELS (ascent + descent) + thickness;
+#else
         return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad) + thickness;
+#endif
 }
 
 static gboolean
