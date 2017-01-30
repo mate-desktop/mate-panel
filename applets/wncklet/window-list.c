@@ -384,13 +384,14 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	TasklistData* tasklist;
 	GtkActionGroup* action_group;
 	gchar* ui_path;
+#if GTK_CHECK_VERSION (3, 20, 0)
 	GtkCssProvider  *provider;
 	GdkScreen *screen;
-
+#endif
 	tasklist = g_new0(TasklistData, 1);
 
 	tasklist->applet = GTK_WIDGET(applet);
-
+#if GTK_CHECK_VERSION (3, 20, 0)
 	provider = gtk_css_provider_new ();
 	screen = gdk_screen_get_default ();
 	gtk_css_provider_load_from_data (provider,
@@ -403,7 +404,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 										GTK_STYLE_PROVIDER (provider),
 										GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
-
+#endif
 	mate_panel_applet_set_flags(MATE_PANEL_APPLET(tasklist->applet), MATE_PANEL_APPLET_EXPAND_MAJOR | MATE_PANEL_APPLET_EXPAND_MINOR | MATE_PANEL_APPLET_HAS_HANDLE);
 
 	setup_gsettings(tasklist);
