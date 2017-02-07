@@ -1646,7 +1646,7 @@ static const char* panel_toplevel_construct_description(PanelToplevel *toplevel)
 	};
 
 	if (toplevel->priv->attached)
-		return N_("Drawer");
+		return _("Drawer");
 
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
@@ -1677,7 +1677,7 @@ static const char* panel_toplevel_construct_description(PanelToplevel *toplevel)
 	else
 		type = 3;
 
-	return description[orientation][type];
+	return _(description[orientation][type]);
 }
 
 static void panel_toplevel_update_description(PanelToplevel* toplevel)
@@ -1692,7 +1692,7 @@ static void panel_toplevel_update_description(PanelToplevel* toplevel)
 
 	if (toplevel->priv->description)
 		g_free (toplevel->priv->description);
-	toplevel->priv->description = g_strdup (_(description));
+	toplevel->priv->description = g_strdup (description);
 
 	if (!toplevel->priv->name)
 		gtk_window_set_title (GTK_WINDOW (toplevel),
@@ -1701,8 +1701,8 @@ static void panel_toplevel_update_description(PanelToplevel* toplevel)
 	panel_a11y_set_atk_name_desc (
 		GTK_WIDGET (toplevel->priv->panel_widget),
 		toplevel->priv->name ? toplevel->priv->name :
-				       _(toplevel->priv->description),
-		_(toplevel->priv->description));
+				       toplevel->priv->description,
+		toplevel->priv->description);
 }
 
 static void panel_toplevel_update_attached_position(PanelToplevel* toplevel, gboolean hidden, int* x, int* y, int* w, int* h)
