@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 10:55+0300\n"
-"PO-Revision-Date: 2016-03-13 17:33+0000\n"
+"POT-Creation-Date: 2017-01-25 17:32+0300\n"
+"PO-Revision-Date: 2017-01-25 14:44+0000\n"
 "Last-Translator: monsta <monsta@inbox.ru>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/mate/MATE/language/vi/)\n"
 "MIME-Version: 1.0\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../applets/clock/calendar-window.c:235 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:248 ../applets/clock/clock.ui.h:27
 msgid "Locations"
 msgstr "Địa điểm"
 
-#: ../applets/clock/calendar-window.c:235
+#: ../applets/clock/calendar-window.c:248
 msgid "Edit"
 msgstr "Sửa"
 
-#: ../applets/clock/calendar-window.c:465
+#: ../applets/clock/calendar-window.c:474
 msgid "Calendar"
 msgstr "Lịch"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:491
+#: ../applets/clock/clock.c:447
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:491 ../applets/clock/clock-location-tile.c:562
+#: ../applets/clock/clock.c:447 ../applets/clock/clock-location-tile.c:513
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -51,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:496 ../applets/clock/clock.c:1673
+#: ../applets/clock/clock.c:452 ../applets/clock/clock.c:1605
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -65,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:496 ../applets/clock/clock.c:1679
-#: ../applets/clock/clock-location-tile.c:522
-#: ../applets/clock/clock-location-tile.c:569
+#: ../applets/clock/clock.c:452 ../applets/clock/clock.c:1611
+#: ../applets/clock/clock-location-tile.c:473
+#: ../applets/clock/clock-location-tile.c:520
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -76,14 +76,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:507
+#: ../applets/clock/clock.c:463
 msgid "%a %b %e"
 msgstr "%a %d %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:514
+#: ../applets/clock/clock.c:470
 #, c-format
 msgid ""
 "%1$s\n"
@@ -93,7 +93,7 @@ msgstr "%2$s\n%1$s"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:522
+#: ../applets/clock/clock.c:478
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
@@ -102,19 +102,19 @@ msgstr "%2$s, %1$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:694
+#: ../applets/clock/clock.c:651
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d %B (%%s)"
 
-#: ../applets/clock/clock.c:723
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Nhấn để ẩn lịch tháng"
 
-#: ../applets/clock/clock.c:726
+#: ../applets/clock/clock.c:679
 msgid "Click to view month calendar"
 msgstr "Nhắp để xem lịch tháng"
 
-#: ../applets/clock/clock.c:1511
+#: ../applets/clock/clock.c:1443
 msgid "Computer Clock"
 msgstr "Đồng hồ máy tính"
 
@@ -124,7 +124,7 @@ msgstr "Đồng hồ máy tính"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1658
+#: ../applets/clock/clock.c:1590
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -134,97 +134,97 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1666
+#: ../applets/clock/clock.c:1598
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1712
+#: ../applets/clock/clock.c:1644
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1743
+#: ../applets/clock/clock.c:1675
 msgid "Set System Time..."
 msgstr "Đặt giờ hệ thống..."
 
-#: ../applets/clock/clock.c:1744
+#: ../applets/clock/clock.c:1676
 msgid "Set System Time"
 msgstr "Đặt giờ hệ thống"
 
-#: ../applets/clock/clock.c:1759
+#: ../applets/clock/clock.c:1691
 msgid "Failed to set the system time"
 msgstr "Lỗi đặt giờ hệ thống"
 
-#: ../applets/clock/clock.c:1957 ../applets/fish/fish.c:1762
-#: ../applets/wncklet/window-list.c:189
-#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/clock/clock.c:1889 ../applets/fish/fish.c:1673
+#: ../applets/wncklet/window-list.c:179
+#: ../applets/wncklet/workspace-switcher.c:227
 msgid "_Preferences"
 msgstr "Tù_y thích"
 
-#: ../applets/clock/clock.c:1960 ../applets/fish/fish.c:1765
-#: ../applets/notification_area/main.c:151
-#: ../applets/wncklet/showdesktop.c:257 ../applets/wncklet/window-list.c:197
+#: ../applets/clock/clock.c:1892 ../applets/fish/fish.c:1676
+#: ../applets/notification_area/main.c:176
+#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:187
 #: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:380 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:734
-#: ../mate-panel/panel-context-menu.c:291 ../mate-panel/panel-menu-bar.c:392
-#: ../mate-panel/panel-menu-button.c:670
+#: ../applets/wncklet/workspace-switcher.c:235 ../mate-panel/drawer.c:545
+#: ../mate-panel/panel-action-button.c:730
+#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
+#: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "Trợ _giúp"
 
-#: ../applets/clock/clock.c:1963 ../applets/fish/fish.c:1768
-#: ../applets/notification_area/main.c:154
-#: ../applets/wncklet/showdesktop.c:265 ../applets/wncklet/window-list.c:205
+#: ../applets/clock/clock.c:1895 ../applets/fish/fish.c:1679
+#: ../applets/notification_area/main.c:179
+#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:195
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:388
+#: ../applets/wncklet/workspace-switcher.c:243
 msgid "_About"
 msgstr "_Giới thiệu"
 
-#: ../applets/clock/clock.c:1966
+#: ../applets/clock/clock.c:1898
 msgid "Copy _Time"
 msgstr "Chép _giờ"
 
-#: ../applets/clock/clock.c:1969
+#: ../applets/clock/clock.c:1901
 msgid "Copy _Date"
 msgstr "Chép ngà_y"
 
-#: ../applets/clock/clock.c:1972
+#: ../applets/clock/clock.c:1904
 msgid "Ad_just Date & Time"
 msgstr "_Chỉnh Ngày và Giờ"
 
-#: ../applets/clock/clock.c:2915
+#: ../applets/clock/clock.c:2847
 msgid "Choose Location"
 msgstr "Chọn địa điểm"
 
-#: ../applets/clock/clock.c:2994
+#: ../applets/clock/clock.c:2926
 msgid "Edit Location"
 msgstr "Chỉnh sửa địa điểm"
 
-#: ../applets/clock/clock.c:3121
+#: ../applets/clock/clock.c:3053
 msgid "City Name"
 msgstr "Tên thành phố"
 
-#: ../applets/clock/clock.c:3125
+#: ../applets/clock/clock.c:3057
 msgid "City Time Zone"
 msgstr "Múi giờ thành phố"
 
-#: ../applets/clock/clock.c:3340
+#: ../applets/clock/clock.c:3272
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Đồng hồ"
 
-#: ../applets/clock/clock.c:3342
+#: ../applets/clock/clock.c:3274
 msgid "The Clock displays the current time and date"
 msgstr "Đồng hồ hiển thị thời gian và ngày hiện thời"
 
-#: ../applets/clock/clock.c:3346 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:145
-#: ../applets/wncklet/showdesktop.c:546 ../applets/wncklet/window-list.c:566
+#: ../applets/clock/clock.c:3278 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:170
+#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:561
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:651
-#: ../mate-panel/panel-context-menu.c:144
+#: ../applets/wncklet/workspace-switcher.c:492
+#: ../mate-panel/panel-context-menu.c:121
 msgid "translator-credits"
 msgstr "Nhóm Việt hoá MATE (http://matevi.sourceforge.net)"
 
@@ -330,7 +330,6 @@ msgstr "Hiện _nhiệt độ"
 
 #: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
 #: ../mate-panel/panel-properties-dialog.ui.h:11
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:11
 msgid "General"
 msgstr "Chung"
 
@@ -362,19 +361,19 @@ msgstr "Thời tiết"
 msgid "Time _Settings"
 msgstr "T_hiết lập thời gian"
 
-#: ../applets/clock/clock-location-tile.c:188
+#: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr "Lỗi đặt múi giờ hệ thống"
 
-#: ../applets/clock/clock-location-tile.c:236
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>Đặt...</small>"
 
-#: ../applets/clock/clock-location-tile.c:237
+#: ../applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>Đặt</small>"
 
-#: ../applets/clock/clock-location-tile.c:354
+#: ../applets/clock/clock-location-tile.c:314
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr "Đặt làm vị trí hiện thời và dùng làm múi giờ hiện thời cho máy này"
@@ -385,7 +384,7 @@ msgstr "Đặt làm vị trí hiện thời và dùng làm múi giờ hiện th�
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:499
+#: ../applets/clock/clock-location-tile.c:450
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -394,7 +393,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:507
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -402,42 +401,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:516
+#: ../applets/clock/clock-location-tile.c:467
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:655
+#: ../applets/clock/clock-location-tile.c:606
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:667
-#: ../applets/clock/clock-location-tile.c:676
+#: ../applets/clock/clock-location-tile.c:618
+#: ../applets/clock/clock-location-tile.c:627
 msgid "Unknown"
 msgstr "Không rõ"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:669
+#: ../applets/clock/clock-location-tile.c:620
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, cảm giác như %s"
 
-#: ../applets/clock/clock-location-tile.c:692
+#: ../applets/clock/clock-location-tile.c:643
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Bình minh: %s / Hoàng hôn: %s"
 
-#: ../applets/clock/clock-utils.c:95 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:98 ../applets/wncklet/wncklet.c:71
-#: ../mate-panel/libpanel-util/panel-show.c:226
+#: ../applets/clock/clock-utils.c:95 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:121 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Không thể hiển thị tài liệu trợ giúp « %s »"
 
-#: ../applets/clock/clock-utils.c:124 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:112 ../applets/wncklet/wncklet.c:88
+#: ../applets/clock/clock-utils.c:124 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:135 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "Gặp lỗi khi hiển thị tài liệu trợ giúp"
 
@@ -561,7 +560,7 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -570,17 +569,17 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr "Cảnh báo: lệnh này có vẻ có cái gì đó thật sự hữu dụng.\nVì nó là một tiểu dụng vô dụng, bạn có lẽ không muốn làm điều này.\nRất khuyên bạn không nên dùng %s cho bất kỳ cái gì mà tạo\ntiểu dụng « thực hành » hay hữu ích."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "Ảnh"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s con cá"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -588,30 +587,30 @@ msgid ""
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr "%s không có tác dụng gì cả. Nó chỉ chiếm sức chứa trên đĩa và thời gian biên dịch, và nếu được tải, nó cũng chiếm chỗ trên Bảng điều khiển và bộ nhớ. Khuyên bạn không dùng nó bằng bất cứ trường hợp nào."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(với một tí trợ giúp nhỏ George)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Cá"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Cá %s, diễn viên nổi tiếng trong phím"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "Không thể định vị trí lệnh cần thực hiện"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Cá %s phán rằng:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -619,16 +618,16 @@ msgid ""
 "Details: %s"
 msgstr "Không thể đọc dữ liệu xuất khi thực hiện lệnh\n\nChi tiết: %s"
 
-#: ../applets/fish/fish.c:844
+#: ../applets/fish/fish.c:836
 msgid "_Speak again"
 msgstr "_Nói lại"
 
-#: ../applets/fish/fish.c:931
+#: ../applets/fish/fish.c:923
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Lệnh được cấu hình không hoạt động và đã được thay thế bằng: %s"
 
-#: ../applets/fish/fish.c:971
+#: ../applets/fish/fish.c:955
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -636,7 +635,7 @@ msgid ""
 "Details: %s"
 msgstr "Không thể thực thi '%s'\n\nChi tiết: %s"
 
-#: ../applets/fish/fish.c:987
+#: ../applets/fish/fish.c:971
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -644,15 +643,15 @@ msgid ""
 "Details: %s"
 msgstr "Không thể đọc từ '%s'\n\nChi tiết: %s"
 
-#: ../applets/fish/fish.c:1611
+#: ../applets/fish/fish.c:1529
 msgid "The water needs changing"
 msgstr "Cần đổi nước"
 
-#: ../applets/fish/fish.c:1613
+#: ../applets/fish/fish.c:1531
 msgid "Look at today's date!"
 msgstr "Xem ngày của hôm nay!"
 
-#: ../applets/fish/fish.c:1696
+#: ../applets/fish/fish.c:1614
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Cá %s sẽ nói nhiều chuyện lạ"
@@ -674,7 +673,6 @@ msgid "Animation"
 msgstr "Hoạt họa"
 
 #: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:14
 msgid "    "
 msgstr "    "
 
@@ -775,12 +773,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:139
+#: ../applets/notification_area/main.c:164
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Vùng thông báo"
 
-#: ../applets/notification_area/main.c:384
+#: ../applets/notification_area/main.c:380
 msgid "Panel Notification Area"
 msgstr "Vùng thông báo trên Bảng điều khiển"
 
@@ -877,7 +875,7 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:308
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
 msgid "Window Selector"
 msgstr "Bộ chọn cửa sổ"
 
@@ -886,7 +884,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:644
+#: ../applets/wncklet/workspace-switcher.c:485
 msgid "Workspace Switcher"
 msgstr "Bộ chuyển đổi Vùng làm việc"
 
@@ -895,7 +893,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:559
+#: ../applets/wncklet/window-list.c:554
 msgid "Window List"
 msgstr "Danh sách cửa sổ"
 
@@ -911,42 +909,42 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:208
+#: ../applets/wncklet/showdesktop.c:186
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Không tải được %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:208
+#: ../applets/wncklet/showdesktop.c:186
 msgid "Icon not found"
 msgstr "Không tìm thấy biểu tượng"
 
-#: ../applets/wncklet/showdesktop.c:281
+#: ../applets/wncklet/showdesktop.c:259
 msgid "Click here to restore hidden windows."
 msgstr "Nhấn vào đây để khôi phục các cửa sổ ẩn."
 
-#: ../applets/wncklet/showdesktop.c:285
+#: ../applets/wncklet/showdesktop.c:263
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Nhấn vào đây để ẩn mọi cửa sổ và hiển thị màn hình nền."
 
-#: ../applets/wncklet/showdesktop.c:473 ../applets/wncklet/showdesktop.c:539
+#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
 msgid "Show Desktop Button"
 msgstr "Hiện nút màn hình nền"
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Nút này cho phép bạn ẩn mọi cửa sổ và hiển thị màn hình nền."
 
-#: ../applets/wncklet/showdesktop.c:567
+#: ../applets/wncklet/showdesktop.c:541
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
 msgstr "Trình quản lý cửa sổ của bạn không hỗ trợ nút hiển thị màn hình nền, hoặc bạn chưa chạy trình quản lý cửa sổ."
 
-#: ../applets/wncklet/window-list.c:181
+#: ../applets/wncklet/window-list.c:171
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:561
+#: ../applets/wncklet/window-list.c:556
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1002,18 +1000,18 @@ msgid ""
 "browse them."
 msgstr "Bộ chọn cửa sổ hiển thị danh sách tất cả các cửa sổ trong một trình đơn, và cho phép bạn duyệt qua chúng."
 
-#: ../applets/wncklet/workspace-switcher.c:203
-#: ../applets/wncklet/workspace-switcher.c:960
+#: ../applets/wncklet/workspace-switcher.c:198
+#: ../applets/wncklet/workspace-switcher.c:787
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "hàng"
 
-#: ../applets/wncklet/workspace-switcher.c:203
-#: ../applets/wncklet/workspace-switcher.c:960
+#: ../applets/wncklet/workspace-switcher.c:198
+#: ../applets/wncklet/workspace-switcher.c:787
 msgid "columns"
 msgstr "cột"
 
-#: ../applets/wncklet/workspace-switcher.c:646
+#: ../applets/wncklet/workspace-switcher.c:487
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1792,9 +1790,9 @@ msgstr ""
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../mate-panel/libpanel-util/panel-error.c:82
-#: ../mate-panel/panel-applet-frame.c:944
-#: ../mate-panel/panel-applet-frame.c:1120
+#: ../mate-panel/libpanel-util/panel-error.c:76
+#: ../mate-panel/panel-applet-frame.c:827
+#: ../mate-panel/panel-applet-frame.c:1003
 msgid "Error"
 msgstr "Lỗi"
 
@@ -1807,7 +1805,7 @@ msgstr ""
 msgid "Could not launch '%s'"
 msgstr "Không thể khởi chạy « %s »"
 
-#: ../mate-panel/libpanel-util/panel-launch.c:48 ../mate-panel/launcher.c:160
+#: ../mate-panel/libpanel-util/panel-launch.c:48 ../mate-panel/launcher.c:162
 msgid "Could not launch application"
 msgstr "Không thể khởi chạy ứng dụng"
 
@@ -1820,28 +1818,28 @@ msgstr "Không thể mở địa chỉ « %s »"
 msgid "No application to handle search folders is installed."
 msgstr "Không có ứng dụng nào được cài đặt để xử lý tìm kiếm thư mục."
 
-#: ../mate-panel/applet.c:443
+#: ../mate-panel/applet.c:466
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:522 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Gỡ bỏ khỏi Bảng"
 
-#: ../mate-panel/applet.c:533 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "Chu_yển"
 
-#: ../mate-panel/applet.c:550 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "_Khoá vào Bảng"
 
-#: ../mate-panel/applet.c:1378
+#: ../mate-panel/applet.c:1384
 msgid "Cannot find an empty spot"
 msgstr "Không tìm thấy chỗ trống nào"
 
 #: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:175
-#: ../mate-panel/panel-toplevel.c:1714
+#: ../mate-panel/panel-toplevel.c:1649
 msgid "Drawer"
 msgstr "Ngăn kéo"
 
@@ -1849,9 +1847,9 @@ msgstr "Ngăn kéo"
 msgid "_Add to Drawer..."
 msgstr "Thê_m vào ngăn kéo..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:798
+#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:556
 #: ../mate-panel/panel-action-button.c:192
-#: ../mate-panel/panel-context-menu.c:222
+#: ../mate-panel/panel-context-menu.c:196
 msgid "_Properties"
 msgstr "_Thuộc tính"
 
@@ -1868,20 +1866,20 @@ msgid "- Edit .desktop files"
 msgstr "• Hiệu chỉnh tập tin kiểu « .desktop »"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:888
+#: ../mate-panel/mate-desktop-item-edit.c:197 ../mate-panel/launcher.c:926
 msgid "Create Launcher"
 msgstr "Tạo bộ khởi chạy"
 
-#: ../mate-panel/mate-desktop-item-edit.c:169
-#: ../mate-panel/mate-desktop-item-edit.c:192
+#: ../mate-panel/mate-desktop-item-edit.c:168
+#: ../mate-panel/mate-desktop-item-edit.c:191
 msgid "Directory Properties"
 msgstr "Thuộc tính của thư mục"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:726
+#: ../mate-panel/mate-desktop-item-edit.c:174 ../mate-panel/launcher.c:773
 msgid "Launcher Properties"
 msgstr "Thuộc tính của bộ khởi chạy"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:138
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:136
 msgid "Panel"
 msgstr "Bảng"
 
@@ -1891,127 +1889,81 @@ msgid ""
 "show the time, etc."
 msgstr "Khởi chạy các ứng dụng khác và cung cấp các tiện ích khác nhau để quản lý cửa sổ, hiển thị giờ v.v."
 
-#: ../mate-panel/launcher.c:117
+#: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
 msgstr "Không thể hiển thị địa chỉ URL này"
 
-#: ../mate-panel/launcher.c:118
+#: ../mate-panel/launcher.c:121
 msgid "No URL was specified."
 msgstr "Chưa ghi rõ địa chỉ URL."
 
-#: ../mate-panel/launcher.c:226
+#: ../mate-panel/launcher.c:214
 msgid "Could not use dropped item"
 msgstr "Không thể sử dụng mục đã thả"
 
-#: ../mate-panel/launcher.c:422
+#: ../mate-panel/launcher.c:440
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Không có địa chỉ URI cho tập tin màn hình nền bộ khởi chạy Bảng điều khiển\n"
 
-#: ../mate-panel/launcher.c:461
+#: ../mate-panel/launcher.c:465
 #, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Không thể mở tập tin màn hình nền %s cho bộ khởi chạy Bản điều khiển %s%s\n"
+msgid "Unable to open desktop file %s for panel launcher\n"
+msgstr ""
 
-#: ../mate-panel/launcher.c:792
+#: ../mate-panel/launcher.c:533
 msgid "_Launch"
 msgstr "_Khởi chạy"
 
-#: ../mate-panel/launcher.c:831
+#: ../mate-panel/launcher.c:867
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Chưa đặt khoá %s nên không thể tải bộ khởi chạy\n"
 
-#: ../mate-panel/launcher.c:957 ../mate-panel/panel-ditem-editor.c:1433
-#: ../mate-panel/panel-ditem-editor.c:1467
-#: ../mate-panel/panel-ditem-editor.c:1498
+#: ../mate-panel/launcher.c:995 ../mate-panel/panel-ditem-editor.c:1327
+#: ../mate-panel/panel-ditem-editor.c:1361
+#: ../mate-panel/panel-ditem-editor.c:1392
 msgid "Could not save launcher"
 msgstr "Không thể lưu bộ khởi chạy"
 
-#: ../mate-panel/main.c:49
+#: ../mate-panel/main.c:47
 msgid "Replace a currently running panel"
 msgstr "Thay thế một bảng đang chạy"
 
 #. this feature was request in #mate irc channel
-#: ../mate-panel/main.c:51
+#: ../mate-panel/main.c:49
 msgid "Reset the panel configuration to default"
 msgstr ""
 
 #. open run dialog
-#: ../mate-panel/main.c:53
+#: ../mate-panel/main.c:51
 msgid "Execute the run dialog"
 msgstr ""
 
 #. default panels layout
-#: ../mate-panel/main.c:55
+#: ../mate-panel/main.c:53
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:531
+#: ../mate-panel/menu.c:527
 msgid "Add this launcher to _panel"
 msgstr "Thêm bộ khởi chạy này vào _Bảng"
 
-#: ../mate-panel/menu.c:538
+#: ../mate-panel/menu.c:534
 msgid "Add this launcher to _desktop"
 msgstr "Thêm bộ khởi chạ_y này vào màn hình nền"
 
-#: ../mate-panel/menu.c:550
+#: ../mate-panel/menu.c:546
 msgid "_Entire menu"
 msgstr "T_oàn bộ trình đơn"
 
-#: ../mate-panel/menu.c:555
+#: ../mate-panel/menu.c:551
 msgid "Add this as _drawer to panel"
 msgstr "Thêm cái này _dạng ngăn kéo vào Bảng"
 
-#: ../mate-panel/menu.c:562
+#: ../mate-panel/menu.c:558
 msgid "Add this as _menu to panel"
 msgstr "Thê_m cái này dạng trình đơn vào Bảng"
-
-#: ../mate-panel/nothing.cP:611
-#, c-format
-msgid "<b>GAME OVER</b> at level %d!"
-msgstr "<b>HẾT LƯỢT</b> ở cấp %d!"
-
-#. Translators: the first and third strings are similar to a
-#. * title, and the second string is a small information text.
-#. * The spaces are there only to separate all the strings, so
-#. try to keep them as is.
-#: ../mate-panel/nothing.cP:618
-#, c-format
-msgid "%1$s   %2$s   %3$s"
-msgstr "%1$s   %2$s   %3$s"
-
-#: ../mate-panel/nothing.cP:619
-msgid "Press 'q' to quit"
-msgstr "Bấm « q » để thoát"
-
-#: ../mate-panel/nothing.cP:624
-msgid "Paused"
-msgstr "Bị tạm dừng"
-
-#. Translators: the first string is a title and the second
-#. * string is a small information text.
-#: ../mate-panel/nothing.cP:627 ../mate-panel/nothing.cP:638
-#, c-format
-msgid "%1$s\t%2$s"
-msgstr "%1$s\t%2$s"
-
-#: ../mate-panel/nothing.cP:628
-msgid "Press 'p' to unpause"
-msgstr "Bấm « p » để hủy tạm dừng"
-
-#: ../mate-panel/nothing.cP:634
-#, c-format
-msgid "Level: %s,  Lives: %s"
-msgstr "Cấp: %s,  Lần sống: %s"
-
-#: ../mate-panel/nothing.cP:639
-msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr "Phím Trái/Phải để di chuyển, phím dài để bắn, « p » để tạm dừng, « q » để thoát"
-
-#: ../mate-panel/nothing.cP:1387
-msgid "Killer GEGLs from Outer Space"
-msgstr "GEGL giết từ Vũ trụ xa"
 
 #: ../mate-panel/panel-action-button.c:180
 msgid "_Activate Screensaver"
@@ -2061,7 +2013,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "Định vị tài liệu và thư mục trên máy này theo tên hoặc nội dung"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:270
+#: ../mate-panel/panel-force-quit.c:251
 msgid "Force Quit"
 msgstr "Buộc thoát"
 
@@ -2102,7 +2054,7 @@ msgstr "Bộ khởi chạy ứng dụng..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Sao chép bộ khởi chạy từ trình đơn ứng dụng"
 
-#: ../mate-panel/panel-addto.c:142 ../mate-panel/panel-menu-button.c:1098
+#: ../mate-panel/panel-addto.c:142 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
 msgstr "Trình đơn chính"
 
@@ -2157,168 +2109,168 @@ msgstr "Thêm vào Bảng"
 msgid "Find an _item to add to the panel:"
 msgstr "Tìm một _mục để thêm vào bảng:"
 
-#: ../mate-panel/panel-applet-frame.c:905
+#: ../mate-panel/panel-applet-frame.c:788
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "« %s » đã thoát bất ngờ"
 
-#: ../mate-panel/panel-applet-frame.c:907
+#: ../mate-panel/panel-applet-frame.c:790
 msgid "Panel object has quit unexpectedly"
 msgstr "Đối tượng Bảng điều khiển đã kết thúc bất ngờ"
 
-#: ../mate-panel/panel-applet-frame.c:914
+#: ../mate-panel/panel-applet-frame.c:797
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Nếu tải lại đối tượng bảng điểu khiển, nó sẽ tự động được thêm lại vào bảng điều khiển."
 
-#: ../mate-panel/panel-applet-frame.c:921
+#: ../mate-panel/panel-applet-frame.c:804
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:922
-#: ../mate-panel/panel-applet-frame.c:927
+#: ../mate-panel/panel-applet-frame.c:805
+#: ../mate-panel/panel-applet-frame.c:810
 msgid "_Don't Reload"
 msgstr "_Không tải lại"
 
-#: ../mate-panel/panel-applet-frame.c:923
-#: ../mate-panel/panel-applet-frame.c:928
+#: ../mate-panel/panel-applet-frame.c:806
+#: ../mate-panel/panel-applet-frame.c:811
 msgid "_Reload"
 msgstr "Tải _lại"
 
-#: ../mate-panel/panel-applet-frame.c:1083
+#: ../mate-panel/panel-applet-frame.c:966
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Bảng điều khiển gặp lỗi khi tải « %s »."
 
-#: ../mate-panel/panel-applet-frame.c:1099
+#: ../mate-panel/panel-applet-frame.c:982
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Bạn có muốn xoá bỏ tiểu dụng khỏi cấu hình của bạn không?"
 
-#: ../mate-panel/panel-context-menu.c:112
+#: ../mate-panel/panel-context-menu.c:89
 msgid "And many, many others..."
 msgstr "Và nhiều, nhiều thứ khác..."
 
-#: ../mate-panel/panel-context-menu.c:135
+#: ../mate-panel/panel-context-menu.c:112
 msgid "The MATE Panel"
 msgstr "Bảng điều khiển MATE"
 
-#: ../mate-panel/panel-context-menu.c:139
+#: ../mate-panel/panel-context-menu.c:116
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr "Chương trình này dùng để khởi chạy các ứng dụng khác, cũng cung cấp các tiện ích giúp đỡ."
 
-#: ../mate-panel/panel-context-menu.c:143
+#: ../mate-panel/panel-context-menu.c:120
 msgid "About the MATE Panel"
 msgstr "Giới thiệu Bảng điều khiển MATE"
 
-#: ../mate-panel/panel-context-menu.c:177
+#: ../mate-panel/panel-context-menu.c:151
 msgid "Cannot delete this panel"
 msgstr "Không thể xoá bỏ bảng này"
 
-#: ../mate-panel/panel-context-menu.c:178
+#: ../mate-panel/panel-context-menu.c:152
 msgid "You must always have at least one panel."
 msgstr "Bạn phải luôn luôn có ít nhất một bảng."
 
-#: ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-context-menu.c:185
 msgid "_Add to Panel..."
 msgstr "Thê_m vào Bảng..."
 
-#: ../mate-panel/panel-context-menu.c:232
+#: ../mate-panel/panel-context-menu.c:206
 msgid "_Delete This Panel"
 msgstr "_Xoá bỏ Bảng này"
 
-#: ../mate-panel/panel-context-menu.c:247
+#: ../mate-panel/panel-context-menu.c:221
 msgid "_New Panel"
 msgstr "Bả_ng mới"
 
-#: ../mate-panel/panel-context-menu.c:299
+#: ../mate-panel/panel-context-menu.c:273
 msgid "A_bout Panels"
 msgstr "Giới thiệu _Bảng"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "Ứng dụng"
 
-#: ../mate-panel/panel-ditem-editor.c:120
+#: ../mate-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
 msgstr "Ứng dụng trong cửa sổ dòng lệnh"
 
-#: ../mate-panel/panel-ditem-editor.c:122
+#: ../mate-panel/panel-ditem-editor.c:118
 msgid "Location"
 msgstr "Địa điểm"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:651
+#: ../mate-panel/panel-ditem-editor.c:610
 msgid "_Type:"
 msgstr "_Kiểu :"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:658
+#: ../mate-panel/panel-ditem-editor.c:617
 msgid "_Name:"
 msgstr "Tê_n:"
 
-#: ../mate-panel/panel-ditem-editor.c:693
+#: ../mate-panel/panel-ditem-editor.c:642
 msgid "_Browse..."
 msgstr "_Duyệt..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:700
+#: ../mate-panel/panel-ditem-editor.c:649
 msgid "Co_mment:"
 msgstr "_Ghi chú :"
 
-#: ../mate-panel/panel-ditem-editor.c:1084
+#: ../mate-panel/panel-ditem-editor.c:978
 msgid "Choose an application..."
 msgstr "Chạy ứng dụng..."
 
-#: ../mate-panel/panel-ditem-editor.c:1088
+#: ../mate-panel/panel-ditem-editor.c:982
 msgid "Choose a file..."
 msgstr "Chọn tập tin..."
 
-#: ../mate-panel/panel-ditem-editor.c:1253
-#: ../mate-panel/panel-ditem-editor.c:1262
+#: ../mate-panel/panel-ditem-editor.c:1147
+#: ../mate-panel/panel-ditem-editor.c:1156
 msgid "Comm_and:"
 msgstr "_Lệnh:"
 
-#: ../mate-panel/panel-ditem-editor.c:1271
+#: ../mate-panel/panel-ditem-editor.c:1165
 msgid "_Location:"
 msgstr "_Vị trí:"
 
-#: ../mate-panel/panel-ditem-editor.c:1434
+#: ../mate-panel/panel-ditem-editor.c:1328
 msgid "The name of the launcher is not set."
 msgstr "Chưa đặt tên của bộ khởi chạy."
 
-#: ../mate-panel/panel-ditem-editor.c:1438
+#: ../mate-panel/panel-ditem-editor.c:1332
 msgid "Could not save directory properties"
 msgstr "Không thể lưu thuộc tính thư mục"
 
-#: ../mate-panel/panel-ditem-editor.c:1439
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the directory is not set."
 msgstr "Chưa đặt tên của thư mục."
 
-#: ../mate-panel/panel-ditem-editor.c:1455
+#: ../mate-panel/panel-ditem-editor.c:1349
 msgid "The command of the launcher is not set."
 msgstr "Chưa đặt lệnh của bộ khởi chạy."
 
-#: ../mate-panel/panel-ditem-editor.c:1458
+#: ../mate-panel/panel-ditem-editor.c:1352
 msgid "The location of the launcher is not set."
 msgstr "Chưa đặt vị trí của bộ khởi chạy."
 
-#: ../mate-panel/panel-ditem-editor.c:1535
+#: ../mate-panel/panel-ditem-editor.c:1429
 msgid "Could not display help document"
 msgstr "Không thể hiển thị tài liệu trợ giúp"
 
-#: ../mate-panel/panel-force-quit.c:88
+#: ../mate-panel/panel-force-quit.c:80
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "Nhấn vào cửa sổ để buộc ứng dụng kết thúc. Để hủy, nhấn phím <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:253
+#: ../mate-panel/panel-force-quit.c:234
 msgid "Force this application to exit?"
 msgstr "Buộc ứng dụng này thoát không?"
 
-#: ../mate-panel/panel-force-quit.c:256
+#: ../mate-panel/panel-force-quit.c:237
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2336,11 +2288,11 @@ msgstr "Truy cập tài liệu, thư mục và địa chỉ mạng"
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Thay đổi diện mạo và hành vi môi trường, được trợ giúp hoặc đăng xuất"
 
-#: ../mate-panel/panel-menu-bar.c:172
+#: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
 msgstr "Ứng dụng"
 
-#: ../mate-panel/panel-menu-bar.c:397 ../mate-panel/panel-menu-button.c:676
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:672
 msgid "_Edit Menus"
 msgstr "_Sửa trình đơn"
 
@@ -2349,7 +2301,7 @@ msgid "Bookmarks"
 msgstr "Đánh dấu"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:566
+#: ../mate-panel/panel-menu-items.c:496 ../mate-panel/panel.c:549
 #, c-format
 msgid "Open '%s'"
 msgstr "Mở « %s »"
@@ -2415,11 +2367,11 @@ msgstr ""
 msgid "Browse bookmarked and local network locations"
 msgstr ""
 
-#: ../mate-panel/panel-menu-items.c:1498
+#: ../mate-panel/panel-menu-items.c:1497
 msgid "Places"
 msgstr "Mở nhanh"
 
-#: ../mate-panel/panel-menu-items.c:1526
+#: ../mate-panel/panel-menu-items.c:1525
 msgid "System"
 msgstr "Hệ thống"
 
@@ -2427,7 +2379,7 @@ msgstr "Hệ thống"
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: ../mate-panel/panel-menu-items.c:1611
+#: ../mate-panel/panel-menu-items.c:1610
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2436,187 +2388,155 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1623
+#: ../mate-panel/panel-menu-items.c:1622
 #, c-format
 msgid "Log Out %s..."
 msgstr "Đăng xuất %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1627
+#: ../mate-panel/panel-menu-items.c:1626
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Đăng xuất %s ra phiên chạy này để đăng nhập với tư cách người dùng khác"
 
-#: ../mate-panel/panel-profile.c:1170
-#, c-format
-msgid ""
-"Panel '%s' is set to be displayed on screen %d which is not currently "
-"available. Not loading this panel."
-msgstr "Bảng điều khiển « %s » được đặt để hiển thị trên màn hình %d, mà hiện thời không sẵn sàng. Như thế thì sẽ không tải Bảng điều khiển này."
-
-#: ../mate-panel/panel-properties-dialog.c:123
+#: ../mate-panel/panel-properties-dialog.c:120
 #: ../mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Trên"
 
-#: ../mate-panel/panel-properties-dialog.c:124
+#: ../mate-panel/panel-properties-dialog.c:121
 #: ../mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Dưới"
 
-#: ../mate-panel/panel-properties-dialog.c:125
+#: ../mate-panel/panel-properties-dialog.c:122
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Trái"
 
-#: ../mate-panel/panel-properties-dialog.c:126
+#: ../mate-panel/panel-properties-dialog.c:123
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Phải"
 
-#: ../mate-panel/panel-properties-dialog.c:895
+#: ../mate-panel/panel-properties-dialog.c:819
 msgid "Drawer Properties"
 msgstr "Thuộc tính ngăn kéo"
 
-#: ../mate-panel/panel-properties-dialog.c:1028
-#: ../mate-panel/panel-run-dialog.c:1993
+#: ../mate-panel/panel-properties-dialog.c:939
+#: ../mate-panel/panel-run-dialog.c:1947
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr ""
 
-#: ../mate-panel/panel-properties-dialog.c:1038
+#: ../mate-panel/panel-properties-dialog.c:945
 msgid "Could not display properties dialog"
 msgstr "Không thể hiển thị hộp thoại thuộc tính"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:1
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:1
 msgid "Panel Properties"
 msgstr "Thuộc tính Bảng"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:2
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:2
 msgid "Some of these properties are locked down"
 msgstr "Vài trong số thuộc tính này đã bị khoá"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:3
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:3
 msgid "_Icon:"
 msgstr "B_iểu tượng:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:4
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:4
 msgid "pixels"
 msgstr "điểm ảnh"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
-msgid "_Size:"
-msgstr "_Cỡ:"
-
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:5
 #: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Orientation:"
 msgstr "_Hướng:"
 
+#: ../mate-panel/panel-properties-dialog.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Size:"
+msgstr "_Cỡ:"
+
 #: ../mate-panel/panel-properties-dialog.ui.h:7
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:7
 msgid "E_xpand"
 msgstr "_Bung"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:8
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:8
 msgid "_Autohide"
 msgstr "Tự động ẩ_n"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:9
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:9
 msgid "Show hide _buttons"
 msgstr "Hiện các nút ẩ_n"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:10
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:10
 msgid "Arro_ws on hide buttons"
 msgstr "Hiện _mũi tên trên nút ẩn"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:12
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:12
 msgid "_None (use system theme)"
 msgstr "_Không (dùng Sắc thái Hệ thống)"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:13
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:13
 msgid "Solid c_olor"
 msgstr "_Màu đặc"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:15
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:15
 msgid "Pick a color"
 msgstr "Chọn màu"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:16
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:18
-msgid "S_tyle:"
-msgstr "_Kiểu :"
+msgid "<small>Transparent</small>"
+msgstr "<small>Trong suốt</small>"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:17
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:17
 msgid "Co_lor:"
 msgstr "_Màu :"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:18
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:16
-msgid "<small>Transparent</small>"
-msgstr "<small>Trong suốt</small>"
+msgid "S_tyle:"
+msgstr "_Kiểu :"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:19
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:19
 msgid "<small>Opaque</small>"
 msgstr "<small>Đục</small>"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:20
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:20
 msgid "Background _image:"
 msgstr "Ảnh _nền:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:21
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:21
 msgid "Select background"
 msgstr "Chọn nền"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:22
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:22
 msgid "Background"
 msgstr "Nền"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:23
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:23
 msgid "Image Background Details"
 msgstr "Chi tiết nền ảnh"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:24
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:24
 msgid "_Tile"
 msgstr "_Lát"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:25
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:25
 msgid "_Scale"
 msgstr "Co _dãn"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:26
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:26
 msgid "St_retch"
 msgstr "_Kéo giãn"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:27
-#: ../mate-panel/panel-properties-dialog-gtk3.ui.h:27
 msgid "Rotate image when panel is _vertical"
 msgstr "Xoay ảnh khi Bảng điều khiển nằm _dọc"
 
@@ -2657,35 +2577,35 @@ msgstr ""
 msgid "Clear all items from the recent documents list"
 msgstr "Xoá mọi mục từ danh sách tài liệu gần đây"
 
-#: ../mate-panel/panel-run-dialog.c:404
+#: ../mate-panel/panel-run-dialog.c:394
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Không thể chạy lệnh « %s »"
 
-#: ../mate-panel/panel-run-dialog.c:462
+#: ../mate-panel/panel-run-dialog.c:434
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Không thể chuyển đổi « %s » từ UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1209
+#: ../mate-panel/panel-run-dialog.c:1181
 msgid "Choose a file to append to the command..."
 msgstr "Chọn tập tin để nối vào lệnh..."
 
-#: ../mate-panel/panel-run-dialog.c:1587 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1559 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Chọn ứng dụng để xem mô tả của nó."
 
-#: ../mate-panel/panel-run-dialog.c:1625
+#: ../mate-panel/panel-run-dialog.c:1597
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Sẽ chạy lệnh: « %s »"
 
-#: ../mate-panel/panel-run-dialog.c:1658
+#: ../mate-panel/panel-run-dialog.c:1630
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Danh sách địa chỉ URI bị thả khi chạy hộp thoại thì có dạng không đúng (%d) hay độ dài (%d) không đúng\n"
 
-#: ../mate-panel/panel-run-dialog.c:1998
+#: ../mate-panel/panel-run-dialog.c:1952
 msgid "Could not display run dialog"
 msgstr "Không thể hiển thị hộp thoại chạy"
 
@@ -2820,101 +2740,101 @@ msgstr "_Tiểu dụng:"
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1248
+#: ../mate-panel/panel-toplevel.c:1218
 msgid "Hide Panel"
 msgstr "Ẩn Bảng"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1685
+#: ../mate-panel/panel-toplevel.c:1620
 msgid "Top Expanded Edge Panel"
 msgstr "Bảng cạnh bung trên"
 
-#: ../mate-panel/panel-toplevel.c:1686
+#: ../mate-panel/panel-toplevel.c:1621
 msgid "Top Centered Panel"
 msgstr "Bảng giữa trên"
 
-#: ../mate-panel/panel-toplevel.c:1687
+#: ../mate-panel/panel-toplevel.c:1622
 msgid "Top Floating Panel"
 msgstr "Bảng nổi trên"
 
-#: ../mate-panel/panel-toplevel.c:1688
+#: ../mate-panel/panel-toplevel.c:1623
 msgid "Top Edge Panel"
 msgstr "Bảng cạnh trên"
 
-#: ../mate-panel/panel-toplevel.c:1692
+#: ../mate-panel/panel-toplevel.c:1627
 msgid "Bottom Expanded Edge Panel"
 msgstr "Bảng cạnh bung dưới"
 
-#: ../mate-panel/panel-toplevel.c:1693
+#: ../mate-panel/panel-toplevel.c:1628
 msgid "Bottom Centered Panel"
 msgstr "Bảng giữa dưới"
 
-#: ../mate-panel/panel-toplevel.c:1694
+#: ../mate-panel/panel-toplevel.c:1629
 msgid "Bottom Floating Panel"
 msgstr "Bảng nổi dưới"
 
-#: ../mate-panel/panel-toplevel.c:1695
+#: ../mate-panel/panel-toplevel.c:1630
 msgid "Bottom Edge Panel"
 msgstr "Bảng cạnh dưới"
 
-#: ../mate-panel/panel-toplevel.c:1699
+#: ../mate-panel/panel-toplevel.c:1634
 msgid "Left Expanded Edge Panel"
 msgstr "Bảng cạnh bung trái"
 
-#: ../mate-panel/panel-toplevel.c:1700
+#: ../mate-panel/panel-toplevel.c:1635
 msgid "Left Centered Panel"
 msgstr "Bảng giữa trái"
 
-#: ../mate-panel/panel-toplevel.c:1701
+#: ../mate-panel/panel-toplevel.c:1636
 msgid "Left Floating Panel"
 msgstr "Bảng nổi trái"
 
-#: ../mate-panel/panel-toplevel.c:1702
+#: ../mate-panel/panel-toplevel.c:1637
 msgid "Left Edge Panel"
 msgstr "Bảng cạnh trái"
 
-#: ../mate-panel/panel-toplevel.c:1706
+#: ../mate-panel/panel-toplevel.c:1641
 msgid "Right Expanded Edge Panel"
 msgstr "Bảng canh bung phải"
 
-#: ../mate-panel/panel-toplevel.c:1707
+#: ../mate-panel/panel-toplevel.c:1642
 msgid "Right Centered Panel"
 msgstr "Bảng giữa phải"
 
-#: ../mate-panel/panel-toplevel.c:1708
+#: ../mate-panel/panel-toplevel.c:1643
 msgid "Right Floating Panel"
 msgstr "Bảng nổi phải"
 
-#: ../mate-panel/panel-toplevel.c:1709
+#: ../mate-panel/panel-toplevel.c:1644
 msgid "Right Edge Panel"
 msgstr "Bảng cạnh phải"
 
-#: ../mate-panel/panel-util.c:356
+#: ../mate-panel/panel-util.c:347
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Không tìm thấy biểu tượng « %s »"
 
-#: ../mate-panel/panel-util.c:474
+#: ../mate-panel/panel-util.c:465
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Không thể thực hiện « %s »"
 
-#: ../mate-panel/panel-util.c:702
+#: ../mate-panel/panel-util.c:693
 msgid "file"
 msgstr "tập tin"
 
-#: ../mate-panel/panel-util.c:883
+#: ../mate-panel/panel-util.c:866
 msgid "Home Folder"
 msgstr "Thư mục chính"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:895
+#: ../mate-panel/panel-util.c:878
 msgid "File System"
 msgstr "Hệ tập tin"
 
-#: ../mate-panel/panel-util.c:1068
+#: ../mate-panel/panel-util.c:1051
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -2922,31 +2842,31 @@ msgstr "Tìm kiếm"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1114
+#: ../mate-panel/panel-util.c:1097
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:499
+#: ../mate-panel/panel.c:482
 #, c-format
 msgid "Open URL: %s"
 msgstr "Mở URL: %s"
 
-#: ../mate-panel/panel.c:1349
+#: ../mate-panel/panel.c:1332
 msgid "Delete this drawer?"
 msgstr "Xoá bỏ ngăn kéo này chứ?"
 
-#: ../mate-panel/panel.c:1350
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "Khi một ngăn kéo bị xoá bỏ, ngăn kéo và\nnhững thiết lập của nó cũng bị mất."
 
-#: ../mate-panel/panel.c:1353
+#: ../mate-panel/panel.c:1336
 msgid "Delete this panel?"
 msgstr "Xoá bỏ Bảng điều khiển này chứ?"
 
-#: ../mate-panel/panel.c:1354
+#: ../mate-panel/panel.c:1337
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
