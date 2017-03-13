@@ -942,6 +942,7 @@ get_all_cb (GObject      *source_object,
         g_debug ("property '%s' not handled!", key);
 
       g_variant_unref (value);
+      g_free (key);
     }
 
   g_variant_iter_free (iter);
