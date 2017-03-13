@@ -382,6 +382,8 @@ na_tray_child_get_category (NaItem *item)
 	}
     }
 
+  g_free (res_class);
+
   return category;
 }
 
