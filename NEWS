@@ -1,43 +1,30 @@
-### mate-panel 1.17.2
+### mate-panel 1.18.0
 
-### mate-panel 1.17.1
+  * NEWS: use consistent, project wide, markdown-like formatting
+    to make generating release announcements easier
+  * Build: require libmate-menu >= 1.10 and dconf >= 0.13.4
+  * Build: require libmateweather and libmate-desktop >= 1.17
+  * Move to GTK+3 (require GTK+ >= 3.14), drop GTK+2 code and
+    --with-gtk build option
+  * Launchers: add desktop actions support for additional launch
+    options
+  * Menu applets: add support for Menulibre menu editor, and prefer
+    it to Mozo if both are installed
+  * Notification area: add StatusNotifier support
+  * Fix lots of GTK+ deprecations and runtime warnings
+  * Don't spam accessible name changes when it is translated
+  * Some code cleanups
+  * Translations update
 
-  * support desktop actions
-  * pre-bump version
-  * window-list.c: Fix indent
-  * GTK 3.20/3.22: fix warnings from show-desktop button Force zero padding, 
-    margin, border to stop underallocation warnings.
-  * GTK 3.20/22: fix warnings from tasklist buttons Force padding and margins 
-    to zero. Borders don't seem to throw warnings here
-  * Remove unused variable
-  * GTK 3.20/22 Clock button: force zero padding and margin Stops negative 
-    allocation warnings unless theme sets a border
-  * Clock: remove non-working signal, fix warning Comment out size-request 
-    signal for label, this no longer works if it ever did. Then comment out 
-    function this leaves unused.
-  * Gtk-WARNING: Allocating size to GtkAlignment..
-  * build: don't require canberra, it's not used
-  * remove ancient code leftovers
-  * xstuff: remove unused code
-  * build: require libmateweather >= 1.17.0 (GTK+3 only)
-  * Fix: the panel does not display the icon on the mouse with dnd
+### mate-panel 1.16.1
 
-### mate-panel 1.17.0
-
-  * sync with transiflex
-  * rename .ui file of panel properties dialog to the original name
-  * move to GTK+3 (>= 3.14), drop GTK+2 code and --with-gtk build option
-  * build: require libmateweather 1.16.0
-  * build: require dconf >= 0.13.4
-  * libmate-panel-applet: remove redundant GLib version check in panel-plug
-  * panel-widget: panel_widget_unrealize is used only with GTK+ < 3.18
-  * libmate-panel-applet: add missing brackets
-  * build: require libmate-menu 1.10
-  * check for stable release of GTK+3, not for development one
-  * libegg: remove win32 & quartz leftovers
-  * clock: update tooltip only when new text is different
-  * GTK+-3 Calendar Window: force minimum size
-  * clock-applet: mark current day
+  * Clock applet: mark current day in the calendar
+  * Clock applet: update tooltip only when new text is different
+    (fixes some OpenGL issues in fullscreen apps)
+  * GTK+3: stop calendar window jumping when expanding/folding
+    locations
+  * GTK+3: fix showing icon at mouse cursor on launcher drag-n-drop
+  * GTK+3: fix a heap of runtime warnings
 
 ### mate-panel 1.16.0
 
