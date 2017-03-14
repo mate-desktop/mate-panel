@@ -78,6 +78,7 @@ update_registered_items (GfSnWatcherV0 *v0)
 
   gf_sn_watcher_v0_gen_set_registered_items (GF_SN_WATCHER_V0_GEN (v0), items);
   g_variant_unref (variant);
+  g_free (items);
 }
 
 static void
