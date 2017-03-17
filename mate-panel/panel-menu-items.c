@@ -1646,7 +1646,7 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	}
 
 	item = panel_menu_items_create_action_item (PANEL_ACTION_SHUTDOWN);
-	if (item != NULL && !g_getenv("LTSP_CLIENT")) {
+	if (item != NULL) {
 		if (!separator_inserted)
 			add_menu_separator (menu);
 
