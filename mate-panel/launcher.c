@@ -738,6 +738,8 @@ launcher_saved (GtkWidget *dialog,
 	location = g_filename_from_uri (uri, NULL, NULL);
 	launcher->app_info = g_desktop_app_info_new_from_filename (location);
 	g_free (location);
+
+	setup_button (launcher);
 }
 
 static void
