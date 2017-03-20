@@ -919,9 +919,12 @@ static void
 panel_ditem_editor_icon_changed (PanelDItemEditor *dialog,
 				 const char       *icon)
 {
-	if (icon)
+	if (icon) {
+		panel_key_file_set_string (dialog->priv->key_file,
+						  "Icon", icon);
 		panel_key_file_set_locale_string (dialog->priv->key_file,
 						  "Icon", icon);
+	}
 	else
 		panel_key_file_remove_all_locale_key (dialog->priv->key_file,
 						      "Icon");
