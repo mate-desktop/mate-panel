@@ -1611,73 +1611,24 @@ void panel_toplevel_update_edges(PanelToplevel* toplevel)
 
 static const char* panel_toplevel_construct_description(PanelToplevel *toplevel)
 {
-	int orientation, type;
-
-	static const char *description[4][4] = {
-		{
-	/* translators: these string will be shown in MetaCity's switch window
-	 * popup when you pass the focus to a panel */
-			N_("Top Expanded Edge Panel"),
-			N_("Top Centered Panel"),
-	     		N_("Top Floating Panel"),
-	     		N_("Top Edge Panel"),
-		},
-
-		{
-			N_("Bottom Expanded Edge Panel"),
-	     		N_("Bottom Centered Panel"),
-	     		N_("Bottom Floating Panel"),
-	     		N_("Bottom Edge Panel"),
-		},
-
-		{
-			N_("Left Expanded Edge Panel"),
-			N_("Left Centered Panel"),
-			N_("Left Floating Panel"),
-			N_("Left Edge Panel"),
-		},
-
-		{
-			N_("Right Expanded Edge Panel"),
-			N_("Right Centered Panel"),
-			N_("Right Floating Panel"),
-			N_("Right Edge Panel"),
-		},
-	};
-
 	if (toplevel->priv->attached)
 		return _("Drawer");
 
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
-		orientation = 0;
-		break;
+	/* translators: these string will be shown in MetaCity's switch window
+	 * popup when you pass the focus to a panel */
+		return _("Top Panel");
 	case PANEL_ORIENTATION_BOTTOM:
-		orientation = 1;
-		break;
+		return _("Bottom Panel");
 	case PANEL_ORIENTATION_LEFT:
-		orientation = 2;
-		break;
+		return _("Left Panel");
 	case PANEL_ORIENTATION_RIGHT:
-		orientation = 3;
-		break;
-	default:
-		orientation = 0;
-		g_assert_not_reached ();
-		break;
+		return _("Right Panel");
 	}
 
-	if (toplevel->priv->expand)
-		type = 0;
-	else if (toplevel->priv->x_centered ||
-		 toplevel->priv->y_centered)
-		type = 1;
-	else if (toplevel->priv->floating)
-		type = 2;
-	else
-		type = 3;
-
-	return _(description[orientation][type]);
+	g_assert_not_reached ();
+	return _("Top Panel");
 }
 
 static void panel_toplevel_update_description(PanelToplevel* toplevel)
