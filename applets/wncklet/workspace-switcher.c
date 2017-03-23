@@ -210,6 +210,113 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
                 type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
 }
 
+/* Replacement for the default scroll handler that also cares about the wrapping property.
+ * Alternative: Add behaviour to libwnck (to the WnckPager widget).
+ */
+static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, PagerData* pager)
+{
+	GdkScrollDirection absolute_direction;
+	int index;
+	int n_workspaces;
+	int n_columns;
+	int in_last_row;
+
+	if (event->type != GDK_SCROLL)
+		return FALSE;
+
+	index = wnck_workspace_get_number(wnck_screen_get_active_workspace(pager->screen));
+	n_workspaces = wnck_screen_get_workspace_count(pager->screen);
+	n_columns = n_workspaces / pager->n_rows;
+
+	if (n_workspaces % pager->n_rows != 0)
+		n_columns++;
+
+	in_last_row    = n_workspaces % n_columns;
+
+	absolute_direction = event->direction;
+
+	if (gtk_widget_get_direction(GTK_WIDGET(applet)) == GTK_TEXT_DIR_RTL)
+	{
+		switch (event->direction)
+		{
+			case GDK_SCROLL_DOWN:
+			case GDK_SCROLL_UP:
+				break;
+			case GDK_SCROLL_RIGHT:
+				absolute_direction = GDK_SCROLL_LEFT;
+				break;
+			case GDK_SCROLL_LEFT:
+				absolute_direction = GDK_SCROLL_RIGHT;
+				break;
+		}
+	}
+
+	switch (absolute_direction)
+	{
+		case GDK_SCROLL_DOWN:
+			if (index + n_columns < n_workspaces)
+			{
+				index += n_columns;
+			}
+			else if (pager->wrap_workspaces && index == n_workspaces - 1)
+			{
+				index = 0;
+			}
+			else if ((index < n_workspaces - 1 && index + in_last_row != n_workspaces - 1) || (index == n_workspaces - 1 && in_last_row != 0))
+			{
+				index = (index % n_columns) + 1;
+			}
+			break;
+
+		case GDK_SCROLL_RIGHT:
+			if (index < n_workspaces - 1)
+			{
+				index++;
+			}
+			else if (pager->wrap_workspaces)
+			{
+			        index = 0;
+			}
+			break;
+
+		case GDK_SCROLL_UP:
+			if (index - n_columns >= 0)
+			{
+				index -= n_columns;
+			}
+			else if (index > 0)
+			{
+				index = ((pager->n_rows - 1) * n_columns) + (index % n_columns) - 1;
+			}
+			else if (pager->wrap_workspaces)
+			{
+				index = n_workspaces - 1;
+			}
+
+			if (index >= n_workspaces)
+				index -= n_columns;
+			break;
+
+		case GDK_SCROLL_LEFT:
+			if (index > 0)
+			{
+				index--;
+			}
+			else if (pager->wrap_workspaces)
+			{
+				index = n_workspaces - 1;
+			}
+			break;
+		default:
+			g_assert_not_reached();
+			break;
+	}
+
+	wnck_workspace_activate(wnck_screen_get_workspace(pager->screen, index), event->time);
+
+	return TRUE;
+}
+
 static void destroy_pager(GtkWidget* widget, PagerData* pager)
 {
 	g_object_unref (pager->settings);
@@ -421,6 +528,9 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	g_object_unref (provider);
 
 	g_signal_connect(G_OBJECT(pager->pager), "destroy", G_CALLBACK(destroy_pager), pager);
+
+	/* overwrite default WnckPager widget scroll-event */
+	g_signal_connect(G_OBJECT(pager->pager), "scroll-event", G_CALLBACK(applet_scroll), pager);
 
 	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
 	gtk_widget_show(pager->pager);
