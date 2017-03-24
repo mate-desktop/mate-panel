@@ -284,10 +284,24 @@ gf_sn_watcher_v0_handle_register_item (GfSnWatcherV0Gen      *object,
 
   if (watch != NULL)
     {
+      /* the specification doesn't explicitly state what should happen when
+       * trying to register the same item again, so it would make sense to
+       * forbid it.  Unfortunately libappindicator tries re-registering pretty
+       * often, and even falls back to System Tray if it fails.
+       * So in practice we need to be forgiving and pretend it's OK. */
+#if 0
       g_dbus_method_invocation_return_error (invocation, G_DBUS_ERROR,
                                              G_DBUS_ERROR_INVALID_ARGS,
                                              "Status Notifier Item with bus name '%s' and object path '%s' is already registered",
                                              bus_name, object_path);
+#else
+      g_warning ("Status Notifier Item with bus name '%s' and object path '%s' is already registered",
+                 bus_name, object_path);
+      /* FIXME: is it OK to simply ignore the request instead of removing the
+       *        old one and adding the new one?  I don't see the problem as
+       *        they are identical, but...? */
+      gf_sn_watcher_v0_gen_complete_register_item (object, invocation);
+#endif
 
       return TRUE;
     }
