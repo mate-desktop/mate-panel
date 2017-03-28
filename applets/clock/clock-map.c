@@ -4,7 +4,6 @@
 
 #include <cairo.h>
 #include <sys/time.h>
-#include <sys/timeb.h>
 #include <gtk/gtk.h>
 #include <math.h>
 
