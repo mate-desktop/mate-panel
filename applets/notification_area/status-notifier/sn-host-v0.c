@@ -125,7 +125,7 @@ add_registered_item (SnHostV0    *v0,
   item = sn_item_v0_new (bus_name, object_path);
   g_object_ref_sink (item);
 
-  g_object_bind_property (v0, "icon-padding", item, "margin",
+  g_object_bind_property (v0, "icon-padding", item, "icon-padding",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
   g_object_bind_property (v0, "icon-size", item, "icon-size",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
