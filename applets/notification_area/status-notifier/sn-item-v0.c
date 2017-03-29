@@ -78,6 +78,7 @@ enum
   PROP_0,
 
   PROP_ICON_SIZE,
+  PROP_ICON_PADDING,
 
   LAST_PROP
 };
@@ -1269,6 +1270,10 @@ sn_item_v0_get_property (GObject    *object,
         g_value_set_uint (value, v0->icon_size);
         break;
 
+      case PROP_ICON_PADDING:
+        g_value_set_int (value, sn_item_v0_get_icon_padding (v0));
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -1291,6 +1296,10 @@ sn_item_v0_set_property (GObject      *object,
         sn_item_v0_set_icon_size (v0, g_value_get_int (value));
         break;
 
+      case PROP_ICON_PADDING:
+        sn_item_v0_set_icon_padding (v0, g_value_get_int (value));
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -1303,6 +1312,10 @@ install_properties (GObjectClass *object_class)
   properties[PROP_ICON_SIZE] =
     g_param_spec_int ("icon-size", "Icon size", "Icon size", 0, G_MAXINT, 16,
                       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  properties[PROP_ICON_PADDING] =
+    g_param_spec_int ("icon-padding", "Icon padding", "Icon padding", 0,
+                      G_MAXINT, 0, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, LAST_PROP, properties);
 }
@@ -1360,6 +1373,49 @@ sn_item_v0_new (const gchar *bus_name,
                        "bus-name", bus_name,
                        "object-path", object_path,
                        NULL);
+}
+
+gint
+sn_item_v0_get_icon_padding (SnItemV0 *v0)
+{
+  GtkOrientation orientation;
+  gint a, b;
+
+  orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (v0));
+
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      a = gtk_widget_get_margin_start (v0->image);
+      b = gtk_widget_get_margin_end (v0->image);
+    }
+  else
+    {
+      a = gtk_widget_get_margin_top (v0->image);
+      b = gtk_widget_get_margin_bottom (v0->image);
+    }
+
+  return (a + b) / 2;
+}
+
+void
+sn_item_v0_set_icon_padding (SnItemV0 *v0,
+                             gint padding)
+{
+  GtkOrientation orientation;
+  gint padding_x = 0;
+  gint padding_y = 0;
+
+  orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (v0));
+
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    padding_x = padding;
+  else
+    padding_y = padding;
+
+  gtk_widget_set_margin_start (v0->image, padding_x);
+  gtk_widget_set_margin_end (v0->image, padding_x);
+  gtk_widget_set_margin_top (v0->image, padding_y);
+  gtk_widget_set_margin_bottom (v0->image, padding_y);
 }
 
 gint

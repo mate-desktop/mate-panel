@@ -39,6 +39,9 @@ GType sn_item_v0_get_type (void);
 SnItem *sn_item_v0_new (const gchar *bus_name,
                         const gchar *object_path);
 
+gint sn_item_v0_get_icon_padding (SnItemV0 *v0);
+void sn_item_v0_set_icon_padding (SnItemV0 *v0,
+                                  gint padding);
 gint sn_item_v0_get_icon_size (SnItemV0 *v0);
 void sn_item_v0_set_icon_size (SnItemV0 *v0,
                                gint size);
