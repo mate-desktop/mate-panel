@@ -288,7 +288,11 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 	icon_no_extension = panel_xdg_icon_remove_extension (icon_name);
 
 	info = gtk_icon_theme_lookup_icon (icon_theme, icon_no_extension,
-					   size, 0);
+					   size, GTK_ICON_LOOKUP_NO_SVG);
+	if (!info) {
+		info = gtk_icon_theme_lookup_icon (icon_theme, icon_no_extension,
+						   size, 0);
+	}
 
 	g_free (icon_no_extension);
 
