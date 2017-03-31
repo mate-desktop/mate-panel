@@ -224,6 +224,9 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 	if (event->type != GDK_SCROLL)
 		return FALSE;
 
+	if (event->direction == GDK_SCROLL_SMOOTH)
+		return FALSE;
+
 	index = wnck_workspace_get_number(wnck_screen_get_active_workspace(pager->screen));
 	n_workspaces = wnck_screen_get_workspace_count(pager->screen);
 	n_columns = n_workspaces / pager->n_rows;
@@ -239,14 +242,13 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 	{
 		switch (event->direction)
 		{
-			case GDK_SCROLL_DOWN:
-			case GDK_SCROLL_UP:
-				break;
 			case GDK_SCROLL_RIGHT:
 				absolute_direction = GDK_SCROLL_LEFT;
 				break;
 			case GDK_SCROLL_LEFT:
 				absolute_direction = GDK_SCROLL_RIGHT;
+				break;
+			default:
 				break;
 		}
 	}
