@@ -249,7 +249,6 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 #endif
 }
 
-#if !GTK_CHECK_VERSION (3, 0, 0)
 static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, PagerData* pager)
 {
 	GdkScrollDirection absolute_direction;
@@ -260,6 +259,11 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 
 	if (event->type != GDK_SCROLL)
 		return FALSE;
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	if (event->direction == GDK_SCROLL_SMOOTH)
+		return FALSE;
+#endif
 
 	index = wnck_workspace_get_number(wnck_screen_get_active_workspace(pager->screen));
 	n_workspaces = wnck_screen_get_workspace_count(pager->screen);
@@ -276,14 +280,13 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 	{
 		switch (event->direction)
 		{
-			case GDK_SCROLL_DOWN:
-			case GDK_SCROLL_UP:
-				break;
 			case GDK_SCROLL_RIGHT:
 				absolute_direction = GDK_SCROLL_LEFT;
 				break;
 			case GDK_SCROLL_LEFT:
 				absolute_direction = GDK_SCROLL_RIGHT;
+				break;
+			default:
 				break;
 		}
 	}
@@ -353,7 +356,6 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 
 	return TRUE;
 }
-#endif
 
 static void destroy_pager(GtkWidget* widget, PagerData* pager)
 {
@@ -577,6 +579,11 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	g_object_unref (provider);
 #endif
 	g_signal_connect(G_OBJECT(pager->pager), "destroy", G_CALLBACK(destroy_pager), pager);
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+	/* overwrite default WnckPager widget scroll-event */
+	g_signal_connect(G_OBJECT(pager->pager), "scroll-event", G_CALLBACK(applet_scroll), pager);
+#endif
 
 	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
 	gtk_widget_show(pager->pager);
