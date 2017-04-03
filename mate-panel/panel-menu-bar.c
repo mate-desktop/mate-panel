@@ -339,6 +339,7 @@ static gboolean panel_menu_bar_on_draw (GtkWidget* widget, cairo_t* cr, gpointer
 static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
 {
 	PanelMenuBar* menubar;
+	GtkSettings* settings;
 
 	g_return_if_fail (panel != NULL);
 
@@ -351,6 +352,8 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 		gtk_widget_destroy(GTK_WIDGET(menubar));
 		return;
 	}
+	settings = gtk_settings_get_for_screen(gtk_widget_get_screen(panel));
+	g_object_set(settings,"gtk-shell-shows-app-menu",FALSE,"gtk-shell-shows-menubar",FALSE,NULL);
 
 	mate_panel_applet_add_callback(menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
 
