@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-25 17:32+0300\n"
-"PO-Revision-Date: 2017-01-25 17:45+0000\n"
+"POT-Creation-Date: 2017-04-03 14:36+0300\n"
+"PO-Revision-Date: 2017-04-01 04:18+0000\n"
 "Last-Translator: 박정규(Jung-Kyu Park) <bagjunggyu@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/mate/MATE/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -36,14 +36,14 @@ msgstr "달력"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:447
+#: ../applets/clock/clock.c:455
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:447 ../applets/clock/clock-location-tile.c:513
+#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:513
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
@@ -54,7 +54,7 @@ msgstr "%p %l:%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:452 ../applets/clock/clock.c:1605
+#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1613
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -68,7 +68,7 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:452 ../applets/clock/clock.c:1611
+#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1619
 #: ../applets/clock/clock-location-tile.c:473
 #: ../applets/clock/clock-location-tile.c:520
 msgid "%H:%M"
@@ -79,14 +79,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:463
+#: ../applets/clock/clock.c:471
 msgid "%a %b %e"
 msgstr "%b %e일 (%a)"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:470
+#: ../applets/clock/clock.c:478
 #, c-format
 msgid ""
 "%1$s\n"
@@ -96,7 +96,7 @@ msgstr "%s\n%s"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:486
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s %s"
@@ -105,19 +105,19 @@ msgstr "%s %s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:651
+#: ../applets/clock/clock.c:659
 msgid "%A %B %d (%%s)"
 msgstr "%B %d일 %A (%%s)"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:685
 msgid "Click to hide month calendar"
 msgstr "달력을 감추려면 누르십시오"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:687
 msgid "Click to view month calendar"
 msgstr "달력을 보려면 누르십시오"
 
-#: ../applets/clock/clock.c:1443
+#: ../applets/clock/clock.c:1451
 msgid "Computer Clock"
 msgstr "컴퓨터 시계"
 
@@ -127,7 +127,7 @@ msgstr "컴퓨터 시계"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1590
+#: ../applets/clock/clock.c:1598
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
@@ -137,96 +137,96 @@ msgstr "%p %I:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1598
+#: ../applets/clock/clock.c:1606
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1644
+#: ../applets/clock/clock.c:1652
 msgid "%A, %B %d %Y"
 msgstr "%Y년 %B %d일 %A"
 
-#: ../applets/clock/clock.c:1675
+#: ../applets/clock/clock.c:1683
 msgid "Set System Time..."
 msgstr "시스템 시간 설정..."
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1684
 msgid "Set System Time"
 msgstr "시스템 시간 설정"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1699
 msgid "Failed to set the system time"
 msgstr "시스템 시간을 설정하는 데 실패했습니다"
 
-#: ../applets/clock/clock.c:1889 ../applets/fish/fish.c:1673
+#: ../applets/clock/clock.c:1897 ../applets/fish/fish.c:1673
 #: ../applets/wncklet/window-list.c:179
-#: ../applets/wncklet/workspace-switcher.c:227
+#: ../applets/wncklet/workspace-switcher.c:336
 msgid "_Preferences"
 msgstr "기본 설정(_P)"
 
-#: ../applets/clock/clock.c:1892 ../applets/fish/fish.c:1676
+#: ../applets/clock/clock.c:1900 ../applets/fish/fish.c:1676
 #: ../applets/notification_area/main.c:176
 #: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:187
 #: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:235 ../mate-panel/drawer.c:545
+#: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
 #: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "도움말(_H)"
 
-#: ../applets/clock/clock.c:1895 ../applets/fish/fish.c:1679
+#: ../applets/clock/clock.c:1903 ../applets/fish/fish.c:1679
 #: ../applets/notification_area/main.c:179
 #: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:195
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:243
+#: ../applets/wncklet/workspace-switcher.c:352
 msgid "_About"
 msgstr "정보(_A)"
 
-#: ../applets/clock/clock.c:1898
+#: ../applets/clock/clock.c:1906
 msgid "Copy _Time"
 msgstr "시각 복사(_T)"
 
-#: ../applets/clock/clock.c:1901
+#: ../applets/clock/clock.c:1909
 msgid "Copy _Date"
 msgstr "날짜 복사(_D)"
 
-#: ../applets/clock/clock.c:1904
+#: ../applets/clock/clock.c:1912
 msgid "Ad_just Date & Time"
 msgstr "날짜 및 시간 조정(_J)"
 
-#: ../applets/clock/clock.c:2847
+#: ../applets/clock/clock.c:2855
 msgid "Choose Location"
 msgstr "위치 선택"
 
-#: ../applets/clock/clock.c:2926
+#: ../applets/clock/clock.c:2934
 msgid "Edit Location"
 msgstr "위치 편집"
 
-#: ../applets/clock/clock.c:3053
+#: ../applets/clock/clock.c:3061
 msgid "City Name"
 msgstr "도시 이름"
 
-#: ../applets/clock/clock.c:3057
+#: ../applets/clock/clock.c:3065
 msgid "City Time Zone"
 msgstr "도시 시간대"
 
-#: ../applets/clock/clock.c:3272
+#: ../applets/clock/clock.c:3280
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "시계"
 
-#: ../applets/clock/clock.c:3274
+#: ../applets/clock/clock.c:3282
 msgid "The Clock displays the current time and date"
 msgstr "시계는 현재 시간과 날짜를 보여 줍니다"
 
-#: ../applets/clock/clock.c:3278 ../applets/fish/fish.c:575
+#: ../applets/clock/clock.c:3286 ../applets/fish/fish.c:575
 #: ../applets/notification_area/main.c:170
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:561
+#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:562
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:492
+#: ../applets/wncklet/workspace-switcher.c:604
 #: ../mate-panel/panel-context-menu.c:121
 msgid "translator-credits"
 msgstr "남성현 <namsh@kldp.org>\n류창우 <cwryu@debian.org>\n차영호 <ganadist@mizi.com>\n이윤호 <neuezeal@gmail.com>\nMATE Desktop Environment Team <https://www.transifex.com/mate/teams/13566/ko/>"
@@ -887,7 +887,7 @@ msgid "Switch between open windows using a menu"
 msgstr "메뉴를 사용하여 열어놓은 창을 전환합니다"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:485
+#: ../applets/wncklet/workspace-switcher.c:597
 msgid "Workspace Switcher"
 msgstr "작업 공간 바꾸기"
 
@@ -896,7 +896,7 @@ msgid "Switch between workspaces"
 msgstr "작업 공간 사이를 전환합니다"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:554
+#: ../applets/wncklet/window-list.c:555
 msgid "Window List"
 msgstr "창 목록"
 
@@ -947,7 +947,7 @@ msgstr "창 관리자가 바탕 화면 보여주기 단추를 지원하지 않�
 msgid "_System Monitor"
 msgstr "시스템 감시(_S)"
 
-#: ../applets/wncklet/window-list.c:556
+#: ../applets/wncklet/window-list.c:557
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1004,17 +1004,17 @@ msgid ""
 msgstr "창 선택 프로그램은 모든 창의 목록을 메뉴에 표시합니다. 여기에서 창 목록을 찾아 볼 수 있습니다."
 
 #: ../applets/wncklet/workspace-switcher.c:198
-#: ../applets/wncklet/workspace-switcher.c:787
+#: ../applets/wncklet/workspace-switcher.c:899
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "행"
 
 #: ../applets/wncklet/workspace-switcher.c:198
-#: ../applets/wncklet/workspace-switcher.c:787
+#: ../applets/wncklet/workspace-switcher.c:899
 msgid "columns"
 msgstr "열"
 
-#: ../applets/wncklet/workspace-switcher.c:487
+#: ../applets/wncklet/workspace-switcher.c:599
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1842,7 +1842,7 @@ msgid "Cannot find an empty spot"
 msgstr "비어 있는 위치가 없습니다"
 
 #: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:175
-#: ../mate-panel/panel-toplevel.c:1649
+#: ../mate-panel/panel-toplevel.c:1615
 msgid "Drawer"
 msgstr "서랍"
 
@@ -1869,7 +1869,7 @@ msgid "- Edit .desktop files"
 msgstr "- .desktop 파일을 편집합니다"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:197 ../mate-panel/launcher.c:926
+#: ../mate-panel/mate-desktop-item-edit.c:197 ../mate-panel/launcher.c:928
 msgid "Create Launcher"
 msgstr "실행 아이콘 만들기"
 
@@ -1878,7 +1878,7 @@ msgstr "실행 아이콘 만들기"
 msgid "Directory Properties"
 msgstr "디렉터리 속성"
 
-#: ../mate-panel/mate-desktop-item-edit.c:174 ../mate-panel/launcher.c:773
+#: ../mate-panel/mate-desktop-item-edit.c:174 ../mate-panel/launcher.c:775
 msgid "Launcher Properties"
 msgstr "실행 아이콘 속성"
 
@@ -1918,14 +1918,14 @@ msgstr "패널 실행 아이콘 %s에 대한 데스크톱 파일을 실행할 �
 msgid "_Launch"
 msgstr "실행(_L)"
 
-#: ../mate-panel/launcher.c:867
+#: ../mate-panel/launcher.c:869
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "%s 키를 설정하지 않았습니다.  실행 아이콘을 읽어들일 수 없습니다\n"
 
-#: ../mate-panel/launcher.c:995 ../mate-panel/panel-ditem-editor.c:1327
-#: ../mate-panel/panel-ditem-editor.c:1361
-#: ../mate-panel/panel-ditem-editor.c:1392
+#: ../mate-panel/launcher.c:997 ../mate-panel/panel-ditem-editor.c:1330
+#: ../mate-panel/panel-ditem-editor.c:1364
+#: ../mate-panel/panel-ditem-editor.c:1395
 msgid "Could not save launcher"
 msgstr "실행 아이콘을 저장할 수 없습니다"
 
@@ -2223,44 +2223,44 @@ msgstr "찾아보기(_B)..."
 msgid "Co_mment:"
 msgstr "설명(_M):"
 
-#: ../mate-panel/panel-ditem-editor.c:978
+#: ../mate-panel/panel-ditem-editor.c:981
 msgid "Choose an application..."
 msgstr "프로그램을 선택하십시오..."
 
-#: ../mate-panel/panel-ditem-editor.c:982
+#: ../mate-panel/panel-ditem-editor.c:985
 msgid "Choose a file..."
 msgstr "파일을 선택하십시오..."
 
-#: ../mate-panel/panel-ditem-editor.c:1147
-#: ../mate-panel/panel-ditem-editor.c:1156
+#: ../mate-panel/panel-ditem-editor.c:1150
+#: ../mate-panel/panel-ditem-editor.c:1159
 msgid "Comm_and:"
 msgstr "명령어(_A):"
 
-#: ../mate-panel/panel-ditem-editor.c:1165
+#: ../mate-panel/panel-ditem-editor.c:1168
 msgid "_Location:"
 msgstr "위치(_L):"
 
-#: ../mate-panel/panel-ditem-editor.c:1328
+#: ../mate-panel/panel-ditem-editor.c:1331
 msgid "The name of the launcher is not set."
 msgstr "실행 아이콘의 이름을 설정하지 않았습니다."
 
-#: ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1335
 msgid "Could not save directory properties"
 msgstr "디렉터리 속성을 저장할 수 없습니다"
 
-#: ../mate-panel/panel-ditem-editor.c:1333
+#: ../mate-panel/panel-ditem-editor.c:1336
 msgid "The name of the directory is not set."
 msgstr "디렉터리의 이름을 설정하지 않았습니다."
 
-#: ../mate-panel/panel-ditem-editor.c:1349
+#: ../mate-panel/panel-ditem-editor.c:1352
 msgid "The command of the launcher is not set."
 msgstr "실행 아이콘의 명령어를 설정하지 않았습니다."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1355
 msgid "The location of the launcher is not set."
 msgstr "실행 아이콘의 위치를 설정하지 않았습니다."
 
-#: ../mate-panel/panel-ditem-editor.c:1429
+#: ../mate-panel/panel-ditem-editor.c:1432
 msgid "Could not display help document"
 msgstr "도움말 문서를 보일 수 없습니다"
 
@@ -2749,69 +2749,21 @@ msgstr "패널 숨기기"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1620
-msgid "Top Expanded Edge Panel"
-msgstr "위의 확장 가장자리 패널"
-
-#: ../mate-panel/panel-toplevel.c:1621
-msgid "Top Centered Panel"
-msgstr "위의 가운데 패널"
-
-#: ../mate-panel/panel-toplevel.c:1622
-msgid "Top Floating Panel"
-msgstr "위의 떠 다니는 패널"
+#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+msgid "Top Panel"
+msgstr "위쪽 패널"
 
 #: ../mate-panel/panel-toplevel.c:1623
-msgid "Top Edge Panel"
-msgstr "위의 가장자리 패널"
+msgid "Bottom Panel"
+msgstr "아래쪽 패널"
+
+#: ../mate-panel/panel-toplevel.c:1625
+msgid "Left Panel"
+msgstr "왼쪽 패널"
 
 #: ../mate-panel/panel-toplevel.c:1627
-msgid "Bottom Expanded Edge Panel"
-msgstr "아래 확장 가장자리 패널"
-
-#: ../mate-panel/panel-toplevel.c:1628
-msgid "Bottom Centered Panel"
-msgstr "아래 가운데 패널"
-
-#: ../mate-panel/panel-toplevel.c:1629
-msgid "Bottom Floating Panel"
-msgstr "아래 떠 다니는 패널"
-
-#: ../mate-panel/panel-toplevel.c:1630
-msgid "Bottom Edge Panel"
-msgstr "아래 가장자리 패널"
-
-#: ../mate-panel/panel-toplevel.c:1634
-msgid "Left Expanded Edge Panel"
-msgstr "왼쪽 확장 가장자리 패널"
-
-#: ../mate-panel/panel-toplevel.c:1635
-msgid "Left Centered Panel"
-msgstr "왼쪽 가운데 패널"
-
-#: ../mate-panel/panel-toplevel.c:1636
-msgid "Left Floating Panel"
-msgstr "왼쪽 떠다니는 패널"
-
-#: ../mate-panel/panel-toplevel.c:1637
-msgid "Left Edge Panel"
-msgstr "왼쪽 가장자리 패널"
-
-#: ../mate-panel/panel-toplevel.c:1641
-msgid "Right Expanded Edge Panel"
-msgstr "오른쪽 확장 가장자리 패널"
-
-#: ../mate-panel/panel-toplevel.c:1642
-msgid "Right Centered Panel"
-msgstr "오른쪽 가운데 패널"
-
-#: ../mate-panel/panel-toplevel.c:1643
-msgid "Right Floating Panel"
-msgstr "오른쪽 떠다니는 패널"
-
-#: ../mate-panel/panel-toplevel.c:1644
-msgid "Right Edge Panel"
-msgstr "오른쪽 가장자리 패널"
+msgid "Right Panel"
+msgstr "오른쪽 패널"
 
 #: ../mate-panel/panel-util.c:347
 #, c-format

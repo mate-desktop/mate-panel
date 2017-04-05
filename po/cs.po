@@ -7,19 +7,22 @@
 # Lucas Lommer <drom@kdyne.net>, 2015
 # Lukáš Kvídera <lukas.kvidera@seznam.cz>, 2013
 # Martin Kříž <liberte.czech@gmail.com>, 2015
+# Martin Kříž <liberte.czech@gmail.com>, 2015
 # Michal Procházka <mich.procha@seznam.cz>, 2012
 # Michal Procházka <mich.procha@seznam.cz>, 2012
 # Michal <sinope@seznam.cz>, 2013
 # Ondřej Kolín <ondrej.kolin@gmail.com>, 2012-2013
 # Petr Šimáček <petr.simacek@gmail.com>, 2016
 # Stanislav Kučera <inactive+kacernator@transifex.com>, 2015
+# Stanislav Kučera <inactive+kacernator@transifex.com>, 2015
+# ToMáš Marný, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-25 17:32+0300\n"
-"PO-Revision-Date: 2017-01-25 14:44+0000\n"
-"Last-Translator: monsta <monsta@inbox.ru>\n"
+"POT-Creation-Date: 2017-04-03 14:36+0300\n"
+"PO-Revision-Date: 2017-04-01 16:55+0000\n"
+"Last-Translator: ToMáš Marný\n"
 "Language-Team: Czech (http://www.transifex.com/mate/MATE/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,14 +45,14 @@ msgstr "Kalendář"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:447
+#: ../applets/clock/clock.c:455
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:447 ../applets/clock/clock-location-tile.c:513
+#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:513
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
@@ -60,7 +63,7 @@ msgstr "%H:%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:452 ../applets/clock/clock.c:1605
+#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1613
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -74,7 +77,7 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:452 ../applets/clock/clock.c:1611
+#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1619
 #: ../applets/clock/clock-location-tile.c:473
 #: ../applets/clock/clock-location-tile.c:520
 msgid "%H:%M"
@@ -85,14 +88,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:463
+#: ../applets/clock/clock.c:471
 msgid "%a %b %e"
 msgstr "%a, %e. %B"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:470
+#: ../applets/clock/clock.c:478
 #, c-format
 msgid ""
 "%1$s\n"
@@ -102,7 +105,7 @@ msgstr "%1$s\n%2$s"
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:486
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -111,19 +114,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:651
+#: ../applets/clock/clock.c:659
 msgid "%A %B %d (%%s)"
 msgstr "%A, %e. %B (%%s)"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:685
 msgid "Click to hide month calendar"
 msgstr "Kliknutím se skryje měsíční kalendář"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:687
 msgid "Click to view month calendar"
 msgstr "Kliknutím se zobrazí měsíční kalendář"
 
-#: ../applets/clock/clock.c:1443
+#: ../applets/clock/clock.c:1451
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
@@ -133,7 +136,7 @@ msgstr "Počítačové hodiny"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1590
+#: ../applets/clock/clock.c:1598
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
@@ -143,96 +146,96 @@ msgstr "%H:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1598
+#: ../applets/clock/clock.c:1606
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1644
+#: ../applets/clock/clock.c:1652
 msgid "%A, %B %d %Y"
 msgstr "%A, %e. %B %Y"
 
-#: ../applets/clock/clock.c:1675
+#: ../applets/clock/clock.c:1683
 msgid "Set System Time..."
 msgstr "Nastavit systémový čas..."
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1684
 msgid "Set System Time"
 msgstr "Nastavit systémový čas"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1699
 msgid "Failed to set the system time"
 msgstr "Nezdařilo se nastavení systémového času"
 
-#: ../applets/clock/clock.c:1889 ../applets/fish/fish.c:1673
+#: ../applets/clock/clock.c:1897 ../applets/fish/fish.c:1673
 #: ../applets/wncklet/window-list.c:179
-#: ../applets/wncklet/workspace-switcher.c:227
+#: ../applets/wncklet/workspace-switcher.c:336
 msgid "_Preferences"
 msgstr "Př_edvolby"
 
-#: ../applets/clock/clock.c:1892 ../applets/fish/fish.c:1676
+#: ../applets/clock/clock.c:1900 ../applets/fish/fish.c:1676
 #: ../applets/notification_area/main.c:176
 #: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:187
 #: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:235 ../mate-panel/drawer.c:545
+#: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
 #: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "Nápo_věda"
 
-#: ../applets/clock/clock.c:1895 ../applets/fish/fish.c:1679
+#: ../applets/clock/clock.c:1903 ../applets/fish/fish.c:1679
 #: ../applets/notification_area/main.c:179
 #: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:195
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:243
+#: ../applets/wncklet/workspace-switcher.c:352
 msgid "_About"
 msgstr "O _aplikaci"
 
-#: ../applets/clock/clock.c:1898
+#: ../applets/clock/clock.c:1906
 msgid "Copy _Time"
 msgstr "Kopírova_t čas"
 
-#: ../applets/clock/clock.c:1901
+#: ../applets/clock/clock.c:1909
 msgid "Copy _Date"
 msgstr "Kopírovat _datum"
 
-#: ../applets/clock/clock.c:1904
+#: ../applets/clock/clock.c:1912
 msgid "Ad_just Date & Time"
 msgstr "_Upravit datum a čas"
 
-#: ../applets/clock/clock.c:2847
+#: ../applets/clock/clock.c:2855
 msgid "Choose Location"
 msgstr "Vybrat umístění"
 
-#: ../applets/clock/clock.c:2926
+#: ../applets/clock/clock.c:2934
 msgid "Edit Location"
 msgstr "Upravit umístění"
 
-#: ../applets/clock/clock.c:3053
+#: ../applets/clock/clock.c:3061
 msgid "City Name"
 msgstr "Název města"
 
-#: ../applets/clock/clock.c:3057
+#: ../applets/clock/clock.c:3065
 msgid "City Time Zone"
 msgstr "Časové pásmo města"
 
-#: ../applets/clock/clock.c:3272
+#: ../applets/clock/clock.c:3280
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Hodiny"
 
-#: ../applets/clock/clock.c:3274
+#: ../applets/clock/clock.c:3282
 msgid "The Clock displays the current time and date"
 msgstr "Hodiny zobrazují aktuální datum a čas"
 
-#: ../applets/clock/clock.c:3278 ../applets/fish/fish.c:575
+#: ../applets/clock/clock.c:3286 ../applets/fish/fish.c:575
 #: ../applets/notification_area/main.c:170
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:561
+#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:562
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:492
+#: ../applets/wncklet/workspace-switcher.c:604
 #: ../mate-panel/panel-context-menu.c:121
 msgid "translator-credits"
 msgstr "GIS <gis@academy.cas.cz>\nDavid Šauer <davids@penguin.cz>\nGeorge Lebl <jirka@5z.com>\nStanislav Brabec <utx@penguin.cz>\nMiloslav Trmač <mitr@volny.cz>\nPetr Tomeš <ptomes@gmail.com>\nJakub Friedl <jfriedl@suse.cz>\nPetr Kovář <pknbe@volny.cz>"
@@ -893,7 +896,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Přepínat mezi okny pomocí menu"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:485
+#: ../applets/wncklet/workspace-switcher.c:597
 msgid "Workspace Switcher"
 msgstr "Přepínač pracovních ploch"
 
@@ -902,7 +905,7 @@ msgid "Switch between workspaces"
 msgstr "Přepínat mezi pracovními plochami"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:554
+#: ../applets/wncklet/window-list.c:555
 msgid "Window List"
 msgstr "Seznam oken"
 
@@ -953,7 +956,7 @@ msgstr "Váš správce oken nepodporuje tlačítko \"Zobrazit pracovní plochu\"
 msgid "_System Monitor"
 msgstr "_Sledování systému"
 
-#: ../applets/wncklet/window-list.c:556
+#: ../applets/wncklet/window-list.c:557
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1010,17 +1013,17 @@ msgid ""
 msgstr "Výběr oken zobrazuje seznam všech oken v nabídce a umožňuje vám je procházet."
 
 #: ../applets/wncklet/workspace-switcher.c:198
-#: ../applets/wncklet/workspace-switcher.c:787
+#: ../applets/wncklet/workspace-switcher.c:899
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "řádcích"
 
 #: ../applets/wncklet/workspace-switcher.c:198
-#: ../applets/wncklet/workspace-switcher.c:787
+#: ../applets/wncklet/workspace-switcher.c:899
 msgid "columns"
 msgstr "sloupců"
 
-#: ../applets/wncklet/workspace-switcher.c:487
+#: ../applets/wncklet/workspace-switcher.c:599
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1848,7 +1851,7 @@ msgid "Cannot find an empty spot"
 msgstr "Nelze nalézt volné místo"
 
 #: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:175
-#: ../mate-panel/panel-toplevel.c:1649
+#: ../mate-panel/panel-toplevel.c:1615
 msgid "Drawer"
 msgstr "Zásuvka"
 
@@ -1875,7 +1878,7 @@ msgid "- Edit .desktop files"
 msgstr "- Upravit soubory. desktop"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:197 ../mate-panel/launcher.c:926
+#: ../mate-panel/mate-desktop-item-edit.c:197 ../mate-panel/launcher.c:928
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
@@ -1884,7 +1887,7 @@ msgstr "Vytvořit spouštěč"
 msgid "Directory Properties"
 msgstr "Vlastnosti adresáře"
 
-#: ../mate-panel/mate-desktop-item-edit.c:174 ../mate-panel/launcher.c:773
+#: ../mate-panel/mate-desktop-item-edit.c:174 ../mate-panel/launcher.c:775
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
@@ -1918,20 +1921,20 @@ msgstr "Pro soubor desktop spouštěče na panelu nebylo poskytnuto URI\n"
 #: ../mate-panel/launcher.c:465
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher\n"
-msgstr ""
+msgstr "Nelze otevřít soubor desktop %s pro spouštěč na panelu\n"
 
 #: ../mate-panel/launcher.c:533
 msgid "_Launch"
 msgstr "_Spustit"
 
-#: ../mate-panel/launcher.c:867
+#: ../mate-panel/launcher.c:869
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Klíč %s není nastaven, nelze načíst spouštěč\n"
 
-#: ../mate-panel/launcher.c:995 ../mate-panel/panel-ditem-editor.c:1327
-#: ../mate-panel/panel-ditem-editor.c:1361
-#: ../mate-panel/panel-ditem-editor.c:1392
+#: ../mate-panel/launcher.c:997 ../mate-panel/panel-ditem-editor.c:1330
+#: ../mate-panel/panel-ditem-editor.c:1364
+#: ../mate-panel/panel-ditem-editor.c:1395
 msgid "Could not save launcher"
 msgstr "Nelze uložit spouštěč"
 
@@ -2229,44 +2232,44 @@ msgstr "_Procházet..."
 msgid "Co_mment:"
 msgstr "Ko_mentář:"
 
-#: ../mate-panel/panel-ditem-editor.c:978
+#: ../mate-panel/panel-ditem-editor.c:981
 msgid "Choose an application..."
 msgstr "Zvolit aplikaci..."
 
-#: ../mate-panel/panel-ditem-editor.c:982
+#: ../mate-panel/panel-ditem-editor.c:985
 msgid "Choose a file..."
 msgstr "Zvolit soubor..."
 
-#: ../mate-panel/panel-ditem-editor.c:1147
-#: ../mate-panel/panel-ditem-editor.c:1156
+#: ../mate-panel/panel-ditem-editor.c:1150
+#: ../mate-panel/panel-ditem-editor.c:1159
 msgid "Comm_and:"
 msgstr "Pří_kaz:"
 
-#: ../mate-panel/panel-ditem-editor.c:1165
+#: ../mate-panel/panel-ditem-editor.c:1168
 msgid "_Location:"
 msgstr "_Umístění:"
 
-#: ../mate-panel/panel-ditem-editor.c:1328
+#: ../mate-panel/panel-ditem-editor.c:1331
 msgid "The name of the launcher is not set."
 msgstr "Název spouštěče není nastaven."
 
-#: ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1335
 msgid "Could not save directory properties"
 msgstr "Nelze uložit nastavení adresáře"
 
-#: ../mate-panel/panel-ditem-editor.c:1333
+#: ../mate-panel/panel-ditem-editor.c:1336
 msgid "The name of the directory is not set."
 msgstr "Název adresáře není nastaven."
 
-#: ../mate-panel/panel-ditem-editor.c:1349
+#: ../mate-panel/panel-ditem-editor.c:1352
 msgid "The command of the launcher is not set."
 msgstr "Příkaz spouštěče není nastaven."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1355
 msgid "The location of the launcher is not set."
 msgstr "Umístění spouštěče není nastaveno."
 
-#: ../mate-panel/panel-ditem-editor.c:1429
+#: ../mate-panel/panel-ditem-editor.c:1432
 msgid "Could not display help document"
 msgstr "Nelze zobrazit dokument nápovědy"
 
@@ -2755,69 +2758,21 @@ msgstr "Skrýt panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1620
-msgid "Top Expanded Edge Panel"
-msgstr "Rozpínací hranový panel nahoře"
-
-#: ../mate-panel/panel-toplevel.c:1621
-msgid "Top Centered Panel"
-msgstr "Panel nahoře uprostřed"
-
-#: ../mate-panel/panel-toplevel.c:1622
-msgid "Top Floating Panel"
-msgstr "Plovoucí panel nahoře"
+#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+msgid "Top Panel"
+msgstr "Horní panel"
 
 #: ../mate-panel/panel-toplevel.c:1623
-msgid "Top Edge Panel"
-msgstr "Hranový panel nahoře"
+msgid "Bottom Panel"
+msgstr "Spodní panel"
+
+#: ../mate-panel/panel-toplevel.c:1625
+msgid "Left Panel"
+msgstr "Levý panel"
 
 #: ../mate-panel/panel-toplevel.c:1627
-msgid "Bottom Expanded Edge Panel"
-msgstr "Rozpínací hranový panel dole"
-
-#: ../mate-panel/panel-toplevel.c:1628
-msgid "Bottom Centered Panel"
-msgstr "Panel dole uprostřed"
-
-#: ../mate-panel/panel-toplevel.c:1629
-msgid "Bottom Floating Panel"
-msgstr "Plovoucí panel dole"
-
-#: ../mate-panel/panel-toplevel.c:1630
-msgid "Bottom Edge Panel"
-msgstr "Hranový panel dole"
-
-#: ../mate-panel/panel-toplevel.c:1634
-msgid "Left Expanded Edge Panel"
-msgstr "Rozpínací hranový panel vlevo"
-
-#: ../mate-panel/panel-toplevel.c:1635
-msgid "Left Centered Panel"
-msgstr "Panel vlevo uprostřed"
-
-#: ../mate-panel/panel-toplevel.c:1636
-msgid "Left Floating Panel"
-msgstr "Plovoucí panel vlevo"
-
-#: ../mate-panel/panel-toplevel.c:1637
-msgid "Left Edge Panel"
-msgstr "Hranový panel vlevo"
-
-#: ../mate-panel/panel-toplevel.c:1641
-msgid "Right Expanded Edge Panel"
-msgstr "Rozpínací hranový panel vpravo"
-
-#: ../mate-panel/panel-toplevel.c:1642
-msgid "Right Centered Panel"
-msgstr "Panel vpravo uprostřed"
-
-#: ../mate-panel/panel-toplevel.c:1643
-msgid "Right Floating Panel"
-msgstr "Plovoucí panel vpravo"
-
-#: ../mate-panel/panel-toplevel.c:1644
-msgid "Right Edge Panel"
-msgstr "Hranový panel vpravo"
+msgid "Right Panel"
+msgstr "Pravý panel"
 
 #: ../mate-panel/panel-util.c:347
 #, c-format
