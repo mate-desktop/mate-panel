@@ -243,14 +243,19 @@ na_box_realize (GtkWidget *widget)
   NaBox *self = NA_BOX (widget);
   GdkScreen *screen;
   GtkOrientation orientation;
+  NaHost *tray_host;
 
   GTK_WIDGET_CLASS (na_box_parent_class)->realize (widget);
 
   /* Instantiate the hosts now we have a screen */
   screen = gtk_widget_get_screen (GTK_WIDGET (self));
   orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
+  tray_host = na_tray_new_for_screen (screen, orientation);
+  g_object_bind_property (self, "orientation",
+                          tray_host, "orientation",
+                          G_BINDING_DEFAULT);
 
-  add_host (self, na_tray_new_for_screen (screen, orientation));
+  add_host (self, tray_host);
   add_host (self, sn_host_v0_new ());
 }
 
