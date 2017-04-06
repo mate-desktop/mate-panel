@@ -106,15 +106,15 @@ item_added_cb (NaHost *host,
   g_return_if_fail (NA_IS_ITEM (item));
   g_return_if_fail (NA_IS_BOX (self));
 
+  g_object_bind_property (self, "orientation",
+                          item, "orientation",
+                          G_BINDING_SYNC_CREATE);
+
   self->items = g_slist_prepend (self->items, item);
   gtk_box_pack_start (GTK_BOX (self), GTK_WIDGET (item), FALSE, FALSE, 0);
 
   self->items = g_slist_sort (self->items, compare_items);
   gtk_container_foreach (GTK_CONTAINER (self), reorder_items, self);
-
-  g_object_bind_property (self, "orientation",
-                          item, "orientation",
-                          G_BINDING_DEFAULT);
 }
 
 static void
