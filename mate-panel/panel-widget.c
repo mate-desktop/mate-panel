@@ -1285,15 +1285,7 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 		g_free (panel->applets_using_hint);
 	panel->applets_using_hint = NULL;
 
-	if (!panel->packed) {
-		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-			minimum_size->width = panel->size;
-			natural_size->width = panel->size;
-		} else {
-			minimum_size->height = panel->size;
-			natural_size->height = panel->size;
-		}
-	} else {
+	if (panel->packed) {
 		/* put the list in the correct order: this is important
 		 * since we'll use this order in the size_allocate() */
 		ad_with_hints = g_list_reverse (ad_with_hints);
