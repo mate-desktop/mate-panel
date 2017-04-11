@@ -1334,17 +1334,13 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *minimum_size)
 	panel->applets_using_hint = NULL;
 
 	if (!panel->packed) {
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			minimum_size->width = panel->size;
-#if GTK_CHECK_VERSION (3, 0, 0)
-			natural_size->width = panel->size;
-#endif
 		} else {
 			minimum_size->height = panel->size;
-#if GTK_CHECK_VERSION (3, 0, 0)
-			natural_size->height = panel->size;
-#endif
 		}
+#endif
 	} else {
 		/* put the list in the correct order: this is important
 		 * since we'll use this order in the size_allocate() */
