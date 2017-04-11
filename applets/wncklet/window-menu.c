@@ -73,7 +73,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 	};
 
 	char copyright[] = \
-		"Copyright \xc2\xa9 2012-2016 MATE developers\n"
+		"Copyright \xc2\xa9 2012-2017 MATE developers\n"
 		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 		"Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"

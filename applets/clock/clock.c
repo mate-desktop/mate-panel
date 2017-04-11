@@ -3273,7 +3273,7 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
         };
 
         char copyright[] = \
-                "Copyright \xc2\xa9 2012-2016 MATE developers\n"
+                "Copyright \xc2\xa9 2012-2017 MATE developers\n"
                 "Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.";
 
         gtk_show_about_dialog(NULL,
