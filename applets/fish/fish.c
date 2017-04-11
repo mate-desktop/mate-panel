@@ -557,7 +557,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 	char* descr;
 	char copyright[] = \
 		"Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.\n"
-		"Copyright \xc2\xa9 2012-2016 MATE developers";
+		"Copyright \xc2\xa9 2012-2017 MATE developers";
 
 	authors[0] = g_strdup_printf(author_format, fish->name);
 	authors[1] = _("(with minor help from George)");

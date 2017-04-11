@@ -505,7 +505,7 @@ static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)
 	/* Translator credits */
 	//const char* translator_credits = _("translator-credits");
 	char copyright[] = \
-		"Copyright \xc2\xa9 2012-2016 MATE developers\n"
+		"Copyright \xc2\xa9 2012-2017 MATE developers\n"
 		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 

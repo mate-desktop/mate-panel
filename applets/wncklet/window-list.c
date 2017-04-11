@@ -547,7 +547,7 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 	};
 
 	char copyright[] = \
-		"Copyright \xc2\xa9 2012-2016 MATE developers\n"
+		"Copyright \xc2\xa9 2012-2017 MATE developers\n"
 		"Copyright \xc2\xa9 2011 Perberos\n"
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
 
