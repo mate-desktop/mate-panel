@@ -238,7 +238,6 @@ update (SnItemV0 *v0)
   AtkObject *accessible;
   GtkImage *image;
   SnTooltip *tip;
-  gboolean visible;
   gint icon_size;
 
   g_return_if_fail (SN_IS_ITEM_V0 (v0));
@@ -314,8 +313,8 @@ update (SnItemV0 *v0)
   else
     atk_object_set_name (accessible, v0->id);
 
-  visible = g_strcmp0 (v0->status, "Passive") != 0;
-  gtk_widget_set_visible (GTK_WIDGET (v0), visible);
+  /* TODO: hide "Passive" items with a setting? */
+  gtk_widget_set_visible (GTK_WIDGET (v0), TRUE);
 }
 
 static gboolean
