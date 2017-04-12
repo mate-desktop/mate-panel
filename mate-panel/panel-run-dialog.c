@@ -114,22 +114,23 @@ static void panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog);
 
 #define PANEL_RUN_SCHEMA "org.mate.panel"
 #define PANEL_RUN_HISTORY_KEY "history-mate-run"
+#define PANEL_RUN_HISTORY_MAX_SIZE_KEY "history-max-size-mate-run"
 #define PANEL_RUN_SHOW_PROGRAM_LIST_KEY "show-program-list"
-#define PANEL_RUN_MAX_HISTORY 10
 
 static GtkTreeModel *
 _panel_run_get_recent_programs_list (PanelRunDialog *dialog)
 {
 	GtkListStore *list;
 	gchar       **items;
-	int           i = 0;
+	guint         history_max_size;
+	guint         i = 0;
 
 	list = gtk_list_store_new (1, G_TYPE_STRING);
 
+	history_max_size = g_settings_get_uint (dialog->settings, PANEL_RUN_HISTORY_MAX_SIZE_KEY);
 	items = g_settings_get_strv (dialog->settings, PANEL_RUN_HISTORY_KEY);
-
 	for (i = 0;
-	     items[i] && i < PANEL_RUN_MAX_HISTORY;
+	     items[i] && i < history_max_size;
 	     i++) {
 		GtkTreeIter iter;
 		gtk_list_store_append (list, &iter);
@@ -149,30 +150,36 @@ _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
 	GtkTreeModel *model;
 	GtkTreeIter   iter;
 	GArray       *items;
-	gint          i = 0;
+	guint         history_max_size;
+	guint         i = 0;
 
-	items = g_array_new (TRUE, TRUE, sizeof (gchar *));
-	g_array_append_val (items, lastcommand);
-	i++;
+	history_max_size = g_settings_get_uint (dialog->settings, PANEL_RUN_HISTORY_MAX_SIZE_KEY);
 
-	model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
+	if (history_max_size > 0) {
+		items = g_array_new (TRUE, TRUE, sizeof (gchar *));
+		g_array_append_val (items, lastcommand);
+		i++;
 
-	if (gtk_tree_model_get_iter_first (model, &iter)) {
-		char *command;
-		do {
-			gtk_tree_model_get (model, &iter, 0, &command, -1);
-			if (g_strcmp0 (command, lastcommand) == 0)
-				continue;
-			g_array_append_val (items, command);
-			i++;
-		} while (gtk_tree_model_iter_next (model, &iter) &&
-			 i < PANEL_RUN_MAX_HISTORY);
+		model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
+
+		if (gtk_tree_model_get_iter_first (model, &iter)) {
+			char *command;
+			do {
+				gtk_tree_model_get (model, &iter, 0, &command, -1);
+				if (g_strcmp0 (command, lastcommand) == 0)
+					continue;
+				g_array_append_val (items, command);
+				i++;
+			} while (gtk_tree_model_iter_next (model, &iter) &&
+				 i < history_max_size);
+		}
+
+		g_settings_set_strv (dialog->settings, PANEL_RUN_HISTORY_KEY,
+				     (const gchar **) items->data);
+
+		g_array_free (items, TRUE);
+
 	}
-
-	g_settings_set_strv (dialog->settings, PANEL_RUN_HISTORY_KEY,
-			     (const gchar **) items->data);
-
-	g_array_free (items, TRUE);
 }
 
 static void
