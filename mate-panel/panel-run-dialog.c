@@ -132,7 +132,7 @@ _panel_run_get_recent_programs_list (PanelRunDialog *dialog)
 	     items[i] && i < PANEL_RUN_MAX_HISTORY;
 	     i++) {
 		GtkTreeIter iter;
-		gtk_list_store_prepend (list, &iter);
+		gtk_list_store_append (list, &iter);
 		gtk_list_store_set (list, &iter, 0, items[i], -1);
 	}
 
