@@ -185,7 +185,8 @@ _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
 		}
 
 		if (history_reverse) {
-			for (guint pos = 0; pos < items_added / 2; pos++)
+			guint pos;
+			for (pos = 0; pos < items_added / 2; pos++)
 			{
 				gchar const * tmp = items[pos + 1];
 				items[pos + 1] = items[items_added - pos];
