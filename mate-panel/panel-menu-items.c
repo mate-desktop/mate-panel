@@ -57,7 +57,6 @@
 #include "panel-util.h"
 #include "panel-schemas.h"
 
-#define BOOKMARKS_FILENAME      ".gtk-bookmarks"
 #define MAX_BOOKMARK_ITEMS      100
 
 G_DEFINE_TYPE(PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
@@ -367,8 +366,8 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_
 	GSList      *add_bookmarks, *l;
 	PanelBookmark *bookmark;
 
-	filename = g_build_filename (g_get_home_dir (),
-				     BOOKMARKS_FILENAME, NULL);
+	filename = g_build_filename (g_get_user_config_dir (),
+				     "gtk-3.0", "bookmarks", NULL);
 
 	io_channel = g_io_channel_new_file (filename, "r", NULL);
 	g_free (filename);
@@ -1387,8 +1386,8 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
-	bookmarks_filename = g_build_filename (g_get_home_dir (),
-					       BOOKMARKS_FILENAME, NULL);
+	bookmarks_filename = g_build_filename (g_get_user_config_dir (),
+					       "gtk-3.0", "bookmarks", NULL);
 	bookmark = g_file_new_for_path (bookmarks_filename);
 
 	error = NULL;
