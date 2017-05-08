@@ -869,7 +869,7 @@ g_signal_cb (GDBusProxy *proxy,
   else if (g_strcmp0 (signal_name, "NewIconThemePath") == 0)
     new_icon_theme_path_cb (v0, parameters);
   else
-    g_assert_not_reached ();
+    g_debug ("signal '%s' not handled!", signal_name);
 }
 
 static void
