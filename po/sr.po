@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2014-2015
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2014-2015,2017
 # Мирослав Николић <miroslavnikolic@rocketmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-03 14:36+0300\n"
-"PO-Revision-Date: 2017-03-30 12:54+0000\n"
-"Last-Translator: monsta <monsta@inbox.ru>\n"
+"POT-Creation-Date: 2017-04-26 11:42+0300\n"
+"PO-Revision-Date: 2017-05-01 04:44+0000\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/mate/MATE/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,7 +79,7 @@ msgstr "%H:%M"
 #. * instead of "May  1").
 #: ../applets/clock/clock.c:471
 msgid "%a %b %e"
-msgstr "%a., %e. %b"
+msgstr "%a., %e. %B"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -170,7 +170,7 @@ msgstr "_Поставке"
 #: ../applets/wncklet/window-menu.c:100
 #: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
-#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
+#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:359
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "По_моћ"
@@ -1102,88 +1102,111 @@ msgid "History for \"Run Application\" dialog"
 msgstr "Историјат у прозорчету за покретање програма"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:10
-msgid "This is the list of commands used in \"Run Application\" dialog."
-msgstr "Приказује списак наредби које су раније коришћене у прозорчету за покретање програма."
+msgid ""
+"This is the list of commands used in \"Run Application\" dialog. The "
+"commands are sorted descendingly by recency (e.g., most recent command comes"
+" first)."
+msgstr "Ово је списак наредби коришћених у прозорчету „Покрени програм“. Наредбе су поређане опадајућим редом почевши од скоријих (тј. недавно коришћене наредбе су на првом месту)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
+msgid "Maximum history size for \"Run Application\" dialog"
+msgstr "Највећа величина историјата у прозорчету за покретање програма"
+
+#: ../data/org.mate.panel.gschema.xml.in.h:12
+msgid ""
+"Controls the maximum size of the history of the \"Run Application\" dialog. "
+"A value of 0 will disable the history."
+msgstr "Управља највећом величином историјата у прозорчету „Покрени програм“. 0 искључује историјат."
+
+#: ../data/org.mate.panel.gschema.xml.in.h:13
+msgid "Reverse the history of the \"Run Application\" dialog"
+msgstr "Обрнутост историјата у прозорчету за покретање програма"
+
+#: ../data/org.mate.panel.gschema.xml.in.h:14
+msgid ""
+"Displays the history in reverse. Provides a consistent view for terminal "
+"users as the up key will select the most recent entry."
+msgstr "Приказује историјат обрнутим редом. Обезбеђује доследан преглед за кориснике терминала где тастер стрелице на горе бира најновији унос."
+
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
 msgstr "Списак ИБ-а панела"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "Списак ИБ-а панела. Сваки ИБ одређује један панел првог нивоа. Подешавања за сваки од ових панела се налазе у „/apps/panel/toplevels/$(id)“."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
 msgstr "Списак ИБ-а предмета на панелу"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "Списак ИБ-а предмета на панелу. Сваки ИБ одређује један предмет на панелу (нпр. покретач, дугме радње или траку/дугме са изборником). Подешавања за сваки предмет се налазе у „/apps/panel/objects/$(id)“."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
 msgstr "Укључује облачиће упутства"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Уколико је постављено, приказују се кратка упутства за објекте на панелу."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "Укључује анимације"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Autoclose drawer"
 msgstr "Самозатварајућа фиока"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "Уколико је постављено, фиока ће се сама затворити када корисник кликне покретач на њој."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
 msgstr "Потврђује уклањање панела"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "Уколико је постављено, приказује се прозорче у којем се тражи одобрење корисника за уклањање панела."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
 msgstr "Осветли покретаче при преласку мишем"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "Уколико је постављено, покретач се осветљава када корисник пређе мишем преко њега."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
 msgstr "Потпуно закључавање панела"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "Уколико је постављено, панел неће дозволити измене у подешавањима панела. Појединачни програмчићи се могу засебно закључати. Панел мора бити поново покренут да би ово ступило на снагу."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
 msgstr "ИИБ-ови програмчета за искључивање учитавања"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:31
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1191,11 +1214,11 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "Списак ИИБ-ова програмчића које ће панел занемаривати. На овај начин можете да спречите учитавање или приказивање у изборнику неких програмчића. На пример, да искључите програмче мали-наредник, додајте „OAFIID:MATE_MiniCommanderApplet“ у овај списак. Панел мора бити поново покренут да би ово ступило на снагу."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
 msgstr "Искључује принудно затварање"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:33
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2293,7 +2316,7 @@ msgstr "Промените изглед и понашање радног про�
 msgid "Applications"
 msgstr "Програми"
 
-#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:672
+#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:672
 msgid "_Edit Menus"
 msgstr "_Уреди изборнике"
 
@@ -2430,7 +2453,7 @@ msgid "Drawer Properties"
 msgstr "Особине фиоке"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1947
+#: ../mate-panel/panel-run-dialog.c:1970
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Не могу да учитам датотеку „%s“: %s."
@@ -2578,35 +2601,35 @@ msgstr "Очисти скорашње документе..."
 msgid "Clear all items from the recent documents list"
 msgstr "Очистите све ставке из списка скорашњих докумената"
 
-#: ../mate-panel/panel-run-dialog.c:394
+#: ../mate-panel/panel-run-dialog.c:417
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Не могу да покренем наредбу „%s“"
 
-#: ../mate-panel/panel-run-dialog.c:434
+#: ../mate-panel/panel-run-dialog.c:457
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Не могу да претворим „%s“ из УТФ-8"
 
-#: ../mate-panel/panel-run-dialog.c:1181
+#: ../mate-panel/panel-run-dialog.c:1204
 msgid "Choose a file to append to the command..."
 msgstr "Изаберите датотеку коју желите да придодате наредби..."
 
-#: ../mate-panel/panel-run-dialog.c:1559 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1582 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Изаберите програм да видите његов опис."
 
-#: ../mate-panel/panel-run-dialog.c:1597
+#: ../mate-panel/panel-run-dialog.c:1620
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Извршићу наредбу: „%s“"
 
-#: ../mate-panel/panel-run-dialog.c:1630
+#: ../mate-panel/panel-run-dialog.c:1653
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Списак адреса пуштен на прозорче за покретање је био неисправног облика (%d) или дужине (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:1952
+#: ../mate-panel/panel-run-dialog.c:1975
 msgid "Could not display run dialog"
 msgstr "Не могу да прикажем прозорче покретања"
 
@@ -2749,24 +2772,24 @@ msgstr "Сакриј панел"
 #. * popup when you pass the focus to a panel
 #: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
 msgid "Top Panel"
-msgstr ""
+msgstr "Горњи панел"
 
 #: ../mate-panel/panel-toplevel.c:1623
 msgid "Bottom Panel"
-msgstr ""
+msgstr "Доњи панел"
 
 #: ../mate-panel/panel-toplevel.c:1625
 msgid "Left Panel"
-msgstr ""
+msgstr "Леви панел"
 
 #: ../mate-panel/panel-toplevel.c:1627
 msgid "Right Panel"
-msgstr ""
+msgstr "Десни панел"
 
 #: ../mate-panel/panel-util.c:347
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "Иконица „%s“ није нађена"
+msgstr "Нисам нашао иконицу „%s“"
 
 #: ../mate-panel/panel-util.c:465
 #, c-format

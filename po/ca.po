@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-03 14:36+0300\n"
-"PO-Revision-Date: 2017-03-30 18:17+0000\n"
+"POT-Creation-Date: 2017-04-26 11:42+0300\n"
+"PO-Revision-Date: 2017-04-26 12:51+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/mate/MATE/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -171,7 +171,7 @@ msgstr "_Preferències"
 #: ../applets/wncklet/window-menu.c:100
 #: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
-#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
+#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:359
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "A_juda"
@@ -1103,88 +1103,111 @@ msgid "History for \"Run Application\" dialog"
 msgstr "Historial per al diàleg «Executa l'aplicació»"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:10
-msgid "This is the list of commands used in \"Run Application\" dialog."
-msgstr "Aquest és el llistat de les ordres utilitzades al diàleg «Executa l'aplicació»."
+msgid ""
+"This is the list of commands used in \"Run Application\" dialog. The "
+"commands are sorted descendingly by recency (e.g., most recent command comes"
+" first)."
+msgstr "Aquesta és la llista de les ordres utilitzades al diàleg «Executa l'aplicació». Les ordres estan ordenades en ordre descendent per immediatesa (p. ex. l'ordre més recent va primer)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
+msgid "Maximum history size for \"Run Application\" dialog"
+msgstr "Mida màxima de l'historial per al diàleg «Executa l'aplicació»"
+
+#: ../data/org.mate.panel.gschema.xml.in.h:12
+msgid ""
+"Controls the maximum size of the history of the \"Run Application\" dialog. "
+"A value of 0 will disable the history."
+msgstr "Controla la mida màxima de l'historial per al diàleg «Executa l'aplicació». Un valor de 0 inhabilitarà l'historial."
+
+#: ../data/org.mate.panel.gschema.xml.in.h:13
+msgid "Reverse the history of the \"Run Application\" dialog"
+msgstr "Capgira l'historial per al diàleg «Executa l'aplicació»"
+
+#: ../data/org.mate.panel.gschema.xml.in.h:14
+msgid ""
+"Displays the history in reverse. Provides a consistent view for terminal "
+"users as the up key will select the most recent entry."
+msgstr "Mostra l'historial a l'inrevés. Proporciona una visualització consistent per als usuaris de terminals, com la tecla amunt, seleccionarà l'entrada més recent."
+
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
 msgstr "Llista dels id. dels taulers"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "Una llista dels id. dels taulers. Cada id. identifica un tauler individual de nivell superior. Els ajusts per a cada un d'aquests taulers s'emmagatzema a /apps/panel/toplevels/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
 msgstr "Llista dels id. dels objectes del tauler"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "Una llista dels id. dels objectes del tauler. Cada id. identifica un objecte individual del tauler. Els ajusts per a cada un d'aquests objectes s'emmagatzema a /apps/panel/objects/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
 msgstr "Habilita els rètols indicadors"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "En cas que fos cert, als taulers es mostraran els rètols indicadors per als objectes."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "Habilita les animacions"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Autoclose drawer"
 msgstr "Tanca automàticament els calaixos"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "En cas que fos cert, els calaixos es tancaran automàticament quan l'usuari faci clic en un llançador de dins."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
 msgstr "Confirma la supressió del tauler"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "En cas que fos cert, es mostra un diàleg demanant confirmació si l'usuari vol suprimir un tauler."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
 msgstr "Ressalta els llançadors si hi ha el ratolí al damunt"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "En cas que fos cert, els llançadors es ressaltaran quan l'usuari posi el punter damunt seu."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
 msgstr "Bloqueig complet del tauler"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "En cas que fos cert, el tauler no permetrà cap canvi en la seva configuració. Tot i així, pot ser necessari bloquejar algunes miniaplicacions individuals per separat. El tauler s'ha de reiniciar perquè això tingui efecte."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
 msgstr "Els id. de les miniaplicacions que no es carregaran"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:31
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1192,11 +1215,11 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "Una llista dels id. de les miniaplicacions que el tauler ignorarà. D'aquesta manera podeu inhabilitar que certes miniaplicacions es carreguin o es mostrin al menú. Per exemple, per inhabilitar la miniaplicació mini-commander afegiu «OAFIID:MATE_MiniCommanderApplet» a aquesta llista. S'ha de tornar a iniciar el tauler perquè tingui efecte."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
 msgstr "Inhabilita la sortida forçada"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:33
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2294,7 +2317,7 @@ msgstr "Canvieu l'aparença de l'escriptori o el comportament, obtingueu ajuda o
 msgid "Applications"
 msgstr "Aplicacions"
 
-#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:672
+#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:672
 msgid "_Edit Menus"
 msgstr "_Edita els menús"
 
@@ -2431,7 +2454,7 @@ msgid "Drawer Properties"
 msgstr "Propietats del calaix"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1947
+#: ../mate-panel/panel-run-dialog.c:1970
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "No es pot carregar el fitxer «%s»: %s."
@@ -2579,35 +2602,35 @@ msgstr "Neteja la llista dels documents recents..."
 msgid "Clear all items from the recent documents list"
 msgstr "Voleu netejar tots els elements de la llista dels documents recents?"
 
-#: ../mate-panel/panel-run-dialog.c:394
+#: ../mate-panel/panel-run-dialog.c:417
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "No s'ha pogut executar l'ordre «%s»"
 
-#: ../mate-panel/panel-run-dialog.c:434
+#: ../mate-panel/panel-run-dialog.c:457
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "No s'ha pogut convertir «%s» d'UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1181
+#: ../mate-panel/panel-run-dialog.c:1204
 msgid "Choose a file to append to the command..."
 msgstr "Seleccioneu un fitxer a afegir a l'ordre..."
 
-#: ../mate-panel/panel-run-dialog.c:1559 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1582 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Seleccioneu una aplicació per veure la seva descripció."
 
-#: ../mate-panel/panel-run-dialog.c:1597
+#: ../mate-panel/panel-run-dialog.c:1620
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "S'executarà l'ordre: «%s»"
 
-#: ../mate-panel/panel-run-dialog.c:1630
+#: ../mate-panel/panel-run-dialog.c:1653
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "L'URI deixat al diàleg d'execució té un format (%d) o mida (%d) errònies\n"
 
-#: ../mate-panel/panel-run-dialog.c:1952
+#: ../mate-panel/panel-run-dialog.c:1975
 msgid "Could not display run dialog"
 msgstr "No s'ha pogut mostrar el diàleg d'execució"
 

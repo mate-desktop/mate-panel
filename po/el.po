@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-03 14:36+0300\n"
-"PO-Revision-Date: 2017-04-01 22:12+0000\n"
+"POT-Creation-Date: 2017-04-26 11:42+0300\n"
+"PO-Revision-Date: 2017-04-28 21:48+0000\n"
 "Last-Translator: Αλέξανδρος Καπετάνιος <alexandros@gnugr.org>\n"
 "Language-Team: Greek (http://www.transifex.com/mate/MATE/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -176,7 +176,7 @@ msgstr "_Προτιμήσεις"
 #: ../applets/wncklet/window-menu.c:100
 #: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
-#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
+#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:359
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "_Βοήθεια"
@@ -1108,88 +1108,111 @@ msgid "History for \"Run Application\" dialog"
 msgstr "Ιστορικό για το διάλογο \"Εκτέλεση Εφαρμογής\""
 
 #: ../data/org.mate.panel.gschema.xml.in.h:10
-msgid "This is the list of commands used in \"Run Application\" dialog."
-msgstr "Αυτή είναι η λίστα με τις εντολές που χρησιμοποιούνται στον διάλογο \"Εκτέλεση Εφαρμογής\""
+msgid ""
+"This is the list of commands used in \"Run Application\" dialog. The "
+"commands are sorted descendingly by recency (e.g., most recent command comes"
+" first)."
+msgstr "Αυτή είναι η λίστα των εντολών που χρησιμοποιούνται στο παράθυρο διαλόγου \"Εκτέλεση εφαρμογής\". Οι εντολές ταξινομούνται κατά φθίνουσα σειρά από την πρόσφατη (π.χ., η πιο πρόσφατη εντολή έρχεται πρώτη)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
+msgid "Maximum history size for \"Run Application\" dialog"
+msgstr "Μέγιστο μέγεθος ιστορικού για το παράθυρο διαλόγου \"Εκτέλεση εφαρμογής\""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:12
+msgid ""
+"Controls the maximum size of the history of the \"Run Application\" dialog. "
+"A value of 0 will disable the history."
+msgstr "Ελέγχει το μέγιστο μέγεθος του ιστορικού του παραθύρου διαλόγου \"Εκτέλεση εφαρμογής\". Μια τιμή 0 θα απενεργοποιήσει το ιστορικό."
+
+#: ../data/org.mate.panel.gschema.xml.in.h:13
+msgid "Reverse the history of the \"Run Application\" dialog"
+msgstr "Αντιστρέψτε το ιστορικό του παραθύρου διαλόγου \"Εκτέλεση εφαρμογής\""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:14
+msgid ""
+"Displays the history in reverse. Provides a consistent view for terminal "
+"users as the up key will select the most recent entry."
+msgstr "Εμφανίζει το ιστορικό αντίστροφα. Παρέχει μια συνεπή προβολή για τους χρήστες τερματικών, καθώς το πλήκτρο επάνω θα επιλέξει την πιο πρόσφατη καταχώρηση."
+
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
 msgstr "Λίστα ταυτότητας πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "Μια λίστα από IDs πίνακα εφαρμογών. Κάθε ID πιστοποιεί ένα ανεξάρτητο πίνακα εφαρμογών. Οι ρυθμίσεις για κάθε έναν από αυτούς τους πίνακες εφαρμογών αποθηκεύονται στο /apps/panel/toplevels/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
 msgstr "Μια λίστα IDs αντικειμένων πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "Μια λίστα IDs αντικειμένων πίνακα εφαρμογών. Κάθε ID πιστοποιεί ένα ανεξάρτητο αντικείμενο πίνακα εφαρμογών (π.χ. ένα εκκινητή, κουμπί εκτέλεσης ή κουμπί μενού). Οι ρυθμίσεις για κάθε από αυτά τα αντικείμενα αποθηκεύονται στο /apps/panel/objects/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
 msgstr "Ενεργοποίηση συμβουλών οθόνης"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Αν αληθές, οι συμβουλές οθόνης εμφανίζονται για τα αντικείμενα στους πίνακες εφαρμογών."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "Ενεργοποίηση κινούμενων σχεδίων"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Autoclose drawer"
 msgstr "Αυτόματο κλείσιμο συρταριού"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "Αν αληθές, το συρτάρι θα κλείνει αυτόματα όταν ο χρήστης κάνει κλικ σε έναν εκκινητή που βρίσκεται στο συρτάρι."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
 msgstr "Επιβεβαίωση αφαίρεσης πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "Αν αληθές, εμφανίζεται ένας διάλογος που ζητά την επιβεβαίωση αν ο χρήστης θέλει να αφαιρέσει τον πίνακα εφαρμογών."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
 msgstr "Επισήμανση εκκινητών με το πέρασμα του ποντικιού"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "Αν αληθές, θα επισημαίνεται ο εκκινητής όταν ο χρήστης μετακινεί το ποντίκι από πάνω του."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
 msgstr "Ολοκληρωτικό κλείδωμα πίνακα εφαρμογών"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "Αν αληθές, ο πίνακας εφαρμογών δεν θα επιτρέπει αλλαγές στη ρύθμιση του. Οι ξεχωριστές μικροεφαρμογές θα πρέπει να κλειδωθούν ξεχωριστά. Ο πίνακας εφαρμογών θα πρέπει να επανεκκινήσει για να εφαρμοστούν οι αλλαγές."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
 msgstr "IIDs μικροεφαρμογών για απενεργοποίηση από τη φόρτωση"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:31
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1197,11 +1220,11 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "Μια λίστα από IIDs μικροεφαρμογών που ο πίνακας εφαρμογών θα αγνοήσει. Με αυτό τον τρόπο θα απενεργοποιήσετε κάποιες μικροεφαρμογές από το να φορτώνονται και να φαίνονται στο μενού. Για παράδειγμα για να απενεργοποιήσετε τη μικροεφαρμογή mini-commander προσθέστε στη λίστα 'OAFIID:MATE_MiniCommanderApplet'. Ο πίνακας εφαρμογών θα πρέπει να επανεκκινήσει για να εφαρμοστούν οι αλλαγές."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
 msgstr "Απενεργοποίηση Εξαναγκασμού εξόδου"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:33
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2299,7 +2322,7 @@ msgstr "Αλλαγή της εμφάνισης και της συμπεριφο�
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:672
+#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:672
 msgid "_Edit Menus"
 msgstr "Επε_ξεργασία μενού"
 
@@ -2436,7 +2459,7 @@ msgid "Drawer Properties"
 msgstr "Ιδιότητες συρταριού"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1947
+#: ../mate-panel/panel-run-dialog.c:1970
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Αποτυχία φόρτωσης αρχείου '%s': %s."
@@ -2584,35 +2607,35 @@ msgstr "Εκκαθάριση πρόσφατων εγγράφων..."
 msgid "Clear all items from the recent documents list"
 msgstr "Εκκαθάριση όλων των αντικειμένων από τη λίστα προσφάτων εγγράφων"
 
-#: ../mate-panel/panel-run-dialog.c:394
+#: ../mate-panel/panel-run-dialog.c:417
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Αδύνατη η εκτέλεση της εντολής '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:434
+#: ../mate-panel/panel-run-dialog.c:457
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Αδυναμία μετατροπής '%s' από UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1181
+#: ../mate-panel/panel-run-dialog.c:1204
 msgid "Choose a file to append to the command..."
 msgstr "Επιλέξτε ένα αρχείο για συσχέτιση με την εντολή..."
 
-#: ../mate-panel/panel-run-dialog.c:1559 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1582 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Επιλογή μιας εφαρμογής για την προβολή της περιγραφής της."
 
-#: ../mate-panel/panel-run-dialog.c:1597
+#: ../mate-panel/panel-run-dialog.c:1620
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Θα εκτελεστεί η εντολή: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1630
+#: ../mate-panel/panel-run-dialog.c:1653
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Η λίστα URI στο διάλογο εκτέλεσης έχει εσφαλμένη μορφή (%d) ή μάκρος (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:1952
+#: ../mate-panel/panel-run-dialog.c:1975
 msgid "Could not display run dialog"
 msgstr "Αδυναμία εμφάνισης διαλόγου εκτέλεσης"
 

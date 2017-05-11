@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-03 14:36+0300\n"
-"PO-Revision-Date: 2017-03-30 12:54+0000\n"
+"POT-Creation-Date: 2017-04-26 11:42+0300\n"
+"PO-Revision-Date: 2017-04-26 08:43+0000\n"
 "Last-Translator: monsta <monsta@inbox.ru>\n"
 "Language-Team: Crimean Turkish (http://www.transifex.com/mate/MATE/language/crh/)\n"
 "MIME-Version: 1.0\n"
@@ -168,7 +168,7 @@ msgstr "Tercih_ler"
 #: ../applets/wncklet/window-menu.c:100
 #: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
-#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
+#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:359
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "_Yardım"
@@ -1100,88 +1100,111 @@ msgid "History for \"Run Application\" dialog"
 msgstr ""
 
 #: ../data/org.mate.panel.gschema.xml.in.h:10
-msgid "This is the list of commands used in \"Run Application\" dialog."
+msgid ""
+"This is the list of commands used in \"Run Application\" dialog. The "
+"commands are sorted descendingly by recency (e.g., most recent command comes"
+" first)."
 msgstr ""
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
+msgid "Maximum history size for \"Run Application\" dialog"
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:12
+msgid ""
+"Controls the maximum size of the history of the \"Run Application\" dialog. "
+"A value of 0 will disable the history."
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:13
+msgid "Reverse the history of the \"Run Application\" dialog"
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:14
+msgid ""
+"Displays the history in reverse. Provides a consistent view for terminal "
+"users as the up key will select the most recent entry."
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
 msgstr "Panel kimligi cedveli"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "Panel kimlikleriniñ cedveli. Er kimlik ferdiy bir üst-seviye panelni kimliklendirir. Bu panellerniñ er biri içün tesbitler /apps/panel/toplevels/$(kimlik) qonumında mağazlanır."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
 msgstr "Panel nesne kimligi cedveli"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "Panel nesnesi kimlikleriniñ cedveli. Er kimlik ferdiy bir panel nesnesini kimliklendirir (meselâ, bir fırlatıcı, amel dögmesi yaki menü dögmesi/çubuğı). Bu nesnelerniñ er biriniñ tesbitleri /apps/panel/toplevels/$(kimlik) qonumında mağazlanır."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
 msgstr "Alet-qaranelerini qabilleştir"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Eger doğru ise, paneldeki nesneler içün alet-qaraneleri kösterilir."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "Canlandırmalarnı qabilleştir"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Autoclose drawer"
 msgstr "Çekmeceni avto-qapat"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "Eger doğru ise, qullanıcı içindeki bir fırlatıcığa çertkenden soñ çekmeceler öz-özünden qapanacaq."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
 msgstr "Panelni çetleştirüvni tasdiqla"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "Eger doğru ise, qullanıcınıñ bir panelni çetleştirmege istegenine dair tasdiq içün sorağan bir dialog kösterilir."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
 msgstr "Üzerinde-imleç üzerine fırlatıcılarnı ışıqlandır"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "Eger doğru ise, qullanıcı noqtacını üzerlerine areket ettirgende fırlatıcılar ışıqlandırılır."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
 msgstr "Tam panel kilitlemesi"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "Eger doğru ise, panel, ayarlamasındaki iç bir deñişiklikke imkân bermeycek. Ancaq ferdiy uyğulamaçıqlar ayrı-ayrı kilitlenüvge muhtac ola bilir. Bunıñ tesirge kirüvi içün panel kene başlatılmalıdır."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
 msgstr "Yüklenüvi ğayrı qabilleştirilecek uyğulamaçıq IID'leri (arayüz kimlikleri)"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:31
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1189,11 +1212,11 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "Panelniñ ihmal etecegi uyğulamaçıq IID'leriniñ (arayüz kimlikleriniñ) cedveli. Bu sayede, belli uyğulamaçıqlarnıñ menü içinde kösterilüvini yaki yüklenüvini ğayrı-qabilleştirebilirsiñiz. Meselâ, mini-buyurıcı uyğulamaçığını ğayrı-qabilleştirmek içün bu cedvelge 'OAFIID:MATE_MiniCommanderApplet' ekleñiz. Bunıñ tesirge kirüvi içün panel kene başlatılmalıdır."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
 msgstr "Çıqışnı Cebir Etüv Ğayrı Qabilleştirilsin"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:33
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2291,7 +2314,7 @@ msgstr "Masaüstü körünimini ve davranışını deñiştir, yardım al ya da 
 msgid "Applications"
 msgstr "Uyğulamalar"
 
-#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:672
+#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:672
 msgid "_Edit Menus"
 msgstr "_Menülerni Tarir Et"
 
@@ -2428,7 +2451,7 @@ msgid "Drawer Properties"
 msgstr "Çekmece Hasiyetleri"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1947
+#: ../mate-panel/panel-run-dialog.c:1970
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Dosye '%s' yüklenalmay: '%s'."
@@ -2576,35 +2599,35 @@ msgstr "Deminki Vesiqalarnı Temizle..."
 msgid "Clear all items from the recent documents list"
 msgstr "Demi qullanılğan vesiqalar cedvelindeki episi unsurlarnı temizle"
 
-#: ../mate-panel/panel-run-dialog.c:394
+#: ../mate-panel/panel-run-dialog.c:417
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' buyruğı çaptırılamadı"
 
-#: ../mate-panel/panel-run-dialog.c:434
+#: ../mate-panel/panel-run-dialog.c:457
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s', UTF-8'den çevirilamadı"
 
-#: ../mate-panel/panel-run-dialog.c:1181
+#: ../mate-panel/panel-run-dialog.c:1204
 msgid "Choose a file to append to the command..."
 msgstr "Buyruqnıñ soñuna eklenecek bir dosye saylañız..."
 
-#: ../mate-panel/panel-run-dialog.c:1559 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1582 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Tasvirini körmek içün bir uyğulama saylañız."
 
-#: ../mate-panel/panel-run-dialog.c:1597
+#: ../mate-panel/panel-run-dialog.c:1620
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Çaptırılacaq buyruq: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1630
+#: ../mate-panel/panel-run-dialog.c:1653
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Çaptıruv dialogına tüşürilgen URI cedveliniñ formatı (%d) yaki uzunlığı (%d) yañlış edi.\n"
 
-#: ../mate-panel/panel-run-dialog.c:1952
+#: ../mate-panel/panel-run-dialog.c:1975
 msgid "Could not display run dialog"
 msgstr "Çaptıruv dialogı kösterilamadı"
 

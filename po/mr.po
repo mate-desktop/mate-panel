@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-03 14:36+0300\n"
-"PO-Revision-Date: 2017-03-30 12:54+0000\n"
+"POT-Creation-Date: 2017-04-26 11:42+0300\n"
+"PO-Revision-Date: 2017-04-26 08:43+0000\n"
 "Last-Translator: monsta <monsta@inbox.ru>\n"
 "Language-Team: Marathi (http://www.transifex.com/mate/MATE/language/mr/)\n"
 "MIME-Version: 1.0\n"
@@ -169,7 +169,7 @@ msgstr "पसंती (_P)"
 #: ../applets/wncklet/window-menu.c:100
 #: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
-#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
+#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:359
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "मदत (_H)"
@@ -1101,88 +1101,111 @@ msgid "History for \"Run Application\" dialog"
 msgstr "\"Run Application\" संवादाचा इतिहास"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:10
-msgid "This is the list of commands used in \"Run Application\" dialog."
-msgstr "\"Run Application\" या संवादामध्ये वापरलेल्या आज्ञांची यादी"
+msgid ""
+"This is the list of commands used in \"Run Application\" dialog. The "
+"commands are sorted descendingly by recency (e.g., most recent command comes"
+" first)."
+msgstr ""
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
+msgid "Maximum history size for \"Run Application\" dialog"
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:12
+msgid ""
+"Controls the maximum size of the history of the \"Run Application\" dialog. "
+"A value of 0 will disable the history."
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:13
+msgid "Reverse the history of the \"Run Application\" dialog"
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:14
+msgid ""
+"Displays the history in reverse. Provides a consistent view for terminal "
+"users as the up key will select the most recent entry."
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
 msgstr "पट्टी ID सूची"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "पटल आयडींची सूची. प्रत्येक आयडी एक स्वतंत्र उच्चस्तरीय पॅनेलला ओळख देते. या सर्व पॅनेल्सच्या रचना /apps/panel/toplevels/$(id) मध्ये संग्रहित आहेत."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
 msgstr "पॅनेल ऑब्जेक्ट ID सूची"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "पटल ऑब्जेक्ट आयडींची सूची. प्रत्येक आयडी एक स्वतंत्र पटल ऑब्जेक्टला (उदा. प्रक्षेपक, क्रिया बटन किंवा मेन्यू बटन/पट्टी) ओळख देते. या सर्व ऑब्जेक्ट्सच्या रचना /apps/panel/objects/$(id) मध्ये संग्रहित आहेत."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
 msgstr "उपकरण सूचके कार्ययोग्य करा"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "खरे असल्यास,पॅनेलमधील ऑब्जेक्ट्ससाठी उपकरणटिपा दाखवल्या जातात."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "एनिमेशन कार्ययोग्य करा"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Autoclose drawer"
 msgstr "आपोआप बंद होणारे ड्रॉवर"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "खरे असल्यास, उपयोक्त्याने प्रक्षेपकावर क्लिक केले असता कप्पा आपोआप बंद केला जाईल."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
 msgstr "पटल काढणे निश्चित करा"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "खरे असल्यास, उपयोक्ता पटल काढून टाकू इच्छित असल्यास त्याच्या खात्रीसाठी संवाद दाखवला जातो."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
 msgstr "प्रक्षेपकांस माउस वरून जाताना प्रकाशमान करा"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "खरे असल्यास, उपयोक्त्याने वरून माउस फिरवला असता प्रक्षेपक प्रकाशमान केला जातो."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
 msgstr "संपूर्ण पटल ताळाबंद"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "खरे असल्यास, पॅनेल पॅनेलच्या व्यूहरचनेत कोणतेही बदल करण्यास प्रबंध करेल. एकेक ऍपलेट मात्र वेगवेगळे ताळाबंद करावे लागू शकते. हे लागू होण्यासाठी पॅनेल पुन्हा सुरू करावेच लागेल."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
 msgstr "भारित करण्यास अक्षम करायचे ऍपलेट IIDs"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:31
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1190,11 +1213,11 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "पटल जे ऍपलेट IID ला दुर्लक्ष करेल त्यांची सूची. याप्रकारे तुम्ही काहिक ऍपलेटचे दाखलन किंवा मेन्यु मध्ये दर्शविण्याकरीता अकार्यान्वीत करू शकता. उदाहरणार्थ mini-commander ऍपलेट अकार्यान्वीत करण्याकरीता 'OAFIID:MATE_MiniCommanderApplet' ला सूचीस जोडा. याचा प्रभाव लगेच होण्याकरीता पटल पुन्ह सुरू केले पाहिजे."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
 msgstr "जबरदस्तीने बाहेर जाणे अकार्यान्वीत करा"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:33
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2292,7 +2315,7 @@ msgstr "कार्यक्षेत्राचे दृश्य व वा
 msgid "Applications"
 msgstr "ऍप्लिकेशन्स्"
 
-#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:672
+#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:672
 msgid "_Edit Menus"
 msgstr "मेन्यू संपादित करा (_E)"
 
@@ -2429,7 +2452,7 @@ msgid "Drawer Properties"
 msgstr "ड्रॉव्हर गुणधर्म"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1947
+#: ../mate-panel/panel-run-dialog.c:1970
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "फाइल '%s' लोड करण्यास अपयशी: %s."
@@ -2577,35 +2600,35 @@ msgstr "नुकतेच दस्तऐवज नष्ट करा..."
 msgid "Clear all items from the recent documents list"
 msgstr "नुकतेच दस्तऐवज सूचीतून सर्व घटके नष्ट करा"
 
-#: ../mate-panel/panel-run-dialog.c:394
+#: ../mate-panel/panel-run-dialog.c:417
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "आदेश '%s' चालवणे अशक्य"
 
-#: ../mate-panel/panel-run-dialog.c:434
+#: ../mate-panel/panel-run-dialog.c:457
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' ला UTF-8 असे रूपांतर करणे अशक्य"
 
-#: ../mate-panel/panel-run-dialog.c:1181
+#: ../mate-panel/panel-run-dialog.c:1204
 msgid "Choose a file to append to the command..."
 msgstr "सूचनेला जोडणारी फाइल निवडा..."
 
-#: ../mate-panel/panel-run-dialog.c:1559 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1582 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "उपलब्ध सूचीमधून एक ऍप्लिकेशन निवडून त्याचे स्वरूप पहा."
 
-#: ../mate-panel/panel-run-dialog.c:1597
+#: ../mate-panel/panel-run-dialog.c:1620
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "आदेश सुरू करेल: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1630
+#: ../mate-panel/panel-run-dialog.c:1653
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "चालवा संवाद मध्ये चुकीचे स्वरूप (%d) किंवा लांबी (%d) असल्यामुळे URI सूची वगळण्यात आले\n"
 
-#: ../mate-panel/panel-run-dialog.c:1952
+#: ../mate-panel/panel-run-dialog.c:1975
 msgid "Could not display run dialog"
 msgstr "रन संवाद दाखवणे अशक्य"
 
