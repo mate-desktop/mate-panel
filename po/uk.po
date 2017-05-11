@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Denis <prohibiti@gmail.com>, 2015
+# dsafsadf <heneral@gmail.com>, 2017
 # Микола Ткач <znadibnyk@gmail.com>, 2013
 # Rax Garfield <admin@dvizho.ks.ua>, 2012
 # Stefano Karapetsas <stefano@karapetsas.com>, 2012
@@ -16,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-03 14:36+0300\n"
-"PO-Revision-Date: 2017-03-31 07:19+0000\n"
+"POT-Creation-Date: 2017-04-26 11:42+0300\n"
+"PO-Revision-Date: 2017-04-28 11:36+0000\n"
 "Last-Translator: Микола Ткач <znadibnyk@gmail.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/mate/MATE/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +178,7 @@ msgstr "П_араметри"
 #: ../applets/wncklet/window-menu.c:100
 #: ../applets/wncklet/workspace-switcher.c:344 ../mate-panel/drawer.c:545
 #: ../mate-panel/panel-action-button.c:730
-#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:355
+#: ../mate-panel/panel-context-menu.c:265 ../mate-panel/panel-menu-bar.c:359
 #: ../mate-panel/panel-menu-button.c:666
 msgid "_Help"
 msgstr "_Довідка"
@@ -1109,88 +1110,111 @@ msgid "History for \"Run Application\" dialog"
 msgstr "Історія для діялоґу «Виконати проґраму»"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:10
-msgid "This is the list of commands used in \"Run Application\" dialog."
-msgstr "Це перелік команд, що використовуються у діялозі «Виконати проґраму»."
+msgid ""
+"This is the list of commands used in \"Run Application\" dialog. The "
+"commands are sorted descendingly by recency (e.g., most recent command comes"
+" first)."
+msgstr "Це список команд, які використовуються в діалоговому вікні \"Запустити програму\". Команди упорядковано відповідно до зменшенням за новизною (наприклад, найостанніша команда на першому місці)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
+msgid "Maximum history size for \"Run Application\" dialog"
+msgstr "Щонайбільший розмір дієпису для діялоґу \"Запустити застосунок\""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:12
+msgid ""
+"Controls the maximum size of the history of the \"Run Application\" dialog. "
+"A value of 0 will disable the history."
+msgstr "Керує щонайбільшим розміром дієпису діялоґу \"Запустити застосунок\". Значення 0 відмикає дієпис."
+
+#: ../data/org.mate.panel.gschema.xml.in.h:13
+msgid "Reverse the history of the \"Run Application\" dialog"
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:14
+msgid ""
+"Displays the history in reverse. Provides a consistent view for terminal "
+"users as the up key will select the most recent entry."
+msgstr ""
+
+#: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
 msgstr "Перелік ідентифікаторів панелів"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: ../data/org.mate.panel.gschema.xml.in.h:16
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "Перелік ідентифікаторів панелів, кожен з яких ідентифікує окрему панель верхнього рівню. Параметри для кожної панелі зберігаються в /apps/panel/toplevels/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
 msgstr "Перелік ідентифікаторів об'єктів панелі"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: ../data/org.mate.panel.gschema.xml.in.h:18
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "Перелік ідентифікаторів об'єктів панелі, кожен з яких ідентифікує окремий об'єкт панелі (наприклад, пускача, кнопку команди чи меню). Параметри для кожного з цих об'єктів зберігаються в /apps/panel/objects/$(id)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
 msgstr "Увімкнути підказки"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Чи показувати підказки для об'єктів у панелях."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
 msgstr "Увімкнути анімацію"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Autoclose drawer"
 msgstr "Автоматично закривати шухляду"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: ../data/org.mate.panel.gschema.xml.in.h:23
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr "Чи закривати шухляду, коли користувач натискає на кнопці запуску в ній."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
 msgstr "Запитувати схвалення на вилучення панелі"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
+#: ../data/org.mate.panel.gschema.xml.in.h:25
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr "Чи запитувати схвалення для вилучення панелі."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
 msgstr "Підсвічувати кнопку запуску під вказівником"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "Чи підсвічувати кнопку запуску, коли вказівник миші знаходиться над нею."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
 msgstr "Повне блокування панелі"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: ../data/org.mate.panel.gschema.xml.in.h:29
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
 msgstr "Якщо встановлено, панель не буде дозволяти вносити зміни у її параметри. Проте індивідуальні аплети можуть потребувати окремого блокування. Щоб зміни було застосовано потрібно перезапустити панель."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
 msgstr "Ідентифікатори (IID) аплетів, для вимкнення їх завантаження"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: ../data/org.mate.panel.gschema.xml.in.h:31
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1198,11 +1222,11 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr "Перелік ідентифікаторів (IID) аплетів які панель нехтуватиме. Таким чином Ви можете вимкнути завантаження деяких аплетів або їх показ у меню. Наприклад, щоб вимкнути аплет mini-commander додайте 'OAFIID:MATE_MiniCommanderApplet' у цей перелік. Для застосування змін потрібно перезавантажити аплет."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
 msgstr "Вимкнути примусове завершення"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: ../data/org.mate.panel.gschema.xml.in.h:33
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2300,7 +2324,7 @@ msgstr "Змінити оздоблення та поведінку, отрим�
 msgid "Applications"
 msgstr "Проґрами"
 
-#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:672
+#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:672
 msgid "_Edit Menus"
 msgstr "_Змінити меню"
 
@@ -2437,7 +2461,7 @@ msgid "Drawer Properties"
 msgstr "Властивости шухляди"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1947
+#: ../mate-panel/panel-run-dialog.c:1970
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Не вдається прочитати файл «%s»: %s."
@@ -2585,35 +2609,35 @@ msgstr "Очищення нещодавніх документів..."
 msgid "Clear all items from the recent documents list"
 msgstr "Очистити усі елементи із переліку нещодавно використаних документів"
 
-#: ../mate-panel/panel-run-dialog.c:394
+#: ../mate-panel/panel-run-dialog.c:417
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Не вдається запустити команду \"%s\""
 
-#: ../mate-panel/panel-run-dialog.c:434
+#: ../mate-panel/panel-run-dialog.c:457
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Не вдається перетворити '%s' з UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1181
+#: ../mate-panel/panel-run-dialog.c:1204
 msgid "Choose a file to append to the command..."
 msgstr "Вибрати файл, щоб додати його до команди..."
 
-#: ../mate-panel/panel-run-dialog.c:1559 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1582 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Вибрати проґраму перегляду опису."
 
-#: ../mate-panel/panel-run-dialog.c:1597
+#: ../mate-panel/panel-run-dialog.c:1620
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Буде запущено: \"%s\""
 
-#: ../mate-panel/panel-run-dialog.c:1630
+#: ../mate-panel/panel-run-dialog.c:1653
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Перелік URI, перетягнений на діялоґ запуску, має неправильний формат (%d) або довжину (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:1952
+#: ../mate-panel/panel-run-dialog.c:1975
 msgid "Could not display run dialog"
 msgstr "Не вдається вивести вікно запуску"
 
