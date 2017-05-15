@@ -2199,55 +2199,6 @@ static void mate_panel_applet_factory_main_finalized(gpointer data, GObject* obj
 	}
 }
 
-static int (*_x_error_func) (Display *, XErrorEvent *);
-
-static int
-_x_error_handler (Display *display, XErrorEvent *error)
-{
-	if (!error->error_code)
-		return 0;
-
-	/* If we got a BadDrawable or a BadWindow, we ignore it for now.
-	 * FIXME: We need to somehow distinguish real errors from
-	 * X-server-induced errors. Keeping a list of windows for which we
-	 * will ignore BadDrawables would be a good idea. */
-	if (error->error_code == BadDrawable ||
-	    error->error_code == BadWindow)
-		return 0;
-
-	return _x_error_func (display, error);
-}
-
-/*
- * To do graphical embedding in the X window system, MATE Panel
- * uses the classic foreign-window-reparenting trick. The
- * GtkPlug/GtkSocket widgets are used for this purpose. However,
- * serious robustness problems arise if the GtkSocket end of the
- * connection unexpectedly dies. The X server sends out DestroyNotify
- * events for the descendants of the GtkPlug (i.e., your embedded
- * component's windows) in effectively random order. Furthermore, if
- * you happened to be drawing on any of those windows when the
- * GtkSocket was destroyed (a common state of affairs), an X error
- * will kill your application.
- *
- * To solve this latter problem, MATE Panel sets up its own X error
- * handler which ignores certain X errors that might have been
- * caused by such a scenario. Other X errors get passed to gdk_x_error
- * normally.
- */
-static void
-_mate_panel_applet_setup_x_error_handler (void)
-{
-	static gboolean error_handler_setup = FALSE;
-
-	if (error_handler_setup)
-		return;
-
-	error_handler_setup = TRUE;
-
-	_x_error_func = XSetErrorHandler (_x_error_handler);
-}
-
 /**
  * mate_panel_applet_factory_main:
  * @factory_id: Factory ID.
@@ -2266,11 +2217,6 @@ int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process
 	g_return_val_if_fail(factory_id != NULL, 1);
 	g_return_val_if_fail(callback != NULL, 1);
 	g_assert(g_type_is_a(applet_type, PANEL_TYPE_APPLET));
-
-	if (out_process)
-	{
-		_mate_panel_applet_setup_x_error_handler();
-	}
 
 	closure = g_cclosure_new(G_CALLBACK(callback), user_data, NULL);
 	factory = mate_panel_applet_factory_new(factory_id, applet_type, closure);
