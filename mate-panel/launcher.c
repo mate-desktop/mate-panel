@@ -513,8 +513,8 @@ create_launcher (const char *location)
 static void
 setup_button (Launcher *launcher)
 {
-	char *comment;
-	char *name;
+	const char *comment;
+	const char *name;
 	char *str;
 	char *icon;
 	char *unescaped_str;
@@ -556,8 +556,8 @@ setup_button (Launcher *launcher)
 					_("_Properties"),
 					launcher_properties_enabled);
 
-	name = g_desktop_app_info_get_string (launcher->app_info, G_KEY_FILE_DESKTOP_KEY_NAME);
-	comment = g_desktop_app_info_get_string (launcher->app_info, G_KEY_FILE_DESKTOP_KEY_COMMENT);
+	name = g_app_info_get_name (G_APP_INFO(launcher->app_info));
+	comment = g_app_info_get_description (G_APP_INFO(launcher->app_info));
 	/* Setup tooltip */
 	if (!PANEL_GLIB_STR_EMPTY (name) && !PANEL_GLIB_STR_EMPTY (comment))
 		str = g_strdup_printf ("%s\n%s", name, comment);
@@ -566,8 +566,6 @@ setup_button (Launcher *launcher)
 	else
 		str = g_strdup (comment);
 
-	g_free (name);
-	g_free (comment);
 
 	/* If we can unescape the string, then we probably have an escaped
 	 * string (a location e.g.). If we can't, then it most probably means
