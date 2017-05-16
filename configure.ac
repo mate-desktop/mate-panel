@@ -29,9 +29,7 @@ AC_PROG_LIBTOOL
 #AC_PROG_SED available in 2.59b
 AM_PROG_CC_C_O
 
-# GLib min/max required versions
-AC_DEFINE([GLIB_VERSION_MAX_ALLOWED], [GLIB_VERSION_2_36],
-	[Warn on use of APIs added after GLib 2.36])
+# GLib min required versions
 AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_36],
 	[Warn on use of APIs deprecated before GLib 2.36])
 
