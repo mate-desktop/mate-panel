@@ -625,6 +625,9 @@ panel_menu_button_disconnect_from_gsettings (PanelMenuButton *button)
 {
 	if (button->priv->settings)
 	{
+		g_signal_handlers_disconnect_by_func (button->priv->settings,
+		                                      G_CALLBACK (panel_menu_button_gsettings_notify),
+		                                      button);
 		g_object_unref (button->priv->settings);
 		button->priv->settings = NULL;
 	}
