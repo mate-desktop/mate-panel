@@ -476,9 +476,13 @@ panel_action_button_finalize (GObject *object)
 {
 	PanelActionButton *button = PANEL_ACTION_BUTTON (object);
 
-	if (button->priv->settings)
+	if (button->priv->settings) {
+		g_signal_handlers_disconnect_by_func (button->priv->settings,
+		                                      G_CALLBACK (panel_action_button_type_changed),
+		                                      button);
 		g_object_unref (button->priv->settings);
-	button->priv->settings = NULL;
+		button->priv->settings = NULL;
+	}
 
 	button->priv->info = NULL;
 	button->priv->type = PANEL_ACTION_NONE;
