@@ -309,6 +309,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         priv->current_label = gtk_label_new ("");
         gtk_widget_show (priv->current_label);
         gtk_widget_set_no_show_all (priv->current_button, TRUE);
+        gtk_widget_set_valign (priv->current_button, GTK_ALIGN_CENTER);
         gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
         gtk_widget_set_tooltip_text (priv->current_button,
                                      _("Set location as current location and use its timezone for this computer"));
@@ -323,13 +324,11 @@ clock_location_tile_fill (ClockLocationTile *this)
 
         strut = gtk_event_box_new ();
         gtk_box_pack_start (GTK_BOX (box), strut, TRUE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (box), priv->current_button, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->current_marker, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->current_spacer, FALSE, FALSE, 0);
         priv->button_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
         gtk_size_group_set_ignore_hidden (priv->button_group, FALSE);
         gtk_size_group_add_widget (priv->button_group, strut);
-        gtk_size_group_add_widget (priv->button_group, priv->current_button);
 
         /*
          * Avoid resizing the popup as the tiles display the current marker,
@@ -342,7 +341,6 @@ clock_location_tile_fill (ClockLocationTile *this)
          */
         priv->current_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
         gtk_size_group_set_ignore_hidden (priv->current_group, FALSE);
-        gtk_size_group_add_widget (priv->current_group, priv->current_button);
         gtk_size_group_add_widget (priv->current_group, priv->current_marker);
         gtk_size_group_add_widget (priv->current_group, priv->current_spacer);
 
@@ -358,6 +356,7 @@ clock_location_tile_fill (ClockLocationTile *this)
 
         gtk_box_pack_start (GTK_BOX (tile), priv->clock_face, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (tile), head_section, TRUE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (tile), priv->current_button, FALSE, FALSE, 0);
 
         gtk_container_add (GTK_CONTAINER (priv->box), tile);
         gtk_container_add (GTK_CONTAINER (this), priv->box);
