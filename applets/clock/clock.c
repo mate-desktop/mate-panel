@@ -980,7 +980,6 @@ create_clock_window (ClockData *cd)
         gtk_container_add (GTK_CONTAINER (locations_box), cd->clock_vbox);
 
         cd->clock_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-        gtk_size_group_set_ignore_hidden (cd->clock_group, FALSE);
 
         gtk_container_foreach (GTK_CONTAINER (locations_box),
                                (GtkCallback) add_to_group,
