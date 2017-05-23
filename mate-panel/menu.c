@@ -1177,14 +1177,12 @@ create_menuitem (GtkWidget          *menu,
 
 		if (matemenu_tree_entry_get_icon (entry) != NULL) {
 			const char *icon;
-			char       *icon_no_ext;
+			GIcon      *gicon;
 
 			icon = matemenu_tree_entry_get_icon (entry);
-			if (!g_path_is_absolute (icon)) {
-				icon_no_ext = panel_xdg_icon_remove_extension (icon);
-				gtk_drag_source_set_icon_name (menuitem,
-							       icon_no_ext);
-				g_free (icon_no_ext);
+			gicon = panel_gicon_from_icon_name (icon);
+			if (gicon != NULL) {
+				gtk_drag_source_set_icon_gicon (menuitem, gicon);
 			}
 		}
 
