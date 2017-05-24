@@ -417,71 +417,6 @@ add_menu_to_panel (GtkWidget      *menuitem,
 	matemenu_tree_item_unref (directory);
 }
 
-/*most of this function stolen from the real gtk_menu_popup*/
-static void
-restore_grabs(GtkWidget *w, gpointer data)
-{
-	GtkWidget *menu_item = data;
-	GtkMenu *menu = GTK_MENU (gtk_widget_get_parent (menu_item));
-	GtkWidget *xgrab_shell;
-	GtkWidget *parent;
-
-	/* Find the last viewable ancestor, and make an X grab on it
-	 */
-	parent = GTK_WIDGET (menu);
-	xgrab_shell = NULL;
-	while (parent) {
-		gboolean viewable = TRUE;
-		GtkWidget *tmp = parent;
-
-		while (tmp) {
-			if (!gtk_widget_get_mapped (tmp)) {
-				viewable = FALSE;
-				break;
-			}
-			tmp = gtk_widget_get_parent (tmp);
-		}
-
-		if (viewable)
-			xgrab_shell = parent;
-
-		parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
-	}
-
-	/*only grab if this HAD a grab before*/
-	/* FIXME fix for GTK3 */
-#if 0
-	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
-          {
-	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
-
-	    if (gdk_pointer_grab (window, TRUE,
-				  GDK_BUTTON_PRESS_MASK |
-				  GDK_BUTTON_RELEASE_MASK |
-				  GDK_ENTER_NOTIFY_MASK |
-				  GDK_LEAVE_NOTIFY_MASK,
-				  NULL, NULL, 0) == 0)
-              {
-		if (gdk_keyboard_grab (window, TRUE,
-				       GDK_CURRENT_TIME) == 0)
-		  GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
-		else
-		  gdk_pointer_ungrab (GDK_CURRENT_TIME);
-	      }
-         }
-#endif
-
-	gtk_grab_add (GTK_WIDGET (menu));
-}
-
-static void
-menu_destroy_context_menu (GtkWidget *item,
-			   GtkWidget *menu)
-{
-	g_signal_handlers_disconnect_by_func (menu, restore_grabs, item);
-	gtk_widget_destroy (menu);
-}
-
 static GtkWidget *
 create_item_context_menu (GtkWidget   *item,
 			  PanelWidget *panel_widget)
@@ -518,11 +453,6 @@ create_item_context_menu (GtkWidget   *item,
 	menu = create_empty_menu ();
 	g_object_set_data (G_OBJECT (item), "panel-item-context-menu", menu);
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
-
-	g_signal_connect (item, "destroy",
-			  G_CALLBACK (menu_destroy_context_menu), menu);
-	g_signal_connect (menu, "deactivate",
-			  G_CALLBACK (restore_grabs), item);
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this launcher to _panel"));
 	g_signal_connect (menuitem, "activate",
