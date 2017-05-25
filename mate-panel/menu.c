@@ -1212,15 +1212,26 @@ create_menuitem (GtkWidget          *menu,
 
 		if (matemenu_tree_entry_get_icon (entry) != NULL) {
 			const char *icon;
+#if GTK_CHECK_VERSION (3, 0, 0)
+			GIcon      *gicon;
+#else
 			char       *icon_no_ext;
+#endif
 
 			icon = matemenu_tree_entry_get_icon (entry);
+#if GTK_CHECK_VERSION (3, 0, 0)
+			gicon = panel_gicon_from_icon_name (icon);
+			if (gicon != NULL) {
+				gtk_drag_source_set_icon_gicon (menuitem, gicon);
+			}
+#else
 			if (!g_path_is_absolute (icon)) {
 				icon_no_ext = panel_xdg_icon_remove_extension (icon);
 				gtk_drag_source_set_icon_name (menuitem,
 							       icon_no_ext);
 				g_free (icon_no_ext);
 			}
+#endif
 		}
 
 		g_signal_connect (G_OBJECT (menuitem), "drag_begin",
