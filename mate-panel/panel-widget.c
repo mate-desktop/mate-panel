@@ -2754,10 +2754,12 @@ panel_widget_reparent (PanelWidget *old_panel,
 	if (gtk_container_get_focus_child (GTK_CONTAINER (old_panel)) == applet)
 		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->toplevel));
 
-	g_object_ref (applet);
-	gtk_container_remove (GTK_CONTAINER (old_panel), applet);
-	gtk_container_add (GTK_CONTAINER (new_panel), applet);
-	g_object_unref (applet);
+	/* Do not touch until GTK+4
+	 * or until we figure out how to properly
+	 * reimplement gtk_widget_reparent.
+	 * https://github.com/mate-desktop/mate-panel/issues/504
+	 */
+	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
 
 	if (info && info->type == PANEL_OBJECT_APPLET)
 		mate_panel_applet_frame_set_panel (MATE_PANEL_APPLET_FRAME (ad->applet), new_panel);
