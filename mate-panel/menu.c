@@ -417,6 +417,72 @@ add_menu_to_panel (GtkWidget      *menuitem,
 	matemenu_tree_item_unref (directory);
 }
 
+static void
+grab_widget (GtkWidget *widget)
+{
+	g_return_if_fail (widget != NULL);
+
+	GdkWindow *window;
+	GdkDisplay *display;
+#if GTK_CHECK_VERSION (3, 20, 0)
+	GdkSeat *seat;
+#else
+	GdkDeviceManager *device_manager;
+	GdkDevice *pointer;
+	GdkDevice *keyboard;
+#endif
+
+	window = gtk_widget_get_window (widget);
+	display = gdk_window_get_display (window);
+
+#if GTK_CHECK_VERSION (3, 20, 0)
+	seat = gdk_display_get_default_seat (display);
+	gdk_seat_grab (seat, window,
+	               GDK_SEAT_CAPABILITY_ALL, TRUE,
+	               NULL, NULL, NULL, NULL);
+#else
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
+
+	if (gdk_device_grab (pointer, window,
+	                     GDK_OWNERSHIP_WINDOW, TRUE,
+	                     GDK_SMOOTH_SCROLL_MASK |
+	                     GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
+	                     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
+	                     GDK_POINTER_MOTION_MASK,
+	                     NULL, GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS) {
+		return;
+	}
+
+	if (gdk_device_grab (keyboard, window,
+	                     GDK_OWNERSHIP_WINDOW, TRUE,
+	                     GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK,
+	                     NULL, GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS) {
+		gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+	}
+#endif
+}
+
+static void
+restore_grabs (GtkWidget *menu,
+               GtkWidget *item)
+{
+	GtkWidget *parent = gtk_widget_get_parent (item);
+
+	if (parent) {
+		grab_widget (parent);
+	}
+}
+
+static void
+menu_destroy_context_menu (GtkWidget *item,
+                           GtkWidget *menu)
+{
+	g_signal_handlers_disconnect_by_func (menu, restore_grabs, item);
+	gtk_widget_destroy (menu);
+}
+
 static GtkWidget *
 create_item_context_menu (GtkWidget   *item,
 			  PanelWidget *panel_widget)
@@ -453,6 +519,11 @@ create_item_context_menu (GtkWidget   *item,
 	menu = create_empty_menu ();
 	g_object_set_data (G_OBJECT (item), "panel-item-context-menu", menu);
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
+
+	g_signal_connect (item, "destroy",
+			  G_CALLBACK (menu_destroy_context_menu), menu);
+	g_signal_connect (menu, "deactivate",
+			  G_CALLBACK (restore_grabs), item);
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this launcher to _panel"));
 	g_signal_connect (menuitem, "activate",
