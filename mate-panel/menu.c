@@ -669,60 +669,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 
   if (xgrab_shell)
     {
-      gboolean status;
-      GdkDisplay *display;
-      GdkDevice *pointer;
-      GdkDevice *keyboard;
-#if GTK_CHECK_VERSION(3, 20, 0)
-      GdkSeat *seat;
-#else
-      GdkDeviceManager *device_manager;
-#endif
-      GdkWindow *window = gtk_widget_get_window (xgrab_shell);
-      GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
-                                                      GDK_ARROW);
-
-      display = gdk_window_get_display (window);
-#if GTK_CHECK_VERSION(3, 20, 0)
-      seat = gdk_display_get_default_seat (display);
-      pointer = gdk_seat_get_pointer (seat);
-#else
-      device_manager = gdk_display_get_device_manager (display);
-      pointer = gdk_device_manager_get_client_pointer (device_manager);
-#endif
-      keyboard = gdk_device_get_associated_device (pointer);
-
-      /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
-         or GDK_OWNERSHIP_APPLICATION Idem for the
-         keyboard below */
-      status = gdk_device_grab (pointer, window,
-                                GDK_OWNERSHIP_WINDOW, TRUE,
-                                GDK_BUTTON_PRESS_MASK
-                                | GDK_BUTTON_RELEASE_MASK
-                                | GDK_ENTER_NOTIFY_MASK
-                                | GDK_LEAVE_NOTIFY_MASK
-                                | GDK_POINTER_MOTION_MASK,
-                                cursor, GDK_CURRENT_TIME);
-
-      if (!status)
-        {
-	  if (gdk_device_grab (keyboard, window,
-			       GDK_OWNERSHIP_WINDOW, TRUE,
-			       GDK_KEY_PRESS | GDK_KEY_RELEASE,
-			       NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
-	    {
-/* FIXME fix for GTK3 */
-#if 0
-          GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
-#endif
-	    }
-	  else
-	    {
-	      gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-	    }
-	}
-
-      g_object_unref (cursor);
+      grab_widget (xgrab_shell);
     }
 }
 
