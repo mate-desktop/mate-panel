@@ -989,18 +989,15 @@ panel_menu_button_invoke_menu (PanelMenuButton *button,
 		panel_show_help (screen, "mate-user-guide", "gospanel-37", NULL);
 
 	} else if (!strcmp (callback_name, "edit")) {
-                GError *error = NULL;
 
-		panel_launch_desktop_file_with_fallback ("menulibre.desktop",
-							 "menulibre",
-							 screen, &error);
-		if (error) {
-			g_error_free (error);
-			panel_launch_desktop_file_with_fallback (
-						"mozo.desktop",
-						"mozo",
-						screen, NULL);
-		}
+		if (panel_is_program_in_path ("menulibre"))
+			panel_launch_desktop_file_with_fallback ("menulibre.desktop",
+								 "menulibre",
+								 screen, NULL);
+		else
+			panel_launch_desktop_file_with_fallback ("mozo.desktop",
+								 "mozo",
+								 screen, NULL);
 	}
 }
 

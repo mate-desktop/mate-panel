@@ -400,15 +400,10 @@ void panel_menu_bar_invoke_menu(PanelMenuBar* menubar, const char* callback_name
 	}
 	else if (!strcmp(callback_name, "edit"))
 	{
-		GError* error = NULL;
-
-		panel_launch_desktop_file_with_fallback("menulibre.desktop", "menulibre", screen, &error);
-
-		if (error)
-		{
-			g_error_free(error);
+		if (panel_is_program_in_path("menulibre"))
+			panel_launch_desktop_file_with_fallback("menulibre.desktop", "menulibre", screen, NULL);
+		else
 			panel_launch_desktop_file_with_fallback("mozo.desktop", "mozo", screen, NULL);
-		}
 	}
 }
 
