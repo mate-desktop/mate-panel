@@ -327,7 +327,6 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (box), priv->current_marker, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->current_spacer, FALSE, FALSE, 0);
         priv->button_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
-        gtk_size_group_set_ignore_hidden (priv->button_group, FALSE);
         gtk_size_group_add_widget (priv->button_group, strut);
 
         /*
@@ -340,7 +339,6 @@ clock_location_tile_fill (ClockLocationTile *this)
          * but they are never visible together).
          */
         priv->current_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
-        gtk_size_group_set_ignore_hidden (priv->current_group, FALSE);
         gtk_size_group_add_widget (priv->current_group, priv->current_marker);
         gtk_size_group_add_widget (priv->current_group, priv->current_spacer);
 
