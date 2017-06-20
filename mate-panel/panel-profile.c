@@ -544,6 +544,13 @@ panel_profile_load_background (PanelToplevel *toplevel)
 
 	image = get_background_image (toplevel, &fit, &stretch, &rotate);
 
+	/* Only allow transparency for non themed panels */
+	if (background_type == PANEL_BACK_NONE)
+		panel_toplevel_update_wmclass (toplevel, FALSE);
+	else
+		panel_toplevel_update_wmclass (toplevel, TRUE);
+
+
 	panel_background_set (background,
 			      background_type,
 			      &color,
@@ -832,6 +839,12 @@ panel_profile_background_change_notify (GSettings *settings,
 		background_type = g_settings_get_enum (settings, key);
 		panel_background_set_type (background, background_type);
 		panel_toplevel_update_edges (toplevel);
+		/* Only allow transparency for non themed panels */
+		if (background_type == PANEL_BACK_NONE)
+			panel_toplevel_update_wmclass (toplevel, FALSE);
+		else
+			panel_toplevel_update_wmclass (toplevel, TRUE);
+
 	} else if (!strcmp (key, "color")) {
 		GdkRGBA color;
 		gchar *str;

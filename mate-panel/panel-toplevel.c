@@ -197,6 +197,9 @@ struct _PanelToplevelPrivate {
 	guint                   updated_geometry_initial : 1;
 	/* flag to see if we have done the initial animation */
 	guint                   initial_animation_done : 1;
+
+        /* wm_class set dynamically to control shadows in marco */
+	const gchar             *panel_wmclass;
 };
 
 enum {
@@ -5606,4 +5609,23 @@ panel_toplevel_get_maximum_size (PanelToplevel *toplevel)
 		return monitor_height / MAXIMUM_SIZE_SCREEN_RATIO;
 	else
 		return monitor_width / MAXIMUM_SIZE_SCREEN_RATIO;
+}
+
+void
+panel_toplevel_update_wmclass (PanelToplevel *toplevel, gboolean transparency)
+{
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	const gchar *target_wmclass = transparency ? PACKAGE_NAME "-alpha" : PACKAGE_NAME;
+
+	if (toplevel->priv->panel_wmclass == target_wmclass || gtk_widget_get_visible (GTK_WIDGET (toplevel)))
+		return;
+
+	toplevel->priv->panel_wmclass = target_wmclass;
+
+	/* We can only change the wmclass once and this is done at startup, as we're
+	 * not able to unrealize the window. */
+	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+	gtk_window_set_wmclass (GTK_WINDOW (toplevel), target_wmclass, target_wmclass);
+	G_GNUC_END_IGNORE_DEPRECATIONS
 }
