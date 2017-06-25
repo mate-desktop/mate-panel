@@ -1538,7 +1538,8 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
-		gdk_window_set_background_pattern(window,NULL);
+		pattern = cairo_pattern_create_rgba (0,0,0,0);     /* Using NULL here breaks transparent */
+		gdk_window_set_background_pattern(window,pattern); /* backgrounds set by GTK theme */
 		break;
 	case PANEL_COLOR_BACKGROUND:
 		gdk_window_set_background_rgba(window,color);
