@@ -109,11 +109,17 @@ panel_background_prepare (PanelBackground *background)
 			* (gdk_window_clear_backing_region), the correctly
 			* scaled pattern is used */
 			cairo_matrix_t m;
+			cairo_surface_t *surface;
+			double width, height;
+
+			cairo_pattern_get_surface(background->default_pattern, &surface);
+			width = cairo_image_surface_get_width (surface);
+			height = cairo_image_surface_get_height (surface);
 
 			cairo_matrix_init_translate (&m, 0, 0);
 			cairo_matrix_scale (&m,
-					    1.0 / background->region.width,
-					    1.0 / background->region.height);
+					width / background->region.width,
+					height / background->region.height);
 			cairo_pattern_set_matrix (background->default_pattern, &m);
 
 			gdk_window_set_background_pattern (background->window,
