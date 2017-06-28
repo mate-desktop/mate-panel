@@ -1776,18 +1776,30 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 	GtkCssProvider  *provider;
 
 	provider = gtk_css_provider_new ();
+#if GTK_CHECK_VERSION (3, 18, 0)
 	gtk_css_provider_load_from_data (provider,
-					 ".mate-custom-panel-background{\n"
+					 "#PanelPlug {\n"
+					 " background-repeat: no-repeat;\n" /*disable in gtk theme features */
+					 " background-size: cover; "        /*that don't work on panel-toplevel */
+					 " }\n"
+					 ".mate-custom-panel-background{\n" /*prepare CSS for user set theme */
 					 " background-color: rgba (0, 0, 0, 0);\n"
 					 " background-image: none;\n"
 					 "}",
 					 -1, NULL);
+#else
+gtk_css_provider_load_from_data (provider,
+					 ".mate-custom-panel-background{\n" /*prepare CSS for user set theme */
+					 " background-color: rgba (0, 0, 0, 0);\n"
+					 " background-image: none;\n"
+					 "}",
+					 -1, NULL);
+#endif
 	gtk_style_context_add_provider (context,
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
 }
-
 static void
 mate_panel_applet_init (MatePanelApplet *applet)
 {
