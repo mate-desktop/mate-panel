@@ -112,7 +112,9 @@ panel_background_prepare (PanelBackground *background)
 			cairo_surface_t *surface;
 			double width, height;
 
+			surface = NULL;
 			cairo_pattern_get_surface(background->default_pattern, &surface);
+			cairo_surface_reference(surface);
 			width = cairo_image_surface_get_width (surface);
 			height = cairo_image_surface_get_height (surface);
 
@@ -124,6 +126,7 @@ panel_background_prepare (PanelBackground *background)
 
 			gdk_window_set_background_pattern (background->window,
 						       background->default_pattern);
+			cairo_surface_destroy(surface);
 		} else
 			gdk_window_set_background_rgba (
 				background->window, &background->default_color);
