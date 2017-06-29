@@ -318,6 +318,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
         gtk_widget_set_halign (priv->current_marker, GTK_ALIGN_END);
         gtk_widget_set_valign (priv->current_marker, GTK_ALIGN_CENTER);
+        gtk_widget_set_margin_start (priv->current_marker, 75);
         gtk_widget_set_no_show_all (priv->current_marker, TRUE);
 
         priv->current_spacer = gtk_event_box_new ();
