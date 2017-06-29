@@ -288,6 +288,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (head_section), priv->city_label, FALSE, FALSE, 0);
 
         priv->time_label = gtk_label_new (NULL);
+        gtk_label_set_width_chars (GTK_LABEL (priv->time_label), 20);
         gtk_widget_set_margin_end (priv->time_label, 3);
 #if GTK_CHECK_VERSION (3, 16, 0)
         gtk_label_set_xalign (GTK_LABEL (priv->time_label), 0.0);
