@@ -113,19 +113,32 @@ panel_background_prepare (PanelBackground *background)
 			double width, height;
 
 			surface = NULL;
+			width = 1.0;
+			height = 1.0;
 			cairo_pattern_get_surface(background->default_pattern, &surface);
-			cairo_surface_reference(surface);
-			width = cairo_image_surface_get_width (surface);
-			height = cairo_image_surface_get_height (surface);
+			/* catch invalid images (e.g. -gtk-gradient) before scaling and rendering */
+			if (surface != NULL ){
+				cairo_surface_reference(surface);
+				width = cairo_image_surface_get_width (surface);
+				height = cairo_image_surface_get_height (surface);
+				cairo_matrix_init_translate (&m, 0, 0);
+				cairo_matrix_scale (&m,
+						width / background->region.width,
+						height / background->region.height);
+				cairo_pattern_set_matrix (background->default_pattern, &m);
 
-			cairo_matrix_init_translate (&m, 0, 0);
-			cairo_matrix_scale (&m,
-					width / background->region.width,
-					height / background->region.height);
-			cairo_pattern_set_matrix (background->default_pattern, &m);
-
-			gdk_window_set_background_pattern (background->window,
-						       background->default_pattern);
+				gdk_window_set_background_pattern (background->window,
+											background->default_pattern);
+			}
+			else {
+				g_printerr ("%s\n",
+						("unsupported panel image background such as -gtk-gradient"));
+				g_printerr ("%s\n",
+						("use an image file or a standard css gradient"));
+				/* use any background color that has been set if image is invalid */
+				gdk_window_set_background_rgba (
+				background->window, &background->default_color);
+			}
 			cairo_surface_destroy(surface);
 		} else
 			gdk_window_set_background_rgba (
