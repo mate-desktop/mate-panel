@@ -131,9 +131,9 @@ panel_background_prepare (PanelBackground *background)
 											background->default_pattern);
 			}
 			else {
-				g_printerr ("%s\n",
+				g_warning ("%s\n",
 						("unsupported panel image background such as -gtk-gradient"));
-				g_printerr ("%s\n",
+				g_warning ("%s\n",
 						("use an image file or a standard css gradient"));
 				/* use any background color that has been set if image is invalid */
 				gdk_window_set_background_rgba (
