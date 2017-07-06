@@ -1533,6 +1533,8 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 				    GdkRGBA* color,
 				    cairo_pattern_t *pattern)
 {
+	GtkStyleContext* context;
+	MatePanelAppletOrient orientation;
 	GdkWindow* window = gtk_widget_get_window (applet->priv->plug);
 	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
 	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
@@ -1553,6 +1555,15 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 		g_assert_not_reached ();
 		break;
 	}
+	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+	orientation = mate_panel_applet_get_orient (applet);
+	if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
+		applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
+		gtk_style_context_add_class(context,"horizontal");
+		}
+	else{
+		gtk_style_context_add_class(context,"vertical");
+		}
 }
 #else
 static void
@@ -1561,6 +1572,8 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 				    GdkRGBA* color,
 				    cairo_pattern_t *pattern)
 {
+	GtkStyleContext* context;
+	MatePanelAppletOrient orientation;
 	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(applet));
 	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
 	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
@@ -1578,6 +1591,15 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 		g_assert_not_reached ();
 		break;
 	}
+	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+	orientation = mate_panel_applet_get_orient (applet);
+	if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
+		applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
+		gtk_style_context_add_class(context,"horizontal");
+		}
+	else{
+		gtk_style_context_add_class(context,"vertical");
+		}
 }
 #endif
 
