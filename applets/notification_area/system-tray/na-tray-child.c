@@ -76,7 +76,7 @@ na_tray_child_realize (GtkWidget *widget)
       gdk_window_set_composited (window, TRUE);
       cairo_pattern_destroy (transparent);
 
-      child->parent_relative_bg = FALSE;
+      child->parent_relative_bg = TRUE;
     }
   else if (visual == gdk_window_get_visual(gdk_window_get_parent(window)))
     {
