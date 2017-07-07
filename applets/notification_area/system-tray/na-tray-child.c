@@ -76,7 +76,7 @@ na_tray_child_realize (GtkWidget *widget)
       gdk_window_set_composited (window, TRUE);
       cairo_pattern_destroy (transparent);
 
-      child->parent_relative_bg = TRUE;
+      child->parent_relative_bg = FALSE;
     }
   else if (visual == gdk_window_get_visual(gdk_window_get_parent(window)))
     {
@@ -589,7 +589,7 @@ na_tray_child_force_redraw (NaTrayChild *child)
 {
   GtkWidget *widget = GTK_WIDGET (child);
 
-  if (gtk_widget_get_mapped (widget) && child->parent_relative_bg)
+  if (gtk_widget_get_mapped (widget))
     {
 #if 1
       /* Sending an ExposeEvent might cause redraw problems if the
