@@ -1350,8 +1350,10 @@ mate_panel_applet_get_pattern_from_pixmap (MatePanelApplet *applet,
 
 	width = gdk_window_get_width(window);
 	height = gdk_window_get_height(window);
-	surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
-
+	surface = gdk_window_create_similar_surface (window,
+	                            CAIRO_CONTENT_COLOR_ALPHA,
+	                            width,
+	                            height);
 	gdk_error_trap_push ();
 	cr = cairo_create (surface);
 	cairo_set_source_surface (cr, background, -x, -y);
