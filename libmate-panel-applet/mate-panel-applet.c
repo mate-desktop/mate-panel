@@ -903,12 +903,18 @@ mate_panel_applet_can_focus (GtkWidget *widget)
 
 /* Taken from libmatecomponentui/matecomponent/matecomponent-plug.c */
 static gboolean
-mate_panel_applet_button_event (GtkWidget      *widget,
+mate_panel_applet_button_event (MatePanelApplet      *applet,
 			   GdkEventButton *event)
 {
+	GtkWidget *widget;
 	GdkWindow *window;
 	GdkWindow *socket_window;
 	XEvent     xevent;
+
+	if (!applet->priv->out_of_process)
+		return FALSE;
+
+	widget = applet->priv->plug;
 
 	if (!gtk_widget_is_toplevel (widget))
 		return FALSE;
@@ -993,7 +999,7 @@ mate_panel_applet_button_press (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	return mate_panel_applet_button_event (applet->priv->plug, event);
+	return mate_panel_applet_button_event (applet, event);
 }
 
 static gboolean
@@ -1002,7 +1008,7 @@ mate_panel_applet_button_release (GtkWidget      *widget,
 {
 	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
 
-	return mate_panel_applet_button_event (applet->priv->plug, event);
+	return mate_panel_applet_button_event (applet, event);
 }
 
 static gboolean
@@ -1877,6 +1883,9 @@ mate_panel_applet_constructor (GType                  type,
 	                                                                  construct_properties);
 	applet = MATE_PANEL_APPLET (object);
 
+	if (!applet->priv->out_of_process)
+		return object;
+
 	applet->priv->plug = gtk_plug_new (0);
 
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
@@ -2438,6 +2447,9 @@ guint32
 mate_panel_applet_get_xid (MatePanelApplet *applet,
 		      GdkScreen   *screen)
 {
+	if (applet->priv->out_of_process == FALSE)
+		return 0;
+
 	gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
 	gtk_widget_show (applet->priv->plug);
 
@@ -2454,5 +2466,14 @@ G_MODULE_EXPORT GtkWidget *
 mate_panel_applet_get_applet_widget (const gchar *factory_id,
                                 guint        uid)
 {
-	return mate_panel_applet_factory_get_applet_widget (factory_id, uid);
+	GtkWidget *widget;
+
+	widget = mate_panel_applet_factory_get_applet_widget (factory_id, uid);
+	if (!widget) {
+		return NULL;
+	}
+
+	mate_panel_applet_setup (MATE_PANEL_APPLET (widget));
+
+	return widget;
 }
