@@ -176,6 +176,7 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	const gchar *applet_id;
 	gint         screen_num;
 	GVariant    *props;
+	GVariant    *return_value;
 	GdkScreen   *screen;
 	guint32      xid;
 	guint32      uid;
@@ -205,8 +206,13 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	g_hash_table_insert (factory->applets, GUINT_TO_POINTER (uid), applet);
 	g_object_set_data (applet, "uid", GUINT_TO_POINTER (uid));
 
-	g_dbus_method_invocation_return_value (invocation,
-					       g_variant_new ("(ou)", object_path, xid));
+	return_value = g_variant_new ("(obuu)",
+	                              object_path,
+	                              factory->out_of_process,
+	                              xid,
+	                              uid);
+
+	g_dbus_method_invocation_return_value (invocation, return_value);
 }
 
 static void
@@ -234,7 +240,9 @@ static const gchar introspection_xml[] =
 	        "<arg name='screen' type='i' direction='in'/>"
 	        "<arg name='props' type='a{sv}' direction='in'/>"
 	        "<arg name='applet' type='o' direction='out'/>"
+            "<arg name='out-of-process' type='b' direction='out'/>"
 	        "<arg name='xid' type='u' direction='out'/>"
+            "<arg name='uid' type='u' direction='out'/>"
 	      "</method>"
 	    "</interface>"
 	  "</node>";
