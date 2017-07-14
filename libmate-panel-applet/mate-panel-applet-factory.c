@@ -20,6 +20,7 @@
  */
 
 #include "mate-panel-applet.h"
+#include "panel-applet-private.h"
 
 #include "mate-panel-applet-factory.h"
 

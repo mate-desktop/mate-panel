@@ -42,6 +42,7 @@
 #include <X11/Xatom.h>
 
 #include "mate-panel-applet.h"
+#include "panel-applet-private.h"
 #include "mate-panel-applet-factory.h"
 #include "mate-panel-applet-marshal.h"
 #include "mate-panel-applet-enums.h"

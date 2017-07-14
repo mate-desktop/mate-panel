@@ -46,13 +46,6 @@ MatePanelAppletFactory *mate_panel_applet_factory_new              (const gchar 
 gboolean            mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory);
 GtkWidget          *mate_panel_applet_factory_get_applet_widget (const gchar        *id,
                                                             guint               uid);
-
-/* This technically belongs to mate-panel-applet.h, but it's not something that
- * should be public API. */
-guint32            mate_panel_applet_get_xid              (MatePanelApplet *applet,
-						      GdkScreen   *screen);
-const gchar       *mate_panel_applet_get_object_path      (MatePanelApplet *applet);
-
 #ifdef __cplusplus
 }
 #endif
