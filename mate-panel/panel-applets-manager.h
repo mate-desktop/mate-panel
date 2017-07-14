@@ -68,6 +68,10 @@ struct _MatePanelAppletsManagerClass {
 	gboolean           (*load_applet)           (MatePanelAppletsManager         *manager,
 						     const gchar                 *iid,
 						     MatePanelAppletFrameActivating  *frame_act);
+
+	GtkWidget        * (*get_applet_widget)     (MatePanelAppletsManager         *manager,
+	                                             const gchar                 *iid,
+	                                             guint                        uid);
 };
 
 struct _MatePanelAppletsManager {
@@ -86,6 +90,9 @@ MatePanelAppletInfo  *mate_panel_applets_manager_get_applet_info_from_old_id (co
 
 gboolean          mate_panel_applets_manager_load_applet                 (const gchar                *iid,
 								     MatePanelAppletFrameActivating *frame_act);
+
+GtkWidget        *mate_panel_applets_manager_get_applet_widget           (const gchar     *iid,
+                                                                     guint            uid);
 
 #ifdef __cplusplus
 }

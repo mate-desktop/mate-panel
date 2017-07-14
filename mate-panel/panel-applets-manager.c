@@ -199,3 +199,23 @@ mate_panel_applets_manager_load_applet (const gchar                *iid,
 
 	return FALSE;
 }
+
+GtkWidget *
+mate_panel_applets_manager_get_applet_widget (const gchar *iid,
+                                         guint        uid)
+{
+	GSList *l;
+
+	_mate_panel_applets_managers_ensure_loaded ();
+
+	for (l = mate_panel_applets_managers; l != NULL; l = l->next) {
+		MatePanelAppletsManager *manager = MATE_PANEL_APPLETS_MANAGER (l->data);
+
+		if (!MATE_PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_info (manager, iid))
+			continue;
+
+		return MATE_PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_widget (manager, iid, uid);
+	}
+
+	return NULL;
+}
