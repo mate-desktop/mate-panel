@@ -1859,10 +1859,26 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	gtk_ui_manager_add_ui_from_string (applet->priv->ui_manager,
 					   panel_menu_ui, -1, NULL);
 
+	gtk_widget_set_events (GTK_WIDGET (applet),
+			       GDK_BUTTON_PRESS_MASK |
+			       GDK_BUTTON_RELEASE_MASK);
+}
 
+static GObject *
+mate_panel_applet_constructor (GType                  type,
+                          guint                  n_construct_properties,
+                          GObjectConstructParam *construct_properties)
+{
+	GObject     *object;
+	MatePanelApplet *applet;
 
+	object = G_OBJECT_CLASS (mate_panel_applet_parent_class)->constructor (type,
+	                                                                  n_construct_properties,
+	                                                                  construct_properties);
+	applet = MATE_PANEL_APPLET (object);
 
 	applet->priv->plug = gtk_plug_new (0);
+
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
@@ -1874,16 +1890,14 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	_mate_panel_applet_prepare_css(context);
 
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
-				  G_CALLBACK (mate_panel_applet_setup),
-				  applet);
+		                      G_CALLBACK (mate_panel_applet_setup),
+		                      applet);
+ 
+ 	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 
-	gtk_widget_set_events (GTK_WIDGET (applet),
-			       GDK_BUTTON_PRESS_MASK |
-			       GDK_BUTTON_RELEASE_MASK);
-
-	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
+	return object;
 }
-
+ 
 static void
 mate_panel_applet_constructed (GObject* object)
 {
@@ -1906,6 +1920,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 
 	gobject_class->get_property = mate_panel_applet_get_property;
 	gobject_class->set_property = mate_panel_applet_set_property;
+	gobject_class->constructor = mate_panel_applet_constructor;
 	gobject_class->constructed = mate_panel_applet_constructed;
 	klass->move_focus_out_of_applet = mate_panel_applet_move_focus_out_of_applet;
 	klass->change_background = mate_panel_applet_change_background;
