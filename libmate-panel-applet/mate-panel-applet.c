@@ -1329,6 +1329,8 @@ mate_panel_applet_get_pattern_from_pixmap (MatePanelApplet *applet,
 	cairo_t         *cr;
 	cairo_pattern_t *pattern;
 
+	pattern = NULL; /*Properly initialize this, otherwise crashes can occur*/
+
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (!gtk_widget_get_realized (GTK_WIDGET (applet)))
