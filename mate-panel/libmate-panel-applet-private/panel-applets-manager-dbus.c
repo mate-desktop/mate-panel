@@ -46,6 +46,8 @@ struct _MatePanelAppletsManagerDBusPrivate
 };
 
 typedef gint (* ActivateAppletFunc) (void);
+typedef GtkWidget * (* GetAppletWidgetFunc) (const gchar *factory_id,
+                                             guint        uid);
 
 typedef struct _MatePanelAppletFactoryInfo {
 	gchar              *id;
@@ -53,6 +55,7 @@ typedef struct _MatePanelAppletFactoryInfo {
 	gboolean            in_process;
 	GModule            *module;
 	ActivateAppletFunc  activate_applet;
+	GetAppletWidgetFunc get_applet_widget;
 	guint               n_applets;
 
 	gchar              *srcdir;
@@ -395,6 +398,7 @@ mate_panel_applets_manager_dbus_factory_activate (MatePanelAppletsManager *manag
 {
 	MatePanelAppletFactoryInfo *info;
 	ActivateAppletFunc      activate_applet;
+	GetAppletWidgetFunc     get_applet_widget;
 
 	info = get_applet_factory_info (manager, iid);
 	if (!info)
@@ -434,6 +438,15 @@ mate_panel_applets_manager_dbus_factory_activate (MatePanelAppletsManager *manag
 		return FALSE;
 	}
 
+	if (!g_module_symbol (info->module, "mate_panel_applet_get_applet_widget", (gpointer *) &get_applet_widget)) {
+		/* FIXME: use a GError? */
+		g_warning ("Failed to load applet %s: %s", iid, g_module_error ());
+		g_module_close (info->module);
+		info->module = NULL;
+
+		return FALSE;
+	}
+
 	/* Activate the applet */
 	if (activate_applet () != 0) {
 		/* FIXME: use a GError? */
@@ -444,6 +457,7 @@ mate_panel_applets_manager_dbus_factory_activate (MatePanelAppletsManager *manag
 		return FALSE;
 	}
 	info->activate_applet = activate_applet;
+	info->get_applet_widget = get_applet_widget;
 
 	info->n_applets = 1;
 
@@ -550,6 +564,20 @@ mate_panel_applets_manager_dbus_load_applet (MatePanelAppletsManager         *ma
 	return mate_panel_applet_frame_dbus_load (iid, frame_act);
 }
 
+static GtkWidget *
+mate_panel_applets_manager_dbus_get_applet_widget (MatePanelAppletsManager *manager,
+                                              const gchar         *iid,
+                                              guint                uid)
+{
+	MatePanelAppletFactoryInfo *info;
+
+	info = get_applet_factory_info (manager, iid);
+	if (!info)
+		return NULL;
+
+	return info->get_applet_widget (info->id, uid);
+}
+
 static void
 mate_panel_applets_manager_dbus_finalize (GObject *object)
 {
@@ -598,6 +626,7 @@ mate_panel_applets_manager_dbus_class_init (MatePanelAppletsManagerDBusClass *cl
 	manager_class->get_applet_info = mate_panel_applets_manager_dbus_get_applet_info;
 	manager_class->get_applet_info_from_old_id = mate_panel_applets_manager_dbus_get_applet_info_from_old_id;
 	manager_class->load_applet = mate_panel_applets_manager_dbus_load_applet;
+	manager_class->get_applet_widget = mate_panel_applets_manager_dbus_get_applet_widget;
 
 	g_type_class_add_private (class, sizeof (MatePanelAppletsManagerDBusPrivate));
 }
