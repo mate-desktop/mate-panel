@@ -44,6 +44,8 @@ MatePanelAppletFactory *mate_panel_applet_factory_new              (const gchar 
 							   GType               applet_type,
 							   GClosure           *closure);
 gboolean            mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory);
+GtkWidget          *mate_panel_applet_factory_get_applet_widget (const gchar        *id,
+                                                            guint               uid);
 
 /* This technically belongs to mate-panel-applet.h, but it's not something that
  * should be public API. */
