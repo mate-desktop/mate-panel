@@ -112,8 +112,13 @@ void mate_panel_applet_request_focus(MatePanelApplet* applet, guint32 timestamp)
 void mate_panel_applet_setup_menu(MatePanelApplet* applet, const gchar* xml, GtkActionGroup* action_group);
 void mate_panel_applet_setup_menu_from_file(MatePanelApplet* applet, const gchar* filename, GtkActionGroup* action_group);
 
-int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
+int mate_panel_applet_factory_main(const gchar* factory_id, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
 gboolean _mate_panel_applet_shlib_factory(void);
+
+int  panel_applet_factory_setup_in_process (const gchar               *factory_id,
+							  GType                      applet_type,
+							  MatePanelAppletFactoryCallback callback,
+							  gpointer                   data);
 
 
 /*
@@ -168,7 +173,7 @@ int main(int argc, char* argv[]) \
 	 \
 	gtk_init (&argc, &argv); \
 	 \
-	retval = mate_panel_applet_factory_main (id, TRUE, type, callback, data); \
+	retval = mate_panel_applet_factory_main (id, type, callback, data); \
 	g_option_context_free (context); \
 	 \
 	return retval; \
@@ -178,7 +183,8 @@ int main(int argc, char* argv[]) \
 G_MODULE_EXPORT gint _mate_panel_applet_shlib_factory(void) \
 { \
 	_MATE_PANEL_APPLET_SETUP_GETTEXT(FALSE); \
-	return mate_panel_applet_factory_main(id, FALSE, type, callback, data); \
+return mate_panel_applet_factory_setup_in_process (id, type,                 \
+                                               callback, data);  \
 }
 
 #ifdef __cplusplus
