@@ -40,6 +40,7 @@ typedef struct _MatePanelAppletFactoryClass   MatePanelAppletFactoryClass;
 
 GType               mate_panel_applet_factory_get_type         (void) G_GNUC_CONST;
 MatePanelAppletFactory *mate_panel_applet_factory_new              (const gchar        *applet_id,
+								gboolean            out_of_process,
 							   GType               applet_type,
 							   GClosure           *closure);
 gboolean            mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory);
