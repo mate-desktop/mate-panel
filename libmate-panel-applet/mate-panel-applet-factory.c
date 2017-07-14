@@ -28,6 +28,7 @@ struct _MatePanelAppletFactory {
 
 	gchar     *factory_id;
 	guint      n_applets;
+	gboolean   out_of_process;
 	GType      applet_type;
 	GClosure  *closure;
 };
@@ -83,6 +84,7 @@ mate_panel_applet_factory_applet_removed (MatePanelAppletFactory *factory,
 
 MatePanelAppletFactory *
 mate_panel_applet_factory_new (const gchar *factory_id,
+				gboolean     out_of_process,
 			  GType        applet_type,
 			  GClosure    *closure)
 {
@@ -90,6 +92,7 @@ mate_panel_applet_factory_new (const gchar *factory_id,
 
 	factory = MATE_PANEL_APPLET_FACTORY (g_object_new (PANEL_TYPE_APPLET_FACTORY, NULL));
 	factory->factory_id = g_strdup (factory_id);
+	factory->out_of_process = out_of_process;
 	factory->applet_type = applet_type;
 	factory->closure = g_closure_ref (closure);
 
@@ -150,6 +153,7 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	g_variant_get (parameters, "(&si@a{sv})", &applet_id, &screen_num, &props);
 
 	applet = g_object_new (factory->applet_type,
+                   "out-of-process", factory->out_of_process,
 			       "id", applet_id,
 			       "connection", connection,
 			       "closure", factory->closure,
