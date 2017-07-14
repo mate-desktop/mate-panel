@@ -31,6 +31,9 @@ struct _MatePanelAppletFactory {
 	gboolean   out_of_process;
 	GType      applet_type;
 	GClosure  *closure;
+
+	GHashTable      *applets;
+	guint            next_uid;
 };
 
 struct _MatePanelAppletFactoryClass {
@@ -42,14 +45,28 @@ struct _MatePanelAppletFactoryClass {
 
 G_DEFINE_TYPE (MatePanelAppletFactory, mate_panel_applet_factory, G_TYPE_OBJECT)
 
+static GHashTable *factories = NULL;
+
 static void
 mate_panel_applet_factory_finalize (GObject *object)
 {
 	MatePanelAppletFactory *factory = MATE_PANEL_APPLET_FACTORY (object);
 
+	g_hash_table_remove (factories, factory->factory_id);
+
+	if (g_hash_table_size (factories) == 0) {
+		g_hash_table_unref (factories);
+		factories = NULL;
+	}
+
 	if (factory->factory_id) {
 		g_free (factory->factory_id);
 		factory->factory_id = NULL;
+	}
+
+	if (factory->applets) {
+		g_hash_table_unref (factory->applets);
+		factory->applets = NULL;
 	}
 
 	if (factory->closure) {
@@ -63,6 +80,8 @@ mate_panel_applet_factory_finalize (GObject *object)
 static void
 mate_panel_applet_factory_init (MatePanelAppletFactory *factory)
 {
+	factory->applets = g_hash_table_new (NULL, NULL);
+	factory->next_uid = 1;
 }
 
 static void
@@ -77,6 +96,12 @@ static void
 mate_panel_applet_factory_applet_removed (MatePanelAppletFactory *factory,
 				     GObject            *applet)
 {
+	guint uid;
+
+	uid = GPOINTER_TO_UINT (g_object_get_data (applet, "uid"));
+
+	g_hash_table_remove (factory->applets, GUINT_TO_POINTER (uid));
+
 	factory->n_applets--;
 	if (factory->n_applets == 0)
 		g_object_unref (factory);
@@ -95,6 +120,11 @@ mate_panel_applet_factory_new (const gchar *factory_id,
 	factory->out_of_process = out_of_process;
 	factory->applet_type = applet_type;
 	factory->closure = g_closure_ref (closure);
+	if (factories == NULL) {
+		factories = g_hash_table_new (g_str_hash, g_str_equal);
+	}
+
+	g_hash_table_insert (factories, factory->factory_id, factory);
 
 	return factory;
 }
@@ -148,6 +178,7 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	GVariant    *props;
 	GdkScreen   *screen;
 	guint32      xid;
+	guint32      uid;
 	const gchar *object_path;
 
 	g_variant_get (parameters, "(&si@a{sv})", &applet_id, &screen_num, &props);
@@ -169,7 +200,10 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 		gdk_screen_get_default ();
 
 	xid = mate_panel_applet_get_xid (MATE_PANEL_APPLET (applet), screen);
+	uid = factory->next_uid++;
 	object_path = mate_panel_applet_get_object_path (MATE_PANEL_APPLET (applet));
+	g_hash_table_insert (factory->applets, GUINT_TO_POINTER (uid), applet);
+	g_object_set_data (applet, "uid", GUINT_TO_POINTER (uid));
 
 	g_dbus_method_invocation_return_value (invocation,
 					       g_variant_new ("(ou)", object_path, xid));
