@@ -161,30 +161,6 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 }
 
 static void
-mate_panel_applet_frame_update_background_size (MatePanelAppletFrame *frame,
-					   GtkAllocation    *old_allocation,
-					   GtkAllocation    *new_allocation)
-{
-	PanelBackground *background;
-
-	if (old_allocation->x      == new_allocation->x &&
-	    old_allocation->y      == new_allocation->y &&
-	    old_allocation->width  == new_allocation->width &&
-	    old_allocation->height == new_allocation->height)
-		return;
-#if GTK_CHECK_VERSION (3, 18, 0)
-	background = &frame->priv->panel->toplevel->background;
-#else
-	background = &frame->priv->panel->background;
-#endif
-	if (background->type == PANEL_BACK_NONE ||
-	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
-		return;
-
-	mate_panel_applet_frame_change_background (frame, background->type);
-}
-
-static void
 mate_panel_applet_frame_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	MatePanelAppletFrame *frame;
@@ -271,22 +247,15 @@ mate_panel_applet_frame_size_allocate (GtkWidget     *widget,
 	GtkWidget        *child;
 	GdkWindow        *window;
 	GtkAllocation     new_allocation;
-	GtkAllocation     old_allocation;
 	GtkAllocation     widget_allocation;
 
 	gtk_widget_get_allocation (widget, &widget_allocation);
-
-	old_allocation.x      = widget_allocation.x;
-	old_allocation.y      = widget_allocation.y;
-	old_allocation.width  = widget_allocation.width;
-	old_allocation.height = widget_allocation.height;
 
 	frame = MATE_PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
 	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->size_allocate (widget,  allocation);
-		mate_panel_applet_frame_update_background_size (frame, &old_allocation, allocation);
 		return;
 	}
 
@@ -359,10 +328,6 @@ mate_panel_applet_frame_size_allocate (GtkWidget     *widget,
 		gtk_widget_size_allocate (child, &new_allocation);
 
 	frame->priv->child_allocation = new_allocation;
-
-	mate_panel_applet_frame_update_background_size (frame,
-						   &old_allocation,
-						   allocation);
 }
 
 static inline gboolean
@@ -537,31 +502,6 @@ mate_panel_applet_frame_change_size (MatePanelAppletFrame *frame,
 }
 
 void
-mate_panel_applet_frame_change_background (MatePanelAppletFrame    *frame,
-				      PanelBackgroundType  type)
-{
-	GtkWidget *parent;
-
-	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
-
-	parent = gtk_widget_get_parent (GTK_WIDGET (frame));
-
-	g_return_if_fail (PANEL_IS_WIDGET (parent));
-
-	if (frame->priv->has_handle) {
-		PanelBackground *background;
-#if GTK_CHECK_VERSION (3, 18, 0)
-		background = &PANEL_WIDGET (parent)->toplevel->background;
-#else
-		background = &PANEL_WIDGET (parent)->background;
-#endif
-		panel_background_apply_css (background, GTK_WIDGET (frame));
-	}
-
-	MATE_PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame, type);
-}
-
-void
 mate_panel_applet_frame_set_panel (MatePanelAppletFrame *frame,
 			      PanelWidget      *panel)
 {
@@ -632,26 +572,10 @@ _mate_panel_applet_frame_update_flags (MatePanelAppletFrame *frame,
 				  gboolean          minor,
 				  gboolean          has_handle)
 {
-	gboolean old_has_handle;
-
 	panel_widget_set_applet_expandable (
 		frame->priv->panel, GTK_WIDGET (frame), major, minor);
 
-	old_has_handle = frame->priv->has_handle;
 	frame->priv->has_handle = has_handle;
-
-	if (!old_has_handle && frame->priv->has_handle) {
-		/* we've added an handle, so we need to get the background for
-		 * it */
-		PanelBackground *background;
-
-#if GTK_CHECK_VERSION (3, 18, 0)
-		background = &frame->priv->panel->toplevel->background;
-#else
-		background = &frame->priv->panel->background;
-#endif
-		mate_panel_applet_frame_change_background (frame, background->type);
-	}
 }
 
 void
