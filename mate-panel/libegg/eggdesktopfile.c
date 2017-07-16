@@ -1185,7 +1185,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
       display = gdk_display_get_default ();
       screen = gdk_display_get_default_screen (display);
     }
-  screen_num = gdk_screen_get_number (screen);
+  screen_num = gdk_x11_screen_get_screen_number (screen);
 
   translated_documents = translate_document_list (desktop_file, documents);
   docs = translated_documents;
@@ -1364,7 +1364,7 @@ egg_desktop_file_launch (EggDesktopFile *desktop_file,
 		       EGG_DESKTOP_FILE_ERROR_NOT_LAUNCHABLE,
 		       _("Can't pass document URIs to a 'Type=Link' desktop entry"));
 	  return FALSE;
-	}	  
+	}
 
       if (!parse_link (desktop_file, &app_desktop_file, &documents, error))
 	return FALSE;
@@ -1483,10 +1483,10 @@ egg_set_desktop_file_without_defaults (const char *desktop_file_path)
 
 /**
  * egg_get_desktop_file:
- * 
+ *
  * Gets the application's #EggDesktopFile, as set by
  * egg_set_desktop_file().
- * 
+ *
  * Return value: the #EggDesktopFile, or %NULL if it hasn't been set.
  **/
 EggDesktopFile *

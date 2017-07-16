@@ -34,7 +34,7 @@ typedef struct {
 
 	GdkScreen        *screen;
 	int               monitor;
-	
+
         PanelOrientation  orientation;
 	GdkRectangle      geometry;
         int               strut_size;
@@ -221,7 +221,7 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 				geometry.height = geometry.y + geometry.height - monitor_y;
 				geometry.y      = monitor_y;
 			}
-				
+
 			if (geometry.y + geometry.height > monitor_y + monitor_height)
 				geometry.height = monitor_y + monitor_height - geometry.y;
 		}
@@ -372,8 +372,8 @@ panel_struts_compare (const PanelStrut *s1,
 	int s2_depth;
 
 	if (s1->screen != s2->screen)
-		return gdk_screen_get_number (s1->screen) -
-			gdk_screen_get_number (s2->screen);
+		return gdk_x11_screen_get_screen_number (s1->screen) -
+			gdk_x11_screen_get_screen_number (s2->screen);
 
 	if (s1->monitor != s2->monitor)
 		return s1->monitor - s2->monitor;
@@ -429,7 +429,7 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	strut->strut_size  = strut_size;
 	strut->strut_start = strut_start;
 	strut->strut_end   = strut_end;
-	
+
 	panel_struts_get_monitor_geometry (screen, monitor,
 					   &monitor_x, &monitor_y,
 					   &monitor_width, &monitor_height);
@@ -500,7 +500,7 @@ panel_struts_update_toplevel_geometry (PanelToplevel *toplevel,
 
 	g_return_val_if_fail (x != NULL, FALSE);
 	g_return_val_if_fail (y != NULL, FALSE);
-	
+
 	if (!(strut = panel_struts_find_strut (toplevel)))
 		return FALSE;
 

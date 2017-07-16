@@ -30,6 +30,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 
@@ -99,7 +100,7 @@ WnckScreen* wncklet_get_screen(GtkWidget* applet)
 	if (!gtk_widget_has_screen(applet))
 		return wnck_screen_get_default();
 
-	screen_num = gdk_screen_get_number(gtk_widget_get_screen(applet));
+	screen_num = gdk_x11_screen_get_screen_number(gtk_widget_get_screen(applet));
 
 	return wnck_screen_get(screen_num);
 }
