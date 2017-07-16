@@ -28,6 +28,7 @@
 
 #include <glib.h>
 #include <gio/gio.h>
+#include <gdk/gdkx.h>
 
 #include <libmate-desktop/mate-dconf.h>
 #include <libmate-desktop/mate-gsettings.h>
@@ -180,7 +181,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     }
     g_strfreev (existing_ids);
     g_free (dconf_path);
-    
+
     if (existing_id || !id)
         unique_id = panel_profile_find_new_id (type);
     else
@@ -285,10 +286,10 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
     gchar      **groups = NULL;
     GError      *error = NULL;
     int          i;
-    
-    screen_n = gdk_screen_get_number (screen);
+
+    screen_n = gdk_x11_screen_get_screen_number (screen);
     layout_file = panel_layout_filename();
-    
+
     if (layout_file)
     {
         keyfile = g_key_file_new ();
@@ -298,12 +299,12 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
                                        &error))
         {
             groups = g_key_file_get_groups (keyfile, NULL);
-            
+
             for (i = 0; groups[i] != NULL; i++) {
-                
+
                 if (g_strcmp0 (groups[i], "Toplevel") == 0 ||
                         g_str_has_prefix (groups[i], "Toplevel "))
-                
+
                     panel_layout_append_group_helper (
                                         keyfile, groups[i],
                                         screen_n,
@@ -315,10 +316,10 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
                                         panel_layout_toplevel_keys,
                                         G_N_ELEMENTS (panel_layout_toplevel_keys),
                                         "toplevel");
-    
+
                 else if (g_strcmp0 (groups[i], "Object") == 0 ||
                         g_str_has_prefix (groups[i], "Object "))
-                
+
                     panel_layout_append_group_helper (
                                         keyfile, groups[i],
                                         -1,
@@ -330,14 +331,14 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
                                         panel_layout_object_keys,
                                         G_N_ELEMENTS (panel_layout_object_keys),
                                         "object");
-                    
+
                 else
-                    
+
                     g_warning ("Unknown group in default layout: '%s'",
                                groups[i]);
-                
+
             }
-            
+
         }
         else
         {
@@ -345,19 +346,19 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
                        layout_file, error->message);
             g_error_free (error);
         }
-        
+
     }
     else {
         g_warning ("Cant find the layout file!");
         /* FIXME implement a fallback panel */
     }
-    
+
     if (groups)
         g_strfreev (groups);
-    
+
     if (keyfile)
         g_key_file_free (keyfile);
-    
+
     if (layout_file)
         g_free (layout_file);
 }

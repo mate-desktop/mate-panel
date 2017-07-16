@@ -361,7 +361,7 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 		g_signal_handlers_disconnect_by_func(sdd->icon_theme, theme_changed_callback, sdd);
 
 	screen = gtk_widget_get_screen(sdd->applet);
-	sdd->wnck_screen = wnck_screen_get(gdk_screen_get_number (screen));
+	sdd->wnck_screen = wnck_screen_get(gdk_x11_screen_get_screen_number (screen));
 
 	if (sdd->wnck_screen != NULL)
 		wncklet_connect_while_alive(sdd->wnck_screen, "showing_desktop_changed", G_CALLBACK(show_desktop_changed_callback), sdd, sdd->applet);

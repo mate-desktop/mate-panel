@@ -780,7 +780,7 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
                          GDK_PROPERTY_CHANGE_MASK | GDK_STRUCTURE_MASK);
 
   selection_atom_name = g_strdup_printf ("_NET_SYSTEM_TRAY_S%d",
-					 gdk_screen_get_number (screen));
+					 gdk_x11_screen_get_screen_number (screen));
   manager->selection_atom = gdk_atom_intern (selection_atom_name, FALSE);
   g_free (selection_atom_name);
 
@@ -886,7 +886,7 @@ na_tray_manager_check_running_screen_x11 (GdkScreen *screen)
 
   display = gdk_screen_get_display (screen);
   selection_atom_name = g_strdup_printf ("_NET_SYSTEM_TRAY_S%d",
-                                         gdk_screen_get_number (screen));
+                                         gdk_x11_screen_get_screen_number (screen));
   selection_atom = gdk_x11_get_xatom_by_name_for_display (display,
                                                           selection_atom_name);
   g_free (selection_atom_name);

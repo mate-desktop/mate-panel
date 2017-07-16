@@ -139,7 +139,7 @@ create_tray_on_screen (GdkScreen *screen,
 				     "Override tray manager?");
     gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 					     "There is already a tray manager running on screen %d.",
-					     gdk_screen_get_number (screen));
+					     gdk_x11_screen_get_screen_number (screen));
     gtk_window_set_screen (GTK_WINDOW (dialog), screen);
     g_signal_connect (dialog, "response", G_CALLBACK (warning_dialog_response_cb), screen);
     gtk_window_present (GTK_WINDOW (dialog));
@@ -149,7 +149,7 @@ create_tray_on_screen (GdkScreen *screen,
 
   data = g_new0 (TrayData, 1);
   data->screen = screen;
-  data->screen_num = gdk_screen_get_number (screen);
+  data->screen_num = gdk_x11_screen_get_screen_number (screen);
 
   data->window = window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_object_weak_ref (G_OBJECT (window), (GWeakNotify) maybe_quit, NULL);
@@ -274,7 +274,7 @@ main (int argc, char *argv[])
   screen = gdk_display_get_default_screen (display);
 
   create_tray_on_screen (screen, FALSE);
-  
+
   gtk_main ();
 
 #ifdef PROVIDE_WATCHER_SERVICE

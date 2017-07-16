@@ -31,6 +31,7 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <gdk/gdkx.h>
 
 #include <libpanel-util/panel-list.h>
 #include <libmate-desktop/mate-dconf.h>
@@ -577,7 +578,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 	if (change->screen_changed)
 		g_settings_set_int (toplevel->queued_settings,
 							"screen",
-							gdk_screen_get_number (change->screen));
+							gdk_x11_screen_get_screen_number (change->screen));
 
 	if (change->monitor_changed)
 		g_settings_set_int (toplevel->queued_settings,
@@ -775,7 +776,7 @@ panel_profile_toplevel_change_notify (GSettings *settings,
 	if (!strcmp (key, "screen")) {
 		GdkScreen *screen;
 		screen = gdk_display_get_screen (
-				gdk_display_get_default (), 
+				gdk_display_get_default (),
 				g_settings_get_int (settings, key));
 		if (screen)
 			gtk_window_set_screen (GTK_WINDOW (toplevel), screen);
@@ -980,13 +981,13 @@ panel_profile_create_toplevel (GdkScreen *screen)
 	settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
 	g_free (path);
 
-	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, gdk_screen_get_number (screen));
+	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, gdk_x11_screen_get_screen_number (screen));
 
 	if (panel_profile_find_empty_spot (screen, &orientation, &monitor)) {
 		g_settings_set_int (settings, PANEL_TOPLEVEL_MONITOR_KEY, monitor);
 		g_settings_set_enum (settings, PANEL_TOPLEVEL_ORIENTATION_KEY, orientation);
 	}
-	
+
 	panel_profile_add_to_list (PANEL_GSETTINGS_TOPLEVELS, id);
 
 	g_object_unref (settings);
@@ -1182,7 +1183,7 @@ panel_profile_load_and_show_toplevel (char *toplevel_id)
 	GSettings *panel_settings;
 	panel_settings = g_settings_new (PANEL_SCHEMA);
 	objects = g_settings_get_strv (panel_settings, PANEL_OBJECT_ID_LIST_KEY);
-	
+
 	if (objects) {
 		panel_profile_object_id_list_update (objects);
 		loading_queued_applets = TRUE;
@@ -1190,7 +1191,7 @@ panel_profile_load_and_show_toplevel (char *toplevel_id)
 
 	if (!loading_queued_applets)
 		mate_panel_applet_load_queued_applets (FALSE);
-	
+
 	g_strfreev (objects);
 	g_object_unref (panel_settings);
 }
@@ -1561,7 +1562,7 @@ panel_profile_load_list (GSettings              *settings,
 	gint    i;
 
 	changed_signal = g_strdup_printf ("changed::%s", key);
-	g_signal_connect (settings, changed_signal, G_CALLBACK (notify_handler), NULL); 
+	g_signal_connect (settings, changed_signal, G_CALLBACK (notify_handler), NULL);
 	g_free (changed_signal);
 
 	list = g_settings_get_strv (settings, key);
@@ -1678,7 +1679,7 @@ panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 	if (!g_settings_is_writable (toplevel->settings, PANEL_TOPLEVEL_MONITOR_KEY))
 		return FALSE;
 
-	/* For expanded panels we don't really have to check 
+	/* For expanded panels we don't really have to check
 	   x and y */
 	if (panel_toplevel_get_expand (toplevel))
 		return TRUE;

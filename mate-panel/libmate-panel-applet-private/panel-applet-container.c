@@ -479,7 +479,7 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 
 	/* we can't use the screen of the container widget since it's not in a
 	 * widget hierarchy yet */
-	screen_number = gdk_screen_get_number (screen);
+	screen_number = gdk_x11_screen_get_screen_number (screen);
 
 	data = g_new (AppletFactoryData, 1);
 	data->result = result;
