@@ -1551,9 +1551,9 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 	if (applet->priv->out_of_process)
 		window = gtk_widget_get_window (applet->priv->plug);
 	else
-		window = gtk_widget_get_window (applet);
+		window = gtk_widget_get_window GTK_WIDGET((applet));
 #else
-		window = gtk_widget_get_window (applet);
+		window = gtk_widget_get_window GTK_WIDGET((applet));
 #endif
 		gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
 		if (applet->priv->out_of_process)
@@ -2350,6 +2350,7 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 
 /**
  * panel_applet_factory_main:
+ * @out_process: boolean, dummy to support applets sending it
  * @factory_id: Factory ID.
  * @applet_type: GType of the applet this factory creates.
  * @callback: (scope call): Callback to be called when a new applet is to be created.
@@ -2359,6 +2360,7 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
  */
 int
 mate_panel_applet_factory_main (const gchar               *factory_id,
+               gboolean                   out_process, /*Dummy to support applets w issues with this */
 			   GType                      applet_type,
 			   MatePanelAppletFactoryCallback callback,
 			   gpointer                   user_data)
