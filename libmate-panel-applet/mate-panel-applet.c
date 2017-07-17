@@ -1538,82 +1538,63 @@ mate_panel_applet_move_focus_out_of_applet (MatePanelApplet      *applet,
 	applet->priv->moving_focus_out = FALSE;
 }
 
+static void
+mate_panel_applet_change_background(MatePanelApplet *applet,
+				    MatePanelAppletBackgroundType type,
+				    GdkRGBA* color,
+				    cairo_pattern_t *pattern)
+{
+	GtkStyleContext* context;
+	MatePanelAppletOrient orientation;
+	GdkWindow* window;
 #if GTK_CHECK_VERSION (3, 18, 0)
-static void
-mate_panel_applet_change_background(MatePanelApplet *applet,
-				    MatePanelAppletBackgroundType type,
-				    GdkRGBA* color,
-				    cairo_pattern_t *pattern)
-{
-	GtkStyleContext* context;
-	MatePanelAppletOrient orientation;
-	GdkWindow* window = gtk_widget_get_window (applet->priv->plug);
-	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
-	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		pattern = cairo_pattern_create_rgba (0,0,0,0);     /* Using NULL here breaks transparent */
-		gdk_window_set_background_pattern(window,pattern); /* backgrounds set by GTK theme */
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gdk_window_set_background_rgba(window,color);
-		gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		gdk_window_set_background_pattern(window,pattern);
-		gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-	orientation = mate_panel_applet_get_orient (applet);
-	if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
-		applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
-		gtk_style_context_add_class(context,"horizontal");
-		}
-	else {
-		gtk_style_context_add_class(context,"vertical");
-		}
-}
+	if (applet->priv->out_of_process)
+		window = gtk_widget_get_window (applet->priv->plug);
+	else
+		window = gtk_widget_get_window (applet);
 #else
-static void
-mate_panel_applet_change_background(MatePanelApplet *applet,
-				    MatePanelAppletBackgroundType type,
-				    GdkRGBA* color,
-				    cairo_pattern_t *pattern)
-{
-	GtkStyleContext* context;
-	MatePanelAppletOrient orientation;
-	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(applet));
-	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
-	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		gdk_window_set_background_pattern(window,NULL);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gdk_window_set_background_rgba(window,color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		gdk_window_set_background_pattern(window,pattern);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-	orientation = mate_panel_applet_get_orient (applet);
-	if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
-		applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
-		gtk_style_context_add_class(context,"horizontal");
+		window = gtk_widget_get_window (applet);
+#endif
+		gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
+		if (applet->priv->out_of_process)
+			_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
+		switch (type) {
+		case PANEL_NO_BACKGROUND:
+			if (applet->priv->out_of_process){
+				pattern = cairo_pattern_create_rgba (0,0,0,0);     /* Using NULL here breaks transparent */
+				gdk_window_set_background_pattern(window,pattern); /* backgrounds set by GTK theme */
+				}
+			break;
+		case PANEL_COLOR_BACKGROUND:
+			gdk_window_set_background_rgba(window,color);
+#if GTK_CHECK_VERSION (3, 18, 0)
+			if (applet->priv->out_of_process)
+			gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
+#endif
+			break;
+		case PANEL_PIXMAP_BACKGROUND:
+			gdk_window_set_background_pattern(window,pattern);
+#if GTK_CHECK_VERSION (3, 18, 0)
+			if (applet->priv->out_of_process)
+			gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
+#endif
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
 		}
-	else {
-		gtk_style_context_add_class(context,"vertical");
+		if (applet->priv->out_of_process){
+		context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+		orientation = mate_panel_applet_get_orient (applet);
+		if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
+			applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
+			gtk_style_context_add_class(context,"horizontal");
+			}
+		else {
+			gtk_style_context_add_class(context,"vertical");
+			}
 		}
 }
-#endif
 
 static void
 mate_panel_applet_get_property (GObject    *object,
