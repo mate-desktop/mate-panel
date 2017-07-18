@@ -84,6 +84,9 @@ main (int argc, char **argv)
 
 	gtk_init (&argc, &argv);
 
+    /* FIXME: High dpi scaling does not work... */
+    gdk_x11_display_set_window_scale (gdk_display_get_default (), 1);
+
 	error = NULL;
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
 		g_printerr ("%s\n", error->message);
