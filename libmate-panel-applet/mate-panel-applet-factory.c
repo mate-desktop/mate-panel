@@ -33,6 +33,10 @@ struct _MatePanelAppletFactory {
 	GType      applet_type;
 	GClosure  *closure;
 
+	GDBusConnection *connection;
+	gint             owner_id;
+	gint             registration_id;
+
 	GHashTable      *applets;
 	guint            next_uid;
 };
@@ -52,6 +56,16 @@ static void
 mate_panel_applet_factory_finalize (GObject *object)
 {
 	MatePanelAppletFactory *factory = MATE_PANEL_APPLET_FACTORY (object);
+
+	if (factory->registration_id) {
+		g_dbus_connection_unregister_object (factory->connection, factory->registration_id);
+		factory->registration_id = 0;
+	}
+
+	if (factory->owner_id) {
+		g_bus_unown_name (factory->owner_id);
+		factory->owner_id = 0;
+	}
 
 	g_hash_table_remove (factories, factory->factory_id);
 
@@ -295,7 +309,7 @@ mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory)
 	gchar *service_name;
 
 	service_name = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_SERVICE_NAME, factory->factory_id);
-	g_bus_own_name (G_BUS_TYPE_SESSION,
+	factory->owner_id = g_bus_own_name (G_BUS_TYPE_SESSION,
 			service_name,
 			G_BUS_NAME_OWNER_FLAGS_NONE,
 			(GBusAcquiredCallback) on_bus_acquired,
