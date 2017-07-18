@@ -241,9 +241,9 @@ static const gchar introspection_xml[] =
 	        "<arg name='screen' type='i' direction='in'/>"
 	        "<arg name='props' type='a{sv}' direction='in'/>"
 	        "<arg name='applet' type='o' direction='out'/>"
-            "<arg name='out-of-process' type='b' direction='out'/>"
+	        "<arg name='out-of-process' type='b' direction='out'/>"
 	        "<arg name='xid' type='u' direction='out'/>"
-            "<arg name='uid' type='u' direction='out'/>"
+	        "<arg name='uid' type='u' direction='out'/>"
 	      "</method>"
 	    "</interface>"
 	  "</node>";
