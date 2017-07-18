@@ -2353,7 +2353,7 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 }
 
 /**
- * panel_applet_factory_main:
+ * mate_panel_applet_factory_main:
  * @out_process: boolean, dummy to support applets sending it
  * @factory_id: Factory ID.
  * @applet_type: GType of the applet this factory creates.
@@ -2374,7 +2374,7 @@ mate_panel_applet_factory_main (const gchar               *factory_id,
 }
 
 /**
- * panel_applet_factory_setup_in_process: (skip)
+ * mate_panel_applet_factory_setup_in_process: (skip)
  * @factory_id: Factory ID.
  * @applet_type: GType of the applet this factory creates.
  * @callback: (scope call): Callback to be called when a new applet is to be created.
