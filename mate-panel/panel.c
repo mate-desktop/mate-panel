@@ -154,17 +154,15 @@ void
 back_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
-	MatePanelAppletFrame    *frame;
-	PanelBackgroundType  type;
 	switch (info->type) {
 	case PANEL_OBJECT_APPLET:
-		frame = MATE_PANEL_APPLET_FRAME (info->widget);
+		mate_panel_applet_frame_change_background (
+
 #if GTK_CHECK_VERSION (3, 18, 0)
-		type = panel->toplevel->background.type;
+		MATE_PANEL_APPLET_FRAME (info->widget), panel->toplevel->background.type);
 #else
-		type = panel->background.type;
+		MATE_PANEL_APPLET_FRAME (info->widget), panel->background.type);
 #endif
-		MATE_PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame, type);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
 		panel_menu_bar_change_background (PANEL_MENU_BAR (info->widget));

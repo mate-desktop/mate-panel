@@ -95,6 +95,9 @@ void  mate_panel_applet_frame_change_orientation (MatePanelAppletFrame    *frame
 void  mate_panel_applet_frame_change_size        (MatePanelAppletFrame    *frame,
 					     guint                size);
 
+void  mate_panel_applet_frame_change_background  (MatePanelAppletFrame    *frame,
+					     PanelBackgroundType  type);
+
 void  mate_panel_applet_frame_set_panel          (MatePanelAppletFrame    *frame,
 					     PanelWidget         *panel);
 
