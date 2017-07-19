@@ -149,7 +149,6 @@ int main(int argc, char* argv[]) \
 	GOptionContext* context; \
 	GError* error; \
 	int retval; \
-	gboolean out_process; \
 	 \
 	_MATE_PANEL_APPLET_SETUP_GETTEXT (TRUE); \
 	 \
@@ -174,7 +173,7 @@ int main(int argc, char* argv[]) \
 	 \
 	gtk_init (&argc, &argv); \
 	 \
-	retval = mate_panel_applet_factory_main (factory_id,out_process, type, callback, data); \
+	retval = mate_panel_applet_factory_main (factory_id,TRUE, type, callback, data); \
 	g_option_context_free (context); \
 	 \
 	return retval; \
