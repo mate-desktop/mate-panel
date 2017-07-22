@@ -112,9 +112,9 @@ void mate_panel_applet_request_focus(MatePanelApplet* applet, guint32 timestamp)
 void mate_panel_applet_setup_menu(MatePanelApplet* applet, const gchar* xml, GtkActionGroup* action_group);
 void mate_panel_applet_setup_menu_from_file(MatePanelApplet* applet, const gchar* filename, GtkActionGroup* action_group);
 
-int mate_panel_applet_factory_main(const gchar* factory_factory_id,gboolean  out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
+int mate_panel_applet_factory_main(const gchar* factory_id,gboolean  out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
 
-int  mate_panel_applet_factory_setup_in_process (const gchar               *factory_factory_id,
+int  mate_panel_applet_factory_setup_in_process (const gchar               *factory_id,
 							  GType                      applet_type,
 							  MatePanelAppletFactoryCallback callback,
 							  gpointer                   data);
