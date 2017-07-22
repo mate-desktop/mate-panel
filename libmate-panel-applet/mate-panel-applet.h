@@ -113,7 +113,6 @@ void mate_panel_applet_setup_menu(MatePanelApplet* applet, const gchar* xml, Gtk
 void mate_panel_applet_setup_menu_from_file(MatePanelApplet* applet, const gchar* filename, GtkActionGroup* action_group);
 
 int mate_panel_applet_factory_main(const gchar* factory_factory_id,gboolean  out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
-gboolean _mate_panel_applet_shlib_factory(void);
 
 int  mate_panel_applet_factory_setup_in_process (const gchar               *factory_factory_id,
 							  GType                      applet_type,
@@ -180,6 +179,7 @@ int main(int argc, char* argv[]) \
 }
 
 #define MATE_PANEL_APPLET_IN_PROCESS_FACTORY(factory_id, type, descr, callback, data) \
+gboolean _mate_panel_applet_shlib_factory (void);	\
 G_MODULE_EXPORT gint _mate_panel_applet_shlib_factory(void) \
 { \
 	_MATE_PANEL_APPLET_SETUP_GETTEXT(FALSE); \
