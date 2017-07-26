@@ -153,8 +153,11 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 
 	if (tasklist->properties_dialog)
 		gtk_widget_destroy(tasklist->properties_dialog);
-
+/* FIXME: this stops segfaults when removing in-process applet
+/* but leaves part of it in RAM until the panel is restarted */
+#ifndef WNCKLET_INPROCESS
 	g_free(tasklist);
+#endif
 }
 
 /* TODO: this is sad, should be used a function to retrieve  applications from

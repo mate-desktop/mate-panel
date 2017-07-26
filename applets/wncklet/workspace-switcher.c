@@ -325,8 +325,11 @@ static void destroy_pager(GtkWidget* widget, PagerData* pager)
 
 	if (pager->properties_dialog)
 		gtk_widget_destroy(pager->properties_dialog);
-
+/* FIXME: this stops segfaults when removing in-process applet
+/* but leaves part of it in RAM until the panel is restarted */
+#ifndef WNCKLET_INPROCESS
 	g_free(pager);
+#endif
 }
 
 static const GtkActionEntry pager_menu_actions[] = {
