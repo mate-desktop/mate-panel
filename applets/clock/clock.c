@@ -763,6 +763,9 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 
         if (cd->calendar_popup)
                 gtk_widget_destroy (cd->calendar_popup);
+/* FIXME this stops segfaults on removing the clock applet when it is*/
+/* built in-process but leaves part of it in RAM until the panel is restarted */
+#ifndef CLOCK_INPROCESS
         cd->calendar_popup = NULL;
 
         g_free (cd->timeformat);
@@ -790,6 +793,7 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
         }
 
         g_free (cd);
+#endif
 }
 
 static gboolean
