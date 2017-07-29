@@ -151,10 +151,13 @@ static void show_help(FishApplet* fish, const char* link_id)
 		uri = g_strdup_printf ("help:%s/%s", FISH_HELP_DOC, link_id);
 	else
 		uri = g_strdup_printf ("help:%s", FISH_HELP_DOC);
-
+#if GTK_CHECK_VERSION (3, 22, 0)
+	gtk_show_uri_on_window (NULL, uri, 
+			  gtk_get_current_event_time (), &error);
+#else
 	gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (fish)), uri,
 		      gtk_get_current_event_time (), &error);
-
+#endif
 	g_free (uri);
 
 	if (error &&

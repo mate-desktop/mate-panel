@@ -49,9 +49,11 @@ void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* lin
 		uri = g_strdup_printf("help:%s/%s", doc_id, link_id);
 	else
 		uri = g_strdup_printf("help:%s", doc_id);
-
+#if GTK_CHECK_VERSION (3, 22, 0)
+	gtk_show_uri_on_window (NULL, uri, gtk_get_current_event_time (), &error);
+#else
 	gtk_show_uri(gtk_widget_get_screen(widget), uri, gtk_get_current_event_time(), &error);
-
+#endif
 	g_free(uri);
 
 	if (error && g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))

@@ -104,9 +104,11 @@ static void help_cb(GtkAction* action, NaTrayApplet* applet)
 	#define NA_HELP_DOC "mate-user-guide"
 
 	uri = g_strdup_printf("help:%s/%s", NA_HELP_DOC, "panels-notification-area");
-
+#if GTK_CHECK_VERSION (3, 22, 0)
+	gtk_show_uri_on_window (NULL, uri, gtk_get_current_event_time (), &error);
+#else
 	gtk_show_uri(gtk_widget_get_screen(GTK_WIDGET(applet)), uri, gtk_get_current_event_time(), &error);
-
+#endif
 	g_free(uri);
 
 	if (error && g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))

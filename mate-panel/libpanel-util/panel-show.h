@@ -1,5 +1,6 @@
 /*
- * panel-show.h: a helper around gtk_show_uri
+ * panel-show.h: a helper around gtk_show_uri_on_window for gtk 3.22 
+ * or gtk_show_uri for gtk 3.20 and earlier
  *
  * Copyright (C) 2008 Novell, Inc.
  *
