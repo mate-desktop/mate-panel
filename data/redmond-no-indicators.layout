@@ -1,0 +1,73 @@
+[Toplevel bottom]
+expand=true
+orientation=bottom
+size=24
+
+[Object mate-menu]
+locked=true
+position=0
+toplevel-id=bottom
+applet-iid=MateMenuAppletFactory::MateMenuApplet
+object-type=applet
+
+[Object showdesktopapplet]
+locked=true
+position=10
+toplevel-id=bottom
+applet-iid=WnckletFactory::ShowDesktopApplet
+object-type=applet
+
+[Object firefox]
+locked=true
+position=20
+launcher-location=/usr/share/applications/firefox.desktop
+toplevel-id=bottom
+object-type=launcher
+menu-path=applications:/
+
+[Object thunderbird]
+locked=true
+position=30
+launcher-location=/usr/share/applications/thunderbird.desktop
+toplevel-id=bottom
+object-type=launcher
+menu-path=applications:/
+
+[Object welcome]
+locked=true
+position=40
+launcher-location=/usr/share/applications/ubuntu-mate-welcome.desktop
+toplevel-id=bottom
+object-type=launcher
+menu-path=applications:/
+
+[Object window-list]
+object-type=applet
+applet-iid=WnckletFactory::WindowListApplet
+toplevel-id=bottom
+position=50
+locked=true
+
+[Object drivemountapplet]
+object-type=applet
+applet-iid=DriveMountAppletFactory::DriveMountApplet
+toplevel-id=bottom
+position=20
+panel-right-stick=true
+locked=true
+
+[Object notification-area]
+object-type=applet
+applet-iid=NotificationAreaAppletFactory::NotificationArea
+toplevel-id=bottom
+position=10
+panel-right-stick=true
+locked=true
+
+[Object clock]
+object-type=applet
+applet-iid=ClockAppletFactory::ClockApplet
+toplevel-id=bottom
+position=0
+panel-right-stick=true
+locked=true
