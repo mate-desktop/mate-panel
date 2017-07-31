@@ -404,7 +404,6 @@ void
 panel_multiscreen_init (void)
 {
 	GdkDisplay *display;
-	int         i;
 
 	if (initialized)
 		return;
@@ -417,24 +416,22 @@ panel_multiscreen_init (void)
 	monitors   = g_new0 (int, screens);
 	geometries = g_new0 (GdkRectangle *, screens);
 
-	for (i = 0; i < screens; i++) {
-		GdkScreen *screen;
+	GdkScreen *screen;
 
-		screen = gdk_display_get_screen (display, i);
+	screen = gdk_display_get_default_screen (display);
 
-		/* We connect to both signals to be on the safe side, but in
-		 * theory, it should be enough to only connect to
-		 * monitors-changed. Since we'll likely get two signals, we do
-		 * the real callback in the idle loop. */
-		g_signal_connect (screen, "size-changed",
-				  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
-		g_signal_connect (screen, "monitors-changed",
-				  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
+	/* We connect to both signals to be on the safe side, but in
+	 * theory, it should be enough to only connect to
+	 * monitors-changed. Since we'll likely get two signals, we do
+	 * the real callback in the idle loop. */
+	g_signal_connect (screen, "size-changed",
+			  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
+	g_signal_connect (screen, "monitors-changed",
+			  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
 
-		panel_multiscreen_get_monitors_for_screen (screen,
-							   &(monitors[i]),
-							   &(geometries[i]));
-	}
+	panel_multiscreen_get_monitors_for_screen (screen,
+						   &(monitors[0]),
+						   &(geometries[0]));
 
 	initialized = TRUE;
 }

@@ -775,9 +775,8 @@ panel_profile_toplevel_change_notify (GSettings *settings,
 
 	if (!strcmp (key, "screen")) {
 		GdkScreen *screen;
-		screen = gdk_display_get_screen (
-				gdk_display_get_default (),
-				g_settings_get_int (settings, key));
+		screen = gdk_display_get_default_screen (gdk_display_get_default ());
+
 		if (screen)
 			gtk_window_set_screen (GTK_WINDOW (toplevel), screen);
 		else

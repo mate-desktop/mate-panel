@@ -161,7 +161,7 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	g_variant_unref (props);
 
 	screen = screen_num != -1 ?
-		gdk_display_get_screen (gdk_display_get_default (), screen_num) :
+		gdk_display_get_default_screen (gdk_display_get_default ()) :
 		gdk_screen_get_default ();
 
 	xid = mate_panel_applet_get_xid (MATE_PANEL_APPLET (applet), screen);
