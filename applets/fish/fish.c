@@ -813,8 +813,9 @@ static void display_fortune_dialog(FishApplet* fish)
 	const char  *charset;
 	int          argc;
 	char       **argv;
-	GdkScreen *screen;
-	char *display;
+	GdkDisplay  *display;
+	GdkScreen   *screen;
+	char        *display_name;
 
 	/* if there is still a pipe, close it */
 	if (fish->source_id)
@@ -938,19 +939,20 @@ static void display_fortune_dialog(FishApplet* fish)
 	clear_fortune_text (fish);
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (fish));
-	display = gdk_screen_make_display_name (screen);
+	display = gdk_screen_get_display (screen);
+	display_name = g_strdup (gdk_display_get_name (display));
 	g_spawn_async_with_pipes (NULL, /* working directory */
 							  argv,
 							  NULL, /* envp */
 							  G_SPAWN_SEARCH_PATH|G_SPAWN_STDERR_TO_DEV_NULL,
 							  set_environment,
-							  &display,
+							  &display_name,
 							  NULL, /* child pid */
 							  NULL, /* stdin */
 							  &output,
 							  NULL, /* stderr */
 							  &error);
-	g_free (display);
+	g_free (display_name);
 
 	if (error) {
 		char *message;
