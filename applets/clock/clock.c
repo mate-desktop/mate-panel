@@ -867,6 +867,9 @@ position_calendar_popup (ClockData *cd)
 {
         GtkRequisition  req;
         GtkAllocation   allocation;
+#if GTK_CHECK_VERSION (3, 22, 0)
+        GdkDisplay     *display;
+#endif
         GdkScreen      *screen;
         GdkRectangle    monitor;
         GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
@@ -890,8 +893,13 @@ position_calendar_popup (ClockData *cd)
         button_h = allocation.height;
 
         screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
+#if GTK_CHECK_VERSION (3, 22, 0)
+        display = gdk_screen_get_display (screen);
 
+        n = gdk_display_get_n_monitors (display);
+#else
         n = gdk_screen_get_n_monitors (screen);
+#endif
         for (i = 0; i < n; i++) {
                 gdk_screen_get_monitor_geometry (screen, i, &monitor);
                 if (x >= monitor.x && x <= monitor.x + monitor.width &&
