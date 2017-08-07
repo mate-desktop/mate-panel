@@ -792,6 +792,8 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	int             menu_y = 0;
 	int             pointer_x;
 	int             pointer_y;
+	int             screen_width;
+	int             screen_height;
 
 	g_return_if_fail (PANEL_IS_APPLET (widget));
 
@@ -815,6 +817,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	menu_x += allocation.x;
 	menu_y += allocation.y;
 
+	gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
+				 &screen_width, &screen_height);
+
 	if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
 	    applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN) {
 		if (gtk_widget_get_direction (GTK_WIDGET (menu)) != GTK_TEXT_DIR_RTL) {
@@ -830,9 +835,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 					       allocation.width - requisition.width);
 			}
 		}
-		menu_x = MIN (menu_x, gdk_screen_get_width (screen) - requisition.width);
+		menu_x = MIN (menu_x, screen_width - requisition.width);
 
-		if (menu_y > gdk_screen_get_height (screen) / 2)
+		if (menu_y > screen_height / 2)
 			menu_y -= requisition.height;
 		else
 			menu_y += allocation.height;
@@ -840,9 +845,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 		if (pointer_y < allocation.height &&
 		    requisition.height < pointer_y)
 			menu_y += MIN (pointer_y, allocation.height - requisition.height);
-		menu_y = MIN (menu_y, gdk_screen_get_height (screen) - requisition.height);
+		menu_y = MIN (menu_y, screen_height - requisition.height);
 
-		if (menu_x > gdk_screen_get_width (screen) / 2)
+		if (menu_x > screen_width / 2)
 			menu_x -= requisition.width;
 		else
 			menu_x += allocation.width;

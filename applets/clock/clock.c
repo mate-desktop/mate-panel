@@ -914,8 +914,9 @@ position_calendar_popup (ClockData *cd)
                    monitors */
                 monitor.x = 0;
                 monitor.y = 0;
-                monitor.width = gdk_screen_get_width (screen);
-                monitor.height = gdk_screen_get_height (screen);
+
+                gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
+                                         &monitor.width, &monitor.height);
         }
 
         /* Based on panel orientation, position the popup.

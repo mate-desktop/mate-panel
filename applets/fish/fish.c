@@ -856,8 +856,8 @@ static void display_fortune_dialog(FishApplet* fish)
 
 		screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 
-		screen_width  = gdk_screen_get_width (screen);
-		screen_height = gdk_screen_get_height (screen);
+		gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
+					 &screen_width, &screen_height);
 
 		gtk_window_set_default_size (GTK_WINDOW (fish->fortune_dialog),
 					     MIN (600, screen_width  * 0.9),

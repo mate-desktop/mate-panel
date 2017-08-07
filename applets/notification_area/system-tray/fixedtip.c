@@ -158,8 +158,8 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
   parent_width = gdk_window_get_width(parent_window);
   parent_height = gdk_window_get_height(parent_window);
 
-  screen_width = gdk_screen_get_width (screen);
-  screen_height = gdk_screen_get_height (screen);
+  gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
+                           &screen_width, &screen_height);
 
   /* pad between panel and message window */
 #define PAD 5
