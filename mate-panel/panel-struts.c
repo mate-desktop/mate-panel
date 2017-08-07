@@ -268,8 +268,8 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 
 	strut_size = strut->allocated_strut_size;
 
-	screen_width  = gdk_screen_get_width  (strut->screen);
-	screen_height = gdk_screen_get_height (strut->screen);
+	gdk_window_get_geometry (gdk_screen_get_root_window (strut->screen), NULL, NULL,
+				 &screen_width, &screen_height);
 
 	panel_struts_get_monitor_geometry (strut->screen,
 					   strut->monitor,

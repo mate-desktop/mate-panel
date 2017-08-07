@@ -1373,7 +1373,10 @@ panel_addto_present (GtkMenuItem *item,
 				     panel_addto_dialog_quark);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	screen_height = gdk_screen_get_height (screen);
+
+	gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
+				 NULL, &screen_height);
+
 	height = MIN (MAX_ADDTOPANEL_HEIGHT, 3 * (screen_height / 4));
 
 	if (!dialog) {

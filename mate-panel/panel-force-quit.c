@@ -86,8 +86,8 @@ display_popup_window (GdkScreen *screen)
 
 	gtk_widget_realize (retval);
 
-	screen_width  = gdk_screen_get_width  (screen);
-	screen_height = gdk_screen_get_height (screen);
+	gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
+				 &screen_width, &screen_height);
 
 	gtk_widget_get_allocation (retval, &allocation);
 
