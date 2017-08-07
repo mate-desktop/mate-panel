@@ -241,7 +241,7 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 	gboolean    retval;
 	GPid        pid;
 	GdkDisplay *display;
-	char       *display_name;
+	const char *display_name;
 
 	g_return_val_if_fail (desktop_file != NULL, FALSE);
 	g_return_val_if_fail (fallback_exec != NULL, FALSE);
@@ -259,7 +259,7 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 	}
 
 	display = gdk_screen_get_display (screen);
-	display_name = g_strdup (gdk_display_get_name (display));
+	display_name = gdk_display_get_name (display);
 	retval = g_spawn_async (NULL, /* working directory */
 				argv,
 				NULL, /* envp */
@@ -268,7 +268,6 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 				&display_name,
 				&pid,
 				&local_error);
-				g_free (display_name);
 
         if (local_error == NULL && retval == TRUE) {
 		g_child_watch_add (pid, dummy_child_watch, NULL);
