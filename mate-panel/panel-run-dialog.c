@@ -390,7 +390,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	GError     *error = NULL;
 	char      **argv;
 	int         argc;
-	char       *display_name;
+	const char *display_name;
 	GPid        pid;
 
 	if (!command_is_executable (locale_command, &argc, &argv))
@@ -402,7 +402,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 		mate_desktop_prepend_terminal_to_vector (&argc, &argv);
 
 	display = gdk_screen_get_display (screen);
-	display_name = g_strdup (gdk_display_get_name (display));
+	display_name = gdk_display_get_name (display);
 
 	result = g_spawn_async (NULL, /* working directory */
 				argv,
@@ -429,7 +429,6 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	}
 
 	g_strfreev (argv);
-	g_free (display_name);
 
 	return result;
 }

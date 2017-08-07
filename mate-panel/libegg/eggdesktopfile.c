@@ -1173,10 +1173,9 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
   if (screen)
     {
       display = gdk_screen_get_display (screen);
-      char *display_name = g_strdup (gdk_display_get_name (display));
+      const char *display_name = gdk_display_get_name (display);
       char *display_env = g_strdup_printf ("DISPLAY=%s", display_name);
       env = array_putenv (env, display_env);
-      g_free (display_name);
       g_free (display_env);
     }
   else
