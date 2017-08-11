@@ -1772,6 +1772,9 @@ static void fish_applet_dispose (GObject *object)
 {
 	FishApplet* fish = (FishApplet*) object;
 
+	if (fish->source_id == 0)
+		return;
+
 	if (fish->timeout)
 	{
 		g_source_remove (fish->timeout);
