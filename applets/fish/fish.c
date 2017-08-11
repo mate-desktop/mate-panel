@@ -995,6 +995,9 @@ static void display_fortune_dialog(FishApplet* fish)
 
 static void name_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
+	if (fish->source_id == 0)
+		return;
+
 	char *value;
 
 	value = g_settings_get_string (settings, key);
@@ -1020,6 +1023,9 @@ static void name_changed_notify(GSettings* settings, gchar* key, FishApplet* fis
 
 static void image_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
 {
+	if (fish->source_id == 0)
+		return;
+
 	char *value;
 
 	value = g_settings_get_string (settings, key);
@@ -1771,9 +1777,6 @@ static gboolean fishy_factory(MatePanelApplet* applet, const char* iid, gpointer
 static void fish_applet_dispose (GObject *object)
 {
 	FishApplet* fish = (FishApplet*) object;
-
-	if (fish->source_id == 0)
-		return;
 
 	if (fish->timeout)
 	{
