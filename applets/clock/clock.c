@@ -791,10 +791,7 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
                 g_object_unref (cd->builder);
                 cd->builder = NULL;
         }
-#ifdef CLOCK_INPROCESS
-        cd = NULL;
-        g_free (cd);
-#else
+#ifndef CLOCK_INPROCESS
         g_free (cd);
 #endif
 }
