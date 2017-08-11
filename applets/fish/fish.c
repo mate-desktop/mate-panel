@@ -591,9 +591,6 @@ static void set_ally_name_desc(GtkWidget* widget, FishApplet* fish)
 	AtkObject  *obj;
 	char       *desc, *name;
 
-	/*Return if the fish has been destroyed*/
-	if (!GTK_IS_WIDGET(widget))
-		return;
 	obj = gtk_widget_get_accessible (widget);
 	/* Return immediately if GAIL is not loaded */
 	if (!GTK_IS_ACCESSIBLE (obj))
@@ -1360,10 +1357,6 @@ static void update_pixmap(FishApplet* fish)
 	cairo_matrix_t matrix;
 	cairo_pattern_t *pattern;
 
-	/*Return if the fish has been destroyed*/
-	if (!GTK_IS_WIDGET(widget))
-		return;
-
 	gtk_widget_get_allocation (widget, &allocation);
 
 	if (!gtk_widget_get_realized (widget) ||
@@ -1635,10 +1628,6 @@ static void set_tooltip(FishApplet* fish)
 {
 	const char *desc_format = _("%s the Fish, the fortune teller");
 	char       *desc;
-
-	/*Return if the fish has been destroyed*/
-	if (fish)
-		return;
 
 	desc = g_markup_printf_escaped (desc_format, fish->name);
 	gtk_widget_set_tooltip_markup (GTK_WIDGET (fish), desc);
