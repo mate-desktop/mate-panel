@@ -42,6 +42,7 @@
 #include <X11/Xatom.h>
 
 #include "mate-panel-applet.h"
+#include "panel-applet-private.h"
 #include "mate-panel-applet-factory.h"
 #include "mate-panel-applet-marshal.h"
 #include "mate-panel-applet-enums.h"
@@ -54,6 +55,8 @@ struct _MatePanelAppletPrivate {
 	GtkWidget         *plug;
 	GtkWidget         *applet;
 	GDBusConnection   *connection;
+
+	gboolean           out_of_process;
 
 	char              *id;
 	GClosure          *closure;
@@ -97,6 +100,7 @@ static guint mate_panel_applet_signals[LAST_SIGNAL] = { 0 };
 
 enum {
 	PROP_0,
+	PROP_OUT_OF_PROCESS,
 	PROP_ID,
 	PROP_CLOSURE,
 	PROP_CONNECTION,
@@ -900,12 +904,18 @@ mate_panel_applet_can_focus (GtkWidget *widget)
 
 /* Taken from libmatecomponentui/matecomponent/matecomponent-plug.c */
 static gboolean
-mate_panel_applet_button_event (GtkWidget      *widget,
+mate_panel_applet_button_event (MatePanelApplet      *applet,
 			   GdkEventButton *event)
 {
+	GtkWidget *widget;
 	GdkWindow *window;
 	GdkWindow *socket_window;
 	XEvent     xevent;
+
+	if (!applet->priv->out_of_process)
+		return FALSE;
+
+	widget = applet->priv->plug;
 
 	if (!gtk_widget_is_toplevel (widget))
 		return FALSE;
@@ -990,7 +1000,7 @@ mate_panel_applet_button_press (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	return mate_panel_applet_button_event (applet->priv->plug, event);
+	return mate_panel_applet_button_event (applet, event);
 }
 
 static gboolean
@@ -999,7 +1009,7 @@ mate_panel_applet_button_release (GtkWidget      *widget,
 {
 	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
 
-	return mate_panel_applet_button_event (applet->priv->plug, event);
+	return mate_panel_applet_button_event (applet, event);
 }
 
 static gboolean
@@ -1528,82 +1538,67 @@ mate_panel_applet_move_focus_out_of_applet (MatePanelApplet      *applet,
 	applet->priv->moving_focus_out = FALSE;
 }
 
+static void
+mate_panel_applet_change_background(MatePanelApplet *applet,
+				    MatePanelAppletBackgroundType type,
+				    GdkRGBA* color,
+				    cairo_pattern_t *pattern)
+{
+	GtkStyleContext* context;
+	GdkWindow* window;
 #if GTK_CHECK_VERSION (3, 18, 0)
-static void
-mate_panel_applet_change_background(MatePanelApplet *applet,
-				    MatePanelAppletBackgroundType type,
-				    GdkRGBA* color,
-				    cairo_pattern_t *pattern)
-{
-	GtkStyleContext* context;
-	MatePanelAppletOrient orientation;
-	GdkWindow* window = gtk_widget_get_window (applet->priv->plug);
-	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
-	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		pattern = cairo_pattern_create_rgba (0,0,0,0);     /* Using NULL here breaks transparent */
-		gdk_window_set_background_pattern(window,pattern); /* backgrounds set by GTK theme */
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gdk_window_set_background_rgba(window,color);
-		gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		gdk_window_set_background_pattern(window,pattern);
-		gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-	orientation = mate_panel_applet_get_orient (applet);
-	if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
-		applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
-		gtk_style_context_add_class(context,"horizontal");
-		}
-	else {
-		gtk_style_context_add_class(context,"vertical");
-		}
-}
+	if (applet->priv->out_of_process)
+		window = gtk_widget_get_window (applet->priv->plug);
+	else
+		window = gtk_widget_get_window GTK_WIDGET((applet));
 #else
-static void
-mate_panel_applet_change_background(MatePanelApplet *applet,
-				    MatePanelAppletBackgroundType type,
-				    GdkRGBA* color,
-				    cairo_pattern_t *pattern)
-{
-	GtkStyleContext* context;
-	MatePanelAppletOrient orientation;
-	GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(applet));
-	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
-	_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		gdk_window_set_background_pattern(window,NULL);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gdk_window_set_background_rgba(window,color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		gdk_window_set_background_pattern(window,pattern);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-	orientation = mate_panel_applet_get_orient (applet);
-	if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
-		applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
-		gtk_style_context_add_class(context,"horizontal");
+		window = gtk_widget_get_window GTK_WIDGET((applet));
+#endif
+		gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
+		if (applet->priv->out_of_process)
+			_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
+		switch (type) {
+		case PANEL_NO_BACKGROUND:
+			if (applet->priv->out_of_process){
+				pattern = cairo_pattern_create_rgba (0,0,0,0);     /* Using NULL here breaks transparent */
+				gdk_window_set_background_pattern(window,pattern); /* backgrounds set by GTK theme */
+				}
+			break;
+		case PANEL_COLOR_BACKGROUND:
+			if (applet->priv->out_of_process){
+				gdk_window_set_background_rgba(window,color);
+#if GTK_CHECK_VERSION (3, 18, 0)
+				gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
+#else
+				gtk_widget_queue_draw (GTK_WIDGET(applet));
+#endif
+				}
+			break;
+		case PANEL_PIXMAP_BACKGROUND:
+			if (applet->priv->out_of_process){
+				gdk_window_set_background_pattern(window,pattern);
+#if GTK_CHECK_VERSION (3, 18, 0)
+				gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
+#else
+				gtk_widget_queue_draw (GTK_WIDGET(applet));
+#endif
+				}
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
 		}
-	else {
-		gtk_style_context_add_class(context,"vertical");
+		if (applet->priv->out_of_process){
+		context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+		if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
+			applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
+			gtk_style_context_add_class(context,"horizontal");
+			}
+		else {
+			gtk_style_context_add_class(context,"vertical");
+			}
 		}
 }
-#endif
 
 static void
 mate_panel_applet_get_property (GObject    *object,
@@ -1614,6 +1609,9 @@ mate_panel_applet_get_property (GObject    *object,
 	MatePanelApplet *applet = MATE_PANEL_APPLET (object);
 
 	switch (prop_id) {
+	case PROP_OUT_OF_PROCESS:
+		g_value_set_boolean (value, applet->priv->out_of_process);
+		break;
 	case PROP_ID:
 		g_value_set_string (value, applet->priv->id);
 		break;
@@ -1672,6 +1670,9 @@ mate_panel_applet_set_property (GObject      *object,
 	MatePanelApplet *applet = MATE_PANEL_APPLET (object);
 
 	switch (prop_id) {
+	case PROP_OUT_OF_PROCESS:
+		applet->priv->out_of_process = g_value_get_boolean (value);
+		break;
 	case PROP_ID:
 		applet->priv->id = g_value_dup_string (value);
 		break;
@@ -1850,10 +1851,29 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	gtk_ui_manager_add_ui_from_string (applet->priv->ui_manager,
 					   panel_menu_ui, -1, NULL);
 
+	gtk_widget_set_events (GTK_WIDGET (applet),
+			       GDK_BUTTON_PRESS_MASK |
+			       GDK_BUTTON_RELEASE_MASK);
+}
 
+static GObject *
+mate_panel_applet_constructor (GType                  type,
+                          guint                  n_construct_properties,
+                          GObjectConstructParam *construct_properties)
+{
+	GObject     *object;
+	MatePanelApplet *applet;
 
+	object = G_OBJECT_CLASS (mate_panel_applet_parent_class)->constructor (type,
+	                                                                  n_construct_properties,
+	                                                                  construct_properties);
+	applet = MATE_PANEL_APPLET (object);
+
+	if (!applet->priv->out_of_process)
+		return object;
 
 	applet->priv->plug = gtk_plug_new (0);
+
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
@@ -1865,16 +1885,14 @@ mate_panel_applet_init (MatePanelApplet *applet)
 	_mate_panel_applet_prepare_css(context);
 
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
-				  G_CALLBACK (mate_panel_applet_setup),
-				  applet);
+		                      G_CALLBACK (mate_panel_applet_setup),
+		                      applet);
+ 
+ 	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 
-	gtk_widget_set_events (GTK_WIDGET (applet),
-			       GDK_BUTTON_PRESS_MASK |
-			       GDK_BUTTON_RELEASE_MASK);
-
-	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
+	return object;
 }
-
+ 
 static void
 mate_panel_applet_constructed (GObject* object)
 {
@@ -1897,6 +1915,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 
 	gobject_class->get_property = mate_panel_applet_get_property;
 	gobject_class->set_property = mate_panel_applet_set_property;
+	gobject_class->constructor = mate_panel_applet_constructor;
 	gobject_class->constructed = mate_panel_applet_constructed;
 	klass->move_focus_out_of_applet = mate_panel_applet_move_focus_out_of_applet;
 	klass->change_background = mate_panel_applet_change_background;
@@ -1917,6 +1936,14 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 
 	g_type_class_add_private (klass, sizeof (MatePanelAppletPrivate));
 
+	g_object_class_install_property (gobject_class,
+	                  PROP_OUT_OF_PROCESS,
+	                  g_param_spec_boolean ("out-of-process",
+	                               "out-of-process",
+	                               "out-of-process",
+	                                TRUE,
+	                                G_PARAM_CONSTRUCT_ONLY |
+	                                G_PARAM_READWRITE));
 	g_object_class_install_property (gobject_class,
 					 PROP_ID,
 					 g_param_spec_string ("id",
@@ -2285,17 +2312,13 @@ _mate_panel_applet_setup_x_error_handler (void)
 	_x_error_func = XSetErrorHandler (_x_error_handler);
 }
 
-/**
- * mate_panel_applet_factory_main:
- * @factory_id: Factory ID.
- * @out_process: If the factory is on a separate process or not.
- * @applet_type: GType of the applet this factory creates.
- * @callback: (scope call): Callback to be called when a new applet is to be created.
- * @data: (closure): Callback data.
- *
- * Returns: 0 on success, 1 if there is an error.
- */
-int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer user_data)
+static int
+_mate_panel_applet_factory_main_internal (const gchar               *factory_id,
+				     gboolean                   out_process,
+				     GType                      applet_type,
+				     MatePanelAppletFactoryCallback callback,
+					 gpointer                   user_data)
+	
 {
 	MatePanelAppletFactory* factory;
 	GClosure* closure;
@@ -2310,7 +2333,7 @@ int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process
 	}
 
 	closure = g_cclosure_new(G_CALLBACK(callback), user_data, NULL);
-	factory = mate_panel_applet_factory_new(factory_id, applet_type, closure);
+	factory = mate_panel_applet_factory_new(factory_id, out_process,  applet_type, closure);
 	g_closure_unref(closure);
 
 	if (mate_panel_applet_factory_register_service(factory))
@@ -2328,6 +2351,47 @@ int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process
 
 	return 1;
 }
+
+/**
+ * mate_panel_applet_factory_main:
+ * @out_process: boolean, dummy to support applets sending it
+ * @factory_id: Factory ID.
+ * @applet_type: GType of the applet this factory creates.
+ * @callback: (scope call): Callback to be called when a new applet is to be created.
+ * @data: (closure): Callback data.
+ *
+ * Returns: 0 on success, 1 if there is an error.
+ */
+int
+mate_panel_applet_factory_main (const gchar               *factory_id,
+               gboolean                   out_process, /*Dummy to support applets w issues with this */
+			   GType                      applet_type,
+			   MatePanelAppletFactoryCallback callback,
+			   gpointer                   user_data)
+{
+	return _mate_panel_applet_factory_main_internal (factory_id, TRUE, applet_type,
+						    callback, user_data);
+}
+
+/**
+ * mate_panel_applet_factory_setup_in_process: (skip)
+ * @factory_id: Factory ID.
+ * @applet_type: GType of the applet this factory creates.
+ * @callback: (scope call): Callback to be called when a new applet is to be created.
+ * @data: (closure): Callback data.
+ *
+ * Returns: 0 on success, 1 if there is an error.
+ */
+int
+mate_panel_applet_factory_setup_in_process (const gchar               *factory_id,
+				       GType                      applet_type,
+				       MatePanelAppletFactoryCallback callback,
+				       gpointer                   user_data)
+{
+	return _mate_panel_applet_factory_main_internal (factory_id, FALSE, applet_type,
+						    callback, user_data);
+}
+
 
 /**
  * mate_panel_applet_set_background_widget:
@@ -2371,6 +2435,9 @@ guint32
 mate_panel_applet_get_xid (MatePanelApplet *applet,
 		      GdkScreen   *screen)
 {
+	if (applet->priv->out_of_process == FALSE)
+		return 0;
+
 	gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
 	gtk_widget_show (applet->priv->plug);
 
@@ -2381,4 +2448,20 @@ const gchar *
 mate_panel_applet_get_object_path (MatePanelApplet *applet)
 {
 	return applet->priv->object_path;
+}
+
+G_MODULE_EXPORT GtkWidget *
+mate_panel_applet_get_applet_widget (const gchar *factory_id,
+                                guint        uid)
+{
+	GtkWidget *widget;
+
+	widget = mate_panel_applet_factory_get_applet_widget (factory_id, uid);
+	if (!widget) {
+		return NULL;
+	}
+
+	mate_panel_applet_setup (MATE_PANEL_APPLET (widget));
+
+	return widget;
 }

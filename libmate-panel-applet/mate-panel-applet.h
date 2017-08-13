@@ -112,8 +112,12 @@ void mate_panel_applet_request_focus(MatePanelApplet* applet, guint32 timestamp)
 void mate_panel_applet_setup_menu(MatePanelApplet* applet, const gchar* xml, GtkActionGroup* action_group);
 void mate_panel_applet_setup_menu_from_file(MatePanelApplet* applet, const gchar* filename, GtkActionGroup* action_group);
 
-int mate_panel_applet_factory_main(const gchar* factory_id, gboolean out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
-gboolean _mate_panel_applet_shlib_factory(void);
+int mate_panel_applet_factory_main(const gchar* factory_id,gboolean  out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
+
+int  mate_panel_applet_factory_setup_in_process (const gchar               *factory_id,
+							  GType                      applet_type,
+							  MatePanelAppletFactoryCallback callback,
+							  gpointer                   data);
 
 
 /*
@@ -138,7 +142,7 @@ gboolean _mate_panel_applet_shlib_factory(void);
 	} while (0)
 #endif /* !defined(ENABLE_NLS) */
 
-#define MATE_PANEL_APPLET_OUT_PROCESS_FACTORY(id, type, name, callback, data) \
+#define MATE_PANEL_APPLET_OUT_PROCESS_FACTORY(factory_id, type, name, callback, data) \
 int main(int argc, char* argv[]) \
 { \
 	GOptionContext* context; \
@@ -168,17 +172,19 @@ int main(int argc, char* argv[]) \
 	 \
 	gtk_init (&argc, &argv); \
 	 \
-	retval = mate_panel_applet_factory_main (id, TRUE, type, callback, data); \
+	retval = mate_panel_applet_factory_main (factory_id,TRUE, type, callback, data); \
 	g_option_context_free (context); \
 	 \
 	return retval; \
 }
 
-#define MATE_PANEL_APPLET_IN_PROCESS_FACTORY(id, type, descr, callback, data) \
+#define MATE_PANEL_APPLET_IN_PROCESS_FACTORY(factory_id, type, descr, callback, data) \
+gboolean _mate_panel_applet_shlib_factory (void);	\
 G_MODULE_EXPORT gint _mate_panel_applet_shlib_factory(void) \
 { \
 	_MATE_PANEL_APPLET_SETUP_GETTEXT(FALSE); \
-	return mate_panel_applet_factory_main(id, FALSE, type, callback, data); \
+return mate_panel_applet_factory_setup_in_process (factory_id, type,                 \
+                                               callback, data);  \
 }
 
 #ifdef __cplusplus

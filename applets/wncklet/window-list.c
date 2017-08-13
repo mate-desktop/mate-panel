@@ -63,6 +63,7 @@ static void call_system_monitor(GtkAction* action, TasklistData* tasklist);
 static void display_properties_dialog(GtkAction* action, TasklistData* tasklist);
 static void display_help_dialog(GtkAction* action, TasklistData* tasklist);
 static void display_about_dialog(GtkAction* action, TasklistData* tasklist);
+static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist);
 
 static void tasklist_update(TasklistData* tasklist)
 {
@@ -145,16 +146,6 @@ static void applet_change_pixel_size(MatePanelApplet* applet, gint size, Tasklis
 	tasklist->size = size;
 
 	tasklist_update(tasklist);
-}
-
-static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
-{
-	g_object_unref(tasklist->settings);
-
-	if (tasklist->properties_dialog)
-		gtk_widget_destroy(tasklist->properties_dialog);
-
-	g_free(tasklist);
 }
 
 /* TODO: this is sad, should be used a function to retrieve  applications from
@@ -693,4 +684,32 @@ static void display_properties_dialog(GtkAction* action, TasklistData* tasklist)
 	gtk_window_set_resizable(GTK_WINDOW(tasklist->properties_dialog), FALSE);
 	gtk_window_set_screen(GTK_WINDOW(tasklist->properties_dialog), gtk_widget_get_screen(tasklist->applet));
 	gtk_window_present(GTK_WINDOW(tasklist->properties_dialog));
+}
+
+static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
+{
+
+	g_signal_handlers_disconnect_by_func(G_OBJECT(tasklist->applet),
+						G_CALLBACK(applet_change_orient), tasklist);
+	g_signal_handlers_disconnect_by_func(G_OBJECT(tasklist->applet),
+						G_CALLBACK(applet_change_pixel_size), tasklist);
+	g_signal_handlers_disconnect_by_func(G_OBJECT(tasklist->applet),
+						G_CALLBACK(applet_change_background), tasklist);
+	g_signal_handlers_disconnect_by_func (tasklist->settings,
+					  G_CALLBACK (display_all_workspaces_changed),
+					  tasklist);
+	g_signal_handlers_disconnect_by_func (tasklist->settings,
+					  G_CALLBACK (group_windows_changed),
+					  tasklist);
+	g_signal_handlers_disconnect_by_func (tasklist->settings,
+					  G_CALLBACK (move_unminimized_windows_changed),
+					  tasklist);
+
+	g_object_unref(tasklist->settings);
+
+	if (tasklist->properties_dialog)
+		gtk_widget_destroy(tasklist->properties_dialog);
+
+	g_free(tasklist);
+
 }

@@ -86,6 +86,7 @@ typedef struct {
 static void display_properties_dialog(GtkAction* action, PagerData* pager);
 static void display_help_dialog(GtkAction* action, PagerData* pager);
 static void display_about_dialog(GtkAction* action, PagerData* pager);
+static void destroy_pager(GtkWidget* widget, PagerData* pager);
 
 static void pager_update(PagerData* pager)
 {
@@ -317,16 +318,6 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 	wnck_workspace_activate(wnck_screen_get_workspace(pager->screen, index), event->time);
 
 	return TRUE;
-}
-
-static void destroy_pager(GtkWidget* widget, PagerData* pager)
-{
-	g_object_unref (pager->settings);
-
-	if (pager->properties_dialog)
-		gtk_widget_destroy(pager->properties_dialog);
-
-	g_free(pager);
 }
 
 static const GtkActionEntry pager_menu_actions[] = {
@@ -966,4 +957,25 @@ static void display_properties_dialog(GtkAction* action, PagerData* pager)
 	gtk_window_set_icon_name(GTK_WINDOW(pager->properties_dialog), WORKSPACE_SWITCHER_ICON);
 	gtk_window_set_screen(GTK_WINDOW(pager->properties_dialog), gtk_widget_get_screen(pager->applet));
 	gtk_window_present(GTK_WINDOW(pager->properties_dialog));
+}
+
+static void destroy_pager(GtkWidget* widget, PagerData* pager)
+{
+	g_signal_handlers_disconnect_by_func (pager->settings,
+					  G_CALLBACK (num_rows_changed),
+					  pager);
+	g_signal_handlers_disconnect_by_func (pager->settings,
+					  G_CALLBACK (display_workspace_names_changed),
+					  pager);
+	g_signal_handlers_disconnect_by_func (pager->settings,
+					  G_CALLBACK (all_workspaces_changed),
+					  pager);
+	g_signal_handlers_disconnect_by_func (pager->settings,
+					  G_CALLBACK (wrap_workspaces_changed),
+					  pager);
+	g_object_unref (pager->settings);
+
+	if (pager->properties_dialog)
+		gtk_widget_destroy(pager->properties_dialog);
+	g_free(pager);
 }
