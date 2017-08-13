@@ -13,6 +13,7 @@
 #include <sys/wait.h>
 
 #include <glib/gi18n.h>
+#include <gdk/gdkx.h>
 
 #include <libegg/eggdesktopfile.h>
 #include <libegg/eggsmclient.h>
