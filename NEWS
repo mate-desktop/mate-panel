@@ -1,5 +1,39 @@
 ### mate-panel 1.19.3
 
+  * Translations update
+  * wncklet: stop segfaults, warnings on removing in-process switcher, window-list
+  * fish: fix adding back after removal
+  * Fish: stop all warnings on removing when built in-process
+  * Clock: fix removal warnings when in-process applet removed
+  * clock: stop segfault on removing applet when built in-process
+  * libmate-panel-applet: fix typos in id->factory_id rename
+  * libmate-panel-applet: Only declare _panel_applet_shlib_factory() when needed
+  * libmate-panel-applet: fix error in unregistering dbus object
+  * libmate-panel-applet: fix build warning
+  * libmate-panel-applet: fix introspection
+  * libmate-panel-applet: unown bus name and unregister dbus object
+  * libmate-panel-applet GTK 3.14/3.16: fix custom bg w alpha
+  * libmate-panel-applet: include dummy variable in factory for certian applets
+  * libmate-panel-applet: fix bg rendering for in-process applets
+  * libpanel-applet/panel-applet.h: Rename id to factory_id for factory
+  * limatepanel-applet: add panel-applet-private.h
+  * don't use GtkPlug/GtkSocket for in process applets
+  * make it possible to get applet widget
+  * libpanel-applet: add panel_applet_factory_get_applet_widget
+  * libpanel-applet: return process type and applet uid
+  * libpanel-applet: store factories in hash table
+  * libpanel-applet: delay GtkPlug creation
+  * libpanel-applet: add process type to private data
+  * libpanel-applet: Remove out_process from panel_applet_factory_main()
+  * avoid deprecated gdk_screen_get_width/height
+  * avoid deprecated gdk_screen_get_n_monitors
+  * fish: fix applet opening as thin line when built in-process
+  * Forces a window scale of 1 for the panel,
+    instead of using the default or user configured scale.
+  * avoid deprecated gdk_screen_make_display_name
+  * avoid deprecated gdk_display_get_screen
+  * don't use deprecated gtk_show_uri
+
 ### mate-panel 1.19.2
 
   * Translations update
