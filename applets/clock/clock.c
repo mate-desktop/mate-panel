@@ -909,7 +909,11 @@ position_calendar_popup (ClockData *cd)
         n = gdk_screen_get_n_monitors (screen);
 #endif
         for (i = 0; i < n; i++) {
+#if GTK_CHECK_VERSION (3, 22, 0)
+                gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &monitor);
+#else
                 gdk_screen_get_monitor_geometry (screen, i, &monitor);
+#endif
                 if (x >= monitor.x && x <= monitor.x + monitor.width &&
                     y >= monitor.y && y <= monitor.y + monitor.height) {
                         found_monitor = TRUE;
