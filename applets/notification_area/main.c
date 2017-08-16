@@ -64,15 +64,22 @@ static GfStatusNotifierWatcher *sn_watcher_service = NULL;
 static GfStatusNotifierWatcher *
 sn_watcher_service_ref (void)
 {
-  if (sn_watcher_service != NULL)
-    g_object_ref (sn_watcher_service);
-  else
+  GSettings *settings;
+  settings = g_settings_new ("org.mate.panel");
+
+  if (g_settings_get_boolean (settings, "enable-sni-support") == TRUE)
     {
-      sn_watcher_service = gf_status_notifier_watcher_new ();
-      g_object_add_weak_pointer ((GObject *) sn_watcher_service,
-                                 (gpointer *) &sn_watcher_service);
+      if (sn_watcher_service != NULL)
+        g_object_ref (sn_watcher_service);
+      else
+        {
+          sn_watcher_service = gf_status_notifier_watcher_new ();
+          g_object_add_weak_pointer ((GObject *) sn_watcher_service,
+                                     (gpointer *) &sn_watcher_service);
+        }
     }
 
+  g_object_unref (settings);
   return sn_watcher_service;
 }
 #endif
