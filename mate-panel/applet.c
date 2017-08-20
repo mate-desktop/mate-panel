@@ -791,6 +791,8 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 {
 	g_return_if_fail (info != NULL);
 
+	g_signal_handlers_disconnect_by_data(info->settings,widget);
+
 	info->widget = NULL;
 
 	if (info->settings) {

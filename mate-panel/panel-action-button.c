@@ -647,6 +647,9 @@ void
 panel_action_button_set_type (PanelActionButton     *button,
 			      PanelActionButtonType  type)
 {
+	if (!type)
+		return;
+
 	g_return_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST);
 
 	if (type == button->priv->type)

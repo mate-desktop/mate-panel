@@ -1757,6 +1757,10 @@ static void fish_applet_dispose (GObject *object)
 {
 	FishApplet* fish = (FishApplet*) object;
 
+	if (fish->settings != NULL)
+		g_signal_handlers_disconnect_by_data (fish->settings,
+					  fish);
+
 	if (fish->timeout)
 	{
 		g_source_remove (fish->timeout);
