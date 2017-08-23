@@ -501,8 +501,6 @@ get_updated_timeformat (ClockData *cd)
 static void
 update_timeformat (ClockData *cd)
 {
-        if (cd->settings == NULL)
-                return;
         if (cd->timeformat)
                 g_free (cd->timeformat);
         cd->timeformat = get_updated_timeformat (cd);
@@ -703,8 +701,6 @@ update_tooltip (ClockData * cd)
 static void
 refresh_clock (ClockData *cd)
 {
-        if (cd->settings == NULL)
-                return;
         unfix_size (cd);
         update_clock (cd);
 }
@@ -712,9 +708,6 @@ refresh_clock (ClockData *cd)
 static void
 refresh_clock_timeout(ClockData *cd)
 {
-        if (cd->settings == NULL)
-                return;
-
         unfix_size (cd);
 
         update_timeformat (cd);
@@ -756,6 +749,9 @@ free_locations (ClockData *cd)
 static void
 destroy_clock (GtkWidget * widget, ClockData *cd)
 {
+        if (cd->settings)
+                g_signal_handlers_disconnect_by_data( cd->settings, cd);
+
         if (cd->settings)
                 g_object_unref (cd->settings);
         cd->settings = NULL;
@@ -2002,9 +1998,6 @@ static void
 update_weather_bool_value_and_toggle_from_gsettings (ClockData *cd, gchar *key,
                                                  gboolean *value_loc, const char *widget_name)
 {
-        if (cd->settings == NULL)
-                return;
-
         GtkWidget *widget;
         gboolean value;
 
@@ -2084,9 +2077,6 @@ location_set_current_cb (ClockLocation *loc,
 static void
 locations_changed (ClockData *cd)
 {
-        if (cd->settings == NULL)
-                return;
-
         GList *l;
         ClockLocation *loc;
         glong id;
@@ -2290,9 +2280,6 @@ temperature_unit_changed (GSettings    *settings,
                           gchar        *key,
                           ClockData    *cd)
 {
-        if (cd->settings == NULL)
-                return;
-
         cd->temperature_unit = g_settings_get_enum (settings, key);
         if (cd->temperature_unit > 0)
         {
@@ -2311,9 +2298,6 @@ speed_unit_changed (GSettings    *settings,
                     gchar        *key,
                     ClockData    *cd)
 {
-        if (cd->settings == NULL)
-                return;
-
         cd->speed_unit = g_settings_get_enum (settings, key);
         if (cd->speed_unit > 0)
         {
@@ -2332,9 +2316,6 @@ custom_format_changed (GSettings    *settings,
                        gchar        *key,
                        ClockData    *clock)
 {
-        if (clock->settings == NULL)
-                return;
-
         gchar *value;
         value = g_settings_get_string (settings, key);
 
