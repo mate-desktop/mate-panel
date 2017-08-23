@@ -750,6 +750,9 @@ static void
 destroy_clock (GtkWidget * widget, ClockData *cd)
 {
         if (cd->settings)
+                g_signal_handlers_disconnect_by_data( cd->settings, cd);
+
+        if (cd->settings)
                 g_object_unref (cd->settings);
         cd->settings = NULL;
 
