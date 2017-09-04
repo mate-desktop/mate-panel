@@ -76,8 +76,7 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 
 	gtk_menu_set_screen (GTK_MENU (menu), screen);
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
-			NULL, NULL, 0, activate_time);
+	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
 }
 
 static void
