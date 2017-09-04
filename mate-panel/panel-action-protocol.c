@@ -76,8 +76,16 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 
 	gtk_menu_set_screen (GTK_MENU (menu), screen);
+#if GTK_CHECK_VERSION (3, 22, 0)
+	gtk_menu_popup_at_widget (GTK_MENU (menu),
+	                          GTK_WIDGET (info->widget),
+	                          GDK_GRAVITY_SOUTH_WEST,
+	                          GDK_GRAVITY_NORTH_WEST,
+                              NULL);
+#else
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
 			NULL, NULL, 0, activate_time);
+#endif
 }
 
 static void

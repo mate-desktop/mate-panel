@@ -357,19 +357,24 @@ panel_popup_menu (PanelToplevel *toplevel,
 		panel_data->insertion_pos = panel_widget_get_cursorloc (panel_widget);
 	else
 		panel_data->insertion_pos = -1;
-
+#if !GTK_CHECK_VERSION (3, 22, 0)
 	if (current_event)
 		gdk_event_free (current_event);
-
+#endif
 	menu = make_popup_panel_menu (panel_widget);
 	if (!menu)
 		return FALSE;
 
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
+#if GTK_CHECK_VERSION (3, 22, 0)
+	gtk_menu_popup_at_pointer (GTK_MENU (menu),current_event);
 
+	if (current_event)
+		gdk_event_free (current_event);
+#else
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, button, activate_time);
-
+#endif
 	return TRUE;
 }
 

@@ -442,6 +442,13 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
 	gtk_menu_set_screen (GTK_MENU (button->priv->menu), screen);
 
+#if GTK_CHECK_VERSION (3, 22, 0)
+	gtk_menu_popup_at_widget (GTK_MENU (button->priv->menu),
+	                          GTK_WIDGET (button),
+	                          GDK_GRAVITY_SOUTH_WEST,
+	                          GDK_GRAVITY_NORTH_WEST,
+	                          NULL);
+#else
 	gtk_menu_popup (GTK_MENU (button->priv->menu),
 			NULL,
 			NULL,
@@ -449,6 +456,7 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 			GTK_WIDGET (button),
 			n_button,
 			activate_time);
+#endif
 }
 
 static void
