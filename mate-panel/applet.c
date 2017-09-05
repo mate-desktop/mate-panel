@@ -736,13 +736,7 @@ applet_show_menu (AppletInfo     *info,
 	if (!gtk_widget_get_realized (info->menu))
 		gtk_widget_show (info->menu);
 
-	gtk_menu_popup (GTK_MENU (info->menu),
-			NULL,
-			NULL,
-			(GtkMenuPositionFunc) mate_panel_applet_position_menu,
-			info->widget,
-			event->button,
-			event->time);
+	gtk_menu_popup_at_pointer (GTK_MENU (info->menu), NULL);
 }
 
 static gboolean
