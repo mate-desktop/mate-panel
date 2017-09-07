@@ -780,6 +780,7 @@ container_has_focusable_child (GtkContainer *container)
 	return retval;
 }
 
+#if !GTK_CHECK_VERSION (3, 22, 0)
 static void
 mate_panel_applet_position_menu (GtkMenu   *menu,
 			    int       *x,
@@ -862,11 +863,16 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	*y = menu_y;
 	*push_in = FALSE;
 }
+#endif
 
 static void
 mate_panel_applet_menu_popup (MatePanelApplet *applet,
-			 guint        button,
-			 guint32      time)
+#if GTK_CHECK_VERSION (3, 22, 0)
+                              GdkEvent *event)
+#else
+                              guint        button,
+                              guint32      time)
+#endif
 {
 	GtkWidget *menu;
 
@@ -884,11 +890,19 @@ mate_panel_applet_menu_popup (MatePanelApplet *applet,
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+#if GTK_CHECK_VERSION (3, 22, 0)
+	gtk_menu_popup_at_widget (GTK_MENU (menu),
+	                          GTK_WIDGET (applet),
+	                          GDK_GRAVITY_SOUTH_WEST,
+	                          GDK_GRAVITY_NORTH_WEST,
+	                          event);
+#else
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL, NULL,
 			(GtkMenuPositionFunc) mate_panel_applet_position_menu,
 			applet,
 			button, time);
+#endif
 }
 
 static gboolean
@@ -998,14 +1012,19 @@ mate_panel_applet_button_press (GtkWidget      *widget,
 			gtk_widget_grab_focus (widget);
 		}
 	}
-
-	if (event->button == 3) {
+	if (event->button == 3){
+#if GTK_CHECK_VERSION (3, 22, 0)
+		mate_panel_applet_menu_popup (applet, (GdkEvent *) event);
+#else
 		mate_panel_applet_menu_popup (applet, event->button, event->time);
-
+#endif
 		return TRUE;
 	}
-
+#if GTK_CHECK_VERSION (3, 22, 0)
+	return FALSE;
+#else
 	return mate_panel_applet_button_event (applet, event);
+#endif
 }
 
 static gboolean
@@ -1017,6 +1036,7 @@ mate_panel_applet_button_release (GtkWidget      *widget,
 	return mate_panel_applet_button_event (applet, event);
 }
 
+#if !GTK_CHECK_VERSION (3, 22, 0)
 static gboolean
 mate_panel_applet_popup_menu (GtkWidget *widget)
 {
@@ -1024,6 +1044,7 @@ mate_panel_applet_popup_menu (GtkWidget *widget)
 
 	return TRUE;
 }
+#endif
 
 #if !GTK_CHECK_VERSION (3, 18, 0)
 static void
@@ -1935,7 +1956,9 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	widget_class->size_allocate = mate_panel_applet_size_allocate;
 	widget_class->focus = mate_panel_applet_focus;
 	widget_class->realize = mate_panel_applet_realize;
+#if !GTK_CHECK_VERSION (3, 22, 0)
 	widget_class->popup_menu = mate_panel_applet_popup_menu;
+#endif
 
 	gobject_class->finalize = mate_panel_applet_finalize;
 
@@ -2101,6 +2124,32 @@ GtkWidget* mate_panel_applet_new(void)
 	return GTK_WIDGET(applet);
 }
 
+#if GTK_CHECK_VERSION (3, 22, 0)
+static GdkEvent *
+button_press_event_new (MatePanelApplet *applet,
+                        guint        button,
+                        guint        time)
+{
+  GdkDisplay *display;
+  GdkSeat *seat;
+  GdkDevice *device;
+  GdkEvent *event;
+
+  display = gdk_display_get_default ();
+  seat = gdk_display_get_default_seat (display);
+  device = gdk_seat_get_pointer (seat);
+
+  event = gdk_event_new (GDK_BUTTON_PRESS);
+
+  event->button.time = time;
+  event->button.button = button;
+
+  gdk_event_set_device (event, device);
+
+  return event;
+}
+#endif
+
 static void
 method_call_cb (GDBusConnection       *connection,
 		const gchar           *sender,
@@ -2112,14 +2161,20 @@ method_call_cb (GDBusConnection       *connection,
 		gpointer               user_data)
 {
 	MatePanelApplet *applet = MATE_PANEL_APPLET (user_data);
-
+#if GTK_CHECK_VERSION (3, 22, 0)
+	GdkEvent *event;
+#endif
 	if (g_strcmp0 (method_name, "PopupMenu") == 0) {
 		guint button;
 		guint time;
 
 		g_variant_get (parameters, "(uu)", &button, &time);
+#if GTK_CHECK_VERSION (3, 22, 0)
+		event = button_press_event_new (applet, button, time);
+		mate_panel_applet_menu_popup (applet, event);
+#else
 		mate_panel_applet_menu_popup (applet, button, time);
-
+#endif
 		g_dbus_method_invocation_return_value (invocation, NULL);
 	}
 }

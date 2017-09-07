@@ -732,7 +732,12 @@ applet_show_menu (AppletInfo     *info,
 
 	if (!gtk_widget_get_realized (info->menu))
 		gtk_widget_show (info->menu);
-
+#if GTK_CHECK_VERSION (3, 22, 0)
+	/* Trying to get the widget from the calling function here */
+	/* puts main menu (menubar) context menu in wrong place    */
+	gtk_menu_popup_at_pointer (GTK_MENU (info->menu),
+	                          NULL);
+#else
 	gtk_menu_popup (GTK_MENU (info->menu),
 			NULL,
 			NULL,
@@ -740,6 +745,7 @@ applet_show_menu (AppletInfo     *info,
 			info->widget,
 			event->button,
 			event->time);
+#endif
 }
 
 static gboolean
@@ -752,7 +758,6 @@ applet_do_popup_menu (GtkWidget      *widget,
 
 	if (info->type == PANEL_OBJECT_APPLET)
 		return FALSE;
-
 	applet_show_menu (info, event);
 
 	return TRUE;
