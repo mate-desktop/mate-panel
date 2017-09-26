@@ -14,8 +14,6 @@
 #include "applet.h"
 #include "panel-widget.h"
 
-#include <gio/gdesktopappinfo.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -24,7 +22,8 @@ typedef struct {
 	AppletInfo        *info;
 	GtkWidget         *button;
 
-	GDesktopAppInfo   *app_info;
+	char              *location;
+	GKeyFile          *key_file;
 
 	GtkWidget         *prop_dialog;
 	GSList            *error_dialogs;
