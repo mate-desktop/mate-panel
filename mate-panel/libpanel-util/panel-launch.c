@@ -163,23 +163,29 @@ panel_app_info_launch_uri (GDesktopAppInfo     *appinfo,
 }
 
 gboolean
-panel_app_info_launch (GDesktopAppInfo   *appinfo,
+panel_launch_key_file (GKeyFile   *keyfile,
 		       GList      *uri_list,
 		       GdkScreen  *screen,
 		       const gchar *action,
 		       GError    **error)
 {
+	GDesktopAppInfo *appinfo;
 	gboolean         retval;
 
-	g_return_val_if_fail (appinfo != NULL, FALSE);
+	g_return_val_if_fail (keyfile != NULL, FALSE);
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+	appinfo = g_desktop_app_info_new_from_keyfile (keyfile);
+	if (appinfo == NULL)
+		return FALSE;
 
 	retval = panel_app_info_launch_uris (appinfo,
 					     uri_list, screen, action,
 					     gtk_get_current_event_time (),
 					     error);
 
+	g_object_unref (appinfo);
 	return retval;
 }
 

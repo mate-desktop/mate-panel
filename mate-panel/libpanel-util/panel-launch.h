@@ -45,7 +45,7 @@ gboolean panel_app_info_launch_uri (GDesktopAppInfo     *appinfo,
 				    guint32       timestamp,
 				    GError      **error);
 
-gboolean panel_app_info_launch (GDesktopAppInfo   *appinfo,
+gboolean panel_launch_key_file (GKeyFile   *keyfile,
 				GList      *uri_list,
 				GdkScreen  *screen,
 				const gchar *action,
