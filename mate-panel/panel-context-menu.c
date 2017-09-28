@@ -203,14 +203,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	g_signal_connect_swapped (menuitem, "activate",
 				  G_CALLBACK (panel_properties_dialog_present), 
 				  panel_widget->toplevel);
-
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Reset Panel"));
-	image = gtk_image_new_from_stock (GTK_STOCK_REVERT_TO_SAVED, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
-	gtk_widget_show (menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_reset), NULL);
+    add_menu_separator (menu);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Delete This Panel"));
 	image = gtk_image_new_from_icon_name ("edit-delete",
@@ -224,6 +217,16 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	g_signal_connect (G_OBJECT (menu), "show",
 			  G_CALLBACK (panel_context_menu_setup_delete_panel_item),
 			  menuitem);
+
+
+	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Reset Panel"));
+	image = gtk_image_new_from_stock (GTK_STOCK_REVERT_TO_SAVED, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	gtk_widget_show (menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (panel_reset), NULL);
+
 
 	add_menu_separator (menu);
 
