@@ -177,6 +177,53 @@ panel_context_menu_setup_delete_panel_item (GtkWidget *menu,
 }
 
 static void
+panel_reset_response (GtkWidget     *dialog,
+			 int            response)
+{
+	if (response == GTK_RESPONSE_OK) {
+		panel_reset ();
+	}
+
+	gtk_widget_destroy (dialog);
+}
+
+static void
+query_panel_reset (PanelToplevel *toplevel)
+{
+	GtkWidget *dialog;
+	char *text1;
+	char *text2;
+
+	text1 = _("Reset this panel?");
+	text2 = _("When a panel is reset,all \n"
+			 "custom settings are lost.");
+
+	dialog = gtk_message_dialog_new (
+			GTK_WINDOW (toplevel),
+			GTK_DIALOG_MODAL,
+			GTK_MESSAGE_WARNING,
+			GTK_BUTTONS_NONE,
+			"%s", text1);
+
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+	                                          "%s", text2);
+	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+				_("_Cancel"), GTK_RESPONSE_CANCEL,
+				_("_Reset Panel"), GTK_RESPONSE_OK,
+				NULL);
+
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+
+	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (panel_reset_response),
+			  NULL);
+
+	gtk_widget_show_all (dialog);
+}
+
+static void
 panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  GtkWidget   *menu)
 {
@@ -209,8 +256,8 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_reset), NULL);
+	g_signal_connect_swapped (menuitem, "activate",
+			  G_CALLBACK (query_panel_reset), panel_widget->toplevel);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Delete This Panel"));
 	image = gtk_image_new_from_icon_name ("edit-delete",
