@@ -1584,6 +1584,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 #if !GTK_CHECK_VERSION(3, 18, 0)
 	panel_widget_set_background_region (panel);
 #endif
+	gtk_widget_queue_resize(widget);
 }
 
 gboolean
