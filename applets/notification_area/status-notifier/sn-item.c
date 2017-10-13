@@ -271,6 +271,8 @@ sn_item_button_press_event (GtkWidget      *widget,
                                     GDK_GRAVITY_SOUTH_WEST,
                                     GDK_GRAVITY_NORTH_WEST,
                                     (GdkEvent *) event);
+          /*Fix positioning if size changed since last shown*/
+          gtk_menu_reposition(priv->menu);
 #else
           gtk_menu_popup (priv->menu, NULL, NULL,
                           sn_item_popup_menu_position_func, widget,
