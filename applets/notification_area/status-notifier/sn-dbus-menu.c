@@ -179,6 +179,8 @@ get_layout_cb (GObject      *source_object,
 
   g_hash_table_remove_all (menu->items);
   layout_parse (menu, layout, GTK_MENU (menu));
+  /*Reposition to accomodate size change if necessary*/
+  gtk_menu_reposition(GTK_MENU(menu));
   g_variant_unref (layout);
 }
 
