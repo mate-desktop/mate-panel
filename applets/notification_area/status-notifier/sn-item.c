@@ -302,6 +302,8 @@ sn_item_popup_menu (GtkWidget *widget)
                                 GDK_GRAVITY_SOUTH_WEST,
                                 GDK_GRAVITY_NORTH_WEST,
                                 NULL);
+      /*Fix positioning if size changed since last shown*/
+      gtk_menu_reposition(priv->menu);
 #else
       guint button = 0;
       guint32 active_time = GDK_CURRENT_TIME;
