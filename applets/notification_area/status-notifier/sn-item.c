@@ -266,6 +266,8 @@ sn_item_button_press_event (GtkWidget      *widget,
           gtk_menu_popup (priv->menu, NULL, NULL,
                           sn_item_popup_menu_position_func, widget,
                           event->button, event->time);
+          /*Fix positioning if size changed since last shown*/
+          gtk_menu_reposition(priv->menu);
 #endif
         }
       else
@@ -318,6 +320,8 @@ sn_item_popup_menu (GtkWidget *widget)
       gtk_menu_popup (priv->menu, NULL, NULL,
                       sn_item_popup_menu_position_func, widget,
                       button, active_time);
+      /*Fix positioning if size changed since last shown*/
+      gtk_menu_reposition(priv->menu);
 #endif
     }
   else

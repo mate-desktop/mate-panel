@@ -111,7 +111,6 @@ layout_update_item (SnDBusMenu *menu,
     {
       sn_dbus_menu_item_update_props (item, props);
     }
-
   return item->submenu;
 }
 
@@ -179,8 +178,11 @@ get_layout_cb (GObject      *source_object,
 
   g_hash_table_remove_all (menu->items);
   layout_parse (menu, layout, GTK_MENU (menu));
-  /*Reposition to accomodate size change if necessary*/
+#if GTK_CHECK_VERSION (3, 22, 0)
+  /* Reposition menu to accomodate any size changes   */
+  /* Menu size never changes with GTK 3.20 or earlier */
   gtk_menu_reposition(GTK_MENU(menu));
+#endif
   g_variant_unref (layout);
 }
 
