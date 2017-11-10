@@ -455,11 +455,13 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 	g_variant_builder_add (&builder, "{sv}",
 			       "locked-down",
 			       g_variant_new_boolean (mate_panel_applet_frame_activating_get_locked_down (frame_act)));
+	/*since background has just been set to NULL, this block never executes
 	if (background) {
 		g_variant_builder_add (&builder, "{sv}",
 				       "background",
 				       g_variant_new_string (background));
 	}
+	*/
 
 	g_object_set_data (G_OBJECT (frame), "mate-panel-applet-frame-activating", frame_act);
 
