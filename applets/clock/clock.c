@@ -569,13 +569,13 @@ format_time (ClockData *cd)
                                                        NULL, NULL, NULL);
                 if (!timeformat)
                         strcpy (hour, "???");
-                else if (strftime (hour, sizeof (hour), timeformat, tm) <= 0)
+                else if (strftime (hour, sizeof (hour), timeformat, tm)== 0)
                         strcpy (hour, "???");
                 g_free (timeformat);
 
                 utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
         } else {
-                if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
+                if (strftime (hour, sizeof (hour), cd->timeformat, tm) == 0)
                         strcpy (hour, "???");
 
                 utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
@@ -659,7 +659,7 @@ update_tooltip (ClockData * cd)
                 loc = g_locale_from_utf8 (_("%A %B %d (%%s)"), -1, NULL, NULL, NULL);
                 if (!loc)
                         strcpy (date, "???");
-                else if (strftime (date, sizeof (date), loc, tm) <= 0)
+                else if (strftime (date, sizeof (date), loc, tm) == 0)
                         strcpy (date, "???");
                 g_free (loc);
 
@@ -1639,7 +1639,7 @@ copy_time (GtkAction *action,
 
                 if (!format)
                         strcpy (string, "???");
-                else if (strftime (string, sizeof (string), format, tm) <= 0)
+                else if (strftime (string, sizeof (string), format, tm) == 0)
                         strcpy (string, "???");
                 g_free (format);
         }
@@ -1668,7 +1668,7 @@ copy_date (GtkAction *action,
         loc = g_locale_from_utf8 (_("%A, %B %d %Y"), -1, NULL, NULL, NULL);
         if (!loc)
                 strcpy (string, "???");
-        else if (strftime (string, sizeof (string), loc, tm) <= 0)
+        else if (strftime (string, sizeof (string), loc, tm) == 0)
                 strcpy (string, "???");
         g_free (loc);
 

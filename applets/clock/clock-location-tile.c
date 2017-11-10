@@ -473,7 +473,7 @@ format_time (struct tm   *now,
                 }
         }
 
-        if (strftime (buf, sizeof (buf), format, now) <= 0) {
+        if (strftime (buf, sizeof (buf), format, now) == 0) {
                 strcpy (buf, "???");
         }
 
