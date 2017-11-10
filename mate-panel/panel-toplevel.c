@@ -331,7 +331,6 @@ static GdkCursorType panel_toplevel_grab_op_cursor(PanelToplevel* toplevel, Pane
 		else
 			retval = GDK_FLEUR;
 		break;
-		break;
 	case PANEL_GRAB_OP_RESIZE_UP:
 		retval = GDK_TOP_SIDE;
 		break;
