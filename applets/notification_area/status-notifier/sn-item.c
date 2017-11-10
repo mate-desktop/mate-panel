@@ -440,8 +440,6 @@ sn_item_ready (SnItem *item)
   SnItemPrivate *priv;
 
   menu = SN_ITEM_GET_CLASS (item)->get_menu (item);
-  if (menu == NULL)
-    return;
 
   if (menu == NULL || *menu == '\0' || g_strcmp0 (menu, "/") == 0)
     return;
