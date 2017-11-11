@@ -419,7 +419,7 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 	GVariantBuilder       builder;
 	GdkScreen            *screen;
 	gchar                *conf_path;
-	gchar                *background;
+	/*gchar                *background; unused */
 	guint                 orient;
 
 	g_return_val_if_fail (iid != NULL, FALSE);
@@ -437,7 +437,7 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 	conf_path = mate_panel_applet_frame_activating_get_conf_path (frame_act);
 	/* we can't really get a background string at this point since we don't
 	 * know the position of the applet */
-	background = NULL;
+	/*background = NULL;               */
 
 	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 	g_variant_builder_add (&builder, "{sv}",
@@ -472,7 +472,7 @@ mate_panel_applet_frame_dbus_load (const gchar                 *iid,
 				    g_variant_builder_end (&builder));
 
 	g_free (conf_path);
-	g_free (background);
+	/*g_free (background); */
 
 	return TRUE;
 }
