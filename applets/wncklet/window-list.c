@@ -688,22 +688,9 @@ static void display_properties_dialog(GtkAction* action, TasklistData* tasklist)
 
 static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 {
+	g_signal_handlers_disconnect_by_data (G_OBJECT (tasklist->applet), tasklist);
 
-	g_signal_handlers_disconnect_by_func(G_OBJECT(tasklist->applet),
-						G_CALLBACK(applet_change_orient), tasklist);
-	g_signal_handlers_disconnect_by_func(G_OBJECT(tasklist->applet),
-						G_CALLBACK(applet_change_pixel_size), tasklist);
-	g_signal_handlers_disconnect_by_func(G_OBJECT(tasklist->applet),
-						G_CALLBACK(applet_change_background), tasklist);
-	g_signal_handlers_disconnect_by_func (tasklist->settings,
-					  G_CALLBACK (display_all_workspaces_changed),
-					  tasklist);
-	g_signal_handlers_disconnect_by_func (tasklist->settings,
-					  G_CALLBACK (group_windows_changed),
-					  tasklist);
-	g_signal_handlers_disconnect_by_func (tasklist->settings,
-					  G_CALLBACK (move_unminimized_windows_changed),
-					  tasklist);
+	g_signal_handlers_disconnect_by_data (tasklist->settings, tasklist);
 
 	g_object_unref(tasklist->settings);
 

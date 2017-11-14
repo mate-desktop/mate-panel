@@ -961,18 +961,8 @@ static void display_properties_dialog(GtkAction* action, PagerData* pager)
 
 static void destroy_pager(GtkWidget* widget, PagerData* pager)
 {
-	g_signal_handlers_disconnect_by_func (pager->settings,
-					  G_CALLBACK (num_rows_changed),
-					  pager);
-	g_signal_handlers_disconnect_by_func (pager->settings,
-					  G_CALLBACK (display_workspace_names_changed),
-					  pager);
-	g_signal_handlers_disconnect_by_func (pager->settings,
-					  G_CALLBACK (all_workspaces_changed),
-					  pager);
-	g_signal_handlers_disconnect_by_func (pager->settings,
-					  G_CALLBACK (wrap_workspaces_changed),
-					  pager);
+	g_signal_handlers_disconnect_by_data (pager->settings, pager);
+
 	g_object_unref (pager->settings);
 
 	if (pager->properties_dialog)
