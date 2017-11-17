@@ -123,7 +123,7 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 	struct tm                  tm1;
 
 	calendar = gtk_calendar_new ();
-	gtk_widget_set_size_request(GTK_WIDGET(calendar), 330, 100);
+	gtk_widget_set_size_request(GTK_WIDGET(calendar), 260, 100);
 	options = gtk_calendar_get_display_options (GTK_CALENDAR (calendar));
 	if (calwin->priv->show_weeks)
 		options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
@@ -481,7 +481,6 @@ calendar_window_init (CalendarWindow *calwin)
 	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_DOCK);
 	gtk_window_set_decorated (window, FALSE);
 	gtk_window_set_resizable (window, FALSE);
-	gtk_window_set_default_size (window, 337, -1);
 	gtk_window_stick (window);
 	gtk_window_set_title (window, _("Calendar"));
 	gtk_window_set_icon_name (window, CLOCK_ICON);
