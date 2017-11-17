@@ -226,10 +226,6 @@ enter_or_leave_tile (GtkWidget             *widget,
                 else
                         can_set = can_set_system_timezone ();
                 if (can_set != 0) {
-                        gtk_label_set_markup (GTK_LABEL (priv->current_label),
-                                                can_set == 1 ?
-                                                        _("<small>Set...</small>") :
-                                                        _("<small>Set</small>"));
                         gtk_widget_hide (priv->current_spacer);
                         gtk_widget_hide (priv->current_marker);
                         gtk_widget_show (priv->current_button);
@@ -288,7 +284,6 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (head_section), priv->city_label, FALSE, FALSE, 0);
 
         priv->time_label = gtk_label_new (NULL);
-        gtk_label_set_width_chars (GTK_LABEL (priv->time_label), 20);
         gtk_widget_set_margin_end (priv->time_label, 3);
 #if GTK_CHECK_VERSION (3, 16, 0)
         gtk_label_set_xalign (GTK_LABEL (priv->time_label), 0.0);
@@ -307,7 +302,7 @@ clock_location_tile_fill (ClockLocationTile *this)
 
         priv->current_button = gtk_button_new ();
         /* The correct label is set on EnterNotify events */
-        priv->current_label = gtk_label_new ("");
+        priv->current_label = gtk_image_new_from_icon_name ("document-open-recent", GTK_ICON_SIZE_BUTTON);
         gtk_widget_show (priv->current_label);
         gtk_widget_set_no_show_all (priv->current_button, TRUE);
         gtk_widget_set_valign (priv->current_button, GTK_ALIGN_CENTER);
@@ -318,7 +313,6 @@ clock_location_tile_fill (ClockLocationTile *this)
         priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
         gtk_widget_set_halign (priv->current_marker, GTK_ALIGN_END);
         gtk_widget_set_valign (priv->current_marker, GTK_ALIGN_CENTER);
-        gtk_widget_set_margin_start (priv->current_marker, 75);
         gtk_widget_set_no_show_all (priv->current_marker, TRUE);
 
         priv->current_spacer = gtk_event_box_new ();
