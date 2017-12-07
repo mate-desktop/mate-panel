@@ -32,6 +32,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
@@ -277,19 +278,14 @@ gboolean panel_toplevel_is_last_unattached(PanelToplevel* toplevel)
 static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, int* width, int* height)
 {
 	GdkScreen* screen;
-	gint       screen_width;
-	gint       screen_height;
 
 	g_return_val_if_fail(PANEL_IS_TOPLEVEL (toplevel), NULL);
 	g_return_val_if_fail(width != NULL && height != NULL, NULL);
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
-	gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
-				 &screen_width, &screen_height);
-
-	*width  = screen_width;
-	*height = screen_height;
+	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
+	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
 
 	return screen;
 }

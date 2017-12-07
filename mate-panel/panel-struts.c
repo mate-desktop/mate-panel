@@ -22,6 +22,7 @@
  */
 
 #include <config.h>
+#include <gdk/gdkx.h>
 
 #include "panel-struts.h"
 
@@ -268,8 +269,8 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 
 	strut_size = strut->allocated_strut_size;
 
-	gdk_window_get_geometry (gdk_screen_get_root_window (strut->screen), NULL, NULL,
-				 &screen_width, &screen_height);
+	screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (strut->screen));
+	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (strut->screen));
 
 	panel_struts_get_monitor_geometry (strut->screen,
 					   strut->monitor,
