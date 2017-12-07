@@ -27,6 +27,7 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <gdk/gdkx.h>
 
 #include <matemenu-tree.h>
 
@@ -1373,10 +1374,7 @@ panel_addto_present (GtkMenuItem *item,
 				     panel_addto_dialog_quark);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-
-	gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
-				 NULL, &screen_height);
-
+	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
 	height = MIN (MAX_ADDTOPANEL_HEIGHT, 3 * (screen_height / 4));
 
 	if (!dialog) {

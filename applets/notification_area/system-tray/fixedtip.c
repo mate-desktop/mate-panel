@@ -20,6 +20,7 @@
  * 02110-1301, USA.
  */
 
+#include <gdk/gdkx.h>
 #include "fixedtip.h"
 
 /* Signals */
@@ -158,8 +159,8 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
   parent_width = gdk_window_get_width(parent_window);
   parent_height = gdk_window_get_height(parent_window);
 
-  gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
-                           &screen_width, &screen_height);
+  screen_width = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
+  screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
 
   /* pad between panel and message window */
 #define PAD 5

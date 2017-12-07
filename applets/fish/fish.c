@@ -37,6 +37,7 @@
 #include <glib/gi18n.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 
@@ -856,8 +857,8 @@ static void display_fortune_dialog(FishApplet* fish)
 
 		screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 
-		gdk_window_get_geometry (gdk_screen_get_root_window (screen), NULL, NULL,
-					 &screen_width, &screen_height);
+		screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
+		screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
 
 		gtk_window_set_default_size (GTK_WINDOW (fish->fortune_dialog),
 					     MIN (600, screen_width  * 0.9),
