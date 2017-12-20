@@ -83,6 +83,7 @@ struct _PanelToplevelPrivate {
 	gboolean                expand;
 	PanelOrientation        orientation;
 	int                     size;
+	int                     scale;
 
 	/* relative to the monitor origin */
 	int                     x;
@@ -1480,9 +1481,9 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		if (y <= monitor_y) {
 			orientation = PANEL_ORIENTATION_TOP;
 			strut = y + height - monitor_y;
-		} else if (y >= monitor_y + monitor_height - height) {
+		} else if (y >= monitor_y + (monitor_height / toplevel->priv->scale) - height) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
-			strut = monitor_y + monitor_height - y;
+			strut = monitor_y + (monitor_height / toplevel->priv->scale) - y;
 		}
 
 		if (strut > 0) {
@@ -1493,15 +1494,21 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		if (x <= monitor_x) {
 			orientation = PANEL_ORIENTATION_LEFT;
 			strut = x + width - monitor_x;
-		} else if (x >= monitor_x + monitor_width - width) {
+		} else if (x >= monitor_x + (monitor_width / toplevel->priv->scale) - width) {
 			orientation = PANEL_ORIENTATION_RIGHT;
-			strut = monitor_x + monitor_width - x;
+			strut = monitor_x + (monitor_width / toplevel->priv->scale) - x;
 		}
 
 		if (strut > 0) {
 			strut_start = MAX (y, monitor_y);
 			strut_end = MIN (y + height, monitor_y + monitor_height) - 1;
 		}
+	}
+
+	/* Adjust strut size based on scale factor */
+	/* FIXME: Panels seem to show an extra large strut in relationship to one another. */
+	if (strut > 0) {
+		strut += toplevel->priv->size * (toplevel->priv->scale - 1);
 	}
 
 	if (orientation != toplevel->priv->orientation) {
@@ -1778,7 +1785,7 @@ static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* 
 	else if (toplevel->priv->x_right != -1 &&
 		 toplevel->priv->x_right <= snap_tolerance &&
 		 !toplevel->priv->x_centered)
-		*x = monitor_width - width;
+		*x = (monitor_width / toplevel->priv->scale) - width;
 
 	if (toplevel->priv->y <= snap_tolerance &&
 	    toplevel->priv->y_bottom == -1 &&
@@ -1787,7 +1794,7 @@ static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* 
 	else if (toplevel->priv->y_bottom != -1 &&
 		 toplevel->priv->y_bottom <= snap_tolerance &&
 		 !toplevel->priv->y_centered)
-		*y = monitor_height - height;
+		*y = (monitor_height / toplevel->priv->scale) - height;
 }
 
 static void
@@ -3113,8 +3120,10 @@ panel_toplevel_check_resize (GtkContainer *container)
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
 	GtkWidget      *widget;
+	PanelToplevel  *toplevel;
 
 	widget = GTK_WIDGET (container);
+	toplevel = (PanelToplevel*) widget;
 
 	if (!gtk_widget_get_visible (widget))
 		return;
@@ -3125,8 +3134,13 @@ panel_toplevel_check_resize (GtkContainer *container)
 	gtk_widget_get_preferred_size (widget, &requisition, NULL);
 	gtk_widget_get_allocation (widget, &allocation);
 
-	allocation.width = requisition.width;
-	allocation.height = requisition.height;
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+		allocation.width = requisition.width / toplevel->priv->scale;
+		allocation.height = requisition.height;
+	} else {
+		allocation.width = requisition.width;
+		allocation.height = requisition.height / toplevel->priv->scale;
+	}
 
 	gtk_widget_size_allocate (widget, &allocation);
 }
@@ -3250,13 +3264,13 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 			challoc.x      = HANDLE_SIZE;
 			challoc.y      = 0;
-			challoc.width  = allocation->width - 2 * HANDLE_SIZE;
+			challoc.width  = (allocation->width / toplevel->priv->scale - 2 * HANDLE_SIZE);
 			challoc.height = allocation->height;
 		} else {
 			challoc.x      = 0;
 			challoc.y      = HANDLE_SIZE;
 			challoc.width  = allocation->width;
-			challoc.height = allocation->height - 2 * HANDLE_SIZE;
+			challoc.height = (allocation->height / toplevel->priv->scale - 2 * HANDLE_SIZE);
 		}
 	}
 
@@ -4317,7 +4331,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
 	widget_class->button_release_event = panel_toplevel_button_release_event;
 #if GTK_CHECK_VERSION (3, 18, 0)
-	widget_class->configure_event      = panel_toplevel_configure_event;	
+	widget_class->configure_event      = panel_toplevel_configure_event;
 #endif
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
 	widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
@@ -4752,6 +4766,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
 	toplevel->priv->size            = DEFAULT_SIZE;
+	toplevel->priv->scale           = gtk_widget_get_scale_factor(GTK_WIDGET(toplevel));
 	toplevel->priv->x               = 0;
 	toplevel->priv->y               = 0;
 	toplevel->priv->x_right         = -1;
@@ -4826,6 +4841,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->attach_hidden     = FALSE;
 	toplevel->priv->updated_geometry_initial = FALSE;
 	toplevel->priv->initial_animation_done   = FALSE;
+
 #if GTK_CHECK_VERSION (3, 18, 0)
 	widget = GTK_WIDGET (toplevel);
 	gtk_widget_add_events (widget,

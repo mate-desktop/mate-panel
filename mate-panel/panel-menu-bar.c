@@ -254,7 +254,11 @@ static void panel_menu_bar_size_allocate(GtkWidget* widget, GtkAllocation* alloc
 {
 	GtkAllocation old_allocation;
 	GtkAllocation widget_allocation;
+	AppletData* ad;
 	PanelBackground* background;
+
+	ad = g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA);
+	ad->needs_unscaling = FALSE;
 
 	gtk_widget_get_allocation(widget, &widget_allocation);
 

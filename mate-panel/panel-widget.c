@@ -1396,6 +1396,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	GList *list;
 	int i;
 	int old_size;
+	int scale;
 	gboolean ltr;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
@@ -1404,14 +1405,15 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	panel = PANEL_WIDGET(widget);
 
 	old_size = panel->size;
+	scale = gtk_widget_get_scale_factor(widget);
 	ltr = gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR;
 	
 	gtk_widget_set_allocation (widget, allocation);
 	if (gtk_widget_get_realized (widget))
 		gdk_window_move_resize (gtk_widget_get_window (widget),
-					allocation->x, 
+					allocation->x,
 					allocation->y,
-					allocation->width, 
+					allocation->width,
 					allocation->height);
 
 	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -1466,6 +1468,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->constrained;
 			}
+			if (scale && ad->needs_unscaling)
+				ad->cells /= scale;
 			ad->min_cells  = ad->cells;
 			gtk_widget_size_allocate(ad->applet,&challoc);
 			i += ad->cells;
@@ -1492,6 +1496,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				else
 					ad->cells = chreq.height;
 
+				if (scale && ad->needs_unscaling)
+					ad->cells /= scale;
 				ad->min_cells = ad->cells;
 			} else {
 				ad->cells = ad->size_hints [ad->size_hints_len - 1];
@@ -2681,6 +2687,7 @@ panel_widget_add (PanelWidget *panel,
 		ad->pos = pos;
 		ad->constrained = pos;
 		ad->drag_off = 0;
+		ad->needs_unscaling = TRUE;
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
