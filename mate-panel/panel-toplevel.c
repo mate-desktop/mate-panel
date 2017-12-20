@@ -83,6 +83,7 @@ struct _PanelToplevelPrivate {
 	gboolean                expand;
 	PanelOrientation        orientation;
 	int                     size;
+	gint                    scale;
 
 	/* relative to the monitor origin */
 	int                     x;
@@ -284,8 +285,15 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
-	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
-	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
+	 * toplevel geometry attributes by the scale factor, then correct for all
+	 * sorts of awful misalignments and pretend it's all good. Or we can just
+	 * make this thing think that the screen is scaled down, and because GTK+
+	 * already scaled everything up without the panel knowing about it, the whole
+	 * thing somehow works well... sigh.
+	 * @see panel_toplevel_get_monitor_geometry() */
+	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
+	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
 
 	return screen;
 }
@@ -299,17 +307,24 @@ static GdkScreen* panel_toplevel_get_monitor_geometry(PanelToplevel* toplevel, i
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
-	if (x) *x = panel_multiscreen_x(screen, toplevel->priv->monitor);
-	if (y) *y = panel_multiscreen_y(screen, toplevel->priv->monitor);
+	if (x) *x = panel_multiscreen_x(screen, toplevel->priv->monitor) / toplevel->priv->scale;
+	if (y) *y = panel_multiscreen_y(screen, toplevel->priv->monitor) / toplevel->priv->scale;
 
+	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
+	 * toplevel geometry attributes by the scale factor, then correct for all
+	 * sorts of awful misalignments and pretend it's all good. Or we can just
+	 * make this thing think that the screen is scaled down, and because GTK+
+	 * already scaled everything up without the panel knowing about it, the whole
+	 * thing somehow works well... sigh.
+	 * @see panel_toplevel_get_screen_geometry() */
 	if (width)
 	{
-		*width  = panel_multiscreen_width(screen, toplevel->priv->monitor);
+		*width  = panel_multiscreen_width(screen, toplevel->priv->monitor) / toplevel->priv->scale;
 	}
 
 	if (height)
 	{
-		*height = panel_multiscreen_height(screen, toplevel->priv->monitor);
+		*height = panel_multiscreen_height(screen, toplevel->priv->monitor) / toplevel->priv->scale;
 	}
 
 	return screen;
@@ -1504,6 +1519,10 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		}
 	}
 
+	/* Adjust strut size based on scale factor */
+	if (strut > 0)
+		strut += toplevel->priv->size * (toplevel->priv->scale - 1);
+
 	if (orientation != toplevel->priv->orientation) {
 		toplevel->priv->orientation = orientation;
 		g_object_notify (G_OBJECT (toplevel), "orientation");
@@ -1519,7 +1538,8 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 								orientation,
 								strut,
 								strut_start,
-								strut_end);
+								strut_end,
+								toplevel->priv->scale);
 	else
 		panel_struts_unregister_strut (toplevel);
 
@@ -2336,7 +2356,8 @@ panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
 	int total_size;
 	int full_hints;
 
-	total_size = non_panel_widget_size + requisition_size;
+	/* Scale down the size so that the panel only takes what it needs for the applets it has. */
+	total_size = non_panel_widget_size + (requisition_size / toplevel->priv->scale);
 
 	nb_size_hints = toplevel->priv->panel_widget->nb_applets_size_hints;
 	if (nb_size_hints <= 0)
@@ -4317,7 +4338,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
 	widget_class->button_release_event = panel_toplevel_button_release_event;
 #if GTK_CHECK_VERSION (3, 18, 0)
-	widget_class->configure_event      = panel_toplevel_configure_event;	
+	widget_class->configure_event      = panel_toplevel_configure_event;
 #endif
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
 	widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
@@ -4752,6 +4773,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
 	toplevel->priv->size            = DEFAULT_SIZE;
+	toplevel->priv->scale           = gtk_widget_get_scale_factor (GTK_WIDGET (toplevel));
 	toplevel->priv->x               = 0;
 	toplevel->priv->y               = 0;
 	toplevel->priv->x_right         = -1;
@@ -4826,6 +4848,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->attach_hidden     = FALSE;
 	toplevel->priv->updated_geometry_initial = FALSE;
 	toplevel->priv->initial_animation_done   = FALSE;
+
 #if GTK_CHECK_VERSION (3, 18, 0)
 	widget = GTK_WIDGET (toplevel);
 	gtk_widget_add_events (widget,

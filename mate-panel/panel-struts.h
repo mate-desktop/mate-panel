@@ -36,7 +36,8 @@ gboolean panel_struts_register_strut           (PanelToplevel    *toplevel,
 						PanelOrientation  orientation,
 						int               strut_size,
 						int               strut_start,
-						int               strut_end);
+						int               strut_end,
+						gint              scale);
 
 void     panel_struts_unregister_strut         (PanelToplevel    *toplevel);
 

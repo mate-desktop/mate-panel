@@ -1214,6 +1214,7 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 	GList *list;
 	GList *ad_with_hints;
 	gboolean dont_fill;
+	gint scale;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
 	g_return_if_fail(minimum_size != NULL);
@@ -1231,6 +1232,7 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 	natural_size->height = minimum_size->height;
 
 	ad_with_hints = NULL;
+	scale = gtk_widget_get_scale_factor(widget);
 
 	for (list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
@@ -1254,8 +1256,10 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 
 			else if (panel->packed)
 			{
-				minimum_size->width += child_min_size.width;
-				natural_size->width += child_natural_size.width;
+				/* Just because everything is bigger when scaled up doesn't mean
+				 * that the applets need any less room when the panel is packed. */
+				minimum_size->width += child_min_size.width * scale;
+				natural_size->width += child_natural_size.width * scale;
 			}
 		} else {
 			if (minimum_size->width < child_min_size.width &&
@@ -1271,8 +1275,10 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 
 			else if (panel->packed)
 			{
-				minimum_size->height += child_min_size.height;
-				natural_size->height += child_natural_size.height;
+				/* Just because everything is bigger when scaled up doesn't mean
+				 * that the applets need any less room when the panel is packed. */
+				minimum_size->height += child_min_size.height * scale;
+				natural_size->height += child_natural_size.height * scale;
 			}
 		}
 	}
@@ -1409,9 +1415,9 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	gtk_widget_set_allocation (widget, allocation);
 	if (gtk_widget_get_realized (widget))
 		gdk_window_move_resize (gtk_widget_get_window (widget),
-					allocation->x, 
+					allocation->x,
 					allocation->y,
-					allocation->width, 
+					allocation->width,
 					allocation->height);
 
 	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
