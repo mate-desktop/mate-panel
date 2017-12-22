@@ -115,7 +115,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.\n"
 		                   "Copyright \xc2\xa9 2011-2017 MATE Developers.",
 		      "comments", _("This program is responsible for launching other "
-				    "apps and provides useful utilities."),
+				    "applications and provides useful utilities."),
 		      "authors", authors,
 		      "documenters", documenters,
 		      "title", _("About the MATE Panel"),
