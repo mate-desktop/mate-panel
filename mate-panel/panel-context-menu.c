@@ -87,7 +87,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		"Stephen Browne <stephen.browne@sun.com>",
 		"Tom Tromey <tromey@cygnus.com>",
 		"Vincent Untz <vuntz@gnome.org>",
-		N_("And many, many others..."),
+		N_("And many, many others…"),
 		NULL
 	};
 	char *documenters[] = {
@@ -115,7 +115,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.\n"
 		                   "Copyright \xc2\xa9 2011-2017 MATE Developers.",
 		      "comments", _("This program is responsible for launching other "
-				    "applications and provides useful utilities."),
+				    "apps and provides useful utilities."),
 		      "authors", authors,
 		      "documenters", documenters,
 		      "title", _("About the MATE Panel"),
@@ -195,7 +195,7 @@ query_panel_reset (PanelToplevel *toplevel)
 	char *text2;
 
 	text1 = _("Reset this panel?");
-	text2 = _("When a panel is reset,all \n"
+	text2 = _("When a panel is reset, all \n"
 			 "custom settings are lost.");
 
 	dialog = gtk_message_dialog_new (
@@ -230,7 +230,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	GtkWidget *menuitem;
 	GtkWidget *image;
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Add to Panel..."));
+	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Add to Panel…"));
 	image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 	gtk_widget_show (menuitem);
