@@ -1,3 +1,30 @@
+### mate-panel 1.19.4
+
+  * Translations update
+  * WidthOfScreen and HeightOfScreen implementation
+  * panel-toplevel: Remove pointer boundary check in panel_toplevel_queue_auto_hide()
+  * remove ancient gnome-panel leftovers
+  * Keep the right icons on bottom still displaying right when the resolution change larger
+  * wncklet: disconnect signals by data on destroy
+  * clock: disconnect one more signal handler on destroy
+  * panel-applet-frame-dbus-c: comment out newly unused variable
+  * Clock: don't check variables that can never be < 0 for < 0
+  * panel-applet-frame-dbus.c: comment out never used code block
+  * panel-toplevel: remove duplicate break statement
+  * status-notifier: remove duplicate check found by cppcheck
+  * status-notifier: hide mate-polkit icon if passive
+  * Apply position fix on popup to GTK 3.20 and earlier
+  * GTK 3.22 status notifier: reposition menu when size changes
+  * GTK 3.22/status-notifer Fix menu position if size changed since last shown
+  * Stop panel collapse left on adding certain out-of-process applets
+  * make file/folder launchers work again
+  * panel-context-menu: Add confirmation dialog to panel reset option
+  * Add option to context menu to reset the panel
+  * clock:disconnect signal handlers on destroy
+  * Fix crashes on moving/removing applets with glib 2.53.4 or later
+  * gtk 3.22: avoid deprecated gdk_screen_get_monitor... functions:
+  * Add a gsettings key to enable/disable SNI Support (#600)
+
 ### mate-panel 1.19.3
 
   * Translations update
