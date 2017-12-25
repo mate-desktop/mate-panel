@@ -252,8 +252,11 @@ update (SnItemV0 *v0)
   if (v0->icon_name != NULL && v0->icon_name[0] != '\0')
     {
       GdkPixbuf *pixbuf;
-
       pixbuf = get_icon_by_name (v0->icon_name, icon_size);
+      if (!pixbuf){
+          /*deal with missing icon or failure to load icon*/
+          pixbuf = get_icon_by_name ("image-missing", icon_size);
+      }
       gtk_image_set_from_pixbuf (image, pixbuf);
       g_object_unref (pixbuf);
     }
