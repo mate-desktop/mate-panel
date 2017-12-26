@@ -254,6 +254,10 @@ update (SnItemV0 *v0)
       GdkPixbuf *pixbuf;
       pixbuf = get_icon_by_name (v0->icon_name, icon_size);
       if (!pixbuf){
+          /*try to find icons specified by path and filename*/
+          pixbuf = gdk_pixbuf_new_from_file(v0->icon_name, NULL);
+      }
+      if (!pixbuf){
           /*deal with missing icon or failure to load icon*/
           pixbuf = get_icon_by_name ("image-missing", icon_size);
       }
