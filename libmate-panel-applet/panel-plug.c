@@ -18,7 +18,6 @@
 #include <gtk/gtk.h>
 
 #if GTK_CHECK_VERSION (3, 18, 0)
-#include "config.h"
 #include "panel-plug-private.h"
 
 struct _PanelPlug
