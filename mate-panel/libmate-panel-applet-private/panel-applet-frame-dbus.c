@@ -235,8 +235,7 @@ container_child_background_set (GObject      *source_object,
 
 	mate_panel_applet_container_child_set_finish (container, res, NULL);
 
-	if (frame->priv->bg_operation)
-		frame->priv->bg_operation = NULL;
+	frame->priv->bg_operation = NULL;
 }
 
 static void
@@ -327,8 +326,7 @@ mate_panel_applet_frame_dbus_finalize (GObject *object)
 {
 	MatePanelAppletFrameDBus *frame = MATE_PANEL_APPLET_FRAME_DBUS (object);
 
-	if (frame->priv->bg_operation)
-		frame->priv->bg_operation = NULL;
+	frame->priv->bg_operation = NULL;
 
 	G_OBJECT_CLASS (mate_panel_applet_frame_dbus_parent_class)->finalize (object);
 }
