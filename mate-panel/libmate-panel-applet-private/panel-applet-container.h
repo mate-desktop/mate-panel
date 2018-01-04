@@ -94,7 +94,7 @@ gboolean   mate_panel_applet_container_child_popup_menu_finish (MatePanelAppletC
 							   GAsyncResult         *result,
 							   GError              **error);
 
-void       mate_panel_applet_container_child_set               (MatePanelAppletContainer *container,
+gconstpointer  mate_panel_applet_container_child_set           (MatePanelAppletContainer *container,
 							   const gchar          *property_name,
 							   const GVariant       *value,
 							   GCancellable         *cancellable,
@@ -103,7 +103,7 @@ void       mate_panel_applet_container_child_set               (MatePanelAppletC
 gboolean   mate_panel_applet_container_child_set_finish        (MatePanelAppletContainer *container,
 							   GAsyncResult         *result,
 							   GError              **error);
-void       mate_panel_applet_container_child_get               (MatePanelAppletContainer *container,
+gconstpointer  mate_panel_applet_container_child_get           (MatePanelAppletContainer *container,
 							   const gchar          *property_name,
 							   GCancellable         *cancellable,
 							   GAsyncReadyCallback   callback,
@@ -111,6 +111,9 @@ void       mate_panel_applet_container_child_get               (MatePanelAppletC
 GVariant  *mate_panel_applet_container_child_get_finish        (MatePanelAppletContainer *container,
 							   GAsyncResult         *result,
 							   GError              **error);
+
+void       mate_panel_applet_container_cancel_operation (MatePanelAppletContainer *container,
+                                                         gconstpointer             operation);
 
 #ifdef __cplusplus
 }
