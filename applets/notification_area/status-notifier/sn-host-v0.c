@@ -223,8 +223,10 @@ register_host_cb (GObject      *source_object,
 
   items = sn_watcher_v0_gen_dup_registered_items (v0->watcher);
 
-  for (i = 0; items[i] != NULL; i++)
-    add_registered_item (v0, items[i]);
+  if (items) {
+    for (i = 0; items[i] != NULL; i++)
+      add_registered_item (v0, items[i]);
+  }
 
   g_strfreev (items);
 }

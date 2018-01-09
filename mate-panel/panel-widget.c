@@ -1675,20 +1675,16 @@ panel_widget_style_updated (GtkWidget *widget)
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
 	panel_widget_set_background_default_style (widget);
 }
-#endif
 
 static gboolean
 toplevel_configure_event (GtkWidget         *widget,
 			  GdkEventConfigure *event,
 			  PanelWidget       *panel)
 {
-#if !GTK_CHECK_VERSION(3, 18, 0)
 	panel_widget_set_background_region (panel);
-#endif
 	return FALSE;
 }
 
-#if !GTK_CHECK_VERSION(3, 18, 0)
 static void
 panel_widget_realize (GtkWidget *widget)
 {

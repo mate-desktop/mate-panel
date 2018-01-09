@@ -594,7 +594,7 @@ set_applet_property_cb (GObject      *source_object,
 	g_object_unref (container);
 }
 
-void
+gconstpointer
 mate_panel_applet_container_child_set (MatePanelAppletContainer *container,
 				  const gchar          *property_name,
 				  const GVariant       *value,
@@ -607,7 +607,7 @@ mate_panel_applet_container_child_set (MatePanelAppletContainer *container,
 	GSimpleAsyncResult       *result;
 
 	if (!proxy)
-		return;
+		return NULL;
 
 	info = mate_panel_applet_container_child_property_get_info (property_name);
 	if (!info) {
@@ -617,7 +617,7 @@ mate_panel_applet_container_child_set (MatePanelAppletContainer *container,
 						     MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
 						     "%s: Applet has no child property named `%s'",
 						     G_STRLOC, property_name);
-		return;
+		return NULL;
 	}
 
 	result = g_simple_async_result_new (G_OBJECT (container),
@@ -645,6 +645,8 @@ mate_panel_applet_container_child_set (MatePanelAppletContainer *container,
 				-1, cancellable,
 				set_applet_property_cb,
 				result);
+
+	return result;
 }
 
 gboolean
@@ -696,7 +698,7 @@ get_applet_property_cb (GObject      *source_object,
 	g_object_unref (container);
 }
 
-void
+gconstpointer
 mate_panel_applet_container_child_get (MatePanelAppletContainer *container,
 				  const gchar          *property_name,
 				  GCancellable         *cancellable,
@@ -708,7 +710,7 @@ mate_panel_applet_container_child_get (MatePanelAppletContainer *container,
 	GSimpleAsyncResult       *result;
 
 	if (!proxy)
-		return;
+		return NULL;
 
 	info = mate_panel_applet_container_child_property_get_info (property_name);
 	if (!info) {
@@ -718,7 +720,7 @@ mate_panel_applet_container_child_get (MatePanelAppletContainer *container,
 						     MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
 						     "%s: Applet has no child property named `%s'",
 						     G_STRLOC, property_name);
-		return;
+		return NULL;
 	}
 
 	result = g_simple_async_result_new (G_OBJECT (container),
@@ -744,6 +746,8 @@ mate_panel_applet_container_child_get (MatePanelAppletContainer *container,
 				-1, cancellable,
 				get_applet_property_cb,
 				result);
+
+	return result;
 }
 
 GVariant *
@@ -825,4 +829,15 @@ mate_panel_applet_container_child_popup_menu_finish (MatePanelAppletContainer *c
 	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == mate_panel_applet_container_child_popup_menu);
 
 	return !g_simple_async_result_propagate_error (simple, error);
+}
+
+void
+mate_panel_applet_container_cancel_operation (MatePanelAppletContainer *container,
+                                              gconstpointer             operation)
+{
+	gpointer value = g_hash_table_lookup (container->priv->pending_ops, operation);
+	if (value == NULL)
+		return;
+
+	g_cancellable_cancel (G_CANCELLABLE (value));
 }

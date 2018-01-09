@@ -252,8 +252,19 @@ update (SnItemV0 *v0)
   if (v0->icon_name != NULL && v0->icon_name[0] != '\0')
     {
       GdkPixbuf *pixbuf;
-
       pixbuf = get_icon_by_name (v0->icon_name, icon_size);
+      if (!pixbuf){
+          /*try to find icons specified by path and filename*/
+          pixbuf = gdk_pixbuf_new_from_file(v0->icon_name, NULL);
+          if (pixbuf){
+              /*An icon specified by path and filename may be the wrong size for the tray */
+              pixbuf=gdk_pixbuf_scale_simple(pixbuf, icon_size-2, icon_size-2,GDK_INTERP_BILINEAR);
+          }
+      }
+      if (!pixbuf){
+          /*deal with missing icon or failure to load icon*/
+          pixbuf = get_icon_by_name ("image-missing", icon_size);
+      }
       gtk_image_set_from_pixbuf (image, pixbuf);
       g_object_unref (pixbuf);
     }
