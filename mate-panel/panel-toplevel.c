@@ -1420,7 +1420,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	GdkScreen        *screen;
 	gboolean          geometry_changed = FALSE;
 	int               strut, strut_start, strut_end;
-	int               x, y, width, height;
+	int               x, y, width, height, scale;
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
 
@@ -1476,14 +1476,15 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	orientation = toplevel->priv->orientation;
 
 	strut = strut_start = strut_end = 0;
+	scale = toplevel->priv->scale;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
 		if (y <= monitor_y) {
 			orientation = PANEL_ORIENTATION_TOP;
 			strut = y + height - monitor_y;
-		} else if (y >= monitor_y + (monitor_height / toplevel->priv->scale) - height) {
+		} else if (y >= monitor_y + (monitor_height / scale) - height) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
-			strut = monitor_y + (monitor_height / toplevel->priv->scale) - y;
+			strut = monitor_y + (monitor_height / scale) - y;
 		}
 
 		if (strut > 0) {
@@ -1494,9 +1495,9 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		if (x <= monitor_x) {
 			orientation = PANEL_ORIENTATION_LEFT;
 			strut = x + width - monitor_x;
-		} else if (x >= monitor_x + (monitor_width / toplevel->priv->scale) - width) {
+		} else if (x >= monitor_x + (monitor_width / scale) - width) {
 			orientation = PANEL_ORIENTATION_RIGHT;
-			strut = monitor_x + (monitor_width / toplevel->priv->scale) - x;
+			strut = monitor_x + (monitor_width / scale) - x;
 		}
 
 		if (strut > 0) {
@@ -1506,9 +1507,8 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	}
 
 	/* Adjust strut size based on scale factor */
-	/* FIXME: Panels seem to show an extra large strut in relationship to one another. */
 	if (strut > 0) {
-		strut += toplevel->priv->size * (toplevel->priv->scale - 1);
+		strut += toplevel->priv->size * (scale - 1);
 	}
 
 	if (orientation != toplevel->priv->orientation) {
@@ -1526,7 +1526,8 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 								orientation,
 								strut,
 								strut_start,
-								strut_end);
+								strut_end,
+								scale);
 	else
 		panel_struts_unregister_strut (toplevel);
 
@@ -3264,13 +3265,13 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 			challoc.x      = HANDLE_SIZE;
 			challoc.y      = 0;
-			challoc.width  = (allocation->width / toplevel->priv->scale - 2 * HANDLE_SIZE);
+			challoc.width  = allocation->width / toplevel->priv->scale - 2 * HANDLE_SIZE;
 			challoc.height = allocation->height;
 		} else {
 			challoc.x      = 0;
 			challoc.y      = HANDLE_SIZE;
 			challoc.width  = allocation->width;
-			challoc.height = (allocation->height / toplevel->priv->scale - 2 * HANDLE_SIZE);
+			challoc.height = allocation->height / toplevel->priv->scale - 2 * HANDLE_SIZE;
 		}
 	}
 
