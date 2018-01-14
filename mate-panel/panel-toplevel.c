@@ -3346,8 +3346,8 @@ static gboolean panel_toplevel_draw(GtkWidget* widget, cairo_t* cr)
 		return retval;
 
 	state = gtk_widget_get_state_flags (widget);
-	awidth = gtk_widget_get_allocated_width (widget);
-	aheight = gtk_widget_get_allocated_height (widget);
+	awidth = gtk_widget_get_allocated_width (widget) * toplevel->priv->scale;
+	aheight = gtk_widget_get_allocated_height (widget) * toplevel->priv->scale;
 
 	context = gtk_widget_get_style_context (widget);
 	gtk_style_context_get_padding (context, state, &padding);
