@@ -263,7 +263,7 @@ static void panel_menu_bar_get_preferred_width(GtkWidget *widget, gint *minimum_
 		gint icon_width;
 
 		icon_size = panel_menu_bar_icon_get_size ();
-		gtk_icon_size_lookup (icon_size, NULL, &icon_width);
+		gtk_icon_size_lookup (icon_size, &icon_width, NULL);
 
 		/* Add an extra pixel for padding */
 		*minimum_width += icon_width + 1;
