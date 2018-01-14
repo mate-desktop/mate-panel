@@ -454,11 +454,13 @@ button_widget_get_preferred_width (GtkWidget *widget,
  	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 	GtkWidget *parent;
 	int size;
+	gint scale;
 
 	parent = gtk_widget_get_parent (widget);
+	scale = gtk_widget_get_scale_factor (widget);
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
-		size = gtk_widget_get_allocated_height (parent);
+		size = gtk_widget_get_allocated_height (parent) * scale;
 	else
 		size = gtk_widget_get_allocated_width (parent);
 
@@ -473,13 +475,15 @@ button_widget_get_preferred_height (GtkWidget *widget,
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 	GtkWidget *parent;
 	int size;
+	gint scale;
 
 	parent = gtk_widget_get_parent (widget);
+	scale = gtk_widget_get_scale_factor (widget);
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
 		size = gtk_widget_get_allocated_height (parent);
 	else
-		size = gtk_widget_get_allocated_width (parent);
+		size = gtk_widget_get_allocated_width (parent) * scale;
 
 	*minimal_height = *natural_height = size;
 }
@@ -489,19 +493,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 			     GtkAllocation *allocation)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
-	AppletData   *applet_data;
 	int           size;
-
-	applet_data = g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA);
-	/* When allocating size for the first time, the size is scaled down unnecessarily.
-	 * This is taken care of on subsequent allocation runs, so run this only once */
-	if (applet_data->needs_unscaling) {
-		if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
-			allocation->width *= 2;
-		else
-			allocation->height *= 2;
-	}
-	applet_data->needs_unscaling = FALSE;
 
 	GTK_WIDGET_CLASS (button_widget_parent_class)->size_allocate (widget, allocation);
 

@@ -250,15 +250,85 @@ static void panel_menu_bar_parent_set(GtkWidget* widget, GtkWidget* previous_par
 	}
 }
 
+static void panel_menu_bar_get_preferred_width(GtkWidget *widget, gint *minimum_width, gint *natural_width)
+{
+	PanelMenuBarPrivate *priv = PANEL_MENU_BAR_GET_PRIVATE (widget);
+	gint scale;
+
+	*minimum_width = *natural_width = 1;
+
+	if (g_settings_get_boolean (priv->settings, PANEL_MENU_BAR_SHOW_ICON_KEY))
+	{
+		GtkIconSize icon_size;
+		gint icon_width;
+
+		icon_size = panel_menu_bar_icon_get_size ();
+		gtk_icon_size_lookup (icon_size, NULL, &icon_width);
+
+		/* Add an extra pixel for padding */
+		*minimum_width += icon_width + 1;
+		*natural_width += icon_width + 1;
+	}
+
+	if (gtk_widget_get_visible (priv->applications_item))
+	{
+		int child_minimal_width;
+		int child_natural_width;
+
+		/* Tie our size to the width of the size_widget */
+		gtk_widget_get_preferred_width (GTK_WIDGET (priv->applications_item),
+				&child_minimal_width,
+				&child_natural_width);
+
+		/* Add an extra pixel for padding */
+		*minimum_width += child_minimal_width + 1;
+		*natural_width += child_natural_width + 1;
+	}
+
+	if (gtk_widget_get_visible (priv->places_item))
+	{
+		int child_minimal_width;
+		int child_natural_width;
+
+		/* Tie our size to the width of the size_widget */
+		gtk_widget_get_preferred_width (GTK_WIDGET (priv->places_item),
+				&child_minimal_width,
+				&child_natural_width);
+
+		/* Add an extra pixel for padding */
+		*minimum_width += child_minimal_width + 1;
+		*natural_width += child_natural_width + 1;
+	}
+
+	if (gtk_widget_get_visible (priv->desktop_item))
+	{
+		int child_minimal_width;
+		int child_natural_width;
+
+		/* Tie our size to the width of the size_widget */
+		gtk_widget_get_preferred_width (GTK_WIDGET (priv->desktop_item),
+				&child_minimal_width,
+				&child_natural_width);
+
+		/* Add an extra pixel for padding */
+		*minimum_width += child_minimal_width + 1;
+		*natural_width += child_natural_width + 1;
+	}
+
+	/* Scale preferred widget size */
+	scale = gtk_widget_get_scale_factor (widget);
+	if (scale)
+	{
+		*minimum_width *= scale;
+		*natural_width *= scale;
+	}
+}
+
 static void panel_menu_bar_size_allocate(GtkWidget* widget, GtkAllocation* allocation)
 {
 	GtkAllocation old_allocation;
 	GtkAllocation widget_allocation;
-	AppletData* ad;
 	PanelBackground* background;
-
-	ad = g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA);
-	ad->needs_unscaling = FALSE;
 
 	gtk_widget_get_allocation(widget, &widget_allocation);
 
@@ -310,6 +380,7 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 	gobject_class->finalize = panel_menu_bar_finalize;
 
 	widget_class->parent_set = panel_menu_bar_parent_set;
+	widget_class->get_preferred_width = panel_menu_bar_get_preferred_width;
 	widget_class->size_allocate = panel_menu_bar_size_allocate;
 
 	g_type_class_add_private(klass, sizeof(PanelMenuBarPrivate));

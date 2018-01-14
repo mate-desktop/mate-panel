@@ -1451,6 +1451,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					challoc.width = MIN (width, allocation->width - i);
 				}
 
+				if (scale)
+					challoc.width /= scale;
 				ad->cells = challoc.width;
 				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
@@ -1464,12 +1466,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					challoc.height = MIN (height, allocation->height - i);
 				}
 
+				if (scale)
+					challoc.height /= scale;
 				ad->cells = challoc.height;
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->constrained;
 			}
-			if (scale && ad->needs_unscaling)
-				ad->cells /= scale;
+
 			ad->min_cells  = ad->cells;
 			gtk_widget_size_allocate(ad->applet,&challoc);
 			i += ad->cells;
@@ -1496,7 +1499,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				else
 					ad->cells = chreq.height;
 
-				if (scale && ad->needs_unscaling)
+				if (scale)
 					ad->cells /= scale;
 				ad->min_cells = ad->cells;
 			} else {
@@ -2683,7 +2686,6 @@ panel_widget_add (PanelWidget *panel,
 		ad->pos = pos;
 		ad->constrained = pos;
 		ad->drag_off = 0;
-		ad->needs_unscaling = TRUE;
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;

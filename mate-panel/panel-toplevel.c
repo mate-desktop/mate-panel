@@ -801,9 +801,9 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	}
 
 	if (x_centered)
-		x = (monitor_width  - width) / 2;
+		x = (monitor_width  - width * toplevel->priv->scale) / 2;
 	if (y_centered)
-		y = (monitor_height - height) / 2;
+		y = (monitor_height - height * toplevel->priv->scale) / 2;
 
 	if (!x_centered && (x + width / 2) > monitor_width / 2)
 		x_right = monitor_width - (x + width);
@@ -2207,9 +2207,9 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 
 	if (!toplevel->priv->expand) {
 		if (toplevel->priv->x_centered)
-			x = (monitor_width - toplevel->priv->geometry.width) / 2;
+			x = (monitor_width / toplevel->priv->scale - toplevel->priv->geometry.width) / 2;
 		if (toplevel->priv->y_centered)
-			y = (monitor_height - toplevel->priv->geometry.height) / 2;
+			y = (monitor_height / toplevel->priv->scale - toplevel->priv->geometry.height) / 2;
 	}
 
 	w = h = -1;
@@ -2344,7 +2344,7 @@ panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
 	int total_size;
 	int full_hints;
 
-	total_size = non_panel_widget_size + requisition_size;
+	total_size = non_panel_widget_size + (requisition_size / toplevel->priv->scale);
 
 	nb_size_hints = toplevel->priv->panel_widget->nb_applets_size_hints;
 	if (nb_size_hints <= 0)

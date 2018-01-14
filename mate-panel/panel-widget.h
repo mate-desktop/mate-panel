@@ -81,10 +81,6 @@ struct _AppletData
 	guint           expand_minor : 1;
 	guint           locked : 1;
 
-	/* When scaling the panel for HiDPI displays, some applets end up
-	 * having a scaled-up number of cells. This flag is used to unscale
-	 * them back to the correct size. */
-	guint           needs_unscaling : 1;
 };
 
 struct _PanelWidget
