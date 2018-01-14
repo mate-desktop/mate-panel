@@ -827,6 +827,10 @@ _mate_panel_applet_frame_applet_broken (MatePanelAppletFrame *frame)
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Error"));
 
 	gtk_widget_show (dialog);
+
+	gtk_window_present_with_time (GTK_WINDOW (dialog),
+				      gdk_x11_get_server_time (gtk_widget_get_window (GTK_WIDGET (dialog))));
+
 	g_free (dialog_txt);
 }
 
