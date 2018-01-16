@@ -1398,7 +1398,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	GList *list;
 	int i;
 	int old_size;
-	int scale;
 	gboolean ltr;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
@@ -1407,7 +1406,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	panel = PANEL_WIDGET(widget);
 
 	old_size = panel->size;
-	scale = gtk_widget_get_scale_factor(widget);
 	ltr = gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR;
 	
 	gtk_widget_set_allocation (widget, allocation);
