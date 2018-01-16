@@ -454,13 +454,11 @@ button_widget_get_preferred_width (GtkWidget *widget,
  	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 	GtkWidget *parent;
 	int size;
-	gint scale;
 
 	parent = gtk_widget_get_parent (widget);
-	scale = gtk_widget_get_scale_factor (widget);
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
-		size = gtk_widget_get_allocated_height (parent) * scale;
+		size = gtk_widget_get_allocated_height (parent);
 	else
 		size = gtk_widget_get_allocated_width (parent);
 
@@ -475,15 +473,13 @@ button_widget_get_preferred_height (GtkWidget *widget,
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 	GtkWidget *parent;
 	int size;
-	gint scale;
 
 	parent = gtk_widget_get_parent (widget);
-	scale = gtk_widget_get_scale_factor (widget);
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
 		size = gtk_widget_get_allocated_height (parent);
 	else
-		size = gtk_widget_get_allocated_width (parent) * scale;
+		size = gtk_widget_get_allocated_width (parent);
 
 	*minimal_height = *natural_height = size;
 }

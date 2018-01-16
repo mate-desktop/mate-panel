@@ -1214,6 +1214,7 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 	GList *list;
 	GList *ad_with_hints;
 	gboolean dont_fill;
+	gint scale;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
 	g_return_if_fail(minimum_size != NULL);
@@ -1231,6 +1232,7 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 	natural_size->height = minimum_size->height;
 
 	ad_with_hints = NULL;
+	scale = gtk_widget_get_scale_factor(widget);
 
 	for (list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
@@ -1254,8 +1256,8 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 
 			else if (panel->packed)
 			{
-				minimum_size->width += child_min_size.width;
-				natural_size->width += child_natural_size.width;
+				minimum_size->width += child_min_size.width * scale;
+				natural_size->width += child_natural_size.width * scale;
 			}
 		} else {
 			if (minimum_size->width < child_min_size.width &&
@@ -1271,8 +1273,8 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 
 			else if (panel->packed)
 			{
-				minimum_size->height += child_min_size.height;
-				natural_size->height += child_natural_size.height;
+				minimum_size->height += child_min_size.height * scale;
+				natural_size->height += child_natural_size.height * scale;
 			}
 		}
 	}
@@ -1451,8 +1453,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					challoc.width = MIN (width, allocation->width - i);
 				}
 
-				if (scale)
-					challoc.width /= scale;
 				ad->cells = challoc.width;
 				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
@@ -1466,8 +1466,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					challoc.height = MIN (height, allocation->height - i);
 				}
 
-				if (scale)
-					challoc.height /= scale;
 				ad->cells = challoc.height;
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->constrained;
@@ -1499,8 +1497,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				else
 					ad->cells = chreq.height;
 
-				if (scale)
-					ad->cells /= scale;
 				ad->min_cells = ad->cells;
 			} else {
 				ad->cells = ad->size_hints [ad->size_hints_len - 1];
