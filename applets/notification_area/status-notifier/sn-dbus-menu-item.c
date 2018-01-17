@@ -180,7 +180,11 @@ sn_dbus_menu_item_new (GVariant *props)
         }
       else if (g_strcmp0 (item->toggle_type, "radio") == 0)
         {
-          item->item = gtk_radio_menu_item_new (NULL);
+          item->item = gtk_check_menu_item_new ();
+          gtk_check_menu_item_set_draw_as_radio (GTK_CHECK_MENU_ITEM(item->item),TRUE);
+          AtkObject *atk_obj;
+          atk_obj = gtk_widget_get_accessible (item->item);
+          atk_object_set_role (atk_obj,ATK_ROLE_RADIO_MENU_ITEM);
         }
       else
         {
