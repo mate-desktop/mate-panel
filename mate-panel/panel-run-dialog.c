@@ -1450,10 +1450,14 @@ entry_event (GtkEditable    *entry,
 	if (event->type != GDK_KEY_PRESS)
 		return FALSE;
 
-	/* if user typed something we're not using the list anymore */
+	/* if user typed something we're not using the list anymore
+	   (but only if it is enabled anyway)
+	*/
 	dialog->use_program_list = FALSE;
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
-	gtk_tree_selection_unselect_all (selection);
+	if (panel_profile_get_enable_program_list ()) {
+		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
+		gtk_tree_selection_unselect_all (selection);
+	}
 
 	if (!panel_profile_get_enable_autocompletion ())
 		return FALSE;
