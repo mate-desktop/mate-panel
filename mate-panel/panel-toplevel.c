@@ -737,7 +737,7 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	gboolean          x_centered, y_centered;
 	int               screen_width, screen_height;
 	int               monitor_width, monitor_height;
-	int               width, height;
+	int               width, height, scale;
 	int               new_monitor;
 	int               x, y, x_right, y_bottom;
 	int               snap_tolerance;
@@ -745,6 +745,7 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
 
+	scale  = toplevel->priv->scale;
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
 
@@ -785,33 +786,33 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		y_centered = FALSE;
 		if (new_y <= snap_tolerance ||
-		    new_y + height >= screen_height - snap_tolerance)
-			x_centered = abs (x - ((monitor_width - width) / 2))
+		    new_y + height >= screen_height / scale - snap_tolerance)
+			x_centered = abs (x - ((monitor_width / scale - width) / 2))
 								<= snap_tolerance;
 		else
 			x_centered = FALSE;
 	} else {
 		x_centered = FALSE;
 		if (new_x <= snap_tolerance ||
-		    new_x + width >= screen_width - snap_tolerance)
-			y_centered = abs (y - ((monitor_height - height) / 2))
+		    new_x + width >= screen_width / scale - snap_tolerance)
+			y_centered = abs (y - ((monitor_height / scale - height) / 2))
 								<= snap_tolerance;
 		else
 			y_centered = FALSE;
 	}
 
 	if (x_centered)
-		x = (monitor_width  - width * toplevel->priv->scale) / 2;
+			x = (monitor_width - width * scale) / 2;
 	if (y_centered)
-		y = (monitor_height - height * toplevel->priv->scale) / 2;
+			y = (monitor_height - height * scale) / 2;
 
-	if (!x_centered && (x + width / 2) > monitor_width / 2)
-		x_right = monitor_width - (x + width);
+	if (!x_centered && (x + width / 2) > (monitor_width / scale) / 2)
+		x_right = (monitor_width / scale) - (x + width);
 	else
 		x_right = -1;
 
-	if (!y_centered && (y + height / 2) > monitor_height / 2)
-		y_bottom = monitor_height - (y + height);
+	if (!y_centered && (y + height / 2) > (monitor_height / scale) / 2)
+		y_bottom = (monitor_height / scale) - (y + height);
 	else
 		y_bottom = -1;
 
@@ -1081,6 +1082,7 @@ static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 	int        monitor_width, monitor_height;
 	int        x, y;
 	int        snap_tolerance;
+	int        scale;
 
 	if (toplevel->priv->expand) {
 		toplevel->priv->floating = FALSE;
@@ -1092,16 +1094,23 @@ static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_x, &monitor_y,
 					     &monitor_width, &monitor_height);
 
+	scale = toplevel->priv->scale;
+
 	if (toplevel->priv->x_right == -1)
 		x = monitor_x + toplevel->priv->x;
 	else
-		x = monitor_x + (monitor_width - (toplevel->priv->x_right + toplevel->priv->geometry.width));
+		x = monitor_x + ((monitor_width / scale) - (toplevel->priv->x_right + toplevel->priv->geometry.width));
 	if (toplevel->priv->y_bottom == -1)
 		y = monitor_y + toplevel->priv->y;
 	else
-		y = monitor_y + (monitor_height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
+		y = monitor_y + ((monitor_height / scale) - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
 
 	snap_tolerance = toplevel->priv->snap_tolerance;
+
+	if (scale) {
+		x *= scale;
+		y *= scale;
+	}
 
 	//FIXME? everywhere else, snap_tolerance is relative to the monitor,
 	//not the screen
@@ -2139,6 +2148,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	int              w, h;
 	int              screen_width, screen_height;
 	int              monitor_width, monitor_height;
+	int              scale;
 
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
@@ -2196,20 +2206,21 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	panel_toplevel_update_expanded_position (toplevel);
 	panel_toplevel_calc_floating (toplevel); //FIXME should probably be done after panel_toplevel_update_normal_position() too
 
+	scale = toplevel->priv->scale;
 	if (toplevel->priv->x_right == -1)
 		x = toplevel->priv->x;
 	else
-		x = monitor_width - (toplevel->priv->x_right + toplevel->priv->geometry.width);
+		x = monitor_width / scale - (toplevel->priv->x_right + toplevel->priv->geometry.width);
 	if (toplevel->priv->y_bottom == -1)
 		y = toplevel->priv->y;
 	else
-		y = monitor_height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height);
+		y = monitor_height / scale - (toplevel->priv->y_bottom + toplevel->priv->geometry.height);
 
 	if (!toplevel->priv->expand) {
 		if (toplevel->priv->x_centered)
-			x = (monitor_width / toplevel->priv->scale - toplevel->priv->geometry.width) / 2;
+			x = (monitor_width / scale - toplevel->priv->geometry.width) / 2;
 		if (toplevel->priv->y_centered)
-			y = (monitor_height / toplevel->priv->scale - toplevel->priv->geometry.height) / 2;
+			y = (monitor_height / scale - toplevel->priv->geometry.height) / 2;
 	}
 
 	w = h = -1;
