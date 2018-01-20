@@ -246,6 +246,51 @@ static void panel_toplevel_calculate_animation_end_geometry(PanelToplevel *tople
 static void panel_toplevel_update_monitor(PanelToplevel* toplevel);
 static void panel_toplevel_set_monitor_internal(PanelToplevel* toplevel, int monitor, gboolean force_resize);
 
+static void
+update_style_classes (PanelToplevel *toplevel)
+{
+	GtkStyleContext *context;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
+
+	/*ensure the panel BG can always be themed*/
+	/*Without this gtk3.19/20 cannot set the BG color and resetting the bg to system is not immediately applied*/
+	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
+	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_RIGHT);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_LEFT);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_TOP);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_BOTTOM);
+
+	switch (toplevel->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOP);
+		break;
+
+	case PANEL_ORIENTATION_LEFT:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_LEFT);
+		break;
+
+	case PANEL_ORIENTATION_BOTTOM:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_BOTTOM);
+		break;
+
+	case PANEL_ORIENTATION_RIGHT:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_RIGHT);
+		break;
+
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
 
 GSList* panel_toplevel_list_toplevels(void)
 {
@@ -4806,12 +4851,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 			       (PanelBackgroundChangedNotify) background_changed,
 			       toplevel);	
 
-	/*ensure the panel BG can always be themed*/
-	/*Without this gtk3.19/20 cannot set the BG color and resetting the bg to system is not immediately applied*/
-	GtkStyleContext *context;
-	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
-	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
-	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+	update_style_classes (toplevel);
 }
 
 PanelWidget *
@@ -5020,15 +5060,8 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	}
 
 	toplevel->priv->orientation = orientation;
+	update_style_classes (toplevel);
 
-	GtkStyleContext* context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
-	if (orientation & PANEL_HORIZONTAL_MASK) {
-		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
-		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
-	} else {
-		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
-		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
-	}
 	gtk_widget_reset_style (GTK_WIDGET (toplevel));
 
 	panel_toplevel_update_hide_buttons (toplevel);
