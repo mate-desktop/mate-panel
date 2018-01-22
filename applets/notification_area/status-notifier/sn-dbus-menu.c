@@ -126,6 +126,15 @@ layout_parse (SnDBusMenu *menu,
   GVariantIter iter;
   GVariant *child;
 
+  if (!g_variant_is_of_type (layout, G_VARIANT_TYPE ("(ia{sv}av)")))
+    {
+      g_warning ("Type of return value for 'layout' property in "
+                 "'GetLayout' call should be '(ia{sv}av)' but got '%s'",
+                 g_variant_get_type_string (layout));
+
+      return;
+    }
+
   g_variant_get (layout, "(i@a{sv}@av)", &id, &props, &items);
 
   submenu = layout_update_item (menu, gtk_menu, id, props);
