@@ -512,6 +512,14 @@ sn_tooltip_new (GVariant *variant)
   if (variant == NULL)
     return NULL;
 
+  if (!g_variant_is_of_type (variant, G_VARIANT_TYPE ("(sa(iiay)ss)")))
+    {
+      g_warning ("Type for 'ToolTip' property should be '(sa(iiay)ss)' "
+                 "but got '%s'", g_variant_get_type_string (variant));
+
+      return NULL;
+    }
+
   g_variant_get (variant, "(&s@a(iiay)&s&s)",
                  &icon_name, &icon_pixmap,
                  &title, &text);
