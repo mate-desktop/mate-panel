@@ -119,10 +119,8 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 		return;
 
 	tasklist->orientation = new_orient;
-
-#if WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), new_orient);
-#endif
+
 	tasklist_update(tasklist);
 }
 
@@ -423,11 +421,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	tasklist->tasklist = wnck_tasklist_new();
 
-#if WNCK_CHECK_VERSION (3, 4, 6)
 	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
 	wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), TRUE);
-#endif
-
 	wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
 
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "destroy", G_CALLBACK(destroy_tasklist), tasklist);
