@@ -167,7 +167,7 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 		"Copyright \xc2\xa9 2002 Red Hat, Inc.\n"
 		"Copyright \xc2\xa9 2003-2006 Vincent Untz\n"
 		"Copyright \xc2\xa9 2011 Perberos\n"
-		"Copyright \xc2\xa9 2012-2017 MATE developers";
+		"Copyright \xc2\xa9 2012-2018 MATE developers";
 
 	gtk_show_about_dialog(NULL,
 		"program-name", _("Notification Area"),
