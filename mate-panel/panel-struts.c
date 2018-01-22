@@ -405,7 +405,7 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 			     int               strut_size,
 			     int               strut_start,
 			     int               strut_end,
-			     int               scale)
+			     gint              scale)
 {
 	PanelStrut *strut;
 	gboolean    new_strut = FALSE;

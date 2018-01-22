@@ -83,7 +83,7 @@ struct _PanelToplevelPrivate {
 	gboolean                expand;
 	PanelOrientation        orientation;
 	int                     size;
-	int                     scale;
+	gint                    scale;
 
 	/* relative to the monitor origin */
 	int                     x;
@@ -285,8 +285,8 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
-	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
-	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
+	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
 
 	return screen;
 }
@@ -305,12 +305,12 @@ static GdkScreen* panel_toplevel_get_monitor_geometry(PanelToplevel* toplevel, i
 
 	if (width)
 	{
-		*width  = panel_multiscreen_width(screen, toplevel->priv->monitor);
+		*width  = panel_multiscreen_width(screen, toplevel->priv->monitor) / toplevel->priv->scale;
 	}
 
 	if (height)
 	{
-		*height = panel_multiscreen_height(screen, toplevel->priv->monitor);
+		*height = panel_multiscreen_height(screen, toplevel->priv->monitor) / toplevel->priv->scale;
 	}
 
 	return screen;
@@ -737,7 +737,7 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	gboolean          x_centered, y_centered;
 	int               screen_width, screen_height;
 	int               monitor_width, monitor_height;
-	int               width, height, scale;
+	int               width, height;
 	int               new_monitor;
 	int               x, y, x_right, y_bottom;
 	int               snap_tolerance;
@@ -745,7 +745,6 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
 
-	scale  = toplevel->priv->scale;
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
 
@@ -786,33 +785,33 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		y_centered = FALSE;
 		if (new_y <= snap_tolerance ||
-		    new_y + height >= screen_height / scale - snap_tolerance)
-			x_centered = abs (x - ((monitor_width / scale - width) / 2))
+		    new_y + height >= screen_height - snap_tolerance)
+			x_centered = abs (x - ((monitor_width - width) / 2))
 								<= snap_tolerance;
 		else
 			x_centered = FALSE;
 	} else {
 		x_centered = FALSE;
 		if (new_x <= snap_tolerance ||
-		    new_x + width >= screen_width / scale - snap_tolerance)
-			y_centered = abs (y - ((monitor_height / scale - height) / 2))
+		    new_x + width >= screen_width - snap_tolerance)
+			y_centered = abs (y - ((monitor_height - height) / 2))
 								<= snap_tolerance;
 		else
 			y_centered = FALSE;
 	}
 
 	if (x_centered)
-			x = (monitor_width - width * scale) / 2;
+		x = (monitor_width  - width) / 2;
 	if (y_centered)
-			y = (monitor_height - height * scale) / 2;
+		y = (monitor_height - height) / 2;
 
-	if (!x_centered && (x + width / 2) > (monitor_width / scale) / 2)
-		x_right = (monitor_width / scale) - (x + width);
+	if (!x_centered && (x + width / 2) > monitor_width / 2)
+		x_right = monitor_width - (x + width);
 	else
 		x_right = -1;
 
-	if (!y_centered && (y + height / 2) > (monitor_height / scale) / 2)
-		y_bottom = (monitor_height / scale) - (y + height);
+	if (!y_centered && (y + height / 2) > monitor_height / 2)
+		y_bottom = monitor_height - (y + height);
 	else
 		y_bottom = -1;
 
@@ -1082,7 +1081,6 @@ static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 	int        monitor_width, monitor_height;
 	int        x, y;
 	int        snap_tolerance;
-	int        scale;
 
 	if (toplevel->priv->expand) {
 		toplevel->priv->floating = FALSE;
@@ -1094,23 +1092,16 @@ static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_x, &monitor_y,
 					     &monitor_width, &monitor_height);
 
-	scale = toplevel->priv->scale;
-
 	if (toplevel->priv->x_right == -1)
 		x = monitor_x + toplevel->priv->x;
 	else
-		x = monitor_x + ((monitor_width / scale) - (toplevel->priv->x_right + toplevel->priv->geometry.width));
+		x = monitor_x + (monitor_width - (toplevel->priv->x_right + toplevel->priv->geometry.width));
 	if (toplevel->priv->y_bottom == -1)
 		y = monitor_y + toplevel->priv->y;
 	else
-		y = monitor_y + ((monitor_height / scale) - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
+		y = monitor_y + (monitor_height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
 
 	snap_tolerance = toplevel->priv->snap_tolerance;
-
-	if (scale) {
-		x *= scale;
-		y *= scale;
-	}
 
 	//FIXME? everywhere else, snap_tolerance is relative to the monitor,
 	//not the screen
@@ -1491,9 +1482,9 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		if (y <= monitor_y) {
 			orientation = PANEL_ORIENTATION_TOP;
 			strut = y + height - monitor_y;
-		} else if (y >= monitor_y + (monitor_height / scale) - height) {
+		} else if (y >= monitor_y + monitor_height - height) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
-			strut = monitor_y + (monitor_height / scale) - y;
+			strut = monitor_y + monitor_height - y;
 		}
 
 		if (strut > 0) {
@@ -1504,9 +1495,9 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		if (x <= monitor_x) {
 			orientation = PANEL_ORIENTATION_LEFT;
 			strut = x + width - monitor_x;
-		} else if (x >= monitor_x + (monitor_width / scale) - width) {
+		} else if (x >= monitor_x + monitor_width - width) {
 			orientation = PANEL_ORIENTATION_RIGHT;
-			strut = monitor_x + (monitor_width / scale) - x;
+			strut = monitor_x + monitor_width - x;
 		}
 
 		if (strut > 0) {
@@ -1516,9 +1507,8 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	}
 
 	/* Adjust strut size based on scale factor */
-	if (strut > 0) {
+	if (strut > 0)
 		strut += toplevel->priv->size * (scale - 1);
-	}
 
 	if (orientation != toplevel->priv->orientation) {
 		toplevel->priv->orientation = orientation;
@@ -1795,7 +1785,7 @@ static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* 
 	else if (toplevel->priv->x_right != -1 &&
 		 toplevel->priv->x_right <= snap_tolerance &&
 		 !toplevel->priv->x_centered)
-		*x = (monitor_width / toplevel->priv->scale) - width;
+		*x = monitor_width - width;
 
 	if (toplevel->priv->y <= snap_tolerance &&
 	    toplevel->priv->y_bottom == -1 &&
@@ -1804,7 +1794,7 @@ static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* 
 	else if (toplevel->priv->y_bottom != -1 &&
 		 toplevel->priv->y_bottom <= snap_tolerance &&
 		 !toplevel->priv->y_centered)
-		*y = (monitor_height / toplevel->priv->scale) - height;
+		*y = monitor_height - height;
 }
 
 static void
@@ -2148,7 +2138,6 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	int              w, h;
 	int              screen_width, screen_height;
 	int              monitor_width, monitor_height;
-	int              scale;
 
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
@@ -2206,21 +2195,20 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	panel_toplevel_update_expanded_position (toplevel);
 	panel_toplevel_calc_floating (toplevel); //FIXME should probably be done after panel_toplevel_update_normal_position() too
 
-	scale = toplevel->priv->scale;
 	if (toplevel->priv->x_right == -1)
 		x = toplevel->priv->x;
 	else
-		x = monitor_width / scale - (toplevel->priv->x_right + toplevel->priv->geometry.width);
+		x = monitor_width - (toplevel->priv->x_right + toplevel->priv->geometry.width);
 	if (toplevel->priv->y_bottom == -1)
 		y = toplevel->priv->y;
 	else
-		y = monitor_height / scale - (toplevel->priv->y_bottom + toplevel->priv->geometry.height);
+		y = monitor_height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height);
 
 	if (!toplevel->priv->expand) {
 		if (toplevel->priv->x_centered)
-			x = (monitor_width / scale - toplevel->priv->geometry.width) / 2;
+			x = (monitor_width - toplevel->priv->geometry.width) / 2;
 		if (toplevel->priv->y_centered)
-			y = (monitor_height / scale - toplevel->priv->geometry.height) / 2;
+			y = (monitor_height - toplevel->priv->geometry.height) / 2;
 	}
 
 	w = h = -1;
@@ -3132,10 +3120,8 @@ panel_toplevel_check_resize (GtkContainer *container)
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
 	GtkWidget      *widget;
-	PanelToplevel  *toplevel;
 
 	widget = GTK_WIDGET (container);
-	toplevel = (PanelToplevel*) widget;
 
 	if (!gtk_widget_get_visible (widget))
 		return;
@@ -3146,13 +3132,8 @@ panel_toplevel_check_resize (GtkContainer *container)
 	gtk_widget_get_preferred_size (widget, &requisition, NULL);
 	gtk_widget_get_allocation (widget, &allocation);
 
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		allocation.width = requisition.width / toplevel->priv->scale;
-		allocation.height = requisition.height;
-	} else {
-		allocation.width = requisition.width;
-		allocation.height = requisition.height / toplevel->priv->scale;
-	}
+	allocation.width = requisition.width;
+	allocation.height = requisition.height;
 
 	gtk_widget_size_allocate (widget, &allocation);
 }
@@ -3276,13 +3257,13 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 			challoc.x      = HANDLE_SIZE;
 			challoc.y      = 0;
-			challoc.width  = allocation->width / toplevel->priv->scale - 2 * HANDLE_SIZE;
+			challoc.width  = allocation->width - 2 * HANDLE_SIZE;
 			challoc.height = allocation->height;
 		} else {
 			challoc.x      = 0;
 			challoc.y      = HANDLE_SIZE;
 			challoc.width  = allocation->width;
-			challoc.height = allocation->height / toplevel->priv->scale - 2 * HANDLE_SIZE;
+			challoc.height = allocation->height - 2 * HANDLE_SIZE;
 		}
 	}
 
@@ -3357,8 +3338,8 @@ static gboolean panel_toplevel_draw(GtkWidget* widget, cairo_t* cr)
 		return retval;
 
 	state = gtk_widget_get_state_flags (widget);
-	awidth = gtk_widget_get_allocated_width (widget) * toplevel->priv->scale;
-	aheight = gtk_widget_get_allocated_height (widget) * toplevel->priv->scale;
+	awidth = gtk_widget_get_allocated_width (widget);
+	aheight = gtk_widget_get_allocated_height (widget);
 
 	context = gtk_widget_get_style_context (widget);
 	gtk_style_context_get_padding (context, state, &padding);
@@ -4778,7 +4759,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
 	toplevel->priv->size            = DEFAULT_SIZE;
-	toplevel->priv->scale           = gtk_widget_get_scale_factor(GTK_WIDGET(toplevel));
+	toplevel->priv->scale           = gtk_widget_get_scale_factor (GTK_WIDGET (toplevel));
 	toplevel->priv->x               = 0;
 	toplevel->priv->y               = 0;
 	toplevel->priv->x_right         = -1;
