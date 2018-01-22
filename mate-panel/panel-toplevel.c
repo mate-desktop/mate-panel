@@ -285,6 +285,13 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
+	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
+	 * toplevel geometry attributes by the scale factor, then correct for all
+	 * sorts of awful misalignments and pretend it's all good. Or we can just
+	 * make this thing think that the screen is scaled down, and because GTK+
+	 * already scaled everything up without the panel knowing about it, the whole
+	 * thing somehow works well... sigh.
+	 * @see panel_toplevel_get_monitor_geometry() */
 	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
 	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
 
@@ -300,9 +307,18 @@ static GdkScreen* panel_toplevel_get_monitor_geometry(PanelToplevel* toplevel, i
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
+	/* FIXME: When using a scale factor > 1, i suspect that these coordinates will probably break
+	 * something on multi-monitor displays. */
 	if (x) *x = panel_multiscreen_x(screen, toplevel->priv->monitor);
 	if (y) *y = panel_multiscreen_y(screen, toplevel->priv->monitor);
 
+	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
+	 * toplevel geometry attributes by the scale factor, then correct for all
+	 * sorts of awful misalignments and pretend it's all good. Or we can just
+	 * make this thing think that the screen is scaled down, and because GTK+
+	 * already scaled everything up without the panel knowing about it, the whole
+	 * thing somehow works well... sigh.
+	 * @see panel_toplevel_get_screen_geometry() */
 	if (width)
 	{
 		*width  = panel_multiscreen_width(screen, toplevel->priv->monitor) / toplevel->priv->scale;
@@ -1420,7 +1436,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	GdkScreen        *screen;
 	gboolean          geometry_changed = FALSE;
 	int               strut, strut_start, strut_end;
-	int               x, y, width, height, scale;
+	int               x, y, width, height;
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
 
@@ -1476,7 +1492,6 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	orientation = toplevel->priv->orientation;
 
 	strut = strut_start = strut_end = 0;
-	scale = toplevel->priv->scale;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
 		if (y <= monitor_y) {
@@ -1508,7 +1523,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 
 	/* Adjust strut size based on scale factor */
 	if (strut > 0)
-		strut += toplevel->priv->size * (scale - 1);
+		strut += toplevel->priv->size * (toplevel->priv->scale - 1);
 
 	if (orientation != toplevel->priv->orientation) {
 		toplevel->priv->orientation = orientation;
@@ -1526,7 +1541,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 								strut,
 								strut_start,
 								strut_end,
-								scale);
+								toplevel->priv->scale);
 	else
 		panel_struts_unregister_strut (toplevel);
 
@@ -2343,6 +2358,7 @@ panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
 	int total_size;
 	int full_hints;
 
+	/* Scale down the size so that the panel only takes what it needs for the applets it has. */
 	total_size = non_panel_widget_size + (requisition_size / toplevel->priv->scale);
 
 	nb_size_hints = toplevel->priv->panel_widget->nb_applets_size_hints;

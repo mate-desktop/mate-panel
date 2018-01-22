@@ -1256,6 +1256,8 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 
 			else if (panel->packed)
 			{
+				/* Just because everything is bigger when scaled up doesn't mean
+				 * that the applets need any less room when the panel is packed. */
 				minimum_size->width += child_min_size.width * scale;
 				natural_size->width += child_natural_size.width * scale;
 			}
@@ -1273,6 +1275,8 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 
 			else if (panel->packed)
 			{
+				/* Just because everything is bigger when scaled up doesn't mean
+				 * that the applets need any less room when the panel is packed. */
 				minimum_size->height += child_min_size.height * scale;
 				natural_size->height += child_natural_size.height * scale;
 			}
