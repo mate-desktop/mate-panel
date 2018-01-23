@@ -231,7 +231,7 @@ static void update_icon(ShowDesktopData* sdd)
 static const GtkActionEntry show_desktop_menu_actions[] = {
 	{
 		"ShowDesktopHelp",
-		GTK_STOCK_HELP,
+		"help-browser",
 		N_("_Help"),
 		NULL,
 		NULL,
@@ -239,7 +239,7 @@ static const GtkActionEntry show_desktop_menu_actions[] = {
 	},
 	{
 		"ShowDesktopAbout",
-		GTK_STOCK_ABOUT,
+		"help-about",
 		N_("_About"),
 		NULL,
 		NULL,

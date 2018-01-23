@@ -140,7 +140,7 @@ static const gchar panel_menu_ui[] =
 	"</ui>\n";
 
 static const GtkActionEntry menu_entries[] = {
-	{ "Remove", GTK_STOCK_REMOVE, N_("_Remove From Panel"),
+	{ "Remove", "list-remove", N_("_Remove From Panel"),
 	  NULL, NULL,
 	  G_CALLBACK (mate_panel_applet_menu_cmd_remove) },
 	{ "Move", NULL, N_("_Move"),

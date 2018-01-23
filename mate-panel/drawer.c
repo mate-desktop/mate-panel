@@ -529,19 +529,19 @@ load_drawer_applet (char          *toplevel_id,
 
 	mate_panel_applet_add_callback (drawer->info,
 				   "add",
-				   GTK_STOCK_ADD,
+				   "list-add",
 				   _("_Add to Drawer..."),
 				   drawer_changes_enabled);
 
 	mate_panel_applet_add_callback (drawer->info,
 				   "properties",
-				   GTK_STOCK_PROPERTIES,
+				   "document-properties",
 				   _("_Properties"),
 				   drawer_changes_enabled);
 
 	mate_panel_applet_add_callback (drawer->info,
 				   "help",
-				   GTK_STOCK_HELP,
+				   "help-browser",
 				   _("_Help"),
 				   NULL);
 

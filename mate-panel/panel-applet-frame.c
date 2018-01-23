@@ -979,7 +979,7 @@ mate_panel_applet_frame_loading_failed (const char  *iid,
 
 	if (locked_down) {
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-					GTK_STOCK_OK, LOADING_FAILED_RESPONSE_DONT_DELETE,
+					"gtk-ok", LOADING_FAILED_RESPONSE_DONT_DELETE,
 					NULL);
 	} else {
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
@@ -987,7 +987,7 @@ mate_panel_applet_frame_loading_failed (const char  *iid,
 					  "from your configuration?"));
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 					PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE,
-					GTK_STOCK_DELETE, LOADING_FAILED_RESPONSE_DELETE,
+					"gtk-delete", LOADING_FAILED_RESPONSE_DELETE,
 					NULL);
 	}
 

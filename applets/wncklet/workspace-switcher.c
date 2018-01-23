@@ -323,7 +323,7 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 static const GtkActionEntry pager_menu_actions[] = {
 	{
 		"PagerPreferences",
-		GTK_STOCK_PROPERTIES,
+		"document-properties",
 		N_("_Preferences"),
 		NULL,
 		NULL,
@@ -331,7 +331,7 @@ static const GtkActionEntry pager_menu_actions[] = {
 	},
 	{
 		"PagerHelp",
-		GTK_STOCK_HELP,
+		"help-browser",
 		N_("_Help"),
 		NULL,
 		NULL,
@@ -339,7 +339,7 @@ static const GtkActionEntry pager_menu_actions[] = {
 	},
 	{
 		"PagerAbout",
-		GTK_STOCK_ABOUT,
+		"help-about",
 		N_("_About"),
 		NULL,
 		NULL,

@@ -239,7 +239,7 @@ kill_window_question (gpointer window)
 						  "in it might get lost."));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				GTK_STOCK_CANCEL,
+				"gtk-cancel",
 				GTK_RESPONSE_CANCEL,
 				PANEL_STOCK_FORCE_QUIT,
 				GTK_RESPONSE_ACCEPT,

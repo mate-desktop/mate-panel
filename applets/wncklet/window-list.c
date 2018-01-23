@@ -166,7 +166,7 @@ static const GtkActionEntry tasklist_menu_actions[] = {
 	},
 	{
 		"TasklistPreferences",
-		GTK_STOCK_PROPERTIES,
+		"document-properties",
 		N_("_Preferences"),
 		NULL,
 		NULL,
@@ -174,7 +174,7 @@ static const GtkActionEntry tasklist_menu_actions[] = {
 	},
 	{
 		"TasklistHelp",
-		GTK_STOCK_HELP,
+		"help-browser",
 		N_("_Help"),
 		NULL,
 		NULL,
@@ -182,7 +182,7 @@ static const GtkActionEntry tasklist_menu_actions[] = {
 	},
 	{
 		"TasklistAbout",
-		GTK_STOCK_ABOUT,
+		"help-about",
 		N_("_About"),
 		NULL,
 		NULL,

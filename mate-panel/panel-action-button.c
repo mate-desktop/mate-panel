@@ -188,7 +188,7 @@ panel_action_lock_setup_menu (PanelActionButton *button)
 
 	mate_panel_applet_add_callback (button->priv->info,
 				   "prefs",
-				   GTK_STOCK_PROPERTIES,
+				   "document-properties",
 				   _("_Properties"),
 				   screensaver_properties_enabled);
 }
@@ -733,7 +733,7 @@ panel_action_button_load (PanelActionButtonType  type,
 
 	mate_panel_applet_add_callback (button->priv->info,
 				   "help",
-				   GTK_STOCK_HELP,
+				   "help-browser",
 				   _("_Help"),
 				   NULL);
 

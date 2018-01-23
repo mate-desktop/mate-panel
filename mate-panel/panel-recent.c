@@ -151,7 +151,7 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 						    "\342\200\242 All items from the recent documents list in all applications."));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (clear_recent_dialog),
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				"gtk-cancel", GTK_RESPONSE_CANCEL,
 				PANEL_STOCK_CLEAR, GTK_RESPONSE_ACCEPT,
 				NULL);
 

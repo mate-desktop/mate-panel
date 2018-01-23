@@ -1912,22 +1912,22 @@ config_date (GtkAction *action,
 
 /* current timestamp */
 static const GtkActionEntry clock_menu_actions [] = {
-        { "ClockPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+        { "ClockPreferences", "document-properties", N_("_Preferences"),
           NULL, NULL,
           G_CALLBACK (verb_display_properties_dialog) },
-        { "ClockHelp", GTK_STOCK_HELP, N_("_Help"),
+        { "ClockHelp", "help-browser", N_("_Help"),
           NULL, NULL,
           G_CALLBACK (display_help_dialog) },
-        { "ClockAbout", GTK_STOCK_ABOUT, N_("_About"),
+        { "ClockAbout", "help-about", N_("_About"),
           NULL, NULL,
           G_CALLBACK (display_about_dialog) },
-        { "ClockCopyTime", GTK_STOCK_COPY, N_("Copy _Time"),
+        { "ClockCopyTime", "edit-copy", N_("Copy _Time"),
           NULL, NULL,
           G_CALLBACK (copy_time) },
-        { "ClockCopyDate", GTK_STOCK_COPY, N_("Copy _Date"),
+        { "ClockCopyDate", "edit-copy", N_("Copy _Date"),
           NULL, NULL,
           G_CALLBACK (copy_date) },
-        { "ClockConfig", GTK_STOCK_PREFERENCES, N_("Ad_just Date & Time"),
+        { "ClockConfig", "preferences-system", N_("Ad_just Date & Time"),
           NULL, NULL,
           G_CALLBACK (config_date) }
 };
