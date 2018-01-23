@@ -96,7 +96,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 static const GtkActionEntry window_menu_actions[] = {
 	{
 		"WindowMenuHelp",
-		GTK_STOCK_HELP,
+		"help-browser",
 		N_("_Help"),
 		NULL,
 		NULL,
@@ -104,7 +104,7 @@ static const GtkActionEntry window_menu_actions[] = {
 	},
 	{
 		"WindowMenuAbout",
-		GTK_STOCK_ABOUT,
+		"help-about",
 		N_("_About"),
 		NULL,
 		NULL,

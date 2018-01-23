@@ -839,7 +839,7 @@ static void display_fortune_dialog(FishApplet* fish)
 			gtk_dialog_new_with_buttons (
 				"", NULL, 0,
 				_("_Speak again"), FISH_RESPONSE_SPEAK,
-				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+				"gtk-close", GTK_RESPONSE_CLOSE,
 				NULL);
 
 		gtk_window_set_icon_name (GTK_WINDOW (fish->fortune_dialog),
@@ -1686,13 +1686,13 @@ static void setup_fish_widget(FishApplet* fish)
 }
 
 static const GtkActionEntry fish_menu_verbs[] = {
-	{ "FishPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+	{ "FishPreferences", "document-properties", N_("_Preferences"),
 	  NULL, NULL,
 	  G_CALLBACK (display_preferences_dialog) },
-	{ "FishHelp", GTK_STOCK_HELP, N_("_Help"),
+	{ "FishHelp", "help-browser", N_("_Help"),
 	  NULL, NULL,
 	  G_CALLBACK (display_help_dialog) },
-	{ "FishAbout", GTK_STOCK_ABOUT, N_("_About"),
+	{ "FishAbout", "help-about", N_("_About"),
 	  NULL, NULL,
 	  G_CALLBACK (display_about_dialog) }
 };

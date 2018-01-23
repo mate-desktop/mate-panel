@@ -1348,8 +1348,8 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 	                                          "%s", text2);	
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
+				"gtk-cancel", GTK_RESPONSE_CANCEL,
+				"gtk-delete", GTK_RESPONSE_OK,
 				NULL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);

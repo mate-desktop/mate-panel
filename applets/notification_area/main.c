@@ -182,10 +182,10 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 }
 
 static const GtkActionEntry menu_actions [] = {
-	{ "SystemTrayHelp", GTK_STOCK_HELP, N_("_Help"),
+	{ "SystemTrayHelp", "help-browser", N_("_Help"),
 	  NULL, NULL,
 	  G_CALLBACK (help_cb) },
-	{ "SystemTrayAbout", GTK_STOCK_ABOUT, N_("_About"),
+	{ "SystemTrayAbout", "help-about", N_("_About"),
 	  NULL, NULL,
 	  G_CALLBACK (about_cb) }
 };

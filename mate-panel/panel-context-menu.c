@@ -252,7 +252,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  panel_widget->toplevel);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Reset Panel"));
-	image = gtk_image_new_from_stock (GTK_STOCK_REVERT_TO_SAVED, GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name ("document-revert", GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);

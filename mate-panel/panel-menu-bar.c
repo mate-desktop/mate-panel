@@ -356,7 +356,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 	settings = gtk_settings_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (panel)));
 	g_object_set (settings, "gtk-shell-shows-app-menu", FALSE, "gtk-shell-shows-menubar", FALSE, NULL);
 
-	mate_panel_applet_add_callback(menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
+	mate_panel_applet_add_callback(menubar->priv->info, "help", "help-browser", _("_Help"), NULL);
 
 	/* Menu editors */
 	if (!panel_lockdown_get_locked_down () && (panel_is_program_in_path("mozo") || panel_is_program_in_path("menulibre")))
