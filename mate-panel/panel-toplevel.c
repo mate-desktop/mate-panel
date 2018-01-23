@@ -307,10 +307,8 @@ static GdkScreen* panel_toplevel_get_monitor_geometry(PanelToplevel* toplevel, i
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
-	/* FIXME: When using a scale factor > 1, i suspect that these coordinates will probably break
-	 * something on multi-monitor displays. */
-	if (x) *x = panel_multiscreen_x(screen, toplevel->priv->monitor);
-	if (y) *y = panel_multiscreen_y(screen, toplevel->priv->monitor);
+	if (x) *x = panel_multiscreen_x(screen, toplevel->priv->monitor) / toplevel->priv->scale;
+	if (y) *y = panel_multiscreen_y(screen, toplevel->priv->monitor) / toplevel->priv->scale;
 
 	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
 	 * toplevel geometry attributes by the scale factor, then correct for all
