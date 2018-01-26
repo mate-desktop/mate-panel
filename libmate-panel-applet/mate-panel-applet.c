@@ -1020,29 +1020,44 @@ mate_panel_applet_popup_menu (GtkWidget *widget)
 	return TRUE;
 }
 
-#if !GTK_CHECK_VERSION (3, 18, 0)
 static void
 mate_panel_applet_get_preferred_width (GtkWidget *widget,
 				       int       *minimum_width,
 				       int       *natural_width)
 {
-	int focus_width = 0;
+	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
+	gint scale;
 
 	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->get_preferred_width (widget,
 										minimum_width,
 										natural_width);
-	if (!mate_panel_applet_can_focus (widget))
-		return;
 
-	/* We are deliberately ignoring focus-padding here to
-	 * save valuable panel real estate.
-	 */
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      NULL);
+	if (applet->priv->out_of_process) {
+		/* Out-of-process applets end up scaled up doubly. We divide by the scale factor to ensure
+		 * they are back at their own intended size.
+		 */
+		scale = gtk_widget_get_scale_factor (widget);
+		if (scale) {
+			*minimum_width /= scale;
+			*natural_width /= scale;
+		}
+	}
 
-	*minimum_width += 2 * focus_width;
-	*natural_width += 2 * focus_width;
+#if !GTK_CHECK_VERSION (3, 18, 0)
+	if (mate_panel_applet_can_focus (widget)) {
+		int focus_width = 0;
+
+		/* We are deliberately ignoring focus-padding here to
+		 * save valuable panel real estate.
+		 */
+		gtk_widget_style_get (widget,
+				"focus-line-width", &focus_width,
+				NULL);
+
+		*minimum_width += 2 * focus_width;
+		*natural_width += 2 * focus_width;
+	}
+#endif
 }
 
 static void
@@ -1050,25 +1065,40 @@ mate_panel_applet_get_preferred_height (GtkWidget *widget,
 					int       *minimum_height,
 					int       *natural_height)
 {
-	int focus_width = 0;
+	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
+	gint scale;
 
 	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->get_preferred_height (widget,
-										 minimum_height,
-										 natural_height);
-	if (!mate_panel_applet_can_focus (widget))
-		return;
+										minimum_height,
+										natural_height);
 
-	/* We are deliberately ignoring focus-padding here to
-	 * save valuable panel real estate.
-	 */
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      NULL);
+	if (applet->priv->out_of_process) {
+		/* Out-of-process applets end up scaled up doubly. We divide by the scale factor to ensure
+		 * they are back at their own intended size.
+		 */
+		scale = gtk_widget_get_scale_factor (widget);
+		if (scale) {
+			*minimum_height /= scale;
+			*natural_height /= scale;
+		}
+	}
 
-	*minimum_height += 2 * focus_width;
-	*natural_height += 2 * focus_width;
-}
+#if !GTK_CHECK_VERSION (3, 18, 0)
+	if (mate_panel_applet_can_focus (widget)) {
+		int focus_width = 0;
+
+		/* We are deliberately ignoring focus-padding here to
+		 * save valuable panel real estate.
+		 */
+		gtk_widget_style_get (widget,
+				"focus-line-width", &focus_width,
+				NULL);
+
+		*minimum_height += 2 * focus_width;
+		*natural_height += 2 * focus_width;
+	}
 #endif
+}
 
 static GtkSizeRequestMode
 mate_panel_applet_get_request_mode (GtkWidget *widget)
@@ -1922,10 +1952,8 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	widget_class->button_press_event = mate_panel_applet_button_press;
 	widget_class->button_release_event = mate_panel_applet_button_release;
 	widget_class->get_request_mode = mate_panel_applet_get_request_mode;
-#if !GTK_CHECK_VERSION (3, 18, 0)
 	widget_class->get_preferred_width = mate_panel_applet_get_preferred_width;
 	widget_class->get_preferred_height = mate_panel_applet_get_preferred_height;
-#endif
 	widget_class->draw = mate_panel_applet_draw;
 	widget_class->size_allocate = mate_panel_applet_size_allocate;
 	widget_class->focus = mate_panel_applet_focus;
