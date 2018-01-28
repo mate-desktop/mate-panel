@@ -671,7 +671,7 @@ panel_menu_button_load (const char  *menu_path,
         if (!panel_lockdown_get_locked_down () &&
             (panel_is_program_in_path ("mozo") ||
 	    panel_is_program_in_path ("menulibre")))
-		mate_panel_applet_add_callback (info, "edit", NULL,
+		mate_panel_applet_add_callback (info, "edit", "document-properties",
 					   _("_Edit Menus"), NULL);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);

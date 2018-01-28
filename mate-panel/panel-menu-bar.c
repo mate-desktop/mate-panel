@@ -357,7 +357,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 	/* Menu editors */
 	if (!panel_lockdown_get_locked_down () && (panel_is_program_in_path("mozo") || panel_is_program_in_path("menulibre")))
 	{
-		mate_panel_applet_add_callback (menubar->priv->info, "edit", NULL, _("_Edit Menus"), NULL);
+		mate_panel_applet_add_callback (menubar->priv->info, "edit", "document-properties", _("_Edit Menus"), NULL);
 	}
 
 	g_signal_connect_after(menubar, "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), menubar);
