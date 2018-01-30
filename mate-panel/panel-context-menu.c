@@ -251,6 +251,8 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  G_CALLBACK (panel_properties_dialog_present), 
 				  panel_widget->toplevel);
 
+	add_menu_separator (menu);
+
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Reset Panel"));
 	image = gtk_image_new_from_icon_name ("document-revert", GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
