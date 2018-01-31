@@ -1362,7 +1362,7 @@ create_main_clock_button (void)
         gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
 #if GTK_CHECK_VERSION (3, 20, 0)
-         force_no_button_padding (button);
+        force_no_button_padding (button);
 #else
         force_no_focus_padding (button);
 #endif

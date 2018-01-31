@@ -1584,15 +1584,18 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 #else
 		window = gtk_widget_get_window GTK_WIDGET((applet));
 #endif
-		gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
-		if (applet->priv->out_of_process)
-			_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
-		switch (type) {
+
+	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
+
+	if (applet->priv->out_of_process)
+		_mate_panel_applet_apply_css(GTK_WIDGET(applet->priv->plug),type);
+
+	switch (type) {
 		case PANEL_NO_BACKGROUND:
 			if (applet->priv->out_of_process){
 				pattern = cairo_pattern_create_rgba (0,0,0,0);     /* Using NULL here breaks transparent */
 				gdk_window_set_background_pattern(window,pattern); /* backgrounds set by GTK theme */
-				}
+			}
 			break;
 		case PANEL_COLOR_BACKGROUND:
 			if (applet->priv->out_of_process){
@@ -1602,7 +1605,7 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 #else
 				gtk_widget_queue_draw (GTK_WIDGET(applet));
 #endif
-				}
+			}
 			break;
 		case PANEL_PIXMAP_BACKGROUND:
 			if (applet->priv->out_of_process){
@@ -1612,22 +1615,23 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 #else
 				gtk_widget_queue_draw (GTK_WIDGET(applet));
 #endif
-				}
+			}
 			break;
 		default:
 			g_assert_not_reached ();
 			break;
-		}
-		if (applet->priv->out_of_process){
+	}
+
+	if (applet->priv->out_of_process){
 		context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
 		if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
 			applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
 			gtk_style_context_add_class(context,"horizontal");
-			}
+		}
 		else {
 			gtk_style_context_add_class(context,"vertical");
-			}
 		}
+	}
 }
 
 static void
