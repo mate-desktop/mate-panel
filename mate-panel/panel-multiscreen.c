@@ -202,27 +202,17 @@ panel_multiscreen_get_gdk_monitors_for_screen (GdkScreen     *screen,
 					       int           *monitors_ret,
 					       GdkRectangle **geometries_ret)
 {
-#if GTK_CHECK_VERSION (3, 22, 0)
 	GdkDisplay   *display;
-#endif
 	int           num_monitors;
 	GdkRectangle *geometries;
 	int           i;
 
-#if GTK_CHECK_VERSION (3, 22, 0)
 	display = gdk_screen_get_display (screen);
 	num_monitors = gdk_display_get_n_monitors (display);
-#else
-	num_monitors = gdk_screen_get_n_monitors (screen);
-#endif
 	geometries = g_new (GdkRectangle, num_monitors);
 
 	for (i = 0; i < num_monitors; i++)
-#if GTK_CHECK_VERSION (3, 22, 0)
 		gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &(geometries[i]));
-#else
-		gdk_screen_get_monitor_geometry (screen, i, &(geometries[i]));
-#endif
 
 	*monitors_ret = num_monitors;
 	*geometries_ret = geometries;

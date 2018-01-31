@@ -540,7 +540,6 @@ create_launcher (const char *location)
 	return launcher;
 }
 
-#if GLIB_CHECK_VERSION (2, 38, 0)
 static void
 setup_actions (Launcher *launcher)
 {
@@ -569,7 +568,6 @@ setup_actions (Launcher *launcher)
 
 	g_object_unref (app_info);
 }
-#endif
 
 static void
 setup_button (Launcher *launcher)
@@ -590,9 +588,7 @@ setup_button (Launcher *launcher)
 					_("_Launch"),
 					NULL);
 
-#if GLIB_CHECK_VERSION (2, 38, 0)
 	setup_actions (launcher);
-#endif
 
 	mate_panel_applet_add_callback (launcher->info,
 					"properties",

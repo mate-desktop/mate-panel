@@ -152,13 +152,9 @@ static void show_help(FishApplet* fish, const char* link_id)
 		uri = g_strdup_printf ("help:%s/%s", FISH_HELP_DOC, link_id);
 	else
 		uri = g_strdup_printf ("help:%s", FISH_HELP_DOC);
-#if GTK_CHECK_VERSION (3, 22, 0)
+
 	gtk_show_uri_on_window (NULL, uri, 
 			  gtk_get_current_event_time (), &error);
-#else
-	gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (fish)), uri,
-		      gtk_get_current_event_time (), &error);
-#endif
 	g_free (uri);
 
 	if (error &&
@@ -889,13 +885,8 @@ static void display_fortune_dialog(FishApplet* fish)
 		gtk_label_set_ellipsize (GTK_LABEL (fish->fortune_label),
 					 PANGO_ELLIPSIZE_MIDDLE);
 		fish->fortune_cmd_label = gtk_label_new ("");
-#if GTK_CHECK_VERSION (3, 16, 0)
 		gtk_label_set_xalign (GTK_LABEL (fish->fortune_cmd_label), 0.0);
 		gtk_label_set_yalign (GTK_LABEL (fish->fortune_cmd_label), 0.5);
-#else
-		gtk_misc_set_alignment (GTK_MISC (fish->fortune_cmd_label),
-					0, 0.5);
-#endif
 
 		vbox = gtk_dialog_get_content_area (GTK_DIALOG (fish->fortune_dialog));
 		gtk_box_pack_start (GTK_BOX (vbox),

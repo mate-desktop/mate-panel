@@ -46,9 +46,8 @@
 #include "mate-panel-applet-factory.h"
 #include "mate-panel-applet-marshal.h"
 #include "mate-panel-applet-enums.h"
-#if GTK_CHECK_VERSION (3, 18, 0)
 #include "panel-plug-private.h"
-#endif
+
 #define MATE_PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, MatePanelAppletPrivate))
 
 struct _MatePanelAppletPrivate {
@@ -72,9 +71,6 @@ struct _MatePanelAppletPrivate {
 	MatePanelAppletOrient  orient;
 	guint              size;
 	char              *background;
-#if !GTK_CHECK_VERSION (3, 18, 0)
-	GtkWidget         *background_widget;
-#endif
 
 	int                previous_width;
 	int                previous_height;
@@ -807,13 +803,10 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 	gdk_window_get_origin (gtk_widget_get_window (widget),
 			       &menu_x, &menu_y);
-#if GTK_CHECK_VERSION (3, 20, 0)
+
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 	gdk_window_get_device_position (gtk_widget_get_window (widget), device, &pointer_x, &pointer_y, NULL);
-#else
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
-	gdk_window_get_device_position (gtk_widget_get_window (widget), device, &pointer_x, &pointer_y, NULL);
-#endif
+
 	gtk_widget_get_allocation (widget, &allocation);
 
 	menu_x += allocation.x;
@@ -924,7 +917,6 @@ mate_panel_applet_button_event (MatePanelApplet      *applet,
 	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
 
 	if (event->type == GDK_BUTTON_PRESS) {
-#if GTK_CHECK_VERSION (3, 20, 0)
 		GdkDisplay *display;
 		GdkSeat *seat;
 
@@ -939,16 +931,6 @@ mate_panel_applet_button_event (MatePanelApplet      *applet,
 		 * We don't want to hog the pointer on our parent.
 		 */
 		gdk_seat_ungrab (seat);
-#else
-		xevent.xbutton.type = ButtonPress;
-
-		/* X does an automatic pointer grab on button press
-		 * if we have both button press and release events
-		 * selected.
-		 * We don't want to hog the pointer on our parent.
-		 */
-		gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
-#endif
 	} else {
 		xevent.xbutton.type = ButtonRelease;
 	}
@@ -1042,22 +1024,6 @@ mate_panel_applet_get_preferred_width (GtkWidget *widget,
 			*natural_width /= scale;
 		}
 	}
-
-#if !GTK_CHECK_VERSION (3, 18, 0)
-	if (mate_panel_applet_can_focus (widget)) {
-		int focus_width = 0;
-
-		/* We are deliberately ignoring focus-padding here to
-		 * save valuable panel real estate.
-		 */
-		gtk_widget_style_get (widget,
-				"focus-line-width", &focus_width,
-				NULL);
-
-		*minimum_width += 2 * focus_width;
-		*natural_width += 2 * focus_width;
-	}
-#endif
 }
 
 static void
@@ -1082,22 +1048,6 @@ mate_panel_applet_get_preferred_height (GtkWidget *widget,
 			*natural_height /= scale;
 		}
 	}
-
-#if !GTK_CHECK_VERSION (3, 18, 0)
-	if (mate_panel_applet_can_focus (widget)) {
-		int focus_width = 0;
-
-		/* We are deliberately ignoring focus-padding here to
-		 * save valuable panel real estate.
-		 */
-		gtk_widget_style_get (widget,
-				"focus-line-width", &focus_width,
-				NULL);
-
-		*minimum_height += 2 * focus_width;
-		*natural_height += 2 * focus_width;
-	}
-#endif
 }
 
 static GtkSizeRequestMode
@@ -1122,36 +1072,19 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 	GtkBin        *bin;
 	GtkWidget     *child;
 	int            border_width;
-#if !GTK_CHECK_VERSION (3, 18, 0)
-	int            focus_width = 0;
-#endif
 	MatePanelApplet   *applet;
 
 	if (!mate_panel_applet_can_focus (widget)) {
 		GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->size_allocate (widget, allocation);
 	} else {
-#if !GTK_CHECK_VERSION (3, 18, 0)
-		/*
-		 * We are deliberately ignoring focus-padding here to
-		 * save valuable panel real estate.
-		 */
-		gtk_widget_style_get (widget,
-				      "focus-line-width", &focus_width,
-				      NULL);
-#endif
 
 		border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
 		gtk_widget_set_allocation (widget, allocation);
 		bin = GTK_BIN (widget);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 		child_allocation.x = 0;
 		child_allocation.y = 0;
-#else
-		child_allocation.x = focus_width;
-		child_allocation.y = focus_width;
-#endif
 
 		child_allocation.width  = MAX (allocation->width  - border_width * 2, 0);
 		child_allocation.height = MAX (allocation->height - border_width * 2, 0);
@@ -1162,11 +1095,6 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 						allocation->y + border_width,
 						child_allocation.width,
 						child_allocation.height);
-
-#if !GTK_CHECK_VERSION (3, 18, 0)
-		child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
-		child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
-#endif
 
 		child = gtk_bin_get_child (bin);
 		if (child)
@@ -1188,9 +1116,6 @@ static gboolean mate_panel_applet_draw(GtkWidget* widget, cairo_t* cr)
 {
 	GtkStyleContext *context;
 	int border_width;
-#if !GTK_CHECK_VERSION (3, 18, 0)
-	int focus_width = 0;
-#endif
 	gdouble x, y, width, height;
 
 	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->draw(widget, cr);
@@ -1200,16 +1125,6 @@ static gboolean mate_panel_applet_draw(GtkWidget* widget, cairo_t* cr)
 
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
-
-#if !GTK_CHECK_VERSION (3, 18, 0)
-	/*
-	 * We are deliberately ignoring focus-padding here to
-	 * save valuable panel real estate.
-	 */
-	gtk_widget_style_get (widget,
-		"focus-line-width", &focus_width,
-		NULL);
-#endif
 
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
@@ -1576,14 +1491,11 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 {
 	GtkStyleContext* context;
 	GdkWindow* window;
-#if GTK_CHECK_VERSION (3, 18, 0)
+
 	if (applet->priv->out_of_process)
 		window = gtk_widget_get_window (applet->priv->plug);
 	else
 		window = gtk_widget_get_window GTK_WIDGET((applet));
-#else
-		window = gtk_widget_get_window GTK_WIDGET((applet));
-#endif
 
 	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
 
@@ -1600,21 +1512,13 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 		case PANEL_COLOR_BACKGROUND:
 			if (applet->priv->out_of_process){
 				gdk_window_set_background_rgba(window,color);
-#if GTK_CHECK_VERSION (3, 18, 0)
 				gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
-#else
-				gtk_widget_queue_draw (GTK_WIDGET(applet));
-#endif
 			}
 			break;
 		case PANEL_PIXMAP_BACKGROUND:
 			if (applet->priv->out_of_process){
 				gdk_window_set_background_pattern(window,pattern);
-#if GTK_CHECK_VERSION (3, 18, 0)
 				gtk_widget_queue_draw (applet->priv->plug); /*change the bg right away always */
-#else
-				gtk_widget_queue_draw (GTK_WIDGET(applet));
-#endif
 			}
 			break;
 		default:
@@ -1835,7 +1739,6 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 	GtkCssProvider  *provider;
 
 	provider = gtk_css_provider_new ();
-#if GTK_CHECK_VERSION (3, 18, 0)
 	gtk_css_provider_load_from_data (provider,
 					 "#PanelPlug {\n"
 					 " background-repeat: no-repeat;\n" /*disable in gtk theme features */
@@ -1846,14 +1749,7 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 					 " background-image: none;\n"
 					 "}",
 					 -1, NULL);
-#else
-gtk_css_provider_load_from_data (provider,
-					 ".mate-custom-panel-background{\n" /*prepare CSS for user set theme */
-					 " background-color: rgba (0, 0, 0, 0);\n"
-					 " background-image: none;\n"
-					 "}",
-					 -1, NULL);
-#endif
+
 	gtk_style_context_add_provider (context,
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -2116,9 +2012,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelApplet");
-#endif
 }
 
 GtkWidget* mate_panel_applet_new(void)
@@ -2437,31 +2331,11 @@ mate_panel_applet_factory_setup_in_process (const gchar               *factory_i
  * Deprecated: 3.20: Do not use this API. Since 3.20 this function does nothing.
  **/
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 void
 mate_panel_applet_set_background_widget (MatePanelApplet *applet,
 				    GtkWidget   *widget)
 {
 }
-#else
-void
-mate_panel_applet_set_background_widget (MatePanelApplet *applet,
-				    GtkWidget   *widget)
-{
-	applet->priv->background_widget = widget;
-
-	if (widget && gtk_widget_get_realized (widget)) {
-		MatePanelAppletBackgroundType  type;
-		GdkRGBA                    color;
-		cairo_pattern_t           *pattern;
-		type = mate_panel_applet_get_background (applet, &color, &pattern);
-		_mate_panel_applet_apply_css(widget,type);
-
-		if (type == PANEL_PIXMAP_BACKGROUND)
-			cairo_pattern_destroy (pattern);
-	}
-}
-#endif
 
 guint32
 mate_panel_applet_get_xid (MatePanelApplet *applet,

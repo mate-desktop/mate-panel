@@ -1372,9 +1372,7 @@ sn_item_v0_class_init (SnItemV0Class *v0_class)
 
   widget_class->size_allocate = sn_item_v0_size_allocate;
 
-#if GTK_CHECK_VERSION (3, 20, 0)
   gtk_widget_class_set_css_name (widget_class, "sn-item");
-#endif
 
   install_properties (object_class);
 }

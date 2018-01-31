@@ -78,16 +78,6 @@ static void panel_widget_cremove        (GtkContainer     *container,
 static void panel_widget_dispose        (GObject *obj);
 static void panel_widget_finalize       (GObject          *obj);
 
-#if !GTK_CHECK_VERSION (3, 18, 0)
-static void panel_widget_realize        (GtkWidget        *widget);
-static void panel_widget_unrealize      (GtkWidget        *panel);
-static void panel_widget_state_flags_changed (GtkWidget *widget,
-					     GtkStateFlags previous_state);
-static void panel_widget_style_updated (GtkWidget *widget);
-static void panel_widget_background_changed (PanelBackground *background,
-					     PanelWidget     *panel);
-#endif
-
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
 static void panel_widget_switch_move_applet (PanelWidget      *panel,
@@ -424,15 +414,8 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->get_preferred_width = panel_widget_get_preferred_width;
 	widget_class->get_preferred_height = panel_widget_get_preferred_height;
 	widget_class->size_allocate = panel_widget_size_allocate;
-#if GTK_CHECK_VERSION (3, 20, 0)
+
 	gtk_widget_class_set_css_name (widget_class, "PanelWidget");
-#endif
-#if !GTK_CHECK_VERSION (3, 18, 0)
-	widget_class->realize = panel_widget_realize;
-	widget_class->unrealize = panel_widget_unrealize;
-	widget_class->state_flags_changed = panel_widget_state_flags_changed;
-	widget_class->style_updated = panel_widget_style_updated;
-#endif
 
 	widget_class->focus = panel_widget_real_focus;
 	container_class->add = panel_widget_cadd;
@@ -1371,30 +1354,7 @@ queue_resize_on_all_applets(PanelWidget *panel)
 		gtk_widget_queue_resize (ad->applet);
 	}
 }
-#if !GTK_CHECK_VERSION(3, 18, 0)
-static void
-panel_widget_set_background_region (PanelWidget *panel)
-{
-	GtkWidget     *widget;
-	int            origin_x = -1, origin_y = -1;
-	GtkAllocation  allocation;
 
-	widget = GTK_WIDGET (panel);
-
-	if (!gtk_widget_get_realized (widget))
-		return;
-
-	gdk_window_get_origin (gtk_widget_get_window (widget), &origin_x, &origin_y);
-
-	gtk_widget_get_allocation (widget, &allocation);
-
-	panel_background_change_region (
-		&panel->background, panel->orient,
-		origin_x, origin_y,
-		allocation.width,
-		allocation.height);
-}
-#endif
 static void
 panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
@@ -1587,9 +1547,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		}
 	}
 
-#if !GTK_CHECK_VERSION(3, 18, 0)
-	panel_widget_set_background_region (panel);
-#endif
 	gtk_widget_queue_resize(widget);
 }
 
@@ -1611,13 +1568,8 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	   !gtk_widget_get_visible(widget))
 		return FALSE;
 
-#if GTK_CHECK_VERSION(3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
-#else
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
-	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
-#endif
 
 	gtk_widget_get_allocation (widget, &allocation);
 	w = allocation.width;
@@ -1631,94 +1583,6 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
-#if !GTK_CHECK_VERSION (3, 18, 0)
-static void
-panel_widget_set_background_default_style (GtkWidget *widget)
-{
-	GtkStyleContext *context;
-	GtkStateFlags state;
-	GdkRGBA *bg_color;
-	cairo_pattern_t *bg_image;
-	PanelBackground *background;
-
-	if (gtk_widget_get_realized (widget)) {
-		context = gtk_widget_get_style_context (widget);
-		state = gtk_widget_get_state_flags (widget);
-		background = &PANEL_WIDGET (widget)->background;
-		panel_background_apply_css (&PANEL_WIDGET (widget)->background, widget);
-		gtk_style_context_add_class(context,"gnome-panel-menu-bar");
-		gtk_style_context_add_class(context,"mate-panel-menu-bar");		
-
-		gtk_style_context_get (context, state,
-		                       "background-color", &bg_color,
-		                       "background-image", &bg_image,
-		                       NULL);
-
-		panel_background_set_default_style (background,
-		                                    bg_color,
-		                                    bg_image);
-
-		if (bg_image)
-			cairo_pattern_destroy (bg_image);
-	}
-}
-
-static void
-panel_widget_state_flags_changed (GtkWidget *widget, GtkStateFlags previous_state)
-{
-	panel_widget_set_background_default_style (widget);
-}
-
-static void
-panel_widget_style_updated (GtkWidget *widget)
-{
-	GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
-	panel_widget_set_background_default_style (widget);
-}
-
-static gboolean
-toplevel_configure_event (GtkWidget         *widget,
-			  GdkEventConfigure *event,
-			  PanelWidget       *panel)
-{
-	panel_widget_set_background_region (panel);
-	return FALSE;
-}
-
-static void
-panel_widget_realize (GtkWidget *widget)
-{
-	PanelWidget  *panel = (PanelWidget *) widget;
-	GdkWindow    *window;
-
-	g_signal_connect (panel->toplevel, "configure-event",
-			  G_CALLBACK (toplevel_configure_event), panel);
-
-	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
-
-	window = gtk_widget_get_window (widget);
-
-	panel_widget_set_background_default_style (widget);
-
-	panel_background_realized (&panel->background, window);
-}
-
-static void
-panel_widget_unrealize (GtkWidget *widget)
-{
-	PanelWidget *panel = (PanelWidget *) widget;
-
-	panel_background_unrealized (&panel->background);
-
-	g_signal_handlers_disconnect_by_func (
-		panel->toplevel,
-		G_CALLBACK (toplevel_configure_event),
-		panel);
-
-	GTK_WIDGET_CLASS (panel_widget_parent_class)->unrealize (widget);
-}
-#endif
-
 static void
 panel_widget_finalize (GObject *obj)
 {
@@ -1727,9 +1591,7 @@ panel_widget_finalize (GObject *obj)
 	g_return_if_fail (PANEL_IS_WIDGET (obj));
 
 	panel = PANEL_WIDGET (obj);
-#if !GTK_CHECK_VERSION(3, 18, 0)
-	panel_background_free (&panel->background);
-#endif
+
 	if (panel->applets_hints != NULL)
 		g_free (panel->applets_hints);
 	panel->applets_hints = NULL;
@@ -1813,11 +1675,7 @@ panel_widget_init (PanelWidget *panel)
 	panel->nb_applets_size_hints = 0;
 	panel->applets_hints = NULL;
 	panel->applets_using_hint = NULL;
-#if !GTK_CHECK_VERSION(3, 18, 0)
-	panel_background_init (&panel->background,
-			       (PanelBackgroundChangedNotify) panel_widget_background_changed,
-			       panel);
-#endif
+
 	panels = g_slist_append (panels, panel);
 }
 
@@ -1948,29 +1806,16 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		GdkGrabStatus  status;
 		GdkCursor     *fleur_cursor;
 		GdkDisplay *display;
-#if GTK_CHECK_VERSION(3, 20, 0)
 		GdkSeat *seat;
-#else
-		GdkDevice *pointer;
-		GdkDeviceManager *device_manager;
-#endif
+
 		fleur_cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
 		                                           GDK_FLEUR);
 
 		display = gdk_window_get_display (window);
-#if GTK_CHECK_VERSION(3, 20, 0)
 		seat = gdk_display_get_default_seat (display);
 
 		status = gdk_seat_grab (seat, window, GDK_SEAT_CAPABILITY_POINTER,
 		                        FALSE, fleur_cursor, NULL, NULL, NULL);
-#else
-		device_manager = gdk_display_get_device_manager (display);
-		pointer = gdk_device_manager_get_client_pointer (device_manager);
-		status = gdk_device_grab (pointer, window,
-					  GDK_OWNERSHIP_NONE, FALSE,
-					  APPLET_EVENT_MASK,
-					  fleur_cursor, time_);
-#endif
 
 		g_object_unref (fleur_cursor);
 		gdk_flush ();
@@ -1986,31 +1831,19 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 void
 panel_widget_applet_drag_end (PanelWidget *panel)
 {
-#if GTK_CHECK_VERSION(3, 20, 0)
 	GdkDisplay *display;
 	GdkSeat *seat;
-#else
-	GdkDisplay *display;
-	GdkDevice *pointer;
-	GdkDeviceManager *device_manager;
-#endif
 
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 
 	if (panel->currently_dragged_applet == NULL)
 		return;
-#if GTK_CHECK_VERSION(3, 20, 0)
+
 	display = gtk_widget_get_display (GTK_WIDGET (panel));
 	seat = gdk_display_get_default_seat (display);
 
 	gdk_seat_ungrab (seat);
-#else
-	display = gtk_widget_get_display (GTK_WIDGET (panel));
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
 
-	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-#endif
 	gtk_grab_remove (panel->currently_dragged_applet->applet);
 	panel_widget_applet_drag_end_no_grab (panel);
 	panel_toplevel_pop_autohide_disabler (panel->toplevel);
@@ -2027,13 +1860,8 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET(panel))));
 	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(panel)), device, &x, &y, NULL);
-#else
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET(panel))));
-	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(panel)), device, &x, &y, NULL);
-#endif
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
 	
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -2256,13 +2084,8 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		}
 	}
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET (panel))));
 	gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET(panel)), device, NULL, NULL, &mods);
-#else
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET (panel))));
-	gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET(panel)), device, NULL, NULL, &mods);
-#endif
 
 	movement = PANEL_SWITCH_MOVE;
 
@@ -2316,13 +2139,8 @@ move_timeout_handler(gpointer data)
 
 		widget = panel->currently_dragged_applet->applet;
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 		device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 		gdk_window_get_device_position (gtk_widget_get_window (widget), device, &x, &y, NULL);
-#else
-		device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
-		gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
-#endif
 
 		gtk_widget_get_allocation (widget, &allocation);
 		w = allocation.width;
@@ -2823,24 +2641,11 @@ panel_widget_set_size (PanelWidget *panel_widget,
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 void
 panel_widget_emit_background_changed (PanelWidget *panel)
 {
 	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
 }
-#else
-static void
-panel_widget_background_changed (PanelBackground *background,
-				 PanelWidget     *panel)
-{
-	g_return_if_fail (PANEL_IS_WIDGET (panel));
-	panel_toplevel_update_edges (panel->toplevel);
-	g_signal_emit (G_OBJECT (panel),
-		       panel_widget_signals [BACK_CHANGE_SIGNAL],
-		       0);
-}
-#endif
 
 static void 
 panel_widget_push_move_applet (PanelWidget     *panel,

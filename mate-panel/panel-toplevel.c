@@ -454,14 +454,8 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	GdkCursorType  cursor_type;
 	GdkCursor     *cursor;
 	GdkDisplay *display;
-#if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat *seat;
 	GdkSeatCapabilities capabilities;
-#else
-	GdkDevice *pointer;
-	GdkDevice *keyboard;
-	GdkDeviceManager *device_manager;
-#endif
 
 	if (toplevel->priv->state != PANEL_STATE_NORMAL ||
 	    toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
@@ -518,7 +512,6 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
 	                                     cursor_type);
 	display = gdk_window_get_display (window);
-#if GTK_CHECK_VERSION(3, 20, 0)
 	seat = gdk_display_get_default_seat (display);
 	capabilities = GDK_SEAT_CAPABILITY_POINTER;
 	if (grab_keyboard)
@@ -528,37 +521,14 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	               NULL, NULL, NULL);
 
 	g_object_unref (cursor);
-#else
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
-	keyboard = gdk_device_get_associated_device (pointer);
-
-	gdk_device_grab (pointer, window,
-			 GDK_OWNERSHIP_NONE, FALSE,
-			 GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
-			 cursor, time_);
-
-	g_object_unref (cursor);
-
-	if (grab_keyboard)
-		gdk_device_grab (keyboard, window,
-				 GDK_OWNERSHIP_NONE, FALSE,
-				 GDK_KEY_PRESS | GDK_KEY_RELEASE,
-				 NULL, time_);
-#endif
 }
 
 static void panel_toplevel_end_grab_op (PanelToplevel* toplevel, guint32 time_)
 {
 	GtkWidget *widget;
 	GdkDisplay *display;
-#if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat *seat;
-#else
-	GdkDevice *pointer;
-	GdkDevice *keyboard;
-	GdkDeviceManager *device_manager;
-#endif
+
 	g_return_if_fail (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE);
 
 	widget = GTK_WIDGET (toplevel);
@@ -569,18 +539,9 @@ static void panel_toplevel_end_grab_op (PanelToplevel* toplevel, guint32 time_)
 	gtk_grab_remove (widget);
 
 	display = gtk_widget_get_display (widget);
-#if GTK_CHECK_VERSION(3, 20, 0)
 	seat = gdk_display_get_default_seat (display);
 
 	gdk_seat_ungrab (seat);
-#else
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
-	keyboard = gdk_device_get_associated_device (pointer);
-
-	gdk_device_ungrab (pointer, time_);
-	gdk_device_ungrab (keyboard, time_);
-#endif
 }
 
 static void panel_toplevel_cancel_grab_op(PanelToplevel* toplevel, guint32 time_)
@@ -884,13 +845,8 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	root_window = gdk_screen_get_root_window (screen);
-#if GTK_CHECK_VERSION(3, 20, 0)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET(root_window))));
 	gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET (root_window)), device, &new_x, &new_y, NULL);
-#else
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET(root_window))));
-	gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET (root_window)), device, &new_x, &new_y, NULL);
-#endif
 
 	switch (keyval) {
 	case GDK_KEY_Up:
@@ -1374,23 +1330,13 @@ static gboolean panel_toplevel_contains_pointer(PanelToplevel* toplevel)
 	GdkDisplay *display;
 	GdkScreen  *screen;
 	GtkWidget  *widget;
-#if GTK_CHECK_VERSION(3, 20, 0)
 	GdkSeat *seat;
 	GdkDevice *pointer;
-#else
-	GdkDeviceManager *device_manager;
-	GdkDevice *pointer;
-#endif
 	int         x, y;
 
 	display = gdk_display_get_default ();
-#if GTK_CHECK_VERSION(3, 20, 0)
 	seat = gdk_display_get_default_seat (display);
 	pointer = gdk_seat_get_pointer (seat);
-#else
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
-#endif
 	widget  = GTK_WIDGET (toplevel);
 
 	if (!gtk_widget_get_realized (widget))
@@ -2247,11 +2193,8 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	 * x = 1 => outer bevel => x = 0 => no outer bevel = > x = 1 => ...
 	 * FIXME: maybe the real bug is that we enter into this loop (see bug
 	 * #160748 to learn how to reproduce.) */
-#if GTK_CHECK_VERSION (3, 18, 0)
 	background = &toplevel->background;
-#else
-	background = &toplevel->priv->panel_widget->background;
-#endif
+
 	/* There's no bevels with a color/image background */
 	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
 		GtkStyleContext *context;
@@ -2301,10 +2244,6 @@ calculate_minimum_height (GtkWidget        *widget,
 	GtkBorder         padding;
 	PangoContext     *pango_context;
 	PangoFontMetrics *metrics;
-#if !GTK_CHECK_VERSION (3, 20, 0)
-	int               focus_width = 0;
-	int               focus_pad = 0;
-#endif
 	int               ascent;
 	int               descent;
 	int               thickness;
@@ -2324,22 +2263,11 @@ calculate_minimum_height (GtkWidget        *widget,
 
 	pango_font_metrics_unref (metrics);
 
-#if !GTK_CHECK_VERSION (3, 20, 0)
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
-			      NULL);
-#endif
-
 	thickness = orientation & PANEL_HORIZONTAL_MASK ?
 		padding.top + padding.bottom :
 		padding.left + padding.right;
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 	return PANGO_PIXELS (ascent + descent) + thickness;
-#else
-	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad) + thickness;
-#endif
 }
 
 static int
@@ -2995,7 +2923,6 @@ panel_toplevel_initially_hide (PanelToplevel *toplevel)
 		toplevel->priv->initial_animation_done = TRUE;
 }
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 static void
 set_background_default_style (GtkWidget *widget)
 {
@@ -3027,12 +2954,10 @@ set_background_default_style (GtkWidget *widget)
 	if (bg_image)
 		cairo_pattern_destroy (bg_image);
 }
-#endif
 
 static void
 panel_toplevel_realize (GtkWidget *widget)
 {
-#if GTK_CHECK_VERSION (3, 18, 0)
 	PanelToplevel *toplevel;
 	GdkScreen *screen;
 	GdkVisual *visual;
@@ -3048,25 +2973,16 @@ panel_toplevel_realize (GtkWidget *widget)
 
 	gtk_widget_set_visual (widget, visual);
  	gtk_window_stick (GTK_WINDOW (widget));
-#else
-	PanelToplevel *toplevel = (PanelToplevel *) widget;
-	GdkWindow     *window;
-#endif
 	gtk_window_set_decorated (GTK_WINDOW (widget), FALSE);
 	gtk_window_stick (GTK_WINDOW (widget));
 	gtk_window_set_type_hint (GTK_WINDOW (widget), GDK_WINDOW_TYPE_HINT_DOCK);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize (widget);
-#else
-	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize)
-		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize (widget);
-#endif
+
 	window = gtk_widget_get_window (widget);
-#if GTK_CHECK_VERSION (3, 18, 0)
 	set_background_default_style (widget);
 	panel_background_realized (&toplevel->background, window);
-#endif
+
 	panel_struts_set_window_hint (toplevel);
 
 	gdk_window_set_group (window, window);
@@ -3096,18 +3012,11 @@ panel_toplevel_disconnect_timeouts (PanelToplevel *toplevel)
 static void
 panel_toplevel_unrealize (GtkWidget *widget)
 {
-#if GTK_CHECK_VERSION (3, 18, 0)
 	PanelToplevel *toplevel;
 	toplevel = PANEL_TOPLEVEL (widget);
 	panel_toplevel_disconnect_timeouts (toplevel);
 	panel_background_unrealized (&toplevel->background);
 	GTK_WIDGET_CLASS (panel_toplevel_parent_class)->unrealize (widget);
-#else
-	panel_toplevel_disconnect_timeouts (PANEL_TOPLEVEL (widget));
-
-	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->unrealize)
-		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->unrealize (widget);
-#endif
 }
 
 static void
@@ -3215,7 +3124,6 @@ panel_toplevel_get_preferred_height (GtkWidget *widget,
 	*minimum_height = *natural_height = req.height;
 }
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 static void
 set_background_region (PanelToplevel *toplevel)
 {
@@ -3246,7 +3154,6 @@ set_background_region (PanelToplevel *toplevel)
 	                                origin_x, origin_y,
 	                                allocation.width, allocation.height);
 }
-#endif
 
 static void
 panel_toplevel_size_allocate (GtkWidget     *widget,
@@ -3321,9 +3228,7 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	if (child && gtk_widget_get_visible (child))
 		gtk_widget_size_allocate (child, &challoc);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	set_background_region (toplevel);
-#endif
 }
 
 static gboolean panel_toplevel_draw(GtkWidget* widget, cairo_t* cr)
@@ -3483,7 +3388,7 @@ panel_toplevel_button_release_event (GtkWidget      *widget,
 
 	return TRUE;
 }
-#if GTK_CHECK_VERSION (3, 18, 0)
+
 static gboolean
 panel_toplevel_configure_event (GtkWidget	  *widget,
 				GdkEventConfigure *event)
@@ -3496,7 +3401,6 @@ panel_toplevel_configure_event (GtkWidget	  *widget,
 
 	return TRUE;
 }
-#endif
 
 static gboolean
 panel_toplevel_key_press_event (GtkWidget   *widget,
@@ -3514,7 +3418,6 @@ panel_toplevel_key_press_event (GtkWidget   *widget,
 	return FALSE;
 }
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 static void
 panel_toplevel_state_flags_changed (GtkWidget     *widget,
                                     GtkStateFlags  previous_state)
@@ -3524,7 +3427,6 @@ panel_toplevel_state_flags_changed (GtkWidget     *widget,
 
 	set_background_default_style (widget);
 }
-#endif
 
 static gboolean
 panel_toplevel_motion_notify_event (GtkWidget      *widget,
@@ -4011,9 +3913,7 @@ panel_toplevel_style_updated (GtkWidget *widget)
 	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated)
 		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated (widget);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	set_background_default_style (widget);
-#endif
 }
 
 static void
@@ -4283,9 +4183,8 @@ panel_toplevel_finalize (GObject *object)
 						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
 						      toplevel);
 		toplevel->priv->gtk_settings = NULL;
-#if GTK_CHECK_VERSION (3, 18, 0)
+
 		panel_background_free (&toplevel->background);
-#endif
 	}
 
 	if (toplevel->priv->attached) {
@@ -4327,9 +4226,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
 	widget_class->realize              = panel_toplevel_realize;
 	widget_class->unrealize            = panel_toplevel_unrealize;
-#if GTK_CHECK_VERSION (3, 18, 0)
 	widget_class->state_flags_changed  = panel_toplevel_state_flags_changed;
-#endif
 	widget_class->draw                 = panel_toplevel_draw;
 	widget_class->get_preferred_width  = panel_toplevel_get_preferred_width;
 	widget_class->get_preferred_height = panel_toplevel_get_preferred_height;
@@ -4337,9 +4234,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->size_allocate        = panel_toplevel_size_allocate;
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
 	widget_class->button_release_event = panel_toplevel_button_release_event;
-#if GTK_CHECK_VERSION (3, 18, 0)
 	widget_class->configure_event      = panel_toplevel_configure_event;
-#endif
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
 	widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
 	widget_class->enter_notify_event   = panel_toplevel_enter_notify_event;
@@ -4348,9 +4243,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
 	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelToplevel");
-#endif
 
 	container_class->check_resize = panel_toplevel_check_resize;
 
@@ -4750,7 +4643,6 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 	gtk_widget_show (toplevel->priv->grid);
 }
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 static void
 background_changed (PanelBackground *background,
                     PanelToplevel   *toplevel)
@@ -4758,14 +4650,11 @@ background_changed (PanelBackground *background,
 	panel_toplevel_update_edges (toplevel);
 	panel_widget_emit_background_changed (toplevel->priv->panel_widget);
 }
-#endif
 
 static void
 panel_toplevel_init (PanelToplevel *toplevel)
 {
-#if GTK_CHECK_VERSION (3, 18, 0)
 	GtkWidget *widget;
-#endif
 	int i;
 
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
@@ -4849,20 +4738,16 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->updated_geometry_initial = FALSE;
 	toplevel->priv->initial_animation_done   = FALSE;
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	widget = GTK_WIDGET (toplevel);
 	gtk_widget_add_events (widget,
-#else
-	gtk_widget_add_events (GTK_WIDGET (toplevel),
-#endif
 			       GDK_BUTTON_PRESS_MASK |
 			       GDK_BUTTON_RELEASE_MASK |
 			       GDK_POINTER_MOTION_MASK |
 			       GDK_ENTER_NOTIFY_MASK |
 			       GDK_LEAVE_NOTIFY_MASK);
-#if GTK_CHECK_VERSION (3, 18, 0)
+
 	gtk_widget_set_app_paintable (widget, TRUE);
-#endif
+
 	panel_toplevel_setup_widgets (toplevel);
 	panel_toplevel_update_description (toplevel);
 	panel_toplevel_update_gtk_settings (toplevel);
@@ -4874,11 +4759,10 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	 */
 	g_signal_connect(GTK_WIDGET(toplevel), "delete-event", G_CALLBACK(gtk_true), NULL);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	panel_background_init (&toplevel->background,
 			       (PanelBackgroundChangedNotify) background_changed,
 			       toplevel);	
-#endif	
+
 	/*ensure the panel BG can always be themed*/
 	/*Without this gtk3.19/20 cannot set the BG color and resetting the bg to system is not immediately applied*/
 	GtkStyleContext *context;

@@ -182,49 +182,6 @@ sn_item_get_action_coordinates (SnItem *item,
     *x += width;
 }
 
-#if ! GTK_CHECK_VERSION (3, 22, 0)
-static void
-sn_item_popup_menu_position_func (GtkMenu  *menu,
-                                  gint     *x,
-                                  gint     *y,
-                                  gboolean *push_in,
-                                  gpointer  widget)
-{
-  GtkAllocation  widget_alloc;
-  GtkRequisition menu_req;
-  GdkWindow     *window;
-  GdkScreen     *screen;
-  gint           monitor_num;
-  GdkRectangle   monitor;
-
-  gtk_widget_get_allocation (widget, &widget_alloc);
-  gtk_widget_get_preferred_size (GTK_WIDGET (menu), &menu_req, NULL);
-
-  window = gtk_widget_get_window (widget);
-  gdk_window_get_origin (window, x, y);
-
-  *x += widget_alloc.x;
-  *y += widget_alloc.y;
-
-  screen = gtk_widget_get_screen (widget);
-  monitor_num = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_geometry (screen, monitor_num, &monitor);
-
-  /* put the menu on the left if we can't put it on the right */
-  if (*x + menu_req.width > monitor.x + monitor.width)
-    *x -= menu_req.width - widget_alloc.width;
-  /* and push it back in if all else failed */
-  if (*x < monitor.x)
-    *x = monitor.x;
-
-  /* put the menu above if we can't put it below */
-  if (*y + widget_alloc.height + menu_req.height > monitor.y + monitor.height)
-    *y -= menu_req.height;
-  else
-    *y += widget_alloc.height;
-}
-#endif
-
 static gboolean
 sn_item_button_press_event (GtkWidget      *widget,
                             GdkEventButton *event)
@@ -244,39 +201,23 @@ sn_item_button_press_event (GtkWidget      *widget,
 
   if (event->button == 2)
     {
-#if GTK_CHECK_VERSION (3, 20, 0)
       gdk_seat_ungrab (gdk_device_get_seat (event->device));
-#else
-      gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
-#endif
       SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
     }
   else if (event->button == 3)
     {
       if (priv->menu != NULL)
         {
-#if GTK_CHECK_VERSION (3, 22, 0)
           gtk_menu_popup_at_widget (priv->menu, widget,
                                     GDK_GRAVITY_SOUTH_WEST,
                                     GDK_GRAVITY_NORTH_WEST,
                                     (GdkEvent *) event);
           /*Fix positioning if size changed since last shown*/
           gtk_menu_reposition(priv->menu);
-#else
-          gtk_menu_popup (priv->menu, NULL, NULL,
-                          sn_item_popup_menu_position_func, widget,
-                          event->button, event->time);
-          /*Fix positioning if size changed since last shown*/
-          gtk_menu_reposition(priv->menu);
-#endif
         }
       else
         {
-#if GTK_CHECK_VERSION (3, 20, 0)
           gdk_seat_ungrab (gdk_device_get_seat (event->device));
-#else
-          gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
-#endif
           SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
         }
     }
@@ -299,30 +240,12 @@ sn_item_popup_menu (GtkWidget *widget)
 
   if (priv->menu != NULL)
     {
-#if GTK_CHECK_VERSION (3, 22, 0)
       gtk_menu_popup_at_widget (priv->menu, widget,
                                 GDK_GRAVITY_SOUTH_WEST,
                                 GDK_GRAVITY_NORTH_WEST,
                                 NULL);
       /*Fix positioning if size changed since last shown*/
       gtk_menu_reposition(priv->menu);
-#else
-      guint button = 0;
-      guint32 active_time = GDK_CURRENT_TIME;
-      GdkEvent *event = gtk_get_current_event ();
-
-      if (event)
-        {
-          gdk_event_get_button (event, &button);
-          active_time = gdk_event_get_time (event);
-        }
-
-      gtk_menu_popup (priv->menu, NULL, NULL,
-                      sn_item_popup_menu_position_func, widget,
-                      button, active_time);
-      /*Fix positioning if size changed since last shown*/
-      gtk_menu_reposition(priv->menu);
-#endif
     }
   else
     {

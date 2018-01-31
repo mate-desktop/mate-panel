@@ -177,11 +177,9 @@ gboolean panel_show_uri(GdkScreen* screen, const gchar* uri, guint32 timestamp, 
 	{
 		return panel_show_caja_search_uri(screen, uri, timestamp, error);
 	}
-#if GTK_CHECK_VERSION (3, 22, 0)
+
 	gtk_show_uri_on_window (NULL, uri,timestamp, &local_error);
-#else
-	gtk_show_uri(screen, uri, timestamp, &local_error);
-#endif
+
 	return _panel_show_handle_error(uri, screen, local_error, error);
 }
 
@@ -284,11 +282,8 @@ panel_show_help (GdkScreen    *screen,
 		uri = g_strdup_printf ("help:%s/%s", doc, link);
 	else
 		uri = g_strdup_printf ("help:%s", doc);
-#if GTK_CHECK_VERSION (3, 22, 0)
+
 	gtk_show_uri_on_window (NULL, uri, gtk_get_current_event_time (), &local_error);
-#else
-	gtk_show_uri (screen, uri, gtk_get_current_event_time (), &local_error);
-#endif
 	g_free (uri);
 
 	return _panel_show_help_handle_error (doc, screen, local_error, error);

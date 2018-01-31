@@ -17,7 +17,6 @@
 
 #include <gtk/gtk.h>
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 #include "panel-plug-private.h"
 
 struct _PanelPlug
@@ -83,9 +82,7 @@ panel_plug_class_init (PanelPlugClass *plug_class)
   widget_class->draw = panel_plug_draw;
   widget_class->realize = panel_plug_realize;
 
-#if GTK_CHECK_VERSION (3, 20, 0)
   gtk_widget_class_set_css_name (widget_class, "PanelApplet");
-#endif
 }
 
 static void
@@ -99,4 +96,3 @@ panel_plug_new (void)
 {
   return g_object_new (PANEL_TYPE_PLUG, NULL);
 }
-#endif

@@ -503,12 +503,8 @@ label_new_with_mnemonic (const char *text)
 	g_free (bold);
 
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-#if GTK_CHECK_VERSION (3, 16, 0)
 	gtk_label_set_xalign (GTK_LABEL (label), 1.0);
 	gtk_label_set_yalign (GTK_LABEL (label), 0.5);
-#else
-	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-#endif
 
 	gtk_widget_show (label);
 

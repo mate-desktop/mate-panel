@@ -28,10 +28,7 @@
 #include <gtk/gtk.h>
 
 #include "panel-background.h"
-
-#if GTK_CHECK_VERSION (3, 18, 0)
 #include "panel-enums.h"
-#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,9 +57,7 @@ struct _PanelToplevel {
 	GSettings             *settings;
 	GSettings             *queued_settings;
 	GSettings             *background_settings;
-#if GTK_CHECK_VERSION (3, 18, 0)
 	PanelBackground        background;
-#endif
 	PanelToplevelPrivate  *priv;
 };
 

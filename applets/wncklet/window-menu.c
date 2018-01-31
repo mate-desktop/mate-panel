@@ -145,27 +145,6 @@ static gboolean window_menu_on_draw (GtkWidget* widget,
 	return FALSE;
 }
 
-#if !GTK_CHECK_VERSION (3, 20, 0)
-static inline void force_no_focus_padding(GtkWidget* widget)
-{
-	GtkCssProvider *provider;
-
-	provider = gtk_css_provider_new ();
-	gtk_css_provider_load_from_data (provider,
-					 "#PanelApplet-window-menu-applet-button {\n"
-					 " border-width: 0px;\n"
-					 " -GtkWidget-focus-line-width: 0px;\n"
-					 " -GtkWidget-focus-padding: 0px; }",
-					 -1, NULL);
-	gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
-					GTK_STYLE_PROVIDER (provider),
-					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-	g_object_unref (provider);
-
-	gtk_widget_set_name(widget, "PanelApplet-window-menu-applet-button");
-}
-#endif
-
 static void window_menu_size_allocate(MatePanelApplet* applet, GtkAllocation* allocation, WindowMenu* window_menu)
 {
 	MatePanelAppletOrient orient;
@@ -247,11 +226,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	window_menu = g_new0(WindowMenu, 1);
 
 	window_menu->applet = GTK_WIDGET(applet);
-#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_set_name (window_menu->applet, "window-menu-applet-button");
-#else
-	force_no_focus_padding(window_menu->applet);
-#endif
 	gtk_widget_set_tooltip_text(window_menu->applet, _("Window Selector"));
 
 	mate_panel_applet_set_flags(applet, MATE_PANEL_APPLET_EXPAND_MINOR);

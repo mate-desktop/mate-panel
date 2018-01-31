@@ -340,9 +340,8 @@ panel_frame_class_init (PanelFrameClass *klass)
 	widget_class->get_preferred_width  = panel_frame_get_preferred_width;
 	widget_class->get_preferred_height = panel_frame_get_preferred_height;
 	widget_class->draw                 = panel_frame_expose;
-#if GTK_CHECK_VERSION (3, 20, 0)
+
 	gtk_widget_class_set_css_name (widget_class, "PanelFrame");
-#endif
 
 	g_object_class_install_property (
 		gobject_class,

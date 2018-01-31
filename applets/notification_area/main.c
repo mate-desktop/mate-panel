@@ -111,11 +111,7 @@ static void help_cb(GtkAction* action, NaTrayApplet* applet)
 	#define NA_HELP_DOC "mate-user-guide"
 
 	uri = g_strdup_printf("help:%s/%s", NA_HELP_DOC, "panels-notification-area");
-#if GTK_CHECK_VERSION (3, 22, 0)
 	gtk_show_uri_on_window (NULL, uri, gtk_get_current_event_time (), &error);
-#else
-	gtk_show_uri(gtk_widget_get_screen(GTK_WIDGET(applet)), uri, gtk_get_current_event_time(), &error);
-#endif
 	g_free(uri);
 
 	if (error && g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
@@ -300,26 +296,6 @@ na_tray_applet_focus (GtkWidget        *widget,
   return GTK_WIDGET_CLASS (na_tray_applet_parent_class)->focus (widget, direction);
 }
 
-#if !GTK_CHECK_VERSION (3, 20, 0)
-static inline void
-force_no_focus_padding (GtkWidget *widget)
-{
-  GtkCssProvider *provider;
-
-  provider = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (provider,
-                                   "NaTrayApplet {\n"
-                                   " -GtkWidget-focus-line-width: 0px;\n"
-                                   " -GtkWidget-focus-padding: 0px;\n"
-				   "}",
-                                   -1, NULL);
-  gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
-                                  GTK_STYLE_PROVIDER (provider),
-                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  g_object_unref (provider);
-}
-#endif
-
 static void
 na_tray_applet_class_init (NaTrayAppletClass *class)
 {
@@ -361,9 +337,7 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
 
   g_type_class_add_private (class, sizeof (NaTrayAppletPrivate));
 
-#if GTK_CHECK_VERSION (3, 20, 0)
   gtk_widget_class_set_css_name (widget_class, "na-tray-applet");
-#endif
 }
 
 static void
@@ -390,10 +364,6 @@ na_tray_applet_init (NaTrayApplet *applet)
 
   mate_panel_applet_set_flags (MATE_PANEL_APPLET (applet),
                           MATE_PANEL_APPLET_HAS_HANDLE|MATE_PANEL_APPLET_EXPAND_MINOR);
-
-#if !GTK_CHECK_VERSION (3, 20, 0)
-  force_no_focus_padding (GTK_WIDGET (applet));
-#endif
 }
 
 static gboolean

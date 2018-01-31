@@ -534,11 +534,7 @@ panel_profile_load_background (PanelToplevel *toplevel)
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	background = &panel_widget->toplevel->background;
-#else
-	background = &panel_widget->background;
-#endif
 	background_type = panel_profile_get_background_type (toplevel);
 
 	get_background_color (toplevel, &color);
@@ -822,11 +818,8 @@ panel_profile_background_change_notify (GSettings *settings,
 	if (panel_widget == NULL)
 		return;
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	background = &panel_widget->toplevel->background;
-#else
-	background = &panel_widget->background;
-#endif
+
 	if (!strcmp (key, "type")) {
 		PanelBackgroundType  background_type;
 		background_type = g_settings_get_enum (settings, key);

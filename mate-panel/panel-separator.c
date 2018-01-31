@@ -154,11 +154,8 @@ panel_separator_size_allocate (GtkWidget     *widget,
 	    old_allocation.width  == allocation->width &&
 	    old_allocation.height == allocation->height)
 		return;
-#if GTK_CHECK_VERSION (3, 18, 0)
+
 	background = &PANEL_SEPARATOR (widget)->priv->panel->toplevel->background;
-#else
-	background = &PANEL_SEPARATOR (widget)->priv->panel->background;
-#endif
 	if (background->type == PANEL_BACK_NONE ||
 	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
 		return;
@@ -192,9 +189,7 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 	widget_class->size_allocate = panel_separator_size_allocate;
 	widget_class->parent_set    = panel_separator_parent_set;
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_widget_class_set_css_name (widget_class, "PanelSeparator");
-#endif
 
 	g_type_class_add_private (klass, sizeof (PanelSeparator));
 }
@@ -279,9 +274,5 @@ panel_separator_create (PanelToplevel *toplevel,
 void
 panel_separator_change_background (PanelSeparator *separator)
 {
-#if GTK_CHECK_VERSION (3, 18, 0)
 	panel_background_apply_css(&separator->priv->panel->toplevel->background, GTK_WIDGET(separator));
-#else
-	panel_background_apply_css(&separator->priv->panel->background, GTK_WIDGET(separator));
-#endif
 }

@@ -123,11 +123,7 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 			       "background-image", &bg_pattern,
 			       NULL);
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 	background = &frame->priv->panel->toplevel->background;
-#else
-	background = &frame->priv->panel->background;
-#endif
 	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
 	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
 		cairo_matrix_t ptm;
@@ -172,11 +168,8 @@ mate_panel_applet_frame_update_background_size (MatePanelAppletFrame *frame,
 	    old_allocation->width  == new_allocation->width &&
 	    old_allocation->height == new_allocation->height)
 		return;
-#if GTK_CHECK_VERSION (3, 18, 0)
+
 	background = &frame->priv->panel->toplevel->background;
-#else
-	background = &frame->priv->panel->background;
-#endif
 	if (background->type == PANEL_BACK_NONE ||
 	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
 		return;
@@ -385,12 +378,7 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 	MatePanelAppletFrame *frame;
 	gboolean              handled = FALSE;
 	GdkDisplay *display;
-#if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat *seat;
-#else
-	GdkDevice *pointer;
-	GdkDeviceManager *device_manager;
-#endif
 
 	frame = MATE_PANEL_APPLET_FRAME (widget);
 
@@ -419,16 +407,9 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 	case 3:
 		if (event->type == GDK_BUTTON_PRESS ||
 		    event->type == GDK_2BUTTON_PRESS) {
-#if GTK_CHECK_VERSION(3, 20, 0)
 			display = gtk_widget_get_display (widget);
 			seat = gdk_display_get_default_seat (display);
 			gdk_seat_ungrab (seat);
-#else
-			display = gtk_widget_get_display (widget);
-			device_manager = gdk_display_get_device_manager (display);
-			pointer = gdk_device_manager_get_client_pointer (device_manager);
-			gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-#endif
 
 			MATE_PANEL_APPLET_FRAME_GET_CLASS (frame)->popup_menu (frame,
 									  event->button,
@@ -550,11 +531,7 @@ mate_panel_applet_frame_change_background (MatePanelAppletFrame    *frame,
 
 	if (frame->priv->has_handle) {
 		PanelBackground *background;
-#if GTK_CHECK_VERSION (3, 18, 0)
 		background = &PANEL_WIDGET (parent)->toplevel->background;
-#else
-		background = &PANEL_WIDGET (parent)->background;
-#endif
 		panel_background_apply_css (background, GTK_WIDGET (frame));
 	}
 
@@ -645,11 +622,7 @@ _mate_panel_applet_frame_update_flags (MatePanelAppletFrame *frame,
 		 * it */
 		PanelBackground *background;
 
-#if GTK_CHECK_VERSION (3, 18, 0)
 		background = &frame->priv->panel->toplevel->background;
-#else
-		background = &frame->priv->panel->background;
-#endif
 		mate_panel_applet_frame_change_background (frame, background->type);
 	}
 }
@@ -705,11 +678,8 @@ _mate_panel_applet_frame_get_background_string (MatePanelAppletFrame    *frame,
 			break;
 		}
 	}
-#if GTK_CHECK_VERSION (3, 18, 0)
+
 	return panel_background_make_string (&panel->toplevel->background, x, y);
-#else
-	return panel_background_make_string (&panel->background, x, y);
-#endif
 }
 
 static void

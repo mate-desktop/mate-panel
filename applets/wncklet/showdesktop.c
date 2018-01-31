@@ -138,10 +138,6 @@ static void update_icon(ShowDesktopData* sdd)
 	GdkPixbuf* scaled;
 	int icon_size;
 	GError* error;
-#if !GTK_CHECK_VERSION (3, 20, 0)
-	int focus_width = 0;
-	int focus_pad = 0;
-#endif
 	int thickness = 0;
 
 	if (!sdd->icon_theme)
@@ -150,12 +146,6 @@ static void update_icon(ShowDesktopData* sdd)
 	state = gtk_widget_get_state_flags (sdd->button);
 	context = gtk_widget_get_style_context (sdd->button);
 	gtk_style_context_get_padding (context, state, &padding);
-#if !GTK_CHECK_VERSION (3, 20, 0)
-	gtk_style_context_get_style (context,
-			             "focus-line-width", &focus_width,
-			             "focus-padding", &focus_pad,
-			             NULL);
-#endif
 
 	switch (sdd->orient) {
 	case GTK_ORIENTATION_HORIZONTAL:
@@ -165,11 +155,8 @@ static void update_icon(ShowDesktopData* sdd)
 		thickness = padding.left + padding.right;
 		break;
 	}
-#if GTK_CHECK_VERSION (3, 20, 0)
+
 	icon_size = sdd->size - thickness;
-#else
-	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
-#endif
 
 	if (icon_size < 22)
 		icon_size = 16;
@@ -418,7 +405,6 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 	gtk_widget_set_name (sdd->button, "showdesktop-button");
     provider = gtk_css_provider_new ();
-#if GTK_CHECK_VERSION (3, 20, 0)
 	gtk_css_provider_load_from_data (provider,
 					 "#showdesktop-button {\n"
                      "border-width: 0px; \n" /*a border here causes GTK warnings */
@@ -430,18 +416,6 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 					GTK_STYLE_PROVIDER (provider),
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 					g_object_unref (provider);
-#else
-	gtk_css_provider_load_from_data (provider,
-					 "#showdesktop-button {\n"
-					 " -GtkWidget-focus-line-width: 0px;\n"
-					 " -GtkWidget-focus-padding: 0px; }",
-					 -1, NULL);
-
-	gtk_style_context_add_provider (gtk_widget_get_style_context (sdd->button),
-					GTK_STYLE_PROVIDER (provider),
-					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-					g_object_unref (provider);
-#endif
 
 	atk_obj = gtk_widget_get_accessible(sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));

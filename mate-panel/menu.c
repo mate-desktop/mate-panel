@@ -424,44 +424,15 @@ grab_widget (GtkWidget *widget)
 
 	GdkWindow *window;
 	GdkDisplay *display;
-#if GTK_CHECK_VERSION (3, 20, 0)
 	GdkSeat *seat;
-#else
-	GdkDeviceManager *device_manager;
-	GdkDevice *pointer;
-	GdkDevice *keyboard;
-#endif
 
 	window = gtk_widget_get_window (widget);
 	display = gdk_window_get_display (window);
 
-#if GTK_CHECK_VERSION (3, 20, 0)
 	seat = gdk_display_get_default_seat (display);
 	gdk_seat_grab (seat, window,
 	               GDK_SEAT_CAPABILITY_ALL, TRUE,
 	               NULL, NULL, NULL, NULL);
-#else
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
-	keyboard = gdk_device_get_associated_device (pointer);
-
-	if (gdk_device_grab (pointer, window,
-	                     GDK_OWNERSHIP_WINDOW, TRUE,
-	                     GDK_SMOOTH_SCROLL_MASK |
-	                     GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-	                     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
-	                     GDK_POINTER_MOTION_MASK,
-	                     NULL, GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS) {
-		return;
-	}
-
-	if (gdk_device_grab (keyboard, window,
-	                     GDK_OWNERSHIP_WINDOW, TRUE,
-	                     GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK,
-	                     NULL, GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS) {
-		gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-	}
-#endif
 }
 
 static void
@@ -779,12 +750,8 @@ setup_menuitem (GtkWidget   *menuitem,
 
 	gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (label), menuitem);
 
-#if GTK_CHECK_VERSION (3, 16, 0)
 	gtk_label_set_xalign (GTK_LABEL (label), 0.0);
 	gtk_label_set_yalign (GTK_LABEL (label), 0.5);
-#else
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-#endif
 	gtk_widget_show (label);
 
 	gtk_container_add (GTK_CONTAINER (menuitem), label);
