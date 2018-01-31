@@ -1129,15 +1129,28 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
 		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
                 gtk_widget_grab_focus (dialog->combobox);
 
-	} else if (show_list) {
-		gtk_window_resize (GTK_WINDOW (dialog->run_dialog), 100, 300);
-		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), TRUE);
-		gtk_widget_grab_focus (dialog->program_list);
+	} else {
 
-        } else if (!show_list) {
-		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
-                gtk_widget_grab_focus (dialog->combobox);
+        /* if the list is closed and the user wants to see it */
+        if (show_list && !gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
+
+            /* open the expander, this shows the list */
+            gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander), TRUE);
+
+            gtk_window_resize (GTK_WINDOW (dialog->run_dialog), 100, 300);
+            gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), TRUE);
+            gtk_widget_grab_focus (dialog->program_list);
+
+        /* if the list is open and the user wants to close it */
+        } else if (!show_list && gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
+
+            /* close the expander, this hides the list */
+            gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander), FALSE);
+
+            gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
+            gtk_widget_grab_focus (dialog->combobox);
         }
+    }
 }
 
 static void
