@@ -194,12 +194,7 @@ sn_item_popup_menu_position_func (GtkMenu  *menu,
   GtkRequisition menu_req;
   GdkWindow     *window;
   GdkScreen     *screen;
-#if GTK_CHECK_VERSION (3, 22, 0)
-  GdkMonitor    *monitor_num;
-  GdkDisplay    *display;
-#else
   gint           monitor_num;
-#endif
   GdkRectangle   monitor;
 
   gtk_widget_get_allocation (widget, &widget_alloc);
@@ -212,14 +207,8 @@ sn_item_popup_menu_position_func (GtkMenu  *menu,
   *y += widget_alloc.y;
 
   screen = gtk_widget_get_screen (widget);
-#if GTK_CHECK_VERSION (3, 22, 0)
-  display = gdk_screen_get_display (screen);
-  monitor_num = gdk_display_get_monitor_at_point (display, *x, *y);
-  gdk_monitor_get_geometry (monitor_num, &monitor);
-#else
   monitor_num = gdk_screen_get_monitor_at_point (screen, *x, *y);
   gdk_screen_get_monitor_geometry (screen, monitor_num, &monitor);
-#endif
 
   /* put the menu on the left if we can't put it on the right */
   if (*x + menu_req.width > monitor.x + monitor.width)
