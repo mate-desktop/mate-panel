@@ -94,10 +94,10 @@ typedef struct {
 } PanelStockItem;
 
 static PanelStockItem stock_items [] = {
-	{ PANEL_STOCK_EXECUTE,     "system-run",            N_("_Run") },
-	{ PANEL_STOCK_FORCE_QUIT,  PANEL_STOCK_FORCE_QUIT,  N_("_Force quit") },
-	{ PANEL_STOCK_CLEAR,       "edit-clear",            N_("C_lear") },
-	{ PANEL_STOCK_DONT_DELETE, "process-stop",          N_("D_on't Delete") }
+	{ PANEL_STOCK_EXECUTE,     "gtk-execute",          N_("_Run") },
+	{ PANEL_STOCK_FORCE_QUIT,  PANEL_STOCK_FORCE_QUIT, N_("_Force quit") },
+	{ PANEL_STOCK_CLEAR,       "gtk-clear",            N_("C_lear") },
+	{ PANEL_STOCK_DONT_DELETE, "gtk-cancel",           N_("D_on't Delete") }
 };
 
 static void
