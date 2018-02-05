@@ -269,6 +269,13 @@ mate_panel_applet_size_hints_changed (MatePanelApplet *applet,
 	return FALSE;
 }
 
+/**
+ * mate_panel_applet_set_size_hints: 
+ * @applet: applet
+ * @size_hints: (array length=n_elements): List of integers
+ * @n_elements: Length of @size_hints
+ * @base_size: base_size
+ */
 void
 mate_panel_applet_set_size_hints (MatePanelApplet *applet,
 			     const int   *size_hints,
