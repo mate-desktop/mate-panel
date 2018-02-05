@@ -1892,6 +1892,35 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 			  dialog);
 }
 
+/* this runs after entry_event() */
+static gboolean
+key_press_event (GtkWidget    *run_dialog,
+				GdkEventKey    *event,
+				PanelRunDialog *dialog)
+{
+
+	/* allow only key presses */
+	if (event->type != GDK_KEY_PRESS)
+		return FALSE;
+
+	/* If the program list is enabled and open and the user presses the F6 key
+	 * the focus should jump between GtkComboBoxText and the program list  */
+	if (panel_profile_get_enable_program_list () && panel_profile_get_show_program_list () && event->keyval == GDK_KEY_F6) {
+
+		/* jump to the program list from anywhere */
+		if (!gtk_widget_has_focus (dialog->program_list)) {
+			gtk_widget_grab_focus (dialog->program_list);
+		/* on the program list, jump to the entry box */
+		} else {
+			gtk_widget_grab_focus (dialog->combobox);
+		}
+
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 static PanelRunDialog *
 panel_run_dialog_new (GdkScreen  *screen,
 		      GtkBuilder *gui,
@@ -1919,6 +1948,10 @@ panel_run_dialog_new (GdkScreen  *screen,
 	panel_run_dialog_setup_file_button   (dialog, gui);
 	panel_run_dialog_setup_program_list  (dialog, gui);
 	panel_run_dialog_setup_list_expander (dialog, gui);
+
+    /* key press event signal for the whole dialog */
+	g_signal_connect (dialog->run_dialog, "key-press-event",
+			  G_CALLBACK (key_press_event), dialog);
 
 	panel_run_dialog_set_default_icon    (dialog, FALSE);
 
