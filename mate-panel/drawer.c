@@ -7,6 +7,7 @@
  *          George Lebl
  */
 
+
 #include <config.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -33,8 +34,10 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
+
 static void
-drawer_click (GtkWidget *w, Drawer *drawer)
+drawer_click (GtkWidget *widget,
+              Drawer    *drawer)
 {
     if (!panel_toplevel_get_is_hidden (drawer->toplevel))
         panel_toplevel_hide (drawer->toplevel, FALSE, -1);
@@ -218,6 +221,7 @@ drag_motion_cb (GtkWidget          *widget,
 
     if (drawer->close_timeout_id)
         g_source_remove (drawer->close_timeout_id);
+
     drawer->close_timeout_id = 0;
 
     button_widget_set_dnd_highlight (BUTTON_WIDGET (widget), TRUE);
@@ -344,30 +348,20 @@ create_drawer_applet (PanelToplevel    *toplevel,
 
     gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0);
 
-    g_signal_connect (drawer->button, "drag_data_get",
-                      G_CALLBACK (drag_data_get_cb), drawer);
-    g_signal_connect (drawer->button, "drag_data_received",
-                      G_CALLBACK (drag_data_received_cb), drawer);
-    g_signal_connect (drawer->button, "drag_motion",
-                      G_CALLBACK (drag_motion_cb), drawer);
-    g_signal_connect (drawer->button, "drag_leave",
-                      G_CALLBACK (drag_leave_cb), drawer);
-    g_signal_connect (drawer->button, "drag_drop",
-                      G_CALLBACK (drag_drop_cb), drawer);
+    g_signal_connect (drawer->button, "drag_data_get", G_CALLBACK (drag_data_get_cb), drawer);
+    g_signal_connect (drawer->button, "drag_data_received", G_CALLBACK (drag_data_received_cb), drawer);
+    g_signal_connect (drawer->button, "drag_motion", G_CALLBACK (drag_motion_cb), drawer);
+    g_signal_connect (drawer->button, "drag_leave", G_CALLBACK (drag_leave_cb), drawer);
+    g_signal_connect (drawer->button, "drag_drop", G_CALLBACK (drag_drop_cb), drawer);
 
-    g_signal_connect (drawer->button, "clicked",
-                      G_CALLBACK (drawer_click), drawer);
-    g_signal_connect (drawer->button, "destroy",
-                      G_CALLBACK (destroy_drawer), drawer);
-    g_signal_connect (drawer->button, "key_press_event",
-                      G_CALLBACK (key_press_drawer), drawer);
-    g_signal_connect (toplevel, "destroy",
-                      G_CALLBACK (toplevel_destroyed), drawer);
+    g_signal_connect (drawer->button, "clicked", G_CALLBACK (drawer_click), drawer);
+    g_signal_connect (drawer->button, "destroy", G_CALLBACK (destroy_drawer), drawer);
+    g_signal_connect (drawer->button, "key_press_event", G_CALLBACK (key_press_drawer), drawer);
+    g_signal_connect (toplevel, "destroy", G_CALLBACK (toplevel_destroyed), drawer);
 
     gtk_widget_show (drawer->button);
 
-    g_signal_connect (drawer->toplevel, "key_press_event",
-                      G_CALLBACK (key_press_drawer_widget), drawer);
+    g_signal_connect (drawer->toplevel, "key_press_event", G_CALLBACK (key_press_drawer_widget), drawer);
 
     panel_toplevel_attach_to_widget (toplevel, parent_toplevel, GTK_WIDGET (drawer->button));
 
@@ -375,7 +369,8 @@ create_drawer_applet (PanelToplevel    *toplevel,
 }
 
 static PanelToplevel *
-create_drawer_toplevel (const char *drawer_id, GSettings *settings)
+create_drawer_toplevel (const char *drawer_id,
+                        GSettings  *settings)
 {
     PanelToplevel *toplevel;
     char          *toplevel_id;
@@ -412,8 +407,8 @@ drawer_button_size_allocated (GtkWidget     *widget,
 
 static void
 panel_drawer_custom_icon_changed (GSettings *settings,
-                                      gchar     *key,
-                                      Drawer      *drawer)
+                                  gchar     *key,
+                                  Drawer    *drawer)
 {
     g_return_if_fail (drawer != NULL);
     g_return_if_fail (drawer->button != NULL);
@@ -433,7 +428,7 @@ panel_drawer_custom_icon_changed (GSettings *settings,
 static void
 panel_drawer_tooltip_changed (GSettings *settings,
                               gchar     *key,
-                              Drawer      *drawer)
+                              Drawer    *drawer)
 {
     gchar *tooltip = g_settings_get_string (settings, key);
     set_tooltip_and_name (drawer, tooltip);
@@ -447,10 +442,12 @@ panel_drawer_connect_to_gsettings (Drawer *drawer)
                       "changed::" PANEL_OBJECT_USE_CUSTOM_ICON_KEY,
                       G_CALLBACK (panel_drawer_custom_icon_changed),
                       drawer);
+
     g_signal_connect (drawer->info->settings,
                       "changed::" PANEL_OBJECT_CUSTOM_ICON_KEY,
                       G_CALLBACK (panel_drawer_custom_icon_changed),
                       drawer);
+
     g_signal_connect (drawer->info->settings,
                       "changed::" PANEL_OBJECT_TOOLTIP_KEY,
                       G_CALLBACK (panel_drawer_tooltip_changed),
@@ -514,8 +511,7 @@ load_drawer_applet (char          *toplevel_id,
         return;
     }
 
-    g_signal_connect_after (drawer->button, "size_allocate",
-                            G_CALLBACK (drawer_button_size_allocated), drawer);
+    g_signal_connect_after (drawer->button, "size_allocate", G_CALLBACK (drawer_button_size_allocated), drawer);
 
     panel_widget_add_forbidden (panel_toplevel_get_panel_widget (drawer->toplevel));
     panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);
@@ -551,7 +547,7 @@ panel_drawer_prepare (const char  *drawer_id,
 {
     GSettings *settings;
     char *path;
-    
+
     path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, drawer_id);
     settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
     g_free (path);
@@ -646,7 +642,7 @@ drawer_load_from_gsettings (PanelWidget *panel_widget,
 
     path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, id);
     settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
-    g_free (path); 
+    g_free (path);
 
     toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_ATTACHED_TOPLEVEL_ID_KEY);
 
@@ -697,9 +693,9 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 }
 
 static void
-drawer_deletion_response (GtkWidget     *dialog,
-                        int            response,
-                        Drawer         *drawer)
+drawer_deletion_response (GtkWidget   *dialog,
+                          int          response,
+                          Drawer      *drawer)
 {
     if (response == GTK_RESPONSE_OK)
         panel_profile_delete_object (drawer->info);
@@ -725,14 +721,9 @@ drawer_query_deletion (Drawer *drawer)
 
         dialog = panel_deletion_dialog (drawer->toplevel);
 
-        g_signal_connect (dialog, "response",
-                            G_CALLBACK (drawer_deletion_response),
-                            drawer);
+        g_signal_connect (dialog, "response", G_CALLBACK (drawer_deletion_response), drawer);
 
-        g_signal_connect_object (drawer->toplevel, "destroy",
-                                 G_CALLBACK (gtk_widget_destroy),
-                                 dialog,
-                                 G_CONNECT_SWAPPED);
+        g_signal_connect_object (drawer->toplevel, "destroy", G_CALLBACK (gtk_widget_destroy), dialog, G_CONNECT_SWAPPED);
 
         gtk_widget_show_all (dialog);
     }
