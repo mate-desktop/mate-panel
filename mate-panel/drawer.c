@@ -22,6 +22,7 @@
 #include <gio/gio.h>
 
 #include "drawer.h"
+#include "drawer-private.h"
 
 #include "applet.h"
 #include "button-widget.h"
@@ -35,6 +36,10 @@
 #include "panel-schemas.h"
 
 
+/* Internal functions */
+/* event handlers */
+
+
 static void
 drawer_click (GtkWidget *widget,
               Drawer    *drawer)
@@ -43,33 +48,6 @@ drawer_click (GtkWidget *widget,
         panel_toplevel_hide (drawer->toplevel, FALSE, -1);
     else
         panel_toplevel_unhide (drawer->toplevel);
-}
-
-static void
-toplevel_destroyed (GtkWidget *widget,
-                    Drawer    *drawer)
-{
-    drawer->toplevel = NULL;
-
-    if (drawer->button) {
-        gtk_widget_destroy (drawer->button);
-        drawer->button = NULL;
-    }
-}
-
-static void
-destroy_drawer (GtkWidget *widget,
-                Drawer    *drawer)
-{
-    if (drawer->toplevel) {
-        gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
-        drawer->toplevel = NULL;
-    }
-
-    if (drawer->close_timeout_id) {
-        g_source_remove (drawer->close_timeout_id);
-        drawer->close_timeout_id = 0;
-    }
 }
 
 static void
@@ -178,26 +156,23 @@ key_press_drawer_widget (GtkWidget   *widget,
     return TRUE;
 }
 
+    /* drag and drop handlers */
+
 static void
-drag_data_received_cb (GtkWidget          *widget,
-                       GdkDragContext     *context,
-                       gint                x,
-                       gint                y,
-                       GtkSelectionData   *selection_data,
-                       guint               info,
-                       guint               time_,
-                       Drawer             *drawer)
+drag_data_get_cb (GtkWidget          *widget,
+                  GdkDragContext     *context,
+                  GtkSelectionData   *selection_data,
+                  guint               info,
+                  guint               time,
+                  Drawer             *drawer)
 {
-    PanelWidget *panel_widget;
+    char *foo;
 
-    if (!panel_check_dnd_target_data (widget, context, &info, NULL)) {
-        gtk_drag_finish (context, FALSE, FALSE, time_);
-        return;
-    }
+    foo = g_strdup_printf ("DRAWER:%d", panel_find_applet_index (widget));
 
-    panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
+    gtk_selection_data_set (selection_data, gtk_selection_data_get_target (selection_data), 8, (guchar *) foo, strlen (foo));
 
-    panel_receive_dnd_data (panel_widget, info, -1, selection_data, context, time_);
+    g_free (foo);
 }
 
 static gboolean
@@ -235,6 +210,46 @@ drag_motion_cb (GtkWidget          *widget,
 }
 
 static gboolean
+drag_drop_cb (GtkWidget      *widget,
+              GdkDragContext *context,
+              int             x,
+              int             y,
+              guint           time_,
+              Drawer         *drawer)
+{
+    GdkAtom atom = NULL;
+
+    if (!panel_check_dnd_target_data (widget, context, NULL, &atom))
+        return FALSE;
+
+    gtk_drag_get_data (widget, context, atom, time_);
+
+    return TRUE;
+}
+
+static void
+drag_data_received_cb (GtkWidget          *widget,
+                       GdkDragContext     *context,
+                       gint                x,
+                       gint                y,
+                       GtkSelectionData   *selection_data,
+                       guint               info,
+                       guint               time_,
+                       Drawer             *drawer)
+{
+    PanelWidget *panel_widget;
+
+    if (!panel_check_dnd_target_data (widget, context, &info, NULL)) {
+        gtk_drag_finish (context, FALSE, FALSE, time_);
+        return;
+    }
+
+    panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
+
+    panel_receive_dnd_data (panel_widget, info, -1, selection_data, context, time_);
+}
+
+static gboolean
 close_drawer_in_idle (gpointer data)
 {
     Drawer *drawer = (Drawer *) data;
@@ -267,39 +282,123 @@ drag_leave_cb (GtkWidget      *widget,
     button_widget_set_dnd_highlight (BUTTON_WIDGET (widget), FALSE);
 }
 
-static gboolean
-drag_drop_cb (GtkWidget      *widget,
-              GdkDragContext *context,
-              int             x,
-              int             y,
-              guint           time_,
-              Drawer         *drawer)
+    /* load_drawer_applet handlers */
+
+static void
+drawer_button_size_allocated (GtkWidget     *widget,
+                              GtkAllocation *alloc,
+                              Drawer        *drawer)
 {
-    GdkAtom atom = NULL;
+    if (!gtk_widget_get_realized (widget))
+        return;
 
-    if (!panel_check_dnd_target_data (widget, context, NULL, &atom))
-        return FALSE;
+    gtk_widget_queue_resize (GTK_WIDGET (drawer->toplevel));
 
-    gtk_drag_get_data (widget, context, atom, time_);
+    g_object_set_data (G_OBJECT (widget), "allocated", GINT_TO_POINTER (TRUE));
+}
 
-    return TRUE;
+static gboolean
+drawer_changes_enabled (void)
+{
+    return !panel_lockdown_get_locked_down ();
+}
+
+    /* gsettings handlers */
+
+static void
+panel_drawer_custom_icon_changed (GSettings *settings,
+                                  gchar     *key,
+                                  Drawer    *drawer)
+{
+    g_return_if_fail (drawer != NULL);
+    g_return_if_fail (drawer->button != NULL);
+
+    gboolean use_custom_icon = g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY);
+    char *custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
+
+    if (use_custom_icon && custom_icon != NULL && custom_icon [0] != '\0') {
+        button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
+    } else {
+        button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), PANEL_ICON_DRAWER);
+    }
+
+    g_free (custom_icon);
 }
 
 static void
-drag_data_get_cb (GtkWidget          *widget,
-                  GdkDragContext     *context,
-                  GtkSelectionData   *selection_data,
-                  guint               info,
-                  guint               time,
-                  Drawer             *drawer)
+panel_drawer_tooltip_changed (GSettings *settings,
+                              gchar     *key,
+                              Drawer    *drawer)
 {
-    char *foo;
+    gchar *tooltip = g_settings_get_string (settings, key);
+    set_tooltip_and_name (drawer, tooltip);
+    g_free (tooltip);
+}
 
-    foo = g_strdup_printf ("DRAWER:%d", panel_find_applet_index (widget));
+    /* destroy handlers */
 
-    gtk_selection_data_set (selection_data, gtk_selection_data_get_target (selection_data), 8, (guchar *) foo, strlen (foo));
+static void
+toplevel_destroyed (GtkWidget *widget,
+                    Drawer    *drawer)
+{
+    drawer->toplevel = NULL;
 
-    g_free (foo);
+    if (drawer->button) {
+        gtk_widget_destroy (drawer->button);
+        drawer->button = NULL;
+    }
+}
+
+static void
+destroy_drawer (GtkWidget *widget,
+                Drawer    *drawer)
+{
+    if (drawer->toplevel) {
+        gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
+        drawer->toplevel = NULL;
+    }
+
+    if (drawer->close_timeout_id) {
+        g_source_remove (drawer->close_timeout_id);
+        drawer->close_timeout_id = 0;
+    }
+}
+
+static void
+drawer_deletion_response (GtkWidget   *dialog,
+                          int          response,
+                          Drawer      *drawer)
+{
+    if (response == GTK_RESPONSE_OK)
+        panel_profile_delete_object (drawer->info);
+
+    gtk_widget_destroy (dialog);
+}
+
+/* end event handlers */
+
+static PanelToplevel *
+create_drawer_toplevel (const char *drawer_id,
+                        GSettings  *settings)
+{
+    PanelToplevel *toplevel;
+    char          *toplevel_id;
+
+    toplevel_id = panel_profile_find_new_id (PANEL_GSETTINGS_TOPLEVELS);
+    toplevel = panel_profile_load_toplevel (toplevel_id);
+
+    if (!toplevel) {
+        g_free (toplevel_id);
+        return NULL;
+    }
+
+    g_settings_set_string (settings, PANEL_OBJECT_ATTACHED_TOPLEVEL_ID_KEY, toplevel_id);
+    g_free (toplevel_id);
+
+    panel_profile_set_toplevel_enable_buttons (toplevel, TRUE);
+    panel_profile_set_toplevel_enable_arrows (toplevel, TRUE);
+
+    return toplevel;
 }
 
 static void
@@ -346,93 +445,28 @@ create_drawer_applet (PanelToplevel    *toplevel,
 
     set_tooltip_and_name (drawer, tooltip);
 
+    g_signal_connect (drawer->button, "clicked", G_CALLBACK (drawer_click), drawer);
+    g_signal_connect (drawer->button, "key_press_event", G_CALLBACK (key_press_drawer), drawer);
+    g_signal_connect (drawer->toplevel, "key_press_event", G_CALLBACK (key_press_drawer_widget), drawer);
+
+
     gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0);
 
     g_signal_connect (drawer->button, "drag_data_get", G_CALLBACK (drag_data_get_cb), drawer);
-    g_signal_connect (drawer->button, "drag_data_received", G_CALLBACK (drag_data_received_cb), drawer);
     g_signal_connect (drawer->button, "drag_motion", G_CALLBACK (drag_motion_cb), drawer);
-    g_signal_connect (drawer->button, "drag_leave", G_CALLBACK (drag_leave_cb), drawer);
     g_signal_connect (drawer->button, "drag_drop", G_CALLBACK (drag_drop_cb), drawer);
+    g_signal_connect (drawer->button, "drag_data_received", G_CALLBACK (drag_data_received_cb), drawer);
+    g_signal_connect (drawer->button, "drag_leave", G_CALLBACK (drag_leave_cb), drawer);
 
-    g_signal_connect (drawer->button, "clicked", G_CALLBACK (drawer_click), drawer);
+
     g_signal_connect (drawer->button, "destroy", G_CALLBACK (destroy_drawer), drawer);
-    g_signal_connect (drawer->button, "key_press_event", G_CALLBACK (key_press_drawer), drawer);
-    g_signal_connect (toplevel, "destroy", G_CALLBACK (toplevel_destroyed), drawer);
+    g_signal_connect (drawer->toplevel, "destroy", G_CALLBACK (toplevel_destroyed), drawer);
 
     gtk_widget_show (drawer->button);
 
-    g_signal_connect (drawer->toplevel, "key_press_event", G_CALLBACK (key_press_drawer_widget), drawer);
-
-    panel_toplevel_attach_to_widget (toplevel, parent_toplevel, GTK_WIDGET (drawer->button));
+    panel_toplevel_attach_to_widget (drawer->toplevel, parent_toplevel, GTK_WIDGET (drawer->button));
 
     return drawer;
-}
-
-static PanelToplevel *
-create_drawer_toplevel (const char *drawer_id,
-                        GSettings  *settings)
-{
-    PanelToplevel *toplevel;
-    char          *toplevel_id;
-
-    toplevel_id = panel_profile_find_new_id (PANEL_GSETTINGS_TOPLEVELS);
-    toplevel = panel_profile_load_toplevel (toplevel_id);
-
-    if (!toplevel) {
-        g_free (toplevel_id);
-        return NULL;
-    }
-
-    g_settings_set_string (settings, PANEL_OBJECT_ATTACHED_TOPLEVEL_ID_KEY, toplevel_id);
-    g_free (toplevel_id);
-
-    panel_profile_set_toplevel_enable_buttons (toplevel, TRUE);
-    panel_profile_set_toplevel_enable_arrows (toplevel, TRUE);
-
-    return toplevel;
-}
-
-static void
-drawer_button_size_allocated (GtkWidget     *widget,
-                              GtkAllocation *alloc,
-                              Drawer        *drawer)
-{
-    if (!gtk_widget_get_realized (widget))
-        return;
-
-    gtk_widget_queue_resize (GTK_WIDGET (drawer->toplevel));
-
-    g_object_set_data (G_OBJECT (widget), "allocated", GINT_TO_POINTER (TRUE));
-}
-
-static void
-panel_drawer_custom_icon_changed (GSettings *settings,
-                                  gchar     *key,
-                                  Drawer    *drawer)
-{
-    g_return_if_fail (drawer != NULL);
-    g_return_if_fail (drawer->button != NULL);
-
-    gboolean use_custom_icon = g_settings_get_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY);
-    char *custom_icon = g_settings_get_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY);
-
-    if (use_custom_icon && custom_icon != NULL && custom_icon [0] != '\0') {
-        button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
-    } else {
-        button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), PANEL_ICON_DRAWER);
-    }
-
-    g_free (custom_icon);
-}
-
-static void
-panel_drawer_tooltip_changed (GSettings *settings,
-                              gchar     *key,
-                              Drawer    *drawer)
-{
-    gchar *tooltip = g_settings_get_string (settings, key);
-    set_tooltip_and_name (drawer, tooltip);
-    g_free (tooltip);
 }
 
 static void
@@ -452,12 +486,6 @@ panel_drawer_connect_to_gsettings (Drawer *drawer)
                       "changed::" PANEL_OBJECT_TOOLTIP_KEY,
                       G_CALLBACK (panel_drawer_tooltip_changed),
                       drawer);
-}
-
-static gboolean
-drawer_changes_enabled (void)
-{
-    return !panel_lockdown_get_locked_down ();
 }
 
 static void
@@ -585,6 +613,8 @@ panel_drawer_prepare (const char  *drawer_id,
     g_object_unref (settings);
 }
 
+/* API */
+
 void
 panel_drawer_create (PanelToplevel *toplevel,
                      int            position,
@@ -690,17 +720,6 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 
     } else
         gtk_drag_source_unset (drawer->button);
-}
-
-static void
-drawer_deletion_response (GtkWidget   *dialog,
-                          int          response,
-                          Drawer      *drawer)
-{
-    if (response == GTK_RESPONSE_OK)
-        panel_profile_delete_object (drawer->info);
-
-    gtk_widget_destroy (dialog);
 }
 
 void
