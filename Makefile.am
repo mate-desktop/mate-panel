@@ -20,28 +20,25 @@ EXTRA_DIST = \
 	COPYING-DOCS		\
 	HACKING
 
-MAINTAINERCLEANFILES = \
-	$(srcdir)/INSTALL \
-	$(srcdir)/aclocal.m4 \
-	$(srcdir)/compile \
-	$(srcdir)/config.guess \
-	$(srcdir)/config.h.in \
-	$(srcdir)/config.sub \
-	$(srcdir)/depcomp \
-	$(srcdir)/install-sh \
-	$(srcdir)/ltmain.sh \
-	$(srcdir)/missing \
-	$(srcdir)/mkinstalldirs \
-	`find "$(srcdir)" -type f -name Makefile.in -print` \
-	$(srcdir)/configure \
-	$(srcdir)/gtk-doc.make \
-	$(srcdir)/m4/gtk-doc.m4 \
-	$(srcdir)/m4/intltool.m4 \
-	$(srcdir)/m4/libtool.m4 \
-	$(srcdir)/m4/ltoptions.m4 \
-	$(srcdir)/m4/ltsugar.m4 \
-	$(srcdir)/m4/ltversion.m4 \
-	$(srcdir)/m4/lt~obsolete.m4
+MPCLEANFILES = \
+	INSTALL \
+	aclocal.m4 \
+	compile \
+	config.* \
+	configure \
+	depcomp \
+	install-sh \
+	ltmain.sh \
+	missing \
+	omf.make \
+	xmldocs.make \
+	mkinstalldirs \
+	gtk-doc.make
+
+mp-clean: maintainer-clean
+	-test -z "$(MPCLEANFILES)" || rm -f $(MPCLEANFILES)
+	-rm -rf m4;
+	find . -name "Makefile.in" -exec rm \{\} \;
 
 # Build ChangeLog from GIT  history
 ChangeLog:

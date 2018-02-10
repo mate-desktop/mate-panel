@@ -1291,7 +1291,7 @@ fill_files_from (const char *dirname,
 
 		suffix = NULL;
 		if (
-#ifdef HAVE_STRUCT_DIRENT_D_TYPE
+#ifdef _DIRENT_HAVE_D_TYPE
 		/* don't use g_file_test at first so we don't stat() */
 		    dent->d_type == DT_DIR ||
 		    (dent->d_type == DT_LNK &&
