@@ -3666,10 +3666,15 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 		panel_toplevel_update_hide_buttons (toplevel);
 	}
 
-	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel)))
+	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel))) {
 		panel_toplevel_start_animation (toplevel);
-	else if (toplevel->priv->attached)
+	}
+
+	/* if the toplevel is attached (-> drawer), hide it after the animation
+	 * this hides the hide button properly as well */
+	if (toplevel->priv->attached) {
 		gtk_widget_hide (GTK_WIDGET (toplevel));
+        }
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 }
@@ -3714,10 +3719,15 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 	if (toplevel->priv->attach_toplevel)
 		panel_toplevel_push_autohide_disabler (toplevel->priv->attach_toplevel);
 
-	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel)))
+	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel))) {
 		panel_toplevel_start_animation (toplevel);
-	else if (toplevel->priv->attached)
+	}
+
+	/* if the toplevel is attached (-> drawer), unhide it after the animation
+	 * (same as for hide) */
+	if (toplevel->priv->attached) {
 		gtk_widget_show (GTK_WIDGET (toplevel));
+	}
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
