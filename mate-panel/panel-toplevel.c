@@ -1171,42 +1171,18 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 				int            left,
 				int            top)
 {
+
 	GtkWidget *button;
 	AtkObject *obj;
 	GtkWidget *arrow;
-	int        arrow_size;
 
 	button = gtk_button_new ();
 	obj = gtk_widget_get_accessible (button);
 	atk_object_set_name (obj, _("Hide Panel"));
 	gtk_widget_set_can_default (button, FALSE);
 
-	gtk_widget_style_get (GTK_WIDGET (toplevel),
-			      "arrow-size", &arrow_size,
-			      NULL);
-
-	switch (arrow_type) {
-	case GTK_ARROW_UP:
-		gtk_widget_set_size_request (button, -1, arrow_size);
-		break;
-	case GTK_ARROW_DOWN:
-		gtk_widget_set_size_request (button, -1, arrow_size);
-		break;
-	case GTK_ARROW_LEFT:
-		gtk_widget_set_size_request (button, arrow_size, -1);
-		break;
-	case GTK_ARROW_RIGHT:
-		gtk_widget_set_size_request (button, arrow_size, -1);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
 	arrow = gtk_image_new ();
 	set_arrow_type (GTK_IMAGE (arrow), arrow_type);
-	gtk_widget_set_margin_start(GTK_WIDGET(arrow), 0);
-	gtk_widget_set_margin_end(GTK_WIDGET(arrow), 0);
 	gtk_container_add (GTK_CONTAINER (button), arrow);
 	gtk_widget_show (arrow);
 
@@ -1261,11 +1237,77 @@ static void panel_toplevel_update_buttons_showing(PanelToplevel* toplevel)
 	}
 }
 
+/* force set hide button size on panel size < 30px */
+static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel_size)
+{
+
+	GtkStyleContext *context = NULL;
+	context = gtk_widget_get_style_context(button);
+	gtk_style_context_add_class(context, "panel-button");
+
+	/* memory is managed by gtk */
+	GtkCssProvider *css_provider = NULL;
+	css_provider = gtk_css_provider_get_default ();
+
+	/* get arrow image */
+	GtkWidget *arrow = NULL;
+	arrow = gtk_bin_get_child (GTK_BIN (button));
+
+	/* get defaults from theme */
+	GtkSettings * settings = NULL;
+	settings = gtk_settings_get_default ();
+	gchar *gtk_theme_name = NULL;
+	g_object_get (settings, "gtk-theme-name", &gtk_theme_name, NULL);
+	css_provider = gtk_css_provider_get_named (gtk_theme_name, NULL);
+	g_free (gtk_theme_name);
+
+
+	/* set custom css by adding our custom code to the default theme css
+	 *
+	 * NOTE that contriary to the documentation:
+	 * https://developer.gnome.org/gtk3/stable/GtkCssProvider.html#gtk-css-provider-load-from-data
+	 * the previously loaded theme is NOT cleared from the css_provider. (reason unknown)
+	 * In other words, this works exactly, how we need it here.
+	 * ALSO NOTE that using gtk_css_provider_to_string () to convert the theme css data into a string
+	 * and then adding the custom css, then adding this updated css to a css_provider
+	 * with the gtk_css_provider_load_from_data () also works,
+	 * however some themes can't be easily converted to strings, beacuse of the binary data
+	 * they contain. This causes a delay of minutes in loading the mate-panel,
+	 * and so this approach is not viable. */
+	if (panel_size < 30) {
+		gtk_css_provider_load_from_data (css_provider, ".panel-button {min-height: 13px; min-width: 13px; padding: 0px;}", -1, NULL);
+	}
+
+
+	gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+	/* set image size */
+	if (panel_size < 20) {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 12);
+	} else if (panel_size < 40) {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 16);
+	} else if (panel_size < 60) {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 24);
+	} else {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 32);
+	}
+
+}
+
 static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 {
-	if (toplevel->priv->buttons_enabled)
+
+	int panel_size = toplevel->priv->size;
+
+	if (toplevel->priv->buttons_enabled) {
 		panel_toplevel_update_buttons_showing (toplevel);
-	else {
+
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_top, panel_size);
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_bottom, panel_size);
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_left, panel_size);
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_right, panel_size);
+
+	} else {
 		g_object_set (
 			G_OBJECT (toplevel->priv->hide_button_top),
 			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_DOWN,
@@ -1285,35 +1327,26 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 	}
 
 	if (toplevel->priv->arrows_enabled) {
-		int arrow_size;
 
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 
-		gtk_widget_style_get (GTK_WIDGET (toplevel),
-				      "arrow-size", &arrow_size,
-				      NULL);
-
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     -1, arrow_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom,
-					     -1, arrow_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_left,
-					     arrow_size, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_right,
-					     arrow_size, -1);
 	} else {
+
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
+	}
 
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,    -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_left,   -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_right,  -1, -1);
+	/* set size after setting the arrow */
+	if (toplevel->priv->buttons_enabled) {
+		gtk_widget_set_size_request (toplevel->priv->hide_button_top,    panel_size, panel_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, panel_size, panel_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_left,   panel_size, panel_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_right,  panel_size, panel_size);
 	}
 }
 
@@ -5049,6 +5082,8 @@ panel_toplevel_set_size (PanelToplevel *toplevel,
 	panel_widget_set_size (toplevel->priv->panel_widget, toplevel->priv->size);
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+
+	panel_toplevel_update_hide_buttons (toplevel);
 
 	g_object_notify (G_OBJECT (toplevel), "size");
 }
