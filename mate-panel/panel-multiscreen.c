@@ -88,11 +88,14 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 						 GdkRectangle **geometries_ret)
 {
 #ifdef HAVE_RANDR
+	GdkDisplay         *display;
+	GdkMonitor         *monitor;
 	Display            *xdisplay;
 	Window              xroot;
 	XRRScreenResources *resources;
 	RROutput            primary;
 	GArray             *geometries;
+	int                 scale;
 	int                 i;
 
 	if (!have_randr)
@@ -138,6 +141,11 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 		return FALSE;
 
 	primary = XRRGetOutputPrimary (xdisplay, xroot);
+	display = gdk_screen_get_display (screen);
+	monitor = gdk_display_get_primary_monitor (display);
+
+	/* Use scale factor to bring geometries down to device pixels to support HiDPI displays */
+	scale = gdk_monitor_get_scale_factor (monitor);
 
 	geometries = g_array_sized_new (FALSE, FALSE,
 					sizeof (GdkRectangle),
@@ -157,10 +165,10 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 			crtc = XRRGetCrtcInfo (xdisplay, resources,
 					       output->crtc);
 
-			rect.x	    = crtc->x;
-			rect.y	    = crtc->y;
-			rect.width  = crtc->width;
-			rect.height = crtc->height;
+			rect.x      = crtc->x / scale;
+			rect.y      = crtc->y / scale;
+			rect.width  = crtc->width / scale;
+			rect.height = crtc->height / scale;
 
 			XRRFreeCrtcInfo (crtc);
 
@@ -211,8 +219,21 @@ panel_multiscreen_get_gdk_monitors_for_screen (GdkScreen     *screen,
 	num_monitors = gdk_display_get_n_monitors (display);
 	geometries = g_new (GdkRectangle, num_monitors);
 
-	for (i = 0; i < num_monitors; i++)
-		gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &(geometries[i]));
+	for (i = 0; i < num_monitors; i++) {
+		GdkMonitor *monitor;
+		int         scale;
+
+		monitor = gdk_display_get_monitor (display, i);
+		scale = gdk_monitor_get_scale_factor (monitor);
+
+		gdk_monitor_get_geometry (monitor, &(geometries[i]));
+
+		/* Scale geometries down to device pixels to support HiDPI displays */
+		geometries[i].x /= scale;
+		geometries[i].y /= scale;
+		geometries[i].width /= scale;
+		geometries[i].height /= scale;
+	}
 
 	*monitors_ret = num_monitors;
 	*geometries_ret = geometries;
