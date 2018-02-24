@@ -1179,42 +1179,18 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 				int            left,
 				int            top)
 {
+
 	GtkWidget *button;
 	AtkObject *obj;
 	GtkWidget *arrow;
-	int        arrow_size;
 
 	button = gtk_button_new ();
 	obj = gtk_widget_get_accessible (button);
 	atk_object_set_name (obj, _("Hide Panel"));
 	gtk_widget_set_can_default (button, FALSE);
 
-	gtk_widget_style_get (GTK_WIDGET (toplevel),
-			      "arrow-size", &arrow_size,
-			      NULL);
-
-	switch (arrow_type) {
-	case GTK_ARROW_UP:
-		gtk_widget_set_size_request (button, -1, arrow_size);
-		break;
-	case GTK_ARROW_DOWN:
-		gtk_widget_set_size_request (button, -1, arrow_size);
-		break;
-	case GTK_ARROW_LEFT:
-		gtk_widget_set_size_request (button, arrow_size, -1);
-		break;
-	case GTK_ARROW_RIGHT:
-		gtk_widget_set_size_request (button, arrow_size, -1);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
 	arrow = gtk_image_new ();
 	set_arrow_type (GTK_IMAGE (arrow), arrow_type);
-	gtk_widget_set_margin_start(GTK_WIDGET(arrow), 0);
-	gtk_widget_set_margin_end(GTK_WIDGET(arrow), 0);
 	gtk_container_add (GTK_CONTAINER (button), arrow);
 	gtk_widget_show (arrow);
 
@@ -1270,7 +1246,7 @@ static void panel_toplevel_update_buttons_showing(PanelToplevel* toplevel)
 }
 
 /* force set hide button size on panel size < 30px */
-static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, gboolean set_size)
+static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel_size)
 {
 
 	GtkStyleContext *context;
@@ -1280,9 +1256,14 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, gboolean 
 	GtkCssProvider *css_provider;
 	css_provider = gtk_css_provider_get_default ();
 
+	/* get arrow image */
+	GtkWidget *arrow;
+	arrow = gtk_bin_get_child (GTK_BIN (button));
+
 	/* set custom css */
-	if (set_size) {
-		gtk_css_provider_load_from_data (css_provider, ".panel-button {padding: 0px;min-height: 15px;}", -1, NULL);
+	if (panel_size < 30) {
+
+		gtk_css_provider_load_from_data (css_provider, ".panel-button {min-height: 10px; min-width: 10px; padding: 0px;}", -1, NULL);
 
 	/* get defaults from theme */
 	} else {
@@ -1297,25 +1278,31 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, gboolean 
 
 	gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+	/* set image size */
+	if (panel_size < 20) {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 12);
+	} else if (panel_size < 25) {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 16);
+	} else if (panel_size < 40) {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 24);
+	} else {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 32);
+	}
+
 }
 
 static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 {
 
+	int panel_size = toplevel->priv->size;
+
 	if (toplevel->priv->buttons_enabled) {
 		panel_toplevel_update_buttons_showing (toplevel);
 
-		if (toplevel->priv->size < 30) {
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_top, TRUE);
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_bottom, TRUE);
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_left, TRUE);
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_right, TRUE);
-		} else {
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_top, FALSE);
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_bottom, FALSE);
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_left, FALSE);
-			panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_right, FALSE);
-		}
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_top, panel_size);
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_bottom, panel_size);
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_left, panel_size);
+		panel_toplevel_update_hide_buttons_size (toplevel->priv->hide_button_right, panel_size);
 
 	} else {
 		g_object_set (
@@ -1337,25 +1324,20 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 	}
 
 	if (toplevel->priv->arrows_enabled) {
-		int arrow_size;
 
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 
-		gtk_widget_style_get (GTK_WIDGET (toplevel),
-				      "arrow-size", &arrow_size,
-				      NULL);
-
 		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     -1, toplevel->priv->size);
+					     -1, panel_size);
 		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom,
-					     -1, toplevel->priv->size);
+					     -1, panel_size);
 		gtk_widget_set_size_request (toplevel->priv->hide_button_left,
-					     toplevel->priv->size, -1);
+					     panel_size, -1);
 		gtk_widget_set_size_request (toplevel->priv->hide_button_right,
-					     toplevel->priv->size, -1);
+					     panel_size, -1);
 
 	} else {
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
