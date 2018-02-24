@@ -1708,7 +1708,6 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 	GdkScreen             *screen;
 	int                    width_request;
 	GtkWidget             *entry;
-	gint                   scale;
 
 	dialog->combobox = PANEL_GTK_BUILDER_GET (gui, "comboboxentry");
 
@@ -1721,10 +1720,9 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 		(GTK_COMBO_BOX (dialog->combobox), 0);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
-	scale = gtk_widget_get_scale_factor (GTK_WIDGET (dialog->run_dialog));
 
         /* 1/4 the width of the first monitor should be a good value */
-	width_request = panel_multiscreen_width (screen, 0) / (4 * scale);
+	width_request = panel_multiscreen_width (screen, 0) / 4;
 	g_object_set (G_OBJECT (dialog->combobox),
 		      "width_request", width_request,
 		      NULL);

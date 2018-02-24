@@ -290,8 +290,7 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 	 * sorts of awful misalignments and pretend it's all good. Or we can just
 	 * make this thing think that the screen is scaled down, and because GTK+
 	 * already scaled everything up without the panel knowing about it, the whole
-	 * thing somehow works well... sigh.
-	 * @see panel_toplevel_get_monitor_geometry() */
+	 * thing somehow works well... sigh. */
 	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
 	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
 
@@ -307,24 +306,17 @@ static GdkScreen* panel_toplevel_get_monitor_geometry(PanelToplevel* toplevel, i
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
-	if (x) *x = panel_multiscreen_x(screen, toplevel->priv->monitor) / toplevel->priv->scale;
-	if (y) *y = panel_multiscreen_y(screen, toplevel->priv->monitor) / toplevel->priv->scale;
+	if (x) *x = panel_multiscreen_x(screen, toplevel->priv->monitor);
+	if (y) *y = panel_multiscreen_y(screen, toplevel->priv->monitor);
 
-	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
-	 * toplevel geometry attributes by the scale factor, then correct for all
-	 * sorts of awful misalignments and pretend it's all good. Or we can just
-	 * make this thing think that the screen is scaled down, and because GTK+
-	 * already scaled everything up without the panel knowing about it, the whole
-	 * thing somehow works well... sigh.
-	 * @see panel_toplevel_get_screen_geometry() */
 	if (width)
 	{
-		*width  = panel_multiscreen_width(screen, toplevel->priv->monitor) / toplevel->priv->scale;
+		*width  = panel_multiscreen_width(screen, toplevel->priv->monitor);
 	}
 
 	if (height)
 	{
-		*height = panel_multiscreen_height(screen, toplevel->priv->monitor) / toplevel->priv->scale;
+		*height = panel_multiscreen_height(screen, toplevel->priv->monitor);
 	}
 
 	return screen;

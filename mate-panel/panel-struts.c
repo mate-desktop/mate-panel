@@ -75,10 +75,17 @@ panel_struts_get_monitor_geometry (GdkScreen *screen,
 				   int       *width,
 				   int       *height)
 {
-        *x      = panel_multiscreen_x      (screen, monitor);
-        *y      = panel_multiscreen_y      (screen, monitor);
-        *width  = panel_multiscreen_width  (screen, monitor);
-        *height = panel_multiscreen_height (screen, monitor);
+        GdkDisplay *display;
+        int scale;
+
+        /* Use scale factor to bring strut dimensions up to application pixels to support HiDPI displays */
+        display = gdk_screen_get_display (screen);
+        scale = gdk_monitor_get_scale_factor (gdk_display_get_monitor (display, monitor));
+
+        *x      = panel_multiscreen_x      (screen, monitor) * scale;
+        *y      = panel_multiscreen_y      (screen, monitor) * scale;
+        *width  = panel_multiscreen_width  (screen, monitor) * scale;
+        *height = panel_multiscreen_height (screen, monitor) * scale;
 }
 
 static PanelStrut *
