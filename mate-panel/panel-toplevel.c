@@ -1263,7 +1263,7 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel
 	/* set custom css */
 	if (panel_size < 30) {
 
-		gtk_css_provider_load_from_data (css_provider, ".panel-button {min-height: 10px; min-width: 10px; padding: 0px;}", -1, NULL);
+		gtk_css_provider_load_from_data (css_provider, ".panel-button {min-height: 13px; min-width: 13px; padding: 0px;}", -1, NULL);
 
 	/* get defaults from theme */
 	} else {
@@ -1281,9 +1281,9 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel
 	/* set image size */
 	if (panel_size < 20) {
 		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 12);
-	} else if (panel_size < 25) {
-		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 16);
 	} else if (panel_size < 40) {
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 16);
+	} else if (panel_size < 60) {
 		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 24);
 	} else {
 		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 32);
@@ -1330,14 +1330,7 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     -1, panel_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom,
-					     -1, panel_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_left,
-					     panel_size, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_right,
-					     panel_size, -1);
+
 
 	} else {
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
@@ -1345,10 +1338,7 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,    -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_left,   -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_right,  -1, -1);
+
 
 	}
 }
