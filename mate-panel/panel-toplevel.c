@@ -1330,16 +1330,20 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 
-
-
 	} else {
+
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
+	}
 
-
-
+	/* set size after setting the arrow */
+	if (toplevel->priv->buttons_enabled) {
+		gtk_widget_set_size_request (toplevel->priv->hide_button_top,    panel_size, panel_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, panel_size, panel_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_left,   panel_size, panel_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_right,  panel_size, panel_size);
 	}
 }
 
@@ -5075,6 +5079,8 @@ panel_toplevel_set_size (PanelToplevel *toplevel,
 	panel_widget_set_size (toplevel->priv->panel_widget, toplevel->priv->size);
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+
+	panel_toplevel_update_hide_buttons (toplevel);
 
 	g_object_notify (G_OBJECT (toplevel), "size");
 }
