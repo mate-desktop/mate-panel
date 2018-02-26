@@ -219,21 +219,8 @@ panel_multiscreen_get_gdk_monitors_for_screen (GdkScreen     *screen,
 	num_monitors = gdk_display_get_n_monitors (display);
 	geometries = g_new (GdkRectangle, num_monitors);
 
-	for (i = 0; i < num_monitors; i++) {
-		GdkMonitor *monitor;
-		int         scale;
-
-		monitor = gdk_display_get_monitor (display, i);
-		scale = gdk_monitor_get_scale_factor (monitor);
-
-		gdk_monitor_get_geometry (monitor, &(geometries[i]));
-
-		/* Scale geometries down to device pixels to support HiDPI displays */
-		geometries[i].x /= scale;
-		geometries[i].y /= scale;
-		geometries[i].width /= scale;
-		geometries[i].height /= scale;
-	}
+	for (i = 0; i < num_monitors; i++)
+		gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &(geometries[i]));
 
 	*monitors_ret = num_monitors;
 	*geometries_ret = geometries;
