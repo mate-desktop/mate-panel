@@ -75,17 +75,10 @@ panel_struts_get_monitor_geometry (GdkScreen *screen,
 				   int       *width,
 				   int       *height)
 {
-        GdkDisplay *display;
-        int scale;
-
-        /* Use scale factor to bring strut dimensions up to application pixels to support HiDPI displays */
-        display = gdk_screen_get_display (screen);
-        scale = gdk_monitor_get_scale_factor (gdk_display_get_monitor (display, monitor));
-
-        *x      = panel_multiscreen_x      (screen, monitor) * scale;
-        *y      = panel_multiscreen_y      (screen, monitor) * scale;
-        *width  = panel_multiscreen_width  (screen, monitor) * scale;
-        *height = panel_multiscreen_height (screen, monitor) * scale;
+        *x      = panel_multiscreen_x      (screen, monitor);
+        *y      = panel_multiscreen_y      (screen, monitor);
+        *width  = panel_multiscreen_width  (screen, monitor);
+        *height = panel_multiscreen_height (screen, monitor);
 }
 
 static PanelStrut *
@@ -263,6 +256,7 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	int         monitor_x, monitor_y, monitor_width, monitor_height;
 	int         screen_width, screen_height;
 	int         leftmost, rightmost, topmost, bottommost;
+	int         scale;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -274,10 +268,11 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 		return;
 	}
 
+	scale = gtk_widget_get_scale_factor (widget);
 	strut_size = strut->allocated_strut_size;
 
-	screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (strut->screen));
-	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (strut->screen));
+	screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
+	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
 
 	panel_struts_get_monitor_geometry (strut->screen,
 					   strut->monitor,
@@ -322,8 +317,8 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	panel_xutils_set_strut (gtk_widget_get_window (widget),
 				strut->orientation,
 				strut_size,
-				strut->allocated_strut_start,
-				strut->allocated_strut_end);
+				strut->allocated_strut_start * scale,
+				strut->allocated_strut_end * scale);
 }
 
 void
@@ -449,24 +444,32 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 		strut->geometry.y      = monitor_y;
 		strut->geometry.width  = strut->strut_end - strut->strut_start + 1;
 		strut->geometry.height = strut->strut_size / scale;
+		if (scale > 1)
+			strut->geometry.width -= (strut->strut_size / scale);
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		strut->geometry.x      = strut->strut_start;
 		strut->geometry.y      = monitor_y + monitor_height - strut->strut_size;
 		strut->geometry.width  = strut->strut_end - strut->strut_start + 1;
 		strut->geometry.height = strut->strut_size / scale;
+		if (scale > 1)
+			strut->geometry.width -= (strut->strut_size / scale);
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		strut->geometry.x      = monitor_x;
 		strut->geometry.y      = strut->strut_start;
 		strut->geometry.width  = strut->strut_size / scale;
 		strut->geometry.height = strut->strut_end - strut->strut_start + 1;
+		if (scale > 1)
+			strut->geometry.height -= (strut->strut_size / scale);
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 		strut->geometry.x      = monitor_x + monitor_width - strut->strut_size;
 		strut->geometry.y      = strut->strut_start;
 		strut->geometry.width  = strut->strut_size / scale;
 		strut->geometry.height = strut->strut_end - strut->strut_start + 1;
+		if (scale > 1)
+			strut->geometry.height -= (strut->strut_size / scale);
 		break;
 	}
 
