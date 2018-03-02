@@ -1026,10 +1026,8 @@ mate_panel_applet_get_preferred_width (GtkWidget *widget,
 		 * they are back at their own intended size.
 		 */
 		scale = gtk_widget_get_scale_factor (widget);
-		if (scale) {
-			*minimum_width /= scale;
-			*natural_width /= scale;
-		}
+		*minimum_width /= scale;
+		*natural_width /= scale;
 	}
 }
 
@@ -1050,10 +1048,8 @@ mate_panel_applet_get_preferred_height (GtkWidget *widget,
 		 * they are back at their own intended size.
 		 */
 		scale = gtk_widget_get_scale_factor (widget);
-		if (scale) {
-			*minimum_height /= scale;
-			*natural_height /= scale;
-		}
+		*minimum_height /= scale;
+		*natural_height /= scale;
 	}
 }
 
@@ -1062,6 +1058,9 @@ mate_panel_applet_get_request_mode (GtkWidget *widget)
 {
 	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
 	MatePanelAppletOrient orientation;
+
+	if (applet->priv->out_of_process)
+		return GTK_SIZE_REQUEST_CONSTANT_SIZE;
 
 	orientation = mate_panel_applet_get_orient (applet);
 	if (orientation == MATE_PANEL_APPLET_ORIENT_UP ||
@@ -1500,9 +1499,9 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 	GdkWindow* window;
 
 	if (applet->priv->out_of_process)
-		window = gtk_widget_get_window (applet->priv->plug);
+		window = gtk_widget_get_window (GTK_WIDGET (applet->priv->plug));
 	else
-		window = gtk_widget_get_window GTK_WIDGET((applet));
+		window = gtk_widget_get_window (GTK_WIDGET (applet));
 
 	gtk_widget_set_app_paintable(GTK_WIDGET(applet),TRUE);
 
