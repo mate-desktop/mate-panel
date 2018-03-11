@@ -1249,32 +1249,39 @@ static void panel_toplevel_update_buttons_showing(PanelToplevel* toplevel)
 static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel_size)
 {
 
-	GtkStyleContext *context;
+	GtkStyleContext *context = NULL;
 	context = gtk_widget_get_style_context(button);
 	gtk_style_context_add_class(context, "panel-button");
 
-	GtkCssProvider *css_provider;
+	/* memory is managed by gtk */
+	GtkCssProvider *css_provider = NULL;
 	css_provider = gtk_css_provider_get_default ();
 
 	/* get arrow image */
-	GtkWidget *arrow;
+	GtkWidget *arrow = NULL;
 	arrow = gtk_bin_get_child (GTK_BIN (button));
 
-	/* set custom css */
-	if (panel_size < 30) {
-
-		gtk_css_provider_load_from_data (css_provider, ".panel-button {min-height: 13px; min-width: 13px; padding: 0px;}", -1, NULL);
-
 	/* get defaults from theme */
-	} else {
-		GtkSettings * settings;
-		settings = gtk_settings_get_default ();
-		gchar *gtk_theme_name;
-		g_object_get (settings, "gtk-theme-name", &gtk_theme_name, NULL);
-		css_provider = gtk_css_provider_get_named (gtk_theme_name, NULL);
+	GtkSettings * settings = NULL;
+	settings = gtk_settings_get_default ();
+	gchar *gtk_theme_name = NULL;
+	g_object_get (settings, "gtk-theme-name", &gtk_theme_name, NULL);
+	css_provider = gtk_css_provider_get_named (gtk_theme_name, NULL);
+	g_free (gtk_theme_name);
 
-		g_free (gtk_theme_name);
+
+	/* set custom css by adding our custom code to the default theme css
+	 * and then loading this new css code */
+	if (panel_size < 30) {
+		gchar *theme_css = NULL;
+		gchar *theme_css_new = NULL;
+		theme_css = gtk_css_provider_to_string (css_provider);
+		theme_css_new = g_strdup_printf ("%s\n\n.panel-button {min-height: 13px; min-width: 13px; padding: 0px;}", theme_css);
+		gtk_css_provider_load_from_data (css_provider, theme_css_new, -1, NULL);
+		g_free (theme_css);
+		g_free (theme_css_new);
 	}
+
 
 	gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
