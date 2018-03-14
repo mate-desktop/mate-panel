@@ -47,6 +47,7 @@
 
 typedef enum {
 	PAGER_WM_MARCO,
+	PAGER_WM_METACITY,
 	PAGER_WM_COMPIZ,
 	PAGER_WM_UNKNOWN
 } PagerWM;
@@ -96,6 +97,8 @@ static void pager_update(PagerData* pager)
 
 	if (pager->wm == PAGER_WM_MARCO)
 		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
+	else if (pager->wm == PAGER_WM_METACITY)
+		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
 	else
 		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), WNCK_PAGER_DISPLAY_CONTENT);
 }
@@ -105,6 +108,16 @@ static void update_properties_for_wm(PagerData* pager)
 	switch (pager->wm)
 	{
 		case PAGER_WM_MARCO:
+			if (pager->workspaces_frame)
+				gtk_widget_show(pager->workspaces_frame);
+			if (pager->workspace_names_label)
+				gtk_widget_show(pager->workspace_names_label);
+			if (pager->workspace_names_scroll)
+				gtk_widget_show(pager->workspace_names_scroll);
+			if (pager->display_workspaces_toggle)
+				gtk_widget_show(pager->display_workspaces_toggle);
+			break;
+		case PAGER_WM_METACITY:
 			if (pager->workspaces_frame)
 				gtk_widget_show(pager->workspaces_frame);
 			if (pager->workspace_names_label)
@@ -149,6 +162,8 @@ static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 		pager->wm = PAGER_WM_UNKNOWN;
 	else if (strcmp(wm_name, "Metacity (Marco)") == 0)
 		pager->wm = PAGER_WM_MARCO;
+	else if (strcmp(wm_name, "Metacity") == 0)
+		pager->wm = PAGER_WM_METACITY;
 	else if (strcmp(wm_name, "Compiz") == 0)
 		pager->wm = PAGER_WM_COMPIZ;
 	else
