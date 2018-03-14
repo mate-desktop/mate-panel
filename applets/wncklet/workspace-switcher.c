@@ -49,6 +49,7 @@ typedef enum {
 	PAGER_WM_MARCO,
 	PAGER_WM_METACITY,
 	PAGER_WM_COMPIZ,
+	PAGER_WM_I3,
 	PAGER_WM_UNKNOWN
 } PagerWM;
 
@@ -74,6 +75,7 @@ typedef struct {
 	GtkWidget* num_workspaces_spin;
 	GtkWidget* workspaces_tree;
 	GtkListStore* workspaces_store;
+	GtkCellRenderer* cell;
 
 	GtkOrientation orientation;
 	int n_rows;				/* for vertical layout this is cols */
@@ -99,6 +101,8 @@ static void pager_update(PagerData* pager)
 		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
 	else if (pager->wm == PAGER_WM_METACITY)
 		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
+	else if (pager->wm == PAGER_WM_I3)
+		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
 	else
 		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), WNCK_PAGER_DISPLAY_CONTENT);
 }
@@ -116,6 +120,7 @@ static void update_properties_for_wm(PagerData* pager)
 				gtk_widget_show(pager->workspace_names_scroll);
 			if (pager->display_workspaces_toggle)
 				gtk_widget_show(pager->display_workspaces_toggle);
+			g_object_set (pager->cell, "editable", TRUE, NULL);
 			break;
 		case PAGER_WM_METACITY:
 			if (pager->workspaces_frame)
@@ -126,6 +131,20 @@ static void update_properties_for_wm(PagerData* pager)
 				gtk_widget_show(pager->workspace_names_scroll);
 			if (pager->display_workspaces_toggle)
 				gtk_widget_show(pager->display_workspaces_toggle);
+			g_object_set (pager->cell, "editable", TRUE, NULL);
+			break;
+		case PAGER_WM_I3:
+			if (pager->workspaces_frame)
+				gtk_widget_show(pager->workspaces_frame);
+			if (pager->num_workspaces_spin)
+				gtk_widget_set_sensitive(pager->num_workspaces_spin, FALSE);
+			if (pager->workspace_names_label)
+				gtk_widget_hide(pager->workspace_names_label);
+			if (pager->workspace_names_scroll)
+				gtk_widget_hide(pager->workspace_names_scroll);
+			if (pager->display_workspaces_toggle)
+				gtk_widget_show(pager->display_workspaces_toggle);
+			g_object_set (pager->cell, "editable", FALSE, NULL);
 			break;
 		case PAGER_WM_COMPIZ:
 			if (pager->workspaces_frame)
@@ -136,6 +155,7 @@ static void update_properties_for_wm(PagerData* pager)
 				gtk_widget_hide(pager->workspace_names_scroll);
 			if (pager->display_workspaces_toggle)
 				gtk_widget_hide(pager->display_workspaces_toggle);
+			g_object_set (pager->cell, "editable", FALSE, NULL);
 			break;
 		case PAGER_WM_UNKNOWN:
 			if (pager->workspaces_frame)
@@ -164,6 +184,8 @@ static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 		pager->wm = PAGER_WM_MARCO;
 	else if (strcmp(wm_name, "Metacity") == 0)
 		pager->wm = PAGER_WM_METACITY;
+	else if (strcmp(wm_name, "i3") == 0)
+		pager->wm = PAGER_WM_I3;
 	else if (strcmp(wm_name, "Compiz") == 0)
 		pager->wm = PAGER_WM_COMPIZ;
 	else
@@ -926,6 +948,7 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	g_object_unref(pager->workspaces_store);
 
 	cell = g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "editable", TRUE, NULL);
+	pager->cell = cell;
 	column = gtk_tree_view_column_new_with_attributes("workspace", cell, "text", 0, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(pager->workspaces_tree), column);
 	g_signal_connect(cell, "edited", (GCallback) workspace_name_edited, pager);
