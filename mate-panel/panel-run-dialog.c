@@ -1118,6 +1118,7 @@ static void
 panel_run_dialog_update_content (PanelRunDialog *dialog,
 				 gboolean        show_list)
 {
+
 	if (!panel_profile_get_enable_program_list ()) {
 		GtkWidget *parent;
 
@@ -1131,8 +1132,9 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
 
 	} else {
 
-        /* if the list is closed and the user wants to see it */
-        if (show_list && !gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
+        /* the following two conditions occur, when the user clicks the expander in the dialog
+         * if the list is closed and the user wants to see it */
+        if (show_list && gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
 
             /* open the expander, this shows the list */
             gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander), TRUE);
@@ -1142,13 +1144,26 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
             gtk_widget_grab_focus (dialog->program_list);
 
         /* if the list is open and the user wants to close it */
-        } else if (!show_list && gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
+        } else if (!show_list && !gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
 
             /* close the expander, this hides the list */
             gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander), FALSE);
 
             gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
             gtk_widget_grab_focus (dialog->combobox);
+        }
+
+        /* the following two conditions occur, when the user changes the expander setting in GSettings */
+        if (show_list && !gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
+
+            /* open the expander, this shows the list */
+            gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander), TRUE);
+
+        /* if the list is open and the user wants to close it */
+        } else if (!show_list && gtk_expander_get_expanded (GTK_EXPANDER (dialog->list_expander))) {
+
+            /* close the expander, this hides the list */
+            gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander), FALSE);
         }
     }
 }
