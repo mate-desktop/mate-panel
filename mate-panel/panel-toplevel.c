@@ -1271,15 +1271,19 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel
 
 
 	/* set custom css by adding our custom code to the default theme css
-	 * and then loading this new css code */
+	 *
+	 * NOTE that contriary to the documentation:
+	 * https://developer.gnome.org/gtk3/stable/GtkCssProvider.html#gtk-css-provider-load-from-data
+	 * the previously loaded theme is NOT cleared from the css_provider. (reason unknown)
+	 * In other words, this works exactly, how we need it here.
+	 * ALSO NOTE that using gtk_css_provider_to_string () to convert the theme css data into a string
+	 * and then adding the custom css, then adding this updated css to a css_provider
+	 * with the gtk_css_provider_load_from_data () also works,
+	 * however some themes can't be easily converted to strings, beacuse of the binary data
+	 * they contain. This causes a delay of minutes in loading the mate-panel,
+	 * and so this approach is not viable. */
 	if (panel_size < 30) {
-		gchar *theme_css = NULL;
-		gchar *theme_css_new = NULL;
-		theme_css = gtk_css_provider_to_string (css_provider);
-		theme_css_new = g_strdup_printf ("%s\n\n.panel-button {min-height: 13px; min-width: 13px; padding: 0px;}", theme_css);
-		gtk_css_provider_load_from_data (css_provider, theme_css_new, -1, NULL);
-		g_free (theme_css);
-		g_free (theme_css_new);
+		gtk_css_provider_load_from_data (css_provider, ".panel-button {min-height: 13px; min-width: 13px; padding: 0px;}", -1, NULL);
 	}
 
 
