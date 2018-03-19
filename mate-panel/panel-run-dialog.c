@@ -291,7 +291,7 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		gtk_icon_size_lookup (GTK_ICON_SIZE_DIALOG, &size, NULL);
 
 		GtkIconTheme *icon_theme = gtk_icon_theme_get_default ();
-		GtkIconInfo *icon_info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
+		GtkIconInfo *icon_info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, GTK_ICON_LOOKUP_FORCE_SIZE);
 		pixbuf = gtk_icon_info_load_icon (icon_info, NULL);
 		g_object_unref (icon_info);
 	}
