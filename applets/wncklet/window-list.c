@@ -427,8 +427,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "destroy", G_CALLBACK(destroy_tasklist), tasklist);
 
 	g_signal_connect(G_OBJECT(tasklist->applet), "size_allocate", G_CALLBACK(applet_size_allocate), tasklist);
-	tasklist_update(tasklist);
-	gtk_widget_show(tasklist->tasklist);
 
 	gtk_container_add(GTK_CONTAINER(tasklist->applet), tasklist->tasklist);
 
@@ -484,6 +482,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	g_object_unref(action_group);
 
+	tasklist_update(tasklist);
+	gtk_widget_show(tasklist->tasklist);
 	gtk_widget_show(tasklist->applet);
 
 	return TRUE;
