@@ -526,13 +526,13 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	g_signal_connect(G_OBJECT(pager->pager), "scroll-event", G_CALLBACK(applet_scroll), pager);
 
 	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
-	gtk_widget_show(pager->pager);
 
 	g_signal_connect(G_OBJECT(pager->applet), "realize", G_CALLBACK(applet_realized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "unrealize", G_CALLBACK(applet_unrealized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "change_orient", G_CALLBACK(applet_change_orient), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "change_background", G_CALLBACK(applet_change_background), pager);
 
+	gtk_widget_show(pager->pager);
 	gtk_widget_show(pager->applet);
 
 	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(pager->applet), GTK_WIDGET(pager->applet));
