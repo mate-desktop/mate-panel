@@ -120,6 +120,8 @@ na_tray_child_get_preferred_width (GtkWidget *widget,
                                    gint      *minimal_width,
                                   gint      *natural_width)
 {
+  gint scale;
+  scale = gtk_widget_get_scale_factor (widget);
   GTK_WIDGET_CLASS (na_tray_child_parent_class)->get_preferred_width (widget,
                                                                       minimal_width,
                                                                       natural_width);
@@ -129,6 +131,9 @@ na_tray_child_get_preferred_width (GtkWidget *widget,
 
   if (*natural_width < 16)
     *natural_width = 16;
+
+  *minimal_width = *minimal_width / scale;
+  *natural_width = *natural_width / scale;
 }
 
 static void
@@ -136,6 +141,8 @@ na_tray_child_get_preferred_height (GtkWidget *widget,
                                     gint      *minimal_height,
                                     gint      *natural_height)
 {
+  gint scale;
+  scale = gtk_widget_get_scale_factor (widget);
   GTK_WIDGET_CLASS (na_tray_child_parent_class)->get_preferred_height (widget,
                                                                        minimal_height,
                                                                        natural_height);
@@ -145,6 +152,9 @@ na_tray_child_get_preferred_height (GtkWidget *widget,
 
   if (*natural_height < 16)
     *natural_height = 16;
+
+  *minimal_height = *minimal_height / scale;
+  *natural_height = *natural_height / scale;
 }
 
 static void

@@ -127,7 +127,8 @@ tray_added (NaTrayManager *manager,
 
   na_host_emit_item_added (NA_HOST (tray), NA_ITEM (icon));
 
-  gtk_widget_show (GTK_WIDGET (icon));
+  /*Does not seem to be needed anymore and can cause a render issue with hidpi*/
+  /*gtk_widget_show (GTK_WIDGET (icon));*/
 }
 
 static void
