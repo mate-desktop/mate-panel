@@ -80,6 +80,7 @@ panel_headers = \
 	panel.h \
 	applet.h \
 	drawer.h \
+	drawer-private.h \
 	panel-util.h \
 	panel-properties-dialog.h \
 	panel-config-global.h \
