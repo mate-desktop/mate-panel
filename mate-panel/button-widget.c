@@ -4,6 +4,7 @@
 
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -30,15 +31,12 @@ struct _ButtonWidgetPrivate {
 	PanelOrientation  orientation;
 
 	int               size;
-
+	GFileMonitor *icon_monitor;
 	guint             activatable   : 1;
 	guint             ignore_leave  : 1;
 	guint             arrow         : 1;
 	guint             dnd_highlight : 1;
 };
-
-static void button_widget_icon_theme_changed (ButtonWidget *button);
-static void button_widget_reload_pixbuf (ButtonWidget *button);
 
 enum {
 	PROP_0,
@@ -113,6 +111,129 @@ make_hc_pixbuf (GdkPixbuf *pb)
 }
 
 static void
+button_widget_unset_pixbufs (ButtonWidget *button)
+{
+  if (button->priv->pixbuf)
+    g_object_unref (button->priv->pixbuf);
+  button->priv->pixbuf = NULL;
+  
+  if (button->priv->pixbuf_hc)
+    g_object_unref (button->priv->pixbuf_hc);
+  button->priv->pixbuf_hc = NULL;
+}
+
+static void
+button_widget_reload_pixbuf (ButtonWidget *button)
+{
+  button_widget_unset_pixbufs (button);
+
+	if (button->priv->size <= 1 || button->priv->icon_theme == NULL)
+		return;
+
+	if (button->priv->filename != NULL &&
+	    button->priv->filename [0] != '\0') {
+		char *error = NULL;
+
+		button->priv->pixbuf = panel_load_icon (button->priv->icon_theme,
+					 button->priv->filename,
+					 button->priv->size,
+					 button->priv->orientation & PANEL_VERTICAL_MASK   ? button->priv->size : -1,
+					 button->priv->orientation & PANEL_HORIZONTAL_MASK ? button->priv->size : -1,
+					 &error);
+		if (error) {
+			//FIXME: this is not rendered at button->priv->size
+			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
+			button->priv->pixbuf = gtk_icon_theme_load_icon (icon_theme,
+							       GTK_STOCK_MISSING_IMAGE,
+							       GTK_ICON_SIZE_BUTTON,
+							       GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
+							       NULL);
+			g_free (error);
+		}
+
+		/* We need to add a child to the button to get the right allocation of the pixbuf.
+		 * When the button is created without a pixbuf, get_preferred_width/height are
+		 * called the first time when the widget is allocated and 0x0 size is cached by
+		 * gtksizerequest. Since the widget doesn't change its size when a pixbuf is set,
+		 * gtk_widget_queue_resize() always uses the cached values instead of calling
+		 * get_preferred_width_height() again. So the actual size, based on pixbuf size,
+		 * is never used. We are overriding the draw() method, so having a child doesn't
+		 * affect the widget rendering anyway.
+		 */
+		gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_pixbuf (button->priv->pixbuf));
+	}
+
+	button->priv->pixbuf_hc = make_hc_pixbuf (button->priv->pixbuf);
+
+	gtk_widget_queue_resize (GTK_WIDGET (button));
+}
+
+static void button_widget_icon_file_changed_cb(GFileMonitor *monitor, GFile *file, GFile *other_file, GFileMonitorEvent event_type, ButtonWidget *button)
+{
+  if ((G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT==event_type) && button->priv->filename != NULL)
+    button_widget_reload_pixbuf (button); 
+}
+
+static void
+button_widget_set_icon_monitor(ButtonWidget *button)
+{
+  GFile *icon_file;
+  char  *icon_filename;
+  GError *error;
+  
+  icon_filename = panel_find_icon(button->priv->icon_theme,
+				  button->priv->filename,
+				  button->priv->size);
+
+  if (!icon_filename)
+    return;
+  
+  icon_file = g_file_new_for_path (icon_filename);
+  
+  error = NULL;
+  button->priv->icon_monitor = g_file_monitor_file
+    (icon_file,
+     G_FILE_MONITOR_NONE,
+     NULL,
+     &error);
+  
+  if (error) {
+    g_warning ("Failed to add file monitor for %s: %s\n",
+	       icon_filename, error->message);
+    g_error_free (error);
+  }
+  else {
+    g_signal_connect (button->priv->icon_monitor, 
+		      "changed",
+		      G_CALLBACK (button_widget_icon_file_changed_cb)
+		      , button);
+  }
+  g_object_unref (icon_file);
+  g_free (icon_filename);
+}
+
+static void
+button_widget_unset_icon_monitor(ButtonWidget *button)
+{
+  if (button->priv->icon_monitor != NULL) {
+    g_file_monitor_cancel (button->priv->icon_monitor);
+    g_object_unref (button->priv->icon_monitor);
+  }
+  button->priv->icon_monitor = NULL;  
+}
+
+static void
+button_widget_icon_theme_changed (ButtonWidget *button) 
+{
+  if (button->priv->filename != NULL)
+    {
+      button_widget_reload_pixbuf (button);
+      button_widget_unset_icon_monitor (button);
+      button_widget_set_icon_monitor (button);     
+    }
+}
+
+static void
 button_widget_realize(GtkWidget *widget)
 {
 #if !GTK_CHECK_VERSION (3, 0, 0)
@@ -174,6 +295,7 @@ button_widget_realize(GtkWidget *widget)
 				 G_CONNECT_SWAPPED);
 
 	button_widget_reload_pixbuf (BUTTON_WIDGET (widget));
+	button_widget_set_icon_monitor(BUTTON_WIDGET (widget));
 }
 
 static void
@@ -202,80 +324,10 @@ button_widget_unrealize (GtkWidget *widget)
 }
 
 static void
-button_widget_unset_pixbufs (ButtonWidget *button)
-{
-	if (button->priv->pixbuf)
-		g_object_unref (button->priv->pixbuf);
-	button->priv->pixbuf = NULL;
-
-	if (button->priv->pixbuf_hc)
-		g_object_unref (button->priv->pixbuf_hc);
-	button->priv->pixbuf_hc = NULL;
-}
-
-static void
-button_widget_reload_pixbuf (ButtonWidget *button)
-{
-	button_widget_unset_pixbufs (button);
-
-	if (button->priv->size <= 1 || button->priv->icon_theme == NULL)
-		return;
-
-	if (button->priv->filename != NULL &&
-	    button->priv->filename [0] != '\0') {
-		char *error = NULL;
-
-		button->priv->pixbuf =
-			panel_load_icon (button->priv->icon_theme,
-					 button->priv->filename,
-					 button->priv->size,
-					 button->priv->orientation & PANEL_VERTICAL_MASK   ? button->priv->size : -1,
-					 button->priv->orientation & PANEL_HORIZONTAL_MASK ? button->priv->size : -1,
-					 &error);
-		if (error) {
-			//FIXME: this is not rendered at button->priv->size
-			button->priv->pixbuf =
-#if GTK_CHECK_VERSION (3, 0, 0)
-				gtk_widget_render_icon_pixbuf (GTK_WIDGET (button),
-							       GTK_STOCK_MISSING_IMAGE,
-							       (GtkIconSize) -1);
-#else
-				gtk_widget_render_icon (GTK_WIDGET (button),
-							GTK_STOCK_MISSING_IMAGE,
-							(GtkIconSize) -1, NULL);
-#endif
-			g_free (error);
-		}
-
-		/* We need to add a child to the button to get the right allocation of the pixbuf.
-		 * When the button is created without a pixbuf, get_preferred_width/height are
-		 * called the first time when the widget is allocated and 0x0 size is cached by
-		 * gtksizerequest. Since the widget doesn't change its size when a pixbuf is set,
-		 * gtk_widget_queue_resize() always uses the cached values instead of calling
-		 * get_preferred_width_height() again. So the actual size, based on pixbuf size,
-		 * is never used. We are overriding the draw() method, so having a child doesn't
-		 * affect the widget rendering anyway.
-		 */
-		gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_pixbuf (button->priv->pixbuf));
-	}
-
-	button->priv->pixbuf_hc = make_hc_pixbuf (button->priv->pixbuf);
-
-	gtk_widget_queue_resize (GTK_WIDGET (button));
-}
-
-static void
-button_widget_icon_theme_changed (ButtonWidget *button)
-{
-	if (button->priv->filename != NULL)
-		button_widget_reload_pixbuf (button);
-}
-
-static void
 button_widget_finalize (GObject *object)
 {
 	ButtonWidget *button = (ButtonWidget *) object;
-
+	button_widget_unset_icon_monitor (button);
 	button_widget_unset_pixbufs (button);
 
 	g_free (button->priv->filename);
@@ -820,6 +872,7 @@ button_widget_init (ButtonWidget *button)
 	button->priv->pixbuf_hc  = NULL;
 
 	button->priv->filename   = NULL;
+	button->priv->icon_monitor   = NULL;
 	
 	button->priv->orientation = PANEL_ORIENTATION_TOP;
 
@@ -971,10 +1024,14 @@ button_widget_set_icon_name (ButtonWidget *button,
 		return;
 
 	if (button->priv->filename)
+	  {
+	    button_widget_unset_icon_monitor(button);
 		g_free (button->priv->filename);
+	  }
 	button->priv->filename = g_strdup (icon_name);
 
 	button_widget_reload_pixbuf (button);
+	button_widget_set_icon_monitor(button);
 
 	g_object_notify (G_OBJECT (button), "icon-name");
 }
