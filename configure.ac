@@ -1,4 +1,4 @@
-AC_INIT([mate-panel], [1.18.7], 
+AC_INIT([mate-panel], [1.18.8],
 [https://github.com/mate-desktop/mate-panel/issues],
     [mate-panel], [http://www.mate-desktop.org])
 AC_CONFIG_HEADERS(config.h)
