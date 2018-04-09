@@ -34,6 +34,8 @@
 
 #include <X11/extensions/XInput2.h>
 
+#include <libpanel-util/panel-gtk.h>
+
 #include "panel-icon-names.h"
 #include "panel-stock-icons.h"
 
@@ -224,12 +226,13 @@ kill_window_question (gpointer window)
 						  "to exit, unsaved changes in any open documents "
 						  "in it might get lost."));
 
-	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				"gtk-cancel",
-				GTK_RESPONSE_CANCEL,
-				PANEL_STOCK_FORCE_QUIT,
-				GTK_RESPONSE_ACCEPT,
-				NULL);
+	panel_dialog_add_button (GTK_DIALOG (dialog),
+				 _("_Cancel"), "process-stop",
+				 GTK_RESPONSE_CANCEL);
+
+	gtk_dialog_add_button (GTK_DIALOG (dialog),
+			       PANEL_STOCK_FORCE_QUIT,
+			       GTK_RESPONSE_ACCEPT);
  
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
 					 GTK_RESPONSE_CANCEL);

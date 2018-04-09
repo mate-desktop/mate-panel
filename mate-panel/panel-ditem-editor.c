@@ -34,6 +34,7 @@
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-xdg.h>
+#include <libpanel-util/panel-gtk.h>
 
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
@@ -648,24 +649,29 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	gtk_label_set_mnemonic_widget (GTK_LABEL (priv->comment_label),
 				       priv->comment_entry);
 
-	priv->help_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						   "gtk-help",
-						   GTK_RESPONSE_HELP);
-	priv->revert_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						     "gtk-revert-to-saved",
-						     REVERT_BUTTON);
+	priv->help_button = panel_dialog_add_button (GTK_DIALOG (dialog),
+						     _("_Help"), "help-browser",
+						     GTK_RESPONSE_HELP);
+
+	priv->revert_button = panel_dialog_add_button (GTK_DIALOG (dialog),
+						       _("_Revert"), "document-revert",
+						       REVERT_BUTTON);
+
 	gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
 					   REVERT_BUTTON,
 					   FALSE);
-	priv->close_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						    "gtk-close",
-						    GTK_RESPONSE_CLOSE);
-	priv->cancel_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						     "gtk-cancel",
-						     GTK_RESPONSE_CANCEL);
-	priv->ok_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						 "gtk-ok",
-						 GTK_RESPONSE_OK);
+
+	priv->close_button = panel_dialog_add_button (GTK_DIALOG (dialog),
+						      _("_Close"), "window-close",
+						      GTK_RESPONSE_CLOSE);
+
+	priv->cancel_button = panel_dialog_add_button (GTK_DIALOG (dialog),
+						       _("_Cancel"), "process-stop",
+						       GTK_RESPONSE_CANCEL);
+
+	priv->ok_button = panel_dialog_add_button (GTK_DIALOG (dialog),
+						   _("_OK"), "gtk-ok",
+						   GTK_RESPONSE_OK);
 
 	/* FIXME: There needs to be a way to edit ALL keys/sections */
 }

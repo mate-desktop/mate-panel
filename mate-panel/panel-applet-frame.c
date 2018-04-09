@@ -33,6 +33,8 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
+#include <libpanel-util/panel-gtk.h>
+
 #include "panel-applets-manager.h"
 #include "panel-profile.h"
 #include "panel.h"
@@ -948,17 +950,18 @@ mate_panel_applet_frame_loading_failed (const char  *iid,
 	g_free (problem_txt);
 
 	if (locked_down) {
-		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-					"gtk-ok", LOADING_FAILED_RESPONSE_DONT_DELETE,
-					NULL);
+		panel_dialog_add_button (GTK_DIALOG (dialog),
+					 _("_OK"), "gtk-ok", LOADING_FAILED_RESPONSE_DONT_DELETE);
 	} else {
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 					_("Do you want to delete the applet "
 					  "from your configuration?"));
-		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-					PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE,
-					"gtk-delete", LOADING_FAILED_RESPONSE_DELETE,
-					NULL);
+
+		gtk_dialog_add_button (GTK_DIALOG (dialog),
+				       PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE);
+
+		panel_dialog_add_button (GTK_DIALOG (dialog),
+					 _("_Delete"), "edit-delete", LOADING_FAILED_RESPONSE_DELETE);
 	}
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),

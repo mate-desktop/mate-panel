@@ -33,6 +33,7 @@
 
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-show.h>
+#include <libpanel-util/panel-gtk.h>
 
 #include "launcher.h"
 #include "panel.h"
@@ -1220,17 +1221,22 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 			  dialog);
 
 	dialog->addto_dialog = gtk_dialog_new ();
-	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-			       "gtk-help", GTK_RESPONSE_HELP);
-	dialog->back_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-						     "gtk-go-back",
-						     PANEL_ADDTO_RESPONSE_BACK);
-	dialog->add_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-						     "gtk-add",
-						     PANEL_ADDTO_RESPONSE_ADD);
-	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-			       "gtk-close",
-			       GTK_RESPONSE_CLOSE);
+
+	panel_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
+				 _("_Help"), "help-browser", GTK_RESPONSE_HELP);
+
+	dialog->back_button = panel_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
+						       _("_Back"), "go-previous",
+						       PANEL_ADDTO_RESPONSE_BACK);
+
+	dialog->add_button = panel_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
+						      _("_Add"), "list-add",
+						      PANEL_ADDTO_RESPONSE_ADD);
+
+	panel_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
+				 _("_Close"), "window-close",
+				 GTK_RESPONSE_CLOSE);
+
 	gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog->addto_dialog),

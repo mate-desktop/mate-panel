@@ -35,6 +35,11 @@ extern "C" {
 
 void panel_gtk_file_chooser_add_image_preview (GtkFileChooser *chooser);
 
+GtkWidget* panel_dialog_add_button (GtkDialog   *dialog,
+				    const gchar *button_text,
+				    const gchar *icon_name,
+				          gint   response_id);
+
 #ifdef __cplusplus
 }
 #endif

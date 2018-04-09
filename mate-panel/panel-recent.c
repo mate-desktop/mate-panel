@@ -31,6 +31,7 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-show.h>
+#include <libpanel-util/panel-gtk.h>
 
 #include "menu.h"
 #include "panel-util.h"
@@ -150,10 +151,13 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 						    "\342\200\242 All items from the Places \342\206\222 Recent Documents menu item.\n"
 						    "\342\200\242 All items from the recent documents list in all applications."));
 
-	gtk_dialog_add_buttons (GTK_DIALOG (clear_recent_dialog),
-				"gtk-cancel", GTK_RESPONSE_CANCEL,
-				PANEL_STOCK_CLEAR, GTK_RESPONSE_ACCEPT,
-				NULL);
+	panel_dialog_add_button (GTK_DIALOG (clear_recent_dialog),
+				 _("_Cancel"), "process-stop",
+				 GTK_RESPONSE_CANCEL);
+
+	gtk_dialog_add_button (GTK_DIALOG (clear_recent_dialog),
+			       PANEL_STOCK_CLEAR,
+			       GTK_RESPONSE_ACCEPT);
 
 	gtk_container_set_border_width (GTK_CONTAINER (clear_recent_dialog), 6);
 
