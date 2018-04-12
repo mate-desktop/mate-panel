@@ -262,6 +262,36 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
 
 		g_free (bg_str);
 	}
+    GtkCssProvider *provider;
+    provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider,
+		"MatePanelAppletFrameDBus > MatePanelAppletFrameDBus { \n"
+        "border-style: solid; \n"
+        "border-width: 3px; \n"
+        "border-color: transparent; \n"
+        "background-repeat: no-repeat; \n"
+        "background-position: left; \n"
+        "background-image: linear-gradient(to bottom, \n"
+        "transparent, \n"
+        "transparent 20%, \n"
+        "alpha (#999999, 0.6) 21%, \n"
+        "alpha (#999999, 0.6) 29%, \n"
+        "transparent 30%, \n"
+        "transparent 45%, \n"
+        "alpha (#999999, 0.6) 46%, \n"
+        "alpha (#999999, 0.6) 54%, \n"
+        "transparent 55%, \n"
+        "transparent 70%, \n"
+        "alpha (#999999, 0.6) 71%, \n"
+        "alpha (#999999, 0.6) 79%, \n"
+        "transparent 80%, \n"
+        "transparent); \n"
+        "}",
+        -1, NULL);
+	gtk_style_context_add_provider (gtk_widget_get_style_context(GTK_WIDGET(frame)),
+		GTK_STYLE_PROVIDER (provider),
+		GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+	g_object_unref (provider);
 }
 
 static void
