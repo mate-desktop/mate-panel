@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.0 
+<!-- Generated with glade 3.22.0 
 
 mate-panel - panel-properties-dialog
 Copyright (C) Mate Developer
@@ -22,7 +22,7 @@ Author: Wolfgang Ulbrich
 
 -->
 <interface>
-  <requires lib="gtk+" version="3.14"/>
+  <requires lib="gtk+" version="3.22"/>
   <!-- interface-license-type gplv2 -->
   <!-- interface-name mate-panel -->
   <!-- interface-description panel-properties-dialog -->
@@ -40,6 +40,21 @@ Author: Wolfgang Ulbrich
     <property name="value">12</property>
     <property name="step_increment">1</property>
     <property name="page_increment">12</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">help-browser</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">help-browser</property>
+  </object>
+  <object class="GtkImage" id="image5">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">window-close</property>
   </object>
   <object class="GtkDialog" id="panel_properties_dialog">
     <property name="can_focus">False</property>
@@ -60,12 +75,13 @@ Author: Wolfgang Ulbrich
             <property name="can_focus">False</property>
             <child>
               <object class="GtkButton" id="helpbutton1">
-                <property name="label">gtk-help</property>
+                <property name="label" translatable="yes">_Help</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="image">image3</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -75,13 +91,14 @@ Author: Wolfgang Ulbrich
             </child>
             <child>
               <object class="GtkButton" id="closebutton1">
-                <property name="label">gtk-close</property>
+                <property name="label" translatable="yes">_Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="image">image5</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -116,7 +133,7 @@ Author: Wolfgang Ulbrich
                       <object class="GtkImage" id="image1">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="stock">gtk-dialog-warning</property>
+                        <property name="icon_name">dialog-warning</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -384,7 +401,7 @@ Author: Wolfgang Ulbrich
                       <object class="GtkImage" id="image2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="stock">gtk-dialog-warning</property>
+                        <property name="icon_name">dialog-warning</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -678,6 +695,14 @@ Author: Wolfgang Ulbrich
       <action-widget response="-11">helpbutton1</action-widget>
       <action-widget response="-7">closebutton1</action-widget>
     </action-widgets>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
+  <object class="GtkImage" id="image6">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">window-close</property>
   </object>
   <object class="GtkDialog" id="image_details_dialog">
     <property name="can_focus">False</property>
@@ -696,12 +721,13 @@ Author: Wolfgang Ulbrich
             <property name="can_focus">False</property>
             <child>
               <object class="GtkButton" id="helpbutton2">
-                <property name="label">gtk-help</property>
+                <property name="label" translatable="yes">_Help</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="image">image4</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -711,12 +737,13 @@ Author: Wolfgang Ulbrich
             </child>
             <child>
               <object class="GtkButton" id="closebutton2">
-                <property name="label">gtk-close</property>
+                <property name="label" translatable="yes">_Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="image">image6</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -830,5 +857,8 @@ Author: Wolfgang Ulbrich
       <action-widget response="-11">helpbutton2</action-widget>
       <action-widget response="-7">closebutton2</action-widget>
     </action-widgets>
+    <child>
+      <placeholder/>
+    </child>
   </object>
 </interface>
