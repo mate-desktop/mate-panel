@@ -802,6 +802,26 @@ set_environment (gpointer display)
 	g_setenv ("DISPLAY", display, TRUE);
 }
 
+GtkWidget*
+panel_dialog_add_button (GtkDialog   *dialog,
+			 const gchar *button_text,
+			 const gchar *icon_name,
+			       gint   response_id)
+{
+	GtkWidget *button;
+
+	button = gtk_button_new_with_mnemonic (button_text);
+	gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON));
+
+	gtk_button_set_use_underline (GTK_BUTTON (button), TRUE);
+	gtk_style_context_add_class (gtk_widget_get_style_context (button), "text-button");
+	gtk_widget_set_can_default (button, TRUE);
+	gtk_widget_show (button);
+	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, response_id);
+
+	return button;
+}
+
 static void display_fortune_dialog(FishApplet* fish)
 {
 	GError      *error = NULL;
@@ -831,12 +851,16 @@ static void display_fortune_dialog(FishApplet* fish)
 		int        screen_width;
 		int        screen_height;
 
-		fish->fortune_dialog =
-			gtk_dialog_new_with_buttons (
-				"", NULL, 0,
-				_("_Speak again"), FISH_RESPONSE_SPEAK,
-				"gtk-close", GTK_RESPONSE_CLOSE,
-				NULL);
+		fish->fortune_dialog = gtk_dialog_new ();
+		gtk_window_set_title (GTK_WINDOW (fish->fortune_dialog), "");
+
+		gtk_dialog_add_button (GTK_DIALOG (fish->fortune_dialog),
+				       _("_Speak again"),
+				       FISH_RESPONSE_SPEAK);
+
+		panel_dialog_add_button (GTK_DIALOG (fish->fortune_dialog),
+					 _("_Close"), "window-close",
+					 GTK_RESPONSE_CLOSE);
 
 		gtk_window_set_icon_name (GTK_WINDOW (fish->fortune_dialog),
 					  FISH_ICON);
