@@ -1009,13 +1009,14 @@ command_browse_button_clicked (PanelDItemEditor *dialog)
 		return;
 	}
 
-	chooser = gtk_file_chooser_dialog_new ("", GTK_WINDOW (dialog),
-					       GTK_FILE_CHOOSER_ACTION_OPEN,
-					       "gtk-cancel",
-					       GTK_RESPONSE_CANCEL,
-					       "gtk-open",
-					       GTK_RESPONSE_ACCEPT,
-					       NULL);
+	chooser = panel_file_chooser_dialog_new ("", GTK_WINDOW (dialog),
+						 GTK_FILE_CHOOSER_ACTION_OPEN,
+						 "process-stop",
+						 GTK_RESPONSE_CANCEL,
+						 "document-open",
+						 GTK_RESPONSE_ACCEPT,
+						 NULL);
+
 	gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);
 
 	g_signal_connect (chooser, "response",

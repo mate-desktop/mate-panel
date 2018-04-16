@@ -1232,12 +1232,12 @@ file_button_clicked (GtkButton      *button,
 {
 	GtkWidget *chooser;
 
-	chooser = gtk_file_chooser_dialog_new (_("Choose a file to append to the command..."),
-					       GTK_WINDOW (dialog->run_dialog),
-					       GTK_FILE_CHOOSER_ACTION_OPEN,
-					       "gtk-cancel", GTK_RESPONSE_CANCEL,
-					       "gtk-ok", GTK_RESPONSE_OK,
-					       NULL);
+	chooser = panel_file_chooser_dialog_new (_("Choose a file to append to the command..."),
+						 GTK_WINDOW (dialog->run_dialog),
+						 GTK_FILE_CHOOSER_ACTION_OPEN,
+						 "process-stop", GTK_RESPONSE_CANCEL,
+						 "gtk-ok", GTK_RESPONSE_OK,
+						 NULL);
 
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (chooser),
 					     g_get_home_dir ());

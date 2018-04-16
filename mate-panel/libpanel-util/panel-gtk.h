@@ -40,6 +40,12 @@ GtkWidget* panel_dialog_add_button (GtkDialog   *dialog,
 				    const gchar *icon_name,
 				          gint   response_id);
 
+GtkWidget* panel_file_chooser_dialog_new (const gchar          *title,
+					  GtkWindow            *parent,
+					  GtkFileChooserAction  action,
+					  const gchar          *first_button_text,
+					  ...);
+
 #ifdef __cplusplus
 }
 #endif
