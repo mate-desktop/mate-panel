@@ -378,14 +378,15 @@ _panel_icon_chooser_clicked (GtkButton *button)
 	else
 		parent = NULL;
 
-	filechooser = gtk_file_chooser_dialog_new (_("Choose an icon"),
-						   parent,
-						   GTK_FILE_CHOOSER_ACTION_OPEN,
-						   "gtk-cancel",
-						   GTK_RESPONSE_CANCEL,
-						   "gtk-open",
-						   GTK_RESPONSE_ACCEPT,
-						   NULL);
+	filechooser = panel_file_chooser_dialog_new (_("Choose an icon"),
+						     parent,
+						     GTK_FILE_CHOOSER_ACTION_OPEN,
+						     "process-stop",
+						     GTK_RESPONSE_CANCEL,
+						     "document-open",
+						     GTK_RESPONSE_ACCEPT,
+						     NULL);
+
 	panel_gtk_file_chooser_add_image_preview (GTK_FILE_CHOOSER (filechooser));
 
 	path = g_build_filename (DATADIR, "icons", NULL);
