@@ -46,6 +46,9 @@ GtkWidget* panel_file_chooser_dialog_new (const gchar          *title,
 					  const gchar          *first_button_text,
 					  ...);
 
+GtkWidget* panel_image_menu_item_new_from_icon (const gchar *icon_name,
+						const gchar *label_name);
+
 #ifdef __cplusplus
 }
 #endif

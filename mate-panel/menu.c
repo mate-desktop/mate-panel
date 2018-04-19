@@ -163,6 +163,9 @@ panel_create_menu (void)
 	GtkWidget       *retval;
 
 	retval = gtk_menu_new ();
+
+	gtk_menu_set_reserve_toggle_size (GTK_MENU (retval), FALSE);
+
 	gtk_widget_set_name (retval, "mate-panel-main-menu");
 
 	g_signal_connect (retval, "key_press_event",

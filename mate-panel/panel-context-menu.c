@@ -36,6 +36,7 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-show.h>
+#include <libpanel-util/panel-gtk.h>
 
 #include "panel-util.h"
 #include "panel.h"
@@ -228,11 +229,9 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  GtkWidget   *menu)
 {
 	GtkWidget *menuitem;
-	GtkWidget *image;
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Add to Panel…"));
-	image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	menuitem = panel_image_menu_item_new_from_icon ("list-add", _("_Add to Panel…"));
+
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
         g_signal_connect (G_OBJECT (menuitem), "activate",
@@ -241,10 +240,8 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	if (!panel_profile_id_lists_are_writable ())
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Properties"));
-	image = gtk_image_new_from_icon_name ("document-properties",
-					      GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	menuitem = panel_image_menu_item_new_from_icon ("document-properties", _("_Properties"));
+
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect_swapped (menuitem, "activate",
@@ -253,18 +250,15 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 
 	add_menu_separator (menu);
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Reset Panel"));
-	image = gtk_image_new_from_icon_name ("document-revert", GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	menuitem = panel_image_menu_item_new_from_icon ("document-revert", _("_Reset Panel"));
+
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect_swapped (menuitem, "activate",
 			  G_CALLBACK (query_panel_reset), panel_widget->toplevel);
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Delete This Panel"));
-	image = gtk_image_new_from_icon_name ("edit-delete",
-					      GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	menuitem = panel_image_menu_item_new_from_icon ("edit-delete", _("_Delete This Panel"));
+
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
@@ -276,9 +270,8 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 
 	add_menu_separator (menu);
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_New Panel"));
-	image = gtk_image_new_from_icon_name ("document-new", GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	menuitem = panel_image_menu_item_new_from_icon ("document-new", _("_New Panel"));
+
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
@@ -295,7 +288,6 @@ panel_context_menu_create (PanelWidget *panel)
 {
 	GtkWidget *retval;
 	GtkWidget *menuitem;
-	GtkWidget *image;
 
 	if (panel->master_widget) {
 		gpointer    *pointer;
@@ -320,18 +312,15 @@ panel_context_menu_create (PanelWidget *panel)
 	if (!panel_lockdown_get_locked_down ())
 		panel_context_menu_build_edition (panel, retval);
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Help"));
-	image = gtk_image_new_from_icon_name ("help-browser", GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	menuitem = panel_image_menu_item_new_from_icon ("help-browser", _("_Help"));
+
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_context_menu_show_help), NULL);
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("A_bout Panels"));
-	image = gtk_image_new_from_icon_name ("help-about",
-					      GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+	menuitem = panel_image_menu_item_new_from_icon ("help-about", _("A_bout Panels"));
+
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 	g_signal_connect (menuitem, "activate",
