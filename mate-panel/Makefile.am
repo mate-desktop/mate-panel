@@ -15,6 +15,7 @@ AM_CPPFLAGS = \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DBUILDERDIR=\""$(uidir)"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
+	-DDATADIR=\""$(datadir)"\"
 	-DICONDIR=\""$(datadir)/mate-panel/pixmaps"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
 

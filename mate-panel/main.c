@@ -60,6 +60,9 @@ main (int argc, char **argv)
 	char           *desktopfile;
 	GOptionContext *context;
 	GError         *error;
+#if GTK_CHECK_VERSION (3, 20, 0)
+	GtkCssProvider *provider;
+#endif
 
 	bindtextdomain (GETTEXT_PACKAGE, MATELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -164,6 +167,25 @@ main (int argc, char **argv)
 	/* Do this at the end, to be sure that we're really ready when
 	 * connecting to the session manager */
 	panel_session_init ();
+
+#if GTK_CHECK_VERSION (3, 20, 0)
+	/*Load a css file from a path so the drag handle image can be loaded*/
+	error = NULL;
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_path (provider,
+	                                 DATADIR "/mate-panel/" "mate-panel.css", &error);
+
+	if (error != NULL) {
+		g_warning ("Can't parse mate-panel CSS custom description: %s\n", error->message);
+		g_error_free (error);
+	}
+	else {
+		gtk_style_context_add_provider_for_screen (gdk_screen_get_default(),
+		                                           GTK_STYLE_PROVIDER (provider),
+		                                           GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+	}
+	g_object_unref (provider);
+#endif
 
 	gtk_main ();
 

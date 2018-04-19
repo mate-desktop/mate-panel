@@ -7,6 +7,11 @@ layout_DATA = \
 	opensuse.layout \
 	ubuntu.layout
 
+matepaneldir   = $(datadir)/mate-panel
+matepanel_DATA = \
+    mate-panel.css  \
+    panel-grid-symbolic.svg
+
 @INTLTOOL_XML_NOMERGE_RULE@
 
 gsettings_ENUM_NAMESPACE = org.mate.panel
@@ -27,6 +32,7 @@ gsettings_SCHEMAS = $(panel_gschemas_in:.xml.in=.xml)
 
 EXTRA_DIST = \
 	$(panel_gschemas_in) \
-	$(layout_DATA)
+	$(layout_DATA) \
+	$(matepanel_DATA)
 
 CLEANFILES = $(gsettings_SCHEMAS)
