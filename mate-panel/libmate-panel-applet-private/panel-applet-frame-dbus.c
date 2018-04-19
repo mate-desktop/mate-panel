@@ -245,10 +245,9 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
 	MatePanelAppletFrameDBus *dbus_frame = MATE_PANEL_APPLET_FRAME_DBUS (frame);
 	MatePanelAppletFrameDBusPrivate *priv = dbus_frame->priv;
 	char *bg_str;
-#if GTK_CHECK_VERSION (3, 20, 0)
     gchar *theme_name;
     GtkSettings *settings;
-#endif
+
 	bg_str = _mate_panel_applet_frame_get_background_string (
 			frame, PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame))), type);
 
@@ -265,7 +264,6 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
 
 		g_free (bg_str);
 	}
-#if GTK_CHECK_VERSION (3, 20, 0)
     GtkCssProvider *provider;
     provider = gtk_css_provider_new ();
 
@@ -276,7 +274,7 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
     if (g_strcmp0 (theme_name, "HighContrast") == 0 ||
                    g_strcmp0 (theme_name, "HighContrastInverse") == 0){
         gtk_css_provider_load_from_data (provider,
-            "MatePanelAppletFrameDBus > MatePanelAppletFrameDBus { \n"
+            "MatePanelAppletFrameDBus { \n"
             "border-style: solid; \n"
             "border-width: 3px; \n"
             "border-color: @theme_bg_color; \n"
@@ -298,7 +296,7 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
     }
     else{
 	    gtk_css_provider_load_from_data (provider,
-            "MatePanelAppletFrameDBus > MatePanelAppletFrameDBus { \n"
+            "MatePanelAppletFrameDBus  { \n"
             "border-style: solid; \n"
             "border-width: 3px; \n"
             "border-color: transparent; \n"
@@ -327,7 +325,6 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
                                     GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
     g_object_unref (provider);
     g_free (theme_name);
-#endif
 }
 
 static void
