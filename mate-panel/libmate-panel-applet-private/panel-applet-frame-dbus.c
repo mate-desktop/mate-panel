@@ -297,9 +297,7 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
     else{
 	    gtk_css_provider_load_from_data (provider,
             "MatePanelAppletFrameDBus > MatePanelAppletFrameDBus { \n"
-            "border-style: solid; \n"
-            "border-width: 3px; \n"
-            "border-color: transparent; \n"
+            "border-style: none; \n"
             "background-repeat: no-repeat; \n"
             "background-position: left; \n"
             "background-image: linear-gradient(to bottom, \n"
