@@ -1287,9 +1287,9 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel
 	} else if (panel_size < 40) {
 		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 16);
 	} else if (panel_size < 60) {
-		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 24);
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 22);
 	} else {
-		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 32);
+		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 24);
 	}
 
 }
@@ -1298,6 +1298,7 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 {
 
 	int panel_size = toplevel->priv->size;
+	int hb_size = 0;
 
 	if (toplevel->priv->buttons_enabled) {
 		panel_toplevel_update_buttons_showing (toplevel);
@@ -1343,10 +1344,16 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 
 	/* set size after setting the arrow */
 	if (toplevel->priv->buttons_enabled) {
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,    panel_size, panel_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, panel_size, panel_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_left,   panel_size, panel_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_right,  panel_size, panel_size);
+
+		if ( panel_size < 20) { hb_size = 16; }
+		else if ( panel_size < 40) { hb_size = 20; }
+		else if ( panel_size < 60) { hb_size = 26; }
+		else { hb_size = 30; }
+
+		gtk_widget_set_size_request (toplevel->priv->hide_button_top, panel_size, hb_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, panel_size, hb_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_left, hb_size, panel_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_right, hb_size, panel_size);
 	}
 }
 
