@@ -14,7 +14,6 @@ AM_CPPFLAGS =							\
 	-I$(top_builddir)/libmate-panel-applet			\
 	-DMATELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DG_LOG_DOMAIN=\""notification-area-applet"\"		\
-	-DNOTIFICATION_AREA_MENU_UI_DIR=\""$(uidir)"\"		\
 	-DPROVIDE_WATCHER_SERVICE=1				\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
@@ -33,7 +32,10 @@ libtray_la_LIBADD =							\
 	status-notifier/libstatus-notifier.la				\
 	system-tray/libsystem-tray.la
 
-NOTIFICATION_AREA_SOURCES = main.c main.h
+NOTIFICATION_AREA_SOURCES = \
+	main.c \
+	main.h \
+	$(BUILT_SOURCES)
 
 NOTIFICATION_AREA_LDADD =				\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
@@ -91,12 +93,23 @@ org.mate.panel.applet.NotificationAreaAppletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
-uidir = $(datadir)/mate-panel/ui
-ui_DATA = notification-area-menu.xml
+ui_FILES = \
+	notification-area-menu.xml
+
+na-resources.c: na.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/na.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name na $<
+
+na-resources.h: na.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/na.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name na $<
+
+BUILT_SOURCES = 		\
+	na-resources.c	\
+	na-resources.h
 
 EXTRA_DIST =								\
 	org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in	\
-	$(ui_DATA)							\
+	$(ui_FILES)	\
+	na.gresource.xml \
 	$(service_in_files)
 
 CLEANFILES =			\

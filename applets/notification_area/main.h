@@ -24,6 +24,8 @@
 
 #include <mate-panel-applet.h>
 
+#define NA_RESOURCE_PATH "/org/mate/panel/applet/na/"
+
 G_BEGIN_DECLS
 
 #define NA_TYPE_TRAY_APPLET             (na_tray_applet_get_type ())
