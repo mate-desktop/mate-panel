@@ -16,6 +16,7 @@
 #include <gio/gio.h>
 
 #include <libpanel-util/panel-show.h>
+#include <libpanel-util/panel-gtk.h>
 
 #include "button-widget.h"
 #include "drawer.h"
@@ -40,6 +41,8 @@
 static GSList *registered_applets = NULL;
 static GSList *queued_position_saves = NULL;
 static guint   queued_position_source = 0;
+
+static GtkCheckMenuItem *checkbox_id = NULL;
 
 static void applet_menu_show (GtkWidget *w, AppletInfo *info);
 static void applet_menu_deactivate (GtkWidget *w, AppletInfo *info);
@@ -98,14 +101,21 @@ mate_panel_applet_toggle_locked (AppletInfo *info)
 }
 
 static void
-mate_panel_applet_lock (GtkCheckMenuItem *menuitem,
-		   AppletInfo       *info)
+checkbox_status (GtkCheckMenuItem *menuitem,
+		 AppletInfo       *info)
+{
+	checkbox_id = GTK_CHECK_MENU_ITEM (menuitem);
+}
+
+static void
+mate_panel_applet_lock (GtkMenuItem *menuitem,
+			AppletInfo  *info)
 {
 	gboolean locked;
 
 	locked = mate_panel_applet_toggle_locked (info);
 
-	gtk_check_menu_item_set_active (menuitem, locked);
+	gtk_check_menu_item_set_active (checkbox_id, locked);
 
 	if (info->move_item)
 		gtk_widget_set_sensitive (info->move_item, !locked);
@@ -382,15 +392,8 @@ setup_an_item (AppletUserMenu *menu,
 	       GtkWidget      *submenu,
 	       int             is_submenu)
 {
-	GtkWidget *image = NULL;
+	menu->menuitem = panel_image_menu_item_new_from_gicon (menu->gicon, menu->text);
 
-	menu->menuitem = gtk_image_menu_item_new_with_mnemonic (menu->text);
-	if (menu->gicon) {
-		image = gtk_image_new_from_gicon (menu->gicon,
-						  GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu->menuitem),
-					       image);
-	}
 	gtk_widget_show (menu->menuitem);
 
 	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
@@ -503,6 +506,8 @@ mate_panel_applet_create_menu (AppletInfo *info)
 
 	menu = g_object_ref_sink (gtk_menu_new ());
 
+	gtk_menu_set_reserve_toggle_size (GTK_MENU (menu), FALSE);
+
 	/* connect the show & deactivate signal, so that we can "disallow" and
 	 * "re-allow" autohide when the menu is shown/deactivated.
 	 */
@@ -524,7 +529,6 @@ mate_panel_applet_create_menu (AppletInfo *info)
 	}
 
 	if (!panel_lockdown_get_locked_down ()) {
-		GtkWidget *image;
 		gboolean   locked;
 		gboolean   lockable;
 		gboolean   movable;
@@ -542,18 +546,16 @@ mate_panel_applet_create_menu (AppletInfo *info)
 			gtk_widget_show (menuitem);
 		}
 
-		menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
-		image = gtk_image_new_from_icon_name ("list-remove",
-						      GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-					       image);
+		menuitem = panel_image_menu_item_new_from_icon ("list-remove", _("_Remove From Panel"));
+
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_widget_show (menuitem);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_widget_set_sensitive (menuitem, (!locked || lockable) && removable);
 
-		menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
+		menuitem = panel_image_menu_item_new_from_icon (NULL, _("_Move"));
+
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (move_applet_callback), info);
 		gtk_widget_show (menuitem);
@@ -571,11 +573,20 @@ mate_panel_applet_create_menu (AppletInfo *info)
 		gtk_widget_show (menuitem);
 
 		menuitem = gtk_check_menu_item_new_with_mnemonic (_("Loc_k To Panel"));
+
 		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
 						locked);
-		g_signal_connect (menuitem, "toggled",
+
+		g_signal_connect (menuitem, "map",
+				  G_CALLBACK (checkbox_status), info);
+
+		menuitem = panel_check_menu_item_new (menuitem);
+
+		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (mate_panel_applet_lock), info);
+
 		gtk_widget_show (menuitem);
+
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_widget_set_sensitive (menuitem, lockable);
 
