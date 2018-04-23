@@ -60,8 +60,12 @@ main (int argc, char **argv)
 {
 	char           *desktopfile;
 	GOptionContext *context;
-	GError         *error, *error2;
-	GtkCssProvider *provider;
+	GError         *error;
+	GdkScreen      *screen;
+	GtkCssProvider *css;
+	GtkStyleProvider *provider;
+	const gchar    *resource;
+	guint          priority;
 
 	bindtextdomain (GETTEXT_PACKAGE, MATELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -167,22 +171,17 @@ main (int argc, char **argv)
 	 * connecting to the session manager */
 	panel_session_init ();
 
-    /*Load a css file from a path so the drag handle image can be loaded*/
-    error2 = NULL;
-    provider = gtk_css_provider_new ();
-	        gtk_css_provider_load_from_path (provider,
-				DATADIR "/mate-panel/" "mate-panel.css", &error2);
+	/*Load a css file from a GResource so the drag handle image can be loaded*/
+	screen = gdk_screen_get_default ();
+	css = gtk_css_provider_new ();
+	provider = GTK_STYLE_PROVIDER (css);
+	resource = "/org/mate/panel/theme/mate-panel.css";
+	priority = GTK_STYLE_PROVIDER_PRIORITY_FALLBACK;
 
-    if (error2 != NULL) {
-        g_warning ("Can't parse mate-panel CSS custom description: %s\n", error2->message);
-        g_error_free (error2);
-    }
-    else {
-	    gtk_style_context_add_provider_for_screen (gdk_screen_get_default(),
-                                    GTK_STYLE_PROVIDER (provider),
-                                    GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
-    }
-     g_object_unref (provider);
+	gtk_css_provider_load_from_resource (css, resource);
+	gtk_style_context_add_provider_for_screen (screen, provider, priority);
+
+	g_object_unref (provider);
 
 	gtk_main ();
 

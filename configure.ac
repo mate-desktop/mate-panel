@@ -254,6 +254,7 @@ AC_SUBST(REBUILD)
 AC_OUTPUT([
 Makefile
 data/Makefile
+data/theme/Makefile
 data/org.mate.panel.gschema.xml
 data/org.mate.panel.menubar.gschema.xml
 data/org.mate.panel.object.gschema.xml

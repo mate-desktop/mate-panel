@@ -14,7 +14,6 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/mate-panel/libpanel-util \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
-	-DDATADIR=\""$(datadir)"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
