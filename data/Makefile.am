@@ -1,3 +1,6 @@
+SUBDIRS = \
+	theme
+
 layoutdir   = $(datadir)/mate-panel/layouts
 layout_DATA = \
 	default.layout \
@@ -6,11 +9,6 @@ layout_DATA = \
 	mageia.layout \
 	opensuse.layout \
 	ubuntu.layout
-
-matepaneldir   = $(datadir)/mate-panel
-matepanel_DATA = \
-    mate-panel.css  \
-    panel-grid-symbolic.svg
 
 @INTLTOOL_XML_NOMERGE_RULE@
 
