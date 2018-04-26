@@ -55,6 +55,15 @@ static const GOptionEntry options[] = {
   { NULL }
 };
 
+static void
+parsing_error_cb (GtkCssProvider *provider,
+                  GtkCssSection  *section,
+                  GError         *error,
+                  gpointer        user_data)
+{
+    g_warning ("Can't parse mate-panel's CSS custom description: %s\n", error->message);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -177,6 +186,8 @@ main (int argc, char **argv)
 	provider = GTK_STYLE_PROVIDER (css);
 	resource = "/org/mate/panel/theme/mate-panel.css";
 	priority = GTK_STYLE_PROVIDER_PRIORITY_FALLBACK;
+
+	g_signal_connect (provider, "parsing-error", G_CALLBACK (parsing_error_cb), NULL);
 
 	gtk_css_provider_load_from_resource (css, resource);
 	gtk_style_context_add_provider_for_screen (screen, provider, priority);
