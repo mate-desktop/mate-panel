@@ -1,24 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# ciaran, 2014-2016
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Welsh (http://www.transifex.com/mate/MATE/language/cy/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Martin Wimpress <code@flexion.org>, 2018\n"
+"Language-Team: Welsh (https://www.transifex.com/mate/teams/13566/cy/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cy\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "Lleoliadau"
 
@@ -33,14 +33,14 @@ msgstr "Calendr"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -51,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -65,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -76,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -102,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "Cliciwch i guddio'r calendr misol"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Cliciwch i weld y calendr misol"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Cloc y cyfrifiadur"
 
@@ -124,7 +126,7 @@ msgstr "Cloc y cyfrifiadur"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -134,232 +136,274 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "Gosod amser y system..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "Gosod amser y system"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "Methwyd gosod amser y system"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_Hoffterau"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Cymorth"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "_Ynghylch"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "Copïo'r _amser"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "Copïo'r _dyddiad"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "Newid y dyddiad a'r amser"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr "Dewis Lleoliad"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr "Golygu'r Lleoliad"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr "Enw Dinas"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr "Cylchfa Amser y Ddinas"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Cloc"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "Mae'r Cloc yn dangos yr amser a'r dyddiad cyfredol"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Dafydd Harries <daf@muse.19inch.net>\nDafydd Tomos <i10n@da.fydd.org>\nTelsa Gwynne <hobbit@aloss.ukuu.org.uk>\nBryn Salisbury <bryn@randomlyevil.org.uk>\nRhys Jones <rhys@sucs.org>"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Cadan ap Tomos https://launchpad.net/~cadz123"
 
-#. Languages that have a single word that translates as either "state" or
-#. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr "<small><i>Teipiwch enw dinas, talaith, neu wlad ac yna dewiswch o'r naidlen.</i></small>"
-
-#: ../applets/clock/clock.ui.h:3
-msgid "_Timezone:"
-msgstr "_Cylchfa amser:"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "_Location Name:"
-msgstr "_Enw'r lleoliad:"
-
-#: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(dewisol)</i>"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "L_ongitude:"
-msgstr "_Hydred:"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "L_atitude:"
-msgstr "_Lledred:"
-
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:1
 msgid "Time & Date"
 msgstr "Amser a Dyddiad"
 
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr "_Amser:"
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "_Diddymu"
 
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr "Amser cyfredol:"
-
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:3
 msgid "_Set System Time"
 msgstr "_Pennu amser y system"
 
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr "Dwyrain"
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "_Amser:"
 
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr "Gorllewin"
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr "Amser cyfredol:"
 
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr "Gogledd"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr "De"
-
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:6
 msgid "Clock Preferences"
 msgstr "Hoffterau'r Cloc"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "Gosodiadau _amser"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "Ca_u"
+
+#: ../applets/clock/clock.ui.h:10
 msgid "Clock Format"
 msgstr "Fformat y Cloc"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:11
 msgid "_12 hour format"
 msgstr "12 awr"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:12
 msgid "_24 hour format"
 msgstr "24 awr"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:14
 msgid "Show the _date"
 msgstr "Dangos y _dyddiad"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:15
 msgid "Show seco_nds"
 msgstr "Dangos yr _eiliadau"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:16
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:17
 msgid "Show _weather"
 msgstr "Dangos y _tywydd"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:18
 msgid "Show _temperature"
 msgstr "Dangos y t_ymheredd"
 
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
 msgid "General"
 msgstr "Cyffredinol"
 
-#: ../applets/clock/clock.ui.h:28
-msgid "Display"
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "_Ychwanegu"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "_Golygu"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:24
+msgid "Display"
+msgstr "Dangos"
+
+#: ../applets/clock/clock.ui.h:25
 msgid "_Visibility unit:"
 msgstr "Uned _gwelededd:"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:26
 msgid "_Pressure unit:"
 msgstr "Uned _pwysedd:"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Wind speed unit:"
 msgstr "Uned _cyflymder y gwynt:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Temperature unit:"
 msgstr "Uned y _tymheredd:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "Weather"
 msgstr "Tywydd"
 
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "Gosodiadau _amser"
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "Dwyrain"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "Gorllewin"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "Gogledd"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "De"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
+
+#. Languages that have a single word that translates as either "state" or
+#. "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:36
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Teipiwch enw dinas, talaith, neu wlad ac yna dewiswch o'r "
+"naidlen.</i></small>"
+
+#: ../applets/clock/clock.ui.h:37
+msgid "_Timezone:"
+msgstr "_Cylchfa amser:"
+
+#: ../applets/clock/clock.ui.h:38
+msgid "_Location Name:"
+msgstr "_Enw'r lleoliad:"
+
+#: ../applets/clock/clock.ui.h:39
+msgid "<i>(optional)</i>"
+msgstr "<i>(dewisol)</i>"
+
+#: ../applets/clock/clock.ui.h:40
+msgid "L_ongitude:"
+msgstr "_Hydred:"
+
+#: ../applets/clock/clock.ui.h:41
+msgid "L_atitude:"
+msgstr "_Lledred:"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -373,7 +417,7 @@ msgstr "<small>Gosod...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Gosod</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -384,7 +428,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -393,7 +437,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -401,42 +445,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
 msgstr "Anhysbys"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, yn teimlo'n %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Codi'r haul: %s / Machlud yr haul: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr ""
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr ""
 
@@ -454,7 +498,16 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "Mae'r allwedd yma'n nodi'r fformat awr a ddefnyddir gan y rhaglennig cloc. Y gwerthoedd posib yw \"12-hour\", \"24-hour\", \"internet\", \"unix\" a \"custom\". Wrth ei osod i \"internet\" fe fydd y cloc yn dangos amser Rhyngrwyd. Mae system amser Rhyngrwyd yn rhannu'r dydd i mewn i 1000 o \"guriadau\". Does dim parthau amser yn y system, felly mae'r amser yr un peth dros y byd i gyd. Wrth ei osod i \"unix\", fe fydd y cloc yn dangos eiliadau ers yr Epoch, h.y. 1970-01-01. Wrth ei osod i \"addasedig\", fe fydd y clock yn dangos yr amser yn ôl y fformat a ddewiswyd yn yr allwedd custom_format."
+msgstr ""
+"Mae'r allwedd yma'n nodi'r fformat awr a ddefnyddir gan y rhaglennig cloc. Y"
+" gwerthoedd posib yw \"12-hour\", \"24-hour\", \"internet\", \"unix\" a "
+"\"custom\". Wrth ei osod i \"internet\" fe fydd y cloc yn dangos amser "
+"Rhyngrwyd. Mae system amser Rhyngrwyd yn rhannu'r dydd i mewn i 1000 o "
+"\"guriadau\". Does dim parthau amser yn y system, felly mae'r amser yr un "
+"peth dros y byd i gyd. Wrth ei osod i \"unix\", fe fydd y cloc yn dangos "
+"eiliadau ers yr Epoch, h.y. 1970-01-01. Wrth ei osod i \"addasedig\", fe "
+"fydd y clock yn dangos yr amser yn ôl y fformat a ddewiswyd yn yr allwedd "
+"custom_format."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -560,98 +613,115 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Rhybudd: Mae'r gorchymyn yn edrych fel ei fod yn rhywbeth defnyddiol.\nGan fod hyn yn rhaglennig diddefnydd, mae'n debyg nag ydych eisiau gwneud hyn.\nRydym ni'n awgrymu'n gryf yn erbyn defnyddio %s am unrhyw beth \"ymarferol\" neu ddefnyddiol."
+msgstr ""
+"Rhybudd: Mae'r gorchymyn yn edrych fel ei fod yn rhywbeth defnyddiol.\n"
+"Gan fod hyn yn rhaglennig diddefnydd, mae'n debyg nag ydych eisiau gwneud hyn.\n"
+"Rydym ni'n awgrymu'n gryf yn erbyn defnyddio %s am unrhyw beth \"ymarferol\" neu ddefnyddiol."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
-msgstr "Delweddau"
+msgstr "Lluniau"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s y Pysgodyn"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "Nid oes gan %s unrhyw ddefnydd o gwbl. Mae ond yn cymryd lle ar y ddisg ac amser crynhoi, ac os llwythir, mae hefyd yn cymryd lle ar y panel ac yn y cof. Os darganfyddir unrhyw un yn ei ddefnyddio, dylid ei anfon ar unwaith at seiciatrydd."
+msgstr ""
+"Nid oes gan %s unrhyw ddefnydd o gwbl. Mae ond yn cymryd lle ar y ddisg ac "
+"amser crynhoi, ac os llwythir, mae hefyd yn cymryd lle ar y panel ac yn y "
+"cof. Os darganfyddir unrhyw un yn ei ddefnyddio, dylid ei anfon ar unwaith "
+"at seiciatrydd."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(gydag ychydig o gymorth gan George)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Pysgodyn"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s y Pysgodyn MATE, oracl cyfoes"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "Methu lleoli'r gorchymyn i'w weithredu"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Meddai %s y Pysgodyn MATE:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "Methu darllen allbwn y gorchymyn\n\nManylion: %s"
+msgstr ""
+"Methu darllen allbwn y gorchymyn\n"
+"\n"
+"Manylion: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "_Siarad eto"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr "Nid yw'r gorchymyn a gyfluniwyd yn gweithio ac mae wedi ei amnewid gan: %s"
+msgstr ""
+"Nid yw'r gorchymyn a gyfluniwyd yn gweithio ac mae wedi ei amnewid gan: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Methu gweithredu '%s'\n\nManylion: %s"
+msgstr ""
+"Methu gweithredu '%s'\n"
+"\n"
+"Manylion: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Methu darllen o '%s'\n\nManylion: %s"
+msgstr ""
+"Methu darllen o '%s'\n"
+"\n"
+"Manylion: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr ""
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr ""
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s y pysgodyn MATE, gweledydd ffawd"
@@ -660,47 +730,47 @@ msgstr "%s y pysgodyn MATE, gweledydd ffawd"
 msgid "Fish Preferences"
 msgstr "Hoffterau Pysgodyn MATE"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "_Enw'r pysgodyn:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "_Gorchymyn i'w weithredu pan gaiff ei glicio:"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr "Animeiddio"
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_Ffeil:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "Dewis animeiddiad"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_Nifer o fframiau yn yr animeiddiad:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "_Saib rhwng bob ffrâm"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "fframiau"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
-msgstr "eiliadau"
+msgstr "eiliad"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "_Cylchdroi ar baneli fertigol"
 
@@ -712,7 +782,9 @@ msgstr "Enw'r pysgodyn"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "Mae pysgodyn heb enw yn bysgodyn eithaf diflas. Gwnewch i'ch pysgodyn fyw gan ei enwi."
+msgstr ""
+"Mae pysgodyn heb enw yn bysgodyn eithaf diflas. Gwnewch i'ch pysgodyn fyw "
+"gan ei enwi."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
@@ -722,7 +794,10 @@ msgstr "Map picseli animeiddiad y pysgodyn"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Mae'r allwedd hon yn penodi enw ffeil y map picseli a gaiff ei ddefnyddio ar gyfer yr animeiddiad a ddangosir yn y rhaglennig pysgodyn yn gymharol i'r cyfeiriadur mapiau picseli."
+msgstr ""
+"Mae'r allwedd hon yn penodi enw ffeil y map picseli a gaiff ei ddefnyddio ar"
+" gyfer yr animeiddiad a ddangosir yn y rhaglennig pysgodyn yn gymharol i'r "
+"cyfeiriadur mapiau picseli."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -732,7 +807,9 @@ msgstr "Gorchymyn i'w weithredu pan gaiff ei glicio"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Mae'r allwedd hon yn penodi'r gorchymyn i'w weithredu pan gaiff y pysgodyn ei glicio."
+msgstr ""
+"Mae'r allwedd hon yn penodi'r gorchymyn i'w weithredu pan gaiff y pysgodyn "
+"ei glicio."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
@@ -742,7 +819,9 @@ msgstr "Nifer y fframiau yn animeiddiad y pysgodyn"
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
-msgstr "Mae'r allwedd hon yn penodi nifer y fframiau a gaiff eu dangos yn animeiddiad y pysgodyn."
+msgstr ""
+"Mae'r allwedd hon yn penodi nifer y fframiau a gaiff eu dangos yn "
+"animeiddiad y pysgodyn."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
 msgid "Pause per frame"
@@ -759,7 +838,8 @@ msgstr "Cylchdroi ar baneli fertigol"
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Os yn wir, yna caiff animeiddiad y pysgodyn ei gylchdroi ar baneli fertigol."
+msgstr ""
+"Os yn wir, yna caiff animeiddiad y pysgodyn ei gylchdroi ar baneli fertigol."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -773,12 +853,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Man Hysbysu"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "Man Hysbysu'r Panel"
 
@@ -802,7 +882,10 @@ msgstr "Dangos ffenestri o bob gweithfan"
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Os mae hyn yn wir, fe fydd y rhestr ffenestri yn dangos ffenestri o bob gweithfan; fel arall fe fydd yn dangos ffenestri o'r weithfan gyfredol yn unig."
+msgstr ""
+"Os mae hyn yn wir, fe fydd y rhestr ffenestri yn dangos ffenestri o bob "
+"gweithfan; fel arall fe fydd yn dangos ffenestri o'r weithfan gyfredol yn "
+"unig."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -812,7 +895,9 @@ msgstr "Pryd i grwpio ffenestri"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Penderfynu pryd i grwpio ffenestri o'r un rhaglen yn y rhestr ffenestri. Mae \"never\", \"auto\" ac \"always\" yn werthoedd dilys."
+msgstr ""
+"Penderfynu pryd i grwpio ffenestri o'r un rhaglen yn y rhestr ffenestri. Mae"
+" \"never\", \"auto\" ac \"always\" yn werthoedd dilys."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -822,7 +907,9 @@ msgstr "Symud ffenestri sy'n cael eu datleihau i'r weithfan gyfredol"
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Os yn wir, yna caiff ffenest ei symud i'r weithfan gyfredol pan gaiff ei ddatleihau. Fel arall, newidir at weithfan y ffenest."
+msgstr ""
+"Os yn wir, yna caiff ffenest ei symud i'r weithfan gyfredol pan gaiff ei "
+"ddatleihau. Fel arall, newidir at weithfan y ffenest."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -843,7 +930,9 @@ msgstr "Dangos pob gweithfan"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Os yw hyn yn wir, fe fydd y newidydd gweithfan yn dangos bob gweithfan; fel arall fe fydd yn dangos y weithfan gyfredol yn unig."
+msgstr ""
+"Os yw hyn yn wir, fe fydd y newidydd gweithfan yn dangos bob gweithfan; fel "
+"arall fe fydd yn dangos y weithfan gyfredol yn unig."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -854,7 +943,11 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "Mae'r allwedd hon yn penodi'r nifer o resi (ar gyfer cyflwyniad llorweddol) neu golofnau (ar gyfer cyflwyniad fertigol) mae'r newidydd gweithfannau yn dangos y gweithfannau ynddi. Mae'r allwedd hon ond yn berthnasol os mae'r allwedd display_all_workspaces yn wir."
+msgstr ""
+"Mae'r allwedd hon yn penodi'r nifer o resi (ar gyfer cyflwyniad llorweddol) "
+"neu golofnau (ar gyfer cyflwyniad fertigol) mae'r newidydd gweithfannau yn "
+"dangos y gweithfannau ynddi. Mae'r allwedd hon ond yn berthnasol os mae'r "
+"allwedd display_all_workspaces yn wir."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -875,16 +968,16 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
-msgstr "Dewiswr Ffenestri"
+msgstr "Dewisydd Ffenestri"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
 msgstr "Cyfnewidydd Gweithfannau"
 
@@ -893,7 +986,7 @@ msgid "Switch between workspaces"
 msgstr "Newid rhwng gweithfannau"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "Rhestr Ffenestri"
 
@@ -909,88 +1002,92 @@ msgstr "Dangos y bwrdd gwaith"
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Methu llwytho %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "Ni chanfuwyd yr eicon"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "Cliciwch yma i adfer ffenestri cudd."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Cliciwch yma i guddio pob ffenest a dangos y penbwrdd."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "Botwm Dangos y Penbwrdd"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Mae'r botwm yma yn cuddio pob ffenest ac yn dangos y penbwrdd"
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "Dyw eich rheolwr ffenestri ddim yn cynnal y botwm dangos y penbwrdd, neu nid ydych yn rhedeg rheolwr ffenestri."
+msgstr ""
+"Dyw eich rheolwr ffenestri ddim yn cynnal y botwm dangos y penbwrdd, neu nid"
+" ydych yn rhedeg rheolwr ffenestri."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "Mae'r Rhestr Ffenestri yn dangos rhestr o'r ffenestri i gyd ac yn eich galluogi i'w pori."
+msgstr ""
+"Mae'r Rhestr Ffenestri yn dangos rhestr o'r ffenestri i gyd ac yn eich "
+"galluogi i'w pori."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "Hoffterau'r rhestr ffenestri"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr "Cynnwys y rhestr ffenestri"
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Dangos ffenestri yn y weithfan _cyfredol"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Dangos ffenestri o _bob gweithfan"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr "Grwpio ffenestri"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "_Peidio â grwpio ffenestri"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "Grwpio ffenestri pan mae prinder _lle"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "Grwpio ffenestri o _hyd"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr "Adfer ffenestri wedi'i hisafu"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "Adfer i'r _weithfan gyfredol"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "Adfer i'r weithfan _brodorol"
 
@@ -998,62 +1095,66 @@ msgstr "Adfer i'r weithfan _brodorol"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "Mae'r Dewisydd Ffenestri yn dangos rhestr o'r ffenestri i gyd ac yn eich galluogi i'w pori."
+msgstr ""
+"Mae'r Dewisydd Ffenestri yn dangos rhestr o'r ffenestri i gyd ac yn eich "
+"galluogi i'w pori."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "o resi"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "o golofnau"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Mae'r Newidydd Gweithfan yn dangos fersiwn bychan eich gweithfannau sy'n eich galluogi i reoli eich ffenestri."
+msgstr ""
+"Mae'r Newidydd Gweithfan yn dangos fersiwn bychan eich gweithfannau sy'n "
+"eich galluogi i reoli eich ffenestri."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "Hoffterau'r Newidydd Gweithfan"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "Dangos y weithfan _gyfredol yn unig"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "Dangos _pob gweithfan mewn:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "Nifer o _weithfannau:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "_Enwau Gweithfannau:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Enwau Gweithfannau"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "Dangos _enwau gweithfannau yn y newidydd"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr "Gweithfannau"
 
@@ -1074,7 +1175,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Os yn wir, yna mae'r rhestr \"Rhaglenni Hysbys\" yn y deialog \"Gweithredu Rhaglen\" ar gael. Mae a ydy'r rhestr wedi ei ehangu ai peidio wedi ei rheoli gan yr allwedd show_program_list."
+msgstr ""
+"Os yn wir, yna mae'r rhestr \"Rhaglenni Hysbys\" yn y deialog \"Gweithredu "
+"Rhaglen\" ar gael. Mae a ydy'r rhestr wedi ei ehangu ai peidio wedi ei "
+"rheoli gan yr allwedd show_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1085,7 +1189,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Os yn wir, yna mae'r rhestr \"Rhaglenni Hysbys\" yn y deialog \"Gweithredu Rhaglen\" wedi ei ehangu pan agorir y deialog. Mae'r allwedd yma yn berthnasol ddim ond os yw'r allwedd enable_program_list yn wir."
+msgstr ""
+"Os yn wir, yna mae'r rhestr \"Rhaglenni Hysbys\" yn y deialog \"Gweithredu "
+"Rhaglen\" wedi ei ehangu pan agorir y deialog. Mae'r allwedd yma yn "
+"berthnasol ddim ond os yw'r allwedd enable_program_list yn wir."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1135,7 +1242,10 @@ msgstr "Rhestr IDau panel"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Rhestr o IDau panel. Mae pob ID yn dynodi panel unigol lefel dop. Mae gosodiadau pob un o'r paneli yma yn cael eu cadw yn /apps/panel/toplevels/$(id)."
+msgstr ""
+"Rhestr o IDau panel. Mae pob ID yn dynodi panel unigol lefel dop. Mae "
+"gosodiadau pob un o'r paneli yma yn cael eu cadw yn "
+"/apps/panel/toplevels/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1146,7 +1256,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Rhestr o IDau gwrthrychau panel. Mae pob ID yn dynodi gwrthrych panel unigol (e.e. lansiwr, botwm gweithred neu far/botwm dewislen). Mae gosodiadau pob un o'r gwrthrychau yma wedi eu cadw yn /apps/panel/objects/$(id)."
+msgstr ""
+"Rhestr o IDau gwrthrychau panel. Mae pob ID yn dynodi gwrthrych panel unigol"
+" (e.e. lansiwr, botwm gweithred neu far/botwm dewislen). Mae gosodiadau pob "
+"un o'r gwrthrychau yma wedi eu cadw yn /apps/panel/objects/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1169,7 +1282,9 @@ msgstr "Cau'r drôr yn awtomatig"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Os gwir, fe gaiff drôr ei gau yn awtomatig pan mae'r defnyddiwr yn clicio lansiwr o'r fewn."
+msgstr ""
+"Os gwir, fe gaiff drôr ei gau yn awtomatig pan mae'r defnyddiwr yn clicio "
+"lansiwr o'r fewn."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1179,7 +1294,9 @@ msgstr "Cadarnhau tyniad panel"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Os gwir, dangosir deialog yn gofyn am gadarnhad os mae'r defnyddiwr eisiau tynnu panel."
+msgstr ""
+"Os gwir, dangosir deialog yn gofyn am gadarnhad os mae'r defnyddiwr eisiau "
+"tynnu panel."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1188,7 +1305,8 @@ msgstr "Amlygu lanswyr wrth i'r llygoden symud drostynt"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Os gwir, amlygir lansiwr pan mae'r defnyddiwr yn symud y pwyntydd drosto."
+msgstr ""
+"Os gwir, amlygir lansiwr pan mae'r defnyddiwr yn symud y pwyntydd drosto."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1199,7 +1317,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Os yn wir, ni fydd y panel yn gadael defnyddiwr i wneud unrhyw newidiadau i osodiadau'r panel. Fodd bynnag mae'n bosib fydd angen cloi lawr rhaglennig unigol, ar wahân. Rhaid ail-ddechrau'r panel er mwyn i hyn gael effaith."
+msgstr ""
+"Os yn wir, ni fydd y panel yn gadael defnyddiwr i wneud unrhyw newidiadau i "
+"osodiadau'r panel. Fodd bynnag mae'n bosib fydd angen cloi lawr rhaglennig "
+"unigol, ar wahân. Rhaid ail-ddechrau'r panel er mwyn i hyn gael effaith."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1211,7 +1332,12 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Rhestr o IIDau rhaglennig y bydd y panel yn anwybyddu. Fe allwch chi analluogi rhaglennig penodol rhag llwytho neu gael ei ddangos yn y fwydlen. Er enghraifft i analluogi'r rhaglennig mini-commander ychwanegwch 'OAFIID:MATE_MiniCommanderApplet' i'r rhestr. Rhaid ail-ddechrau'r panel er mwyn i hyn gael effaith."
+msgstr ""
+"Rhestr o IIDau rhaglennig y bydd y panel yn anwybyddu. Fe allwch chi "
+"analluogi rhaglennig penodol rhag llwytho neu gael ei ddangos yn y fwydlen. "
+"Er enghraifft i analluogi'r rhaglennig mini-commander ychwanegwch "
+"'OAFIID:MATE_MiniCommanderApplet' i'r rhestr. Rhaid ail-ddechrau'r panel er "
+"mwyn i hyn gael effaith."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1221,7 +1347,9 @@ msgstr "Analluogi Gorfodi Gadael"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Os yn wir, ni fydd y panel yn gadael defnyddiwr i orfodi rhaglen i gau lawr drwy beidio rhoi mynediad i'r botwm cau'n orfodol."
+msgstr ""
+"Os yn wir, ni fydd y panel yn gadael defnyddiwr i orfodi rhaglen i gau lawr "
+"drwy beidio rhoi mynediad i'r botwm cau'n orfodol."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1325,7 +1453,9 @@ msgstr "Safle'r gwrthrych ar y panel"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Lleoliad y gwrthrych panel hwn. Mae'r lleoliad fel arfer wedi ei benodi yn nhermau nifer y picseli o ymyl chwith (neu frig os yn fertigol) y panel."
+msgstr ""
+"Lleoliad y gwrthrych panel hwn. Mae'r lleoliad fel arfer wedi ei benodi yn "
+"nhermau nifer y picseli o ymyl chwith (neu frig os yn fertigol) y panel."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1335,7 +1465,9 @@ msgstr "Dehongli'r safle yn gymharol i'r ymyl gwaelod/de."
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Os yn wir, mae safle'r gwrthrych wedi ei ddehongli yn gymharol i ymyl de (gwaelod os yn fertigol) y panel."
+msgstr ""
+"Os yn wir, mae safle'r gwrthrych wedi ei ddehongli yn gymharol i ymyl de "
+"(gwaelod os yn fertigol) y panel."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1345,7 +1477,9 @@ msgstr "Cloi'r gwrthrych i'r panel"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Os yn wir, ni chaiff y defnyddiwr symud y rhaglennig heb ddatgloi'r gwrthrych gan ddefnyddio'r cofnod dewislen \"Datgloi\"."
+msgstr ""
+"Os yn wir, ni chaiff y defnyddiwr symud y rhaglennig heb ddatgloi'r "
+"gwrthrych gan ddefnyddio'r cofnod dewislen \"Datgloi\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1367,7 +1501,9 @@ msgstr "Y panel wedi cysylltu i'r drôr"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Dynodydd y panel sydd wedi ei gysylltu i'r drôr hwn. Mae'r gosodiad yma ond yn berthnasol os mae'r allwedd object_type yn \"drawer-object\"."
+msgstr ""
+"Dynodydd y panel sydd wedi ei gysylltu i'r drôr hwn. Mae'r gosodiad yma ond "
+"yn berthnasol os mae'r allwedd object_type yn \"drawer-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1378,7 +1514,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "Testun y brysgymorth i'w ddangos ar gyfer y drôr neu'r fwydlen hon. Mae'r gosodiad yma ond yn berthnasol os yw'r allwedd object_type yn \"drawer-object\" neu \"menu-object\"."
+msgstr ""
+"Testun y brysgymorth i'w ddangos ar gyfer y drôr neu'r fwydlen hon. Mae'r "
+"gosodiad yma ond yn berthnasol os yw'r allwedd object_type yn \"drawer-"
+"object\" neu \"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1389,7 +1528,11 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Os yn wir, defnyddir yr alwed custom_icon fel eicon addasedig ar gyfer y botwm. Os nad yw'n wir, anwybyddir yr allwedd custom_icon. Mae'r allwedd yma ond yn berthnasol os yw'r object_type yn \"menu-object\" neu \"drawer-object\"."
+msgstr ""
+"Os yn wir, defnyddir yr alwed custom_icon fel eicon addasedig ar gyfer y "
+"botwm. Os nad yw'n wir, anwybyddir yr allwedd custom_icon. Mae'r allwedd yma"
+" ond yn berthnasol os yw'r object_type yn \"menu-object\" neu \"drawer-"
+"object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1400,7 +1543,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Lleoliad y ffeil ddelwedd a ddefnyddir fel eicon botwm y gwrthrych. Mae'r allwedd yma ond yn berthnasol os mae'r allwedd object_type yn \"drawer-object\" ac mae'r allwedd use_custom_icon yn wir."
+msgstr ""
+"Lleoliad y ffeil ddelwedd a ddefnyddir fel eicon botwm y gwrthrych. Mae'r "
+"allwedd yma ond yn berthnasol os mae'r allwedd object_type yn \"drawer-"
+"object\" ac mae'r allwedd use_custom_icon yn wir."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1411,7 +1557,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Os yn wir, defnyddir yr allwedd menu_path fel llwybr dylid adeiladu cynnwys y ddewislen ohoni. Os nad yw'n wir, anwybyddir yr allwedd menu_path. Mae'r allwedd yma ond yn berthnasol os mae'r object_type yn \"menu-object\"."
+msgstr ""
+"Os yn wir, defnyddir yr allwedd menu_path fel llwybr dylid adeiladu cynnwys "
+"y ddewislen ohoni. Os nad yw'n wir, anwybyddir yr allwedd menu_path. Mae'r "
+"allwedd yma ond yn berthnasol os mae'r object_type yn \"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1422,7 +1571,10 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "Y llwybr caiff cynnwys y ddewislen eu creu ohoni. Mae’r allwedd yma ond yn berthnasol os mae'r allwedd use_menu_path yn wir ac mae'r allwedd object_type yn \"menu-object\"."
+msgstr ""
+"Y llwybr caiff cynnwys y ddewislen eu creu ohoni. Mae’r allwedd yma ond yn "
+"berthnasol os mae'r allwedd use_menu_path yn wir ac mae'r allwedd "
+"object_type yn \"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1442,7 +1594,9 @@ msgstr "Lleoliad y lansiwr"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Lleoliad y ffeil .desktop sy'n disgrifio'r lansiwr. Mae'r gosodiad yma ond yn berthnasol os mae'r allwedd object_type yn \"launcher-object\"."
+msgstr ""
+"Lleoliad y ffeil .desktop sy'n disgrifio'r lansiwr. Mae'r gosodiad yma ond "
+"yn berthnasol os mae'r allwedd object_type yn \"launcher-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1453,7 +1607,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Y math o weithred mae'r botwm yma'n cynrychioli. Gwerthoedd dilys: \"lock\", \"logout\", \"run\", \"search\" a \"screenshot\". Mae'r allwedd yma ond yn berthnasol os mae'r allwedd object_type yn \"action-applet\"."
+msgstr ""
+"Y math o weithred mae'r botwm yma'n cynrychioli. Gwerthoedd dilys: \"lock\","
+" \"logout\", \"run\", \"search\" a \"screenshot\". Mae'r allwedd yma ond yn "
+"berthnasol os mae'r allwedd object_type yn \"action-applet\"."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1464,7 +1621,10 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Mae hyn yn enw darllenadwy gan bobl rydych yn gallu defnyddio er mwyn dynodi panel. Ei phrif bwrpas yw ymddangos fel teitl ffenest y panel, sy'n ddefnyddiol wrth lywio rhwng paneli."
+msgstr ""
+"Mae hyn yn enw darllenadwy gan bobl rydych yn gallu defnyddio er mwyn dynodi"
+" panel. Ei phrif bwrpas yw ymddangos fel teitl ffenest y panel, sy'n "
+"ddefnyddiol wrth lywio rhwng paneli."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1474,7 +1634,9 @@ msgstr "Y sgrîn X lle dangosir y panel"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "Gyda gosodiad aml-sgrîn, fe allwch gael paneli ar bob sgrîn unigol. Mae'r allwedd hon yn penodi'r sgrîn gyfredol mae'r panel wedi ei ddangos arni."
+msgstr ""
+"Gyda gosodiad aml-sgrîn, fe allwch gael paneli ar bob sgrîn unigol. Mae'r "
+"allwedd hon yn penodi'r sgrîn gyfredol mae'r panel wedi ei ddangos arni."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1484,7 +1646,9 @@ msgstr "Y monitor Xinerama lle dangosir y panel"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Mewn gosodiad Xinerama, fe allwch gael paneli ar bob monitor unigol. Mae'r allwedd hon yn dynodi'r monitor cyfredol dangosir y panel arni."
+msgstr ""
+"Mewn gosodiad Xinerama, fe allwch gael paneli ar bob monitor unigol. Mae'r "
+"allwedd hon yn dynodi'r monitor cyfredol dangosir y panel arni."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1496,7 +1660,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Os yn wir, fe fydd y panel yn defnyddio holl led y sgrin (uchder os mae hwn yn banel fertigol). Yn y modd yma gellir gosod y panel hwn ar ymyl sgrin yn unig. Os yn anwir, fe fydd y panel dim ond yn ddigon mawr i ddal y Rhaglenigion, lanswyr a botymau ar y panel."
+msgstr ""
+"Os yn wir, fe fydd y panel yn defnyddio holl led y sgrin (uchder os mae hwn "
+"yn banel fertigol). Yn y modd yma gellir gosod y panel hwn ar ymyl sgrin yn "
+"unig. Os yn anwir, fe fydd y panel dim ond yn ddigon mawr i ddal y "
+"Rhaglenigion, lanswyr a botymau ar y panel."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1512,7 +1680,15 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Gogwydd y panel. Mae pedwar gwerth posib: \"top\", \"bottom\", \"left\", \"right\". Yn y modd ehangedig mae'r allwedd yn penodi pa ymyl o'r sgrîn mae'r panel arni. Yn y modd diehangedig mae'r gwahaniaeth rhwng \"top\" a \"bottom\" yn llai pwysig - mae'r ddau yn penodi taw panel llorweddol yw hyn - ond yn rhoi awgrym defnyddiol ynghylch sut ddylai rhai gwrthrychau panel ymddwyn. Er enghraifft, ar banel \"top\" fe fydd botwm dewislen yn dangos ei ddewislen islaw'r panel, tra ar banel \"bottom\" caiff ei ddangos uwchben y panel."
+msgstr ""
+"Gogwydd y panel. Mae pedwar gwerth posib: \"top\", \"bottom\", \"left\", "
+"\"right\". Yn y modd ehangedig mae'r allwedd yn penodi pa ymyl o'r sgrîn "
+"mae'r panel arni. Yn y modd diehangedig mae'r gwahaniaeth rhwng \"top\" a "
+"\"bottom\" yn llai pwysig - mae'r ddau yn penodi taw panel llorweddol yw hyn"
+" - ond yn rhoi awgrym defnyddiol ynghylch sut ddylai rhai gwrthrychau panel "
+"ymddwyn. Er enghraifft, ar banel \"top\" fe fydd botwm dewislen yn dangos ei"
+" ddewislen islaw'r panel, tra ar banel \"bottom\" caiff ei ddangos uwchben y"
+" panel."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1524,7 +1700,10 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Uchder (lled ar gyfer panel fertigol) y panel. Fe fydd y panel yn penderfynu pan mae'n gweithredu maint lleiaf yn seiliedig ar faint y ffont a phethau eraill. Y maint uchaf yw chwarter uchder (neu led) y sgrîn."
+msgstr ""
+"Uchder (lled ar gyfer panel fertigol) y panel. Fe fydd y panel yn penderfynu"
+" pan mae'n gweithredu maint lleiaf yn seiliedig ar faint y ffont a phethau "
+"eraill. Y maint uchaf yw chwarter uchder (neu led) y sgrîn."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1535,7 +1714,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Lleoliad y panel ar hyd yr echelin x. Mae gan yr allwedd hon ystyr yn y modd diehangedig. Yn y modd ehangedig, anwybyddir yr allwedd hon a gosodir y panel ar ymylon y sgrîn a benodir gan yr allwedd gogwydd."
+msgstr ""
+"Lleoliad y panel ar hyd yr echelin x. Mae gan yr allwedd hon ystyr yn y modd"
+" diehangedig. Yn y modd ehangedig, anwybyddir yr allwedd hon a gosodir y "
+"panel ar ymylon y sgrîn a benodir gan yr allwedd gogwydd."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1546,7 +1728,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Lleoliad y panel ar hyd yr echelin y. Mae gan yr allwedd hon ystyr yn y modd diehangedig. Yn y modd ehangedig, anwybyddir yr allwedd hon a gosodir y panel ar ymylon y sgrîn a arwyddir gan yr allwedd gogwydd."
+msgstr ""
+"Lleoliad y panel ar hyd yr echelin y. Mae gan yr allwedd hon ystyr yn y modd"
+" diehangedig. Yn y modd ehangedig, anwybyddir yr allwedd hon a gosodir y "
+"panel ar ymylon y sgrîn a arwyddir gan yr allwedd gogwydd."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1609,13 +1794,18 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Os yn wir, caiff y panel ei guddio'n awtomatig i gornel y sgrin pan mae'r pwyntydd yn gadael ardal y panel. Fe fydd symud y pwyntydd i'r cornel hwnnw yn achosi i'r panel ymddangos eto."
+msgstr ""
+"Os yn wir, caiff y panel ei guddio'n awtomatig i gornel y sgrin pan mae'r "
+"pwyntydd yn gadael ardal y panel. Fe fydd symud y pwyntydd i'r cornel hwnnw "
+"yn achosi i'r panel ymddangos eto."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Os yn wir, caiff cuddio a datguddio'r panel hwn ei animeiddio yn hytrach na digwydd ar unwaith."
+msgstr ""
+"Os yn wir, caiff cuddio a datguddio'r panel hwn ei animeiddio yn hytrach na "
+"digwydd ar unwaith."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1625,7 +1815,9 @@ msgstr "Galluogi botymau cuddio"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Os yn wir, gosodir botymau ar naill ochr y panel gellir eu defnyddio i symud y panel i ymyl y sgrin, gan adael dim ond botwm yn dangos."
+msgstr ""
+"Os yn wir, gosodir botymau ar naill ochr y panel gellir eu defnyddio i symud"
+" y panel i ymyl y sgrin, gan adael dim ond botwm yn dangos."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1635,7 +1827,9 @@ msgstr "Galluogi saethau ar fotymau cuddio"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "Os yn wir, gosodir saethau ar y botymau cuddio. Mae'r allwedd yma ond yn berthnasol os mae'r allwedd enable_buttons yn wir."
+msgstr ""
+"Os yn wir, gosodir saethau ar y botymau cuddio. Mae'r allwedd yma ond yn "
+"berthnasol os mae'r allwedd enable_buttons yn wir."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1646,7 +1840,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Penodi'r nifer o filfedau eiliad i seibio ar ôl i'r pwyntydd adael ardal y panel cyn caiff y panel ei guddio'n awtomatig. Mae'r allwedd yma ond yn berthnasol os mae'r allwedd auto_hide yn wir."
+msgstr ""
+"Penodi'r nifer o filfedau eiliad i seibio ar ôl i'r pwyntydd adael ardal y "
+"panel cyn caiff y panel ei guddio'n awtomatig. Mae'r allwedd yma ond yn "
+"berthnasol os mae'r allwedd auto_hide yn wir."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1657,7 +1854,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Penodi nifer o filfedau eiliad i seibio ar ôl i'r pwyntydd gyrraedd ardal y panel cyn caiff y panel ei ail-ddangos yn awtomatig. Mae'r allwedd yma ond yn briodol os mae'r allwedd auto_hide yn wir."
+msgstr ""
+"Penodi nifer o filfedau eiliad i seibio ar ôl i'r pwyntydd gyrraedd ardal y "
+"panel cyn caiff y panel ei ail-ddangos yn awtomatig. Mae'r allwedd yma ond "
+"yn briodol os mae'r allwedd auto_hide yn wir."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1668,7 +1868,10 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Penodi nifer y picseli sy'n weladwy pan gaiff y panel ei guddio mewn cornel yn awtomatig. Mae'r allwedd yma ond yn berthnasol pan mae'r allwedd auto_hide yn wir."
+msgstr ""
+"Penodi nifer y picseli sy'n weladwy pan gaiff y panel ei guddio mewn cornel "
+"yn awtomatig. Mae'r allwedd yma ond yn berthnasol pan mae'r allwedd "
+"auto_hide yn wir."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1679,7 +1882,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "Y cyflymder dylai animeiddiadau ddigwydd ati. Mae tri gwerth posib: \"slow\", \"medium\" a \"fast\". Mae'r allwedd yma dim ond yn berthnasol os mae'r allwedd enable_animations yn wir."
+msgstr ""
+"Y cyflymder dylai animeiddiadau ddigwydd ati. Mae tri gwerth posib: "
+"\"slow\", \"medium\" a \"fast\". Mae'r allwedd yma dim ond yn berthnasol os "
+"mae'r allwedd enable_animations yn wir."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1710,18 +1916,24 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Penodi didreiddedd ffurf lliw'r cefndir. Os nad yw'r lliw yn hollol ddidraidd (gwerth yn llai na 65535), caiff y lliw ei gyfansoddi a delwedd cefndir y penbwrdd."
+msgstr ""
+"Penodi didreiddedd ffurf lliw'r cefndir. Os nad yw'r lliw yn hollol "
+"ddidraidd (gwerth yn llai na 65535), caiff y lliw ei gyfansoddi a delwedd "
+"cefndir y penbwrdd."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
-msgstr "Delwedd cefndir"
+msgstr "Llun cefndirol"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:48
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Penodi ffeil i'w ddefnyddio ar gyfer y ddelwedd cefndir. Os mae'r ddelwedd yn cynnwys sianel alpha fe gaiff ei gyfansoddi gyda delwedd cefndir y penbwrdd."
+msgstr ""
+"Penodi ffeil i'w ddefnyddio ar gyfer y ddelwedd cefndir. Os mae'r ddelwedd "
+"yn cynnwys sianel alpha fe gaiff ei gyfansoddi gyda delwedd cefndir y "
+"penbwrdd."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1731,7 +1943,9 @@ msgstr "Ffitio'r ddelwedd i'r panel"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Os yn wir, caiff y ddelwedd ei raddio (gan gadw cymhareb agwedd y ddelwedd) at uchder y panel (os yn llorweddol)."
+msgstr ""
+"Os yn wir, caiff y ddelwedd ei raddio (gan gadw cymhareb agwedd y ddelwedd) "
+"at uchder y panel (os yn llorweddol)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1741,7 +1955,9 @@ msgstr "Ymestyn y ddelwedd i'r panel"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Os yn wir, caiff y ddelwedd ei raddio i faint y panel. Ni chaiff cymhareb agwedd y ddelwedd ei gadw."
+msgstr ""
+"Os yn wir, caiff y ddelwedd ei raddio i faint y panel. Ni chaiff cymhareb "
+"agwedd y ddelwedd ei gadw."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1751,7 +1967,9 @@ msgstr "Cylchdroi'r ddelwedd ar baneli fertigol"
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "Os yn wir, yna caiff y ddelwedd cefndir ei droi pan mae'r panel wedi ei ogwyddo'n fertigol."
+msgstr ""
+"Os yn wir, yna caiff y ddelwedd cefndir ei droi pan mae'r panel wedi ei "
+"ogwyddo'n fertigol."
 
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1786,11 +2004,11 @@ msgstr ""
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Nid yw'n eitem y gellir lansio"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "Analluogi cysylltiad â'r rheolwr sesiynau"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
@@ -1802,7 +2020,7 @@ msgstr "FFEIL"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Penodi ID rheolaeth sesiynau"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
@@ -1822,8 +2040,8 @@ msgstr "Dangos dewisiadau rheoli sesiynau"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr "Gwall"
 
@@ -1853,32 +2071,32 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Tynnu o'r Panel"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "_Symud"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "_Cloi i'r panel"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr ""
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "Drôr"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_Ychwanegu at y Drôr..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
@@ -1890,14 +2108,14 @@ msgstr "Creu ffeil yn y cyfeiriadur a benodwyd"
 
 #: ../mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
-msgstr ""
+msgstr "[FFEIL...]"
 
 #: ../mate-panel/mate-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- Golygu ffeiliau .desktop"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Creu lansiwr"
 
@@ -1906,11 +2124,11 @@ msgstr "Creu lansiwr"
 msgid "Directory Properties"
 msgstr ""
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Priodweddau'r Lansiwr"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr "Panel"
 
@@ -1940,20 +2158,20 @@ msgstr "Dim URI wedi ei ddarparu ar gyfer ffeil penbwrdd y lansiwr panel\n"
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "Methu agor y ffeil penbwrdd %s ar gyfer lansiwr panel%s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_Lansio"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr ""
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "Methu cadw'r lansiwr"
 
@@ -1976,23 +2194,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "Ychwanegu'r lansiwr yma at y _panel"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "Ychwanegu'r lansiwr yma at y _bwrdd gwaith"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "_Dewislen gyfan"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Ychwanegu hwn fel _drôr i'r panel"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Ychwanegu hwn fel d_ewislen i'r panel"
 
@@ -2025,7 +2243,8 @@ msgstr "Allgofnodi..."
 
 #: ../mate-panel/panel-action-button.c:361
 msgid "Log out of this session to log in as a different user"
-msgstr "Allgofnodi o'r sesiwn gyfredol er mwyn mewngofnodi fel defnyddiwr gwahanol"
+msgstr ""
+"Allgofnodi o'r sesiwn gyfredol er mwyn mewngofnodi fel defnyddiwr gwahanol"
 
 #: ../mate-panel/panel-action-button.c:370
 msgid "Run Application..."
@@ -2041,10 +2260,11 @@ msgstr "Chwilio am Ffeiliau..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "Lleoli dogfennau neu blygellau ar y cyfrifiadur hwn yn ôl enw neu gynnwys"
+msgstr ""
+"Lleoli dogfennau neu blygellau ar y cyfrifiadur hwn yn ôl enw neu gynnwys"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Gorfodi Gadael"
 
@@ -2069,114 +2289,124 @@ msgstr "Diffodd"
 msgid "Shut down the computer"
 msgstr "Diffodd y cyfrifiadur"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "Lansiwr Rhaglen Addasedig"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "Creu lansiwr newydd"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "Lansiwr Rhaglen..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "Copïo lansiwr o'r ddewislen raglenni"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
-msgstr "Prif Ddewislen"
+msgstr "Prif ddewislen"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "Prif ddewislen MATE"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Bar Dewislenni"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Bar dewislen addasedig"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr "Gwahanydd"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "Gwahanydd er mwyn trefnu eitemau'r panel"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "Drôr naid i gadw eitemau eraill ynddo"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(gwag)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Canfod _eitem i'w hychwanegu at \"%s\":"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "Ychwanegu at y Drôr"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "Canfod _eitem i'w hychwanegu at y drôr:"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "Ychwanegu at y Panel..."
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "Canfod _eitem i'w hychwanegu at y panel:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr ""
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" wedi terfynu'n annisgwyl"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Terfynwyd gwrthrych panel yn annisgwyl"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Os ydych yn ail llwytho gwrthrych panel, byddai'n cael ei ychwanegu yn ôl yn syth."
+msgstr ""
+"Os ydych yn ail llwytho gwrthrych panel, byddai'n cael ei ychwanegu yn ôl yn"
+" syth."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "_Peidio Ail-lwytho"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
-msgstr "_Ail Llwytho"
+msgstr "_Ail-lwytho"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Fe gafodd y panel broblem wrth lwytho \"%s\"."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ydych chi eisiau dileu'r rhaglennig o'ch cyfluniad?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_Dileu"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2214,12 +2444,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2227,100 +2453,106 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_Dileu'r Panel Hwn"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "Panel _Newydd"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "_Ynghylch Paneli"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "Rhaglen"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "Lleoliad"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_Math:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr "_Enw:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "_Pori..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "_Sylw:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "_Dychwelyd"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "Dewis rhaglen..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "Dewis ffeil..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
 msgstr "_Lleoliad:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
-msgstr "Methu dangos y ddogfen gymorth"
+msgstr "Methwyd dangos y ddogfen gymorth"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Cliciwch ar ffenest er mwyn gorfodi'r rhaglen i derfynu. Gwasgwch <ESC> er mwyn canslo."
+msgstr ""
+"Cliciwch ar ffenest er mwyn gorfodi'r rhaglen i derfynu. Gwasgwch <ESC> er "
+"mwyn canslo."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Gorfodi'r rhaglen hon i gau?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2336,13 +2568,14 @@ msgstr "Cyrchu dogfennau, plygellau a lleoedd rhwydwaith"
 
 #: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Newid edrychiad ac ymddygiad y bwrdd gwaith, cael cymorth, neu allgofnodi"
+msgstr ""
+"Newid edrychiad ac ymddygiad y bwrdd gwaith, cael cymorth, neu allgofnodi"
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
 msgstr "Rhaglenni"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "Golygu dewislenni"
 
@@ -2351,7 +2584,7 @@ msgid "Bookmarks"
 msgstr "Llyfrnodau"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "Agor '%s'"
@@ -2419,7 +2652,7 @@ msgstr ""
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
-msgstr "Mannau"
+msgstr "Llefydd"
 
 #: ../mate-panel/panel-menu-items.c:1524
 msgid "System"
@@ -2448,7 +2681,9 @@ msgstr "Allgofnodi %s..."
 #: ../mate-panel/panel-menu-items.c:1625
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
-msgstr "Allgofnodi %s o'r sesiwn gyfredol er mwyn mewngofnodi fel defnyddiwr gwahanol"
+msgstr ""
+"Allgofnodi %s o'r sesiwn gyfredol er mwyn mewngofnodi fel defnyddiwr "
+"gwahanol"
 
 #: ../mate-panel/panel-properties-dialog.c:120
 #: ../mate-panel/panel-test-applets.c:58
@@ -2479,7 +2714,7 @@ msgid "Drawer Properties"
 msgstr ""
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr ""
@@ -2492,138 +2727,138 @@ msgstr "Methu dangos deialog priodweddau"
 msgid "Panel Properties"
 msgstr "Priodweddau'r Panel"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "Mae rhai o'r priodweddau yma wedi eu cloi"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_Eicon:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
-msgstr "o bicseli"
+msgstr "picsel"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_Gogwydd:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "_Maint:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "_Ehangu"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_Cuddio'n Awtomatig"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "Dangos _botymau cuddio"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "_Saethau ar fotymau cuddio"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_Dim (defnyddio thema'r system)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "Lliw _Unffurf"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
 msgstr "Dewiswch liw"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>Tryloyw</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "_Lliw:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "_Arddull:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>Didraidd</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "_Delwedd cefndir:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "Dewis Cefndir"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "Cefndir"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "Manylion Delwedd Cefndir"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Teilsio"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "_Ailraddio"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "_Ehangu"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "Cylchdroi'r ddelwedd pan fo'r panel yn _fertigol"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Methu agor y ddogfen \"%s\" a ddefnyddiwyd yn ddiweddar"
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Clirio'r rhestr Dogfennau Diweddar?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Clirio Dogfennau Diweddar"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Dogfennau Diweddar"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr "Clirio'r dogfennau diweddar..."
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "Clirio'r pob eitem o'r rhestr Dogfennau Diweddar"
 
@@ -2637,25 +2872,28 @@ msgstr "Methu rhedeg y gorchymyn '%s'"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ni ellir trosi '%s' o UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Dewis ffeil i'w atodi i'r gorchymyn..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "Dewiswch raglen er mwyn gweld ei ddisgrifiad."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Caiff y gorchymyn '%s' ei weithredu"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Fformat (%d) neu hyd (%d) annilys yn y rhestr URI a gafodd ei gollwng wrth y deialog gychwyn\n"
+msgstr ""
+"Fformat (%d) neu hyd (%d) annilys yn y rhestr URI a gafodd ei gollwng wrth y"
+" deialog gychwyn\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "Methu dangos y ddeialog rhedeg"
 
@@ -2663,49 +2901,54 @@ msgstr "Methu dangos y ddeialog rhedeg"
 msgid "Run Application"
 msgstr "Gweithredu Rhaglen"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "Eicon y gorchymyn"
-
-#: ../mate-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "Eicon y gorchymyn i'w rhedeg."
-
-#: ../mate-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "Gweithredu mewn _terfynell"
-
-#: ../mate-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "Dewiswch y blwch yma er mwyn rhedeg y gorchymyn mewn ffenest terfynell."
-
-#: ../mate-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "Gweithredu gyda _ffeil..."
-
-#: ../mate-panel/panel-run-dialog.ui.h:7
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr "Cliciwch y botwm yma er mwyn pori am ffeil er mwyn atodi ei enw i'r llinyn gorchymyn."
-
-#: ../mate-panel/panel-run-dialog.ui.h:8
-msgid "List of known applications"
-msgstr "Rhestr o raglenni hysbys"
-
-#: ../mate-panel/panel-run-dialog.ui.h:10
-msgid "Show list of known _applications"
-msgstr "Rhestr o _rhaglenni hysbys"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Gweithredu"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-run-dialog.ui.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Cliciwch y botwm hwn er mwyn gweithredu'r rhaglen a ddewiswyd neu'r gorchymyn yn y maes gorchymyn."
+msgstr ""
+"Cliciwch y botwm hwn er mwyn gweithredu'r rhaglen a ddewiswyd neu'r "
+"gorchymyn yn y maes gorchymyn."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Command icon"
+msgstr "Eicon y gorchymyn"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "The icon of the command to be run."
+msgstr "Eicon y gorchymyn i'w rhedeg."
+
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Run in _terminal"
+msgstr "Gweithredu mewn _terfynell"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr ""
+"Dewiswch y blwch yma er mwyn rhedeg y gorchymyn mewn ffenest terfynell."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Run with _file..."
+msgstr "Gweithredu gyda _ffeil..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Cliciwch y botwm yma er mwyn pori am ffeil er mwyn atodi ei enw i'r llinyn "
+"gorchymyn."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+msgid "List of known applications"
+msgstr "Rhestr o raglenni hysbys"
+
+#: ../mate-panel/panel-run-dialog.ui.h:14
+msgid "Show list of known _applications"
+msgstr "Rhestr o _rhaglenni hysbys"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2713,7 +2956,7 @@ msgstr "_Gorfodi gadael"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "C_lirio"
+msgstr "_Clirio"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2730,12 +2973,14 @@ msgstr ""
 
 #: ../mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr "Penodi maint cychwynnol y rhaglennig (xx-small, medium, large a.y.y.b.)"
+msgstr ""
+"Penodi maint cychwynnol y rhaglennig (xx-small, medium, large a.y.y.b.)"
 
 #: ../mate-panel/panel-test-applets.c:42
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "Penodi gogwydd cychwynnol y rhaglennig (brig, gwaelod, chwith neu dde)"
+msgstr ""
+"Penodi gogwydd cychwynnol y rhaglennig (brig, gwaelod, chwith neu dde)"
 
 #: ../mate-panel/panel-test-applets.c:66
 msgctxt "Size"
@@ -2782,40 +3027,44 @@ msgstr "Methu llwytho'r rhaglennig %s"
 msgid "Test applet utility"
 msgstr "Rhaglen profi Rhaglennig"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_Rhaglennig:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr "_Llwybr Hoffterau:"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Cuddio'r Panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
 #: ../mate-panel/panel-util.c:347
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "Heb ganfod yr eicon '%s'"
+msgstr "Ni chanfuwyd yr eicon '%s'"
 
 #: ../mate-panel/panel-util.c:465
 #, c-format
@@ -2828,13 +3077,13 @@ msgstr "ffeil"
 
 #: ../mate-panel/panel-util.c:866
 msgid "Home Folder"
-msgstr "Plygell Cartref"
+msgstr "Plygell gartref"
 
 #. Translators: this is the same string as the one found in
 #. * caja
 #: ../mate-panel/panel-util.c:878
 msgid "File System"
-msgstr "System Ffeiliau"
+msgstr "System ffeiliau"
 
 #: ../mate-panel/panel-util.c:1051
 msgid "Search"
@@ -2849,27 +3098,31 @@ msgstr "Chwilio"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "Agor LAU: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "Tynnu'r drôr?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "Pan gaiff drôr ei dynnu, collir y drôr\na'i osodiadau."
+msgstr ""
+"Pan gaiff drôr ei dynnu, collir y drôr\n"
+"a'i osodiadau."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "Dileu'r Panel Hwn?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "Pan gaiff panel ei dynnu, collir y panel\na'i osodiadau."
+msgstr ""
+"Pan gaiff panel ei dynnu, collir y panel\n"
+"a'i osodiadau."

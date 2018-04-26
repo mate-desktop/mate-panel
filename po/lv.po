@@ -1,25 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Imants Liepiņš <imzzinator@gmail.com>, 2012-2013
-# Rihards Priedītis <rprieditis@gmail.com>, 2013
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Latvian (http://www.transifex.com/mate/MATE/language/lv/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Martin Wimpress <code@flexion.org>, 2018\n"
+"Language-Team: Latvian (https://www.transifex.com/mate/teams/13566/lv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: lv\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "Atrašanās vietas"
 
@@ -34,14 +33,14 @@ msgstr "Kalendārs"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -52,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -66,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -77,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%b. %a %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -103,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A %d. %B (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "Klikšķiniet, lai slēptu mēneša kalendāru"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Klikšķiniet, lai skatītu mēneša kalendāru"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Datora pulkstenis"
 
@@ -125,7 +126,7 @@ msgstr "Datora pulkstenis"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -135,232 +136,274 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "Iestatīt sistēmas laiku..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "Iestatīt sistēmas laiku"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "Neizdevās iestatīt sistēmas laiku"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_Iestatījumi"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Palīdzība"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "P_ar"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "Kopē_t laiku"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "Kopēt _datumu"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "No_regulēt datumu un laiku"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr "Izvēlieties vietu"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr "Rediģēt vietu"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr "Pilsētas vārds"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr "Pilsētas laika zona"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Pulkstenis"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "Pulkstenis rāda pašreizējo laiku un datumu"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Raivis Dejus <orvils@gmail.com>\nPēteris Krišjānis <peteris.krisjanis@os.lv>\nArtis Trops <hornet@navigator.lv>\nRūdolfs Mazurs <rudolfs.mazurs@gmail.com>"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Kristaps https://launchpad.net/~retail"
 
-#. Languages that have a single word that translates as either "state" or
-#. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr "<small><i>Ierakstiet pilsētu vai valsti, lai iegūtu iespējamo vietu sarakstu no kura izvēlēties īsto.</i></small>"
-
-#: ../applets/clock/clock.ui.h:3
-msgid "_Timezone:"
-msgstr "_Laika josla:"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "_Location Name:"
-msgstr "Atrašanās _vieta:"
-
-#: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(neobligāts)</i>"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "L_ongitude:"
-msgstr "Ga_rums:"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "L_atitude:"
-msgstr "Pl_atums:"
-
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:1
 msgid "Time & Date"
 msgstr "Laiks un datums"
 
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr "_Laiks:"
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "At_celt"
 
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr "Pašreizējais laiks:"
-
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:3
 msgid "_Set System Time"
 msgstr "Iestatīt _sistēmas laiku"
 
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr "Austrumi"
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "_Laiks:"
 
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr "Rietumi"
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr "Pašreizējais laiks:"
 
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr "Ziemeļi"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr "Dienvidi"
-
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:6
 msgid "Clock Preferences"
 msgstr "Pulksteņa iestatījumi"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "Laika ie_statījumi"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "_Aizvērt"
+
+#: ../applets/clock/clock.ui.h:10
 msgid "Clock Format"
 msgstr "Pulksteņa formāts"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:11
 msgid "_12 hour format"
 msgstr "_12 stundu formāts"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:12
 msgid "_24 hour format"
 msgstr "_24 stundu formāts"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr "Paneļa ekrāns"
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:14
 msgid "Show the _date"
 msgstr "Rādīt _datumu"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:15
 msgid "Show seco_nds"
 msgstr "Rādīt seku_ndes"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:16
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:17
 msgid "Show _weather"
 msgstr "Rādīt _laikapstākļus"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:18
 msgid "Show _temperature"
 msgstr "Rādīt _temperatūru"
 
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
 msgid "General"
-msgstr "Vispārējs"
+msgstr "Vispārīgs"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "_Pievienot"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "R_ediģēt"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr "_Izņemt"
+
+#: ../applets/clock/clock.ui.h:24
 msgid "Display"
 msgstr "Attēlot"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:25
 msgid "_Visibility unit:"
 msgstr "_Redzamības vienība:"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:26
 msgid "_Pressure unit:"
-msgstr "S_piediena vienība:"
+msgstr "_Spiediena vienība:"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Wind speed unit:"
 msgstr "_Vēja ātruma vienība:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Temperature unit:"
 msgstr "_Temperatūras vienība:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "Weather"
 msgstr "Laikapstākļi"
 
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "Laika ie_statījumi"
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "Austrumu"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "Rietumu"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "Ziemeļu"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "Dienvidu"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
+
+#. Languages that have a single word that translates as either "state" or
+#. "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:36
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Ierakstiet pilsētu vai valsti, lai iegūtu iespējamo vietu sarakstu"
+" no kura izvēlēties īsto.</i></small>"
+
+#: ../applets/clock/clock.ui.h:37
+msgid "_Timezone:"
+msgstr "_Laika josla:"
+
+#: ../applets/clock/clock.ui.h:38
+msgid "_Location Name:"
+msgstr "Atrašanās _vieta:"
+
+#: ../applets/clock/clock.ui.h:39
+msgid "<i>(optional)</i>"
+msgstr "<i>(neobligāts)</i>"
+
+#: ../applets/clock/clock.ui.h:40
+msgid "L_ongitude:"
+msgstr "Ga_rums:"
+
+#: ../applets/clock/clock.ui.h:41
+msgid "L_atitude:"
+msgstr "Pl_atums:"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -374,10 +417,12 @@ msgstr "<small>Iestatīt...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Iestatīt</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "Iestatīt pašreizējo vietu kā atrašanās vietu un izmantot tās laika zonu šajā datorā"
+msgstr ""
+"Iestatīt pašreizējo vietu kā atrašanās vietu un izmantot tās laika zonu šajā"
+" datorā"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -385,7 +430,7 @@ msgstr "Iestatīt pašreizējo vietu kā atrašanās vietu un izmantot tās laik
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -394,7 +439,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -402,42 +447,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
 msgstr "Nezināms"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, šķiet kā %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Saullēkts: %s / saulriets: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Nevar parādīt palīdzības dokumentu '%s'"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "Kļūda, parādot palīdzības dokumentu"
 
@@ -455,7 +500,15 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "Šis elements nosaka kāds laika formāts tiks lietots pulksteņa sīklietotnē. Iespējamās vērtības ir \"12-stundu\", \"24-stundu\", \"interneta\", \"UNIX\" un \"pielāgots\". Ja šī vērtība ir iestatīta uz \"interneta\", pulkstenis rādīs interneta laiku, kurā sistēma dienu sadala 1000 \"pulsos\". Šajā laika sistēmā nav laika joslu un laiks visiem ir vienāds. Ja ir izvēlēts \"UNIX\" laiks, tad pulkstenis rādīs sekunžu skaitu kopš 1970-01-01. Ja ir norādīts, ka laika formāts būs kāds \"pielāgots\", tad laiks tiks attēlots atbilstoši cita formāta tipa laukā ievadītajām vērtībām."
+msgstr ""
+"Šis elements nosaka kāds laika formāts tiks lietots pulksteņa sīklietotnē. "
+"Iespējamās vērtības ir \"12-stundu\", \"24-stundu\", \"interneta\", \"UNIX\""
+" un \"pielāgots\". Ja šī vērtība ir iestatīta uz \"interneta\", pulkstenis "
+"rādīs interneta laiku, kurā sistēma dienu sadala 1000 \"pulsos\". Šajā laika"
+" sistēmā nav laika joslu un laiks visiem ir vienāds. Ja ir izvēlēts \"UNIX\""
+" laiks, tad pulkstenis rādīs sekunžu skaitu kopš 1970-01-01. Ja ir norādīts,"
+" ka laika formāts būs kāds \"pielāgots\", tad laiks tiks attēlots atbilstoši"
+" cita formāta tipa laukā ievadītajām vērtībām."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -467,7 +520,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "Šī atslēga nosaka, kādu laika formātu lietot pulksteņa sīkiletotnē, kad kā formāts ir norādīts \"pielāgots\". Jūs varat lietot konvertācijas apzīmētājus, lai iegūtu ar strftime() savietojamu formātu. Papildus informāciju meklējiet strftime() dokumentācijā."
+msgstr ""
+"Šī atslēga nosaka, kādu laika formātu lietot pulksteņa sīkiletotnē, kad kā "
+"formāts ir norādīts \"pielāgots\". Jūs varat lietot konvertācijas "
+"apzīmētājus, lai iegūtu ar strftime() savietojamu formātu. Papildus "
+"informāciju meklējiet strftime() dokumentācijā."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -491,7 +548,9 @@ msgstr "Parādīt datumu paskaidrē"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Ja patiess, parādīt datumu paskaidrē, kad peles kursors tiek novietots virs pulksteņa."
+msgstr ""
+"Ja patiess, parādīt datumu paskaidrē, kad peles kursors tiek novietots virs "
+"pulksteņa."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -561,98 +620,114 @@ msgstr "Pulksteņa sīklietotnes ražotne"
 msgid "Get the current time and date"
 msgstr "Iegūt patreizējo laiku un datumu"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Brīdinājums: Izskatās, ka šī komanda ir patiešām kaut kas noderīgs.\nTā kā šī ir bezjēdzīga sīklietotne, jūs to varētu vēlēties nedarīt.\nMēs nopietni ierosinām jums nelietot %s kaut kam,\nkas varētu šo sīklietotni padarīt \"praktisku\" vai noderīgu."
+msgstr ""
+"Brīdinājums: Izskatās, ka šī komanda ir patiešām kaut kas noderīgs.\n"
+"Tā kā šī ir bezjēdzīga sīklietotne, jūs to varētu vēlēties nedarīt.\n"
+"Mēs nopietni ierosinām jums nelietot %s kaut kam,\n"
+"kas varētu šo sīklietotni padarīt \"praktisku\" vai noderīgu."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
-msgstr "Attēli"
+msgstr " Attēli"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Zivtiņa %s"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s vispār nav pielietojama. Tā aizņem tikai vietu uz diska un kompilācijas laiku, un, ielādēta atmiņā, tā aizņem vērtīgo vietu panelī un atmiņā. Katrs, kas to lieto, būtu nekavējoties jānosūta psiholoģiskai izmeklēšanai."
+msgstr ""
+"%s vispār nav pielietojama. Tā aizņem tikai vietu uz diska un kompilācijas "
+"laiku, un, ielādēta atmiņā, tā aizņem vērtīgo vietu panelī un atmiņā. Katrs,"
+" kas to lieto, būtu nekavējoties jānosūta psiholoģiskai izmeklēšanai."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(ar nelielu palīdzību no Džordža)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Zivtiņa"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Zivtiņa %s, mūsdienu orākuls"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "Nevaru atrast komandu, ko izpildīt"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Zivtiņa %s saka:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "Nevarēju iegūt izvadu no dotās komandas\n\nDetaļas: %s"
+msgstr ""
+"Nevarēju iegūt izvadu no dotās komandas\n"
+"\n"
+"Detaļas: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "_Runā vēl"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Konfigurācijā norādītā komanda nedarbojās un tika aizstāta ar: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Nevar izpildīt '%s'\n\nDetaļas: %s"
+msgstr ""
+"Nevar izpildīt '%s'\n"
+"\n"
+"Detaļas: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Nevar nolasīt no '%s'\n\nDetaļas: %s"
+msgstr ""
+"Nevar nolasīt no '%s'\n"
+"\n"
+"Detaļas: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr "Būtu tā kā ūdens jānomaina"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr "Apskaties, kāds šodien datums!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Zivtiņa %s, laimes pareģotāja"
@@ -661,47 +736,47 @@ msgstr "Zivtiņa %s, laimes pareģotāja"
 msgid "Fish Preferences"
 msgstr "Zivtiņas iestatījumi"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "Zivtiņas _vārds:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "Ko_manda, ko izpildīt uzklikšķinot:"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr "Animācija"
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_Fails:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "Izvēlieties animāciju"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "Kadri ka_trā animācijā:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "_Pauze uz kadru:"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "kadri"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
 msgstr "sekundes"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "_Rotēt vertikālajos paneļos"
 
@@ -713,7 +788,8 @@ msgstr "Zivtiņas vārds"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "Zivs bez vārda ir diezgan garlaicīga zivs. Ved to dzīvē, dodot tai vārdu."
+msgstr ""
+"Zivs bez vārda ir diezgan garlaicīga zivs. Ved to dzīvē, dodot tai vārdu."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
@@ -723,7 +799,10 @@ msgstr "Zivtiņas animācijas bitkarte"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Šī vērtība nosaka tā attēla faila nosaukumu, kas tiks lietots zivtiņas animācijā faila atrašanās vieta ir relatīva attiecībā pret attēlkaršu (pixmap) mapi."
+msgstr ""
+"Šī vērtība nosaka tā attēla faila nosaukumu, kas tiks lietots zivtiņas "
+"animācijā faila atrašanās vieta ir relatīva attiecībā pret attēlkaršu "
+"(pixmap) mapi."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -733,7 +812,9 @@ msgstr "Komanda, ko palaist, kad tiek klikšķināts uz zivtiņas"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Šī vērtība nosaka kāda komanda tiks palaista, kad tiek klikšķināts uz zivtiņas."
+msgstr ""
+"Šī vērtība nosaka kāda komanda tiks palaista, kad tiek klikšķināts uz "
+"zivtiņas."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
@@ -760,7 +841,9 @@ msgstr "Rotēt vertikālajos paneļos"
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Ja šis ir atzīmēts, zivtiņas animācija tiks rādīta sagriezta vertikālajā panelī."
+msgstr ""
+"Ja šis ir atzīmēts, zivtiņas animācija tiks rādīta sagriezta vertikālajā "
+"panelī."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -774,12 +857,12 @@ msgstr "No kurienas tā dumjā zivs nāca"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Parāda peldošu zivtiņu vai citu animētu radību"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Paziņojumu lauks"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "Paneļa paziņojumu lauks"
 
@@ -797,13 +880,16 @@ msgstr "Laukums, kur rādīt paziņojuma ikonas"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
-msgstr "Rādīt logus no visām darba vietām"
+msgstr "Parādīt logus no visām darba vietām"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Ja šī vērtība ir patiesa, \"Logu saraksts\" parādīs visus logus no visām darba vietām. Pretējā gadījumā tas parādīs logus tikai no pašreizējās darbvirsmas."
+msgstr ""
+"Ja šī vērtība ir patiesa, \"Logu saraksts\" parādīs visus logus no visām "
+"darba vietām. Pretējā gadījumā tas parādīs logus tikai no pašreizējās "
+"darbvirsmas."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -813,7 +899,9 @@ msgstr "Kad grupēt logus"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Lemj, kad grupēt vienas programmas logus \"Logu sarakstā\". Pieļaujamās  vērtības ir \"never\", \"auto\" un \"always\"."
+msgstr ""
+"Lemj, kad grupēt vienas programmas logus \"Logu sarakstā\". Pieļaujamās  "
+"vērtības ir \"never\", \"auto\" un \"always\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -823,7 +911,9 @@ msgstr "Atjaunojot pārvietot logus uz pašreizējo darba vietu"
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Ja patiess, tad, kad atjauno logu, pārvietot to uz pašreizējo darba vietu. Pretējā gadījumā pāriet uz loga darba vietu."
+msgstr ""
+"Ja patiess, tad, kad atjauno logu, pārvietot to uz pašreizējo darba vietu. "
+"Pretējā gadījumā pāriet uz loga darba vietu."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -834,7 +924,10 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "Ja šī vērtība ir patiesa, darba vietas Darba vietu pārslēgā rādīs arī darba vietu nosaukumus, Pretējā gadījumā tās rādīs darba vietas saturu. Šis iestatījums strādā vienīgi, ja logu pārvaldnieks ir Marco."
+msgstr ""
+"Ja šī vērtība ir patiesa, darba vietas Darba vietu pārslēgā rādīs arī darba "
+"vietu nosaukumus, Pretējā gadījumā tās rādīs darba vietas saturu. Šis "
+"iestatījums strādā vienīgi, ja logu pārvaldnieks ir Marco."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -844,7 +937,9 @@ msgstr "Rādīt visas darba vietas"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Ja patiess, Darba vietu pārslēgs rādīs visas darba vietas, pretējā gadījumā tas rādīs tikai pašreizējo darba vietu."
+msgstr ""
+"Ja patiess, Darba vietu pārslēgs rādīs visas darba vietas, pretējā gadījumā "
+"tas rādīs tikai pašreizējo darba vietu."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -855,7 +950,10 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "Šī vērtība nosaka cik daudz rindās (horizontālam izkārtojumam) vai kolonās (vertikālajam izkārtojumam) Darba vietu pārslēgs parāda darba vietas. Šī vērtība ir aktuāla vienīgi, ja ir izvēlēts display_all_workspaces."
+msgstr ""
+"Šī vērtība nosaka cik daudz rindās (horizontālam izkārtojumam) vai kolonās "
+"(vertikālajam izkārtojumam) Darba vietu pārslēgs parāda darba vietas. Šī "
+"vērtība ir aktuāla vienīgi, ja ir izvēlēts display_all_workspaces."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -865,7 +963,9 @@ msgstr "Apliekt uz ritināšanu"
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
-msgstr "Kad patiess, tad darbvirsmas pārslēdzējs uz ritināšanas pārslēgsies no pēdējās uz pirmo darbvirsmu un no pirmās uz pēdējo darbvirsmu."
+msgstr ""
+"Kad patiess, tad darbvirsmas pārslēdzējs uz ritināšanas pārslēgsies no "
+"pēdējās uz pirmo darbvirsmu un no pirmās uz pēdējo darbvirsmu."
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
@@ -876,7 +976,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "Ražotne priekš logu navigācijas sīklietotnēm"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
 msgstr "Logu selektors"
 
@@ -885,7 +985,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Pārslēgties starp atvērtajiem logiem izmantojot izvēlni"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
 msgstr "Darba vietu pārslēdzējs"
 
@@ -894,7 +994,7 @@ msgid "Switch between workspaces"
 msgstr "Pārslēgties starp darbvirsmām"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "Logu saraksts"
 
@@ -910,88 +1010,92 @@ msgstr "Parādīt Darbvirsmu"
 msgid "Hide application windows and show the desktop"
 msgstr "Paslēpt lietotnes logus un rādīt darbvirsmu"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Neizdevās ielādēt %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "Ikona nav atrasta"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "Spiediet šeit, lai atjaunotu paslēptos logus."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Spiediet šeit, lai paslēptu visus logus un parādītu darbvirsmu."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "\"Rādīt darbvirsmu\" poga"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Šī poga ļauj paslēpt visus atvērtos logus un parādīt darbvirsmu."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "Jūsu logu pārvaldnieks neatbalsta darbvirsmas parādīšanas pogu, vai arī jūs neizmantojat logu pārvaldnieku."
+msgstr ""
+"Jūsu logu pārvaldnieks neatbalsta darbvirsmas parādīšanas pogu, vai arī jūs "
+"neizmantojat logu pārvaldnieku."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "_Sistēmas pārraugs"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "\"Logu saraksts\" pogu veidā parāda visu pieejamos logus un ļauj jums izvēlēties starp tiem."
+msgstr ""
+"\"Logu saraksts\" pogu veidā parāda visu pieejamos logus un ļauj jums "
+"izvēlēties starp tiem."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "Logu saraksta iestatījumi"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr "Logu saraksta saturs"
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Rādīt l_ogus no pašreizējās darba vietas"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Rādīt logus no _visām darba vietām"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr "Logu grupēšana"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "_Nekad negrupēt logus"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "Grupēt logu_s, kad vieta ir ierobežota"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "_Vienmēr grupēt logus"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr "Atjauno minimizētos logus"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "Atjaunot pašreizējā _darba vietā"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "Atjaunot attiecīgajā d_arba vietā"
 
@@ -1001,60 +1105,62 @@ msgid ""
 "browse them."
 msgstr "\"Logu saraksts\" izvēlnē parāda visus logus un ļauj jums tos pārlūkot."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "rindas"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "kolonnas"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Darba vietu pārslēdzējs parāda jums samazinātu jūsu darba vietu versiju, kas ļauj jums pārvaldīt jūsu logus."
+msgstr ""
+"Darba vietu pārslēdzējs parāda jums samazinātu jūsu darba vietu versiju, kas"
+" ļauj jums pārvaldīt jūsu logus."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "Darba vietu pārslēdzēja iestatījumi"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "Rādīt tikai pašreizēj_o darba vietu"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "Rādīt vis_as darba vietas:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "Pārslēgs"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "_Darba vietu skaits:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "Darba vietu nosauku_mi:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Darba vietu nosaukumi"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "Rādīt darba vietu _nosaukumus pārslēdzējā"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr "Atļauj darb_virsmām apliekties ap pārslēdzēju"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr "Darba vieta"
 
@@ -1075,7 +1181,9 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Ja patiess, \"Zināmo lietotņu\" saraksts būs pieejams \"Palaist lietotni\" dialogā. To, vai šis saraksts būs izvērsts, kontrolē show_program_list."
+msgstr ""
+"Ja patiess, \"Zināmo lietotņu\" saraksts būs pieejams \"Palaist lietotni\" "
+"dialogā. To, vai šis saraksts būs izvērsts, kontrolē show_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1086,7 +1194,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Ja patiess, \"Zināmo lietotņu\" saraksts \"Palaist lietotni\" dialogā tiks izvērsts. Šī vērtība ir aktuāla vienīgi, ja ir aktivizēta enable_program_list."
+msgstr ""
+"Ja patiess, \"Zināmo lietotņu\" saraksts \"Palaist lietotni\" dialogā tiks "
+"izvērsts. Šī vērtība ir aktuāla vienīgi, ja ir aktivizēta "
+"enable_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1095,7 +1206,9 @@ msgstr "Aktivizēt automātisko pabeigšanu \"Palaist lietotni\" dialogā"
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Ja patiess, automātiskā pabeigšana būs pieejama \"Palaist lietotni\" dialogā."
+msgstr ""
+"Ja patiess, automātiskā pabeigšana būs pieejama \"Palaist lietotni\" "
+"dialogā."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1136,7 +1249,9 @@ msgstr "Paneļu ID saraksts"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Paneļu ID saraksts. Katrs ID identificē atsevišķu augstākā līmeņa paneli. Katra paneļa iestatījumi glabājas /apps/panel/toplevels/$(id)."
+msgstr ""
+"Paneļu ID saraksts. Katrs ID identificē atsevišķu augstākā līmeņa paneli. "
+"Katra paneļa iestatījumi glabājas /apps/panel/toplevels/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1147,7 +1262,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Paneļa objektu ID saraksts. Katrs ID identificē atsevišķu objektu (palaidēju, pogu vai izvēlni/joslu). Katra objekta iestatījumi glabājas /apps/panel/objects/$(id)."
+msgstr ""
+"Paneļa objektu ID saraksts. Katrs ID identificē atsevišķu objektu "
+"(palaidēju, pogu vai izvēlni/joslu). Katra objekta iestatījumi glabājas "
+"/apps/panel/objects/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1160,7 +1278,7 @@ msgstr "Ja patiess, paneļa objektiem tiks rādītas paskaidres."
 #: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
 msgid "Enable animations"
-msgstr "Aktivizēt animācijas"
+msgstr "Iespējot Animācijas"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:22
 msgid "Autoclose drawer"
@@ -1170,7 +1288,9 @@ msgstr "Automātiski aizvērt atvilktni"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Ja patiess, atvilktne, pēc uzklikšķināšanas uz tajā esošajiem palaidējiem, tiks automātiski aizvērta."
+msgstr ""
+"Ja patiess, atvilktne, pēc uzklikšķināšanas uz tajā esošajiem palaidējiem, "
+"tiks automātiski aizvērta."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1180,7 +1300,9 @@ msgstr "Apstipriniet paneļa noņemšanu"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Ja patiess, pirms paneļa izņemšanas lietotājam tiks parādīts logs, kurā būs jāapstiprina šī izvēle."
+msgstr ""
+"Ja patiess, pirms paneļa izņemšanas lietotājam tiks parādīts logs, kurā būs "
+"jāapstiprina šī izvēle."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1189,7 +1311,9 @@ msgstr "Izgaismot palaidējus, kad uz tiem ir peles kursors"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Ja patiess, palaidēji tiks automātiski izgaismoti, kad pār tiem tiks novietots peles kursors."
+msgstr ""
+"Ja patiess, palaidēji tiks automātiski izgaismoti, kad pār tiem tiks "
+"novietots peles kursors."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1200,7 +1324,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Ja patiess, panelis neļaus lietotājiem veikt izmaiņas paneļa konfigurācijā. Iespējams, ka atsevišķas sīklietotnes būs jānoslēdz atsevišķi. Lai izmaiņas stātos spēkā, paneli nāksies pārstartēt."
+msgstr ""
+"Ja patiess, panelis neļaus lietotājiem veikt izmaiņas paneļa konfigurācijā. "
+"Iespējams, ka atsevišķas sīklietotnes būs jānoslēdz atsevišķi. Lai izmaiņas "
+"stātos spēkā, paneli nāksies pārstartēt."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1212,7 +1339,12 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Sīklietotņu ID saraksts, kuras panelis ignorēs. Šādi jūs varat panākt, ka zināmas sīklietotnes netiek ielādētas un neparādās izvēlnēs. Piemēram, lai atslēgtu mini komandrindas sīklietotni, pievienojiet sarakstam 'OAFIID:MATE_MiniCommanderApplet'. Lai izmaiņas stātos spēkā, nepieciešams pārstartēt paneli."
+msgstr ""
+"Sīklietotņu ID saraksts, kuras panelis ignorēs. Šādi jūs varat panākt, ka "
+"zināmas sīklietotnes netiek ielādētas un neparādās izvēlnēs. Piemēram, lai "
+"atslēgtu mini komandrindas sīklietotni, pievienojiet sarakstam "
+"'OAFIID:MATE_MiniCommanderApplet'. Lai izmaiņas stātos spēkā, nepieciešams "
+"pārstartēt paneli."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1222,7 +1354,9 @@ msgstr "Deaktivizēt piespiedu aizvēršanu"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Ja patiess, panelis neļaus lietotājiem veikt programmu piespiedu aizvēršanu, liedzot piekļuvi piespiedu aizvēršanas pogai."
+msgstr ""
+"Ja patiess, panelis neļaus lietotājiem veikt programmu piespiedu aizvēršanu,"
+" liedzot piekļuvi piespiedu aizvēršanas pogai."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1326,7 +1460,9 @@ msgstr "Objekta novietojums panelī"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Šī paneļa objekta novietojums. Objekta novietojumu apraksta pikseļu skaits no paneļa labās malas (vai augšas, ja tas ir vertikāls)."
+msgstr ""
+"Šī paneļa objekta novietojums. Objekta novietojumu apraksta pikseļu skaits "
+"no paneļa labās malas (vai augšas, ja tas ir vertikāls)."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1336,7 +1472,9 @@ msgstr "Interpretēt novietojumu attiecībā pret apakšējo/labo malu"
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Ja patiess, objektu novietojums tiek interpretēts attiecībā pret labo paneļa malu (vai apakšējo malu vertikālajos paneļos)."
+msgstr ""
+"Ja patiess, objektu novietojums tiek interpretēts attiecībā pret labo paneļa"
+" malu (vai apakšējo malu vertikālajos paneļos)."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1346,7 +1484,9 @@ msgstr "Pieslēgt objektu panelim"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Ja patiess, lietotājs nevar pārvietot sīklietotnes, iepriekš tās neatslēdzot izmantojot \"Atslēgt\" izvēlnes elementu."
+msgstr ""
+"Ja patiess, lietotājs nevar pārvietot sīklietotnes, iepriekš tās neatslēdzot"
+" izmantojot \"Atslēgt\" izvēlnes elementu."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1358,7 +1498,10 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr "Sīklietotnes īstenotais ID, piemēram, \"ClockAppletFactory::ClockApplet\". Šī atslēga ir svarīga tikai ja objekta tipa atslēga ir \"external-applet\" (vai novecojusī \"matecomponent-applet\")."
+msgstr ""
+"Sīklietotnes īstenotais ID, piemēram, \"ClockAppletFactory::ClockApplet\". "
+"Šī atslēga ir svarīga tikai ja objekta tipa atslēga ir \"external-applet\" "
+"(vai novecojusī \"matecomponent-applet\")."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
@@ -1368,7 +1511,9 @@ msgstr "Panelis piesaistīts atvilktnei"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Šai atvilktnei piesaistītā paneļa identifikators. Šī vērtība ir aktuāla vienīgi, ja object_type vērtība ir \"drawer-object\"."
+msgstr ""
+"Šai atvilktnei piesaistītā paneļa identifikators. Šī vērtība ir aktuāla "
+"vienīgi, ja object_type vērtība ir \"drawer-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1379,7 +1524,9 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "Šīs atvilktnes vai izvēlnes apraksts. šī vērtība ir aktuāla tikai, ja object_type vērtība ir \"drawer-object\" vai \"menu-object\"."
+msgstr ""
+"Šīs atvilktnes vai izvēlnes apraksts. šī vērtība ir aktuāla tikai, ja "
+"object_type vērtība ir \"drawer-object\" vai \"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1390,7 +1537,10 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Ja patiess, custom_icon vērtība tiks lietota pogas ikonai. Ja aplams, tad custom_icon vērtība tiek ignorēta. Šī vērtība ir aktuāla vienīgi, ja object_type vērtība ir \"menu-object\" vai \"drawer-object\"."
+msgstr ""
+"Ja patiess, custom_icon vērtība tiks lietota pogas ikonai. Ja aplams, tad "
+"custom_icon vērtība tiek ignorēta. Šī vērtība ir aktuāla vienīgi, ja "
+"object_type vērtība ir \"menu-object\" vai \"drawer-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1401,7 +1551,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "To attēlu atrašanās vieta, kas tiek lietoti, kā objektu pogu ikonas. Šī vērtība ir svarīga vienīgi, ja object_type vērtība ir \"drawer-object\" vai \"menu-object\" un use_custom_icon vērtība ir patiess."
+msgstr ""
+"To attēlu atrašanās vieta, kas tiek lietoti, kā objektu pogu ikonas. Šī "
+"vērtība ir svarīga vienīgi, ja object_type vērtība ir \"drawer-object\" vai "
+"\"menu-object\" un use_custom_icon vērtība ir patiess."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1412,7 +1565,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Ja patiess, menu_path vērtība tiek lietota, lai no tās ielādētu izvēlnes saturu. Ja aplams, tā tiek ignorēta. Šī vērtība ir aktuāla vienīgi tad, ja object_type atslēga ir \"menu-object\"."
+msgstr ""
+"Ja patiess, menu_path vērtība tiek lietota, lai no tās ielādētu izvēlnes "
+"saturu. Ja aplams, tā tiek ignorēta. Šī vērtība ir aktuāla vienīgi tad, ja "
+"object_type atslēga ir \"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1423,7 +1579,10 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "Ceļš uz vietu no kuras tiek veidots izvēlnes saturs. Šī vērtība ir aktuāla vienīgi, ja use_menu_path vērtība ir patiess un object_type vērtība ir \"menu-object\"."
+msgstr ""
+"Ceļš uz vietu no kuras tiek veidots izvēlnes saturs. Šī vērtība ir aktuāla "
+"vienīgi, ja use_menu_path vērtība ir patiess un object_type vērtība ir "
+"\"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1433,7 +1592,9 @@ msgstr "Zīmēt bultu iekš izvēlnes pogas"
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
-msgstr "Ja patiess, bulta tiks zīmēta pāri izvēlnes pogas ikonai. Ja nepatiess, izvēlnes pogai būs tikai ikona."
+msgstr ""
+"Ja patiess, bulta tiks zīmēta pāri izvēlnes pogas ikonai. Ja nepatiess, "
+"izvēlnes pogai būs tikai ikona."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:27
 msgid "Launcher location"
@@ -1443,7 +1604,9 @@ msgstr "Palaidēja atrašanās vieta"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Palaidēju aprakstošā .desktop faila atrašanās vieta. Šī vērtība ir aktuāla vienīgi, ja object_type vērtība ir \"launcher-object\"."
+msgstr ""
+"Palaidēju aprakstošā .desktop faila atrašanās vieta. Šī vērtība ir aktuāla "
+"vienīgi, ja object_type vērtība ir \"launcher-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1454,7 +1617,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Šīs pogas piedāvātās darbības. Iespējamās vērtības ir \"saslēgt\", \"beigt darbu\", \"palaist\", \"meklēt\" un \"ekrānattēls\". Šī vērtība ir aktuāla vienīgi, ja object_type vērtība ir \"action-applet\"."
+msgstr ""
+"Šīs pogas piedāvātās darbības. Iespējamās vērtības ir \"saslēgt\", \"beigt "
+"darbu\", \"palaist\", \"meklēt\" un \"ekrānattēls\". Šī vērtība ir aktuāla "
+"vienīgi, ja object_type vērtība ir \"action-applet\"."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1465,7 +1631,10 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Šis ir cilvēkiem viegli saprotams nosaukums, ko jūs varat lietot, lai identificētu konkrētu paneli. Tā galvenais uzdevums ir būt par paneļa loga virsrakstu, kas varētu noderēt, pārvietojoties starp vairākiem paneļiem."
+msgstr ""
+"Šis ir cilvēkiem viegli saprotams nosaukums, ko jūs varat lietot, lai "
+"identificētu konkrētu paneli. Tā galvenais uzdevums ir būt par paneļa loga "
+"virsrakstu, kas varētu noderēt, pārvietojoties starp vairākiem paneļiem."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1475,7 +1644,10 @@ msgstr "X ekrāns, kurā ir redzams attiecīgais panelis"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "Gadījumā, ja jums ir vairāki ekrāni, jūs atsevišķus paneļus varat novietot katrā no tiem. Šī lauka vērtība norāda, kurā no ekrāniem šobrīd ir redzams konkrētais panelis."
+msgstr ""
+"Gadījumā, ja jums ir vairāki ekrāni, jūs atsevišķus paneļus varat novietot "
+"katrā no tiem. Šī lauka vērtība norāda, kurā no ekrāniem šobrīd ir redzams "
+"konkrētais panelis."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1485,7 +1657,10 @@ msgstr "Xinerama monitors, uz kura būs redzams konkrētais panelis"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Xinerama gadījumā jums var būt vairāki paneļi, kas katrs atrodas uz sava monitora. Šī vērtība nosaka uz kura no monitoriem šobrīd tiks attēlots attiecīgais panelis."
+msgstr ""
+"Xinerama gadījumā jums var būt vairāki paneļi, kas katrs atrodas uz sava "
+"monitora. Šī vērtība nosaka uz kura no monitoriem šobrīd tiks attēlots "
+"attiecīgais panelis."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1497,7 +1672,10 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Ja patiess, panelis aizņems visu ekrāna platumu (vai augstumu, ja tas ir vertikāls). Šajā režīmā paneli var novietot vienīgi ekrāna malās. Pretējā gadījumā panelis būs tikai tik liels, lai uz tā satilptu viss tā saturs."
+msgstr ""
+"Ja patiess, panelis aizņems visu ekrāna platumu (vai augstumu, ja tas ir "
+"vertikāls). Šajā režīmā paneli var novietot vienīgi ekrāna malās. Pretējā "
+"gadījumā panelis būs tikai tik liels, lai uz tā satilptu viss tā saturs."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1513,7 +1691,13 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Paneļa atrašanās vieta. Iespējamās vērtības ir \"top\", \"bottom\", \"left\", \"right\". Izvērstā stāvoklī šī vērtība nosaka pie kuras ekrāna malas atradīsies attiecīgais panelis. Neizvērstā stāvoklī starpība starp \"top\" un \"bottom\" nav īpaši liela - abas tās norāda, ka konkrētais panelis ir horizontāls - taču tik un tā sniedz mums vērtīgu informāciju, kā vajadzētu uzvesties dažiem paneļa objektiem."
+msgstr ""
+"Paneļa atrašanās vieta. Iespējamās vērtības ir \"top\", \"bottom\", "
+"\"left\", \"right\". Izvērstā stāvoklī šī vērtība nosaka pie kuras ekrāna "
+"malas atradīsies attiecīgais panelis. Neizvērstā stāvoklī starpība starp "
+"\"top\" un \"bottom\" nav īpaši liela - abas tās norāda, ka konkrētais "
+"panelis ir horizontāls - taču tik un tā sniedz mums vērtīgu informāciju, kā "
+"vajadzētu uzvesties dažiem paneļa objektiem."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1525,7 +1709,11 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Paneļa augstums (vai platums, ja tas ir vertikāls). Vadoties pēc fonta izmēra un citiem faktoriem, izpildes laikā automātiski tiks noteikts paneļa maksimālais izmērs. Paneļa maksimālais izmērs nevar būt lielāks par ceturto daļu no ekrāna izmēra."
+msgstr ""
+"Paneļa augstums (vai platums, ja tas ir vertikāls). Vadoties pēc fonta "
+"izmēra un citiem faktoriem, izpildes laikā automātiski tiks noteikts paneļa "
+"maksimālais izmērs. Paneļa maksimālais izmērs nevar būt lielāks par ceturto "
+"daļu no ekrāna izmēra."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1536,7 +1724,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Paneļa atrašanās vieta gar x-asi. Šī vērtība ir aktuāla tikai neizvērstā stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek novietots pie kādas no ekrāna malām."
+msgstr ""
+"Paneļa atrašanās vieta gar x-asi. Šī vērtība ir aktuāla tikai neizvērstā "
+"stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek "
+"novietots pie kādas no ekrāna malām."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1547,7 +1738,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Paneļa atrašanās vieta gar y-asi. Šī vērtība ir aktuāla tikai neizvērstā stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek novietots pie kādas no ekrāna malām."
+msgstr ""
+"Paneļa atrašanās vieta gar y-asi. Šī vērtība ir aktuāla tikai neizvērstā "
+"stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek "
+"novietots pie kādas no ekrāna malām."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1561,7 +1755,12 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Paneļa atrašanās vieta gar x-asi, sākot ar ekrāna labo malu. Ja vērtība ir -1, tā tiek ignorēta un tās vietā tiek izmantota x vērtība. Ja vērtība ir lielāka par 0, x vērtība tiks ignorēta. Šī vērtība ir aktuāla tikai neizvērstā stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek novietots pie kādas no ekrāna malām."
+msgstr ""
+"Paneļa atrašanās vieta gar x-asi, sākot ar ekrāna labo malu. Ja vērtība ir "
+"-1, tā tiek ignorēta un tās vietā tiek izmantota x vērtība. Ja vērtība ir "
+"lielāka par 0, x vērtība tiks ignorēta. Šī vērtība ir aktuāla tikai "
+"neizvērstā stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis "
+"tiek novietots pie kādas no ekrāna malām."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1575,7 +1774,12 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Paneļa atrašanās vieta gar y-asi, sākot ar ekrāna apakšu. Ja vērtība ir -1, tā tiek ignorēta un tās vietā tiek izmantota y vērtība. Ja vērtība ir lielāka par 0, y vērtība tiks ignorēta.Šī vērtība ir aktuāla tikai neizvērstā stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek novietots pie kādas no ekrāna malām."
+msgstr ""
+"Paneļa atrašanās vieta gar y-asi, sākot ar ekrāna apakšu. Ja vērtība ir -1, "
+"tā tiek ignorēta un tās vietā tiek izmantota y vērtība. Ja vērtība ir "
+"lielāka par 0, y vērtība tiks ignorēta.Šī vērtība ir aktuāla tikai "
+"neizvērstā stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis "
+"tiek novietots pie kādas no ekrāna malām."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1587,7 +1791,11 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "Ja patiess, x un x_right atslēgas tiek ignorētas un panelis atrodas ekrāna x-ass centrā. Ja paneļa izmēri tiek mainīti, tas tik un tā atradīsies ekrāna centrā. Pretējā gadījumā x un x_right vērtības nosaka paneļa atrašanās vietu."
+msgstr ""
+"Ja patiess, x un x_right atslēgas tiek ignorētas un panelis atrodas ekrāna "
+"x-ass centrā. Ja paneļa izmēri tiek mainīti, tas tik un tā atradīsies ekrāna"
+" centrā. Pretējā gadījumā x un x_right vērtības nosaka paneļa atrašanās "
+"vietu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1599,7 +1807,11 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "Ja patiess, tad y un y_bottom vērtības tiks ignorētas un panelis tiks novietots ekrāna y-ass centrā. Ja paneļa izmērs tiks mainīts tas vienalga paliks tajā pat vietā. Pretējā gadījumā y un y_bottom vērtības nosaka paneļa atrašanās vietu."
+msgstr ""
+"Ja patiess, tad y un y_bottom vērtības tiks ignorētas un panelis tiks "
+"novietots ekrāna y-ass centrā. Ja paneļa izmērs tiks mainīts tas vienalga "
+"paliks tajā pat vietā. Pretējā gadījumā y un y_bottom vērtības nosaka paneļa"
+" atrašanās vietu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1610,13 +1822,17 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Ja patiess, panelis tiks automātiski paslēpts ik reizi, kad peles kursors neatradīsies tā teritorijā."
+msgstr ""
+"Ja patiess, panelis tiks automātiski paslēpts ik reizi, kad peles kursors "
+"neatradīsies tā teritorijā."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Ja patiess, paneļa parādīšana un paslēpšana notiek kustīgi, nevis pēkšņi parādoties un pazūdot."
+msgstr ""
+"Ja patiess, paneļa parādīšana un paslēpšana notiek kustīgi, nevis pēkšņi "
+"parādoties un pazūdot."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1626,7 +1842,10 @@ msgstr "Aktivizēt paneļa paslēpšanas pogas"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Ja patiess, abās paneļa malās tiks pievienotas pogas, kas ļaus pilnībā noslēpt paneli, redzamu atstājot tikai pogu, lai atkal parādītu paslēpto paneli."
+msgstr ""
+"Ja patiess, abās paneļa malās tiks pievienotas pogas, kas ļaus pilnībā "
+"noslēpt paneli, redzamu atstājot tikai pogu, lai atkal parādītu paslēpto "
+"paneli."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1636,7 +1855,9 @@ msgstr "Rādīt bultas uz paneļa paslēpšanas pogām"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "Ja patiess, uz paneļa slēpšanas pogām tiks novietotas arī bultiņas. Šī vērtība ir aktuāla vienīgi, ja enable_buttons vērtība ir patiess."
+msgstr ""
+"Ja patiess, uz paneļa slēpšanas pogām tiks novietotas arī bultiņas. Šī "
+"vērtība ir aktuāla vienīgi, ja enable_buttons vērtība ir patiess."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1647,7 +1868,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Norāda milisekunžu skaitu pirms panelis tiks paslēpts, kad tā teritoriju pamet peles kursors. Šī vērtība ir aktuāla vienīgi, ja auto_hide atslēga ir patiesa."
+msgstr ""
+"Norāda milisekunžu skaitu pirms panelis tiks paslēpts, kad tā teritoriju "
+"pamet peles kursors. Šī vērtība ir aktuāla vienīgi, ja auto_hide atslēga ir "
+"patiesa."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1658,7 +1882,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Norāda milisekunžu skaitu pirms panelis tiks parādīts, kad tā teritorijā tiek novietots peles kursors. Šī vērtība ir aktuāla vienīgi, ja auto_hide atslēga ir patiesa."
+msgstr ""
+"Norāda milisekunžu skaitu pirms panelis tiks parādīts, kad tā teritorijā "
+"tiek novietots peles kursors. Šī vērtība ir aktuāla vienīgi, ja auto_hide "
+"atslēga ir patiesa."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1669,7 +1896,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Norāda redzamo pikseļu skaitu, kad panelis tiek paslēpts stūrī. Šī vērtība ir aktuāla vienīgi, ja auto_hide atslēga ir patiesa."
+msgstr ""
+"Norāda redzamo pikseļu skaitu, kad panelis tiek paslēpts stūrī. Šī vērtība "
+"ir aktuāla vienīgi, ja auto_hide atslēga ir patiesa."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1680,11 +1909,14 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "Ātrums, kādā būtu jānotiek paneļa animācijām. Iespējamās vērtības ir \"slow\", \"medium\" un \"fast\". Šī vērtība ir aktuāla vienīgi, ja ir aktivizētas animācijas (enable_animations = true)."
+msgstr ""
+"Ātrums, kādā būtu jānotiek paneļa animācijām. Iespējamās vērtības ir "
+"\"slow\", \"medium\" un \"fast\". Šī vērtība ir aktuāla vienīgi, ja ir "
+"aktivizētas animācijas (enable_animations = true)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
-msgstr "Fona tips"
+msgstr "Fona veids"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
 msgid ""
@@ -1692,7 +1924,11 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "Kādu fona tipu vajadzētu lietot šim panelim. Iespējamās vērtības ir \"none\" - GTK+ noklusētā  sīkrīka fons tiks lietots, \"color\" - tiks lietota krāsas lauka vērtība, \"image\" - tiks lietots attēls uz ko norāda fona attēla lauka vērtība."
+msgstr ""
+"Kādu fona tipu vajadzētu lietot šim panelim. Iespējamās vērtības ir \"none\""
+" - GTK+ noklusētā  sīkrīka fons tiks lietots, \"color\" - tiks lietota "
+"krāsas lauka vērtība, \"image\" - tiks lietots attēls uz ko norāda fona "
+"attēla lauka vērtība."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
@@ -1711,7 +1947,9 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Norāda fona krāsas caurspīdību. Ja krāsa nav pilnīgi caurspīdīga (caurspīdības vērtība ir mazāka par 65535), krāsa pārklāsies ar fona attēlu."
+msgstr ""
+"Norāda fona krāsas caurspīdību. Ja krāsa nav pilnīgi caurspīdīga "
+"(caurspīdības vērtība ir mazāka par 65535), krāsa pārklāsies ar fona attēlu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1722,7 +1960,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Norāda failu, kas tiks izmantots par fona attēlu. Ja attēlam ir alfa kanāls, tas un fona attēls pārklāsies."
+msgstr ""
+"Norāda failu, kas tiks izmantots par fona attēlu. Ja attēlam ir alfa kanāls,"
+" tas un fona attēls pārklāsies."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1732,7 +1972,9 @@ msgstr "Ietilpināt attēlu panelī"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Ja patiess, attēls, neizmainot tā proporcijas, tiks piemērots paneļa izmēriem."
+msgstr ""
+"Ja patiess, attēls, neizmainot tā proporcijas, tiks piemērots paneļa "
+"izmēriem."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1742,7 +1984,9 @@ msgstr "Izstiept attēlu pa visu paneli"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Ja patiess, attēls, nesaglabājot tā proporcijas, tiks pielāgots paneļa izmēriem."
+msgstr ""
+"Ja patiess, attēls, nesaglabājot tā proporcijas, tiks pielāgots paneļa "
+"izmēriem."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1762,17 +2006,17 @@ msgstr "Fails nav derīgs .desktop fails"
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "Neatpazīta desktop faila versija '%s'"
+msgstr "Neatpazīta darbvirsmas faila versija '%s'"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
-msgstr "Palaiž %s"
+msgstr "Startē %s"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr "Lietotne nepieņem dokumentus no komandrindas"
+msgstr "Lietotne nepieņem norādes uz dokumentiem no komandrindas"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
@@ -1782,20 +2026,20 @@ msgstr "Neatpazīta palaišanas opcija: %d"
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Nevar padot dokumenta URI uz 'Type=Link' darbvirsmas ierakstu"
+msgstr "Nevar nodot dokumenta URI 'Typa=Link' darbvirsmas ierakstam"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr "Nav palaižams priekšmets"
+msgstr "Nepalaižama vienība"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr "Atslēgt savienojumu ar sesijas pārvaldnieku"
+msgstr "Atvienoties no sesiju pārvaldnieka"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "Norādīt failu, kurš satur saglabātu konfigurāciju"
+msgstr "Norādīt failu, kurš satur saglabāto konfigurāciju"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
@@ -1803,7 +2047,7 @@ msgstr "FAILS"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr "Norādīt sesijas vadības ID"
+msgstr "Norādīt sesijas pārvaldības ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
@@ -1811,11 +2055,11 @@ msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
-msgstr "Sesijas vadības opcijas:"
+msgstr "Sesijas pārvaldības opcijas:"
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "Rādīt sesijas vadības opcijas"
+msgstr "Rādīt sesijas pārvaldības opcijas"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1823,8 +2067,8 @@ msgstr "Rādīt sesijas vadības opcijas"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr "Kļūda"
 
@@ -1854,36 +2098,36 @@ msgstr "Meklēšanas mapju apstrādei nav uzinstalēta neviena programma."
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Noņemt no paneļa"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
-msgstr "_Pārvietot"
+msgstr "Pār_vietot"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "Pieslēg_t panelim"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "Nevar atrast tukšu vietu"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "Atvilktne"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_Pievienot atvilknei..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
-msgstr "_Iestatījumi"
+msgstr "_Parametri"
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1891,14 +2135,14 @@ msgstr "Izveidot jaunu failu dotajā mapē"
 
 #: ../mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
-msgstr "[FILE...]"
+msgstr "[FAILS...]"
 
 #: ../mate-panel/mate-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- Rediģēt .desktop failus"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Izveidot palaidēju"
 
@@ -1907,11 +2151,11 @@ msgstr "Izveidot palaidēju"
 msgid "Directory Properties"
 msgstr "Mapes iestatījumi"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Palaidēja iestatījumi"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr "Panelis"
 
@@ -1919,7 +2163,9 @@ msgstr "Panelis"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "Palaiž citas programmas un nodrošina rīkus, lai pārvaldītu kogus, rādītu laiku un darītu citas lietas."
+msgstr ""
+"Palaiž citas programmas un nodrošina rīkus, lai pārvaldītu kogus, rādītu "
+"laiku un darītu citas lietas."
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1941,20 +2187,20 @@ msgstr "Nav dots URI paneļa palaidēja darbavirsmas failam\n"
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "Nevaru atvērt darbavirsmas failu %s paneļa palaidējam%s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "Pa_laist"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Atslēga %s nav iestatīta nevar ielādēt palaidēju\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "Nevar saglabāt palaidēju"
 
@@ -1977,23 +2223,23 @@ msgstr "Izpildīt palaišanas dialogu"
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "Pievienot šo palaidēju _panelim"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "Novietot šo palaidēju uz _darbavirsmas"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "Visu izv_ēlni"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Pievienot šo kā atvilkni panelim"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Pievienot šo kā izvēlni panelim"
 
@@ -2011,7 +2257,7 @@ msgstr "Nevaru pieslēgties serverim"
 
 #: ../mate-panel/panel-action-button.c:345
 msgid "Lock Screen"
-msgstr "Bloķēt ekrānu"
+msgstr "Noslēgt ekrānu"
 
 #: ../mate-panel/panel-action-button.c:346
 msgid "Protect your computer from unauthorized use"
@@ -2026,7 +2272,9 @@ msgstr "Iziet..."
 
 #: ../mate-panel/panel-action-button.c:361
 msgid "Log out of this session to log in as a different user"
-msgstr "Iziet no šīs sesijas, lai pieslēgtos ar citu lietotājvārdu vai arī beidzētu datoru"
+msgstr ""
+"Iziet no šīs sesijas, lai pieslēgtos ar citu lietotājvārdu vai arī beidzētu "
+"datoru"
 
 #: ../mate-panel/panel-action-button.c:370
 msgid "Run Application..."
@@ -2042,10 +2290,10 @@ msgstr "Meklēt failus..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "Meklē mapes un failus šajā datorā pēc to nosaukuma vai satura"
+msgstr "Meklē datorā mapes un failus pēc to nosaukumiem un satura"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Piespiedu apturēšana"
 
@@ -2070,114 +2318,124 @@ msgstr "Izslēgt..."
 msgid "Shut down the computer"
 msgstr "Izslēgt datoru"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "Pašizvēlētas programmas palaidējs"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "Izveidot jaunu palaidēju"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "Aplikāciju palaidējs..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "Pārkopēt palaidēju no Programmu izvēlnes"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
 msgstr "Galvenā izvēlne"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "Galvenā MATE izvēlne"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Izvēlņu josla"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Pielāgota izvēļņu josla"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr "Atdalītājs"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "Atdalītājs paneļa elementu sakārtošanai"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "Izvelkama atvilkne citu lietu glabāšanai"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(tukšs)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Atrast elementu, ko p_ievienot \"%s\":"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "Pievienot atvilknei"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "Atrast elementu, ko p_ievienot atvilknei:"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "_Pievienot panelim"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "Atrast elementu, ko p_ievienot panelim:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "_Atpakaļ"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" ir negaidot aizvērusies"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Paneļa objekts ir negaidot aizvēries"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Ja jūs pārlādēsiet šo paneļa objektu, tas tiks auomātiski atkal pievienots panelim."
+msgstr ""
+"Ja jūs pārlādēsiet šo paneļa objektu, tas tiks auomātiski atkal pievienots "
+"panelim."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "Nepārlā_dēt"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
 msgstr "_Pārlādēt"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelis saskārās ar problēmu, ladējot \"%s\"."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vai vēlaties dzēst paneļprogrammu no jūsu konfigurācijas?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_Izdzēst"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2191,7 +2449,9 @@ msgstr "MATE panelis"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "Šī programma ir atbildīga par citu programmu palaišanu un nodrošina noderīgus rīkus."
+msgstr ""
+"Šī programma ir atbildīga par citu programmu palaišanu un nodrošina "
+"noderīgus rīkus."
 
 #: ../mate-panel/panel-context-menu.c:121
 msgid "About the MATE Panel"
@@ -2215,12 +2475,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2228,104 +2484,112 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_Dzēst šo paneli"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "_Jauns panelis"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "_Par paneļiem"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "Programma"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "Aplikācija terminālī"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
-msgstr "Vieta"
+msgstr "Atrašanās vieta"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_Tips:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr "_Nosaukums:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "_Lūkoties..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "Ko_mentārs:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "_Atgriezt"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "Izvēlies programmu..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "Izvēlies failu..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr "Kom_anda:"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
-msgstr "_Atrašanās vieta:"
+msgstr "_Vieta:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "Palaidēja vārds nav norādīts."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr "Nevar saglabāt direktorijas iestatījumus"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr "Direktorijas vārds nav norādīts."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "Nav norādīta palaidēja komanda."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "Nav norādīta palaidēja atrašanās vieta."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
-msgstr "Nevaru parādīt palīdzības dokumentu"
+msgstr "Nevar parādīt palīdzības dokumentu"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Uzklikšķiniet uz loga, lai liktu programmai beigt darbu. Lai atceltu nospiediet <ESC>."
+msgstr ""
+"Uzklikšķiniet uz loga, lai liktu programmai beigt darbu. Lai atceltu "
+"nospiediet <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Likt šai programmai pārtraukt darbu?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "Ja aizvērsiet šo lietotni piespiedu kārtā, atvērto dokumentu nesaglabātās izmaiņas tiks zaudētas."
+msgstr ""
+"Ja aizvērsiet šo lietotni piespiedu kārtā, atvērto dokumentu nesaglabātās "
+"izmaiņas tiks zaudētas."
 
 #: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
@@ -2337,13 +2601,15 @@ msgstr "Piekļūstiet dokumentiem, mapēm un tīkla vietām"
 
 #: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Izmainiet saskarnes izskatu un uzvedību, iegūstiet palīdzību vai beidziet darbu"
+msgstr ""
+"Izmainiet saskarnes izskatu un uzvedību, iegūstiet palīdzību vai beidziet "
+"darbu"
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
 msgstr "Lietotnes"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "R_ediģēt izvēlnes"
 
@@ -2352,7 +2618,7 @@ msgid "Bookmarks"
 msgstr "Grāmatzīmes"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "Atvērt '%s'"
@@ -2403,20 +2669,22 @@ msgstr "Atvērt darbvirsmas saturu mapē"
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
-msgstr ""
+msgstr "Dators"
 
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
+"Pārlūkot visus no šīs mašīnas pieejamos lokālos un attālinātos diskus un "
+"mapes"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
-msgstr ""
+msgstr "Tīkls"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "Pārlūkot grāmatzīmēs saglabātās vai lokālā tīkla vietas"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
@@ -2467,20 +2735,20 @@ msgstr "Apakšā"
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
-msgstr "Pa kreisi"
+msgstr "Pa Kreisi"
 
 #: ../mate-panel/panel-properties-dialog.c:123
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
-msgstr "Pa labi"
+msgstr "Pa Labi"
 
 #: ../mate-panel/panel-properties-dialog.c:819
 msgid "Drawer Properties"
 msgstr "Atvilktnes iestatījumi"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Neizdevās ielādēt failu: '%s': %s"
@@ -2493,138 +2761,141 @@ msgstr "Nevarēja parādīt iestatījumu dialogu"
 msgid "Panel Properties"
 msgstr "Paneļa īpašības"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "Daži no šiem parametriem ir noslēgti"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_Ikona:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
 msgstr "pikseļi"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "N_ovietojums:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
-msgstr "Izmēr_s:"
+msgstr "_Izmērs:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "I_zvērst"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_Automātiskā paslēpšana"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "Rādīt slēpšanas _pogas"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "Parādīt _bultas uz slēpšanas pogām"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_Nav norādīts (izmantot sistēmas tēmu)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "Tīrt_oņa krāsa"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
-msgstr "Izvēlies krāsu"
+msgstr "Izvēlieties krāsu"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>Caurspīdīgs</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "_Krāsa:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "S_tils:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>Puscaurspīdīgs</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "_Fona attēls:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "Izvēlieties fonu"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "Fons"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "Attēla fona detaļas"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Flīze"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "Mērog_s"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "Iz_stiept"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "Rotēt attēlu, kad panelis ir _vertikāls"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Nevar atvērt nesen lietoto dokumentu \"%s\""
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Mēģinot atvērt \"%s\", gadījās nezināma kļūda."
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Attīrīt nesen izmantoto dokumentu sarakstu?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "Ja attīrīsiet nesen izmantoto dokumentu sarakstu, jūs attīrīsiet sekojošo:\n• Visu no Vietas → Nesen izmantoto dokumentu izvēlnes.\n• Visu lietotņu nesen izmantoto dokumentu sarakstus."
+msgstr ""
+"Ja attīrīsiet nesen izmantoto dokumentu sarakstu, jūs attīrīsiet sekojošo:\n"
+"• Visu no Vietas → Nesen izmantoto dokumentu izvēlnes.\n"
+"• Visu lietotņu nesen izmantoto dokumentu sarakstus."
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Attīrīt nesen izmantotos dokumentus"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Nesen izmantotie dokumenti"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr "Attīrīt nesen izmantotos dokumentus..."
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "Notīrīt visus elementus nesen izmantoto dokumentu sarakstā"
 
@@ -2638,25 +2909,28 @@ msgstr "Nevar palaist komandu '%s'"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nevar pārveidot '%s' no UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Izvēlieties failu, ko pievienot komandai..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "Izvēlieties programmu, kuras aprakstu vēlaties redzēt."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Palaidīs komandu: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Palaišanas logā norādītajam URI saraksta formāts (%d) vai garums (%d) nav pareizs\n"
+msgstr ""
+"Palaišanas logā norādītajam URI saraksta formāts (%d) vai garums (%d) nav "
+"pareizs\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "Nevar parādīt palaišanas dialogu"
 
@@ -2664,49 +2938,51 @@ msgstr "Nevar parādīt palaišanas dialogu"
 msgid "Run Application"
 msgstr "Palaist lietotni"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
+msgid "_Run"
+msgstr "_Palaist"
+
+#: ../mate-panel/panel-run-dialog.ui.h:5
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Spiediet šo pogu, lai palaistu izvēlēto programmu vai komandas ievada laukā "
+"norādīto komandu."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
 msgid "Command icon"
 msgstr "Komandas ikona"
 
-#: ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel-run-dialog.ui.h:7
 msgid "The icon of the command to be run."
 msgstr "Izpildāmās komandas ikona."
 
-#: ../mate-panel/panel-run-dialog.ui.h:4
+#: ../mate-panel/panel-run-dialog.ui.h:8
 msgid "Run in _terminal"
 msgstr "Palaist _terminālī"
 
-#: ../mate-panel/panel-run-dialog.ui.h:5
+#: ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
 msgstr "Izvēlies šo kastīti, lai palaistu komandu termināļa logā."
 
-#: ../mate-panel/panel-run-dialog.ui.h:6
+#: ../mate-panel/panel-run-dialog.ui.h:10
 msgid "Run with _file..."
 msgstr "Palaist ar _failu..."
 
-#: ../mate-panel/panel-run-dialog.ui.h:7
+#: ../mate-panel/panel-run-dialog.ui.h:11
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr "Spiediet šo pogu, lai atrastu šai komandai pievienojamā faila vārdu."
 
-#: ../mate-panel/panel-run-dialog.ui.h:8
+#: ../mate-panel/panel-run-dialog.ui.h:12
 msgid "List of known applications"
 msgstr "Zināmo lietotņu saraksts"
 
-#: ../mate-panel/panel-run-dialog.ui.h:10
+#: ../mate-panel/panel-run-dialog.ui.h:14
 msgid "Show list of known _applications"
 msgstr "P_arādīt zināmo lietotņu sarakstu"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
-msgid "_Run"
-msgstr "_Palaist"
-
-#: ../mate-panel/panel-run-dialog.ui.h:12
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr "Spiediet šo pogu, lai palaistu izvēlēto programmu vai komandas ievada laukā norādīto komandu."
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2714,7 +2990,7 @@ msgstr "_Aizvērt piespiedu kārtā"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "_Attīrīt"
+msgstr "At_saukt"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2736,7 +3012,9 @@ msgstr "Norādiet sīklietotņu sākotnējo izmēru (xx-mazs, vidējs, liels utt
 #: ../mate-panel/panel-test-applets.c:42
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "Norādiet sīklietotnes sākotnējo novietojumu (augšā, apakšā, pa labu vai pa kreisi)"
+msgstr ""
+"Norādiet sīklietotnes sākotnējo novietojumu (augšā, apakšā, pa labu vai pa "
+"kreisi)"
 
 #: ../mate-panel/panel-test-applets.c:66
 msgctxt "Size"
@@ -2756,7 +3034,7 @@ msgstr "Mazs"
 #: ../mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
-msgstr "Vidējs"
+msgstr "Vidēji"
 
 #: ../mate-panel/panel-test-applets.c:70
 msgctxt "Size"
@@ -2783,40 +3061,44 @@ msgstr "Neizdevās ielādēt sīklietotni: %s"
 msgid "Test applet utility"
 msgstr "Testēt sīklietotnes utilīti"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_Sīklietotne:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr "U_zstādījumu Ceļš:"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Slēpt paneli"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
 #: ../mate-panel/panel-util.c:347
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "Ikona '%s' nav atrasta"
+msgstr "Ikona '%s' netika atrasta"
 
 #: ../mate-panel/panel-util.c:465
 #, c-format
@@ -2850,27 +3132,31 @@ msgstr "Meklēt"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "Atvērt URL: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "Dzēst šo atvilktni?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "Dzēšot atvilktni, arī visi tās\n iestatījumi tiek zaudēti."
+msgstr ""
+"Dzēšot atvilktni, arī visi tās\n"
+" iestatījumi tiek zaudēti."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "Dzēst šo paneli?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "Dzēšot paneli, tiek zaudēti arī \nvisi tā iestatījumi."
+msgstr ""
+"Dzēšot paneli, tiek zaudēti arī \n"
+"visi tā iestatījumi."

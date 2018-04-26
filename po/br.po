@@ -1,25 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Alan Monfort <alan.monfort@free.fr>, 2015
-# Denis ARNAUD <denisarnuad@hotmail.com>, 2016
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Breton (http://www.transifex.com/mate/MATE/language/br/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Alan Monfort <alan.monfort@free.fr>, 2018\n"
+"Language-Team: Breton (https://www.transifex.com/mate/teams/13566/br/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: br\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "Lec'hiadurioù"
 
@@ -34,14 +33,14 @@ msgstr "Deiziataer"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -52,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -66,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -77,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -103,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "Klikit evit kushat an deiziadur miziek"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Klikit evit gwelout deiziataer ar miz"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Horolaj an urzhiataer"
 
@@ -125,7 +126,7 @@ msgstr "Horolaj an urzhiataer"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -135,232 +136,272 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B  %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "Arventenniñ eur ar reizhiad..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "Arventenniñ eur ar reizhiad"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "C'hwitadenn war arventennañ ar reizhiad eur"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_Gwellvezioù"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Skoazell"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
-msgstr "_A-zivout"
+msgstr "_Diwar-benn"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "Eilañ an _eur"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "Eilañ an _deiziad"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "Kengeidañ an deiziad hag an eur"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr "Dibab al lec'hiadur"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr "Kemmañ al lec'hiadur"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr "Anv kêr"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr "Gwerzhid-eur ar Gêr"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Horolaj"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "An horolaj a ziskouez an eur hag an deiziad"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Giulia Fraboulet <djoulia_at_gmail.com>\nJérémy Le Floc'h <jeremy.lefloch@gmail.com>\n\nLaunchpad Contributions:\n  Alan https://launchpad.net/~alan-monfort\n  Breizh https://launchpad.net/~jamybzh-free\n  Denis https://launchpad.net/~bibar\n  Giulia Fraboulet https://launchpad.net/~djoulia"
+msgstr "Troet eo bet gant"
 
-#. Languages that have a single word that translates as either "state" or
-#. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr "<small><i>Skrivañ ur gêr, ur rannvro pe anv ur vro ha diuzañ ur genglotadenn diwar an  tiflugellad.</i></small>"
-
-#: ../applets/clock/clock.ui.h:3
-msgid "_Timezone:"
-msgstr "_Gwezhid an eur :"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "_Location Name:"
-msgstr "Anv al le_c'hiadur"
-
-#: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(n'eo ket ret)</i>"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "L_ongitude:"
-msgstr "He_dred :"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "L_atitude:"
-msgstr "L_edred :"
-
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:1
 msgid "Time & Date"
 msgstr "Eur & Deiziad"
 
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr "_Eur :"
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "_Nullañ"
 
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr "Eur a-vremañ :"
-
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:3
 msgid "_Set System Time"
 msgstr "A_rventenniñ eur ar reizhiad"
 
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr "Reter"
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "_Eur:"
 
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr "Kornog"
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr "Eur a-vremañ :"
 
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr "Norzh"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr "Su"
-
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:6
 msgid "Clock Preferences"
 msgstr "Gwellvezioù an horolaj"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "Arventennoù an _Eur"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "_Serriñ"
+
+#: ../applets/clock/clock.ui.h:10
 msgid "Clock Format"
 msgstr "Stumm an horolaj"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:11
 msgid "_12 hour format"
 msgstr "Dre _12 eur"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:12
 msgid "_24 hour format"
 msgstr "Dre _24 eur"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr "Skrammañ ar penel lankañ"
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:14
 msgid "Show the _date"
 msgstr "Diskouez an  _deiz"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:15
 msgid "Show seco_nds"
 msgstr "Diskouez an  eile_nnoù"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:16
 msgid "Show wee_k numbers in calendar"
 msgstr "Diskouez niverennoù ar si_zhunioù en deiziataer"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:17
 msgid "Show _weather"
 msgstr "Diskouez an _amzer"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:18
 msgid "Show _temperature"
 msgstr "Diskouez an  _gwrezverk"
 
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
 msgid "General"
 msgstr "Hollek"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "_Ouzhpennañ"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "Dask_emmañ"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:24
 msgid "Display"
 msgstr "Skrammañ"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:25
 msgid "_Visibility unit:"
-msgstr "Unanenn _gweledenn :"
+msgstr "Unanenn _Gweledenn:"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:26
 msgid "_Pressure unit:"
 msgstr "Unanenn aerwas_k :"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Wind speed unit:"
-msgstr "Unanenn tizh an _Avel :"
+msgstr "Unanenn tizh an av_el :"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Temperature unit:"
-msgstr "Unanenn _Gwrezverk :"
+msgstr "Unanenn g_werzverker :"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "Weather"
 msgstr "An Amzer"
 
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "Arventennoù an _Eur"
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "Reter"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "Kornog"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "Norzh"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "Su"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
+
+#. Languages that have a single word that translates as either "state" or
+#. "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:36
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Skrivañ ur gêr, ur rannvro pe anv ur vro ha diuzañ ur genglotadenn"
+" diwar an  tiflugellad.</i></small>"
+
+#: ../applets/clock/clock.ui.h:37
+msgid "_Timezone:"
+msgstr "_Gwezhid an eur :"
+
+#: ../applets/clock/clock.ui.h:38
+msgid "_Location Name:"
+msgstr "Anv al le_c'hiadur"
+
+#: ../applets/clock/clock.ui.h:39
+msgid "<i>(optional)</i>"
+msgstr "<i>(n'eo ket ret)</i>"
+
+#: ../applets/clock/clock.ui.h:40
+msgid "L_ongitude:"
+msgstr "He_dred :"
+
+#: ../applets/clock/clock.ui.h:41
+msgid "L_atitude:"
+msgstr "L_edred :"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -374,10 +415,12 @@ msgstr "<small>Stagañ...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Stagañ</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "Arventennañ al lec'hiadur evel al lec'hiadur bremanel hag arverañ e wezhid-eur evit an urzhiataer-mañ"
+msgstr ""
+"Arventennañ al lec'hiadur evel al lec'hiadur bremanel hag arverañ e wezhid-"
+"eur evit an urzhiataer-mañ"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -385,7 +428,7 @@ msgstr "Arventennañ al lec'hiadur evel al lec'hiadur bremanel hag arverañ e we
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -394,7 +437,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -402,42 +445,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
 msgstr "Dianav"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, santañ a ra evel %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sav-heol: %s / Kuzh-heol: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "N'eus ket tu da ziskouez an diell skoazell '%s'"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "Fazi e-pad an diskouez diell skoazell"
 
@@ -455,7 +498,17 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "An alc'hwez-se a dermen stumm an euriad implijet gant an elfenn horolaj. Tu a zo da lakaat \"12-eur\", \"24-eur\", \"internet\", \"unix\" ha \"personelaet\". ma'z eo lakaet war \"internet\"  e vo diskouezet an horolaj gant an eur stummet diwar an eur internet. Eur internet a rann an devezh etre 1000 boulsadenn \".beats\". N'eus ket deus rannoù euriadurel gant an doare-se, neuze e vez implijet ar memes eur er bed a bezh. Ma'z eo lakaet war \"unix\" e vo diskouezet an horolaj gant an eur stummet diwar eilenoù tremenet abaoe mare i.e 1970-01-01. ma'z eo \"personelaet\" (custom) a zo lakaet e vo diskouezet an horolaj stummet evel m'eo bet dibabet en alc'hwez \"stumm_personelaet\" (custom_format)."
+msgstr ""
+"An alc'hwez-se a dermen stumm an euriad implijet gant an elfenn horolaj. Tu "
+"a zo da lakaat \"12-eur\", \"24-eur\", \"internet\", \"unix\" ha "
+"\"personelaet\". ma'z eo lakaet war \"internet\"  e vo diskouezet an horolaj"
+" gant an eur stummet diwar an eur internet. Eur internet a rann an devezh "
+"etre 1000 boulsadenn \".beats\". N'eus ket deus rannoù euriadurel gant an "
+"doare-se, neuze e vez implijet ar memes eur er bed a bezh. Ma'z eo lakaet "
+"war \"unix\" e vo diskouezet an horolaj gant an eur stummet diwar eilenoù "
+"tremenet abaoe mare i.e 1970-01-01. ma'z eo \"personelaet\" (custom) a zo "
+"lakaet e vo diskouezet an horolaj stummet evel m'eo bet dibabet en alc'hwez "
+"\"stumm_personelaet\" (custom_format)."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -467,7 +520,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "Ar mentrezh arveret gant arload an horolaj eo erspizet gant an alc'hwez-mañ pa vez arventennet an alc'hwez da \"personelaet\". Arveret e vez erspizerioù amdreiñ komprenet gant strftime() evit kaout am mentrezh spesadel. Kit da lenn dornlevr strftime()  evit gouzout hiroc'h."
+msgstr ""
+"Ar mentrezh arveret gant arload an horolaj eo erspizet gant an alc'hwez-mañ "
+"pa vez arventennet an alc'hwez da \"personelaet\". Arveret e vez erspizerioù"
+" amdreiñ komprenet gant strftime() evit kaout am mentrezh spesadel. Kit da "
+"lenn dornlevr strftime()  evit gouzout hiroc'h."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -483,7 +540,8 @@ msgstr "Diskouez an deizhiad en horolaj"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:8
 msgid "If true, display date in the clock, in addition to time."
-msgstr "Ma'z eo gwir, diskouez an deizhiad e-barzh an horolaj, e-kichen an eur."
+msgstr ""
+"Ma'z eo gwir, diskouez an deizhiad e-barzh an horolaj, e-kichen an eur."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:9
 msgid "Show date in tooltip"
@@ -491,7 +549,9 @@ msgstr "Diskouez an deizhiad e-barzh ul lagadenn"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Ma'z eo gwir, diskouez an deizhiad e-barzh ul lagadenn gant al logodenn war an horolaj."
+msgstr ""
+"Ma'z eo gwir, diskouez an deizhiad e-barzh ul lagadenn gant al logodenn war "
+"an horolaj."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -561,98 +621,117 @@ msgstr "Aozerezh evit arloadig an horolaj"
 msgid "Get the current time and date"
 msgstr "Kaout an eur hag an deiziad bremanel"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Diwall : an urzh a seblant bezañ un dra talvoudus evit ar poent.\nAbaoe m'eo un elfenn dilabour, ne rankfec'h ket ober an dra-se.\nKinnig a reomp groñs deoc'h non pas implijout %s gant tra ebet\na c'hellfe lakaat an elfenn da vezañ termenet pe implijet."
+msgstr ""
+"Diwall : an urzh a seblant bezañ un dra talvoudus evit ar poent.\n"
+"Abaoe m'eo un elfenn dilabour, ne rankfec'h ket ober an dra-se.\n"
+"Kinnig a reomp groñs deoc'h non pas implijout %s gant tra ebet\n"
+"a c'hellfe lakaat an elfenn da vezañ termenet pe implijet."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "Skeudennoù"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s ar Pesk"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "N'eus talvoudegezh ebet gant %s. Kemer a ra plas war ar gantenn galet ha goulenn a ra amzer kempunañ nemetken, ha ma ez eo karget e kemer plas talvoudus er penel hag implijout a ra memor. Forzh pehini a vefe kavet oc'h implijout anezhañ a rankfe bezañ bac'het e ospital ar re sot diouzhtu."
+msgstr ""
+"N'eus talvoudegezh ebet gant %s. Kemer a ra plas war ar gantenn galet ha "
+"goulenn a ra amzer kempunañ nemetken, ha ma ez eo karget e kemer plas "
+"talvoudus er penel hag implijout a ra memor. Forzh pehini a vefe kavet oc'h "
+"implijout anezhañ a rankfe bezañ bac'het e ospital ar re sot diouzhtu."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(gant un tammig skoazell a-berzh George)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Pesk"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s ar Pesk, un orakl a-vremañ"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "N'eus ket tro da gavout an arc'had da erounit"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s ar Pesk a lavar :"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "N'eus ket tu da lenn disoc'h eus an arc'had\n\nMunudoù : %s"
+msgstr ""
+"N'eus ket tu da lenn disoc'h eus an arc'had\n"
+"\n"
+"Munudoù : %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "_Adlavar"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr "Ne ya ket an urzh termenet en dro hag eo bet lakaet %s da labourat en e blas."
+msgstr ""
+"Ne ya ket an urzh termenet en dro hag eo bet lakaet %s da labourat en e "
+"blas."
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "N'eus ket tu da lañsiñ '%s'\n\nMunudoù :%s"
+msgstr ""
+"N'eus ket tu da lañsiñ '%s'\n"
+"\n"
+"Munudoù :%s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "N'eus ket tu da lenn eus '%s'\n\nMunudoù : %s"
+msgstr ""
+"N'eus ket tu da lenn eus '%s'\n"
+"\n"
+"Munudoù : %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr "Ret eo kemmañ an dour"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr "Sellit ouzh an deiz hiziv!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s ar Pesk, an diouganer planedenn"
@@ -661,47 +740,47 @@ msgstr "%s ar Pesk, an diouganer planedenn"
 msgid "Fish Preferences"
 msgstr "Gwellvezioù ar pesk"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "Anv ar pesk :"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "Urzh da seveniñ pa'z eo kliket :"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr "Bliverezh"
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_Restr :"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "Dibab ur blivadur"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_Niver a skeudennoù dre eilenn er blivadur :"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "Skeudennoù dre eilenn"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "skeudenn dre eilenn"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
-msgstr "eilennoù"
+msgstr "eilenn"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "_Treiñ ar panell a blom"
 
@@ -713,7 +792,9 @@ msgstr "Anv ar pesk"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "Ur pesk disanv a zo ur vrav a besk e darn. Dakait buhez en ho pesk en ur reiñ un anv dezhañ."
+msgstr ""
+"Ur pesk disanv a zo ur vrav a besk e darn. Dakait buhez en ho pesk en ur "
+"reiñ un anv dezhañ."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
@@ -723,7 +804,9 @@ msgstr "Restr skeudennoù blivadur ar pesk"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Termenet e vez gant an alc'hwez-se anv ar restr skeudennoù a vo implijet e-barzh blivadur ar pesk tennet deus rollad ar restroù skeudennoù."
+msgstr ""
+"Termenet e vez gant an alc'hwez-se anv ar restr skeudennoù a vo implijet "
+"e-barzh blivadur ar pesk tennet deus rollad ar restroù skeudennoù."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -733,7 +816,9 @@ msgstr "Urzh da seveniñ pa glikoc'h"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Termenet e vez gant an alc'hwez-se an urzh a vo klasket lañsiñ pa vez kliket ar pesk."
+msgstr ""
+"Termenet e vez gant an alc'hwez-se an urzh a vo klasket lañsiñ pa vez kliket"
+" ar pesk."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
@@ -743,7 +828,9 @@ msgstr "Skeudennoù dre eilenn e-barzh blivadur ar pesk"
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
-msgstr "Termenet e vez gant an alc'hwez-se niver ar skeudennoù dre eilenn a vo diskouezet e blivadur ar pesk."
+msgstr ""
+"Termenet e vez gant an alc'hwez-se niver ar skeudennoù dre eilenn a vo "
+"diskouezet e blivadur ar pesk."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
 msgid "Pause per frame"
@@ -751,7 +838,9 @@ msgstr "Skeudennoù dre eilenn"
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
 msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "Termenet e vez gant an alc'hwez-se e-pad ped a eilennoù e vo diskouezet pep rann."
+msgstr ""
+"Termenet e vez gant an alc'hwez-se e-pad ped a eilennoù e vo diskouezet pep "
+"rann."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
 msgid "Rotate on vertical panels"
@@ -760,7 +849,8 @@ msgstr "Treiñ war banelloù a blom"
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Ma'z eo gwir e vo diskouezet blivadur ar pesk troet war panelloù a blom."
+msgstr ""
+"Ma'z eo gwir e vo diskouezet blivadur ar pesk troet war panelloù a blom."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -774,12 +864,12 @@ msgstr "Eus al lec'h ma teu ar pesk genaoueg-mañ dioutañ"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Skrammañ ur pesk o neuial pe ne vern pe grouedur all"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Maez kelaouiñ"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "Panell ar maez kelaouiñ"
 
@@ -797,13 +887,16 @@ msgstr "Maez ma'z a war-wel an arlunioù kelaouiñ"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
-msgstr "Diskouez prenistri an holl zachennoù-labour"
+msgstr "Diskouez ar prenestroù diouzh an holl dachennoù labour."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Mar gwir e vo diskouezet ar prenistri diwar an holl dachennoù labour gant roll ar prenestroù. A-hend-all e skrammo prenestroù diouzh an dachenn labour vremanel hepken."
+msgstr ""
+"Mar gwir e vo diskouezet ar prenistri diwar an holl dachennoù labour gant "
+"roll ar prenestroù. A-hend-all e skrammo prenestroù diouzh an dachenn labour"
+" vremanel hepken."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -813,7 +906,10 @@ msgstr "Pegoulz strollañ ar prenistri"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Divizout a ra pegoulz kenstrollañ ar prenestroù eus an hevelep arload war roll ar prenestroù. Ar gwerzhioù a vez kavet zo \"morse\", \"emgefreek\" ha \"bepred\"."
+msgstr ""
+"Divizout a ra pegoulz kenstrollañ ar prenestroù eus an hevelep arload war "
+"roll ar prenestroù. Ar gwerzhioù a vez kavet zo \"morse\", \"emgefreek\" ha "
+"\"bepred\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -823,7 +919,9 @@ msgstr "Kas ar prenistri war an dachenn labour dibabet pa vezont divihanaet"
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Mar gwir, pa vez brasaet ur prenestr ez eo dilec'hiet war an dachenn labour vremanel. A-hend-all e trec'haol betek tachenn labour ar prenestr."
+msgstr ""
+"Mar gwir, pa vez brasaet ur prenestr ez eo dilec'hiet war an dachenn labour "
+"vremanel. A-hend-all e trec'haol betek tachenn labour ar prenestr."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -834,7 +932,11 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "Mar gwir e vo skrammet anvioù an dachenn-labour gant an dachenn-labour e trec'haoler an dachenn-labour. A-hend-all e skrammint ar prenestroù war an dachenn-labour. Gant an ardoer prenestroù Marco hepken ez a en-dro an arventennoù."
+msgstr ""
+"Mar gwir e vo skrammet anvioù an dachenn-labour gant an dachenn-labour e "
+"trec'haoler an dachenn-labour. A-hend-all e skrammint ar prenestroù war an "
+"dachenn-labour. Gant an ardoer prenestroù Marco hepken ez a en-dro an "
+"arventennoù."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -844,7 +946,9 @@ msgstr "Diskouez an holl dachennoù-labour"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Ma'z eo gwir, ar c'h emmer tachennoù-labour a ziskouezo an holl dachennoù-labour. Ma'z eo faos, e tiskouezo an dachenn-labour en implij hepken."
+msgstr ""
+"Ma'z eo gwir, ar c'h emmer tachennoù-labour a ziskouezo an holl dachennoù-"
+"labour. Ma'z eo faos, e tiskouezo an dachenn-labour en implij hepken."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -855,7 +959,11 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "An alc'hwez a erspiz pet a renkadoù (evit ur c'hempennadur a-zremm) pe vannoù (evit ur c'hempennadur a-serzh) a vo diskouezet gant trec'haoler an dachenn-labour en tachennoù-lavour. Talvoudus eo an alc'hwez-mañ mard eo gwir an alc'hwez display_all_workspaces."
+msgstr ""
+"An alc'hwez a erspiz pet a renkadoù (evit ur c'hempennadur a-zremm) pe "
+"vannoù (evit ur c'hempennadur a-serzh) a vo diskouezet gant trec'haoler an "
+"dachenn-labour en tachennoù-lavour. Talvoudus eo an alc'hwez-mañ mard eo "
+"gwir an alc'hwez display_all_workspaces."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -873,10 +981,11 @@ msgstr "Aozerezh an arloadig evit ar merdeiñ dre brenestroù"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:2
 msgid "Factory for the window navigation related applets"
-msgstr "Aozerezh evit an arloadigoùigoù kenereet ouzh ar merdeiñ dre brenestroù"
+msgstr ""
+"Aozerezh evit an arloadigoùigoù kenereet ouzh ar merdeiñ dre brenestroù"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
 msgstr "Diuzer prenestroù"
 
@@ -885,18 +994,18 @@ msgid "Switch between open windows using a menu"
 msgstr "Trec'haoliñ e-touez ar prenestroù digor en ur ober gant ul lañser"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
-msgstr "Trec'haoler an dachennoù-labour"
+msgstr "Trec'haoler an tachennoù-labour"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "Trec'haoliñ e-touez an tachennoù labour"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
-msgstr "Roll ar prenestr"
+msgstr "Roll ar prenestroù"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:8
 msgid "Switch between open windows using buttons"
@@ -910,88 +1019,92 @@ msgstr "Diskouez ar burev"
 msgid "Hide application windows and show the desktop"
 msgstr "Kuzhañ prenestroù an arload ha diskouez ar burev"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "N'eus ket tu da gargañ %s : %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "Arlun ebet kavet"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "Klikit amañ evit adwelout prenestroù kuzhet."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klikit amañ evit kuzhat an holl brenestroù ha diskouez ar burev."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "Diskouez ar afell Burev"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Ar afell-mañ a c'hall kuzhat an holl brenestroù ha diskouez ar burev."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "An afell da ziskouez ar burev n'eo ket skoret gant ardoer ar prenestr pe n'emaoc'h ket o labourat en un ardoer prenestr."
+msgstr ""
+"An afell da ziskouez ar burev n'eo ket skoret gant ardoer ar prenestr pe "
+"n'emaoc'h ket o labourat en un ardoer prenestr."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "_Gouarner ar reizhiad"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "Roll ar prenestroù a ziskouez roll an holl brenestroù en ur strollad afelloù ha furchet e vez en  o zouez."
+msgstr ""
+"Roll ar prenestroù a ziskouez roll an holl brenestroù en ur strollad afelloù"
+" ha furchet e vez en  o zouez."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "Gwellvezioù ar roll-prenistri"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr "Rollad ar prenestroù"
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Diskoue_z prenistri an dachenn-labour vremanel"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Diskouez prenistri an _holl dachennoù-labour"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr "Strolladur ar prenestroù"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "Chom hep strollañ ar prenistri _morse"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "Strollañ ar prenistri pa n'eus ket kalz a _blas"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "Strollañ ar prenistri _bepred"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr "Adsaveladur ar prenestroù bihanaet"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "Distreiñ d'an dachenn-_labour vremanel"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "Distreiñ d'an dachenn-labour _orin"
 
@@ -999,62 +1112,66 @@ msgstr "Distreiñ d'an dachenn-labour _orin"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "An diuzer prenestroù a ziskouez ur roll prenestroù war ul lañser ha reiñ a ra tro deoc'h da verdeiñ en o zouez."
+msgstr ""
+"An diuzer prenestroù a ziskouez ur roll prenestroù war ul lañser ha reiñ a "
+"ra tro deoc'h da verdeiñ en o zouez."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "renkad"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "bann"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Trec'haoler an dachenn-labour a ziskouez deoc'h un alberz bihan eus ho tachennoù-labour a ro tro deoc'h da ardeiñ ho prenestroù."
+msgstr ""
+"Trec'haoler an dachenn-labour a ziskouez deoc'h un alberz bihan eus ho "
+"tachennoù-labour a ro tro deoc'h da ardeiñ ho prenestroù."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "Gwellvezioù ar c'hemmer tachennoù-labour"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "Diskouez an dachenn-labour en implij hepken"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "Diskouez an holl dachennoù-labour e :"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "Trec'haoler"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "Niver a zachennoù-labour :"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "Anv an tachennoù-labour :"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Anv an tachennoù-labour"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "Diskouez anv an dachenn-labour er c'hemmer"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr "Tachennoù-labour"
 
@@ -1064,7 +1181,9 @@ msgstr "Kempennadur ar penel dre ziouer"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:2
 msgid "The default panels layout to use when panels are created or resetted."
-msgstr "Kempennadur ar penel dre ziouer da arverañ pe vez krouet pe adderaouekaet penelioù."
+msgstr ""
+"Kempennadur ar penel dre ziouer da arverañ pe vez krouet pe adderaouekaet "
+"penelioù."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:3
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1075,7 +1194,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Mar gwir ez eo lakaet roll an \"Arloadoù anavezet\" da vezañ hegerz e boestad emziviz \"Lañsañ un arload\". An alc'hwez show_program_list a vestroni skrammadur ar roll pa vez diskouezet pe get ar voestad emziviz."
+msgstr ""
+"Mar gwir ez eo lakaet roll an \"Arloadoù anavezet\" da vezañ hegerz e "
+"boestad emziviz \"Lañsañ un arload\". An alc'hwez show_program_list a "
+"vestroni skrammadur ar roll pa vez diskouezet pe get ar voestad emziviz."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1086,7 +1208,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Mar gwir ez eo dibunet listad an \"Arloadoù anavezet\" e boestad emziviz \"Lañsañ un arload\" pa vez digoret ar voestad. Talvoudus eo an alc'hwez-mañ mard eo gwir an alc'hwez enable_program_list."
+msgstr ""
+"Mar gwir ez eo dibunet listad an \"Arloadoù anavezet\" e boestad emziviz "
+"\"Lañsañ un arload\" pa vez digoret ar voestad. Talvoudus eo an alc'hwez-mañ"
+" mard eo gwir an alc'hwez enable_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1095,7 +1220,9 @@ msgstr "Gweredekaat an embeurechuiñ er voestad emziviz \"Lañsañ an arload\""
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Mar gwrir e vo lakaet da vezañ hegerz an embeurechuiñ er voestad emziviz \"Lañsañ an arload\""
+msgstr ""
+"Mar gwrir e vo lakaet da vezañ hegerz an embeurechuiñ er voestad emziviz "
+"\"Lañsañ an arload\""
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1136,7 +1263,10 @@ msgstr "Roll ID-où ar penel lankañ"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Ur roll naoudioù (ID) evit ar penel lankañ. Pep naoudi a ro anv ur penel lankañ e live uhelañ. Enrollet eo an arventennoù evit pep penel e /apps/panel/toplevels/$(id)."
+msgstr ""
+"Ur roll naoudioù (ID) evit ar penel lankañ. Pep naoudi a ro anv ur penel "
+"lankañ e live uhelañ. Enrollet eo an arventennoù evit pep penel e "
+"/apps/panel/toplevels/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1147,7 +1277,11 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Ur roll naoudioù (ID) evit ergorennoù ar penel lankañ. Pep naoudi a ro anv un ergorenn hiniennel eus ar penel lankañ (d.l.e. ul lañser, un afell gwezhiañ pe afell ul lañser). Enrollet eo an arventennoù evit pep ergorenn e /apps/panel/objects/$(id)."
+msgstr ""
+"Ur roll naoudioù (ID) evit ergorennoù ar penel lankañ. Pep naoudi a ro anv "
+"un ergorenn hiniennel eus ar penel lankañ (d.l.e. ul lañser, un afell "
+"gwezhiañ pe afell ul lañser). Enrollet eo an arventennoù evit pep ergorenn e"
+" /apps/panel/objects/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1170,7 +1304,9 @@ msgstr "Lakaat an diretenn da emserriñ"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Mar gwir e vo serret un diretenn ent emgefreek pa gliko an arveriad war ul loc'her a zo enni."
+msgstr ""
+"Mar gwir e vo serret un diretenn ent emgefreek pa gliko an arveriad war ul "
+"loc'her a zo enni."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1180,7 +1316,9 @@ msgstr "kadarnaad dilamadur ar penel lankañ"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Ma 'z eo gwir, ur gerig a vo diskouezet a-benn goulenn kadarnaat lamadur ur penel."
+msgstr ""
+"Ma 'z eo gwir, ur gerig a vo diskouezet a-benn goulenn kadarnaat lamadur ur "
+"penel."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1189,7 +1327,9 @@ msgstr "Usskediñ al lañserioù pa dremen al logodenn a-us dezho"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Mar gwir e vo usskedet ul loc'her pa zilec'hio an arveriad reti al logodenn dreisti."
+msgstr ""
+"Mar gwir e vo usskedet ul loc'her pa zilec'hio an arveriad reti al logodenn "
+"dreisti."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1200,7 +1340,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Mar gwir n'aotreo ket ar penel lankañ kemmoù war kefluniadur ar penel. Koulskoude e vo ret da arloadoù hiniennel bezañ prennet marteze. Ret eo deoc'h adloc'hañ ar penel lankañ a-benn ma vo efedus."
+msgstr ""
+"Mar gwir n'aotreo ket ar penel lankañ kemmoù war kefluniadur ar penel. "
+"Koulskoude e vo ret da arloadoù hiniennel bezañ prennet marteze. Ret eo "
+"deoc'h adloc'hañ ar penel lankañ a-benn ma vo efedus."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1212,7 +1355,12 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Ur roll IIDoù evit arloadoù hag a vo laosket a-gostez gant ar penel. Evel-se e vez miret un darn eus an arloadoù ouzh bezañ karget pe diskouezet war al lañser. Da skouer, diweredekaat an arloadig 'mini-commander', ouzhpennit 'OAFIID:MATE_MiniCommanderApplet' war ar roll. Ret eo adloc'hañ ar penel lankañ a-benn ma vo efedus."
+msgstr ""
+"Ur roll IIDoù evit arloadoù hag a vo laosket a-gostez gant ar penel. Evel-se"
+" e vez miret un darn eus an arloadoù ouzh bezañ karget pe diskouezet war al "
+"lañser. Da skouer, diweredekaat an arloadig 'mini-commander', ouzhpennit "
+"'OAFIID:MATE_MiniCommanderApplet' war ar roll. Ret eo adloc'hañ ar penel "
+"lankañ a-benn ma vo efedus."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1222,7 +1370,9 @@ msgstr "Lazhañ ar c'huitaat dre ret"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Mar gwir n'aotreo ket ar penel lankañ un arveriad da vountañ war un arload da vont kuit dre zilemel an haeziñ d'an afell Bountañ da vont kuit."
+msgstr ""
+"Mar gwir n'aotreo ket ar penel lankañ un arveriad da vountañ war un arload "
+"da vont kuit dre zilemel an haeziñ d'an afell Bountañ da vont kuit."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1326,7 +1476,9 @@ msgstr "Lec'hiadur an elfenn war ar penel lankañ"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Lec'hiadur eus ergorenn ar penel. Erspizet eo al lec'hiadur gant an niver a bikselioù diouzh riblenn a-gleiz (pe krec'h mar a-serzh) ar penel."
+msgstr ""
+"Lec'hiadur eus ergorenn ar penel. Erspizet eo al lec'hiadur gant an niver a "
+"bikselioù diouzh riblenn a-gleiz (pe krec'h mar a-serzh) ar penel."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1336,7 +1488,9 @@ msgstr "Jubenniñ lec'hiadur daveel gant riblenn en traoñ/an tu dehou"
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Mar gwir ez eo jubennet lec'hiadur an ergorenn daveel gant tu dehou (pe draoñ mar a-serzh) riblenn ar penel lankañ."
+msgstr ""
+"Mar gwir ez eo jubennet lec'hiadur an ergorenn daveel gant tu dehou (pe "
+"draoñ mar a-serzh) riblenn ar penel lankañ."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1346,7 +1500,10 @@ msgstr "Stagañ an elfenn war ar penel lankañ"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Mar gwir ne vo ket dilec'hiet an arloadig gant an arveriad hep bezañ dibrennet an ergorenn da gentañ en ur ober gant elfenn al lañser \"Dibrennañ\"."
+msgstr ""
+"Mar gwir ne vo ket dilec'hiet an arloadig gant an arveriad hep bezañ "
+"dibrennet an ergorenn da gentañ en ur ober gant elfenn al lañser "
+"\"Dibrennañ\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1358,7 +1515,11 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr "Naoudi keflouerañ eus an arload - dle  - e.g. \"ClockAppletFactory::ClockApplet\". Dereat eo an alc'hwez-mañ mard eo an alc'hwez object_type o tlvezout da \"external-applet\" (pe \"matecomponent-applet\" diamzeret)."
+msgstr ""
+"Naoudi keflouerañ eus an arload - dle  - e.g. "
+"\"ClockAppletFactory::ClockApplet\". Dereat eo an alc'hwez-mañ mard eo an "
+"alc'hwez object_type o tlvezout da \"external-applet\" (pe \"matecomponent-"
+"applet\" diamzeret)."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
@@ -1368,7 +1529,9 @@ msgstr "Penel lankañ stag ouzh an diretenn"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Naoudi ar penel lankañ staget ouzh an diretenn-mañ. Talvoudus eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn an diretenn\"."
+msgstr ""
+"Naoudi ar penel lankañ staget ouzh an diretenn-mañ. Talvoudus eo an alc"
+"'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn an diretenn\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1379,7 +1542,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "An destenn da skrammañ en ul lagadenn evit an diretenn-mañ pe al lañser-mañ. Talvoudus eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn an diretenn\" pe \"ergorenn al lañser\"."
+msgstr ""
+"An destenn da skrammañ en ul lagadenn evit an diretenn-mañ pe al lañser-mañ."
+" Talvoudus eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn "
+"an diretenn\" pe \"ergorenn al lañser\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1390,7 +1556,11 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Mar gwir ez eo arveret an alc'hwez custom_icon evel un arlun personelaet evit an afell. Mar diwir ez eo laosket a-gostez. Talvoudus eo an alc'hwez-mañ mard eo an alc'hwez object_type un \"ergorenn al lañser\" pe \"ergorenn an diretenn\"."
+msgstr ""
+"Mar gwir ez eo arveret an alc'hwez custom_icon evel un arlun personelaet "
+"evit an afell. Mar diwir ez eo laosket a-gostez. Talvoudus eo an alc'hwez-"
+"mañ mard eo an alc'hwez object_type un \"ergorenn al lañser\" pe \"ergorenn "
+"an diretenn\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1401,7 +1571,11 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Lec'hiadur ar skeudenn arveret evel arlun evit afell an ergorenn.  Talvoudus eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn an diretenn\" pe \"ergorenn al lañser\" ha mard eo gwir an alc'hwez use_custom_icon."
+msgstr ""
+"Lec'hiadur ar skeudenn arveret evel arlun evit afell an ergorenn.  Talvoudus"
+" eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn an "
+"diretenn\" pe \"ergorenn al lañser\" ha mard eo gwir an alc'hwez "
+"use_custom_icon."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1412,7 +1586,11 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Mar gwir ez eo arveret an alc'hwez menu_path ma tlefe bezañ savet endalc'hadoù al lañser drezi. Mar diwir ez eo laosket an alc'hwez menu_path a-gostez. Talvoudus eo an alc'hwez ma talv an alc'hwez object_type da \"ergorenn al lañser\"."
+msgstr ""
+"Mar gwir ez eo arveret an alc'hwez menu_path ma tlefe bezañ savet "
+"endalc'hadoù al lañser drezi. Mar diwir ez eo laosket an alc'hwez menu_path "
+"a-gostez. Talvoudus eo an alc'hwez ma talv an alc'hwez object_type da "
+"\"ergorenn al lañser\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1423,7 +1601,10 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "An treug ma 'z eo savet endalc'hadoù al lañser dioutañ. Talvoudus eo an alc'hwez-mañ mard eo gwir an alc'hwez use_menu_path ha ma talv an alc'hwez object_type da \"ergorenn al lañser\"."
+msgstr ""
+"An treug ma 'z eo savet endalc'hadoù al lañser dioutañ. Talvoudus eo an alc"
+"'hwez-mañ mard eo gwir an alc'hwez use_menu_path ha ma talv an alc'hwez "
+"object_type da \"ergorenn al lañser\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1433,7 +1614,9 @@ msgstr "Kempenn biroù e afell al lañser"
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
-msgstr "Mar gwir e vo treset ur bir a-us da arlun an afell. Mar diwir ez eus un arlun hepken gant afell al lañser."
+msgstr ""
+"Mar gwir e vo treset ur bir a-us da arlun an afell. Mar diwir ez eus un "
+"arlun hepken gant afell al lañser."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:27
 msgid "Launcher location"
@@ -1443,7 +1626,9 @@ msgstr "Lec'hiadur al loc'her"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Lec'hiadur ar restr mod .desktop o teskrivañ al loc'her. Talvoudus eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn al loc'her\"."
+msgstr ""
+"Lec'hiadur ar restr mod .desktop o teskrivañ al loc'her. Talvoudus eo an alc"
+"'hwez-mañ ma talv an alc'hwez object_type da \"ergorenn al loc'her\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1454,7 +1639,11 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Ar rizh gwezhiañ diskouezet gant an afell-mañ. Ar gwerzhioù a c'hall bezañ \"prennañ\", \"digennaskañ\", \"loc'hañ\", \"klask\" ha \"tapadenn skramm\". Talvoudus eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"arloadig gwezhiañ\"."
+msgstr ""
+"Ar rizh gwezhiañ diskouezet gant an afell-mañ. Ar gwerzhioù a c'hall bezañ "
+"\"prennañ\", \"digennaskañ\", \"loc'hañ\", \"klask\" ha \"tapadenn skramm\"."
+" Talvoudus eo an alc'hwez-mañ ma talv an alc'hwez object_type da \"arloadig "
+"gwezhiañ\"."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1465,7 +1654,9 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Un anv den helenn a vez arveret ganeoc'h eo hennezh. E bal pennañ a dalv da ditl prenestr ur penel, pezh a zo talvoudus pa vez merdeet e-touez peneloù."
+msgstr ""
+"Un anv den helenn a vez arveret ganeoc'h eo hennezh. E bal pennañ a dalv da "
+"ditl prenestr ur penel, pezh a zo talvoudus pa vez merdeet e-touez peneloù."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1475,7 +1666,10 @@ msgstr "Ar skramm X ma vez skrammet ar penel lankañ"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "Gant ur c'hefluniadur dre liesskrammoù e c'hallit kaout peneloù war bep a skramm hiniennel. An alc'hwez-mañ a laka un naoudi ar skramm bremanel ma 'z eo skrammet ar penel warnañ."
+msgstr ""
+"Gant ur c'hefluniadur dre liesskrammoù e c'hallit kaout peneloù war bep a "
+"skramm hiniennel. An alc'hwez-mañ a laka un naoudi ar skramm bremanel ma 'z "
+"eo skrammet ar penel warnañ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1485,7 +1679,10 @@ msgstr "Ar skramm Xinerama ma vez skrammet ar penel lankañ"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Gant ur c'hefluniadur Xinerama hoc'h eus tro da gaout peneloù war pep skramm hiniennel. An alc'hwez-mañ a ro naoudi ar skramm bremanel ma 'z eo skrammet ar penel warnañ."
+msgstr ""
+"Gant ur c'hefluniadur Xinerama hoc'h eus tro da gaout peneloù war pep skramm"
+" hiniennel. An alc'hwez-mañ a ro naoudi ar skramm bremanel ma 'z eo skrammet"
+" ar penel warnañ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1497,7 +1694,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Mar gwir ez ac'hub ar penel led ar skramm en e bezh (sav mard eo ur penel a-serzh). Gant ar mod-mañ e vez lec'hiet ar penel ouzh riblenn ar skramm. Mar diwir e vo ar penel bras a-walc'h a-benn azasaat an arloadoù, al loc'herioù hag afelloù ouzh ar penel."
+msgstr ""
+"Mar gwir ez ac'hub ar penel led ar skramm en e bezh (sav mard eo ur penel "
+"a-serzh). Gant ar mod-mañ e vez lec'hiet ar penel ouzh riblenn ar skramm. "
+"Mar diwir e vo ar penel bras a-walc'h a-benn azasaat an arloadoù, al "
+"loc'herioù hag afelloù ouzh ar penel."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1513,7 +1714,15 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Reteradur ar penel. Ar gwerzhioù a c'hall bezañ \"krec'h\", \"traoñ\", \tu kleiz\", \"tu dehou\". Gant ar mod astennet ez erspiz an alc'hwez war peseurt riblenn skramm emañ ar penel lankañ. Gant ar mod diastennet n'eo ket an difoc'h etre \"krec'h\" ha \"traoñ\" ken pouezus - an eil hag egile a veneg ez eo ur penel a-zremm - met titouroù talvoudus a roont a-zivout emzalc'h elfennoù zo eus ar penel. Da skouer, gant ur penel \"krec'h\" e tifluko afell ul lañser dindan ar penel,  ur penel \"traoñ\" e tifluko afell ul lañser a-us d'ar penel."
+msgstr ""
+"Reteradur ar penel. Ar gwerzhioù a c'hall bezañ \"krec'h\", \"traoñ\", \tu "
+"kleiz\", \"tu dehou\". Gant ar mod astennet ez erspiz an alc'hwez war "
+"peseurt riblenn skramm emañ ar penel lankañ. Gant ar mod diastennet n'eo ket"
+" an difoc'h etre \"krec'h\" ha \"traoñ\" ken pouezus - an eil hag egile a "
+"veneg ez eo ur penel a-zremm - met titouroù talvoudus a roont a-zivout "
+"emzalc'h elfennoù zo eus ar penel. Da skouer, gant ur penel \"krec'h\" e "
+"tifluko afell ul lañser dindan ar penel,  ur penel \"traoñ\" e tifluko afell"
+" ul lañser a-us d'ar penel."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1525,7 +1734,11 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Sav (led evit ur penel lankañ a-serzh) ar penel. E-kerz an erounit e vo despizet gant ar penel un vent izek diazezet war ment an nodrezhoù ha menegerioù all. Lakaet eo ar vent uc'hek d'ur c'hard eus sav ar skramm (pe led)."
+msgstr ""
+"Sav (led evit ur penel lankañ a-serzh) ar penel. E-kerz an erounit e vo "
+"despizet gant ar penel un vent izek diazezet war ment an nodrezhoù ha "
+"menegerioù all. Lakaet eo ar vent uc'hek d'ur c'hard eus sav ar skramm (pe "
+"led)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1536,7 +1749,11 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Lec'hiadur ar penel lankañ a-hed an ahel-x (ledenn). Talvoudus eo an alc'hwez-mañ er mod diastenn. En ur mod astennet e vo leuskel ar an alc'hwez a-gostez ha lec'hiet e vo ar penel lankañ ouzh riblenn ar skramm erspizet gant alc'hwez ar reteradur."
+msgstr ""
+"Lec'hiadur ar penel lankañ a-hed an ahel-x (ledenn). Talvoudus eo an alc"
+"'hwez-mañ er mod diastenn. En ur mod astennet e vo leuskel ar an alc'hwez "
+"a-gostez ha lec'hiet e vo ar penel lankañ ouzh riblenn ar skramm erspizet "
+"gant alc'hwez ar reteradur."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1547,7 +1764,11 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Lec'hiadur ar penel lankañ a-hed an ahel-y (hedenn). Talvoudus eo an alc'hwez-mañ er mod diastenn. En ur mod astennet e vo leuskel ar an alc'hwez a-gostez ha lec'hiet e vo ar penel lankañ ouzh riblenn ar skramm erspizet gant alc'hwez ar reteradur."
+msgstr ""
+"Lec'hiadur ar penel lankañ a-hed an ahel-y (hedenn). Talvoudus eo an alc"
+"'hwez-mañ er mod diastenn. En ur mod astennet e vo leuskel ar an alc'hwez "
+"a-gostez ha lec'hiet e vo ar penel lankañ ouzh riblenn ar skramm erspizet "
+"gant alc'hwez ar reteradur."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1561,7 +1782,13 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Lec'hiadur ar penel lankañ a-hed an ahel-x (ledenn), o tedaouiñ diwar tu dehou ar skramm. Mar arventennet da -1 e vo leuskel ar werzh a-gostez ha gwerzh an alc'hwez x a vo arveret. Mar bez ar werzh brasoc'h eget 0  e vo leuskel ar werzh x a-gostez. Talvoudus eo an alc'hwez-mañ er mod diastenn. En ur mod astennet e vo leuskel ar an alc'hwez a-gostez ha lec'hiet e vo ar penel lankañ ouzh riblenn ar skramm erspizet gant alc'hwez ar reteradur."
+msgstr ""
+"Lec'hiadur ar penel lankañ a-hed an ahel-x (ledenn), o tedaouiñ diwar tu "
+"dehou ar skramm. Mar arventennet da -1 e vo leuskel ar werzh a-gostez ha "
+"gwerzh an alc'hwez x a vo arveret. Mar bez ar werzh brasoc'h eget 0  e vo "
+"leuskel ar werzh x a-gostez. Talvoudus eo an alc'hwez-mañ er mod diastenn. "
+"En ur mod astennet e vo leuskel ar an alc'hwez a-gostez ha lec'hiet e vo ar "
+"penel lankañ ouzh riblenn ar skramm erspizet gant alc'hwez ar reteradur."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1575,7 +1802,13 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Lec'hiadur ar penel lankañ a-hed an ahel-y (hedenn), o tedaouiñ diwar traoñ ar skramm. Mar arventennet da -1 e vo leuskel ar werzh a-gostez ha gwerzh an alc'hwez y a vo arveret. Mar bez ar werzh brasoc'h eget 0  e vo leuskel ar werzh y a-gostez. Talvoudus eo an alc'hwez-mañ er mod diastenn. En ur mod astennet e vo leuskel ar an alc'hwez a-gostez ha lec'hiet e vo ar penel lankañ ouzh riblenn ar skramm erspizet gant alc'hwez ar reteradur."
+msgstr ""
+"Lec'hiadur ar penel lankañ a-hed an ahel-y (hedenn), o tedaouiñ diwar traoñ "
+"ar skramm. Mar arventennet da -1 e vo leuskel ar werzh a-gostez ha gwerzh an"
+" alc'hwez y a vo arveret. Mar bez ar werzh brasoc'h eget 0  e vo leuskel ar "
+"werzh y a-gostez. Talvoudus eo an alc'hwez-mañ er mod diastenn. En ur mod "
+"astennet e vo leuskel ar an alc'hwez a-gostez ha lec'hiet e vo ar penel "
+"lankañ ouzh riblenn ar skramm erspizet gant alc'hwez ar reteradur."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1587,7 +1820,11 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "Mar gwir ez eo laosket alc'hwezioù x hag ahelioù-x (ledenn) ha lakaet eo ar penel lankañ e kreiz ledenn ar skramm. Mar bez admentet ar penel lankañ e chomo war al lec'h-mañ - d.l.e. kreskiñ a ray ar penel a bep tu. Mar diwir ez erspiz alc'hwezioù x hag ahelioù-x (ledenn) lec'hiadur ar penel lankañ."
+msgstr ""
+"Mar gwir ez eo laosket alc'hwezioù x hag ahelioù-x (ledenn) ha lakaet eo ar "
+"penel lankañ e kreiz ledenn ar skramm. Mar bez admentet ar penel lankañ e "
+"chomo war al lec'h-mañ - d.l.e. kreskiñ a ray ar penel a bep tu. Mar diwir "
+"ez erspiz alc'hwezioù x hag ahelioù-x (ledenn) lec'hiadur ar penel lankañ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1599,7 +1836,11 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "Mar gwir ez eo laosket alc'hwezioù y hag ahelioù-y (hedenn) ha lakaet eo ar penel lankañ e kreiz hedenn ar skramm. Mar bez admentet ar penel lankañ e chomo war al lec'h-mañ - d.l.e. kreskiñ a ray ar penel a bep tu. Mar diwir ez erspiz alc'hwezioù y hag ahelioù-y (hedenn) lec'hiadur ar penel lankañ."
+msgstr ""
+"Mar gwir ez eo laosket alc'hwezioù y hag ahelioù-y (hedenn) ha lakaet eo ar "
+"penel lankañ e kreiz hedenn ar skramm. Mar bez admentet ar penel lankañ e "
+"chomo war al lec'h-mañ - d.l.e. kreskiñ a ray ar penel a bep tu. Mar diwir "
+"ez erspiz alc'hwezioù y hag ahelioù-y (hedenn) lec'hiadur ar penel lankañ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1610,13 +1851,18 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Mar gwir ez eo kuzhet ar penel lankañ en ur c'horn eus ar skramm pa guita ar reti maez ar penel. Dilec'hiañ ar reti war ar c'horn-mañ en-dro hag ar penel a ya war wel en-dro."
+msgstr ""
+"Mar gwir ez eo kuzhet ar penel lankañ en ur c'horn eus ar skramm pa guita ar"
+" reti maez ar penel. Dilec'hiañ ar reti war ar c'horn-mañ en-dro hag ar "
+"penel a ya war wel en-dro."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Mar gwir, ar c'huzhañ hag an diskouez eus ar penel a vo fiñvek kentoc'h eget mont war wel a daol trumm."
+msgstr ""
+"Mar gwir, ar c'huzhañ hag an diskouez eus ar penel a vo fiñvek kentoc'h eget"
+" mont war wel a daol trumm."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1626,7 +1872,10 @@ msgstr "Enaouiñ an afelloù-kuzhat"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Mar gwir, lec'hiet e vo afelloù da bep tu ar panel lankañ. An afelloù a vo arveret da zilec'hiañ ar penel ouzh riblenn ar skramm, o leuskel un afell hepken da vezañ gwelet."
+msgstr ""
+"Mar gwir, lec'hiet e vo afelloù da bep tu ar panel lankañ. An afelloù a vo "
+"arveret da zilec'hiañ ar penel ouzh riblenn ar skramm, o leuskel un afell "
+"hepken da vezañ gwelet."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1636,7 +1885,9 @@ msgstr "Enaouiñ ar biroù war an afelloù-kuzhat"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "Mar gwir e vo lec'hiet biroù war an afelloù kuzhañ. Talvoudus eo an alc'hwez-mañmard eo gwir an alc'hwez enable_buttons."
+msgstr ""
+"Mar gwir e vo lec'hiet biroù war an afelloù kuzhañ. Talvoudus eo an alc"
+"'hwez-mañmard eo gwir an alc'hwez enable_buttons."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1647,7 +1898,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Erspizañ a ra an niver a milieilennoù dale ez eus etre ar mare ma 'z a ar reti er-maez eus maez ar panel hag ar mare ma 'z eo kuzhet ent emgefreek. Talvoudus eo an alc'hwez mard eo gwir an alc'hwez auto_hide."
+msgstr ""
+"Erspizañ a ra an niver a milieilennoù dale ez eus etre ar mare ma 'z a ar "
+"reti er-maez eus maez ar panel hag ar mare ma 'z eo kuzhet ent emgefreek. "
+"Talvoudus eo an alc'hwez mard eo gwir an alc'hwez auto_hide."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1658,7 +1912,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Erspizañ a ra an niver a milieilennoù dale ez eus etre ar mare ma 'z a ar reti war maez ar panel hag ar mare ma 'z eo skrammet en-dro. Talvoudus eo an alc'hwez mard eo gwir an alc'hwez auto_hide."
+msgstr ""
+"Erspizañ a ra an niver a milieilennoù dale ez eus etre ar mare ma 'z a ar "
+"reti war maez ar panel hag ar mare ma 'z eo skrammet en-dro. Talvoudus eo an"
+" alc'hwez mard eo gwir an alc'hwez auto_hide."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1669,7 +1926,10 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Erspizañ a ra an niver a bikselioù hewel pa vez kuzhet ar penel gant un doare emgefreek en ur c'horn. Talvoudus eo an alc'hwez mard eo gwir an alc'hwez auto_hide."
+msgstr ""
+"Erspizañ a ra an niver a bikselioù hewel pa vez kuzhet ar penel gant un "
+"doare emgefreek en ur c'horn. Talvoudus eo an alc'hwez mard eo gwir an "
+"alc'hwez auto_hide."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1680,11 +1940,14 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "An tizh ma tegouezho bliverezhioù ar penel drezañ. Ar gwerzhioù a c'hall bezañ zo \"gorrek\", \"krenn\", \"buan\". Talvoudus eo an alc'hwez-mañ mard eo gwir an alc'hwez enable_animations."
+msgstr ""
+"An tizh ma tegouezho bliverezhioù ar penel drezañ. Ar gwerzhioù a c'hall "
+"bezañ zo \"gorrek\", \"krenn\", \"buan\". Talvoudus eo an alc'hwez-mañ mard "
+"eo gwir an alc'hwez enable_animations."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
-msgstr "Neuz an drekleur"
+msgstr "Seurt an drekleur"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
 msgid ""
@@ -1692,7 +1955,12 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "Peseurt rizh drekleur a zlefe bezañ arveret evit ar penel-mañ. Ar gwerzhioù a c'hall bezañ \"hini ebet\" - drekleur dre ziouer ar widjed GTK+ a vo arveret ; \"Liv\" - alc'hwez al liv a vo arveret evel liv an drekleur pe \"skeudenn\" - ar skeudenn erspizet gant alc'hwez ar skeudenn a vo arveret evel drekleur."
+msgstr ""
+"Peseurt rizh drekleur a zlefe bezañ arveret evit ar penel-mañ. Ar gwerzhioù "
+"a c'hall bezañ \"hini ebet\" - drekleur dre ziouer ar widjed GTK+ a vo "
+"arveret ; \"Liv\" - alc'hwez al liv a vo arveret evel liv an drekleur pe "
+"\"skeudenn\" - ar skeudenn erspizet gant alc'hwez ar skeudenn a vo arveret "
+"evel drekleur."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
@@ -1711,7 +1979,10 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Erspizañ a ra demerez mentrezh liv an drekleur. Ma n'eo ket demer al liv penn da benn (ur werzh bihanoc'h eget 65535) e vo savet ul liesparzh gant skeudenn drekleur ar burev."
+msgstr ""
+"Erspizañ a ra demerez mentrezh liv an drekleur. Ma n'eo ket demer al liv "
+"penn da benn (ur werzh bihanoc'h eget 65535) e vo savet ul liesparzh gant "
+"skeudenn drekleur ar burev."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1722,7 +1993,10 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Erspizañ a ra ar restr da arverañ evit skeudenn an drekleur. Mar bez ur sanell alfa er skeudenn e vo savet ul liesparzh gant skeudenn drekleur ar burev."
+msgstr ""
+"Erspizañ a ra ar restr da arverañ evit skeudenn an drekleur. Mar bez ur "
+"sanell alfa er skeudenn e vo savet ul liesparzh gant skeudenn drekleur ar "
+"burev."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1732,7 +2006,9 @@ msgstr "Lakaat ar skeudenn da genglotañ gant ar penel lankañ"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Mar gwir e vo skeulaet ar skeudenn (o virout keñver neuz ar skeudenn) e-keñver sav ar penel (mar a-zremm)."
+msgstr ""
+"Mar gwir e vo skeulaet ar skeudenn (o virout keñver neuz ar skeudenn) "
+"e-keñver sav ar penel (mar a-zremm)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1742,7 +2018,9 @@ msgstr "Ledanaat ar skeudenn war ar penel lankañ"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Mar gwir e vo skeulaet ar skeudenn e-keñver mentoù ar penel. Ne vo ket miret keñver neuz ar skeudenn."
+msgstr ""
+"Mar gwir e vo skeulaet ar skeudenn e-keñver mentoù ar penel. Ne vo ket miret"
+" keñver neuz ar skeudenn."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1752,17 +2030,18 @@ msgstr "C'hwelañ ar skeudenn war ar peneloù a-serzh"
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "Mar gwir e vo c'hwelet skeudenn an drekleur pa vo reteraet ar penel a-serzh."
+msgstr ""
+"Mar gwir e vo c'hwelet skeudenn an drekleur pa vo reteraet ar penel a-serzh."
 
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr "Ar restr n'eo ket ur restr .desktop talvoudek"
+msgstr "N'eo ket ur restr mod .desktop talvoudek"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "Handelv '%s' ar restr .desktop zo dianavezet"
+msgstr "Handelv '%s' restr ar burev n'eo ket bet anavezet"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
@@ -1772,7 +2051,7 @@ msgstr "O loc'hañ %s"
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr "An arload ne zedegemer ket an teulioù dre arroudennoù arc'had"
+msgstr "An arload ne zegemer ket an teulioù dre arc'had"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
@@ -1782,20 +2061,22 @@ msgstr "Dibarzh loc'hañ dianavezet : %d"
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "N'haller lakaat URIoù an teul da dremen d'un enankad war ar burev evel 'Type=Link'"
+msgstr ""
+"N'hall ket lakaat URIioù un teul d'un enankad mod .desktop e rizh "
+"'Type=Link'"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr "N'eo ket un elfenn loc'hadus"
+msgstr "N'eo ket un dra da loc'hañ"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr "Diweredekaat kennask ouzh ardoer an estezioù"
+msgstr "Lazhañ kennask ouzh ardoer an estez"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "Erspizañ ar restr gant ar c'hefluniadur enrollet enni"
+msgstr "Erspizit ar restr gant ar c'hefluniadur enrollet enni"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
@@ -1807,7 +2088,7 @@ msgstr "Dibab ID ardoadur an estez"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
-msgstr "NAOUDI"
+msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
@@ -1815,7 +2096,7 @@ msgstr "Dibarzhioù ardeiñ an estez :"
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "Diskouez dibarzhioù ardeiñ an estez :"
+msgstr "Diskouez dibarzhioù ardeiñ an estez"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1823,8 +2104,8 @@ msgstr "Diskouez dibarzhioù ardeiñ an estez :"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr "Fazi"
 
@@ -1854,32 +2135,32 @@ msgstr "N'eus ket bet staliet un arload da zornata an teuliadoù klask."
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Lemel diwar ar banell"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
-msgstr "_Dilec'hiañ"
+msgstr "Di_lec'hiañ"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "_Stagañ d'ar banell"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "N'haller ket kavout ul lec'h goullo"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "Tiretenn"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_Ouzhpennañ d'an diretenn..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
@@ -1898,7 +2179,7 @@ msgid "- Edit .desktop files"
 msgstr "- Embann ar restroù  *.desktop"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Krouiñ al loc'her"
 
@@ -1907,19 +2188,21 @@ msgstr "Krouiñ al loc'her"
 msgid "Directory Properties"
 msgstr "Perzhioù ar c'havlec'hiad"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Perzhioù al loc'her"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
-msgstr "Penel lankañ"
+msgstr "Panel"
 
 #: ../mate-panel/mate-panel.desktop.in.in.h:2
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "Lañsañ arloadoù all ha pourchas mavegoù liesseurt da ardeiñ ar prenestroù, diskouez an eur, h.a."
+msgstr ""
+"Lañsañ arloadoù all ha pourchas mavegoù liesseurt da ardeiñ ar prenestroù, "
+"diskouez an eur, h.a."
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1936,25 +2219,27 @@ msgstr "Dibosupl eo implij an elfenn bet laosket"
 #: ../mate-panel/launcher.c:445
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr "URI ebet bet pourchaset evit ar restr mod .desktop eus loc'her ar penel lankañ\n"
+msgstr ""
+"URI ebet bet pourchaset evit ar restr mod .desktop eus loc'her ar penel "
+"lankañ\n"
 
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "N'eus ket tu da zigeriñ restr burev %s evit lañser ar panell%s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_Loc'hañ"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "N'eo ket arventennet an alc'hwez %s, n'hall ket kargañ al loc'her\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "Ne c'hell ket bezañ gwarezet al lañser"
 
@@ -1977,23 +2262,23 @@ msgstr "Erounit ar voestad emzivi loc'hañ"
 msgid "Set the default panel layout"
 msgstr "Despizañ kempennadur dre ziouer ar penel"
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "Ouzhpennañ al loc'her-mañ war ar banell"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "Ouzhpennañ al loc'her-mañ war ar burev"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "Lañser _a-bezh"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Ouzhpennañ evel un _diretenn war ar banell"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Ouzhpennañ an dra-mañ evel ul _lañser war ar penel lankañ"
 
@@ -2042,10 +2327,12 @@ msgstr "Klask restroù..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "Lec'hiaduriñ an teulioù hag an teuliadoù war an urzhiataer-mañ dre anv pe endalc'had"
+msgstr ""
+"Lec'hiaduriñ an teulioù hag an teuliadoù war an urzhiataer-mañ dre anv pe "
+"dre endalc'had"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Rediañ da guitaat"
 
@@ -2070,114 +2357,124 @@ msgstr "Lazhañ..."
 msgid "Shut down the computer"
 msgstr "Lazhañ an urzhiataer"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "Lañser arload personalaet"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "Krouiñ ul loc'her nevez"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "Lañser arload..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "Eilañ ul loc'her diwar lañser an arloadoù"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
-msgstr "Pennroll"
+msgstr "Pennlañser"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "Ar roll pennañ MATE"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Barenn lañserioù"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Ur varenn lañserioù personelaet"
 
-#: ../mate-panel/panel-addto.c:165
-msgid "Separator"
-msgstr "Dispartier"
-
 #: ../mate-panel/panel-addto.c:166
+msgid "Separator"
+msgstr "Disranner"
+
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "Un dispartier evit renkañ elfennoù ar penel lankañ"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "Un diretenn difoupus evit renkañ elfennoù all e-barzh"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(goullo)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Kavout un _elfenn da ouzhpennañ e  \"%s\":"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "Ouzhpennañ d'an diretenn"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "Kavout un elfenn da ouzhpennañ d'an diretenn :"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "Ouzhpennañ d'ar penel lankañ"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "Kavout un _elfenn da ouzhpennañ d'ar penel lankañ :"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "_Distreiñ"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" zo aet kuit gant un doare dic'hortoz"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Ergorenn ar penel lankañ zo aet kuit gant un doare dic'hortoz"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Mar adkargot un ergorenn eus ur penel lankañ e vo ouzhpennet d'ar penel en-dro ent emgefreek."
+msgstr ""
+"Mar adkargot un ergorenn eus ur penel lankañ e vo ouzhpennet d'ar penel en-"
+"dro ent emgefreek."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "_Chom hep adkargañ"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
 msgstr "_Adkargañ"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Ar penel lankañ en deus bet ur gudenn pa oa o kargañ \"%s\"."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "C'hoant hoc'h eus da zilemel an elfenn-mañ eus ho kefluniadur ?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_Dilemel"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2191,7 +2488,8 @@ msgstr "Penel lankañ MATE"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "Dre an arload-mañ e vez lañset arloadoù all ha pourchaset mavegoù liesseurt."
+msgstr ""
+"Dre an arload-mañ e vez lañset arloadoù all ha pourchaset mavegoù liesseurt."
 
 #: ../mate-panel/panel-context-menu.c:121
 msgid "About the MATE Panel"
@@ -2215,12 +2513,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2228,104 +2522,112 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_Lemel ar penel lankañ-mañ"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "Penel lankañ _nevez"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "Diwar-benn ar peneloù lankañ"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "Arload"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "Arload en dermenell"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "Lec'hiadur"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_Rizh :"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
-msgstr "_Anv :"
+msgstr "_Anv"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "_Furchal..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "Askele_nn :"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "_Stumm diaraog"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "Dibab un arload..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "Dibabit ur restr..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr "_Urzh :"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
-msgstr "_Lec'hiadur:"
+msgstr "_Lec'hiadur :"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "N'eo ket arventennet anv al loc'her."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr "N'eo ket gouest da enrollañ perzhioù ar c'havlec'hiad"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr "N'eo ket arventennet anv ar c'havlec'hiad."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "N'eo ket arventennet arc'had al loc'her."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "N'eo ket arventennet lec'hiadur al loc'her."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
-msgstr "Ne oa ket tu diskouez an diell-sikour"
+msgstr "N'haller ket skrammañ an teul skoazell"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Klikit war ur prenestr evit rediañ an arload da serriñ. Evit nullañ pouezhit war <ESC>."
+msgstr ""
+"Klikit war ur prenestr evit rediañ an arload da serriñ. Evit nullañ pouezhit"
+" war <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Bountañ war an arload-mañ a-benn ma kuitay ?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "Mar bez bountet war an arload-mañ a-benn ma kuitay e vo kollet an holl gemmoù en holl deulioù digor nad int ket bet enrollet."
+msgstr ""
+"Mar bez bountet war an arload-mañ a-benn ma kuitay e vo kollet an holl "
+"gemmoù en holl deulioù digor nad int ket bet enrollet."
 
 #: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
@@ -2343,7 +2645,7 @@ msgstr "Kemmañ stumm hag emzalc'h ar burev, kaout skoazell, pe zigennaskañ"
 msgid "Applications"
 msgstr "Arloadoù"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "_Kemmañ al lañserioù"
 
@@ -2352,7 +2654,7 @@ msgid "Bookmarks"
 msgstr "Sinedoù"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "Digeriñ '%s'"
@@ -2408,7 +2710,9 @@ msgstr "Urzhiataer"
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr "Merdeiñ dre an holl gantennoù ha teuliadoù lec'hel pe a-bell a vez tizhet diouzh an urzhiataer-mañ"
+msgstr ""
+"Merdeiñ dre an holl gantennoù ha teuliadoù lec'hel pe a-bell a vez tizhet "
+"diouzh an urzhiataer-mañ"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
@@ -2420,7 +2724,7 @@ msgstr "Merdeiñ dre lec'hiadurioù ar rouedad lec'hel ha lakaet ur sined warno"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
-msgstr "Berradennoù"
+msgstr "Lec'hioù"
 
 #: ../mate-panel/panel-menu-items.c:1524
 msgid "System"
@@ -2467,20 +2771,20 @@ msgstr "Traoñ"
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
-msgstr "Tu kleiz"
+msgstr "Kleiz"
 
 #: ../mate-panel/panel-properties-dialog.c:123
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
-msgstr "Tu dehoù"
+msgstr "Dehou"
 
 #: ../mate-panel/panel-properties-dialog.c:819
 msgid "Drawer Properties"
 msgstr "Perzhioù an diretenn"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "N'eo ket gouest da gargañ ar restr '%s' : %s."
@@ -2493,138 +2797,142 @@ msgstr "Ne oa ket tu da ziskouez kendiviz ar perzhioù"
 msgid "Panel Properties"
 msgstr "Perzhioù ar penel lankañ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "Prennet eo ul lod eus ar perzhioù-mañ."
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_Arlun :"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
-msgstr "piksel"
+msgstr "a bikselioù"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_Reteradur :"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "_Ment :"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "Ast_enn"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_Emguzhañ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "Diskouez an afelloù-kuzhat"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "Bir_où war an afelloù-kuzhat"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_Hini ebet (implij neuz ar reizhiad)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "_Liv unvan"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
 msgstr "Dibab ul liv"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>Treuzwelus</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "_Liv :"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "S_til :"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>Divoull</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "Skeudenn an _drekleur:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "Diuz an drekleur"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "Drekleur"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "Munudoù skeudenn an drekleur"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Titl"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "_Skeul"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "Ad_ventañ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "Treiñ ar skeudenn pa vez ar penel lankañ a-_blom"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Ne oa ket tu da zigeriñ an diell nevez-implijet \"%s\""
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
-msgstr "Un darvoud pe ur fazi dianav a zo c'hoarvezet en ur glask da zigeriñ \"%s\"."
+msgstr ""
+"Un darvoud pe ur fazi dianav a zo c'hoarvezet en ur glask da zigeriñ \"%s\"."
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Naetaat roll an dielloù nevez-implijet?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "Mar bez skarzhet roll an teulioù nevez a-walc'h e vo skazhet :\n• An holl elfennoù diwar ar verradenn → Teulioù nevez a-walc'h.\n• An holl elfennoù diwar roll an teulioù nevez a-walc'h en holl arloadoù."
+msgstr ""
+"Mar bez skarzhet roll an teulioù nevez a-walc'h e vo skazhet :\n"
+"• An holl elfennoù diwar ar verradenn → Teulioù nevez a-walc'h.\n"
+"• An holl elfennoù diwar roll an teulioù nevez a-walc'h en holl arloadoù."
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Naetaat an dielloù nevez-implijet"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Dielloù nevez-implijet"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr "Skarzhañ an teulioù nevez a-walc'h..."
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "Naetaat pep tra eus ar roll dielloù nevez-implijet"
 
@@ -2638,25 +2946,28 @@ msgstr "Ne oa ket tu da seveniñ an urzh '%s'"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ne oa ket tu amdreiñ '%s' eus UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Dibabit ur restr da ouzhpennñ en urzhiad..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "Dibabit un arload evit gwelout e zisplegadenn."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "A seveno an urzhiad: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Ar roll URI lakaet er vestad emziviz loc'h zo fall e ventrezh (%d) pe e hirder (%d)\n"
+msgstr ""
+"Ar roll URI lakaet er vestad emziviz loc'h zo fall e ventrezh (%d) pe e "
+"hirder (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "Ne oa ket tu da ziskouez ar c'hendiviz-seveniñ"
 
@@ -2664,49 +2975,53 @@ msgstr "Ne oa ket tu da ziskouez ar c'hendiviz-seveniñ"
 msgid "Run Application"
 msgstr "Loc'hañ d'an arload"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "Arlun an urzhiad"
-
-#: ../mate-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "Arlun an urzh en deus da vezañ lañset."
-
-#: ../mate-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "Seveniñ en _dermenell"
-
-#: ../mate-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "Dibabit al log-mañ evit lañsiñ an urzhiad e prenestr un dermenell."
-
-#: ../mate-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "Loc'hañ gant ur _restr..."
-
-#: ../mate-panel/panel-run-dialog.ui.h:7
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr "Klikañ war an afell-mañ da gerc'hat ur restr da ouzhpennañ d'an hedad arc'hañ."
-
-#: ../mate-panel/panel-run-dialog.ui.h:8
-msgid "List of known applications"
-msgstr "Roll an arloadoù anavezet"
-
-#: ../mate-panel/panel-run-dialog.ui.h:10
-msgid "Show list of known _applications"
-msgstr "Diskouez roll an _arloadoù anavezet"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Seveniñ"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-run-dialog.ui.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Klikañ war an afell-mañ a-benn erounit an arload diuzet pe an arc'had er maez enankañ."
+msgstr ""
+"Klikañ war an afell-mañ a-benn erounit an arload diuzet pe an arc'had er "
+"maez enankañ."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Command icon"
+msgstr "Arlun an urzhiad"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "The icon of the command to be run."
+msgstr "Arlun an urzh en deus da vezañ lañset."
+
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Run in _terminal"
+msgstr "Seveniñ en _dermenell"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "Dibabit al log-mañ evit lañsiñ an urzhiad e prenestr un dermenell."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Run with _file..."
+msgstr "Loc'hañ gant ur _restr..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Klikañ war an afell-mañ da gerc'hat ur restr da ouzhpennañ d'an hedad "
+"arc'hañ."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+msgid "List of known applications"
+msgstr "Roll an arloadoù anavezet"
+
+#: ../mate-panel/panel-run-dialog.ui.h:14
+msgid "Show list of known _applications"
+msgstr "Diskouez roll an _arloadoù anavezet"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2714,7 +3029,7 @@ msgstr "_Rediañ da guitaat"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "_Diverkañ"
+msgstr "_Goullonderiñ"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2727,7 +3042,9 @@ msgstr "Erspizañ un arload IID da gargañ"
 #: ../mate-panel/panel-test-applets.c:40
 msgid ""
 "Specify a gsettings path in which the applet preferences should be stored"
-msgstr "Erspizañ un treug mod gsettings ma vefe kadavet gwellvezioù an arloadig ennañ"
+msgstr ""
+"Erspizañ un treug mod gsettings ma vefe kadavet gwellvezioù an arloadig "
+"ennañ"
 
 #: ../mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
@@ -2736,7 +3053,9 @@ msgstr "Erspizañ ment orinel an arloadig (bihan bihan, krenn, bras, h.a.)"
 #: ../mate-panel/panel-test-applets.c:42
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "Erspizañ reteradur orinel an arloadig (krec'h, traoñ, war an tu kleiz pe zehou)"
+msgstr ""
+"Erspizañ reteradur orinel an arloadig (krec'h, traoñ, war an tu kleiz pe "
+"zehou)"
 
 #: ../mate-panel/panel-test-applets.c:66
 msgctxt "Size"
@@ -2756,7 +3075,7 @@ msgstr "Bihan"
 #: ../mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
-msgstr "Krenn"
+msgstr "Etre"
 
 #: ../mate-panel/panel-test-applets.c:70
 msgctxt "Size"
@@ -2783,40 +3102,44 @@ msgstr "Ne oa ket tu da gargañ an arloadig %s"
 msgid "Test applet utility"
 msgstr "Maveg da brouadiñ an arloadoù"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_Arloadig :"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr "_Treug ar gwellvezioù :"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Kuzhat ar penel lankañ"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
 #: ../mate-panel/panel-util.c:347
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "Arlun '%s' ebet kavet"
+msgstr "N'eo ket bet kavet an arlun '%s'"
 
 #: ../mate-panel/panel-util.c:465
 #, c-format
@@ -2850,27 +3173,31 @@ msgstr "Klask"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "Digeriñ an URL : %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "Lemel an diretenn-mañ?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "Pa lemer un diretenn, e koller an diretenn \nhag e neuziadoù."
+msgstr ""
+"Pa lemer un diretenn, e koller an diretenn \n"
+"hag e neuziadoù."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "Lemel ar penel lankañ-mañ?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "Pa ziverker ur penel lankañ e koller ar penel \nhag e arventennoù."
+msgstr ""
+"Pa ziverker ur penel lankañ e koller ar penel \n"
+"hag e arventennoù."

@@ -1,28 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Dušan Kazik <prescott66@gmail.com>, 2015-2018
-# Ján Ďanovský <dagsoftware@yahoo.com>, 2013-2017
-# Pavol Šimo <palo.simo@gmail.com>, 2015
-# peter, 2017
-# Tibor Kaputa <tibbbi2@gmail.com>, 2014
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2018-01-29 18:50+0000\n"
-"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
-"Language-Team: Slovak (http://www.transifex.com/mate/MATE/language/sk/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Martin Wimpress <code@flexion.org>, 2018\n"
+"Language-Team: Slovak (https://www.transifex.com/mate/teams/13566/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "Miesta"
 
@@ -37,14 +33,14 @@ msgstr "Kalendár"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -55,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -69,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -80,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %e. %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%2$s\n%1$s"
+msgstr ""
+"%2$s\n"
+"%1$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
@@ -106,19 +104,19 @@ msgstr "%2$s, %1$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A %d. %B (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "Kliknutím skryjete kalendár mesiacov"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Kliknutím si pozriete kalendár mesiacov"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
@@ -128,7 +126,7 @@ msgstr "Počítačové hodiny"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -138,232 +136,276 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M%p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "Nastaviť čas systému..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "Nastaviť čas systému"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "Nastavenie času systému zlyhalo"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
-msgstr "Nas_tavenia"
+msgstr "_Nastavenia"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Pomocník"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
-msgstr "_O programe"
+msgstr "O progr_ame"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "Kopírovať ča_s"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "Kopírovať _dátum"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "_Upraviť dátum a čas"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr "Výber umiestnenia"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr "Úprava miesta"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr "Názov mesta"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr "Časové pásmo mesta"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Hodiny"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "Aplet Hodiny zobrazuje aktuálny dátum a čas"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)\nMarcel Telka <marcel@telka.sk>\nPeter Tuhársky <tuharsky@misbb.sk>\nPavol Šimo <palo.simo@gmail.com>\nJán Ďanovský <dagsoftware@yahoo.com>\nTibor Kaputa <tibbbi2@gmail.com>"
+msgstr ""
+"Stanislav Višňovský\n"
+"Marcel Telka <marcel@telka.sk>\n"
+"Tibor Kaputa <tibbbi2@gmail.com>\n"
+"Dušan Kazik <prescott66@gmail.com>"
 
-#. Languages that have a single word that translates as either "state" or
-#. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr "<small><i>Zadajte názov mesta, kraja alebo štátu a potom zvoľte vhodnú položku zo zoznamu.</i></small>"
-
-#: ../applets/clock/clock.ui.h:3
-msgid "_Timezone:"
-msgstr "Časové _pásmo:"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "_Location Name:"
-msgstr "Názov _miesta:"
-
-#: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(voliteľná)</i>"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "L_ongitude:"
-msgstr "Zemepisná _dĺžka:"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "L_atitude:"
-msgstr "Zemepisná ší_rka:"
-
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:1
 msgid "Time & Date"
 msgstr "Čas a dátum"
 
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr "Ča_s:"
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "_Zrušiť"
 
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr "Aktuálny čas:"
-
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:3
 msgid "_Set System Time"
 msgstr "Nastaviť ča_s systému"
 
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr "Východne"
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "Ča_s:"
 
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr "Západne"
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr "Aktuálny čas:"
 
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr "Severne"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr "Južne"
-
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:6
 msgid "Clock Preferences"
 msgstr "Nastavenie hodín"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "N_astavenia času"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "Zat_voriť"
+
+#: ../applets/clock/clock.ui.h:10
 msgid "Clock Format"
 msgstr "Formát hodín"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:11
 msgid "_12 hour format"
 msgstr "_12-hodinový formát"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:12
 msgid "_24 hour format"
 msgstr "_24-hodinový formát"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr "Zobraziť v paneli"
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:14
 msgid "Show the _date"
 msgstr "Zobraziť _dátum"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:15
 msgid "Show seco_nds"
 msgstr "Zobraziť _sekundy"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:16
 msgid "Show wee_k numbers in calendar"
 msgstr "Zobraziť čísla _týždňov v kalendári"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:17
 msgid "Show _weather"
 msgstr "Zobraziť počasi_e"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:18
 msgid "Show _temperature"
 msgstr "Zobraziť _teplotu"
 
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
 msgid "General"
 msgstr "Všeobecné"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "_Pridať"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "_Upraviť"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr "_Odstrániť"
+
+#: ../applets/clock/clock.ui.h:24
 msgid "Display"
-msgstr "Zobrazenie"
+msgstr "Displej"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:25
 msgid "_Visibility unit:"
-msgstr "Jednotka vi_diteľnosti:"
+msgstr "Jednotka _viditeľnosti:"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:26
 msgid "_Pressure unit:"
 msgstr "Jednotka _tlaku:"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Wind speed unit:"
-msgstr "Jednotka _rýchlosti vetra:"
+msgstr "Jednotka rýchlosti _vetra:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Temperature unit:"
-msgstr "Jednotka t_eploty:"
+msgstr "Jednotka _teploty:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "Weather"
 msgstr "Počasie"
 
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "N_astavenia času"
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "Východ"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "Západ"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "Sever"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "Juh"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
+
+#. Languages that have a single word that translates as either "state" or
+#. "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:36
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Zadajte názov mesta, kraja alebo štátu a potom zvoľte vhodnú "
+"položku zo zoznamu.</i></small>"
+
+#: ../applets/clock/clock.ui.h:37
+msgid "_Timezone:"
+msgstr "Časové _pásmo:"
+
+#: ../applets/clock/clock.ui.h:38
+msgid "_Location Name:"
+msgstr "Názov _miesta:"
+
+#: ../applets/clock/clock.ui.h:39
+msgid "<i>(optional)</i>"
+msgstr "<i>(voliteľná)</i>"
+
+#: ../applets/clock/clock.ui.h:40
+msgid "L_ongitude:"
+msgstr "Zemepisná _dĺžka:"
+
+#: ../applets/clock/clock.ui.h:41
+msgid "L_atitude:"
+msgstr "Zemepisná ší_rka:"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -377,10 +419,11 @@ msgstr "<small>Nastaviť...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Nastaviť</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "Nastaviť miesto ako predvolené a použiť jeho časové pásmo pre tento počítač"
+msgstr ""
+"Nastaviť miesto ako predvolené a použiť jeho časové pásmo pre tento počítač"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -388,7 +431,7 @@ msgstr "Nastaviť miesto ako predvolené a použiť jeho časové pásmo pre ten
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -397,7 +440,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -405,42 +448,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
-msgstr "Neznáme"
+msgstr "Neznámy"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, je ako %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Vychádza: %s / Zapadá: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Nepodarilo sa zobraziť dokument pomocníka „%s“"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "Nepodarilo sa zobraziť dokument pomocníka"
 
@@ -458,7 +501,14 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "Tento kľúč určuje formát hodín pre aplet hodín. Možné hodnoty sú „12-hour“, „24-hour“, „internet“, „unix“ a „custom“. Ak použijete „internet“, hodiny budú zobrazovať internetový čas. Ten rozdeľuje deň na 1000 „.beats“. V tomto systéme neexistujú časové zóny, takže je rovnaký na celom svete. Ak použijete „unix“, hodiny budú zobrazovať počet sekúnd od 1.1.1970. Ak použijete „custom“, hodiny budú zobrazovať čas podľa formátu, ktorý ste zadali v kľúči custom_format."
+msgstr ""
+"Tento kľúč určuje formát hodín pre aplet hodín. Možné hodnoty sú „12-hour“, "
+"„24-hour“, „internet“, „unix“ a „custom“. Ak použijete „internet“, hodiny "
+"budú zobrazovať internetový čas. Ten rozdeľuje deň na 1000 „.beats“. V tomto"
+" systéme neexistujú časové zóny, takže je rovnaký na celom svete. Ak "
+"použijete „unix“, hodiny budú zobrazovať počet sekúnd od 1.1.1970. Ak "
+"použijete „custom“, hodiny budú zobrazovať čas podľa formátu, ktorý ste "
+"zadali v kľúči custom_format."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -470,7 +520,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "Tento kľúč určuje formát pre aplet hodín pri použití formátovacieho typu „custom“ (vlastný). Môžete použiť všetky konverzné prepínače známe funkcii strftime() a získať tak špecifický formát. Podrobnosti nájdete v manuáli funkcie."
+msgstr ""
+"Tento kľúč určuje formát pre aplet hodín pri použití formátovacieho typu "
+"„custom“ (vlastný). Môžete použiť všetky konverzné prepínače známe funkcii "
+"strftime() a získať tak špecifický formát. Podrobnosti nájdete v manuáli "
+"funkcie."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -494,7 +548,9 @@ msgstr "Zobraziť dátum ako tooltip"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Ak je táto možnosť vybraná, dátum sa zobrazí v tooltipe pri presune kurzora myši na hodiny."
+msgstr ""
+"Ak je táto možnosť vybraná, dátum sa zobrazí v tooltipe pri presune kurzora "
+"myši na hodiny."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -510,7 +566,9 @@ msgstr "Zobraziť teplotu v hodinách"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:14
 msgid "If true, show the temperature next to the weather icon."
-msgstr "Ak je táto možnosť vybraná, v kalendári sa zobrazí pri ikone počasia aj teplota."
+msgstr ""
+"Ak je táto možnosť vybraná, v kalendári sa zobrazí pri ikone počasia aj "
+"teplota."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:15
 msgid "Show week numbers in calendar"
@@ -526,7 +584,8 @@ msgstr "Rozšíriť zoznam miest"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:18
 msgid "If true, expand the list of locations in the calendar window."
-msgstr "Ak je táto možnosť vybraná, zoznam miest v okne kalendára bude roztiahnutý."
+msgstr ""
+"Ak je táto možnosť vybraná, zoznam miest v okne kalendára bude roztiahnutý."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:19
 msgid "List of locations"
@@ -564,98 +623,114 @@ msgstr "Vytváracie rozhranie pre aplet Hodiny"
 msgid "Get the current time and date"
 msgstr "Získať aktuálny čas a dátum"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Varovanie: Príkaz vyzerá byť zmysluplným.\nKeďže tento aplet je zbytočný, asi tento príkaz nechcete použiť.\nVýrazne odporúčame nepoužívať aplet %s na niečo,\nčo by ho urobilo „praktickým“ alebo použiteľným."
+msgstr ""
+"Varovanie: Príkaz vyzerá byť zmysluplným.\n"
+"Keďže tento aplet je zbytočný, asi tento príkaz nechcete použiť.\n"
+"Výrazne odporúčame nepoužívať aplet %s na niečo,\n"
+"čo by ho urobilo „praktickým“ alebo použiteľným."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Ryba %s"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s nie je vôbec užitočný. Iba zaberá miesto na disku a čas kompilácie a ak je aktívny, zaberá vzácne miesto na paneli a v pamäti. Ak nájdete niekoho, kto používa tento aplet, okamžite ho pošlite na psychiatrické vyšetrenie."
+msgstr ""
+"%s nie je vôbec užitočný. Iba zaberá miesto na disku a čas kompilácie a ak "
+"je aktívny, zaberá vzácne miesto na paneli a v pamäti. Ak nájdete niekoho, "
+"kto používa tento aplet, okamžite ho pošlite na psychiatrické vyšetrenie."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(s malou pomocou od Georgea)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Ryba"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Ryba menom %s, moderné orákulum"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "Nepodarilo sa nájsť príkaz pre spustenie"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Ryba %s hovorí:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "Nepodarilo sa prečítať výstup z príkazu\n\nPodrobnosti: %s"
+msgstr ""
+"Nepodarilo sa prečítať výstup z príkazu\n"
+"\n"
+"Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "Povedz ešte _niečo"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Nastavený príkaz nepracuje a bol nahradený týmto: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Nepodarilo sa vykonať príkaz: „%s“\n\nPodrobnosti: %s"
+msgstr ""
+"Nepodarilo sa vykonať príkaz: „%s“\n"
+"\n"
+"Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Nepodarilo sa čítať z „%s“\n\nPodrobnosti: %s"
+msgstr ""
+"Nepodarilo sa čítať z „%s“\n"
+"\n"
+"Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr "Voda potrebuje vymeniť"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr "Pozrite sa na dnešný dátum!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Ryba %s, rozprávač citátov"
@@ -664,47 +739,47 @@ msgstr "Ryba %s, rozprávač citátov"
 msgid "Fish Preferences"
 msgstr "Nastavenie ryby"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "_Meno ryby:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "_Príkaz vykonaný pri kliknutí:"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr "Animácia"
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_Súbor:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "Vybrať animáciu"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_Celkom snímok v animácii:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "_Prestávka medzi snímkami:"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "snímok"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
 msgstr "sekúnd"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "_Otočiť na zvislých paneloch"
 
@@ -726,7 +801,9 @@ msgstr "Obrázok s animáciou ryby"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Tento kľúč určuje názov súboru obrázka, ktorý sa používa pre animáciu ryby. Cesta je relatívna k priečinku obrázkov."
+msgstr ""
+"Tento kľúč určuje názov súboru obrázka, ktorý sa používa pre animáciu ryby. "
+"Cesta je relatívna k priečinku obrázkov."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -763,7 +840,8 @@ msgstr "Otočiť na zvislých paneloch"
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Ak je táto možnosť vybraná, animácia ryby bude na zvislých paneloch otočená."
+msgstr ""
+"Ak je táto možnosť vybraná, animácia ryby bude na zvislých paneloch otočená."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -777,12 +855,12 @@ msgstr "Odkiaľ sa tá hlúpa ryba mohla vziať"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Zobraziť plávajúcu rybu alebo iné animované stvorenie"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Oblasť oznámení"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "Oblasť oznámení panelu"
 
@@ -800,13 +878,15 @@ msgstr "Miesto, kde sa objavujú oznámenia"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
-msgstr "Zobraziť okná zo všetkých plôch"
+msgstr "Ukázať okná zo všetkých pracovných priestorov"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Ak je táto možnosť vybraná, zoznam okien zobrazí okná zo všetkých plôch, inak zobrazí iba okná z aktuálnej plochy."
+msgstr ""
+"Ak je táto možnosť vybraná, zoznam okien zobrazí okná zo všetkých plôch, "
+"inak zobrazí iba okná z aktuálnej plochy."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -816,7 +896,9 @@ msgstr "Kedy zoskupovať okná"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Určuje, či sa majú okná jedného programu zoskupiť v zozname úloh. Platné hodnoty sú „never“ (nikdy), „auto“ (automaticky) a „always“ (vždy)."
+msgstr ""
+"Určuje, či sa majú okná jedného programu zoskupiť v zozname úloh. Platné "
+"hodnoty sú „never“ (nikdy), „auto“ (automaticky) a „always“ (vždy)."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -826,7 +908,9 @@ msgstr "Pri zrušení minimalizácie presunúť okná na aktuálnu plochu"
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Ak je táto možnosť vybraná, pri obnovení okna sa okno presunie na aktuálnu plochu. Inak sa presunie na plochu okna."
+msgstr ""
+"Ak je táto možnosť vybraná, pri obnovení okna sa okno presunie na aktuálnu "
+"plochu. Inak sa presunie na plochu okna."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -837,7 +921,10 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "Ak je táto možnosť vybraná, pracovné plochy budú v prepínači plôch zobrazovať svoje názvy, inak budú zobrazovať obsah plochy. Funguje to iba so správcom okien Marco."
+msgstr ""
+"Ak je táto možnosť vybraná, pracovné plochy budú v prepínači plôch "
+"zobrazovať svoje názvy, inak budú zobrazovať obsah plochy. Funguje to iba so"
+" správcom okien Marco."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -847,7 +934,9 @@ msgstr "Zobraziť všetky pracovné plochy"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Ak je táto možnosť vybraná, prepínač pracovných plôch bude zobrazovať všetky pracovné plochy, inak iba aktuálnu."
+msgstr ""
+"Ak je táto možnosť vybraná, prepínač pracovných plôch bude zobrazovať všetky"
+" pracovné plochy, inak iba aktuálnu."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -858,7 +947,10 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "Pri zobrazení všetkých plôch určuje, koľko riadkov (pre vodorovné rozloženie) a stĺpcov (pre zvislé rozloženie) sa má zobraziť. Má to zmysel iba pri zapnutí kľúča display_all_workspaces."
+msgstr ""
+"Pri zobrazení všetkých plôch určuje, koľko riadkov (pre vodorovné "
+"rozloženie) a stĺpcov (pre zvislé rozloženie) sa má zobraziť. Má to zmysel "
+"iba pri zapnutí kľúča display_all_workspaces."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -868,7 +960,10 @@ msgstr "Po ukončení skrolovania začať od znova"
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
-msgstr "Ak je táto možnosť vybraná, prepínač plôch povolí opakovanie, to znamená, že umožní priamo prepnúť z poslednej plochy na prvú a opačne pomocou skrolovania."
+msgstr ""
+"Ak je táto možnosť vybraná, prepínač plôch povolí opakovanie, to znamená, že"
+" umožní priamo prepnúť z poslednej plochy na prvú a opačne pomocou "
+"skrolovania."
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
@@ -879,25 +974,25 @@ msgid "Factory for the window navigation related applets"
 msgstr "Vytváracie rozhranie pre navigačné aplety"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
-msgstr "Výber okna"
+msgstr "Výber okien"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
 msgstr "Prepnúť medzi otvorenými oknami a menu"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
-msgstr "Prepínanie plôch"
+msgstr "Prepínač plôch"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "Prepnúť medzi plochami"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "Zoznam okien"
 
@@ -913,88 +1008,92 @@ msgstr "Zobraziť plochu"
 msgid "Hide application windows and show the desktop"
 msgstr "Skryť okná programov a zobraziť plochu"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nepodarilo sa načítať %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "Ikona nebola nájdená"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "Kliknutím sem obnovíte skryté okná."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknutím sem skryjete všetky okná a zobrazíte plochu."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "Tlačidlo pre zobrazenie plochy"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Toto tlačidlo umožňuje skryť všetky okná a zobraziť plochu."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "Váš správca okien nepodporuje tlačidlo pre zobrazenie plochy, alebo žiadneho správcu okien nepoužívate."
+msgstr ""
+"Váš správca okien nepodporuje tlačidlo pre zobrazenie plochy, alebo žiadneho"
+" správcu okien nepoužívate."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "Monitor _systému"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "Zoznam okien zobrazuje zoznam všetkých okien pomocou tlačidiel a umožňuje medzi nimi prechádzať."
+msgstr ""
+"Zoznam okien zobrazuje zoznam všetkých okien pomocou tlačidiel a umožňuje "
+"medzi nimi prechádzať."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "Nastavenie zoznamu okien"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr "Obsah zoznamu okien"
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Zobraziť okná z _aktuálnej plochy"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Zobraziť okná zo všet_kých plôch"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr "Zoskupovanie okien"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "_Nikdy nezoskupovať okná"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "Zoskupiť okná pri nedostatku _miesta"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "Vždy _zoskupovať okná"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr "Obnovujú sa minimalizované okná"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "_Obnoviť na aktuálnu pracovnú plochu"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "Obnoviť na pôvo_dnú plochu"
 
@@ -1002,62 +1101,67 @@ msgstr "Obnoviť na pôvo_dnú plochu"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "Výber okna zobrazuje zoznam všetkých okien v menu a umožňuje medzi nimi prechádzať."
+msgstr ""
+"Výber okna zobrazuje zoznam všetkých okien v menu a umožňuje medzi nimi "
+"prechádzať."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "riadky"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "stĺpce"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Prepínač pracovných plôch zobrazuje miniatúrnu verziu vašej pracovnej plochy a umožňuje vám tak spravovať okná."
+msgstr ""
+"Prepínač pracovných plôch zobrazuje miniatúrnu verziu vašej pracovnej plochy"
+" a umožňuje vám tak spravovať okná."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "Nastavenia prepínača pracovných plôch"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "Zobraziť iba _aktuálnu pracovnú plochu"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "_Zobraziť všetky pracovné plochy v:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "Prepínač"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "_Počet pracovných plôch:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "_Názvy pracovných plôch:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Názvy pracovných plôch"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "Z_obraziť názvy pracovných plôch"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
-msgstr "Povoliť prechod od poslednej pracovnej plochy k prvej v prepínači plôch"
+msgstr ""
+"Povoliť prechod od poslednej pracovnej plochy k prvej v prepínači plôch"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr "Pracovné plochy"
 
@@ -1067,7 +1171,9 @@ msgstr "Predvolené rozloženie panela"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:2
 msgid "The default panels layout to use when panels are created or resetted."
-msgstr "Predvolené rozloženie panelov, ktoré sa použije pri vytvorení panelov, alebo pri ich obnovení."
+msgstr ""
+"Predvolené rozloženie panelov, ktoré sa použije pri vytvorení panelov, alebo"
+" pri ich obnovení."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:3
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1078,7 +1184,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Ak je táto možnosť vybraná, zoznam „Známe programy“ v dialógu „Spustiť program“ bude pri otvorení dialógu k dispozícii. O tom, či bude rozbalený, rozhoduje kľúč show_program_list."
+msgstr ""
+"Ak je táto možnosť vybraná, zoznam „Známe programy“ v dialógu „Spustiť "
+"program“ bude pri otvorení dialógu k dispozícii. O tom, či bude rozbalený, "
+"rozhoduje kľúč show_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1089,7 +1198,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Ak je táto možnosť vybraná, zoznam „Známe programy“ v dialógu „Spustiť program“ bude pri otvorení dialógu rozbalený. Tento kľúč má zmysel iba ak je enable_program_list true."
+msgstr ""
+"Ak je táto možnosť vybraná, zoznam „Známe programy“ v dialógu „Spustiť "
+"program“ bude pri otvorení dialógu rozbalený. Tento kľúč má zmysel iba ak je"
+" enable_program_list true."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1098,7 +1210,9 @@ msgstr "Povoliť automatické dopĺňanie v dialógovom okne „Spustiť program
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Ak je táto možnosť vybraná, automatické dopĺňanie v dialógovom okne „Spustiť program“ bude dostupné."
+msgstr ""
+"Ak je táto možnosť vybraná, automatické dopĺňanie v dialógovom okne „Spustiť"
+" program“ bude dostupné."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1109,7 +1223,10 @@ msgid ""
 "This is the list of commands used in \"Run Application\" dialog. The "
 "commands are sorted descendingly by recency (e.g., most recent command comes"
 " first)."
-msgstr "Toto je zoznam príkazov použitých v dialógovom okne \"Spustiť program\". Príkazy sú zoradené zostupne podľa nedávnosti (najprv je najposlednejší príkaz)."
+msgstr ""
+"Toto je zoznam príkazov použitých v dialógovom okne \"Spustiť program\". "
+"Príkazy sú zoradené zostupne podľa nedávnosti (najprv je najposlednejší "
+"príkaz)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
 msgid "Maximum history size for \"Run Application\" dialog"
@@ -1119,7 +1236,9 @@ msgstr "Maximálna história dialógu „Spustiť program“"
 msgid ""
 "Controls the maximum size of the history of the \"Run Application\" dialog. "
 "A value of 0 will disable the history."
-msgstr "Riadi maximálnu veľkosť histórie dialógu \"Spustiť program\". Hodnota 0 zakáže históriu."
+msgstr ""
+"Riadi maximálnu veľkosť histórie dialógu \"Spustiť program\". Hodnota 0 "
+"zakáže históriu."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:13
 msgid "Reverse the history of the \"Run Application\" dialog"
@@ -1129,7 +1248,9 @@ msgstr "Otočiť históriu dialógu „Spustiť program“"
 msgid ""
 "Displays the history in reverse. Provides a consistent view for terminal "
 "users as the up key will select the most recent entry."
-msgstr "Zobrazí históriu naopak. Poskytuje konzistentné zobrazenie pre používateľa terminálov, keďže tlačidlo nahor vyberie poslednú položku."
+msgstr ""
+"Zobrazí históriu naopak. Poskytuje konzistentné zobrazenie pre používateľa "
+"terminálov, keďže tlačidlo nahor vyberie poslednú položku."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
@@ -1139,7 +1260,9 @@ msgstr "Zoznam ID panelov"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Zoznam ID panelov. Každé ID určuje jeden panel najvyššej úrovne. Nastavenia každého z týchto panelov sú uložené v /apps/panel/toplevels/$(id)."
+msgstr ""
+"Zoznam ID panelov. Každé ID určuje jeden panel najvyššej úrovne. Nastavenia "
+"každého z týchto panelov sú uložené v /apps/panel/toplevels/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1150,7 +1273,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Zoznam ID objektov panelu. Každé ID určuje jeden objekt panelu (napr. spúšťač, tlačidlo akcie alebo menu). Nastavenia každého z týchto objektov sú uložené v /apps/panel/objects/$(id)."
+msgstr ""
+"Zoznam ID objektov panelu. Každé ID určuje jeden objekt panelu (napr. "
+"spúšťač, tlačidlo akcie alebo menu). Nastavenia každého z týchto objektov sú"
+" uložené v /apps/panel/objects/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1158,7 +1284,8 @@ msgstr "Povoliť tooltipy"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Ak je táto možnosť vybraná, pre objekty na paneli sa zobrazujú tooltipy."
+msgstr ""
+"Ak je táto možnosť vybraná, pre objekty na paneli sa zobrazujú tooltipy."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
@@ -1173,7 +1300,9 @@ msgstr "Automatické zatvorenie zásuvky"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Ak je táto možnosť vybraná, zásuvka sa zatvorí automaticky po kliknutí na spúšťač."
+msgstr ""
+"Ak je táto možnosť vybraná, zásuvka sa zatvorí automaticky po kliknutí na "
+"spúšťač."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1183,7 +1312,9 @@ msgstr "Potvrdiť odstránenie panelu"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Ak je táto možnosť vybraná, bude sa zobrazovať dialóg pre potvrdenie, či sa má odstrániť panel."
+msgstr ""
+"Ak je táto možnosť vybraná, bude sa zobrazovať dialóg pre potvrdenie, či sa "
+"má odstrániť panel."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1192,7 +1323,9 @@ msgstr "Zvýrazniť spúšťače pod kurzorom"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Ak je táto možnosť vybraná, spúšťač bude zvýraznený v prípade, že je nad ním kurzor myši."
+msgstr ""
+"Ak je táto možnosť vybraná, spúšťač bude zvýraznený v prípade, že je nad ním"
+" kurzor myši."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1203,7 +1336,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Ak je táto možnosť vybraná, panel neumožní žiadne zmeny vo svojom nastavení. Je možné, že budete musieť jednotlivé aplety zamknúť samostatne. Aby sa zmena tohto nastavenia prejavila, je nutné panel znovu spustiť."
+msgstr ""
+"Ak je táto možnosť vybraná, panel neumožní žiadne zmeny vo svojom nastavení."
+" Je možné, že budete musieť jednotlivé aplety zamknúť samostatne. Aby sa "
+"zmena tohto nastavenia prejavila, je nutné panel znovu spustiť."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1215,7 +1351,11 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Zoznam IID apletov, ktoré bude panel ignorovať. Týmto môžete zabrániť niektorým apletom, aby sa zobrazovali v menu alebo spúšťali. Napríklad ak chcete zakázať mini-commander, pridajte „OAFIID:MATE_MiniCommanderApplet“. Aby sa toto nastavenie prejavilo, je nutné panel znovu spustiť."
+msgstr ""
+"Zoznam IID apletov, ktoré bude panel ignorovať. Týmto môžete zabrániť "
+"niektorým apletom, aby sa zobrazovali v menu alebo spúšťali. Napríklad ak "
+"chcete zakázať mini-commander, pridajte „OAFIID:MATE_MiniCommanderApplet“. "
+"Aby sa toto nastavenie prejavilo, je nutné panel znovu spustiť."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1225,7 +1365,9 @@ msgstr "Zaḱázať vynútené ukončenie"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Ak je táto možnosť vybraná, panel neumožní vynútené ukončenie programu tým, že zabráni v prístupe k danému tlačidlu."
+msgstr ""
+"Ak je táto možnosť vybraná, panel neumožní vynútené ukončenie programu tým, "
+"že zabráni v prístupe k danému tlačidlu."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1283,7 +1425,9 @@ msgstr "Veľkosť ikony v paneli menu"
 msgid ""
 "Set the size of an icon used in menu bar. The panel must be restarted for "
 "this to take effect."
-msgstr "Nastaví veľkosť ikon použitých v paneli menu. Panel musí byť reštartovaný pre uplatnenie zmien."
+msgstr ""
+"Nastaví veľkosť ikon použitých v paneli menu. Panel musí byť reštartovaný "
+"pre uplatnenie zmien."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:13
 msgid "Menu items icon size"
@@ -1293,7 +1437,9 @@ msgstr "Veľkosť ikony položiek menu"
 msgid ""
 "Set the size of icons used in the menu. The panel must be restarted for this"
 " to take effect."
-msgstr "Nastaví veľkosť ikon použitých v menu. Panel musí byť reštartovaný pre uplatnenie zmien."
+msgstr ""
+"Nastaví veľkosť ikon použitých v menu. Panel musí byť reštartovaný pre "
+"uplatnenie zmien."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:15
 msgid "Threshold of menu items before submenu is created"
@@ -1303,7 +1449,9 @@ msgstr "Prah položiek menu pred vytvorením podmenu"
 msgid ""
 "Maximum number of menu items (i.e. bookmarks) that are displayed without "
 "being put in a submenu."
-msgstr "Maximálny počet položiek menu (napr. záložiek), ktoré sú zobrazené bez toho, aby boli vložené do podmenu."
+msgstr ""
+"Maximálny počet položiek menu (napr. záložiek), ktoré sú zobrazené bez toho,"
+" aby boli vložené do podmenu."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:1
 msgid "Panel object type"
@@ -1329,7 +1477,9 @@ msgstr "Pozícia objektu na paneli"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Pozícia objektu panela. Je to počet pixlov zľava (pri zvislom zobrazení zhora)."
+msgstr ""
+"Pozícia objektu panela. Je to počet pixlov zľava (pri zvislom zobrazení "
+"zhora)."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1339,7 +1489,9 @@ msgstr "Považovať pozíciu za relatívnu k dolnému/pravému okraju"
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Ak je táto možnosť vybraná, pozícia objektu sa považuje za relatívnu k pravému (alebo dolnému, ak je panel zvislý) okraju panelu."
+msgstr ""
+"Ak je táto možnosť vybraná, pozícia objektu sa považuje za relatívnu k "
+"pravému (alebo dolnému, ak je panel zvislý) okraju panelu."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1349,7 +1501,9 @@ msgstr "Uzamknúť objekt na paneli"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Ak je táto možnosť vybraná, používateľ nemôže presunúť aplet bez toho, aby ho najprv odomkol položkou menu „Odomknúť“."
+msgstr ""
+"Ak je táto možnosť vybraná, používateľ nemôže presunúť aplet bez toho, aby "
+"ho najprv odomkol položkou menu „Odomknúť“."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1361,7 +1515,10 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr "ID implementácie apletu - napr. „ClockAppletFactory::ClockApplet“. Tento kľúč má zmysel iba ak má kľúč object_type hodnotu „external-applet“ (alebo „matecomponent-applet“)."
+msgstr ""
+"ID implementácie apletu - napr. „ClockAppletFactory::ClockApplet“. Tento "
+"kľúč má zmysel iba ak má kľúč object_type hodnotu „external-applet“ (alebo "
+"„matecomponent-applet“)."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
@@ -1371,7 +1528,9 @@ msgstr "Panel pripojený k zásuvke"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Identifikátor panelu pripojeného k tejto zásuvke. Tento kľúč má zmysel iba ak má kľúč object_type hodnotu „drawer-object“."
+msgstr ""
+"Identifikátor panelu pripojeného k tejto zásuvke. Tento kľúč má zmysel iba "
+"ak má kľúč object_type hodnotu „drawer-object“."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1382,7 +1541,9 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "Text zobrazený ako tooltip pre túto zásuvku alebo menu. Tento kľúč má zmysel iba ak má kľúč object_type hodnotu „drawer-object“ alebo „menu_object“."
+msgstr ""
+"Text zobrazený ako tooltip pre túto zásuvku alebo menu. Tento kľúč má zmysel"
+" iba ak má kľúč object_type hodnotu „drawer-object“ alebo „menu_object“."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1393,7 +1554,11 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Ak je táto možnosť vybraná, použije sa custom_icon pre vlastnú ikonu tlačidla. Ak táto možnosť vybraná nie je, custom_icon key sa ignoruje. Tento kľúč má zmysel iba ak má kľúč object_type hodnotu „menu-object“ alebo „drawer-object“."
+msgstr ""
+"Ak je táto možnosť vybraná, použije sa custom_icon pre vlastnú ikonu "
+"tlačidla. Ak táto možnosť vybraná nie je, custom_icon key sa ignoruje. Tento"
+" kľúč má zmysel iba ak má kľúč object_type hodnotu „menu-object“ alebo "
+"„drawer-object“."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1404,7 +1569,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Umiestnenie súboru obrázku pre ikonu tlačidla objektu. Tento kľúč má zmysel iba ak má kľúč object_type hodnotu „drawer-object“ alebo „menu-object“ a kľúč use_custom_icon má hodnotu true."
+msgstr ""
+"Umiestnenie súboru obrázku pre ikonu tlačidla objektu. Tento kľúč má zmysel "
+"iba ak má kľúč object_type hodnotu „drawer-object“ alebo „menu-object“ a "
+"kľúč use_custom_icon má hodnotu true."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1415,7 +1583,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Ak je táto možnosť vybraná, kľúč menu_path určuje cestu, z ktorej sa vytvorí obsah menu. Ak je false, menu_path sa ignoruje. Tento kľúč má zmysel iba ak má kľúč object_type hodnotu „menu-object“."
+msgstr ""
+"Ak je táto možnosť vybraná, kľúč menu_path určuje cestu, z ktorej sa vytvorí"
+" obsah menu. Ak je false, menu_path sa ignoruje. Tento kľúč má zmysel iba ak"
+" má kľúč object_type hodnotu „menu-object“."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1426,7 +1597,9 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "Cesta, z ktorej sa má vytvoriť obsah menu. Tento kľúč má zmysel iba ak má kľúč use_menu_path hodnotu true a kľúč object_type má hodnotu „menu-object“."
+msgstr ""
+"Cesta, z ktorej sa má vytvoriť obsah menu. Tento kľúč má zmysel iba ak má "
+"kľúč use_menu_path hodnotu true a kľúč object_type má hodnotu „menu-object“."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1436,7 +1609,9 @@ msgstr "Nakresliť šípku v tlačidle menu"
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
-msgstr "Ak je táto možnosť vybraná, cez ikonu tlačidla sa vykreslí šípka. Ak je toto false, tlačidlo má iba ikonu."
+msgstr ""
+"Ak je táto možnosť vybraná, cez ikonu tlačidla sa vykreslí šípka. Ak je toto"
+" false, tlačidlo má iba ikonu."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:27
 msgid "Launcher location"
@@ -1446,7 +1621,9 @@ msgstr "Umiestnenie spúšťača"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Umiestnenie súboru .desktop popisujúceho spúšťač. Tento kľúč má zmysel iba ak má kľúč object_type hodnotu „launcher-object“."
+msgstr ""
+"Umiestnenie súboru .desktop popisujúceho spúšťač. Tento kľúč má zmysel iba "
+"ak má kľúč object_type hodnotu „launcher-object“."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1457,7 +1634,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Typ akcie pre toto tlačidlo. Možné hodnoty sú „lock“, „logout“, „run“, „search“ a „screenshot“. Tento kľúč má zmysel iba ak má kľúč object_type hodnoru „action-applet“."
+msgstr ""
+"Typ akcie pre toto tlačidlo. Možné hodnoty sú „lock“, „logout“, „run“, "
+"„search“ a „screenshot“. Tento kľúč má zmysel iba ak má kľúč object_type "
+"hodnoru „action-applet“."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1468,7 +1648,9 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Toto je zobraziteľný názov pre identifikáciu panelu. Jeho hlavným zmyslom je fungovať ako titulok okna panela, čo sa hodí pri prepínaní medzi panelmi."
+msgstr ""
+"Toto je zobraziteľný názov pre identifikáciu panelu. Jeho hlavným zmyslom je"
+" fungovať ako titulok okna panela, čo sa hodí pri prepínaní medzi panelmi."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1478,7 +1660,9 @@ msgstr "Displej X s panelom"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "V nastavení s viacerými obrazovkami je možné mať panel na každej z nich. Tento kľúč určuje aktuálnu obrazovku, na ktorej je panel zobrazený."
+msgstr ""
+"V nastavení s viacerými obrazovkami je možné mať panel na každej z nich. "
+"Tento kľúč určuje aktuálnu obrazovku, na ktorej je panel zobrazený."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1488,7 +1672,9 @@ msgstr "Xinerama monitor s panelom"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "V nastavení Xinerama je možné mať panel na každom monitore. Tento kľúč určuje aktuálny monitor, na ktorom je panel zobrazený."
+msgstr ""
+"V nastavení Xinerama je možné mať panel na každom monitore. Tento kľúč "
+"určuje aktuálny monitor, na ktorom je panel zobrazený."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1500,7 +1686,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Ak je táto možnosť vybraná, panel bude zaberať celú šírku obrazovky (výšku pre zvislé panely). V tomto režime je možné panel umiestniť iba na okraje obrazovky. Ak táto možnosť vybraná nie je, panel bude veľký akurát pre všetky aplety a objekty, ktoré na ňom sú."
+msgstr ""
+"Ak je táto možnosť vybraná, panel bude zaberať celú šírku obrazovky (výšku "
+"pre zvislé panely). V tomto režime je možné panel umiestniť iba na okraje "
+"obrazovky. Ak táto možnosť vybraná nie je, panel bude veľký akurát pre "
+"všetky aplety a objekty, ktoré na ňom sú."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1516,7 +1706,13 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Orientácia panelu. Možné hodnoty sú „top“ (hore), „bottom“ (dole), „left“ (vľavo), „right“ (vpravo). V roztiahnutom režime kľúč určuje, pri ktorom okraji obrazovky je panel. Inak je rozdiel medzi „nahor“ a „nadol“ menej významný - obe určujú, že sa jedná o horizontálny panel - ale stále ešte pomáhajú pri nastavení správania objektov panelu. Napríklad pri „nahor“ sa menu panelu rozbalí dolu a pri „nadol“ hore."
+msgstr ""
+"Orientácia panelu. Možné hodnoty sú „top“ (hore), „bottom“ (dole), „left“ "
+"(vľavo), „right“ (vpravo). V roztiahnutom režime kľúč určuje, pri ktorom "
+"okraji obrazovky je panel. Inak je rozdiel medzi „nahor“ a „nadol“ menej "
+"významný - obe určujú, že sa jedná o horizontálny panel - ale stále ešte "
+"pomáhajú pri nastavení správania objektov panelu. Napríklad pri „nahor“ sa "
+"menu panelu rozbalí dolu a pri „nadol“ hore."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1528,7 +1724,10 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Výška panelu (šírka pre zvislý). Panel určí za behu minimálnu veľkosť podľa veľkosti písma a ďalších informácií. Maximálna veľkosť je jedna štvrtina výšky (alebo šírky) obrazovky."
+msgstr ""
+"Výška panelu (šírka pre zvislý). Panel určí za behu minimálnu veľkosť podľa "
+"veľkosti písma a ďalších informácií. Maximálna veľkosť je jedna štvrtina "
+"výšky (alebo šírky) obrazovky."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1539,7 +1738,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Umiestnenie panelu podľa osi X. Tento kľúč má zmysel iba ak panel nie je roztiahnutý. Inak sa ignoruje a panel sa umiestni k okraju obrazovky podľa kľúča orientácie."
+msgstr ""
+"Umiestnenie panelu podľa osi X. Tento kľúč má zmysel iba ak panel nie je "
+"roztiahnutý. Inak sa ignoruje a panel sa umiestni k okraju obrazovky podľa "
+"kľúča orientácie."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1550,7 +1752,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Umiestnenie panelu podľa osi Y. Tento kľúč má zmysel iba ak panel nie je roztiahnutý. Inak sa ignoruje a panel sa umiestni k okraju obrazovky podľa kľúča orientácie."
+msgstr ""
+"Umiestnenie panelu podľa osi Y. Tento kľúč má zmysel iba ak panel nie je "
+"roztiahnutý. Inak sa ignoruje a panel sa umiestni k okraju obrazovky podľa "
+"kľúča orientácie."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1564,7 +1769,12 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Umiestnenie panelu podľa osi X, so začiatkom z pravej strany obrazovky. Ak je nastavené na -1, hodnota sa ignoruje a použije sa hodnota kľúča x. Ak je hodnota väčšia než 0, tak sa hodnota kľúča x ignoruje. Ak je panel roztiahnutý, tak sa ignoruje a panel sa umiestni k okraju obrazovky podľa kľúča orientácie."
+msgstr ""
+"Umiestnenie panelu podľa osi X, so začiatkom z pravej strany obrazovky. Ak "
+"je nastavené na -1, hodnota sa ignoruje a použije sa hodnota kľúča x. Ak je "
+"hodnota väčšia než 0, tak sa hodnota kľúča x ignoruje. Ak je panel "
+"roztiahnutý, tak sa ignoruje a panel sa umiestni k okraju obrazovky podľa "
+"kľúča orientácie."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1578,7 +1788,12 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Umiestnenie panelu podľa osi Y, so začiatkom na spodku obrazovky. Ak je nastavené na -1, hodnota sa ignoruje a použije sa hodnota kľúča y. Ak je hodnota väčšia než 0, tak sa hodnota kľúča y ignoruje. Ak je panel roztiahnutý, tak sa ignoruje a panel sa umiestni k okraju obrazovky podľa kľúča orientácie."
+msgstr ""
+"Umiestnenie panelu podľa osi Y, so začiatkom na spodku obrazovky. Ak je "
+"nastavené na -1, hodnota sa ignoruje a použije sa hodnota kľúča y. Ak je "
+"hodnota väčšia než 0, tak sa hodnota kľúča y ignoruje. Ak je panel "
+"roztiahnutý, tak sa ignoruje a panel sa umiestni k okraju obrazovky podľa "
+"kľúča orientácie."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1590,7 +1805,11 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "Ak je táto možnosť vybraná, kľúče x a x_right sa ignorujú a panel sa umiestni do stredu osi X obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - čiže bude rásť na oboch stranách. Ak táto možnosť vybraná nie je, kľúče x a x_right určujú umiestnenie panelu."
+msgstr ""
+"Ak je táto možnosť vybraná, kľúče x a x_right sa ignorujú a panel sa "
+"umiestni do stredu osi X obrazovky. Ak je veľkosť panelu zmenená, zostane na"
+" tejto pozícii - čiže bude rásť na oboch stranách. Ak táto možnosť vybraná "
+"nie je, kľúče x a x_right určujú umiestnenie panelu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1602,7 +1821,11 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "Ak je táto možnosť vybraná, kľúče y a y_bottom sa ignorujú a panel sa umiestni do stredu osi y obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - čiže bude rásť na oboch stranách. Ak táto možnosť vybraná nie je, kľúče y a y_bottom určujú umiestnenie panelu."
+msgstr ""
+"Ak je táto možnosť vybraná, kľúče y a y_bottom sa ignorujú a panel sa "
+"umiestni do stredu osi y obrazovky. Ak je veľkosť panelu zmenená, zostane na"
+" tejto pozícii - čiže bude rásť na oboch stranách. Ak táto možnosť vybraná "
+"nie je, kľúče y a y_bottom určujú umiestnenie panelu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1613,13 +1836,17 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Ak je táto možnosť vybraná, panel sa automaticky skryje do rohu v momente, keď kurzor myši opustí panel. Panel sa obnoví ak kurzor myši ukáže na roh."
+msgstr ""
+"Ak je táto možnosť vybraná, panel sa automaticky skryje do rohu v momente, "
+"keď kurzor myši opustí panel. Panel sa obnoví ak kurzor myši ukáže na roh."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Ak je táto možnosť vybraná, skrývanie a obnova tohto panelu bude animovaná a nie okamžitá."
+msgstr ""
+"Ak je táto možnosť vybraná, skrývanie a obnova tohto panelu bude animovaná a"
+" nie okamžitá."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1629,7 +1856,9 @@ msgstr "Povoliť skrývacie tlačidlá"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Ak je táto možnosť vybraná, na každej strane panelu budú tlačidlá pre presun panelu na okraj obrazovky. Zostane zobrazené iba malé tlačidlo."
+msgstr ""
+"Ak je táto možnosť vybraná, na každej strane panelu budú tlačidlá pre presun"
+" panelu na okraj obrazovky. Zostane zobrazené iba malé tlačidlo."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1639,7 +1868,9 @@ msgstr "Povoliť šípky na skrývacích tlačidlách"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "Ak je táto možnosť vybraná, na skrývacích tlačidlách budú šípky. Tento kľúč má zmysel iba ak má kľúč enable_buttons hodnotu true."
+msgstr ""
+"Ak je táto možnosť vybraná, na skrývacích tlačidlách budú šípky. Tento kľúč "
+"má zmysel iba ak má kľúč enable_buttons hodnotu true."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1650,7 +1881,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Určuje počet milisekúnd po opustení panelu kurzorom, po ktorých sa panel automaticky skryje. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu true."
+msgstr ""
+"Určuje počet milisekúnd po opustení panelu kurzorom, po ktorých sa panel "
+"automaticky skryje. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu "
+"true."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1661,7 +1895,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Určuje počet milisekúnd po ukázaní kurzorom, po ktorých sa panel automaticky obnoví. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu true."
+msgstr ""
+"Určuje počet milisekúnd po ukázaní kurzorom, po ktorých sa panel automaticky"
+" obnoví. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu true."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1672,7 +1908,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Určuje počet viditeľných bodov pri automatickom skrytí panelu do rohu. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu true."
+msgstr ""
+"Určuje počet viditeľných bodov pri automatickom skrytí panelu do rohu. Tento"
+" kľúč má zmysel iba ak má kľúč auto_hide hodnotu true."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1683,7 +1921,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "Rýchlosť, ktorou sa má animovať panel. Možné hodnoty sú „slow“ (pomaly), „medium“ (normálne) a „fast“ (rýchlo). Tento kľúč má zmysel iba ak má kľúč enable_animations hodnotu true."
+msgstr ""
+"Rýchlosť, ktorou sa má animovať panel. Možné hodnoty sú „slow“ (pomaly), "
+"„medium“ (normálne) a „fast“ (rýchlo). Tento kľúč má zmysel iba ak má kľúč "
+"enable_animations hodnotu true."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1695,7 +1936,11 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "Ktorý typ pozadia sa má pre tento panel použiť. Možné hodnoty sú „none“ - použije sa predvolený prvok GTK+ pre pozadie, „color“ - použije sa farba zadaná v kľúči color, alebo „image“ - použije sa obrázok zadaný v kľúči image."
+msgstr ""
+"Ktorý typ pozadia sa má pre tento panel použiť. Možné hodnoty sú „none“ - "
+"použije sa predvolený prvok GTK+ pre pozadie, „color“ - použije sa farba "
+"zadaná v kľúči color, alebo „image“ - použije sa obrázok zadaný v kľúči "
+"image."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
@@ -1714,7 +1959,9 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Určuje priesvitnosť farby pozadia. Ak nie je farba plná (hodnota je menej ako 65535), bude spojená s obrázkom pozadia plochy."
+msgstr ""
+"Určuje priesvitnosť farby pozadia. Ak nie je farba plná (hodnota je menej "
+"ako 65535), bude spojená s obrázkom pozadia plochy."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1725,7 +1972,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Určuje súbor použitý ako obrázok na pozadí. Ak obrázok obsahuje alfa kanál, bude zložený s obrázkom na pozadí plochy."
+msgstr ""
+"Určuje súbor použitý ako obrázok na pozadí. Ak obrázok obsahuje alfa kanál, "
+"bude zložený s obrázkom na pozadí plochy."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1735,7 +1984,9 @@ msgstr "Roztiahnuť obrázok na celý panel"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Ak je táto možnosť vybraná, obrázok bude roztiahnutý (so zachovaním pomeru strán) na výšku panelu (pre vodorovný panel)."
+msgstr ""
+"Ak je táto možnosť vybraná, obrázok bude roztiahnutý (so zachovaním pomeru "
+"strán) na výšku panelu (pre vodorovný panel)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1745,7 +1996,9 @@ msgstr "Roztiahnuť obrázok podľa panelu"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Ak je táto možnosť vybraná, obrázok bude roztiahnutý na rozmery panelu. Pomer strán nebude zachovaný."
+msgstr ""
+"Ak je táto možnosť vybraná, obrázok bude roztiahnutý na rozmery panelu. "
+"Pomer strán nebude zachovaný."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1755,7 +2008,9 @@ msgstr "Otočiť obrázky vo zvislých paneloch"
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "Ak je táto možnosť vybraná, obrázok na pozadí bude pre zvislé panely otočený."
+msgstr ""
+"Ak je táto možnosť vybraná, obrázok na pozadí bude pre zvislé panely "
+"otočený."
 
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1775,22 +2030,23 @@ msgstr "Spúšťa sa %s"
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr "Program neprijíma dokumenty v príkazovom riadku"
+msgstr "Program neprijíma dokumenty z príkazového riadka"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "Nerozpoznaná možnosť spustenia: %d"
+msgstr "Nerozpoznaný spúšťací argument: %d"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Položke pracovnej plochy typu Odkaz nie je možné odovzdať URI dokumentov"
+msgstr ""
+"Položke pracovnej plochy typu Odkaz nie je možné odovzdať URI dokumentov"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr "Nespustiteľná položka"
+msgstr "Nie je spustiteľnou položkou"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
@@ -1798,7 +2054,7 @@ msgstr "Zakázať spojenie k správcovi relácií"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "Určte súbor obsahujúci uloženú konfiguráciu"
+msgstr "Určte súbor obsahujúci uložené nastavenia"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
@@ -1806,7 +2062,7 @@ msgstr "SÚBOR"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr "Určte ID správcu relácií"
+msgstr "Zadať identifikátor správy relácií"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
@@ -1814,11 +2070,11 @@ msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
-msgstr "Možnosti správy relácie:"
+msgstr "Možnosti správy relácií:"
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "Zobraziť možnosti správy relácií"
+msgstr "Zobraziť možnosti správy relácie"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1826,8 +2082,8 @@ msgstr "Zobraziť možnosti správy relácií"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr "Chyba"
 
@@ -1851,42 +2107,43 @@ msgstr "Nepodarilo sa otvoriť umiestnenie „%s“"
 
 #: ../mate-panel/libpanel-util/panel-show.c:158
 msgid "No application to handle search folders is installed."
-msgstr "Nie je inštalovaný žiadny program na prezeranie výsledkov vyhľadávania"
+msgstr ""
+"Nie je inštalovaný žiadny program na prezeranie výsledkov vyhľadávania"
 
 #: ../mate-panel/applet.c:466
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "Odstrániť _z panelu"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
-msgstr "P_resunúť"
+msgstr "Pre_miestniť"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "_Uzamknúť na panel"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "Nepodarilo sa nájsť prázdne miesto"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "Zásuvka"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "Pridať do zás_uvky..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
-msgstr "Nas_tavenia"
+msgstr "_Vlastnosti"
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1901,7 +2158,7 @@ msgid "- Edit .desktop files"
 msgstr "- Upraviť súbory .desktop"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Vytvoriť spúšťač"
 
@@ -1910,11 +2167,11 @@ msgstr "Vytvoriť spúšťač"
 msgid "Directory Properties"
 msgstr "Vlastnosti priečinka"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Vlastnosti spúšťača"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr "Panel"
 
@@ -1922,7 +2179,9 @@ msgstr "Panel"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "Spúšťať iné programy a ponúknuť viacero nástrojov na správu okien, zobrazenie času, a pod."
+msgstr ""
+"Spúšťať iné programy a ponúknuť viacero nástrojov na správu okien, "
+"zobrazenie času, a pod."
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1946,18 +2205,18 @@ msgstr "Pre spúšťač panelu nie je v desktop súbore uvedené URI\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nie je možné otvoriť súbor .desktop %s pre spúšťač%s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_Spustiť"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Kľúč %s nie je nastavený, nie je možné načítať spúšťač\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "Nepodarilo sa uložiť spúšťač"
 
@@ -1980,23 +2239,23 @@ msgstr "Spustiť dialóg Spustiť"
 msgid "Set the default panel layout"
 msgstr "Nastaviť predvolené rozloženie panela"
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "Pridať tento spúšťač do _panelu"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "Pridať tento spúšťač na pracovnú p_lochu"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "_Celé menu"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Pridať toto ako _zásuvku do panelu"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Pridať ako _menu do panelu"
 
@@ -2045,10 +2304,11 @@ msgstr "Hľadať súbory..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "Vyhľadať dokumenty a priečinky na tomto počítači podľa názvu a obsahu"
+msgstr ""
+"Vyhľadať dokumenty a priečinky na tomto počítači podľa názvu alebo obsahu"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Vynútiť ukončenie"
 
@@ -2063,7 +2323,7 @@ msgstr "Pripojiť sa k serveru..."
 
 #: ../mate-panel/panel-action-button.c:400
 msgid "Connect to a remote computer or shared disk"
-msgstr "Pripojiť k vzdialenému serveru alebo zdieľanému disku"
+msgstr "Pripojiť sa ku vzdialenému počítaču alebo zdieľanému disku"
 
 #: ../mate-panel/panel-action-button.c:408
 msgid "Shut Down..."
@@ -2073,114 +2333,123 @@ msgstr "Vypnúť..."
 msgid "Shut down the computer"
 msgstr "Vypnúť počítač"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "Vlastný spúšťač programu"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "Vytvoriť nový spúšťač"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "Spúšťač programu..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopírovať spúšťač z menu programov"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
 msgstr "Hlavné menu"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "Hlavné menu MATE"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Panel menu"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Vlastný panel menu"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr "Oddeľovač"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "Oddeľovač pre lepšie usporiadanie položiek na paneli"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "Vyťahovacia zásuvka na uloženie ostatných položiek"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(prázdne)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "_Zvoľte položku, ktorú pridať do „%s“:"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "Pridať do zásuvky"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "_Zvoľte položku, ktorú pridať do zásuvky:"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "Pridať do panelu"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "_Zvoľte položku, ktorú pridať do panelu:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "_Dozadu"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "„%s“ skončil neočakávane"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Objekt panelu neočakávane skončil"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Ak opätovne načítate objekt panelu, automaticky bude pridaný späť do panelu."
+msgstr ""
+"Ak opätovne načítate objekt panelu, automaticky bude pridaný späť do panelu."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr "O_dstrániť"
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "_Nevykonať opätovné načítanie"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
-msgstr "_Opäť načítať"
+msgstr "_Znovu načítať"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Pri načítavaní „%s“ panel narazil na chybu."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete odstrániť tento aplet z vašej konfigurácie?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_Vymazať"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2194,7 +2463,9 @@ msgstr "MATE panel"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "Tento program je zodpovedný za spúšťanie iných programov a ponúka užitočné nástroje."
+msgstr ""
+"Tento program je zodpovedný za spúšťanie iných programov a ponúka užitočné "
+"nástroje."
 
 #: ../mate-panel/panel-context-menu.c:121
 msgid "About the MATE Panel"
@@ -2216,14 +2487,12 @@ msgstr "Resetnúť tento panel?"
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
-msgstr "Obnovením panelu budú\nstratené všetky nastavenia."
-
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr "_Zrušiť"
+msgstr ""
+"Obnovením panelu budú\n"
+"stratené všetky nastavenia."
 
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr "_Resetnúť panel"
 
@@ -2231,104 +2500,112 @@ msgstr "_Resetnúť panel"
 msgid "_Add to Panel…"
 msgstr "_Pridať do panelu…"
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "Od_strániť tento panel"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "_Nový panel"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "_O paneloch"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "Program"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "Program v termináli"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "Umiestnenie"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_Typ:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr "_Názov:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "_Prehliadať..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
-msgstr "P_oznámka:"
+msgstr "Ko_mentár:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "O_bnoviť"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "Vybrať program..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "Vybrať súbor..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr "Prík_az:"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
 msgstr "_Umiestnenie:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "Názov spúšťača nie je nastavený."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr "Nepodarilo sa uložiť vlastnosti priečinka"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr "Názov priečinka nie je nastavený."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "Príkaz spúšťača nie je nastavený."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "Umiestnenie spúšťača nie je nastavené."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
-msgstr "Nepodarilo sa zobraziť pomocníka"
+msgstr "Nepodarilo sa zobraziť dokument pomocníka"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Kliknutím na okno vynútite ukončenie programu. Akciu zrušíte stlačením <ESC>."
+msgstr ""
+"Kliknutím na okno vynútite ukončenie programu. Akciu zrušíte stlačením "
+"<ESC>."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Vynútiť ukončenie tohoto programu?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "Ak sa rozhodnete vynútiť ukončenie programu, všetky neuložené zmeny v ňom otvorených dokumentoch sa môžu stratiť."
+msgstr ""
+"Ak sa rozhodnete vynútiť ukončenie programu, všetky neuložené zmeny v ňom "
+"otvorených dokumentoch sa môžu stratiť."
 
 #: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
@@ -2340,13 +2617,14 @@ msgstr "Môžete pristupovať k dokumentom, priečinkom a miestam v sieti"
 
 #: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Môžete meniť vzhľad a správanie prostredia, získať pomoc, alebo sa odhlásiť"
+msgstr ""
+"Môžete meniť vzhľad a správanie prostredia, získať pomoc, alebo sa odhlásiť"
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
-msgstr "Programy"
+msgstr "Aplikácie"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "_Upraviť menu"
 
@@ -2355,7 +2633,7 @@ msgid "Bookmarks"
 msgstr "Záložky"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "Otvoriť „%s“"
@@ -2398,11 +2676,11 @@ msgstr "Otvoriť osobný priečinok"
 #: ../mate-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr "Plocha"
+msgstr "Pracovná plocha"
 
 #: ../mate-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
-msgstr "Otvoriť pracovnú plochu ako priečinok"
+msgstr "Otvoriť obsah pracovnej plochy v priečinku"
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
@@ -2411,7 +2689,9 @@ msgstr "Počítač"
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr "Prehliadať všetky lokálne aj vzdialené disky a priečinky, prístupné z tohto počítača"
+msgstr ""
+"Prehliadať všetky miestne a vzdialené disky a priečinky dostupné z tohto "
+"počítača"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
@@ -2483,7 +2763,7 @@ msgid "Drawer Properties"
 msgstr "Vlastnosti zásuvky"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Nepodarilo sa načítať súbor „%s“: %s."
@@ -2496,138 +2776,141 @@ msgstr "Nepodarilo sa zobraziť dialógové okno vlastností"
 msgid "Panel Properties"
 msgstr "Vlastnosti panelu"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "Niektoré z týchto vlastností nie je možné meniť"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_Ikona:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
-msgstr "pixle"
+msgstr "pixelov"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_Orientácia:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "V_eľkosť:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "_Roztiahnuť"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_Automatické skrývanie"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "Zobraziť tlačidlá pre _skrývanie"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "Šípky na _tlačidlách pre skrývanie"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "Žia_dne (použiť systémovú tému)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "Jednoliata fa_rba"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
 msgstr "Vybrať farbu"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>Priesvitný</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "_Farba:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "Š_týl:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>Nepriehľadný</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "_Obrázok pozadia:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "Vyberte pozadie"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "Pozadie"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "Podrobnosti o obrázku na pozadí"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Dlaždice"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "_Zväčšiť"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "_Roztiahnuť"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "Otočiť obrázok pre _zvislé panely"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Nepodarilo sa otvoriť nedávno použitý dokument „%s“"
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Počas pokusu o otvorenie „%s“ nastala neznáma chyba."
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Vyčistiť zoznam Nedávno otvorených dokumentov?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "Ak vyčistíte zoznam Nedávno otvorených dokumentov, vyčistíte nasledujúce:\n• Všetky položky z menu Miesta → Nedávno otvorené dokumenty.\n• Všetky položky zo zoznamu nedávno otvorených dokumentov všetkých programov."
+msgstr ""
+"Ak vyčistíte zoznam Nedávno otvorených dokumentov, vyčistíte nasledujúce:\n"
+"• Všetky položky z menu Miesta → Nedávno otvorené dokumenty.\n"
+"• Všetky položky zo zoznamu nedávno otvorených dokumentov všetkých programov."
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Vyčistiť Nedávno otvorené dokumenty"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Nedávno otvorené dokumenty"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr "Vyčistiť Nedávno otvorené dokumenty..."
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "Vyčistiť všetky položky zo zoznamu nedávno otvorených dokumentov"
 
@@ -2641,25 +2924,28 @@ msgstr "Nepodarilo sa spustiť príkaz „%s“"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nepodarilo sa previesť „%s“ z UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Vyberte súbor, ktorý sa má odovzdať príkazu..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
-msgstr "Vyberte program, ktorého popis chcete zobraziť."
+msgstr "Vyberte program na zobrazenie jej popisu."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustí príkaz: „%s“"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Zoznam URI pustený na dialógovom okne spustenia mal zlý formát (%d) alebo dĺžku (%d)\n"
+msgstr ""
+"Zoznam URI pustený na dialógovom okne spustenia mal zlý formát (%d) alebo "
+"dĺžku (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "Nepodarilo sa zobraziť dialógové okno spustenia"
 
@@ -2667,49 +2953,52 @@ msgstr "Nepodarilo sa zobraziť dialógové okno spustenia"
 msgid "Run Application"
 msgstr "Spustiť program"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "Ikona príkazu"
-
-#: ../mate-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "Ikona pre spúšťaný príkaz."
-
-#: ../mate-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "Spustiť v _termináli"
-
-#: ../mate-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "Označte toto pole ak sa má príkaz spustiť v okne terminálu."
-
-#: ../mate-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "Spustiť s_o súborom..."
-
-#: ../mate-panel/panel-run-dialog.ui.h:7
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr "Stlačením tohto tlačidla môžete zvoliť názov súboru, ktorý sa pridá za príkaz."
-
-#: ../mate-panel/panel-run-dialog.ui.h:8
-msgid "List of known applications"
-msgstr "Zoznam známych programov"
-
-#: ../mate-panel/panel-run-dialog.ui.h:10
-msgid "Show list of known _applications"
-msgstr "Zoznam známych progr_amov"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Spustiť"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-run-dialog.ui.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Stlačením tohto tlačidla spustíte zvolený program alebo zadaný príkaz."
+msgstr ""
+"Stlačením tohto tlačidla spustíte zvolený program alebo zadaný príkaz."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Command icon"
+msgstr "Ikona príkazu"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "The icon of the command to be run."
+msgstr "Ikona pre spúšťaný príkaz."
+
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Run in _terminal"
+msgstr "Spustiť v _termináli"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "Označte toto pole ak sa má príkaz spustiť v okne terminálu."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Run with _file..."
+msgstr "Spustiť s_o súborom..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Stlačením tohto tlačidla môžete zvoliť názov súboru, ktorý sa pridá za "
+"príkaz."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+msgid "List of known applications"
+msgstr "Zoznam známych programov"
+
+#: ../mate-panel/panel-run-dialog.ui.h:14
+msgid "Show list of known _applications"
+msgstr "Zoznam známych progr_amov"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2717,7 +3006,7 @@ msgstr "_Vynútiť koniec"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "Vyči_stiť"
+msgstr "_Vyčistiť"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2730,7 +3019,8 @@ msgstr "Zadajte IID appletu, ktorý chcete načítať"
 #: ../mate-panel/panel-test-applets.c:40
 msgid ""
 "Specify a gsettings path in which the applet preferences should be stored"
-msgstr "Zadajte umiestnenie gsettings, kde by mali byť uložené nastavenia apletu"
+msgstr ""
+"Zadajte umiestnenie gsettings, kde by mali byť uložené nastavenia apletu"
 
 #: ../mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
@@ -2754,7 +3044,7 @@ msgstr "X malá"
 #: ../mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
-msgstr "Malá"
+msgstr "Malé"
 
 #: ../mate-panel/panel-test-applets.c:69
 msgctxt "Size"
@@ -2764,7 +3054,7 @@ msgstr "Stredná"
 #: ../mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
-msgstr "Veľká"
+msgstr "Veľké"
 
 #: ../mate-panel/panel-test-applets.c:71
 msgctxt "Size"
@@ -2786,33 +3076,37 @@ msgstr "Zlyhalo načítanie apletu %s"
 msgid "Test applet utility"
 msgstr "Nástroj pre testovanie apletov"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_Aplet:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr "_Cesta k nastaveniam:"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Skryť panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr "Horný panel"
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr "Dolný panel"
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr "Ľavý panel"
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr "Pravý panel"
 
@@ -2853,27 +3147,31 @@ msgstr "Hľadať"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otvoriť URL: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "Odstrániť túto zásuvku?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "Keď je zásuvka odstránená, stratí sa spolu\ns nastaveniami."
+msgstr ""
+"Keď je zásuvka odstránená, stratí sa spolu\n"
+"s nastaveniami."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "Odstrániť tento panel?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "Keď je panel odstránený, stratí sa spolu\ns nastaveniami."
+msgstr ""
+"Keď je panel odstránený, stratí sa spolu\n"
+"s nastaveniami."

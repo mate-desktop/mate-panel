@@ -1,31 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Ma Xiaojun <damage3025@gmail.com>, 2012
-# liushuyu011 <liushuyu011@gmail.com>, 2016-2017
-# Mingcong Bai <jeffbai@aosc.xyz>, 2017
-# Mingye Wang <arthur200126@gmail.com>, 2016
-# Wylmer Wang, 2013
-# hiahoo lee (leaber) <zodiac8765@gmail.com>, 2013
-# Mingcong Bai <jeffbai@aosc.xyz>, 2016
-# Mingcong Bai <jeffbai@aosc.xyz>, 2015
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-26 18:41+0000\n"
-"Last-Translator: Mingcong Bai <jeffbai@aosc.xyz>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/mate/MATE/language/zh_CN/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Martin Wimpress <code@flexion.org>, 2018\n"
+"Language-Team: Chinese (China) (https://www.transifex.com/mate/teams/13566/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "位置"
 
@@ -40,14 +33,14 @@ msgstr "日历"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
@@ -58,7 +51,7 @@ msgstr "%p %l:%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -72,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -83,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%-m月%-d日%A"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
@@ -109,19 +104,19 @@ msgstr "%1$s %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%m月%d日 星期%a (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "单击隐藏月历"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "单击查看月历"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "计算机时钟"
 
@@ -131,7 +126,7 @@ msgstr "计算机时钟"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
@@ -141,232 +136,280 @@ msgstr "%H:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%Y年%-m月%-d日%A"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "设置系统时间..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "设置系统时间"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "设置系统时间失败"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
-msgstr "首选项(_P)"
+msgstr "属性(_P)"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
-msgstr "帮助(_H)"
+msgstr "帮助（_H）"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "关于(_A)"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "复制时间(_T)"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "复制日期(_D)"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "调整日期和时间(_J)"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr "选择位置"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr "编辑位置"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr "城市名称"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr "城市时区"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "时钟"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "时钟显示当前时间和日期"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Wang Jian <lark@linux.net.cn>\nJiang Xiong <jxiong@gwu.edu>\nZipeco <zipeco@btamail.net.cn>\nWang Li <charles@linux.net.cn>\nFunda Wang <fundawang@gmail.com>\n甘露 (Gan Lu) <rhythm.gan@gmail.com>\nAron Xu <happyaron.xu@gmail.com>"
+msgstr ""
+"Christopher Meng <i@cicku.me>, 2012-2013\n"
+"ravix <dr.neemous@gmail.com>, 2013\n"
+"Dianjin Wang <1132321739qq@gmail.com>, 2012\n"
+"Cravix <dr.neemous@gmail.com>, 2013\n"
+"nyanyh <rebuilty@gmail.com>, 2013\n"
+"liulitchi <xingzuo88@qq.com>, 2013\n"
+"玉堂白鹤 <yjwork@qq.com>, 2015\n"
+"Mingye Wang <arthur200126@gmail.com>, 2015-2016\n"
+"白铭骢 <jeffbai@aosc.xyz>, 2015-2016\n"
+"刘子兴 <liushuyu@aosc.xyz>, 2015-2016"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "Time & Date"
+msgstr "时间和日期"
+
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "取消(_C)"
+
+#: ../applets/clock/clock.ui.h:3
+msgid "_Set System Time"
+msgstr "设置系统时间(_S)"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "时间(_T)："
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr "当前时间："
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Clock Preferences"
+msgstr "时钟首选项"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "时间设置(_S)"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "关闭(_C)"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "Clock Format"
+msgstr "时钟格式"
+
+#: ../applets/clock/clock.ui.h:11
+msgid "_12 hour format"
+msgstr "_12 小时格式"
+
+#: ../applets/clock/clock.ui.h:12
+msgid "_24 hour format"
+msgstr "_24 小时格式"
+
+#: ../applets/clock/clock.ui.h:13
+msgid "Panel Display"
+msgstr "面板显示"
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Show the _date"
+msgstr "显示日期(_D)"
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show seco_nds"
+msgstr "显示秒(_N)"
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show wee_k numbers in calendar"
+msgstr "在日历中显示星期序号"
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show _weather"
+msgstr "显示天气(_W)"
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show _temperature"
+msgstr "显示温度(_T)"
+
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "General"
+msgstr "通用选项"
+
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "添加(_A)"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "编辑（_E）"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr "移除(_R)"
+
+#: ../applets/clock/clock.ui.h:24
+msgid "Display"
+msgstr "显示"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_Visibility unit:"
+msgstr "能见度单位(_V)："
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Pressure unit:"
+msgstr "气压单位(_P)："
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Wind speed unit:"
+msgstr "风速单位(_W)："
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Temperature unit:"
+msgstr "温度单位(_T)："
+
+#: ../applets/clock/clock.ui.h:29
+msgid "Weather"
+msgstr "天气"
+
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "东"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "西"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "北"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "南"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr "确定 (_O)"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
+#: ../applets/clock/clock.ui.h:36
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr "<small><i>输入某个城市，省或国家名，然后从弹出菜单中选择符合的项目</i></small>"
 
-#: ../applets/clock/clock.ui.h:3
+#: ../applets/clock/clock.ui.h:37
 msgid "_Timezone:"
 msgstr "时区(_T)："
 
-#: ../applets/clock/clock.ui.h:4
+#: ../applets/clock/clock.ui.h:38
 msgid "_Location Name:"
 msgstr "位置名称(_L)："
 
-#: ../applets/clock/clock.ui.h:5
+#: ../applets/clock/clock.ui.h:39
 msgid "<i>(optional)</i>"
 msgstr "<i>(可选)</i>"
 
-#: ../applets/clock/clock.ui.h:6
+#: ../applets/clock/clock.ui.h:40
 msgid "L_ongitude:"
 msgstr "经度(_O)："
 
-#: ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.ui.h:41
 msgid "L_atitude:"
 msgstr "纬度(_A)："
-
-#: ../applets/clock/clock.ui.h:8
-msgid "Time & Date"
-msgstr "时间和日期"
-
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr "时间(_T)："
-
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr "当前时间："
-
-#: ../applets/clock/clock.ui.h:11
-msgid "_Set System Time"
-msgstr "设置系统时间(_S)"
-
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr "东"
-
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr "西"
-
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr "北"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr "南"
-
-#: ../applets/clock/clock.ui.h:16
-msgid "Clock Preferences"
-msgstr "时钟首选项"
-
-#: ../applets/clock/clock.ui.h:17
-msgid "Clock Format"
-msgstr "时钟格式"
-
-#: ../applets/clock/clock.ui.h:18
-msgid "_12 hour format"
-msgstr "_12 小时格式"
-
-#: ../applets/clock/clock.ui.h:19
-msgid "_24 hour format"
-msgstr "_24 小时格式"
-
-#: ../applets/clock/clock.ui.h:20
-msgid "Panel Display"
-msgstr "面板显示"
-
-#: ../applets/clock/clock.ui.h:21
-msgid "Show the _date"
-msgstr "显示日期(_D)"
-
-#: ../applets/clock/clock.ui.h:22
-msgid "Show seco_nds"
-msgstr "显示秒(_N)"
-
-#: ../applets/clock/clock.ui.h:23
-msgid "Show wee_k numbers in calendar"
-msgstr "在日历中显示星期序号"
-
-#: ../applets/clock/clock.ui.h:24
-msgid "Show _weather"
-msgstr "显示天气(_W)"
-
-#: ../applets/clock/clock.ui.h:25
-msgid "Show _temperature"
-msgstr "显示温度(_T)"
-
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
-msgid "General"
-msgstr "常规"
-
-#: ../applets/clock/clock.ui.h:28
-msgid "Display"
-msgstr "显示"
-
-#: ../applets/clock/clock.ui.h:29
-msgid "_Visibility unit:"
-msgstr "能见度单位(_V)："
-
-#: ../applets/clock/clock.ui.h:30
-msgid "_Pressure unit:"
-msgstr "压力单位(_P)："
-
-#: ../applets/clock/clock.ui.h:31
-msgid "_Wind speed unit:"
-msgstr "风速单位(_W)："
-
-#: ../applets/clock/clock.ui.h:32
-msgid "_Temperature unit:"
-msgstr "温度单位(_T)："
-
-#: ../applets/clock/clock.ui.h:33
-msgid "Weather"
-msgstr "天气"
-
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "时间设置(_S)"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -380,7 +423,7 @@ msgstr "<small>设置...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>设置</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr "将位置设置为当前位置，并将其用作此计算机的时区"
@@ -391,7 +434,7 @@ msgstr "将位置设置为当前位置，并将其用作此计算机的时区"
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -400,7 +443,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -408,42 +451,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
 msgstr "未知"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr "气温 %s / 体感 %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "日出 %s / 日落 %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "无法显示帮助文档“%s”"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "显示帮助文档时出错"
 
@@ -461,7 +504,11 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "此键指定了时钟小程序所使用的小时格式。可供选择的值为“12-hour”、“24-hour”、“internet”、“unix”和“custom”。如果设定为“internet”，时钟将显示 Internet 时间。Internet 时间将一天分为 1000“拍”。此系统中没有时区之分，所以全世界的时间都是相同的。如果设定为“unix”，时钟将会以自新纪元(即 1970-01-01)开始已过的秒数。如果设定为“custom”，时钟将会根据 custom_format 键中指定的格式来显示时间。"
+msgstr ""
+"此键指定了时钟小程序所使用的小时格式。可供选择的值为“12-hour”、“24-hour”、“internet”、“unix”和“custom”。如果设定为“internet”，时钟将显示"
+" Internet 时间。Internet 时间将一天分为 "
+"1000“拍”。此系统中没有时区之分，所以全世界的时间都是相同的。如果设定为“unix”，时钟将会以自新纪元(即 "
+"1970-01-01)开始已过的秒数。如果设定为“custom”，时钟将会根据 custom_format 键中指定的格式来显示时间。"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -473,7 +520,9 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "当 format 键设为“custom”时，此键指定了时钟小程序要使用的格式。您可以使用 strftime() 的格式符来获取特定格式。详细说明可参见 strftime() 的手册。"
+msgstr ""
+"当 format 键设为“custom”时，此键指定了时钟小程序要使用的格式。您可以使用 strftime() 的格式符来获取特定格式。详细说明可参见 "
+"strftime() 的手册。"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -567,98 +616,113 @@ msgstr "j时钟小程序的工厂"
 msgid "Get the current time and date"
 msgstr "时钟显示当前时间和日期"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "警告：这个命令看起来有些真正的用途。\n由于这是个没有用处的小程序，您可能并不想这么做。\n我们强烈建议您不要利用 %s 来做什么“实际”\n或有用的事情。"
+msgstr ""
+"警告：这个命令看起来有些真正的用途。\n"
+"由于这是个没有用处的小程序，您可能并不想这么做。\n"
+"我们强烈建议您不要利用 %s 来做什么“实际”\n"
+"或有用的事情。"
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "图像"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "小鱼 %s"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s 其实什么用处都没有。它只会占硬盘空间、编译时间，运行时还得占去您宝贵的面板和内存空间。如果发现任何人在使用这个小程序，他可能应该马上送去检查一下精神状况喔。"
+msgstr ""
+"%s "
+"其实什么用处都没有。它只会占硬盘空间、编译时间，运行时还得占去您宝贵的面板和内存空间。如果发现任何人在使用这个小程序，他可能应该马上送去检查一下精神状况喔。"
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(还有 George 的小帮助)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "小鱼"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "小鱼 %s，当代祭司"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "无法找到要执行的命令"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "小鱼 %s 说："
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "无法读取命令的输出\n\n细节：%s"
+msgstr ""
+"无法读取命令的输出\n"
+"\n"
+"细节：%s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "再说一遍(_S)"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "配置的命令无法运行，已经被替换为：%s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "无法执行“%s”\n\n细节：%s"
+msgstr ""
+"无法执行“%s”\n"
+"\n"
+"细节：%s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "无法从“%s”读取\n\n细节：%s"
+msgstr ""
+"无法从“%s”读取\n"
+"\n"
+"细节：%s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr "需要给我换水了"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr "看看今天是几号了！"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "小鱼 %s，能够预知幸福"
@@ -667,47 +731,47 @@ msgstr "小鱼 %s，能够预知幸福"
 msgid "Fish Preferences"
 msgstr "小鱼首选项"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "小鱼的名字(_N)："
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "点击时执行的命令(_M)："
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr "动画"
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "文件(_F)："
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "选择动画"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "动画的总帧数(_T)："
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "每帧的暂停时间(_P)："
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "帧"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
 msgstr "秒"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "在垂直面板上作相应旋转(_R)"
 
@@ -780,12 +844,12 @@ msgstr "傻乎乎的小鱼的来源地"
 msgid "Display a swimming fish or another animated creature"
 msgstr "显示游动的小鱼旺达，或其他动画形象"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "通知区域"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "面板通知区域"
 
@@ -803,7 +867,7 @@ msgstr "显示通知图标的地方"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
-msgstr "显示所有工作区中的窗口"
+msgstr "显示所有工作区的窗口"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
@@ -882,7 +946,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "与窗口导航相关的小程序工厂"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
 msgstr "窗口选择器"
 
@@ -891,16 +955,16 @@ msgid "Switch between open windows using a menu"
 msgstr "通过菜单在打开的窗口间切换"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
-msgstr "工作区切换器"
+msgstr "工作区切换程序"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "在工作区之间切换"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "窗口列表"
 
@@ -916,42 +980,42 @@ msgstr "显示桌面"
 msgid "Hide application windows and show the desktop"
 msgstr "隐藏所有的窗口并显示桌面。"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "载入 %s 失败：%s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "未找到图标"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "单击此处恢复隐藏的窗口。"
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "单击此处隐藏所有的窗口并显示桌面。"
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "显示桌面按钮"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "这个按钮让您隐藏所有的窗口并显示桌面。"
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
 msgstr "您的窗口管理器不支持显示桌面按钮，或者您未运行桌面管理器。"
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "系统监视器;(_S)"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -961,43 +1025,43 @@ msgstr "窗口列表以按钮集的方式显示了所有窗口的列表，以便
 msgid "Window List Preferences"
 msgstr "窗口列表首选项"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr "窗口列表内容"
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "显示当前工作区中的窗口(_O)"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "显示所有工作区中的窗口(_L)"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr "窗口分组"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "从不对窗口分组(_N)"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "当空间有限时将窗口分组(_S)"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "总是对窗口分组(_A)"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr "在恢复最小化的窗口时"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "还原到当前工作区(_W)"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "还原到原工作区(_T)"
 
@@ -1007,18 +1071,18 @@ msgid ""
 "browse them."
 msgstr "窗口选择器以菜单方式显示了所有窗口的列表，以便于您浏览它们。"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
-msgstr "行数"
+msgstr "行"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
-msgstr "列数"
+msgstr "列"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1028,39 +1092,39 @@ msgstr "工作区切换器显示了您的工作区的缩影，以便于您管理
 msgid "Workspace Switcher Preferences"
 msgstr "工作区切换器首选项"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "只显示当前工作区(_O)"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "显示所有工作区于(_A)："
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "切换器"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "工作区的数量(_W)："
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "工作区名称(_M)："
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "工作区名称"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "在切换器中显示工作区名称(_N)"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr "在切换器中允许工作区折回;(_W)"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr "工作区"
 
@@ -1081,7 +1145,9 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "如果为 true，则“运行应用程序”对话框中的“已知的应用程序”列表就处于可用状态。当对话框打开时列表是否展开是由设置 show_program_list 来控制的。"
+msgstr ""
+"如果为 true，则“运行应用程序”对话框中的“已知的应用程序”列表就处于可用状态。当对话框打开时列表是否展开是由设置 "
+"show_program_list 来控制的。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1092,7 +1158,9 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "如果为 true，则在打开“运行应用程序”对话框时其中的“已知的应用程序”列表处于展开状态。这一设置只在 enable_program_list 为 true 时才生效。"
+msgstr ""
+"如果为 true，则在打开“运行应用程序”对话框时其中的“已知的应用程序”列表处于展开状态。这一设置只在 enable_program_list 为 "
+"true 时才生效。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1142,7 +1210,8 @@ msgstr "面板 ID 列表"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "面板 ID 的列表。每个 ID 都标明了一个独立的顶层面板。关于这些面板的设置保存在 /apps/panel/toplevels/$(id) 之中。"
+msgstr ""
+"面板 ID 的列表。每个 ID 都标明了一个独立的顶层面板。关于这些面板的设置保存在 /apps/panel/toplevels/$(id) 之中。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1153,7 +1222,9 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "面板对象 ID 列表。每个 ID 都标明了一个独立的面板对象(例如启动器、动作按钮或菜单按钮/菜单栏)。关于这些小程序的设置保存在 /apps/panel/objects/$(id) 之中。"
+msgstr ""
+"面板对象 ID 列表。每个 ID 都标明了一个独立的面板对象(例如启动器、动作按钮或菜单按钮/菜单栏)。关于这些小程序的设置保存在 "
+"/apps/panel/objects/$(id) 之中。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1218,7 +1289,9 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "列出了面板将忽略的小程序 IID。这样，您就可以禁止载入特定的小程序，或者不将这些小程序显示在菜单中。例如，要禁用 mini-commander 小程序，只需在此列表中添加“OAFIID:MATE_MiniCommanderApplet”。要让此设置生效，必须重新启动面板。"
+msgstr ""
+"列出了面板将忽略的小程序 IID。这样，您就可以禁止载入特定的小程序，或者不将这些小程序显示在菜单中。例如，要禁用 mini-commander "
+"小程序，只需在此列表中添加“OAFIID:MATE_MiniCommanderApplet”。要让此设置生效，必须重新启动面板。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1364,7 +1437,9 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr "小程序的实现 ID  - 例如 \"ClockAppletFactory::ClockApplet\"。此键只在 object_type key 为 \"external-applet\" (或废弃的 \"matecomponent-applet\") 时有效。"
+msgstr ""
+"小程序的实现 ID  - 例如 \"ClockAppletFactory::ClockApplet\"。此键只在 object_type key 为 "
+"\"external-applet\" (或废弃的 \"matecomponent-applet\") 时有效。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
@@ -1396,7 +1471,8 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "如果为 true，则定制图标设置就被用作按钮的定制图标。如果为 false，则忽略定制图标设置。该设置只在对象类型为“菜单对象”或“抽屉对象”时才有效。"
+msgstr ""
+"如果为 true，则定制图标设置就被用作按钮的定制图标。如果为 false，则忽略定制图标设置。该设置只在对象类型为“菜单对象”或“抽屉对象”时才有效。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1407,7 +1483,8 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "用作对象按钮图标的图像文件的位置。该设置只在对象类型为“抽屉对象”或“菜单对象”并且 use_custom_icon 为 true 时才有效。"
+msgstr ""
+"用作对象按钮图标的图像文件的位置。该设置只在对象类型为“抽屉对象”或“菜单对象”并且 use_custom_icon 为 true 时才有效。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1418,7 +1495,8 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "如果为 true，菜单路径设置就被用作需创建菜单内容的路径。如果为 false，则忽略菜单路径设置。该设置只在对象类型为“菜单对象”时才有效。"
+msgstr ""
+"如果为 true，菜单路径设置就被用作需创建菜单内容的路径。如果为 false，则忽略菜单路径设置。该设置只在对象类型为“菜单对象”时才有效。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1503,7 +1581,9 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "如果为 true，则面板将占据整个屏幕的宽度(如果是垂直面板则是高度)。此时面板只能置于屏幕边缘。如果为 false，则面板只具有能够容纳面板中所有小程序、启动器、按钮的最小空间。"
+msgstr ""
+"如果为 true，则面板将占据整个屏幕的宽度(如果是垂直面板则是高度)。此时面板只能置于屏幕边缘。如果为 "
+"false，则面板只具有能够容纳面板中所有小程序、启动器、按钮的最小空间。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1519,7 +1599,10 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "面板的方向。可供选择的值有：“顶”、“底”、“左”、“右”。在扩展模式下该值指定了面板所在的屏幕边缘。在非扩展模式下“顶”和“底”的区别就不重要了 - 都表示这是水平面板 - 但仍然给出有用的提示以便某些面板对象确定其行为。例如，在“顶”面板中菜单按钮将在面板下方弹出它的菜单，而“底”面板的菜单将在面板上方弹出菜单。"
+msgstr ""
+"面板的方向。可供选择的值有：“顶”、“底”、“左”、“右”。在扩展模式下该值指定了面板所在的屏幕边缘。在非扩展模式下“顶”和“底”的区别就不重要了 - "
+"都表示这是水平面板 - "
+"但仍然给出有用的提示以便某些面板对象确定其行为。例如，在“顶”面板中菜单按钮将在面板下方弹出它的菜单，而“底”面板的菜单将在面板上方弹出菜单。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1567,7 +1650,9 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "面板在 X 轴上的位置，从屏幕的右端开始。如果设置为-1，该值将被忽略而 x 键的值将被使用。该值只在非扩展模式下有意义。在扩展模式下忽略该值并将面板置于由面板方向指定的屏幕边缘。"
+msgstr ""
+"面板在 X 轴上的位置，从屏幕的右端开始。如果设置为-1，该值将被忽略而 x "
+"键的值将被使用。该值只在非扩展模式下有意义。在扩展模式下忽略该值并将面板置于由面板方向指定的屏幕边缘。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1581,7 +1666,9 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "面板在 Y 轴上的位置，从屏幕的底端开始。如果设置为-1，该值将被忽略而 y 键的值将被使用。该值只在非扩展模式下有意义。在扩展模式下忽略该值并将面板置于面板方向指定的屏幕边缘。"
+msgstr ""
+"面板在 Y 轴上的位置，从屏幕的底端开始。如果设置为-1，该值将被忽略而 y "
+"键的值将被使用。该值只在非扩展模式下有意义。在扩展模式下忽略该值并将面板置于面板方向指定的屏幕边缘。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1593,7 +1680,9 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "如果为 true，则忽略 x 和 x_right 设置并将面板置于屏幕 x 轴的中央。面板改变大小时将保持位置 - 即面板将同时向两个方向扩展。如果为 false，则由 x 与 x_right 设置决定面板的位置。"
+msgstr ""
+"如果为 true，则忽略 x 和 x_right 设置并将面板置于屏幕 x 轴的中央。面板改变大小时将保持位置 - 即面板将同时向两个方向扩展。如果为 "
+"false，则由 x 与 x_right 设置决定面板的位置。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1605,7 +1694,9 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "如果为 true，则忽略 y 和 y_bottom 设置并将面板置于屏幕 y 轴的中央。面板改变大小时将保持位置 - 即面板将同时向两个方向扩展。如果为 false，则由 y 与 y_bottom 设置决定面板的位置。"
+msgstr ""
+"如果为 true，则忽略 y 和 y_bottom 设置并将面板置于屏幕 y 轴的中央。面板改变大小时将保持位置 - 即面板将同时向两个方向扩展。如果为"
+" false，则由 y 与 y_bottom 设置决定面板的位置。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1698,11 +1789,13 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "此面板的背景类型。可供选择的值有：“none” - 使用默认的 GTK+ 构件背景，“color”将颜色首选项作为背景颜色，“图像”将图像首选项指定的图像作为背景。"
+msgstr ""
+"此面板的背景类型。可供选择的值有：“none” - 使用默认的 GTK+ "
+"构件背景，“color”将颜色首选项作为背景颜色，“图像”将图像首选项指定的图像作为背景。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
-msgstr "背景颜色"
+msgstr "背景色"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
 msgid "Specifies the background color for the panel in #RGB format."
@@ -1763,12 +1856,12 @@ msgstr "如果为 true，则在面板为垂直面板时旋转背景图像。"
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr "不是正确的 .desktop 文件"
+msgstr "不是一个有效的 .desktop 文件"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "desktop 文件版本 '%s' 不能被识别"
+msgstr "不能识别的桌面文件版本“%s”"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
@@ -1778,22 +1871,22 @@ msgstr "正在启动 %s"
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr "在命令行模式下，应用程序不接受文档"
+msgstr "程序在命令行中不接收文档"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "不能被识别的启动选项：%d"
+msgstr "不能识别的启动选项：%d"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "在 desktop 文件中，不能传递文档 URI 到 'Type=Link' 项"
+msgstr "无法将文档 URL 传递给“Type=Link”的桌面项"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr "不是一个可启动项"
+msgstr "非可启动项目"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
@@ -1801,7 +1894,7 @@ msgstr "禁止连接到会话管理器"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "指定包含已保存配置的文件"
+msgstr "指定包含有已保存配置的文件"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
@@ -1809,7 +1902,7 @@ msgstr "文件"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr "指定会话管理器 ID"
+msgstr "指定会话管理 ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
@@ -1817,11 +1910,11 @@ msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
-msgstr "会话管理器选项："
+msgstr "会话管理选项："
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "显示会话管理器选项"
+msgstr "显示会话管理选项"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1829,8 +1922,8 @@ msgstr "显示会话管理器选项"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr "错误"
 
@@ -1860,36 +1953,36 @@ msgstr "没有安装可处理搜索文件夹的应用程序。"
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "从面板上删除(_R)"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "移动(_M)"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "锁定到面板(_K)"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "无法找到空位"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "抽屉"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "添加到抽屉(_A)..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
-msgstr "属性(_P)"
+msgstr "属性 (_P)"
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1904,7 +1997,7 @@ msgid "- Edit .desktop files"
 msgstr "- 编辑 .desktop 文件"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "创建启动器"
 
@@ -1913,11 +2006,11 @@ msgstr "创建启动器"
 msgid "Directory Properties"
 msgstr "目录属性"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "启动器属性"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr "面板"
 
@@ -1949,18 +2042,18 @@ msgstr "没有给出面板启动器的 desktop 文件的 URI\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "无法打开面板启动器的 desktop 文件 %s%s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "启动(_L)"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "没有设置键 %s，无法载入启动器\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "无法保存启动器"
 
@@ -1983,23 +2076,23 @@ msgstr "执行运行对话框"
 msgid "Set the default panel layout"
 msgstr "设置默认面板布局"
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "将此启动器添加到面板(_P)"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "将此启动器添加到桌面(_D)"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "整个菜单(_E)"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "将它作为抽屉添加到面板(_D)"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "将它作为菜单添加到面板(_M)"
 
@@ -2017,7 +2110,7 @@ msgstr "无法连接到服务器"
 
 #: ../mate-panel/panel-action-button.c:345
 msgid "Lock Screen"
-msgstr "锁住屏幕"
+msgstr "锁定屏幕"
 
 #: ../mate-panel/panel-action-button.c:346
 msgid "Protect your computer from unauthorized use"
@@ -2044,14 +2137,14 @@ msgstr "输入命令或从列表中选择要运行的应用程序"
 
 #: ../mate-panel/panel-action-button.c:380
 msgid "Search for Files..."
-msgstr "搜索文件"
+msgstr "搜索文件..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "按名称或内容定位此计算机上的文档和文件夹"
+msgstr "按照名称或内容定位此计算机中的文档和文件夹"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "强制退出"
 
@@ -2076,114 +2169,122 @@ msgstr "关机"
 msgid "Shut down the computer"
 msgstr "关闭计算机"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "自定义应用程序启动器"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "创建新启动器"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "应用程序启动器..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "从启动应用程序菜单复制启动器"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
 msgstr "主菜单"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "MATE 主菜单"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "菜单栏"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "自定义菜单栏"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr "分隔符"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "组织面板项的分隔符"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "用于存储其它项目的弹出式抽屉"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(空)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "查找要添加到“%s”的项目(_I)："
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "添加到抽屉"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "查找要添加到抽屉的项目(_I)："
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "添加到面板"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "查找要添加到面板的项目(_I)："
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "后退(_B)"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "“%s”异常退出"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "面板对象异常退出"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "如果您重新载入面板对象，将会自动添加到面板中。"
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr "刪除(_E)"
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "不重新载入(_D)"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
 msgstr "重新载入(_R)"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "面板载入“%s”时遇到问题。"
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "您是否想要从配置中删除该小程序？"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "删除(_D)"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2221,12 +2322,8 @@ msgid ""
 "custom settings are lost."
 msgstr "重置面板后，所有自定义设置都会丢失。"
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr "取消(_C)"
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr "重置面板(_R)"
 
@@ -2234,100 +2331,104 @@ msgstr "重置面板(_R)"
 msgid "_Add to Panel…"
 msgstr "添加到面板(_A)…"
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "删除该面板(_D)"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "新建面板(_N)"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "关于面板(_B)"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "应用程序"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "终端应用程序"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "位置"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "类型(_T)："
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr "名称(_N)："
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "浏览(_B)..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "注释(_M)："
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "还原(_R)"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "选择应用程序..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "选择文件..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr "命令(_A)："
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
 msgstr "位置(_L)："
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "未设定启动器名称。"
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr "无法保存目录属性"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr "未设定目录名称。"
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "未设定启动器命令。"
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "启动器的位置未设定。"
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
-msgstr "无法显示帮助文档"
+msgstr "不能显示帮助文档"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "单击窗口可以强制退出应用程序。要取消请按 <ESC>。"
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "强制退出此应用程序吗？"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2349,7 +2450,7 @@ msgstr "更改桌面外观和行为、获得帮助或注销"
 msgid "Applications"
 msgstr "应用程序"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "编辑菜单(_E)"
 
@@ -2358,7 +2459,7 @@ msgid "Bookmarks"
 msgstr "书签"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "打开“%s”"
@@ -2393,7 +2494,7 @@ msgstr "网络位置"
 
 #: ../mate-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
-msgstr "打开您的个人文件夹"
+msgstr "打开个人文件夹"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
@@ -2401,7 +2502,7 @@ msgstr "打开您的个人文件夹"
 #: ../mate-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr "桌面文件夹"
+msgstr "桌面"
 
 #: ../mate-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
@@ -2414,7 +2515,7 @@ msgstr "计算机"
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr "浏览可从本计算机访问的所有本地和远程磁盘和文件夹"
+msgstr "浏览可从本机访问的所有本地和远程磁盘和文件夹"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
@@ -2473,20 +2574,20 @@ msgstr "底部"
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
-msgstr "左侧"
+msgstr "左"
 
 #: ../mate-panel/panel-properties-dialog.c:123
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
-msgstr "右侧"
+msgstr "右"
 
 #: ../mate-panel/panel-properties-dialog.c:819
 msgid "Drawer Properties"
 msgstr "抽屉属性"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "无法载入文件“%s”：%s。"
@@ -2499,138 +2600,142 @@ msgstr "无法显示属性对话框"
 msgid "Panel Properties"
 msgstr "面板属性"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "某些属性已经锁定"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "图标(_I)："
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
 msgstr "像素"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "方向(_O)："
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "大小(_S)："
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "扩展(_X)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "自动隐藏(_A)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "显示隐藏按钮(_B)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "在隐藏按钮上显示箭头(_W)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "无(使用系统主题)(_N)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "纯色(_O)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
 msgstr "选取颜色"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>透明</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "颜色(_L)："
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "样式(_T)："
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>不透明</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "背景图像(_I)："
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "选择背景"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "背景"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "背景图像细节"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "平铺(_T)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "缩放(_S)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "拉伸(_R)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "面板垂直放置时旋转图像(_V)"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "无法打开最近用过的文档“%s”"
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "尝试打开“%s”时发生了未知错误。"
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "清除最近的文档列表吗？"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "如果您清除最近的文档列表，您将清除下列内容：\n\n• 位置 -> 最近文档菜单项中的全部项目。\n• 全部应用程序的最近文档列表中的全部项目。"
+msgstr ""
+"如果您清除最近的文档列表，您将清除下列内容：\n"
+"\n"
+"• 位置 -> 最近文档菜单项中的全部项目。\n"
+"• 全部应用程序的最近文档列表中的全部项目。"
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "清除最近文档历史"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "最近文档"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr "清除最近文档历史..."
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "从最近的文档列表中清除全部项目"
 
@@ -2644,25 +2749,26 @@ msgstr "无法运行命令“%s”"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "无法从 UTF-8 转换“%s”"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "选择追加到命令的文件..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "选择应用程序可查看其描述。"
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "将运行命令：“%s”"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖放到运行对话框上的 URI 列表格式(%d)或长度(%d)不对\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "无法显示运行对话框"
 
@@ -2670,49 +2776,49 @@ msgstr "无法显示运行对话框"
 msgid "Run Application"
 msgstr "运行应用程序"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
+msgid "_Run"
+msgstr "运行(_R)"
+
+#: ../mate-panel/panel-run-dialog.ui.h:5
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr "单击此按钮可运行选中应用程序或在命令输入域中的命令。"
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
 msgid "Command icon"
 msgstr "命令图标"
 
-#: ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel-run-dialog.ui.h:7
 msgid "The icon of the command to be run."
 msgstr "要运行的程序的图标。"
 
-#: ../mate-panel/panel-run-dialog.ui.h:4
+#: ../mate-panel/panel-run-dialog.ui.h:8
 msgid "Run in _terminal"
 msgstr "在终端里运行(_T)"
 
-#: ../mate-panel/panel-run-dialog.ui.h:5
+#: ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
 msgstr "选中此框可在终端窗口运行命令。"
 
-#: ../mate-panel/panel-run-dialog.ui.h:6
+#: ../mate-panel/panel-run-dialog.ui.h:10
 msgid "Run with _file..."
 msgstr "带文件运行(_F)..."
 
-#: ../mate-panel/panel-run-dialog.ui.h:7
+#: ../mate-panel/panel-run-dialog.ui.h:11
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr "单击次按钮可以浏览文件，文件名将会追加到命令字符串之后。"
 
-#: ../mate-panel/panel-run-dialog.ui.h:8
+#: ../mate-panel/panel-run-dialog.ui.h:12
 msgid "List of known applications"
 msgstr "已知应用程序列表"
 
-#: ../mate-panel/panel-run-dialog.ui.h:10
+#: ../mate-panel/panel-run-dialog.ui.h:14
 msgid "Show list of known _applications"
 msgstr "显示已知应用程序的列表(_A)"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
-msgid "_Run"
-msgstr "运行(_R)"
-
-#: ../mate-panel/panel-run-dialog.ui.h:12
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr "单击此按钮可运行选中应用程序或在命令输入域中的命令。"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2720,7 +2826,7 @@ msgstr "强制退出(_F)"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "清除(_L)"
+msgstr "清除 (_L)"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2789,40 +2895,44 @@ msgstr "载入小程序 %s 失败"
 msgid "Test applet utility"
 msgstr "测试小程序工具"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "小程序(_A)："
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr "首选项路径(_P)："
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "隐藏面板"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr "顶部面板"
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr "底部面板"
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr "左面板"
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr "右面板"
 
 #: ../mate-panel/panel-util.c:347
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "未找到图标“%s”"
+msgstr "图标“%s”未找到"
 
 #: ../mate-panel/panel-util.c:465
 #, c-format
@@ -2845,7 +2955,7 @@ msgstr "文件系统"
 
 #: ../mate-panel/panel-util.c:1051
 msgid "Search"
-msgstr "搜索"
+msgstr "查找"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
@@ -2856,27 +2966,31 @@ msgstr "搜索"
 msgid "%1$s: %2$s"
 msgstr "%1$s：%2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "打开 URL：%s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "删除此抽屉吗？"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "删除抽屉时，抽屉及其设置\n都会丢失。"
+msgstr ""
+"删除抽屉时，抽屉及其设置\n"
+"都会丢失。"
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "删除此面板吗？"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "删除面板时，面板及其设置\n都会丢失。"
+msgstr ""
+"删除面板时，面板及其设置\n"
+"都会丢失。"

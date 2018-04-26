@@ -1,29 +1,30 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Kurdish (http://www.transifex.com/mate/MATE/language/ku/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Martin Wimpress <code@flexion.org>, 2018\n"
+"Language-Team: Kurdish (https://www.transifex.com/mate/teams/13566/ku/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ku\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr ""
 
 #: ../applets/clock/calendar-window.c:259
 msgid "Edit"
-msgstr ""
+msgstr "Biguherîne"
 
 #: ../applets/clock/calendar-window.c:486
 msgid "Calendar"
@@ -32,14 +33,14 @@ msgstr "Salname"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -50,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -64,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -75,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -101,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr ""
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr ""
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Bitikîne da tu salnameya mehane bibînî"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Demijmêra Komputerê"
 
@@ -123,7 +126,7 @@ msgstr "Demijmêra Komputerê"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -133,231 +136,269 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr ""
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_Vebijêrk"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Alîkarî"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "_Der barê"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "De_mê ji ber bigire"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "_Dîrokê ji ber bigire"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "_Dîrok & Demê Saz Bike"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr ""
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr ""
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Demjimêr"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "Demjimêr li gor dem û dîroka heyî dixebite"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Rizoyê Xerzî<rizaseckin@hotmail.com>"
+msgstr "Erdal Ronahî"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "Time & Date"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "_Betal"
+
+#: ../applets/clock/clock.ui.h:3
+msgid "_Set System Time"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "_Dem(Saet):"
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Clock Preferences"
+msgstr "Vebijêrkên Demjimêrê"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "_Bigire"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "Clock Format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:11
+msgid "_12 hour format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:12
+msgid "_24 hour format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:13
+msgid "Panel Display"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Show the _date"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show seco_nds"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show wee_k numbers in calendar"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show _weather"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show _temperature"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "General"
+msgstr "Giştî"
+
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "_Têxê"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "_Sererastkirin"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:24
+msgid "Display"
+msgstr "Dîmen"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_Visibility unit:"
+msgstr "Yekeya Xuyanîbûnê:"
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Pressure unit:"
+msgstr "_Yekeya Pestoyê:"
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Wind speed unit:"
+msgstr "_Yekeya Leza Bê:"
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Temperature unit:"
+msgstr "_Yekeya Germê"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "Weather"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "Rojhilat"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "Rojava"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "Bakur"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "Başûr"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
+#: ../applets/clock/clock.ui.h:36
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:3
+#: ../applets/clock/clock.ui.h:37
 msgid "_Timezone:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:4
+#: ../applets/clock/clock.ui.h:38
 msgid "_Location Name:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:5
+#: ../applets/clock/clock.ui.h:39
 msgid "<i>(optional)</i>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:6
+#: ../applets/clock/clock.ui.h:40
 msgid "L_ongitude:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.ui.h:41
 msgid "L_atitude:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:8
-msgid "Time & Date"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:11
-msgid "_Set System Time"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:16
-msgid "Clock Preferences"
-msgstr "Vebijêrkên Demjimêrê"
-
-#: ../applets/clock/clock.ui.h:17
-msgid "Clock Format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:18
-msgid "_12 hour format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:19
-msgid "_24 hour format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:20
-msgid "Panel Display"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:21
-msgid "Show the _date"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:22
-msgid "Show seco_nds"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:23
-msgid "Show wee_k numbers in calendar"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:24
-msgid "Show _weather"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:25
-msgid "Show _temperature"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
-msgid "General"
-msgstr "Giştî"
-
-#: ../applets/clock/clock.ui.h:28
-msgid "Display"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:29
-msgid "_Visibility unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:30
-msgid "_Pressure unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:31
-msgid "_Wind speed unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:32
-msgid "_Temperature unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:33
-msgid "Weather"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
 msgstr ""
 
 #: ../applets/clock/clock-location-tile.c:183
@@ -372,7 +413,7 @@ msgstr ""
 msgid "<small>Set</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -383,7 +424,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr ""
 
@@ -392,7 +433,7 @@ msgstr ""
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr ""
 
@@ -400,42 +441,42 @@ msgstr ""
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr ""
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
-msgstr ""
+msgstr "Nenas"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr ""
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr ""
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr ""
 
@@ -453,7 +494,16 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "Ev mifte awayê saeta ku dê ji aliyê sepanoka saetê vê were bikaranîn nîşan dike. Nirxên derbasdar, \"12-hour\", \"24-hour\", \"înternet\", \"unix\" û \"custom\" in. Heke înternet hatibe mîhengkirin, saet saeta înternetê dide xuyakirin. Saeta înternetê rojan dabeşî 1000 \".beats\"an dike. Di vê pergalê de perçeyê demê tuneye, ji ber vê jî saet li her derê dinyayê weke hev e. Heke \"unix\" hatibe mîhengkirin, saet ji Epochê, yanî ji dîroka ku 1970-01-01 û heta îro weke çirkan dide xuyakirin. Heke \"custom\" hatibe mîhengkirin, saet, demê weke  mifteya hatiye diyarkirin ya \"custom_format\"ê de dide xuyanî."
+msgstr ""
+"Ev mifte awayê saeta ku dê ji aliyê sepanoka saetê vê were bikaranîn nîşan "
+"dike. Nirxên derbasdar, \"12-hour\", \"24-hour\", \"înternet\", \"unix\" û "
+"\"custom\" in. Heke înternet hatibe mîhengkirin, saet saeta înternetê dide "
+"xuyakirin. Saeta înternetê rojan dabeşî 1000 \".beats\"an dike. Di vê "
+"pergalê de perçeyê demê tuneye, ji ber vê jî saet li her derê dinyayê weke "
+"hev e. Heke \"unix\" hatibe mîhengkirin, saet ji Epochê, yanî ji dîroka ku "
+"1970-01-01 û heta îro weke çirkan dide xuyakirin. Heke \"custom\" hatibe "
+"mîhengkirin, saet, demê weke  mifteya hatiye diyarkirin ya "
+"\"custom_format\"ê de dide xuyanî."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -489,7 +539,9 @@ msgstr "Dîrokê di teşeya amûran de nîşan bide"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Heke rast bi, dîrokê di teşeya amûran de nîşan bide dema ku nîşander li ser demjimêrê be."
+msgstr ""
+"Heke rast bi, dîrokê di teşeya amûran de nîşan bide dema ku nîşander li ser "
+"demjimêrê be."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -533,7 +585,7 @@ msgstr ""
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:21
 msgid "Temperature unit"
-msgstr ""
+msgstr "Yekeya germê"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:22
 msgid "The unit to use when showing temperatures."
@@ -541,7 +593,7 @@ msgstr ""
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:23
 msgid "Speed unit"
-msgstr ""
+msgstr "Yekeya lezê"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:24
 msgid "The unit to use when showing wind speed."
@@ -559,57 +611,63 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Hişyarî: Ev ferman weke bikêrhatî dixuye.\nJi ber ku ev sepanok nêbikêr e, belkî tu nexwaze vê bike.\nEm pêşniyar dikin tu fermana %s bikar bîne, da ku tu vê sepanokê wernegerîne awayê \"pratîk\" an jî bikêrhatî."
+msgstr ""
+"Hişyarî: Ev ferman weke bikêrhatî dixuye.\n"
+"Ji ber ku ev sepanok nêbikêr e, belkî tu nexwaze vê bike.\n"
+"Em pêşniyar dikin tu fermana %s bikar bîne, da ku tu vê sepanokê wernegerîne awayê \"pratîk\" an jî bikêrhatî."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "Wêne"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Masiyê %s"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "Ji bo %s tu tişt nehate dîtin. Tenê ji bo qada dîskê û berhevkirinê dem stend, û heke were barkirin wê ji bîrê û ji qada panelê tiştan bistîne (bidize)."
+msgstr ""
+"Ji bo %s tu tişt nehate dîtin. Tenê ji bo qada dîskê û berhevkirinê dem "
+"stend, û heke were barkirin wê ji bîrê û ji qada panelê tiştan bistîne "
+"(bidize)."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(Bi alîkariyek biçûk ji George)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Masî"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Masiyê %s, kahînê hemdem"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "Xwe nagihîne fermana ku wê were xebitandin"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Masiyê %s dibêje:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -617,40 +675,46 @@ msgid ""
 "Details: %s"
 msgstr "Hûrbînî: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "_Dîsa biaxive"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Fermana komkirinê naxebite û hatiye guhertin bi: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Meşandina '%s' serneket\n\nHuragahî: %s"
+msgstr ""
+"Meşandina '%s' serneket\n"
+"\n"
+"Huragahî: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Xwendina ji '%s' serneket\n\nHuragahî: %s"
+msgstr ""
+"Xwendina ji '%s' serneket\n"
+"\n"
+"Huragahî: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr ""
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr ""
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Masiyê %s, falavêj"
@@ -659,47 +723,47 @@ msgstr "Masiyê %s, falavêj"
 msgid "Fish Preferences"
 msgstr "Vebijêrkên Masî"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "_Navê masiyê:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "_Fermana ku dê bi tikandinê bicî bê:"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr ""
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_Dosya:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "Anîmasyonekê hilbijêre"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "-çarçoveya giştî ya candariyan:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "-rawestan bo her çarçoveyê:"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "çarçove"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
-msgstr "çirk"
+msgstr "çirke"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "_Zivirandin di panelên stûnî de"
 
@@ -721,7 +785,8 @@ msgstr "Nexşeya Pix a çarçoveya masî"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Bişkoja taybetmendiya navê dosya nexşeya Pix çarçoveya bikartîne ....."
+msgstr ""
+"Bişkoja taybetmendiya navê dosya nexşeya Pix çarçoveya bikartîne ....."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -741,7 +806,9 @@ msgstr "Çaçoveyên di candariya masî de"
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
-msgstr "Ev bişkoj taybetmendiyê dide çarçoveya ku dê were xebitandin di candariya masî de."
+msgstr ""
+"Ev bişkoj taybetmendiyê dide çarçoveya ku dê were xebitandin di candariya "
+"masî de."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
 msgid "Pause per frame"
@@ -749,7 +816,8 @@ msgstr "Rawestana her çarçoveyê"
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
 msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "Ev bişkoj taybetmendiya hejmara çirkan di her çarçoveyekê de dixebitîne."
+msgstr ""
+"Ev bişkoj taybetmendiya hejmara çirkan di her çarçoveyekê de dixebitîne."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
 msgid "Rotate on vertical panels"
@@ -772,12 +840,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Qada danezanan"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "Qada danezanê di panelê de"
 
@@ -801,7 +869,9 @@ msgstr "Nîşandana hemû paceyên qada xebatê"
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Heke rast be, lîsteya paceyan dê paceyan ji hemû qadên xebatê bide nîşandan. heke ne wiha be dê bi tenê paceyan ji qada xebatê ya heyî nîşan bide."
+msgstr ""
+"Heke rast be, lîsteya paceyan dê paceyan ji hemû qadên xebatê bide nîşandan."
+" heke ne wiha be dê bi tenê paceyan ji qada xebatê ya heyî nîşan bide."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -811,17 +881,23 @@ msgstr "Kengî pace tên komkirin"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Biryar dide bo komkirina paceyan ji heman sepana lîsteya paceyan.nirxên çalak \"dest pê bike\", \"bixweber\" û \"herdem\"."
+msgstr ""
+"Biryar dide bo komkirina paceyan ji heman sepana lîsteya paceyan.nirxên "
+"çalak \"dest pê bike\", \"bixweber\" û \"herdem\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
-msgstr "Dema tu biçûkbûna paceyan betal bikî dê vegerin mezinahiya qada xebatê ya heyî"
+msgstr ""
+"Dema tu biçûkbûna paceyan betal bikî dê vegerin mezinahiya qada xebatê ya "
+"heyî"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Heke rast be, dema tu biçûkirina paceyê betal bikî dê pace vegere meznahiya qada xebatê ya heyî. An na, qada xebatê ya paceyê vêxe."
+msgstr ""
+"Heke rast be, dema tu biçûkirina paceyê betal bikî dê pace vegere meznahiya "
+"qada xebatê ya heyî. An na, qada xebatê ya paceyê vêxe."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -842,7 +918,9 @@ msgstr "Hemû qadên xebatê nîşan bide"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Heke hatibe hilbijartin, guherkera qadên xebatê hemû qadên xebatê dide  xuyanî. Heke ne wisa be jî tenê qada xebatê ya wê çaxê dide xuyanî."
+msgstr ""
+"Heke hatibe hilbijartin, guherkera qadên xebatê hemû qadên xebatê dide  "
+"xuyanî. Heke ne wisa be jî tenê qada xebatê ya wê çaxê dide xuyanî."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -853,7 +931,11 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "Ev mifte diyar dike ku wê guherkerê qada xebatê ew ê qadên xebatê di hundirê çend rêzikan de (bo pergala serpahnayê) an jî stûnan de (bo pergala serdirêjahiyê) bide xuyanî.Heke hemû qadên xebatê werine xuyanî ev mifte watedar e."
+msgstr ""
+"Ev mifte diyar dike ku wê guherkerê qada xebatê ew ê qadên xebatê di hundirê"
+" çend rêzikan de (bo pergala serpahnayê) an jî stûnan de (bo pergala "
+"serdirêjahiyê) bide xuyanî.Heke hemû qadên xebatê werine xuyanî ev mifte "
+"watedar e."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -874,25 +956,25 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
-msgstr "Hilbijêra Paceyan"
+msgstr "Hilbijartina Paceyan"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
-msgstr "bişkoja xebitandina qada kar"
+msgstr "Hilbijartina Kargehan"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "Lîsteya paceyan"
 
@@ -908,88 +990,92 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Barkirina %s biserneket: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "Îkon nehat dîtin"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "Vir bitikîne ji bo vegerandina paceyên veşartî"
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Vir bitikîne ji bo veşartina hemû paceyan û xuyakirina sermasê."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "Bişkoja sermasê bide xuyakirin"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Ev bişkoj dikare hemû paceyan bigire û sermasê n3işan bide"
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "Gerînendeyê paceyên te destûrê nade bişkoja xuyakirina sermasê , an jî tu gerînendeyê paceyan naxebitînî."
+msgstr ""
+"Gerînendeyê paceyên te destûrê nade bişkoja xuyakirina sermasê , an jî tu "
+"gerînendeyê paceyan naxebitînî."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "Lîsteya paceyan hemû paciyan nîşanî te dide û tu dikarî di nav hemûyan de bigerî."
+msgstr ""
+"Lîsteya paceyan hemû paciyan nîşanî te dide û tu dikarî di nav hemûyan de "
+"bigerî."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "Vebijêrkên gerînendeyê Paceyan"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Paceyan qada xebata heyî_nîşan bide"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Paceyên hemû qada xebatê_nîşan bide"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "Paceyan _qet kom neke"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "Dema qad bisînor be_paceyan kom bike"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "Herdem_Paceyan kom bike"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "Vegere _meznahiya qada xebatê ya berê"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "Vegere_meznahiya qada xebatê ya orjînal"
 
@@ -997,62 +1083,66 @@ msgstr "Vegere_meznahiya qada xebatê ya orjînal"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "Hilbijêrê paceyê lîsteya hemû paceyan di pêşekekê de nîşan dide û dihêle tu di nav de bigerî."
+msgstr ""
+"Hilbijêrê paceyê lîsteya hemû paceyan di pêşekekê de nîşan dide û dihêle tu "
+"di nav de bigerî."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "rêzik"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "stûn"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Guherbarê qadên xebatê wêneyê biçûk ên qadên xebata te nîşan didin, tu dikarî bi rêya wan rêvebiriya paceyên xwe bikî."
+msgstr ""
+"Guherbarê qadên xebatê wêneyê biçûk ên qadên xebata te nîşan didin, tu "
+"dikarî bi rêya wan rêvebiriya paceyên xwe bikî."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "Vebijêrkên Guherîbarê qada xebatê"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "Bitenê qadên xebata heyî_nîşan bide"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "Hemû qadên xebatê nîşan bide di:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "Hejmara_Qadên xebatê"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "_Navên qada xebatê:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Navên qada xebatê"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "Di guherbarê de _navên qada xebatê nîşan bide"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr ""
 
@@ -1073,7 +1163,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Heke rast be, lîsteya \"sepanên naskirî\" di diyaloga \"sepanê bixebitînê\" de dê zêdekirina li lîsteyê di kontrola mifteya lîsteya programan de be. di dema pêşkêşkirina diyalogê de."
+msgstr ""
+"Heke rast be, lîsteya \"sepanên naskirî\" di diyaloga \"sepanê bixebitînê\" "
+"de dê zêdekirina li lîsteyê di kontrola mifteya lîsteya programan de be. di "
+"dema pêşkêşkirina diyalogê de."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1084,16 +1177,23 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Heke rast be, lîsteya \"sepanên naskirî\" di diyaloga \"sepanê bixebitînê\" de radixîne di dema vekirina diyalogê de. Ev mifte bê wateye heke ku mifteya lîsteya bernameyan rast be."
+msgstr ""
+"Heke rast be, lîsteya \"sepanên naskirî\" di diyaloga \"sepanê bixebitînê\" "
+"de radixîne di dema vekirina diyalogê de. Ev mifte bê wateye heke ku mifteya"
+" lîsteya bernameyan rast be."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "Taybetmendiya dewamkirina fermanê çalak bikedi diyaloga\"\"bernameyê bixebitînê\" de"
+msgstr ""
+"Taybetmendiya dewamkirina fermanê çalak bikedi diyaloga\"\"bernameyê "
+"bixebitînê\" de"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Heke rast be, dewamkirina fermanê di diyaloga \"sepanê bixebitînê\" de çalak dibe."
+msgstr ""
+"Heke rast be, dewamkirina fermanê di diyaloga \"sepanê bixebitînê\" de çalak"
+" dibe."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1134,7 +1234,10 @@ msgstr "Lîsteya Panela ID"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Lîsteya nimroyên danasînên panelê. Her nimro paneleke asta jor dide nasîn. Ji bo van panelan, mîheng di hundirê /apps/panel/toplevels/$(id) de tê veşartin."
+msgstr ""
+"Lîsteya nimroyên danasînên panelê. Her nimro paneleke asta jor dide nasîn. "
+"Ji bo van panelan, mîheng di hundirê /apps/panel/toplevels/$(id) de tê "
+"veşartin."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1145,7 +1248,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Lîsteya nimroyên danasînan yên bireserên panelan. Her nimro biresereke panelan dide nasîn (mînak: xebatkerek, berpêşk an jî bişkoka pêşekê). Ji bo her bireserekê mîheng di hundirê /apps/panel/objects/$(id) de tê veşartin."
+msgstr ""
+"Lîsteya nimroyên danasînan yên bireserên panelan. Her nimro biresereke "
+"panelan dide nasîn (mînak: xebatkerek, berpêşk an jî bişkoka pêşekê). Ji bo "
+"her bireserekê mîheng di hundirê /apps/panel/objects/$(id) de tê veşartin."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1153,7 +1259,8 @@ msgstr "Rê dide Amûrên wekhev"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Heke hatibe hilbijartin, ji bo bireserên di panelê de ne nepox tê xuyanî."
+msgstr ""
+"Heke hatibe hilbijartin, ji bo bireserên di panelê de ne nepox tê xuyanî."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
@@ -1168,7 +1275,9 @@ msgstr "Girtina berkêşk a bixweber"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Heke hatibe hilbijartin, berpêşk, piştî ku li destpêkereke di hundirê wê de ye were tikandin wê bixweber were girtin."
+msgstr ""
+"Heke hatibe hilbijartin, berpêşk, piştî ku li destpêkereke di hundirê wê de "
+"ye were tikandin wê bixweber were girtin."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1178,7 +1287,9 @@ msgstr "Rakirina panelê erê bike"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Heke hatibe hilbijartin, dema bikarhêner bixwaze panelê jê bibe, paceyeke erêkirinê tê xuyanî."
+msgstr ""
+"Heke hatibe hilbijartin, dema bikarhêner bixwaze panelê jê bibe, paceyeke "
+"erêkirinê tê xuyanî."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1187,7 +1298,9 @@ msgstr "Lîsteya destpêkaran nîşan dide dema ku mişk di ser re diçe"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Heke hatibe hilbijartin, dema destpêker ji ser nîşanekê derbas bibe wê bibiriqin."
+msgstr ""
+"Heke hatibe hilbijartin, dema destpêker ji ser nîşanekê derbas bibe wê "
+"bibiriqin."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1198,7 +1311,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Heke rast be, panel destûrê nade bila guherîn di veavakirina wê de pêk were. Lê dibe ku hin sepanok pêdiviya wan bi kilîtbûnê ve hebe. Ji bo ku ev bandortir be divê panel ji nû ve were destpêkirin."
+msgstr ""
+"Heke rast be, panel destûrê nade bila guherîn di veavakirina wê de pêk were."
+" Lê dibe ku hin sepanok pêdiviya wan bi kilîtbûnê ve hebe. Ji bo ku ev "
+"bandortir be divê panel ji nû ve were destpêkirin."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1210,7 +1326,10 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Lîsteya sepanokên dê ji alî panelê ve were piştguhkirin. Bi vî awayî tu dikarî hin sepanan ji bo daxistinê an nîşandana di pêşekê de bikar bînî. divê panel were nû kirin ji bo ku guhertinan bicih bike."
+msgstr ""
+"Lîsteya sepanokên dê ji alî panelê ve were piştguhkirin. Bi vî awayî tu "
+"dikarî hin sepanan ji bo daxistinê an nîşandana di pêşekê de bikar bînî. "
+"divê panel were nû kirin ji bo ku guhertinan bicih bike."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1220,7 +1339,10 @@ msgstr "Rawestana bi zor asteng bike"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Heke rast be, dema sepanek were girtin û pêkanîna wê ya bi zorê derketinê panel berê pêl bişkoka Bi Dawî Bîne dike û gihiştinê ji ser wê radike û asteng dike."
+msgstr ""
+"Heke rast be, dema sepanek were girtin û pêkanîna wê ya bi zorê derketinê "
+"panel berê pêl bişkoka Bi Dawî Bîne dike û gihiştinê ji ser wê radike û "
+"asteng dike."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1324,7 +1446,9 @@ msgstr "Cihê hêmanê di panelê de"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Cihê laşê vê panelê. Cih bi hinek pîkselên li çepê panelê  destnîşankiriye an jî li jor."
+msgstr ""
+"Cihê laşê vê panelê. Cih bi hinek pîkselên li çepê panelê  destnîşankiriye "
+"an jî li jor."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1334,7 +1458,9 @@ msgstr "Pozîsyonê gorî qeraxa jêr/rastê bisepîne"
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Heke hatibe hilbijartin, pozisyona bireserê gorî qeraxa rastê ya panelê (heke serdirêjahiyê be gorî jêr) tê sepandin."
+msgstr ""
+"Heke hatibe hilbijartin, pozisyona bireserê gorî qeraxa rastê ya panelê "
+"(heke serdirêjahiyê be gorî jêr) tê sepandin."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1344,7 +1470,9 @@ msgstr "Bireserê li panelê kilît bike"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Heke rast be, sepanoka bikarhêner hêmana pêşeka \"Kilitê Veke\" bikar bîne û kilîta bireserê raneke nikare veguhezîne."
+msgstr ""
+"Heke rast be, sepanoka bikarhêner hêmana pêşeka \"Kilitê Veke\" bikar bîne û"
+" kilîta bireserê raneke nikare veguhezîne."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1366,7 +1494,9 @@ msgstr "Panela girêdayî berkêşkê"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Destnîşankerê girêdana panelê ya vê berkêşkê. karê vê kilîtê tuneye ji bilî dema mîhengkirina bikirê berkêşkê."
+msgstr ""
+"Destnîşankerê girêdana panelê ya vê berkêşkê. karê vê kilîtê tuneye ji bilî "
+"dema mîhengkirina bikirê berkêşkê."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1377,7 +1507,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "Teksta ku di nepoxê de tê xuyanî ya ji bo pêşekê an jî bo berkêşkê. Ev mifte dema cureyê_xebatê \"xebata-berkêşkê\" an jî \"xebata-pêşekê\" be watedar e."
+msgstr ""
+"Teksta ku di nepoxê de tê xuyanî ya ji bo pêşekê an jî bo berkêşkê. Ev mifte"
+" dema cureyê_xebatê \"xebata-berkêşkê\" an jî \"xebata-pêşekê\" be watedar "
+"e."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1388,7 +1521,11 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Heke rast be, mifteya custom_icon ji bo vê bişkokê semboleke taybet bikar tîne. Heke nehatibe hilbijartin, custom_icon tune tê hesabkirin. Ev mifte dema mifteya object_type \"menu_object\" an jî \"drawer_object\" be watedar e."
+msgstr ""
+"Heke rast be, mifteya custom_icon ji bo vê bişkokê semboleke taybet bikar "
+"tîne. Heke nehatibe hilbijartin, custom_icon tune tê hesabkirin. Ev mifte "
+"dema mifteya object_type \"menu_object\" an jî \"drawer_object\" be watedar "
+"e."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1399,7 +1536,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Bicihbûna dosyaya wêneyan ya di bişkoka bireseran de wê were bikaranîn. Ev mifte heke object_type \"drawer_object\" an jî \"menu_object\" be û mifteya use_custom_icon hatibe rastkirin watedar e."
+msgstr ""
+"Bicihbûna dosyaya wêneyan ya di bişkoka bireseran de wê were bikaranîn. Ev "
+"mifte heke object_type \"drawer_object\" an jî \"menu_object\" be û mifteya "
+"use_custom_icon hatibe rastkirin watedar e."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1410,7 +1550,9 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Heke hatibe hilbijartin, ji bo pêkanîna naveroka pêşekê riya ku di mifteya menu_pathê de hatiye diyarkirin wê bikar bîne."
+msgstr ""
+"Heke hatibe hilbijartin, ji bo pêkanîna naveroka pêşekê riya ku di mifteya "
+"menu_pathê de hatiye diyarkirin wê bikar bîne."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1421,7 +1563,10 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "Riya ku di pêkhatina naveroka pêşekê de wê were bikaranîn.Ev mifte tenê tê bikaranîn dema ku mifteya_riya_pêşekê rast be û mifteya cureyê_xebatê heke \"mifteya_xebatê_pêşekê\" be watedar e."
+msgstr ""
+"Riya ku di pêkhatina naveroka pêşekê de wê were bikaranîn.Ev mifte tenê tê "
+"bikaranîn dema ku mifteya_riya_pêşekê rast be û mifteya cureyê_xebatê heke "
+"\"mifteya_xebatê_pêşekê\" be watedar e."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1441,7 +1586,9 @@ msgstr "Cihê destpêkarê"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Bicihbûna dosyeya desktop ya destpêkerê dide nasîn. Ev mifte tenê mifteya object_type, \"matecomponent_applet\" be watedar e."
+msgstr ""
+"Bicihbûna dosyeya desktop ya destpêkerê dide nasîn. Ev mifte tenê mifteya "
+"object_type, \"matecomponent_applet\" be watedar e."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1452,7 +1599,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Cureyê çalakiyê ya ev bişkok diyar dike. Nirxên derbasdar \"lock\", \"logout\", \"run\", \"search\" ve \"screenshot\" in. Ev mifte tenê mifteya object_type, \"matecomponent_applet\" jî watedar e."
+msgstr ""
+"Cureyê çalakiyê ya ev bişkok diyar dike. Nirxên derbasdar \"lock\", "
+"\"logout\", \"run\", \"search\" ve \"screenshot\" in. Ev mifte tenê mifteya "
+"object_type, \"matecomponent_applet\" jî watedar e."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1463,7 +1613,10 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Ev navekî wisa ye ku dihêle bila panel were nasîn û mirov jî jê fahm bikin. Armanca wê ya girîng ew e ku dema tu di nav panelan de bigerî panel weke sernavê paceyan were bikaranîn e."
+msgstr ""
+"Ev navekî wisa ye ku dihêle bila panel were nasîn û mirov jî jê fahm bikin. "
+"Armanca wê ya girîng ew e ku dema tu di nav panelan de bigerî panel weke "
+"sernavê paceyan were bikaranîn e."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1473,7 +1626,9 @@ msgstr "Dîmendera X ku dê panel tê de were pêşkêşkirin"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "Di sazkirina dîmendera pirî de, tu dikarî di dîmenderên cihê de panelan bihundirîne. Ev mifte, panela ku wê di dîmenderê de were xuyanî diyar dike."
+msgstr ""
+"Di sazkirina dîmendera pirî de, tu dikarî di dîmenderên cihê de panelan "
+"bihundirîne. Ev mifte, panela ku wê di dîmenderê de were xuyanî diyar dike."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1483,7 +1638,10 @@ msgstr "Dîmendera X cihê xebata panelê"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Di mîhenga Xineramayê de, tu dikarî li hemû dîmenderan panelan bi cih bike. Ev mifte, dîmendera heyî ya ji bo panel karibe li ser wê were xuyanî, diyar dike."
+msgstr ""
+"Di mîhenga Xineramayê de, tu dikarî li hemû dîmenderan panelan bi cih bike. "
+"Ev mifte, dîmendera heyî ya ji bo panel karibe li ser wê were xuyanî, diyar "
+"dike."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1495,7 +1653,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Heke rast be, panel wê firehiya dîmendera tijî (heke panela serdirêjahiyê be wê bilindbûna wê) bigire. Di vê modê de panel tenê dikare li qeraxên dîmenderê bi cih bibe. Heke çewt be; panel tenê sepanokan, destpêkeran û bi qasî ku bişkokan bihundirîne wê mezin be."
+msgstr ""
+"Heke rast be, panel wê firehiya dîmendera tijî (heke panela serdirêjahiyê be"
+" wê bilindbûna wê) bigire. Di vê modê de panel tenê dikare li qeraxên "
+"dîmenderê bi cih bibe. Heke çewt be; panel tenê sepanokan, destpêkeran û bi "
+"qasî ku bişkokan bihundirîne wê mezin be."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1511,7 +1673,15 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Bicihbûna panelê. Nirxên derbasdar \"jor\" , \"jêr\", \"çep\" û rast e. Mifte di moda girtina qeraxan de, diyar dike ku bila panel li kîjan qeraxê were bicihkirin. Heke di moda negirtina qeraxan de be ferqa ku di navbera \"jor\" û \"jêr\" de heye pir hindik e - herdu jî diyar dike ku ev, paneleke serpahnayê ye- lê dîsa jî der barê bikarhatina bireserên panelê de hin agahiyan dide. Wekî mînak li panela \"jor\" de bişkoka pêşekê di binê pêşekê de pêşekê dide xuyanî lê  \"jêr\" di panelê de pêşek li ser panelê tê xuyakirin."
+msgstr ""
+"Bicihbûna panelê. Nirxên derbasdar \"jor\" , \"jêr\", \"çep\" û rast e. "
+"Mifte di moda girtina qeraxan de, diyar dike ku bila panel li kîjan qeraxê "
+"were bicihkirin. Heke di moda negirtina qeraxan de be ferqa ku di navbera "
+"\"jor\" û \"jêr\" de heye pir hindik e - herdu jî diyar dike ku ev, paneleke"
+" serpahnayê ye- lê dîsa jî der barê bikarhatina bireserên panelê de hin "
+"agahiyan dide. Wekî mînak li panela \"jor\" de bişkoka pêşekê di binê pêşekê"
+" de pêşekê dide xuyanî lê  \"jêr\" di panelê de pêşek li ser panelê tê "
+"xuyakirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1523,7 +1693,11 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Bilindbûna panelê (ji bo panela serdirêjahiyê firehî). Panel dema xebatê de mezinahiya curenivîsê û nişankerên din dide ber çav û mezinahiya asgarî (ya kêm) diyar dike. Ji çar perçeyên bilindbûna dîmenderê (an jî firehiyê) xwe li yekê dide sabîtkirin."
+msgstr ""
+"Bilindbûna panelê (ji bo panela serdirêjahiyê firehî). Panel dema xebatê de "
+"mezinahiya curenivîsê û nişankerên din dide ber çav û mezinahiya asgarî (ya "
+"kêm) diyar dike. Ji çar perçeyên bilindbûna dîmenderê (an jî firehiyê) xwe "
+"li yekê dide sabîtkirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1534,7 +1708,11 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Li ser tewereya Xê cihê panelê. Ev mifte tenê dema qeraxa panelê ne di moda girtinê de be watedar e. Di moda girtina qeraxan de, ev mifte tune tê hesabkirin û bi awayê ku mifteya panel orientation diyar kiriye li qeraxê tê bicihkirin."
+msgstr ""
+"Li ser tewereya Xê cihê panelê. Ev mifte tenê dema qeraxa panelê ne di moda "
+"girtinê de be watedar e. Di moda girtina qeraxan de, ev mifte tune tê "
+"hesabkirin û bi awayê ku mifteya panel orientation diyar kiriye li qeraxê tê"
+" bicihkirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1545,7 +1723,11 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Li ser tewereya Yyê cihê panelê. Ev mifte tenê dema qeraxa panelê ne di moda girtinê de be watedar e. Di moda girtina qeraxan de, ev mifte tune tê hesabkirin û bi awayê ku mifteya panel orientation diyar kiriye li qeraxê tê bicihkirin."
+msgstr ""
+"Li ser tewereya Yyê cihê panelê. Ev mifte tenê dema qeraxa panelê ne di moda"
+" girtinê de be watedar e. Di moda girtina qeraxan de, ev mifte tune tê "
+"hesabkirin û bi awayê ku mifteya panel orientation diyar kiriye li qeraxê tê"
+" bicihkirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1608,13 +1790,18 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "heke rastbe, Dema tîrik ji qada panelê derkeve dê panel bixweber li kenareke dîmenderê winda bibe. guhertina tîrik ji wê kenarê dê careke din panelê bide xuyakirin."
+msgstr ""
+"heke rastbe, Dema tîrik ji qada panelê derkeve dê panel bixweber li kenareke"
+" dîmenderê winda bibe. guhertina tîrik ji wê kenarê dê careke din panelê "
+"bide xuyakirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "heke rastbe, dê veşartin an tunekirina veşartina panelê çalak bike li şûna ku bixweber bihêle."
+msgstr ""
+"heke rastbe, dê veşartin an tunekirina veşartina panelê çalak bike li şûna "
+"ku bixweber bihêle."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1624,7 +1811,9 @@ msgstr "Bişkokên veşartinê çalak bike"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "heke rastbe, dê bişkoj li her aliyê panelê werin bicihkirin û bi w3i awayî dikare were guhertin bo jêra dîmenderê û bi tenê bişkojek xuyadike."
+msgstr ""
+"heke rastbe, dê bişkoj li her aliyê panelê werin bicihkirin û bi w3i awayî "
+"dikare were guhertin bo jêra dîmenderê û bi tenê bişkojek xuyadike."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1634,7 +1823,9 @@ msgstr "Bila di bişkokên veşartinê de tîr bixuyin"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "heke rast be, wê tîrik li ser bişkojên veşartî werin bicihkirin. tenê dema \"bişkojan çalak bike ev mifte tê çalakirin."
+msgstr ""
+"heke rast be, wê tîrik li ser bişkojên veşartî werin bicihkirin. tenê dema "
+"\"bişkojan çalak bike ev mifte tê çalakirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1645,7 +1836,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Heke nîşanek ji qada panelê derdikeve berî ku bixweber were xuyanî diyar dike ku rawestîna berî vê dê mîlîçirk be. Ev mifte tenê dema mifteya veşartina_bixweber be watedar e."
+msgstr ""
+"Heke nîşanek ji qada panelê derdikeve berî ku bixweber were xuyanî diyar "
+"dike ku rawestîna berî vê dê mîlîçirk be. Ev mifte tenê dema mifteya "
+"veşartina_bixweber be watedar e."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1656,7 +1850,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Heke nîşanek kete qada panelê berî ku bixweber were xuyanî diyar dike ku rawestîna berî vê dê çend mîlîçirk be. Ev mifte tenê dema mifteya veşartina_bixweber be watedar e."
+msgstr ""
+"Heke nîşanek kete qada panelê berî ku bixweber were xuyanî diyar dike ku "
+"rawestîna berî vê dê çend mîlîçirk be. Ev mifte tenê dema mifteya "
+"veşartina_bixweber be watedar e."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1667,7 +1864,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Dema ku panel li goşeyê bixweber xwe veşêre diyar dike ku wê çend hev tipik xuya bibe. Ev mifte tenê dema veşartine_bixweber rast be watedar e."
+msgstr ""
+"Dema ku panel li goşeyê bixweber xwe veşêre diyar dike ku wê çend hev tipik "
+"xuya bibe. Ev mifte tenê dema veşartine_bixweber rast be watedar e."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1678,7 +1877,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "Diyar dike ku wê sêwirandinên panelê bi kîjan lezê were kirin. Nirxên derbasdar \"hêdî\" \"orte\" û \"zû\" ye. Ev mifte tenê dema mifteya enable_animations rast be watedar e."
+msgstr ""
+"Diyar dike ku wê sêwirandinên panelê bi kîjan lezê were kirin. Nirxên "
+"derbasdar \"hêdî\" \"orte\" û \"zû\" ye. Ev mifte tenê dema mifteya "
+"enable_animations rast be watedar e."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1709,7 +1911,10 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Awayê şeffafbûna rengê rûerd diyar dike. Heke reng temamî ne rengekî sade be (nirxekî ji 65535 biçûktir be), renk bi wêneyê rûerd ya sermasê tê têkelkirin."
+msgstr ""
+"Awayê şeffafbûna rengê rûerd diyar dike. Heke reng temamî ne rengekî sade be"
+" (nirxekî ji 65535 biçûktir be), renk bi wêneyê rûerd ya sermasê tê "
+"têkelkirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1720,7 +1925,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Dosya ku dê di wêneyê rûzemînê de were bikaranîn distnîşan dike.Heke di wêne de alpha channel hebe dê bi rûzemîna dîmender re were siwarkirin."
+msgstr ""
+"Dosya ku dê di wêneyê rûzemînê de were bikaranîn distnîşan dike.Heke di wêne"
+" de alpha channel hebe dê bi rûzemîna dîmender re were siwarkirin."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1730,7 +1937,9 @@ msgstr "Wêne li panelê bîne"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "heke rastbe, dê wêne were sazkirin (zelaliya xuyakirina wêne tê parastin) bo bilidahiya panelê . heke ne stûnkî be."
+msgstr ""
+"heke rastbe, dê wêne were sazkirin (zelaliya xuyakirina wêne tê parastin) bo"
+" bilidahiya panelê . heke ne stûnkî be."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1740,7 +1949,9 @@ msgstr "Wêne li gorî panelê vezelîne"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Heke rastbe, dê çarçoveya wêne were sazkirin. lê guh nade zelalbûna xuyakirina wêne."
+msgstr ""
+"Heke rastbe, dê çarçoveya wêne were sazkirin. lê guh nade zelalbûna "
+"xuyakirina wêne."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1765,7 +1976,7 @@ msgstr ""
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "Dest bi %s dike"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
@@ -1785,11 +1996,11 @@ msgstr ""
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Ev tişt nayê dan destpêkirin"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "Girêdana bi rêveberiyê hatiye kirin betal bike"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
@@ -1797,15 +2008,15 @@ msgstr ""
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
-msgstr ""
+msgstr "PEL"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr ""
+msgstr "IDa rêveberiyê diyar bike"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
@@ -1813,7 +2024,7 @@ msgstr ""
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
+msgstr "Bijarekên gerînendeya beşê nîşan bide"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1821,10 +2032,10 @@ msgstr ""
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
-msgstr ""
+msgstr "Çewtî"
 
 #: ../mate-panel/libpanel-util/panel-icon-chooser.c:381
 msgid "Choose an icon"
@@ -1852,36 +2063,36 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "Ji Panelê _Rake"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
-msgstr "_guhestin"
+msgstr "_Tevbigere"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "Bi Panelê re _Girêbide"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "Ciheke vala nehate dîtin"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "Berkêşk"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "Li berkêşkê zêde bike..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
-msgstr "_Taybetmendî"
+msgstr "_Taybetî"
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1889,14 +2100,14 @@ msgstr "Dosyayek nû biafirîne"
 
 #: ../mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
-msgstr "[DOSYA...]"
+msgstr "[PEL...]"
 
 #: ../mate-panel/mate-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- Dosiyên .desktop biguherîne"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Destpêkerê biafirîne"
 
@@ -1905,13 +2116,13 @@ msgstr "Destpêkerê biafirîne"
 msgid "Directory Properties"
 msgstr ""
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Taybetmendiyên destpêkerê"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
-msgstr ""
+msgstr "Panel"
 
 #: ../mate-panel/mate-panel.desktop.in.in.h:2
 msgid ""
@@ -1939,20 +2150,20 @@ msgstr "Ti URL ji bo dosya sermasê destnîşankirî tuneye\n"
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "Dosya sermasê venabe %s ji bo hemû berkêşkê%s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "Bide dest_pêkirin"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Kilîta %s ne çalak e, nikare destpêkerê bar bike\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "Nikarî destpêkarê tomar bike"
 
@@ -1975,23 +2186,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "Li panelê zêde bike"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "Li sermasê_zêde bike"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "_Hemû pêşek"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Wekî berkêşk li panelê zêde bike"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Wekî pêşek li panelê zêde bike"
 
@@ -2036,14 +2247,14 @@ msgstr ""
 
 #: ../mate-panel/panel-action-button.c:380
 msgid "Search for Files..."
-msgstr "Li Dosiyan Bigere..."
+msgstr "Li Pelan Bigere..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Bidawîkirina derketinê"
 
@@ -2068,114 +2279,124 @@ msgstr "Bigire..."
 msgid "Shut down the computer"
 msgstr "Komputerê bigire"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "Destpêkara Sepanê ya Taybet"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "Destpêkareke nû biafirîne"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "Destpêkera Sepanê..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "Destpêkarekê ji pêşeka sepanan kopî bike"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
-msgstr "Pêşeka bingehîn"
+msgstr "Pêşeka Bingehîn"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "Pêşeka bingehîn a MATE"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Darikê pêşekê"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Darikê pêşeka taybet"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr "Veqetîner"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "Veqetînerê rêxistinkarê endamên panelê"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "Berkêşka ji bo hilanîna endamên din"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(vala)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Hêmanekê hilbijêre ji bo tu zêde bikî li \"%s\":"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "Li berkêşkê zêde bike"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "_Hêmanekê hilbijêre ji bo berkêşkê:"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "Li panelê zêde bike"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "Hêmanekê hilbijêre ji bo berkêşkê:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "P_aş"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" ji nişkan ve hate derketin"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Bikirê panelê ji nişkan ve derket"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Heke careke din bikirê panelê hate barkirin, dê bixweber li panelê were barkirin."
+msgstr ""
+"Heke careke din bikirê panelê hate barkirin, dê bixweber li panelê were "
+"barkirin."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "_Ji nû ve bar neke"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
-msgstr "_Ji nû ve bar bike"
+msgstr "_Nû Bike"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Di dema barkirinê de teşqeleyek çêbû\"%s\"."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Tu dixwazî sepanokê ji komikên xwe bavêjî?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_Rake"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2213,12 +2434,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2226,100 +2443,106 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "Vê Panelê _jê bibe"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "Panela _nû"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "Der _Barê Panelan"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "Sepan"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "Sepana di Termînalê de"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
-msgstr ""
+msgstr "Cih"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_Cure:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr "_Nav:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "_Bigere..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "Şîro_ve:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "_Bizivirîne Paş"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "Sepanê hilbijêre..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "Dosiyekê hilbijêre..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
 msgstr "_Cih:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "Navê destpêkarê nehat diyar kirin."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "Fermana destpêkarê nehat diyar kirin."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "Cihê destpêkarê nehat diyar kirin."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
 msgstr "Nikare Dosya alîkariyê pêşkêş bike"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Ji bo bidawîkirina sepanê li ser paceyê bitikîne. ji bo derketinê  vê bitikîne <ESC>."
+msgstr ""
+"Ji bo bidawîkirina sepanê li ser paceyê bitikîne. ji bo derketinê  vê "
+"bitikîne <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr ""
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2335,13 +2558,15 @@ msgstr "Pelge, peldank û cihên toreyan"
 
 #: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Dîmenê sermasê û şêwaza wê biguherînin, alîkariyê bistînin an jî danîşîna xwe bigirin."
+msgstr ""
+"Dîmenê sermasê û şêwaza wê biguherînin, alîkariyê bistînin an jî danîşîna "
+"xwe bigirin."
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
 msgstr "Sepan"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "Menuyan _biguherîne"
 
@@ -2350,7 +2575,7 @@ msgid "Bookmarks"
 msgstr "Bijare"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' veke"
@@ -2385,7 +2610,7 @@ msgstr "Cihên Torê"
 
 #: ../mate-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
-msgstr ""
+msgstr "Peldanka şexsî veke"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
@@ -2393,7 +2618,7 @@ msgstr ""
 #: ../mate-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr ""
+msgstr "Sermêze"
 
 #: ../mate-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
@@ -2401,7 +2626,7 @@ msgstr ""
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
-msgstr ""
+msgstr "Komputer"
 
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
@@ -2410,7 +2635,7 @@ msgstr ""
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
-msgstr ""
+msgstr "Tor"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
@@ -2465,20 +2690,20 @@ msgstr ""
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
-msgstr ""
+msgstr "Çep"
 
 #: ../mate-panel/panel-properties-dialog.c:123
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
-msgstr ""
+msgstr "Rast"
 
 #: ../mate-panel/panel-properties-dialog.c:819
 msgid "Drawer Properties"
 msgstr ""
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr ""
@@ -2491,138 +2716,138 @@ msgstr "Nikare taybetiyên diyalogê bixebitîne"
 msgid "Panel Properties"
 msgstr "Taybetiyên Panelê"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "Hin taybetmendî girtîne"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "Î_kon:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
 msgstr "pîksel"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_Hêl:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "_Mezinahî"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "_Fireh bike"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_Bixweber veşêre"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "Bişkojên veşartinê_nîşan bide"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "Çewtî di bişkojên veşartî de"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_ne tiştek (mijara pergalê bikar bîne)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "Rengeke_sar"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
 msgstr "Rengekî hilbijêre"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>Zelal</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "_Reng:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "_Teşe:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<biçûk>Tarîkirî</biçûk>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "Wêneya _zemîne:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "Zemînê hilbijêre"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "Zemîn"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "Hûrbîniya wêneyê rûzemînê"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Çargoşe"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "_Pîvan"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "Dirêj_kirin"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "Zivirandina wêne dema ku panel stûnî be"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Dokumana ku herî dawî hate bikaranîn \"%s\" venebû"
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Dema hewldana vekirina \"%s\" de çewtiyeke nenas çêbû."
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Lîsteya pelgeyên borî pajûk bike?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Pelgeyên ku Herî Dawî Hatine Bikaranîn Paqij Bike"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Pelgeyên Borî"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "Lîsteya pelgeyên ku herî dawî hatine bikaranîn paqij bike"
 
@@ -2636,25 +2861,28 @@ msgstr "Nikarî fermana '%s' bimeşîne"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' ji UTF-8 nayê wergerandin"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Dosya hilbijêre ji bo pêveka fermanê"
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "Spanekê hilbijêre ji bo dîtina taybetmendiyên wê."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Dê fermana '%s' bimeşîne"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Şêwaza xebitandina diyalogê çewte li ser lîsteya URL (%d) an jî firehî (%d)↵\n"
+msgstr ""
+"Şêwaza xebitandina diyalogê çewte li ser lîsteya URL (%d) an jî firehî "
+"(%d)↵\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "Nikare diyalogê pêşkêş bike"
 
@@ -2662,49 +2890,55 @@ msgstr "Nikare diyalogê pêşkêş bike"
 msgid "Run Application"
 msgstr "Sepanê bimeşîne"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "îkona fermanê"
-
-#: ../mate-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "Sembola fermana ku wê were xebitandin."
-
-#: ../mate-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "Di termînalê de bimeşîne"
-
-#: ../mate-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "Vê sendoqê hilbijêre da ku ferman di paceya dîmendera alîkî de were xebitandin."
-
-#: ../mate-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "bi dosya_bixebitîne..."
-
-#: ../mate-panel/panel-run-dialog.ui.h:7
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr "vê bişkojê bitikîne da ku tu bikaribî li dosya ku dê li fermanê zêde bibe binêrî."
-
-#: ../mate-panel/panel-run-dialog.ui.h:8
-msgid "List of known applications"
-msgstr "Lîsteya sepanên nas"
-
-#: ../mate-panel/panel-run-dialog.ui.h:10
-msgid "Show list of known _applications"
-msgstr "Lîsteya _sepanên nenas nîşan bide"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Bimeşîne"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-run-dialog.ui.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Vê bişkojê bitikîne da ku tu sepana hilbijartî bixebitînî an na dê ferman di destpêkê de bisernekeve."
+msgstr ""
+"Vê bişkojê bitikîne da ku tu sepana hilbijartî bixebitînî an na dê ferman di"
+" destpêkê de bisernekeve."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Command icon"
+msgstr "îkona fermanê"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "The icon of the command to be run."
+msgstr "Sembola fermana ku wê were xebitandin."
+
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Run in _terminal"
+msgstr "Di termînalê de bimeşîne"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr ""
+"Vê sendoqê hilbijêre da ku ferman di paceya dîmendera alîkî de were "
+"xebitandin."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Run with _file..."
+msgstr "bi dosya_bixebitîne..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"vê bişkojê bitikîne da ku tu bikaribî li dosya ku dê li fermanê zêde bibe "
+"binêrî."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+msgid "List of known applications"
+msgstr "Lîsteya sepanên nas"
+
+#: ../mate-panel/panel-run-dialog.ui.h:14
+msgid "Show list of known _applications"
+msgstr "Lîsteya _sepanên nenas nîşan bide"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2729,7 +2963,8 @@ msgstr ""
 
 #: ../mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr "Mezinahiya destpêkirina sepanokê diyar bikin (biçûk, orte, mezin hwd.)"
+msgstr ""
+"Mezinahiya destpêkirina sepanokê diyar bikin (biçûk, orte, mezin hwd.)"
 
 #: ../mate-panel/panel-test-applets.c:42
 msgid ""
@@ -2749,7 +2984,7 @@ msgstr ""
 #: ../mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
-msgstr ""
+msgstr "Biçûk"
 
 #: ../mate-panel/panel-test-applets.c:69
 msgctxt "Size"
@@ -2759,7 +2994,7 @@ msgstr ""
 #: ../mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
-msgstr ""
+msgstr "Fireh"
 
 #: ../mate-panel/panel-test-applets.c:71
 msgctxt "Size"
@@ -2781,33 +3016,37 @@ msgstr "Sepanoka %s nehate barkirin."
 msgid "Test applet utility"
 msgstr "Hilbijartina amûrên sepanokê"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_Sepanok:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Panelê veşêre"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
@@ -2823,21 +3062,21 @@ msgstr "Meşandina '%s' beserneket"
 
 #: ../mate-panel/panel-util.c:693
 msgid "file"
-msgstr ""
+msgstr "pel"
 
 #: ../mate-panel/panel-util.c:866
 msgid "Home Folder"
-msgstr ""
+msgstr "Peldanka Mal"
 
 #. Translators: this is the same string as the one found in
 #. * caja
 #: ../mate-panel/panel-util.c:878
 msgid "File System"
-msgstr ""
+msgstr "Pergala Pelan"
 
 #: ../mate-panel/panel-util.c:1051
 msgid "Search"
-msgstr ""
+msgstr "Lê bigere"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
@@ -2848,26 +3087,26 @@ msgstr ""
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL veke: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "Vê berkêşkê jê bibe?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "Dema berkêşk were jêbirin dê tevî destnîşaniyên xwe winda bibin."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "Vê panelê jê bibe?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."

@@ -1,23 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Mongolian (http://www.transifex.com/mate/MATE/language/mn/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Zorig <zorig_ezd@yahoo.com>, 2018\n"
+"Language-Team: Mongolian (https://www.transifex.com/mate/teams/13566/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: mn\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "Байршлууд"
 
@@ -32,14 +33,14 @@ msgstr "Календар"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -50,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -64,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -75,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -101,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr ""
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr ""
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Сарын хуанлийг харахын тлд дарна уу"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Компьютерын цаг"
 
@@ -123,7 +126,7 @@ msgstr "Компьютерын цаг"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -133,232 +136,272 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr ""
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_Тохиргоо"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Тусламж"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "_Тухай"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "_Цаг хуулах"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "_Огноо хуулах"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "Цаг & Огноо _тохируулах"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr ""
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr ""
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Цаг"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "Цаг нь идэвхитэй цаг болон огноог үзүүлж байна"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Санлигийн Бадрал <badral@openmn.org>\nГанбаатар Ганбат \nГномын орчуулгад туслах хүсэлтэй хүмүүс дээрх хаягаар холбоо барина уу!"
+msgstr ""
+"Сүхбаатарын Дөлмандах <sdulmandakh@yahoo.co> \n"
+"Санлигийн Бадрал 2004, <badral@openmn.org>"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "Time & Date"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "_Буцах"
+
+#: ../applets/clock/clock.ui.h:3
+msgid "_Set System Time"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "_Цаг:"
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Clock Preferences"
+msgstr "Цагийн тохиргоо"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "Цаг _тохиргоонууд"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "_Хаах"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "Clock Format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:11
+msgid "_12 hour format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:12
+msgid "_24 hour format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:13
+msgid "Panel Display"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Show the _date"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show seco_nds"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show wee_k numbers in calendar"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show _weather"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show _temperature"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "General"
+msgstr "Ерөнхий "
+
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "_Нэмэх"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "_Засварлах"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:24
+msgid "Display"
+msgstr "Дэлгэц"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_Visibility unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Pressure unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Wind speed unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Temperature unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:29
+msgid "Weather"
+msgstr "Цаг агаар"
+
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "Зүүн"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "Баруун"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "Зүүн"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "Өмнө"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
+#: ../applets/clock/clock.ui.h:36
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:3
+#: ../applets/clock/clock.ui.h:37
 msgid "_Timezone:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:4
+#: ../applets/clock/clock.ui.h:38
 msgid "_Location Name:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:5
+#: ../applets/clock/clock.ui.h:39
 msgid "<i>(optional)</i>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:6
+#: ../applets/clock/clock.ui.h:40
 msgid "L_ongitude:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.ui.h:41
 msgid "L_atitude:"
 msgstr ""
-
-#: ../applets/clock/clock.ui.h:8
-msgid "Time & Date"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:11
-msgid "_Set System Time"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:16
-msgid "Clock Preferences"
-msgstr "Цагийн тохиргоо"
-
-#: ../applets/clock/clock.ui.h:17
-msgid "Clock Format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:18
-msgid "_12 hour format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:19
-msgid "_24 hour format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:20
-msgid "Panel Display"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:21
-msgid "Show the _date"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:22
-msgid "Show seco_nds"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:23
-msgid "Show wee_k numbers in calendar"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:24
-msgid "Show _weather"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:25
-msgid "Show _temperature"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
-msgid "General"
-msgstr "Ерөнхий"
-
-#: ../applets/clock/clock.ui.h:28
-msgid "Display"
-msgstr "Дэлгэц"
-
-#: ../applets/clock/clock.ui.h:29
-msgid "_Visibility unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:30
-msgid "_Pressure unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:31
-msgid "_Wind speed unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:32
-msgid "_Temperature unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:33
-msgid "Weather"
-msgstr "Цаг агаар"
-
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "Цаг _тохиргоонууд"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -372,7 +415,7 @@ msgstr ""
 msgid "<small>Set</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -383,7 +426,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr ""
 
@@ -392,7 +435,7 @@ msgstr ""
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr ""
 
@@ -400,42 +443,42 @@ msgstr ""
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr ""
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
-msgstr ""
+msgstr "Тодорхойлогдоогүй"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr ""
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr ""
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr ""
 
@@ -453,7 +496,15 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "Энэ түлхүүр цагийн апплетыг хэрэглэн цагийг тодорхойлдог. Боломжит утгууд нь \"12-цаг\", \"24-цаг\", \"интернэт\", \"юникс\" ба \"зуршил\". Хэрэв \"интернэт\" утгатай бол цагийг интерэт цагаар харуулна. Интернэт цагийн систем өдрийг 1000 \".beats\" -р хуваадаг. Энэ системд цагийн бүс гэсэн ойлголт байхгүй бөгөөд тиймээс цаг нь бүх дэлхий дээр яг ижил явж байдаг. Хэрвээ \"юникс\", гэж авбал Epoch-оос хойшхи цагийг секундээр харуулна. Ө.х. 1970-01-01 -нээс хойш. Хэрэв \"зуршил\" бол, цаг зуршил_формат түлхүүрт тодорхойлогдсон форматаар харуулна."
+msgstr ""
+"Энэ түлхүүр цагийн апплетыг хэрэглэн цагийг тодорхойлдог. Боломжит утгууд нь"
+" \"12-цаг\", \"24-цаг\", \"интернэт\", \"юникс\" ба \"зуршил\". Хэрэв "
+"\"интернэт\" утгатай бол цагийг интерэт цагаар харуулна. Интернэт цагийн "
+"систем өдрийг 1000 \".beats\" -р хуваадаг. Энэ системд цагийн бүс гэсэн "
+"ойлголт байхгүй бөгөөд тиймээс цаг нь бүх дэлхий дээр яг ижил явж байдаг. "
+"Хэрвээ \"юникс\", гэж авбал Epoch-оос хойшхи цагийг секундээр харуулна. Ө.х."
+" 1970-01-01 -нээс хойш. Хэрэв \"зуршил\" бол, цаг зуршил_формат түлхүүрт "
+"тодорхойлогдсон форматаар харуулна."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -559,98 +610,113 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Сануулга: Зарим нэг зүйлийг хэрэгтэй болоход энэ команд харагдана.\nЭнэ нь хэрэгцээгүй апплет тул та үүнийг хийхийг хүсэхгүй.\nБид танд апплетыг \"тохирсон\" эсвэл үр ашигтай хийх бүх зүйлд %s-ийг хэрэглэхийг зөвлөж байна."
+msgstr ""
+"Сануулга: Зарим нэг зүйлийг хэрэгтэй болоход энэ команд харагдана.\n"
+"Энэ нь хэрэгцээгүй апплет тул та үүнийг хийхийг хүсэхгүй.\n"
+"Бид танд апплетыг \"тохирсон\" эсвэл үр ашигтай хийх бүх зүйлд %s-ийг хэрэглэхийг зөвлөж байна."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
-msgstr "Зураг"
+msgstr "Зургууд"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s загас"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s хэрэглээгүй what-so-ever. Энэ зөвхөн диксний зай ба өөрчлөгдөх хугацааг тооцох бөгөөд хэрвээ ачаалагдсан бол ой санамж болон панелийн зайг тооцдог. Түүнтэй холбогдсон хүн бүр сэтгэл зүйн үнэлгээнд илгээх ёстой."
+msgstr ""
+"%s хэрэглээгүй what-so-ever. Энэ зөвхөн диксний зай ба өөрчлөгдөх хугацааг "
+"тооцох бөгөөд хэрвээ ачаалагдсан бол ой санамж болон панелийн зайг тооцдог. "
+"Түүнтэй холбогдсон хүн бүр сэтгэл зүйн үнэлгээнд илгээх ёстой."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(Жоржын бяцхан тусламж)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Загас"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s Загас, орчин үеийн oracle"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "Биелүүлэх командыг байршуулах боломжгүй"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s загас хэлж байна:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "Командын гаралтыг унших боломжгүй\n\nДэлгэрэнгүй: %s"
+msgstr ""
+"Командын гаралтыг унших боломжгүй\n"
+"\n"
+"Дэлгэрэнгүй: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "_Дахин ярих"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Тохируулсан команд ажиллахгүй байна, %s- ээр солигдлоо"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Устгах боломжгүй \"%s\"\n\nДэлгэрэнгүй: %s"
+msgstr ""
+"Устгах боломжгүй \"%s\"\n"
+"\n"
+"Дэлгэрэнгүй: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "'%s'-ээс унших боломжгүй\n\nДэлгэрэнгүй: %s"
+msgstr ""
+"'%s'-ээс унших боломжгүй\n"
+"\n"
+"Дэлгэрэнгүй: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr ""
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr ""
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s Загас, үзмэрч"
@@ -659,47 +725,47 @@ msgstr "%s Загас, үзмэрч"
 msgid "Fish Preferences"
 msgstr "Загасны тохиргоо"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "Загасны _нэр:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "Товшиход ажиллах команд:"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr ""
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_Файл:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "Хөдөлгөөн сонгох"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_Бүх хөдөлгөөнт кадрууд:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "Кадр түр _зогсоох:"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "Кадр"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
-msgstr "секунд"
+msgstr "Секундүүд"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "Босоо самбарт _эргүүлэх"
 
@@ -721,7 +787,9 @@ msgstr "Загасны хөдөлгөөний пиксмап"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Энэ түлхүүр нь загас апплетийг пиксмаптай харьцуулсан харьцааг харуулдаг хөдөлгөөнд зориулан хэрэглэдэг пиксмапийн файлын нэрийг тодорхойлдог."
+msgstr ""
+"Энэ түлхүүр нь загас апплетийг пиксмаптай харьцуулсан харьцааг харуулдаг "
+"хөдөлгөөнд зориулан хэрэглэдэг пиксмапийн файлын нэрийг тодорхойлдог."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -731,7 +799,8 @@ msgstr "Товшиход устгах команд"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Загасан дээр дарахад биелүүлэхийг оролдох тушаалыг энэ түлхүүрээр тогтооно."
+msgstr ""
+"Загасан дээр дарахад биелүүлэхийг оролдох тушаалыг энэ түлхүүрээр тогтооно."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
@@ -741,7 +810,8 @@ msgstr "Загасны хөдөлгөөний кадрууд"
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
-msgstr "Энэ түлхүүр нь загасны хөдөлгөөнийг харуулдаг кадрын тоог тодорхойлдог."
+msgstr ""
+"Энэ түлхүүр нь загасны хөдөлгөөнийг харуулдаг кадрын тоог тодорхойлдог."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
 msgid "Pause per frame"
@@ -772,12 +842,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Сонордуулгын талбар"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "Самбарын сонордуулгын талбар"
 
@@ -801,7 +871,9 @@ msgstr "Бүх ажлын талбарын цонхнуудыг харуулах
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Хэрэв үнэн бол цонхны жагсаалт нь бүх ажлын талбарын цонхнуудыг үзүүлнэ. Үгүй бол зөвхөн идэвхитэй ажлын  талбарыг харуулна."
+msgstr ""
+"Хэрэв үнэн бол цонхны жагсаалт нь бүх ажлын талбарын цонхнуудыг үзүүлнэ. "
+"Үгүй бол зөвхөн идэвхитэй ажлын  талбарыг харуулна."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -811,7 +883,9 @@ msgstr "Цонхны бүлэглэлд"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Цонхны жагсаалтад зарим програмын цонхнуудыг бүлэглэхээр шийдэх. Боломжит утгууд: \"хэзээ ч үгүй\", \"автомат\" ба \"үргэлж\"."
+msgstr ""
+"Цонхны жагсаалтад зарим програмын цонхнуудыг бүлэглэхээр шийдэх. Боломжит "
+"утгууд: \"хэзээ ч үгүй\", \"автомат\" ба \"үргэлж\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -821,7 +895,9 @@ msgstr "Цонхыг жижигрүүлээгүй бол идэвхтэй ажл
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Хэрэв үнэн бол жижигрүүлээгүй цонхыг идэвхитэй ажлын талбарт шилжүүлнэ. Үгүй бол цонхны ажлын талбарыг холбоно."
+msgstr ""
+"Хэрэв үнэн бол жижигрүүлээгүй цонхыг идэвхитэй ажлын талбарт шилжүүлнэ. Үгүй"
+" бол цонхны ажлын талбарыг холбоно."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -842,7 +918,9 @@ msgstr "Бүх ажлын талбарыг харуулах"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Хэрэв үнэн бол ажлын талбарын сэлгэгч бүх ажлын талбарыг үзүүлнэ. Үгүй бол зөвхөн идэвхитэй ажлын талбарыг үзүүлнэ."
+msgstr ""
+"Хэрэв үнэн бол ажлын талбарын сэлгэгч бүх ажлын талбарыг үзүүлнэ. Үгүй бол "
+"зөвхөн идэвхитэй ажлын талбарыг үзүүлнэ."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -853,7 +931,10 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "Энэ түлхүүр ажлын талбарт ажлын талбар сэлгэгчийн хэдэн багана, мөр байгааг тодорхойлдог. Энэ нь зөвхөн дэлгэцийн бүх ажлын талбарууд үнэн байхад хүчинтэй."
+msgstr ""
+"Энэ түлхүүр ажлын талбарт ажлын талбар сэлгэгчийн хэдэн багана, мөр байгааг "
+"тодорхойлдог. Энэ нь зөвхөн дэлгэцийн бүх ажлын талбарууд үнэн байхад "
+"хүчинтэй."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -874,7 +955,7 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
 msgstr "Цонх сонгогч"
 
@@ -883,7 +964,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
 msgstr "Ажлын талбар сэлгэгч"
 
@@ -892,7 +973,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "Цонхны жагсаалт"
 
@@ -908,88 +989,92 @@ msgstr "Дэлгэц харах"
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s ачаалагдсангүй: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "Эмблем олдсонгүй"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "Далдлагдсан цонхнуудыг сэргээхэд энд дарна."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Бүх цонхнуудыг далдлах ба дэлгэцэнд харуулахад энд дарна."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "Дэлгэцийн товчыг харуулах"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Энэ товч нь бүх цонхнуудыг далдлах болон дэлгэцэнд үзүүлнэ."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "Таны цонхны менежер дэлгэцийн товчийг харуулахыг дэмжихгүй байна эсвэл та цонхны менежерийг ажиллуулаагүй байна."
+msgstr ""
+"Таны цонхны менежер дэлгэцийн товчийг харуулахыг дэмжихгүй байна эсвэл та "
+"цонхны менежерийг ажиллуулаагүй байна."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "_Систем хянах"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "Цонхны жагсаалт нь нэг товчлуурын багцаар бүх цонхуудын жагсаалтыг харуулах бөгөөд танд тэднийг сонгох боломжийг олгоно."
+msgstr ""
+"Цонхны жагсаалт нь нэг товчлуурын багцаар бүх цонхуудын жагсаалтыг харуулах "
+"бөгөөд танд тэднийг сонгох боломжийг олгоно."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "Цонхны жагсаалтын тохиргоо"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Идэвхитэй ажлын талбараас цонхнуудыг х_аруулах"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "_Бүх ажлын талбарын цонхнуудыг үзүүлэх"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "Цонхнуудыг _хэзээ ч бүлэглэхгүй"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "Хязгаарлагдсан орон зайд цонхнуудыг бүлэглэх"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "Цонхнуудыг ү_ргэлж бүлэглэнэ"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "Идэвхитэй ажлын _талбарыг сэргээх"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "_Анхдагч ажлын талбар сэргээх"
 
@@ -997,62 +1082,66 @@ msgstr "_Анхдагч ажлын талбар сэргээх"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "Цонх сонгогч нь цэсний бүх цонхуудын жагсаалтыг харуулах бөгөөд таньд үзэх боломжыг олгоно."
+msgstr ""
+"Цонх сонгогч нь цэсний бүх цонхуудын жагсаалтыг харуулах бөгөөд таньд үзэх "
+"боломжыг олгоно."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "мөрүүд"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "баганууд"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Ажлын талбарыг сэлгэгч нь танд цонхоо удирдах боломжийг олгодог ажлын талбарын жижиг хувилбарыг харуулна."
+msgstr ""
+"Ажлын талбарыг сэлгэгч нь танд цонхоо удирдах боломжийг олгодог ажлын "
+"талбарын жижиг хувилбарыг харуулна."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "Ажлын талбар сэлгэгчийн тохиргоо"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "_Зөвхөн идэвхитэй ажлын талбарыг харуулах"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "_Бүх ажлын талбаруудыг харуулах"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "Сэлгэгч"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "Ажлын талбарын дугаар:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "Ажлын талбарын _нэрс:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Ажлын талбарын нэрс"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "Сэлгэгчид ажлын талбарын _нэрсийг харуулах"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr "Талбарууд"
 
@@ -1073,7 +1162,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Үнэн бол \"Програм ажиллуулах\" цонхонд \"тодорхой програм\"-гарчигийг хүснэгтэнд бэлэн болгоно. Хэрвээ цонх харуулах_програм_жагсаалт түлхүүрээр хянагдаж байвал юмар ч тохиолдолд жагсаалтыг өргөтгөнө."
+msgstr ""
+"Үнэн бол \"Програм ажиллуулах\" цонхонд \"тодорхой програм\"-гарчигийг "
+"хүснэгтэнд бэлэн болгоно. Хэрвээ цонх харуулах_програм_жагсаалт түлхүүрээр "
+"хянагдаж байвал юмар ч тохиолдолд жагсаалтыг өргөтгөнө."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1084,7 +1176,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Үнэн бол цонх нээгдэхэд \"Програм ажиллуулах\" цонхонд  \"тодорхой програм\" гарчигийг задалсан. Энэ түлхүүр нь зөвхөн _програмын_жагсаалт түлхүүр үнэн үед хэрэгтэй."
+msgstr ""
+"Үнэн бол цонх нээгдэхэд \"Програм ажиллуулах\" цонхонд  \"тодорхой програм\""
+" гарчигийг задалсан. Энэ түлхүүр нь зөвхөн _програмын_жагсаалт түлхүүр үнэн "
+"үед хэрэгтэй."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1093,7 +1188,9 @@ msgstr "\"Програм ажиллуулах\" цонхонд автомата�
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Үнэн бол \"Програм ажиллуулах\" цонхонд автоматаар дуусгахыг боломжтой болгох."
+msgstr ""
+"Үнэн бол \"Програм ажиллуулах\" цонхонд автоматаар дуусгахыг боломжтой "
+"болгох."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1134,7 +1231,9 @@ msgstr "Самбарын ТТ жагсаалт"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "ТТ самбарны жагсаалт. ТТ бүр самбарны дээд түвшнийг тодорхойлно. Эдгээр самбар бүрийн тохируулга /apps/panel/toplevels/$(id)-д хадгалагдсан."
+msgstr ""
+"ТТ самбарны жагсаалт. ТТ бүр самбарны дээд түвшнийг тодорхойлно. Эдгээр "
+"самбар бүрийн тохируулга /apps/panel/toplevels/$(id)-д хадгалагдсан."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1145,7 +1244,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Самбар обьектын ТТ жагсаалт. ТТ бүр панел обьектын онцлогийг тодорхойлдог.(Жиш. ачаалагч, үйлдлийн товч эсвэл цэсний товч/мөр). Эдгээр обьект бүрийн тохируулга /apps/panel/objects/$(id)-д хадгалагдсан."
+msgstr ""
+"Самбар обьектын ТТ жагсаалт. ТТ бүр панел обьектын онцлогийг "
+"тодорхойлдог.(Жиш. ачаалагч, үйлдлийн товч эсвэл цэсний товч/мөр). Эдгээр "
+"обьект бүрийн тохируулга /apps/panel/objects/$(id)-д хадгалагдсан."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1168,7 +1270,8 @@ msgstr "Шүүгээг автоматаар хаах"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Үнэн бол хэрэглэгч ачаалагчийг нь товшиход шүүгээ автоматаар хаагдана."
+msgstr ""
+"Үнэн бол хэрэглэгч ачаалагчийг нь товшиход шүүгээ автоматаар хаагдана."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1178,7 +1281,9 @@ msgstr "Самбар устгахыг бататгах"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Үнэн бол хэрэглэгч самбарыг устгахыг хүсвэл баталгаа асуусан хүснэгт харуулна."
+msgstr ""
+"Үнэн бол хэрэглэгч самбарыг устгахыг хүсвэл баталгаа асуусан хүснэгт "
+"харуулна."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1198,7 +1303,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Үнэн бол самбар нь самбарын тохиргооны ямар нэг өөрчлөлтийг зөвшөөрөхгүй. Апплет бүр тус тусдаа түгжигдэх ёстой. Үүнийг нөлөөтэй байлгахад самбарыг дахин эхлүүлэх ёстой."
+msgstr ""
+"Үнэн бол самбар нь самбарын тохиргооны ямар нэг өөрчлөлтийг зөвшөөрөхгүй. "
+"Апплет бүр тус тусдаа түгжигдэх ёстой. Үүнийг нөлөөтэй байлгахад самбарыг "
+"дахин эхлүүлэх ёстой."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1210,7 +1318,11 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Апплетын ТТ жагсаалт самбарыг үгүйсгэсэн. Ийм байдлаар та цэсэнд ачаалж байгаа болон харуулж байгаа апплетуудаас хаах боломжтой. Жишээлбэл апплетын жижиг удирдлагыг хаахад энэ жагсаалт дээр 'OAFIID:ГНОМЕ_Жижиг удирдлагын апплет'-ийг нэмнэ. Үүнийг нөлөөтэй байлгахад самбарыг дахин эхлүүлнэ."
+msgstr ""
+"Апплетын ТТ жагсаалт самбарыг үгүйсгэсэн. Ийм байдлаар та цэсэнд ачаалж "
+"байгаа болон харуулж байгаа апплетуудаас хаах боломжтой. Жишээлбэл апплетын "
+"жижиг удирдлагыг хаахад энэ жагсаалт дээр 'OAFIID:ГНОМЕ_Жижиг удирдлагын "
+"апплет'-ийг нэмнэ. Үүнийг нөлөөтэй байлгахад самбарыг дахин эхлүүлнэ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1220,7 +1332,9 @@ msgstr "Хүчээр гарахыг идэвхгүйжүүлэх"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Үнэн бол самбар хэрэглэгчдэд хаах товч руу орох оролтыг устгаж програм хаахыг зөвшөөрөхгүй."
+msgstr ""
+"Үнэн бол самбар хэрэглэгчдэд хаах товч руу орох оролтыг устгаж програм "
+"хаахыг зөвшөөрөхгүй."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1324,7 +1438,9 @@ msgstr "Самбар дах объектын байрлал"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Энэ самбар обьектын байрлал. Энэ байрлал нь самбарны зүүн захын (босоо бол суурь) цэгүүдийн тоогоор тодорхойлогддог."
+msgstr ""
+"Энэ самбар обьектын байрлал. Энэ байрлал нь самбарны зүүн захын (босоо бол "
+"суурь) цэгүүдийн тоогоор тодорхойлогддог."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1334,7 +1450,9 @@ msgstr "Суурь/баруун зах гэсэн харьцангуй байр�
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Үнэн бол обьектын байрлал самбарны баруун захад (босоо бол суурь хэсэгт) байна."
+msgstr ""
+"Үнэн бол обьектын байрлал самбарны баруун захад (босоо бол суурь хэсэгт) "
+"байна."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1344,7 +1462,9 @@ msgstr "Объектыг самбарт бэхлэх"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Үнэн бол хэрэглэгч \"Нээлттэй\" цэсний эмблем ашиглан обьектыг эхэлж нээхгүйгээр апплетыг зөөж чадахгүй."
+msgstr ""
+"Үнэн бол хэрэглэгч \"Нээлттэй\" цэсний эмблем ашиглан обьектыг эхэлж "
+"нээхгүйгээр апплетыг зөөж чадахгүй."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1366,7 +1486,9 @@ msgstr "Самбарыг шүүгээнд хавсаргав"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Самбарны тэмдэглэгчийг энэ шүүгээнд хавсаргав. Энэ түлхүүр зөвхөн обьект_түлхүүр \"шүүгээ-обьект\" үед хүчинтэй.\t"
+msgstr ""
+"Самбарны тэмдэглэгчийг энэ шүүгээнд хавсаргав. Энэ түлхүүр зөвхөн "
+"обьект_түлхүүр \"шүүгээ-обьект\" үед хүчинтэй.\t"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1377,7 +1499,9 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "Шүүгээний болон цэсний зөвлөмжид харуулах текст. Энэ түлхүүр нь зөвхөн обьект_хэлбэр түлхүүр \"шүүгээ-обьект\" эсвэл \"цэс-обьект\" үед хүчинтэй."
+msgstr ""
+"Шүүгээний болон цэсний зөвлөмжид харуулах текст. Энэ түлхүүр нь зөвхөн "
+"обьект_хэлбэр түлхүүр \"шүүгээ-обьект\" эсвэл \"цэс-обьект\" үед хүчинтэй."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1388,7 +1512,10 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Үнэн бол хэрэглэгчийн эмблем нь товчны хэрэглэгчийн эмблемээр хэрэглэгдэнэ. Буруу бол хэрэглэгчийн эмблем үгүйсгэгдэнэ. Энэ түлхүүр нь зөвхөн товчны хэлбэрийн түлхүүр \"цэс-обьект\" эсвэл \"шүүгээ-обьект\" үед хүчинтэй."
+msgstr ""
+"Үнэн бол хэрэглэгчийн эмблем нь товчны хэрэглэгчийн эмблемээр хэрэглэгдэнэ. "
+"Буруу бол хэрэглэгчийн эмблем үгүйсгэгдэнэ. Энэ түлхүүр нь зөвхөн товчны "
+"хэлбэрийн түлхүүр \"цэс-обьект\" эсвэл \"шүүгээ-обьект\" үед хүчинтэй."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1399,7 +1526,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Зургийн файлын байрлал обьектын товчинд эмблемийг ашигладаг. Энэ түлхүүр нь зөвхөн обьект_хэлбэр түлхүүр \"шүүгээ-обьект\" эсвэл \"цэс-обьект\" үед хүчинтэй бөгөөд хэрэглэх_зуршил_эмблем түлхүүр үнэн байна."
+msgstr ""
+"Зургийн файлын байрлал обьектын товчинд эмблемийг ашигладаг. Энэ түлхүүр нь "
+"зөвхөн обьект_хэлбэр түлхүүр \"шүүгээ-обьект\" эсвэл \"цэс-обьект\" үед "
+"хүчинтэй бөгөөд хэрэглэх_зуршил_эмблем түлхүүр үнэн байна."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1410,7 +1540,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Үнэн бол цэс_зам түлхүүр цэсний агуулгаас бүрдсэн замаар хэрэглэгдэнэ. Буруу бол цэс_зам түлхүүр үгүйсгэгдэнэ. Энэ түлхүүр нь обьект түлхүүр зөвхөн \"цэс-обьект\" үед хүчинтэй."
+msgstr ""
+"Үнэн бол цэс_зам түлхүүр цэсний агуулгаас бүрдсэн замаар хэрэглэгдэнэ. Буруу"
+" бол цэс_зам түлхүүр үгүйсгэгдэнэ. Энэ түлхүүр нь обьект түлхүүр зөвхөн "
+"\"цэс-обьект\" үед хүчинтэй."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1421,7 +1554,9 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "Цэсний агуулгын зам үүссэн. Энэ түлхүүр зөвхөн хэрэглэх_цэс_зам түлхүүр үнэн бөгөөд обьект_хэлбэр түлхүүр \"цэс-обьект\" бол хүчинтэй."
+msgstr ""
+"Цэсний агуулгын зам үүссэн. Энэ түлхүүр зөвхөн хэрэглэх_цэс_зам түлхүүр үнэн"
+" бөгөөд обьект_хэлбэр түлхүүр \"цэс-обьект\" бол хүчинтэй."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1441,7 +1576,9 @@ msgstr "Ачаалагчийн байршил"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Ачаалагчийг тодорхойлж буй дэлгэцийн файлын байрлал. Энэ түлхүүр нь зөвхөн обьект_хэлбэр түлхүүр \"ачаалагч-обьект\" үед хүчинтэй."
+msgstr ""
+"Ачаалагчийг тодорхойлж буй дэлгэцийн файлын байрлал. Энэ түлхүүр нь зөвхөн "
+"обьект_хэлбэр түлхүүр \"ачаалагч-обьект\" үед хүчинтэй."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1452,7 +1589,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Товчны үзүүлж байгаа үйлдлийн хэлбэр. Боломжит утгууд нь \"бэхлэх\", \"гарах\", \"ажиллуулах\", \"хайх\" ба \"агшин дэлгэц\". Энэ түлхүүр нь зөвхөн обьект_түлхүүр \"action-applet\" үед хүчинтэй."
+msgstr ""
+"Товчны үзүүлж байгаа үйлдлийн хэлбэр. Боломжит утгууд нь \"бэхлэх\", "
+"\"гарах\", \"ажиллуулах\", \"хайх\" ба \"агшин дэлгэц\". Энэ түлхүүр нь "
+"зөвхөн обьект_түлхүүр \"action-applet\" үед хүчинтэй."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1463,7 +1603,8 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Энэ нь самбарыг тодорхойлоход таны хэрэглэсэн уншиж болохоор нэр байна. "
+msgstr ""
+"Энэ нь самбарыг тодорхойлоход таны хэрэглэсэн уншиж болохоор нэр байна. "
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1473,7 +1614,9 @@ msgstr "Самбар харуулах Х-дэлгэц"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "Та олон төрлийн дэлгэц тохиргоонд тухайн дэлгэц бүрд самбаруудтай байна. Энэ түлхүүр нь харагдаж буй самбарны идэвхитэй дэлгэцийг тодорхойлно."
+msgstr ""
+"Та олон төрлийн дэлгэц тохиргоонд тухайн дэлгэц бүрд самбаруудтай байна. Энэ"
+" түлхүүр нь харагдаж буй самбарны идэвхитэй дэлгэцийг тодорхойлно."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1483,7 +1626,9 @@ msgstr "Самбар харуулах Xinerama хянах самбар"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Та Xinerama тохиргоонд хянах дэлгэц бүрт самбаруудтай байна. Энэ түлхүүр самбарны идэвхитэй хянах дэлгэцийг тодорхойлно."
+msgstr ""
+"Та Xinerama тохиргоонд хянах дэлгэц бүрт самбаруудтай байна. Энэ түлхүүр "
+"самбарны идэвхитэй хянах дэлгэцийг тодорхойлно."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1495,7 +1640,10 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Үнэн бол самбар дэлгэцийн бүх өргөнийг эзэлнэ (Хэрвээ босоо самбар бол өндөрийг). Самбарны энэ төрөл нь зөвхөн дэлгэцийн захад байрлах боломжтой. Буруу бол самбар нь апплетууд, ачаалагчид, товчнуудыг багтаасан том байна."
+msgstr ""
+"Үнэн бол самбар дэлгэцийн бүх өргөнийг эзэлнэ (Хэрвээ босоо самбар бол "
+"өндөрийг). Самбарны энэ төрөл нь зөвхөн дэлгэцийн захад байрлах боломжтой. "
+"Буруу бол самбар нь апплетууд, ачаалагчид, товчнуудыг багтаасан том байна."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1511,7 +1659,14 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Самбарны байрлал. Боломжит утгууд \"дээд хэсэг\", \"доод хэсэг\", \"зүүн\", \"баруун\". Самбарны дэлгэцийн захад байгаа түлхүүр нь өргөтгөсөн хэлбэрт тодорхойлогддог. \"дээд хэсэг\" ба \"доод хэсэг\"-ээр ялгаа бүхий өргөтгөөгүй хэлбэр нь чухал биш - хоёулаа хэвтээ самбар гэдгийг тодорхойлох боловч зарим самбар обьектыг хэрхэн авах талаар зөвлөлгөө өгнө. Жишээлбэл, Самбарны \"дээд хэсэг\"-т цэсний товч нь самбарны доорхи цэстэй таарч байхад \"доод хэсэг\" дэх цэс самбарны дээр таардаг."
+msgstr ""
+"Самбарны байрлал. Боломжит утгууд \"дээд хэсэг\", \"доод хэсэг\", \"зүүн\", "
+"\"баруун\". Самбарны дэлгэцийн захад байгаа түлхүүр нь өргөтгөсөн хэлбэрт "
+"тодорхойлогддог. \"дээд хэсэг\" ба \"доод хэсэг\"-ээр ялгаа бүхий "
+"өргөтгөөгүй хэлбэр нь чухал биш - хоёулаа хэвтээ самбар гэдгийг тодорхойлох "
+"боловч зарим самбар обьектыг хэрхэн авах талаар зөвлөлгөө өгнө. Жишээлбэл, "
+"Самбарны \"дээд хэсэг\"-т цэсний товч нь самбарны доорхи цэстэй таарч байхад"
+" \"доод хэсэг\" дэх цэс самбарны дээр таардаг."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1523,7 +1678,11 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Самбарны өндөр (хэвтээ самбар бол өргөн). Үсгийн хэмжээ болон бусад үзүүлэлт дээр тулгуурласан хамгийн бага самбарны хэмжээг ажиллах хугацаанд тодорхойлно. Хамгийн том хэмжээ нь дэлгэцний өндөрийн (эсвэл өргөний) дөрөвний нэгээр тодорхойлогдоно."
+msgstr ""
+"Самбарны өндөр (хэвтээ самбар бол өргөн). Үсгийн хэмжээ болон бусад үзүүлэлт"
+" дээр тулгуурласан хамгийн бага самбарны хэмжээг ажиллах хугацаанд "
+"тодорхойлно. Хамгийн том хэмжээ нь дэлгэцний өндөрийн (эсвэл өргөний) "
+"дөрөвний нэгээр тодорхойлогдоно."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1534,7 +1693,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Самбарын х-тэнхлэгийн дагуух байрлал. Энэ түлхүүр зөвхөн өргөтгөөгүй хэлбэрт хүчинтэй. Өргөтгөсөн хэлбэрт энэ түлхүүр нь үгүйсгэгддэг ба самбар байрлалын түлхүүрээр тодорхойлогдсон дэлгэцийн захад байрлана."
+msgstr ""
+"Самбарын х-тэнхлэгийн дагуух байрлал. Энэ түлхүүр зөвхөн өргөтгөөгүй хэлбэрт"
+" хүчинтэй. Өргөтгөсөн хэлбэрт энэ түлхүүр нь үгүйсгэгддэг ба самбар "
+"байрлалын түлхүүрээр тодорхойлогдсон дэлгэцийн захад байрлана."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1545,7 +1707,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Самбарын у-тэнхлэгийн дагуух байрлал. Энэ түлхүүр зөвхөн өргөтгөөгүй хэлбэрт хүчинтэй. Өргөтгөсөн хэлбэрт энэ түлхүүр нь үгүйсгэгддэг ба самбар байрлалын түлхүүрээр тодорхойлогдсон дэлгэцийн захад байрлана."
+msgstr ""
+"Самбарын у-тэнхлэгийн дагуух байрлал. Энэ түлхүүр зөвхөн өргөтгөөгүй хэлбэрт"
+" хүчинтэй. Өргөтгөсөн хэлбэрт энэ түлхүүр нь үгүйсгэгддэг ба самбар "
+"байрлалын түлхүүрээр тодорхойлогдсон дэлгэцийн захад байрлана."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1608,13 +1773,17 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Үнэн бол сум самбарын хэсгийг орхисон тохиолдолд самбарыг дэлгэцийн буланд далдална. Сумыг буланд дахин зөөхөд самбар дахин гарч ирнэ."
+msgstr ""
+"Үнэн бол сум самбарын хэсгийг орхисон тохиолдолд самбарыг дэлгэцийн буланд "
+"далдална. Сумыг буланд дахин зөөхөд самбар дахин гарч ирнэ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Үнэн бол далдлагдсан болон далдлагдаагүй самбаруудыг одоо байгаагаас илүү хөдөлгөөнд оруулна."
+msgstr ""
+"Үнэн бол далдлагдсан болон далдлагдаагүй самбаруудыг одоо байгаагаас илүү "
+"хөдөлгөөнд оруулна."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1624,7 +1793,9 @@ msgstr "Далдлагдсан товчийг нээх"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Үнэн бол товчнуудыг дэлгэцийн зах руу зөөхөд ашигласан самбарны тал бүрд байрлуулж, зөвхөн нэг товчийг төлөөлүүлж үлдээнэ."
+msgstr ""
+"Үнэн бол товчнуудыг дэлгэцийн зах руу зөөхөд ашигласан самбарны тал бүрд "
+"байрлуулж, зөвхөн нэг товчийг төлөөлүүлж үлдээнэ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1634,7 +1805,9 @@ msgstr "Далдлагдсан товчин дээр сум үзүүлэх"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "Үнэн бол далдлагдсан товч дээр сумыг байрлуулна. Энэ түлхүүр зөвхөн боломжтой_товч түлхүүр үнэн үед хүчинтэй."
+msgstr ""
+"Үнэн бол далдлагдсан товч дээр сумыг байрлуулна. Энэ түлхүүр зөвхөн "
+"боломжтой_товч түлхүүр үнэн үед хүчинтэй."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1645,7 +1818,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Самбарыг автоматаар далдлахаас өмнө заагч самбарын хэсгийг орхисны дараах миллисекундын дугаарын хоцролтыг заасан. Энэ түлхүүр зөвхөн автоматаар далдлах түлхүүр үнэн үед хүчинтэй."
+msgstr ""
+"Самбарыг автоматаар далдлахаас өмнө заагч самбарын хэсгийг орхисны дараах "
+"миллисекундын дугаарын хоцролтыг заасан. Энэ түлхүүр зөвхөн автоматаар "
+"далдлах түлхүүр үнэн үед хүчинтэй."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1656,7 +1832,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Самбарыг автоматаар дахин харуулахаас өмнө заагч самбарт ирсний дараах миллисекундын дугаарын хоцролтыг заасан. Энэ түлхүүр зөвхөн автоматаар далдлах түлхүүр үнэн үед хүчинтэй."
+msgstr ""
+"Самбарыг автоматаар дахин харуулахаас өмнө заагч самбарт ирсний дараах "
+"миллисекундын дугаарын хоцролтыг заасан. Энэ түлхүүр зөвхөн автоматаар "
+"далдлах түлхүүр үнэн үед хүчинтэй."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1667,7 +1846,10 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Самбар буланд автоматаар далдлагдсан үед харагдаж буй пикселийн дугаарыг тодорхойлно. Энэ түлхүүр зөвхөн автоматаар далдлах түлхүүр үнэн үед хүчинтэй."
+msgstr ""
+"Самбар буланд автоматаар далдлагдсан үед харагдаж буй пикселийн дугаарыг "
+"тодорхойлно. Энэ түлхүүр зөвхөн автоматаар далдлах түлхүүр үнэн үед "
+"хүчинтэй."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1678,7 +1860,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "Самбарыг хөдөлгөх хурд. Боломжит утгууд \"удаан\", \"дунд зэрэг\" мөн \"хурдан\". Энэ түлхүүр нь зөвхөн боломжит_хөдөлгөөнүүд түлхүүр үнэн үед хүчинтэй."
+msgstr ""
+"Самбарыг хөдөлгөх хурд. Боломжит утгууд \"удаан\", \"дунд зэрэг\" мөн "
+"\"хурдан\". Энэ түлхүүр нь зөвхөн боломжит_хөдөлгөөнүүд түлхүүр үнэн үед "
+"хүчинтэй."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1709,7 +1894,10 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Дэвсгэрийн өнгөний форматын тодорхой бус байдлыг заана. Хэрвээ өнгө нь хэсэг газраараа тунгалаг биш (утга нь 655335- аас бага) бол тухайн өнгө дэлгэцийн дэвсгэр өнгөнд агуулагдана."
+msgstr ""
+"Дэвсгэрийн өнгөний форматын тодорхой бус байдлыг заана. Хэрвээ өнгө нь хэсэг"
+" газраараа тунгалаг биш (утга нь 655335- аас бага) бол тухайн өнгө дэлгэцийн"
+" дэвсгэр өнгөнд агуулагдана."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1720,7 +1908,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Дэвсгэр зурагт хэрэглэх файлыг тодорхойлох. Хэрвээ зураг альфа сувагт агуулагдаж байвал дэлгэцийн дэвсгэр зурагт хамт байна."
+msgstr ""
+"Дэвсгэр зурагт хэрэглэх файлыг тодорхойлох. Хэрвээ зураг альфа сувагт "
+"агуулагдаж байвал дэлгэцийн дэвсгэр зурагт хамт байна."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1730,7 +1920,9 @@ msgstr "Зургийг самбарт дүүргэх"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Үнэн бол зургийг самбарын өндөрт хуваарилна (зургийн уртын хэмжээг хадгална)."
+msgstr ""
+"Үнэн бол зургийг самбарын өндөрт хуваарилна (зургийн уртын хэмжээг "
+"хадгална)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1740,7 +1932,9 @@ msgstr "Зургийг самбарт татаж тааруулах"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Үнэн бол зургийг самбарын хэмжээнд хуваарилна. Зургийн уртын хэмжээ хадгалагдахгүй."
+msgstr ""
+"Үнэн бол зургийг самбарын хэмжээнд хуваарилна. Зургийн уртын хэмжээ "
+"хадгалагдахгүй."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1755,65 +1949,66 @@ msgstr "Үнэн бол самбар хэвтээ үед дэвсгэр зург
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr ""
+msgstr "Файл нь зөв .desktop файл биш байна"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr ""
+msgstr "Дэсктоп файлын танигдахгүй Хувилбар '%s'"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "%s-ийг эхлүүлж байна"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "Командын мөрний баримт бичгийг програм хүлээн авахгүй байна"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "Танигдахгүй эхлүүлэх сонголт: %d"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
+"URIs баримт бичгийг 'Type=Link' дэсктопын оролт руу оруулах боломжгүй байна"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Нээж болох зүйл биш байна"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "Сэшн менежерт холбогдох боломжгүй болгох"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Тохиргоо сануулсан файлыг ялган харуулах"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
-msgstr ""
+msgstr "ФАЙЛ"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Сэшн менежментийн ID-г ялган харуулах"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
-msgstr ""
+msgstr "Дугаар"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
-msgstr ""
+msgstr "Сэшн менежментийн сонголтууд:"
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
+msgstr "Сэшн менежментийн сонголтуудыг харуулах"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1821,10 +2016,10 @@ msgstr ""
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
-msgstr ""
+msgstr "Алдаа"
 
 #: ../mate-panel/libpanel-util/panel-icon-chooser.c:381
 msgid "Choose an icon"
@@ -1852,36 +2047,36 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "Самбараас _устгах"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "_Зөөх"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "_Самбарт бэхлэх"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "Хоосон зайг олсонгүй"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "Шүүгээ"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_Шүүгээнд нэмэх..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
-msgstr "_Тохиргоо"
+msgstr "_Онцлогууд..."
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1896,7 +2091,7 @@ msgid "- Edit .desktop files"
 msgstr "- Ажлын талбар файл засварлах"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Ачаалагч үүсгэх"
 
@@ -1905,11 +2100,11 @@ msgstr "Ачаалагч үүсгэх"
 msgid "Directory Properties"
 msgstr "Лавлахын тохиргоо"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Ачаалагчийн тодруулга"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr ""
 
@@ -1939,20 +2134,20 @@ msgstr "Дэлгэцийн ачаалагч файлыг URI тэжээгээг�
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "%2$s%3$s самбарын ачаалагчийн %1$s файлыг нээх боломжгүй\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_Ачаалах"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "%s түлхүүр олгогдоогүй, ачаалагчийг ачаалах боломжгүй\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "Ачаалагч хадгалаж чадсангүй"
 
@@ -1975,23 +2170,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "Энэ ачаалагчийг _самбарт нэмэх"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "Энэ ачаалагчийг _дэлгэцэнд нэмэх"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "_Бүх цэс"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Үүнийг самбарт _шургуулгаар нэмэх"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Энийг самбарт _цэсээр нэмэх"
 
@@ -2043,7 +2238,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Хүчээр гарах"
 
@@ -2068,114 +2263,124 @@ msgstr "Унтраах"
 msgid "Shut down the computer"
 msgstr "Компютерийг унтраах"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "Хэвшмэл ачаалагч програм"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "Шинэ ачаалагч үүсгэх"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "Програм ачаалагч..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "Програмын цэснээс ачаалагчийг хуулах"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
-msgstr "Үндсэн Цэс"
+msgstr "Үндсэн цэс"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "ГНОМЕ үндсэн цэс"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Цэс самбар"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Хэвшмэл цэс самбар"
 
-#: ../mate-panel/panel-addto.c:165
-msgid "Separator"
-msgstr "Түсгаарлагч"
-
 #: ../mate-panel/panel-addto.c:166
+msgid "Separator"
+msgstr "Тусгаарлагч"
+
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "Самбарийн тэмдэглэгээг зохицуулахад зориулсан тусгаарлагч"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "Шүүгээнээс өөр тэмдэглэгээнд хадгалах"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(хоосон)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\"-д нэмэх тэмдэглэгээг олох:"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "Шүүгээнд нэмэх"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "Шүүгээнд нэмэх тэмдэглэгээг олох"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "Самбарт нэмэх"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "Самбард нэмэх _элементийг олох:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "_Эгэн"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" санамсаргүй хаагдсан"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Самбар обьект санамсаргүй хаагдлаа"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Хэрвээ та панел обьектыг дахин ачаалахад панелд автоматаар эргэн нэмэгдэх болно."
+msgstr ""
+"Хэрвээ та панел обьектыг дахин ачаалахад панелд автоматаар эргэн нэмэгдэх "
+"болно."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "Дахин бүү _ачаалж"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
-msgstr "_Дахин ачаалах"
+msgstr "_Ахин ачаалах"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Самбард \"%s\"-г ачаалах явцад асуудал гарлаа."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Өөрийн тохиргооны сангаас апплетыг устгах уу?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_Устгах"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2213,12 +2418,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2226,100 +2427,106 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "Энэ самбарыг _устгах"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "_Шинэ самбар"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "Самбарын _тухай"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "Програм"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "Терминалын програм"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
-msgstr ""
+msgstr "Байрлал"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_Төрөл:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr "_Нэр:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "_Сонгох..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "_Сэтгэгдэл:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "_Сэргээх"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "Програм сонго..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "Файл сонгох..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
 msgstr "_Байрлал:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "Ачаалагчийн нэр олгогдоогүй байна."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "Ачаалагчийн тушаал олгогдоогүй байна."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "Ачаалагчийн байрлал олгогдоогүй байна."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
 msgstr "Тусламж баримт үзүүлэх боломжгүй"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Програмыг хүчээр дуусгахын тулд цонхон дээр товшино уу. Болихын тулд <ESC> дар."
+msgstr ""
+"Програмыг хүчээр дуусгахын тулд цонхон дээр товшино уу. Болихын тулд <ESC> "
+"дар."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Програмаас хүчээр гарах"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2335,25 +2542,27 @@ msgstr "Баримтжуулалт, хавтаснууд болон сүлжээ
 
 #: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Дэлгэцийн байдал, ажиллах горим, тусламж руу орох эсвэл горимоос гаралтыг өөрчлөх"
+msgstr ""
+"Дэлгэцийн байдал, ажиллах горим, тусламж руу орох эсвэл горимоос гаралтыг "
+"өөрчлөх"
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
 msgstr "Програм"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "_Цэс засварлах"
 
 #: ../mate-panel/panel-menu-items.c:472
 msgid "Bookmarks"
-msgstr "Хавчуургууд"
+msgstr "Хавчуурга"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
-msgstr "%s -г нээх:"
+msgstr "'%s'-г нээх"
 
 #: ../mate-panel/panel-menu-items.c:566
 #, c-format
@@ -2478,7 +2687,7 @@ msgid "Drawer Properties"
 msgstr ""
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "'%s': %s файлыг унших боломжгүй байна"
@@ -2491,138 +2700,138 @@ msgstr "Хүснэгтний шинжүүдийг харуулах боломж�
 msgid "Panel Properties"
 msgstr "Самбарын тохируулга"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "Эдгээр шинжүүдээс зарим нь нээлттэй"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_Эмблем:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
-msgstr "Цэгүүд"
+msgstr "цэгүүд"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_Чиглэл:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "Хэмжээ:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "Ө_ргөсгөх"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "Автоматаар _нуух"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "Нууцлагдсан _товчийг үзүүлэх"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "Далдлагдсан товчин дээр _сум үзүүлэх"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_Хоосон (системийн хэлбэр хэрэглэх)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "Хатуу ө_нгө"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
-msgstr "Өнгө сонгох"
+msgstr "Та өнгөө сонгоно уу"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>Тунгалаг</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "Ө_нгө:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "_Хэлбэр:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>Балархай</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "Дэвсгэр _зураг:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "Дэвсгэр сонгох"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "Дэвсгэр"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "Дэвсгэр зургийн тодруулга"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Дүүргэх"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "Х_увиарлах"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "_Сунгах"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "Самбар _босоо бол зургийг эргүүлэх"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Саяхан хэрэглэгдсэн баримт \"%s\" нээгдсэнгүй"
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "%s-г нээж байхад тодорхойгүй алдаа гарлаа."
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Шинэхэн баримтуудын жагсаалтыг арилгах уу?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Шинэхэн баримтуудыг цэвэрлэх"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Шинэхэн баримтууд"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "Шинэхэн баримтуудын жагсаалтаас бүх элемэнтүүдийг цэвэрлэх"
 
@@ -2636,25 +2845,28 @@ msgstr "%s тушаалыг гүйцэтгэх боломжгүй"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s'-г ЮТФ-8 -с хөрвүүлэх боломжгүй"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Тушаал руу залгах файлын нэрийг сонго..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "Тайлбарыг нь харуулах програмыг сонгоно уу."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Биелүүлэх тушаал: %s"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Ажиллуулах цонхонд URI жагсаалт буруу формат (%d) эсвэл уртаар (%d) өгөгдсөн\n"
+msgstr ""
+"Ажиллуулах цонхонд URI жагсаалт буруу формат (%d) эсвэл уртаар (%d) "
+"өгөгдсөн\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "Ажиллуулах цонхонд харуулж чадахгүй"
 
@@ -2662,49 +2874,53 @@ msgstr "Ажиллуулах цонхонд харуулж чадахгүй"
 msgid "Run Application"
 msgstr "Програм ажиллуулах"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "Тушаалын эмблем"
-
-#: ../mate-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "Ажлуулах тушаалын эмблем."
-
-#: ../mate-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "_Терминалд ажиллуулах"
-
-#: ../mate-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "Тушаалыг терминал цонхонд ажиллуулах бол энэ талбарыг тэмдэглэ."
-
-#: ../mate-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "Дараах _файлтай ажиллуул..."
-
-#: ../mate-panel/panel-run-dialog.ui.h:7
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr "Энэ товчийг командын тэмдэгт мөрөнд файлыг хавсаргах хугацаанд харуулахын тулд товшино уу"
-
-#: ../mate-panel/panel-run-dialog.ui.h:8
-msgid "List of known applications"
-msgstr "Нийтлэг програмын жагсаалт"
-
-#: ../mate-panel/panel-run-dialog.ui.h:10
-msgid "Show list of known _applications"
-msgstr "Мэдэгдэж байгаа _програмуудын жагсаалт"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Ажиллуулах"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-run-dialog.ui.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Сонгосон програм эсвэл тушаал өгөх талбарын тушаалыг ажиллуулахад энэ товчийг дарна."
+msgstr ""
+"Сонгосон програм эсвэл тушаал өгөх талбарын тушаалыг ажиллуулахад энэ "
+"товчийг дарна."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Command icon"
+msgstr "Тушаалын эмблем"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "The icon of the command to be run."
+msgstr "Ажлуулах тушаалын эмблем."
+
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Run in _terminal"
+msgstr "_Терминалд ажиллуулах"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "Тушаалыг терминал цонхонд ажиллуулах бол энэ талбарыг тэмдэглэ."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Run with _file..."
+msgstr "Дараах _файлтай ажиллуул..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Энэ товчийг командын тэмдэгт мөрөнд файлыг хавсаргах хугацаанд харуулахын "
+"тулд товшино уу"
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+msgid "List of known applications"
+msgstr "Нийтлэг програмын жагсаалт"
+
+#: ../mate-panel/panel-run-dialog.ui.h:14
+msgid "Show list of known _applications"
+msgstr "Мэдэгдэж байгаа _програмуудын жагсаалт"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2712,7 +2928,7 @@ msgstr "_Хүчээр гарах"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "_Цэвэрлэх"
+msgstr "_Устгах"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2781,33 +2997,37 @@ msgstr "Апплетыг ачаалах бүтсэнгүй %s"
 msgid "Test applet utility"
 msgstr "Апплетын хэрэгсэл шалгах"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_Апплет:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Самбар далдлах"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
@@ -2827,7 +3047,7 @@ msgstr ""
 
 #: ../mate-panel/panel-util.c:866
 msgid "Home Folder"
-msgstr ""
+msgstr "Гэр хавтас"
 
 #. Translators: this is the same string as the one found in
 #. * caja
@@ -2848,26 +3068,26 @@ msgstr "Хайх"
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "%s URL нээх:"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "Энэ шүүгээг устгах уу?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "Шүүгээг устгавал шүүгээ болон түүний тохиргоо алдагдана."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "Энэ самбарыг устгах уу?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."

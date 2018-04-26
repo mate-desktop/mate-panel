@@ -1,29 +1,30 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Igbo (http://www.transifex.com/mate/MATE/language/ig/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
+"Language-Team: Igbo (https://www.transifex.com/mate/teams/13566/ig/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ig\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr ""
 
 #: ../applets/clock/calendar-window.c:259
 msgid "Edit"
-msgstr ""
+msgstr "Dezie"
 
 #: ../applets/clock/calendar-window.c:486
 msgid "Calendar"
@@ -32,14 +33,14 @@ msgstr "Kalenda"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -50,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -64,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -75,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -101,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr ""
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr ""
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Pịa ka egosi kalenda ọnwa"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Elekere Kọmputa"
 
@@ -123,7 +126,7 @@ msgstr "Elekere Kọmputa"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -133,231 +136,269 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr ""
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_Nkarachọ"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Nnyemaka"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "_Maka "
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "Debata _Oge"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "Debata _ụbọchị"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "We_bilata ụbọchị na oge"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr ""
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr ""
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Elekere"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "Elekere na-egosi oge na ụbọchị ozugbo"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
 msgstr "Omentụgharị-Uru"
 
+#: ../applets/clock/clock.ui.h:1
+msgid "Time & Date"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:3
+msgid "_Set System Time"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Clock Preferences"
+msgstr "Nkarachọ Elekere"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "_Mechie"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "Clock Format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:11
+msgid "_12 hour format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:12
+msgid "_24 hour format"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:13
+msgid "Panel Display"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Show the _date"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show seco_nds"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show wee_k numbers in calendar"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show _weather"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show _temperature"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
+msgid "General"
+msgstr "Zurugbezurugbe"
+
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "_Dezie"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:24
+msgid "Display"
+msgstr "Gosi"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_Visibility unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Pressure unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Wind speed unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Temperature unit:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:29
+msgid "Weather"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
+
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
+#: ../applets/clock/clock.ui.h:36
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:3
+#: ../applets/clock/clock.ui.h:37
 msgid "_Timezone:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:4
+#: ../applets/clock/clock.ui.h:38
 msgid "_Location Name:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:5
+#: ../applets/clock/clock.ui.h:39
 msgid "<i>(optional)</i>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:6
+#: ../applets/clock/clock.ui.h:40
 msgid "L_ongitude:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.ui.h:41
 msgid "L_atitude:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:8
-msgid "Time & Date"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:11
-msgid "_Set System Time"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:16
-msgid "Clock Preferences"
-msgstr "Nkarachọ Elekere"
-
-#: ../applets/clock/clock.ui.h:17
-msgid "Clock Format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:18
-msgid "_12 hour format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:19
-msgid "_24 hour format"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:20
-msgid "Panel Display"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:21
-msgid "Show the _date"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:22
-msgid "Show seco_nds"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:23
-msgid "Show wee_k numbers in calendar"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:24
-msgid "Show _weather"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:25
-msgid "Show _temperature"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
-msgid "General"
-msgstr "Zurugbezurugbe"
-
-#: ../applets/clock/clock.ui.h:28
-msgid "Display"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:29
-msgid "_Visibility unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:30
-msgid "_Pressure unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:31
-msgid "_Wind speed unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:32
-msgid "_Temperature unit:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:33
-msgid "Weather"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
 msgstr ""
 
 #: ../applets/clock/clock-location-tile.c:183
@@ -372,7 +413,7 @@ msgstr ""
 msgid "<small>Set</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -383,7 +424,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr ""
 
@@ -392,7 +433,7 @@ msgstr ""
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr ""
 
@@ -400,42 +441,42 @@ msgstr ""
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr ""
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
-msgstr ""
+msgstr "Amaghị"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr ""
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr ""
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr ""
 
@@ -453,7 +494,14 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "Kii a na-ezipụta nhazi oge nke elekere apleeti jiri rụọ ọrụ.Uru dị mmenwu bụ \"12-hour\", \"24-hour\", \"internet\", \"unix\" na \"custom\". Ọ bụrụ na ekpokọta ya na \"internet\", elekere ahụ ga-egosi oge nke ịntaneetị. Sistem oge ịntaneetị na-ekewa ụbọchị n'ime otu puku \" beats\".Enweghị nkewasị oge ụwa na sistem a,  ya bụ na oge ga-abụ otu na mba ụwa. Ọ bụrụ na-ekpokọta ya na \"unix\", elekere ahụ ga-egosi oge n'ụdị ntabi anya kamgbe Epoch, ya bụ n'afọ 1970-01-01. Maọbụrụ na ekpokọta ya na"
+msgstr ""
+"Kii a na-ezipụta nhazi oge nke elekere apleeti jiri rụọ ọrụ.Uru dị mmenwu bụ"
+" \"12-hour\", \"24-hour\", \"internet\", \"unix\" na \"custom\". Ọ bụrụ na "
+"ekpokọta ya na \"internet\", elekere ahụ ga-egosi oge nke ịntaneetị. Sistem "
+"oge ịntaneetị na-ekewa ụbọchị n'ime otu puku \" beats\".Enweghị nkewasị oge "
+"ụwa na sistem a,  ya bụ na oge ga-abụ otu na mba ụwa. Ọ bụrụ na-ekpokọta ya "
+"na \"unix\", elekere ahụ ga-egosi oge n'ụdị ntabi anya kamgbe Epoch, ya bụ "
+"n'afọ 1970-01-01. Maọbụrụ na ekpokọta ya na"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -489,7 +537,8 @@ msgstr "Gosi ụbọchị na tuultip"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, Gosi ụbọchị n'ime tuultip mgbe pọịnta nọ n'elekere."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, Gosi ụbọchị n'ime tuultip mgbe pọịnta nọ n'elekere."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -559,26 +608,31 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Ịmaọkwa: Iwu ahụ pụtara bụrụ ihe bara uru.\nKamgbe nke a bịara bụrụ apleetị na-abaghị uru, inwere ike ị gaghị achọ ime nke a.\nAnyị n'adụ gị ọdụ n'iji %s maka ihe ọbụla\nnke ga-eme ka apleetị ahụ baa uru mọọbụ \"practical\n."
+msgstr ""
+"Ịmaọkwa: Iwu ahụ pụtara bụrụ ihe bara uru.\n"
+"Kamgbe nke a bịara bụrụ apleetị na-abaghị uru, inwere ike ị gaghị achọ ime nke a.\n"
+"Anyị n'adụ gị ọdụ n'iji %s maka ihe ọbụla\n"
+"nke ga-eme ka apleetị ahụ baa uru mọọbụ \"practical\n"
+"."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "Inyogo"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s azụ ahụ"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -586,71 +640,80 @@ msgid ""
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr ""
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(ya na obere enyemaka site na George)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Ázụ̀"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s azụ ahụ, áfá keugbua"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "E nweghị ike ịchọtanwu iwu ahụ achọrọ imepụta"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s azụ ahụ kwuru:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "E nweghị ike ịgụ ihe ngosipụta site n'iwu\n\nNdesịta ozi: %s"
+msgstr ""
+"E nweghị ike ịgụ ihe ngosipụta site n'iwu\n"
+"\n"
+"Ndesịta ozi: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "_Kwuo ọzọ"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Iwu ahụ a hazirila anaghị arụ ọrụ nke mere na %s dochiri ya:"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "E nweghị ike imepụta '%s'\n\nNdesịta ozi: %s"
+msgstr ""
+"E nweghị ike imepụta '%s'\n"
+"\n"
+"Ndesịta ozi: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "E nweghị ike ịgụ site '%s'\n\nNdesịta ozi: %s"
+msgstr ""
+"E nweghị ike ịgụ site '%s'\n"
+"\n"
+"Ndesịta ozi: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr ""
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr ""
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s azụ ahụ, dibia"
@@ -659,47 +722,47 @@ msgstr "%s azụ ahụ, dibia"
 msgid "Fish Preferences"
 msgstr "Azụ nkarachọ"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "_Aha azụ:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "Iwu_ga-ebido mgbe a pịrị ya:"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr ""
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "...."
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_Faịlụ:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr ""
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_Freemu niile n'ime anịmeshiọn:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "_kwụsị Freemu nke ọbụla:"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "Freemu"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
 msgstr "Oge ntabi anya"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "_Tụgharịa na vatịkal paneelụ"
 
@@ -711,7 +774,8 @@ msgstr "Aha azụ ahụ"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "Azụ ọbụla na-enweghị aha bụ azụ tìì. Webata ndụ n'azụ site n'ịgụ ya aha."
+msgstr ""
+"Azụ ọbụla na-enweghị aha bụ azụ tìì. Webata ndụ n'azụ site n'ịgụ ya aha."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
@@ -721,7 +785,9 @@ msgstr "Pixmap animeshiọnụ azụ"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Kii a na-ezipụta ahafaịlụ nke pixmap nke a ga-eji maka ngosipụta anịmeshiọn n'ime apleetị azụ yītụ́wárá ihenlereanya pixmap."
+msgstr ""
+"Kii a na-ezipụta ahafaịlụ nke pixmap nke a ga-eji maka ngosipụta anịmeshiọn "
+"n'ime apleetị azụ yītụ́wárá ihenlereanya pixmap."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -741,7 +807,8 @@ msgstr "Freemu n'ime anịmeshiọn azụ"
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
-msgstr "Kii a na-ezipụta ọnụọgụgụ freemu nke a ga-egosipụta n'ime anịmeshiọnụ azụ."
+msgstr ""
+"Kii a na-ezipụta ọnụọgụgụ freemu nke a ga-egosipụta n'ime anịmeshiọnụ azụ."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
 msgid "Pause per frame"
@@ -749,7 +816,9 @@ msgstr "Kwụsị freemu nke ọbụla "
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
 msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "Kii a na-ezipụta ọnụọgụgụ nke oge nke otu ntabianya a ga-egosipụta freemu nke ọbụla."
+msgstr ""
+"Kii a na-ezipụta ọnụọgụgụ nke oge nke otu ntabianya a ga-egosipụta freemu "
+"nke ọbụla."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
 msgid "Rotate on vertical panels"
@@ -758,7 +827,9 @@ msgstr "Tugharịa na vatịkal peneelụ"
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, e gosipụtara anịmeshiọn azụ ahụ na ntụgharị n'elu vatịkal paneelụ"
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, e gosipụtara anịmeshiọn azụ ahụ na ntụgharị n'elu "
+"vatịkal paneelụ"
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -772,12 +843,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Mpaghara ebe ọmụmaọkwa"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "Paneelụ mpaghara ebe ọmụmaọkwa"
 
@@ -801,7 +872,9 @@ msgstr "Gosi windo site na wọkspeesi niile"
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, ndesịta windo ga-egosi windo site na wọkspeesi niile. kama ọ ga-egosi windo sọsọ site na wọkspeesi nọ mgbe ahụ."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, ndesịta windo ga-egosi windo site na wọkspeesi "
+"niile. kama ọ ga-egosi windo sọsọ site na wọkspeesi nọ mgbe ahụ."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -811,17 +884,22 @@ msgstr "Mgbe a ga-ekewasị windo"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Kpebie mgbe ị ga-ekewasị windo site n'otu usoroiheomume ahụ ná ndesịta windo ahụ. uru dị mmenwu bụ \"never\", \"auto\" na \"always\"."
+msgstr ""
+"Kpebie mgbe ị ga-ekewasị windo site n'otu usoroiheomume ahụ ná ndesịta "
+"windo ahụ. uru dị mmenwu bụ \"never\", \"auto\" na \"always\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
-msgstr "Kpụga windo ndị ahụ na wọkspeesi nọ mgbe ahụ mgbe á ná-ēpéwágá ya mpe"
+msgstr ""
+"Kpụga windo ndị ahụ na wọkspeesi nọ mgbe ahụ mgbe á ná-ēpéwágá ya mpe"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, mgbe ị na-epewaga windo mpe, kpụga ya na wọkspeesi nọ mgbe ahụ. Kama, banye na wọkspeesi nke windo."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, mgbe ị na-epewaga windo mpe, kpụga ya na wọkspeesi "
+"nọ mgbe ahụ. Kama, banye na wọkspeesi nke windo."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -842,7 +920,9 @@ msgstr "Gosi wọkspeesi niile"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, omembanye wọkspeesi ahụ ga-egosi wọkspeesi niile. Kama ọ ga-egosi sọsọ wọkspeesi nọ mgbe ahụ."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, omembanye wọkspeesi ahụ ga-egosi wọkspeesi niile. "
+"Kama ọ ga-egosi sọsọ wọkspeesi nọ mgbe ahụ."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -853,7 +933,10 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "Kii a na-egosi mpagharauhie ole (maka ndozi horizon) mọọbụ mpagharaogologo (maka ndozi vatịkal) omembanye wọkspeesi na-egosi wọkspeesi n'ime. Kii a na-aba uru mgbe ngosi wọkspeesi kii_niile_ahụ bụ̀ eziokwu. "
+msgstr ""
+"Kii a na-egosi mpagharauhie ole (maka ndozi horizon) mọọbụ mpagharaogologo "
+"(maka ndozi vatịkal) omembanye wọkspeesi na-egosi wọkspeesi n'ime. Kii a na-"
+"aba uru mgbe ngosi wọkspeesi kii_niile_ahụ bụ̀ eziokwu. "
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -874,7 +957,7 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
 msgstr "Ọhọpụta windo"
 
@@ -883,7 +966,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
 msgstr "Omembanye wọkspeesi"
 
@@ -892,7 +975,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "Ndesịta windo"
 
@@ -908,88 +991,92 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Ndebata dàrà àdà %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "Achọtaghị aịkọn"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "Pịa ebe a ka iweghachi windo zoro ezo."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Pịa ebe a ka i zoo windo niile ma gosi desktọọpụ."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "Gosi Bọtịn Desktọọpụ"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Bọtịnị a ga-enyere gị aka izo windo niile ma gosi desktọọpụ."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "Onyenlekọta windo gị akwadoghị ngosi bọtịn desktọọpụ, mọọbụ na ịnaghị ebido onyenlekọta windo."
+msgstr ""
+"Onyenlekọta windo gị akwadoghị ngosi bọtịn desktọọpụ, mọọbụ na ịnaghị ebido "
+"onyenlekọta windo."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "Ndesịta windo na-egosi ndesịta windo niile ná mkpokọta bọtịn ma nyekwara gị aka ịchọgharị ha."
+msgstr ""
+"Ndesịta windo na-egosi ndesịta windo niile ná mkpokọta bọtịn ma nyekwara gị"
+" aka ịchọgharị ha."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "Nkarachọ Ndesịta Windo"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Go_si windo site na wọkspeesi no mgbe ahụ "
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Gosi windo site na wọkspeesi niile"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "_Windo nke nkewasị onweghị"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "Kewasịa windo mgbe _ohere dị limiteedị"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "_Windo nke nkewasị mgbe ọbụla"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "Weghachi na wọkspeesi_nọ mgbe ahụ"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "Weghachi n'ebe_nsiripụta wọkspeesi"
 
@@ -997,62 +1084,66 @@ msgstr "Weghachi n'ebe_nsiripụta wọkspeesi"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "Ọhọpụta windo ahụ na-egosi ndesịta nke windo niile nà menu ma nyere gị aka ịchọgharị ha."
+msgstr ""
+"Ọhọpụta windo ahụ na-egosi ndesịta nke windo niile nà menu ma nyere gị aka "
+"ịchọgharị ha."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "Mpagharauhie"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "Mpagharaogologo"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Omembanye wọkspeesi na-egosi gị obere agbanke nke wọkspeesi gị na-enyere gị aka ịlekọta windo gị."
+msgstr ""
+"Omembanye wọkspeesi na-egosi gị obere agbanke nke wọkspeesi gị na-enyere gị "
+"aka ịlekọta windo gị."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "Nkarachọ omembanye wọkspeesi"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "Gosi _sọsọ wọkspeesi nọ mgbe ahụ"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "Gosi _wọkspeesi niile na:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "Ọnụọgụgụ nke _wọkspeesi:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "A_ha wọkspeesi:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Aha wọkspeesi"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "Gosi aha _wọkspeesi na omembanye"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr ""
 
@@ -1073,7 +1164,11 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, \"Usoroiheomume ahu a ma ama\"Ewepụtara ndesịta ahụ n'ime \"Bido usoroiheomume\"dayalọọgụ. Ma ọ bụ ma ọbụghị na a bawanyere ndesịta ahụ mgbe e gosiri dayalọọgụ ka elekọtara site n'aka kii_program_ngosi."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, \"Usoroiheomume ahu a ma ama\"Ewepụtara ndesịta ahụ "
+"n'ime \"Bido usoroiheomume\"dayalọọgụ. Ma ọ bụ ma ọbụghị na a bawanyere "
+"ndesịta ahụ mgbe e gosiri dayalọọgụ ka elekọtara site n'aka "
+"kii_program_ngosi."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1084,7 +1179,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, \"Usoroiheomume ahụ a ma ama\"ndesịta ahụ n'ime \"Bido usoroiheomume\"dayalọogụ ka abawanyere mgbe e mepere dayalọọgụ. Kii a bara uru sọsọ ma ọ bụrụ na kii ndesịta_program_nke e kwere bụ eziokwu."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, \"Usoroiheomume ahụ a ma ama\"ndesịta ahụ n'ime "
+"\"Bido usoroiheomume\"dayalọogụ ka abawanyere mgbe e mepere dayalọọgụ. Kii a"
+" bara uru sọsọ ma ọ bụrụ na kii ndesịta_program_nke e kwere bụ eziokwu."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1093,7 +1191,9 @@ msgstr "N'ekwe ngwụcha keonwe na \"Bido usoroiheomume\"dayalọọgụ"
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Ọ bụrụ na o bụ eziokwu, a ga-ewepụta ngwụcha nkeonwe nọ na \"Bido usoroiheomume\" dayalọọgụ."
+msgstr ""
+"Ọ bụrụ na o bụ eziokwu, a ga-ewepụta ngwụcha nkeonwe nọ na \"Bido "
+"usoroiheomume\" dayalọọgụ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1134,7 +1234,9 @@ msgstr "Ndesịta ID paneelụ"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Ndesịta ID paneelụ. IDs nke ọbụla na-egosi paneelụ tọplevụụl. Nhazi ahụ maka nke ọbụla nke paneelụ ndị a ka echekwara na /apps/panel/toplevels/$(id)."
+msgstr ""
+"Ndesịta ID paneelụ. IDs nke ọbụla na-egosi paneelụ tọplevụụl. Nhazi ahụ maka"
+" nke ọbụla nke paneelụ ndị a ka echekwara na /apps/panel/toplevels/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1145,7 +1247,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Ndesịta IDs ọbjektị paneelụ. ID nke ọbụla na-egosi ọbjektị paneelụ (ọmụmatụ obubata, bọtịnị mmem mọọbụ bọtịnị menu/bar). Nhazi maka ọbjektị ndị a ka echekwara na /apps/panel/objects/$(id)."
+msgstr ""
+"Ndesịta IDs ọbjektị paneelụ. ID nke ọbụla na-egosi ọbjektị paneelụ (ọmụmatụ "
+"obubata, bọtịnị mmem mọọbụ bọtịnị menu/bar). Nhazi maka ọbjektị ndị a ka "
+"echekwara na /apps/panel/objects/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1153,7 +1258,8 @@ msgstr "N'ekwe tuultip"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, a ga-egosi tuultip maka ọbjektị nọ na paneelụ."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, a ga-egosi tuultip maka ọbjektị nọ na paneelụ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
@@ -1168,7 +1274,9 @@ msgstr "Drọwa nke mmechi nkeonwe"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, drọwa ga-eji aka ya mechie mgbe ojieme pịrị obubata n'ime ya."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, drọwa ga-eji aka ya mechie mgbe ojieme pịrị obubata "
+"n'ime ya."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1178,7 +1286,9 @@ msgstr "Chọchaa nwepụ nke paneelụ"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, egosiri dayalọọgụ n'ịjụ maka nchọpụta ma ọ bụrụ na ojieme chọrọ iwepụ paneelụ."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, egosiri dayalọọgụ n'ịjụ maka nchọpụta ma ọ bụrụ na "
+"ojieme chọrọ iwepụ paneelụ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1187,7 +1297,8 @@ msgstr "Kpụkpụta ndi mbubata na maụsova"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, akpụpụtara obubata mgbe ojieme kpụgara pọịnta na ya."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, akpụpụtara obubata mgbe ojieme kpụgara pọịnta na ya."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1198,7 +1309,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ agaghị e kwe mgbanwe ọbụla na nhazi paneelụ ahụ. Paneelụ ndị ọzọ ga-achọ mkpọchi n'iche n'iche ka ọ dị. A ga-ebidogharịrị paneelụ ahụ ka nke a bido ọrụ."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ agaghị e kwe mgbanwe ọbụla na nhazi "
+"paneelụ ahụ. Paneelụ ndị ọzọ ga-achọ mkpọchi n'iche n'iche ka ọ dị. A ga-"
+"ebidogharịrị paneelụ ahụ ka nke a bido ọrụ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1210,7 +1324,11 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Ndesịta nke apleetị IIDs nke paneelụ na-elegharanya. N'ụzọ a ị ga-edizebụlụ ụfọdụ apleetị site n'idebata mọọbụ igosi na menu. Omụmatụ n'ịdịzebụlụ apleetị otiiwu-obere tinye 'OAFIID:MATE_MiniCommanderApplet' na ndesịta a. A ga-ebidogharị paneelụ ahụ ka nke a bido ọrụ."
+msgstr ""
+"Ndesịta nke apleetị IIDs nke paneelụ na-elegharanya. N'ụzọ a ị ga-edizebụlụ "
+"ụfọdụ apleetị site n'idebata mọọbụ igosi na menu. Omụmatụ n'ịdịzebụlụ "
+"apleetị otiiwu-obere tinye 'OAFIID:MATE_MiniCommanderApplet' na ndesịta a. A"
+" ga-ebidogharị paneelụ ahụ ka nke a bido ọrụ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1220,7 +1338,9 @@ msgstr "Akwụsịla ike dizebụlụ"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ agaghị e kwe ojieme ka ọkwụsị usoroiheomume n'ike site n'iwepụ ikikembanye na bọtịnị nkwụsị n'ike."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ agaghị e kwe ojieme ka ọkwụsị "
+"usoroiheomume n'ike site n'iwepụ ikikembanye na bọtịnị nkwụsị n'ike."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1324,7 +1444,9 @@ msgstr "Ebe ọbjektị na paneelụ"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Ebe paneelụ ọbjektị a. Ezipụtara ebe ahụ site n'ọnụọgụgụ nke pikseelụ n'akaekpe (mọọbụ nke elu ma ọ bụrụ na ọ dị vatịkal) paneelụ."
+msgstr ""
+"Ebe paneelụ ọbjektị a. Ezipụtara ebe ahụ site n'ọnụọgụgụ nke pikseelụ "
+"n'akaekpe (mọọbụ nke elu ma ọ bụrụ na ọ dị vatịkal) paneelụ."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1334,7 +1456,9 @@ msgstr "Tụgharịa ebe n'akụkụ okpuru/akanri"
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, a ga-atụgharị ebe ọbjektị n'akụkụ akanri (mọọbụ n'okpuru ma ọ bụrụ na ọ dị vatikal) nke paneelụ ahụ."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, a ga-atụgharị ebe ọbjektị n'akụkụ akanri (mọọbụ "
+"n'okpuru ma ọ bụrụ na ọ dị vatikal) nke paneelụ ahụ."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1344,7 +1468,9 @@ msgstr "Kpọchie ọbjektị na paneelụ ahụ"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, ojieme nwere ike ọ gaghị akpụgha apleetị n'ebughị ụzọ akpọpe ọbjektị ahụ n'iji \"Unlock\" menuitem."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, ojieme nwere ike ọ gaghị akpụgha apleetị n'ebughị "
+"ụzọ akpọpe ọbjektị ahụ n'iji \"Unlock\" menuitem."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1366,7 +1492,9 @@ msgstr "Paneelụ agbakwunyere na drọwa"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Ògòsí nke paneelụ agbakwunyere na drọwa a. Kii a na-aba uru ma ọ bụrụ kii object_type bụ \"drawer-object\"."
+msgstr ""
+"Ògòsí nke paneelụ agbakwunyere na drọwa a. Kii a na-aba uru ma ọ bụrụ kii"
+" object_type bụ \"drawer-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1377,7 +1505,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "Ngwe ahụ nke ga-egosi na tuultiipu maka drọwa a mọọbụ menu a. Kii a sọsọ bara uru ma ọ bụrụ na kii object_type bụ \"drawer-object\" mọọbụ \"menu-object\"."
+msgstr ""
+"Ngwe ahụ nke ga-egosi na tuultiipu maka drọwa a mọọbụ menu a. Kii a sọsọ "
+"bara uru ma ọ bụrụ na kii object_type bụ \"drawer-object\" mọọbụ \"menu-"
+"object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1388,7 +1519,11 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, kii aịkọn_emeredịkachọrọ ka e weere dịka aịkọnụ emeredịkachọrọ maka bọtịnị ahụ. Ma ọ bụrụ na ọ bụ asị, a ga-eleghara aịkọnụ_emeredịkachọrọ anya. Kii a na-aba uru ma ọ bụrụ na kii ụdị_ọbjektị bụ \"menu-object\" mọọbụ \"drawer-object\"."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, kii aịkọn_emeredịkachọrọ ka e weere dịka aịkọnụ "
+"emeredịkachọrọ maka bọtịnị ahụ. Ma ọ bụrụ na ọ bụ asị, a ga-eleghara "
+"aịkọnụ_emeredịkachọrọ anya. Kii a na-aba uru ma ọ bụrụ na kii ụdị_ọbjektị bụ"
+" \"menu-object\" mọọbụ \"drawer-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1399,7 +1534,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Ebe faịlụ inyogo ejiri dịka aịkọn maka bọtịnị ọbjektị. Kii a sọsọ na-aba uru ma ọ bụrụ na kii object_type bụ \"drawer-object\" mọọbụ \"menu-object\" nakwa kii use_custom_icon bụ eziokwu."
+msgstr ""
+"Ebe faịlụ inyogo ejiri dịka aịkọn maka bọtịnị ọbjektị. Kii a sọsọ na-aba uru"
+" ma ọ bụrụ na kii object_type bụ \"drawer-object\" mọọbụ \"menu-object\" "
+"nakwa kii use_custom_icon bụ eziokwu."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1410,7 +1548,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, ejiri kii menu_path dịka path nke a rụpụtara na ndịna menu. Ma ọ bụrụ na ọ bụ asị, a ga-eleghara kii menu_path anya. Kii a na-aba uru sọsọ ma ọ bụrụ na kii object_type bụ \"menu-object\". "
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, ejiri kii menu_path dịka path nke a rụpụtara na "
+"ndịna menu. Ma ọ bụrụ na ọ bụ asị, a ga-eleghara kii menu_path anya. Kii a "
+"na-aba uru sọsọ ma ọ bụrụ na kii object_type bụ \"menu-object\". "
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1421,7 +1562,9 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "Paatị ahụ nke e siri rụpụta  ndịna menu. Kii a na-aba uru ma ọ bụrụ na kii use_menu_path bụ eziokwu nakwa kii object_type bụ \"menu- object\". "
+msgstr ""
+"Paatị ahụ nke e siri rụpụta  ndịna menu. Kii a na-aba uru ma ọ bụrụ na kii "
+"use_menu_path bụ eziokwu nakwa kii object_type bụ \"menu- object\". "
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1441,7 +1584,9 @@ msgstr "Ebe obubata"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Ebe desktọọpụ faịlụ nà-àkọ́wá obubata. Kii a na-aba uru ma ọ bụrụ na kii object_type bụ \"launcher-object\". "
+msgstr ""
+"Ebe desktọọpụ faịlụ nà-àkọ́wá obubata. Kii a na-aba uru ma ọ bụrụ na kii "
+"object_type bụ \"launcher-object\". "
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1452,7 +1597,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Ụdị mmem bọtịnị a na-anọchi. Valiu ndị dị mmenwu bụ \"lock\", \"logout\", \"run\", \"search\"screenshot\". Kii a na-aba uru ma ọ bụrụ na kii object_type bụ \"action-applet\"."
+msgstr ""
+"Ụdị mmem bọtịnị a na-anọchi. Valiu ndị dị mmenwu bụ \"lock\", \"logout\", "
+"\"run\", \"search\"screenshot\". Kii a na-aba uru ma ọ bụrụ na kii "
+"object_type bụ \"action-applet\"."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1463,7 +1611,10 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Nke a bụ aha mmadụ dị mma ọgụgụ nke ị ga-eji gosi paneelụ. Nkeisi ya bụ ịrụ orụ dịka isiokwu windo paneelụ nke bara uru mgbe a na-eme ngagharị na paneelụ ndị ahụ."
+msgstr ""
+"Nke a bụ aha mmadụ dị mma ọgụgụ nke ị ga-eji gosi paneelụ. Nkeisi ya bụ ịrụ "
+"orụ dịka isiokwu windo paneelụ nke bara uru mgbe a na-eme ngagharị na "
+"paneelụ ndị ahụ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1473,7 +1624,9 @@ msgstr "X screen ebe egosiri paneelụ ahụ "
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "Tinyere nrụnye nke mọlti-skriin, inwere ike inwe paneelụ n'inyogo nke ọbụla. Kii a na-egosipụta inyogo ọfụụ ǹkè a na-egosi paneelụ na ya."
+msgstr ""
+"Tinyere nrụnye nke mọlti-skriin, inwere ike inwe paneelụ n'inyogo nke ọbụla."
+" Kii a na-egosipụta inyogo ọfụụ ǹkè a na-egosi paneelụ na ya."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1483,7 +1636,9 @@ msgstr "Inyogo Xinerama ebe egosiri paneelụ ahụ"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Na nrụnye nke Xinerama, inwere ike inwe paneelụ n;inyogo nke ọbụla. Kii a na-egosipụta inyogo nọ mgbe ahụ a ga-egosiwe paneelụ."
+msgstr ""
+"Na nrụnye nke Xinerama, inwere ike inwe paneelụ n;inyogo nke ọbụla. Kii a "
+"na-egosipụta inyogo nọ mgbe ahụ a ga-egosiwe paneelụ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1495,7 +1650,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ ga-anọchị uhie inyogo niile ahụ (ógō ma ọ bụrụ na nke a bụ vatikal paneelụ). Ábị́á na moodu a ga-edogowe paneelụ sọsọ n'isi inyogo. Ọ bụrụ na ọ bụ asị, paneelụ ahụ ga-ebu ibu nke ibubataju apleetị ndị ahụ, obubata na bọtịn paneelụ. "
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ ga-anọchị uhie inyogo niile ahụ (ógō "
+"ma ọ bụrụ na nke a bụ vatikal paneelụ). Ábị́á na moodu a ga-edogowe "
+"paneelụ sọsọ n'isi inyogo. Ọ bụrụ na ọ bụ asị, paneelụ ahụ ga-ebu ibu nke "
+"ibubataju apleetị ndị ahụ, obubata na bọtịn paneelụ. "
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1511,7 +1670,12 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Ndụzi nke paneelụ. Valiu dị mmenwu bụ \"top\",\"bottom\", \"left \", \"right\". Na moodu anabawanyeghị̤ abawanye adimiche n'etiti \"top\" na \"bottom \" abachaghị uru - ha abụọ na-egosi na nke a bụ paneelụ kwụ ọtọ - ma na-enye ozi bara uru dịka etu ụfọdụ ọbjektị paneelụ sị akpa agwa. Ọmụmatụ, na \"top\"paneelụ bọtị̣nị menu ga-pọpụ ọpụ menu ya n'okpụrụ"
+msgstr ""
+"Ndụzi nke paneelụ. Valiu dị mmenwu bụ \"top\",\"bottom\", \"left \", "
+"\"right\". Na moodu anabawanyeghị̤ abawanye adimiche n'etiti \"top\" na "
+"\"bottom \" abachaghị uru - ha abụọ na-egosi na nke a bụ paneelụ kwụ ọtọ - "
+"ma na-enye ozi bara uru dịka etu ụfọdụ ọbjektị paneelụ sị akpa agwa. "
+"Ọmụmatụ, na \"top\"paneelụ bọtị̣nị menu ga-pọpụ ọpụ menu ya n'okpụrụ"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1523,7 +1687,10 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Ogo (Uhie maka vatịkal paneelụ)nke paneelụ. paneelụ ahụ ga-ekwun'oge mbido ụhara nke àl̀à nke beeziri n'ụhara ihumkpụrụedemede nakwa ogosi ndị ọzọ. Ụhara nke elu ka emeziri n'otu mpaghara nke ogo inyogo (mọọbụ uhie)."
+msgstr ""
+"Ogo (Uhie maka vatịkal paneelụ)nke paneelụ. paneelụ ahụ ga-ekwun'oge mbido "
+"ụhara nke àl̀à nke beeziri n'ụhara ihumkpụrụedemede nakwa ogosi ndị ọzọ. "
+"Ụhara nke elu ka emeziri n'otu mpaghara nke ogo inyogo (mọọbụ uhie)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1534,7 +1701,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Ebe paneelụ a n'ụzọ x axis. Kii a sọsọ bara uru na moodu ánábáwányéghị́ ábáwányé. Na moodu abawanyere abawanye a na-eleghara kii a anya nakwa a na-edogowe paneelụ a n'isi inyogo nke kii nduzi zipụtara."
+msgstr ""
+"Ebe paneelụ a n'ụzọ x axis. Kii a sọsọ bara uru na moodu ánábáwányéghị́"
+" ábáwányé. Na moodu abawanyere abawanye a na-eleghara kii a anya nakwa a"
+" na-edogowe paneelụ a n'isi inyogo nke kii nduzi zipụtara."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1545,7 +1715,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Ebe paneelụ a n'ụzọ y axis. Kii a sọṣọ bara uru na moodu ánábáwányéghị́ ábáwányé. Na moodu abawanyere aaabawanye a na-eleghara kii a anya nakwa a na-edogowe paneelụ a n'isi inyogo nke kii nduzi zipụtara."
+msgstr ""
+"Ebe paneelụ a n'ụzọ y axis. Kii a sọṣọ bara uru na moodu ánábáwányéghị́"
+" ábáwányé. Na moodu abawanyere aaabawanye a na-eleghara kii a anya nakwa"
+" a na-edogowe paneelụ a n'isi inyogo nke kii nduzi zipụtara."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1608,13 +1781,18 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ ga-eji aka ya zóó onwe ya n'ime kọna nke inyogo ahụ mgbe pọịnta ahụ papụrụ mpaghara paneelụ. Ịkpụga pọịnta ahụ na kọna ahụ ọzọ ga eme ka paneelụ ahụ pụta-gharịa ọzọ."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, paneelụ ahụ ga-eji aka ya zóó onwe ya n'ime kọna "
+"nke inyogo ahụ mgbe pọịnta ahụ papụrụ mpaghara paneelụ. Ịkpụga pọịnta ahụ na"
+" kọna ahụ ọzọ ga eme ka paneelụ ahụ pụta-gharịa ọzọ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, ozuzo na ezoghi ezo nke paneelụ a kà á gà-èmé n'ụdị ụmụanụmanụ kama ime ozugbo."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, ozuzo na ezoghi ezo nke paneelụ a kà á gà-èmé "
+"n'ụdị ụmụanụmanụ kama ime ozugbo."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1624,7 +1802,9 @@ msgstr "Na-enye aka izo bọtịn"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, a ga-edogowe bọtịn na mpaghara paneelụ nke ọbula nke a ga-eji kpụga paneelụ ahụ n'isi inyogo, hapụ otu bọtịn ka ọ ná-ègósí."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, a ga-edogowe bọtịn na mpaghara paneelụ nke ọbula nke"
+" a ga-eji kpụga paneelụ ahụ n'isi inyogo, hapụ otu bọtịn ka ọ ná-ègósí."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1634,7 +1814,9 @@ msgstr "Na-enyere aro aka na bọtịnị ozuzzo"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "O bụrụ na ọ bụ eziokwu, a ga-edogowe aro ndị ahụ na bọtịnị ozuzo. Kii a sọsọ bara uru ma ọ bụrụ na kịị enable_buttons bụ eziokwu."
+msgstr ""
+"O bụrụ na ọ bụ eziokwu, a ga-edogowe aro ndị ahụ na bọtịnị ozuzo. Kii a sọsọ"
+" bara uru ma ọ bụrụ na kịị enable_buttons bụ eziokwu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1645,7 +1827,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Na-ezipụta ọnụọgụgụ nke ọgbugbu oge milisekọds mgbe pọịnta hapụrụ mpaghara paneelụ tupuu paneelụ ejiri aka ya zogharịa onwe ya. Kii a sọsọ bara uru ma ọ bụrụ na kii auto_hide bụ eziokwu."
+msgstr ""
+"Na-ezipụta ọnụọgụgụ nke ọgbugbu oge milisekọds mgbe pọịnta hapụrụ mpaghara "
+"paneelụ tupuu paneelụ ejiri aka ya zogharịa onwe ya. Kii a sọsọ bara uru ma "
+"ọ bụrụ na kii auto_hide bụ eziokwu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1656,7 +1841,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Na-ezipụta ọnụọgụgụ nke ogbugbu oge nke milisekọnds mgbe pọịnta banyere na mpaghara paneelụ tupuu paneelụ ejiri aka ya gosigharịa onwe ya. Kii a sọsọ bara uru ma ọ bụrụ na kii auto_hide bụ eziokwu."
+msgstr ""
+"Na-ezipụta ọnụọgụgụ nke ogbugbu oge nke milisekọnds mgbe pọịnta banyere na "
+"mpaghara paneelụ tupuu paneelụ ejiri aka ya gosigharịa onwe ya. Kii a sọsọ "
+"bara uru ma ọ bụrụ na kii auto_hide bụ eziokwu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1667,7 +1855,10 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Na-ezipụta ọnụọgụgụ nke mmebereinyogo ahụrụ anya mgbe paneelụ ji aka ya zoghzrịa onwe ya n'otu kọna. Kii a sọsọ bara uru ma ọ buru na kii auto_hide bụ eziokwu."
+msgstr ""
+"Na-ezipụta ọnụọgụgụ nke mmebereinyogo ahụrụ anya mgbe paneelụ ji aka ya "
+"zoghzrịa onwe ya n'otu kọna. Kii a sọsọ bara uru ma ọ buru na kii auto_hide "
+"bụ eziokwu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1678,7 +1869,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "Ụdị ọsịsọ nke paneelụ animeshiọn na-agba. Valiu dị mmenwu bụ \"slow \", \"medium\" na \"fast\". Kii a sọsọ na-aba uru ma ọ bụrụ na kii enable_animations bụ eziokwu."
+msgstr ""
+"Ụdị ọsịsọ nke paneelụ animeshiọn na-agba. Valiu dị mmenwu bụ \"slow \", "
+"\"medium\" na \"fast\". Kii a sọsọ na-aba uru ma ọ bụrụ na kii "
+"enable_animations bụ eziokwu."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1709,7 +1903,10 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Na-ezipụta nhazi ụcha okpuru nke ánāhụ́chāghị́ányá. Ọ bụrụ na ụcha ahụ na-ahughị ya anya kpamkpam (valiu nke les dan 65535), a ga-ahazi ụcha ahụ n'inyogo okpuru desktọọpụ. "
+msgstr ""
+"Na-ezipụta nhazi ụcha okpuru nke ánāhụ́chāghị́ányá. Ọ bụrụ na ụcha ahụ "
+"na-ahughị ya anya kpamkpam (valiu nke les dan 65535), a ga-ahazi ụcha ahụ "
+"n'inyogo okpuru desktọọpụ. "
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1720,7 +1917,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Na-ezipụta faịlụ ka ejiri ya maka inyogo okpuru. Ọ bụrụ na inyogo ahụ nwere alpha channel a ga-ahazi ya n'okpuru inyogo desktọọpụ."
+msgstr ""
+"Na-ezipụta faịlụ ka ejiri ya maka inyogo okpuru. Ọ bụrụ na inyogo ahụ nwere "
+"alpha channel a ga-ahazi ya n'okpuru inyogo desktọọpụ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1730,7 +1929,9 @@ msgstr "Fiitie inyogo na paneelụ"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, a ga-skeelụ inyogo (desagharia aspektị reshio nke inyogo) n'ogo paneelụ (ma ọ bụrụ na ọkwụ ogologo)."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, a ga-skeelụ inyogo (desagharia aspektị reshio nke "
+"inyogo) n'ogo paneelụ (ma ọ bụrụ na ọkwụ ogologo)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1740,7 +1941,9 @@ msgstr "Gbatịa inyogo na paneelụ"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, a ga-skeelụ mpaghara paneelụ. Agaghị ajikwa aspektị reshio nke inyogo. "
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, a ga-skeelụ mpaghara paneelụ. Agaghị ajikwa aspektị "
+"reshio nke inyogo. "
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1750,7 +1953,9 @@ msgstr "Tụgharịa inyogo na vatịkal paneelụ"
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "Ọ bụrụ na ọ bụ eziokwu, a ga-atụgharị inyogo okpuru mgbe eduziri paneelụ vatikali."
+msgstr ""
+"Ọ bụrụ na ọ bụ eziokwu, a ga-atụgharị inyogo okpuru mgbe eduziri paneelụ "
+"vatikali."
 
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1765,7 +1970,7 @@ msgstr ""
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "Na-ebido %s"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
@@ -1785,7 +1990,7 @@ msgstr ""
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Ọ bụghị ihenhọrọ dị̄ mbubata"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
@@ -1821,8 +2026,8 @@ msgstr ""
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr ""
 
@@ -1852,32 +2057,32 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Kpụpụta na Paneelụ"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "_Kpụghaa"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr ""
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr ""
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "Drọwa"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_Tinye na Drọwa... "
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
@@ -1896,7 +2101,7 @@ msgid "- Edit .desktop files"
 msgstr ""
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Kewapụta obubata"
 
@@ -1905,11 +2110,11 @@ msgstr "Kewapụta obubata"
 msgid "Directory Properties"
 msgstr ""
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Akparamagwa obubàtà"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr ""
 
@@ -1939,20 +2144,20 @@ msgstr "Onweghị URI ewepụtaara paneelụ obubàtà desktọọpụ faịl�
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "Desktọọpụ faịlụ %s ekweghị mmepe maka obubàtà paneelụ%s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_Bubata"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr ""
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr ""
 
@@ -1975,23 +2180,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr ""
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr ""
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr ""
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr ""
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr ""
 
@@ -2043,7 +2248,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Nwepụ n'ike"
 
@@ -2068,114 +2273,124 @@ msgstr ""
 msgid "Shut down the computer"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "Obubata usoroiheomume emeredịkaachọrọ"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "Kewapụta obubata ọfụụ"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "Obubata usoroiheomume..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
 msgstr "Menu nkeisi"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "MATE menu nkeisi"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Menu baa"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Menu baa emeredịkaachọrọ"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "Drọwa mpụta ozugbo ka ochekwa ihenhọrọ ndị ọzọ n'ime"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(efu)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "Tinye na Drọwa"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "Tinye na paneelụ"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "_Azụ"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" akwụsịla na-amaghị ama"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Ọbjektị paneelụ akwụsịla na-amaghị ama"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Ọ bụrụ na ibubatagharịa ọbjektị paneelụ, ọ ga-eji aka ya tinyeghachi na paneelụ ahụ."
+msgstr ""
+"Ọ bụrụ na ibubatagharịa ọbjektị paneelụ, ọ ga-eji aka ya tinyeghachi na "
+"paneelụ ahụ."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "_Ebubatagharịkwala"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
 msgstr "_Bubatagharịa"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Paneelụ ahụ bakwuuru nsogbu mgbe ọ na-ebubata \"%s\"."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ị̀ chọrọ ihicha apleetị site na nhazi gị?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_Hichaa"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2213,12 +2428,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2226,100 +2437,104 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_Hichaa paneelụ a "
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "_Paneelụ ọfụụ"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "M_aka Paneelụ"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr ""
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr ""
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr ""
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr ""
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
-msgstr ""
+msgstr "_Ebe:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr ""
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
 msgstr ""
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "Pịa na windo n'ịkwụsị usoroiheomume n'ike. N'iwepụ pịa <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr ""
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2339,9 +2554,9 @@ msgstr ""
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
-msgstr "Usoroiheomume"
+msgstr "Usoro ihe omume"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "_Dezie Menu"
 
@@ -2350,7 +2565,7 @@ msgid "Bookmarks"
 msgstr "Òbún̄gósíébēfailụ"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "Mepee '%s'"
@@ -2393,7 +2608,7 @@ msgstr ""
 #: ../mate-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr ""
+msgstr "Desktọ́ọ̀pụ̀"
 
 #: ../mate-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
@@ -2401,7 +2616,7 @@ msgstr ""
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
-msgstr ""
+msgstr "Kọmputa"
 
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
@@ -2410,7 +2625,7 @@ msgstr ""
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
-msgstr ""
+msgstr "Ikukumgbasaozi"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
@@ -2478,7 +2693,7 @@ msgid "Drawer Properties"
 msgstr ""
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr ""
@@ -2491,138 +2706,138 @@ msgstr ""
 msgid "Panel Properties"
 msgstr "Akparamagwa paneelụ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "Mkpọchi akparamagwa ụfọdụ ndị a"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_Aịkọn:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
 msgstr "pixels"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_Nduzi:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "_Ụhara"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "B_awanye"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_Ozuzokeonwe"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "Gosi _bọtịnị ndị e zoro ezo"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "Ar_o nọ na bọtịnị ozuzo"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_Onweghị (Jiri isiokwu sistem)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "Ụcha _bụ̄ ákpụ̀"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
 msgstr "Họrọ ụcha"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>Kèánàhụ́ányā</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "Ục_ha:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "Ụ_dị:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>Kèánáhụ́chāghị́ányá</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "Inyogo _keokpuru:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "Họrọ keokpuru"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "Keokpuru"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "Ndesịta mmem inyogo keokpuru"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Taịlụ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "_Skeelụ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "Mg_batị"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "Tụgharịa inyogo mgbe paneelụ dị _vatịkal"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Kpochapụ dọkụmenti nke ọfụụ?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Kpochapụ dọkumenti ndị ọfụụ"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Dọkumenti ọfụụ"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "Kpochapụ ihenhọrọ niile na ndesịta dọkumenti ọfụụ"
 
@@ -2636,25 +2851,28 @@ msgstr ""
 msgid "Could not convert '%s' from UTF-8"
 msgstr ""
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Họrọ faịlụ ka ịgbakwunye n'iwu ahụ..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "Họrọ usoroiheomume ka i gosi nkọwa ya."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Ga-ebido iwu: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Ndesịta URI kwụsịrị na mbido dayalọọgụ nwere ájọ́ nhaziihe (%d) mọọbụ ogologo (%d)\n"
+msgstr ""
+"Ndesịta URI kwụsịrị na mbido dayalọọgụ nwere ájọ́ nhaziihe (%d) mọọbụ "
+"ogologo (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr ""
 
@@ -2662,49 +2880,52 @@ msgstr ""
 msgid "Run Application"
 msgstr "Bido Usoroiheomume"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "Aịkọn iwu"
-
-#: ../mate-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "A ga-ebido aịkọn iwu."
-
-#: ../mate-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "Bido _ngwaọrụ mbupụ na mbubata ozi"
-
-#: ../mate-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "Họrọ igbe a bido iwu na windo mbupụ na mbubata ozi."
-
-#: ../mate-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "Bido ya na _faịlụ..."
-
-#: ../mate-panel/panel-run-dialog.ui.h:7
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr "Pịa bọtịnị a ka ịchọgharịa maka nke aha ya gbakwunyere n'iwu ahịrị ahụ."
-
-#: ../mate-panel/panel-run-dialog.ui.h:8
-msgid "List of known applications"
-msgstr "Ndesịta usoroiheomume a na-amaghị"
-
-#: ../mate-panel/panel-run-dialog.ui.h:10
-msgid "Show list of known _applications"
-msgstr "Gosi ndesịta _usoroiheomume ndị ama"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Bido"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-run-dialog.ui.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Pịa bọtịnị a ka ibido usoroiheomume a họrọla mọọbụ iwu ahụ nọ n'ime fịldụ mbanye nke iwu."
+msgstr ""
+"Pịa bọtịnị a ka ibido usoroiheomume a họrọla mọọbụ iwu ahụ nọ n'ime fịldụ "
+"mbanye nke iwu."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Command icon"
+msgstr "Aịkọn iwu"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "The icon of the command to be run."
+msgstr "A ga-ebido aịkọn iwu."
+
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Run in _terminal"
+msgstr "Bido _ngwaọrụ mbupụ na mbubata ozi"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "Họrọ igbe a bido iwu na windo mbupụ na mbubata ozi."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Run with _file..."
+msgstr "Bido ya na _faịlụ..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Pịa bọtịnị a ka ịchọgharịa maka nke aha ya gbakwunyere n'iwu ahịrị ahụ."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+msgid "List of known applications"
+msgstr "Ndesịta usoroiheomume a na-amaghị"
+
+#: ../mate-panel/panel-run-dialog.ui.h:14
+msgid "Show list of known _applications"
+msgstr "Gosi ndesịta _usoroiheomume ndị ama"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2734,7 +2955,8 @@ msgstr "Zipụta ụhara ochie nke apleetị (xx-obere, nhatanha, ibu dgz.)"
 #: ../mate-panel/panel-test-applets.c:42
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "Zipụta nduzi nke ochie nke apleetị (elu, àlá àlà, akaekpe mọọbụ akanri)"
+msgstr ""
+"Zipụta nduzi nke ochie nke apleetị (elu, àlá àlà, akaekpe mọọbụ akanri)"
 
 #: ../mate-panel/panel-test-applets.c:66
 msgctxt "Size"
@@ -2781,33 +3003,37 @@ msgstr ""
 msgid "Test applet utility"
 msgstr "Nnwale ezi ngwaọrụ apleetị"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_Apleetị:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Zòó paneelụ"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
@@ -2827,7 +3053,7 @@ msgstr ""
 
 #: ../mate-panel/panel-util.c:866
 msgid "Home Folder"
-msgstr ""
+msgstr "Nsomebefaịlụ nke ụlọ"
 
 #. Translators: this is the same string as the one found in
 #. * caja
@@ -2848,27 +3074,31 @@ msgstr ""
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "Mepee URL: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "Hichaa drọwa a?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "Mgbe ehichara drọwa, drọwa na nhazi ya\n ga-efu."
+msgstr ""
+"Mgbe ehichara drọwa, drọwa na nhazi ya\n"
+" ga-efu."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "Hichaa paneelụ a?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "Mgbe ehichara paneelụ, paneelụ na nhazi ya\n ga-efu."
+msgstr ""
+"Mgbe ehichara paneelụ, paneelụ na nhazi ya\n"
+" ga-efu."

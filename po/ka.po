@@ -1,23 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Georgian (http://www.transifex.com/mate/MATE/language/ka/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Martin Wimpress <code@flexion.org>, 2018\n"
+"Language-Team: Georgian (https://www.transifex.com/mate/teams/13566/ka/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ka\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "მდებარეობა"
 
@@ -32,14 +33,14 @@ msgstr "კალენდარი"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -50,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -64,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -75,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -101,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d %B (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "დააწკაპეთ, თვიური კალენდრის დასამალად"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "დააწკაპეთ, თვიური კალენდრის სანახავად"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "კომპიუტერის საათი"
 
@@ -123,7 +126,7 @@ msgstr "კომპიუტერის საათი"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -133,232 +136,272 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "სისტემის დროის გამართვა..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "სისტემის დროის გამართვა"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "შეუძლებელი გახდა სისტემური დროის გამართვა"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_პარამეტრები"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_დახმარება"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
-msgstr "_აპლეტის შესახებ"
+msgstr "_შესახებ"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "_დროის ასლი"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "_თარიღის ასლი"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "დროის და თარიღის _გასწორება"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr ""
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr "ქალაქის სახელი"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr "ქალაქის დროის სარტყელი"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "საათი"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "აჩვენებს ამჟამინდელ თარიღსა და დროს"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Vladimer Sichinava  ვლადიმერ სიჭინავა  <vsichi@gnome.org>"
+msgstr "Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>"
 
-#. Languages that have a single word that translates as either "state" or
-#. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr "<small><i>ჩაწერეთ ქალაქის, რეგიონის ან ქვეყნის დასახელება, შემდგომ შემოთავაზებული მენიუდან ამოირჩიეთ</i></small>"
-
-#: ../applets/clock/clock.ui.h:3
-msgid "_Timezone:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:4
-msgid "_Location Name:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(არამნიშვნელოვანი)</i>"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "L_ongitude:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:7
-msgid "L_atitude:"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:1
 msgid "Time & Date"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr ""
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "_გაუქმება"
 
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr "მიმდინარე დრო:"
-
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:3
 msgid "_Set System Time"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr ""
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "_დრო:"
 
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr ""
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr "მიმდინარე დრო:"
 
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr ""
-
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:6
 msgid "Clock Preferences"
 msgstr "საათის პარამეტრები"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "დროის _პარამეტრები"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "_დახურვა"
+
+#: ../applets/clock/clock.ui.h:10
 msgid "Clock Format"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:11
 msgid "_12 hour format"
 msgstr "_12 საათიანი ფორმატი"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:12
 msgid "_24 hour format"
 msgstr "_24 საათიანი ფორმატი"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:14
 msgid "Show the _date"
 msgstr "თ_არიღის ჩვენება"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:15
 msgid "Show seco_nds"
 msgstr "წა_მების ჩვენება"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:16
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:17
 msgid "Show _weather"
 msgstr "ა_მინდის ჩვენება"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:18
 msgid "Show _temperature"
 msgstr "_ტემპერატურის ჩვენება"
 
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
 msgid "General"
 msgstr "საერთო"
 
-#: ../applets/clock/clock.ui.h:28
-msgid "Display"
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "დამატება"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "_დამუშავება"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:24
+msgid "Display"
+msgstr "დისპლეი"
+
+#: ../applets/clock/clock.ui.h:25
 msgid "_Visibility unit:"
-msgstr "ხი_ლვადობის ერთეული:"
+msgstr "_ხილვადობის ერთეული:"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:26
 msgid "_Pressure unit:"
-msgstr "წ_ნევის ერთეული:"
+msgstr "წნევის ე_რთეული:"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Wind speed unit:"
-msgstr "ქა_რის სიჩქარის ერთეული:"
+msgstr "ქარ_ის სიჩქარის ერთეული:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Temperature unit:"
 msgstr "_ტემპერატურის ერთეული:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "Weather"
 msgstr "ამინდი"
 
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "დროის _პარამეტრები"
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "აღმოსავლეთი"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "დასავლეთი"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "ჩრდილოეთი"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "სამხრეთი"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
+
+#. Languages that have a single word that translates as either "state" or
+#. "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:36
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>ჩაწერეთ ქალაქის, რეგიონის ან ქვეყნის დასახელება, შემდგომ "
+"შემოთავაზებული მენიუდან ამოირჩიეთ</i></small>"
+
+#: ../applets/clock/clock.ui.h:37
+msgid "_Timezone:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:38
+msgid "_Location Name:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:39
+msgid "<i>(optional)</i>"
+msgstr "<i>(არამნიშვნელოვანი)</i>"
+
+#: ../applets/clock/clock.ui.h:40
+msgid "L_ongitude:"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:41
+msgid "L_atitude:"
+msgstr ""
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -372,10 +415,12 @@ msgstr "<small>გამართვა...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>გამართვა</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "მიუთითეთ თქვენი მდებარეობა, როგორც მიმდინარე მდებარეობას და გამოიყენეთ მდებარეობის დროის სარტყელი ამ კომპიუტერისთვის."
+msgstr ""
+"მიუთითეთ თქვენი მდებარეობა, როგორც მიმდინარე მდებარეობას და გამოიყენეთ "
+"მდებარეობის დროის სარტყელი ამ კომპიუტერისთვის."
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -383,7 +428,7 @@ msgstr "მიუთითეთ თქვენი მდებარეობ�
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -392,7 +437,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -400,42 +445,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
-msgstr "უცნობია"
+msgstr "უცნობი"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, თითქოს ყოფილიყოს %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "აისი: %s / დაისი: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "შეუძლებელია '%s' დამხმარე დოკუმენტაციის ჩვენება"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "შეცდომა დოკუმენტაციის ჩვენებისას"
 
@@ -453,7 +498,15 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "ეს ღილაკი განსაზღვრავს საათის აპლეტით განსაზღვრულ დროის ფორმატს. მოცემული სახეობებია: “12–საათი“,“24–საათი“,“ინტერნეტი“,“UNIX“ და “სამომხმარებლო“. თუ საათი დაყენებულია “ინტერნეტ“–ზე, აჩვენებს ინტერნეტის დროს.  ინტერნეტ დროის სისტემა დღე–ღამეს ყოფს 1000 ბიტად \".beats\". ამ შემთხვევაში არ არსებობს არანაირი დროის სარტყელი და მტელს მსოფლიოში ერტი დროა. თუ ჩართულია “UNIX“ დრო, საათი აჩვენებს წამებს, რომელიც სათავეს იღებს “UNIX“–ის ეპოქაში, ანუ 1970.01.01. თუ საათი დაყენებულია  “სამომხარებლო“, ტრადიციულ ფორმატში. იგი აჩვენებს დროს, რომელიც განისაზღვრება სამომხმარებლო დროის სარტყელით."
+msgstr ""
+"ეს ღილაკი განსაზღვრავს საათის აპლეტით განსაზღვრულ დროის ფორმატს. მოცემული "
+"სახეობებია: “12–საათი“,“24–საათი“,“ინტერნეტი“,“UNIX“ და “სამომხმარებლო“. თუ "
+"საათი დაყენებულია “ინტერნეტ“–ზე, აჩვენებს ინტერნეტის დროს.  ინტერნეტ დროის "
+"სისტემა დღე–ღამეს ყოფს 1000 ბიტად \".beats\". ამ შემთხვევაში არ არსებობს "
+"არანაირი დროის სარტყელი და მტელს მსოფლიოში ერტი დროა. თუ ჩართულია “UNIX“ "
+"დრო, საათი აჩვენებს წამებს, რომელიც სათავეს იღებს “UNIX“–ის ეპოქაში, ანუ "
+"1970.01.01. თუ საათი დაყენებულია  “სამომხარებლო“, ტრადიციულ ფორმატში. იგი "
+"აჩვენებს დროს, რომელიც განისაზღვრება სამომხმარებლო დროის სარტყელით."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -465,7 +518,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "მოცემული გასაღები ადგენს საათის აპლეტის ფორმატს,მხოლოდ როცა დრო \"custom\"  ინდივიდუალურ ფორმატშია მოცემული. საათის ფორმატის შეცვლა შესაძლებელია ფუნქცია strftime()-ით. დამატებითი ინფორმაციისთვის იხილეთ strftime()-ის დოკუმენტაცია."
+msgstr ""
+"მოცემული გასაღები ადგენს საათის აპლეტის ფორმატს,მხოლოდ როცა დრო \"custom\"  "
+"ინდივიდუალურ ფორმატშია მოცემული. საათის ფორმატის შეცვლა შესაძლებელია ფუნქცია"
+" strftime()-ით. დამატებითი ინფორმაციისთვის იხილეთ strftime()-ის "
+"დოკუმენტაცია."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -489,7 +546,9 @@ msgstr "კარნახში თარიღის ჩვენება"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "თუ მონიშნულია, გამოსახე თარიღი კარნახის ფანჯარაში,როდესაც მიმთითებელი საათს ზევითაა."
+msgstr ""
+"თუ მონიშნულია, გამოსახე თარიღი კარნახის ფანჯარაში,როდესაც მიმთითებელი საათს "
+"ზევითაა."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -559,98 +618,113 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "ყურადღება: მოცემული ბრძანება წარმოადგენს რაღაცა მნიშვნელოვანს.\nრადგანაც საუბარია უმნიშვნელო აპლეტზე, თქვენ ალბათ არ გსურთ ეს.\nგირჩევთ არ გამოიყენოთ %s რაიმე მნიშვნელოვანი პროგრამისთვის,\nრომელიც მას პრაქტიკულს ან სასარგებლოს გახდის."
+msgstr ""
+"ყურადღება: მოცემული ბრძანება წარმოადგენს რაღაცა მნიშვნელოვანს.\n"
+"რადგანაც საუბარია უმნიშვნელო აპლეტზე, თქვენ ალბათ არ გსურთ ეს.\n"
+"გირჩევთ არ გამოიყენოთ %s რაიმე მნიშვნელოვანი პროგრამისთვის,\n"
+"რომელიც მას პრაქტიკულს ან სასარგებლოს გახდის."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "სურათები"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s თევზი"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s აპლეტს არავინ იყენებს, და მისი პანელზე ყოფნა რესურსების უაზრო ხარჯვას წარმოადგენს."
+msgstr ""
+"%s აპლეტს არავინ იყენებს, და მისი პანელზე ყოფნა რესურსების უაზრო ხარჯვას "
+"წარმოადგენს."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(პატარა დახმარება გიორგისაგან)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "თევზი"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s თევზი, არის თანამედროვე მკითხავი"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "ვერ ვპოულობ გასაშვებ ბრძანებას"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s თევზი ამბობს:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "შეუძლებელია ბრძანებიდან გამონატანის წაკითხვა\n\nდაწვრილებით: %s"
+msgstr ""
+"შეუძლებელია ბრძანებიდან გამონატანის წაკითხვა\n"
+"\n"
+"დაწვრილებით: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "_ილაპარაკე ხელახლა"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "კონფიგურირებული ბრძანება არ მოქმედებს და ჩაინაცვლა: %s-ით"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "შეუძლებელია გაშვება '%s'↵\n↵\nდეტალები: %s"
+msgstr ""
+"შეუძლებელია გაშვება '%s'↵\n"
+"↵\n"
+"დეტალები: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "შეუძლებელია '%s'-დან წაკითხვა↵\n↵\nდეტალები: %s"
+msgstr ""
+"შეუძლებელია '%s'-დან წაკითხვა↵\n"
+"↵\n"
+"დეტალები: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr "საჭიროებს წყლის გამოცვლას"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr "შეხედე დღევანდელ თარიღს!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s მკითხავი ტევზი"
@@ -659,47 +733,47 @@ msgstr "%s მკითხავი ტევზი"
 msgid "Fish Preferences"
 msgstr "თევზის პარამეტრები"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "თევზის სახელი:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "დაწკაპუნებით ჩასართველი ბრძანება"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr ""
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_ფაილი:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "ანიმაციის ამორჩევა"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_კადრების რაიდენობა ანიმაციაში"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "_დააპაუზე თიტოეული კადრი"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "კადრი"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
 msgstr "წამი"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "_შემოატრიალე ვერტუკალურად"
 
@@ -711,7 +785,9 @@ msgstr "თევზის სახელი"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "თევზი სახელის გარეშე, მართლაც რომ საცოდავი არსებაა. არ გაანაწყენოთ იგი, დაარქვით სახელი."
+msgstr ""
+"თევზი სახელის გარეშე, მართლაც რომ საცოდავი არსებაა. არ გაანაწყენოთ იგი, "
+"დაარქვით სახელი."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
@@ -721,7 +797,9 @@ msgstr "თევზის ანიმაციის პიქტოგრა�
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "ეს პარამეტრი წარმოადგენს პიქტოგრამის ფაილის სახელს რომელიც გამოყენებულ იქნება ანიმაციის ადგილას."
+msgstr ""
+"ეს პარამეტრი წარმოადგენს პიქტოგრამის ფაილის სახელს რომელიც გამოყენებულ "
+"იქნება ანიმაციის ადგილას."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -731,7 +809,9 @@ msgstr "ბრძანება შესრულდება დაჭერ�
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "ეს პარამეტრი წარმოადგენს ბრძანებას რომელიც თევზზე დაწკაპვის შედეგად ჩაირთვება."
+msgstr ""
+"ეს პარამეტრი წარმოადგენს ბრძანებას რომელიც თევზზე დაწკაპვის შედეგად "
+"ჩაირთვება."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
@@ -758,7 +838,8 @@ msgstr "ამოტრიალება ვერტიკალური პ�
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "მონიშვნის შემთხვევაში, თევზის ანიმაცია 90%ით ამოტრიალდება პანელის მიმართ."
+msgstr ""
+"მონიშვნის შემთხვევაში, თევზის ანიმაცია 90%ით ამოტრიალდება პანელის მიმართ."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -772,12 +853,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "შეტყობინებების არე"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "შეტყობინებების არე პანელზე"
 
@@ -801,7 +882,9 @@ msgstr "ფანჯრების ყველა სამუშაო გა
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "თუ მონიშნულია, ფანჯრების სია აჩვენებს არამარტო მიმდინარე გარემოში გახსნილ ფანჯრებს, არამედ ყველა ფანჯრებს სისტემაში არსებული გარემოებებიდან."
+msgstr ""
+"თუ მონიშნულია, ფანჯრების სია აჩვენებს არამარტო მიმდინარე გარემოში გახსნილ "
+"ფანჯრებს, არამედ ყველა ფანჯრებს სისტემაში არსებული გარემოებებიდან."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -811,7 +894,9 @@ msgstr "ფანჯრების დაჯგუფება"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "წყვეტს დააჯგუფოს თუ არა ერთი და იმავე პროგრამიდან წარმოშობილი ფანჯრები. შესაძლებელი მნიშვნელობებია \"არასდროს\", \"ავტო\" და \"ყოველთვის\"."
+msgstr ""
+"წყვეტს დააჯგუფოს თუ არა ერთი და იმავე პროგრამიდან წარმოშობილი ფანჯრები. "
+"შესაძლებელი მნიშვნელობებია \"არასდროს\", \"ავტო\" და \"ყოველთვის\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -821,7 +906,9 @@ msgstr "გადაიტანე ფანჯარა ახალ სამ
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "თუ მონიშნულია, ფანჯარა გაიხსნება მიმდინარე სამუშაო გარემოში და არა იმ გარემოში სადაც ის პირველად გაიხსნა."
+msgstr ""
+"თუ მონიშნულია, ფანჯარა გაიხსნება მიმდინარე სამუშაო გარემოში და არა იმ "
+"გარემოში სადაც ის პირველად გაიხსნა."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -832,7 +919,10 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "თუ მონიშნულია, გადამრთველი გამოსახავს სამუშაო გარემოებების სახელწოდებებს, სხვაგვარად, სამუშაო გარემოებებში მხოლოდ ფანჯრები გამოისახება. ყოველი ეს მუშაობს Marco ფანჯრების მმართველის გამოყენების შემთხვევაში."
+msgstr ""
+"თუ მონიშნულია, გადამრთველი გამოსახავს სამუშაო გარემოებების სახელწოდებებს, "
+"სხვაგვარად, სამუშაო გარემოებებში მხოლოდ ფანჯრები გამოისახება. ყოველი ეს "
+"მუშაობს Marco ფანჯრების მმართველის გამოყენების შემთხვევაში."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -842,7 +932,9 @@ msgstr "ანახე ყველა სამუშაო სივრცე
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "თუ მონიშნულია, გადამრთველი გამოსახავს არა მხოლოდ მიმდინარე გარემოს არამედ, ყველა არსებულს."
+msgstr ""
+"თუ მონიშნულია, გადამრთველი გამოსახავს არა მხოლოდ მიმდინარე გარემოს არამედ, "
+"ყველა არსებულს."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -853,7 +945,10 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "მოცემული გასაღები მიანიშნებს თუ რამდენ რიგად (ჰორიზონტალურად) ან სვეტად (ვერტიკალურად) გადამრთველი გამოსახავს სამუშაო გარემოებს. აქვს აზრი თუ ამორთულია display_all_workspaces გასაღები."
+msgstr ""
+"მოცემული გასაღები მიანიშნებს თუ რამდენ რიგად (ჰორიზონტალურად) ან სვეტად "
+"(ვერტიკალურად) გადამრთველი გამოსახავს სამუშაო გარემოებს. აქვს აზრი თუ "
+"ამორთულია display_all_workspaces გასაღები."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -874,25 +969,25 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
-msgstr "ფანჯრების სელექტორი"
+msgstr "ფანჯრების გადამრთველი"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
-msgstr "სამუშაო სივრცის გადამრთველი"
+msgstr "გარემოს გადამრთველი"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "ფანჯრების სია"
 
@@ -908,88 +1003,92 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "შეუძლებელია ჩატვირთვა %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "შეუძლებელია ხატულას პოვნა"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "დააჭირეთ აქ დამალული ფანჯრის აღსადგენად."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "დააჭირეთ აქ ყველა ფანჯრის დასამალად და სამუშაო მაგიდის გამოსაჩენად."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "სამუშაო მაგიდის ღილაკის ჩვენება"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ეს ღილაკი მალავს ყველა ფანჯარას და აჩენს სამუშაო მაგიდას."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "თქვენს ფანჯარათა მენეჯერს არ გააჩნია \"მაგიდის გამოჩენის\" ღილაკის მხარდაჭერა, ან სულაც ფანჯარათა მენეჯერი არ არის ჩართული."
+msgstr ""
+"თქვენს ფანჯარათა მენეჯერს არ გააჩნია \"მაგიდის გამოჩენის\" ღილაკის "
+"მხარდაჭერა, ან სულაც ფანჯარათა მენეჯერი არ არის ჩართული."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "\"ფანჯრების სია\" გიჩვენებთ გარემოს ყველა ფანჯარას ერთი ღილაკით მართვადი სიის სახით და გაძლევთ მათი დათვალიერების საშუალებას."
+msgstr ""
+"\"ფანჯრების სია\" გიჩვენებთ გარემოს ყველა ფანჯარას ერთი ღილაკით მართვადი "
+"სიის სახით და გაძლევთ მათი დათვალიერების საშუალებას."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "ფანჯარათა სიის პარამეტრები"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "მიმდინარე სამუშაო გარემოს ფანჯრების ჩვ_ენება"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "ყ_ველა სამუშაო გარემოებებიდან ფანჯრების ჩვენება"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "_არასოდეს დააჯგუფო ფანჯრები"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "ფანჯრების დაჯგუფება ადგილის არ ქონის დროს"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "_ყოველთვის დააჯგუფე ფანჯრები"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "_მიმდინარე სამუშაო გარემოს აღდგენა"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "თ_ავდაპირველი სამუშაო გარემოს აღდგენა"
 
@@ -997,62 +1096,65 @@ msgstr "თ_ავდაპირველი სამუშაო გარე
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "ფანჯრების სიის მენუს სახით წარმოსახვა და მათი მენუს სახით დათვალიერება."
+msgstr ""
+"ფანჯრების სიის მენუს სახით წარმოსახვა და მათი მენუს სახით დათვალიერება."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "ხაზი"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "სვეტი"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "სამუშაო გარემოთა გადამრთველი გიჩვენებთ მინიატურულ სამუშაო გარემოებს და მათი მართვის საშუალებას იძლევა."
+msgstr ""
+"სამუშაო გარემოთა გადამრთველი გიჩვენებთ მინიატურულ სამუშაო გარემოებს და მათი "
+"მართვის საშუალებას იძლევა."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
 msgstr "სივრცეთა გადამრთველის პარამეტრები"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "მიმდი_ნარე სამუშაო გარემოს ჩვენება"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "ყველა სამუშაო გარემოს ჩ_ვენება:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "სამუშაო სივრცეთა რაოდენობა"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "სივრცეთა სახელები"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "სივრცეთა სახელი"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "გადამრთველში _სამუშაო გარემოთა სახელების ჩვენება"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr ""
 
@@ -1073,7 +1175,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია გამოჩნდება \"პროგრამების გაშვება\"-ის დიალოგ ფანჯარაში. მის გაშლა/შეკეცვას განაპირობებს show_program_list გასაღები."
+msgstr ""
+"თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია გამოჩნდება \"პროგრამების "
+"გაშვება\"-ის დიალოგ ფანჯარაში. მის გაშლა/შეკეცვას განაპირობებს "
+"show_program_list გასაღები."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1084,7 +1189,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია \"პროგრამების გაშვება\"-ის დიალოგ ფანჯარაში გაშლილი სახით გამოჩნდება.ყოველივე ამას აქვს აზრი თუ მომიშნულია პარამეტრი enable_program_list."
+msgstr ""
+"თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია \"პროგრამების გაშვება\"-ის "
+"დიალოგ ფანჯარაში გაშლილი სახით გამოჩნდება.ყოველივე ამას აქვს აზრი თუ "
+"მომიშნულია პარამეტრი enable_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1093,7 +1201,8 @@ msgstr "ბრძანების ავტოაკრეფვის ჩა�
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "თუ მონიშნულია, \"Run Application\" დიალოგ ფანჯარაში ავტოაკრეფვა იმუშავებს."
+msgstr ""
+"თუ მონიშნულია, \"Run Application\" დიალოგ ფანჯარაში ავტოაკრეფვა იმუშავებს."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1134,7 +1243,10 @@ msgstr "პანელის ID სია"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "პანელების იდენტიფიკატორების სია. ყოველი იდენტიფიკატორი წარმოადგენს ზემო დონის პანელს. ამ პანელების ცალკეული პარამეტრი /apps/panel/toplevels/$(id)-ში ინახება."
+msgstr ""
+"პანელების იდენტიფიკატორების სია. ყოველი იდენტიფიკატორი წარმოადგენს ზემო "
+"დონის პანელს. ამ პანელების ცალკეული პარამეტრი /apps/panel/toplevels/$(id)-ში"
+" ინახება."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1145,7 +1257,11 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "პანელის ობიექტების იდენტიფიკატორების (ID) სია. ყოველი იდენტიფიკატორი წარმოადგენს პანელის ცალკეულ ობიექტს(მაგალითად,გაშვების ღილაკი,ბრძანების ღილაკი ან მენუს ღილაკი). ამ ობიექტების ცალკეული პარამეტრი /apps/panel/objects/$(id)-ში ინახება."
+msgstr ""
+"პანელის ობიექტების იდენტიფიკატორების (ID) სია. ყოველი იდენტიფიკატორი "
+"წარმოადგენს პანელის ცალკეულ ობიექტს(მაგალითად,გაშვების ღილაკი,ბრძანების "
+"ღილაკი ან მენუს ღილაკი). ამ ობიექტების ცალკეული პარამეტრი "
+"/apps/panel/objects/$(id)-ში ინახება."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1168,7 +1284,8 @@ msgstr "უჯრის ავტო დახურვა"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "თუ მონიშნულია, უჯრაში მყოფ ღილაკებზე დაწკაპვისას უჯრა მყისვე დაიკეტება."
+msgstr ""
+"თუ მონიშნულია, უჯრაში მყოფ ღილაკებზე დაწკაპვისას უჯრა მყისვე დაიკეტება."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1198,7 +1315,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "თუ მონიშნულია, პანელი აკრძალავს პანელისვე კონფიგურაციის შეცვლის შესაძლებლობას. თუმცა შესაძლოა რომ ზოგიერთ აპლეტს ინდივიდუალური ამორთვა დასჭირდეს. ეფექტურობისთვის საჭიროა აპლეტის გადატვირთვა."
+msgstr ""
+"თუ მონიშნულია, პანელი აკრძალავს პანელისვე კონფიგურაციის შეცვლის "
+"შესაძლებლობას. თუმცა შესაძლოა რომ ზოგიერთ აპლეტს ინდივიდუალური ამორთვა "
+"დასჭირდეს. ეფექტურობისთვის საჭიროა აპლეტის გადატვირთვა."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1210,7 +1330,12 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "პანელების აპლეტების (IID) იდენტიფიკატორების სია, რომლებსაც პანელი დააიგნორირებს. ამდაგვარად შესაძლებელი გახდება ზოგიერთი აპლეტის ჩატვირთვის აკრძალვა. მაგალითად, მინი ბრძანების სტრიქონის ამორთვისთვის საჭიროა დავამატოთ \"OAFIID:MATE_MiniCommanderApplet\" სტრიქონი მოცემულ სიაში. ცვლილებაში დარწმუნებისათვის საჭიროა პანელის ხელახალი ჩართვა."
+msgstr ""
+"პანელების აპლეტების (IID) იდენტიფიკატორების სია, რომლებსაც პანელი "
+"დააიგნორირებს. ამდაგვარად შესაძლებელი გახდება ზოგიერთი აპლეტის ჩატვირთვის "
+"აკრძალვა. მაგალითად, მინი ბრძანების სტრიქონის ამორთვისთვის საჭიროა დავამატოთ"
+" \"OAFIID:MATE_MiniCommanderApplet\" სტრიქონი მოცემულ სიაში. ცვლილებაში "
+"დარწმუნებისათვის საჭიროა პანელის ხელახალი ჩართვა."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1220,7 +1345,9 @@ msgstr "ნაძალადევი გასვლის დეაქტი�
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "თუ მონიშნულია, პანელი აუკრძალავს მომხმარებელს პროგრამის ძალდატანებით გამორთვას. ძალდატანების ღილაკი ამოირთვება."
+msgstr ""
+"თუ მონიშნულია, პანელი აუკრძალავს მომხმარებელს პროგრამის ძალდატანებით "
+"გამორთვას. ძალდატანების ღილაკი ამოირთვება."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1324,7 +1451,10 @@ msgstr "ობიექტის პანელზე ადგილმდე�
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "პანელზე ობიექტის მდებარეობა. პოზიცია განისაზღვრება მარცხენა პანელის გვერდამდე (ან ზედა პანელის, ვერტიკალური პანელების შემთხვევაში) პიქსელების რაოდენობით."
+msgstr ""
+"პანელზე ობიექტის მდებარეობა. პოზიცია განისაზღვრება მარცხენა პანელის "
+"გვერდამდე (ან ზედა პანელის, ვერტიკალური პანელების შემთხვევაში) პიქსელების "
+"რაოდენობით."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1334,7 +1464,9 @@ msgstr "პოზიციის ინტერპრეტაცია ქვ�
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "თუ მონიშნულია, მაშინ ობიექტის ადგილმდებარეობა განისაზღვრება პანელის მარჯვენა(ან ქვედა, ვერტიკალური პანელების შემთხვევაში) ნაპირიდან."
+msgstr ""
+"თუ მონიშნულია, მაშინ ობიექტის ადგილმდებარეობა განისაზღვრება პანელის "
+"მარჯვენა(ან ქვედა, ვერტიკალური პანელების შემთხვევაში) ნაპირიდან."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1344,7 +1476,9 @@ msgstr "დაამაგრე პანელზე"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "თუ მონიშნულია, მომხმარებელს არ შეუძლია აპლეტის პანელზე გადაადგილება, მანამ სანამ არ გაუშვებს\"ბლოკის მოხსნა\" ბრძანებას."
+msgstr ""
+"თუ მონიშნულია, მომხმარებელს არ შეუძლია აპლეტის პანელზე გადაადგილება, მანამ "
+"სანამ არ გაუშვებს\"ბლოკის მოხსნა\" ბრძანებას."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1366,7 +1500,9 @@ msgstr "უჯრასთან მიერთებული პანელ�
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "პანელის იდენტიფიკატორი, მოცემულ უჯრასთან მიერთებული. ამ პარამეტრს აქვს აზრი მხოლოდ და მხოლოდ როცა object_type გასაღები შეიცავს \"drawer-applet\"."
+msgstr ""
+"პანელის იდენტიფიკატორი, მოცემულ უჯრასთან მიერთებული. ამ პარამეტრს აქვს აზრი "
+"მხოლოდ და მხოლოდ როცა object_type გასაღები შეიცავს \"drawer-applet\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1377,7 +1513,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "ტექსტი რომელიც გამოიყენება როგორც კარნახი მოცემული უჯრისთვის. ამ პარამეტრს აქვს აზრი თუ object_type გასაღები შეიცავს \"drawer-object\"-ს ან \"menu-object\"-ს."
+msgstr ""
+"ტექსტი რომელიც გამოიყენება როგორც კარნახი მოცემული უჯრისთვის. ამ პარამეტრს "
+"აქვს აზრი თუ object_type გასაღები შეიცავს \"drawer-object\"-ს ან \"menu-"
+"object\"-ს."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1388,7 +1527,12 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "თუ მონიშნულია, მაშინ გასაღები custom_icon გამოყენებულ იქნება როგორც მომხმარებლის ინდივიდუალურად ამორჩეული ღილაკი. თუ გასაღები მონიშნული არ არის, მაშინ custom_icon გასაღები ინგორირებულია. ამ გასაღებს აქვს მხოლოდ და მხოლოდ მნიშვნელობა როცა object_type-ის მნიშვნელობა \"menu-object\" ან \"drawer-object\"-ია."
+msgstr ""
+"თუ მონიშნულია, მაშინ გასაღები custom_icon გამოყენებულ იქნება როგორც "
+"მომხმარებლის ინდივიდუალურად ამორჩეული ღილაკი. თუ გასაღები მონიშნული არ არის,"
+" მაშინ custom_icon გასაღები ინგორირებულია. ამ გასაღებს აქვს მხოლოდ და მხოლოდ"
+" მნიშვნელობა როცა object_type-ის მნიშვნელობა \"menu-object\" ან \"drawer-"
+"object\"-ია."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1399,7 +1543,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "ობიექტის ღილაკის პიქტოგრამის/ნახატის მდებარეობა.ამ გასაღებს აქვს აზრი მხოლოდ და მხოლოდ როცა object_type გასაღები შეიცავს \"drawer-applet\" ან \"menu-object\" და use_custom_icon გასაღები მონიშნულია."
+msgstr ""
+"ობიექტის ღილაკის პიქტოგრამის/ნახატის მდებარეობა.ამ გასაღებს აქვს აზრი მხოლოდ"
+" და მხოლოდ როცა object_type გასაღები შეიცავს \"drawer-applet\" ან \"menu-"
+"object\" და use_custom_icon გასაღები მონიშნულია."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1410,7 +1557,11 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "თუ მონიშნულია, menu_path-ის მნიშვნელობა გამოიყენება როგორც მდებარეობა, რომლისგანაც იგება მენუ. თუ მონიშნული არ არის, მაშინ menu_path-ის მნიშვნელობა ინგორირებულ იქნება. ამ პარამეტრს აქვს მნიშვნელობა თუ გასაღები object_type შეიცავს \"menu-object\"-ს."
+msgstr ""
+"თუ მონიშნულია, menu_path-ის მნიშვნელობა გამოიყენება როგორც მდებარეობა, "
+"რომლისგანაც იგება მენუ. თუ მონიშნული არ არის, მაშინ menu_path-ის მნიშვნელობა"
+" ინგორირებულ იქნება. ამ პარამეტრს აქვს მნიშვნელობა თუ გასაღები object_type "
+"შეიცავს \"menu-object\"-ს."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1421,7 +1572,10 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "გეზი, რომლიდანაც აიგება შინაარსობრივი მენუ. ამ გასაღებს აქვს მნიშვნელობა, მხოლოდ მაშინ, როცა გასაღები use_menu_path მონიშნულია და გასაღებ object_type-ს აქვს \"menu-object\" მნიშვნელობა."
+msgstr ""
+"გეზი, რომლიდანაც აიგება შინაარსობრივი მენუ. ამ გასაღებს აქვს მნიშვნელობა, "
+"მხოლოდ მაშინ, როცა გასაღები use_menu_path მონიშნულია და გასაღებ "
+"object_type-ს აქვს \"menu-object\" მნიშვნელობა."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1441,7 +1595,10 @@ msgstr "გამშვების ადგილმდებარეობ�
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "ფაილ .desktop-ის მდებარეობა, რომელიც შეიცავს ღილაკის აღწერის ტექსტს. ამ პარამეტრს აქვს აზრი როდესაც (object_type) გასაღები შეიცავს \"launcher-object\"."
+msgstr ""
+"ფაილ .desktop-ის მდებარეობა, რომელიც შეიცავს ღილაკის აღწერის ტექსტს. ამ "
+"პარამეტრს აქვს აზრი როდესაც (object_type) გასაღები შეიცავს \"launcher-"
+"object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1452,7 +1609,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "მოქმედების ტიპი, ღილაკის შესაძლებლობები. მიღებული მნიშვნელობები \"lock\", \"logout\", \"run\", \"search\" და \"screenshot\". ამ პარამეტრს აქვს აზრი მხოლოდ და მხოლოდ როცა object_type გასაღები შეიცავს \"action-applet\"."
+msgstr ""
+"მოქმედების ტიპი, ღილაკის შესაძლებლობები. მიღებული მნიშვნელობები \"lock\", "
+"\"logout\", \"run\", \"search\" და \"screenshot\". ამ პარამეტრს აქვს აზრი "
+"მხოლოდ და მხოლოდ როცა object_type გასაღები შეიცავს \"action-applet\"."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1463,7 +1623,9 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "ადამიანისთვის გასაგებ ენაზე დაწერილი პანელის სახელი. მთავარი მნიშვნელობა პანელის დასათაურებაა, რაც პანელებს შორის გადართვაში გეხმარებათ."
+msgstr ""
+"ადამიანისთვის გასაგებ ენაზე დაწერილი პანელის სახელი. მთავარი მნიშვნელობა "
+"პანელის დასათაურებაა, რაც პანელებს შორის გადართვაში გეხმარებათ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1473,7 +1635,10 @@ msgstr "X ეკრანი სადაც პანელი გამოჩ�
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "რამოდენიმე ეკრანის ქონის დროს, პანელის სხვადასხვა ეკრანებზე გადატანა ხდება შესაძლებელი, მოცემული გასაღები აღნიშვნავს მიმდინარე ეკრანს, რომელზედაც პანელი არის განთავსებული."
+msgstr ""
+"რამოდენიმე ეკრანის ქონის დროს, პანელის სხვადასხვა ეკრანებზე გადატანა ხდება "
+"შესაძლებელი, მოცემული გასაღები აღნიშვნავს მიმდინარე ეკრანს, რომელზედაც "
+"პანელი არის განთავსებული."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1483,7 +1648,10 @@ msgstr "მონიტორი Xineramas-ს მხარდაჭერით
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Xinerama (ორ მონიტორიანი სისტემა) სისტემის გამოყენებისას, პანელების განლაგება ინდივიდუალურ მონიტორებზეა შესაძლებელი. მიმდინარე გასაღები წარმოადგენს მონიტორს რომელზედაც პანელია მოთავსებული."
+msgstr ""
+"Xinerama (ორ მონიტორიანი სისტემა) სისტემის გამოყენებისას, პანელების "
+"განლაგება ინდივიდუალურ მონიტორებზეა შესაძლებელი. მიმდინარე გასაღები "
+"წარმოადგენს მონიტორს რომელზედაც პანელია მოთავსებული."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1495,7 +1663,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "თუ მონიშნულია, პანელი დაიკავებს ეკრანის მთელს სიგანეს (ან სიმაღლეს ვერტიკალური პანელის შემთხვევაში). ამგვარი პანელები ეკრანის გვერდებზე თავსდებიან. თუ გასაღები არ არის მონიშნული, პანელის სირძეს განსაზღვრავს მასზე მყოფი აპლეტების, ღილაკების ან მენუს რაოდენობა."
+msgstr ""
+"თუ მონიშნულია, პანელი დაიკავებს ეკრანის მთელს სიგანეს (ან სიმაღლეს "
+"ვერტიკალური პანელის შემთხვევაში). ამგვარი პანელები ეკრანის გვერდებზე "
+"თავსდებიან. თუ გასაღები არ არის მონიშნული, პანელის სირძეს განსაზღვრავს მასზე"
+" მყოფი აპლეტების, ღილაკების ან მენუს რაოდენობა."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1511,7 +1683,12 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "პანელის ორიენტაცია.შესაძლებელი მნიშვნელობებია \"top\", \"bottom\", \"left\", \"right\". გაშლილ რეჟიმში ეს მნიშვნელობები აღნიშნავენ თუ ეკრანი რომელ გვერდთან განლაგდება პანელი. გაშლილ რეჟიმში \"top\" და \"bottom\" პარამეტრებს არ აქვთ დიდი მნიშვნელობა. აგალითად \"top\"-ის დროს მენუ გაიშლება ქვემოთ ხოლო \"bottom\"-ისთვის გაიშლება ზემოთ."
+msgstr ""
+"პანელის ორიენტაცია.შესაძლებელი მნიშვნელობებია \"top\", \"bottom\", \"left\","
+" \"right\". გაშლილ რეჟიმში ეს მნიშვნელობები აღნიშნავენ თუ ეკრანი რომელ "
+"გვერდთან განლაგდება პანელი. გაშლილ რეჟიმში \"top\" და \"bottom\" პარამეტრებს"
+" არ აქვთ დიდი მნიშვნელობა. აგალითად \"top\"-ის დროს მენუ გაიშლება ქვემოთ "
+"ხოლო \"bottom\"-ისთვის გაიშლება ზემოთ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1523,7 +1700,11 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "პანელის სიმაღლე (ან სიგანე ვერტიკალური პანელების შემთხვევაში). პანელი განსაზღვრავს მინიმალურად დასაშვებ ზომას, შრიფტის და პანელზე მყოფი ელემენტების ზომიდან გამომდინარე. მაქსიმალური ზომა არ აღემატება ეკრანის 1/4-ურ დაფარვას."
+msgstr ""
+"პანელის სიმაღლე (ან სიგანე ვერტიკალური პანელების შემთხვევაში). პანელი "
+"განსაზღვრავს მინიმალურად დასაშვებ ზომას, შრიფტის და პანელზე მყოფი "
+"ელემენტების ზომიდან გამომდინარე. მაქსიმალური ზომა არ აღემატება ეკრანის "
+"1/4-ურ დაფარვას."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1534,7 +1715,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "პანელის მდებარეობა x ღერძის მიმართ. ამ გასაღებს აქვს მნიშვნელობა მხოლოდ ჩაკეცილ რეჟიმში. გაშლილ რეჟიმში მოცემული გასაღები ოგნორირებულია და პანელი მოთავსდება ეკრანის ნაპირას, ორიენტაციის გასაღების მიხედვით."
+msgstr ""
+"პანელის მდებარეობა x ღერძის მიმართ. ამ გასაღებს აქვს მნიშვნელობა მხოლოდ "
+"ჩაკეცილ რეჟიმში. გაშლილ რეჟიმში მოცემული გასაღები ოგნორირებულია და პანელი "
+"მოთავსდება ეკრანის ნაპირას, ორიენტაციის გასაღების მიხედვით."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1545,7 +1729,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "პანელის მდებარეობა y ღერძის მიმართ. ამ გასაღებს აქვს მნიშვნელობა მხოლოდ ჩაკეცილ რეჟიმში. გაშლილ რეჟიმში მოცემული გასაღები ოგნორირებულია და პანელი მოთავსდება ეკრანის ნაპირას, ორიენტაციის გასაღების მიხედვით."
+msgstr ""
+"პანელის მდებარეობა y ღერძის მიმართ. ამ გასაღებს აქვს მნიშვნელობა მხოლოდ "
+"ჩაკეცილ რეჟიმში. გაშლილ რეჟიმში მოცემული გასაღები ოგნორირებულია და პანელი "
+"მოთავსდება ეკრანის ნაპირას, ორიენტაციის გასაღების მიხედვით."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1559,7 +1746,13 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "პანელის მდებარეობა x ღერძის გასწვრივ, ეკრანის მარჯვენა მხრიდან. თუ გასაღების მნიშვნელობა 1-ია, მაშინ ის იგნორირებულია და გამოყენებულ იქნება x-ის მნიშვნელობა. თუ გასაღების მნიშვნელობა 0-ზე მეტია, მაშინ x-ის მნიშნველობა იგნორირდება. მოცემული გასაღები მნიშვნელოვანია მხოლოდ გაუშლელ მდგომარეობაში. გაშლილ მდგომარეობაში მოცემული გასაღები იგნორირებულია და პანელი თავსდება ეკრანის ნაპირზე, მისი მდებარეობა ორიენტაციის მნიშვნელობებით განისაზღვრება."
+msgstr ""
+"პანელის მდებარეობა x ღერძის გასწვრივ, ეკრანის მარჯვენა მხრიდან. თუ გასაღების"
+" მნიშვნელობა 1-ია, მაშინ ის იგნორირებულია და გამოყენებულ იქნება x-ის "
+"მნიშვნელობა. თუ გასაღების მნიშვნელობა 0-ზე მეტია, მაშინ x-ის მნიშნველობა "
+"იგნორირდება. მოცემული გასაღები მნიშვნელოვანია მხოლოდ გაუშლელ მდგომარეობაში. "
+"გაშლილ მდგომარეობაში მოცემული გასაღები იგნორირებულია და პანელი თავსდება "
+"ეკრანის ნაპირზე, მისი მდებარეობა ორიენტაციის მნიშვნელობებით განისაზღვრება."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1573,7 +1766,13 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "პანელის მდებარეობა y ღერძის გასწვრივ, ეკრანის ქვემოდან. თუ გასაღების მნიშვნელობა 1-ია, მაშინ ის იგნორირებულია და გამოყენებულ იქნება y-ის მნიშვნელობა. თუ გასაღების მნიშვნელობა 0-ზე მეტია, მაშინ y-ის მნიშნველობა იგნორირდება. მოცემული გასაღები მნიშვნელოვანია მხოლოდ გაუშლელ მდგომარეობაში. გაშლილ მდგომარეობაში მოცემული გასაღები იგნორირებულია და პანელი თავსდება ეკრანის ნაპირზე, მისი მდებარეობა ორიენტაციის მნიშვნელობებით განისაზღვრება."
+msgstr ""
+"პანელის მდებარეობა y ღერძის გასწვრივ, ეკრანის ქვემოდან. თუ გასაღების "
+"მნიშვნელობა 1-ია, მაშინ ის იგნორირებულია და გამოყენებულ იქნება y-ის "
+"მნიშვნელობა. თუ გასაღების მნიშვნელობა 0-ზე მეტია, მაშინ y-ის მნიშნველობა "
+"იგნორირდება. მოცემული გასაღები მნიშვნელოვანია მხოლოდ გაუშლელ მდგომარეობაში. "
+"გაშლილ მდგომარეობაში მოცემული გასაღები იგნორირებულია და პანელი თავსდება "
+"ეკრანის ნაპირზე, მისი მდებარეობა ორიენტაციის მნიშვნელობებით განისაზღვრება."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1585,7 +1784,11 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "თუ მონიშნულია, x-ის კოორდინატები იგნორირებულია და ათვლის წერტილი ეკრანის ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის ადგილმდებარეობას (ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის მონიშნული, x-ის კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
+msgstr ""
+"თუ მონიშნულია, x-ის კოორდინატები იგნორირებულია და ათვლის წერტილი ეკრანის "
+"ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის ადგილმდებარეობას "
+"(ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის მონიშნული, x-ის "
+"კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1597,7 +1800,11 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "თუ მონიშნულია, y-ის კოორდინატები იგნორირებულია და ათვლის წერტილი ეკრანის ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის ადგილმდებარეობას (ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის მონიშნული, y-ის კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
+msgstr ""
+"თუ მონიშნულია, y-ის კოორდინატები იგნორირებულია და ათვლის წერტილი ეკრანის "
+"ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის ადგილმდებარეობას "
+"(ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის მონიშნული, y-ის "
+"კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1608,7 +1815,9 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "თუ მონიშნულია, პანელი ავტომატურად იმალება ეკრანის კუთხეში როდესაც კურსორი მის არეში აღარ იმყოფება. კურსორის კუთხეში გადატარებით პანელი ისევ ხილვადია."
+msgstr ""
+"თუ მონიშნულია, პანელი ავტომატურად იმალება ეკრანის კუთხეში როდესაც კურსორი "
+"მის არეში აღარ იმყოფება. კურსორის კუთხეში გადატარებით პანელი ისევ ხილვადია."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
@@ -1624,7 +1833,11 @@ msgstr "ფარულ ღილაკთა აქტივირება"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "თუ მონიშნულია, პანელზე გამოჩნდება ჩვენება/დამალვის ღილაკები. ეს ღილაკები გამოიყენება პანელის ეკრანის არედან გარეთ გატანისთვის, ისე რომ მხოლოდ ღილაკის ხილვა ხდება შესაძლებელი, ამავე ღილაკების მეშვეობით შესაძლებელია პანელის უკან დაბრუნება."
+msgstr ""
+"თუ მონიშნულია, პანელზე გამოჩნდება ჩვენება/დამალვის ღილაკები. ეს ღილაკები "
+"გამოიყენება პანელის ეკრანის არედან გარეთ გატანისთვის, ისე რომ მხოლოდ ღილაკის"
+" ხილვა ხდება შესაძლებელი, ამავე ღილაკების მეშვეობით შესაძლებელია პანელის "
+"უკან დაბრუნება."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1634,7 +1847,9 @@ msgstr "დამალვა/გამოჩენის ღილაკებ�
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "თუ მონიშნულია, დამალვა/გამოჩენის ღილაკებზე გამოჩნდებიან მიმანიშნებელი იზრები. ამ გასაღებს აქვს მნიშვნელობა თუ გასაღები enable_buttons მონიშნულია."
+msgstr ""
+"თუ მონიშნულია, დამალვა/გამოჩენის ღილაკებზე გამოჩნდებიან მიმანიშნებელი "
+"იზრები. ამ გასაღებს აქვს მნიშვნელობა თუ გასაღები enable_buttons მონიშნულია."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1645,7 +1860,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "განსაზღვრავს პანელის დამალვის დროს მილიწამებში მის არედან კურსორის გადასვლისას. ამ გასაღებს აქვს აზრი თუ მონიშნულია auto_hide გასაღები."
+msgstr ""
+"განსაზღვრავს პანელის დამალვის დროს მილიწამებში მის არედან კურსორის "
+"გადასვლისას. ამ გასაღებს აქვს აზრი თუ მონიშნულია auto_hide გასაღები."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1656,7 +1873,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "განსაზღვრავს პანელის გამოჩენის დროს მილიწამებში მის არეში კურსორის გამოჩენისას. ამ გასაღებს აქვს აზრი თუ მონიშნულია auto_hide გასაღები."
+msgstr ""
+"განსაზღვრავს პანელის გამოჩენის დროს მილიწამებში მის არეში კურსორის "
+"გამოჩენისას. ამ გასაღებს აქვს აზრი თუ მონიშნულია auto_hide გასაღები."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1667,7 +1886,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "განსაზღვრავს პანელის გამოჩენის რაოდენობას პიფსელებში როდესაც იგი ეკრანის მიღმაა დამალული. ამ გასაღებს აქვს აზრი თუ მონიშნულია auto_hide გასაღები."
+msgstr ""
+"განსაზღვრავს პანელის გამოჩენის რაოდენობას პიფსელებში როდესაც იგი ეკრანის "
+"მიღმაა დამალული. ამ გასაღებს აქვს აზრი თუ მონიშნულია auto_hide გასაღები."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1678,7 +1899,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "ანიმაციის სიჩქარე. მისაღები მნიშვნალობებია: \"slow\", \"medium\" და \"fast\". ამ გასაღებს გააჩნია მნიშვნელობა თუ enable_animations გასაღები მონიშნულია."
+msgstr ""
+"ანიმაციის სიჩქარე. მისაღები მნიშვნალობებია: \"slow\", \"medium\" და "
+"\"fast\". ამ გასაღებს გააჩნია მნიშვნელობა თუ enable_animations გასაღები "
+"მონიშნულია."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1709,7 +1933,10 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "განსაზღვრავს ფონური ნახატის გამჭვირვალებას. თუ ფერს არ არის ბოლომდე გამჭვირვალე (მისი მნიშვნელობა 65535 ნაკლებია), იგი შეირწყმება სამუშაო მაგიდის გრაფიკულ გამოსახულებასთან."
+msgstr ""
+"განსაზღვრავს ფონური ნახატის გამჭვირვალებას. თუ ფერს არ არის ბოლომდე "
+"გამჭვირვალე (მისი მნიშვნელობა 65535 ნაკლებია), იგი შეირწყმება სამუშაო "
+"მაგიდის გრაფიკულ გამოსახულებასთან."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1730,7 +1957,10 @@ msgstr "გამოსახულების პანელზე მორ�
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "თუ მონიშნულია, ფონური გამოსახულება განიცდის მაშტაბირებას (ანუ არ კარგავს სიმაღლე/სიგანეს) პანელის მაქსიმალურ სიმაღლემდე.(თუ პანელს ჰორიზონტალური ფორმა აქვს)."
+msgstr ""
+"თუ მონიშნულია, ფონური გამოსახულება განიცდის მაშტაბირებას (ანუ არ კარგავს "
+"სიმაღლე/სიგანეს) პანელის მაქსიმალურ სიმაღლემდე.(თუ პანელს ჰორიზონტალური "
+"ფორმა აქვს)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1740,7 +1970,9 @@ msgstr "ნახატის პანელზე გაჭიმვა"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "თუ მონიშნულია, გრაფიკული გამოსახულება პანელის ზომას მიიღებს. მაგრამ ამავე დროს დაირღვევა პიქტოგრამის პროპორციები.თუ მონიშნულია,"
+msgstr ""
+"თუ მონიშნულია, გრაფიკული გამოსახულება პანელის ზომას მიიღებს. მაგრამ ამავე "
+"დროს დაირღვევა პიქტოგრამის პროპორციები.თუ მონიშნულია,"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1750,7 +1982,9 @@ msgstr "ნახატის ამოყირავება ვერტი�
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "თუ მონიშნულია, ფონური გრაფიკული გამოსახულება გადმოტრიალდება თუ პანელი ვერტიკალურ მდგომარეობას მიიღებს."
+msgstr ""
+"თუ მონიშნულია, ფონური გრაფიკული გამოსახულება გადმოტრიალდება თუ პანელი "
+"ვერტიკალურ მდგომარეობას მიიღებს."
 
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1760,12 +1994,12 @@ msgstr ""
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr ""
+msgstr "ამოუცნობი desktop ფაილის ვერსია '%s'"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "ირთვება %s"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
@@ -1785,27 +2019,27 @@ msgstr ""
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "არ არის გაშვებადი ელემენტი"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr ""
+msgstr "ვერ ვუკავშირდები სესიის მენეჯერს"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "დამახსოვრებული კონფიგურაციის მქონე ფაილის მინიშნება"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
-msgstr ""
+msgstr "ფაილი"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr ""
+msgstr "აღნიშნეთ თუ რომელი სეანსი ჩაიტვირთოს"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
@@ -1813,7 +2047,7 @@ msgstr ""
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
+msgstr "აჩვენე სეანსის მართვის პარამეტრები"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1821,8 +2055,8 @@ msgstr ""
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr "შეცდომა"
 
@@ -1852,36 +2086,36 @@ msgstr "ძიების დასტების გამხსნელი 
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "პანელიდან _ამოღება"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
-msgstr "_გადატანა"
+msgstr "_გადაადგილება"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "პანელზე _მიმაგრება"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "შეუძლებელია ცარიელი ადგილის პოვნა"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "უჯრა"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_უჯრაზე დამატება"
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
-msgstr "_თვისებები"
+msgstr "_პარამეტრები"
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1896,7 +2130,7 @@ msgid "- Edit .desktop files"
 msgstr "- .desktop ფაილების რედაქტირება"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "გამშვების შექმნა"
 
@@ -1905,11 +2139,11 @@ msgstr "გამშვების შექმნა"
 msgid "Directory Properties"
 msgstr "დასტის თვისებები"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "გამშვების თვისებები"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr "პანელი"
 
@@ -1917,7 +2151,9 @@ msgstr "პანელი"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "რთავს სხვა პროგრამებს და უზრუნველყოფს სხვადასხვა აპლეტებს როგორც, ფანჯრის აპლეტი, დროის აპლეტი და სხვა."
+msgstr ""
+"რთავს სხვა პროგრამებს და უზრუნველყოფს სხვადასხვა აპლეტებს როგორც, ფანჯრის "
+"აპლეტი, დროის აპლეტი და სხვა."
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1939,20 +2175,20 @@ msgstr "პანელ გამშვებისთვის არ მიც
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "ვერ ვხსნი სამუშაო მაგიდაზე მყოფ ფაილ %s -ის პანელზე გამშვებ %s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_გაშვება"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "გასაღები %s არ არის მონიშნული, შეუძლებელია გამშვების ჩატვირთვა\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "შეუძლებელია გამშვების დამახსოვრება"
 
@@ -1975,23 +2211,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "გამშვების _პანელზე დამატება"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "გამშვების სამუშაო _მაგიდაზე დამატება"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "_მთლიანი მენუ"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "პანელზე _დამატება ახალი უჯრის სახით"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "პანელზე დამატებითი _მენუს დამატება"
 
@@ -2009,7 +2245,7 @@ msgstr "შეუძლებელია სერვერთან დაკ�
 
 #: ../mate-panel/panel-action-button.c:345
 msgid "Lock Screen"
-msgstr "ეკრანის დაცვა პაროლით"
+msgstr "ეკრანის დაბლოკვა"
 
 #: ../mate-panel/panel-action-button.c:346
 msgid "Protect your computer from unauthorized use"
@@ -2036,14 +2272,14 @@ msgstr "პროგრამის გაშვება, უშუალოდ
 
 #: ../mate-panel/panel-action-button.c:380
 msgid "Search for Files..."
-msgstr "ფაილების ძებნა..."
+msgstr "ფაილის ძებნა..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "ფაილების და დასტების სახელის ან შინაარსი მიხედვით მოძებნა"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "ძალდათანებითი გათიშვა"
 
@@ -2068,114 +2304,124 @@ msgstr "სისტემის გამორთვა..."
 msgid "Shut down the computer"
 msgstr "კომპიუტერის გამორთვა"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "პერსონალური პროგრამის გამშვები"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "შექმენი ახალი გამშვები"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "პროგრამის გამშვები"
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "პროგრამების მენუდან გამშვების კოპირება"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
-msgstr "ძირითადი მენუ"
+msgstr "ძირითადი მენიუ"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "გნომის მთავარი მენუ"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "მენუს ზოლი"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "პირადი მენუ პანელი"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr "გამყოფი"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "ელემენტების ორგანიზირებისთვის საჭირო პანელის გამყოფი"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "დამატებითი ელემენტების მისამაგრებელი გამოსაწევი უჯრა"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(ცარიელი)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "შეარჩიეთ \"%s\" -ზე მისამაგრი _ელემენტი:"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "მიამატე უჯრას"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "შეარჩიეთ უჯრაში მისამაგრი ელემენტი:"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "პანელზე დამატება"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "შეარჩიეთ პანელზე დასამატებელი ელემენტი:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "_უკან"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" მოულოდნელად გაითიშა"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "პანელის ელემენტი მოულოდნელად გაითიშა"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "პანელის ობიექტის გადატვირთვის შემთხვევაში, ის პანელს ავტომატურად ხელახლა დაემატება."
+msgstr ""
+"პანელის ობიექტის გადატვირთვის შემთხვევაში, ის პანელს ავტომატურად ხელახლა "
+"დაემატება."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "_არ გადატვირთო"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
-msgstr "_გადატვირთო"
+msgstr "_გადატვირთვა"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "პანელის ჩატვირთვის დროს წარმოიშვა პრობლემა \"%s\"."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "გსურთ აპლეტის მიმდინარე კონფიგურაციიდან მოშორება?"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_წაშლა"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2189,7 +2435,9 @@ msgstr "გნომის პანელი"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "მოცემული პროგრამა უზრუნველყოფს სხვა პროგრამების გაშვებას, ამის გარდა შეიცავს დამხმარე უტილიტებს."
+msgstr ""
+"მოცემული პროგრამა უზრუნველყოფს სხვა პროგრამების გაშვებას, ამის გარდა შეიცავს"
+" დამხმარე უტილიტებს."
 
 #: ../mate-panel/panel-context-menu.c:121
 msgid "About the MATE Panel"
@@ -2213,12 +2461,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2226,100 +2470,106 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_პანელის წაშლა"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "_ახალი პანელი"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "პანელების შესახებ"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "პროგრამები"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "ტერმინალის პროგრამა"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
-msgstr "მდებარეობა"
+msgstr "ადგილმდებარეობა"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_ტიპი:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
-msgstr "სახ_ელი:"
+msgstr "_სახელი:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
-msgstr "_ნუსხა..."
+msgstr "დ_ათვალიარება..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "კო_მენტარი:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "_აღდგენა"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "პროგრამის ამორჩევა..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "ფაილის ამორჩევა..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr "ბრძ_ანება:"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
 msgstr "მ_დებარეობა:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "გაშვების ღილაკის სახელი არ მითითებულა"
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr "შეუძლებელი გახდა დასტის პარამეტრების დამახსოვრება"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr "დასტის სახელი არ მითითებულა."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "არ მითითებულა გაშვების ღილაკის ბრძანება."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "არ მითითებულა გაშვების ღილაკის მდებარეობა."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
 msgstr "შეუძლებელია დახმარების დოკუმენტის გაშვება"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "პროგრამის გასათიშად მის ფანჯარაზე დააწკაპუნეთ,ან მოქმედების გასაუქმებლად დააჭირეთ <ESC>."
+msgstr ""
+"პროგრამის გასათიშად მის ფანჯარაზე დააწკაპუნეთ,ან მოქმედების გასაუქმებლად "
+"დააჭირეთ <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "გნებავთ პროგრამის ძალდატანებით გათიშვა?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2341,19 +2591,19 @@ msgstr "სამუშაო მაგიდის იერის შეცვ
 msgid "Applications"
 msgstr "პროგრამები"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "_მენუს დამუშავება"
 
 #: ../mate-panel/panel-menu-items.c:472
 msgid "Bookmarks"
-msgstr "სანიშნე"
+msgstr "სანიშნეები"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
-msgstr "გახსნა '%s'"
+msgstr "გახსენი '%s'"
 
 #: ../mate-panel/panel-menu-items.c:566
 #, c-format
@@ -2393,7 +2643,7 @@ msgstr "პირადი დასტის გახსნა"
 #: ../mate-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr "სამუშაო მაგიდის დასტა"
+msgstr "სამუშაო მაგიდა"
 
 #: ../mate-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
@@ -2401,20 +2651,21 @@ msgstr "სამუშაო მაგიდის დასტისებრ�
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
-msgstr ""
+msgstr "კომპიუტერი"
 
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
+"თქვენი კომპიუტერიდან ლოკალური ან დაშორებული დისკების, დასტების დათვალიერება"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
-msgstr ""
+msgstr "ქსელი"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "ლოკალური და ქსელური მისამართების დათვალიერება"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
@@ -2447,7 +2698,9 @@ msgstr "%s სეანსის დასრულება ..."
 #: ../mate-panel/panel-menu-items.c:1625
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
-msgstr "მომხმარებელი %s სეანსის დასრულება და სხვა მომხმარებლის სახელით სისტემაში ხელახალი შემოსვლა"
+msgstr ""
+"მომხმარებელი %s სეანსის დასრულება და სხვა მომხმარებლის სახელით სისტემაში "
+"ხელახალი შემოსვლა"
 
 #: ../mate-panel/panel-properties-dialog.c:120
 #: ../mate-panel/panel-test-applets.c:58
@@ -2478,7 +2731,7 @@ msgid "Drawer Properties"
 msgstr "უჯრის თვისებები"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr ""
@@ -2491,138 +2744,141 @@ msgstr "შეუძლებელია პარამეტრების �
 msgid "Panel Properties"
 msgstr "პანელის თვისებები"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "ზოგი მოცემული პარამეტრი დაბლოკილია"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_ხატულა:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
 msgstr "პიქსელი"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_ორიენტაცია:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "_ზომა:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "გაშლ_ა"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_ავტოდამალვა"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "დამალულ ღილაკთა ჩვენება"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "დამალულ ღილაკზე ისარი"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_არანაირი(გამოიყენება საერთო სისტემური გაფორმება)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "სავსე ფ_ერი"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
-msgstr "აირჩიე ფერი"
+msgstr "ფერის ამორჩევა"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small> გამჭირვალე</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "ფერ_ი:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "ს_ტილი:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small> დაბინდული</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "საფონე _ნახატი"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "ფონის შერჩევა"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "ფონი"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "ფონური გამოსახულების დეტალები"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_მოზაიკა"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "_მასშტაბი"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "გაშლ_ა"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "გრაფიკული გამოსახულების ამოყირავება როცა პ_ანელი ვერტიკალურია"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "ვერ ვხსნი ახლახანს დამუშავებულ დოკუმენტს \"%s\""
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "დაიშვა უცნობი შეცდომა \"%s\"-ის გახსნის მცდელობისას."
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "გნებავთ \"ბოლო დოკუმენტები\" -ს სიის წაშლა?"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "\"ბოლო დოკუმენტები\" გასუფთავების შემთხვევაში, წაიშლება:\n• მენუ \"მდებარეობა\"-> \"ბოლო დოკუმენტები\"-ის სია.\n• ყველა პროგრამაში ბოლოს დამუშავებული დოკუმენტების სია."
+msgstr ""
+"\"ბოლო დოკუმენტები\" გასუფთავების შემთხვევაში, წაიშლება:\n"
+"• მენუ \"მდებარეობა\"-> \"ბოლო დოკუმენტები\"-ის სია.\n"
+"• ყველა პროგრამაში ბოლოს დამუშავებული დოკუმენტების სია."
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "ბოლოს დამუშავებული დოკუმენტების გასუფთავება"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "ბოლო დოკუმენტები"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "ბოლოს დამუშავებულ დოკუმენტების სიის გასუფთავება"
 
@@ -2636,25 +2892,28 @@ msgstr "ვერ ვუშვებ ბრძანებას '%s'"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "შეუძლებელი გახდა  \"%s\"-ის UTF-8-დან კონვერტირება"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "ბრძანებასთან მისაერთებელი ფაილის ამორჩევა..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "ამოირჩიეთ პროგრამა მისი აღწერილობის სანახავად."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "გაუშვებს ბრძანება: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "URI სიას,გამშვებ ფანჯარაშია გადმოტანილი,აქვს არასწორი ფორმატი (%d) ან სიგრძე (%d)\n"
+msgstr ""
+"URI სიას,გამშვებ ფანჯარაშია გადმოტანილი,აქვს არასწორი ფორმატი (%d) ან სიგრძე"
+" (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "ვერ ვრთავ გამშვებ დიალოგ ფანჯარას"
 
@@ -2662,49 +2921,53 @@ msgstr "ვერ ვრთავ გამშვებ დიალოგ ფ�
 msgid "Run Application"
 msgstr "პროგრამის გაშვება"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "ბრძანების ხატულა"
-
-#: ../mate-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "გასაშვები ბრძანების პიქტოგრამა."
-
-#: ../mate-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "_ტერმინალში გაშვება"
-
-#: ../mate-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "მონიშნეთ რათა ბრძანება გაიშვას ტერმინალის ფანჯარაში."
-
-#: ../mate-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "ფაი_ლთან ერთად..."
-
-#: ../mate-panel/panel-run-dialog.ui.h:7
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr "დააწკაპეთ მოცემულ ღილაკზე და ამოირჩიეთ ფაილი, რომლის დასახელება ბრძანების სტრიქონს მიემატება."
-
-#: ../mate-panel/panel-run-dialog.ui.h:8
-msgid "List of known applications"
-msgstr "ნაცნობი პროგრამების სია"
-
-#: ../mate-panel/panel-run-dialog.ui.h:10
-msgid "Show list of known _applications"
-msgstr "ნაცნობი _პროგრამების სიის ჩვენება"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "გაშვე_ბა"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: ../mate-panel/panel-run-dialog.ui.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "დააწკაპეთ მოცემულ ღილაკზე, მონიშნული პროგრამის ან ბრძანების ბრძანების სტრიქონში გასაშვებად."
+msgstr ""
+"დააწკაპეთ მოცემულ ღილაკზე, მონიშნული პროგრამის ან ბრძანების ბრძანების "
+"სტრიქონში გასაშვებად."
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
+msgid "Command icon"
+msgstr "ბრძანების ხატულა"
+
+#: ../mate-panel/panel-run-dialog.ui.h:7
+msgid "The icon of the command to be run."
+msgstr "გასაშვები ბრძანების პიქტოგრამა."
+
+#: ../mate-panel/panel-run-dialog.ui.h:8
+msgid "Run in _terminal"
+msgstr "_ტერმინალში გაშვება"
+
+#: ../mate-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "მონიშნეთ რათა ბრძანება გაიშვას ტერმინალის ფანჯარაში."
+
+#: ../mate-panel/panel-run-dialog.ui.h:10
+msgid "Run with _file..."
+msgstr "ფაი_ლთან ერთად..."
+
+#: ../mate-panel/panel-run-dialog.ui.h:11
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"დააწკაპეთ მოცემულ ღილაკზე და ამოირჩიეთ ფაილი, რომლის დასახელება ბრძანების "
+"სტრიქონს მიემატება."
+
+#: ../mate-panel/panel-run-dialog.ui.h:12
+msgid "List of known applications"
+msgstr "ნაცნობი პროგრამების სია"
+
+#: ../mate-panel/panel-run-dialog.ui.h:14
+msgid "Show list of known _applications"
+msgstr "ნაცნობი _პროგრამების სიის ჩვენება"
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2712,7 +2975,7 @@ msgstr "_ნაძალადევი გამოსვლა"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "გა_სუფთავება"
+msgstr "_გაწმენდა"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2781,40 +3044,44 @@ msgstr "ვერ ვტვირთავ აპლეტს %s"
 msgid "Test applet utility"
 msgstr "აპლეტის უტილიტების ტესტი"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "_აპლეტი:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "პანელის დამალვა"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
 #: ../mate-panel/panel-util.c:347
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "ვერ ვპოუულობ '%s' ხატულას"
+msgstr "ხატულა '%s' ვერ მოიძებნა"
 
 #: ../mate-panel/panel-util.c:465
 #, c-format
@@ -2837,7 +3104,7 @@ msgstr "ფაილური სისტემა"
 
 #: ../mate-panel/panel-util.c:1051
 msgid "Search"
-msgstr "ძიება"
+msgstr "ძებნა"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
@@ -2848,27 +3115,31 @@ msgstr "ძიება"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "გახსენი URL: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "წავშალო მოცემული უჯრა?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "პანელის წაშლის შემთხვევაში,თვით პანელი და მისი\nპარამეტრები დაიკარგებიან."
+msgstr ""
+"პანელის წაშლის შემთხვევაში,თვით პანელი და მისი\n"
+"პარამეტრები დაიკარგებიან."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "წავშალო პანელი?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "პანელის წაშლის შემთხვევაში,თვით პანელი და მისი\nპარამეტრები დაიკარგებიან."
+msgstr ""
+"პანელის წაშლის შემთხვევაში,თვით პანელი და მისი\n"
+"პარამეტრები დაიკარგებიან."

@@ -1,23 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Urdu (http://www.transifex.com/mate/MATE/language/ur/)\n"
+"POT-Creation-Date: 2018-04-17 17:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Martin Wimpress <code@flexion.org>, 2018\n"
+"Language-Team: Urdu (https://www.transifex.com/mate/teams/13566/ur/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ur\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:27
+#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "مقامات"
 
@@ -32,14 +33,14 @@ msgstr "تقویم"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -50,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -64,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -75,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -101,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "ماہ تقویم پوشیدہ کرنے کے لیے کلک کریں"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "ماہ تقویم دیکھنے کے لیے کلک کریں"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "کمپیوٹر کی گھڑی"
 
@@ -123,7 +126,7 @@ msgstr "کمپیوٹر کی گھڑی"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -133,232 +136,278 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "نظام کا وقت متعین کریں..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "نظام کا وقت متعین کریں"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "نظام کا وقت متعین کرنے میں ناکامی"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1704
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_ترجیحات"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
-#: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
-#: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../applets/clock/clock.c:1853 ../applets/clock/clock.ui.h:7
+#: ../applets/fish/fish.c:1707 ../applets/fish/fish.ui.h:2
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:222 ../applets/wncklet/window-list.c:176
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/wncklet/workspace-switcher.c:372
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
+#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1226
+#: ../mate-panel/panel-context-menu.c:323
+#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
+#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_ہدایات"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1710
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:230 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "_بابت"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "_وقت کاپی کریں"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "_تاریخ کاپی کریں"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "وقت اور تاریخ _مطابق کریں"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2808
 msgid "Choose Location"
 msgstr "مقام منتخب کریں"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2887
 msgid "Edit Location"
 msgstr "مقام مدون کریں"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3014
 msgid "City Name"
 msgstr "شہر کا نام"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3018
 msgid "City Time Zone"
 msgstr "شہر کا علاقہ وقت"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3233
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "گھڑی"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3235
 msgid "The Clock displays the current time and date"
 msgstr "گھڑی حالیہ وقت اور تاریخ ظاہر کرتی ہے"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3239 ../applets/fish/fish.c:575
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:494 ../applets/wncklet/window-list.c:547
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:632
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "محمد علی مکی\nmakki@hacari.org\nاردو کوڈر لینکس فورم\nhttp://www.urducoder.com\nمکی کا بلاگ\nhttp://makki.urducoder.com"
+msgstr ""
+"محمد علی مکی\n"
+"makki@hacari.org\n"
+"اردو کوڈر لینکس فورم\n"
+"http://www.urducoder.com\n"
+"مکی کا بلاگ\n"
+"http://makki.urducoder.com"
 
-#. Languages that have a single word that translates as either "state" or
-#. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:2
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr "<small><i>شہر، علاقہ اور ملک کا نام لکھیں اور پوپ-اپ سے جوڑ منتخب کریں</i></small>"
-
-#: ../applets/clock/clock.ui.h:3
-msgid "_Timezone:"
-msgstr "_علاقہ وقت:"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "_Location Name:"
-msgstr "_مقام کا نام:"
-
-#: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(اختیاری)</i>"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "L_ongitude:"
-msgstr "_طول البلد:"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "L_atitude:"
-msgstr "_عرض البلد:"
-
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:1
 msgid "Time & Date"
 msgstr "وقت اور تاریخ"
 
-#: ../applets/clock/clock.ui.h:9
-msgid "_Time:"
-msgstr "_وقت:"
+#: ../applets/clock/clock.ui.h:2 ../mate-panel/panel-context-menu.c:211
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:230
+#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1348
+msgid "_Cancel"
+msgstr "_ملتوی"
 
-#: ../applets/clock/clock.ui.h:10
-msgid "Current Time:"
-msgstr "حالیہ وقت:"
-
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:3
 msgid "_Set System Time"
 msgstr "نظام کا وقت _متعین کریں"
 
-#: ../applets/clock/clock.ui.h:12
-msgid "East"
-msgstr "مشرق"
+#: ../applets/clock/clock.ui.h:4
+msgid "_Time:"
+msgstr "_وقت:"
 
-#: ../applets/clock/clock.ui.h:13
-msgid "West"
-msgstr "مغرب"
+#: ../applets/clock/clock.ui.h:5
+msgid "Current Time:"
+msgstr "حالیہ وقت:"
 
-#: ../applets/clock/clock.ui.h:14
-msgid "North"
-msgstr "شمال"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "South"
-msgstr "جنوب"
-
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:6
 msgid "Clock Preferences"
 msgstr "گھڑی کی ترجیحات"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:8
+msgid "Time _Settings"
+msgstr "_ترتیبات وقت"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:862
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../mate-panel/panel-addto.c:1237 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-test-applets.ui.h:4
+msgid "_Close"
+msgstr "_بند کریں"
+
+#: ../applets/clock/clock.ui.h:10
 msgid "Clock Format"
 msgstr "گھڑی کی ساخت"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:11
 msgid "_12 hour format"
 msgstr "_12 گھنٹے کی ساخت"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:12
 msgid "_24 hour format"
 msgstr "_24 گھنٹے کی ساخت"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr "پینل منظر"
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:14
 msgid "Show the _date"
 msgstr "_تاریخ دکھائیں"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:15
 msgid "Show seco_nds"
 msgstr "_ثانیے دکھائیں"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:16
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:17
 msgid "Show _weather"
 msgstr "_موسم دکھائیں"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:18
 msgid "Show _temperature"
 msgstr "_درجہ حرارت دکھائیں"
 
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:2
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:13
 msgid "General"
 msgstr "عام"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1233
+msgid "_Add"
+msgstr "_شامل کریں"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "_Edit"
+msgstr "_تدوین"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_Remove"
+msgstr "_حذف کریں"
+
+#: ../applets/clock/clock.ui.h:24
 msgid "Display"
 msgstr "منظر"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:25
 msgid "_Visibility unit:"
 msgstr "_رویت اکائی:"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:26
 msgid "_Pressure unit:"
 msgstr "_دباؤ اکائی:"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Wind speed unit:"
 msgstr "_ہوا رفتار اکائی:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Temperature unit:"
 msgstr "_درجہ حرارت اکائی:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "Weather"
 msgstr "موسم"
 
-#: ../applets/clock/clock.ui.h:34
-msgid "Time _Settings"
-msgstr "_ترتیبات وقت"
+#: ../applets/clock/clock.ui.h:30
+msgid "East"
+msgstr "مشرق"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "West"
+msgstr "مغرب"
+
+#: ../applets/clock/clock.ui.h:32
+msgid "North"
+msgstr "شمال"
+
+#: ../applets/clock/clock.ui.h:33
+msgid "South"
+msgstr "جنوب"
+
+#: ../applets/clock/clock.ui.h:34 ../mate-panel/panel-applet-frame.c:954
+#: ../mate-panel/panel-ditem-editor.c:673
+msgid "_OK"
+msgstr ""
+
+#. Languages that have a single word that translates as either "state" or
+#. "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:36
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>شہر، علاقہ اور ملک کا نام لکھیں اور پوپ-اپ سے جوڑ منتخب "
+"کریں</i></small>"
+
+#: ../applets/clock/clock.ui.h:37
+msgid "_Timezone:"
+msgstr "_علاقہ وقت:"
+
+#: ../applets/clock/clock.ui.h:38
+msgid "_Location Name:"
+msgstr "_مقام کا نام:"
+
+#: ../applets/clock/clock.ui.h:39
+msgid "<i>(optional)</i>"
+msgstr "<i>(اختیاری)</i>"
+
+#: ../applets/clock/clock.ui.h:40
+msgid "L_ongitude:"
+msgstr "_طول البلد:"
+
+#: ../applets/clock/clock.ui.h:41
+msgid "L_atitude:"
+msgstr "_عرض البلد:"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
@@ -372,10 +421,12 @@ msgstr "<small>وضع کریں...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>وضع کریں</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "مقام کو بطور حالیہ مقام وضع کریں اور اس کا علاقہ وقت اس کمپیوٹر کے لیے استعمال کریں"
+msgstr ""
+"مقام کو بطور حالیہ مقام وضع کریں اور اس کا علاقہ وقت اس کمپیوٹر کے لیے "
+"استعمال کریں"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -383,7 +434,7 @@ msgstr "مقام کو بطور حالیہ مقام وضع کریں اور اس �
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -392,7 +443,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -400,42 +451,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:618
 msgid "Unknown"
 msgstr "نامعلوم"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:611
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, محسوس ہو جیسے %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:634
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "طلوع آفتار: %s / غروب آفتاب: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "ہدایات کی دستاویز نہیں دکھائی جاسکتی '%s'"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "ہدایات کی دستاویز دکھانے میں غلطی"
 
@@ -489,7 +540,8 @@ msgstr "ٹوٹکے میں تاریخ دکھائیں"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "اگر فعال ہو، پوائنٹر کے گھڑی پر سے گزرنے پر تاریخ ٹوٹکے میں دکھاتا ہے."
+msgstr ""
+"اگر فعال ہو، پوائنٹر کے گھڑی پر سے گزرنے پر تاریخ ٹوٹکے میں دکھاتا ہے."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -559,7 +611,7 @@ msgstr "فیکٹری برائے گھڑی ایپلیٹ"
 msgid "Get the current time and date"
 msgstr "حالیہ وقت اور تاریخ حاصل کریں"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -568,17 +620,17 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:436
 msgid "Images"
 msgstr "تصاویر"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:692
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s مچھلی"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:543
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -586,71 +638,80 @@ msgid ""
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr ""
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:563
 msgid "(with minor help from George)"
 msgstr "(جارج کی تھوڑی سی مدد سے)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:569
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "مچھلی"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:587
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s مچھلی، عم عصر غیبی آواز"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:653
 msgid "Unable to locate the command to execute"
 msgstr "نفاذ کے لیے کمانڈ تلاش کرنے سے قاصر"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:697
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s مچھلی کہتی ہے:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:760
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "کمانڈ سے ما حاصل پڑھنے سے قاصر\n\nتفصیلات: %s"
+msgstr ""
+"کمانڈ سے ما حاصل پڑھنے سے قاصر\n"
+"\n"
+"تفصیلات: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:858
 msgid "_Speak again"
 msgstr "دوبارہ _بولو"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:943
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "تشکیل کردہ کمانڈ کام نہیں کر رہی چنانچہ اسے: %s سے بدل دیا گیا ہے"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "نفاذ سے قاصر '%s'\n\nتفصیلات: %s"
+msgstr ""
+"نفاذ سے قاصر '%s'\n"
+"\n"
+"تفصیلات: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:992
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "'%s' سے پڑھنے سے قاصر\n\nتفصیلات: %s"
+msgstr ""
+"'%s' سے پڑھنے سے قاصر\n"
+"\n"
+"تفصیلات: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1560
 msgid "The water needs changing"
 msgstr "پانی کو تبدلی کی ضرورت ہے"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1562
 msgid "Look at today's date!"
 msgstr "آج کی تاریخ دیکھیں!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1645
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s مچھلی، مستقبل بتانے والی"
@@ -659,47 +720,47 @@ msgstr "%s مچھلی، مستقبل بتانے والی"
 msgid "Fish Preferences"
 msgstr "مچھلی کی ترجیحات"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "مچھلی کا _نام:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "کلک ہونے پر چلانے کے لیے _کمانڈ:"
 
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:7
 msgid "Animation"
 msgstr "حرکت اندازی"
 
-#: ../applets/fish/fish.ui.h:6 ../mate-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_File:"
 msgstr "_فائل:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "Select an animation"
 msgstr "حرکت اندازی منتخب کریں"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "حرکت اندازی میں _کُل فریم:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:12
 msgid "_Pause per frame:"
 msgstr "_وقفہ فی فریم:"
 
-#: ../applets/fish/fish.ui.h:11
+#: ../applets/fish/fish.ui.h:13
 msgid "frames"
 msgstr "فریم"
 
-#: ../applets/fish/fish.ui.h:12
+#: ../applets/fish/fish.ui.h:14
 msgid "seconds"
-msgstr "ثانیے"
+msgstr "سیکنڈ"
 
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:15
 msgid "_Rotate on vertical panels"
 msgstr "عمودی پینلوں میں _گھمائیں"
 
@@ -731,7 +792,8 @@ msgstr "کلک کرنے پر چلانے کے لیے کمانڈ"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "یہ کلید اس کمانڈ کا تعین کرتی ہے جو مچھلی پر کلک کیے جانے پر چلائی جائے گی."
+msgstr ""
+"یہ کلید اس کمانڈ کا تعین کرتی ہے جو مچھلی پر کلک کیے جانے پر چلائی جائے گی."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
@@ -758,7 +820,9 @@ msgstr "عمودی پینلوں میں گھمائیں"
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "اگر فعال کیا گیا، عمودی پینلوں پر مچھلی کی حرکت اندازی گھومی ہوئی دکھائی جائے گی."
+msgstr ""
+"اگر فعال کیا گیا، عمودی پینلوں پر مچھلی کی حرکت اندازی گھومی ہوئی دکھائی "
+"جائے گی."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -772,12 +836,12 @@ msgstr "کہاں سے یہ نادان مچھلی آئی ہے"
 msgid "Display a swimming fish or another animated creature"
 msgstr "تیرتی مچھلی یا دوسری متحرک مخلوق ظاہر کریں"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "اطلاعیہ علاقہ"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:363
 msgid "Panel Notification Area"
 msgstr "پینل اطلاعی علاقہ"
 
@@ -801,7 +865,9 @@ msgstr "تمام مقام کاروں سے دریچے دکھائیں"
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "اگر فعال ہو، دریچوں کی فہرست تمام مقام کاروں سے دریچے دکھائے گی. بصورتِ دیگر یہ فقط حالیہ مقام کار کے دریچے دکھائے گی."
+msgstr ""
+"اگر فعال ہو، دریچوں کی فہرست تمام مقام کاروں سے دریچے دکھائے گی. بصورتِ دیگر"
+" یہ فقط حالیہ مقام کار کے دریچے دکھائے گی."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -811,7 +877,9 @@ msgstr "دریچوں کی گروہ بندی کب کی جائے"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "فیصلہ کرتا ہے کہ دریچوں کی فہرست میں ایک ہی اطلاقیے کے دریچوں کی گروہ بندی کب کی جائے. ممکنہ قدریں ہیں \"کبھی نہیں\", \"خودکار\" اور \"ہمیشہ\"."
+msgstr ""
+"فیصلہ کرتا ہے کہ دریچوں کی فہرست میں ایک ہی اطلاقیے کے دریچوں کی گروہ بندی "
+"کب کی جائے. ممکنہ قدریں ہیں \"کبھی نہیں\", \"خودکار\" اور \"ہمیشہ\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -832,7 +900,10 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "اگر فعال ہو، مقام کار مُبدل میں مقام کار مقام کاروں کے نام دکھائے گا. بصورتِ دیگر وہ مقام کار کے دریچے دکھائے گا. یہ ترتیبات تب کام کریں گی جب دریچہ منیجر ماکرو ہو."
+msgstr ""
+"اگر فعال ہو، مقام کار مُبدل میں مقام کار مقام کاروں کے نام دکھائے گا. بصورتِ"
+" دیگر وہ مقام کار کے دریچے دکھائے گا. یہ ترتیبات تب کام کریں گی جب دریچہ "
+"منیجر ماکرو ہو."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -842,7 +913,9 @@ msgstr "تمام مقام کار ظاہر کریں"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "اگر فعال ہو، مقام کار مُبدل تمام مقام کار دکھائے گا. بصورتِ دیگر یہ فقط حالیہ مقام کار دکھائے گا."
+msgstr ""
+"اگر فعال ہو، مقام کار مُبدل تمام مقام کار دکھائے گا. بصورتِ دیگر یہ فقط "
+"حالیہ مقام کار دکھائے گا."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -874,7 +947,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "فیکٹری برائے دریچہ نیویگیشن متعلقہ ایپلیٹ"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:230
 msgid "Window Selector"
 msgstr "دریچہ منتخب کار"
 
@@ -883,7 +956,7 @@ msgid "Switch between open windows using a menu"
 msgstr "ایک فہرست کے استعمال سے کھلے دریچوں کے درمیان منتقل ہوں"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
 msgstr "مقام کار مُبدل"
 
@@ -892,7 +965,7 @@ msgid "Switch between workspaces"
 msgstr "مقام کاروں کے درمیان منتقل ہوں"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:540
 msgid "Window List"
 msgstr "دریچہ فہرست"
 
@@ -908,88 +981,92 @@ msgstr "ڈیسک ٹاپ ظاہر کریں"
 msgid "Hide application windows and show the desktop"
 msgstr "اطلاقیوں کے دریچے پوشیدہ کر کے ڈیسک ٹاپ ظاہر کریں"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "لادنے میں ناکام %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:173
 msgid "Icon not found"
 msgstr "آئکن نہیں پائی گئی"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:246
 msgid "Click here to restore hidden windows."
 msgstr "پوشیدہ دریچے بحال کرنے کے لیے یہاں کلک کریں"
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:250
 msgid "Click here to hide all windows and show the desktop."
 msgstr "تمام دریچے پوشیدہ کر کے ڈیسک ٹاپ ظاہر کرنے کے لیے یہاں کلک کریں."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:421 ../applets/wncklet/showdesktop.c:487
 msgid "Show Desktop Button"
 msgstr "ڈیسک ٹاپ بٹن دکھائیں"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:489
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "یہ بٹن تمام دریچے پوشیدہ کر کے ڈیسک ٹاپ ظاہر کرتا ہے."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:515
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "آپ کا دریچہ منیجر ڈیسک ٹاپ ظاہر کرنے والے بٹن کی معاونت نہیں رکھتا، یا آپ دریچہ منیجر نہیں چلا رہے."
+msgstr ""
+"آپ کا دریچہ منیجر ڈیسک ٹاپ ظاہر کرنے والے بٹن کی معاونت نہیں رکھتا، یا آپ "
+"دریچہ منیجر نہیں چلا رہے."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "_نظام کا مانیٹر"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:542
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "دریچہ فہرست بٹنوں کی صورت میں دریچے ظاہر کرتی ہے اور آپ کو ان کے درمیان منتقلی کی صلاحیت دیتی ہے."
+msgstr ""
+"دریچہ فہرست بٹنوں کی صورت میں دریچے ظاہر کرتی ہے اور آپ کو ان کے درمیان "
+"منتقلی کی صلاحیت دیتی ہے."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
 msgstr "دریچہ فہرست ترجیحات"
 
-#: ../applets/wncklet/window-list.ui.h:2
+#: ../applets/wncklet/window-list.ui.h:4
 msgid "Window List Content"
 msgstr "دریچہ فہرست مواد"
 
-#: ../applets/wncklet/window-list.ui.h:3
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "حالیہ مقام کار سے دریچے _دکھائیں"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "_تمام مقام کاروں سے دریچے دکھائیں"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: ../applets/wncklet/window-list.ui.h:7
 msgid "Window Grouping"
 msgstr "دریچہ گروہ بندی"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: ../applets/wncklet/window-list.ui.h:8
 msgid "_Never group windows"
 msgstr "دریچوں کی گروہ بندی _نہ کریں"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Group windows when _space is limited"
 msgstr "محدود _جگہ کی صورت میں دریچے گروہوں میں تبدیل کریں"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "دریچوں کی _ہمیشہ گروہ بندی کریں"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "Restoring Minimized Windows"
 msgstr "جھکائے گئے دریچوں کی بحالی"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:12
 msgid "Restore to current _workspace"
 msgstr "حالیہ _مقام کار کو بحال کریں"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Restore to na_tive workspace"
 msgstr "مقامی مقام کار بحال کریں"
 
@@ -997,20 +1074,22 @@ msgstr "مقامی مقام کار بحال کریں"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "دریچہ منتخب کار ایک فہرست میں دریچوں کی فہرست دکھاتا ہے اور آپ کو انہیں استعمال کرنے صلاحیت دیتا ہے."
+msgstr ""
+"دریچہ منتخب کار ایک فہرست میں دریچوں کی فہرست دکھاتا ہے اور آپ کو انہیں "
+"استعمال کرنے صلاحیت دیتا ہے."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
-msgstr "قطار"
+msgstr "سطریں"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:927
 msgid "columns"
 msgstr "کالم"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1020,39 +1099,39 @@ msgstr ""
 msgid "Workspace Switcher Preferences"
 msgstr "مقام کار مُبدل ترجیحات"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _only the current workspace"
 msgstr "_فقط حالیہ مقام کار دکھائیں"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Show _all workspaces in:"
 msgstr "_تمام مقام کار دکھائیں:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "مُبدل"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "_مقام کاروں کی تعداد:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "مقام کاروں کے _نام:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "مقام کاروں کے نام"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "مُبدل میں مقام کار کا _نام دکھائیں"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Allow workspace _wrap around in switcher"
 msgstr "مُبدل میں مقام کار _لفاف کی اجازت دیں"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: ../applets/wncklet/workspace-switcher.ui.h:13
 msgid "Workspaces"
 msgstr "مقام کار"
 
@@ -1178,7 +1257,9 @@ msgstr "پینل کے حذف کی تصدیق"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "اگر فعال ہو، اگر صارف پینل حذف کرنا چاہے تو ایک مکالمہ تصدیق کے لیے پوچھے گا."
+msgstr ""
+"اگر فعال ہو، اگر صارف پینل حذف کرنا چاہے تو ایک مکالمہ تصدیق کے لیے پوچھے "
+"گا."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1682,7 +1763,7 @@ msgstr ""
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
-msgstr "پس منظر نوعیت"
+msgstr "پس منظر کی نوعیت"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
 msgid ""
@@ -1694,7 +1775,7 @@ msgstr ""
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
-msgstr "پس منظر رنگ"
+msgstr "پس منظر کا رنگ"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
 msgid "Specifies the background color for the panel in #RGB format."
@@ -1713,7 +1794,7 @@ msgstr ""
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
-msgstr "پس منظر تصویر"
+msgstr "پس منظر کی تصویر"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:48
 msgid ""
@@ -1770,12 +1851,12 @@ msgstr "شروع کیا جارہا ہے %s"
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr "اطلاقیہ کمانڈ لائن میں دستاویزات قبول نہیں کرتا"
+msgstr "اطلاقیہ کمانڈ لائن سے دستاویزات قبول نہیں کرتا"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "چلانے کا غیر تسلیم شدہ اختیار: %d"
+msgstr "چلانے کا غیر تسلیم شُدہ اختیار: %d"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
@@ -1793,7 +1874,7 @@ msgstr "نشست منیجر سے اتصال معطل کریں"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "محفوظ کردہ تشکیل پر مشتمل فائل متعین کریں"
+msgstr "محفوظ کردہ تشکیل پر مشتمل فائل مُتعین کریں"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
@@ -1805,7 +1886,7 @@ msgstr "نشست ادارت آئی ڈی متعین کریں"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
-msgstr "ID"
+msgstr "آئی ڈی"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
@@ -1813,7 +1894,7 @@ msgstr "نشست ادارت اختیارات:"
 
 #: ../mate-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "نشست ادارت اختیارات ظاہر کریں"
+msgstr "نشست ادارت کے اختیارات دکھائیں"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1821,8 +1902,8 @@ msgstr "نشست ادارت اختیارات ظاہر کریں"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:799
+#: ../mate-panel/panel-applet-frame.c:980
 msgid "Error"
 msgstr "غلطی"
 
@@ -1852,32 +1933,32 @@ msgstr "فولڈروں کی تلاش کو ہینڈل کرنے کے لیے کوئ
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "پینل سے _حذف کریں"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "م_نتقل کریں"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "پینل میں _مقفل کریں"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "خالی داغ تلاش نہیں کیا جاسکتا"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-toplevel.c:1606
 msgid "Drawer"
 msgstr "دراز"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "دراز میں _شامل کریں"
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
@@ -1896,7 +1977,7 @@ msgid "- Edit .desktop files"
 msgstr "- .desktop فائل مدون کریں"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "لانچر بنائیں"
 
@@ -1905,11 +1986,11 @@ msgstr "لانچر بنائیں"
 msgid "Directory Properties"
 msgstr "ڈائریکٹری خصوصیات"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "لانچر خصوصیات"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:137
 msgid "Panel"
 msgstr "پینل"
 
@@ -1917,7 +1998,9 @@ msgstr "پینل"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "دیگر اطلاقیے چلاتا ہے اور دریچوں کی ادارت کے لیے کئی سہولیات فراہم کرتا ہے جیسے وقت دکھانا وغیرہ."
+msgstr ""
+"دیگر اطلاقیے چلاتا ہے اور دریچوں کی ادارت کے لیے کئی سہولیات فراہم کرتا ہے "
+"جیسے وقت دکھانا وغیرہ."
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1939,20 +2022,20 @@ msgstr "پینل لانچر ڈیسک ٹاپ فائل کے لیے کوئی ربط
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "پینل لانچر %s%s کے لیے ڈیسک ٹاپ فائل %s نہیں کھولی جاسکتی\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_چلائیں"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "کلید %s مرتب نہیں ہے، لانچر لادا نہیں جاسکتا\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1332
+#: ../mate-panel/panel-ditem-editor.c:1366
+#: ../mate-panel/panel-ditem-editor.c:1397
 msgid "Could not save launcher"
 msgstr "لانچر محفوظ نہیں کیا جاسکتا"
 
@@ -1975,23 +2058,23 @@ msgstr "چلانے کے مکالمے کا نفاذ کریں"
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "یہ لانچر _پینل میں شامل کریں"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "یہ لانچر _ڈیسک ٹاپ میں شامل کریں"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "_تمام فہرست"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "اس _دراز کو پینل میں شامل کریں"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "اس _فہرست کو پینل میں شامل کریں"
 
@@ -2040,10 +2123,10 @@ msgstr "تلاش برائے فائلیں..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "اس کمپیوٹر پر دستاویزات اور فولڈر ان کے ناموں یا مواد سے تلاش کریں"
+msgstr "نام یا مواد سے اس کمپیوٹر میں دستاویزات اور فولڈر تلاش کریں"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "بزور برخاست کریں"
 
@@ -2068,114 +2151,124 @@ msgstr "بند کریں..."
 msgid "Shut down the computer"
 msgstr "کمپیوٹر بند کریں"
 
-#: ../mate-panel/panel-addto.c:117
+#: ../mate-panel/panel-addto.c:118
 msgid "Custom Application Launcher"
 msgstr "مخصوص اطلاقیہ لانچر"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:119
 msgid "Create a new launcher"
 msgstr "نیا لانچر بنائیں"
 
-#: ../mate-panel/panel-addto.c:128
+#: ../mate-panel/panel-addto.c:129
 msgid "Application Launcher..."
 msgstr "اطلاقیہ لانچر..."
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:130
 msgid "Copy a launcher from the applications menu"
 msgstr "اطلاقیوں کی فہرست سے لانچر کاپی کریں"
 
-#: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
 msgstr "مرکزی فہرست"
 
-#: ../mate-panel/panel-addto.c:144
+#: ../mate-panel/panel-addto.c:145
 msgid "The main MATE menu"
 msgstr "میٹ کی مرکزی فہرست"
 
-#: ../mate-panel/panel-addto.c:154
+#: ../mate-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "فہرست پٹی"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "مخصوص فہرست پٹی"
 
-#: ../mate-panel/panel-addto.c:165
+#: ../mate-panel/panel-addto.c:166
 msgid "Separator"
 msgstr "جداگار"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:167
 msgid "A separator to organize the panel items"
 msgstr "پینل کے عناصر منظم کرنے کے لیے جُداگار"
 
-#: ../mate-panel/panel-addto.c:177
+#: ../mate-panel/panel-addto.c:178
 msgid "A pop out drawer to store other items in"
 msgstr "دوسرے عناصر اس میں رکھنے کے لیے کھلنے والی دراز"
 
-#: ../mate-panel/panel-addto.c:258
+#: ../mate-panel/panel-addto.c:259
 msgid "(empty)"
 msgstr "(خالی)"
 
-#: ../mate-panel/panel-addto.c:989
+#: ../mate-panel/panel-addto.c:990
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" میں شامل کرنے کے لیے _عنصر تلاش کریں:"
 
-#: ../mate-panel/panel-addto.c:993
+#: ../mate-panel/panel-addto.c:994
 #, c-format
 msgid "Add to Drawer"
 msgstr "دراز میں شامل کریں"
 
-#: ../mate-panel/panel-addto.c:995
+#: ../mate-panel/panel-addto.c:996
 msgid "Find an _item to add to the drawer:"
 msgstr "دراز میں شامل کرنے کے لیے کوئی _عنصر تلاش کریں:"
 
-#: ../mate-panel/panel-addto.c:997
+#: ../mate-panel/panel-addto.c:998
 #, c-format
 msgid "Add to Panel"
 msgstr "پینل میں شامل کریں"
 
-#: ../mate-panel/panel-addto.c:999
+#: ../mate-panel/panel-addto.c:1000
 msgid "Find an _item to add to the panel:"
 msgstr "پینل میں شامل کرنے کے لیے کوئی _عنصر تلاش کریں:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-addto.c:1229
+msgid "_Back"
+msgstr "_پیچھے"
+
+#: ../mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" غیر متوقع طور پر بند ہوگیا ہے"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "پینل کا عنصر غیر متوقع طور پر برخاست ہوگیا ہے"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "اگر آپ پینل کے عنصر کو دوبارہ لادیں تو یہ خودکار طور پر دوبارہ پینل میں شامل ہوجائے گا."
+msgstr ""
+"اگر آپ پینل کے عنصر کو دوبارہ لادیں تو یہ خودکار طور پر دوبارہ پینل میں شامل"
+" ہوجائے گا."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "دوبارہ _مت لادیں"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:778
+#: ../mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
-msgstr "_لادیں"
+msgstr "_دوبارہ لادیں"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "پینل کو \"%s\" کو لادتے وقت مسئلہ درپیش ہوا ہے."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:957
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "کیا آپ اپنی تشکیلات سے ایپلیٹ حذف کرنا چاہتے ہیں؟"
+
+#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+msgid "_Delete"
+msgstr "_حذف کریں"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
@@ -2189,7 +2282,9 @@ msgstr "میٹ پینل"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "یہ پروگرام دوسرے اطلاقیوں کو چلانے کا ذمہ دار ہے اور اچھی سہولیات فراہم کرتا ہے."
+msgstr ""
+"یہ پروگرام دوسرے اطلاقیوں کو چلانے کا ذمہ دار ہے اور اچھی سہولیات فراہم کرتا"
+" ہے."
 
 #: ../mate-panel/panel-context-menu.c:121
 msgid "About the MATE Panel"
@@ -2213,12 +2308,8 @@ msgid ""
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:211
-msgid "_Cancel"
-msgstr ""
-
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2226,104 +2317,112 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "یہ پینل _حذف کریں"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "_نیا پینل"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "پینلوں کی _بابت"
 
-#: ../mate-panel/panel-ditem-editor.c:114
+#: ../mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "اطلاقیہ"
 
-#: ../mate-panel/panel-ditem-editor.c:116
+#: ../mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "ٹرمنل میں اطلاقیہ"
 
-#: ../mate-panel/panel-ditem-editor.c:118
+#: ../mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "مقام"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:607
 msgid "_Type:"
 msgstr "_نوعیت:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:614
 msgid "_Name:"
 msgstr "_نام:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:639
 msgid "_Browse..."
 msgstr "_انتخاب..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:646
 msgid "Co_mment:"
 msgstr "_تبصرہ:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:657
+msgid "_Revert"
+msgstr "_الٹیں"
+
+#: ../mate-panel/panel-ditem-editor.c:983
 msgid "Choose an application..."
 msgstr "اطلاقیہ منتخب کریں..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:987
 msgid "Choose a file..."
 msgstr "فائل منتخب کریں..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1152
+#: ../mate-panel/panel-ditem-editor.c:1161
 msgid "Comm_and:"
 msgstr "_کمانڈ:"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1170
 msgid "_Location:"
 msgstr "_مقام:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1333
 msgid "The name of the launcher is not set."
 msgstr "لانچر کا نام مرتب نہیں ہے."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1337
 msgid "Could not save directory properties"
 msgstr "ڈائریکٹری کی خصوصیات محفوظ نہیں کی جاسکتیں"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1338
 msgid "The name of the directory is not set."
 msgstr "ڈائریکٹری کا نام مرتب نہیں ہے."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1354
 msgid "The command of the launcher is not set."
 msgstr "لانچر کی کمانڈ مرتب نہیں ہے."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1357
 msgid "The location of the launcher is not set."
 msgstr "لانچر کا مقام مرتب نہیں ہے."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1434
 msgid "Could not display help document"
 msgstr "ہدایات کی دستاویز نہیں دکھائی جاسکتی"
 
-#: ../mate-panel/panel-force-quit.c:80
+#: ../mate-panel/panel-force-quit.c:82
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "اطلاقیے کو بزور قوت بند کرنے کے لیے اس کے دریچے پر کلک کریں. ملتوی کرنے کے لیے <ESC> دبائیں."
+msgstr ""
+"اطلاقیے کو بزور قوت بند کرنے کے لیے اس کے دریچے پر کلک کریں. ملتوی کرنے کے "
+"لیے <ESC> دبائیں."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "کیا اس اطلاقیہ کو بزور قوت بند کردیا جائے؟"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "اگر آپ نے اطلاقیہ کو بزور قوت بند کیا، کسی بھی کھلی دستاویز میں غیر محفوظ کردہ تبدیلیاں ضائع ہوسکتی ہیں."
+msgstr ""
+"اگر آپ نے اطلاقیہ کو بزور قوت بند کیا، کسی بھی کھلی دستاویز میں غیر محفوظ "
+"کردہ تبدیلیاں ضائع ہوسکتی ہیں."
 
 #: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
@@ -2335,13 +2434,14 @@ msgstr "دستاویزات، فولڈر اور نیٹ ورک مقامات تک �
 
 #: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "ڈیسک ٹاپ کی شکل وصورت اور سلوک تبدیل کریں، مدد حاصل کریں، یا لاگ آؤٹ کریں"
+msgstr ""
+"ڈیسک ٹاپ کی شکل وصورت اور سلوک تبدیل کریں، مدد حاصل کریں، یا لاگ آؤٹ کریں"
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
 msgstr "اطلاقیے"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "فہرست _مدون کریں"
 
@@ -2350,7 +2450,7 @@ msgid "Bookmarks"
 msgstr "پسندیدہ"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
 #, c-format
 msgid "Open '%s'"
 msgstr "کھولیں '%s'"
@@ -2401,20 +2501,20 @@ msgstr "اپنے ڈیسک ٹاپ کا مواد ایک فولڈر میں کھول
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
-msgstr ""
+msgstr "کمپیوٹر"
 
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr ""
+msgstr "اس کمپیوٹر سے قابلِ رسائی تمام مقامی اور بعید ڈسک اور فولڈر دیکھیں"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
-msgstr ""
+msgstr "نیٹ ورک"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "پسندیدہ اور مقامی نیٹ ورک مقامات دیکھیں"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
@@ -2478,7 +2578,7 @@ msgid "Drawer Properties"
 msgstr "دراز کی خصوصیات"
 
 #: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
+#: ../mate-panel/panel-run-dialog.c:2038
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "فائل لادنے سے قاصر '%s': %s."
@@ -2491,138 +2591,138 @@ msgstr "خصوصیات کا مکالمہ ظاہر نہیں کیا جاسکتا"
 msgid "Panel Properties"
 msgstr "پینل خصوصیات"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:2
+#: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "Some of these properties are locked down"
 msgstr "ان خصوصیات میں سے کچھ مقفل کردیا گیا ہے"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:5
 msgid "_Icon:"
 msgstr "_آئکن:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: ../mate-panel/panel-properties-dialog.ui.h:6
 msgid "pixels"
 msgstr "پکسل"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-test-applets.ui.h:7
 msgid "_Orientation:"
 msgstr "_سمت بندی:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:6
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-test-applets.ui.h:5
 msgid "_Size:"
 msgstr "_حجم:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
+#: ../mate-panel/panel-properties-dialog.ui.h:9
 msgid "E_xpand"
 msgstr "_پھیلائیں"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
+#: ../mate-panel/panel-properties-dialog.ui.h:10
 msgid "_Autohide"
 msgstr "_خودکار چھپائیں"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: ../mate-panel/panel-properties-dialog.ui.h:11
 msgid "Show hide _buttons"
 msgstr "چھپانے کے _بٹن دکھائیں"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: ../mate-panel/panel-properties-dialog.ui.h:12
 msgid "Arro_ws on hide buttons"
 msgstr "چھپانے کے بٹن پر _تیر"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: ../mate-panel/panel-properties-dialog.ui.h:14
 msgid "_None (use system theme)"
 msgstr "_کچھ نہیں (نظام کی تھیم استعمال کریں)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Solid c_olor"
 msgstr "پختہ _رنگ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: ../mate-panel/panel-properties-dialog.ui.h:17
 msgid "Pick a color"
 msgstr "رنگ اٹھائیں"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:16
+#: ../mate-panel/panel-properties-dialog.ui.h:18
 msgid "<small>Transparent</small>"
 msgstr "<small>شفاف</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: ../mate-panel/panel-properties-dialog.ui.h:19
 msgid "Co_lor:"
 msgstr "_رنگ:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: ../mate-panel/panel-properties-dialog.ui.h:20
 msgid "S_tyle:"
 msgstr "_طرز:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: ../mate-panel/panel-properties-dialog.ui.h:21
 msgid "<small>Opaque</small>"
 msgstr "<small>غیر شفاف</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: ../mate-panel/panel-properties-dialog.ui.h:22
 msgid "Background _image:"
 msgstr "پس منظر _تصویر:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: ../mate-panel/panel-properties-dialog.ui.h:23
 msgid "Select background"
 msgstr "پس منظر منتخب کریں"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: ../mate-panel/panel-properties-dialog.ui.h:24
 msgid "Background"
 msgstr "پس منظر"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: ../mate-panel/panel-properties-dialog.ui.h:25
 msgid "Image Background Details"
 msgstr "پس منظر تصویر کی تفصیلات"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: ../mate-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_ٹائل"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: ../mate-panel/panel-properties-dialog.ui.h:27
 msgid "_Scale"
 msgstr "_پیمانہ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: ../mate-panel/panel-properties-dialog.ui.h:28
 msgid "St_retch"
 msgstr "کسا ہوا"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: ../mate-panel/panel-properties-dialog.ui.h:29
 msgid "Rotate image when panel is _vertical"
 msgstr "پینل کے _عمودی ہونے پر تصویر کو گھمائیں"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "حالیہ استعمال ہونے والی دستاویز \"%s\" نہیں کھولی جاسکتی"
 
-#: ../mate-panel/panel-recent.c:90
+#: ../mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "\"%s\" کو کھولنے کی کوشش میں نامعلوم غلطی واقع ہوئی ہے."
 
-#: ../mate-panel/panel-recent.c:147
+#: ../mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "کیا حالیہ دستاویزات کی فہرست صاف کردی جائے؟"
 
-#: ../mate-panel/panel-recent.c:149
+#: ../mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:161
+#: ../mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "حالیہ دستاویزات صاف کریں"
 
-#: ../mate-panel/panel-recent.c:196
+#: ../mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "حالیہ دستاویزات"
 
-#: ../mate-panel/panel-recent.c:235
+#: ../mate-panel/panel-recent.c:239
 msgid "Clear Recent Documents..."
 msgstr "حالیہ دستاویزات صاف کریں..."
 
-#: ../mate-panel/panel-recent.c:237
+#: ../mate-panel/panel-recent.c:241
 msgid "Clear all items from the recent documents list"
 msgstr "حالیہ دستاویزات کی فہرست سے تمام عناصر صاف کریں"
 
@@ -2636,25 +2736,26 @@ msgstr "کمانڈ '%s' نہیں چلائی جاسکتی"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' کو UTF-8 سے تبدیل نہیں کیا جاسکتا"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "کمانڈ سے منسلک کرنے کے لیے فائل منتخب کریں..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1617
+#: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "کسی اطلاقیے کی تفصیل دیکھنے کے لیے اسے منتخب کریں"
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1655
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "کمانڈ چلائی جائے گی: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1688
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 
-#: ../mate-panel/panel-run-dialog.c:1978
+#: ../mate-panel/panel-run-dialog.c:2043
 msgid "Could not display run dialog"
 msgstr "چلانے کا مکالمہ ظاہر نہیں کیا جاسکتا"
 
@@ -2662,49 +2763,49 @@ msgstr "چلانے کا مکالمہ ظاہر نہیں کیا جاسکتا"
 msgid "Run Application"
 msgstr "اطلاقیہ چلائیں"
 
-#: ../mate-panel/panel-run-dialog.ui.h:2
+#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
+msgid "_Run"
+msgstr "_چلائیں"
+
+#: ../mate-panel/panel-run-dialog.ui.h:5
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+
+#: ../mate-panel/panel-run-dialog.ui.h:6
 msgid "Command icon"
 msgstr "کمانڈ کی آئکن"
 
-#: ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel-run-dialog.ui.h:7
 msgid "The icon of the command to be run."
 msgstr "چلنے والی کمانڈ کی آئکن."
 
-#: ../mate-panel/panel-run-dialog.ui.h:4
+#: ../mate-panel/panel-run-dialog.ui.h:8
 msgid "Run in _terminal"
 msgstr "_ٹرمنل میں چلائیں"
 
-#: ../mate-panel/panel-run-dialog.ui.h:5
+#: ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
 msgstr "ٹرمنل کے دریچے میں کمانڈ چلانے کے لیے یہ بکس منتخب کریں."
 
-#: ../mate-panel/panel-run-dialog.ui.h:6
+#: ../mate-panel/panel-run-dialog.ui.h:10
 msgid "Run with _file..."
 msgstr "_فائل کے ساتھ چلائیں"
 
-#: ../mate-panel/panel-run-dialog.ui.h:7
+#: ../mate-panel/panel-run-dialog.ui.h:11
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
 
-#: ../mate-panel/panel-run-dialog.ui.h:8
+#: ../mate-panel/panel-run-dialog.ui.h:12
 msgid "List of known applications"
 msgstr "فہرست برائے معلوم اطلاقیے"
 
-#: ../mate-panel/panel-run-dialog.ui.h:10
+#: ../mate-panel/panel-run-dialog.ui.h:14
 msgid "Show list of known _applications"
 msgstr "معلوم _اطلاقیوں کی فہرست دکھائیں"
-
-#: ../mate-panel/panel-run-dialog.ui.h:11 ../mate-panel/panel-stock-icons.c:97
-msgid "_Run"
-msgstr "_چلائیں"
-
-#: ../mate-panel/panel-run-dialog.ui.h:12
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr ""
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2781,33 +2882,37 @@ msgstr "ایپلیٹ %s لادنے میں ناکام"
 msgid "Test applet utility"
 msgstr "ایپلیٹ کی سہولیات جانچیں"
 
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: ../mate-panel/panel-test-applets.ui.h:3
+msgid "_Execute"
+msgstr ""
+
+#: ../mate-panel/panel-test-applets.ui.h:6
 msgid "_Applet:"
 msgstr "ا_یپلیٹ:"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: ../mate-panel/panel-test-applets.ui.h:8
 msgid "_Prefs Path:"
 msgstr "_مجوزہ پاتھ:"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "پینل پوشیدہ کریں"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1612 ../mate-panel/panel-toplevel.c:1622
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1614
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1616
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1618
 msgid "Right Panel"
 msgstr ""
 
@@ -2833,11 +2938,11 @@ msgstr "گھر کا فولڈر"
 #. * caja
 #: ../mate-panel/panel-util.c:878
 msgid "File System"
-msgstr "فائل سسٹم"
+msgstr "فائل نظام"
 
 #: ../mate-panel/panel-util.c:1051
 msgid "Search"
-msgstr "تلاش"
+msgstr "تلاش کریں"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
@@ -2848,27 +2953,31 @@ msgstr "تلاش"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:478
 #, c-format
 msgid "Open URL: %s"
 msgstr "ربط کھولیں: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1328
 msgid "Delete this drawer?"
 msgstr "کیا یہ دراز حذف کردی جائے؟"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1329
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "جب دراز حذف کی جاتی ہے تو دراز اور اس\nکی ترتیبات ضائع ہوجاتی ہیں."
+msgstr ""
+"جب دراز حذف کی جاتی ہے تو دراز اور اس\n"
+"کی ترتیبات ضائع ہوجاتی ہیں."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1332
 msgid "Delete this panel?"
 msgstr "کیا یہ پینل حذف کردیا جائے؟"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1333
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "جب پینل حذف کیا جاتا تو پینل اور اس کی\nترتیبات ضائع ہوجاتی ہیں."
+msgstr ""
+"جب پینل حذف کیا جاتا تو پینل اور اس کی\n"
+"ترتیبات ضائع ہوجاتی ہیں."
