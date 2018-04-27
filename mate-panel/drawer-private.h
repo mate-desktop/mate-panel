@@ -133,7 +133,7 @@ static void  load_drawer_applet                 (char             *toplevel_id,
                                                  const char       *id);
 
 static void  panel_drawer_prepare               (const char       *drawer_id,
-                                                 const char       *custom_icon,
+                                                 GIcon            *custom_icon,
                                                  gboolean          use_custom_icon,
                                                  const char       *tooltip,
                                                  char            **attached_toplevel_id);
