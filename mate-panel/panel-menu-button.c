@@ -716,8 +716,12 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 			}
 		}
 
-		if (directory)
-			retval = g_strdup (matemenu_tree_directory_get_icon (directory));
+		if (directory) {
+			GIcon  *gicon;
+			gicon = matemenu_tree_directory_get_icon (directory);
+			if (gicon != NULL)
+				retval = g_icon_to_string(gicon);
+		}
 	}
 
 	if (!retval)

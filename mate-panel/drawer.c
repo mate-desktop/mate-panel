@@ -568,7 +568,7 @@ load_drawer_applet (char          *toplevel_id,
 
 static void
 panel_drawer_prepare (const char  *drawer_id,
-                      const char  *custom_icon,
+                      GIcon       *custom_icon,
                       gboolean     use_custom_icon,
                       const char  *tooltip,
                       char       **attached_toplevel_id)
@@ -587,7 +587,10 @@ panel_drawer_prepare (const char  *drawer_id,
     g_settings_set_boolean (settings, PANEL_OBJECT_USE_CUSTOM_ICON_KEY, use_custom_icon);
 
     if (custom_icon) {
-        g_settings_set_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY, custom_icon);
+	gchar *icon_name;
+	icon_name = g_icon_to_string(custom_icon);
+	g_settings_set_string (settings, PANEL_OBJECT_CUSTOM_ICON_KEY, icon_name);
+	g_free(icon_name);
     }
 
     if (attached_toplevel_id) {
@@ -618,7 +621,7 @@ panel_drawer_prepare (const char  *drawer_id,
 void
 panel_drawer_create (PanelToplevel *toplevel,
                      int            position,
-                     const char    *custom_icon,
+                     GIcon         *custom_icon,
                      gboolean       use_custom_icon,
                      const char    *tooltip)
 {
@@ -636,7 +639,7 @@ panel_drawer_create (PanelToplevel *toplevel,
 char *
 panel_drawer_create_with_id (const char    *toplevel_id,
                              int            position,
-                             const char    *custom_icon,
+                             GIcon         *custom_icon,
                              gboolean       use_custom_icon,
                              const char    *tooltip)
 {
