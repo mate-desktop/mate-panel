@@ -392,7 +392,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 										GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
 
-	mate_panel_applet_set_flags(MATE_PANEL_APPLET(tasklist->applet), MATE_PANEL_APPLET_EXPAND_MAJOR | MATE_PANEL_APPLET_EXPAND_MINOR | MATE_PANEL_APPLET_HAS_HANDLE);
+	mate_panel_applet_set_flags(MATE_PANEL_APPLET(tasklist->applet),  MATE_PANEL_APPLET_EXPAND_MINOR | MATE_PANEL_APPLET_HAS_HANDLE);
 
 	setup_gsettings(tasklist);
 
