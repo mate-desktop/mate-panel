@@ -612,13 +612,13 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
         else
                 line2 = g_strdup (temp);
         g_free (temp);
-        g_free (apparent);
 
         wind = weather_info_get_wind (info);
         if (strcmp (apparent, dgettext ("mate-applets-2.0", "Unknown")) != 0)
                 line3 = g_strdup_printf ("%s\n", wind);
         else
                 line3 = g_strdup ("");
+        g_free (apparent);
 
         sys_timezone = getenv ("TZ");
         setenv ("TZ", clock_location_get_timezone (location), 1);
