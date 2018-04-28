@@ -615,7 +615,7 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
         g_free (apparent);
 
         wind = weather_info_get_wind (info);
-        if (strcmp (apparent, dgettext ("mate-applets-2.0", "Unknown")) != 0)
+        if (strcmp (wind, dgettext ("mate-applets-2.0", "Unknown")) != 0)
                 line3 = g_strdup_printf ("%s\n", wind);
         else
                 line3 = g_strdup ("");
