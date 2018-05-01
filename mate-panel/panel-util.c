@@ -327,7 +327,7 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 	return retval;
 }
 
-GdkPixbuf *
+cairo_surface_t *
 panel_load_icon (GtkIconTheme  *icon_theme,
 		 const char    *icon_name,
 		 int            size,
@@ -335,7 +335,8 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 		 int            desired_height,
 		 char         **error_msg)
 {
-	GdkPixbuf *retval;
+	GdkPixbuf *pixbuf;
+	cairo_surface_t *surface;
 	char      *file;
 	GError    *error;
 
@@ -351,19 +352,25 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	}
 
 	error = NULL;
-	retval = gdk_pixbuf_new_from_file_at_size (file,
+	pixbuf = gdk_pixbuf_new_from_file_at_scale (file,
 						   desired_width,
 						   desired_height,
+						   TRUE,
 						   &error);
 	if (error) {
 		if (error_msg)
 			*error_msg = g_strdup (error->message);
 		g_error_free (error);
+		surface = NULL;
+	}
+	else {
+		surface = gdk_cairo_surface_create_from_pixbuf (pixbuf, 0, NULL);
 	}
 
 	g_free (file);
+	g_object_unref (pixbuf);
 
-	return retval;
+	return surface;
 }
 
 static char* panel_lock_screen_action_get_command(const char* action)

@@ -184,15 +184,15 @@ drag_data_received_cb (GtkWidget        *widget,
 	GList   *file_list;
 
 	if (panel_global_config_get_enable_animations ()) {
-		GdkPixbuf *pixbuf;
-		pixbuf = button_widget_get_pixbuf (BUTTON_WIDGET (widget));
+		cairo_surface_t *surface;
+		surface = button_widget_get_surface (BUTTON_WIDGET (widget));
 		xstuff_zoom_animate (widget,
-				     pixbuf,
+				     surface,
 				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
 				     NULL);
-		g_object_unref (pixbuf);
+		cairo_surface_destroy (surface);
 	}
-	
+
 	file_list = NULL;
 	uris = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (selection_data));
 	for (i = 0; uris[i]; i++)
@@ -402,13 +402,13 @@ clicked_cb (Launcher  *launcher,
 		  GtkWidget        *widget)
 {
 	if (panel_global_config_get_enable_animations ()) {
-		GdkPixbuf *pixbuf;
-		pixbuf = button_widget_get_pixbuf (BUTTON_WIDGET (widget));
+		cairo_surface_t *surface;
+		surface = button_widget_get_surface (BUTTON_WIDGET (widget));
 		xstuff_zoom_animate (widget,
-				     pixbuf,
+				     surface,
 				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
 				     NULL);
-		g_object_unref (pixbuf);
+		cairo_surface_destroy (surface);
 	}
 
 	launcher_launch (launcher, NULL);
@@ -1157,7 +1157,7 @@ void
 panel_launcher_set_dnd_enabled (Launcher *launcher,
 				gboolean  dnd_enabled)
 {
-	GdkPixbuf *pixbuf;
+	cairo_surface_t *surface;
 
 	if (dnd_enabled) {
 		static GtkTargetEntry dnd_targets[] = {
@@ -1170,16 +1170,20 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 				     GDK_BUTTON1_MASK,
 				     dnd_targets, 2,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		//FIXME: this doesn't work since the pixbuf isn't loaded yet
-		pixbuf = button_widget_get_pixbuf (BUTTON_WIDGET (launcher->button));
-		if (pixbuf) {
+		surface = button_widget_get_surface (BUTTON_WIDGET (launcher->button));
+		if (surface) {
+			GdkPixbuf *pixbuf;
+			pixbuf = gdk_pixbuf_get_from_surface (surface,
+							 0,
+							 0,
+							 cairo_image_surface_get_width (surface),
+							 cairo_image_surface_get_height (surface));
 			gtk_drag_source_set_icon_pixbuf (launcher->button,
 							 pixbuf);
 			g_object_unref (pixbuf);
+			cairo_surface_destroy (surface);
 		}
 		gtk_widget_set_has_window (launcher->button, FALSE);
-	
-
 	} else
 		gtk_drag_source_unset (launcher->button);
 }
