@@ -134,9 +134,9 @@ static void update_icon(ShowDesktopData* sdd)
 	GtkStateFlags    state;
 	GtkBorder        padding;
 	int width, height;
-	GdkPixbuf* icon;
-	GdkPixbuf* scaled;
-	int icon_size;
+	cairo_surface_t* icon;
+	cairo_surface_t* scaled;
+	int icon_size, icon_scale;
 	GError* error;
 	int thickness = 0;
 
@@ -156,17 +156,24 @@ static void update_icon(ShowDesktopData* sdd)
 		break;
 	}
 
-	icon_size = sdd->size - thickness;
+	icon_scale = gtk_widget_get_scale_factor (sdd->button);
+	icon_size = sdd->size * icon_scale - thickness;
 
 	if (icon_size < 22)
 		icon_size = 16;
-	else if (icon_size < 32)
+	else if (icon_size < 24)
 		icon_size = 22;
+	else if (icon_size < 32)
+		icon_size = 24;
 	else if (icon_size < 48)
 		icon_size = 32;
+	else if (icon_size < 64)
+		icon_size = 48;
+	else if (icon_size < 128)
+		icon_size = 64;
 
 	error = NULL;
-	icon = gtk_icon_theme_load_icon (sdd->icon_theme, SHOW_DESKTOP_ICON, icon_size, 0, &error);
+	icon = gtk_icon_theme_load_surface (sdd->icon_theme, SHOW_DESKTOP_ICON, icon_size, icon_scale, NULL, 0, &error);
 
 	if (icon == NULL)
 	{
@@ -182,8 +189,8 @@ static void update_icon(ShowDesktopData* sdd)
 		return;
 	}
 
-	width = gdk_pixbuf_get_width(icon);
-	height = gdk_pixbuf_get_height(icon);
+	width = cairo_image_surface_get_width (icon);
+	height = cairo_image_surface_get_height (icon);
 
 	scaled = NULL;
 
@@ -191,28 +198,36 @@ static void update_icon(ShowDesktopData* sdd)
 	switch (sdd->orient)
 	{
 		case GTK_ORIENTATION_HORIZONTAL:
-			width = (icon_size * width) / height;
-			height = icon_size;
+			width = (icon_size / icon_scale * width) / height;
+			height = icon_size / icon_scale;
 			break;
 		case GTK_ORIENTATION_VERTICAL:
-			height = (icon_size * height) / width;
-			width = icon_size;
+			height = (icon_size / icon_scale * height) / width;
+			width = icon_size / icon_scale;
 			break;
 	}
 
-	scaled = gdk_pixbuf_scale_simple(icon, width, height, GDK_INTERP_BILINEAR);
+	scaled = cairo_surface_create_similar (icon,
+		                               cairo_surface_get_content (icon),
+		                               width,
+		                               height);
 
 	if (scaled != NULL)
 	{
-		gtk_image_set_from_pixbuf(GTK_IMAGE(sdd->image), scaled);
-		g_object_unref(scaled);
+		cairo_t *cr;
+		cr = cairo_create (scaled);
+		cairo_scale (cr, (double) width / icon_size, (double) height / icon_size);
+		cairo_set_source_surface (cr, icon, 0, 0);
+		cairo_paint (cr);
+		gtk_image_set_from_surface (GTK_IMAGE(sdd->image), scaled);
+		cairo_surface_destroy (scaled);
 	}
 	else
 	{
-		gtk_image_set_from_pixbuf (GTK_IMAGE (sdd->image), icon);
+		gtk_image_set_from_surface (GTK_IMAGE (sdd->image), icon);
 	}
 
-	g_object_unref (icon);
+	cairo_surface_destroy (icon);
 }
 
 static const GtkActionEntry show_desktop_menu_actions[] = {

@@ -5,7 +5,7 @@
 #include <gtk/gtk.h>
 
 void xstuff_zoom_animate                (GtkWidget        *widget,
-					 GdkPixbuf        *pixbuf,
+					 cairo_surface_t  *surface,
 					 PanelOrientation  orientation,
 					 GdkRectangle     *opt_src_rect);
 

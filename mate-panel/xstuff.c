@@ -328,7 +328,7 @@ draw_zoom_animation (GdkScreen *gscreen,
 
 void
 xstuff_zoom_animate (GtkWidget *widget,
-		     GdkPixbuf *pixbuf,
+		     cairo_surface_t *surface,
 		     PanelOrientation orientation,
 		     GdkRectangle *opt_rect)
 {
@@ -353,12 +353,17 @@ xstuff_zoom_animate (GtkWidget *widget,
 
 	gscreen = gtk_widget_get_screen (widget);
 
-	if (gdk_screen_is_composited (gscreen) && pixbuf)
+	if (gdk_screen_is_composited (gscreen) && surface) {
+		GdkPixbuf *pixbuf = gdk_pixbuf_get_from_surface (surface,
+				0, 0,
+				cairo_image_surface_get_width (surface),
+				cairo_image_surface_get_height (surface));
 		draw_zoom_animation_composited (gscreen,
-						rect.x, rect.y,
-						rect.width, rect.height,
-						pixbuf, orientation);
-	else {
+				rect.x, rect.y,
+				rect.width, rect.height,
+				pixbuf, orientation);
+		g_object_unref (pixbuf);
+	} else {
 		display = gdk_screen_get_display (gscreen);
 		monitor = gdk_display_get_monitor_at_window (display,
 							     gtk_widget_get_window (widget));

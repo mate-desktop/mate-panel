@@ -5,7 +5,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
 
 #include "button-widget.h"
 #include "panel-widget.h"
@@ -22,8 +22,8 @@
 
 struct _ButtonWidgetPrivate {
 	GtkIconTheme     *icon_theme;
-	GdkPixbuf        *pixbuf;
-	GdkPixbuf        *pixbuf_hc;
+	cairo_surface_t  *surface;
+	cairo_surface_t  *surface_hc;
 
 	char             *filename;
 
@@ -38,7 +38,7 @@ struct _ButtonWidgetPrivate {
 };
 
 static void button_widget_icon_theme_changed (ButtonWidget *button);
-static void button_widget_reload_pixbuf (ButtonWidget *button);
+static void button_widget_reload_surface (ButtonWidget *button);
 
 enum {
 	PROP_0,
@@ -54,9 +54,9 @@ enum {
 
 G_DEFINE_TYPE (ButtonWidget, button_widget, GTK_TYPE_BUTTON)
 
-/* colorshift a pixbuf */
+/* colorshift a surface */
 static void
-do_colorshift (GdkPixbuf *dest, GdkPixbuf *src, int shift)
+do_colorshift (cairo_surface_t *dest, cairo_surface_t *src, int shift)
 {
 	gint i, j;
 	gint width, height, has_alpha, srcrowstride, destrowstride;
@@ -67,13 +67,13 @@ do_colorshift (GdkPixbuf *dest, GdkPixbuf *src, int shift)
 	int val;
 	guchar r,g,b;
 
-	has_alpha = gdk_pixbuf_get_has_alpha (src);
-	width = gdk_pixbuf_get_width (src);
-	height = gdk_pixbuf_get_height (src);
-	srcrowstride = gdk_pixbuf_get_rowstride (src);
-	destrowstride = gdk_pixbuf_get_rowstride (dest);
-	target_pixels = gdk_pixbuf_get_pixels (dest);
-	original_pixels = gdk_pixbuf_get_pixels (src);
+	has_alpha = cairo_surface_get_content (src) != CAIRO_CONTENT_COLOR;
+	width = cairo_image_surface_get_width (src);
+	height = cairo_image_surface_get_height (src);
+	srcrowstride = cairo_image_surface_get_stride (src);
+	destrowstride = cairo_image_surface_get_stride (dest);
+	original_pixels = cairo_image_surface_get_data (src);
+	target_pixels = cairo_image_surface_get_data (dest);
 
 	for (i = 0; i < height; i++) {
 		pixdest = target_pixels + i*destrowstride;
@@ -94,20 +94,25 @@ do_colorshift (GdkPixbuf *dest, GdkPixbuf *src, int shift)
 	}
 }
 
-static GdkPixbuf *
-make_hc_pixbuf (GdkPixbuf *pb)
+static cairo_surface_t *
+make_hc_surface (cairo_surface_t *surface)
 {
-	GdkPixbuf *new;
-	
-	if (!pb)
+	cairo_t *cr;
+	cairo_surface_t *new;
+
+	if (!surface)
 		return NULL;
 
-	new = gdk_pixbuf_new (gdk_pixbuf_get_colorspace (pb),
-			      gdk_pixbuf_get_has_alpha (pb),
-			      gdk_pixbuf_get_bits_per_sample (pb),
-			      gdk_pixbuf_get_width (pb),
-			      gdk_pixbuf_get_height (pb));
-	do_colorshift (new, pb, 30);
+	new = cairo_surface_create_similar (surface,
+			                    cairo_surface_get_content (surface),
+			                    cairo_image_surface_get_width (surface),
+			                    cairo_image_surface_get_height (surface));
+
+	do_colorshift (new, surface, 30);
+
+	cr = cairo_create (new);
+	cairo_set_operator (cr, CAIRO_OPERATOR_DEST_IN);
+	cairo_mask_surface (cr, surface, 0, 0);
 
 	return new;
 }
@@ -128,7 +133,7 @@ button_widget_realize(GtkWidget *widget)
 				 widget,
 				 G_CONNECT_SWAPPED);
 
-	button_widget_reload_pixbuf (BUTTON_WIDGET (widget));
+	button_widget_reload_surface (BUTTON_WIDGET (widget));
 }
 
 static void
@@ -142,49 +147,54 @@ button_widget_unrealize (GtkWidget *widget)
 }
 
 static void
-button_widget_unset_pixbufs (ButtonWidget *button)
+button_widget_unset_surfaces (ButtonWidget *button)
 {
-	if (button->priv->pixbuf)
-		g_object_unref (button->priv->pixbuf);
-	button->priv->pixbuf = NULL;
+	if (button->priv->surface)
+		cairo_surface_destroy (button->priv->surface);
+	button->priv->surface = NULL;
 
-	if (button->priv->pixbuf_hc)
-		g_object_unref (button->priv->pixbuf_hc);
-	button->priv->pixbuf_hc = NULL;
+	if (button->priv->surface_hc)
+		cairo_surface_destroy (button->priv->surface_hc);
+	button->priv->surface_hc = NULL;
 }
 
 static void
-button_widget_reload_pixbuf (ButtonWidget *button)
+button_widget_reload_surface (ButtonWidget *button)
 {
-	button_widget_unset_pixbufs (button);
+	button_widget_unset_surfaces (button);
 
 	if (button->priv->size <= 1 || button->priv->icon_theme == NULL)
 		return;
 
 	if (button->priv->filename != NULL &&
 	    button->priv->filename [0] != '\0') {
+		gint scale;
 		char *error = NULL;
 
-		button->priv->pixbuf =
+		scale = gtk_widget_get_scale_factor (GTK_WIDGET (button));
+
+		button->priv->surface =
 			panel_load_icon (button->priv->icon_theme,
 					 button->priv->filename,
-					 button->priv->size,
-					 button->priv->orientation & PANEL_VERTICAL_MASK   ? button->priv->size : -1,
-					 button->priv->orientation & PANEL_HORIZONTAL_MASK ? button->priv->size : -1,
+					 button->priv->size * scale,
+					 button->priv->orientation & PANEL_VERTICAL_MASK   ? button->priv->size * scale : -1,
+					 button->priv->orientation & PANEL_HORIZONTAL_MASK ? button->priv->size * scale: -1,
 					 &error);
 		if (error) {
 			//FIXME: this is not rendered at button->priv->size
 			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
-			button->priv->pixbuf = gtk_icon_theme_load_icon (icon_theme,
+			button->priv->surface = gtk_icon_theme_load_surface (icon_theme,
 							       "image-missing",
 							       GTK_ICON_SIZE_BUTTON,
+							       scale,
+							       NULL,
 							       GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
 							       NULL);
 			g_free (error);
 		}
 	}
 
-	button->priv->pixbuf_hc = make_hc_pixbuf (button->priv->pixbuf);
+	button->priv->surface_hc = make_hc_surface (button->priv->surface);
 
 	gtk_widget_queue_resize (GTK_WIDGET (button));
 }
@@ -193,7 +203,7 @@ static void
 button_widget_icon_theme_changed (ButtonWidget *button)
 {
 	if (button->priv->filename != NULL)
-		button_widget_reload_pixbuf (button);
+		button_widget_reload_surface (button);
 }
 
 static void
@@ -201,7 +211,7 @@ button_widget_finalize (GObject *object)
 {
 	ButtonWidget *button = (ButtonWidget *) object;
 
-	button_widget_unset_pixbufs (button);
+	button_widget_unset_surfaces (button);
 
 	g_free (button->priv->filename);
 	button->priv->filename = NULL;
@@ -341,49 +351,46 @@ button_widget_draw (GtkWidget *widget,
 	GtkStateFlags state_flags;
 	int off;
 	int x, y, w, h;
-	GdkPixbuf *pb = NULL;
-  
+	int scale;
+
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
 	button_widget = BUTTON_WIDGET (widget);
 
-	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
+	if (!button_widget->priv->surface_hc && !button_widget->priv->surface)
 		return FALSE;
 
 	state_flags = gtk_widget_get_state_flags (widget);
 	width = gtk_widget_get_allocated_width (widget);
 	height = gtk_widget_get_allocated_height (widget);
+	scale = gtk_widget_get_scale_factor (widget);
 
 	/* offset for pressed buttons */
 	off = (button_widget->priv->activatable &&
 		(state_flags & GTK_STATE_FLAG_PRELIGHT) && (state_flags & GTK_STATE_FLAG_ACTIVE)) ?
 		BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
 
-	if (!button_widget->priv->activatable) {
-		pb = gdk_pixbuf_copy (button_widget->priv->pixbuf);
-		gdk_pixbuf_saturate_and_pixelate (button_widget->priv->pixbuf,
-						  pb,
-						  0.8,
-						  TRUE);
-	} else if (panel_global_config_get_highlight_when_over () && 
-		   (state_flags & GTK_STATE_FLAG_PRELIGHT || gtk_widget_has_focus (widget)))
-		pb = g_object_ref (button_widget->priv->pixbuf_hc);
-	else
-		pb = g_object_ref (button_widget->priv->pixbuf);
-
-	g_assert (pb != NULL);
-
-	w = gdk_pixbuf_get_width (pb);
-	h = gdk_pixbuf_get_height (pb);
-	x = off + (width - w)/2;
-	y = off + (height - h)/2;
+	w = cairo_image_surface_get_width (button_widget->priv->surface) / scale;
+	h = cairo_image_surface_get_height (button_widget->priv->surface) / scale;
+	x = off + (width - w) / 2;
+	y = off + (height - h) / 2;
 
 	cairo_save (cr);
-	gdk_cairo_set_source_pixbuf (cr, pb, x, y);
+
+	if (!button_widget->priv->activatable) {
+		cairo_set_source_surface (cr, button_widget->priv->surface, x, y);
+		cairo_mask_surface (cr, button_widget->priv->surface, x, y);
+		cairo_set_operator (cr, CAIRO_OPERATOR_HSL_SATURATION);
+		cairo_set_source_rgba (cr, 0, 0, 0, 0.2);
+	} else if (panel_global_config_get_highlight_when_over () &&
+		   (state_flags & GTK_STATE_FLAG_PRELIGHT || gtk_widget_has_focus (widget))) {
+		cairo_set_source_surface (cr, button_widget->priv->surface_hc, x, y);
+	} else {
+		cairo_set_source_surface (cr, button_widget->priv->surface, x, y);
+	}
+
 	cairo_paint (cr);
 	cairo_restore (cr);
-
-	g_object_unref (pb);
 
 	context = gtk_widget_get_style_context (widget);
 
@@ -494,7 +501,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 	if (button_widget->priv->size != size) {
 		button_widget->priv->size = size;
 
-		button_widget_reload_pixbuf (button_widget);
+		button_widget_reload_surface (button_widget);
 	}
 }
 
@@ -571,8 +578,8 @@ button_widget_init (ButtonWidget *button)
 	button->priv = BUTTON_WIDGET_GET_PRIVATE (button);
 
 	button->priv->icon_theme = NULL;
-	button->priv->pixbuf     = NULL;
-	button->priv->pixbuf_hc  = NULL;
+	button->priv->surface    = NULL;
+	button->priv->surface_hc = NULL;
 
 	button->priv->filename   = NULL;
 	
@@ -724,7 +731,7 @@ button_widget_set_icon_name (ButtonWidget *button,
 		g_free (button->priv->filename);
 	button->priv->filename = g_strdup (icon_name);
 
-	button_widget_reload_pixbuf (button);
+	button_widget_reload_surface (button);
 
 	g_object_notify (G_OBJECT (button), "icon-name");
 }
@@ -850,13 +857,13 @@ button_widget_get_icon_theme (ButtonWidget *button)
 	return button->priv->icon_theme;
 }
 
-GdkPixbuf *
-button_widget_get_pixbuf (ButtonWidget *button)
+cairo_surface_t *
+button_widget_get_surface (ButtonWidget *button)
 {
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
 
-	if (!button->priv->pixbuf)
+	if (!button->priv->surface)
 		return NULL;
 
-	return g_object_ref (button->priv->pixbuf);
+	return cairo_surface_reference (button->priv->surface);
 }

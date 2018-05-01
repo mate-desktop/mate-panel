@@ -1975,7 +1975,8 @@ location_weather_updated_cb (ClockLocation *location,
         const gchar *icon_name;
         const gchar *temp;
         GtkIconTheme *theme;
-        GdkPixbuf *pixbuf;
+        cairo_surface_t *surface;
+        gint icon_size, icon_scale;
 
         if (!info || !weather_info_is_valid (info))
                 return;
@@ -1984,15 +1985,23 @@ location_weather_updated_cb (ClockLocation *location,
                 return;
 
         icon_name = weather_info_get_icon_name (info);
-        /* FIXME: mmh, screen please? Also, don't hardcode to 16 */
-        theme = gtk_icon_theme_get_default ();
-        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
-                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+        if (icon_name == NULL)
+                return;
+
+        theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (cd->applet)));
+
+        icon_size = mate_panel_applet_get_size (MATE_PANEL_APPLET (cd->applet));
+        icon_scale = gtk_widget_get_scale_factor (GTK_WIDGET (cd->applet));
+
+        surface = gtk_icon_theme_load_surface (theme, icon_name, icon_size, icon_scale,
+                                               NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
 
         temp = weather_info_get_temp_summary (info);
 
-        gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), pixbuf);
+        gtk_image_set_from_surface (GTK_IMAGE (cd->panel_weather_icon), surface);
         gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temp);
+
+        cairo_surface_destroy (surface);
 }
 
 static void
