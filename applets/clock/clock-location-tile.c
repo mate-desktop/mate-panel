@@ -584,11 +584,14 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
         const gchar *sys_timezone;
         time_t sunrise_time, sunset_time;
         gchar *sunrise_str, *sunset_str;
+        gint icon_scale;
 
-        icon_name = weather_info_get_icon_name (info);
         theme = gtk_icon_theme_get_default ();
-        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 48,
-                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+        icon_name = weather_info_get_icon_name (info);
+        icon_scale = gdk_window_get_scale_factor (gdk_get_default_root_window ());
+
+        pixbuf = gtk_icon_theme_load_icon_for_scale (theme, icon_name, 48, icon_scale,
+                                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
         if (pixbuf)
                 gtk_tooltip_set_icon (tooltip, pixbuf);
 
@@ -654,7 +657,7 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 static gboolean
 weather_tooltip (GtkWidget  *widget,
                  gint        x,
-                 gint             y,
+                 gint        y,
                  gboolean    keyboard_mode,
                  GtkTooltip *tooltip,
                  gpointer    data)
@@ -681,20 +684,23 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
 {
         ClockLocationTile *tile = data;
         ClockLocationTilePrivate *priv = PRIVATE (tile);
-        GdkPixbuf *pixbuf = NULL;
+        cairo_surface_t *surface = NULL;
         GtkIconTheme *theme = NULL;
         const gchar *icon_name;
+        gint icon_scale;
 
         if (!info || !weather_info_is_valid (info))
                 return;
 
+        theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (priv->weather_icon)));
         icon_name = weather_info_get_icon_name (info);
-        theme = gtk_icon_theme_get_default ();
-        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
-                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+        icon_scale = gtk_widget_get_scale_factor (GTK_WIDGET (priv->weather_icon));
 
-        if (pixbuf) {
-                gtk_image_set_from_pixbuf (GTK_IMAGE (priv->weather_icon), pixbuf);
+        surface = gtk_icon_theme_load_surface (theme, icon_name, 16, icon_scale,
+                                               NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+
+        if (surface) {
+                gtk_image_set_from_surface (GTK_IMAGE (priv->weather_icon), surface);
                 gtk_widget_set_margin_end (priv->weather_icon, 6);
         }
 }

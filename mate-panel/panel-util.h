@@ -31,7 +31,7 @@ GIcon *         panel_gicon_from_icon_name (const char *icon_name);
 char *          panel_find_icon         (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
 					 int            size);
-GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
+cairo_surface_t *panel_load_icon        (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
 					 int            size,
 					 int            desired_width,
