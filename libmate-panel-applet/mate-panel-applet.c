@@ -1096,18 +1096,15 @@ mate_panel_applet_get_preferred_height (GtkWidget *widget,
 static GtkSizeRequestMode
 mate_panel_applet_get_request_mode (GtkWidget *widget)
 {
-	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
-	MatePanelAppletOrient orientation;
-
-	if (applet->priv->out_of_process)
-		return GTK_SIZE_REQUEST_CONSTANT_SIZE;
-
-	orientation = mate_panel_applet_get_orient (applet);
-	if (orientation == MATE_PANEL_APPLET_ORIENT_UP ||
-	    orientation == MATE_PANEL_APPLET_ORIENT_DOWN)
-		return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
-
-	return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
+	/*Do not use GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH
+	 *or GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
+	 *to avoid problems with in-process applets
+	 *when the panel is not expanded
+	 *See https://github.com/mate-desktop/mate-panel/issues/797
+	 *and https://github.com/mate-desktop/mate-panel/issues/799
+	 *Out of process applets already use GTK_SIZE_REQUEST_CONSTANT_SIZE
+	 */
+	return GTK_SIZE_REQUEST_CONSTANT_SIZE;
 }
 
 static void
