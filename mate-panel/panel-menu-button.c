@@ -128,20 +128,33 @@ panel_menu_filename_to_scheme (const char *filename)
 {
 	const char *retval;
 	int         i;
+	gchar *basename;
 
 	retval = NULL;
 
 	if (!filename)
 		return retval;
 
+	/* Note:
+	 * filename in root_items dose not have the parent directory,
+	 * if filename passed is absolute path, this function will return NULL.
+	 * so here use the basename for compare.
+	 */
+	if (g_path_is_absolute (filename)) {
+		basename = g_path_get_basename (filename);
+	} else {
+		basename = g_strdup(filename);
+	}
+
 	for (i = 0; i < G_N_ELEMENTS (root_items); i++) {
 		if (root_items [i].filename &&
-		    !strncmp (filename, root_items [i].filename,
+		    !strncmp (basename, root_items [i].filename,
 			      strlen (root_items [i].filename))) {
 			retval = root_items [i].scheme;
 			break;
 		}
 	}
+	g_free(basename);
 
 	return retval;
 }
