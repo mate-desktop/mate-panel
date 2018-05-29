@@ -1,21 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# ABE Tsunehiko, 2014
-# ABE Tsunehiko, 2014
-# IWAI, Masaharu <iwaim.sub@gmail.com>, 2016
-# Mika Kobayashi, 2017
-# semicolon <mail@semicln.com>, 2016
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Japanese (http://www.transifex.com/mate/MATE/language/ja/)\n"
+"POT-Creation-Date: 2018-05-12 21:36+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: shinmili <rmsk.pl.ur.lpt@gmail.com>, 2018\n"
+"Language-Team: Japanese (https://www.transifex.com/mate/teams/13566/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,16 +33,16 @@ msgstr "カレンダ"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%p%l:%M:%S"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
-msgstr "%p%l:%M"
+msgstr "%p %l:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
@@ -55,7 +51,7 @@ msgstr "%p%l:%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%k:%M:%S"
 
@@ -69,35 +65,37 @@ msgstr "%k:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
-msgstr "%k:%M"
+msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the date. Replace %e with %d if, when
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%b%e日 (%a)"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
@@ -106,19 +104,19 @@ msgstr "%1$s %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%B%e日 %A (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "クリックすると月間カレンダを隠します"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "クリックすると月間カレンダを表示します"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "コンピュータ時計"
 
@@ -128,7 +126,7 @@ msgstr "コンピュータ時計"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%p%l:%M:%S"
 
@@ -138,99 +136,110 @@ msgstr "%p%l:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%p%l:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%Y/%m/%d (%a)"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "システム時刻の設定..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "システム時刻の設定"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "システム時刻を設定できませんでした"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1673
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "設定(_P)"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
+#: ../applets/clock/clock.c:1853 ../applets/fish/fish.c:1676
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:237 ../applets/wncklet/window-list.c:176
 #: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
+#: ../applets/wncklet/workspace-switcher.c:372 ../mate-panel/drawer.c:563
 #: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../mate-panel/panel-context-menu.c:323 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1679
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:245 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "情報(_A)"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "時刻のコピー(_T)"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "日付のコピー(_D)"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "日付と時刻の調整(_J)"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2803
 msgid "Choose Location"
 msgstr "場所を選択"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2882
 msgid "Edit Location"
 msgstr "場所を編集"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3009
 msgid "City Name"
 msgstr "都市名"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3013
 msgid "City Time Zone"
 msgstr "都市のタイムゾーン"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3228
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "時計"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3230
 msgid "The Clock displays the current time and date"
 msgstr "現在の時刻と日付を表示する時計です。"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3234 ../applets/fish/fish.c:568
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:546
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:631
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "佐藤 暁 <ss@gnome.gr.jp>\n相花 毅 <takeshi.aihana@gmail.com>\nKAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\nYuusuke Tahara <tahara@gnome.gr.jp>\nYukihiro Nakai <nakai@gnome.gr.jp>\nYasuyuki Furukawa <yasu@on.cs.keio.ac.jp>\nTakayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\nShingo Akagaki <dora@kondara.org>\nEiichiro ITANI <emu@ceres.dti.ne.jp>\nAkira TAGOH <tagoh@gnome.gr.jp>\nやまねひでき <henrich@debian.or.jp>\nKiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\nIWAI, Masaharu <iwaim.sub@gmail.com>\n日本GNOMEユーザー会 http://www.gnome.gr.jp/"
+msgstr ""
+"相花 毅 <takeshi.aihana@gmail.com>\n"
+"佐藤 暁 <ss@gnome.gr.jp>\n"
+"KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
+"Akira TAGOH <tagoh@gnome.gr.jp>\n"
+"Yukihiro Nakai <nakai@gnome.gr.jp>\n"
+"Yuusuke Tahara <tahara@gnome.gr.jp>\n"
+"Akira Higuchi <a-higuti@math.sci.hokudai.ac.jp>\n"
+"やまね ひでき <henrich@debian.or.jp>\n"
+"草野 貴之 <AE5T-KSN@asahi-net.or.jp>\n"
+"松澤 二郎 <jmatsuzawa@gnome.org>\n"
+"日本GNOMEユーザー会 http://www.gnome.gr.jp/"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
@@ -238,7 +247,8 @@ msgstr "佐藤 暁 <ss@gnome.gr.jp>\n相花 毅 <takeshi.aihana@gmail.com>\nKAMA
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
-msgstr "<small><i>(都市名または都道府県名、あるいは国の名前を入力し、ポップアップからそれに一致するジオメトリ情報を選択してください)</i></small>"
+msgstr ""
+"<small><i>(都市名または都道府県名、あるいは国の名前を入力し、ポップアップからそれに一致するジオメトリ情報を選択してください)</i></small>"
 
 #: ../applets/clock/clock.ui.h:3
 msgid "_Timezone:"
@@ -278,19 +288,19 @@ msgstr "システム時刻の設定(_S)"
 
 #: ../applets/clock/clock.ui.h:12
 msgid "East"
-msgstr "東経"
+msgstr "東"
 
 #: ../applets/clock/clock.ui.h:13
 msgid "West"
-msgstr "西経"
+msgstr "西"
 
 #: ../applets/clock/clock.ui.h:14
 msgid "North"
-msgstr "北緯"
+msgstr "北"
 
 #: ../applets/clock/clock.ui.h:15
 msgid "South"
-msgstr "南緯"
+msgstr "南"
 
 #: ../applets/clock/clock.ui.h:16
 msgid "Clock Preferences"
@@ -377,7 +387,7 @@ msgstr "<small>セット...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>セット</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr "この場所を現在の所在地に指定して、そのタイムゾーンをコンピュータで使用します"
@@ -388,7 +398,7 @@ msgstr "この場所を現在の所在地に指定して、そのタイムゾー
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "<small>%p</small>%l:%M <small>(%A)</small>"
 
@@ -397,7 +407,7 @@ msgstr "<small>%p</small>%l:%M <small>(%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%k:%M <small>(%A)</small>"
 
@@ -405,42 +415,42 @@ msgstr "%k:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "<small>%p</small>%l:%M"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s、%s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "不明"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s (体感温度は %s)"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "日の出: %s / 日の入り: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "'%s' のヘルプを表示できませんでした"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "ヘルプを表示する際にエラーが発生しました"
 
@@ -458,7 +468,13 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "このキーで時計アプレットが使用する '時 (hour)' の書式を指定します (利用可能な値: \"12-hour\", \"24-hour\", \"internet\", \"unix\" と \"custom\")。\"internet\" をセットすると、時計はインターネット時刻を表示します。インターネット時刻システムは一日を 1000 \".beats\" に分割します。このシステムにはタイムゾーンは存在しないので、時刻は世界中ですべて同じになります。\"unix\" をセットすると、時計は時刻を Epoch (1970-01-01) からの秒数で表示します。\"custom\" をセットすると、custom_format キーで指定した書式に従って時刻が表示されます。"
+msgstr ""
+"このキーで時計アプレットが使用する '時 (hour)' の書式を指定します (利用可能な値: \"12-hour\", \"24-hour\", "
+"\"internet\", \"unix\" と \"custom\")。\"internet\" "
+"をセットすると、時計はインターネット時刻を表示します。インターネット時刻システムは一日を 1000 \".beats\" "
+"に分割します。このシステムにはタイムゾーンは存在しないので、時刻は世界中ですべて同じになります。\"unix\" をセットすると、時計は時刻を "
+"Epoch (1970-01-01) からの秒数で表示します。\"custom\" をセットすると、custom_format "
+"キーで指定した書式に従って時刻が表示されます。"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -470,7 +486,9 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "このキーは時計アプレットで format キーが \"custom\" にセットされている時に使用する時刻の書式を指定します。特定の書式を指定するには strftime() 関数で利用できる書式指定子を利用できます。詳細は strftime() 関数のマニュアルを参照してください。"
+msgstr ""
+"このキーは時計アプレットで format キーが \"custom\" にセットされている時に使用する時刻の書式を指定します。特定の書式を指定するには "
+"strftime() 関数で利用できる書式指定子を利用できます。詳細は strftime() 関数のマニュアルを参照してください。"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -564,98 +582,113 @@ msgstr "時計アプレットのファクトリー"
 msgid "Get the current time and date"
 msgstr "現在の日時を取得する"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:265
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "[警告] コマンドというのは実際に何か役に立つものでなければなりません。\nこのアプレットは役に立たないものなので、実行したくないかもしれません。\nアプレットを \"実用的なもの\"、または何か便利なものにすることを期待しながら\n%s を利用しようすることがないよう、強く勧告するものであります。"
+msgstr ""
+"[警告] コマンドというのは実際に何か役に立つものでなければなりません。\n"
+"このアプレットは役に立たないものなので、実行したくないかもしれません。\n"
+"アプレットを \"実用的なもの\"、または何か便利なものにすることを期待しながら\n"
+"%s を利用しようすることがないよう、強く勧告するものであります。"
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:429
 msgid "Images"
 msgstr "画像"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:535 ../applets/fish/fish.c:579
+#: ../applets/fish/fish.c:685
 #, no-c-format
 msgid "%s the Fish"
 msgstr "おさかな君 %s"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:536
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s はホントに何の役にもたちません。ディスク容量とビルド時間を費やした挙げ句に、実行すると貴重なパネルの空スペースとメモリを無駄遣いします。もしこのアプレットを使っている人を見かけたら、直ぐにカウンセリングを勧めてくださいネ。"
+msgstr ""
+"%s "
+"はホントに何の役にもたちません。ディスク容量とビルド時間を費やした挙げ句に、実行すると貴重なパネルの空スペースとメモリを無駄遣いします。もしこのアプレットを使っている人を見かけたら、直ぐにカウンセリングを勧めてくださいネ。"
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:556
 msgid "(with minor help from George)"
 msgstr "(あと George にちょっと手伝ってもらった)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:562
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "おさかな君"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:580
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "現代の神のお告げ MATE おさかな君 %s"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:646
 msgid "Unable to locate the command to execute"
 msgstr "実行するコマンドの格納場所に移動できません"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:690
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "MATE おさかな君 %s が言うには:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:753
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "コマンドの出力を読み込めません:\n\n詳細: %s"
+msgstr ""
+"コマンドの出力を読み込めません:\n"
+"\n"
+"詳細: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:830
 msgid "_Speak again"
 msgstr "もう一度聞く(_S)"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:912
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "設定コマンドが動作しないので、次のコマンドで置き換えました: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:945
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "'%s' を実行できません。\n\n詳細: %s"
+msgstr ""
+"'%s' を実行できません。\n"
+"\n"
+"詳細: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:961
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "'%s' から読み込めません:\n\n詳細: %s"
+msgstr ""
+"'%s' から読み込めません:\n"
+"\n"
+"詳細: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1529
 msgid "The water needs changing"
 msgstr "水を換えてくれぃ"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1531
 msgid "Look at today's date!"
 msgstr "今日の日付を見てみてネ!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1614
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "占い師の MATE おさかな君 %s"
@@ -726,7 +759,8 @@ msgstr "おさかな君のアニメーション画像"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "このキーはおさかな君アプレットでアニメーションする際に使用する ($datadir/pixmaps フォルダ下の) 画像ファイルを指定します。"
+msgstr ""
+"このキーはおさかな君アプレットでアニメーションする際に使用する ($datadir/pixmaps フォルダ下の) 画像ファイルを指定します。"
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -777,12 +811,12 @@ msgstr "そこからあのバカな魚がやってきた"
 msgid "Display a swimming fish or another animated creature"
 msgstr "泳ぐ魚や動くクリーチャーを表示します"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "通知スペース"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:362
 msgid "Panel Notification Area"
 msgstr "パネル通知エリア"
 
@@ -800,13 +834,14 @@ msgstr "通知アイコンが表示されるエリア"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
-msgstr "すべてのワークスペースのウインドウを表示する"
+msgstr "すべての作業領域のウィンドウを表示する"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "TRUE にすると、ウィンドウ一覧にすべてのワークスペースのウィンドウを表示します。それ以外は、現在のワークスペースにあるウィンドウのみ表示します。"
+msgstr ""
+"TRUE にすると、ウィンドウ一覧にすべてのワークスペースのウィンドウを表示します。それ以外は、現在のワークスペースにあるウィンドウのみ表示します。"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -826,7 +861,9 @@ msgstr "最小化から復元する際に現在のワークスペースへ移動
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "TRUE にすると、最小化から復元する際にそのウィンドウを現在のワークスペースに移動して表示します。それ以外は、ウィンドウがあったワークスペースに表示します。"
+msgstr ""
+"TRUE "
+"にすると、最小化から復元する際にそのウィンドウを現在のワークスペースに移動して表示します。それ以外は、ウィンドウがあったワークスペースに表示します。"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -837,7 +874,9 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "TRUE にすると、ワークスペース切り替え器の中にあるワークスペースの名前を表示します。それ以外は、ワークスペースの内容 (ウィンドウ) を表示します。この設定は、使用しているウィンドウ・マネージャが Marco の場合にのみ有効です。"
+msgstr ""
+"TRUE にすると、ワークスペース切り替え器の中にあるワークスペースの名前を表示します。それ以外は、ワークスペースの内容 (ウィンドウ) "
+"を表示します。この設定は、使用しているウィンドウ・マネージャが Marco の場合にのみ有効です。"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -858,7 +897,9 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "このキーはすべてのワークスペースを表示する際に、ワークスペースが (縦方向に) 何行、(横方向) 何列あるかを指定します。このキーは display_all_workspaces が TRUE の場合にのみ有効になります。"
+msgstr ""
+"このキーはすべてのワークスペースを表示する際に、ワークスペースが (縦方向に) 何行、(横方向) 何列あるかを指定します。このキーは "
+"display_all_workspaces が TRUE の場合にのみ有効になります。"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -868,7 +909,8 @@ msgstr "スクロール時に折り返す"
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
-msgstr "trueにすると、ワークスペースが折り返しを行います。スクロールした際に、最初と最後のワークスペースがつながっているものとして取り扱われます。"
+msgstr ""
+"trueにすると、ワークスペースが折り返しを行います。スクロールした際に、最初と最後のワークスペースがつながっているものとして取り扱われます。"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
@@ -879,25 +921,25 @@ msgid "Factory for the window navigation related applets"
 msgstr "アプレットに関連したウィンドウナビゲーションのファクトリー"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:229
 msgid "Window Selector"
-msgstr "ウィンドウ・セレクタ"
+msgstr "ウィンドウの選択"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
 msgstr "メニューを使って開いているウィンドウを切り替える"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid "Workspace Switcher"
-msgstr "ワークスペース切り換え器"
+msgstr "ワークスペース切替"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "ワークスペースをまたいで切り替える"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:539
 msgid "Window List"
 msgstr "ウィンドウの一覧"
 
@@ -913,42 +955,42 @@ msgstr "デスクトップを表示する"
 msgid "Hide application windows and show the desktop"
 msgstr "アプリケーションを隠してデスクトップを表示する"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s の読み込みに失敗しました: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 msgid "Icon not found"
 msgstr "アイコンが見つかりません"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:261
 msgid "Click here to restore hidden windows."
 msgstr "隠したウィンドウを元に戻す場合は、ここをクリックしてください。"
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:265
 msgid "Click here to hide all windows and show the desktop."
 msgstr "すべてのウィンドウを隠してデスクトップを表示する場合は、ここをクリックして下さい"
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:435 ../applets/wncklet/showdesktop.c:501
 msgid "Show Desktop Button"
 msgstr "デスクトップの表示ボタン"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:503
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "デスクトップ上にあるすべてのウィンドウを隠してデスクトップ自身を表示します。"
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:529
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
 msgstr "お使いのウィンドウ・マネージャはデスクトップ表示ボタンをサポートしていないか、ウィンドウ・マネージャを起動していないようです。"
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "システムモニター(_S)"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:541
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1004,18 +1046,18 @@ msgid ""
 "browse them."
 msgstr "ウィンドウ・セレクタはすべてのウィンドウの一覧をメニュー形式で表示し、それらを閲覧する機能を提供します。"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "行"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 msgid "columns"
 msgstr "列"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:626
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1078,7 +1120,9 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "TRUE にすると、\"プログラムの実行\" ダイアログの中に表示される \"既存のアプリケーション\" の一覧を利用できます。ダイアログが表示された際に一覧があるかないかは show_program_list キーで制御することができます。"
+msgstr ""
+"TRUE にすると、\"プログラムの実行\" ダイアログの中に表示される \"既存のアプリケーション\" "
+"の一覧を利用できます。ダイアログが表示された際に一覧があるかないかは show_program_list キーで制御することができます。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1089,7 +1133,9 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "TRUE にすると、\"プログラムの実行\" ダイアログが開いた際に、\"既存のアプリケーション\" の一覧がこのダイアログの中に表示されます。このキーは enable_program_list が TRUE の場合にのみ有効になります。"
+msgstr ""
+"TRUE にすると、\"プログラムの実行\" ダイアログが開いた際に、\"既存のアプリケーション\" "
+"の一覧がこのダイアログの中に表示されます。このキーは enable_program_list が TRUE の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1139,7 +1185,9 @@ msgstr "パネル ID のリスト"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "パネル ID の並びです。各 ID は個々のトップレベル・パネルを示します。これらのパネルの設定はそれぞれ /apps/panel/toplevels/$(id) に格納されます。"
+msgstr ""
+"パネル ID の並びです。各 ID は個々のトップレベル・パネルを示します。これらのパネルの設定はそれぞれ "
+"/apps/panel/toplevels/$(id) に格納されます。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1150,7 +1198,9 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "パネル・オブジェクト ID の並びです。各 ID は個々のパネル・オブジェクト (例: ランチャ、アクション・ボタンやメニューボタン、メニューバー) を表します。これらのオブジェクトの設定はそれぞれ /apps/panel/objects/$(id) に格納されます。"
+msgstr ""
+"パネル・オブジェクト ID の並びです。各 ID は個々のパネル・オブジェクト (例: ランチャ、アクション・ボタンやメニューボタン、メニューバー) "
+"を表します。これらのオブジェクトの設定はそれぞれ /apps/panel/objects/$(id) に格納されます。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1203,7 +1253,9 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "TRUE にすると、パネルは設定を変更できなくします。ただし、それぞれのアプレットは個別にロックする必要があります。パネルはこの設定を有効にするために、再起動しなければなりません。"
+msgstr ""
+"TRUE "
+"にすると、パネルは設定を変更できなくします。ただし、それぞれのアプレットは個別にロックする必要があります。パネルはこの設定を有効にするために、再起動しなければなりません。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1215,7 +1267,10 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "パネルが無視するアプレット IID のリストです。これを利用すると、特定のアプレットの読み込みやメニューへの表示を無効にできます。例えば、ミニ・コマンダー・アプレットを無効にするには、このリストに 'OAFIID:MATE_MiniCommanderApplet' を追加します。パネルはこの設定を有効にするため、再起動します。"
+msgstr ""
+"パネルが無視するアプレット IID "
+"のリストです。これを利用すると、特定のアプレットの読み込みやメニューへの表示を無効にできます。例えば、ミニ・コマンダー・アプレットを無効にするには、このリストに"
+" 'OAFIID:MATE_MiniCommanderApplet' を追加します。パネルはこの設定を有効にするため、再起動します。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1225,7 +1280,8 @@ msgstr "アプリの強制終了の無効"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "TRUE にすると、ユーザは \"アプリの強制終了\" ボタンにアクセスできなくなるので、アプリケーションを強制的に終了することができなくなります。"
+msgstr ""
+"TRUE にすると、ユーザは \"アプリの強制終了\" ボタンにアクセスできなくなるので、アプリケーションを強制的に終了することができなくなります。"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1361,7 +1417,10 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr "アプレットのインプリメンテーションID (例 \"ClockAppletFactory::ClockApplet\") です。このキーは、object_type キーが \"external-applet\" (または廃止された \"matecomponent-applet\") の場合にのみ有効になります。"
+msgstr ""
+"アプレットのインプリメンテーションID (例 \"ClockAppletFactory::ClockApplet\") "
+"です。このキーは、object_type キーが \"external-applet\" (または廃止された \"matecomponent-"
+"applet\") の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
@@ -1371,7 +1430,8 @@ msgstr "パネルを引き出しに結合する"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "この引き出しを配置するパネルの識別子です。このキーは、object_type キーが \"drawer-object\" の場合にのみ有効になります。"
+msgstr ""
+"この引き出しを配置するパネルの識別子です。このキーは、object_type キーが \"drawer-object\" の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1382,7 +1442,9 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "この引き出しまたはこのメニューのツールチップの中に表示する文字列です。このキーは、object_type キーが \"drawer-object\" または \"menu-object\" の場合にのみ有効になります。"
+msgstr ""
+"この引き出しまたはこのメニューのツールチップの中に表示する文字列です。このキーは、object_type キーが \"drawer-object\" "
+"または \"menu-object\" の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1393,7 +1455,10 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "TRUE にすると、ボタンのカスタム・アイコンとして custom_icon キーを使用します。TRUE でない場合は、custom_icon キーが無視されます。このキーは、object_type キーが \"menu-object\" または \"drawer-objet\" の場合にのみ有効になります。"
+msgstr ""
+"TRUE にすると、ボタンのカスタム・アイコンとして custom_icon キーを使用します。TRUE でない場合は、custom_icon "
+"キーが無視されます。このキーは、object_type キーが \"menu-object\" または \"drawer-objet\" "
+"の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1404,7 +1469,9 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "オブジェクトのボタンに表示するアイコンの画像ファイルの格納場所です。このキーは、object_type キーが \"drawer-object\" まはた \"menu-object\"  で、かつ use_custom_icon が TRUE の場合にのみ有効になります。"
+msgstr ""
+"オブジェクトのボタンに表示するアイコンの画像ファイルの格納場所です。このキーは、object_type キーが \"drawer-object\" "
+"まはた \"menu-object\"  で、かつ use_custom_icon が TRUE の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1415,7 +1482,9 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "TRUE にすると、メニューの内容を構成するエントリのパスとして menu_path キーを使用します。TRUE でない場合は、menu_path キーが無視されます。このキーは、object_type キーが \"menu-object\" の場合にのみ有効になります。"
+msgstr ""
+"TRUE にすると、メニューの内容を構成するエントリのパスとして menu_path キーを使用します。TRUE でない場合は、menu_path "
+"キーが無視されます。このキーは、object_type キーが \"menu-object\" の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1426,7 +1495,9 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "メニューを構成するものを格納する場所 (パス名) です。このキーは use_menu_path キーが TRUE で、かつ object_type キーが \"menu-object\" の場合にのみ有効になります。"
+msgstr ""
+"メニューを構成するものを格納する場所 (パス名) です。このキーは use_menu_path キーが TRUE で、かつ object_type "
+"キーが \"menu-object\" の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1446,7 +1517,9 @@ msgstr "ランチャの配置"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "ランチャの詳細を記述した .desktop ファイルの格納場所です。このキーは、object_type キーが \"launcher-object\" の場合にのみ有効になります。"
+msgstr ""
+"ランチャの詳細を記述した .desktop ファイルの格納場所です。このキーは、object_type キーが \"launcher-object\" "
+"の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1457,7 +1530,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "このボタンに付与されたアクションの種類です。このキーは、object_type が \"action-applet\" の場合にのみ利用できます。指定可能な値: \"lock\", \"logout\", \"run\", \"search\", \"screenshot\""
+msgstr ""
+"このボタンに付与されたアクションの種類です。このキーは、object_type が \"action-applet\" "
+"の場合にのみ利用できます。指定可能な値: \"lock\", \"logout\", \"run\", \"search\", "
+"\"screenshot\""
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1468,7 +1544,8 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "これはパネルを識別するのに使用する可読な名前です。その主な目的は、複数のパネルの間でナビゲートする際に便利なパネル・ウィンドウのタイトルとして保持することにあります。"
+msgstr ""
+"これはパネルを識別するのに使用する可読な名前です。その主な目的は、複数のパネルの間でナビゲートする際に便利なパネル・ウィンドウのタイトルとして保持することにあります。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1500,7 +1577,10 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "TRUE にすると、パネルがスクリーンの幅 (パネルが縦向きの場合は高さ) 一杯に延びます。このモードでは、パネルはスクリーンの端にしか配置することができません。False にすると、パネルはその上にあるアプレット、ランチャ、ボタンの数に合わせた大きさになります。"
+msgstr ""
+"TRUE にすると、パネルがスクリーンの幅 (パネルが縦向きの場合は高さ) "
+"一杯に延びます。このモードでは、パネルはスクリーンの端にしか配置することができません。False "
+"にすると、パネルはその上にあるアプレット、ランチャ、ボタンの数に合わせた大きさになります。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1516,7 +1596,12 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "このパネルを配置する向きです (指定可能な値: \"top\", \"bottom\", \"left\", \"right\")。パネルを広げたモードの場合、このキーはパネルをスクリーンのどの端に配置するかを指定します。パネルを広げないモードでは、\"top\" と \"bottom\" の違いは重要ではありません …どちらも水平なパネルであることを示します。しかしパネル上のオブジェクトの振る舞いを規定する有用なヒントにはなります。例えば、\"top\" パネルでは、メニューはパネルの下側に向かってポップアップします。逆に \"bottom\" パネルのメニューはパネルの上側に向かってポップアップします。"
+msgstr ""
+"このパネルを配置する向きです (指定可能な値: \"top\", \"bottom\", \"left\", "
+"\"right\")。パネルを広げたモードの場合、このキーはパネルをスクリーンのどの端に配置するかを指定します。パネルを広げないモードでは、\"top\""
+" と \"bottom\" の違いは重要ではありません "
+"…どちらも水平なパネルであることを示します。しかしパネル上のオブジェクトの振る舞いを規定する有用なヒントにはなります。例えば、\"top\" "
+"パネルでは、メニューはパネルの下側に向かってポップアップします。逆に \"bottom\" パネルのメニューはパネルの上側に向かってポップアップします。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1528,7 +1613,9 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "パネルの高さ (パネルが縦向きの場合は幅) です。パネルはフォントサイズや他のアイコンに基づいた最小サイズをリアルタイムに決定します。最大サイズはスクリーンの高さの 1/4 固定になっています。"
+msgstr ""
+"パネルの高さ (パネルが縦向きの場合は幅) "
+"です。パネルはフォントサイズや他のアイコンに基づいた最小サイズをリアルタイムに決定します。最大サイズはスクリーンの高さの 1/4 固定になっています。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1539,7 +1626,8 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "X軸に沿ったパネルの位置です。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
+msgstr ""
+"X軸に沿ったパネルの位置です。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1550,7 +1638,8 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Y軸に沿ったパネルの位置です。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
+msgstr ""
+"Y軸に沿ったパネルの位置です。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1564,7 +1653,10 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "X軸に沿ったパネルの位置で、スクリーンの右側からカウントします。-1 にすると、このキーの値を無視して x キーの値を使用します。0 より大きな値にすると、x キーの値を無視します。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
+msgstr ""
+"X軸に沿ったパネルの位置で、スクリーンの右側からカウントします。-1 にすると、このキーの値を無視して x キーの値を使用します。0 "
+"より大きな値にすると、x "
+"キーの値を無視します。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1578,7 +1670,10 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Y軸に沿ったパネルの位置で、スクリーンの下側からカウントします。-1 にすると、このキーの値を無視して y キーの値を使用します。0 より大きな値にすると、y キーの値を無視します。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
+msgstr ""
+"Y軸に沿ったパネルの位置で、スクリーンの下側からカウントします。-1 にすると、このキーの値を無視して y キーの値を使用します。0 "
+"より大きな値にすると、y "
+"キーの値を無視します。このキーはパネルを広げないモードでのみ有効になります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示すスクリーンの端に配置されます。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1590,7 +1685,10 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "TRUE にすると、x と x_right キーの設定を無視して、スクリーンのX軸の中央にパネルが配置されます。パネルのサイズが変更されると、その位置を保持します (つまり、パネルは両端から延びていきます)。TRUE でない場合、パネルの位置は x と x_right キーの設定に従って配置されます。"
+msgstr ""
+"TRUE にすると、x と x_right "
+"キーの設定を無視して、スクリーンのX軸の中央にパネルが配置されます。パネルのサイズが変更されると、その位置を保持します "
+"(つまり、パネルは両端から延びていきます)。TRUE でない場合、パネルの位置は x と x_right キーの設定に従って配置されます。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1602,7 +1700,10 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "TRUE にすると、y と y_bottom キーの設定を無視して、スクリーンのY軸の中央にパネルが配置されます。パネルのサイズが変更されると、その位置を保持します (つまり、パネルは両端から延びていきます)。TRUE でない場合、パネルの位置は y と y_buttom キーの設定に従って配置されます。"
+msgstr ""
+"TRUE にすると、y と y_bottom "
+"キーの設定を無視して、スクリーンのY軸の中央にパネルが配置されます。パネルのサイズが変更されると、その位置を保持します "
+"(つまり、パネルは両端から延びていきます)。TRUE でない場合、パネルの位置は y と y_buttom キーの設定に従って配置されます。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1613,7 +1714,9 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "TRUE にすると、マウス・カーソルがパネルから離れた際に、パネルが自動的にスクリーンの端に隠れます。マウス・カーソルを端に移動すると、パネルが再び表示されます。"
+msgstr ""
+"TRUE "
+"にすると、マウス・カーソルがパネルから離れた際に、パネルが自動的にスクリーンの端に隠れます。マウス・カーソルを端に移動すると、パネルが再び表示されます。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
@@ -1629,7 +1732,8 @@ msgstr "隠すボタンを有効にする"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "TRUE にすると、パネルの両端にボタンを配置します。このボタンはスクリーンの端に向かってパネルを移動し、ボタンのみ残して表示させる場合に使用します。"
+msgstr ""
+"TRUE にすると、パネルの両端にボタンを配置します。このボタンはスクリーンの端に向かってパネルを移動し、ボタンのみ残して表示させる場合に使用します。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1639,7 +1743,8 @@ msgstr "隠すボタンに矢印をつける"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "TRUT にすると、隠すボタンに矢印が付与されます。このキーは enable_buttons キーが TRUE の場合にのみ有効になります。"
+msgstr ""
+"TRUT にすると、隠すボタンに矢印が付与されます。このキーは enable_buttons キーが TRUE の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1650,7 +1755,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "マウス・カーソルがパネルの領域から離れたあと、自動的にパネルが隠れるまでの遅延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にのみ有効になります。"
+msgstr ""
+"マウス・カーソルがパネルの領域から離れたあと、自動的にパネルが隠れるまでの遅延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE"
+" の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1661,7 +1768,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "マウス・カーソルがパネルの領域に入ったあとに、自動的にパネルが再表示されるまでの遅延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にのみ有効になります。"
+msgstr ""
+"マウス・カーソルがパネルの領域に入ったあとに、自動的にパネルが再表示されるまでの遅延時間をミリ秒で指定します。このキーは auto_hide キーが "
+"TRUE の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1672,7 +1781,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "パネルが自動的にスクリーンの端に隠れた際に表示する部分のピクセル値を指定します。このキーは auto_hide キーが TRUE の場合にのみ有効になります。"
+msgstr ""
+"パネルが自動的にスクリーンの端に隠れた際に表示する部分のピクセル値を指定します。このキーは auto_hide キーが TRUE "
+"の場合にのみ有効になります。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1683,7 +1794,9 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "パネルをアニメーションさせる際の速度です。このキーは enable_animations が TRUE の場合にのみ機能します。指定可能な値: \"slow\", \"medium\", \"fast\""
+msgstr ""
+"パネルをアニメーションさせる際の速度です。このキーは enable_animations が TRUE の場合にのみ機能します。指定可能な値: "
+"\"slow\", \"medium\", \"fast\""
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1695,11 +1808,13 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "このパネルに適用する背景の種類です。指定可能な値: \"none\" (デフォルトの GTK+ ウィジットの背景を使用する), \"color\" (背景に指定した色を使用する), \"image\" (背景に指定した画像を使用する)"
+msgstr ""
+"このパネルに適用する背景の種類です。指定可能な値: \"none\" (デフォルトの GTK+ ウィジットの背景を使用する), \"color\" "
+"(背景に指定した色を使用する), \"image\" (背景に指定した画像を使用する)"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
-msgstr "背景色"
+msgstr "背景の色"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
 msgid "Specifies the background color for the panel in #RGB format."
@@ -1735,7 +1850,8 @@ msgstr "画像をパネルにフィットさせる"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "TRUE にすると、(パネルの向きが水平方向の場合) パネルの高さに合わせて画像のサイズを調整します。画像のアスペクト比 (縦横比) は保持します。"
+msgstr ""
+"TRUE にすると、(パネルの向きが水平方向の場合) パネルの高さに合わせて画像のサイズを調整します。画像のアスペクト比 (縦横比) は保持します。"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1760,49 +1876,49 @@ msgstr "TRUE にすると、パネルが縦向きになった際に背景の画�
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr "ファイルは正しい .desktop ファイルではありません"
+msgstr "妥当な .desktop ファイルではありません"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "認識できない desktop ファイル　バージョン '%s'"
+msgstr "バージョン '%s' の .desktop ファイルはサポートしていません"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:957
 #, c-format
 msgid "Starting %s"
-msgstr "%s を開始しています"
+msgstr "%s の起動中です"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1098
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr "このアプリケーションはコマンドライン上ではドキュメントを開けません"
+msgstr "コマンドラインからドキュメントにはアクセスできません"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1166
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "認識できない起動オプション: %d"
+msgstr "不明な起動オプションです: %d"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "'Type=Link' のデスクトップエントリにはドキュメントの URI を渡せません"
+msgstr "'Type=Link' の .desktop エントリーにはドキュメントの URI を渡せません"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr "起動可能な項目ではありません"
+msgstr "起動できないアイテムです"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
-msgstr "セッションマネージャへの接続を無効にする"
+msgstr "セッションマネージャーに接続しない"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "保存された設定を含むファイルを指定する"
+msgstr "設定を保存したファイルを指定する"
 
 #: ../mate-panel/libegg/eggsmclient.c:229
 msgid "FILE"
-msgstr "ファイル"
+msgstr "FILE"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
@@ -1826,8 +1942,8 @@ msgstr "セッション管理のオプションを表示する"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:977
 msgid "Error"
 msgstr "エラー"
 
@@ -1857,32 +1973,32 @@ msgstr "検索フォルダを処理できるアプリがインストールされ
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "パネルから削除(_R)"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "ロックする(_K)"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "空いているスペースを見つけられません"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:176
+#: ../mate-panel/panel-toplevel.c:1613
 msgid "Drawer"
 msgstr "引き出し"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "引き出しへ追加(_A)..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
@@ -1894,14 +2010,14 @@ msgstr "新しいファイルを指定したフォルダに作成する"
 
 #: ../mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
-msgstr "[FILE...]"
+msgstr "[ファイル...]"
 
 #: ../mate-panel/mate-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- .desktop を編集する"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "ランチャの作成"
 
@@ -1910,11 +2026,11 @@ msgstr "ランチャの作成"
 msgid "Directory Properties"
 msgstr "フォルダのプロパティ"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "ランチャのプロパティ"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:151
 msgid "Panel"
 msgstr "パネル"
 
@@ -1944,20 +2060,20 @@ msgstr "パネル・ランチャのデスクトップ・ファイルに URI が�
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "デスクトップ・ファイル %s (パネル・ランチャ %s%s) を開けません\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "起動する(_L)"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "キー %s がセットされていないので、ランチャを読み込めません\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1326
+#: ../mate-panel/panel-ditem-editor.c:1360
+#: ../mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "ランチャを保存できませんでした"
 
@@ -1980,23 +2096,23 @@ msgstr "実行ダイアログを表示"
 msgid "Set the default panel layout"
 msgstr "デフォルトのパネルレイアウトを設定"
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "このランチャをパネルへ追加(_P)"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "このランチャをデスクトップへ追加(_D)"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "メニューの追加(_E)"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "引き出しとしてパネルへ追加(_D)"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "メニューとしてパネルへ追加(_M)"
 
@@ -2045,10 +2161,10 @@ msgstr "ファイルの検索..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "このコンピュータから名前や内容でドキュメントとフォルダを特定します"
+msgstr "このコンピュータから名前や内容でドキュメントとフォルダーを特定します"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "アプリの強制終了"
 
@@ -2107,7 +2223,7 @@ msgstr "カスタム・メニュー・バーです"
 
 #: ../mate-panel/panel-addto.c:165
 msgid "Separator"
-msgstr "区切り"
+msgstr "セパレーター"
 
 #: ../mate-panel/panel-addto.c:166
 msgid "A separator to organize the panel items"
@@ -2144,41 +2260,41 @@ msgstr "パネルへ追加"
 msgid "Find an _item to add to the panel:"
 msgstr "パネルへ追加するアイテムの検索(_I):"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-applet-frame.c:758
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" が突然終了しました"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:760
 msgid "Panel object has quit unexpectedly"
 msgstr "パネル・オブジェクトが突然終了しました"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:767
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "パネル・オブジェクトを再読み込みすると、自動的にオブジェクトをパネルの後ろに追加します。"
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:774
 msgid "D_elete"
 msgstr "削除(_E)"
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:775
+#: ../mate-panel/panel-applet-frame.c:780
 msgid "_Don't Reload"
 msgstr "再読み込みしない(_D)"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:776
+#: ../mate-panel/panel-applet-frame.c:781
 msgid "_Reload"
 msgstr "再読み込み(_R)"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:940
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" を読み込む際にパネルで問題が発生しました。"
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:956
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "お使いの設定からアプレットを削除しますか?"
 
@@ -2220,10 +2336,10 @@ msgstr ""
 
 #: ../mate-panel/panel-context-menu.c:211
 msgid "_Cancel"
-msgstr ""
+msgstr "キャンセル(_C)"
 
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2231,15 +2347,15 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "このパネルを削除する(_D)"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "新しいパネル(_N)"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "パネルについて(_B)"
 
@@ -2256,75 +2372,75 @@ msgid "Location"
 msgstr "場所"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:606
 msgid "_Type:"
-msgstr "種類(_T):"
+msgstr "キーの型(_T):"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:613
 msgid "_Name:"
 msgstr "名前(_N):"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:638
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:645
 msgid "Co_mment:"
 msgstr "コメント(_M):"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:977
 msgid "Choose an application..."
 msgstr "アプリケーションの選択..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:981
 msgid "Choose a file..."
 msgstr "ファイルの選択..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1146
+#: ../mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "コマンド(_A):"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "場所(_L):"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "ランチャの名前を入力してください。"
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "フォルダのプロパティを保存できませんでした"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "フォルダの名前を入力してください。"
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "ランチャのコマンドを入力してください。"
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "ランチャの場所を入力してください。"
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
-msgstr "ヘルプを表示できませんでした"
+msgstr "ヘルプドキュメントを表示できませんでした"
 
 #: ../mate-panel/panel-force-quit.c:80
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "ウインドウ上でクリックすると、そのアプリケーションを強制終了させます。取り消すには <ESC> キーを押します。"
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:220
 msgid "Force this application to exit?"
 msgstr "このアプリケーションを強制的に終了しますか?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:223
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2346,7 +2462,7 @@ msgstr "デスクトップの外観や設定を変更したり、ヘルプを参
 msgid "Applications"
 msgstr "アプリケーション"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "メニューの編集(_E)"
 
@@ -2355,7 +2471,7 @@ msgid "Bookmarks"
 msgstr "ブックマーク"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:544
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' を開きます"
@@ -2390,7 +2506,7 @@ msgstr "ネットワークの場所"
 
 #: ../mate-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
-msgstr "ユーザ専用のフォルダを開きます"
+msgstr "個人用フォルダーを開く"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
@@ -2402,7 +2518,7 @@ msgstr "デスクトップ"
 
 #: ../mate-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
-msgstr "お使いのデスクトップをフォルダとして開きます"
+msgstr "フォルダー内にあるデスクトップの内容を開きます"
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
@@ -2411,7 +2527,7 @@ msgstr "コンピュータ"
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr "このコンピュータからアクセスできるすべてのディスクとフォルダを参照します"
+msgstr "このコンピューターからアクセスできるすべてのローカルとリモートにあるディスクとフォルダーを閲覧する"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
@@ -2419,7 +2535,7 @@ msgstr "ネットワーク"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
-msgstr "ブックマークの場所やローカルのネットワークの場所を参照します"
+msgstr "ブックマークやローカルネットワークの場所を閲覧する"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
@@ -2454,43 +2570,33 @@ msgstr "%s のログアウト..."
 msgid "Log out %s of this session to log in as a different user"
 msgstr "別のユーザでログインするために、このセッション (%s) からログアウトします"
 
-#: ../mate-panel/panel-properties-dialog.c:120
+#: ../mate-panel/panel-properties-dialog.c:119
 #: ../mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "上"
 
-#: ../mate-panel/panel-properties-dialog.c:121
+#: ../mate-panel/panel-properties-dialog.c:120
 #: ../mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "下"
 
-#: ../mate-panel/panel-properties-dialog.c:122
+#: ../mate-panel/panel-properties-dialog.c:121
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "左"
 
-#: ../mate-panel/panel-properties-dialog.c:123
+#: ../mate-panel/panel-properties-dialog.c:122
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "右"
 
-#: ../mate-panel/panel-properties-dialog.c:819
+#: ../mate-panel/panel-properties-dialog.c:818
 msgid "Drawer Properties"
 msgstr "引き出しのプロパティ"
-
-#: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
-#, c-format
-msgid "Unable to load file '%s': %s."
-msgstr "ファイル '%s'  を読み込めません: %s"
-
-#: ../mate-panel/panel-properties-dialog.c:945
-msgid "Could not display properties dialog"
-msgstr "プロパティ・ダイアログを表示できませんでした"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:1
 msgid "Panel Properties"
@@ -2544,7 +2650,7 @@ msgstr "単色(_O)"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:15
 msgid "Pick a color"
-msgstr "色の取得"
+msgstr "色の選択"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:16
 msgid "<small>Transparent</small>"
@@ -2613,7 +2719,10 @@ msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "最近開いたドキュメントの一覧をクリアすると、次のエントリを消去することになります:\n• [場所]→[最近開いたドキュメント] にあるすべてのエントリ\n• アプリケーションで記録した[最近開いた...]のすべてのエントリ"
+msgstr ""
+"最近開いたドキュメントの一覧をクリアすると、次のエントリを消去することになります:\n"
+"• [場所]→[最近開いたドキュメント] にあるすべてのエントリ\n"
+"• アプリケーションで記録した[最近開いた...]のすべてのエントリ"
 
 #: ../mate-panel/panel-recent.c:161
 msgid "Clear Recent Documents"
@@ -2631,37 +2740,33 @@ msgstr "最近開いたドキュメントをクリアする..."
 msgid "Clear all items from the recent documents list"
 msgstr "\"最近開いたドキュメント\" の一覧をすべてクリアします"
 
-#: ../mate-panel/panel-run-dialog.c:419
+#: ../mate-panel/panel-run-dialog.c:420
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "コマンド '%s' を起動できませんでした"
 
-#: ../mate-panel/panel-run-dialog.c:460
+#: ../mate-panel/panel-run-dialog.c:461
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "UTF-8 から '%s' へ変換できませんでした"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1236
 msgid "Choose a file to append to the command..."
 msgstr "コマンドの後ろに続けるファイルを選択してください..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1618 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "説明を表示するアプリケーションを選択してください"
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "実行するコマンド: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "実行ダイアログにドロップした URI の並びの書式 (%d) またはサイズ (%d) が間違っています\n"
-
-#: ../mate-panel/panel-run-dialog.c:1978
-msgid "Could not display run dialog"
-msgstr "プログラムの起動ダイアログを表示できませんでした"
 
 #: ../mate-panel/panel-run-dialog.ui.h:1
 msgid "Run Application"
@@ -2717,7 +2822,7 @@ msgstr "強制的に終了(_F)"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "クリアする(_L)"
+msgstr "クリア(_L)"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2754,17 +2859,17 @@ msgstr "ちょっと小さい"
 #: ../mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
-msgstr "小さい"
+msgstr "小"
 
 #: ../mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
-msgstr "中ぐらい"
+msgstr "中"
 
 #: ../mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
-msgstr "大きい"
+msgstr "大"
 
 #: ../mate-panel/panel-test-applets.c:71
 msgctxt "Size"
@@ -2794,53 +2899,53 @@ msgstr "アプレット(_A):"
 msgid "_Prefs Path:"
 msgstr "設定のパス:(_P)"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "パネルを隠す"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1619 ../mate-panel/panel-toplevel.c:1629
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1621
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1623
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1625
 msgid "Right Panel"
 msgstr ""
 
-#: ../mate-panel/panel-util.c:347
+#: ../mate-panel/panel-util.c:348
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "'%s' というアイコンが見つかりません"
+msgstr "'%s' というアイコンが見つかりませんでした"
 
-#: ../mate-panel/panel-util.c:465
+#: ../mate-panel/panel-util.c:472
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' を実行できませんでした"
 
-#: ../mate-panel/panel-util.c:693
+#: ../mate-panel/panel-util.c:700
 msgid "file"
 msgstr "ファイル"
 
-#: ../mate-panel/panel-util.c:866
+#: ../mate-panel/panel-util.c:873
 msgid "Home Folder"
-msgstr "ホーム・フォルダ"
+msgstr "ホームフォルダ"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:878
+#: ../mate-panel/panel-util.c:885
 msgid "File System"
-msgstr "ファイル・システム"
+msgstr "ファイルシステム"
 
-#: ../mate-panel/panel-util.c:1051
+#: ../mate-panel/panel-util.c:1058
 msgid "Search"
 msgstr "検索"
 
@@ -2848,32 +2953,36 @@ msgstr "検索"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1097
+#: ../mate-panel/panel-util.c:1104
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL を開く: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1327
 msgid "Delete this drawer?"
 msgstr "この引き出しを削除しますか?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1328
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "引き出しを削除すると、\n引き出しとその設定がすべて無くなります。"
+msgstr ""
+"引き出しを削除すると、\n"
+"引き出しとその設定がすべて無くなります。"
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1331
 msgid "Delete this panel?"
 msgstr "このパネルを削除しますか?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1332
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "パネルを削除すると、\nパネルとその設定が失われてしまいます。"
+msgstr ""
+"パネルを削除すると、\n"
+"パネルとその設定が失われてしまいます。"

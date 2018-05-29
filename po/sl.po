@@ -1,21 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Damir Jerovšek <jierro@windowslive.com>, 2013-2014
-# Helena S <ele@tutamail.com>, 2017
-# Marko Šterman <marko.chamillionaire@gmail.com>, 2012
-# Marko Šterman <marko.chamillionaire@gmail.com>, 2012
-# jetomit <timotej.lazar@araneo.si>, 2016
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Slovenian (http://www.transifex.com/mate/MATE/language/sl/)\n"
+"POT-Creation-Date: 2018-05-12 21:36+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: jetomit <timotej.lazar@araneo.si>, 2018\n"
+"Language-Team: Slovenian (https://www.transifex.com/mate/teams/13566/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,14 +33,14 @@ msgstr "Koledar"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -55,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -69,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -80,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %e. %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -106,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "Kliknite za skrivanje mesečnega koledarja"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "Kliknite za ogled mesečnega koledarja"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "Računalniška ura"
 
@@ -128,7 +126,7 @@ msgstr "Računalniška ura"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -138,99 +136,99 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "Nastavitev sistemskega časa ..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "Nastavitev sistemskega časa"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "Nastavitev sistemskega časa je spodletela"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1673
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "_Možnosti"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
+#: ../applets/clock/clock.c:1853 ../applets/fish/fish.c:1676
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:237 ../applets/wncklet/window-list.c:176
 #: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
+#: ../applets/wncklet/workspace-switcher.c:372 ../mate-panel/drawer.c:563
 #: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../mate-panel/panel-context-menu.c:323 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
 msgid "_Help"
-msgstr "Pomo_č"
+msgstr "_Pomoč"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1679
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:245 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "_O programu"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "Kopiraj _čas"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "Kopiraj _datum"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "_Nastavi datum in uro"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2803
 msgid "Choose Location"
 msgstr "Izbor mesta"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2882
 msgid "Edit Location"
 msgstr "Uredi mesto"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3009
 msgid "City Name"
 msgstr "Ime mesta"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3013
 msgid "City Time Zone"
 msgstr "Časovni pas mesta"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3228
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Ura"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3230
 msgid "The Clock displays the current time and date"
 msgstr "Ura prikaže trenutni čas in datum"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3234 ../applets/fish/fish.c:568
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:546
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:631
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Andraž Tori <andraz.tori1@guest.arnes.si>\nMatic Žgur <mr.zgur@gmail.com>\nMatej Urbančič <mateju@svn.gnome.org>\nDamir Jerovšek <damir.jerovsek@ubuntu.si>"
+msgstr "zasluge-prevajalcev"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
@@ -238,7 +236,9 @@ msgstr "Andraž Tori <andraz.tori1@guest.arnes.si>\nMatic Žgur <mr.zgur@gmail.c
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
-msgstr "<small><i>Vpišite ime mesta, območja ali države in nato izberite želeno mesto iz pojavnega okna.</i></small>"
+msgstr ""
+"<small><i>Vpišite ime mesta, območja ali države in nato izberite želeno "
+"mesto iz pojavnega okna.</i></small>"
 
 #: ../applets/clock/clock.ui.h:3
 msgid "_Timezone:"
@@ -339,15 +339,15 @@ msgstr "Splošno"
 
 #: ../applets/clock/clock.ui.h:28
 msgid "Display"
-msgstr "Prikaži"
+msgstr "Prikaz"
 
 #: ../applets/clock/clock.ui.h:29
 msgid "_Visibility unit:"
-msgstr "Enota _vidljivosti:"
+msgstr "Enota za _vidljivost:"
 
 #: ../applets/clock/clock.ui.h:30
 msgid "_Pressure unit:"
-msgstr "_Enota tlaka:"
+msgstr "_Enota za tlak:"
 
 #: ../applets/clock/clock.ui.h:31
 msgid "_Wind speed unit:"
@@ -377,10 +377,12 @@ msgstr "<small>Nastavi ...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Nastavi</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "Nastavi mesto kot trenutno mesto in uporabi njegov časovni pas za ta računalnik"
+msgstr ""
+"Nastavi mesto kot trenutno mesto in uporabi njegov časovni pas za ta "
+"računalnik"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -388,7 +390,7 @@ msgstr "Nastavi mesto kot trenutno mesto in uporabi njegov časovni pas za ta ra
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -397,7 +399,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -405,42 +407,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "Neznano"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, ki jih občutimo kot %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sončni vzhod: %s / Sončni zahod: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Ni mogoče prikazati dokumenta pomoči '%s'"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "Napaka med prikazovanjem dokumenta pomoči"
 
@@ -458,7 +460,13 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "Ključ navaja obliko zapisa ure v apletu ure. Mogoče vrednosti prikaza so \"12-hour\", \"24-hour\", \"internet\", \"unix\" in \"custom\" (po meri). Internetni sistem časa deli dan v 1000 \"utripov\". V tem sistemu ni časovnih območij, zato je čas enak povsod po svetu. Možnost \"unix\" prikazuje čas v sekundah od 1970-01-01. Možnost \"custom\" (po meri) pa prikazuje čas v obliki, ki jo določa nastavitev \"custom_format\"."
+msgstr ""
+"Ključ navaja obliko zapisa ure v apletu ure. Mogoče vrednosti prikaza so "
+"\"12-hour\", \"24-hour\", \"internet\", \"unix\" in \"custom\" (po meri). "
+"Internetni sistem časa deli dan v 1000 \"utripov\". V tem sistemu ni "
+"časovnih območij, zato je čas enak povsod po svetu. Možnost \"unix\" "
+"prikazuje čas v sekundah od 1970-01-01. Možnost \"custom\" (po meri) pa "
+"prikazuje čas v obliki, ki jo določa nastavitev \"custom_format\"."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -470,7 +478,10 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "Ključ navaja obliko, ki naj jo uporablja vstavek ure, kadar je ključ oblike nastavljen na \"custom\" (po meri). Za določitev oblike lahko uporabite tudi oznake funkcije strftime(), ki so podrobneje zapisane v priročniku."
+msgstr ""
+"Ključ navaja obliko, ki naj jo uporablja vstavek ure, kadar je ključ oblike "
+"nastavljen na \"custom\" (po meri). Za določitev oblike lahko uporabite tudi"
+" oznake funkcije strftime(), ki so podrobneje zapisane v priročniku."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -494,7 +505,9 @@ msgstr "Pokaži datum v namigu"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Izbrana mžnost omogoča prikaz datuma v oblačku namiga, ko je kazalka miške nad uro."
+msgstr ""
+"Izbrana mžnost omogoča prikaz datuma v oblačku namiga, ko je kazalka miške "
+"nad uro."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -538,7 +551,7 @@ msgstr "Seznam mest, prikazanih v oknu koledarja."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:21
 msgid "Temperature unit"
-msgstr "Enota temperature"
+msgstr "Enota za temperaturo"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:22
 msgid "The unit to use when showing temperatures."
@@ -546,7 +559,7 @@ msgstr "Enota za prikaz temperature."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:23
 msgid "Speed unit"
-msgstr "Enota hitrosti"
+msgstr "Enota za hitrost"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:24
 msgid "The unit to use when showing wind speed."
@@ -564,98 +577,115 @@ msgstr "Tovarna za aplet ure"
 msgid "Get the current time and date"
 msgstr "Pridobi trenutni čas in datum"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:265
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "Opozorilo: videti je, da je ukaz uporaben.\nKer je sam aplet neuporaben, to morda ni priporočljivo.\nUporaba %s za karkoli, kaj bi naredilo aplet\nkoristen oz. uporaben, je močno odsvetovana."
+msgstr ""
+"Opozorilo: videti je, da je ukaz uporaben.\n"
+"Ker je sam aplet neuporaben, to morda ni priporočljivo.\n"
+"Uporaba %s za karkoli, kaj bi naredilo aplet\n"
+"koristen oz. uporaben, je močno odsvetovana."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:429
 msgid "Images"
 msgstr "Slike"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:535 ../applets/fish/fish.c:579
+#: ../applets/fish/fish.c:685
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Riba %s"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:536
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s je popolnoma neuporabnen. Po nepotrebnem zaseda diskovni prostor, korišča prevajalni čas in če je naložen, zaseda dragocen prostor na pultu in v pomnilniku. V primeru, da jo uporabljate, predlagamo, da si privoščite dolg odmor."
+msgstr ""
+"%s je popolnoma neuporabnen. Po nepotrebnem zaseda diskovni prostor, korišča"
+" prevajalni čas in če je naložen, zaseda dragocen prostor na pultu in v "
+"pomnilniku. V primeru, da jo uporabljate, predlagamo, da si privoščite dolg "
+"odmor."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:556
 msgid "(with minor help from George)"
 msgstr "(z manjšo pomočjo Georgea)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:562
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Riba"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:580
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Riba %s, sodobni orakelj"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:646
 msgid "Unable to locate the command to execute"
 msgstr "Ni mogoče najti ukaza za izvedbo"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:690
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Riba %s pravi:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:753
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "Ni mogoče prebrati izhoda ukaza\n\nPodrobnosti: %s"
+msgstr ""
+"Ni mogoče prebrati izhoda ukaza\n"
+"\n"
+"Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:830
 msgid "_Speak again"
 msgstr "_Spregovori znova"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:912
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Nastavljen ukaz ne deluje in je bil zamenjan z: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:945
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Ni mogoče izvesti: '%s'\n\nPodrobnosti: %s"
+msgstr ""
+"Ni mogoče izvesti: '%s'\n"
+"\n"
+"Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:961
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "Ni mogoče brati iz: '%s'\n\nPodrobnosti: %s"
+msgstr ""
+"Ni mogoče brati iz: '%s'\n"
+"\n"
+"Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1529
 msgid "The water needs changing"
 msgstr "Treba bo zamenjati vodo"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1531
 msgid "Look at today's date!"
 msgstr "Poglejte današnji datum!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1614
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Riba %s, prerokovalka"
@@ -716,7 +746,9 @@ msgstr "Ime ribe"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "Riba brez imena je precej dolgočasna riba. Poživite svojo ribo tako, da jo poimenujete."
+msgstr ""
+"Riba brez imena je precej dolgočasna riba. Poživite svojo ribo tako, da jo "
+"poimenujete."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
@@ -726,7 +758,9 @@ msgstr "Večbitna sličica animacije ribe"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Ključ navaja ime datoteke večbitne sličice, ki bo uporabljena za animacijo, prikazano v apletu ribe, glede na mapo večbitnih sličic."
+msgstr ""
+"Ključ navaja ime datoteke večbitne sličice, ki bo uporabljena za animacijo, "
+"prikazano v apletu ribe, glede na mapo večbitnih sličic."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -763,7 +797,9 @@ msgstr "Zavrti predmet pri navpično postavljenih pultih"
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Izbrana možnost omogoča, da bo animacija ribe na navpičnem pultu prikazana obrnjeno."
+msgstr ""
+"Izbrana možnost omogoča, da bo animacija ribe na navpičnem pultu prikazana "
+"obrnjeno."
 
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
 msgid "Wanda Factory"
@@ -777,12 +813,12 @@ msgstr "Od kod je prišla ta neumna riba"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Prikaži plavajočo ribo ali drugo animirano bitje"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Obvestilno območje"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:362
 msgid "Panel Notification Area"
 msgstr "Obvestilno območje pulta"
 
@@ -800,13 +836,15 @@ msgstr "Območje, kjer se pojavi obvestilna ikona"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
 msgid "Show windows from all workspaces"
-msgstr "Pokaži okna vseh delovnih površin"
+msgstr "Pokaži okna iz vseh delovnih prostorov"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "Izbrana možnost določa, da bo seznam oken prikazal okna vseh delovnih površin, sicer bodo prikazana le okna trenutne delovne površine."
+msgstr ""
+"Izbrana možnost določa, da bo seznam oken prikazal okna vseh delovnih "
+"površin, sicer bodo prikazana le okna trenutne delovne površine."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -816,7 +854,9 @@ msgstr "Kdaj naj se okna združujejo v skupine"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Določi, kdaj se okna istega programa v seznamu oken združujejo. Veljavne vrednosti so \"nikoli\", \"samodejno\" in \"vedno\"."
+msgstr ""
+"Določi, kdaj se okna istega programa v seznamu oken združujejo. Veljavne "
+"vrednosti so \"nikoli\", \"samodejno\" in \"vedno\"."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -826,7 +866,9 @@ msgstr "Ob povečanju okna le-to premakni na trenutno delovno površino"
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Izbrana možnost določa, da se ob povečanju okna to premakne na trenutno delovno površino, sicer se preklopi cela delovna površina."
+msgstr ""
+"Izbrana možnost določa, da se ob povečanju okna to premakne na trenutno "
+"delovno površino, sicer se preklopi cela delovna površina."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -837,7 +879,10 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "Izbrana možnost omogoča prikaz imen delovnih površin v preklopniku. V nasprotnem primeru bodo prikazana njihova okna. Ta nastavitev deluje samo v primeru, da je upravljalnik oken Marco."
+msgstr ""
+"Izbrana možnost omogoča prikaz imen delovnih površin v preklopniku. V "
+"nasprotnem primeru bodo prikazana njihova okna. Ta nastavitev deluje samo v "
+"primeru, da je upravljalnik oken Marco."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -847,7 +892,9 @@ msgstr "Prikaži vse delovne površine"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "Izbrana možnost omogoča prikaz vseh delovnih površin, sicer je prikazana le trenutna."
+msgstr ""
+"Izbrana možnost omogoča prikaz vseh delovnih površin, sicer je prikazana le "
+"trenutna."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -858,7 +905,10 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "Ključ navaja, koliko vrstic (za vodoravno postavitev) ali stolpcev (za navpično postavitev) se pokaže v preklopniku delovnih površin. Ta ključ se upošteva samo. če je omogočen ključ display_all_workspaces."
+msgstr ""
+"Ključ navaja, koliko vrstic (za vodoravno postavitev) ali stolpcev (za "
+"navpično postavitev) se pokaže v preklopniku delovnih površin. Ta ključ se "
+"upošteva samo. če je omogočen ključ display_all_workspaces."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -868,7 +918,9 @@ msgstr "Ovij ob drsenju"
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
-msgstr "Izbrana možnost omogoči preklopniku delovnih površin ovijanje, kar pomeni preklapljanje s prve na zadnjo delovno površino in obratno z drsenjem."
+msgstr ""
+"Izbrana možnost omogoči preklopniku delovnih površin ovijanje, kar pomeni "
+"preklapljanje s prve na zadnjo delovno površino in obratno z drsenjem."
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
@@ -879,7 +931,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "Tovarna za aplete, povezane s krmarjenjem med okni"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:229
 msgid "Window Selector"
 msgstr "Izbirnik oken"
 
@@ -888,7 +940,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Preklopi med odprtimi okni s pomočjo menija"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid "Workspace Switcher"
 msgstr "Preklopnik delovnih površin"
 
@@ -897,7 +949,7 @@ msgid "Switch between workspaces"
 msgstr "Preklopi med delovnimi površinami"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:539
 msgid "Window List"
 msgstr "Seznam oken"
 
@@ -913,46 +965,50 @@ msgstr "Pokaži namizje"
 msgid "Hide application windows and show the desktop"
 msgstr "Skrij okna programov in pokaži namizje"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Ni mogoče naložiti %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 msgid "Icon not found"
 msgstr "Ikone ni mogoče najti"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:261
 msgid "Click here to restore hidden windows."
 msgstr "Kliknite za povrnitev skritih oken."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:265
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknite za skritje vseh oken in prikaz namizja."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:435 ../applets/wncklet/showdesktop.c:501
 msgid "Show Desktop Button"
 msgstr "Pokaži ikono namizja"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:503
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Gumb omogoča skrivanje vseh oken in prikaz namizja."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:529
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "Upravljalnik oken ne podpira prikaza gumba namizja ali pa upravljalnik oken ni zagnan."
+msgstr ""
+"Upravljalnik oken ne podpira prikaza gumba namizja ali pa upravljalnik oken "
+"ni zagnan."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "_Nadzornik sistema"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:541
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "Seznam oken pokaže seznam vseh oken in hkrati omogoča brskanje s pomočjo gumbov."
+msgstr ""
+"Seznam oken pokaže seznam vseh oken in hkrati omogoča brskanje s pomočjo "
+"gumbov."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
@@ -1002,24 +1058,28 @@ msgstr "Povrni na _izvorno delovno površino"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "Izbirnik oken prikazuje seznam vseh oken v meniju in vam omogoča brskanje med njimi."
+msgstr ""
+"Izbirnik oken prikazuje seznam vseh oken v meniju in vam omogoča brskanje "
+"med njimi."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
-msgstr "vrstic"
+msgstr "vrstice"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 msgid "columns"
-msgstr "stolpcev"
+msgstr "stolpci"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:626
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Preklopnik delovnih površin pokaže manjše sličice delovnih površin, ki omogočajo preklapljanje med njimi."
+msgstr ""
+"Preklopnik delovnih površin pokaže manjše sličice delovnih površin, ki "
+"omogočajo preklapljanje med njimi."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
@@ -1067,7 +1127,8 @@ msgstr "Privzeta postavitev pulta"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:2
 msgid "The default panels layout to use when panels are created or resetted."
-msgstr "Uporabi privzete nastavitve pulta, ko so pulti ustvarjeni ali ponastavljeni."
+msgstr ""
+"Uporabi privzete nastavitve pulta, ko so pulti ustvarjeni ali ponastavljeni."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:3
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1078,7 +1139,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "Izbrana možnost omogoča, da postane seznam \"Znani programi\" na voljo znotraj pogovornega okna \"Zaženi program\". Oblika prikaza seznama je podana s ključem show_program_list."
+msgstr ""
+"Izbrana možnost omogoča, da postane seznam \"Znani programi\" na voljo "
+"znotraj pogovornega okna \"Zaženi program\". Oblika prikaza seznama je "
+"podana s ključem show_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1089,7 +1153,10 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Izbrana možnost omogoča, da se seznam \"Znani programi\" v pogovornem oknu \"Zaženi program\" razširi ob odprtju pogovornega okna. Ta ključ se upošteva samo. če je omogočen ključ enable_program_list."
+msgstr ""
+"Izbrana možnost omogoča, da se seznam \"Znani programi\" v pogovornem oknu "
+"\"Zaženi program\" razširi ob odprtju pogovornega okna. Ta ključ se upošteva"
+" samo. če je omogočen ključ enable_program_list."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1098,7 +1165,9 @@ msgstr "Omogoči samodejno dopolnjevanje v pogovornem oknu \"Zaženi program\""
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Izbrana možnost omogoča samodejno dopolnjevanje v pogovornem oknu \"Zaženi program\"."
+msgstr ""
+"Izbrana možnost omogoča samodejno dopolnjevanje v pogovornem oknu \"Zaženi "
+"program\"."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1110,26 +1179,33 @@ msgid ""
 "commands are sorted descendingly by recency (e.g., most recent command comes"
 " first)."
 msgstr ""
+"To je seznam ukazov, uporabljenih v pogovornem oknu »Zaženi program«. Ukazi "
+"so razvrščeni padajoče po nedavnosti (npr. nazadnje uporabljeni ukazi so "
+"prvi)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:11
 msgid "Maximum history size for \"Run Application\" dialog"
-msgstr ""
+msgstr "Največja velikost zgodovine za pogovorno okno »Zaženi program«"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:12
 msgid ""
 "Controls the maximum size of the history of the \"Run Application\" dialog. "
 "A value of 0 will disable the history."
 msgstr ""
+"Nadzira največjo velikost pogovornega okna zgodovine »Zaženi program«. "
+"Vrednost 0 bo onemogočila zgodovino."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:13
 msgid "Reverse the history of the \"Run Application\" dialog"
-msgstr ""
+msgstr "Obrni smer zgodovine pogovornega okna »Zaženi program«"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:14
 msgid ""
 "Displays the history in reverse. Provides a consistent view for terminal "
 "users as the up key will select the most recent entry."
 msgstr ""
+"Prikaže zgodovino v obratni smeri. Zagotavlja konsistenten pogled za "
+"uporabnike terminala, saj bo tipka gor izbrala najnovejši vnos."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:15
 msgid "Panel ID list"
@@ -1139,7 +1215,9 @@ msgstr "Seznam ID-jev pulta"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Seznam ID-jev pultov. Vsak ID predstavlja samostojen vrhnji pult. Nastavitve vsakega pulta posebej so shranjene v /apps/panel/toplevels/$(id)."
+msgstr ""
+"Seznam ID-jev pultov. Vsak ID predstavlja samostojen vrhnji pult. Nastavitve"
+" vsakega pulta posebej so shranjene v /apps/panel/toplevels/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1150,7 +1228,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Seznam ID-jev predmetov pulta. Vsak ID predstavlja samostojen vstavek pulta (npr.: zaganjalnik, gumb dejanja ali gumb menija).  Nastavitve za vsakega izmed predmetov so shranjene v /apps/panel/objects/$(id)."
+msgstr ""
+"Seznam ID-jev predmetov pulta. Vsak ID predstavlja samostojen vstavek pulta "
+"(npr.: zaganjalnik, gumb dejanja ali gumb menija).  Nastavitve za vsakega "
+"izmed predmetov so shranjene v /apps/panel/objects/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1173,7 +1254,9 @@ msgstr "Samodejno zapri predalnik"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Izbrana možnost onemogoča samodejno zapiranje predalnika, ko uporabnik v njem klikne na zaganjalnik."
+msgstr ""
+"Izbrana možnost onemogoča samodejno zapiranje predalnika, ko uporabnik v "
+"njem klikne na zaganjalnik."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1183,7 +1266,9 @@ msgstr "Potrdi odstranitev pulta"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Izbrana možnost onemogoča prikaz pogovornega okna, ki vpraša ali je uporabnik prepričan o odstranitvi pulta."
+msgstr ""
+"Izbrana možnost onemogoča prikaz pogovornega okna, ki vpraša ali je "
+"uporabnik prepričan o odstranitvi pulta."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1192,7 +1277,8 @@ msgstr "Poudari zaganjalnike ob prehodu miške"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Izbrana možnost onemogoča poudarjanje zaganjalnika, ko je nad njem miška."
+msgstr ""
+"Izbrana možnost onemogoča poudarjanje zaganjalnika, ko je nad njem miška."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1203,7 +1289,9 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "Izbrana možnost onemogoča spreminjanje nastavitev pulta. Nekateri apleti morajo biti zaklenjeni posebej. Po izbiri je treba pult ponovno zagnati."
+msgstr ""
+"Izbrana možnost onemogoča spreminjanje nastavitev pulta. Nekateri apleti "
+"morajo biti zaklenjeni posebej. Po izbiri je treba pult ponovno zagnati."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1215,7 +1303,11 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Seznam IID-jev apletov, ki jih bo pult prezrl. Na ta način lahko določenim vstavkom preprečite nalaganje in prikaz v meniju. Na primer, da preprečite vstavek mini-commander, v ta seznam dodajte 'OAFIID:MATE_MiniCommanderApplet'. Možnost zahteva ponovni zagon pulta."
+msgstr ""
+"Seznam IID-jev apletov, ki jih bo pult prezrl. Na ta način lahko določenim "
+"vstavkom preprečite nalaganje in prikaz v meniju. Na primer, da preprečite "
+"vstavek mini-commander, v ta seznam dodajte "
+"'OAFIID:MATE_MiniCommanderApplet'. Možnost zahteva ponovni zagon pulta."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1225,31 +1317,33 @@ msgstr "Onemogoči vsiljeno končanje"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Izbrana možnost onemogoča uporabniku vsiljeno končanje programov tako, da odstrani možnost iz menija."
+msgstr ""
+"Izbrana možnost onemogoča uporabniku vsiljeno končanje programov tako, da "
+"odstrani možnost iz menija."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
-msgstr ""
+msgstr "Omogoči SNI podporo"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:35
 msgid "If true, the panel provides support for SNI."
-msgstr ""
+msgstr "Izbrana možnost pulta zagotovi podporo za SNI."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:1
 msgid "Show applications menu"
-msgstr "Pokaži meni programov"
+msgstr "Pokaži meni Programi"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:2
 msgid "If true, show applications item in menu bar."
-msgstr ""
+msgstr "Izbrana možnost omogoča prikaz menija Programi v menijski vrstici."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:3
 msgid "Show places menu"
-msgstr "Pokaži meni mesta"
+msgstr "Pokaži meni Mesta"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:4
 msgid "If true, show places item in menu bar."
-msgstr ""
+msgstr "Izbrana možnost omogoča prikaz menija Mesta v menijski vrstici."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:5
 msgid "Show desktop menu"
@@ -1257,7 +1351,7 @@ msgstr "Pokaži meni namizja"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:6
 msgid "If true, show desktop item in menu bar."
-msgstr ""
+msgstr "Izbrana možnost omogoča prikaz namizja v menijski vrstici."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:7
 msgid "Show icon"
@@ -1265,7 +1359,7 @@ msgstr "Pokaži ikono"
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:8
 msgid "If true, show icon in menu bar."
-msgstr ""
+msgstr "Izbrana možnost omogoča prikaz ikone v menijski vrstici."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:9
 msgid "Icon to show in menu bar"
@@ -1329,7 +1423,9 @@ msgstr "Položaj predmeta na pultu"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Mesto predmeta pulta. Mesto je navedeno s številom točk od levega (oziroma vrhnjega) roba pulta."
+msgstr ""
+"Mesto predmeta pulta. Mesto je navedeno s številom točk od levega (oziroma "
+"vrhnjega) roba pulta."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1339,7 +1435,9 @@ msgstr "Določi mesto glede na na spodnji/desni rob"
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "Izbrana možnost omogoča, da je položaj predmeta določen glede na desni (ali spodnji, če je navpičen) rob pulta."
+msgstr ""
+"Izbrana možnost omogoča, da je položaj predmeta določen glede na desni (ali "
+"spodnji, če je navpičen) rob pulta."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1349,7 +1447,10 @@ msgstr "Zakleni predmet na pult"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "Izbrana možnost omogoča, da uporabnik ne more prestaviti apleta, brez predhodnega odklepanja predmeta z uporabo možnosti \"Odkleni\" iz menija predmeta."
+msgstr ""
+"Izbrana možnost omogoča, da uporabnik ne more prestaviti apleta, brez "
+"predhodnega odklepanja predmeta z uporabo možnosti \"Odkleni\" iz menija "
+"predmeta."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1361,7 +1462,10 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr "Izvedbeni ID apleta - npr. \"ClockAppletFactory::ClockApplet\". Ta ključ se upošteva samo. če je ključ object_type nastavljen na \"external-applet\" (ali opuščeni \"matecomponent-applet\")."
+msgstr ""
+"Izvedbeni ID apleta - npr. \"ClockAppletFactory::ClockApplet\". Ta ključ se "
+"upošteva samo. če je ključ object_type nastavljen na \"external-applet\" "
+"(ali opuščeni \"matecomponent-applet\")."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
@@ -1371,7 +1475,9 @@ msgstr "Pult je pripet na predalnik"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Določilo pulta, pripetega na ta predalnik. Ta ključ se upošteva samo. če je ključ object_type nastavljen na \"drawer-object\"."
+msgstr ""
+"Določilo pulta, pripetega na ta predalnik. Ta ključ se upošteva samo. če je "
+"ključ object_type nastavljen na \"drawer-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1382,7 +1488,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "Besedilo, ki se pokaže v namigu tega predalnika ali menija. Ta ključ se upošteva samo. če je ključ object_type nastavljen na \"drawer_object\" ali \"menu-object\"."
+msgstr ""
+"Besedilo, ki se pokaže v namigu tega predalnika ali menija. Ta ključ se "
+"upošteva samo. če je ključ object_type nastavljen na \"drawer_object\" ali "
+"\"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1393,7 +1502,10 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Izbrana možnost omogoča, da je ključ custom_icon uporabljen kot prilagojena ikona za gumb, sicer je ključ prezrt. Ta ključ se upošteva samo. če je ključ object_type nastavljen na \"menu-object\" ali \"drawer-object\"."
+msgstr ""
+"Izbrana možnost omogoča, da je ključ custom_icon uporabljen kot prilagojena "
+"ikona za gumb, sicer je ključ prezrt. Ta ključ se upošteva samo. če je ključ"
+" object_type nastavljen na \"menu-object\" ali \"drawer-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1404,7 +1516,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Mesto datoteke slike, ki se uporabi za ikono gumba predmeta. Ta ključ se upošteva samo. če je ključ object_type nastavljen na \"drawer_object\" ali \"menu object\" ter če je ključ use_custom_icon omogočen."
+msgstr ""
+"Mesto datoteke slike, ki se uporabi za ikono gumba predmeta. Ta ključ se "
+"upošteva samo. če je ključ object_type nastavljen na \"drawer_object\" ali "
+"\"menu object\" ter če je ključ use_custom_icon omogočen."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1415,7 +1530,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Izbrana možnost omogoča, da je ključ menu_path uporabljen kot pot, iz katere se ustvari vsebina menija, sicer je ključ prezrt. Ta ključ se upošteva samo. če je ključ object_type nastavljen na \"menu-object\"."
+msgstr ""
+"Izbrana možnost omogoča, da je ključ menu_path uporabljen kot pot, iz katere"
+" se ustvari vsebina menija, sicer je ključ prezrt. Ta ključ se upošteva "
+"samo. če je ključ object_type nastavljen na \"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1426,7 +1544,10 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "Pot, iz katere je ustvarjena vsebina menija. Ta ključ se upošteva samo. če je ključ use_menu_path omogočen ter da je ključ object_type nastavljen na \"menu-object\"."
+msgstr ""
+"Pot, iz katere je ustvarjena vsebina menija. Ta ključ se upošteva samo. če "
+"je ključ use_menu_path omogočen ter da je ključ object_type nastavljen na "
+"\"menu-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1436,7 +1557,9 @@ msgstr "Nariši puščico na gumbu menija"
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
-msgstr "Izbrana možnost omogoči prikaz puščice na ikoni gumba menija. Če možnost ni izbrana, je na gumbu menija samo ikona."
+msgstr ""
+"Izbrana možnost omogoči prikaz puščice na ikoni gumba menija. Če možnost ni "
+"izbrana, je na gumbu menija samo ikona."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:27
 msgid "Launcher location"
@@ -1446,7 +1569,9 @@ msgstr "Mesto zaganjalnika"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Mesto datoteke .desktop, ki opisuje zaganjalnik. Ta ključ se upošteva samo. če je ključ object_type nastavljen na \"launcher-object\"."
+msgstr ""
+"Mesto datoteke .desktop, ki opisuje zaganjalnik. Ta ključ se upošteva samo. "
+"če je ključ object_type nastavljen na \"launcher-object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1457,7 +1582,11 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "Vrsta dejanja, ki ga ta gumb predstavlja. Možne vrednosti so \"lock\" (zakleni), \"logout\" (odjava), \"run\" (zaženi), \"search\" (poišči) in \"screenshot\" (zajem zaslona). Ta ključ se upošteva samo, če je ključ object_type nastavljen na \"action-applet\"."
+msgstr ""
+"Vrsta dejanja, ki ga ta gumb predstavlja. Možne vrednosti so \"lock\" "
+"(zakleni), \"logout\" (odjava), \"run\" (zaženi), \"search\" (poišči) in "
+"\"screenshot\" (zajem zaslona). Ta ključ se upošteva samo, če je ključ "
+"object_type nastavljen na \"action-applet\"."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1468,7 +1597,9 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "To je ime, namenjeno prepoznavanju pulta. Ime se pojavi v nazivni vrstici okna pulta, s čimer se olajša prepoznavanje pulta."
+msgstr ""
+"To je ime, namenjeno prepoznavanju pulta. Ime se pojavi v nazivni vrstici "
+"okna pulta, s čimer se olajša prepoznavanje pulta."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1478,7 +1609,9 @@ msgstr "Zaslon X, na katerem je prikazan pult"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "Pri uporabi več zaslonov imate lahko pulte na vsakem zaslonu posebej. Ta ključ določa trenutni zaslon, na katerem bo prikazan pult."
+msgstr ""
+"Pri uporabi več zaslonov imate lahko pulte na vsakem zaslonu posebej. Ta "
+"ključ določa trenutni zaslon, na katerem bo prikazan pult."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1488,7 +1621,9 @@ msgstr "Nadzornik Xinerama, na katerem je prikazan pult"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "V okoljih s Xineramo je mogoče imeti pulte na vsakem zaslonu posebej. Možnost določa trenutni zaslon, na katerem je prikazan pult."
+msgstr ""
+"V okoljih s Xineramo je mogoče imeti pulte na vsakem zaslonu posebej. "
+"Možnost določa trenutni zaslon, na katerem je prikazan pult."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1500,7 +1635,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "Izbrana možnost določa razširitev pulta na celotno širino zaslona (višino, če je pult navpičen). V tem načinu je lahko pult postavljen le na rob zaslona. Obratno pa bo pult velik le toliko, da bodo lahko na njem vsi apleti, zaganjalniki in gumbi."
+msgstr ""
+"Izbrana možnost določa razširitev pulta na celotno širino zaslona (višino, "
+"če je pult navpičen). V tem načinu je lahko pult postavljen le na rob "
+"zaslona. Obratno pa bo pult velik le toliko, da bodo lahko na njem vsi "
+"apleti, zaganjalniki in gumbi."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1516,7 +1655,13 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "Usmerjenost pulta. Mogoče vrednosti so \"zgoraj\", \"spodaj\", \"levo\" in \"desno\". V razširjenem načinu možnost določa rob zaslona, na katerem se nahaja pult. V običajnem načinu je razlika med \"zgoraj\" in \"spodaj\" manj pomembna, saj obe vrednosti določata vodoravni pult. Pri možnosti \"zgoraj\" bo gumb menija postavil meni pod pult, pri možnosti \"spodaj\" pa nad pult."
+msgstr ""
+"Usmerjenost pulta. Mogoče vrednosti so \"zgoraj\", \"spodaj\", \"levo\" in "
+"\"desno\". V razširjenem načinu možnost določa rob zaslona, na katerem se "
+"nahaja pult. V običajnem načinu je razlika med \"zgoraj\" in \"spodaj\" manj"
+" pomembna, saj obe vrednosti določata vodoravni pult. Pri možnosti "
+"\"zgoraj\" bo gumb menija postavil meni pod pult, pri možnosti \"spodaj\" pa"
+" nad pult."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1528,7 +1673,10 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Višina (širina za vodoravni pult) pulta. Pult samodejno določi najmanjšo velikost, na osnovi velikosti pisave in drugih kazalnikih. Največja vrednost je nastavljena na četrtino višine (ali širine) zaslona."
+msgstr ""
+"Višina (širina za vodoravni pult) pulta. Pult samodejno določi najmanjšo "
+"velikost, na osnovi velikosti pisave in drugih kazalnikih. Največja vrednost"
+" je nastavljena na četrtino višine (ali širine) zaslona."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1539,7 +1687,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Mesto pulta na osi X. Ključ je uporabljen le v nerazširjenem načinu. V razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona, kot to določa ključ usmerjenosti."
+msgstr ""
+"Mesto pulta na osi X. Ključ je uporabljen le v nerazširjenem načinu. V "
+"razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona, "
+"kot to določa ključ usmerjenosti."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1550,7 +1701,11 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Mesto pulta na osi Y. Ključ je uporabljen le v običajnem načinu. Ta ključ se upošteva samo. če je v nerazširjenem načinu. V razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona, kot to določa ključ usmerjenosti."
+msgstr ""
+"Mesto pulta na osi Y. Ključ je uporabljen le v običajnem načinu. Ta ključ se"
+" upošteva samo. če je v nerazširjenem načinu. V razširjenem načinu je ta "
+"ključ prezrt in pult je postavljen ob rob zaslona, kot to določa ključ "
+"usmerjenosti."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1564,7 +1719,12 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Mesto pulta na osi X z začetkom na dnu zaslona. Če je vrednost -1, je le-ta prezrta in je uporabljena vrednost koordinate X. Če je vrednost večja od 0, je vrednost koordinate X prezrta. Ta ključ se upošteva samo. če je v nerazširjenem načinu. V razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona, kot to določa ključ usmerjenosti."
+msgstr ""
+"Mesto pulta na osi X z začetkom na dnu zaslona. Če je vrednost -1, je le-ta "
+"prezrta in je uporabljena vrednost koordinate X. Če je vrednost večja od 0, "
+"je vrednost koordinate X prezrta. Ta ključ se upošteva samo. če je v "
+"nerazširjenem načinu. V razširjenem načinu je ta ključ prezrt in pult je "
+"postavljen ob rob zaslona, kot to določa ključ usmerjenosti."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1578,7 +1738,12 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "Mesto pulta na osi Y z začetkom na dnu zaslona. Če je vrednost -1, je le-ta prezrta in je uporabljena vrednost koordinate Y. Če je vrednost večja od 0, je vrednost koordinate Y prezrta. Ta ključ se upošteva samo. če je v nerazširjenem načinu. V razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona, kot to določa ključ usmerjenosti."
+msgstr ""
+"Mesto pulta na osi Y z začetkom na dnu zaslona. Če je vrednost -1, je le-ta "
+"prezrta in je uporabljena vrednost koordinate Y. Če je vrednost večja od 0, "
+"je vrednost koordinate Y prezrta. Ta ključ se upošteva samo. če je v "
+"nerazširjenem načinu. V razširjenem načinu je ta ključ prezrt in pult je "
+"postavljen ob rob zaslona, kot to določa ključ usmerjenosti."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1590,7 +1755,11 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult postavi na sredino osi X. Sprememba velikosti pulta se odraža na obeh straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi X."
+msgstr ""
+"Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult "
+"postavi na sredino osi X. Sprememba velikosti pulta se odraža na obeh "
+"straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi "
+"X."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1602,7 +1771,11 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult postavi na sredino osi Y. Sprememba velikosti pulta se odraža na obeh straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi Y."
+msgstr ""
+"Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult "
+"postavi na sredino osi Y. Sprememba velikosti pulta se odraža na obeh "
+"straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi "
+"Y."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1613,13 +1786,18 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Izbrana možnost določa, da se pult samodejno skrije za rob zaslona, ko nad njim ni miškinega kazalca. Premik kazalca ob rob zaslona povzroči ponovno odkritje pulta."
+msgstr ""
+"Izbrana možnost določa, da se pult samodejno skrije za rob zaslona, ko nad "
+"njim ni miškinega kazalca. Premik kazalca ob rob zaslona povzroči ponovno "
+"odkritje pulta."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Izbrana možnost določa animirano skrivanje in odkrivanje pulta, namesto hipnega dejanja."
+msgstr ""
+"Izbrana možnost določa animirano skrivanje in odkrivanje pulta, namesto "
+"hipnega dejanja."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1629,7 +1807,9 @@ msgstr "Omogoči gumbe skrivanja"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Izbrana možnost določa prikaz gumbov za stransko skrivanje pladnja na obeh njegovih koncih."
+msgstr ""
+"Izbrana možnost določa prikaz gumbov za stransko skrivanje pladnja na obeh "
+"njegovih koncih."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1639,7 +1819,9 @@ msgstr "Omogoči puščice na gumbih skrivanja"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "Izbrana možnost določa prikaz puščic na gumbih skrivanja. Ta ključ se upošteva samo. če je omogočen ključ enable_buttons."
+msgstr ""
+"Izbrana možnost določa prikaz puščic na gumbih skrivanja. Ta ključ se "
+"upošteva samo. če je omogočen ključ enable_buttons."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1650,7 +1832,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Navaja premor v milisekundah, preden se pult ob dotiku kazala miške samodejno skrije. Ta ključ se upošteva samo. če je omogočen ključ auto_hide."
+msgstr ""
+"Navaja premor v milisekundah, preden se pult ob dotiku kazala miške "
+"samodejno skrije. Ta ključ se upošteva samo. če je omogočen ključ auto_hide."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1661,7 +1845,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Navaja premor v milisekundah, preden se pult ob dotiku kazala miške samodejno odkrije. Ta ključ se upošteva samo. če je omogočen ključ auto_hide."
+msgstr ""
+"Navaja premor v milisekundah, preden se pult ob dotiku kazala miške "
+"samodejno odkrije. Ta ključ se upošteva samo. če je omogočen ključ "
+"auto_hide."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1672,7 +1859,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "Navaja število točk, ki so vidni, ko se pult samodejno skrije za rob. Ta ključ se upošteva samo. če je omogočen ključ auto_hide."
+msgstr ""
+"Navaja število točk, ki so vidni, ko se pult samodejno skrije za rob. Ta "
+"ključ se upošteva samo. če je omogočen ključ auto_hide."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1683,7 +1872,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "Hitrost animacij pulta. Mogoče vrednosti so \"počasi\", \"srednje\" in \"hitro\". Ta ključ se upošteva samo. če je omogočen ključ enable_animations."
+msgstr ""
+"Hitrost animacij pulta. Mogoče vrednosti so \"počasi\", \"srednje\" in "
+"\"hitro\". Ta ključ se upošteva samo. če je omogočen ključ "
+"enable_animations."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1695,7 +1887,11 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "Katera vrsta ozadja naj bo uporabljena za ta pult. Mogoče vrednosti so \"none\" - uporabljeno bo privzeto ozadje gradnika GTK+. \"color\" - barvni ključ bo uporabljen kot barva ozadja. \"image\" - slika, navedena s strani slikovnega ključa, bo uporabljena kot ozadje."
+msgstr ""
+"Katera vrsta ozadja naj bo uporabljena za ta pult. Mogoče vrednosti so "
+"\"none\" - uporabljeno bo privzeto ozadje gradnika GTK+. \"color\" - barvni "
+"ključ bo uporabljen kot barva ozadja. \"image\" - slika, navedena s strani "
+"slikovnega ključa, bo uporabljena kot ozadje."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
@@ -1714,7 +1910,9 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "Navaja prosojnost barve ozadja. V primeru, da je vrednost manj kot 65535, se bo barva ozadja pulta združila z barvo ozadja namizja."
+msgstr ""
+"Navaja prosojnost barve ozadja. V primeru, da je vrednost manj kot 65535, se"
+" bo barva ozadja pulta združila z barvo ozadja namizja."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1725,7 +1923,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Navaja datoteko, ki bo uporabljena kot slika ozadja. V primeru, da slika vsebuje kanal alfa, bo slika prikazana združeno s sliko ozadja namizja."
+msgstr ""
+"Navaja datoteko, ki bo uporabljena kot slika ozadja. V primeru, da slika "
+"vsebuje kanal alfa, bo slika prikazana združeno s sliko ozadja namizja."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1735,7 +1935,9 @@ msgstr "Prilagodi velikost slike pultu"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Izbrana možnost določa spremenjeno velikost slike (razmerje slike bo ohranjeno) na višino pulta (če je vodoraven)."
+msgstr ""
+"Izbrana možnost določa spremenjeno velikost slike (razmerje slike bo "
+"ohranjeno) na višino pulta (če je vodoraven)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1745,7 +1947,9 @@ msgstr "Raztegni sliko na pultu"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Izbrana možnost določa prilagoditev slike velikosti pultu. Razmerje slike ne bo ohranjeno."
+msgstr ""
+"Izbrana možnost določa prilagoditev slike velikosti pultu. Razmerje slike ne"
+" bo ohranjeno."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1755,12 +1959,13 @@ msgstr "Zavrti sliko pri navpično postavljenih pultih"
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "Izbrana možnost določa obrnjenost ozadja, kadar je pult usmerjen navpično."
+msgstr ""
+"Izbrana možnost določa obrnjenost ozadja, kadar je pult usmerjen navpično."
 
 #: ../mate-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr "Datoteka ni veljavna datoteka .desktop"
+msgstr "Datoteka ni veljavna .datoteka namizja"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:188
 #, c-format
@@ -1785,12 +1990,13 @@ msgstr "Neprepoznana možnost zagona: %d"
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Ni mogoče poslati naslovov URI dokumenta na vnos namizja 'Vrsta=Povezava'"
+msgstr ""
+"Ni mogoče poslati naslovov URI dokumenta na vnos namizja 'Vrsta=Povezava'"
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
 msgid "Not a launchable item"
-msgstr "Ni izvedljiv predmet"
+msgstr "Predmet ni izvedljiv"
 
 #: ../mate-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
@@ -1806,7 +2012,7 @@ msgstr "DATOTEKA"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr "Navaja ID upravljalnika seje"
+msgstr "Določi ID upravljanja seje"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
@@ -1826,8 +2032,8 @@ msgstr "Pokaži možnosti upravljanja seje"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:977
 msgid "Error"
 msgstr "Napaka"
 
@@ -1857,36 +2063,36 @@ msgstr "Ni nameščenega programa za iskanje map."
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Odstrani s pulta"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "_Premakni"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "Zak_leni na pult"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "Ni mogoče najti praznega mesta"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:176
+#: ../mate-panel/panel-toplevel.c:1613
 msgid "Drawer"
 msgstr "Predalnik"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_Dodaj v predalnik ..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
-msgstr "_Lastnosti"
+msgstr "_Lasnosti"
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1901,7 +2107,7 @@ msgid "- Edit .desktop files"
 msgstr "- Urejanje datotek .desktop"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Ustvari zaganjalnik"
 
@@ -1910,11 +2116,11 @@ msgstr "Ustvari zaganjalnik"
 msgid "Directory Properties"
 msgstr "Lastnosti imenika"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Lastnosti zaganjalnika"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:151
 msgid "Panel"
 msgstr "Pult"
 
@@ -1922,7 +2128,9 @@ msgstr "Pult"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "Zagon drugih programov za zagotovitev različnih pripomočkov za upravljanje z okni, prikazom časa ..."
+msgstr ""
+"Zagon drugih programov za zagotovitev različnih pripomočkov za upravljanje z"
+" okni, prikazom časa ..."
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1944,20 +2152,20 @@ msgstr "Za datoteko namizja zaganjalnika pulta ni navedenega naslova URI\n"
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "Ni mogoče odpreti datoteke namizja %s za zaganjalnik pulta %s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "_Zaženi"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Ključ %s ni nastavljen, zato ni mogoče naložiti zaganjalnika\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1326
+#: ../mate-panel/panel-ditem-editor.c:1360
+#: ../mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "Ni mogoče shraniti zaganjalnika"
 
@@ -1980,23 +2188,23 @@ msgstr "Izvedi pogovorno okno zagona"
 msgid "Set the default panel layout"
 msgstr "Nastavi privzeto postavitev pulta"
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "Dodaj zaganjalnik na _pult"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "Dodaj zaganjalnik na _namizje"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "_Celoten meni"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Dodaj kot _predalnik na pult"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Dodaj kot _meni na pult"
 
@@ -2048,7 +2256,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "Krajevno iskanje dokumentov in map po imenu ali vsebini"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "Vsili končanje"
 
@@ -2144,47 +2352,49 @@ msgstr "Dodaj na pult"
 msgid "Find an _item to add to the panel:"
 msgstr "Najdi _predmet za dodajanje na pult:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-applet-frame.c:758
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" se je nepričakovano končal"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:760
 msgid "Panel object has quit unexpectedly"
 msgstr "Predmet pulta se je nepričakovano končal"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:767
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "V primeru, da ponovno naložite predmet pulta, se bo samodejno dodal nazaj na pult."
+msgstr ""
+"V primeru, da ponovno naložite predmet pulta, se bo samodejno dodal nazaj na"
+" pult."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:774
 msgid "D_elete"
 msgstr "I_zbriši"
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:775
+#: ../mate-panel/panel-applet-frame.c:780
 msgid "_Don't Reload"
 msgstr "_Ne naloži ponovno"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:776
+#: ../mate-panel/panel-applet-frame.c:781
 msgid "_Reload"
 msgstr "_Ponovno naloži"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:940
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Pult je med nalaganjem \"%s\" naletel na napako."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:956
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ali želite izbrisati aplet iz nastavitev?"
 
 #: ../mate-panel/panel-context-menu.c:90
 msgid "And many, many others…"
-msgstr ""
+msgstr "In veliko, veliko drugih ..."
 
 #: ../mate-panel/panel-context-menu.c:113
 msgid "The MATE Panel"
@@ -2210,36 +2420,38 @@ msgstr "Na namizju mora biti vedno vsaj en pult."
 
 #: ../mate-panel/panel-context-menu.c:197
 msgid "Reset this panel?"
-msgstr ""
+msgstr "Ponastavi ta pult?"
 
 #: ../mate-panel/panel-context-menu.c:198
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
 msgstr ""
+"Z ponastavitvijo pulta, so vse \n"
+"nastavitve po meri izgubljene. "
 
 #: ../mate-panel/panel-context-menu.c:211
 msgid "_Cancel"
-msgstr ""
+msgstr "_Prekliči"
 
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
-msgstr ""
+msgstr "_Ponastavi pult"
 
 #: ../mate-panel/panel-context-menu.c:233
 msgid "_Add to Panel…"
-msgstr ""
+msgstr "_Dodaj na pult..."
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_Izbriši pult"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "_Nov pult"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "_O pultu ..."
 
@@ -2256,79 +2468,83 @@ msgid "Location"
 msgstr "Mesto"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:606
 msgid "_Type:"
 msgstr "_Vrsta:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:613
 msgid "_Name:"
 msgstr "_Ime:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:638
 msgid "_Browse..."
-msgstr "_Prebrskaj ..."
+msgstr "_Brskaj ..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:645
 msgid "Co_mment:"
-msgstr "_Opomba:"
+msgstr "_Ukaz:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:977
 msgid "Choose an application..."
 msgstr "Izbor programa ..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:981
 msgid "Choose a file..."
 msgstr "Izbor datoteke ..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1146
+#: ../mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "_Ukaz:"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "_Mesto:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "Ime zaganjalnika ni določeno."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "Ni mogoče shraniti lastnosti mape"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "Ime mape ni določeno."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "Ukaz zaganjalnika ni nastavljen."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "Mesto zaganjalnika ni določeno."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
 msgstr "Ni mogoče prikazati dokumenta pomoči"
 
 #: ../mate-panel/panel-force-quit.c:80
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Kliknite na okno za vsiljen konec programa. Za preklic pritisnite tipko <ESC>."
+msgstr ""
+"Kliknite na okno za vsiljen konec programa. Za preklic pritisnite tipko "
+"<ESC>."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:220
 msgid "Force this application to exit?"
 msgstr "Ali naj bo program vsiljeno končan?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:223
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti dokumenti programa."
+msgstr ""
+"V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti "
+"dokumenti programa."
 
 #: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
@@ -2344,9 +2560,9 @@ msgstr "Spreminjanje videza in obnašanja namizja, dostop do pomoči in odjave."
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
-msgstr "Programi"
+msgstr "Aplikacije"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "Ur_edi menije"
 
@@ -2355,7 +2571,7 @@ msgid "Bookmarks"
 msgstr "Zaznamki"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:544
 #, c-format
 msgid "Open '%s'"
 msgstr "Odpri '%s'"
@@ -2390,7 +2606,7 @@ msgstr "Omrežna mesta"
 
 #: ../mate-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
-msgstr "Dostop do osebne mape"
+msgstr "Odpre vašo osebno mapo"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
@@ -2398,7 +2614,7 @@ msgstr "Dostop do osebne mape"
 #: ../mate-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr "Namizje"
+msgstr "Namizje:"
 
 #: ../mate-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
@@ -2411,7 +2627,9 @@ msgstr "Računalnik"
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr "Brskanje po vseh krajevnih in oddaljenih diskih in mapah, ki so dostopni s tega računalnika"
+msgstr ""
+"Brskanje po vseh krajevnih in oddaljenih diskih in mapah, ki so dostopni s "
+"tega računalnika"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
@@ -2423,11 +2641,11 @@ msgstr "Brskanje med zaznamki in mesti krajevnega omrežja"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
-msgstr "Mesta"
+msgstr "Mesta:"
 
 #: ../mate-panel/panel-menu-items.c:1524
 msgid "System"
-msgstr "Sistem"
+msgstr "Sistem:"
 
 #. Below this, we only have log out/shutdown items
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
@@ -2454,43 +2672,33 @@ msgstr "Odjava %s ..."
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Odjava uporabnika %s za prijavo drugega uporabnika"
 
-#: ../mate-panel/panel-properties-dialog.c:120
+#: ../mate-panel/panel-properties-dialog.c:119
 #: ../mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Zgoraj"
 
-#: ../mate-panel/panel-properties-dialog.c:121
+#: ../mate-panel/panel-properties-dialog.c:120
 #: ../mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Dno"
 
-#: ../mate-panel/panel-properties-dialog.c:122
+#: ../mate-panel/panel-properties-dialog.c:121
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Levo"
 
-#: ../mate-panel/panel-properties-dialog.c:123
+#: ../mate-panel/panel-properties-dialog.c:122
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Desno"
 
-#: ../mate-panel/panel-properties-dialog.c:819
+#: ../mate-panel/panel-properties-dialog.c:818
 msgid "Drawer Properties"
 msgstr "Lastnosti predalnika"
-
-#: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
-#, c-format
-msgid "Unable to load file '%s': %s."
-msgstr "Ni mogoče naložiti datoteke '%s': %s."
-
-#: ../mate-panel/panel-properties-dialog.c:945
-msgid "Could not display properties dialog"
-msgstr "Ni mogoče prikazati lastnosti"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:1
 msgid "Panel Properties"
@@ -2506,7 +2714,7 @@ msgstr "_Ikona:"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:4
 msgid "pixels"
-msgstr "slikovne točke"
+msgstr "slikovnih točk"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:5
 #: ../mate-panel/panel-test-applets.ui.h:5
@@ -2613,7 +2821,10 @@ msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "Med čiščenjem seznama nedavnih dokumentov bodo počiščeni:\n• vsi predmeti iz menija Mesta → predmet menija Nedavni dokumenti.\n• vsi predmeti iz seznamov nedavnih dokumentov vseh programov."
+msgstr ""
+"Med čiščenjem seznama nedavnih dokumentov bodo počiščeni:\n"
+"• vsi predmeti iz menija Mesta → predmet menija Nedavni dokumenti.\n"
+"• vsi predmeti iz seznamov nedavnih dokumentov vseh programov."
 
 #: ../mate-panel/panel-recent.c:161
 msgid "Clear Recent Documents"
@@ -2631,37 +2842,35 @@ msgstr "Počisti nedavne dokumente ..."
 msgid "Clear all items from the recent documents list"
 msgstr "Počisti vse predmete s seznama nedavnih dokumentov"
 
-#: ../mate-panel/panel-run-dialog.c:419
+#: ../mate-panel/panel-run-dialog.c:420
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Ni mogoče zagnati ukaza \"%s\""
 
-#: ../mate-panel/panel-run-dialog.c:460
+#: ../mate-panel/panel-run-dialog.c:461
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ni mogoče pretvoriti '%s' iz UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1236
 msgid "Choose a file to append to the command..."
 msgstr "Izberite datoteko, ki naj se pripne ukazu ..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1618 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Izberite program za ogled opisa."
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Izveden bo ukaz '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Seznam naslovov URI, spuščen v pogovornem oknu zagona, ima napačno obliko (%d) ali dolžino (%d)\n"
-
-#: ../mate-panel/panel-run-dialog.c:1978
-msgid "Could not display run dialog"
-msgstr "Ni mogoče prikazati pogovornega okna zagona"
+msgstr ""
+"Seznam naslovov URI, spuščen v pogovornem oknu zagona, ima napačno obliko "
+"(%d) ali dolžino (%d)\n"
 
 #: ../mate-panel/panel-run-dialog.ui.h:1
 msgid "Run Application"
@@ -2691,7 +2900,8 @@ msgstr "Zaženi z _datoteko ..."
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
-msgstr "Kliknite gumb za prebrskanje datoteke, katere ime bo pripeto ukaznemu nizu."
+msgstr ""
+"Kliknite gumb za prebrskanje datoteke, katere ime bo pripeto ukaznemu nizu."
 
 #: ../mate-panel/panel-run-dialog.ui.h:8
 msgid "List of known applications"
@@ -2709,7 +2919,8 @@ msgstr "_Zaženi"
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Kliknite gumb za zagon izbranega programa ali ukaza v vnosnem polju ukaza."
+msgstr ""
+"Kliknite gumb za zagon izbranega programa ali ukaza v vnosnem polju ukaza."
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2717,7 +2928,7 @@ msgstr "_Vsili končanje"
 
 #: ../mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
-msgstr "_Počisti"
+msgstr "P_očisti"
 
 #: ../mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
@@ -2734,7 +2945,8 @@ msgstr "Navedi pot za gsettings, v kateri naj bodo shranjene možnosti apleta"
 
 #: ../mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr "Navedite začetno velikost apleta (zelo zelo majhna, srednja, velika, itd.)"
+msgstr ""
+"Navedite začetno velikost apleta (zelo zelo majhna, srednja, velika, itd.)"
 
 #: ../mate-panel/panel-test-applets.c:42
 msgid ""
@@ -2754,7 +2966,7 @@ msgstr "Zelo majhno"
 #: ../mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
-msgstr "Majhno"
+msgstr "Majhne"
 
 #: ../mate-panel/panel-test-applets.c:69
 msgctxt "Size"
@@ -2764,7 +2976,7 @@ msgstr "Srednje"
 #: ../mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
-msgstr "Veliko"
+msgstr "Velike"
 
 #: ../mate-panel/panel-test-applets.c:71
 msgctxt "Size"
@@ -2794,53 +3006,53 @@ msgstr "_Aplet: "
 msgid "_Prefs Path:"
 msgstr "Pot _možnosti:"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "Skrij pult"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1619 ../mate-panel/panel-toplevel.c:1629
 msgid "Top Panel"
 msgstr "Zgornji pult"
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1621
 msgid "Bottom Panel"
 msgstr "Spodnji pult"
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1623
 msgid "Left Panel"
 msgstr "Levi pult"
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1625
 msgid "Right Panel"
 msgstr "Desni pult"
 
-#: ../mate-panel/panel-util.c:347
+#: ../mate-panel/panel-util.c:348
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikone '%s' ni mogoče najti"
 
-#: ../mate-panel/panel-util.c:465
+#: ../mate-panel/panel-util.c:472
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Ni mogoče izvršiti '%s'"
 
-#: ../mate-panel/panel-util.c:693
+#: ../mate-panel/panel-util.c:700
 msgid "file"
 msgstr "datoteka"
 
-#: ../mate-panel/panel-util.c:866
+#: ../mate-panel/panel-util.c:873
 msgid "Home Folder"
-msgstr "Domača mapa"
+msgstr "Domača mapa:"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:878
+#: ../mate-panel/panel-util.c:885
 msgid "File System"
 msgstr "Datotečni sistem"
 
-#: ../mate-panel/panel-util.c:1051
+#: ../mate-panel/panel-util.c:1058
 msgid "Search"
 msgstr "Iskanje"
 
@@ -2848,32 +3060,36 @@ msgstr "Iskanje"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1097
+#: ../mate-panel/panel-util.c:1104
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "Odpri naslov URL: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1327
 msgid "Delete this drawer?"
 msgstr "Ali naj se predalnik izbriše?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1328
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "Z brisanjem predalnika se izbrišejo tudi\nvse njegove nastavitve."
+msgstr ""
+"Z brisanjem predalnika se izbrišejo tudi\n"
+"vse njegove nastavitve."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1331
 msgid "Delete this panel?"
 msgstr "Ali naj se pult izbriše?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1332
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "Z brisanjem pulta se izbrišejo tudi\nvse njegove nastavitve."
+msgstr ""
+"Z brisanjem pulta se izbrišejo tudi\n"
+"vse njegove nastavitve."

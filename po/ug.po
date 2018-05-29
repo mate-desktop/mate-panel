@@ -1,16 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Uighur (http://www.transifex.com/mate/MATE/language/ug/)\n"
+"POT-Creation-Date: 2018-05-12 21:36+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
+"Language-Team: Uighur (https://www.transifex.com/mate/teams/13566/ug/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -32,14 +33,14 @@ msgstr "يىلنامە"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -50,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -64,9 +65,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -75,24 +76,26 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -101,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "چېكىلسە ئايلىق يىلنامەنى يوشۇرىدۇ"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "چېكىلسە ئايلىق يىلنامەنى كۆرسىتىدۇ"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "كومپيۇتېر سائىتى"
 
@@ -123,7 +126,7 @@ msgstr "كومپيۇتېر سائىتى"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -133,99 +136,108 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "سىستېما ۋاقىت تەڭشەك…"
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "سىستېما ۋاقىت تەڭشەك"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "سىستېما ۋاقتىنى تەڭشىيەلمىدى"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1673
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
 msgstr "مايىللىق(_P)"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
+#: ../applets/clock/clock.c:1853 ../applets/fish/fish.c:1676
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:237 ../applets/wncklet/window-list.c:176
 #: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
+#: ../applets/wncklet/workspace-switcher.c:372 ../mate-panel/drawer.c:563
 #: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../mate-panel/panel-context-menu.c:323 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
 msgid "_Help"
 msgstr "ياردەم(_H)"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1679
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:245 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
 msgstr "ھەققىدە(_A)"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "ۋاقىت كۆچۈر(_T)"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "چېسلا كۆچۈر(_D)"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "چېسلا ۋە ۋاقىت تەڭشە(_J)"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2803
 msgid "Choose Location"
 msgstr "ئورۇن تاللا"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2882
 msgid "Edit Location"
 msgstr "ئورۇن تەھرىر"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3009
 msgid "City Name"
 msgstr "شەھەر نامى"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3013
 msgid "City Time Zone"
 msgstr "شەھەر ۋاقىت رايونى"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3228
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "سائەت"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3230
 msgid "The Clock displays the current time and date"
 msgstr "سائەت ھازىرقى ۋاقىت ۋە چېسلانى كۆرسىتىدۇ"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3234 ../applets/fish/fish.c:568
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:546
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:631
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "تەرجىمان تۆھپىكارلار"
+msgstr ""
+"Gheyret Kenji <gheyret@gmail.com>\n"
+"Sahran<sahran@live.com>\n"
+"Muhemmed Erdem <misran_erdem@hotmail.com>\n"
+"\n"
+"Launchpad Contributions:\n"
+"  Abdumomin.Kadir https://launchpad.net/~abdumomin-kadir\n"
+"  Gheyret T.Kenji https://launchpad.net/~gheyret\n"
+"  Gheyret T.Kenji https://launchpad.net/~gheyretkenji\n"
+"  Sahran https://launchpad.net/~sahran"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
@@ -233,7 +245,9 @@ msgstr "تەرجىمان تۆھپىكارلار"
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
-msgstr "<small><i>مەلۇم دۆلەت، رايون، شەھەرنى كىرگۈزۈپ ئاندىن قاڭقىش تىزىملىكىدىن مۇناسىپ تۈرنى تاللاڭ.</i></small>"
+msgstr ""
+"<small><i>مەلۇم دۆلەت، رايون، شەھەرنى كىرگۈزۈپ ئاندىن قاڭقىش تىزىملىكىدىن "
+"مۇناسىپ تۈرنى تاللاڭ.</i></small>"
 
 #: ../applets/clock/clock.ui.h:3
 msgid "_Timezone:"
@@ -342,7 +356,7 @@ msgstr "كۆرۈش ئارىلىقى بىرلىكى(_V) :"
 
 #: ../applets/clock/clock.ui.h:30
 msgid "_Pressure unit:"
-msgstr "بېسىم بىرلىكى(_P):"
+msgstr "ھاۋا بىسىم بىرلىكى:(_P)"
 
 #: ../applets/clock/clock.ui.h:31
 msgid "_Wind speed unit:"
@@ -372,10 +386,12 @@ msgstr "<small>تەڭشە…</small>"
 msgid "<small>Set</small>"
 msgstr "<small>تەڭشە</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "ئورۇننى نۆۋەتتىكى ئورۇنغا تەڭشەپ، ئۇنى بۇ كومپيۇتېرنىڭ ۋاقىت رايونى قىلىپ ئىشلەت"
+msgstr ""
+"ئورۇننى نۆۋەتتىكى ئورۇنغا تەڭشەپ، ئۇنى بۇ كومپيۇتېرنىڭ ۋاقىت رايونى قىلىپ "
+"ئىشلەت"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -383,7 +399,7 @@ msgstr "ئورۇننى نۆۋەتتىكى ئورۇنغا تەڭشەپ، ئۇنى
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -392,7 +408,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -400,42 +416,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "نامەلۇم"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "تېمپېراتۇرا %s / بەدەن سېزىمى %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "كۈن چىقىش: %s / كۈن ئولتۇرۇش: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "'%s' دېگەن ياردەم پۈتۈكىنى كۆرسەتكىلى بولمىدى"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "ياردەم پۈتۈكنى كۆرسەتكەندە خاتالىق كۆرۈلدى"
 
@@ -453,7 +469,16 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "بۇ كۇنۇپكا سائەت قوللانچاق ئىشلەتكەن سائەت فورماتىنى بەلگىلىگەن. ئىشلەتكىلى بولىدىغان قىممىتى \"12-hour\" يەنى (12 سائەت)، \"24-hour\" يەنى (24 سائەت)، \"internet\" (تۇتاش تور)،  \"unix\" ۋە \"custom\" (ئىختىيارى). ئەگەر \"internet\" قىلىپ تەڭشەلسە سائەت تۇتاش تور ۋاقتىنى كۆرسىتىدۇ. تۇتاش تور ۋاقتى بىر كۈننى 1000 \".beats\" (ئۇدار)غا بۆلىدۇ. بۇ سىستېمىدا ۋاقىت رايون پەرقى بولمايدۇ، شۇڭلاشقا پۈتۈن دۇنيانىڭ ۋاقتى ئوخشاش بولىدۇ. ئەگەر \"unix\" قىلىپ تەڭشەلسە سائەت ئۆزلۈكىدىن يېڭى ئىرا (يەنى، 1970-01-01) دىن ئۆتكەن سېكۇنتنى ئاساس قىلىدۇ. ئەگەر \"custom\" قىلىپ تەڭشەلسە سائەت custom_format كۇنۇپكا قىممىتىگە ئاساسەن ۋاقىتنى كۆرسىتىدۇ."
+msgstr ""
+"بۇ كۇنۇپكا سائەت قوللانچاق ئىشلەتكەن سائەت فورماتىنى بەلگىلىگەن. ئىشلەتكىلى "
+"بولىدىغان قىممىتى \"12-hour\" يەنى (12 سائەت)، \"24-hour\" يەنى (24 سائەت)، "
+"\"internet\" (تۇتاش تور)،  \"unix\" ۋە \"custom\" (ئىختىيارى). ئەگەر "
+"\"internet\" قىلىپ تەڭشەلسە سائەت تۇتاش تور ۋاقتىنى كۆرسىتىدۇ. تۇتاش تور "
+"ۋاقتى بىر كۈننى 1000 \".beats\" (ئۇدار)غا بۆلىدۇ. بۇ سىستېمىدا ۋاقىت رايون "
+"پەرقى بولمايدۇ، شۇڭلاشقا پۈتۈن دۇنيانىڭ ۋاقتى ئوخشاش بولىدۇ. ئەگەر \"unix\" "
+"قىلىپ تەڭشەلسە سائەت ئۆزلۈكىدىن يېڭى ئىرا (يەنى، 1970-01-01) دىن ئۆتكەن "
+"سېكۇنتنى ئاساس قىلىدۇ. ئەگەر \"custom\" قىلىپ تەڭشەلسە سائەت custom_format "
+"كۇنۇپكا قىممىتىگە ئاساسەن ۋاقىتنى كۆرسىتىدۇ."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -465,7 +490,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "format (فورمات) كۇنۇپكىسى \"custom\" (ئىختىيارى) قىلىپ تەڭشەلسە بۇ كۇنۇپكا سائەت قوللانچاق ئىشلىتىدىغان فورماتنى بەلگىلىگەن. سىز strftime()نىڭ فورمات بەلگىسىنى ئىشلىتىپ بەلگىلەنگەن فورماتقا ئېرىشەلەيسىز. تەپسىلاتىنى strftime() نىڭ قوللانمىسىدىن كۆرۈڭ."
+msgstr ""
+"format (فورمات) كۇنۇپكىسى \"custom\" (ئىختىيارى) قىلىپ تەڭشەلسە بۇ كۇنۇپكا "
+"سائەت قوللانچاق ئىشلىتىدىغان فورماتنى بەلگىلىگەن. سىز strftime()نىڭ فورمات "
+"بەلگىسىنى ئىشلىتىپ بەلگىلەنگەن فورماتقا ئېرىشەلەيسىز. تەپسىلاتىنى strftime()"
+" نىڭ قوللانمىسىدىن كۆرۈڭ."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -489,7 +518,9 @@ msgstr "ئەسكەرتىشتە چېسلانى كۆرسەت"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "true بولسا چاشقىنەك سائەت ئۈستىدىن ئۆتكەندە قورال ئەسكەرتىشتە چېسلا كۆرۈنىدۇ."
+msgstr ""
+"true بولسا چاشقىنەك سائەت ئۈستىدىن ئۆتكەندە قورال ئەسكەرتىشتە چېسلا "
+"كۆرۈنىدۇ."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -559,98 +590,111 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:265
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "ئاگاھلاندۇرۇش: قارىغاندا بۇ بۇيرۇقنىڭ ھېقىقى ئىشلىتىش ئورنى بار.\nبۇ لازىمى يوق قولانچاق بولغانلىقتىن بۇنداق قىلىشنى ئويلىمىغان بولۇشىڭىز مۇمكىن.\nسىزنىڭ %s دىن پايدىلىنىپ ئاتالمىش «ئەمەلىي» ياكى پايدىلىق ئىش قىلماسلىقىڭىزنى كۈچلۈك تەۋسىيە قىلىمىز."
+msgstr ""
+"ئاگاھلاندۇرۇش: قارىغاندا بۇ بۇيرۇقنىڭ ھېقىقى ئىشلىتىش ئورنى بار.\n"
+"بۇ لازىمى يوق قولانچاق بولغانلىقتىن بۇنداق قىلىشنى ئويلىمىغان بولۇشىڭىز مۇمكىن.\n"
+"سىزنىڭ %s دىن پايدىلىنىپ ئاتالمىش «ئەمەلىي» ياكى پايدىلىق ئىش قىلماسلىقىڭىزنى كۈچلۈك تەۋسىيە قىلىمىز."
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:429
 msgid "Images"
 msgstr "سۈرەتلەر"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:535 ../applets/fish/fish.c:579
+#: ../applets/fish/fish.c:685
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s بېلىق"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:536
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s ئەمەلىيەتتە ھېچقانداق رولى يوق. ئۇ پەقەت دىسكا بوشلۇقى، تەرجىمە-تەھرىر ۋاقتىنى ئىگىلەيدۇ، ئىجرا قىلغاندا سىزنىڭ قىممەتلىك تاختا ۋە ئەسلەك بوشلۇقىڭىزنى ئىگىلەيدۇ. ئەگەر كىمدە كىم بۇ قوللانچاقنى ئىشلەتكەنلىكىنى كۆرسىڭىز ئۇ روھىي ھالىتىنى تەكشۈرۈپ بېقىشنى ئويلىشىپ باقسا بولارمىكىن."
+msgstr ""
+"%s ئەمەلىيەتتە ھېچقانداق رولى يوق. ئۇ پەقەت دىسكا بوشلۇقى، تەرجىمە-تەھرىر "
+"ۋاقتىنى ئىگىلەيدۇ، ئىجرا قىلغاندا سىزنىڭ قىممەتلىك تاختا ۋە ئەسلەك "
+"بوشلۇقىڭىزنى ئىگىلەيدۇ. ئەگەر كىمدە كىم بۇ قوللانچاقنى ئىشلەتكەنلىكىنى "
+"كۆرسىڭىز ئۇ روھىي ھالىتىنى تەكشۈرۈپ بېقىشنى ئويلىشىپ باقسا بولارمىكىن."
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:556
 msgid "(with minor help from George)"
 msgstr "(يەنە George نىڭ كىچىككىنە ياردىمىمۇ بار)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:562
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "بېلىق"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:580
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s بېلىق، ھازىرقى زاماندىكى oracle"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:646
 msgid "Unable to locate the command to execute"
 msgstr "ئىجرا قىلىدىغان بۇيرۇقنى تاپالمىدى"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:690
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s بېلىق ئېيتىدۇكى:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:753
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "بۇيرۇق چىقىرىشنى ئوقۇيالمىدى\nتەپسىلاتى: %s"
+msgstr ""
+"بۇيرۇق چىقىرىشنى ئوقۇيالمىدى\n"
+"تەپسىلاتى: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:830
 msgid "_Speak again"
 msgstr "قايتا سۆزلە(_S)"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:912
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "سەپلەنگەن بۇيرۇقنى ئىجرا قىلالماي ئالماشتۇرۇلغىنى: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:945
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "'%s' ئىجرا قىلالمىدى\nتەپسىلاتى: %s"
+msgstr ""
+"'%s' ئىجرا قىلالمىدى\n"
+"تەپسىلاتى: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:961
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "'%s' دىن ئوقۇيالمىدى\nتەپسىلاتى: %s"
+msgstr ""
+"'%s' دىن ئوقۇيالمىدى\n"
+"تەپسىلاتى: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1529
 msgid "The water needs changing"
 msgstr "سۇ ئالماشتۇرۇش زۆرۈر"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1531
 msgid "Look at today's date!"
 msgstr "بۈگۈنكى چېسلاغا قاراڭ!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1614
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s بېلىق،  بەختنى ئالدىن بىلەلەيدۇ"
@@ -721,7 +765,9 @@ msgstr "بېلىقنىڭ  ھەرىكەت بىتلىق تەسۋىرى"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "بۇ جايدا بەلگىلەنگەن بىتلىق تەسۋىر ھۆججەت ئاتى، شۇ بىتلىق تەسۋىر مۇندەرىجە بىلەن مۇناسىۋەتلىك بېلىقنىڭ ھەرىكىتىنى كۆرسىتىشكە ئىشلىتىلىدۇ."
+msgstr ""
+"بۇ جايدا بەلگىلەنگەن بىتلىق تەسۋىر ھۆججەت ئاتى، شۇ بىتلىق تەسۋىر مۇندەرىجە "
+"بىلەن مۇناسىۋەتلىك بېلىقنىڭ ھەرىكىتىنى كۆرسىتىشكە ئىشلىتىلىدۇ."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -731,7 +777,9 @@ msgstr "چەككەندە ئىجرا قىلىنىدىغان بۇيرۇق"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "بۇ جايدا بېلىقنى چەككەندىن كېيىن ئىجرا قىلىشنى سىنايدىغان بۇيرۇق بەلگىلىنىدۇ."
+msgstr ""
+"بۇ جايدا بېلىقنى چەككەندىن كېيىن ئىجرا قىلىشنى سىنايدىغان بۇيرۇق "
+"بەلگىلىنىدۇ."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
 msgid "Frames in fish's animation"
@@ -749,7 +797,8 @@ msgstr "ھەر كاندۇكنى ۋاقىتلىق توختات"
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
 msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "بۇ جايدا ھەر بىر كاندۇك ھەرىكەتنى كۆرسىتىشنىڭ سېكۇنت سانى بەلگىلىنىدۇ."
+msgstr ""
+"بۇ جايدا ھەر بىر كاندۇك ھەرىكەتنى كۆرسىتىشنىڭ سېكۇنت سانى بەلگىلىنىدۇ."
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
 msgid "Rotate on vertical panels"
@@ -772,12 +821,12 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "ئۇقتۇرۇش رايونى"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:362
 msgid "Panel Notification Area"
 msgstr "تاختا ئۇقتۇرۇش رايونى"
 
@@ -801,7 +850,9 @@ msgstr "ھەممە خىزمەت رايونىدىكى كۆزنەكلەرنى كۆ
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "ئەگەر true بولسا كۆزنەك تىزىملىكى ھەممە خىزمەت رايونىدىكى كۆزنەكلەرنى كۆرسىتىدۇ، ئۇنداق بولمىسا نۆۋەتتىكى خىزمەت رايونىدىكى كۆزنەكلەرنى كۆرسىتىدۇ."
+msgstr ""
+"ئەگەر true بولسا كۆزنەك تىزىملىكى ھەممە خىزمەت رايونىدىكى كۆزنەكلەرنى "
+"كۆرسىتىدۇ، ئۇنداق بولمىسا نۆۋەتتىكى خىزمەت رايونىدىكى كۆزنەكلەرنى كۆرسىتىدۇ."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -811,17 +862,24 @@ msgstr "قايسى ۋاقىتتا كۆزنەك گۇرۇپپىلىنىدۇ"
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "قايسى ۋاقىتتا كۆزنەك تىزىملىكىدە ئوخشاش قوللىنىشچان پروگرامما كۆزنەكلىرىنى گۇرۇپپىلاشنى قارار قىلىدۇ. تاللاشقا بولىدىغان قىممىتى \"never\" (ھەرگىز)، \"auto\" (ئۆزلۈكىدىن) ۋە \"always\" (ھەمىشە) بار."
+msgstr ""
+"قايسى ۋاقىتتا كۆزنەك تىزىملىكىدە ئوخشاش قوللىنىشچان پروگرامما كۆزنەكلىرىنى "
+"گۇرۇپپىلاشنى قارار قىلىدۇ. تاللاشقا بولىدىغان قىممىتى \"never\" (ھەرگىز)، "
+"\"auto\" (ئۆزلۈكىدىن) ۋە \"always\" (ھەمىشە) بار."
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
-msgstr "كۆزنەكنى كىچىكلىتىشتىن بوشاتقاندا كۆزنەك نۆۋەتتىكى خىزمەت رايونىغا يۆتكىلىدۇ"
+msgstr ""
+"كۆزنەكنى كىچىكلىتىشتىن بوشاتقاندا كۆزنەك نۆۋەتتىكى خىزمەت رايونىغا يۆتكىلىدۇ"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "ئەگەر true بولسا كۆزنەكنىڭ ئەڭ كىچىكلىكىنى بىكار قىلغاندا ئۇنى نۆۋەتتىكى خىزمەت رايونىغا قويىدۇ. ئۇنداق بولمىسا كۆزنەك تۇرۇشلۇق خىزمەت رايونىغا ئالمىشىدۇ."
+msgstr ""
+"ئەگەر true بولسا كۆزنەكنىڭ ئەڭ كىچىكلىكىنى بىكار قىلغاندا ئۇنى نۆۋەتتىكى "
+"خىزمەت رايونىغا قويىدۇ. ئۇنداق بولمىسا كۆزنەك تۇرۇشلۇق خىزمەت رايونىغا "
+"ئالمىشىدۇ."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -832,7 +890,10 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "ئەگەر true بولسا خىزمەت رايون ئالماشتۇرغۇچتا خىزمەت رايون ئاتىنى كۆرسىتىدۇ، ئۇنداق بولمىسا خىزمەت رايونىدىكى كۆزنەكنى كۆرسىتىدۇ. بۇ تەڭشەك پەقەت Marco كۆزنەك باشقۇرغۇچ ئىشلەتكەندىلا كۈچكە ئىگە."
+msgstr ""
+"ئەگەر true بولسا خىزمەت رايون ئالماشتۇرغۇچتا خىزمەت رايون ئاتىنى كۆرسىتىدۇ، "
+"ئۇنداق بولمىسا خىزمەت رايونىدىكى كۆزنەكنى كۆرسىتىدۇ. بۇ تەڭشەك پەقەت Marco "
+"كۆزنەك باشقۇرغۇچ ئىشلەتكەندىلا كۈچكە ئىگە."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -842,7 +903,9 @@ msgstr "ھەممە خىزمەت رايونىنى كۆرسەت"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "ئەگەر true بولسا خىزمەت رايون ئالماشتۇرغۇچ ھەممە خىزمەت رايونىنى كۆرسىتىدۇ، ئۇنداق بولمىسا نۆۋەتتىكى خىزمەت رايونىنىلا كۆرسىتىدۇ."
+msgstr ""
+"ئەگەر true بولسا خىزمەت رايون ئالماشتۇرغۇچ ھەممە خىزمەت رايونىنى كۆرسىتىدۇ، "
+"ئۇنداق بولمىسا نۆۋەتتىكى خىزمەت رايونىنىلا كۆرسىتىدۇ."
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -853,7 +916,11 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "بۇ كۇنۇپكا خىزمەت رايون ئالماشتۇرغۇچ قانچە قۇر (توغرىسىغا جايلاشتۇرۇش) ياكى ئىستون(بويىغا جايلاشتۇرۇش)دا خىزمەت رايونى كۆرسىتىدىغانلىقىنى بەلگىلەيدۇ. بۇ تەڭشەك پەقەت display_all_workspaces (ھەممە خىزمەت رايونىنى كۆرسەت)نىڭ قىممىتى true بولغاندا كۈچكە ئىگە. "
+msgstr ""
+"بۇ كۇنۇپكا خىزمەت رايون ئالماشتۇرغۇچ قانچە قۇر (توغرىسىغا جايلاشتۇرۇش) ياكى "
+"ئىستون(بويىغا جايلاشتۇرۇش)دا خىزمەت رايونى كۆرسىتىدىغانلىقىنى بەلگىلەيدۇ. بۇ"
+" تەڭشەك پەقەت display_all_workspaces (ھەممە خىزمەت رايونىنى كۆرسەت)نىڭ "
+"قىممىتى true بولغاندا كۈچكە ئىگە. "
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -874,7 +941,7 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:229
 msgid "Window Selector"
 msgstr "كۆزنەك تاللىغۇچ"
 
@@ -883,7 +950,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid "Workspace Switcher"
 msgstr "خىزمەت رايونى ئالماشتۇرغۇچ"
 
@@ -892,7 +959,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:539
 msgid "Window List"
 msgstr "كۆزنەك تىزىملىكى"
 
@@ -908,46 +975,50 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s يۈكلىيەلمىدى: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 msgid "Icon not found"
 msgstr "سىنبەلگە تاپالمىدى"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:261
 msgid "Click here to restore hidden windows."
 msgstr "بۇ جاي چېكىلسە يوشۇرۇن كۆزنەك ئەسلىگە كېلىدۇ."
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:265
 msgid "Click here to hide all windows and show the desktop."
 msgstr "بۇ جاي چېكىلسە ھەممە كۆنەكنى يوشۇرۇپ ئۈستەل ئۈستىنى كۆرسىتىدۇ."
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:435 ../applets/wncklet/showdesktop.c:501
 msgid "Show Desktop Button"
 msgstr "ئۈستەل ئۈستى توپچىنى كۆرسەت"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:503
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "بۇ توپچا ھەممە كۆنەكنى يوشۇرۇپ ئۈستەل ئۈستىنى كۆرسىتىشكە يول قويىدۇ."
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:529
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "كۆزنەك باشقۇرغۇچىڭىز ئۈستەل ئۈستىنى كۆرسىتىش توپچىسىنى قوللىمايدۇ ياكى ئۈستەل ئۈستى باشقۇرغۇچ ئىجرا قىلىنمىغان."
+msgstr ""
+"كۆزنەك باشقۇرغۇچىڭىز ئۈستەل ئۈستىنى كۆرسىتىش توپچىسىنى قوللىمايدۇ ياكى "
+"ئۈستەل ئۈستى باشقۇرغۇچ ئىجرا قىلىنمىغان."
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:541
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "كۆزنەك تىزىملىكى توپچا شەكلىدە كۆز يۈگۈرتۈشكە قۇلايلىق بولۇشى ئۈچۈن ھەممە كۆزنەكنىڭ تىزىملىكىنى كۆرسەتتى."
+msgstr ""
+"كۆزنەك تىزىملىكى توپچا شەكلىدە كۆز يۈگۈرتۈشكە قۇلايلىق بولۇشى ئۈچۈن ھەممە "
+"كۆزنەكنىڭ تىزىملىكىنى كۆرسەتتى."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
@@ -997,24 +1068,28 @@ msgstr "ئەسلى خىزمەت رايونىنى ئەسلىگە كەلتۈر(_T)
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "كۆزنەك تاللىغۇچ تىزىملىك شەكلىدە ھەممە كۆزنەك تىزىملىكىنى كۆرسىتىپ سىزنىڭ ئۇلارغا كۆز يۈگۈرتۈشىڭىزگە يول قويىدۇ."
+msgstr ""
+"كۆزنەك تاللىغۇچ تىزىملىك شەكلىدە ھەممە كۆزنەك تىزىملىكىنى كۆرسىتىپ سىزنىڭ "
+"ئۇلارغا كۆز يۈگۈرتۈشىڭىزگە يول قويىدۇ."
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "قۇرلار"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 msgid "columns"
 msgstr "ئىستونلار"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:626
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "خىزمەت رايون ئالماشتۇرغۇچ خىزمەت رايونىڭىزنى باشقۇرۇشقا قۇلايلىق بولۇشى ئۈچۈن خىزمەت رايونىڭىزنىڭ ئىخچام نەشرىنى كۆرسەتتى."
+msgstr ""
+"خىزمەت رايون ئالماشتۇرغۇچ خىزمەت رايونىڭىزنى باشقۇرۇشقا قۇلايلىق بولۇشى "
+"ئۈچۈن خىزمەت رايونىڭىزنىڭ ئىخچام نەشرىنى كۆرسەتتى."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
@@ -1066,34 +1141,45 @@ msgstr ""
 
 #: ../data/org.mate.panel.gschema.xml.in.h:3
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "«قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى پروگرامما تىزىملىكىنى قوزغات"
+msgstr ""
+"«قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى پروگرامما تىزىملىكىنى قوزغات"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:4
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "ئەگەر true بولسا «قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى«مەلۇملۇق قوللىنىشچان پروگرامما» تىزىملىكى ئىشلىتىلىشچان ھالەتتە. سۆزلەشكۈ ئېچىلغاندا تىزىملىك يېيىلامدۇ يوق بۇ تەڭشەكنى show_program_list نىڭ قىممىتى باشقۇرىدۇ."
+msgstr ""
+"ئەگەر true بولسا «قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى«مەلۇملۇق "
+"قوللىنىشچان پروگرامما» تىزىملىكى ئىشلىتىلىشچان ھالەتتە. سۆزلەشكۈ ئېچىلغاندا "
+"تىزىملىك يېيىلامدۇ يوق بۇ تەڭشەكنى show_program_list نىڭ قىممىتى باشقۇرىدۇ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "«قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى پروگرامما تىزىملىكىنى كېڭەيت"
+msgstr ""
+"«قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى پروگرامما تىزىملىكىنى كېڭەيت"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:6
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "ئەگەر true بولسا «قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈنى ئاچقاندا ئۇنىڭدىكى«مەلۇملۇق قوللىنىشچان پروگرامما» تىزىملىكى يېيىلغان ھالەتتە. بۇ تەڭشەك پەقەت enable_program_list نىڭ قىممىتى true بولسا ئاندىن كۈچكە ئىگە."
+msgstr ""
+"ئەگەر true بولسا «قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈنى ئاچقاندا "
+"ئۇنىڭدىكى«مەلۇملۇق قوللىنىشچان پروگرامما» تىزىملىكى يېيىلغان ھالەتتە. بۇ "
+"تەڭشەك پەقەت enable_program_list نىڭ قىممىتى true بولسا ئاندىن كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "«قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى ئۆزلۈكىدىن تاماملاشنى قوزغات"
+msgstr ""
+"«قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى ئۆزلۈكىدىن تاماملاشنى قوزغات"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "ئەگەر true بولسا «قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى ئۆزلۈكىدىن تاماملاشنى قوزغات"
+msgstr ""
+"ئەگەر true بولسا «قوللىنىشچان پروگرامما ئىجرا قىل» سۆزلەشكۈدىكى ئۆزلۈكىدىن "
+"تاماملاشنى قوزغات"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1134,7 +1220,10 @@ msgstr "تاختا كىملىك (ID) تىزىملىكى"
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "تاختا كىملىك(ID) تىزىملىكى. ھەر بىر كىملىك مۇستەقىل بىر يۇقىرى دەرىجىلىك تاختىنى ئىپادىلەيدۇ. بۇ تاختىلارغا ئائىت تەڭشەك /apps/panel/toplevels/$(id) دا ساقلىنىدۇ."
+msgstr ""
+"تاختا كىملىك(ID) تىزىملىكى. ھەر بىر كىملىك مۇستەقىل بىر يۇقىرى دەرىجىلىك "
+"تاختىنى ئىپادىلەيدۇ. بۇ تاختىلارغا ئائىت تەڭشەك /apps/panel/toplevels/$(id) "
+"دا ساقلىنىدۇ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1145,7 +1234,10 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "تاختا نەڭ(ID) تىزىملىكى. ھەر بىر كىملىك مۇستەقىل بىر تاختا نەڭ(مەسىلەن، قوزغاتقۇچ، ھەرىكەت توپچا ياكى تىزىملىك توپچا/بالداق)نى ئىپادىلەيدۇ. بۇ نەڭگە ئائىت تەڭشەك /apps/panel/applets/$(id) دا ساقلىنىدۇ."
+msgstr ""
+"تاختا نەڭ(ID) تىزىملىكى. ھەر بىر كىملىك مۇستەقىل بىر تاختا نەڭ(مەسىلەن، "
+"قوزغاتقۇچ، ھەرىكەت توپچا ياكى تىزىملىك توپچا/بالداق)نى ئىپادىلەيدۇ. بۇ نەڭگە"
+" ئائىت تەڭشەك /apps/panel/applets/$(id) دا ساقلىنىدۇ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1168,7 +1260,9 @@ msgstr "ئۆزلۈكىدىن يېپىلىدىغان تارتما"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "ئەگەر true  بولسا ئىشلەتكۈچى تارتمادىكى قوزغاتقۇچنى چەكسە تارتما ئۆزلۈكىدىن يېپىلىدۇ."
+msgstr ""
+"ئەگەر true  بولسا ئىشلەتكۈچى تارتمادىكى قوزغاتقۇچنى چەكسە تارتما ئۆزلۈكىدىن "
+"يېپىلىدۇ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1178,7 +1272,9 @@ msgstr "تاختا چىقىرىۋېتىشنى جەزملە"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "ئەگەر true بولسا نۆۋەتتىكى ئىشلەتكۈچى تاختا چىقىرىۋەتمەكچى بولسا جەزملەشنى تەلەپ قىلىدۇ."
+msgstr ""
+"ئەگەر true بولسا نۆۋەتتىكى ئىشلەتكۈچى تاختا چىقىرىۋەتمەكچى بولسا جەزملەشنى "
+"تەلەپ قىلىدۇ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:26
 msgid "Highlight launchers on mouseover"
@@ -1187,7 +1283,9 @@ msgstr "چاشقىنەك لەيلىگەندە قوزغاتقۇچنى يورۇت"
 #: ../data/org.mate.panel.gschema.xml.in.h:27
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "ئەگەر true  بولسا ئىشلەتكۈچى چاشقىنەكتە قوزغاتقۇچنى كۆرسەتسە شۇ قوزغاتقۇچ يورۇتۇلىدۇ."
+msgstr ""
+"ئەگەر true  بولسا ئىشلەتكۈچى چاشقىنەكتە قوزغاتقۇچنى كۆرسەتسە شۇ قوزغاتقۇچ "
+"يورۇتۇلىدۇ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:28
 msgid "Complete panel lockdown"
@@ -1198,7 +1296,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "ئەگەر true  بولسا تاختا تاختا سەپلىمىسىگە ھەر قانداق ئۆزگەرتىش ئېلىپ بېرىشقا يول قويىدۇ. ئەمما يەككە قوللانچاققا ئايرىم قۇلۇپلاشنى تەلەپ قىلىدۇ. بۇ تەڭشەك كۈچكە ئىگە بولۇشى ئۈچۈن، تاختىنى قايتا قوزغىتىش لازىم."
+msgstr ""
+"ئەگەر true  بولسا تاختا تاختا سەپلىمىسىگە ھەر قانداق ئۆزگەرتىش ئېلىپ بېرىشقا"
+" يول قويىدۇ. ئەمما يەككە قوللانچاققا ئايرىم قۇلۇپلاشنى تەلەپ قىلىدۇ. بۇ "
+"تەڭشەك كۈچكە ئىگە بولۇشى ئۈچۈن، تاختىنى قايتا قوزغىتىش لازىم."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1210,7 +1311,12 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "كۆرسىتىلگەن تاختا پەرۋا قىلمىغان قوللانچاق IID. بۇنداق بولغاندا سىز مۇئەييەن قوللانچاقنى يۈكلەشنى چەكلىيەلەيسىز ياكى بۇ قوللانچاقلارنى تىزىملىكتە كۆرسەتمەيسىز. مەسىلەن، mini-commander قوللانچاقنى چەكلەشتە، پەقەت مۇشۇ تىزىملىككە 'OAFIID:MATE_MiniCommanderApplet' قوشسىڭىزلا بولىدۇ. بۇ تەڭشەك كۈچكە ئىگە بولۇشى ئۈچۈن تاختا چوقۇم قايتا قوزغىتىلىشى لازىم."
+msgstr ""
+"كۆرسىتىلگەن تاختا پەرۋا قىلمىغان قوللانچاق IID. بۇنداق بولغاندا سىز مۇئەييەن"
+" قوللانچاقنى يۈكلەشنى چەكلىيەلەيسىز ياكى بۇ قوللانچاقلارنى تىزىملىكتە "
+"كۆرسەتمەيسىز. مەسىلەن، mini-commander قوللانچاقنى چەكلەشتە، پەقەت مۇشۇ "
+"تىزىملىككە 'OAFIID:MATE_MiniCommanderApplet' قوشسىڭىزلا بولىدۇ. بۇ تەڭشەك "
+"كۈچكە ئىگە بولۇشى ئۈچۈن تاختا چوقۇم قايتا قوزغىتىلىشى لازىم."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1220,7 +1326,9 @@ msgstr "مەجبۇرىي چېكىنىشنى چەكلە"
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "ئەگەر true  بولسا تاختا مەجبۇرىي چېكىن توپچىنى زىيارەت قىلىشنى چىقىرىۋېتىپ، ئىشلەتكۈچىنىڭ قوللىنىشچان پروگراممىنى مەجبۇرىي چېكىندۈرۈشىنى چەكلەيدۇ."
+msgstr ""
+"ئەگەر true  بولسا تاختا مەجبۇرىي چېكىن توپچىنى زىيارەت قىلىشنى چىقىرىۋېتىپ، "
+"ئىشلەتكۈچىنىڭ قوللىنىشچان پروگراممىنى مەجبۇرىي چېكىندۈرۈشىنى چەكلەيدۇ."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1324,7 +1432,9 @@ msgstr "نەڭنىڭ تاختادىكى ئورنى"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "بۇ تاختا نەڭنىڭ ئورنى. ئورنى تاختىنىڭ سول تەرىپى(بوي تاختىدا ئۈستى قىرى)گە نىسبەتەن چېكىت سانى."
+msgstr ""
+"بۇ تاختا نەڭنىڭ ئورنى. ئورنى تاختىنىڭ سول تەرىپى(بوي تاختىدا ئۈستى قىرى)گە "
+"نىسبەتەن چېكىت سانى."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1334,7 +1444,9 @@ msgstr "ئورۇننى ئاستى/ئوڭغا نىسبەتەن يېشىدۇ."
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "ئەگەر true بولسا نەڭ ئورنى تاختىغا نىسبەتەن ئوڭ تەرەپ (بوي تاختىدا ئاستىدا)تە دەپ يېشىدۇ."
+msgstr ""
+"ئەگەر true بولسا نەڭ ئورنى تاختىغا نىسبەتەن ئوڭ تەرەپ (بوي تاختىدا "
+"ئاستىدا)تە دەپ يېشىدۇ."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1344,7 +1456,9 @@ msgstr "نەڭنى تاختاغا قۇلۇپلا"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "ئەگەر true بولسا ئىشلەتكۈچى «قۇلۇپ ئاچ» تىزىملىك تۈرىنى ئىشلىتىپ نەڭ قۇلۇپىنى ئېچىشتىن ئىلگىرى قوللانچاقنى يۆتكىيەلمەيدۇ."
+msgstr ""
+"ئەگەر true بولسا ئىشلەتكۈچى «قۇلۇپ ئاچ» تىزىملىك تۈرىنى ئىشلىتىپ نەڭ "
+"قۇلۇپىنى ئېچىشتىن ئىلگىرى قوللانچاقنى يۆتكىيەلمەيدۇ."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1366,7 +1480,9 @@ msgstr "تارتمىغا قوشۇلغان تاختا"
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "بۇ تارتما تاختىنىڭ بەلگىسىگە قوشۇلغان. بۇ تەڭشەك پەقەت نەڭ تىپى \"drawer-object\" (تارتما نەڭ) بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"بۇ تارتما تاختىنىڭ بەلگىسىگە قوشۇلغان. بۇ تەڭشەك پەقەت نەڭ تىپى \"drawer-"
+"object\" (تارتما نەڭ) بولغاندىلا كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1377,7 +1493,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "بۇ تارتما ياكى تىزىملىكنىڭ كۆرسەتمە قورال بالداقتا كۆرسىتىدىغان تېكىست. بۇ تەڭشەك پەقەت نەڭ تىپى \"drawer-object\" (تارتما نەڭ) ياكى \"menu-object\" (تىزىملىك نەڭ) بولغاندىلا كۈچكە ئىگە بولىدۇ."
+msgstr ""
+"بۇ تارتما ياكى تىزىملىكنىڭ كۆرسەتمە قورال بالداقتا كۆرسىتىدىغان تېكىست. بۇ "
+"تەڭشەك پەقەت نەڭ تىپى \"drawer-object\" (تارتما نەڭ) ياكى \"menu-object\" "
+"(تىزىملىك نەڭ) بولغاندىلا كۈچكە ئىگە بولىدۇ."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1388,7 +1507,11 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "ئەگەر true بولسا ئىختىيارى سىنبەلگە تەڭشىكى توپچىنىڭ ئىختىيارى سىنبەلگىسى قىلىپ ئىشلىتىلىدۇ. ئەگەر false بولسا ئىختىيارى سىنبەلگە تەڭشىكىگە پەرۋا قىلمايدۇ. بۇ تەڭشەك پەقەت نەڭ تىپى \"menu-object\" (تىزىملىك نەڭ) ياكى \"drawer-object\" (تارتما نەڭ)نى تەڭشىگەندە ئاندىن كۈچكە ئىگە."
+msgstr ""
+"ئەگەر true بولسا ئىختىيارى سىنبەلگە تەڭشىكى توپچىنىڭ ئىختىيارى سىنبەلگىسى "
+"قىلىپ ئىشلىتىلىدۇ. ئەگەر false بولسا ئىختىيارى سىنبەلگە تەڭشىكىگە پەرۋا "
+"قىلمايدۇ. بۇ تەڭشەك پەقەت نەڭ تىپى \"menu-object\" (تىزىملىك نەڭ) ياكى "
+"\"drawer-object\" (تارتما نەڭ)نى تەڭشىگەندە ئاندىن كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1399,7 +1522,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "نەڭ توپچا سىنبەلگىسىنىڭ سۈرەت ھۆججەت ئورنىغا ئىشلىتىدۇ. بۇ تەڭشەك پەقەت نەڭ تىپى \"drawer-object\" (تارتما نەڭ) ياكى \"menu-object\" (تىزىملىك نەڭ) بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"نەڭ توپچا سىنبەلگىسىنىڭ سۈرەت ھۆججەت ئورنىغا ئىشلىتىدۇ. بۇ تەڭشەك پەقەت نەڭ "
+"تىپى \"drawer-object\" (تارتما نەڭ) ياكى \"menu-object\" (تىزىملىك نەڭ) "
+"بولغاندىلا كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1410,7 +1536,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "ئەگەر true بولسا تىزىملىك يول تەڭشىكى تىزىملىك مەزمۇنى قۇرىدىغان يول قىلىنىدۇ. ئەگەر false بولسا تىزىملىك يول تەڭشىكىگە پەرۋا قىلمايدۇ. بۇ تەڭشەك پەقەت نەڭ تىپى \"menu-object\" (تىزىملىك نەڭ) بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"ئەگەر true بولسا تىزىملىك يول تەڭشىكى تىزىملىك مەزمۇنى قۇرىدىغان يول "
+"قىلىنىدۇ. ئەگەر false بولسا تىزىملىك يول تەڭشىكىگە پەرۋا قىلمايدۇ. بۇ تەڭشەك"
+" پەقەت نەڭ تىپى \"menu-object\" (تىزىملىك نەڭ) بولغاندىلا كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1421,7 +1550,10 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "بۇ جايدىن تىزىملىك مەزمۇنى قۇرىدىغان يول. بۇ تەڭشەك پەقەت use_menu_path قىممىتى true ھەمدە نەڭ تىپى \"menu-object\" (تىزىملىك نەڭ) بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"بۇ جايدىن تىزىملىك مەزمۇنى قۇرىدىغان يول. بۇ تەڭشەك پەقەت use_menu_path "
+"قىممىتى true ھەمدە نەڭ تىپى \"menu-object\" (تىزىملىك نەڭ) بولغاندىلا كۈچكە "
+"ئىگە."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1441,7 +1573,10 @@ msgstr "قوزغاتقۇچ ئورنى"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "قوزغاتقۇچنىڭ .desktop ھۆججەت ئورنىنىڭ ئورنىنى چۈشەندۈرىدۇ. بۇ تەڭشەك پەقەت نەڭ تىپى \"launcher-object\" (قوزغاتقۇچ نەڭ) بولغاندىلا ئاندىن كۈچكە ئىگە بولىدۇ."
+msgstr ""
+"قوزغاتقۇچنىڭ .desktop ھۆججەت ئورنىنىڭ ئورنىنى چۈشەندۈرىدۇ. بۇ تەڭشەك پەقەت "
+"نەڭ تىپى \"launcher-object\" (قوزغاتقۇچ نەڭ) بولغاندىلا ئاندىن كۈچكە ئىگە "
+"بولىدۇ."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1452,7 +1587,11 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "بۇ توپچا ۋەكىللىك قىلىدىغان ھەرىكەت تىپى. ئىشلەتكىلى بولىدىغان قىممىتى «قۇلۇپلا»، «تىزىمدىن چىق»، «ئىجرا قىل»، «ئىزدە» ۋە «ئېكران كەسمىسى». بۇ تەڭشەك پەقەت نەڭ تىپى \"action-applet\" (ھەرىكەت قوللانچاق) بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"بۇ توپچا ۋەكىللىك قىلىدىغان ھەرىكەت تىپى. ئىشلەتكىلى بولىدىغان قىممىتى "
+"«قۇلۇپلا»، «تىزىمدىن چىق»، «ئىجرا قىل»، «ئىزدە» ۋە «ئېكران كەسمىسى». بۇ "
+"تەڭشەك پەقەت نەڭ تىپى \"action-applet\" (ھەرىكەت قوللانچاق) بولغاندىلا كۈچكە"
+" ئىگە."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1463,7 +1602,9 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "بۇ سىزنىڭ تاختىنى پەرقلەندۈرۈشىڭىزنىڭ دوستانە ئاتى. ئۇنىڭ ئاساسلىق مەقسىتى تاختا ئارىسىدا ئالماشتۇرغاندا تاختىنىڭ كۆزنەك ماۋزۇسى بولىدۇ."
+msgstr ""
+"بۇ سىزنىڭ تاختىنى پەرقلەندۈرۈشىڭىزنىڭ دوستانە ئاتى. ئۇنىڭ ئاساسلىق مەقسىتى "
+"تاختا ئارىسىدا ئالماشتۇرغاندا تاختىنىڭ كۆزنەك ماۋزۇسى بولىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1473,7 +1614,9 @@ msgstr "تاختىنىڭ X ئېكرانىنى كۆرسىتىدۇ"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "كۆپ ئېكران تەڭشەكتە، سىز ھەر بىر مۇستەقىل ئېكراندا تاختىڭىز بولسا بولىدۇ. بۇ جايدا تاختىدا كۆرسىتىدىغان نۆۋەتتىكى كۆزنەكنى ئېنىقلايدۇ."
+msgstr ""
+"كۆپ ئېكران تەڭشەكتە، سىز ھەر بىر مۇستەقىل ئېكراندا تاختىڭىز بولسا بولىدۇ. بۇ"
+" جايدا تاختىدا كۆرسىتىدىغان نۆۋەتتىكى كۆزنەكنى ئېنىقلايدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1483,7 +1626,9 @@ msgstr "تاختىنىڭ Xinerama كۆزەتكۈچىنى كۆرسىتىدۇ"
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "Xinerama تەڭشەكتە، سىز ھەر بىر مۇستەقىل كۆزەتكۈچتە بىردىن تاختىڭىز بولۇشى مۇمكىن. بۇ جاي تاختا كۆرسەتكەن نۆۋەتتىكى كۆزەتكۈچنى ئېنىقلايدۇ."
+msgstr ""
+"Xinerama تەڭشەكتە، سىز ھەر بىر مۇستەقىل كۆزەتكۈچتە بىردىن تاختىڭىز بولۇشى "
+"مۇمكىن. بۇ جاي تاختا كۆرسەتكەن نۆۋەتتىكى كۆزەتكۈچنى ئېنىقلايدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1495,7 +1640,11 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "ئەگەر true بولسا تاختا پۈتكۈل ئېكران كەڭلىكى(ئەگەر بويىغا تاختا بولسا ئېگىزلىكى)نى ئىگىلەيدۇ. بۇ چاغدا تاختا پەقەت ئېكران قىرىغا قويغىلى بولىدۇ. ئەگەر false بولسا تاختا پەقەت تاختىدىكى ھەممە قوللانچاق، قوزغاتقۇچ، توپچىلارنى سىغدۇرالىغۇدەك ئەڭ كىچىك بوشلۇققا ئىگە بولىدۇ."
+msgstr ""
+"ئەگەر true بولسا تاختا پۈتكۈل ئېكران كەڭلىكى(ئەگەر بويىغا تاختا بولسا "
+"ئېگىزلىكى)نى ئىگىلەيدۇ. بۇ چاغدا تاختا پەقەت ئېكران قىرىغا قويغىلى بولىدۇ. "
+"ئەگەر false بولسا تاختا پەقەت تاختىدىكى ھەممە قوللانچاق، قوزغاتقۇچ، "
+"توپچىلارنى سىغدۇرالىغۇدەك ئەڭ كىچىك بوشلۇققا ئىگە بولىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1511,7 +1660,14 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "تاختىنىڭ يۆنىلىشى. ئىشلىتىشكە بولىدىغان قىممىتى «ئۈستى»، «ئاستى»، «سول»، «ئوڭ». كېڭەيتىلگەن ھالەتتە بۇ قىممەت تاختا تۇرۇشلۇق ئېكراننىڭ قىرىنى بەلگىلەيدۇ. غەيرىي كېڭەيتىلگەن ھالەتتە «ئۈستى» ۋە «ئاستى» نىڭ پەرقى ئانچە روشەن بولمايدۇ، - ھەممىسى توغرىسىغا تاختا ئىكەنلىكىنى ئىپادىلەيدۇ - ئەمما يەنىلا پايدىلىق كۆرسەتمە بېرىپ بەزى تاختا نەڭنىڭ ھەرىكىتىنى بەلگىلەيدۇ. مەسىلەن، «ئۈستى» تاختىدا تىزىملىك توپچىسى تاختا ئاستىدا ئۆزىنىڭ تىزىملىكىنى كۆرسىتىدۇ، «ئاستى» تاختىنىڭ تىزىملىكى تاختا ئۈستىدە تىزىملىك قاڭقىتىدۇ."
+msgstr ""
+"تاختىنىڭ يۆنىلىشى. ئىشلىتىشكە بولىدىغان قىممىتى «ئۈستى»، «ئاستى»، «سول»، "
+"«ئوڭ». كېڭەيتىلگەن ھالەتتە بۇ قىممەت تاختا تۇرۇشلۇق ئېكراننىڭ قىرىنى "
+"بەلگىلەيدۇ. غەيرىي كېڭەيتىلگەن ھالەتتە «ئۈستى» ۋە «ئاستى» نىڭ پەرقى ئانچە "
+"روشەن بولمايدۇ، - ھەممىسى توغرىسىغا تاختا ئىكەنلىكىنى ئىپادىلەيدۇ - ئەمما "
+"يەنىلا پايدىلىق كۆرسەتمە بېرىپ بەزى تاختا نەڭنىڭ ھەرىكىتىنى بەلگىلەيدۇ. "
+"مەسىلەن، «ئۈستى» تاختىدا تىزىملىك توپچىسى تاختا ئاستىدا ئۆزىنىڭ تىزىملىكىنى "
+"كۆرسىتىدۇ، «ئاستى» تاختىنىڭ تىزىملىكى تاختا ئۈستىدە تىزىملىك قاڭقىتىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1523,7 +1679,10 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "تاختا ئېگىزلىكى(بويىغا تاختىنىڭ كەڭلىكى). تاختا ئىجرا قىلىنغاندا خەت نۇسخا چوڭلۇقى ۋە باشقا كۆرسەتكۈچلەرگە ئاساسەن ئەڭ كىچىك چوڭلۇقنى جەزملەيدۇ. ئەڭ چوڭ چوڭلۇقى ئېكران ئېگىزلىكى(ياكى كەڭلىكى)نىڭ تۆتتىن بىرى بولىدۇ."
+msgstr ""
+"تاختا ئېگىزلىكى(بويىغا تاختىنىڭ كەڭلىكى). تاختا ئىجرا قىلىنغاندا خەت نۇسخا "
+"چوڭلۇقى ۋە باشقا كۆرسەتكۈچلەرگە ئاساسەن ئەڭ كىچىك چوڭلۇقنى جەزملەيدۇ. ئەڭ "
+"چوڭ چوڭلۇقى ئېكران ئېگىزلىكى(ياكى كەڭلىكى)نىڭ تۆتتىن بىرى بولىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1534,7 +1693,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "تاختىنىڭ x ئوقتىكى ئورنى.  بۇ قىممەت پەقەت غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە پەرۋا قىلىنمايدۇ ھەمدە تاختىنى تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا قويىدۇ."
+msgstr ""
+"تاختىنىڭ x ئوقتىكى ئورنى.  بۇ قىممەت پەقەت غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن"
+" رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە پەرۋا قىلىنمايدۇ ھەمدە تاختىنى "
+"تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا قويىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1545,7 +1707,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "تاختىنىڭ y ئوقتىكى ئورنى.  بۇ قىممەت پەقەت غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە پەرۋا قىلىنمايدۇ ھەمدە تاختىنى تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا قويىدۇ."
+msgstr ""
+"تاختىنىڭ y ئوقتىكى ئورنى.  بۇ قىممەت پەقەت غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن"
+" رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە پەرۋا قىلىنمايدۇ ھەمدە تاختىنى "
+"تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا قويىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1559,7 +1724,13 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "تاختىنىڭ x ئوقتىكى ئورنى ئېكراننىڭ ئوڭ تەرەپتىن باشلىنىدۇ. ئەگەر -1 غا تەڭشەلسە، بۇ قىممەتكە پەرۋا قىلماي x كۇنۇپكا قىممىتى ئىشلىتىلىدۇ. ئەگەر قىممىتى 0 دىن چوڭ بولسا x كۇنۇپكا قىممىتىگە پەرۋا قىلمايدۇ. بۇ قىممەت پەقەت غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە پەرۋا قىلىنمايدۇ ھەمدە تاختىنى تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا قويىدۇ."
+msgstr ""
+"تاختىنىڭ x ئوقتىكى ئورنى ئېكراننىڭ ئوڭ تەرەپتىن باشلىنىدۇ. ئەگەر -1 غا "
+"تەڭشەلسە، بۇ قىممەتكە پەرۋا قىلماي x كۇنۇپكا قىممىتى ئىشلىتىلىدۇ. ئەگەر "
+"قىممىتى 0 دىن چوڭ بولسا x كۇنۇپكا قىممىتىگە پەرۋا قىلمايدۇ. بۇ قىممەت پەقەت "
+"غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە "
+"پەرۋا قىلىنمايدۇ ھەمدە تاختىنى تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا "
+"قويىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1573,7 +1744,13 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "تاختىنىڭ y ئوقتىكى ئورنى ئېكراننىڭ ئوڭ تەرەپتىن باشلىنىدۇ. ئەگەر -1 غا تەڭشەلسە، بۇ قىممەتكە پەرۋا قىلماي y كۇنۇپكا قىممىتى ئىشلىتىلىدۇ. ئەگەر قىممىتى 0 دىن چوڭ بولسا y كۇنۇپكا قىممىتىگە پەرۋا قىلمايدۇ. بۇ قىممەت پەقەت غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە پەرۋا قىلىنمايدۇ ھەمدە تاختىنى تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا قويىدۇ."
+msgstr ""
+"تاختىنىڭ y ئوقتىكى ئورنى ئېكراننىڭ ئوڭ تەرەپتىن باشلىنىدۇ. ئەگەر -1 غا "
+"تەڭشەلسە، بۇ قىممەتكە پەرۋا قىلماي y كۇنۇپكا قىممىتى ئىشلىتىلىدۇ. ئەگەر "
+"قىممىتى 0 دىن چوڭ بولسا y كۇنۇپكا قىممىتىگە پەرۋا قىلمايدۇ. بۇ قىممەت پەقەت "
+"غەيرىي كېڭەيتىلگەن ھالەتتە ئاندىن رولى بار. كېڭەيتىلگەن ھالەتتە بۇ قىممەتكە "
+"پەرۋا قىلىنمايدۇ ھەمدە تاختىنى تاختا يۆنىلىشى بەلگىلىگەن ئېكران قىرىغا "
+"قويىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1585,7 +1762,11 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "ئەگەر true بولسا x ۋە x_right تەڭشىكىگە پەرۋا قىلمايدۇ ھەمدە تاختىنى ئېكراننىڭ x ئوقىنىڭ ئوتتۇرىسىغا قويىدۇ. تاختا چوڭلۇقىنى ئۆزگەرتكەندە ئورنىنى ساقلايدۇ يەنى تاختا بىرلا ۋاقىتتا ئىككى يۆنىلىشتە كېڭىيىدۇ. ئەگەر false بولسا x ۋە x_right تەڭشىكى تاختىنىڭ ئورنىنى بەلگىلەيدۇ."
+msgstr ""
+"ئەگەر true بولسا x ۋە x_right تەڭشىكىگە پەرۋا قىلمايدۇ ھەمدە تاختىنى "
+"ئېكراننىڭ x ئوقىنىڭ ئوتتۇرىسىغا قويىدۇ. تاختا چوڭلۇقىنى ئۆزگەرتكەندە ئورنىنى"
+" ساقلايدۇ يەنى تاختا بىرلا ۋاقىتتا ئىككى يۆنىلىشتە كېڭىيىدۇ. ئەگەر false "
+"بولسا x ۋە x_right تەڭشىكى تاختىنىڭ ئورنىنى بەلگىلەيدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1597,7 +1778,11 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "ئەگەر true بولسا y ۋە y_right تەڭشىكىگە پەرۋا قىلمايدۇ ھەمدە تاختىنى ئېكراننىڭ y ئوقىنىڭ ئوتتۇرىسىغا قويىدۇ. تاختا چوڭلۇقىنى ئۆزگەرتكەندە ئورنىنى ساقلايدۇ يەنى تاختا بىرلا ۋاقىتتا ئىككى يۆنىلىشتە كېڭىيىدۇ. ئەگەر false بولسا y ۋە y_right تەڭشىكى تاختىنىڭ ئورنىنى بەلگىلەيدۇ."
+msgstr ""
+"ئەگەر true بولسا y ۋە y_right تەڭشىكىگە پەرۋا قىلمايدۇ ھەمدە تاختىنى "
+"ئېكراننىڭ y ئوقىنىڭ ئوتتۇرىسىغا قويىدۇ. تاختا چوڭلۇقىنى ئۆزگەرتكەندە ئورنىنى"
+" ساقلايدۇ يەنى تاختا بىرلا ۋاقىتتا ئىككى يۆنىلىشتە كېڭىيىدۇ. ئەگەر false "
+"بولسا y ۋە y_right تەڭشىكى تاختىنىڭ ئورنىنى بەلگىلەيدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1608,13 +1793,18 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "ئەگەر true بولسا نۇر بەلگە تاختا دائىرىسىدىن ئايرىلغاندا تاختا ئۆزلۈكىدىن ئېكران بۇلۇڭىغا يوشۇرۇلىدۇ. نۇر بەلگە بۇلۇڭغا يۆتكەلگەندە تاختا قايتا كۆرۈنىدۇ."
+msgstr ""
+"ئەگەر true بولسا نۇر بەلگە تاختا دائىرىسىدىن ئايرىلغاندا تاختا ئۆزلۈكىدىن "
+"ئېكران بۇلۇڭىغا يوشۇرۇلىدۇ. نۇر بەلگە بۇلۇڭغا يۆتكەلگەندە تاختا قايتا "
+"كۆرۈنىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "ئەگەر true بولسا  بۇ تاختىنىڭ يوشۇرۇش ۋە كۆرسىتىشى تېزلا تاماملانماستىن ھەرىكەتتە ئىپادىلىنىدۇ."
+msgstr ""
+"ئەگەر true بولسا  بۇ تاختىنىڭ يوشۇرۇش ۋە كۆرسىتىشى تېزلا تاماملانماستىن "
+"ھەرىكەتتە ئىپادىلىنىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1624,7 +1814,9 @@ msgstr "يوشۇرۇن توپچا قوزغات"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "ئەگەر true بولسا توپچىنى يوشۇرغىلى بولىدىغان ئېكراننىڭ ھەر بىر قىرىغا يوشۇرغىلى بولىدۇ، يوشۇرغاندىن كېيىن پەقەت بىرلا توپچا كۆرۈنىدۇ."
+msgstr ""
+"ئەگەر true بولسا توپچىنى يوشۇرغىلى بولىدىغان ئېكراننىڭ ھەر بىر قىرىغا "
+"يوشۇرغىلى بولىدۇ، يوشۇرغاندىن كېيىن پەقەت بىرلا توپچا كۆرۈنىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1634,7 +1826,9 @@ msgstr "يوشۇرۇن توپچىدىكى يا ئوقنى قوزغات"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "ئەگەر true بولسا يوشۇرۇن توپچىدا يا ئوق كۆرسىتىدۇ. بۇ كۇنۇپكا پەقەت كۇنۇپكا قىممىتى true بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"ئەگەر true بولسا يوشۇرۇن توپچىدا يا ئوق كۆرسىتىدۇ. بۇ كۇنۇپكا پەقەت كۇنۇپكا "
+"قىممىتى true بولغاندىلا كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1645,7 +1839,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "نۇر بەلگە تاختا دائىرىسىدىن ئايرىلغاندا تاختا ئۆزلۈكىدىن يوشۇرۇشتىن ئىلگىرىكى كېچىكتۈرۈش مىللىي سېكۇنت سانى. بۇ كۇنۇپكا پەقەت ئۆزلۈكىدىن يوشۇرۇش true بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"نۇر بەلگە تاختا دائىرىسىدىن ئايرىلغاندا تاختا ئۆزلۈكىدىن يوشۇرۇشتىن "
+"ئىلگىرىكى كېچىكتۈرۈش مىللىي سېكۇنت سانى. بۇ كۇنۇپكا پەقەت ئۆزلۈكىدىن يوشۇرۇش"
+" true بولغاندىلا كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1656,7 +1853,10 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "نۇر بەلگە تاختا دائىرىسىگە كىرگەندە تاختا ئۆزلۈكىدىن كۆرسىتىشتىن ئىلگىرىكى كېچىكتۈرۈش مىللىي سېكۇنت سانى. بۇ كۇنۇپكا پەقەت ئۆزلۈكىدىن يوشۇرۇش true بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"نۇر بەلگە تاختا دائىرىسىگە كىرگەندە تاختا ئۆزلۈكىدىن كۆرسىتىشتىن ئىلگىرىكى "
+"كېچىكتۈرۈش مىللىي سېكۇنت سانى. بۇ كۇنۇپكا پەقەت ئۆزلۈكىدىن يوشۇرۇش true "
+"بولغاندىلا كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1667,7 +1867,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "نۇر بەلگە بۇلۇڭغا ئۆزلۈكىدىن يوشۇرۇنغاندا كۆرگىلى بولىدىغان چېكىت سانى. بۇ كۇنۇپكا پەقەت ئۆزلۈكىدىن يوشۇرۇش true بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"نۇر بەلگە بۇلۇڭغا ئۆزلۈكىدىن يوشۇرۇنغاندا كۆرگىلى بولىدىغان چېكىت سانى. بۇ "
+"كۇنۇپكا پەقەت ئۆزلۈكىدىن يوشۇرۇش true بولغاندىلا كۈچكە ئىگە."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1678,7 +1880,10 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "تاختا ھەرىكىتىنىڭ سۈرئىتى. تاللاشقا بولىدىغان قىممىتى «ئاستى»، «ئوتتۇرا»، «تېز». بۇ كۇنۇپكا پەقەت جانسىن قوزغىتىلىپ قىممىتى true بولغاندىلا كۈچكە ئىگە."
+msgstr ""
+"تاختا ھەرىكىتىنىڭ سۈرئىتى. تاللاشقا بولىدىغان قىممىتى «ئاستى»، «ئوتتۇرا»، "
+"«تېز». بۇ كۇنۇپكا پەقەت جانسىن قوزغىتىلىپ قىممىتى true بولغاندىلا كۈچكە "
+"ئىگە."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1694,7 +1899,7 @@ msgstr ""
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
-msgstr "تەگلىك رەڭگى"
+msgstr "تەگ رەڭگى"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
 msgid "Specifies the background color for the panel in #RGB format."
@@ -1709,7 +1914,9 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "تەگلىك رەڭ فورماتىنىڭ تۇتۇقلۇقىنى بەلگىلەيدۇ. ئەگەر پۈتۈنلەي تۇتۇق(قىممىتى 65535 دىن كىچىك ) بولسا رەڭ ئۈستەل تەگلىكى بىلەن بىرلەشتۈرۈلىدۇ."
+msgstr ""
+"تەگلىك رەڭ فورماتىنىڭ تۇتۇقلۇقىنى بەلگىلەيدۇ. ئەگەر پۈتۈنلەي تۇتۇق(قىممىتى "
+"65535 دىن كىچىك ) بولسا رەڭ ئۈستەل تەگلىكى بىلەن بىرلەشتۈرۈلىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1720,7 +1927,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "تەگلىككە ئىشلىتىدىغان سۈرەت ھۆججەتنى بەلگىلەيدۇ. ئەگەر سۈرەتتە ئالفا قانال بولسا ئۇ ئۈستەل تەگلىك سۈرەتكە بىرلەشتۈرۈلىدۇ."
+msgstr ""
+"تەگلىككە ئىشلىتىدىغان سۈرەت ھۆججەتنى بەلگىلەيدۇ. ئەگەر سۈرەتتە ئالفا قانال "
+"بولسا ئۇ ئۈستەل تەگلىك سۈرەتكە بىرلەشتۈرۈلىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1730,7 +1939,9 @@ msgstr "سۈرەتنى تاختىغا ماسلاشتۇر"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "ئەگەر true بولسا سۈرەت (سۈرەتنىڭ ئەسلى كەڭلىك ئېگىزلىك نىسبىتى ساقلىنىدۇ) تاختا ئېگىزلىكى (توغرىسىغا تاختا)گە ماسلاشتۇرۇلىدۇ."
+msgstr ""
+"ئەگەر true بولسا سۈرەت (سۈرەتنىڭ ئەسلى كەڭلىك ئېگىزلىك نىسبىتى ساقلىنىدۇ) "
+"تاختا ئېگىزلىكى (توغرىسىغا تاختا)گە ماسلاشتۇرۇلىدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1740,7 +1951,9 @@ msgstr "سۈرەتنى تاختىغا يايىدۇ"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "ئەگەر true بولسا سۈرەت تاختا چوڭلۇقىغا ماسلاشتۇرۇلىدۇ.سۈرەتنىڭ ئەسلى كەڭلىك ئېگىزلىك نىسبىتى ساقلانمايدۇ."
+msgstr ""
+"ئەگەر true بولسا سۈرەت تاختا چوڭلۇقىغا ماسلاشتۇرۇلىدۇ.سۈرەتنىڭ ئەسلى كەڭلىك "
+"ئېگىزلىك نىسبىتى ساقلانمايدۇ."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1780,7 +1993,7 @@ msgstr "تونۇمايدىغان ئىجرا تاللانمىسى: %d"
 #: ../mate-panel/libegg/eggdesktopfile.c:1364
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "URI پۈتۈكنى 'Type=Link' ئۈستەل يۈزى تۈرىگە يوللىيالمىدى."
+msgstr "پۈتۈك URI نى 'Type=Link' ئۈستەليۈزى تۈرىگە يوللىيالمىدى."
 
 #: ../mate-panel/libegg/eggdesktopfile.c:1385
 #, c-format
@@ -1805,7 +2018,7 @@ msgstr "ئەڭگىمە باشقۇرغۇچ كىملىكىنى بەلگىلە"
 
 #: ../mate-panel/libegg/eggsmclient.c:232
 msgid "ID"
-msgstr "ID "
+msgstr "ID"
 
 #: ../mate-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
@@ -1821,8 +2034,8 @@ msgstr "ئەڭگىمە باشقۇرغۇچ تاللانمىلىرىنى كۆرس�
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:977
 msgid "Error"
 msgstr "خاتالىق"
 
@@ -1846,38 +2059,39 @@ msgstr "'%s' ئورۇننى ئاچالمىدى"
 
 #: ../mate-panel/libpanel-util/panel-show.c:158
 msgid "No application to handle search folders is installed."
-msgstr "ئىزدەش قىسقۇچنى بىر تەرەپ قىلىدىغان قوللىنىشچان پروگرامما ئورنىتىلمىغان."
+msgstr ""
+"ئىزدەش قىسقۇچنى بىر تەرەپ قىلىدىغان قوللىنىشچان پروگرامما ئورنىتىلمىغان."
 
 #: ../mate-panel/applet.c:466
 msgid "???"
 msgstr "؟؟؟"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "تاختىدىن چىقىرىۋەت(_R)"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "يۆتكە(_M)"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "تاختىغا قۇلۇپلا(_K)"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "بوش ئورۇن تاپالمىدى"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:176
+#: ../mate-panel/panel-toplevel.c:1613
 msgid "Drawer"
 msgstr "تارتما"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "تارتمىغا  قوش(_A)…"
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
@@ -1896,7 +2110,7 @@ msgid "- Edit .desktop files"
 msgstr "-  .desktop ھۆججەت تەھرىر"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "قوزغاتقۇچ قۇر"
 
@@ -1905,11 +2119,11 @@ msgstr "قوزغاتقۇچ قۇر"
 msgid "Directory Properties"
 msgstr "مۇندەرىجە خاسلىقى"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "قوزغاتقۇچ خاسلىقى"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:151
 msgid "Panel"
 msgstr "تاختا"
 
@@ -1917,7 +2131,9 @@ msgstr "تاختا"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "باشقا قوللىنىشچان پروگراممىنى قوزغىتىپ، كۆزنەك باشقۇرۇش، ۋاقىت كۆرسىتىش قاتارلىق ئىقتىدارلارنى تەمىنلەيدىغان قورال."
+msgstr ""
+"باشقا قوللىنىشچان پروگراممىنى قوزغىتىپ، كۆزنەك باشقۇرۇش، ۋاقىت كۆرسىتىش "
+"قاتارلىق ئىقتىدارلارنى تەمىنلەيدىغان قورال."
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1939,20 +2155,20 @@ msgstr "تاختا قوزغاتقۇچنىڭ ئۈستەل ئۈستى ھۆججىت
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "%s%s تاختا قوزغاتقۇچنىڭ ئۈستەل ئۈستى ھۆججىتى %s نى ئاچالمىدى\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "قوزغات(_L)"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "%s كۇنۇپكا تەڭشەلمىگەن، قوزغاتقۇچنى يۈكلىيەلمىدى\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1326
+#: ../mate-panel/panel-ditem-editor.c:1360
+#: ../mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "قوزغاتقۇچنى ساقلىيالمىدى"
 
@@ -1975,23 +2191,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "بۇ قوزغاتقۇچنى تاختىغا قوش(_P)"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "بۇ قوزغاتقۇچنى ئۈستەل ئۈستىگە قوش(_D)"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "پۈتكۈل تىزىملىك(_E)"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "بۇنى تارتما سۈپىتىدە تاختىغا قوش(_D)"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "بۇنى تىزىملىك سۈپىتىدە تاختىغا قوش(_M)"
 
@@ -2024,7 +2240,8 @@ msgstr "تىزىمدىن چىق…"
 
 #: ../mate-panel/panel-action-button.c:361
 msgid "Log out of this session to log in as a different user"
-msgstr "بۇ ئەڭگىمەدىن تىزىمدىن چىقىپ باشقا ئىشلەتكۈچى سالاھىيىتىدە تىزىمغا كىرىدۇ"
+msgstr ""
+"بۇ ئەڭگىمەدىن تىزىمدىن چىقىپ باشقا ئىشلەتكۈچى سالاھىيىتىدە تىزىمغا كىرىدۇ"
 
 #: ../mate-panel/panel-action-button.c:370
 msgid "Run Application..."
@@ -2032,7 +2249,9 @@ msgstr "پروگرامما ئىجرا قىل…"
 
 #: ../mate-panel/panel-action-button.c:371
 msgid "Run an application by typing a command or choosing from a list"
-msgstr "ئىجرا قىلىدىغان قوللىنىشچان پروگراممىنىڭ بۇيرۇق قۇرىنى كىرگۈزۈڭ ياكى تىزىملىكتىن تاللاڭ"
+msgstr ""
+"ئىجرا قىلىدىغان قوللىنىشچان پروگراممىنىڭ بۇيرۇق قۇرىنى كىرگۈزۈڭ ياكى "
+"تىزىملىكتىن تاللاڭ"
 
 #: ../mate-panel/panel-action-button.c:380
 msgid "Search for Files..."
@@ -2040,10 +2259,12 @@ msgstr "ھۆججەت ئىزدە…"
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "بۇ كومپيۇتېردىكى پۈتۈك ۋە قىسقۇچلارنى ئاتى ياكى مەزمۇنى بويىچە ئورۇن بېكىتىدۇ"
+msgstr ""
+"بۇ كومپيۇتېردىكى پۈتۈك ۋە قىسقۇچلارنى ئاتى ياكى مەزمۇنى بويىچە ئورۇن "
+"بېكىتىدۇ"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "مەجبۇرىي چېكىن"
 
@@ -2086,7 +2307,7 @@ msgstr "قوزغاتقۇچنى قوللىنىشچان پروگرامما تىز�
 
 #: ../mate-panel/panel-addto.c:143 ../mate-panel/panel-menu-button.c:1094
 msgid "Main Menu"
-msgstr "ئاساسىي تىزىملىك"
+msgstr "باش menu"
 
 #: ../mate-panel/panel-addto.c:144
 msgid "The main MATE menu"
@@ -2139,41 +2360,41 @@ msgstr "تاختىغا قوش"
 msgid "Find an _item to add to the panel:"
 msgstr "تاختىغا قوشىدىغان تۈرنى ئىزدە(_I)"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-applet-frame.c:758
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" تاسادىپىي چېكىندى"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:760
 msgid "Panel object has quit unexpectedly"
 msgstr "تاختا نەڭ تاسادىپىي چېكىندى"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:767
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "ئەگەر تاختا نەڭنى قايتا يۈكلىسىڭىز، ئۇ ئۆزلۈكىدىن تاختىغا قوشۇلىدۇ."
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:774
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:775
+#: ../mate-panel/panel-applet-frame.c:780
 msgid "_Don't Reload"
 msgstr "قايتا يۈكلىمە(_D)"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:776
+#: ../mate-panel/panel-applet-frame.c:781
 msgid "_Reload"
 msgstr "قايتا يۈكلە(_R)"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:940
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" تاختا يۈكلەنگەندە مەسىلىگە يولۇقتى."
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:956
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "سەپلىمەڭىزدىن قوللانچاقنى ئۆچۈرەمسىز؟"
 
@@ -2189,7 +2410,9 @@ msgstr "MATE تاختا"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "بۇ پروگرامما باشقا قوللىنىشچان پروگراممىنى قوزغىتىشقا مەسئۇل بولۇپ، پايدىلىق قوراللار بىلەن تەمىنلەيدۇ."
+msgstr ""
+"بۇ پروگرامما باشقا قوللىنىشچان پروگراممىنى قوزغىتىشقا مەسئۇل بولۇپ، پايدىلىق"
+" قوراللار بىلەن تەمىنلەيدۇ."
 
 #: ../mate-panel/panel-context-menu.c:121
 msgid "About the MATE Panel"
@@ -2218,7 +2441,7 @@ msgid "_Cancel"
 msgstr ""
 
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2226,15 +2449,15 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "بۇ تاختانى ئۆچۈر(_D)"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "يېڭى تاختا(_N)"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "تاختا ھەققىدە(_B)"
 
@@ -2251,79 +2474,83 @@ msgid "Location"
 msgstr "ئورنى"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:606
 msgid "_Type:"
-msgstr "تىپى(_T):"
+msgstr "تۈرى(_T):"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:613
 msgid "_Name:"
-msgstr "ئاتى(_N):"
+msgstr "نامى(_N):"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:638
 msgid "_Browse..."
-msgstr "كۆز يۈگۈرت(_B)…"
+msgstr "كۆز يۈگۈرت(_B)..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:645
 msgid "Co_mment:"
 msgstr "ئىزاھات(_M):"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:977
 msgid "Choose an application..."
 msgstr "قوللىنىشچان پروگرامما تاللا…"
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:981
 msgid "Choose a file..."
 msgstr "ھۆججەت تاللا…"
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1146
+#: ../mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "بۇيرۇق(_A):"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "ئورنى(_L):"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "قوزغاتقۇچ ئاتى تەڭشەلمىگەن."
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "مۇندەرىجە خاسلىقىنى ساقلىيالمىدى"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "مۇندەرىجە ئاتى تەڭشەلمىگەن."
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "قوزغاتقۇچنىڭ بۇيرۇقى تەڭشەلمىگەن."
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "قوزغاتقۇچنىڭ ئورنى تەڭشەلمىگەن."
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
 msgstr "ياردەم پۈتۈكىنى كۆرسەتكىلى بولمىدى"
 
 #: ../mate-panel/panel-force-quit.c:80
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "كۆزنەك چېكىلسە قوللىنىشچان پروگرامما مەجبۇرىي چېكىنىدۇ. ۋاز كەچمەكچى بولغاندا <ESC> بېسىلىدۇ."
+msgstr ""
+"كۆزنەك چېكىلسە قوللىنىشچان پروگرامما مەجبۇرىي چېكىنىدۇ. ۋاز كەچمەكچى "
+"بولغاندا <ESC> بېسىلىدۇ."
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:220
 msgid "Force this application to exit?"
 msgstr "بۇ قوللىنىشچان پروگراممىنى مەجبۇرىي چېكىندۈرەمسىز؟"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:223
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "ئەگەر بۇ قوللىنىشچان پروگراممىدىن مەجبۇرىي چېكىنسىڭىز، شۇ پروگرامما ئاچقان ھەممە پۈتۈكنىڭ تېخى ساقلانمىغان ئۆزگەرتىشلىرى يوقىلىشى مۇمكىن."
+msgstr ""
+"ئەگەر بۇ قوللىنىشچان پروگراممىدىن مەجبۇرىي چېكىنسىڭىز، شۇ پروگرامما ئاچقان "
+"ھەممە پۈتۈكنىڭ تېخى ساقلانمىغان ئۆزگەرتىشلىرى يوقىلىشى مۇمكىن."
 
 #: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
@@ -2335,22 +2562,24 @@ msgstr "پۈتۈك، قىسقۇچ ۋە تور ئورنى زىيارىتى"
 
 #: ../mate-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "ئۈستەل ئۈستى قىياپىتى ۋە ھەرىكىتىنى ئۆزگەرتىپ، ياردەم ياكى تىزىمدىن چىقىشقا ئېرىش"
+msgstr ""
+"ئۈستەل ئۈستى قىياپىتى ۋە ھەرىكىتىنى ئۆزگەرتىپ، ياردەم ياكى تىزىمدىن چىقىشقا "
+"ئېرىش"
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
-msgstr "پروگراممىلار"
+msgstr "قوللىنىشچان پروگراممىلار"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "تەھرىر تىزىملىك(_E)"
 
 #: ../mate-panel/panel-menu-items.c:472
 msgid "Bookmarks"
-msgstr "خەتكۈچلەر"
+msgstr "Bookmarks"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:544
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' ئاچ"
@@ -2401,20 +2630,22 @@ msgstr "بىر قىسقۇچتا ئۈستەل ئۈستى مەزمۇنىنى ئا�
 
 #: ../mate-panel/panel-menu-items.c:1079
 msgid "Computer"
-msgstr ""
+msgstr "كومپيۇتېر"
 
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
+"بۇ كومپيۇتېردا زىيارەت قىلغىلى بولىدىغان ھەممە يەرلىك ۋە يىراقتىكى دىسكا ۋە "
+"قىسقۇچقا كۆز يۈگۈرت"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
-msgstr ""
+msgstr "تور"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "خەتكۈچ ۋە يەرلىك توردىكى ئورۇنغا كۆز يۈگۈرت"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
@@ -2447,45 +2678,37 @@ msgstr "%s تىزىمدىن چىق…"
 #: ../mate-panel/panel-menu-items.c:1625
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
-msgstr "بۇ ئەڭگىمە %s دىن تىزىمدىن چىقىپ باشقا ئىشلەتكۈچى سالاھىيىتىدە تىزىمغا كىرىدۇ"
+msgstr ""
+"بۇ ئەڭگىمە %s دىن تىزىمدىن چىقىپ باشقا ئىشلەتكۈچى سالاھىيىتىدە تىزىمغا "
+"كىرىدۇ"
 
-#: ../mate-panel/panel-properties-dialog.c:120
+#: ../mate-panel/panel-properties-dialog.c:119
 #: ../mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "ئۈستى"
 
-#: ../mate-panel/panel-properties-dialog.c:121
+#: ../mate-panel/panel-properties-dialog.c:120
 #: ../mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "ئاستى"
 
-#: ../mate-panel/panel-properties-dialog.c:122
+#: ../mate-panel/panel-properties-dialog.c:121
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "سول"
 
-#: ../mate-panel/panel-properties-dialog.c:123
+#: ../mate-panel/panel-properties-dialog.c:122
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "ئوڭ"
 
-#: ../mate-panel/panel-properties-dialog.c:819
+#: ../mate-panel/panel-properties-dialog.c:818
 msgid "Drawer Properties"
 msgstr "تارتما خاسلىقى"
-
-#: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
-#, c-format
-msgid "Unable to load file '%s': %s."
-msgstr "'%s' ھۆججەتنى يۈكلىيەلمىدى: %s"
-
-#: ../mate-panel/panel-properties-dialog.c:945
-msgid "Could not display properties dialog"
-msgstr "خاسلىق سۆزلەشكۈنى كۆرسىتەلمىدى"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:1
 msgid "Panel Properties"
@@ -2608,7 +2831,10 @@ msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "ئەگەر يېقىنقى پۈتۈك تىزىملىكىنى تازىلىسىڭىز، تۆۋەندىكى مەزمۇنلارنى تازىلايسىز:\n• ئورۇندىكى ھەممە تۈر → يېقىنقى تىزىملىك تۈرىدىكى ھەممە تۈر.\n• ھەممە قوللىنىشچان پروگراممىنىڭ يېقىنقى پۈتۈك تىزىملىكىدىكى ھەممە تۈر."
+msgstr ""
+"ئەگەر يېقىنقى پۈتۈك تىزىملىكىنى تازىلىسىڭىز، تۆۋەندىكى مەزمۇنلارنى تازىلايسىز:\n"
+"• ئورۇندىكى ھەممە تۈر → يېقىنقى تىزىملىك تۈرىدىكى ھەممە تۈر.\n"
+"• ھەممە قوللىنىشچان پروگراممىنىڭ يېقىنقى پۈتۈك تىزىملىكىدىكى ھەممە تۈر."
 
 #: ../mate-panel/panel-recent.c:161
 msgid "Clear Recent Documents"
@@ -2626,37 +2852,35 @@ msgstr "يېقىنقى پۈتۈك ئىزىنى تازىلا…"
 msgid "Clear all items from the recent documents list"
 msgstr "يېقىنقى پۈتۈك ئىزى تىزىملىكىدىن ھەممە تۈرنى تازىلا"
 
-#: ../mate-panel/panel-run-dialog.c:419
+#: ../mate-panel/panel-run-dialog.c:420
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' بۇيرۇقنى ئىجرا قىلالمىدى"
 
-#: ../mate-panel/panel-run-dialog.c:460
+#: ../mate-panel/panel-run-dialog.c:461
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "UTF-8 دىن '%s' ئايلاندۇرالمىدى"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1236
 msgid "Choose a file to append to the command..."
 msgstr "بۇيرۇققا قوشىدىغان ھۆججەتتىن بىرنى تاللاڭ…"
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1618 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "قوللىنىشچان پروگراممىدىن بىرنى تاللاپ چۈشەندۈرۈشىنى كۆرسەت"
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "ئىجرا قىلىنىدىغان بۇيرۇق: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "ئىجرا قىلىنىۋاتقان سۆزلەشكۈدىكى URI تىزىملىك فورماتى (%d) ياكى ئۇزۇنلۇقى (%d) خاتا\n"
-
-#: ../mate-panel/panel-run-dialog.c:1978
-msgid "Could not display run dialog"
-msgstr "ئىجرا قىلىش سۆزلەشكۈنى كۆرسىتەلمىدى"
+msgstr ""
+"ئىجرا قىلىنىۋاتقان سۆزلەشكۈدىكى URI تىزىملىك فورماتى (%d) ياكى ئۇزۇنلۇقى "
+"(%d) خاتا\n"
 
 #: ../mate-panel/panel-run-dialog.ui.h:1
 msgid "Run Application"
@@ -2686,7 +2910,9 @@ msgstr "ھۆججەت بىلەن ئىجرا قىل(_F)…"
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
-msgstr "بۇ توپچا چېكىلسە ھۆججەتكە كۆز يۈگۈرتكىلى بولىدۇ، ھۆججەت ئاتى بۇيرۇق ھەرپ تىزمىسىنىڭ كەينىگە قوشۇلىدۇ."
+msgstr ""
+"بۇ توپچا چېكىلسە ھۆججەتكە كۆز يۈگۈرتكىلى بولىدۇ، ھۆججەت ئاتى بۇيرۇق ھەرپ "
+"تىزمىسىنىڭ كەينىگە قوشۇلىدۇ."
 
 #: ../mate-panel/panel-run-dialog.ui.h:8
 msgid "List of known applications"
@@ -2704,7 +2930,9 @@ msgstr "ئىجرا قىل(_R)"
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "بۇ توپچا چېكىلسە تاللانغان قوللىنىشچان پروگرامما ئىجرا قىلىنىدۇ ياكى بۇيرۇق كۆزنىكىدە بۇيرۇق كىرگۈزۈشكە بولىدۇ."
+msgstr ""
+"بۇ توپچا چېكىلسە تاللانغان قوللىنىشچان پروگرامما ئىجرا قىلىنىدۇ ياكى بۇيرۇق "
+"كۆزنىكىدە بۇيرۇق كىرگۈزۈشكە بولىدۇ."
 
 #: ../mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
@@ -2789,53 +3017,53 @@ msgstr "قوللانچاق(_A):"
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "تاختا يوشۇر"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1619 ../mate-panel/panel-toplevel.c:1629
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1621
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1623
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1625
 msgid "Right Panel"
 msgstr ""
 
-#: ../mate-panel/panel-util.c:347
+#: ../mate-panel/panel-util.c:348
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "'%s' سىنبەلگىنى تاپالمىدى"
+msgstr "سىنبەلگە '%s' تېپىلمىدى"
 
-#: ../mate-panel/panel-util.c:465
+#: ../mate-panel/panel-util.c:472
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' ئىجرا قىلالمىدى"
 
-#: ../mate-panel/panel-util.c:693
+#: ../mate-panel/panel-util.c:700
 msgid "file"
 msgstr "ھۆججەت"
 
-#: ../mate-panel/panel-util.c:866
+#: ../mate-panel/panel-util.c:873
 msgid "Home Folder"
 msgstr "باش مۇندەرىجە"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:878
+#: ../mate-panel/panel-util.c:885
 msgid "File System"
 msgstr "ھۆججەت سىستېمىسى"
 
-#: ../mate-panel/panel-util.c:1051
+#: ../mate-panel/panel-util.c:1058
 msgid "Search"
 msgstr "ئىزدە"
 
@@ -2843,31 +3071,31 @@ msgstr "ئىزدە"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1097
+#: ../mate-panel/panel-util.c:1104
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s "
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL ئاچ: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1327
 msgid "Delete this drawer?"
 msgstr "بۇ تارتمىنى ئۆچۈرەمسىز؟"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1328
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "تارتما ئۆچۈرگەندە تارتما ۋە ئۇنىڭ تەڭشىكى يوقىلىدۇ."
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1331
 msgid "Delete this panel?"
 msgstr "بۇ تاختىنى ئۆچۈرەمسىز؟"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1332
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."

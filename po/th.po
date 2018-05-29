@@ -1,17 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Aefgh Threenine <aefgh3962@gmail.com>, 2016
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 18:25+0100\n"
-"PO-Revision-Date: 2017-12-24 17:27+0000\n"
-"Last-Translator: Wolfgang Ulbrich <mate@raveit.de>\n"
-"Language-Team: Thai (http://www.transifex.com/mate/MATE/language/th/)\n"
+"POT-Creation-Date: 2018-05-12 21:36+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Aefgh Threenine <aefgh3962@gmail.com>, 2018\n"
+"Language-Team: Thai (https://www.transifex.com/mate/teams/13566/th/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,16 @@ msgstr "ปฏิทิน"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455
+#: ../applets/clock/clock.c:429
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:455 ../applets/clock/clock-location-tile.c:512
+#: ../applets/clock/clock.c:429 ../applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
-msgstr "%l:%M %p"
+msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
@@ -51,7 +51,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1631
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1566
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -65,35 +65,37 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:460 ../applets/clock/clock.c:1637
-#: ../applets/clock/clock-location-tile.c:472
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1572
+#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
-msgstr "%H:%M"
+msgstr "%H.%M น."
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the date. Replace %e with %d if, when
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:445
 msgid "%a %b %e"
 msgstr "%a %-d %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:478
+#: ../applets/clock/clock.c:452
 #, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s\n%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:486
+#: ../applets/clock/clock.c:460
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -102,19 +104,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:659
+#: ../applets/clock/clock.c:633
 msgid "%A %B %d (%%s)"
 msgstr "วัน%Aที่ %-d %B %EY (%%s)"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:659
 msgid "Click to hide month calendar"
 msgstr "กดเพื่อซ่อนปฏิทินรายเดือน"
 
-#: ../applets/clock/clock.c:687
+#: ../applets/clock/clock.c:661
 msgid "Click to view month calendar"
 msgstr "กดเพื่อดูปฏิทินรายเดือน"
 
-#: ../applets/clock/clock.c:1469
+#: ../applets/clock/clock.c:1404
 msgid "Computer Clock"
 msgstr "นาฬิกาคอมพิวเตอร์"
 
@@ -124,7 +126,7 @@ msgstr "นาฬิกาคอมพิวเตอร์"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1616
+#: ../applets/clock/clock.c:1551
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
@@ -134,99 +136,99 @@ msgstr "%H:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1559
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1605
 msgid "%A, %B %d %Y"
 msgstr "วัน%Aที่ %-d %B %EY"
 
-#: ../applets/clock/clock.c:1701
+#: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
 msgstr "ตั้งเวลาของเครื่อง..."
 
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1637
 msgid "Set System Time"
 msgstr "ตั้งเวลาของเครื่อง"
 
-#: ../applets/clock/clock.c:1717
+#: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
 msgstr "ตั้งเวลาของเครื่องไม่สำเร็จ"
 
-#: ../applets/clock/clock.c:1915 ../applets/fish/fish.c:1689
-#: ../applets/wncklet/window-list.c:170
-#: ../applets/wncklet/workspace-switcher.c:327
+#: ../applets/clock/clock.c:1850 ../applets/fish/fish.c:1673
+#: ../applets/wncklet/window-list.c:168
+#: ../applets/wncklet/workspace-switcher.c:364
 msgid "_Preferences"
-msgstr "_ปรับแต่ง..."
+msgstr "_การกำหนดค่า"
 
-#: ../applets/clock/clock.c:1918 ../applets/fish/fish.c:1692
-#: ../applets/notification_area/main.c:185
-#: ../applets/wncklet/showdesktop.c:235 ../applets/wncklet/window-list.c:178
+#: ../applets/clock/clock.c:1853 ../applets/fish/fish.c:1676
+#: ../applets/notification_area/main.c:181
+#: ../applets/wncklet/showdesktop.c:237 ../applets/wncklet/window-list.c:176
 #: ../applets/wncklet/window-menu.c:100
-#: ../applets/wncklet/workspace-switcher.c:335 ../mate-panel/drawer.c:545
+#: ../applets/wncklet/workspace-switcher.c:372 ../mate-panel/drawer.c:563
 #: ../mate-panel/panel-action-button.c:737
-#: ../mate-panel/panel-context-menu.c:321 ../mate-panel/panel-menu-bar.c:359
+#: ../mate-panel/panel-context-menu.c:323 ../mate-panel/panel-menu-bar.c:355
 #: ../mate-panel/panel-menu-button.c:669
 msgid "_Help"
-msgstr "_วีธีใช้"
+msgstr "_วิธีใช้"
 
-#: ../applets/clock/clock.c:1921 ../applets/fish/fish.c:1695
-#: ../applets/notification_area/main.c:188
-#: ../applets/wncklet/showdesktop.c:243 ../applets/wncklet/window-list.c:186
+#: ../applets/clock/clock.c:1856 ../applets/fish/fish.c:1679
+#: ../applets/notification_area/main.c:184
+#: ../applets/wncklet/showdesktop.c:245 ../applets/wncklet/window-list.c:184
 #: ../applets/wncklet/window-menu.c:108
-#: ../applets/wncklet/workspace-switcher.c:343
+#: ../applets/wncklet/workspace-switcher.c:380
 msgid "_About"
-msgstr "เ_กี่ยวกับ..."
+msgstr "เ_กี่ยวกับ"
 
-#: ../applets/clock/clock.c:1924
+#: ../applets/clock/clock.c:1859
 msgid "Copy _Time"
 msgstr "คัดลอกเ_วลา"
 
-#: ../applets/clock/clock.c:1927
+#: ../applets/clock/clock.c:1862
 msgid "Copy _Date"
 msgstr "คัดลอกวั_นที่"
 
-#: ../applets/clock/clock.c:1930
+#: ../applets/clock/clock.c:1865
 msgid "Ad_just Date & Time"
 msgstr "_ตั้งวันที่และเวลา"
 
-#: ../applets/clock/clock.c:2873
+#: ../applets/clock/clock.c:2803
 msgid "Choose Location"
 msgstr "เลือกตำแหน่ง"
 
-#: ../applets/clock/clock.c:2952
+#: ../applets/clock/clock.c:2882
 msgid "Edit Location"
 msgstr "แก้ไขตำแหน่ง"
 
-#: ../applets/clock/clock.c:3079
+#: ../applets/clock/clock.c:3009
 msgid "City Name"
 msgstr "ชื่อเมือง"
 
-#: ../applets/clock/clock.c:3083
+#: ../applets/clock/clock.c:3013
 msgid "City Time Zone"
 msgstr "เขตเวลาของเมือง"
 
-#: ../applets/clock/clock.c:3298
+#: ../applets/clock/clock.c:3228
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "นาฬิกา"
 
-#: ../applets/clock/clock.c:3300
+#: ../applets/clock/clock.c:3230
 msgid "The Clock displays the current time and date"
 msgstr "นาฬิกาแสดงวันและเวลาปัจจุบัน"
 
-#: ../applets/clock/clock.c:3304 ../applets/fish/fish.c:579
-#: ../applets/notification_area/main.c:179
-#: ../applets/wncklet/showdesktop.c:520 ../applets/wncklet/window-list.c:553
+#: ../applets/clock/clock.c:3234 ../applets/fish/fish.c:568
+#: ../applets/notification_area/main.c:175
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:546
 #: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:595
+#: ../applets/wncklet/workspace-switcher.c:631
 #: ../mate-panel/panel-context-menu.c:122
 msgid "translator-credits"
-msgstr "Supphachoke Suntiwichaya\nChatchawarn Hansakunbuntheung\nSupranee Thirawatthanasuk\nChanchai Junlouchai\nไพศาข์ สีเหลืองสวัสดิ์\nเทพพิทักษ์ การุญบุญญานันท์\n\nถ้ามีเวลาโปรดมาช่วยกันแปล :-)\nhttp://mate-th.sf.net"
+msgstr "Akom Chotiphantawanon <knight2000@gmail.com>, 2016"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
@@ -234,7 +236,9 @@ msgstr "Supphachoke Suntiwichaya\nChatchawarn Hansakunbuntheung\nSupranee Thiraw
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
-msgstr "<small><i>ป้อนชื่อเมือง ชื่อรัฐ หรือชื่อประเทศ แล้วเลือกรายการที่ตรงจากเมนูที่ผุดขึ้น</i></small>"
+msgstr ""
+"<small><i>ป้อนชื่อเมือง ชื่อรัฐ หรือชื่อประเทศ "
+"แล้วเลือกรายการที่ตรงจากเมนูที่ผุดขึ้น</i></small>"
 
 #: ../applets/clock/clock.ui.h:3
 msgid "_Timezone:"
@@ -351,7 +355,7 @@ msgstr "หน่วยความเร็ว_ลม:"
 
 #: ../applets/clock/clock.ui.h:32
 msgid "_Temperature unit:"
-msgstr "หน่วยอุณหภู_มิ:"
+msgstr "หน่วย_อุณหภูมิ:"
 
 #: ../applets/clock/clock.ui.h:33
 msgid "Weather"
@@ -373,10 +377,12 @@ msgstr "<small>ตั้ง...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>ตั้ง</small>"
 
-#: ../applets/clock/clock-location-tile.c:316
+#: ../applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
-msgstr "กำหนดตำแหน่งที่ตั้งให้เป็นตำแหน่งที่ตั้งปัจจุบัน และใช้เขตเวลาของตำแหน่งดังกล่าวสำหรับเครื่องนี้"
+msgstr ""
+"กำหนดตำแหน่งที่ตั้งให้เป็นตำแหน่งที่ตั้งปัจจุบัน "
+"และใช้เขตเวลาของตำแหน่งดังกล่าวสำหรับเครื่องนี้"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -384,7 +390,7 @@ msgstr "กำหนดตำแหน่งที่ตั้งให้เป
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%I:%M <small>%p (%A)</small>"
 
@@ -393,7 +399,7 @@ msgstr "%I:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -401,42 +407,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%I:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:617
-#: ../applets/clock/clock-location-tile.c:626
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "ไม่ทราบ"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:619
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, รู้สึกเหมือน %s"
 
-#: ../applets/clock/clock-location-tile.c:642
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "ดวงอาทิตย์ขึ้น: %s / ดวงอาทิตย์ตก: %s"
 
-#: ../applets/clock/clock-utils.c:98 ../applets/fish/fish.c:172
-#: ../applets/notification_area/main.c:130 ../applets/wncklet/wncklet.c:74
-#: ../mate-panel/libpanel-util/panel-show.c:236
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:126 ../applets/wncklet/wncklet.c:71
+#: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "ไม่สามารถแสดงเอกสารวิธีใช้ '%s'"
 
-#: ../applets/clock/clock-utils.c:127 ../applets/fish/fish.c:198
-#: ../applets/notification_area/main.c:144 ../applets/wncklet/wncklet.c:91
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:140 ../applets/wncklet/wncklet.c:88
 msgid "Error displaying help document"
 msgstr "เกิดข้อผิดพลาดขณะแสดงเอกสารวิธีใช้"
 
@@ -454,7 +460,14 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in"
 " the custom_format key."
-msgstr "ค่านี้กำหนดรูปแบบชั่วโมงที่จะใช้ในแอพเพล็ตนาฬิกา ค่าที่เป็นไปได้คือ\"12-hour\", \"24-hour\", \"internet\", \"unix\" และ \"custom\"ถ้ากำหนดเป็น \"internet\" นาฬิกาจะแสดงเวลาอินเทอร์เน็ตซึ่งจะแบ่งวันออกเป็น 1000 \".beat\" ระบบนี้จะไม่มีเขตเวลา เวลาจึงเหมือนกันทุกแห่งในโลกถ้ากำหนดเป็น \"unix\" นาฬิกาจะแสดงเวลาเป็นวินาทีนับจาก 1970-01-01 ถ้ากำหนดเป็น \"custom\" นาฬิกาจะแสดงตามรูปแบบที่กำหนดใน custom_format"
+msgstr ""
+"ค่านี้กำหนดรูปแบบชั่วโมงที่จะใช้ในแอพเพล็ตนาฬิกา "
+"ค่าที่เป็นไปได้คือ\"12-hour\", \"24-hour\", \"internet\", \"unix\" และ "
+"\"custom\"ถ้ากำหนดเป็น \"internet\" "
+"นาฬิกาจะแสดงเวลาอินเทอร์เน็ตซึ่งจะแบ่งวันออกเป็น 1000 \".beat\" "
+"ระบบนี้จะไม่มีเขตเวลา เวลาจึงเหมือนกันทุกแห่งในโลกถ้ากำหนดเป็น \"unix\" "
+"นาฬิกาจะแสดงเวลาเป็นวินาทีนับจาก 1970-01-01 ถ้ากำหนดเป็น \"custom\" "
+"นาฬิกาจะแสดงตามรูปแบบที่กำหนดใน custom_format"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
 msgid "Custom format of the clock"
@@ -466,7 +479,10 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "ค่านี้กำหนดรูปแบบของเวลาในแอพเพล็ตนาฬิกาเมื่อกำหนดรูปแบบเป็น \"custom\" คุณสามารถใช้รหัสการแปลงของ strftime() เพื่อระบุรูปแบบที่ต้องการได้ ดูข้อมูลเพิ่มเติมได้จากคู่มือของ strftime()"
+msgstr ""
+"ค่านี้กำหนดรูปแบบของเวลาในแอพเพล็ตนาฬิกาเมื่อกำหนดรูปแบบเป็น \"custom\" "
+"คุณสามารถใช้รหัสการแปลงของ strftime() เพื่อระบุรูปแบบที่ต้องการได้ "
+"ดูข้อมูลเพิ่มเติมได้จากคู่มือของ strftime()"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
 msgid "Show time with seconds"
@@ -560,98 +576,114 @@ msgstr "โรงงานสำหรับแอพเพล็ตนาฬิ
 msgid "Get the current time and date"
 msgstr "รับข้อมูลวันและเวลาปัจจุบัน"
 
-#: ../applets/fish/fish.c:268
+#: ../applets/fish/fish.c:265
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
-msgstr "คำเตือน:  คำสั่งนี้เป็นคำสั่งที่มีประโยชน์\nแต่เนื่องจากนี่คือแอพเพล็ตที่ไม่มีประโยชน์ คุณอาจจะไม่ต้องการใช้คำสั่งนี้\nขอแนะนำว่าไม่ควรใช้ %s กับอะไรก็ตาม\nที่จะทำให้แอพเพล็ตนี้ \"ใช้งานได้จริง\" หรือใช้ประโยชน์ได้"
+msgstr ""
+"คำเตือน:  คำสั่งนี้เป็นคำสั่งที่มีประโยชน์\n"
+"แต่เนื่องจากนี่คือแอพเพล็ตที่ไม่มีประโยชน์ คุณอาจจะไม่ต้องการใช้คำสั่งนี้\n"
+"ขอแนะนำว่าไม่ควรใช้ %s กับอะไรก็ตาม\n"
+"ที่จะทำให้แอพเพล็ตนี้ \"ใช้งานได้จริง\" หรือใช้ประโยชน์ได้"
 
-#: ../applets/fish/fish.c:440
+#: ../applets/fish/fish.c:429
 msgid "Images"
 msgstr "รูปภาพ"
 
-#: ../applets/fish/fish.c:546 ../applets/fish/fish.c:590
-#: ../applets/fish/fish.c:696
+#: ../applets/fish/fish.c:535 ../applets/fish/fish.c:579
+#: ../applets/fish/fish.c:685
 #, no-c-format
 msgid "%s the Fish"
 msgstr "ปลา %s"
 
-#: ../applets/fish/fish.c:547
+#: ../applets/fish/fish.c:536
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s ไม่มีประโยชน์อะไรเลย แอพเพล็ตนี้ทำให้เสียเนื้อที่ดิสก์และเวลาคอมไพล์ และถ้าโหลดขึ้นมา ก็จะทำให้เสียเนื้อที่พาเนลและหน่วยความจำ ใครใช้เป็นประจำ น่าจะต้องปรึกษาจิตแพทย์โดยเร็ว"
+msgstr ""
+"%s ไม่มีประโยชน์อะไรเลย แอพเพล็ตนี้ทำให้เสียเนื้อที่ดิสก์และเวลาคอมไพล์ "
+"และถ้าโหลดขึ้นมา ก็จะทำให้เสียเนื้อที่พาเนลและหน่วยความจำ ใครใช้เป็นประจำ "
+"น่าจะต้องปรึกษาจิตแพทย์โดยเร็ว"
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:556
 msgid "(with minor help from George)"
 msgstr "(ด้วยความช่วยเหลือเล็กน้อยจาก George)"
 
-#: ../applets/fish/fish.c:573
+#: ../applets/fish/fish.c:562
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "ปลา"
 
-#: ../applets/fish/fish.c:591
+#: ../applets/fish/fish.c:580
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "ปลา %s หมอดูร่วมสมัย"
 
-#: ../applets/fish/fish.c:657
+#: ../applets/fish/fish.c:646
 msgid "Unable to locate the command to execute"
 msgstr "ไม่สามารถหาคำสั่งเพื่อเรียกใช้งานได้"
 
-#: ../applets/fish/fish.c:701
+#: ../applets/fish/fish.c:690
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "ปลา %s บอกว่า:"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:753
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "ไม่สามารถอ่านผลลัพธ์จากคำสั่ง\n\nรายละเอียด: %s"
+msgstr ""
+"ไม่สามารถอ่านผลลัพธ์จากคำสั่ง\n"
+"\n"
+"รายละเอียด: %s"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:830
 msgid "_Speak again"
 msgstr "_พูดอีก"
 
-#: ../applets/fish/fish.c:928
+#: ../applets/fish/fish.c:912
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "คำสั่งที่ตั้งไว้ไม่ทำงาน จะแทนที่ด้วย: %s"
 
-#: ../applets/fish/fish.c:961
+#: ../applets/fish/fish.c:945
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "ไม่สามารถเรียกใช้งาน '%s'\n\nรายละเอียด: %s"
+msgstr ""
+"ไม่สามารถเรียกใช้งาน '%s'\n"
+"\n"
+"รายละเอียด: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:961
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "ไม่สามารถอ่านค่าจากคำสั่ง '%s'\n\nรายละเอียด: %s"
+msgstr ""
+"ไม่สามารถอ่านค่าจากคำสั่ง '%s'\n"
+"\n"
+"รายละเอียด: %s"
 
-#: ../applets/fish/fish.c:1545
+#: ../applets/fish/fish.c:1529
 msgid "The water needs changing"
 msgstr "เปลี่ยนน้ำได้แล้ว"
 
-#: ../applets/fish/fish.c:1547
+#: ../applets/fish/fish.c:1531
 msgid "Look at today's date!"
 msgstr "ดูปฏิทินสิ!"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1614
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "ปลา %s หมอดูไม่แม่น"
@@ -712,7 +744,8 @@ msgstr "ชื่อของปลา"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "ปลาที่ไร้นามนั้นไม่ค่อยน่าสนใจ ตั้งชื่อปลาเพื่อให้เขามีชีวิตชีวาหน่อยสิ"
+msgstr ""
+"ปลาที่ไร้นามนั้นไม่ค่อยน่าสนใจ ตั้งชื่อปลาเพื่อให้เขามีชีวิตชีวาหน่อยสิ"
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
 msgid "The fish's animation pixmap"
@@ -722,7 +755,9 @@ msgstr "pixmap ของภาพปลาเคลื่อนไหว"
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "ค่านี้กำหนดชื่อแฟ้มภาพพิกซ์แมป จากตำแหน่งโฟลเดอร์พิกซ์แมป ซึ่งจะใช้สำหรับแสดงการเคลื่อนไหว ในแอพเพล็ตปลา"
+msgstr ""
+"ค่านี้กำหนดชื่อแฟ้มภาพพิกซ์แมป จากตำแหน่งโฟลเดอร์พิกซ์แมป "
+"ซึ่งจะใช้สำหรับแสดงการเคลื่อนไหว ในแอพเพล็ตปลา"
 
 #: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
 msgid "Command to execute on click"
@@ -773,12 +808,12 @@ msgstr "From Whence That Stupid Fish Came"
 msgid "Display a swimming fish or another animated creature"
 msgstr "แสดงภาพปลากำลังว่ายน้ำ หรือภาพเคลื่อนไหวของสัตว์แบบอื่น ๆ"
 
-#: ../applets/notification_area/main.c:173
+#: ../applets/notification_area/main.c:169
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "พื้นที่แจ้งเหตุ"
 
-#: ../applets/notification_area/main.c:389
+#: ../applets/notification_area/main.c:362
 msgid "Panel Notification Area"
 msgstr "พื้นที่แจ้งเหตุสำหรับพาเนล"
 
@@ -802,7 +837,9 @@ msgstr "แสดงหน้าต่างจากพื้นที่ทำ
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
-msgstr "ถ้าเลือก รายชื่อหน้าต่างจะแสดงหน้าต่างจากพื้นที่ทำงานทั้งหมด มิฉะนั้นจะแสดงเฉพาะหน้าต่างที่มาจากพื้นที่ทำงานปัจจุบันเท่านั้น"
+msgstr ""
+"ถ้าเลือก รายชื่อหน้าต่างจะแสดงหน้าต่างจากพื้นที่ทำงานทั้งหมด "
+"มิฉะนั้นจะแสดงเฉพาะหน้าต่างที่มาจากพื้นที่ทำงานปัจจุบันเท่านั้น"
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
 msgid "When to group windows"
@@ -812,7 +849,9 @@ msgstr "เวลาที่จะจัดกลุ่มหน้าต่า
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "กำหนดว่าเมื่อใดจะจัดกลุ่มหน้าต่างที่มาจากโปรแกรมเดียวกันในรายชื่อหน้าต่าง ค่าที่เป็นไปได้คือ \"never\", \"auto\" และ \"always\""
+msgstr ""
+"กำหนดว่าเมื่อใดจะจัดกลุ่มหน้าต่างที่มาจากโปรแกรมเดียวกันในรายชื่อหน้าต่าง "
+"ค่าที่เป็นไปได้คือ \"never\", \"auto\" และ \"always\""
 
 #: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -822,7 +861,10 @@ msgstr "ย้ายหน้าต่างไปที่พื้นที่
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "ถ้าเลือก เมื่อใดที่คืนขนาดหน้าต่างที่ถูกย่อเล็กสุด ให้ย้ายหน้าต่างนั้นไปที่พื้นที่ทำงานปัจจุบัน มิฉะนั้นเปลี่ยนไปที่พื้นที่ทำงานเดิมของหน้าต่างนั้น"
+msgstr ""
+"ถ้าเลือก เมื่อใดที่คืนขนาดหน้าต่างที่ถูกย่อเล็กสุด "
+"ให้ย้ายหน้าต่างนั้นไปที่พื้นที่ทำงานปัจจุบัน "
+"มิฉะนั้นเปลี่ยนไปที่พื้นที่ทำงานเดิมของหน้าต่างนั้น"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
 msgid "Display workspace names"
@@ -833,7 +875,10 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Marco."
-msgstr "ถ้าเลือก แอพเพล็ตสลับพื้นที่ทำงานจะแสดงชื่อของพื้นที่ทำงาน มิฉะนั้นจะแสดงหน้าต่างที่อยู่บนพื้นที่ทำงาน ค่าตั้งนี้ ใช้ได้กับโปรแกรมจัดการหน้าต่าง Marco เท่านั้น"
+msgstr ""
+"ถ้าเลือก แอพเพล็ตสลับพื้นที่ทำงานจะแสดงชื่อของพื้นที่ทำงาน "
+"มิฉะนั้นจะแสดงหน้าต่างที่อยู่บนพื้นที่ทำงาน ค่าตั้งนี้ "
+"ใช้ได้กับโปรแกรมจัดการหน้าต่าง Marco เท่านั้น"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
 msgid "Display all workspaces"
@@ -843,7 +888,9 @@ msgstr "แสดงพื้นที่ทำงานทั้งหมด"
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
-msgstr "ถ้าเลือก แอพเพล็ตสลับพื้นที่ทำงานจะแสดงพื้นที่ทำงานทั้งหมด มิฉะนั้นจะแสดงเฉพาะพื้นที่ทำงานปัจจุบัน"
+msgstr ""
+"ถ้าเลือก แอพเพล็ตสลับพื้นที่ทำงานจะแสดงพื้นที่ทำงานทั้งหมด "
+"มิฉะนั้นจะแสดงเฉพาะพื้นที่ทำงานปัจจุบัน"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
 msgid "Rows in workspace switcher"
@@ -854,7 +901,10 @@ msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
 " only relevant if the display_all_workspaces key is true."
-msgstr "ค่านี้กำหนดจำนวนแถว (สำหรับการจัดวางแนวนอน) หรือจำนวนคอลัมน์ (สำหรับการจัดวางแนวตั้ง) ที่ช่องสลับพื้นที่ทำงานใช้แสดงพื้นที่ทำงาน ค่านี้ใช้ได้ก็ต่อเมื่อค่า display_all_workspaces เป็นจริง"
+msgstr ""
+"ค่านี้กำหนดจำนวนแถว (สำหรับการจัดวางแนวนอน) หรือจำนวนคอลัมน์ "
+"(สำหรับการจัดวางแนวตั้ง) ที่ช่องสลับพื้นที่ทำงานใช้แสดงพื้นที่ทำงาน "
+"ค่านี้ใช้ได้ก็ต่อเมื่อค่า display_all_workspaces เป็นจริง"
 
 #: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
 msgid "Wrap around on scroll"
@@ -875,27 +925,27 @@ msgid "Factory for the window navigation related applets"
 msgstr "โรงงานสำหรับแอพเพล็ตที่เกี่ยวข้องกับการนำทางหน้าต่าง"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:255
+#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:229
 msgid "Window Selector"
-msgstr "รายชื่อหน้าต่างแบบเมนู"
+msgstr "เลือกหน้าต่าง"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
 msgstr "สลับระหว่างหน้าต่างที่เปิดอยู่โดยใช้เมนู"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:588
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid "Workspace Switcher"
-msgstr "สลับพื้นที่ทำงาน"
+msgstr "ตัวสลับพื้นที่ทำงาน"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "สลับไปมาระหว่างพื้นที่ทำงาน"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:546
+#: ../applets/wncklet/window-list.c:539
 msgid "Window List"
-msgstr "รายชื่อหน้าต่างแบบแถบ"
+msgstr "ลิสต์หน้าต่าง"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:8
 msgid "Switch between open windows using buttons"
@@ -909,46 +959,50 @@ msgstr "แสดงพื้นโต๊ะ"
 msgid "Hide application windows and show the desktop"
 msgstr "ซ่อนหน้าต่างทั้งหมดและแสดงพื้นโต๊ะ"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "ไม่สามารถเรียกใช้ %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:186
+#: ../applets/wncklet/showdesktop.c:180
 msgid "Icon not found"
 msgstr "ไม่พบไอคอน"
 
-#: ../applets/wncklet/showdesktop.c:259
+#: ../applets/wncklet/showdesktop.c:261
 msgid "Click here to restore hidden windows."
 msgstr "คลิกที่นี่เพื่อขยายคืนหน้าต่างที่ซ่อนอยู่"
 
-#: ../applets/wncklet/showdesktop.c:263
+#: ../applets/wncklet/showdesktop.c:265
 msgid "Click here to hide all windows and show the desktop."
 msgstr "คลิกที่นี่เพื่อซ่อนหน้าต่างทั้งหมดและแสดงพื้นโต๊ะ"
 
-#: ../applets/wncklet/showdesktop.c:447 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:435 ../applets/wncklet/showdesktop.c:501
 msgid "Show Desktop Button"
 msgstr "ปุ่มแสดงพื้นโต๊ะ"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:503
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ปุ่มนี้ช่วยคุณซ่อนหน้าต่างทั้งหมดและแสดงพื้นโต๊ะ"
 
-#: ../applets/wncklet/showdesktop.c:541
+#: ../applets/wncklet/showdesktop.c:529
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
-msgstr "โปรแกรมจัดการหน้าต่างของคุณ ไม่รองรับปุ่มแสดงพื้นโต๊ะ หรือคุณไม่ได้ใช้โปรแกรมจัดการหน้าต่างอยู่"
+msgstr ""
+"โปรแกรมจัดการหน้าต่างของคุณ ไม่รองรับปุ่มแสดงพื้นโต๊ะ "
+"หรือคุณไม่ได้ใช้โปรแกรมจัดการหน้าต่างอยู่"
 
-#: ../applets/wncklet/window-list.c:162
+#: ../applets/wncklet/window-list.c:160
 msgid "_System Monitor"
 msgstr "_เครื่องมือเฝ้าสังเกตระบบ"
 
-#: ../applets/wncklet/window-list.c:548
+#: ../applets/wncklet/window-list.c:541
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
-msgstr "รายชื่อหน้าต่างแบบแถบ แสดงรายชื่อหน้าต่างทั้งหมดเป็นชุดปุ่มกด และให้คุณเรียกดูหน้าต่างเหล่านั้น"
+msgstr ""
+"รายชื่อหน้าต่างแบบแถบ แสดงรายชื่อหน้าต่างทั้งหมดเป็นชุดปุ่มกด "
+"และให้คุณเรียกดูหน้าต่างเหล่านั้น"
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Window List Preferences"
@@ -998,24 +1052,28 @@ msgstr "ขยายคืนกลับพื้นที่ทำงาน_�
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "รายชื่อหน้าต่างแบบเมนู แสดงรายชื่อหน้าต่างทั้งหมดในเมนู และให้คุณเรียกดูหน้าต่างเหล่านั้น"
+msgstr ""
+"รายชื่อหน้าต่างแบบเมนู แสดงรายชื่อหน้าต่างทั้งหมดในเมนู "
+"และให้คุณเรียกดูหน้าต่างเหล่านั้น"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
-msgstr "แถว"
+msgstr "บรรทัด"
 
-#: ../applets/wncklet/workspace-switcher.c:199
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:236
+#: ../applets/wncklet/workspace-switcher.c:926
 msgid "columns"
 msgstr "คอลัมน์"
 
-#: ../applets/wncklet/workspace-switcher.c:590
+#: ../applets/wncklet/workspace-switcher.c:626
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "แอพเพล็ตสลับพื้นที่ทำงาน แสดงรูปย่อของพื้นที่ทำงานของคุณ ซึ่งคุณสามารถใช้จัดการหน้าต่างได้"
+msgstr ""
+"แอพเพล็ตสลับพื้นที่ทำงาน แสดงรูปย่อของพื้นที่ทำงานของคุณ "
+"ซึ่งคุณสามารถใช้จัดการหน้าต่างได้"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Workspace Switcher Preferences"
@@ -1074,7 +1132,9 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr "ถ้าเลือก จะแสดงรายชื่อ \"โปรแกรมที่รู้จัก\" ในกล่องโต้ตอบ \"เรียกโปรแกรม\" รายชื่อนี้จะเปิดขยายออกหรือไม่ จะควบคุมโดยคีย์ show_program_list"
+msgstr ""
+"ถ้าเลือก จะแสดงรายชื่อ \"โปรแกรมที่รู้จัก\" ในกล่องโต้ตอบ \"เรียกโปรแกรม\" "
+"รายชื่อนี้จะเปิดขยายออกหรือไม่ จะควบคุมโดยคีย์ show_program_list"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1085,7 +1145,9 @@ msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "ถ้าเลือก จะขยายรายชื่อ \"โปรแกรมที่รู้จัก\" ในกล่องโต้ตอบ \"เรียกโปรแกรม\" เมื่อเปิดกล่องโต้ตอบ ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า enable_program_list"
+msgstr ""
+"ถ้าเลือก จะขยายรายชื่อ \"โปรแกรมที่รู้จัก\" ในกล่องโต้ตอบ \"เรียกโปรแกรม\" "
+"เมื่อเปิดกล่องโต้ตอบ ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า enable_program_list"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:7
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1094,7 +1156,9 @@ msgstr "เปิดใช้งานการเติมชื่อโปร
 #: ../data/org.mate.panel.gschema.xml.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "ถ้าเลือก จะเปิดใช้การเติมชื่อโปรแกรมโดยอัตโนมัติขณะพิมพ์ในกล่องโต้ตอบ \"เรียกโปรแกรม\""
+msgstr ""
+"ถ้าเลือก จะเปิดใช้การเติมชื่อโปรแกรมโดยอัตโนมัติขณะพิมพ์ในกล่องโต้ตอบ "
+"\"เรียกโปรแกรม\""
 
 #: ../data/org.mate.panel.gschema.xml.in.h:9
 msgid "History for \"Run Application\" dialog"
@@ -1135,7 +1199,9 @@ msgstr "รายชื่อหมายเลขประจำพาเนล
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "รายชื่อหมายเลขประจำพาเนล แต่ละหมายเลขแทนพาเนลระดับบนแต่ละตัว ค่าตั้งสำหรับแต่ละพาเนลเหล่านี้จะเก็บไว้ใน /apps/panel/toplevels/$(id)"
+msgstr ""
+"รายชื่อหมายเลขประจำพาเนล แต่ละหมายเลขแทนพาเนลระดับบนแต่ละตัว "
+"ค่าตั้งสำหรับแต่ละพาเนลเหล่านี้จะเก็บไว้ใน /apps/panel/toplevels/$(id)"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:17
 msgid "Panel object ID list"
@@ -1146,7 +1212,11 @@ msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "รายชื่อหมายเลขประจำวัตถุพาเนล แต่ละหมายเลขแทนวัตถุพาเนลแต่ละตัว (เช่น ปุ่มเรียก ปุ่มทำงานหรือปุ่ม/แถบเมนู)ค่าตั้งสำหรับแต่ละวัตถุเหล่านี้จะเก็บไว้ใน /apps/panel/objects/$(id)"
+msgstr ""
+"รายชื่อหมายเลขประจำวัตถุพาเนล แต่ละหมายเลขแทนวัตถุพาเนลแต่ละตัว (เช่น "
+"ปุ่มเรียก "
+"ปุ่มทำงานหรือปุ่ม/แถบเมนู)ค่าตั้งสำหรับแต่ละวัตถุเหล่านี้จะเก็บไว้ใน "
+"/apps/panel/objects/$(id)"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
@@ -1169,7 +1239,8 @@ msgstr "ปิดลิ้นชักอัตโนมัติ"
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "ถ้าเลือก ลิ้นชักจะปิดอัตโนมัติเมื่อผู้ใช้คลิกปุ่มเรียกที่อยู่ในลิ้นชัก"
+msgstr ""
+"ถ้าเลือก ลิ้นชักจะปิดอัตโนมัติเมื่อผู้ใช้คลิกปุ่มเรียกที่อยู่ในลิ้นชัก"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:24
 msgid "Confirm panel removal"
@@ -1199,7 +1270,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
 " panel must be restarted for this to take effect."
-msgstr "ถ้าเลือก พาเนลจะไม่อนุญาตให้เปลี่ยนการตั้งค่าใดๆ ของพาเนลอีกเลย แต่สำหรับแอพเพล็ตต่างๆ อาจต้องล็อคเป็นรายๆ ไปอีกที คุณต้องเริ่มพาเนลใหม่เพื่อให้รายการนี้มีผล"
+msgstr ""
+"ถ้าเลือก พาเนลจะไม่อนุญาตให้เปลี่ยนการตั้งค่าใดๆ ของพาเนลอีกเลย "
+"แต่สำหรับแอพเพล็ตต่างๆ อาจต้องล็อคเป็นรายๆ ไปอีกที "
+"คุณต้องเริ่มพาเนลใหม่เพื่อให้รายการนี้มีผล"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:30
 msgid "Applet IIDs to disable from loading"
@@ -1211,7 +1285,11 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "รายชื่อ IID ของแอพเพล็ตที่พาเนลจะไม่โหลดด้วยการตั้งค่านี้ คุณสามารถปิดการทำงานแอพเพล็ตบางตัวไม่ให้โหลดหรือแสดงบนเมนูได้ตัวอย่างเช่น ถ้าจะปิดแอพเพล็ตบรรทัดคำสั่ง ก็เพิ่ม'OAFIID:MATE_MiniCommanderApplet' ในรายชื่อนี้ คุณต้องเริ่มพาเนลใหม่เพื่อให้รายการนี้มีผล"
+msgstr ""
+"รายชื่อ IID ของแอพเพล็ตที่พาเนลจะไม่โหลดด้วยการตั้งค่านี้ "
+"คุณสามารถปิดการทำงานแอพเพล็ตบางตัวไม่ให้โหลดหรือแสดงบนเมนูได้ตัวอย่างเช่น "
+"ถ้าจะปิดแอพเพล็ตบรรทัดคำสั่ง ก็เพิ่ม'OAFIID:MATE_MiniCommanderApplet' "
+"ในรายชื่อนี้ คุณต้องเริ่มพาเนลใหม่เพื่อให้รายการนี้มีผล"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:32
 msgid "Disable Force Quit"
@@ -1221,7 +1299,9 @@ msgstr "ปิดการใช้งานการบังคับออก
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "ถ้าเลือก พาเนลจะไม่อนุญาตให้ผู้ใช้บังคับปิดโปรแกรม โดยจะไม่ยอมให้ใช้ปุ่มบังคับออก"
+msgstr ""
+"ถ้าเลือก พาเนลจะไม่อนุญาตให้ผู้ใช้บังคับปิดโปรแกรม "
+"โดยจะไม่ยอมให้ใช้ปุ่มบังคับออก"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:34
 msgid "Enable SNI support"
@@ -1299,7 +1379,9 @@ msgstr ""
 msgid ""
 "Maximum number of menu items (i.e. bookmarks) that are displayed without "
 "being put in a submenu."
-msgstr "กำหนดจำนวนชื่อรายการเมนู (เช่น ที่คั่นหน้า) ที่จะแสดงโดยที่ไม่ต้องนำไปไว้ในในเมนูย่อย"
+msgstr ""
+"กำหนดจำนวนชื่อรายการเมนู (เช่น ที่คั่นหน้า) "
+"ที่จะแสดงโดยที่ไม่ต้องนำไปไว้ในในเมนูย่อย"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:1
 msgid "Panel object type"
@@ -1325,7 +1407,9 @@ msgstr "ตำแหน่งของวัตถุบนพาเนล"
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "ตำแหน่งของวัตถุพาเนลนี้ ตำแหน่งนี้ถูกกำหนดโดย จำนวนพิกเซลจากทางขอบซ้าย (หรือขอบบนในกรณีแนวตั้ง) พาเนล"
+msgstr ""
+"ตำแหน่งของวัตถุพาเนลนี้ ตำแหน่งนี้ถูกกำหนดโดย จำนวนพิกเซลจากทางขอบซ้าย "
+"(หรือขอบบนในกรณีแนวตั้ง) พาเนล"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
 msgid "Interpret position relative to bottom/right edge"
@@ -1335,7 +1419,9 @@ msgstr "วัดตำแหน่งเทียบกับขอบล่า
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
-msgstr "ถ้าเลือก ตำแหน่งของวัตถุจะวัดเทียบกับขอบขวา (หรือขอบล่างในกรณีแนวตั้ง) ของพาเนล"
+msgstr ""
+"ถ้าเลือก ตำแหน่งของวัตถุจะวัดเทียบกับขอบขวา (หรือขอบล่างในกรณีแนวตั้ง) "
+"ของพาเนล"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:9
 msgid "Lock the object to the panel"
@@ -1345,7 +1431,9 @@ msgstr "ล็อควัตถุติดกับพาเนล"
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
-msgstr "ถ้าเลือก ผู้ใช้จะไม่สามารถย้ายแอพเพล็ตได้ถ้าไม่ปลดล็อควัตถุก่อน โดยใช้รายการเมนู \"ปลดล็อค\""
+msgstr ""
+"ถ้าเลือก ผู้ใช้จะไม่สามารถย้ายแอพเพล็ตได้ถ้าไม่ปลดล็อควัตถุก่อน "
+"โดยใช้รายการเมนู \"ปลดล็อค\""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:11
 msgid "Applet IID"
@@ -1357,7 +1445,10 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
-msgstr "ชื่อเรียกของการ implement ของแอพเพล็ต - เช่น \"ClockAppletFactory::ClockApplet\" คีย์นี้จะมีผลก็ต่อเมื่อคีย์ object_type เป็น \"external-applet\" (หรือคีย์เดิม \"matecomponent-applet\") เท่านั้น"
+msgstr ""
+"ชื่อเรียกของการ implement ของแอพเพล็ต - เช่น "
+"\"ClockAppletFactory::ClockApplet\" คีย์นี้จะมีผลก็ต่อเมื่อคีย์ object_type "
+"เป็น \"external-applet\" (หรือคีย์เดิม \"matecomponent-applet\") เท่านั้น"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:13
 msgid "Panel attached to drawer"
@@ -1367,7 +1458,9 @@ msgstr "พาเนลที่แนบติดกับลิ้นชัก
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "ตัวบ่งชี้ของพาเนลที่แนบติดกับลิ้นชักนี้ ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type เป็น \"drawer-object\""
+msgstr ""
+"ตัวบ่งชี้ของพาเนลที่แนบติดกับลิ้นชักนี้ ค่านี้ใช้ได้ก็ต่อเมื่อค่า "
+"object_type เป็น \"drawer-object\""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
@@ -1378,7 +1471,10 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
-msgstr "ข้อความที่จะแสดงในคำแนะนำเครื่องมือสำหรับลิ้นชักนี้ ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type เป็น \"drawer-object\" หรือ \"menu-object\""
+msgstr ""
+"ข้อความที่จะแสดงในคำแนะนำเครื่องมือสำหรับลิ้นชักนี้ "
+"ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type เป็น \"drawer-object\" หรือ \"menu-"
+"object\""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1389,7 +1485,10 @@ msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "ถ้าเลือก ค่า custom_icon จะถูกใช้เป็นไอคอนที่กำหนดเองสำหรับปุ่มนั้น ถ้าไม่เลือก จะไม่สนใจค่า custom_icon คีย์นี้จะมีผลก็ต่อเมื่อค่า object_type เป็น \"menu-object\" หรือ \"drawer-object\""
+msgstr ""
+"ถ้าเลือก ค่า custom_icon จะถูกใช้เป็นไอคอนที่กำหนดเองสำหรับปุ่มนั้น "
+"ถ้าไม่เลือก จะไม่สนใจค่า custom_icon คีย์นี้จะมีผลก็ต่อเมื่อค่า object_type "
+"เป็น \"menu-object\" หรือ \"drawer-object\""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:19
 msgid "Icon used for object's button"
@@ -1400,7 +1499,10 @@ msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "ตำแหน่งของแฟ้มภาพที่ใช้เป็นไอคอนสำหรับปุ่มของวัตถุ ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type key เป็น \"drawer-object\" หรือ \"menu-object\" และเลือกใช้ค่า use_custom_icon"
+msgstr ""
+"ตำแหน่งของแฟ้มภาพที่ใช้เป็นไอคอนสำหรับปุ่มของวัตถุ ค่านี้ใช้ได้ก็ต่อเมื่อค่า"
+" object_type key เป็น \"drawer-object\" หรือ \"menu-object\" และเลือกใช้ค่า "
+"use_custom_icon"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1411,7 +1513,10 @@ msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "ถ้าเลือก ค่า menu_path จะใช้เป็นเส้นที่สำหรับสร้างเนื้อหาเมนู ถ้าไม่เลือก จะไม่สนใจค่า menu_path ค่านี้จะมีผลก็ต่อเมื่อค่า object_type เป็น \"menu-object\""
+msgstr ""
+"ถ้าเลือก ค่า menu_path จะใช้เป็นเส้นที่สำหรับสร้างเนื้อหาเมนู ถ้าไม่เลือก "
+"จะไม่สนใจค่า menu_path ค่านี้จะมีผลก็ต่อเมื่อค่า object_type เป็น \"menu-"
+"object\""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:23
 msgid "Menu content path"
@@ -1422,7 +1527,9 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
-msgstr "พาธจากที่ที่สร้างเนื้อหาเมนูนั้น ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า use_menu_path และค่า object_type เป็น \"menu-object\""
+msgstr ""
+"พาธจากที่ที่สร้างเนื้อหาเมนูนั้น ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า "
+"use_menu_path และค่า object_type เป็น \"menu-object\""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:25
 msgid "Draw arrow in menu button"
@@ -1442,7 +1549,9 @@ msgstr "ตำแหน่งปุ่มเรียก"
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "ตำแหน่งของแฟ้ม .desktop ที่บรรยายปุ่มเรียก ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type เป็น \"launcher-object\""
+msgstr ""
+"ตำแหน่งของแฟ้ม .desktop ที่บรรยายปุ่มเรียก ค่านี้ใช้ได้ก็ต่อเมื่อค่า "
+"object_type เป็น \"launcher-object\""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:29
 msgid "Action button type"
@@ -1453,7 +1562,10 @@ msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
-msgstr "ชนิดการทำงานที่ปุ่มนี้แสดงถึง ค่าที่เป็นไปได้คือ \"lock\", \"logout\", \"run\", \"search\" และ \"screenshot\" ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type เป็น \"action-applet\""
+msgstr ""
+"ชนิดการทำงานที่ปุ่มนี้แสดงถึง ค่าที่เป็นไปได้คือ \"lock\", \"logout\", "
+"\"run\", \"search\" และ \"screenshot\" ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type"
+" เป็น \"action-applet\""
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
 msgid "Name to identify panel"
@@ -1464,7 +1576,10 @@ msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "นี่เป็นชื่อที่คนสามารถอ่านได้ซึ่งคุณสามารถใช้เพื่อระบุพาเนล จุดประสงค์หลักคือเพื่อใช้เป็นชื่อหัวเรื่องของหน้าต่าง ซึ่งเป็นประโยชน์ในการเปลี่ยนไปมาระหว่างพาเนลที่มี"
+msgstr ""
+"นี่เป็นชื่อที่คนสามารถอ่านได้ซึ่งคุณสามารถใช้เพื่อระบุพาเนล "
+"จุดประสงค์หลักคือเพื่อใช้เป็นชื่อหัวเรื่องของหน้าต่าง "
+"ซึ่งเป็นประโยชน์ในการเปลี่ยนไปมาระหว่างพาเนลที่มี"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1474,7 +1589,9 @@ msgstr "X screen ที่พาเนลอาศัยอยู่"
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr "โดยใช้ชุดติดตั้งหลายจอภาพ คุณอาจจะมีหลายพาเนลบนจอภาพอิสระแต่ละตัว ค่านี้ระบุหน้าจอปัจจุบันที่พาเนลแสดงอยู่"
+msgstr ""
+"โดยใช้ชุดติดตั้งหลายจอภาพ คุณอาจจะมีหลายพาเนลบนจอภาพอิสระแต่ละตัว "
+"ค่านี้ระบุหน้าจอปัจจุบันที่พาเนลแสดงอยู่"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
@@ -1484,7 +1601,9 @@ msgstr "หน้าจอของ Xinerama ที่พาเนลอาศ�
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr "เวลาใช้ Xinerama คุณอาจจะมีพาเนลบนอยู่บนแต่ละหน้าจอ ค่านี้แสดงหน้าจอปัจจุบันที่พาเนลนี้อาศัยอยู่"
+msgstr ""
+"เวลาใช้ Xinerama คุณอาจจะมีพาเนลบนอยู่บนแต่ละหน้าจอ "
+"ค่านี้แสดงหน้าจอปัจจุบันที่พาเนลนี้อาศัยอยู่"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
 msgid "Expand to occupy entire screen width"
@@ -1496,7 +1615,10 @@ msgid ""
 "vertical panel). In this mode the panel can only be placed at a screen edge."
 " If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr "ถ้าเลือก พาเนลจะขยายเต็มความกว้างของหน้าจอ (หรือความสูง ถ้าเป็นพาเนลแนวตั้ง) ในโหมดนี้ จะสามารถวางพาเนลไว้ที่ขอบของหน้าจอได้เท่านั้น ถ้าไม่เลือก พาเนลจะขยายใหญ่ให้เพียงพอสำหรับวางแอพเพล็ต ปุ่มเรียก และปุ่มต่างๆ เท่านั้น"
+msgstr ""
+"ถ้าเลือก พาเนลจะขยายเต็มความกว้างของหน้าจอ (หรือความสูง ถ้าเป็นพาเนลแนวตั้ง)"
+" ในโหมดนี้ จะสามารถวางพาเนลไว้ที่ขอบของหน้าจอได้เท่านั้น ถ้าไม่เลือก "
+"พาเนลจะขยายใหญ่ให้เพียงพอสำหรับวางแอพเพล็ต ปุ่มเรียก และปุ่มต่างๆ เท่านั้น"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
 msgid "Panel orientation"
@@ -1512,7 +1634,14 @@ msgid ""
 "For example, on a \"top\" panel a menu button will pop up its menu below the"
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
-msgstr "แนววางของพาเนล ค่าที่เป็นไปได้คือ \"top\", \"bottom\", \"left\", \"right\" ในโหมดขยายตัว ค่านี้กำหนดว่าพาเนลจะอยู่บนขอบใดของหน้าจอ ในโหมดไม่ขยายตัว ความแตกต่างระหว่าง \"ขอบบน\" และ \"ขอบล่าง\" อาจจะไม่สำคัญ โดยทั้งสองค่าต่างแสดงว่าพาเนลเป็นพาเนลตามแนวนอน แต่ก็ยังให้แนวทางที่เป็นประโยชน์ ว่าวัตถุพาเนลบางตัวควรปฏิบัติอย่างไร ตัวอย่างเช่น บนพาเนล \"ขอบบน\" ปุ่มเมนูจะผุดเมนูใต้พาเนลลงมา ในขณะที่ บนพาเนล \"ขอบล่าง\" จะผุดเมนูด้านบนเหนือพาเนล"
+msgstr ""
+"แนววางของพาเนล ค่าที่เป็นไปได้คือ \"top\", \"bottom\", \"left\", \"right\" "
+"ในโหมดขยายตัว ค่านี้กำหนดว่าพาเนลจะอยู่บนขอบใดของหน้าจอ ในโหมดไม่ขยายตัว "
+"ความแตกต่างระหว่าง \"ขอบบน\" และ \"ขอบล่าง\" อาจจะไม่สำคัญ "
+"โดยทั้งสองค่าต่างแสดงว่าพาเนลเป็นพาเนลตามแนวนอน "
+"แต่ก็ยังให้แนวทางที่เป็นประโยชน์ ว่าวัตถุพาเนลบางตัวควรปฏิบัติอย่างไร "
+"ตัวอย่างเช่น บนพาเนล \"ขอบบน\" ปุ่มเมนูจะผุดเมนูใต้พาเนลลงมา ในขณะที่ "
+"บนพาเนล \"ขอบล่าง\" จะผุดเมนูด้านบนเหนือพาเนล"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
 msgid "Panel size"
@@ -1524,7 +1653,10 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "ความสูง (ความกว้างสำหรับพาเนลตามแนวตั้ง) ของพาเนล ในขณะทำงาน พาเนลจะพิจารณาหาค่าที่ต่ำที่สุดจากขนาดของรูปแบบตัวอักษรและตัวบ่งชี้อื่นๆ ค่าสูงสุดถูกกำหนดไว้ที่หนึ่งส่วนสี่ของความสูงจอภาพ (หรือความกว้าง)"
+msgstr ""
+"ความสูง (ความกว้างสำหรับพาเนลตามแนวตั้ง) ของพาเนล ในขณะทำงาน "
+"พาเนลจะพิจารณาหาค่าที่ต่ำที่สุดจากขนาดของรูปแบบตัวอักษรและตัวบ่งชี้อื่นๆ "
+"ค่าสูงสุดถูกกำหนดไว้ที่หนึ่งส่วนสี่ของความสูงจอภาพ (หรือความกว้าง)"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
 msgid "X co-ordinate of panel"
@@ -1535,7 +1667,10 @@ msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "ตำแหน่งของพาเนลตามแกน X ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+msgstr ""
+"ตำแหน่งของพาเนลตามแกน X ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว "
+"ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
 msgid "Y co-ordinate of panel"
@@ -1546,7 +1681,10 @@ msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "ตำแหน่งของพาเนลตามแกน Y ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+msgstr ""
+"ตำแหน่งของพาเนลตามแกน Y ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว "
+"ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
 msgid "X co-ordinate of panel, starting from the right of the screen"
@@ -1560,7 +1698,11 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "ตำแหน่งของพาเนลตามแกน X นับจากขอบขวาของหน้าจอ ถ้ากำหนดเป็น -1 จะไม่ใช้ค่านี้ และไปใช้ค่าในคีย์ x แทน ถ้าค่านี้มากกว่า 0 ก็จะไม่ใช้ค่าในคีย์ x  ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+msgstr ""
+"ตำแหน่งของพาเนลตามแกน X นับจากขอบขวาของหน้าจอ ถ้ากำหนดเป็น -1 จะไม่ใช้ค่านี้"
+" และไปใช้ค่าในคีย์ x แทน ถ้าค่านี้มากกว่า 0 ก็จะไม่ใช้ค่าในคีย์ x  "
+"ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -1574,7 +1716,12 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr "ตำแหน่งของพาเนลตามแกน Y นับจากขอบล่างของหน้าจอ ถ้ากำหนดเป็น -1 จะไม่ใช้ค่านี้ และไปใช้ค่าในคีย์ y แทน ถ้าค่านี้มากกว่า 0 ก็จะไม่ใช้ค่าในคีย์ y  ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+msgstr ""
+"ตำแหน่งของพาเนลตามแกน Y นับจากขอบล่างของหน้าจอ ถ้ากำหนดเป็น -1 "
+"จะไม่ใช้ค่านี้ และไปใช้ค่าในคีย์ y แทน ถ้าค่านี้มากกว่า 0 "
+"ก็จะไม่ใช้ค่าในคีย์ y  ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว "
+"ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
 msgid "Center panel on x-axis"
@@ -1586,7 +1733,11 @@ msgid ""
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr "ถ้าเลือก จะไม่สนใจค่า x และ x_right และวางพาเนลไว้ตรงกลางตามแกน X ของหน้าจอเสมอ ถึงพาเนลถูกปรับขนาด ก็จะยังคงอยู่ตรงกลางเหมือนเดิม โดยพาเนลจะขยายขอบออกทั้งสองข้าง ถ้าไม่เลือก จะใช้ค่า x และ x_right กำหนดตำแหน่งของพาเนล"
+msgstr ""
+"ถ้าเลือก จะไม่สนใจค่า x และ x_right และวางพาเนลไว้ตรงกลางตามแกน X "
+"ของหน้าจอเสมอ ถึงพาเนลถูกปรับขนาด ก็จะยังคงอยู่ตรงกลางเหมือนเดิม "
+"โดยพาเนลจะขยายขอบออกทั้งสองข้าง ถ้าไม่เลือก จะใช้ค่า x และ x_right "
+"กำหนดตำแหน่งของพาเนล"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
 msgid "Center panel on y-axis"
@@ -1598,7 +1749,11 @@ msgid ""
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr "ถ้าเลือก จะไม่สนใจค่า y และ y_bottom และวางพาเนลไว้ตรงกลางตามแกน Y ของหน้าจอเสมอ ถึงพาเนลถูกปรับขนาด ก็จะยังคงอยู่ตรงกลางเหมือนเดิม โดยพาเนลจะขยายขอบออกทั้งสองข้าง ถ้าไม่เลือก จะใช้ค่า y และ y_bottom กำหนดตำแหน่งของพาเนล"
+msgstr ""
+"ถ้าเลือก จะไม่สนใจค่า y และ y_bottom และวางพาเนลไว้ตรงกลางตามแกน Y "
+"ของหน้าจอเสมอ ถึงพาเนลถูกปรับขนาด ก็จะยังคงอยู่ตรงกลางเหมือนเดิม "
+"โดยพาเนลจะขยายขอบออกทั้งสองข้าง ถ้าไม่เลือก จะใช้ค่า y และ y_bottom "
+"กำหนดตำแหน่งของพาเนล"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
 msgid "Automatically hide panel into corner"
@@ -1609,13 +1764,17 @@ msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "ถ้าเลือก จะซ่อนพาเนลไปไว้ในมุมหนึ่งของหน้าจอโดยอัตโนมัติ เมื่อเลื่อนตัวชี้ออกจากพื้นที่พาเนล  การย้ายตัวชี้ไปที่มุมนั้นอีกครั้ง จะดึงพาเนลกลับออกมาใหม่"
+msgstr ""
+"ถ้าเลือก จะซ่อนพาเนลไปไว้ในมุมหนึ่งของหน้าจอโดยอัตโนมัติ "
+"เมื่อเลื่อนตัวชี้ออกจากพื้นที่พาเนล  การย้ายตัวชี้ไปที่มุมนั้นอีกครั้ง "
+"จะดึงพาเนลกลับออกมาใหม่"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "ถ้าเลือก การซ่อนและการปรากฏของพาเนลนี้จะมีการเคลื่อนไหวแทนที่จะเกิดขึ้นทันที"
+msgstr ""
+"ถ้าเลือก การซ่อนและการปรากฏของพาเนลนี้จะมีการเคลื่อนไหวแทนที่จะเกิดขึ้นทันที"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
 msgid "Enable hide buttons"
@@ -1625,7 +1784,9 @@ msgstr "เปิดใช้งานปุ่มซ่อน"
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "ถ้าเลือก จะวางปุ่มที่ด้านข้างแต่ละข้างของพาเนล ซึ่งสามารถใช้ย้ายพาเนลไปซ่อนที่ขอบของหน้าจอโดยเหลือแต่ปุ่มเดียวสำหรับดึงพาเนลกลับออกมา"
+msgstr ""
+"ถ้าเลือก จะวางปุ่มที่ด้านข้างแต่ละข้างของพาเนล "
+"ซึ่งสามารถใช้ย้ายพาเนลไปซ่อนที่ขอบของหน้าจอโดยเหลือแต่ปุ่มเดียวสำหรับดึงพาเนลกลับออกมา"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
 msgid "Enable arrows on hide buttons"
@@ -1635,7 +1796,9 @@ msgstr "เปิดใช้งานลูกศรบนปุ่มซ่อ
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "ถ้าเลือก จะแสดงรูปลูกศรบนปุ่มซ่อนพาเนล ค่านี้มีผลก็ต่อเมื่อเลือก enable_buttons"
+msgstr ""
+"ถ้าเลือก จะแสดงรูปลูกศรบนปุ่มซ่อนพาเนล ค่านี้มีผลก็ต่อเมื่อเลือก "
+"enable_buttons"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
 msgid "Panel autohide delay"
@@ -1646,7 +1809,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "กำหนดระยะเวลาหน่วงเป็นมิลลิวินาทีหลังจากตัวชี้เคลื่อนออกจากพื้นที่ของพาเนล ก่อนที่พาเนลจะซ่อนตัวอัตโนมัติ ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า auto_hide"
+msgstr ""
+"กำหนดระยะเวลาหน่วงเป็นมิลลิวินาทีหลังจากตัวชี้เคลื่อนออกจากพื้นที่ของพาเนล "
+"ก่อนที่พาเนลจะซ่อนตัวอัตโนมัติ ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า auto_hide"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
 msgid "Panel autounhide delay"
@@ -1657,7 +1822,9 @@ msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "กำหนดระยะเวลาหน่วงเป็นมิลลิวินาทีหลังจากตัวชี้เคลื่อนเข้าสู่พื้นที่ของพาเนล ก่อนที่พาเนลจะปรากฏใหม่อัตโนมัติ ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า auto_hide"
+msgstr ""
+"กำหนดระยะเวลาหน่วงเป็นมิลลิวินาทีหลังจากตัวชี้เคลื่อนเข้าสู่พื้นที่ของพาเนล "
+"ก่อนที่พาเนลจะปรากฏใหม่อัตโนมัติ ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า auto_hide"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
 msgid "Visible pixels when hidden"
@@ -1668,7 +1835,9 @@ msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
 "true."
-msgstr "กำหนดจำนวนพิกเซลที่แสดงให้เห็นได้เมื่อพาเนลถูกซ่อนอัตโนมัติไปที่มุม ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า auto_hide"
+msgstr ""
+"กำหนดจำนวนพิกเซลที่แสดงให้เห็นได้เมื่อพาเนลถูกซ่อนอัตโนมัติไปที่มุม "
+"ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า auto_hide"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
 msgid "Animation speed"
@@ -1679,7 +1848,9 @@ msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
-msgstr "ความเร็วของการเคลื่อนไหวของพาเนล ค่าที่เป็นไปได้คือ \"slow\", \"memory\" และ \"fast\" ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า enable_animations"
+msgstr ""
+"ความเร็วของการเคลื่อนไหวของพาเนล ค่าที่เป็นไปได้คือ \"slow\", \"memory\" และ"
+" \"fast\" ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า enable_animations"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
 msgid "Background type"
@@ -1691,7 +1862,10 @@ msgid ""
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "พื้นหลังชนิดใดที่ควรใช้สำหรับพาเนลนี้ ค่าที่เป็นไปได้คือ \"none\" - ใช้พื้นหลังปกติของวิดเจ็ต GTK+, \"color\" - ใช้ค่าในคีย์ \"สีพื้นหลัง\" เป็นสีพื้นหลัง หรือ \"image\" - ใช้ภาพในคีย์ \"ภาพพื้นหลัง\" เป็นพื้นหลัง"
+msgstr ""
+"พื้นหลังชนิดใดที่ควรใช้สำหรับพาเนลนี้ ค่าที่เป็นไปได้คือ \"none\" - "
+"ใช้พื้นหลังปกติของวิดเจ็ต GTK+, \"color\" - ใช้ค่าในคีย์ \"สีพื้นหลัง\" "
+"เป็นสีพื้นหลัง หรือ \"image\" - ใช้ภาพในคีย์ \"ภาพพื้นหลัง\" เป็นพื้นหลัง"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
 msgid "Background color"
@@ -1710,7 +1884,9 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
 " onto the desktop background image."
-msgstr "กำหนดความทึบสำหรับรูปแบบสีพื้นหลัง ถ้าสีนั้นไม่ทึบ (ค่าน้อยกว่า 65535) สีนั้นจะผสมไปกับภาพพื้นหลังพื้นโต๊ะ"
+msgstr ""
+"กำหนดความทึบสำหรับรูปแบบสีพื้นหลัง ถ้าสีนั้นไม่ทึบ (ค่าน้อยกว่า 65535) "
+"สีนั้นจะผสมไปกับภาพพื้นหลังพื้นโต๊ะ"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
 msgid "Background image"
@@ -1721,7 +1897,9 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "กำหนดแฟ้มที่ใช้เป็นภาพพื้นหลัง ถ้าภาพนั้นมีแชนแนลอัลฟา ภาพจะถูกผสมไปกับภาพพื้นหลังพื้นโต๊ะ"
+msgstr ""
+"กำหนดแฟ้มที่ใช้เป็นภาพพื้นหลัง ถ้าภาพนั้นมีแชนแนลอัลฟา "
+"ภาพจะถูกผสมไปกับภาพพื้นหลังพื้นโต๊ะ"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
 msgid "Fit image to panel"
@@ -1731,7 +1909,9 @@ msgstr "ปรับภาพให้พอดีกับพาเนล"
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "ถ้าเลือก จะปรับขนาดของภาพ (โดยรักษาสัดส่วนของภาพ) ตามความสูงของพาเนล (ในกรณีวางในแนวนอน)"
+msgstr ""
+"ถ้าเลือก จะปรับขนาดของภาพ (โดยรักษาสัดส่วนของภาพ) ตามความสูงของพาเนล "
+"(ในกรณีวางในแนวนอน)"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
 msgid "Stretch image to panel"
@@ -1741,7 +1921,9 @@ msgstr "ขยายภาพเต็มพาเนล"
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "ถ้าเลือก จะปรับขนาดของภาพตามขนาดกว้างยาวของพาเนล โดยไม่มีการรักษาสัดส่วนของภาพ"
+msgstr ""
+"ถ้าเลือก จะปรับขนาดของภาพตามขนาดกว้างยาวของพาเนล "
+"โดยไม่มีการรักษาสัดส่วนของภาพ"
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
 msgid "Rotate image on vertical panels"
@@ -1822,8 +2004,8 @@ msgstr "แสดงตัวเลือกเกี่ยวกับการ
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:827
-#: ../mate-panel/panel-applet-frame.c:1003
+#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:977
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
@@ -1853,32 +2035,32 @@ msgstr "ไม่มีโปรแกรมสำหรับจัดการ
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:143
+#: ../mate-panel/applet.c:545 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_ลบออกจากพาเนล"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:146
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
-msgstr "_ย้าย"
+msgstr "ย้า_ย"
 
-#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:152
+#: ../mate-panel/applet.c:573 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "ล็อ_คติดกับพาเนล"
 
-#: ../mate-panel/applet.c:1386
+#: ../mate-panel/applet.c:1383
 msgid "Cannot find an empty spot"
 msgstr "ไม่มีที่ว่าง"
 
-#: ../mate-panel/drawer.c:346 ../mate-panel/panel-addto.c:176
-#: ../mate-panel/panel-toplevel.c:1615
+#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:176
+#: ../mate-panel/panel-toplevel.c:1613
 msgid "Drawer"
 msgstr "ลิ้นชัก"
 
-#: ../mate-panel/drawer.c:533
+#: ../mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "เ_พิ่มลงในลิ้นชัก..."
 
-#: ../mate-panel/drawer.c:539 ../mate-panel/launcher.c:600
+#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
 #: ../mate-panel/panel-context-menu.c:244
 msgid "_Properties"
@@ -1897,7 +2079,7 @@ msgid "- Edit .desktop files"
 msgstr "- แก้ไขแฟ้ม .desktop"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:971
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "สร้างปุ่มเรียก"
 
@@ -1906,11 +2088,11 @@ msgstr "สร้างปุ่มเรียก"
 msgid "Directory Properties"
 msgstr "คุณสมบัติไดเรกทอรี"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:815
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "คุณสมบัติปุ่มเรียก"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:140
+#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:151
 msgid "Panel"
 msgstr "พาเนล"
 
@@ -1918,7 +2100,9 @@ msgstr "พาเนล"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "ใช้เรียกโปรแกรมต่างๆ พร้อมเครื่องมือต่างๆ สำหรับจัดการหน้าต่าง แสดงนาฬิกา ฯลฯ"
+msgstr ""
+"ใช้เรียกโปรแกรมต่างๆ พร้อมเครื่องมือต่างๆ สำหรับจัดการหน้าต่าง แสดงนาฬิกา "
+"ฯลฯ"
 
 #: ../mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -1940,20 +2124,20 @@ msgstr "ไม่ได้กำหนด URI ของแฟ้มพื้น�
 #: ../mate-panel/launcher.c:484
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "ไม่สามารถเปิดแฟ้มพื้นโต๊ะ %s สำหรับปุ่มเรียกบนพาเนล %s%s\n"
 
-#: ../mate-panel/launcher.c:590
+#: ../mate-panel/launcher.c:588
 msgid "_Launch"
 msgstr "เ_รียกใช้"
 
-#: ../mate-panel/launcher.c:908
+#: ../mate-panel/launcher.c:904
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "ไม่ได้กำหนดค่า %s ไม่สามารถโหลดปุ่มเรียก\n"
 
-#: ../mate-panel/launcher.c:1040 ../mate-panel/panel-ditem-editor.c:1330
-#: ../mate-panel/panel-ditem-editor.c:1364
-#: ../mate-panel/panel-ditem-editor.c:1395
+#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1326
+#: ../mate-panel/panel-ditem-editor.c:1360
+#: ../mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "ไม่สามารถบันทึกปุ่มเรียกได้"
 
@@ -1976,23 +2160,23 @@ msgstr "เรียกทำงานกล่องโต้ตอบ 'เร�
 msgid "Set the default panel layout"
 msgstr "ตั้งเค้าโครงพาเนลปริยาย"
 
-#: ../mate-panel/menu.c:528
+#: ../mate-panel/menu.c:499
 msgid "Add this launcher to _panel"
 msgstr "เพิ่มปุ่มเรียกโปรแกรมนี้ใน_พาเนล"
 
-#: ../mate-panel/menu.c:535
+#: ../mate-panel/menu.c:506
 msgid "Add this launcher to _desktop"
 msgstr "เพิ่มไอคอนเรียกโปรแกรมนี้บนพื้นโ_ต๊ะ"
 
-#: ../mate-panel/menu.c:547
+#: ../mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "เมนูทั้งห_มด"
 
-#: ../mate-panel/menu.c:552
+#: ../mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "เพิ่มลงเป็น_ลิ้นชักในพาเนล"
 
-#: ../mate-panel/menu.c:559
+#: ../mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "เพิ่มลงเป็นเ_มนูในพาเนล"
 
@@ -2041,10 +2225,10 @@ msgstr "ค้นหาแฟ้ม..."
 
 #: ../mate-panel/panel-action-button.c:381
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "ค้นหาเอกสารและโฟลเดอร์ในคอมพิวเตอร์เครื่องนี้ด้วยชื่อหรือเนื้อหา"
+msgstr "ค้นหาเอกสารและโฟลเดอร์ในคอมพิวเตอร์นี้ด้วยชื่อหรือเนื้อหา"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:251
+#: ../mate-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "บังคับออก"
 
@@ -2140,41 +2324,43 @@ msgstr "เพิ่มลงในพาเนล"
 msgid "Find an _item to add to the panel:"
 msgstr "หา_รายการที่จะเพิ่มลงในพาเนล:"
 
-#: ../mate-panel/panel-applet-frame.c:788
+#: ../mate-panel/panel-applet-frame.c:758
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" หยุดทำงานกระทันหัน"
 
-#: ../mate-panel/panel-applet-frame.c:790
+#: ../mate-panel/panel-applet-frame.c:760
 msgid "Panel object has quit unexpectedly"
 msgstr "วัตถุพาเนลหยุดทำงานกระทันหัน"
 
-#: ../mate-panel/panel-applet-frame.c:797
+#: ../mate-panel/panel-applet-frame.c:767
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "การโหลดวัตถุพาเนลใหม่ จะเป็นการเพิ่มวัตถุพาเนลนั้นกลับเข้าไปในพาเนลอีกครั้งโดยอัตโนมัติ"
+msgstr ""
+"การโหลดวัตถุพาเนลใหม่ "
+"จะเป็นการเพิ่มวัตถุพาเนลนั้นกลับเข้าไปในพาเนลอีกครั้งโดยอัตโนมัติ"
 
-#: ../mate-panel/panel-applet-frame.c:804
+#: ../mate-panel/panel-applet-frame.c:774
 msgid "D_elete"
 msgstr "_ลบ"
 
-#: ../mate-panel/panel-applet-frame.c:805
-#: ../mate-panel/panel-applet-frame.c:810
+#: ../mate-panel/panel-applet-frame.c:775
+#: ../mate-panel/panel-applet-frame.c:780
 msgid "_Don't Reload"
 msgstr "ไ_ม่ต้องโหลดใหม่"
 
-#: ../mate-panel/panel-applet-frame.c:806
-#: ../mate-panel/panel-applet-frame.c:811
+#: ../mate-panel/panel-applet-frame.c:776
+#: ../mate-panel/panel-applet-frame.c:781
 msgid "_Reload"
 msgstr "โห_ลดใหม่"
 
-#: ../mate-panel/panel-applet-frame.c:966
+#: ../mate-panel/panel-applet-frame.c:940
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "พาเนลพบกับปัญหาในขณะเรียกใช้ \"%s\""
 
-#: ../mate-panel/panel-applet-frame.c:982
+#: ../mate-panel/panel-applet-frame.c:956
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "คุณต้องการลบแอพเพล็ตนี้จากการกำหนดค่าของคุณหรือไม่?"
 
@@ -2190,7 +2376,9 @@ msgstr "พาเนลของ MATE"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "โปรแกรมนี้ใช้สำหรับเรียกใช้โปรแกรมอื่นๆ และมีเครื่องมืออรรถประโยชน์ให้เรียกใช้"
+msgstr ""
+"โปรแกรมนี้ใช้สำหรับเรียกใช้โปรแกรมอื่นๆ "
+"และมีเครื่องมืออรรถประโยชน์ให้เรียกใช้"
 
 #: ../mate-panel/panel-context-menu.c:121
 msgid "About the MATE Panel"
@@ -2216,10 +2404,10 @@ msgstr ""
 
 #: ../mate-panel/panel-context-menu.c:211
 msgid "_Cancel"
-msgstr ""
+msgstr "_ยกเลิก"
 
 #: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-context-menu.c:254
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
@@ -2227,15 +2415,15 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_ลบพาเนลนี้"
 
-#: ../mate-panel/panel-context-menu.c:277
+#: ../mate-panel/panel-context-menu.c:279
 msgid "_New Panel"
 msgstr "พาเนลใ_หม่"
 
-#: ../mate-panel/panel-context-menu.c:329
+#: ../mate-panel/panel-context-menu.c:331
 msgid "A_bout Panels"
 msgstr "เ_กี่ยวกับพาเนล"
 
@@ -2249,82 +2437,84 @@ msgstr "โปรแกรมในเทอร์มินัล"
 
 #: ../mate-panel/panel-ditem-editor.c:118
 msgid "Location"
-msgstr "ตำแหน่ง"
+msgstr "ตำแหน่งที่ตั้ง"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:610
+#: ../mate-panel/panel-ditem-editor.c:606
 msgid "_Type:"
 msgstr "ช_นิด:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:617
+#: ../mate-panel/panel-ditem-editor.c:613
 msgid "_Name:"
 msgstr "_ชื่อ:"
 
-#: ../mate-panel/panel-ditem-editor.c:642
+#: ../mate-panel/panel-ditem-editor.c:638
 msgid "_Browse..."
 msgstr "เ_รียกดู..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:649
+#: ../mate-panel/panel-ditem-editor.c:645
 msgid "Co_mment:"
 msgstr "คำ_อธิบาย:"
 
-#: ../mate-panel/panel-ditem-editor.c:981
+#: ../mate-panel/panel-ditem-editor.c:977
 msgid "Choose an application..."
 msgstr "เลือกโปรแกรม..."
 
-#: ../mate-panel/panel-ditem-editor.c:985
+#: ../mate-panel/panel-ditem-editor.c:981
 msgid "Choose a file..."
 msgstr "เลือกแฟ้ม..."
 
-#: ../mate-panel/panel-ditem-editor.c:1150
-#: ../mate-panel/panel-ditem-editor.c:1159
+#: ../mate-panel/panel-ditem-editor.c:1146
+#: ../mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "คำ_สั่ง:"
 
-#: ../mate-panel/panel-ditem-editor.c:1168
+#: ../mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "_ตำแหน่ง:"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: ../mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "ไม่ได้กำหนดชื่อปุ่มเรียก"
 
-#: ../mate-panel/panel-ditem-editor.c:1335
+#: ../mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "ไม่สามารถบันทึกคุณสมบัติของไดเรกทอรี"
 
-#: ../mate-panel/panel-ditem-editor.c:1336
+#: ../mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "ไม่ได้กำหนดชื่อไดเรกทอรี"
 
-#: ../mate-panel/panel-ditem-editor.c:1352
+#: ../mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "ไม่ได้กำหนดคำสั่งของปุ่มเรียก"
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "ไม่ได้กำหนดตำแหน่งของปุ่มเรียก"
 
-#: ../mate-panel/panel-ditem-editor.c:1432
+#: ../mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
-msgstr "ไม่สามารถแสดงเอกสารวิธีใช้ได้"
+msgstr "ไม่สามารถแสดงเอกสารวิธีใช้"
 
 #: ../mate-panel/panel-force-quit.c:80
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "คลิกบนหน้าต่างที่จะบังคับให้หยุดทำงาน ถ้าจะยกเลิกกดปุ่ม <ESC>"
 
-#: ../mate-panel/panel-force-quit.c:234
+#: ../mate-panel/panel-force-quit.c:220
 msgid "Force this application to exit?"
 msgstr "บังคับให้โปรแกรมนี้หยุดทำงานหรือไม่?"
 
-#: ../mate-panel/panel-force-quit.c:237
+#: ../mate-panel/panel-force-quit.c:223
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "ถ้าคุณบังคับให้โปรแกรมหยุดทำงาน การเปลี่ยนแปลงในเอกสารใดๆ ที่ยังไม่ได้บันทึกอาจสูญหาย"
+msgstr ""
+"ถ้าคุณบังคับให้โปรแกรมหยุดทำงาน การเปลี่ยนแปลงในเอกสารใดๆ "
+"ที่ยังไม่ได้บันทึกอาจสูญหาย"
 
 #: ../mate-panel/panel-menu-bar.c:99
 msgid "Browse and run installed applications"
@@ -2340,9 +2530,9 @@ msgstr "เปลี่ยนรูปลักษณ์และพฤติก
 
 #: ../mate-panel/panel-menu-bar.c:168
 msgid "Applications"
-msgstr "โปรแกรม"
+msgstr "แอพพลิเคชั่น"
 
-#: ../mate-panel/panel-menu-bar.c:364 ../mate-panel/panel-menu-button.c:675
+#: ../mate-panel/panel-menu-bar.c:360 ../mate-panel/panel-menu-button.c:675
 msgid "_Edit Menus"
 msgstr "แ_ก้ไขเมนู"
 
@@ -2351,10 +2541,10 @@ msgid "Bookmarks"
 msgstr "ที่คั่นหน้า"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:549
+#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:544
 #, c-format
 msgid "Open '%s'"
-msgstr "เปิด '%s'"
+msgstr "เปิดเอกสาร '%s'"
 
 #: ../mate-panel/panel-menu-items.c:566
 #, c-format
@@ -2407,7 +2597,8 @@ msgstr "คอมพิวเตอร์"
 #: ../mate-panel/panel-menu-items.c:1084
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
-msgstr "ท่องดูดิสก์และโฟลเดอร์ทั้งหมดในเครื่องและในเครือข่ายที่เข้าถึงได้จากคอมพิวเตอร์นี้"
+msgstr ""
+"ท่องดูดิสก์และโฟลเดอร์ทั้งหมดในเครื่องและในเครือข่ายที่เข้าถึงได้จากคอมพิวเตอร์นี้"
 
 #: ../mate-panel/panel-menu-items.c:1097
 msgid "Network"
@@ -2415,11 +2606,12 @@ msgstr "เครือข่าย"
 
 #: ../mate-panel/panel-menu-items.c:1098
 msgid "Browse bookmarked and local network locations"
-msgstr "ท่องดูตำแหน่งเครือข่ายที่คั่นหน้าไว้ และตำแหน่งต่างๆ ในเครือข่ายเฉพาะที่"
+msgstr ""
+"ท่องดูตำแหน่งเครือข่ายที่คั่นหน้าไว้ และตำแหน่งต่างๆ ในเครือข่ายเฉพาะที่"
 
 #: ../mate-panel/panel-menu-items.c:1496
 msgid "Places"
-msgstr "ที่หลักๆ"
+msgstr "สถานที่"
 
 #: ../mate-panel/panel-menu-items.c:1524
 msgid "System"
@@ -2450,43 +2642,33 @@ msgstr "ออกจากระบบ (ผู้ใช้ %s)..."
 msgid "Log out %s of this session to log in as a different user"
 msgstr "ออกจากวาระนี้ของผู้ใช้ %s เพื่อเข้าระบบเป็นผู้ใช้อื่น"
 
-#: ../mate-panel/panel-properties-dialog.c:120
+#: ../mate-panel/panel-properties-dialog.c:119
 #: ../mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "ขอบบน"
 
-#: ../mate-panel/panel-properties-dialog.c:121
+#: ../mate-panel/panel-properties-dialog.c:120
 #: ../mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "ขอบล่าง"
 
-#: ../mate-panel/panel-properties-dialog.c:122
+#: ../mate-panel/panel-properties-dialog.c:121
 #: ../mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
-msgstr "ขอบซ้าย"
+msgstr "ซ้าย"
 
-#: ../mate-panel/panel-properties-dialog.c:123
+#: ../mate-panel/panel-properties-dialog.c:122
 #: ../mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
-msgstr "ขอบขวา"
+msgstr "ขวา"
 
-#: ../mate-panel/panel-properties-dialog.c:819
+#: ../mate-panel/panel-properties-dialog.c:818
 msgid "Drawer Properties"
 msgstr "คุณสมบัติลิ้นชัก"
-
-#: ../mate-panel/panel-properties-dialog.c:939
-#: ../mate-panel/panel-run-dialog.c:1973
-#, c-format
-msgid "Unable to load file '%s': %s."
-msgstr "ไม่สามารถอ่านแฟ้ม '%s': %s"
-
-#: ../mate-panel/panel-properties-dialog.c:945
-msgid "Could not display properties dialog"
-msgstr "ไม่สามารถเปิดกล่องโต้ตอบคุณสมบัติได้"
 
 #: ../mate-panel/panel-properties-dialog.ui.h:1
 msgid "Panel Properties"
@@ -2609,7 +2791,10 @@ msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
-msgstr "การล้างรายชื่อเอกสารล่าสุด จะล้างรายการต่อไปนี้:\n• รายการทั้งหมดในเมนู ที่หลักๆ → เอกสารล่าสุด\n• รายชื่อเอกสารล่าสุดในโปรแกรมทั้งหมด"
+msgstr ""
+"การล้างรายชื่อเอกสารล่าสุด จะล้างรายการต่อไปนี้:\n"
+"• รายการทั้งหมดในเมนู ที่หลักๆ → เอกสารล่าสุด\n"
+"• รายชื่อเอกสารล่าสุดในโปรแกรมทั้งหมด"
 
 #: ../mate-panel/panel-recent.c:161
 msgid "Clear Recent Documents"
@@ -2627,37 +2812,35 @@ msgstr "ล้างรายชื่อเอกสารล่าสุด...
 msgid "Clear all items from the recent documents list"
 msgstr "ล้างรายการเอกสารล่าสุดทั้งหมด"
 
-#: ../mate-panel/panel-run-dialog.c:419
+#: ../mate-panel/panel-run-dialog.c:420
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "ไม่สามารถเรียกใช้คำสั่ง '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:460
+#: ../mate-panel/panel-run-dialog.c:461
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "ไม่สามารถแปลง '%s' จาก UTF-8 ได้"
 
-#: ../mate-panel/panel-run-dialog.c:1207
+#: ../mate-panel/panel-run-dialog.c:1236
 msgid "Choose a file to append to the command..."
 msgstr "เลือกแฟ้มที่จะใช้ต่อท้ายคำสั่ง..."
 
-#: ../mate-panel/panel-run-dialog.c:1585 ../mate-panel/panel-run-dialog.ui.h:9
+#: ../mate-panel/panel-run-dialog.c:1618 ../mate-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "เลือกโปรแกรมแล้วจะแสดงรายละเอียด"
 
-#: ../mate-panel/panel-run-dialog.c:1623
+#: ../mate-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "จะเรียกใช้คำสั่ง: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1656
+#: ../mate-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "รายชื่อ URI ที่ถูกวางในกล่องโต้ตอบเรียกโปรแกรมมีรูปแบบไม่ถูกต้อง (%d) หรือมีความยาวไม่ถูกต้อง (%d)\n"
-
-#: ../mate-panel/panel-run-dialog.c:1978
-msgid "Could not display run dialog"
-msgstr "ไม่สามารถเปิดกล่องโต้ตอบเรียกโปรแกรมได้"
+msgstr ""
+"รายชื่อ URI ที่ถูกวางในกล่องโต้ตอบเรียกโปรแกรมมีรูปแบบไม่ถูกต้อง (%d) "
+"หรือมีความยาวไม่ถูกต้อง (%d)\n"
 
 #: ../mate-panel/panel-run-dialog.ui.h:1
 msgid "Run Application"
@@ -2790,86 +2973,90 @@ msgstr "แ_อพเพล็ต:"
 msgid "_Prefs Path:"
 msgstr "เส้นทางค่า_ปรับแต่ง:"
 
-#: ../mate-panel/panel-toplevel.c:1218
+#: ../mate-panel/panel-toplevel.c:1181
 msgid "Hide Panel"
 msgstr "ซ่อนพาเนล"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1621 ../mate-panel/panel-toplevel.c:1631
+#: ../mate-panel/panel-toplevel.c:1619 ../mate-panel/panel-toplevel.c:1629
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1623
+#: ../mate-panel/panel-toplevel.c:1621
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1625
+#: ../mate-panel/panel-toplevel.c:1623
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1627
+#: ../mate-panel/panel-toplevel.c:1625
 msgid "Right Panel"
 msgstr ""
 
-#: ../mate-panel/panel-util.c:347
+#: ../mate-panel/panel-util.c:348
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "ไม่พบไอคอน '%s'"
 
-#: ../mate-panel/panel-util.c:465
+#: ../mate-panel/panel-util.c:472
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "ไม่สามารถเรียกใช้ '%s'"
 
-#: ../mate-panel/panel-util.c:693
+#: ../mate-panel/panel-util.c:700
 msgid "file"
 msgstr "แฟ้ม"
 
-#: ../mate-panel/panel-util.c:866
+#: ../mate-panel/panel-util.c:873
 msgid "Home Folder"
-msgstr "โฟลเดอร์บ้าน"
+msgstr "โฟลเดอร์หลัก"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:878
+#: ../mate-panel/panel-util.c:885
 msgid "File System"
 msgstr "ระบบแฟ้ม"
 
-#: ../mate-panel/panel-util.c:1051
+#: ../mate-panel/panel-util.c:1058
 msgid "Search"
-msgstr "ค้นหาแฟ้ม"
+msgstr "ค้นหา"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1097
+#: ../mate-panel/panel-util.c:1104
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:482
+#: ../mate-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "เปิด URL: %s"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1327
 msgid "Delete this drawer?"
 msgstr "ยืนยันการลบลิ้นชักนี้หรือไม่?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1328
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
-msgstr "เมื่อลบลิ้นชัก ลิ้นชักและค่าที่ตั้งไว้จะสูญหาย\nลบลิ้นชักนี้หรือไม่?"
+msgstr ""
+"เมื่อลบลิ้นชัก ลิ้นชักและค่าที่ตั้งไว้จะสูญหาย\n"
+"ลบลิ้นชักนี้หรือไม่?"
 
-#: ../mate-panel/panel.c:1336
+#: ../mate-panel/panel.c:1331
 msgid "Delete this panel?"
 msgstr "ยืนยันการลบพาเนลนี้หรือไม่?"
 
-#: ../mate-panel/panel.c:1337
+#: ../mate-panel/panel.c:1332
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
-msgstr "เมื่อลบพาเนล พาเนลและค่าที่ตั้งไว้จะสูญหาย\nลบพาเนลนี้หรือไม่?"
+msgstr ""
+"เมื่อลบพาเนล พาเนลและค่าที่ตั้งไว้จะสูญหาย\n"
+"ลบพาเนลนี้หรือไม่?"
