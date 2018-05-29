@@ -1,26 +1,50 @@
+### mate-panel 1.20.2
+
+  * sync with transifex
+  * update mate-panel.pot
+  * Convert launcher icons to cairo surfaces
+  * fix rendering and removal of in-process applets on unexpanded panel
+  * limit size of panel-hide-button
+  * clock: fix weird thing in comments
+  * clock: fix copy/paste error which caused use-after-free
+  * fish: Install fish animations in fish-specific directory
+  * fish: drop wanda image from gresource
+  * css: use parsing-error signal to warn on bad css file or image
+  * css: Convert to GResource
+  * na-tray: Convert to GResource
+  * wncklet: Convert to GResource
+  * panel: Convert to GResource
+  * clock: Use new GdkPixbuf API to load resources
+  * clock: Convert to GResource
+  * fish: Convert to GResource
+  * libpanel-applet: Add panel_applet_setup_menu_from_resource() API
+  * Theme: consistant theming for applet drag handles in all themes
+  * Revert "panel-toplevel: Remove pointer boundary check in panel_toplevel_queue_auto_hide()"
+  * Accessibility: white/black applet handles in GNOME high contrast themes
+  * Theme: show applet handles on non-MATE themes
+
 ### mate-panel 1.20.1
 
-    workspace-switcher: support i3 WM
-    Fix rendering of out-of-process window list with hidpi
-    workspace-switcher: support metacity WM
-    Apply fix for workspace-switcher
-    hidpi: fix tray icon spacing with window-scaling > 1
-    Fix out-of-process applet sizes for HiDPI
-    Fix hide buttons make panel bigger
-    run dialog: force icon size when loading app icon
-    run dialog: fix expand of content on window resize
-    Fix run dialog show-program-list enabling fix
-    run-dialog: use F6 to switch between entry field and program list
-    Fix strut sizes for HiDPI multi-monitors
-    Do not down-scale monitor geometries for GDK monitors
-    Scale monitor geometries down to device pixels to support multiple monitors in HiDPI
+  * workspace-switcher: support i3 WM
+  * Fix rendering of out-of-process window list with hidpi
+  * workspace-switcher: support metacity WM
+  * Apply fix for workspace-switcher
+  * hidpi: fix tray icon spacing with window-scaling > 1
+  * Fix out-of-process applet sizes for HiDPI
+  * Fix hide buttons make panel bigger
+  * run dialog: force icon size when loading app icon
+  * run dialog: fix expand of content on window resize
+  * Fix run dialog show-program-list enabling fix
+  * run-dialog: use F6 to switch between entry field and program list
+  * Fix strut sizes for HiDPI multi-monitors
+  * Do not down-scale monitor geometries for GDK monitors
+  * Scale monitor geometries down to device pixels to support multiple monitors in HiDPI
 
 commit 13940c6221d0eb062352d238a45b879e65116fc6
 Author: info-cppsp <info@cppsp.de>
 Date:   Tue Feb 6 16:24:14 2018 +0100
 
-    Drawer cleanup and fix arrow behavior
-
+  * Drawer cleanup and fix arrow behavior
 
 ### mate-panel 1.20.0
 
