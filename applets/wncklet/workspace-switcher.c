@@ -248,6 +248,27 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
                 type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
 }
 
+static void applet_style_updated (MatePanelApplet *applet, GtkStyleContext *context)
+{
+	GtkCssProvider *provider;
+	GdkRGBA color;
+
+	provider = gtk_css_provider_new ();
+
+	/* Provide a fallback color for the highlighted workspace based on the current theme */
+	gtk_style_context_lookup_color (context, "theme_selected_bg_color", &color);
+	gchar *bg_css = g_strconcat (".wnck-pager:selected {\n"
+		                     "	background-color:", gdk_rgba_to_string (&color), ";\n"
+		                     "}", NULL);
+	gtk_css_provider_load_from_data (provider, bg_css, -1, NULL);
+	g_free (bg_css);
+
+	gtk_style_context_add_provider (context,
+					GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+	g_object_unref (provider);
+}
+
 /* Replacement for the default scroll handler that also cares about the wrapping property.
  * Alternative: Add behaviour to libwnck (to the WnckPager widget).
  */
@@ -493,7 +514,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	PagerData* pager;
 	GtkActionGroup* action_group;
 	gboolean display_names;
-	GtkCssProvider *provider;
 
 	pager = g_new0(PagerData, 1);
 
@@ -546,16 +566,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	context = gtk_widget_get_style_context (pager->pager);
 	gtk_style_context_add_class (context, "wnck-pager");
 
-	provider = gtk_css_provider_new ();
-	gtk_css_provider_load_from_data (provider,
-                                         ".wnck-pager:selected {\n"
-                                         "background-color: #4A90D9; }",
-                                         -1, NULL);
-	gtk_style_context_add_provider (context,
-					GTK_STYLE_PROVIDER (provider),
-					GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
-	g_object_unref (provider);
-
 	g_signal_connect(G_OBJECT(pager->pager), "destroy", G_CALLBACK(destroy_pager), pager);
 
 	/* overwrite default WnckPager widget scroll-event */
@@ -567,6 +577,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	g_signal_connect(G_OBJECT(pager->applet), "unrealize", G_CALLBACK(applet_unrealized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "change_orient", G_CALLBACK(applet_change_orient), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "change_background", G_CALLBACK(applet_change_background), pager);
+	g_signal_connect(G_OBJECT(pager->applet), "style-updated", G_CALLBACK(applet_style_updated), context);
 
 	gtk_widget_show(pager->pager);
 	gtk_widget_show(pager->applet);
