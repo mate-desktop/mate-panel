@@ -250,13 +250,15 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 void
 panel_struts_set_window_hint (PanelToplevel *toplevel)
 {
-	GtkWidget  *widget;
-	PanelStrut *strut;
-	int         strut_size;
-	int         monitor_x, monitor_y, monitor_width, monitor_height;
-	int         screen_width, screen_height;
-	int         leftmost, rightmost, topmost, bottommost;
-	int         scale;
+	GtkWidget       *widget;
+	PanelStrut      *strut;
+	int              strut_size;
+	int              monitor_x, monitor_y, monitor_width, monitor_height;
+	int              screen_width, screen_height;
+	int              leftmost, rightmost, topmost, bottommost;
+	int              scale;
+	PanelOrientation strut_orientation;
+	int              strut_start, strut_end;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -288,26 +290,69 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
                                                  &topmost,
                                                  &bottommost);
 
+	/* HACK: Here we purposefully break freedesktop wm-spec standard for _NET_WM_STRUT_PARTIAL
+	 * for multi-monitor setups. Since _NET_WM_STRUT_PARTIAL only allow struts along the edges
+	 * of the screen (rather than each monitor), panels positioned on the inside edge of a
+	 * monitor (e.g. top panel on the bottom-most monitor, left panel on the right-most
+	 * monitor, etc), cannot have proper struts. We "fix" this by setting a partial strut that
+	 * is orthogonal to the "correct" one, and pivot the dimensions for it.
+	 *
+	 * For example: a top panel defaults to having a strut that is 24px high, a start
+	 * coordinate of 0px, and an end coordinate of 1920px. If this panel is on the bottom-most
+	 * monitor, and thus no longer at the edge of the screen, we instead "fix" it here by
+	 * applying struts as though it was a *left* panel, that is 1920px wide, with a start
+	 * coordinate of 1080px (top monitor height) and an end coordinate of (1080px + 24px).
+	 *
+	 * This hack only works properly for expanded panels, or panels that start at either edge
+	 * of the monitor, since otherwise they require floating struts, which are not really a
+	 * thing. This last part we just ignore and let the strut exist snapped to the far edge of
+	 * the monitor, which only mildly affects edge snapping of non-maximized windows against
+	 * the floating panel.
+	 */
+	strut_start = strut->allocated_strut_start;
+	strut_end = strut->allocated_strut_end;
+	strut_orientation = strut->orientation;
+
 	switch (strut->orientation) {
 	case PANEL_ORIENTATION_TOP:
-		if (monitor_y > 0)
+		if (!topmost) {
+			strut_orientation = strut_start ? PANEL_ORIENTATION_RIGHT : PANEL_ORIENTATION_LEFT;
+			strut_start = monitor_y;
+			strut_end = (strut_size / scale) + strut_start - 1;
+			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+		} else if (monitor_y > 0) {
 			strut_size += monitor_y;
-		if (!topmost) strut_size = 0;
+		}
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		if (monitor_y + monitor_height < screen_height)
+		if (!bottommost) {
+			strut_orientation = strut_start ? PANEL_ORIENTATION_RIGHT : PANEL_ORIENTATION_LEFT;
+			strut_end = monitor_height - 1;
+			strut_start = strut_end - (strut_size / scale) + 1;
+			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+		} else if (monitor_y + monitor_height < screen_height) {
 			strut_size += screen_height - (monitor_y + monitor_height);
-		if (!bottommost) strut_size = 0;
+		}
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		if (leftmost && monitor_x > 0)
+		if (!leftmost) {
+			strut_orientation = strut_start ? PANEL_ORIENTATION_BOTTOM : PANEL_ORIENTATION_TOP;
+			strut_start = monitor_x;
+			strut_end = (strut_size / scale) + strut_start - 1;
+			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+		} else if (monitor_x > 0) {
 			strut_size += monitor_x;
-		if (!leftmost) strut_size = 0;
+		}
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		if (monitor_x + monitor_width < screen_width)
+		if (!rightmost) {
+			strut_orientation = strut_start ? PANEL_ORIENTATION_BOTTOM : PANEL_ORIENTATION_TOP;
+			strut_end = monitor_width - 1;
+			strut_start = strut_end - (strut_size / scale) + 1;
+			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+		} else if (monitor_x + monitor_width < screen_width) {
 			strut_size += screen_width - (monitor_x + monitor_width);
-		if (!rightmost) strut_size = 0;
+		}
 		break;
 	default:
 		g_assert_not_reached ();
@@ -315,10 +360,10 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	}
 
 	panel_xutils_set_strut (gtk_widget_get_window (widget),
-				strut->orientation,
+				strut_orientation,
 				strut_size,
-				strut->allocated_strut_start * scale,
-				strut->allocated_strut_end * scale);
+				strut_start * scale,
+				strut_end * scale);
 }
 
 void
