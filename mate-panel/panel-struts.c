@@ -259,6 +259,8 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	int              scale;
 	PanelOrientation strut_orientation;
 	int              strut_start, strut_end;
+	const char      *wm_name;
+	gboolean         wm_compatible;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -308,48 +310,72 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	 * thing. This last part we just ignore and let the strut exist snapped to the far edge of
 	 * the monitor, which only mildly affects edge snapping of non-maximized windows against
 	 * the floating panel.
+	 *
+	 * This hack will be removed once _NET_WM_STRUT_AREA is implemented.
 	 */
 	strut_start = strut->allocated_strut_start;
 	strut_end = strut->allocated_strut_end;
 	strut_orientation = strut->orientation;
 
+	/* Only "Metacity" and "Metacity (Marco)" are compatible with this workaround, so we set a
+	 * flag to make sure that other window managers get the standard behavior.
+	 */
+	wm_name = gdk_x11_screen_get_window_manager_name (strut->screen);
+	wm_compatible = g_str_has_prefix (wm_name, "Metacity");
+
 	switch (strut->orientation) {
 	case PANEL_ORIENTATION_TOP:
 		if (!topmost) {
-			strut_orientation = strut_start ? PANEL_ORIENTATION_RIGHT : PANEL_ORIENTATION_LEFT;
-			strut_start = monitor_y;
-			strut_end = (strut_size / scale) + strut_start - 1;
-			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			if (wm_compatible) {
+				strut_orientation = strut_start ? PANEL_ORIENTATION_RIGHT : PANEL_ORIENTATION_LEFT;
+				strut_start = monitor_y;
+				strut_end = (strut_size / scale) + strut_start - 1;
+				strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			} else {
+				strut_size = 0;
+			}
 		} else if (monitor_y > 0) {
 			strut_size += monitor_y;
 		}
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		if (!bottommost) {
-			strut_orientation = strut_start ? PANEL_ORIENTATION_RIGHT : PANEL_ORIENTATION_LEFT;
-			strut_end = monitor_height - 1;
-			strut_start = strut_end - (strut_size / scale) + 1;
-			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			if (wm_compatible) {
+				strut_orientation = strut_start ? PANEL_ORIENTATION_RIGHT : PANEL_ORIENTATION_LEFT;
+				strut_end = monitor_height - 1;
+				strut_start = strut_end - (strut_size / scale) + 1;
+				strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			} else {
+				strut_size = 0;
+			}
 		} else if (monitor_y + monitor_height < screen_height) {
 			strut_size += screen_height - (monitor_y + monitor_height);
 		}
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		if (!leftmost) {
-			strut_orientation = strut_start ? PANEL_ORIENTATION_BOTTOM : PANEL_ORIENTATION_TOP;
-			strut_start = monitor_x;
-			strut_end = (strut_size / scale) + strut_start - 1;
-			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			if (wm_compatible) {
+				strut_orientation = strut_start ? PANEL_ORIENTATION_BOTTOM : PANEL_ORIENTATION_TOP;
+				strut_start = monitor_x;
+				strut_end = (strut_size / scale) + strut_start - 1;
+				strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			} else {
+				strut_size = 0;
+			}
 		} else if (monitor_x > 0) {
 			strut_size += monitor_x;
 		}
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 		if (!rightmost) {
-			strut_orientation = strut_start ? PANEL_ORIENTATION_BOTTOM : PANEL_ORIENTATION_TOP;
-			strut_end = monitor_width - 1;
-			strut_start = strut_end - (strut_size / scale) + 1;
-			strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			if (wm_compatible) {
+				strut_orientation = strut_start ? PANEL_ORIENTATION_BOTTOM : PANEL_ORIENTATION_TOP;
+				strut_end = monitor_width - 1;
+				strut_start = strut_end - (strut_size / scale) + 1;
+				strut_size = (1 + strut->allocated_strut_end - strut->allocated_strut_start) * scale;
+			} else {
+				strut_size = 0;
+			}
 		} else if (monitor_x + monitor_width < screen_width) {
 			strut_size += screen_width - (monitor_x + monitor_width);
 		}
