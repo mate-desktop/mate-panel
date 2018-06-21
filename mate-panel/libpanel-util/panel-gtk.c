@@ -26,12 +26,18 @@
 #include <glib/gi18n.h>
 
 #include "panel-gtk.h"
+#include "panel-cleanup.h"
 
 /*
  * Originally based on code from panel-properties-dialog.c. This part of the
  * code was:
  * Copyright (C) 2005 Vincent Untz <vuntz@gnome.org>
  */
+
+/*There should be only one icon_settings object for the whole panel
+ *So we need a global variable here
+ */
+static GSettings *icon_settings = NULL;
 
 static void
 panel_gtk_file_chooser_preview_update (GtkFileChooser *chooser,
@@ -160,12 +166,27 @@ panel_file_chooser_dialog_new (const gchar          *title,
 	return result;
 }
 
+
+static void
+ensure_icon_settings (void)
+{
+	if (icon_settings != NULL)
+	return;
+
+	icon_settings = g_settings_new ("org.mate.interface");
+
+	panel_cleanup_register (panel_cleanup_unref_and_nullify,
+					&icon_settings);
+}
+
 GtkWidget *
 panel_image_menu_item_new_from_icon (const gchar *icon_name,
 				     const gchar *label_name)
 {
 	GtkWidget *icon;
+	GtkStyleContext *context;
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	GtkWidget *icon_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
 	if (icon_name)
 		icon = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
@@ -175,11 +196,19 @@ panel_image_menu_item_new_from_icon (const gchar *icon_name,
 	GtkWidget *label_menu = gtk_label_new_with_mnemonic (g_strconcat (label_name, "     ", NULL));
 	GtkWidget *menuitem = gtk_menu_item_new ();
  
-	gtk_container_add (GTK_CONTAINER (box), icon);
+	context = gtk_widget_get_style_context (GTK_WIDGET(icon_box));
+	gtk_style_context_add_class(context,"mate-panel-menu-icon-box");
+
+	gtk_container_add (GTK_CONTAINER (icon_box), icon);
+	gtk_container_add (GTK_CONTAINER (box), icon_box);
 	gtk_container_add (GTK_CONTAINER (box), label_menu);
  
 	gtk_container_add (GTK_CONTAINER (menuitem), box);
 	gtk_widget_show_all (menuitem);
+
+	ensure_icon_settings();
+	g_settings_bind (icon_settings, "menus-have-icons", icon, "visible",
+                         G_SETTINGS_BIND_GET);
 
 	return menuitem;
 }
@@ -189,7 +218,9 @@ panel_image_menu_item_new_from_gicon (GIcon       *gicon,
 				      const gchar *label_name)
 {
 	GtkWidget *icon;
+	GtkStyleContext *context;
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	GtkWidget *icon_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
 	if (gicon)
 		icon = gtk_image_new_from_gicon (gicon, GTK_ICON_SIZE_MENU);
@@ -198,12 +229,20 @@ panel_image_menu_item_new_from_gicon (GIcon       *gicon,
 
 	GtkWidget *label_menu = gtk_label_new_with_mnemonic (g_strconcat (label_name, "     ", NULL));
 	GtkWidget *menuitem = gtk_menu_item_new ();
+
+	context = gtk_widget_get_style_context (GTK_WIDGET(icon_box));
+	gtk_style_context_add_class(context,"mate-panel-menu-icon-box");
  
-	gtk_container_add (GTK_CONTAINER (box), icon);
+	gtk_container_add (GTK_CONTAINER (icon_box), icon);
+	gtk_container_add (GTK_CONTAINER (box), icon_box);
 	gtk_container_add (GTK_CONTAINER (box), label_menu);
  
 	gtk_container_add (GTK_CONTAINER (menuitem), box);
 	gtk_widget_show_all (menuitem);
+
+	ensure_icon_settings();
+	g_settings_bind (icon_settings, "menus-have-icons", icon, "visible",
+                         G_SETTINGS_BIND_GET);
 
 	return menuitem;
 }
