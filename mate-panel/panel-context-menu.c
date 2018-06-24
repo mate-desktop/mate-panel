@@ -230,6 +230,8 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 {
 	GtkWidget *menuitem;
 
+	gtk_menu_set_reserve_toggle_size (GTK_MENU (menu), FALSE);
+
 	menuitem = panel_image_menu_item_new_from_icon ("list-add", _("_Add to Panel…"));
 
 	gtk_widget_show (menuitem);
