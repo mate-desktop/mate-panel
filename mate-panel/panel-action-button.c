@@ -34,6 +34,10 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
+#ifdef HAVE_RDA
+#include <rda/rda.h>
+#endif
+
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
 #include <libmate-desktop/mate-gsettings.h>
@@ -86,6 +90,9 @@ static const char *panel_action_type [PANEL_ACTION_LAST] = {
   [PANEL_ACTION_NONE] =           "none",
   [PANEL_ACTION_LOCK] =           "lock",
   [PANEL_ACTION_LOGOUT] =         "logout",
+#ifdef HAVE_RDA
+  [PANEL_ACTION_SUSPEND] =        "suspend",
+#endif
   [PANEL_ACTION_RUN] =            "run",
   [PANEL_ACTION_SEARCH] =         "search",
   [PANEL_ACTION_FORCE_QUIT] =     "force-quit",
@@ -212,6 +219,24 @@ panel_action_logout (GtkWidget *widget)
 		panel_session_manager_request_logout (manager,
 						      PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL);
 }
+
+#ifdef HAVE_RDA
+/* Suspend Remote Session
+ */
+static void
+panel_action_suspend (GtkWidget *widget)
+{
+
+	rda_session_suspend();
+
+}
+
+static gboolean
+panel_action_suspend_not_supported(void)
+{
+	return (!rda_session_can_be_suspended());
+}
+#endif /* HAVE_RDA */
 
 static void
 panel_action_shutdown (GtkWidget *widget)
@@ -361,6 +386,18 @@ static PanelAction actions [PANEL_ACTION_LAST] = {
 		panel_action_logout, NULL, NULL,
 		panel_lockdown_get_disable_log_out
 	},
+#ifdef HAVE_RDA
+	[PANEL_ACTION_SUSPEND] = {
+		PANEL_ACTION_SUSPEND,
+		PANEL_ICON_SUSPEND,
+		N_("Suspend Session..."),
+		N_("Suspend the Remote Session and Resume later"),
+		"gospanel-20",
+		"ACTION:suspend:NEW",
+		panel_action_suspend, NULL, NULL,
+		panel_action_suspend_not_supported
+	},
+#endif /* HAVE_RDA */
 	[PANEL_ACTION_RUN] = {
 		PANEL_ACTION_RUN,
 		PANEL_ICON_RUN,

@@ -243,6 +243,13 @@ if test "x$have_randr" = "xyes"; then
   AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
 fi
 
+dnl Remote Desktop Awareness
+
+PKG_CHECK_MODULES(RDA, rda, have_rda=yes, have_rda=no)
+if test "x$have_rda" = "xyes"; then
+  AC_DEFINE(HAVE_RDA, 1, [Have the Remote Desktop Awareness library])
+fi
+
 dnl Modules dir
 AC_SUBST([modulesdir],"\$(libdir)/mate-panel/modules")
 

@@ -40,6 +40,9 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#ifdef HAVE_RDA
+#include <rda/rda.h>
+#endif
 #include <libmate-desktop/mate-gsettings.h>
 
 #include <libpanel-util/panel-error.h>
@@ -1542,6 +1545,28 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		separator_inserted = GTK_IS_SEPARATOR (GTK_WIDGET (last->data));
 	}
 	g_list_free (children);
+
+#ifdef HAVE_RDA
+	if (rda_session_can_be_suspended())
+	{
+
+		label = g_strdup_printf (_("Suspend %s Session..."),
+                                        rda_get_remote_technology_name());
+		tooltip = g_strdup_printf (_("Suspend this %s session and resume it later..."),
+                                        rda_get_remote_technology_name());
+		item = panel_menu_items_create_action_item_full (PANEL_ACTION_SUSPEND,
+                                                                label, tooltip);
+		g_free (label);
+		g_free (tooltip);
+
+		if (item != NULL) {
+			/* this separator will always be inserted */
+			add_menu_separator (menu);
+			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		}
+
+	}
+#endif /* HAVE_RDA */
 
 	if (panel_lock_screen_action_available("lock"))
 	{
