@@ -106,17 +106,19 @@ panel_push_window_busy (GtkWidget *window)
 
 	if (busy == 1) {
 		GdkWindow *win;
+		GdkDisplay *display;
 
 		gtk_widget_set_sensitive (window, FALSE);
 
 		win = gtk_widget_get_window (window);
+		display = gdk_display_get_default ();
 		if (win != NULL) {
-			GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+			GdkCursor *cursor = gdk_cursor_new_for_display (display,
 			                                                GDK_WATCH);
 
 			gdk_window_set_cursor (win, cursor);
 			g_object_unref (cursor);
-			gdk_flush ();
+			gdk_display_flush (display);
 		}
 	}
 
