@@ -315,17 +315,24 @@ popup_filter (GdkXEvent *gdk_xevent,
 	return GDK_FILTER_CONTINUE;
 }
 
+static void
+prepare_root_window (GdkSeat   *seat,
+                     GdkWindow *window,
+                     gpointer   user_data)
+{
+	gdk_window_show_unraised (window);
+}
+
 void
 panel_force_quit (GdkScreen *screen,
 		  guint      time)
 {
 	GdkGrabStatus  status;
 	GdkCursor     *cross;
+	GdkSeatCapabilities caps;
 	GtkWidget     *popup;
 	GdkWindow     *root;
 	GdkDisplay    *display;
-	GdkDevice     *pointer;
-	GdkDevice     *keyboard;
 	GdkSeat       *seat;
 
 	popup = display_popup_window (screen);
@@ -335,22 +342,17 @@ panel_force_quit (GdkScreen *screen,
 	gdk_window_add_filter (root, (GdkFilterFunc) popup_filter, popup);
 	cross = gdk_cursor_new_for_display (gdk_display_get_default (),
 	                                    GDK_CROSS);
+	caps = GDK_SEAT_CAPABILITY_POINTER | GDK_SEAT_CAPABILITY_KEYBOARD;
 	display = gdk_window_get_display (root);
 	seat = gdk_display_get_default_seat (display);
-	pointer = gdk_seat_get_pointer (seat);
-	keyboard = gdk_device_get_associated_device (pointer);
 
-	status = gdk_device_grab (pointer, root,
-				  GDK_OWNERSHIP_NONE, FALSE,
-				  GDK_BUTTON_PRESS_MASK,
-				  cross, time);
+	status = gdk_seat_grab (seat, root,
+	                        caps, FALSE,
+	                        cross, NULL,
+	                        prepare_root_window,
+	                        NULL);
 
 	g_object_unref (cross);
-
-	status = gdk_device_grab (keyboard, root,
-				  GDK_OWNERSHIP_NONE, FALSE,
-				  GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK,
-				  NULL, time);
 
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Pointer grab failed\n");
