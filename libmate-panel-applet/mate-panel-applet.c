@@ -951,6 +951,7 @@ mate_panel_applet_button_event (MatePanelApplet      *applet,
 	GdkWindow *window;
 	GdkWindow *socket_window;
 	XEvent     xevent;
+	GdkDisplay *display;
 
 	if (!applet->priv->out_of_process)
 		return FALSE;
@@ -963,13 +964,13 @@ mate_panel_applet_button_event (MatePanelApplet      *applet,
 	window = gtk_widget_get_window (widget);
 	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
 
+	display = gdk_display_get_default ();
+
 	if (event->type == GDK_BUTTON_PRESS) {
-		GdkDisplay *display;
 		GdkSeat *seat;
 
 		xevent.xbutton.type = ButtonPress;
 
-		display = gdk_display_get_default ();
 		seat = gdk_display_get_default_seat (display);
 
 		/* X does an automatic pointer grab on button press
@@ -998,14 +999,14 @@ mate_panel_applet_button_event (MatePanelApplet      *applet,
 	xevent.xbutton.button      = event->button;
 	xevent.xbutton.same_screen = TRUE; /* FIXME ? */
 
-	gdk_error_trap_push ();
+	gdk_x11_display_error_trap_push (display);
 
 	XSendEvent (GDK_WINDOW_XDISPLAY (window),
 		    GDK_WINDOW_XID (socket_window),
 		    False, NoEventMask, &xevent);
 
-	gdk_flush ();
-	gdk_error_trap_pop_ignored ();
+	gdk_display_flush (display);
+	gdk_x11_display_error_trap_pop_ignored (display);
 
 	return TRUE;
 }
@@ -1300,10 +1301,10 @@ mate_panel_applet_create_foreign_surface_for_display (GdkDisplay *display,
 	gint x, y;
 	guint width, height, border, depth;
 
-	gdk_error_trap_push ();
+	gdk_x11_display_error_trap_push (display);
 	result = XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
 	                       &x, &y, &width, &height, &border, &depth);
-	gdk_error_trap_pop_ignored ();
+	gdk_x11_display_error_trap_pop_ignored (display);
 
 	if (result == 0)
 		return NULL;
@@ -1324,6 +1325,7 @@ mate_panel_applet_get_pattern_from_pixmap (MatePanelApplet *applet,
 	GdkWindow       *window;
 	int              width;
 	int              height;
+	GdkDisplay      *display;
 	cairo_t         *cr;
 	cairo_pattern_t *pattern;
 
@@ -1333,8 +1335,9 @@ mate_panel_applet_get_pattern_from_pixmap (MatePanelApplet *applet,
 		return NULL;
 
 	window = gtk_widget_get_window (GTK_WIDGET (applet));
+	display = gdk_window_get_display (window);
 
-	background = mate_panel_applet_create_foreign_surface_for_display (gdk_window_get_display (window),
+	background = mate_panel_applet_create_foreign_surface_for_display (display,
 									   gdk_window_get_visual (window),
 									   xid);
 
@@ -1352,12 +1355,12 @@ mate_panel_applet_get_pattern_from_pixmap (MatePanelApplet *applet,
 	                            CAIRO_CONTENT_COLOR_ALPHA,
 	                            width,
 	                            height);
-	gdk_error_trap_push ();
+	gdk_x11_display_error_trap_push (display);
 	cr = cairo_create (surface);
 	cairo_set_source_surface (cr, background, -x, -y);
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_fill (cr);
-	gdk_error_trap_pop_ignored ();
+	gdk_x11_display_error_trap_pop_ignored (display);
 
 	cairo_surface_destroy (background);
 	pattern = NULL;
