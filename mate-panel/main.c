@@ -70,6 +70,7 @@ main (int argc, char **argv)
 	char           *desktopfile;
 	GOptionContext *context;
 	GError         *error;
+	GdkDisplay     *display;
 	GdkScreen      *screen;
 	GtkCssProvider *css;
 	GtkStyleProvider *provider;
@@ -174,7 +175,8 @@ main (int argc, char **argv)
 
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the caja desktop). */
-	gdk_flush ();
+	display = gdk_display_get_default ();
+	gdk_display_flush (display);
 
 	/* Do this at the end, to be sure that we're really ready when
 	 * connecting to the session manager */
