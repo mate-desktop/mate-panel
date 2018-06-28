@@ -196,14 +196,16 @@ kill_window_response (GtkDialog *dialog,
 		      gpointer   user_data)
 {
 	if (response_id == GTK_RESPONSE_ACCEPT) {
-		Display *display;
+		GdkDisplay *display;
+		Display *xdisplay;
 		Window window = (Window) user_data;
 
-		display = GDK_DISPLAY_XDISPLAY (gtk_widget_get_display (GTK_WIDGET (dialog)));
+		display = gtk_widget_get_display (GTK_WIDGET (dialog));
+		xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
 		gdk_error_trap_push ();
-		XKillClient (display, window);
-		gdk_flush ();
+		XKillClient (xdisplay, window);
+		gdk_display_flush (display);
 		gdk_error_trap_pop_ignored ();
 	}
 
@@ -352,5 +354,5 @@ panel_force_quit (GdkScreen *screen,
 		return;
 	}
 
-	gdk_flush ();
+	gdk_display_flush (display);
 }
