@@ -122,9 +122,10 @@ remove_popup (GtkWidget *popup)
 }
 
 static gboolean
-wm_state_set (Display *display,
+wm_state_set (Display *xdisplay,
 	      Window   window)
 {
+	GdkDisplay *display;
 	gulong  nitems;
 	gulong  bytes_after;
 	gulong *prop;
@@ -132,13 +133,14 @@ wm_state_set (Display *display,
 	int     ret_format;
 	int     result;
 
-	gdk_error_trap_push ();
-	result = XGetWindowProperty (display, window, wm_state_atom,
+	display = gdk_display_get_default ();
+	gdk_x11_display_error_trap_push (display);
+	result = XGetWindowProperty (xdisplay, window, wm_state_atom,
 				     0, G_MAXLONG, False, wm_state_atom,
 				     &ret_type, &ret_format, &nitems,
 				     &bytes_after, (gpointer) &prop);
 
-	if (gdk_error_trap_pop ())
+	if (gdk_x11_display_error_trap_pop (display))
 		return FALSE;
 
 	if (result != Success)
@@ -153,9 +155,10 @@ wm_state_set (Display *display,
 }
 
 static Window 
-find_managed_window (Display *display,
+find_managed_window (Display *xdisplay,
 		     Window   window)
 {
+	GdkDisplay *display;
 	Window  root;
 	Window  parent;
 	Window *kids = NULL;
@@ -163,23 +166,24 @@ find_managed_window (Display *display,
 	guint   nkids;
 	int     i, result;
 
-	if (wm_state_set (display, window))
+	if (wm_state_set (xdisplay, window))
 		return window;
 
-	gdk_error_trap_push ();
-	result = XQueryTree (display, window, &root, &parent, &kids, &nkids);
-	if (gdk_error_trap_pop () || !result)
+	display = gdk_display_get_default ();
+	gdk_x11_display_error_trap_push (display);
+	result = XQueryTree (xdisplay, window, &root, &parent, &kids, &nkids);
+	if (gdk_x11_display_error_trap_pop (display) || !result)
 		return None;
 
 	retval = None;
 
 	for (i = 0; i < nkids; i++) {
-		if (wm_state_set (display, kids [i])) {
+		if (wm_state_set (xdisplay, kids [i])) {
 			retval = kids [i];
 			break;
 		}
 
-		retval = find_managed_window (display, kids [i]);
+		retval = find_managed_window (xdisplay, kids [i]);
 		if (retval != None)
 			break;
 	}
@@ -203,10 +207,10 @@ kill_window_response (GtkDialog *dialog,
 		display = gtk_widget_get_display (GTK_WIDGET (dialog));
 		xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
-		gdk_error_trap_push ();
+		gdk_x11_display_error_trap_push (display);
 		XKillClient (xdisplay, window);
 		gdk_display_flush (display);
-		gdk_error_trap_pop_ignored ();
+		gdk_x11_display_error_trap_pop_ignored (display);
 	}
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
