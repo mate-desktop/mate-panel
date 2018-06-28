@@ -1818,7 +1818,7 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		                        FALSE, fleur_cursor, NULL, NULL, NULL);
 
 		g_object_unref (fleur_cursor);
-		gdk_flush ();
+		gdk_display_flush (display);
 
 		if (status != GDK_GRAB_SUCCESS) {
 			g_warning (G_STRLOC ": failed to grab pointer (errorcode: %d)",
@@ -1847,7 +1847,7 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 	gtk_grab_remove (panel->currently_dragged_applet->applet);
 	panel_widget_applet_drag_end_no_grab (panel);
 	panel_toplevel_pop_autohide_disabler (panel->toplevel);
-	gdk_flush ();
+	gdk_display_flush (display);
 }
 
 /*get pos of the cursor location in panel coordinates*/
@@ -2547,6 +2547,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	AppletData *ad;
 	GtkWidget *focus_widget = NULL;
 	AppletInfo* info;
+	GdkDisplay *display;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(old_panel), FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(new_panel), FALSE);
@@ -2598,7 +2599,8 @@ panel_widget_reparent (PanelWidget *old_panel,
 	}
  	gtk_window_present (GTK_WINDOW (new_panel->toplevel));
 
-	gdk_flush();
+	display = gtk_widget_get_display (GTK_WIDGET (new_panel));
+	gdk_display_flush (display);
 
 	emit_applet_moved (new_panel, ad);
 
