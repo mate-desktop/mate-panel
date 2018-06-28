@@ -442,6 +442,7 @@ na_tray_child_new (GdkScreen *screen,
 {
   XWindowAttributes window_attributes;
   Display *xdisplay;
+  GdkDisplay *display;
   NaTrayChild *child;
   GdkVisual *visual;
   gboolean visual_has_alpha;
@@ -457,10 +458,11 @@ na_tray_child_new (GdkScreen *screen,
    * the socket in the same visual.
    */
 
-  gdk_error_trap_push ();
+  display = gdk_screen_get_display (screen);
+  gdk_x11_display_error_trap_push (display);
   result = XGetWindowAttributes (xdisplay, icon_window,
                                  &window_attributes);
-  gdk_error_trap_pop_ignored ();
+  gdk_x11_display_error_trap_pop_ignored (display);
 
   if (!result) /* Window already gone */
     return NULL;
@@ -510,7 +512,7 @@ na_tray_child_get_title (NaTrayChild *child)
   utf8_string = gdk_x11_get_xatom_by_name_for_display (display, "UTF8_STRING");
   atom = gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_NAME");
 
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (display);
 
   result = XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display),
                                child->icon_window,
@@ -520,7 +522,7 @@ na_tray_child_get_title (NaTrayChild *child)
                                &type, &format, &nitems,
                                &bytes_after, (guchar **)&val);
 
-  if (gdk_error_trap_pop () || result != Success)
+  if (gdk_x11_display_error_trap_pop (display) || result != Success)
     return NULL;
 
   if (type != utf8_string ||
@@ -606,10 +608,14 @@ na_tray_child_force_redraw (NaTrayChild *child)
        * icon is expecting the server to clear-to-background before
        * the redraw. It should be ok for GtkStatusIcon or EggTrayIcon.
        */
-      Display *xdisplay = GDK_DISPLAY_XDISPLAY (gtk_widget_get_display (widget));
+      GdkDisplay *display;
+      Display *xdisplay; 
       XEvent xev;
       GdkWindow *plug_window;
       GtkAllocation allocation;
+
+      display = gtk_widget_get_display (widget);
+      xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
       plug_window = gtk_socket_get_plug_window (GTK_SOCKET (child));
       gtk_widget_get_allocation (widget, &allocation);
@@ -622,8 +628,8 @@ na_tray_child_force_redraw (NaTrayChild *child)
       xev.xexpose.height = allocation.height;
       xev.xexpose.count = 0;
 
-      gdk_error_trap_push ();
-      XSendEvent (GDK_DISPLAY_XDISPLAY (gtk_widget_get_display (widget)),
+      gdk_x11_display_error_trap_push (display);
+      XSendEvent (xdisplay,
                   xev.xexpose.window,
                   False, ExposureMask,
                   &xev);
@@ -631,7 +637,7 @@ na_tray_child_force_redraw (NaTrayChild *child)
        * since that is asynchronous.
        */
       XSync (xdisplay, False);
-      gdk_error_trap_pop_ignored ();
+      gdk_x11_display_error_trap_pop_ignored (display);
 #else
       /* Hiding and showing is the safe way to do it, but can result in more
        * flickering.
@@ -668,14 +674,16 @@ _get_wmclass (Display *xdisplay,
               char   **res_class,
               char   **res_name)
 {
+  GdkDisplay *display;
   XClassHint ch;
 
   ch.res_name = NULL;
   ch.res_class = NULL;
 
-  gdk_error_trap_push ();
+  display = gdk_display_get_default ();
+  gdk_x11_display_error_trap_push (display);
   XGetClassHint (xdisplay, xwindow, &ch);
-  gdk_error_trap_pop_ignored ();
+  gdk_x11_display_error_trap_pop_ignored (display);
 
   if (res_class)
     *res_class = NULL;
