@@ -388,6 +388,7 @@ echo "
         Wayland support:               ${have_wayland}
         X11 support:                   ${have_x11}
         XRandr support:                ${have_randr}
+        RDA support:                   ${have_rda}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}
 
