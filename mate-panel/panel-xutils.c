@@ -57,19 +57,20 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 			guint32           strut_start,
 			guint32           strut_end)
  {
-	Display *display;
+	Display *xdisplay;
 	Window   window;
 	gulong   struts [12] = { 0, };
+	GdkDisplay *display;
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
-	display = GDK_WINDOW_XDISPLAY (gdk_window);
+	xdisplay = GDK_WINDOW_XDISPLAY (gdk_window);
 	window = GDK_WINDOW_XID (gdk_window);
 
 	if (net_wm_strut == None)
-		net_wm_strut = XInternAtom (display, "_NET_WM_STRUT", False);
+		net_wm_strut = XInternAtom (xdisplay, "_NET_WM_STRUT", False);
 	if (net_wm_strut_partial == None)
-		net_wm_strut_partial = XInternAtom (display, "_NET_WM_STRUT_PARTIAL", False);
+		net_wm_strut_partial = XInternAtom (xdisplay, "_NET_WM_STRUT_PARTIAL", False);
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_LEFT:
@@ -94,14 +95,15 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 		break;
 	}
 
-	gdk_error_trap_push ();
-	XChangeProperty (display, window, net_wm_strut,
+	display = gdk_window_get_display (gdk_window);
+	gdk_x11_display_error_trap_push (display);
+	XChangeProperty (xdisplay, window, net_wm_strut,
 			 XA_CARDINAL, 32, PropModeReplace,
 			 (guchar *) &struts, 4);
-	XChangeProperty (display, window, net_wm_strut_partial,
+	XChangeProperty (xdisplay, window, net_wm_strut_partial,
 			 XA_CARDINAL, 32, PropModeReplace,
 			 (guchar *) &struts, 12);
-	gdk_error_trap_pop_ignored ();
+	gdk_x11_display_error_trap_pop_ignored (display);
 }
 
 void
@@ -109,17 +111,19 @@ panel_warp_pointer (GdkWindow *gdk_window,
 		    int        x,
 		    int        y)
 {
-	Display *display;
+	Display *xdisplay;
 	Window   window;
+	GdkDisplay *display;
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
-	display = GDK_WINDOW_XDISPLAY (gdk_window);
+	xdisplay = GDK_WINDOW_XDISPLAY (gdk_window);
 	window = GDK_WINDOW_XID (gdk_window);
 
-	gdk_error_trap_push ();
-	XWarpPointer (display, None, window, 0, 0, 0, 0, x, y);
-	gdk_error_trap_pop_ignored ();
+	display = gdk_window_get_display (gdk_window);
+	gdk_x11_display_error_trap_push (display);
+	XWarpPointer (xdisplay, None, window, 0, 0, 0, 0, x, y);
+	gdk_x11_display_error_trap_pop_ignored (display);
 }
 
 guint
