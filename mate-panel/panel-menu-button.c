@@ -455,13 +455,11 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
 	gtk_menu_set_screen (GTK_MENU (button->priv->menu), screen);
 
-	gtk_menu_popup (GTK_MENU (button->priv->menu),
-			NULL,
-			NULL,
-			(GtkMenuPositionFunc) mate_panel_applet_position_menu,
-			GTK_WIDGET (button),
-			n_button,
-			activate_time);
+	gtk_menu_popup_at_widget (GTK_MENU (button->priv->menu),
+	                          GTK_WIDGET (button),
+	                          GDK_GRAVITY_SOUTH_WEST,
+	                          GDK_GRAVITY_NORTH_WEST,
+	                          NULL);
 }
 
 static void
