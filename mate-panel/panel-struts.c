@@ -22,13 +22,18 @@
  */
 
 #include <config.h>
+
+#ifdef COMPILE_X11
 #include <gdk/gdkx.h>
+#endif
 
 #include "panel-struts.h"
 
 #include "panel-multiscreen.h"
-#include "panel-xutils.h"
 
+#ifdef COMPILE_X11
+#include "panel-xutils.h"
+#endif
 
 typedef struct {
         PanelToplevel    *toplevel;
@@ -271,8 +276,8 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	scale = gtk_widget_get_scale_factor (widget);
 	strut_size = strut->allocated_strut_size;
 
-	screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
-	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
+	screen_width  = gdk_screen_get_width (strut->screen) / scale;
+	screen_height = gdk_screen_get_height (strut->screen) / scale;
 
 	panel_struts_get_monitor_geometry (strut->screen,
 					   strut->monitor,
@@ -314,11 +319,16 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 		break;
 	}
 
-	panel_xutils_set_strut (gtk_widget_get_window (widget),
-				strut->orientation,
-				strut_size,
-				strut->allocated_strut_start * scale,
-				strut->allocated_strut_end * scale);
+    #ifdef COMPILE_X11
+    if (GDK_IS_X11_DISPLAY(gdk_display_get_default ()))
+    {
+        panel_xutils_set_strut (gtk_widget_get_window (widget),
+                    strut->orientation,
+                    strut_size,
+                    strut->allocated_strut_start * scale,
+                    strut->allocated_strut_end * scale);
+    }
+    #endif
 }
 
 void
@@ -327,7 +337,12 @@ panel_struts_unset_window_hint (PanelToplevel *toplevel)
 	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		return;
 
-	panel_xutils_set_strut (gtk_widget_get_window (GTK_WIDGET (toplevel)), 0, 0, 0, 0);
+	#ifdef COMPILE_X11
+    if (GDK_IS_X11_DISPLAY(gdk_display_get_default ()))
+    {
+        panel_xutils_set_strut (gtk_widget_get_window (GTK_WIDGET (toplevel)), 0, 0, 0, 0);
+    }
+    #endif
 }
 
 static inline int
@@ -374,9 +389,14 @@ panel_struts_compare (const PanelStrut *s1,
 	int s1_depth;
 	int s2_depth;
 
-	if (s1->screen != s2->screen)
-		return gdk_x11_screen_get_screen_number (s1->screen) -
-			gdk_x11_screen_get_screen_number (s2->screen);
+    #ifdef COMPILE_X11
+    if (GDK_IS_X11_DISPLAY(gdk_display_get_default ()))
+    {
+        if (s1->screen != s2->screen)
+            return gdk_x11_screen_get_screen_number (s1->screen) -
+                gdk_x11_screen_get_screen_number (s2->screen);
+    }
+    #endif
 
 	if (s1->monitor != s2->monitor)
 		return s1->monitor - s2->monitor;

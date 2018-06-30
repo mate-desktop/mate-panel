@@ -25,10 +25,12 @@
 
 #include <config.h>
 
+#ifdef COMPILE_X11
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #include <gdk/gdkx.h>
+#endif
 
 #include "panel-multiscreen.h"
 
@@ -41,7 +43,7 @@ static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
 static guint          reinit_id   = 0;
 
-#ifdef HAVE_RANDR
+#if defined(COMPILE_X11) && defined(HAVE_RANDR)
 static gboolean
 _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 					   RROutput       output,
@@ -87,7 +89,7 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 						 int           *monitors_ret,
 						 GdkRectangle **geometries_ret)
 {
-#ifdef HAVE_RANDR
+#if defined(COMPILE_X11) && defined(HAVE_RANDR)
 	GdkDisplay         *display;
 	GdkMonitor         *monitor;
 	Display            *xdisplay;
@@ -386,14 +388,14 @@ panel_multiscreen_queue_reinit (void)
 static void
 panel_multiscreen_init_randr (GdkDisplay *display)
 {
-#ifdef HAVE_RANDR
+#if defined(COMPILE_X11) && defined(HAVE_RANDR)
 	Display *xdisplay;
 	int      event_base, error_base;
 #endif
 
 	have_randr = FALSE;
 
-#ifdef HAVE_RANDR
+#if defined(COMPILE_X11) && defined(HAVE_RANDR)
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
 	/* We don't remember the event/error bases, as we expect to get "screen
@@ -488,7 +490,7 @@ panel_multiscreen_monitors (GdkScreen *screen)
 {
 	int n_screen;
 
-	n_screen = gdk_x11_screen_get_screen_number (screen);
+	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 1);
 
@@ -501,7 +503,7 @@ panel_multiscreen_x (GdkScreen *screen,
 {
 	int n_screen;
 
-	n_screen = gdk_x11_screen_get_screen_number (screen);
+	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
@@ -515,7 +517,7 @@ panel_multiscreen_y (GdkScreen *screen,
 {
 	int n_screen;
 
-	n_screen = gdk_x11_screen_get_screen_number (screen);
+	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
@@ -529,7 +531,7 @@ panel_multiscreen_width (GdkScreen *screen,
 {
 	int n_screen;
 
-	n_screen = gdk_x11_screen_get_screen_number (screen);
+	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
@@ -543,7 +545,7 @@ panel_multiscreen_height (GdkScreen *screen,
 {
 	int n_screen;
 
-	n_screen = gdk_x11_screen_get_screen_number (screen);
+	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
@@ -595,7 +597,7 @@ panel_multiscreen_get_monitor_at_point (GdkScreen *screen,
 	/* not -1 as callers expect a real monitor */
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), 0);
 
-	n_screen = gdk_x11_screen_get_screen_number (screen);
+	n_screen = gdk_screen_get_number (screen);
 
 	n_monitors = monitors[n_screen];
 	geoms = geometries[n_screen];
@@ -660,7 +662,7 @@ panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
 	MonitorBounds monitor;
 	int           n_screen, i;
 
-	n_screen = gdk_x11_screen_get_screen_number (screen);
+	n_screen = gdk_screen_get_number (screen);
 
 	*leftmost   = TRUE;
 	*rightmost  = TRUE;

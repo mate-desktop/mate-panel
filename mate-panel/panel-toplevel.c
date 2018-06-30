@@ -32,13 +32,17 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#ifdef COMPILE_X11
 #include <gdk/gdkx.h>
+#endif
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
 #include "panel-profile.h"
 #include "panel-frame.h"
+#ifdef COMPILE_X11
 #include "panel-xutils.h"
+#endif
 #include "panel-multiscreen.h"
 #include "panel-a11y.h"
 #include "panel-typebuiltins.h"
@@ -336,8 +340,8 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 	 * make this thing think that the screen is scaled down, and because GTK+
 	 * already scaled everything up without the panel knowing about it, the whole
 	 * thing somehow works well... sigh. */
-	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
-	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
+	*width  = gdk_screen_get_width(screen) / toplevel->priv->scale;
+	*height = gdk_screen_get_height(screen) / toplevel->priv->scale;
 
 	return screen;
 }
@@ -425,8 +429,11 @@ static void panel_toplevel_init_resize_drag_offsets(PanelToplevel* toplevel, Pan
 	}
 }
 
+#ifdef COMPILE_X11
 static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 {
+    g_assert(GDK_IS_X11_DISPLAY(gdk_display_get_default ()));
+
 	GtkWidget    *widget;
 	GdkRectangle  geometry;
 	int           x, y;
@@ -471,6 +478,7 @@ static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 
 	panel_warp_pointer (gtk_widget_get_window (widget), x, y);
 }
+#endif
 
 static void panel_toplevel_begin_attached_move(PanelToplevel* toplevel, gboolean is_keyboard, guint32 time_)
 {
@@ -540,7 +548,14 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	gtk_grab_add (widget);
 
 	if (toplevel->priv->grab_is_keyboard)
-		panel_toplevel_warp_pointer (toplevel);
+    {
+        #ifdef COMPILE_X11
+        GDK_IS_X11_DISPLAY(gdk_display_get_default ())
+        {
+            panel_toplevel_warp_pointer (toplevel);
+        }
+        #endif
+    }
 
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
@@ -873,8 +888,11 @@ static void panel_toplevel_rotate_to_pointer(PanelToplevel* toplevel, int pointe
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
 }
 
+#ifdef COMPILE_X11
 static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, int keyval, int increment)
 {
+    g_assert(GDK_IS_X11_DISPLAY(gdk_display_get_default ()));
+
 	GdkScreen *screen;
 	GdkWindow *root_window;
 	GdkDevice      *device;
@@ -911,6 +929,7 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 
 	return TRUE;
 }
+#endif
 
 static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, GdkEventKey* event)
 {
@@ -922,8 +941,17 @@ static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, G
 	if ((event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)
 		increment = SMALL_INCREMENT;
 
-	return panel_toplevel_warp_pointer_increment (
+    #ifdef COMPILE_X11
+    GDK_IS_X11_DISPLAY(gdk_display_get_default ())
+    {
+        return panel_toplevel_warp_pointer_increment (
 				toplevel, event->keyval, increment);
+    }
+    else
+        return TRUE;
+    #else
+    return TRUE;
+    #endif
 
 #undef SMALL_INCREMENT
 #undef NORMAL_INCREMENT
@@ -1029,8 +1057,13 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 		case PANEL_GRAB_OP_RESIZE_DOWN:
 		case PANEL_GRAB_OP_RESIZE_LEFT:
 		case PANEL_GRAB_OP_RESIZE_RIGHT:
-			retval = panel_toplevel_warp_pointer_increment (
+            #ifdef COMPILE_X11
+            GDK_IS_X11_DISPLAY(gdk_display_get_default ())
+			{
+                retval = panel_toplevel_warp_pointer_increment (
 						toplevel, event->keyval, 1);
+            }
+            #endif
 			break;
 		default:
 			g_assert_not_reached ();
@@ -3064,7 +3097,8 @@ panel_toplevel_realize (GtkWidget *widget)
 	panel_struts_set_window_hint (toplevel);
 
 	gdk_window_set_group (window, window);
-	gdk_window_set_geometry_hints (window, NULL, 0);
+    GdkGeometry geom;
+	gdk_window_set_geometry_hints (window, &geom, 0);
 
 	panel_toplevel_initially_hide (toplevel);
 
