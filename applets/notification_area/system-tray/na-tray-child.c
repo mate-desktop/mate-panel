@@ -157,51 +157,6 @@ na_tray_child_get_preferred_height (GtkWidget *widget,
   *natural_height = *natural_height / scale;
 }
 
-static void
-na_tray_child_size_allocate (GtkWidget      *widget,
-                             GtkAllocation  *allocation)
-{
-  NaTrayChild *child = NA_TRAY_CHILD (widget);
-  GtkAllocation widget_allocation;
-  gboolean moved, resized;
-
-  gtk_widget_get_allocation (widget, &widget_allocation);
-
-  moved = (allocation->x != widget_allocation.x ||
-	   allocation->y != widget_allocation.y);
-  resized = (allocation->width != widget_allocation.width ||
-	     allocation->height != widget_allocation.height);
-
-  /* When we are allocating the widget while mapped we need special handling
-   * for both real and fake transparency.
-   *
-   * Real transparency: we need to invalidate and trigger a redraw of the old
-   *   and new areas. (GDK really should handle this for us, but doesn't as of
-   *   GTK+-2.14)
-   *
-   * Fake transparency: if the widget moved, we need to force the contents to
-   *   be redrawn with the new offset for the parent-relative background.
-   */
-  if ((moved || resized) && gtk_widget_get_mapped (widget))
-    {
-      if (na_tray_child_has_alpha (child))
-        gdk_window_invalidate_rect (gdk_window_get_parent (gtk_widget_get_window (widget)),
-                                    &widget_allocation, FALSE);
-    }
-
-  GTK_WIDGET_CLASS (na_tray_child_parent_class)->size_allocate (widget,
-                                                                allocation);
-
-  if ((moved || resized) && gtk_widget_get_mapped (widget))
-    {
-      if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
-        gdk_window_invalidate_rect (gdk_window_get_parent (gtk_widget_get_window (widget)),
-                                    &widget_allocation, FALSE);
-      else if (moved && child->parent_relative_bg)
-        na_tray_child_force_redraw (child);
-    }
-}
-
 /* The plug window should completely occupy the area of the child, so we won't
  * get an expose event. But in case we do (the plug unmaps itself, say), this
  * expose handler draws with real or fake transparency.
@@ -429,7 +384,6 @@ na_tray_child_class_init (NaTrayChildClass *klass)
   widget_class->realize = na_tray_child_realize;
   widget_class->get_preferred_width = na_tray_child_get_preferred_width;
   widget_class->get_preferred_height = na_tray_child_get_preferred_height;
-  widget_class->size_allocate = na_tray_child_size_allocate;
   widget_class->draw = na_tray_child_draw;
 
   /* we don't really care actually */
