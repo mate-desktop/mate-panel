@@ -364,7 +364,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, button, activate_time);
+	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
 
 	return TRUE;
 }
