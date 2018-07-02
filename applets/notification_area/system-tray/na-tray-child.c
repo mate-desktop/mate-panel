@@ -115,6 +115,7 @@ na_tray_child_style_set (GtkWidget *widget,
    */
 }
 
+#if !GTK_CHECK_VERSION (3, 23, 0)
 static void
 na_tray_child_get_preferred_width (GtkWidget *widget,
                                    gint      *minimal_width,
@@ -156,6 +157,7 @@ na_tray_child_get_preferred_height (GtkWidget *widget,
   *minimal_height = *minimal_height / scale;
   *natural_height = *natural_height / scale;
 }
+#endif
 
 /* The plug window should completely occupy the area of the child, so we won't
  * get an expose event. But in case we do (the plug unmaps itself, say), this
@@ -382,8 +384,10 @@ na_tray_child_class_init (NaTrayChildClass *klass)
 
   widget_class->style_set = na_tray_child_style_set;
   widget_class->realize = na_tray_child_realize;
+#if !GTK_CHECK_VERSION (3, 23, 0)
   widget_class->get_preferred_width = na_tray_child_get_preferred_width;
   widget_class->get_preferred_height = na_tray_child_get_preferred_height;
+#endif
   widget_class->draw = na_tray_child_draw;
 
   /* we don't really care actually */
