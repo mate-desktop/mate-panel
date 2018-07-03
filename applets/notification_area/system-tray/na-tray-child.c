@@ -561,48 +561,11 @@ na_tray_child_force_redraw (NaTrayChild *child)
 
   if (gtk_widget_get_mapped (widget))
     {
-#if 1
-      /* Sending an ExposeEvent might cause redraw problems if the
-       * icon is expecting the server to clear-to-background before
-       * the redraw. It should be ok for GtkStatusIcon or EggTrayIcon.
-       */
-      GdkDisplay *display;
-      Display *xdisplay; 
-      XEvent xev;
-      GdkWindow *plug_window;
-      GtkAllocation allocation;
-
-      display = gtk_widget_get_display (widget);
-      xdisplay = GDK_DISPLAY_XDISPLAY (display);
-
-      plug_window = gtk_socket_get_plug_window (GTK_SOCKET (child));
-      gtk_widget_get_allocation (widget, &allocation);
-
-      xev.xexpose.type = Expose;
-      xev.xexpose.window = GDK_WINDOW_XID (plug_window);
-      xev.xexpose.x = 0;
-      xev.xexpose.y = 0;
-      xev.xexpose.width = allocation.width;
-      xev.xexpose.height = allocation.height;
-      xev.xexpose.count = 0;
-
-      gdk_x11_display_error_trap_push (display);
-      XSendEvent (xdisplay,
-                  xev.xexpose.window,
-                  False, ExposureMask,
-                  &xev);
-      /* We have to sync to reliably catch errors from the XSendEvent(),
-       * since that is asynchronous.
-       */
-      XSync (xdisplay, False);
-      gdk_x11_display_error_trap_pop_ignored (display);
-#else
-      /* Hiding and showing is the safe way to do it, but can result in more
-       * flickering.
-       */
-      gdk_window_hide (widget->window);
-      gdk_window_show (widget->window);
-#endif
+    /* Hiding and showing is the safe way to do it, but can result in more
+     * flickering.
+     */
+    gtk_widget_hide(widget);
+    gtk_widget_show_all(widget);
     }
 }
 
