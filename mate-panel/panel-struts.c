@@ -23,7 +23,7 @@
 
 #include <config.h>
 
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #endif
 
@@ -31,7 +31,7 @@
 
 #include "panel-multiscreen.h"
 
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 #include "panel-xutils.h"
 #endif
 
@@ -319,7 +319,7 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 		break;
 	}
 
-    #ifdef COMPILE_X11
+    #ifdef HAVE_X11
     if (GDK_IS_X11_DISPLAY(gdk_display_get_default ()))
     {
         panel_xutils_set_strut (gtk_widget_get_window (widget),
@@ -337,7 +337,7 @@ panel_struts_unset_window_hint (PanelToplevel *toplevel)
 	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		return;
 
-	#ifdef COMPILE_X11
+	#ifdef HAVE_X11
     if (GDK_IS_X11_DISPLAY(gdk_display_get_default ()))
     {
         panel_xutils_set_strut (gtk_widget_get_window (GTK_WIDGET (toplevel)), 0, 0, 0, 0);
@@ -389,7 +389,7 @@ panel_struts_compare (const PanelStrut *s1,
 	int s1_depth;
 	int s2_depth;
 
-    #ifdef COMPILE_X11
+    #ifdef HAVE_X11
     if (GDK_IS_X11_DISPLAY(gdk_display_get_default ()))
     {
         if (s1->screen != s2->screen)

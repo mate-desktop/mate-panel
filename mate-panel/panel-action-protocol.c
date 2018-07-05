@@ -26,7 +26,7 @@
 
 #include "panel-action-protocol.h"
 
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
@@ -42,7 +42,7 @@
 #include "panel-menu-button.h"
 #include "panel-menu-bar.h"
 
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 static Atom atom_mate_panel_action            = None;
 static Atom atom_gnome_panel_action           = None;
 static Atom atom_mate_panel_action_main_menu  = None;
@@ -121,7 +121,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 			      GdkEvent  *event,
 			      gpointer   data)
 {
-    #ifdef COMPILE_X11
+    #ifdef HAVE_X11
 	GdkWindow *window;
 	GdkScreen *screen;
 	GdkDisplay *display;
@@ -165,7 +165,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 void
 panel_action_protocol_init (void)
 {
-    #ifdef COMPILE_X11
+    #ifdef HAVE_X11
 	GdkDisplay *display;
 
 	display = gdk_display_get_default ();

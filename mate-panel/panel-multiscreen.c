@@ -25,7 +25,7 @@
 
 #include <config.h>
 
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
@@ -43,7 +43,7 @@ static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
 static guint          reinit_id   = 0;
 
-#if defined(COMPILE_X11) && defined(HAVE_RANDR)
+#if defined(HAVE_X11) && defined(HAVE_RANDR)
 static gboolean
 _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 					   RROutput       output,
@@ -89,7 +89,7 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 						 int           *monitors_ret,
 						 GdkRectangle **geometries_ret)
 {
-#if defined(COMPILE_X11) && defined(HAVE_RANDR)
+#if defined(HAVE_X11) && defined(HAVE_RANDR)
 	GdkDisplay         *display;
 	GdkMonitor         *monitor;
 	Display            *xdisplay;
@@ -388,14 +388,14 @@ panel_multiscreen_queue_reinit (void)
 static void
 panel_multiscreen_init_randr (GdkDisplay *display)
 {
-#if defined(COMPILE_X11) && defined(HAVE_RANDR)
+#if defined(HAVE_X11) && defined(HAVE_RANDR)
 	Display *xdisplay;
 	int      event_base, error_base;
 #endif
 
 	have_randr = FALSE;
 
-#if defined(COMPILE_X11) && defined(HAVE_RANDR)
+#if defined(HAVE_X11) && defined(HAVE_RANDR)
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
 	/* We don't remember the event/error bases, as we expect to get "screen

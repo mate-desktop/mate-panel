@@ -32,7 +32,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #endif
 #include <gdk/gdkkeysyms.h>
@@ -40,7 +40,7 @@
 
 #include "panel-profile.h"
 #include "panel-frame.h"
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 #include "panel-xutils.h"
 #endif
 #include "panel-multiscreen.h"
@@ -429,7 +429,7 @@ static void panel_toplevel_init_resize_drag_offsets(PanelToplevel* toplevel, Pan
 	}
 }
 
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 {
     g_assert(GDK_IS_X11_DISPLAY(gdk_display_get_default ()));
@@ -549,7 +549,7 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 
 	if (toplevel->priv->grab_is_keyboard)
     {
-        #ifdef COMPILE_X11
+        #ifdef HAVE_X11
         GDK_IS_X11_DISPLAY(gdk_display_get_default ())
         {
             panel_toplevel_warp_pointer (toplevel);
@@ -888,7 +888,7 @@ static void panel_toplevel_rotate_to_pointer(PanelToplevel* toplevel, int pointe
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
 }
 
-#ifdef COMPILE_X11
+#ifdef HAVE_X11
 static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, int keyval, int increment)
 {
     g_assert(GDK_IS_X11_DISPLAY(gdk_display_get_default ()));
@@ -941,7 +941,7 @@ static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, G
 	if ((event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)
 		increment = SMALL_INCREMENT;
 
-    #ifdef COMPILE_X11
+    #ifdef HAVE_X11
     GDK_IS_X11_DISPLAY(gdk_display_get_default ())
     {
         return panel_toplevel_warp_pointer_increment (
@@ -1057,7 +1057,7 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 		case PANEL_GRAB_OP_RESIZE_DOWN:
 		case PANEL_GRAB_OP_RESIZE_LEFT:
 		case PANEL_GRAB_OP_RESIZE_RIGHT:
-            #ifdef COMPILE_X11
+            #ifdef HAVE_X11
             GDK_IS_X11_DISPLAY(gdk_display_get_default ())
 			{
                 retval = panel_toplevel_warp_pointer_increment (
