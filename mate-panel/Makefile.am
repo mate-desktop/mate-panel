@@ -12,6 +12,7 @@ AM_CPPFLAGS = \
 	-I$(srcdir) \
 	-I$(top_builddir)/mate-panel \
 	-I$(top_builddir)/mate-panel/libpanel-util \
+	-I$(top_builddir)/mate-panel/wayland-protocols \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)

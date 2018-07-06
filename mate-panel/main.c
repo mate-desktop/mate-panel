@@ -38,10 +38,13 @@
 #endif
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
+#include "wlr-layer-shell-unstable-v1-client-protocol.h"
 #endif
 /* globals */
 GSList *panels = NULL;
 GSList *panel_list = NULL;
+
+struct zwlr_layer_shell_v1 *layer_shell = NULL;
 
 static char*    layout;
 static gboolean replace = FALSE;
@@ -70,7 +73,10 @@ parsing_error_cb (GtkCssProvider *provider,
 
 static void handle_global(void *data, struct wl_registry *registry,
 		uint32_t id, const char *interface, uint32_t version) {
-	g_message ("got Wayland global '%s'", interface);
+	if (strcmp(interface, zwlr_layer_shell_v1_interface.name) == 0) {
+		layer_shell = wl_registry_bind(registry, id, &zwlr_layer_shell_v1_interface, 1);
+        printf("layer shell bound\n");
+	}
 }
 
 static void handle_global_remove(void *data, struct wl_registry *registry,
