@@ -178,6 +178,25 @@ main (int argc, char **argv)
 		gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 	}
 
+    #ifdef GDK_WINDOWING_WAYLAND
+    GdkDisplay *gdk_display = gdk_display_get_default ();
+    if (GDK_IS_WAYLAND_DISPLAY (gdk_display))
+    {
+        struct wl_display *wl_display = gdk_wayland_display_get_wl_display(gdk_display);
+        struct wl_registry *wl_registry = wl_display_get_registry(wl_display);
+        if (wl_registry)
+            fprintf(stderr, "got registry!\n");
+        wl_registry_add_listener(wl_registry, &registry_listener, NULL);
+        wl_display_roundtrip(wl_display);
+    }
+    else
+    {
+        fprintf(stderr, "GDK_IS_WAYLAND_DISPLAY() returned false\n");
+    }
+    #else
+    fprintf(stderr, "GDK_WINDOWING_WAYLAND not set\n ");
+    #endif
+
 	if (!panel_shell_register (replace)) {
 		panel_cleanup_do ();
 		return -1;
@@ -206,25 +225,6 @@ main (int argc, char **argv)
 	/* Do this at the end, to be sure that we're really ready when
 	 * connecting to the session manager */
 	panel_session_init ();
-
-    #ifdef GDK_WINDOWING_WAYLAND
-    GdkDisplay *gdk_display = gdk_display_get_default ();
-    if (GDK_IS_WAYLAND_DISPLAY (gdk_display))
-    {
-        struct wl_display *wl_display = gdk_wayland_display_get_wl_display(gdk_display);
-        struct wl_registry *wl_registry = wl_display_get_registry(wl_display);
-        if (wl_registry)
-            fprintf(stderr, "got registry!\n");
-        wl_registry_add_listener(wl_registry, &registry_listener, NULL);
-        wl_display_roundtrip(wl_display);
-    }
-    else
-    {
-        fprintf(stderr, "GDK_IS_WAYLAND_DISPLAY() returned false\n");
-    }
-    #else
-    fprintf(stderr, "GDK_WINDOWING_WAYLAND not set\n ");
-    #endif
 
 	/*Load a css file from a GResource so the drag handle image can be loaded*/
 	screen = gdk_screen_get_default ();

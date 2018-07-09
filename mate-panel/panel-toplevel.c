@@ -43,6 +43,10 @@
 #ifdef HAVE_X11
 #include "panel-xutils.h"
 #endif
+#ifdef HAVE_WAYLAND
+#include <gdk/gdkwayland.h>
+#include "wlr-layer-shell-unstable-v1-client-protocol.h"
+#endif
 #include "panel-multiscreen.h"
 #include "panel-a11y.h"
 #include "panel-typebuiltins.h"
@@ -2997,7 +3001,7 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 
 	if(resize || move)
 	{
-		for(list = toplevel->priv->panel_widget->applet_list;list!=NULL;list = g_list_next(list)) 
+		for(list = toplevel->priv->panel_widget->applet_list;list!=NULL;list = g_list_next(list))
 		{
 			AppletData *ad = list->data;
 			id = mate_panel_applet_get_id_by_widget (ad->applet);
@@ -3047,7 +3051,7 @@ set_background_default_style (GtkWidget *widget)
 		return;
 
 	toplevel = PANEL_TOPLEVEL (widget);
- 
+
 	context = gtk_widget_get_style_context (widget);
 	state = gtk_style_context_get_state (context);
 
@@ -3065,6 +3069,28 @@ set_background_default_style (GtkWidget *widget)
 	if (bg_image)
 		cairo_pattern_destroy (bg_image);
 }
+
+extern struct zwlr_layer_shell_v1 *layer_shell;
+
+static void layer_surface_configure(void *data,
+		struct zwlr_layer_surface_v1 *surface,
+		uint32_t serial, uint32_t w, uint32_t h) {
+	//width = w;
+	//height = h;
+	// TODO: resize the GTK window
+    //gtk_window_set_default_size(GTK_WINDOW(window), width, height);
+	zwlr_layer_surface_v1_ack_configure(surface, serial);
+}
+
+static void layer_surface_closed(void *data,
+		struct zwlr_layer_surface_v1 *surface) {
+	// TODO: close the GTK window
+}
+
+struct zwlr_layer_surface_v1_listener layer_surface_listener = {
+	.configure = layer_surface_configure,
+	.closed = layer_surface_closed,
+};
 
 static void
 panel_toplevel_realize (GtkWidget *widget)
@@ -3103,6 +3129,44 @@ panel_toplevel_realize (GtkWidget *widget)
 	panel_toplevel_initially_hide (toplevel);
 
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
+
+    #ifdef GDK_WINDOWING_WAYLAND
+    GdkDisplay *gdk_display = gdk_display_get_default ();
+    if (GDK_IS_WAYLAND_DISPLAY (gdk_display))
+    {
+        g_message("using layer shell");
+        gdk_wayland_window_set_use_custom_surface(window);
+        struct wl_surface * wl_surface = gdk_wayland_window_get_wl_surface(window);
+        g_assert(layer_shell);
+
+        //struct wl_output *wl_output = NULL;
+        uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_TOP;
+        char *namespace = "wmww"; // wtf is this? who fucking knows
+        //wl_surface_attach(wl_surface, NULL, 0, 0);
+        //wl_surface_commit(wl_surface);
+        GdkMonitor *gdk_monitor = gdk_display_get_primary_monitor(gdk_display);
+        if (gdk_monitor == NULL && gdk_display_get_n_monitors(gdk_display) > 0) {
+            gdk_monitor = gdk_display_get_monitor(gdk_display, 0);
+        }
+        g_assert(gdk_monitor);
+        struct wl_output *wl_output = gdk_wayland_monitor_get_wl_output(gdk_monitor);
+        struct zwlr_layer_surface_v1 *layer_surface = zwlr_layer_shell_v1_get_layer_surface(layer_shell, wl_surface, wl_output, layer, namespace);
+        g_assert(layer_surface);
+        GdkRectangle rect;
+        gdk_monitor_get_geometry(gdk_monitor, &rect);
+        int width = rect.width / 2;
+        int height = 80;
+        zwlr_layer_surface_v1_set_size(layer_surface, width, height);
+        zwlr_layer_surface_v1_set_anchor(layer_surface, ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM); // | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);
+        //zwlr_layer_surface_v1_set_exclusive_zone(layer_surface, exclusive_zone);
+        //zwlr_layer_surface_v1_set_margin(layer_surface, margin_top, margin_right, margin_bottom, margin_left);
+        zwlr_layer_surface_v1_set_keyboard_interactivity(layer_surface, FALSE);
+        zwlr_layer_surface_v1_add_listener(layer_surface, &layer_surface_listener, NULL);
+        wl_surface_commit(wl_surface);
+        struct wl_display *wl_display = gdk_wayland_display_get_wl_display(gdk_display);
+        wl_display_roundtrip(wl_display);
+    }
+    #endif
 }
 
 static void
@@ -3504,7 +3568,7 @@ panel_toplevel_button_release_event (GtkWidget      *widget,
 static gboolean
 panel_toplevel_configure_event (GtkWidget	  *widget,
 				GdkEventConfigure *event)
-{	
+{
 	PanelToplevel *toplevel;
 
 	toplevel = PANEL_TOPLEVEL (widget);
@@ -4884,7 +4948,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	panel_background_init (&toplevel->background,
 			       (PanelBackgroundChangedNotify) background_changed,
-			       toplevel);	
+			       toplevel);
 
 	update_style_classes (toplevel);
 }
