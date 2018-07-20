@@ -1055,21 +1055,23 @@ mate_panel_applet_get_preferred_width (GtkWidget *widget,
 				       int       *minimum_width,
 				       int       *natural_width)
 {
-	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
-	gint scale;
-
 	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->get_preferred_width (widget,
 										minimum_width,
 										natural_width);
 
+#if !GTK_CHECK_VERSION (3, 23, 0)
+	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
 	if (applet->priv->out_of_process) {
-		/* Out-of-process applets end up scaled up doubly. We divide by the scale factor to ensure
+		/* Out-of-process applets end up scaled up doubly with GTK 3.22.
+         * For these builds divide by the scale factor to ensure
 		 * they are back at their own intended size.
 		 */
+		gint scale;
 		scale = gtk_widget_get_scale_factor (widget);
 		*minimum_width /= scale;
 		*natural_width /= scale;
 	}
+#endif
 }
 
 static void
@@ -1077,21 +1079,22 @@ mate_panel_applet_get_preferred_height (GtkWidget *widget,
 					int       *minimum_height,
 					int       *natural_height)
 {
-	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
-	gint scale;
-
 	GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->get_preferred_height (widget,
 										minimum_height,
 										natural_height);
-
+#if !GTK_CHECK_VERSION (3, 23, 0)
+	MatePanelApplet *applet = MATE_PANEL_APPLET (widget);
 	if (applet->priv->out_of_process) {
-		/* Out-of-process applets end up scaled up doubly. We divide by the scale factor to ensure
+		gint scale;
+		/* Out-of-process applets end up scaled up doubly with GTK 3.22.
+         * For these builds divide by the scale factor to ensure
 		 * they are back at their own intended size.
 		 */
 		scale = gtk_widget_get_scale_factor (widget);
 		*minimum_height /= scale;
 		*natural_height /= scale;
 	}
+#endif
 }
 
 static GtkSizeRequestMode
