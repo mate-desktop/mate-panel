@@ -2302,10 +2302,12 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 	g_return_val_if_fail(callback != NULL, 1);
 	g_assert(g_type_is_a(applet_type, PANEL_TYPE_APPLET));
 
-	if (out_process)
-	{
-		_mate_panel_applet_setup_x_error_handler();
-	}
+	/*Use this both in and out of process as the tray applet always uses GtkSocket
+	 *to handle GtkStatusIcons whether the tray itself is built in or out of process
+     */
+
+	_mate_panel_applet_setup_x_error_handler();
+
 
 	closure = g_cclosure_new(G_CALLBACK(callback), user_data, NULL);
 	factory = mate_panel_applet_factory_new(factory_id, out_process,  applet_type, closure);
