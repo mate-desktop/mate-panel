@@ -120,7 +120,8 @@ static void update_properties_for_wm(PagerData* pager)
 				gtk_widget_show(pager->workspace_names_scroll);
 			if (pager->display_workspaces_toggle)
 				gtk_widget_show(pager->display_workspaces_toggle);
-			g_object_set (pager->cell, "editable", TRUE, NULL);
+			if (pager->cell)
+				g_object_set (pager->cell, "editable", TRUE, NULL);
 			break;
 		case PAGER_WM_METACITY:
 			if (pager->workspaces_frame)
@@ -131,7 +132,8 @@ static void update_properties_for_wm(PagerData* pager)
 				gtk_widget_show(pager->workspace_names_scroll);
 			if (pager->display_workspaces_toggle)
 				gtk_widget_show(pager->display_workspaces_toggle);
-			g_object_set (pager->cell, "editable", TRUE, NULL);
+			if (pager->cell)
+				g_object_set (pager->cell, "editable", TRUE, NULL);
 			break;
 		case PAGER_WM_I3:
 			if (pager->workspaces_frame)
@@ -144,7 +146,8 @@ static void update_properties_for_wm(PagerData* pager)
 				gtk_widget_hide(pager->workspace_names_scroll);
 			if (pager->display_workspaces_toggle)
 				gtk_widget_show(pager->display_workspaces_toggle);
-			g_object_set (pager->cell, "editable", FALSE, NULL);
+			if (pager->cell)
+				g_object_set (pager->cell, "editable", FALSE, NULL);
 			break;
 		case PAGER_WM_COMPIZ:
 			if (pager->workspaces_frame)
@@ -155,7 +158,8 @@ static void update_properties_for_wm(PagerData* pager)
 				gtk_widget_hide(pager->workspace_names_scroll);
 			if (pager->display_workspaces_toggle)
 				gtk_widget_hide(pager->display_workspaces_toggle);
-			g_object_set (pager->cell, "editable", FALSE, NULL);
+			if (pager->cell)
+				g_object_set (pager->cell, "editable", FALSE, NULL);
 			break;
 		case PAGER_WM_UNKNOWN:
 			if (pager->workspaces_frame)
