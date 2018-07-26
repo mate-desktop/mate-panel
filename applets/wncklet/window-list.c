@@ -42,6 +42,9 @@ typedef struct {
 
 	GtkOrientation orientation;
 	int size;
+#ifndef WNCKLET_INPROCESS
+	gboolean needs_hints;
+#endif
 
 	GtkIconTheme* icon_theme;
 
@@ -319,7 +322,27 @@ static void applet_size_allocate(GtkWidget *widget, GtkAllocation *allocation, T
 
 	g_assert(len % 2 == 0);
 
-	mate_panel_applet_set_size_hints(MATE_PANEL_APPLET(tasklist->applet), size_hints, len, 0);
+#ifndef WNCKLET_INPROCESS
+	/* HACK: When loading the WnckTasklist initially, it reports size hints as though there were
+	 * no elements in the Tasklist. This causes a rendering issue when built out-of-process in
+	 * HiDPI displays. We keep a flag to skip size hinting until WnckTasklist has something to
+	 * show. */
+	if (!tasklist->needs_hints)
+	{
+		int i;
+		for (i = 0; i < len; i++)
+		{
+			if (size_hints[i])
+			{
+				tasklist->needs_hints = TRUE;
+				break;
+			}
+		}
+	}
+
+	if (tasklist->needs_hints)
+#endif
+		mate_panel_applet_set_size_hints(MATE_PANEL_APPLET(tasklist->applet), size_hints, len, 0);
 }
 
 static GdkPixbuf* icon_loader_func(const char* icon, int size, unsigned int flags, void* data)
@@ -403,6 +426,10 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	tasklist->move_unminimized_windows = g_settings_get_boolean (tasklist->settings, "move-unminimized-windows");
 
 	tasklist->size = mate_panel_applet_get_size(applet);
+
+#ifndef WNCKLET_INPROCESS
+	tasklist->needs_hints = FALSE;
+#endif
 
 	switch (mate_panel_applet_get_orient(applet))
 	{
