@@ -42,7 +42,7 @@ typedef struct {
 
 	GtkOrientation orientation;
 	int size;
-#ifndef WNCKLET_INPROCESS
+#if !defined(WNCKLET_INPROCESS) && !GTK_CHECK_VERSION (3, 22, 31)
 	gboolean needs_hints;
 #endif
 
@@ -322,7 +322,7 @@ static void applet_size_allocate(GtkWidget *widget, GtkAllocation *allocation, T
 
 	g_assert(len % 2 == 0);
 
-#ifndef WNCKLET_INPROCESS
+#if !defined(WNCKLET_INPROCESS) && !GTK_CHECK_VERSION (3, 22, 31)
 	/* HACK: When loading the WnckTasklist initially, it reports size hints as though there were
 	 * no elements in the Tasklist. This causes a rendering issue when built out-of-process in
 	 * HiDPI displays. We keep a flag to skip size hinting until WnckTasklist has something to
@@ -427,7 +427,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	tasklist->size = mate_panel_applet_get_size(applet);
 
-#ifndef WNCKLET_INPROCESS
+#if !defined(WNCKLET_INPROCESS) && !GTK_CHECK_VERSION (3, 22, 31)
 	tasklist->needs_hints = FALSE;
 #endif
 
