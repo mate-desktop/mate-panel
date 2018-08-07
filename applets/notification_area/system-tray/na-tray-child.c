@@ -115,7 +115,7 @@ na_tray_child_style_set (GtkWidget *widget,
    */
 }
 
-#if !GTK_CHECK_VERSION (3, 22, 31)
+#if !GTK_CHECK_VERSION (3, 23, 0)
 static void
 na_tray_child_get_preferred_width (GtkWidget *widget,
                                    gint      *minimal_width,
@@ -384,7 +384,7 @@ na_tray_child_class_init (NaTrayChildClass *klass)
 
   widget_class->style_set = na_tray_child_style_set;
   widget_class->realize = na_tray_child_realize;
-#if !GTK_CHECK_VERSION (3, 22, 31)
+#if !GTK_CHECK_VERSION (3, 23, 0)
   widget_class->get_preferred_width = na_tray_child_get_preferred_width;
   widget_class->get_preferred_height = na_tray_child_get_preferred_height;
 #endif
