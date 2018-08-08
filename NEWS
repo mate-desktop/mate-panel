@@ -1,8 +1,20 @@
 ### mate-panel 1.20.3
 
+  * Translations update
+  * Change GTK_CHECK_VERSION to match next gtk+ release
+  * applets: Guard against GTK scale-factor fixes on GtkSocket
+  * window-list: Skip setting size hints until WnckTasklist has items to show.
+  * applets: Fix runtime error messages
+  * mate-panel-applet: setup_x_error_handler for in-process applets too
+  * GTK 3.23: fix applet size allocation
+  * GTK 3.23: don't cut tray icons too narrow in HiDPI mode
+  * na-tray-child: remove na_tray_child_size_allocate
+  * Remove leftover from GTK2 that may play a role in cutting tray icons
+  * panel-toplevel: add position css class
+
 ### mate-panel 1.20.2
 
-  * sync with transifex
+  * Translations update
   * update mate-panel.pot
   * Convert launcher icons to cairo surfaces
   * fix rendering and removal of in-process applets on unexpanded panel
@@ -41,11 +53,6 @@
   * Fix strut sizes for HiDPI multi-monitors
   * Do not down-scale monitor geometries for GDK monitors
   * Scale monitor geometries down to device pixels to support multiple monitors in HiDPI
-
-commit 13940c6221d0eb062352d238a45b879e65116fc6
-Author: info-cppsp <info@cppsp.de>
-Date:   Tue Feb 6 16:24:14 2018 +0100
-
   * Drawer cleanup and fix arrow behavior
 
 ### mate-panel 1.20.0
