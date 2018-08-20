@@ -303,35 +303,40 @@ calc_arrow (PanelOrientation  orientation,
 	    gdouble          *size)
 {
 	GtkArrowType retval = GTK_ARROW_UP;
-	double scale;
 
-	scale = (orientation & PANEL_HORIZONTAL_MASK ? button_height : button_width) / 48.0;
-
-	*size = 12 * scale;
+	if (orientation & PANEL_HORIZONTAL_MASK) {
+		if (button_width > 50)
+			button_width = 50;
+	} else {
+		if (button_height > 50)
+			button_height = 50;
+	}
+	
+	*size = (orientation & PANEL_HORIZONTAL_MASK ? button_width : button_height) / 2;
 	*angle = 0;
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		*x     = scale * 3;
-		*y     = scale * (48 - 13);
+		*x     = (button_width - (*size)) / 2;
+		*y     = button_height * .99 - (*size) / (3/2);	// 3/2 is the approximate ratio of GTK arrows
 		*angle = G_PI;
 		retval = GTK_ARROW_DOWN;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		*x     = scale * (48 - 13);
-		*y     = scale * 1;
+		*x     = (button_width - (*size)) / 2;
+		*y     = button_height * .01;
 		*angle = 0;
 		retval = GTK_ARROW_UP;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		*x     = scale * (48 - 13);
-		*y     = scale * 3;
+		*x     = button_width * .99 - (*size) / (3/2);	// 3/2 is the approximate ratio of GTK arrows
+		*y     = (button_height - (*size)) / 2;
 		*angle = G_PI / 2;
 		retval = GTK_ARROW_RIGHT;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		*x     = scale * 1;
-		*y     = scale * 3;
+		*x     = button_width * .01;
+		*y     = (button_height - (*size)) / 2;
 		*angle = 3 * (G_PI / 2);
 		retval = GTK_ARROW_LEFT;
 		break;
