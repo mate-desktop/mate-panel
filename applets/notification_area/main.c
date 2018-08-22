@@ -440,6 +440,9 @@ na_tray_applet_realize (GtkWidget *widget)
   gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
   gtk_action_group_add_actions(action_group, menu_actions, G_N_ELEMENTS(menu_actions), applet);
   ui_path = g_build_filename(NOTIFICATION_AREA_MENU_UI_DIR, "notification-area-menu.xml", NULL);
+  //mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (applet),
+  //                                            NA_RESOURCE_PATH "notification-area-menu.xml",
+  //                                            action_group);
   mate_panel_applet_setup_menu_from_file(MATE_PANEL_APPLET(applet), ui_path, action_group);
   g_free(ui_path);
   g_object_unref(action_group);
