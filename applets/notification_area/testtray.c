@@ -30,7 +30,7 @@
 #ifdef PROVIDE_WATCHER_SERVICE
 # include "libstatus-notifier-watcher/gf-status-notifier-watcher.h"
 #endif
-#include "na-box.h"
+#include "na-grid.h"
 
 #define NOTIFICATION_AREA_ICON "mate-panel-notification-area"
 
