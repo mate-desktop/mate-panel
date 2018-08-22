@@ -24,7 +24,17 @@
 
 #include <mate-panel-applet.h>
 
-#define NA_RESOURCE_PATH "/org/mate/panel/applet/na/"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define NA_TRAY_SCHEMA                 "org.mate.panel.applet.notification-area"
+#define KEY_USE_ONLY_ONE_LINE          "use-only-one-line"
+#define KEY_MIN_ICON_SIZE              "min-icon-size"
+
+#ifdef __cplusplus
+}
+#endif
 
 G_BEGIN_DECLS
 
