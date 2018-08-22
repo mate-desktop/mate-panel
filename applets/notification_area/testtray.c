@@ -181,7 +181,7 @@ create_tray_on_screen (GdkScreen *screen,
   gtk_label_set_yalign (GTK_LABEL (label), 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  data->traybox = na_box_new (GTK_ORIENTATION_HORIZONTAL);
+  data->traybox = na_grid_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (data->traybox), TRUE, TRUE, 0);
 
   g_signal_connect_after (data->traybox, "add", G_CALLBACK (tray_added_cb), data);
