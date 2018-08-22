@@ -135,13 +135,40 @@ get_gtk_orientation_from_applet_orient (MatePanelAppletOrient orient)
   return GTK_ORIENTATION_HORIZONTAL;
 }
 
-void update_grid(GSettings    *settings,
-                 gchar        *key,
-                 NaTrayApplet *applet)
+void update_grid_use_only_one_line(GSettings    *settings,
+                                   gchar        *key,
+                                   NaTrayApplet *applet)
 {
+        gboolean use_only_one_line = g_settings_get_boolean (applet->priv->settings, KEY_USE_ONLY_ONE_LINE);
+        set_grid_display_mode(NA_GRID (applet->priv->grid),
+        		      use_only_one_line,
+        		      applet->priv->min_icon_size);
+        
+        gtk_toggle_button_set_active (applet->priv->dialog->use_only_one_line_toggle, use_only_one_line);
+        
+        if (use_only_one_line) {
+		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, FALSE);
+		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, FALSE);
+		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, FALSE);        
+        } else {
+		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, TRUE);
+		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, TRUE);
+		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, TRUE);   
+        }       
+}
+
+void update_grid_min_icon_size(GSettings    *settings,
+                               gchar        *key,
+                               NaTrayApplet *applet)
+{
+	gint min_icon_size = g_settings_get_int (applet->priv->settings, KEY_MIN_ICON_SIZE);
         set_grid_display_mode(NA_GRID (applet->priv->grid),
         		      applet->priv->use_only_one_line,
-        		      applet->priv->min_icon_size);
+        		      min_icon_size);
+	
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin),
+				   min_icon_size);
+
 }
 
 static inline GtkWidget *
@@ -188,8 +215,8 @@ setup_gsettings (NaTrayApplet *applet)
 {
         applet->priv->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (applet), NA_TRAY_SCHEMA);
 
-        g_signal_connect (applet->priv->settings, "changed::" KEY_USE_ONLY_ONE_LINE, G_CALLBACK (update_grid), applet);
-        g_signal_connect (applet->priv->settings, "changed::" KEY_MIN_ICON_SIZE, G_CALLBACK (update_grid), applet);
+        g_signal_connect (applet->priv->settings, "changed::" KEY_USE_ONLY_ONE_LINE, G_CALLBACK (update_grid_use_only_one_line), applet);
+        g_signal_connect (applet->priv->settings, "changed::" KEY_MIN_ICON_SIZE, G_CALLBACK (update_grid_min_icon_size), applet);
 }
 
 static void
