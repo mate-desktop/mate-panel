@@ -24,6 +24,7 @@
 
 #include <mate-panel-applet.h>
 
+#define NA_RESOURCE_PATH "/org/mate/panel/applet/na/"
 #ifdef __cplusplus
 extern "C" {
 #endif
