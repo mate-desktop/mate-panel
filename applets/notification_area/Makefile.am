@@ -119,6 +119,7 @@ EXTRA_DIST =								\
 	$(notification_area_gschemas_in)				\
 	$(xmlui_DATA)							\
 	$(ui_DATA)							\
+	na.gresource.xml						\
 	$(service_in_files)
 
 CLEANFILES =			\
