@@ -113,6 +113,8 @@ gsettings_SCHEMAS = $(notification_area_gschemas_in:.xml.in=.xml)
 #BUILT_SOURCES = 		\
 #	na-resources.c	\
 #	na-resources.h
+@INTLTOOL_XML_NOMERGE_RULE@
+@GSETTINGS_RULES@
 
 EXTRA_DIST =								\
 	org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in	\
