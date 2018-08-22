@@ -34,7 +34,10 @@ libtray_la_LIBADD =							\
 	status-notifier/libstatus-notifier.la				\
 	system-tray/libsystem-tray.la
 
-NOTIFICATION_AREA_SOURCES = main.c main.h
+NOTIFICATION_AREA_SOURCES = \
+	main.c \
+	main.h \
+	$(BUILT_SOURCES)
 
 NOTIFICATION_AREA_LDADD =				\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
@@ -100,6 +103,16 @@ xmlui_DATA = notification-area-menu.xml
 
 notification_area_gschemas_in = org.mate.panel.applet.notification-area.gschema.xml.in
 gsettings_SCHEMAS = $(notification_area_gschemas_in:.xml.in=.xml)
+
+#na-resources.c: na.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/na.gresource.xml)
+#	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name na $<
+
+#na-resources.h: na.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/na.gresource.xml)
+#	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name na $<
+
+#BUILT_SOURCES = 		\
+#	na-resources.c	\
+#	na-resources.h
 
 EXTRA_DIST =								\
 	org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in	\
