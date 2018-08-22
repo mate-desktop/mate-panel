@@ -135,18 +135,11 @@ get_gtk_orientation_from_applet_orient (MatePanelAppletOrient orient)
   return GTK_ORIENTATION_HORIZONTAL;
 }
 
-void update_grid_use_only_one_line(GSettings    *settings,
-                                   gchar        *key,
-                                   NaTrayApplet *applet)
+static void
+notification_area_preferences_dialog_use_only_one_line_toggle (NaTrayApplet *applet,
+                                                               gboolean toggle)
 {
-        gboolean use_only_one_line = g_settings_get_boolean (applet->priv->settings, KEY_USE_ONLY_ONE_LINE);
-        set_grid_display_mode(NA_GRID (applet->priv->grid),
-        		      use_only_one_line,
-        		      applet->priv->min_icon_size);
-        
-        gtk_toggle_button_set_active (applet->priv->dialog->use_only_one_line_toggle, use_only_one_line);
-        
-        if (use_only_one_line) {
+        if (toggle) {
 		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, FALSE);
 		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, FALSE);
 		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, FALSE);        
@@ -154,14 +147,27 @@ void update_grid_use_only_one_line(GSettings    *settings,
 		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, TRUE);
 		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, TRUE);
 		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, TRUE);   
-        }       
+        }
+}
+
+void update_grid_use_only_one_line(GSettings    *settings,
+                                   gchar        *key,
+                                   NaTrayApplet *applet)
+{
+        gboolean use_only_one_line = g_settings_get_boolean (settings, key);
+        set_grid_display_mode(NA_GRID (applet->priv->grid),
+        		      use_only_one_line,
+        		      applet->priv->min_icon_size);
+        
+        gtk_toggle_button_set_active (applet->priv->dialog->use_only_one_line_toggle, use_only_one_line);
+        notification_area_preferences_dialog_use_only_one_line_toggle(applet, use_only_one_line);     
 }
 
 void update_grid_min_icon_size(GSettings    *settings,
                                gchar        *key,
                                NaTrayApplet *applet)
 {
-	gint min_icon_size = g_settings_get_int (applet->priv->settings, KEY_MIN_ICON_SIZE);
+	gint min_icon_size = g_settings_get_int (settings, key);
         set_grid_display_mode(NA_GRID (applet->priv->grid),
         		      applet->priv->use_only_one_line,
         		      min_icon_size);
@@ -188,16 +194,7 @@ notification_area_preferences_dialog_use_only_one_line_toggled (NaTrayApplet *ap
 		applet->priv->use_only_one_line = FALSE;
 	
 	g_settings_set_boolean (applet->priv->settings, KEY_USE_ONLY_ONE_LINE, applet->priv->use_only_one_line);
-
-        if (applet->priv->use_only_one_line) {
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, FALSE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, FALSE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, FALSE);        
-        } else {
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, TRUE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, TRUE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, TRUE);   
-        }
+	notification_area_preferences_dialog_use_only_one_line_toggle(applet, applet->priv->use_only_one_line);
 
 }
 
@@ -312,15 +309,7 @@ ensure_prefs_window_is_created (NaTrayApplet* applet)
 				  G_CALLBACK (notification_area_preferences_dialog_use_only_one_line_toggled),
 				  applet);
 
-        if (applet->priv->use_only_one_line) {
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, FALSE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, FALSE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, FALSE);        
-        } else {
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, TRUE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, TRUE);
-		gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label_pixels, TRUE);   
-        }
+       notification_area_preferences_dialog_use_only_one_line_toggle(applet, applet->priv->use_only_one_line);
 
 }
 
@@ -427,11 +416,20 @@ static const GtkActionEntry menu_actions [] = {
 	  G_CALLBACK (about_cb) }
 };
 
+static void refresh_grid_display_mode(GtkWidget *grid, GtkAllocation *allocation, gpointer data) {
+
+	NaTrayApplet *applet = data;
+        load_gsettings(applet);
+
+}
+
 static void
 na_tray_applet_realize (GtkWidget *widget)
 {
-  NaTrayApplet      *applet = NA_TRAY_APPLET (widget);
+  NaTrayApplet           *applet = NA_TRAY_APPLET (widget);
   MatePanelAppletOrient  orient;
+  char                   *filename;
+  GError                 *error;
 
   if (parent_class_realize)
     parent_class_realize (widget);
@@ -445,9 +443,6 @@ na_tray_applet_realize (GtkWidget *widget)
   mate_panel_applet_setup_menu_from_file(MATE_PANEL_APPLET(applet), ui_path, action_group);
   g_free(ui_path);
   g_object_unref(action_group);
-
-  char           *filename;
-  GError         *error;
 
   setup_gsettings (applet);
   load_gsettings (applet);
@@ -465,6 +460,8 @@ na_tray_applet_realize (GtkWidget *widget)
   }
 
   g_free (filename);
+  
+  g_signal_connect(GTK_GRID(applet->priv->grid), "size-allocate", G_CALLBACK(refresh_grid_display_mode), applet);
 
 }
 
