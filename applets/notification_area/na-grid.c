@@ -37,12 +37,19 @@
 #define MIN_ICON_SIZE_DEFAULT 26
 #define USE_ONLY_ONE_LINE_DEFAULT TRUE
 
-typedef struct _GridProps
+typedef struct
 {
 	gint cols;
 	gint rows;
 	gint length;
 } GridProps;
+
+typedef struct
+{
+	GtkOrientation orientation;
+	guint index;
+	NaGrid *na_grid;
+} PackData;
 
 struct _NaGrid
 {
@@ -57,13 +64,6 @@ struct _NaGrid
 	GSList *items;
 	GridProps *grid_props;
 };
-
-typedef struct _PackData
-{
-	GtkOrientation orientation;
-	guint index;
-	NaGrid *na_grid;
-} PackData;
 
 enum
 {
@@ -103,7 +103,7 @@ compare_items (gconstpointer a,
 }
 
 static void reorder_items_with_data(GtkWidget *item,
-				    PackData *data)
+				    PackData  *data)
 {
 	guint row, col;
 	guint left, right, top, bottom;
@@ -198,17 +198,17 @@ refresh_grid(NaGrid *self)
 	g_return_if_fail (NA_IS_GRID (self));
 	
 	orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
-	determine_grid_properties(self);
+	determine_grid_properties (self);
 
 	for (item = self->items; item; item = item->next)
 	{
-		if (GTK_IS_WIDGET(item))
-			gtk_container_remove(GTK_CONTAINER (self), GTK_WIDGET(item));
+		if (GTK_IS_WIDGET (item))
+			gtk_container_remove (GTK_CONTAINER (self), GTK_WIDGET(item));
 	}
 
 	for (item = self->items; item; item = item->next)
 	{	
-		if (GTK_IS_WIDGET(item))
+		if (GTK_IS_WIDGET (item))
 		{
 			gtk_grid_attach (GTK_GRID (self),
 					 GTK_WIDGET(item),
@@ -254,14 +254,16 @@ refresh_grid(NaGrid *self)
 			(GHFunc)reorder_items_with_data,
 			&pack_data);
 
-	na_grid_force_redraw(GTK_GRID (self));
+	na_grid_force_redraw (GTK_GRID (self));
 }
 
-void set_grid_display_mode( NaGrid *grid, gboolean use_only_one_line, gint min_icon_size)
+void set_grid_display_mode(NaGrid   *grid,
+			   gboolean  use_only_one_line,
+			   gint      min_icon_size)
 {
 	grid->use_only_one_line = use_only_one_line;
 	grid->min_icon_size = min_icon_size;
-	refresh_grid(grid);
+	refresh_grid (grid);
 }
 
 static void
@@ -279,10 +281,10 @@ item_added_cb (NaHost *host,
 
 	self->items = g_slist_prepend (self->items, item);
 
-	determine_grid_properties(self);
+	determine_grid_properties (self);
 
-	gtk_widget_set_hexpand(GTK_WIDGET(item), TRUE);
-	gtk_widget_set_vexpand(GTK_WIDGET(item), TRUE);
+	gtk_widget_set_hexpand (GTK_WIDGET(item), TRUE);
+	gtk_widget_set_vexpand (GTK_WIDGET(item), TRUE);
 	gtk_grid_attach (GTK_GRID (self),
 			 item,
 			 self->grid_props->cols - 1,
@@ -290,7 +292,7 @@ item_added_cb (NaHost *host,
 			 1, 1);
 
 	self->items = g_slist_sort (self->items, compare_items);
-	refresh_grid(self);
+	refresh_grid (self);
 }
 
 static void
@@ -305,7 +307,7 @@ item_removed_cb (NaHost *host,
 	gtk_container_remove (GTK_CONTAINER (self), GTK_WIDGET (item));
 	
 	self->items = g_slist_remove (self->items, item);
-	refresh_grid(self);
+	refresh_grid (self);
 }
 
 static void
@@ -313,7 +315,7 @@ refresh_notify (GObject    *object,
 		GParamSpec *pspec,
 		gpointer    data)
 {
-	refresh_grid(NA_GRID (object));
+	refresh_grid (NA_GRID (object));
 }
 
 static void
@@ -336,7 +338,7 @@ na_grid_init (NaGrid *self)
 }
 
 static void
-add_host (NaGrid  *self,
+add_host (NaGrid *self,
 	  NaHost *host)
 {
 	self->hosts = g_slist_prepend (self->hosts, host);
