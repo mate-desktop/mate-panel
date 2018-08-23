@@ -187,10 +187,8 @@ static void
 notification_area_preferences_dialog_use_only_one_line_toggled (NaTrayApplet    *applet,
 								GtkToggleButton *toggle)
 {
-	applet->priv->use_only_one_line = gtk_toggle_button_get_active (toggle);
-	
+	applet->priv->use_only_one_line = gtk_toggle_button_get_active (toggle);	
 	g_settings_set_boolean (applet->priv->settings, KEY_USE_ONLY_ONE_LINE, applet->priv->use_only_one_line);
-	notification_area_preferences_dialog_use_only_one_line_toggle(applet, applet->priv->use_only_one_line);
 }
 
 static void
