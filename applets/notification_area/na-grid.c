@@ -102,10 +102,6 @@ compare_items (gconstpointer a,
 	return g_strcmp0 (id1, id2);
 }
 
-
-
-/************************************************/
-
 static void reorder_items_with_data(GtkWidget *item,
 				    PackData *data)
 {
@@ -146,7 +142,6 @@ static void reorder_items_with_data(GtkWidget *item,
 static void
 determine_grid_properties(NaGrid *self)
 {
-
 	gint rows, cols, length;
 	GtkOrientation orientation;
 	GtkAllocation allocation;
@@ -192,11 +187,9 @@ determine_grid_properties(NaGrid *self)
 	//syslog (LOG_MAKEPRI(LOG_LOCAL1, LOG_INFO), "Cols %d. Rows %d. length %d.", cols, rows, length);
 }
 
-
 void
 refresh_grid(NaGrid *self)
 {
-
 	PackData pack_data;
 	GSList *item;
 	GtkOrientation orientation;
@@ -214,8 +207,7 @@ refresh_grid(NaGrid *self)
 	}
 
 	for (item = self->items; item; item = item->next)
-	{
-		
+	{	
 		if (GTK_IS_WIDGET(item))
 		{
 			gtk_grid_attach (GTK_GRID (self),
@@ -232,11 +224,10 @@ refresh_grid(NaGrid *self)
 						 NULL);
 
 			if (self->use_only_one_line) {
-				if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+				if (orientation == GTK_ORIENTATION_HORIZONTAL)
 					col++;
-				} else {
+				else
 					row++;
-				} 
 			} else {
 				if (orientation == GTK_ORIENTATION_HORIZONTAL) {
 					if (col < self->grid_props->cols) col++;
@@ -278,7 +269,6 @@ item_added_cb (NaHost *host,
 	       NaItem *item,
 	       NaGrid *self)
 {
-
 	g_return_if_fail (NA_IS_HOST (host));
 	g_return_if_fail (NA_IS_ITEM (item));
 	g_return_if_fail (NA_IS_GRID (self));
@@ -301,8 +291,6 @@ item_added_cb (NaHost *host,
 
 	self->items = g_slist_sort (self->items, compare_items);
 	refresh_grid(self);
-
-
 }
 
 static void
@@ -318,7 +306,6 @@ item_removed_cb (NaHost *host,
 	
 	self->items = g_slist_remove (self->items, item);
 	refresh_grid(self);
-
 }
 
 static void
@@ -332,7 +319,6 @@ refresh_notify (GObject    *object,
 static void
 na_grid_init (NaGrid *self)
 {
-
 	self->icon_padding = 0;
 	self->icon_size = 0;
 
@@ -347,7 +333,6 @@ na_grid_init (NaGrid *self)
 
 	g_signal_connect (self, "notify::orientation", G_CALLBACK (refresh_notify), NULL);
 	g_signal_connect (self, "notify::size-changed", G_CALLBACK (refresh_notify), NULL);
-
 }
 
 static void
@@ -430,7 +415,6 @@ na_grid_realize (GtkWidget *widget)
 
 	add_host (self, tray_host);
 	add_host (self, sn_host_v0_new ());
-
 }
 
 static void
