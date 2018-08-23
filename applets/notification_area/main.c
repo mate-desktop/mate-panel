@@ -45,16 +45,17 @@
 
 #define NOTIFICATION_AREA_ICON "mate-panel-notification-area"
 
-typedef struct {
-	GtkWidget     *preferences_dialog;
+typedef struct
+{
+	GtkWidget *preferences_dialog;
 
-	GtkWidget     *general_table;
-	GtkWidget     *general_vbox;
-	GtkWidget     *min_icon_size_widgets;
-	GtkWidget     *min_icon_size_spin;
-	GtkWidget     *min_icon_size_label;
-	GtkWidget     *min_icon_size_label_pixels;
-	GtkWidget     *use_only_one_line_toggle;
+	GtkWidget *general_table;
+	GtkWidget *general_vbox;
+	GtkWidget *min_icon_size_widgets;
+	GtkWidget *min_icon_size_spin;
+	GtkWidget *min_icon_size_label;
+	GtkWidget *min_icon_size_label_pixels;
+	GtkWidget *use_only_one_line_toggle;
 
 } NAPreferencesDialog;
 
@@ -63,11 +64,9 @@ struct _NaTrayAppletPrivate
 	GtkWidget *applet;
 	GtkGrid *grid;
 
-	/* Preferences dialog */
 	NAPreferencesDialog *dialog;
-  
+
 	GtkBuilder *builder;
-  
 	GSettings *settings;
   
 	gboolean use_only_one_line;
@@ -84,7 +83,6 @@ static void (*parent_class_realize) (GtkWidget *widget);
 static void (*parent_class_style_updated) (GtkWidget *widget);
 static void (*parent_class_change_background)(MatePanelApplet *panel_applet, MatePanelAppletBackgroundType type, GdkRGBA *color, cairo_pattern_t* pattern);
 static void (*parent_class_change_orient)(MatePanelApplet *panel_applet, MatePanelAppletOrient  orient);
-
 
 #ifdef PROVIDE_WATCHER_SERVICE
 /* Quite dirty way of providing the org.kde.StatusNotifierWatcher service
@@ -136,7 +134,7 @@ get_gtk_orientation_from_applet_orient (MatePanelAppletOrient orient)
 
 static void
 na_preferences_dialog_use_only_one_line_toggle (NaTrayApplet *applet,
-						gboolean     toggle)
+						gboolean      toggle)
 {
 	gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_spin, !toggle);
 	gtk_widget_set_sensitive (applet->priv->dialog->min_icon_size_label, !toggle);
@@ -154,9 +152,9 @@ void gsettings_changed_use_only_one_line(GSettings    *settings,
 		na_preferences_dialog_use_only_one_line_toggle(applet, applet->priv->use_only_one_line);
 	}
 
-	set_grid_display_mode(NA_GRID (applet->priv->grid),
-			      applet->priv->use_only_one_line,
-			      applet->priv->min_icon_size);
+	set_grid_display_mode (NA_GRID (applet->priv->grid),
+			       applet->priv->use_only_one_line,
+			       applet->priv->min_icon_size);
 }
 
 void gsettings_changed_min_icon_size(GSettings    *settings,
@@ -170,14 +168,14 @@ void gsettings_changed_min_icon_size(GSettings    *settings,
 					   applet->priv->min_icon_size);
 	}
 
-	set_grid_display_mode(NA_GRID (applet->priv->grid),
-			      applet->priv->use_only_one_line,
-			      applet->priv->min_icon_size);
+	set_grid_display_mode (NA_GRID (applet->priv->grid),
+			       applet->priv->use_only_one_line,
+			       applet->priv->min_icon_size);
 }
 
 static inline GtkWidget *
 na_get_widget (NaTrayApplet *applet,
-	       const char *name)
+	       const char   *name)
 {
 	return GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, name));
 }
@@ -191,7 +189,7 @@ na_preferences_dialog_use_only_one_line_toggled (NaTrayApplet    *applet,
 }
 
 static void
-na_preferences_dialog_min_icon_size_changed (NaTrayApplet* applet,
+na_preferences_dialog_min_icon_size_changed (NaTrayApplet  *applet,
 				      	     GtkSpinButton *spin_button)
 {
 	applet->priv->min_icon_size = gtk_spin_button_get_value_as_int (spin_button);
@@ -215,9 +213,9 @@ load_gsettings (NaTrayApplet *applet)
 	applet->priv->use_only_one_line = g_settings_get_boolean (applet->priv->settings, KEY_USE_ONLY_ONE_LINE);
 	applet->priv->min_icon_size = g_settings_get_int (applet->priv->settings, KEY_MIN_ICON_SIZE);
 	
-	set_grid_display_mode(NA_GRID (applet->priv->grid),
-			      applet->priv->use_only_one_line,
-			      applet->priv->min_icon_size);
+	set_grid_display_mode (NA_GRID (applet->priv->grid),
+			       applet->priv->use_only_one_line,
+			       applet->priv->min_icon_size);
 }
 
 static gboolean
@@ -231,8 +229,8 @@ na_preferences_dialog_hide_event (GtkWidget    *widget,
 
 static void
 na_preferences_dialog_response (NaTrayApplet *applet,
-				int          response,
-				GtkWidget   *preferences_dialog)
+				int           response,
+				GtkWidget    *preferences_dialog)
 {
 	switch (response) {
 		case GTK_RESPONSE_CLOSE:
@@ -244,7 +242,7 @@ na_preferences_dialog_response (NaTrayApplet *applet,
 }
 
 static void
-ensure_prefs_window_is_created (NaTrayApplet* applet)
+ensure_prefs_window_is_created (NaTrayApplet *applet)
 {	
 	if (applet->priv->dialog)
 		return;
@@ -301,8 +299,8 @@ ensure_prefs_window_is_created (NaTrayApplet* applet)
 }
 
 static void
-properties_dialog(GtkAction *action,
-		  NaTrayApplet* applet)
+properties_dialog(GtkAction    *action,
+		  NaTrayApplet *applet)
 {
 	ensure_prefs_window_is_created (applet);
 
@@ -311,7 +309,9 @@ properties_dialog(GtkAction *action,
 	gtk_window_present (GTK_WINDOW (applet->priv->dialog->preferences_dialog));
 }
 
-static void help_cb(GtkAction* action, NaTrayApplet* applet)
+static void
+help_cb(GtkAction    *action,
+	NaTrayApplet *applet)
 {
 	GError* error = NULL;
 	char* uri;
@@ -350,7 +350,9 @@ static void help_cb(GtkAction* action, NaTrayApplet* applet)
 	}
 }
 
-static void about_cb(GtkAction* action, NaTrayApplet* applet)
+static void
+about_cb(GtkAction    *action,
+	 NaTrayApplet *applet)
 {
 	const gchar* authors[] = {
 		"Havoc Pennington <hp@redhat.com>",
@@ -396,15 +398,18 @@ static const GtkActionEntry menu_actions [] = {
 	  G_CALLBACK (about_cb) }
 };
 
-static void na_tray_applet_size_allocate(GtkWidget *grid, GtkAllocation *allocation, gpointer data)
+static void
+na_tray_applet_size_allocate(GtkWidget     *grid,
+			     GtkAllocation *allocation,
+			     gpointer       data)
 {
 	NaTrayApplet *applet = data;
 	
 	g_return_if_fail (NA_IS_GRID (grid));
 
-	set_grid_display_mode(NA_GRID (grid),
-			      applet->priv->use_only_one_line,
-			      applet->priv->min_icon_size);
+	set_grid_display_mode (NA_GRID (grid),
+			       applet->priv->use_only_one_line,
+			       applet->priv->min_icon_size);
 }
 
 static void
@@ -420,16 +425,16 @@ na_tray_applet_realize (GtkWidget *widget)
 	if (parent_class_realize)
 		parent_class_realize (widget);
 
-	action_group = gtk_action_group_new("NA Applet Menu Actions");
-	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions(action_group, menu_actions, G_N_ELEMENTS(menu_actions), applet);
-	ui_path = g_build_filename(NOTIFICATION_AREA_MENU_UI_DIR, "notification-area-menu.xml", NULL);
+	action_group = gtk_action_group_new ("NA Applet Menu Actions");
+	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (action_group, menu_actions, G_N_ELEMENTS(menu_actions), applet);
+	ui_path = g_build_filename (NOTIFICATION_AREA_MENU_UI_DIR, "notification-area-menu.xml", NULL);
 	//mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (applet),
 	//					      NA_RESOURCE_PATH "notification-area-menu.xml",
 	//					      action_group);
-	mate_panel_applet_setup_menu_from_file(MATE_PANEL_APPLET(applet), ui_path, action_group);
-	g_free(ui_path);
-	g_object_unref(action_group);
+	mate_panel_applet_setup_menu_from_file (MATE_PANEL_APPLET(applet), ui_path, action_group);
+	g_free (ui_path);
+	g_object_unref (action_group);
 
 	setup_gsettings (applet);
 	load_gsettings (applet);
@@ -448,7 +453,7 @@ na_tray_applet_realize (GtkWidget *widget)
 
 	g_free (filename);
   
-	g_signal_connect(GTK_GRID(applet->priv->grid), "size-allocate", G_CALLBACK(na_tray_applet_size_allocate), applet);
+	g_signal_connect (GTK_GRID(applet->priv->grid), "size-allocate", G_CALLBACK(na_tray_applet_size_allocate), applet);
 
 }
 
@@ -489,10 +494,10 @@ na_tray_applet_style_updated (GtkWidget *widget)
 }
 
 static void
-na_tray_applet_change_background(MatePanelApplet* panel_applet,
-				 MatePanelAppletBackgroundType type,
-				 GdkRGBA* color,
-				 cairo_pattern_t* pattern)
+na_tray_applet_change_background(MatePanelApplet               *panel_applet,
+				 MatePanelAppletBackgroundType  type,
+				 GdkRGBA                       *color,
+				 cairo_pattern_t               *pattern)
 {
 	NaTrayApplet *applet = NA_TRAY_APPLET (panel_applet);
 
@@ -534,7 +539,7 @@ na_tray_applet_button_press_event (GtkWidget      *widget,
 }
 
 static gboolean
-na_tray_applet_focus (GtkWidget	*widget,
+na_tray_applet_focus (GtkWidget	       *widget,
 		      GtkDirectionType  direction)
 {
 	NaTrayApplet *applet = NA_TRAY_APPLET (widget);
@@ -623,7 +628,7 @@ na_tray_applet_init (NaTrayApplet *applet)
 static gboolean
 applet_factory (MatePanelApplet *applet,
 		const gchar     *iid,
-		gpointer        user_data)
+		gpointer         user_data)
 {
 	if (!(strcmp (iid, "NotificationArea") == 0 ||
 	      strcmp (iid, "SystemTrayApplet") == 0))
