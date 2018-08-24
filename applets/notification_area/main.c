@@ -208,10 +208,10 @@ setup_gsettings (NaTrayApplet *applet)
 static void
 load_gsettings (NaTrayApplet *applet)
 {
-	g_return_if_fail (NA_IS_GRID (applet->priv->grid));
-
 	applet->priv->use_only_one_line = g_settings_get_boolean (applet->priv->settings, KEY_USE_ONLY_ONE_LINE);
 	applet->priv->min_icon_size = g_settings_get_int (applet->priv->settings, KEY_MIN_ICON_SIZE);
+	
+	g_return_if_fail (NA_IS_GRID (applet->priv->grid));
 	
 	set_grid_display_mode (NA_GRID (applet->priv->grid),
 			       applet->priv->use_only_one_line,
