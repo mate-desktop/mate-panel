@@ -23,11 +23,15 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <gio/gio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdkx.h>
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
@@ -46,6 +50,8 @@
 #include "launcher.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
+
+static Atom _net_active_window = None;
 
 char *
 panel_util_make_exec_uri_for_desktop (const char *exec)
@@ -1238,4 +1244,90 @@ panel_util_get_file_optional_homedir (const char *location)
 	g_free (path);
 
 	return file;
+}
+
+static void panel_menu_bar_get_net_active_window(Display *xdisplay)
+{
+	if (_net_active_window == None)
+		_net_active_window = XInternAtom (xdisplay,
+						  "_NET_ACTIVE_WINDOW",
+						  False);
+}
+
+Window panel_util_get_current_active_window (GtkWidget *toplevel)
+{
+	GdkScreen  *screen;
+	GdkDisplay *display;
+	GdkWindow  *root;
+	Display    *xdisplay;
+	Window      xroot;
+
+	Window      res = None;
+
+	Atom           return_type;
+	int            return_format;
+	unsigned long  n;
+	unsigned long  bytes;
+	unsigned char *prop = NULL;
+
+	screen   = gtk_window_get_screen (GTK_WINDOW(toplevel));
+	display  = gdk_screen_get_display (screen);
+	root     = gdk_screen_get_root_window (screen);
+
+	xdisplay = GDK_DISPLAY_XDISPLAY (display);
+	xroot    = GDK_WINDOW_XID (root);
+
+	panel_menu_bar_get_net_active_window (xdisplay);
+	if (_net_active_window != None
+	    && XGetWindowProperty (xdisplay, xroot, _net_active_window, 0, 1,
+				   False, XA_WINDOW, &return_type, &return_format,
+				   &n, &bytes, &prop) == Success)
+	{
+		if ((return_type == XA_WINDOW) && (return_format == 32) &&
+		    (n == 1) && (prop)) {
+			res = *(Window *)prop;
+		}
+
+		if (prop)
+			XFree (prop);
+
+	}
+	return res;
+}
+
+void panel_util_set_current_active_window (GtkWidget *toplevel, Window window)
+{
+	GdkScreen  *screen;
+	GdkDisplay *display;
+	GdkWindow  *root;
+	Display    *xdisplay;
+	Window      xroot;
+	XEvent      xev;
+
+	screen   = gtk_window_get_screen (GTK_WINDOW(toplevel));
+	display  = gdk_screen_get_display (screen);
+	root     = gdk_screen_get_root_window (screen);
+
+	xdisplay = GDK_DISPLAY_XDISPLAY (display);
+	xroot    = GDK_WINDOW_XID (root);
+
+	panel_menu_bar_get_net_active_window (xdisplay);
+	if (_net_active_window == None)
+		return;
+
+	xev.xclient.type	 = ClientMessage;
+	xev.xclient.serial	 = 0;
+	xev.xclient.send_event	 = True;
+	xev.xclient.window	 = window;
+	xev.xclient.message_type = _net_active_window;
+	xev.xclient.format	 = 32;
+	xev.xclient.data.l[0]	 = 2; /* requestor type; we're not an app */
+	xev.xclient.data.l[1]	 = CurrentTime;
+	xev.xclient.data.l[2]	 = None; /* our currently active window */
+	xev.xclient.data.l[3]	 = 0;
+	xev.xclient.data.l[4]	 = 0;
+
+	XSendEvent (xdisplay, xroot, False,
+		    SubstructureRedirectMask | SubstructureNotifyMask,
+		    &xev);
 }
