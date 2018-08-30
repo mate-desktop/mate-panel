@@ -26,9 +26,12 @@
 
 #include "panel-menu-button.h"
 
+#include <X11/Xlib.h>
+
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <gdk/gdkx.h>
 
 #include <matemenu-tree.h>
 
@@ -91,6 +94,8 @@ struct _PanelMenuButtonPrivate {
 	char                  *menu_path;
 	char                  *custom_icon;
 	char                  *tooltip;
+
+	Window                 interrupted_window;
 
 	MenuPathRoot           path_root;
 	guint                  use_menu_path : 1;
@@ -437,12 +442,23 @@ panel_menu_button_recreate_menu (PanelMenuButton *button)
 	button->priv->menu = NULL;
 }
 
+static gboolean panel_menu_button_menu_deactivate (GtkWidget* widget, PanelMenuButton* button)
+{
+	GtkWidget *toplevel = gtk_widget_get_toplevel(widget);
+	panel_util_set_current_active_window(toplevel, button->priv->interrupted_window);
+	button->priv->interrupted_window = None;
+
+	return FALSE;
+}
+
 void
 panel_menu_button_popup_menu (PanelMenuButton *button,
 			      guint            n_button,
 			      guint32          activate_time)
 {
 	GdkScreen *screen;
+	GtkWidget *toplevel;
+	GdkWindow *window;
 
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
@@ -460,6 +476,12 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	                          GDK_GRAVITY_SOUTH_WEST,
 	                          GDK_GRAVITY_NORTH_WEST,
 	                          NULL);
+
+	g_signal_connect(GTK_MENU_SHELL (button->priv->menu), "deactivate", G_CALLBACK (panel_menu_button_menu_deactivate), button);
+	toplevel = gtk_widget_get_toplevel(GTK_WIDGET(button->priv->toplevel));
+	button->priv->interrupted_window = panel_util_get_current_active_window (toplevel);
+	window = gtk_widget_get_window (toplevel);
+	panel_util_set_current_active_window (toplevel, GDK_WINDOW_XID(window));
 }
 
 static void
