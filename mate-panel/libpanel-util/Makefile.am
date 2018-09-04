@@ -14,8 +14,6 @@ AM_CFLAGS = $(WARN_CFLAGS)
 libpanel_util_la_SOURCES =		\
 	panel-cleanup.c			\
 	panel-cleanup.h			\
-	panel-dbus-service.c		\
-	panel-dbus-service.h		\
 	panel-color.c			\
 	panel-color.h			\
 	panel-error.c			\
