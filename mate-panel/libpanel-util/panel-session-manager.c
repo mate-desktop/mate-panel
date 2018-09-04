@@ -22,8 +22,6 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
-#include <dbus/dbus-glib.h>
-
 #include "panel-cleanup.h"
 #include "panel-dbus-service.h"
 
@@ -85,7 +83,8 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 				      PanelSessionManagerLogoutType  mode)
 {
 	GError *error;
-	DBusGProxy *proxy;
+	GDBusProxy *proxy;
+	GVariant *_ret;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
 
@@ -101,13 +100,18 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 
 	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
 
-	if (!dbus_g_proxy_call (proxy, "Logout", &error,
-				G_TYPE_UINT, mode, G_TYPE_INVALID,
-				G_TYPE_INVALID) &&
-	    error != NULL) {
+	_ret = g_dbus_proxy_call_sync (proxy, "Logout",
+			g_variant_new ("(u)", mode),
+			G_DBUS_CALL_FLAGS_NONE,
+			-1,
+			NULL,
+			&error);
+	if (_ret == NULL) {
 		g_warning ("Could not ask session manager to log out: %s",
 			   error->message);
 		g_error_free (error);
+	} else {
+		g_variant_unref (_ret);
 	}
 }
 
@@ -115,7 +119,8 @@ void
 panel_session_manager_request_shutdown (PanelSessionManager *manager)
 {
 	GError *error;
-	DBusGProxy *proxy;
+	GDBusProxy *proxy;
+	GVariant *_ret;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
 
@@ -131,13 +136,18 @@ panel_session_manager_request_shutdown (PanelSessionManager *manager)
 
 	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
 
-	if (!dbus_g_proxy_call (proxy, "Shutdown", &error,
-				G_TYPE_INVALID,
-				G_TYPE_INVALID) &&
-	    error != NULL) {
+	_ret = g_dbus_proxy_call_sync (proxy, "Shutdown",
+			g_variant_new ("()"),
+			G_DBUS_CALL_FLAGS_NONE,
+			-1,
+			NULL,
+			&error);
+	if (_ret == NULL) {
 		g_warning ("Could not ask session manager to shut down: %s",
 			   error->message);
 		g_error_free (error);
+	} else {
+		g_variant_unref (_ret);
 	}
 }
 
@@ -145,8 +155,9 @@ gboolean
 panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
 {
 	GError *error;
-	DBusGProxy *proxy;
+	GDBusProxy *proxy;
 	gboolean is_shutdown_available;
+	GVariant *_ret;
 
 	g_return_val_if_fail (PANEL_IS_SESSION_MANAGER (manager), FALSE);
 
@@ -163,15 +174,20 @@ panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
 
 	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
 
-	if (!dbus_g_proxy_call (proxy, "CanShutdown", &error,
-				G_TYPE_INVALID, G_TYPE_BOOLEAN,
-				&is_shutdown_available, G_TYPE_INVALID) &&
-	    error != NULL) {
+	_ret = g_dbus_proxy_call_sync (proxy, "CanShutdown",
+			g_variant_new ("()"),
+			G_DBUS_CALL_FLAGS_NONE,
+			-1,
+			NULL,
+			&error);
+	if (_ret == NULL) {
 		g_warning ("Could not ask session manager if shut down is available: %s",
 			   error->message);
 		g_error_free (error);
-
 		return FALSE;
+	} else {
+		g_variant_get(_ret, "(b)", &is_shutdown_available);
+		g_variant_unref (_ret);
 	}
 
 	return is_shutdown_available;

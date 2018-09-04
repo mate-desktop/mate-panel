@@ -28,30 +28,34 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
-
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gio.h>
 
 #include "set-timezone.h"
 
+#define DATETIME_DBUS_NAME "org.mate.SettingsDaemon.DateTimeMechanism"
+#define DATETIME_DBUS_PATH "/"
 
-static DBusGConnection *
-get_system_bus (void)
+static GDBusProxy *
+get_bus_proxy (void)
 {
-        GError          *error;
-        static DBusGConnection *bus = NULL;
-
-	if (bus == NULL) {
-        	error = NULL;
-        	bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        	if (bus == NULL) {
-                	g_warning ("Couldn't connect to system bus: %s", 
-				   error->message);
-                	g_error_free (error);
+	GError            *error = NULL;
+	static GDBusProxy *proxy = NULL;
+	if ( proxy == NULL) {
+		proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+				G_DBUS_PROXY_FLAGS_NONE,
+				NULL,
+				DATETIME_DBUS_NAME,
+				DATETIME_DBUS_PATH,
+				DATETIME_DBUS_NAME,
+				NULL,
+				&error);
+		if (proxy == NULL)
+		{
+			g_warning ("Unable to contact datetime settings daemon: %s\n", error->message);
+			g_error_free (error);
 		}
-        }
-
-        return bus;
+	}
+	return proxy;
 }
 
 #define CACHE_VALIDITY_SEC 2
@@ -59,18 +63,25 @@ get_system_bus (void)
 typedef  void (*CanDoFunc) (gint value);
 
 static void
-notify_can_do (DBusGProxy     *proxy,
-	       DBusGProxyCall *call,
-	       void           *user_data)
+notify_can_do (GObject *source_object,
+		GAsyncResult *res,
+		gpointer user_data)
 {
-	CanDoFunc callback = user_data;
-	GError *error = NULL;
-	gint value;
+	GDBusProxy *proxy;
+	GVariant   *variant;
+	GError     *error = NULL;
+	gint32      value;
 
-	if (dbus_g_proxy_end_call (proxy, call,
-				   &error,
-				   G_TYPE_INT, &value,
-				   G_TYPE_INVALID)) {
+	CanDoFunc callback = user_data;
+
+	proxy = get_bus_proxy ();
+	variant = g_dbus_proxy_call_finish (proxy, res, &error);
+	if (variant == NULL) {
+		g_warning ("Call can set time zone dbus method: %s", error->message);
+		g_error_free (error);
+	} else {
+		g_variant_get (variant, "(i)", &value);
+		g_variant_unref (variant);
 		callback (value);
 	}
 }
@@ -78,24 +89,20 @@ notify_can_do (DBusGProxy     *proxy,
 static void
 refresh_can_do (const gchar *action, CanDoFunc callback)
 {
-        DBusGConnection *bus;
-        DBusGProxy      *proxy;
+	GDBusProxy      *proxy;
 
-        bus = get_system_bus ();
-        if (bus == NULL)
-                return;
+	proxy = get_bus_proxy ();
+	if (proxy == NULL)
+		return;
 
-	proxy = dbus_g_proxy_new_for_name (bus,
-					   "org.mate.SettingsDaemon.DateTimeMechanism",
-					   "/",
-					   "org.mate.SettingsDaemon.DateTimeMechanism");
-
-	dbus_g_proxy_begin_call_with_timeout (proxy,
-					      action,
-					      notify_can_do,
-					      callback, NULL,
-					      INT_MAX,
-					      G_TYPE_INVALID);
+	g_dbus_proxy_call (proxy,
+			action,
+			g_variant_new ("()"),
+			G_DBUS_CALL_FLAGS_NONE,
+			G_MAXINT,
+			NULL,
+			notify_can_do,
+			callback);
 }
 
 static gint   settimezone_cache = 0;
@@ -171,75 +178,63 @@ free_data (gpointer d)
 }
 
 static void
-set_time_notify (DBusGProxy     *proxy,
-		 DBusGProxyCall *call,
-		 void           *user_data)
+set_time_notify (GObject *source_object,
+		GAsyncResult *res,
+		gpointer user_data)
 {
 	SetTimeCallbackData *data = user_data;
-	GError *error = NULL;
+	GError     *error = NULL;
+	GDBusProxy *proxy;
+	GVariant   *variant;
 
-	if (dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID)) {
-		if (data->callback) 
-			data->callback (data->data, NULL);
-	}
-	else {
-		if (error->domain == DBUS_GERROR &&
-		    error->code == DBUS_GERROR_NO_REPLY) {
-			/* these errors happen because dbus doesn't
-			 * use monotonic clocks
-			 */	
-			g_warning ("ignoring no-reply error when setting time");
-			g_error_free (error);
-			if (data->callback)
-				data->callback (data->data, NULL);
-		}
-		else {
+	proxy = get_bus_proxy ();
+	variant = g_dbus_proxy_call_finish (proxy, res, &error);
+	if (variant == NULL) {
+		if (error != NULL) {
 			if (data->callback)
 				data->callback (data->data, error);
 			else
 				g_error_free (error);
-		}		
+		} else {
+			if (data->callback)
+				data->callback (data->data, NULL);
+		}
+	} else {
+		g_variant_get (variant, "()");
+		g_variant_unref (variant);
+		if (data->callback)
+			data->callback (data->data, NULL);
 	}
 }
 
 static void
 set_time_async (SetTimeCallbackData *data)
 {
-        DBusGConnection *bus;
-        DBusGProxy      *proxy;
+        GDBusProxy      *proxy;
 
-        bus = get_system_bus ();
-        if (bus == NULL)
-                return;
-
-	proxy = dbus_g_proxy_new_for_name (bus,
-					   "org.mate.SettingsDaemon.DateTimeMechanism",
-					   "/",
-					   "org.mate.SettingsDaemon.DateTimeMechanism");
+	proxy = get_bus_proxy ();
+	if (proxy == NULL)
+		return;
 
 	data->ref_count++;
 	if (strcmp (data->call, "SetTime") == 0)
-		dbus_g_proxy_begin_call_with_timeout (proxy, 
-						      "SetTime",
-						      set_time_notify,
-						      data, free_data,
-						      INT_MAX,
-						      /* parameters: */
-						      G_TYPE_INT64, data->time,
-						      G_TYPE_INVALID,
-						      /* return values: */
-						      G_TYPE_INVALID);
+		g_dbus_proxy_call (proxy,
+				"SetTime",
+				g_variant_new ("(x)", data->time),
+				G_DBUS_CALL_FLAGS_NONE,
+				G_MAXINT,
+				NULL,
+				set_time_notify,
+				data);
 	else 
-		dbus_g_proxy_begin_call_with_timeout (proxy, 
-						      "SetTimezone",
-						      set_time_notify,
-						      data, free_data,
-						      INT_MAX,
-						      /* parameters: */
-						      G_TYPE_STRING, data->filename,
-						      G_TYPE_INVALID,
-						      /* return values: */
-						      G_TYPE_INVALID);
+		g_dbus_proxy_call (proxy,
+				"SetTimezone",
+				g_variant_new ("(s)", data->filename),
+				G_DBUS_CALL_FLAGS_NONE,
+				G_MAXINT,
+				NULL,
+				set_time_notify,
+				data);
 }
 
 void

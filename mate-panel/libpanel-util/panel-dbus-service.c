@@ -32,14 +32,11 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include <dbus/dbus-glib.h>
-
 #include "panel-dbus-service.h"
 
 struct _PanelDBusServicePrivate {
-	DBusGConnection *dbus_connection;
-	DBusGProxy      *bus_proxy;
-	DBusGProxy      *service_proxy;
+	GDBusConnection *dbus_connection;
+	GDBusProxy      *service_proxy;
 	guint32          is_connected : 1;
 
 	const char      *service_name;
@@ -54,7 +51,6 @@ static void panel_dbus_service_get_property (GObject    *object,
 					     guint       prop_id,
 					     GValue     *value,
 					     GParamSpec *pspec);
-
 enum {
   PROP_0 = 0,
   PROP_IS_CONNECTED
@@ -104,7 +100,6 @@ panel_dbus_service_init (PanelDBusService *service)
 						     PanelDBusServicePrivate);
 
 	service->priv->dbus_connection = NULL;
-	service->priv->bus_proxy = NULL;
 	service->priv->service_proxy = NULL;
 	service->priv->is_connected = FALSE;
 
@@ -121,13 +116,8 @@ panel_dbus_service_finalize (GObject *object)
 	service = PANEL_DBUS_SERVICE (object);
 
 	if (service->priv->dbus_connection != NULL) {
-		dbus_g_connection_unref (service->priv->dbus_connection);
+		g_object_unref (service->priv->dbus_connection);
 		service->priv->dbus_connection = NULL;
-	}
-
-	if (service->priv->bus_proxy != NULL) {
-		g_object_unref (service->priv->bus_proxy);
-		service->priv->bus_proxy = NULL;
 	}
 
 	if (service->priv->service_proxy != NULL) {
@@ -161,26 +151,6 @@ panel_dbus_service_get_property (GObject    *object,
 	}
 }
 
-static void
-panel_dbus_service_on_name_owner_changed (DBusGProxy       *bus_proxy,
-					  const char       *name,
-					  const char       *prev_owner,
-					  const char       *new_owner,
-					  PanelDBusService *service)
-{
-	g_assert (service->priv->service_name != NULL);
-
-	if (name && strcmp (name, service->priv->service_name) != 0)
-		return;
-
-	if (service->priv->service_proxy != NULL) {
-		g_object_unref (service->priv->service_proxy);
-		service->priv->service_proxy = NULL;
-	}
-
-	panel_dbus_service_ensure_connection (service, NULL);
-}
-
 gboolean
 panel_dbus_service_ensure_connection (PanelDBusService  *service,
 				      GError           **error)
@@ -197,8 +167,9 @@ panel_dbus_service_ensure_connection (PanelDBusService  *service,
 
 	connection_error = NULL;
 	if (service->priv->dbus_connection == NULL) {
-		service->priv->dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION,
-								 &connection_error);
+		service->priv->dbus_connection = g_bus_get_sync (G_BUS_TYPE_SESSION,
+				NULL,
+				&connection_error);
 
 		if (service->priv->dbus_connection == NULL) {
 			g_propagate_error (error, connection_error);
@@ -207,39 +178,15 @@ panel_dbus_service_ensure_connection (PanelDBusService  *service,
 		}
 	}
 
-	if (service->priv->bus_proxy == NULL) {
-		service->priv->bus_proxy =
-			dbus_g_proxy_new_for_name_owner (service->priv->dbus_connection,
-							 DBUS_SERVICE_DBUS,
-							 DBUS_PATH_DBUS,
-							 DBUS_INTERFACE_DBUS,
-							 &connection_error);
-
-		if (service->priv->bus_proxy == NULL) {
-			g_propagate_error (error, connection_error);
-			is_connected = FALSE;
-			goto out;
-		}
-
-		dbus_g_proxy_add_signal (service->priv->bus_proxy,
-					 "NameOwnerChanged",
-					 G_TYPE_STRING,
-					 G_TYPE_STRING,
-					 G_TYPE_STRING,
-					 G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal (service->priv->bus_proxy,
-					     "NameOwnerChanged",
-					     G_CALLBACK (panel_dbus_service_on_name_owner_changed),
-					     service, NULL);
-	}
-
 	if (service->priv->service_proxy == NULL) {
 		service->priv->service_proxy =
-			dbus_g_proxy_new_for_name_owner (
-					service->priv->dbus_connection,
+			g_dbus_proxy_new_sync (service->priv->dbus_connection,
+					G_DBUS_PROXY_FLAGS_NONE,
+					NULL,
 					service->priv->service_name,
 					service->priv->service_path,
 					service->priv->service_interface,
+					NULL,
 					&connection_error);
 
 		if (service->priv->service_proxy == NULL) {
@@ -258,16 +205,6 @@ out:
 
 	if (!is_connected) {
 		if (service->priv->dbus_connection == NULL) {
-			if (service->priv->bus_proxy != NULL) {
-				g_object_unref (service->priv->bus_proxy);
-				service->priv->bus_proxy = NULL;
-			}
-
-			if (service->priv->service_proxy != NULL) {
-				g_object_unref (service->priv->service_proxy);
-				service->priv->service_proxy = NULL;
-			}
-		} else if (service->priv->bus_proxy == NULL) {
 			if (service->priv->service_proxy != NULL) {
 				g_object_unref (service->priv->service_proxy);
 				service->priv->service_proxy = NULL;
@@ -298,7 +235,7 @@ panel_dbus_service_define_service (PanelDBusService *service,
 	service->priv->service_interface = interface;
 }
 
-DBusGProxy *
+GDBusProxy *
 panel_dbus_service_get_proxy (PanelDBusService *service)
 {
 	g_return_val_if_fail (PANEL_IS_DBUS_SERVICE (service), NULL);

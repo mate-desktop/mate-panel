@@ -31,7 +31,7 @@
 #define PANEL_DBUS_SERVICE_H
 
 #include <glib-object.h>
-#include <dbus/dbus-glib.h>
+#include <gio/gio.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,7 +69,7 @@ void     panel_dbus_service_define_service    (PanelDBusService *service,
 gboolean panel_dbus_service_ensure_connection (PanelDBusService  *service,
 					       GError           **error);
 
-DBusGProxy *panel_dbus_service_get_proxy (PanelDBusService *service);
+GDBusProxy *panel_dbus_service_get_proxy (PanelDBusService *service);
 
 #ifdef __cplusplus
 }
