@@ -684,7 +684,7 @@ drop_urilist (PanelWidget *panel,
 				success = FALSE;
 		}
 
-		g_object_unref (info);
+		g_clear_object (&info);
 		g_object_unref (file);
 	}
 
