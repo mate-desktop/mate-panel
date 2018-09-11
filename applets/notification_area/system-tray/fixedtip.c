@@ -39,7 +39,7 @@ struct _NaFixedTipPrivate
   GtkOrientation  orientation;
 };
 
-G_DEFINE_TYPE (NaFixedTip, na_fixed_tip, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE_WITH_PRIVATE (NaFixedTip, na_fixed_tip, GTK_TYPE_WINDOW)
 
 static gboolean
 button_press_handler (GtkWidget      *fixedtip,
@@ -94,8 +94,6 @@ na_fixed_tip_class_init (NaFixedTipClass *class)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
-
-  g_type_class_add_private (class, sizeof (NaFixedTipPrivate));
 }
 
 /* Did you already see this code? Yes, it's gtk_tooltips_ force_window() ;-) */
@@ -104,8 +102,7 @@ na_fixed_tip_init (NaFixedTip *fixedtip)
 {
   GtkWidget *label;
 
-  fixedtip->priv = G_TYPE_INSTANCE_GET_PRIVATE (fixedtip, NA_TYPE_FIXED_TIP,
-                                                NaFixedTipPrivate);
+  fixedtip->priv = na_fixed_tip_get_instance_private (fixedtip);
 
   gtk_window_set_type_hint (GTK_WINDOW (fixedtip),
                             GDK_WINDOW_TYPE_HINT_TOOLTIP);
