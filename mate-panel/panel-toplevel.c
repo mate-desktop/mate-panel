@@ -3152,15 +3152,18 @@ panel_toplevel_realize (GtkWidget *widget)
         struct wl_output *wl_output = gdk_wayland_monitor_get_wl_output(gdk_monitor);
         struct zwlr_layer_surface_v1 *layer_surface = zwlr_layer_shell_v1_get_layer_surface(layer_shell, wl_surface, wl_output, layer, namespace);
         g_assert(layer_surface);
-        GdkRectangle rect;
-        gdk_monitor_get_geometry(gdk_monitor, &rect);
-        int width = rect.width / 2;
-        int height = 80;
+        // GdkRectangle rect;
+        // gdk_monitor_get_geometry(gdk_monitor, &rect);
+        gint width = 0, height = 0;
+        gtk_window_get_size (GTK_WINDOW(widget), &width, &height);
+        printf("window size is %d, %d\n", width, height);
         zwlr_layer_surface_v1_set_size(layer_surface, width, height);
-        zwlr_layer_surface_v1_set_anchor(layer_surface, ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM); // | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);
+        zwlr_layer_surface_v1_set_anchor(layer_surface,
+                                         ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);
         //zwlr_layer_surface_v1_set_exclusive_zone(layer_surface, exclusive_zone);
         //zwlr_layer_surface_v1_set_margin(layer_surface, margin_top, margin_right, margin_bottom, margin_left);
         zwlr_layer_surface_v1_set_keyboard_interactivity(layer_surface, FALSE);
+        zwlr_layer_surface_v1_set_exclusive_zone(layer_surface, 200);
         zwlr_layer_surface_v1_add_listener(layer_surface, &layer_surface_listener, NULL);
         wl_surface_commit(wl_surface);
         struct wl_display *wl_display = gdk_wayland_display_get_wl_display(gdk_display);
