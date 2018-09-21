@@ -12,10 +12,20 @@ AM_CPPFLAGS = \
 	-I$(srcdir) \
 	-I$(top_builddir)/mate-panel \
 	-I$(top_builddir)/mate-panel/libpanel-util \
-	-I$(top_builddir)/mate-panel/wayland-protocols \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
+
+if ENABLE_WAYLAND
+AM_CPPFLAGS += \
+	-I$(top_builddir)/mate-panel/wayland-protocols \
+	-DHAVE_WAYLAND=1
+endif
+
+if ENABLE_X11
+AM_CPPFLAGS += \
+	-DHAVE_X11=1
+endif
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
@@ -24,7 +34,6 @@ panel_sources = \
 	main.c \
 	panel-widget.c \
 	button-widget.c \
-	xstuff.c \
 	panel-session.c \
 	panel.c \
 	applet.c \
@@ -52,7 +61,6 @@ panel_sources = \
 	panel-toplevel.c \
 	panel-struts.c \
 	panel-frame.c \
-	panel-xutils.c \
 	panel-multiscreen.c \
 	panel-a11y.c \
 	panel-bindings.c \
@@ -64,21 +72,26 @@ panel_sources = \
 	panel-ditem-editor.c \
 	panel-modules.c \
 	panel-applet-info.c \
-	panel-reset.c \
-	wayland-backend.c
+	panel-reset.c
 
 if ENABLE_WAYLAND
 panel_sources += \
+	wayland-backend.c \
 	wayland-protocols/wlr-layer-shell-unstable-v1-protocol.c \
 	wayland-protocols/xdg-shell-protocol.c
 endif
+
+# if ENABLE_X11
+panel_sources += \
+	xstuff.c \
+	panel-xutils.c
+# endif
 
 panel_headers = \
 	panel-types.h \
 	panel-widget.h \
 	panel-globals.h \
 	button-widget.h \
-	xstuff.h \
 	panel-session.h \
 	panel.h \
 	applet.h \
@@ -107,7 +120,6 @@ panel_headers = \
 	panel-toplevel.h \
 	panel-struts.h \
 	panel-frame.h \
-	panel-xutils.h \
 	panel-multiscreen.h \
 	panel-a11y.h \
 	panel-bindings.h \
@@ -123,14 +135,20 @@ panel_headers = \
 	panel-modules.h \
 	panel-applet-info.h \
 	panel-reset.h \
-	panel-schemas.h \
-	wayland-backend.h
+	panel-schemas.h
 
 if ENABLE_WAYLAND
-panel_headers += \
+panel_sources += \
+	wayland-backend.h \
 	wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h \
 	wayland-protocols/xdg-shell-client-protocol.h
 endif
+
+# if ENABLE_X11
+panel_sources += \
+	xstuff.h \
+	panel-xutils.h
+# endif
 
 mate_panel_SOURCES = \
 	$(panel_sources) \
@@ -175,8 +193,12 @@ mate_desktop_item_edit_SOURCES = \
 mate_desktop_item_edit_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
-	$(DCONF_LIBS) \
+	$(DCONF_LIBS)
+
+if ENABLE_X11
+mate_desktop_item_edit_LDADD += \
 	-lX11
+endif
 
 mate_panel_test_applets_SOURCES = \
 	$(panel_test_applets_BUILT_SOURCES)	\

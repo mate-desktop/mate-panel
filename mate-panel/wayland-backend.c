@@ -1,7 +1,5 @@
 #include <config.h>
 
-#ifdef HAVE_WAYLAND
-
 #include "wayland-backend.h"
 
 #include <gtk/gtk.h>
@@ -124,5 +122,3 @@ void wayland_realize_panel_toplevel (GtkWidget *widget)
 	struct wl_display *wl_display = gdk_wayland_display_get_wl_display (gdk_display);
 	wl_display_roundtrip (wl_display);
 }
-
-#endif /* HAVE_WAYLAND */

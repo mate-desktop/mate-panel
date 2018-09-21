@@ -1,8 +1,6 @@
 #ifndef __WAYLAND_BACKEND_H__
 #define __WAYLAND_BACKEND_H__
 
-#include <config.h>
-
 #ifndef HAVE_WAYLAND
 #error file should only be included when HAVE_WAYLAND is enabled
 #endif
