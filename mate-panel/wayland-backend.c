@@ -11,10 +11,10 @@
 struct zwlr_layer_shell_v1 *layer_shell_global = NULL;
 
 static void wl_regitsty_handle_global(void *data,
-									  struct wl_registry *registry,
-									  uint32_t id,
-									  const char *interface,
-									  uint32_t version)
+				      struct wl_registry *registry,
+				      uint32_t id,
+				      const char *interface,
+				      uint32_t version)
 {
 	// pull out the layer shell global
 	if (strcmp(interface, zwlr_layer_shell_v1_interface.name) == 0) {
@@ -23,8 +23,8 @@ static void wl_regitsty_handle_global(void *data,
 }
 
 static void wl_regitsty_handle_global_remove(void *data,
-											 struct wl_registry *registry,
-											 uint32_t id) {
+					     struct wl_registry *registry,
+					     uint32_t id) {
 	// who cares
 }
 
@@ -34,14 +34,14 @@ static const struct wl_registry_listener wl_registry_listener = {
 };
 
 static void layer_surface_handle_configure (void *data,
-											struct zwlr_layer_surface_v1 *surface,
-											uint32_t serial,
-											uint32_t w,
-											uint32_t h) {
+					    struct zwlr_layer_surface_v1 *surface,
+					    uint32_t serial,
+					    uint32_t w,
+					    uint32_t h) {
 	//width = w;
 	//height = h;
 	// TODO: resize the GTK window
-    //gtk_window_set_default_size(GTK_WINDOW(window), width, height);
+	//gtk_window_set_default_size(GTK_WINDOW(window), width, height);
 	zwlr_layer_surface_v1_ack_configure (surface, serial);
 }
 
@@ -69,10 +69,11 @@ void wayland_registry_init()
 struct wl_output *get_primary_wl_output (GdkDisplay *gdk_display)
 {
 	GdkMonitor *gdk_monitor = gdk_display_get_primary_monitor (gdk_display);
-	if (gdk_monitor == NULL && gdk_display_get_n_monitors (gdk_display) > 0) {
+
+	if (gdk_monitor == NULL && gdk_display_get_n_monitors (gdk_display) > 0)
 		gdk_monitor = gdk_display_get_monitor (gdk_display, 0);
-	}
-	if (gdk_monitor)
+
+if (gdk_monitor)
 		return gdk_wayland_monitor_get_wl_output (gdk_monitor);
 	else
 		return NULL;
@@ -101,10 +102,10 @@ void wayland_realize_panel_toplevel (GtkWidget *widget)
 	char *namespace = "mate"; // not sure what this is for
 
 	struct zwlr_layer_surface_v1 *layer_surface = zwlr_layer_shell_v1_get_layer_surface (layer_shell_global,
-																						 wl_surface,
-																						 NULL,
-																						 layer,
-																						 namespace);
+											     wl_surface,
+											     NULL,
+											     layer,
+											     namespace);
 	g_assert (layer_surface);
 	// GdkRectangle rect;
 	// gdk_monitor_get_geometry(gdk_monitor, &rect);
@@ -113,7 +114,7 @@ void wayland_realize_panel_toplevel (GtkWidget *widget)
 	printf("window size is %d, %d\n", width, height);
 	zwlr_layer_surface_v1_set_size (layer_surface, width, height);
 	zwlr_layer_surface_v1_set_anchor (layer_surface,
-									  ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);
+					  ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);
 	//zwlr_layer_surface_v1_set_exclusive_zone (layer_surface, exclusive_zone);
 	//zwlr_layer_surface_v1_set_margin (layer_surface, margin_top, margin_right, margin_bottom, margin_left);
 	zwlr_layer_surface_v1_set_keyboard_interactivity (layer_surface, FALSE);
