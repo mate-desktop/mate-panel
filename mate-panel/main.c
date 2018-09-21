@@ -37,14 +37,11 @@
 #include "xstuff.h"
 #endif
 #ifdef HAVE_WAYLAND
-#include <gdk/gdkwayland.h>
-#include "wlr-layer-shell-unstable-v1-client-protocol.h"
+#include "wayland-backend.h"
 #endif
 /* globals */
 GSList *panels = NULL;
 GSList *panel_list = NULL;
-
-struct zwlr_layer_shell_v1 *layer_shell = NULL;
 
 static char*    layout;
 static gboolean replace = FALSE;
@@ -70,24 +67,6 @@ parsing_error_cb (GtkCssProvider *provider,
 {
     g_warning ("Can't parse mate-panel's CSS custom description: %s\n", error->message);
 }
-
-static void handle_global(void *data, struct wl_registry *registry,
-		uint32_t id, const char *interface, uint32_t version) {
-	if (strcmp(interface, zwlr_layer_shell_v1_interface.name) == 0) {
-		layer_shell = wl_registry_bind(registry, id, &zwlr_layer_shell_v1_interface, 1);
-        printf("layer shell bound\n");
-	}
-}
-
-static void handle_global_remove(void *data, struct wl_registry *registry,
-		uint32_t id) {
-	// who cares
-}
-
-static const struct wl_registry_listener registry_listener = {
-	.global = handle_global,
-	.global_remove = handle_global_remove,
-};
 
 int
 main (int argc, char **argv)
@@ -178,24 +157,9 @@ main (int argc, char **argv)
 		gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 	}
 
-    #ifdef GDK_WINDOWING_WAYLAND
-    GdkDisplay *gdk_display = gdk_display_get_default ();
-    if (GDK_IS_WAYLAND_DISPLAY (gdk_display))
-    {
-        struct wl_display *wl_display = gdk_wayland_display_get_wl_display(gdk_display);
-        struct wl_registry *wl_registry = wl_display_get_registry(wl_display);
-        if (wl_registry)
-            fprintf(stderr, "got registry!\n");
-        wl_registry_add_listener(wl_registry, &registry_listener, NULL);
-        wl_display_roundtrip(wl_display);
-    }
-    else
-    {
-        fprintf(stderr, "GDK_IS_WAYLAND_DISPLAY() returned false\n");
-    }
-    #else
-    fprintf(stderr, "GDK_WINDOWING_WAYLAND not set\n ");
-    #endif
+#ifdef HAVE_WAYLAND
+	wayland_registry_init();
+#endif
 
 	if (!panel_shell_register (replace)) {
 		panel_cleanup_do ();
