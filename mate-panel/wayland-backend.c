@@ -7,6 +7,7 @@
 #include "wlr-layer-shell-unstable-v1-client-protocol.h"
 
 struct zwlr_layer_shell_v1 *layer_shell_global = NULL;
+static gboolean wayland_has_initialized = FALSE;
 
 gboolean is_using_wayland ()
 {
@@ -66,6 +67,9 @@ void wayland_registry_init()
 	struct wl_registry *wl_registry = wl_display_get_registry (wl_display);
 	wl_registry_add_listener (wl_registry, &wl_registry_listener, NULL);
 	wl_display_roundtrip (wl_display);
+	if (!layer_shell_global)
+		g_warning("Layer shell global not bound");
+	wayland_has_initialized = TRUE;
 }
 
 struct wl_output *get_primary_wl_output (GdkDisplay *gdk_display)
@@ -85,6 +89,7 @@ void wayland_realize_panel_toplevel (GtkWidget *widget)
 {
 	GdkDisplay *gdk_display = gdk_display_get_default ();
 	g_assert (GDK_IS_WAYLAND_DISPLAY (gdk_display));
+	g_assert (wayland_has_initialized);
 
 	if (!layer_shell_global) {
 		g_warning ("Layer shell protocol not supported");
