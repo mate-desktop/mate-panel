@@ -3108,7 +3108,8 @@ panel_toplevel_realize (GtkWidget *widget)
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
 
 #ifdef HAVE_WAYLAND
-	wayland_realize_panel_toplevel (widget);
+	if (is_using_wayland ())
+		wayland_realize_panel_toplevel (widget);
 #endif
 }
 

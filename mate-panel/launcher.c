@@ -187,7 +187,7 @@ drag_data_received_cb (GtkWidget        *widget,
 
 	// The animation uses X specific functionality
 #ifdef HAVE_X11
-	if (is_using_x () && panel_global_config_get_enable_animations ()) {
+	if (is_using_x11 () && panel_global_config_get_enable_animations ()) {
 		cairo_surface_t *surface;
 		surface = button_widget_get_surface (BUTTON_WIDGET (widget));
 		xstuff_zoom_animate (widget,
@@ -408,7 +408,7 @@ clicked_cb (Launcher  *launcher,
 {
 
 #ifdef HAVE_X11
-	if (is_using_x () && panel_global_config_get_enable_animations ()) {
+	if (is_using_x11 () && panel_global_config_get_enable_animations ()) {
 		cairo_surface_t *surface;
 		surface = button_widget_get_surface (BUTTON_WIDGET (widget));
 		xstuff_zoom_animate (widget,

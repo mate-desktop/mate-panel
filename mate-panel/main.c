@@ -157,10 +157,6 @@ main (int argc, char **argv)
 		gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 	}
 
-#ifdef HAVE_WAYLAND
-	wayland_registry_init();
-#endif
-
 	if (!panel_shell_register (replace)) {
 		panel_cleanup_do ();
 		return -1;
@@ -179,9 +175,25 @@ main (int argc, char **argv)
 	                 (GFunc)panel_widget_add_forbidden,
 	                 NULL);
 
-#ifdef HAVE_X11
-	xstuff_init ();
+	gboolean found_backend = FALSE;
+
+#ifdef HAVE_WAYLAND
+	if (is_using_wayland ()) {
+		wayland_registry_init();
+		found_backend = TRUE;
+	}
 #endif
+
+#ifdef HAVE_X11
+	if (is_using_x11 ()) {
+		xstuff_init ();
+		found_backend = TRUE;
+	}
+#endif
+
+	if (!found_backend) {
+		g_error("GDK platform not supported");
+	}
 
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the caja desktop). */

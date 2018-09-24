@@ -244,7 +244,7 @@ guint
 panel_bindings_get_mouse_button_modifier_keymask (void)
 {
 #ifdef HAVE_X11
-	if (!is_using_x ())
+	if (!is_using_x11 ())
 		return 0;
 
 	g_assert (mouse_button_modifier_keymask != 0);

@@ -8,7 +8,7 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-gboolean is_using_x                     ();
+gboolean is_using_x11                   ();
 
 void xstuff_zoom_animate                (GtkWidget        *widget,
 					 cairo_surface_t  *surface,

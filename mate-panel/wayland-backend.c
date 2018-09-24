@@ -8,6 +8,11 @@
 
 struct zwlr_layer_shell_v1 *layer_shell_global = NULL;
 
+gboolean is_using_wayland ()
+{
+	return GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ());
+}
+
 static void wl_regitsty_handle_global(void *data,
 				      struct wl_registry *registry,
 				      uint32_t id,
@@ -55,13 +60,12 @@ struct zwlr_layer_surface_v1_listener layer_surface_listener = {
 
 void wayland_registry_init()
 {
-	GdkDisplay *gdk_display = gdk_display_get_default();
-	if (GDK_IS_WAYLAND_DISPLAY (gdk_display)) {
-		struct wl_display *wl_display = gdk_wayland_display_get_wl_display (gdk_display);
-		struct wl_registry *wl_registry = wl_display_get_registry (wl_display);
-		wl_registry_add_listener (wl_registry, &wl_registry_listener, NULL);
-		wl_display_roundtrip (wl_display);
-	}
+	GdkDisplay *gdk_display = gdk_display_get_default ();
+	g_assert (GDK_IS_WAYLAND_DISPLAY (gdk_display));
+	struct wl_display *wl_display = gdk_wayland_display_get_wl_display (gdk_display);
+	struct wl_registry *wl_registry = wl_display_get_registry (wl_display);
+	wl_registry_add_listener (wl_registry, &wl_registry_listener, NULL);
+	wl_display_roundtrip (wl_display);
 }
 
 struct wl_output *get_primary_wl_output (GdkDisplay *gdk_display)
@@ -71,7 +75,7 @@ struct wl_output *get_primary_wl_output (GdkDisplay *gdk_display)
 	if (gdk_monitor == NULL && gdk_display_get_n_monitors (gdk_display) > 0)
 		gdk_monitor = gdk_display_get_monitor (gdk_display, 0);
 
-if (gdk_monitor)
+	if (gdk_monitor)
 		return gdk_wayland_monitor_get_wl_output (gdk_monitor);
 	else
 		return NULL;
@@ -79,13 +83,11 @@ if (gdk_monitor)
 
 void wayland_realize_panel_toplevel (GtkWidget *widget)
 {
-	GdkDisplay *gdk_display = gdk_display_get_default();
-
-	if (!GDK_IS_WAYLAND_DISPLAY(gdk_display))
-		return;
+	GdkDisplay *gdk_display = gdk_display_get_default ();
+	g_assert (GDK_IS_WAYLAND_DISPLAY (gdk_display));
 
 	if (!layer_shell_global) {
-		g_warning("Layer shell protocol not supported");
+		g_warning ("Layer shell protocol not supported");
 		return;
 	}
 

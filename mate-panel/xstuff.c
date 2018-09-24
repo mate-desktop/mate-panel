@@ -45,7 +45,7 @@ static gboolean xstuff_display_is_dead = FALSE;
 #define ZOOM_STEPS  14
 #define ZOOM_DELAY 10
 
-gboolean is_using_x ()
+gboolean is_using_x11 ()
 {
 	return GDK_IS_X11_DISPLAY (gdk_display_get_default ());
 }
@@ -400,7 +400,7 @@ xstuff_xio_error_handler (Display *display)
 gboolean
 xstuff_is_display_dead (void)
 {
-	if (is_using_x ())
+	if (is_using_x11 ())
 		return xstuff_display_is_dead;
 	else
 		return FALSE;
