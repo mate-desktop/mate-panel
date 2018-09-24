@@ -109,7 +109,6 @@ void wayland_realize_panel_toplevel (GtkWidget *widget)
 	// gdk_monitor_get_geometry(gdk_monitor, &rect);
 	gint width = 0, height = 0;
 	gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
-	printf("window size is %d, %d\n", width, height);
 	zwlr_layer_surface_v1_set_size (layer_surface, width, height);
 	zwlr_layer_surface_v1_set_anchor (layer_surface,
 					  ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);

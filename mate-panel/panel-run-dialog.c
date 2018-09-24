@@ -60,7 +60,6 @@
 #include "panel-multiscreen.h"
 #include "menu.h"
 #include "panel-lockdown.h"
-#include "panel-xutils.h"
 #include "panel-icon-names.h"
 
 typedef struct {
