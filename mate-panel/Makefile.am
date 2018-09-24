@@ -81,11 +81,11 @@ panel_sources += \
 	wayland-protocols/xdg-shell-protocol.c
 endif
 
-# if ENABLE_X11
+if ENABLE_X11
 panel_sources += \
 	xstuff.c \
 	panel-xutils.c
-# endif
+endif
 
 panel_headers = \
 	panel-types.h \
@@ -144,11 +144,11 @@ panel_sources += \
 	wayland-protocols/xdg-shell-client-protocol.h
 endif
 
-# if ENABLE_X11
+if ENABLE_X11
 panel_sources += \
 	xstuff.h \
 	panel-xutils.h
-# endif
+endif
 
 mate_panel_SOURCES = \
 	$(panel_sources) \
@@ -187,8 +187,12 @@ mate_desktop_item_edit_SOURCES = \
 	mate-desktop-item-edit.c \
 	panel-ditem-editor.c \
 	panel-marshal.c \
-	panel-util.c \
+	panel-util.c
+
+if ENABLE_X11
+mate_desktop_item_edit_SOURCES += \
 	xstuff.c
+endif
 
 mate_desktop_item_edit_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \

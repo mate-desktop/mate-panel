@@ -25,6 +25,10 @@
 #ifndef __PANEL_XUTILS_H__
 #define __PANEL_XUTILS_H__
 
+#ifndef HAVE_X11
+#error file should only be included when HAVE_X11 is enabled
+#endif
+
 #include <glib.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>

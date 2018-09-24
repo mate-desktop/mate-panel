@@ -34,7 +34,9 @@
 
 #include "panel-schemas.h"
 #include "panel-profile.h"
+#ifdef HAVE_X11
 #include "panel-xutils.h"
+#endif
 
 #define DEFAULT_MOUSE_MODIFIER GDK_MOD1_MASK
 
@@ -241,10 +243,17 @@ panel_bindings_set_entries (GtkBindingSet *binding_set)
 guint
 panel_bindings_get_mouse_button_modifier_keymask (void)
 {
+#ifdef HAVE_X11
+	if (!is_using_x ())
+		return 0;
+
 	g_assert (mouse_button_modifier_keymask != 0);
 
 	if (!initialised)
 		panel_bindings_initialise ();
 
 	return panel_get_real_modifier_mask (mouse_button_modifier_keymask);
+#else
+	return 0;
+#endif
 }

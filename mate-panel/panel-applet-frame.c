@@ -43,7 +43,9 @@
 #include "panel-background.h"
 #include "panel-lockdown.h"
 #include "panel-stock-icons.h"
+#ifdef HAVE_X11
 #include "xstuff.h"
+#endif
 #include "panel-schemas.h"
 
 #include "panel-applet-frame.h"
@@ -746,8 +748,11 @@ _mate_panel_applet_frame_applet_broken (MatePanelAppletFrame *frame)
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (frame));
 
+#ifdef HAVE_X11
+	// This will always return false when not using X
 	if (xstuff_is_display_dead ())
 		return;
+#endif
 
 	if (frame->priv->iid) {
 		MatePanelAppletInfo *info;

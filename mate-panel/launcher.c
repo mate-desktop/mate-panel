@@ -34,7 +34,9 @@
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-profile.h"
+#ifdef HAVE_X11
 #include "xstuff.h"
+#endif
 #include "panel-toplevel.h"
 #include "panel-a11y.h"
 #include "panel-globals.h"
@@ -183,7 +185,9 @@ drag_data_received_cb (GtkWidget        *widget,
 	int      i;
 	GList   *file_list;
 
-	if (panel_global_config_get_enable_animations ()) {
+	// The animation uses X specific functionality
+#ifdef HAVE_X11
+	if (is_using_x () && panel_global_config_get_enable_animations ()) {
 		cairo_surface_t *surface;
 		surface = button_widget_get_surface (BUTTON_WIDGET (widget));
 		xstuff_zoom_animate (widget,
@@ -192,6 +196,7 @@ drag_data_received_cb (GtkWidget        *widget,
 				     NULL);
 		cairo_surface_destroy (surface);
 	}
+#endif
 
 	file_list = NULL;
 	uris = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (selection_data));
@@ -401,7 +406,9 @@ static void
 clicked_cb (Launcher  *launcher,
 		  GtkWidget        *widget)
 {
-	if (panel_global_config_get_enable_animations ()) {
+
+#ifdef HAVE_X11
+	if (is_using_x () && panel_global_config_get_enable_animations ()) {
 		cairo_surface_t *surface;
 		surface = button_widget_get_surface (BUTTON_WIDGET (widget));
 		xstuff_zoom_animate (widget,
@@ -410,6 +417,7 @@ clicked_cb (Launcher  *launcher,
 				     NULL);
 		cairo_surface_destroy (surface);
 	}
+#endif
 
 	launcher_launch (launcher, NULL);
 

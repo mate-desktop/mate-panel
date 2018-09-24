@@ -179,7 +179,9 @@ main (int argc, char **argv)
 	                 (GFunc)panel_widget_add_forbidden,
 	                 NULL);
 
+#ifdef HAVE_X11
 	xstuff_init ();
+#endif
 
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the caja desktop). */

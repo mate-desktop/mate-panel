@@ -12,6 +12,11 @@
  *  Copyright (c) 1997-2002 Alfredo K. Kojima
 
  */
+
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include <config.h>
 #include <string.h>
 #include <unistd.h>
@@ -39,6 +44,11 @@ static gboolean xstuff_display_is_dead = FALSE;
 #define ZOOM_FACTOR 5
 #define ZOOM_STEPS  14
 #define ZOOM_DELAY 10
+
+gboolean is_using_x ()
+{
+	return GDK_IS_X11_DISPLAY (gdk_display_get_default ());
+}
 
 typedef struct {
 	int size;
@@ -390,7 +400,10 @@ xstuff_xio_error_handler (Display *display)
 gboolean
 xstuff_is_display_dead (void)
 {
-	return xstuff_display_is_dead;
+	if (is_using_x ())
+		return xstuff_display_is_dead;
+	else
+		return FALSE;
 }
 
 static int
