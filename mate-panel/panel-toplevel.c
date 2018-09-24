@@ -550,15 +550,10 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 
 	gtk_grab_add (widget);
 
-	if (toplevel->priv->grab_is_keyboard)
-    {
-        #ifdef HAVE_X11
-        GDK_IS_X11_DISPLAY(gdk_display_get_default ())
-        {
-            panel_toplevel_warp_pointer (toplevel);
-        }
-        #endif
-    }
+#ifdef HAVE_X11
+	if (is_using_x11 () && toplevel->priv->grab_is_keyboard)
+		panel_toplevel_warp_pointer (toplevel);
+#endif
 
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
@@ -944,17 +939,14 @@ static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, G
 	if ((event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)
 		increment = SMALL_INCREMENT;
 
-    #ifdef HAVE_X11
-    GDK_IS_X11_DISPLAY(gdk_display_get_default ())
-    {
-        return panel_toplevel_warp_pointer_increment (
-				toplevel, event->keyval, increment);
-    }
-    else
-        return TRUE;
-    #else
-    return TRUE;
-    #endif
+#ifdef HAVE_X11
+	if (is_using_x11 ())
+		return panel_toplevel_warp_pointer_increment (toplevel, event->keyval, increment);
+	else
+		return TRUE;
+#else
+	return TRUE;
+#endif
 
 #undef SMALL_INCREMENT
 #undef NORMAL_INCREMENT
@@ -1060,13 +1052,10 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 		case PANEL_GRAB_OP_RESIZE_DOWN:
 		case PANEL_GRAB_OP_RESIZE_LEFT:
 		case PANEL_GRAB_OP_RESIZE_RIGHT:
-            #ifdef HAVE_X11
-            GDK_IS_X11_DISPLAY(gdk_display_get_default ())
-			{
-                retval = panel_toplevel_warp_pointer_increment (
-						toplevel, event->keyval, 1);
-            }
-            #endif
+#ifdef HAVE_X11
+			if (is_using_x11 ())
+				retval = panel_toplevel_warp_pointer_increment (toplevel, event->keyval, 1);
+#endif
 			break;
 		default:
 			g_assert_not_reached ();
