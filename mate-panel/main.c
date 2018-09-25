@@ -28,12 +28,12 @@
 #include "panel-session.h"
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"
-#include "panel-action-protocol.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 #include "panel-reset.h"
 #include "panel-run-dialog.h"
 #ifdef HAVE_X11
+#include "panel-action-protocol.h"
 #include "xstuff.h"
 #endif
 #ifdef HAVE_WAYLAND
@@ -168,7 +168,10 @@ main (int argc, char **argv)
 		return -1;
 	}
 
-	panel_action_protocol_init ();
+#ifdef HAVE_X11
+	if (is_using_x11 ())
+		panel_action_protocol_init ();
+#endif
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 

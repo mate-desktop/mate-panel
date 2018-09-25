@@ -24,13 +24,15 @@
 
 #include <config.h>
 
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include "panel-action-protocol.h"
 
-#ifdef HAVE_X11
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
-#endif
 
 #include "menu.h"
 #include "applet.h"
@@ -42,7 +44,6 @@
 #include "panel-menu-button.h"
 #include "panel-menu-bar.h"
 
-#ifdef HAVE_X11
 static Atom atom_mate_panel_action            = None;
 static Atom atom_gnome_panel_action           = None;
 static Atom atom_mate_panel_action_main_menu  = None;
@@ -50,7 +51,6 @@ static Atom atom_mate_panel_action_run_dialog = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
 static Atom atom_mate_panel_action_kill_dialog = None;
-#endif
 
 static void
 panel_action_protocol_main_menu (GdkScreen *screen,
@@ -121,7 +121,6 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 			      GdkEvent  *event,
 			      gpointer   data)
 {
-    #ifdef HAVE_X11
 	GdkWindow *window;
 	GdkScreen *screen;
 	GdkDisplay *display;
@@ -136,6 +135,8 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 
 	screen = gdk_event_get_screen (event);
 	display = gdk_screen_get_display (screen);
+	if (!GDK_IS_X11_DISPLAY (display))
+		return;
 	window = gdk_x11_window_lookup_for_display (display, xevent->xclient.window);
 	if (!window)
 		return GDK_FILTER_CONTINUE;
@@ -157,52 +158,45 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 		return GDK_FILTER_CONTINUE;
 
 	return GDK_FILTER_REMOVE;
-    #else
-    return GDK_FILTER_CONTINUE;
-    #endif
 }
 
 void
 panel_action_protocol_init (void)
 {
-    #ifdef HAVE_X11
 	GdkDisplay *display;
 
 	display = gdk_display_get_default ();
-    if (GDK_IS_X11_DISPLAY(display))
-    {
-        atom_mate_panel_action =
-            XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-                    "_MATE_PANEL_ACTION",
-                    FALSE);
-        atom_gnome_panel_action =
-            XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-                    "_GNOME_PANEL_ACTION",
-                    FALSE);
-        atom_mate_panel_action_main_menu =
-            XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-                    "_MATE_PANEL_ACTION_MAIN_MENU",
-                    FALSE);
-        atom_mate_panel_action_run_dialog =
-            XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-                    "_MATE_PANEL_ACTION_RUN_DIALOG",
-                    FALSE);
-        atom_gnome_panel_action_main_menu =
-            XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-                    "_GNOME_PANEL_ACTION_MAIN_MENU",
-                    FALSE);
-        atom_gnome_panel_action_run_dialog =
-            XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-                    "_GNOME_PANEL_ACTION_RUN_DIALOG",
-                    FALSE);
-        atom_mate_panel_action_kill_dialog =
-            XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-                    "_MATE_PANEL_ACTION_KILL_DIALOG",
-                    FALSE);
+	g_assert(GDK_IS_X11_DISPLAY (display));
 
-        /* We'll filter event sent on non-root windows later */
-        gdk_window_add_filter (NULL, panel_action_protocol_filter, NULL);
-    }
+	atom_mate_panel_action =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_MATE_PANEL_ACTION",
+			     FALSE);
+	atom_gnome_panel_action =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_GNOME_PANEL_ACTION",
+			     FALSE);
+	atom_mate_panel_action_main_menu =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_MATE_PANEL_ACTION_MAIN_MENU",
+			     FALSE);
+	atom_mate_panel_action_run_dialog =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_MATE_PANEL_ACTION_RUN_DIALOG",
+			     FALSE);
+	atom_gnome_panel_action_main_menu =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_GNOME_PANEL_ACTION_MAIN_MENU",
+			     FALSE);
+	atom_gnome_panel_action_run_dialog =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_GNOME_PANEL_ACTION_RUN_DIALOG",
+			     FALSE);
+	atom_mate_panel_action_kill_dialog =
+		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
+			     "_MATE_PANEL_ACTION_KILL_DIALOG",
+			     FALSE);
 
-    #endif
+	/* We'll filter event sent on non-root windows later */
+	gdk_window_add_filter (NULL, panel_action_protocol_filter, NULL);
 }

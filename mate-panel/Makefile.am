@@ -57,7 +57,6 @@ panel_sources = \
 	panel-menu-items.c \
 	panel-separator.c \
 	panel-recent.c \
-	panel-action-protocol.c \
 	panel-toplevel.c \
 	panel-struts.c \
 	panel-frame.c \
@@ -84,7 +83,8 @@ endif
 if ENABLE_X11
 panel_sources += \
 	xstuff.c \
-	panel-xutils.c
+	panel-xutils.c \
+	panel-action-protocol.c
 endif
 
 panel_headers = \
@@ -116,7 +116,6 @@ panel_headers = \
 	panel-menu-items.h \
 	panel-separator.h \
 	panel-recent.h \
-	panel-action-protocol.h \
 	panel-toplevel.h \
 	panel-struts.h \
 	panel-frame.h \
@@ -147,7 +146,8 @@ endif
 if ENABLE_X11
 panel_sources += \
 	xstuff.h \
-	panel-xutils.h
+	panel-xutils.h \
+	panel-action-protocol.h
 endif
 
 mate_panel_SOURCES = \
