@@ -344,9 +344,16 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 	 * make this thing think that the screen is scaled down, and because GTK+
 	 * already scaled everything up without the panel knowing about it, the whole
 	 * thing somehow works well... sigh. */
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
+		*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
+		*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
+		return screen;
+	}
+#endif
+
 	*width  = gdk_screen_get_width(screen) / toplevel->priv->scale;
 	*height = gdk_screen_get_height(screen) / toplevel->priv->scale;
-
 	return screen;
 }
 
@@ -436,7 +443,7 @@ static void panel_toplevel_init_resize_drag_offsets(PanelToplevel* toplevel, Pan
 #ifdef HAVE_X11
 static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 {
-    g_assert(GDK_IS_X11_DISPLAY(gdk_display_get_default ()));
+	g_assert (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))));
 
 	GtkWidget    *widget;
 	GdkRectangle  geometry;
@@ -482,7 +489,7 @@ static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 
 	panel_warp_pointer (gtk_widget_get_window (widget), x, y);
 }
-#endif
+#endif // HAVE_X11
 
 static void panel_toplevel_begin_attached_move(PanelToplevel* toplevel, gboolean is_keyboard, guint32 time_)
 {
@@ -890,7 +897,7 @@ static void panel_toplevel_rotate_to_pointer(PanelToplevel* toplevel, int pointe
 #ifdef HAVE_X11
 static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, int keyval, int increment)
 {
-    g_assert(GDK_IS_X11_DISPLAY(gdk_display_get_default ()));
+	g_assert (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))));
 
 	GdkScreen *screen;
 	GdkWindow *root_window;
@@ -928,7 +935,7 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 
 	return TRUE;
 }
-#endif
+#endif // HAVE_X11
 
 static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, GdkEventKey* event)
 {
@@ -941,13 +948,11 @@ static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, G
 		increment = SMALL_INCREMENT;
 
 #ifdef HAVE_X11
-	if (is_using_x11 ())
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))))
 		return panel_toplevel_warp_pointer_increment (toplevel, event->keyval, increment);
-	else
-		return TRUE;
-#else
-	return TRUE;
 #endif
+
+	return TRUE;
 
 #undef SMALL_INCREMENT
 #undef NORMAL_INCREMENT
@@ -3090,8 +3095,6 @@ panel_toplevel_realize (GtkWidget *widget)
 	panel_struts_set_window_hint (toplevel);
 
 	gdk_window_set_group (window, window);
-    GdkGeometry geom;
-	gdk_window_set_geometry_hints (window, &geom, 0);
 
 	panel_toplevel_initially_hide (toplevel);
 
