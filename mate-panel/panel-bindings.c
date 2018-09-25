@@ -35,6 +35,7 @@
 #include "panel-schemas.h"
 #include "panel-profile.h"
 #ifdef HAVE_X11
+#include "xstuff.h"
 #include "panel-xutils.h"
 #endif
 

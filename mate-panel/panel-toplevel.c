@@ -41,6 +41,7 @@
 #include "panel-profile.h"
 #include "panel-frame.h"
 #ifdef HAVE_X11
+#include "xstuff.h"
 #include "panel-xutils.h"
 #endif
 #ifdef HAVE_WAYLAND

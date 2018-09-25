@@ -62,6 +62,10 @@
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 
+#ifdef HAVE_X11
+#include "xstuff.h"
+#endif
+
 typedef struct {
 	GtkWidget        *run_dialog;
 
@@ -1999,8 +2003,11 @@ panel_run_dialog_new (GdkScreen  *screen,
 
 	gtk_widget_grab_focus (dialog->combobox);
 	gtk_widget_realize (dialog->run_dialog);
-	gdk_x11_window_set_user_time (gtk_widget_get_window (dialog->run_dialog),
-				      activate_time);
+#ifdef HAVE_X11
+	if (is_using_x11 ())
+		gdk_x11_window_set_user_time (gtk_widget_get_window (dialog->run_dialog),
+					      activate_time);
+#endif
 	gtk_widget_show (dialog->run_dialog);
 
 	return dialog;
