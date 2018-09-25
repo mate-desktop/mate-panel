@@ -388,14 +388,16 @@ panel_multiscreen_queue_reinit (void)
 static void
 panel_multiscreen_init_randr (GdkDisplay *display)
 {
-#if defined(HAVE_X11) && defined(HAVE_RANDR)
-	Display *xdisplay;
-	int      event_base, error_base;
-#endif
-
 	have_randr = FALSE;
 
-#if defined(HAVE_X11) && defined(HAVE_RANDR)
+#ifdef HAVE_X11
+#ifdef HAVE_RANDR
+	Display *xdisplay;
+	int      event_base, error_base;
+
+	if (!GDK_IS_X11_DISPLAY (display))
+		return;
+
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
 	/* We don't remember the event/error bases, as we expect to get "screen
@@ -409,6 +411,7 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 		if ((major == 1 && minor >= 3) || major > 1)
 			have_randr = TRUE;
 	}
+#endif
 #endif
 }
 
