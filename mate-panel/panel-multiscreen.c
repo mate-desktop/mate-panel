@@ -43,7 +43,8 @@ static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
 static guint          reinit_id   = 0;
 
-#if defined(HAVE_X11) && defined(HAVE_RANDR)
+#ifdef HAVE_X11
+#ifdef HAVE_RANDR
 static gboolean
 _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 					   RROutput       output,
@@ -82,14 +83,12 @@ _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 	 */
 	return (g_ascii_strncasecmp (info->name, "LVDS", strlen ("LVDS")) == 0);
 }
-#endif
 
 static gboolean
 panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 						 int           *monitors_ret,
 						 GdkRectangle **geometries_ret)
 {
-#if defined(HAVE_X11) && defined(HAVE_RANDR)
 	GdkDisplay         *display;
 	GdkMonitor         *monitor;
 	Display            *xdisplay;
@@ -202,10 +201,9 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	*geometries_ret = (GdkRectangle *) g_array_free (geometries, FALSE);
 
 	return TRUE;
-#else
-	return FALSE;
-#endif
 }
+#endif // HAVE_RANDR
+#endif // HAVE_X11
 
 static void
 panel_multiscreen_get_gdk_monitors_for_screen (GdkScreen     *screen,
@@ -233,14 +231,18 @@ panel_multiscreen_get_raw_monitors_for_screen (GdkScreen     *screen,
 					       int           *monitors_ret,
 					       GdkRectangle **geometries_ret)
 {
-	gboolean res;
+	gboolean res = FALSE;
 
 	*monitors_ret = 0;
 	*geometries_ret = NULL;
 
+#ifdef HAVE_X11
+#ifdef HAVE_RANDR
 	res = panel_multiscreen_get_randr_monitors_for_screen (screen,
 							       monitors_ret,
 							       geometries_ret);
+#endif // HAVE_RANDR
+#endif // HAVE_X11
 	if (res && *monitors_ret > 0)
 		return;
 
@@ -411,8 +413,8 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 		if ((major == 1 && minor >= 3) || major > 1)
 			have_randr = TRUE;
 	}
-#endif
-#endif
+#endif // HAVE_RANDR
+#endif // HAVE_X11
 }
 
 void
