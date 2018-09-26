@@ -24,8 +24,11 @@
 
 #include <config.h>
 #include <stdlib.h>
-#include <gdk/gdkx.h>
 #include <libegg/eggsmclient.h>
+
+// #ifdef HAVE_X11
+#include <gdk/gdkx.h>
+// #endif
 
 #include "panel-shell.h"
 #include "panel-session.h"

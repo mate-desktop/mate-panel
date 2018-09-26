@@ -27,10 +27,13 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <gdk/gdk.h>
+
+// #ifndef HAVE_X11
 #include <gdk/gdkx.h>
 #include <cairo-xlib.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
+// #endif
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-bg.h>

@@ -20,8 +20,11 @@
  * 02110-1301, USA.
  */
 
-#include <gdk/gdkx.h>
 #include "fixedtip.h"
+
+// #ifdef HAVE_X11
+#include <gdk/gdkx.h>
+// #endif
 
 /* Signals */
 enum

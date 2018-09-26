@@ -33,13 +33,16 @@
 
 #include <glib/gi18n-lib.h>
 #include <cairo.h>
-#include <cairo-xlib.h>
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+
+// #ifdef HAVE_X11
+#include <cairo-xlib.h>
+#include <gdk/gdkx.h>
 #include <gtk/gtkx.h>
 #include <X11/Xatom.h>
+// #endif
 
 #include "mate-panel-applet.h"
 #include "panel-applet-private.h"

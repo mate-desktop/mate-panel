@@ -7,6 +7,8 @@
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
+
+#include <gdk/gdkx.h>
 #include <gtk/gtkx.h>
 
 gboolean is_using_x11                   ();

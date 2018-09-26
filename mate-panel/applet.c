@@ -12,8 +12,11 @@
 #include <unistd.h>
 
 #include <glib/gi18n.h>
-#include <gdk/gdkx.h>
 #include <gio/gio.h>
+
+// #ifdef HAVE_X11
+#include <gdk/gdkx.h>
+// #endif
 
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-gtk.h>

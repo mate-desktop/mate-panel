@@ -28,7 +28,10 @@
 
 #include <glib.h>
 #include <gio/gio.h>
+
+// #ifdef HAVE_X11
 #include <gdk/gdkx.h>
+// #endif
 
 #include <libmate-desktop/mate-dconf.h>
 #include <libmate-desktop/mate-gsettings.h>

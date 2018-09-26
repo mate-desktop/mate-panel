@@ -31,7 +31,6 @@
 
 #include <gio/gio.h>
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
 
 #include <libpanel-util/panel-gtk.h>
 
@@ -804,8 +803,15 @@ _mate_panel_applet_frame_applet_broken (MatePanelAppletFrame *frame)
 
 	gtk_widget_show (dialog);
 
-	gtk_window_present_with_time (GTK_WINDOW (dialog),
-				      gdk_x11_get_server_time (gtk_widget_get_window (GTK_WIDGET (dialog))));
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (dialog)))
+		gtk_window_present_with_time (GTK_WINDOW (dialog),
+					      gdk_x11_get_server_time (gtk_widget_get_window (GTK_WIDGET (dialog))));
+	else
+		gtk_window_present(GTK_WINDOW (dialog));
+#else
+	gtk_window_present(GTK_WINDOW (dialog));
+#endif
 
 	g_free (dialog_txt);
 }

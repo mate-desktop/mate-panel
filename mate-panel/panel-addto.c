@@ -27,7 +27,10 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+
+// #ifdef HAVE_X11
 #include <gdk/gdkx.h>
+// #endif
 
 #include <matemenu-tree.h>
 

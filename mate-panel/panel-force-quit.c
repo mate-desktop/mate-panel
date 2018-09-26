@@ -28,11 +28,13 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
 #include <X11/keysym.h>
 
+// #ifdef HAVE_X11
+#include <gdk/gdkx.h>
+#include <X11/Xlib.h>
 #include <X11/extensions/XInput2.h>
+// #endif
 
 #include <libpanel-util/panel-gtk.h>
 
