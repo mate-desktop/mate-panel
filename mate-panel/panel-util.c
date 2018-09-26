@@ -1346,3 +1346,20 @@ panel_util_get_screen_number (GdkScreen *screen)
 
 	return gdk_screen_get_number (screen);
 }
+
+void
+panel_util_get_screen_geometry (GdkScreen *screen, int* width, int* height)
+{
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
+		*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
+		*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+		return;
+	}
+#endif
+
+	// TODO: get a monitor somehow, and use gdk_monitor_get_geometry ()
+	*width  = gdk_screen_get_width(screen);
+	*height = gdk_screen_get_height(screen);
+	return;
+}

@@ -73,6 +73,7 @@ void   panel_util_set_current_active_window (GtkWidget *toplevel,
 					     Window     window);
 
 int panel_util_get_screen_number (GdkScreen *screen);
+void panel_util_get_screen_geometry (GdkScreen *screen, int* width, int* height);
 
 #ifdef __cplusplus
 }

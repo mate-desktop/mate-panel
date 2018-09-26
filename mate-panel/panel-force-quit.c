@@ -30,14 +30,15 @@
 #include <gtk/gtk.h>
 #include <X11/keysym.h>
 
-// #ifdef HAVE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/XInput2.h>
-// #endif
+#endif
 
 #include <libpanel-util/panel-gtk.h>
 
+#include "panel-util.h"
 #include "panel-icon-names.h"
 #include "panel-stock-icons.h"
 
@@ -90,8 +91,7 @@ display_popup_window (GdkScreen *screen)
 
 	gtk_widget_realize (retval);
 
-	screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
-	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+	panel_util_get_screen_geometry(screen, &screen_width, &screen_height);
 
 	gtk_widget_get_allocation (retval, &allocation);
 

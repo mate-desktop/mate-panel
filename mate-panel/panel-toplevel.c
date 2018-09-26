@@ -38,6 +38,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
+#include "panel-util.h"
 #include "panel-profile.h"
 #include "panel-frame.h"
 #ifdef HAVE_X11
@@ -338,22 +339,17 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 
 	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
 
+	panel_util_get_screen_geometry(screen, width, height);
+
 	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
 	 * toplevel geometry attributes by the scale factor, then correct for all
 	 * sorts of awful misalignments and pretend it's all good. Or we can just
 	 * make this thing think that the screen is scaled down, and because GTK+
 	 * already scaled everything up without the panel knowing about it, the whole
 	 * thing somehow works well... sigh. */
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
-		*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
-		*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
-		return screen;
-	}
-#endif
+	*width /= toplevel->priv->scale;
+	*height /= toplevel->priv->scale;
 
-	*width  = gdk_screen_get_width(screen) / toplevel->priv->scale;
-	*height = gdk_screen_get_height(screen) / toplevel->priv->scale;
 	return screen;
 }
 
