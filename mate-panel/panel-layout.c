@@ -29,13 +29,10 @@
 #include <glib.h>
 #include <gio/gio.h>
 
-// #ifdef HAVE_X11
-#include <gdk/gdkx.h>
-// #endif
-
 #include <libmate-desktop/mate-dconf.h>
 #include <libmate-desktop/mate-gsettings.h>
 
+#include "panel-util.h"
 #include "panel-layout.h"
 #include "panel-profile.h"
 #include "panel-schemas.h"
@@ -290,7 +287,7 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
     GError      *error = NULL;
     int          i;
 
-    screen_n = gdk_x11_screen_get_screen_number (screen);
+    screen_n = panel_util_get_screen_number (screen);
     layout_file = panel_layout_filename();
 
     if (layout_file)

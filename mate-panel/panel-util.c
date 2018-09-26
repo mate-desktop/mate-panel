@@ -50,7 +50,10 @@
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
 
+#ifdef HAVE_X11
+#include <gdk/gdkx.h>
 static Atom _net_active_window = None;
+#endif
 
 char *
 panel_util_make_exec_uri_for_desktop (const char *exec)
@@ -1331,4 +1334,15 @@ void panel_util_set_current_active_window (GtkWidget *toplevel, Window window)
 	XSendEvent (xdisplay, xroot, False,
 		    SubstructureRedirectMask | SubstructureNotifyMask,
 		    &xev);
+}
+
+int
+panel_util_get_screen_number (GdkScreen *screen)
+{
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen)))
+		return gdk_x11_screen_get_screen_number (screen);
+#endif
+
+	return gdk_screen_get_number (screen);
 }

@@ -29,6 +29,7 @@
 
 #include "panel-struts.h"
 
+#include "panel-util.h"
 #include "panel-multiscreen.h"
 
 #ifdef HAVE_X11
@@ -390,11 +391,9 @@ panel_struts_compare (const PanelStrut *s1,
 	int s1_depth;
 	int s2_depth;
 
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (s1->screen)) && s1->screen != s2->screen)
-		return gdk_x11_screen_get_screen_number (s1->screen) -
-			gdk_x11_screen_get_screen_number (s2->screen);
-#endif
+	if (s1->screen != s2->screen)
+		return panel_util_get_screen_number (s1->screen) -
+			panel_util_get_screen_number (s2->screen);
 
 	if (s1->monitor != s2->monitor)
 		return s1->monitor - s2->monitor;
