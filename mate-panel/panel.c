@@ -19,7 +19,11 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+
+// #ifdef HAVE_X11
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
+// #endif
+
 
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>

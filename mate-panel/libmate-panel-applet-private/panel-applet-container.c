@@ -21,8 +21,12 @@
  */
 
 #include <string.h>
+
+// #ifdef HAVE_X11
 #include <gtk/gtk.h>
 #include <gtk/gtkx.h>
+// #endif
+
 #include <panel-applets-manager.h>
 #include "panel-applet-container.h"
 #include "panel-marshal.h"

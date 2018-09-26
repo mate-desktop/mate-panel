@@ -31,7 +31,10 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+
+// #ifdef HAVE_X11
 #include <gdk/gdkx.h>
+// #endif
 
 #include <libpanel-util/panel-list.h>
 #include <libmate-desktop/mate-dconf.h>

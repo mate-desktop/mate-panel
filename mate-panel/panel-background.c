@@ -27,11 +27,14 @@
 #include "panel-background.h"
 
 #include <string.h>
-#include <gdk/gdkx.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <cairo.h>
+
+// #ifdef HAVE_X11
+#include <gdk/gdkx.h>
 #include <cairo-xlib.h>
+// #endif
 
 #include "panel-background-monitor.h"
 #include "panel-util.h"

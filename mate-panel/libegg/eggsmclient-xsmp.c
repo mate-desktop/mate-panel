@@ -37,7 +37,10 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
+
+// #ifdef HAVE_X11
 #include <gdk/gdkx.h>
+// #endif
 
 #define EGG_TYPE_SM_CLIENT_XSMP            (egg_sm_client_xsmp_get_type ())
 #define EGG_SM_CLIENT_XSMP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), EGG_TYPE_SM_CLIENT_XSMP, EggSMClientXSMP))

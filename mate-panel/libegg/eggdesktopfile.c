@@ -31,8 +31,11 @@
 #include <unistd.h>
 
 #include <glib/gi18n.h>
-#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
+
+// #ifdef HAVE_X11
+#include <gdk/gdkx.h>
+// #endif
 
 struct EggDesktopFile {
   GKeyFile           *key_file;

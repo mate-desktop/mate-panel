@@ -19,7 +19,10 @@
 #define PANEL_PLUG_PRIVATE_H
 
 #include <gtk/gtk.h>
+
+// #ifdef HAVE_X11
 #include <gtk/gtkx.h>
+// #endif
 
 G_BEGIN_DECLS
 

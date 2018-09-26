@@ -51,6 +51,7 @@
 #include "mate-panel-applet-enums.h"
 #include "panel-plug-private.h"
 
+
 #define MATE_PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, MatePanelAppletPrivate))
 
 struct _MatePanelAppletPrivate {

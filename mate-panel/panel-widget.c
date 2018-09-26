@@ -11,7 +11,10 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+
+// #ifdef HAVE_X11
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
+// #endif
 
 #include <libpanel-util/panel-list.h>
 
