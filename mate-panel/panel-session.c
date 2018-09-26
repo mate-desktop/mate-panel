@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #include <libegg/eggsmclient.h>
 
-// #ifdef HAVE_X11
-#include <gdk/gdkx.h>
-// #endif
+#ifdef HAVE_X11
+#include "xstuff.h"
+#endif
 
 #include "panel-shell.h"
 #include "panel-session.h"
@@ -73,7 +73,11 @@ panel_session_init (void)
 	g_signal_connect (client, "quit",
 			  G_CALLBACK (panel_session_handle_quit), NULL);
 
-	/* We don't want the WM to try and save/restore our
-	 * window position */
-	gdk_x11_set_sm_client_id (NULL);
+#ifdef HAVE_X11
+	if (is_using_x11 ()) {
+		/* We don't want the X WM to try and save/restore our
+		* window position */
+		gdk_x11_set_sm_client_id (NULL);
+	}
+#endif
 }

@@ -11,6 +11,8 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtkx.h>
 
+#include "panel-enums-gsettings.h"
+
 gboolean is_using_x11                   ();
 
 void xstuff_zoom_animate                (GtkWidget        *widget,
