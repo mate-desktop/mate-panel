@@ -65,7 +65,6 @@ panel_sources = \
 	panel-bindings.c \
 	panel-layout.c \
 	panel-profile.c \
-	panel-force-quit.c \
 	panel-lockdown.c \
 	panel-addto.c \
 	panel-ditem-editor.c \
@@ -84,6 +83,7 @@ if ENABLE_X11
 panel_sources += \
 	xstuff.c \
 	panel-xutils.c \
+	panel-force-quit.c \
 	panel-action-protocol.c
 endif
 
@@ -126,7 +126,6 @@ panel_headers = \
 	panel-profile.h \
 	panel-enums-gsettings.h \
 	panel-enums.h \
-	panel-force-quit.h \
 	panel-lockdown.h \
 	panel-addto.h \
 	panel-ditem-editor.h \
@@ -147,6 +146,7 @@ if ENABLE_X11
 panel_sources += \
 	xstuff.h \
 	panel-xutils.h \
+	panel-force-quit.h \
 	panel-action-protocol.h
 endif
 

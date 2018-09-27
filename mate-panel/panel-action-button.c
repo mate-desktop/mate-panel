@@ -46,7 +46,6 @@
 #include "panel-config-global.h"
 #include "panel-profile.h"
 #include "panel-typebuiltins.h"
-#include "panel-force-quit.h"
 #include "panel-util.h"
 #include "panel-session.h"
 #include "panel-globals.h"
@@ -55,6 +54,10 @@
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
+
+#ifdef HAVE_X11
+#include "panel-force-quit.h"
+#endif
 
 G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
 
@@ -281,8 +284,24 @@ panel_action_search (GtkWidget *widget)
 static void
 panel_action_force_quit (GtkWidget *widget)
 {
-	panel_force_quit (gtk_widget_get_screen (widget),
-			  gtk_get_current_event_time ());
+	GtkWidget *dialog;
+	GtkDialogFlags flags;
+
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget))) {
+		panel_force_quit (gtk_widget_get_screen (widget),
+				  gtk_get_current_event_time ());
+		return;
+	}
+#endif
+	flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+	dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
+					 flags,
+					 GTK_MESSAGE_ERROR,
+					 GTK_BUTTONS_CLOSE,
+					 "Force quit only available in X11");
+	gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_destroy (dialog);
 }
 
 /* Connect Server

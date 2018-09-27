@@ -25,6 +25,10 @@
 #ifndef __PANEL_FORCE_QUIT_H__
 #define __PANEL_FORCE_QUIT_H__
 
+#ifndef HAVE_X11
+#error file should only be included when HAVE_X11 is enabled
+#endif
+
 #include <gdk/gdk.h>
 
 #ifdef __cplusplus
