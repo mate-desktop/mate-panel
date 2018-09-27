@@ -27,15 +27,17 @@
 
 #include "eggdesktopfile.h"
 
+#include "../panel-util.h"
+
 #include <string.h>
 #include <unistd.h>
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-// #ifdef HAVE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
-// #endif
+#endif
 
 struct EggDesktopFile {
   GKeyFile           *key_file;
@@ -912,6 +914,7 @@ parse_link (EggDesktopFile  *desktop_file,
   return TRUE;
 }
 
+#ifdef HAVE_X11
 static char *
 start_startup_notification (GdkDisplay     *display,
 			    EggDesktopFile *desktop_file,
@@ -924,6 +927,8 @@ start_startup_notification (GdkDisplay     *display,
   char *startup_id;
   char *description, *wmclass;
   char *screen_str, *workspace_str;
+
+  g_assert(GDK_IS_X11_DISPLAY (display));
 
   if (g_key_file_has_key (desktop_file->key_file,
 			  EGG_DESKTOP_FILE_GROUP,
@@ -1022,6 +1027,7 @@ set_startup_notification_timeout (GdkDisplay *display,
   g_timeout_add_seconds (EGG_DESKTOP_FILE_SN_TIMEOUT_LENGTH,
 			 startup_notification_timeout, sn_data);
 }
+#endif // HAVE_X11
 
 static GPtrArray *
 array_putenv (GPtrArray *env, char *variable)
@@ -1187,7 +1193,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
       display = gdk_display_get_default ();
       screen = gdk_display_get_default_screen (display);
     }
-  screen_num = gdk_x11_screen_get_screen_number (screen);
+  screen_num = panel_util_get_screen_number (screen);
 
   translated_documents = translate_document_list (desktop_file, documents);
   docs = translated_documents;
@@ -1207,16 +1213,29 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	}
       g_free (command);
 
-      startup_id = start_startup_notification (display, desktop_file,
-					       argv[0], screen_num,
-					       workspace, launch_time);
-      if (startup_id)
-	{
-	  char *startup_id_env = g_strdup_printf ("DESKTOP_STARTUP_ID=%s",
-						  startup_id);
-	  env = array_putenv (env, startup_id_env);
-	  g_free (startup_id_env);
-	}
+      startup_id = NULL;
+
+#ifdef HAVE_X11
+      if (GDK_IS_X11_DISPLAY (display))
+        {
+          startup_id = start_startup_notification (display, desktop_file,
+						   argv[0], screen_num,
+						   workspace, launch_time);
+
+          if (startup_id)
+	    {
+	      char *startup_id_env = g_strdup_printf ("DESKTOP_STARTUP_ID=%s",
+						      startup_id);
+	      env = array_putenv (env, startup_id_env);
+	      g_free (startup_id_env);
+	    }
+        }
+#else
+      // Suppress unused variable warnings when not compiling with X
+      (void)screen_num;
+      (void)workspace;
+      (void)launch_time;
+#endif
 
       if (env != NULL)
 	g_ptr_array_add (env, NULL);
@@ -1236,7 +1255,10 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	{
 	  if (current_success)
 	    {
-	      set_startup_notification_timeout (display, startup_id);
+#ifdef HAVE_X11
+	      if (GDK_IS_X11_DISPLAY (display))
+	        set_startup_notification_timeout (display, startup_id);
+#endif
 
 	      if (ret_startup_id)
 		*ret_startup_id = startup_id;

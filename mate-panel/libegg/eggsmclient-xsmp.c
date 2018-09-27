@@ -38,9 +38,10 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
-// #ifdef HAVE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
-// #endif
+#include "../xstuff.h"
+#endif
 
 #define EGG_TYPE_SM_CLIENT_XSMP            (egg_sm_client_xsmp_get_type ())
 #define EGG_SM_CLIENT_XSMP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), EGG_TYPE_SM_CLIENT_XSMP, EggSMClientXSMP))
@@ -371,7 +372,10 @@ sm_client_xsmp_startup (EggSMClient *client,
       xsmp->client_id = g_strdup (ret_client_id);
       free (ret_client_id);
 
-      gdk_x11_set_sm_client_id (xsmp->client_id);
+#ifdef HAVE_X11
+      if (is_using_x11 ())
+        gdk_x11_set_sm_client_id (xsmp->client_id);
+#endif
 
       g_debug ("Got client ID \"%s\"", xsmp->client_id);
     }

@@ -56,6 +56,7 @@
 #include "panel-schemas.h"
 
 #ifdef HAVE_X11
+#include <gdk/gdkx.h>
 #include "panel-force-quit.h"
 #endif
 
