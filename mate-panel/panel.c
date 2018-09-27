@@ -20,10 +20,9 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-// #ifdef HAVE_X11
+#ifdef HAVE_X11
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
-// #endif
-
+#endif
 
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>
@@ -393,11 +392,14 @@ static gboolean
 panel_key_press_event (GtkWidget   *widget,
 		       GdkEventKey *event)
 {
+#ifdef HAVE_X11
 	/*
   	 * If the focus widget is a GtkSocket, i.e. the
 	 * focus is in an applet in another process, then key 
 	 * bindings do not work. We get around this by
 	 * activating the key bindings here.
+	 *
+	 * Will always be false when not using X
 	 */ 
 	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
 	    event->keyval == GDK_KEY_F10 &&
@@ -405,6 +407,7 @@ panel_key_press_event (GtkWidget   *widget,
 		return gtk_bindings_activate (G_OBJECT (widget),
 					      event->keyval,
 					      event->state);
+#endif
 
 	return FALSE;
 }

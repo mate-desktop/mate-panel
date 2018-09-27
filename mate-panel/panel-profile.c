@@ -32,10 +32,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-// #ifdef HAVE_X11
-#include <gdk/gdkx.h>
-// #endif
-
 #include <libpanel-util/panel-list.h>
 #include <libmate-desktop/mate-dconf.h>
 #include <libmate-desktop/mate-gsettings.h>
@@ -577,7 +573,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 	if (change->screen_changed)
 		g_settings_set_int (toplevel->queued_settings,
 							"screen",
-							gdk_x11_screen_get_screen_number (change->screen));
+							panel_util_get_screen_number (change->screen));
 
 	if (change->monitor_changed)
 		g_settings_set_int (toplevel->queued_settings,
@@ -976,7 +972,7 @@ panel_profile_create_toplevel (GdkScreen *screen)
 	settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
 	g_free (path);
 
-	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, gdk_x11_screen_get_screen_number (screen));
+	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, panel_util_get_screen_number (screen));
 
 	if (panel_profile_find_empty_spot (screen, &orientation, &monitor)) {
 		g_settings_set_int (settings, PANEL_TOPLEVEL_MONITOR_KEY, monitor);

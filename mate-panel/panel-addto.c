@@ -28,10 +28,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-// #ifdef HAVE_X11
-#include <gdk/gdkx.h>
-// #endif
-
 #include <matemenu-tree.h>
 
 #include <libpanel-util/panel-glib.h>
@@ -1378,7 +1374,7 @@ panel_addto_present (GtkMenuItem *item,
 	PanelToplevel *toplevel;
 	PanelData     *pd;
 	GdkScreen *screen;
-	gint screen_height;
+	gint screen_width, screen_height;
 	gint height;
 
 	toplevel = panel_widget->toplevel;
@@ -1392,7 +1388,7 @@ panel_addto_present (GtkMenuItem *item,
 				     panel_addto_dialog_quark);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+	panel_util_get_screen_geometry(screen, &screen_width, &screen_height);
 	height = MIN (MAX_ADDTOPANEL_HEIGHT, 3 * (screen_height / 4));
 
 	if (!dialog) {

@@ -31,10 +31,9 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
 
-// #ifdef HAVE_X11
-#include <gdk/gdkx.h>
+#ifdef HAVE_X11
 #include <cairo-xlib.h>
-// #endif
+#endif
 
 #include "panel-background-monitor.h"
 #include "panel-util.h"
@@ -988,6 +987,7 @@ panel_background_make_string (PanelBackground *background,
 	if (effective_type == PANEL_BACK_IMAGE ||
 	    (effective_type == PANEL_BACK_COLOR && background->has_alpha
 	    && (!gdk_window_check_composited_wm(background->window)))) {
+#ifdef HAVE_X11
 		cairo_surface_t *surface;
 
 		if (!background->composited_pattern)
@@ -1000,6 +1000,9 @@ panel_background_make_string (PanelBackground *background,
 			return NULL;
 
 		retval = g_strdup_printf ("pixmap:%d,%d,%d", (guint32)cairo_xlib_surface_get_drawable (surface), x, y);
+#else
+		return NULL;
+#endif
 	} else if (effective_type == PANEL_BACK_COLOR) {
 		gchar *rgba = gdk_rgba_to_string (&background->color);
 		retval = g_strdup_printf (
