@@ -1,5 +1,16 @@
 #! /bin/sh
 
 PACKAGE=mate-panel;
+CLOCK=mate-clock;
+FISH=mate-fish;
 
+# regular translations
 make -C po $PACKAGE.pot && mv po/$PACKAGE.pot .
+
+# clock
+make -C help/$CLOCK $CLOCK.pot \
+&& mv help/$CLOCK/$CLOCK.pot .
+
+# fish
+make -C help/$FISH $FISH.pot \
+&& mv help/$FISH/$FISH.pot .
