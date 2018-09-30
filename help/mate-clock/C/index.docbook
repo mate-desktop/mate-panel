@@ -318,25 +318,6 @@ The <application>&applet;</application> applet displays the date and time, and w
 		</orderedlist>
 	</sect2>
 
-	<sect2 id="clock-usage-adjust">
-	<title>To Adjust the System Date or Time</title>
-	<para>To adjust the system date or time that the <application>&applet;</application> applet displays, perform the following steps:	</para>
-	<orderedlist>
-	<listitem>
-			<para>Right-click on the applet, then choose <guimenuitem>Adjust Date &amp; Time</guimenuitem>.
-			</para>
-	</listitem>
-	<listitem>
-			<para>Type the <literal>root</literal> password, then click <guibutton>OK</guibutton>.
-			</para>
-	</listitem>
-	<listitem>
-			<para>The <application>&applet;</application> applet starts the system tool that sets the system date and time. Use the tool to adjust the date and time.
-			</para>
-	</listitem>
-	</orderedlist>
-	</sect2>
-
 </sect1>
 
 <!-- ============= Preferences ============================= -->
@@ -485,8 +466,27 @@ The <application>&applet;</application> applet displays the date and time, and w
 		  </varlistentry>
 	</variablelist>
 
-
 </sect2>
+
+<sect2 id="clock-usage-adjust">
+    <title>To Adjust the System Date or Time</title>
+    <para>To adjust the system date or time that the <application>&applet;</application> applet displays, perform the following steps:</para>
+    <orderedlist>
+        <listitem>
+            <para>Press the <guibutton>Time Settings</guibutton> button in the Preferences dialog.
+            </para>
+        </listitem>
+        <listitem>
+            <para>Use the <guilabel>Date &amp; Time</guilabel> dialog to adjust the date and time.
+            </para>
+        </listitem>
+        <listitem>
+            <para>Press the <guibutton>Set System Time</guibutton> button, then the <application>mate-polkit</application> dialog prompts for the administration password. Enter the administration password and press the <guibutton>Authenticate</guibutton> button.
+            </para>
+        </listitem>
+    </orderedlist>
+</sect2>
+
 </sect1>
 
 </article>
