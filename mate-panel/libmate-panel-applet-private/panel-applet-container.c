@@ -22,10 +22,10 @@
 
 #include <string.h>
 
-// #ifdef HAVE_X11
+#ifdef HAVE_X11
 #include <gtk/gtk.h>
 #include <gtk/gtkx.h>
-// #endif
+#endif
 
 #include <panel-applets-manager.h>
 #include "panel-applet-container.h"
@@ -104,15 +104,22 @@ static void
 panel_applet_container_setup (MatePanelAppletContainer *container)
 {
 	if (container->priv->out_of_process) {
-		container->priv->socket = gtk_socket_new ();
+#ifdef HAVE_X11
+		if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (container)))) {
+			container->priv->socket = gtk_socket_new ();
 
-		g_signal_connect_swapped (container->priv->socket,
-		                          "plug-removed",
-		                          G_CALLBACK (mate_panel_applet_container_plug_removed),
-		                          container);
+			g_signal_connect_swapped (container->priv->socket,
+						"plug-removed",
+						G_CALLBACK (mate_panel_applet_container_plug_removed),
+						container);
 
-		gtk_container_add (GTK_CONTAINER (container), container->priv->socket);
-		gtk_widget_show (container->priv->socket);
+			gtk_container_add (GTK_CONTAINER (container), container->priv->socket);
+			gtk_widget_show (container->priv->socket);
+		} else
+#endif
+		{ // Not using X11
+			g_warning("Requested out-of-process container, which is only supported on X");
+		}
 	} else {
 		GtkWidget *applet;
 
@@ -377,10 +384,13 @@ on_proxy_appeared (GObject      *source_object,
 
 	panel_applet_container_setup (container);
 
+#ifdef HAVE_X11
+	// xid always <= 0 when not using X11
 	if (container->priv->xid > 0) {
 		gtk_socket_add_id (GTK_SOCKET (container->priv->socket),
 				   container->priv->xid);
 	}
+#endif
 
 	/* g_async_result_get_source_object returns new ref */
 	g_object_unref (container);
@@ -514,7 +524,14 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 
 	/* we can't use the screen of the container widget since it's not in a
 	 * widget hierarchy yet */
-	screen_number = gdk_x11_screen_get_screen_number (screen);
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display())) {
+		screen_number = gdk_x11_screen_get_screen_number (screen);
+	} else
+#endif
+	{ // Not using X11
+		screen_number = gdk_screen_get_number (screen);
+	}
 
 	data = g_new (AppletFactoryData, 1);
 	data->result = result;

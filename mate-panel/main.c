@@ -156,7 +156,6 @@ main (int argc, char **argv)
 		gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 	}
 
-	// wayland_registry_init () must be called up here
 #ifdef HAVE_WAYLAND
 	if (is_using_wayland ())
 		wayland_registry_init ();

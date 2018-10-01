@@ -25,8 +25,11 @@
 
 G_BEGIN_DECLS
 
+#ifdef HAVE_X11
 guint32      mate_panel_applet_get_xid           (MatePanelApplet *applet,
                                              GdkScreen   *screen);
+#endif
+
 const gchar *mate_panel_applet_get_object_path   (MatePanelApplet *applet);
 
 GtkWidget   *mate_panel_applet_get_applet_widget (const gchar *factory_id,

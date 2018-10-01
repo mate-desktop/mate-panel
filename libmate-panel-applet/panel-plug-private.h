@@ -18,11 +18,13 @@
 #ifndef PANEL_PLUG_PRIVATE_H
 #define PANEL_PLUG_PRIVATE_H
 
+#ifndef HAVE_X11
+#error file should only be included when HAVE_X11 is enabled
+#endif
+
 #include <gtk/gtk.h>
 
-// #ifdef HAVE_X11
 #include <gtk/gtkx.h>
-// #endif
 
 G_BEGIN_DECLS
 

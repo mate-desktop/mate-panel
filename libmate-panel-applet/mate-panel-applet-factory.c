@@ -24,6 +24,10 @@
 
 #include "mate-panel-applet-factory.h"
 
+#ifdef HAVE_X11
+#include <gdk/gdkx.h>
+#endif
+
 struct _MatePanelAppletFactory {
 	GObject    base;
 
@@ -215,7 +219,15 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 		gdk_display_get_default_screen (gdk_display_get_default ()) :
 		gdk_screen_get_default ();
 
-	xid = mate_panel_applet_get_xid (MATE_PANEL_APPLET (applet), screen);
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
+		xid = mate_panel_applet_get_xid (MATE_PANEL_APPLET (applet), screen);
+	} else
+#endif
+	{ // Not using X11
+		xid = 0;
+	}
+
 	uid = factory->next_uid++;
 	object_path = mate_panel_applet_get_object_path (MATE_PANEL_APPLET (applet));
 	g_hash_table_insert (factory->applets, GUINT_TO_POINTER (uid), applet);

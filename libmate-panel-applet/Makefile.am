@@ -9,6 +9,16 @@ AM_CPPFLAGS =							\
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
+if ENABLE_WAYLAND
+AM_CFLAGS += \
+	-DHAVE_WAYLAND=1
+endif
+
+if ENABLE_X11
+AM_CFLAGS += \
+	-DHAVE_X11=1
+endif
+
 libmate_panel_appletincludedir = $(includedir)/mate-panel-4.0/libmate-panel-applet
 libmate_panel_appletinclude_HEADERS =	\
 	mate-panel-applet.h			\
@@ -23,9 +33,13 @@ libmate_panel_applet_4_la_SOURCES =		\
 	mate-panel-applet-factory.c		\
 	mate-panel-applet-gsettings.c		\
 	mate-panel-applet-gsettings.h       \
-	panel-plug.c			\
-	panel-plug-private.h    \
 	panel-applet-private.h
+
+if ENABLE_X11
+libmate_panel_applet_4_la_SOURCES +=	\
+	panel-plug.c			\
+	panel-plug-private.h
+endif
 
 libmate_panel_applet_4_la_LIBADD  = \
 	$(LIBMATE_PANEL_APPLET_LIBS) \

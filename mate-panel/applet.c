@@ -14,9 +14,9 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-// #ifdef HAVE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
-// #endif
+#endif
 
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-gtk.h>
@@ -655,12 +655,15 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	int             menu_y = 0;
 	int             pointer_x;
 	int             pointer_y;
+	int             screen_width;
+	int             screen_height;
 
 	parent = gtk_widget_get_parent (applet);
 
 	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
 	screen = gtk_widget_get_screen (applet);
+	panel_util_get_screen_geometry (screen, &screen_width, &screen_height);
 
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 
@@ -690,9 +693,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 					       allocation.width - requisition.width);
 			}
 		}
-		menu_x = MIN (menu_x, WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) - requisition.width);
+		menu_x = MIN (menu_x, screen_width - requisition.width);
 
-		if (menu_y > HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / 2)
+		if (menu_y > screen_height / 2)
 			menu_y -= requisition.height;
 		else
 			menu_y += allocation.height;
@@ -700,9 +703,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 		if (pointer_y < allocation.height &&
 		    requisition.height < pointer_y)
 			menu_y += MIN (pointer_y, allocation.height - requisition.height);
-		menu_y = MIN (menu_y, HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) - requisition.height);
+		menu_y = MIN (menu_y, screen_height - requisition.height);
 
-		if (menu_x > WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / 2)
+		if (menu_x > screen_width / 2)
 			menu_x -= requisition.width;
 		else
 			menu_x += allocation.width;
