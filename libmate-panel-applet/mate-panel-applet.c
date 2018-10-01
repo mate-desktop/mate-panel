@@ -2422,6 +2422,27 @@ mate_panel_applet_factory_setup_in_process (const gchar               *factory_i
 						    callback, user_data);
 }
 
+/**
+ * mate_panel_applet_get_screen_geometry:
+ * screen: The screen to get geometry from.
+ * width: Returned width.
+ * height: Returned height.
+ */
+void
+mate_panel_applet_get_screen_geometry (GdkScreen *screen, int* width, int* height)
+{
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
+		*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
+		*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+	} else
+#endif
+	{ // Not using X11
+		// TODO: get a monitor somehow, and use gdk_monitor_get_geometry ()
+		*width  = gdk_screen_get_width(screen);
+		*height = gdk_screen_get_height(screen);
+	}
+}
 
 /**
  * mate_panel_applet_set_background_widget:

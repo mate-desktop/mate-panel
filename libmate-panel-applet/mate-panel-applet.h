@@ -125,6 +125,8 @@ int  mate_panel_applet_factory_setup_in_process (const gchar               *fact
 							  gpointer                   data);
 
 
+void mate_panel_applet_get_screen_geometry (GdkScreen *screen, int* width, int* height);
+
 /*
  * These macros are getting a bit unwieldy.
  *

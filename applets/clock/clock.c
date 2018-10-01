@@ -49,7 +49,6 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <gdk/gdkx.h>
 #include <gio/gio.h>
 
 #include <libmateweather/mateweather-prefs.h>
@@ -891,8 +890,7 @@ position_calendar_popup (ClockData *cd)
                    monitors */
                 monitor.x = 0;
                 monitor.y = 0;
-                monitor.width = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
-                monitor.height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+                mate_panel_applet_get_screen_geometry(screen, &monitor.width, &monitor.height);
         }
 
         /* Based on panel orientation, position the popup.

@@ -7,7 +7,10 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
+#endif
 
 #include "clock.h"
 #include "clock-face.h"
