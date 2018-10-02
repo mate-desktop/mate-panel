@@ -25,7 +25,6 @@
  * don't make a big deal out of it. */
 
 #include "config.h"
-
 #include <gtk/gtk.h>
 
 #include "na-grid.h"
@@ -33,18 +32,29 @@
 #include "system-tray/na-tray.h"
 #include "status-notifier/sn-host-v0.h"
 
-#define ICON_SPACING 1
-#define MIN_GRID_SIZE 3
+#define MIN_ICON_SIZE_DEFAULT 24
+
+typedef struct
+{
+  GtkOrientation  orientation;
+  gint            index;
+  NaGrid         *grid;
+} SortData;
 
 struct _NaGrid
 {
-  GtkBox parent;
+  GtkGrid    parent;
 
-  gint icon_padding;
-  gint icon_size;
+  gint       icon_padding;
+  gint       icon_size;
 
-  GSList *hosts;
-  GSList *items;
+  gint       min_icon_size;
+  gint       cols;
+  gint       rows;
+  gint       length;
+
+  GSList    *hosts;
+  GSList    *items;
 };
 
 enum
@@ -54,7 +64,7 @@ enum
   PROP_ICON_SIZE
 };
 
-G_DEFINE_TYPE (NaGrid, na_grid, GTK_TYPE_BOX)
+G_DEFINE_TYPE (NaGrid, na_grid, GTK_TYPE_GRID)
 
 static gint
 compare_items (gconstpointer a,
@@ -85,16 +95,95 @@ compare_items (gconstpointer a,
 }
 
 static void
-reorder_items (GtkWidget *widget,
-               gpointer   user_data)
+sort_items (GtkWidget *item,
+            SortData  *data)
 {
-  NaGrid *nb;
-  gint position;
+  gint col, row, left_attach, top_attach;
 
-  nb = NA_GRID (user_data);
+  /* row / col number depends on whether we are horizontal or vertical */
+  if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      col = data->index / data->grid->rows;
+      row = data->index % data->grid->rows;
+    }
+  else
+    {
+      row = data->index / data->grid->cols;
+      col = data->index % data->grid->cols;
+    }
 
-  position = g_slist_index (nb->items, widget);
-  gtk_box_reorder_child (GTK_BOX (nb), widget, position);
+  /* only update item position if it has changed from current */
+  gtk_container_child_get (GTK_CONTAINER (data->grid),
+                           item,
+                           "left-attach", &left_attach,
+                           "top-attach", &top_attach,
+                           NULL);
+
+  if (left_attach != col || top_attach != row)
+    {
+      gtk_container_child_set (GTK_CONTAINER (data->grid),
+                               item,
+                               "left-attach", col,
+                               "top-attach", row,
+                               NULL);
+    }
+
+  /* increment to index of next item */
+  data->index++;
+}
+
+static void
+refresh_grid (NaGrid *self)
+{
+  GtkOrientation orientation;
+  GtkAllocation allocation;
+  gint rows, cols, length;
+  
+  orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
+  gtk_widget_get_allocation (GTK_WIDGET (self), &allocation);
+  length = g_slist_length (self->items);
+
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      rows = MAX (1, allocation.height / self->min_icon_size);
+      cols = MAX (1, length / rows);
+      if (length % rows)
+        cols++;
+    }
+  else
+    {
+      cols = MAX (1, allocation.width / self->min_icon_size);
+      rows = MAX (1, length / cols);
+      if (length % cols)
+        rows++;
+    }
+  
+  if (self->cols != cols || self->rows != rows || self->length != length)
+    {
+      self->cols = cols;
+      self->rows = rows;
+      self->length = length;
+      
+      SortData data;
+      data.orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
+      data.index = 0;
+      data.grid = self;
+
+      g_slist_foreach (self->items,
+                       (GFunc) sort_items,
+                       &data);
+    }
+}
+
+void
+na_grid_set_min_icon_size (NaGrid *grid,
+                           gint    min_icon_size)
+{
+  grid->min_icon_size = min_icon_size;
+  
+  g_return_if_fail (NA_IS_GRID (grid));
+  
+  refresh_grid (grid);
 }
 
 static void
@@ -111,10 +200,17 @@ item_added_cb (NaHost *host,
                           G_BINDING_SYNC_CREATE);
 
   self->items = g_slist_prepend (self->items, item);
-  gtk_box_pack_start (GTK_BOX (self), GTK_WIDGET (item), FALSE, FALSE, 0);
+
+  gtk_widget_set_hexpand (GTK_WIDGET (item), TRUE);
+  gtk_widget_set_vexpand (GTK_WIDGET (item), TRUE);
+  gtk_grid_attach (GTK_GRID (self),
+                   GTK_WIDGET (item),
+                   self->cols - 1,
+                   self->rows - 1,
+                   1, 1);
 
   self->items = g_slist_sort (self->items, compare_items);
-  gtk_container_foreach (GTK_CONTAINER (self), reorder_items, self);
+  refresh_grid (self);
 }
 
 static void
@@ -128,52 +224,25 @@ item_removed_cb (NaHost *host,
 
   gtk_container_remove (GTK_CONTAINER (self), GTK_WIDGET (item));
   self->items = g_slist_remove (self->items, item);
-}
-
-static void
-update_size_and_orientation (NaGrid         *self,
-                             GtkOrientation  orientation)
-{
-  /* FIXME: do we really need that?  comes from NaTray */
-  /* FIXME: if we do, do that in overridden preferred size handlers */
-
-  /* note, you want this larger if the frame has non-NONE relief by default. */
-  switch (orientation)
-    {
-    case GTK_ORIENTATION_VERTICAL:
-      /* Give grid a min size so the frame doesn't look dumb */
-      gtk_widget_set_size_request (GTK_WIDGET (self), MIN_GRID_SIZE, -1);
-      break;
-    case GTK_ORIENTATION_HORIZONTAL:
-      gtk_widget_set_size_request (GTK_WIDGET (self), -1, MIN_GRID_SIZE);
-      break;
-    }
-}
-
-static void
-orientation_notify (GObject    *object,
-                    GParamSpec *pspec,
-                    gpointer    data)
-{
-  update_size_and_orientation (NA_GRID (object),
-                               gtk_orientable_get_orientation (GTK_ORIENTABLE (object)));
+  refresh_grid (self);
 }
 
 static void
 na_grid_init (NaGrid *self)
 {
-  GtkOrientation orientation;
-
   self->icon_padding = 0;
   self->icon_size = 0;
 
+  self->min_icon_size = MIN_ICON_SIZE_DEFAULT;
+  self->cols = 1;
+  self->rows = 1;
+  self->length = 0;
+
   self->hosts = NULL;
   self->items = NULL;
-
-  orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
-  update_size_and_orientation (self, orientation);
-
-  g_signal_connect (self, "notify::orientation", G_CALLBACK (orientation_notify), NULL);
+  
+  gtk_grid_set_row_homogeneous (GTK_GRID (self), TRUE);
+  gtk_grid_set_column_homogeneous (GTK_GRID (self), TRUE);
 }
 
 static void
@@ -276,6 +345,14 @@ na_grid_unrealize (GtkWidget *widget)
 }
 
 static void
+na_grid_size_allocate (GtkWidget     *widget,
+                       GtkAllocation *allocation)
+{
+  GTK_WIDGET_CLASS (na_grid_parent_class)->size_allocate (widget, allocation);
+  refresh_grid (NA_GRID (widget));
+}
+
+static void
 na_grid_get_property (GObject    *object,
                       guint       property_id,
                       GValue     *value,
@@ -336,6 +413,7 @@ na_grid_class_init (NaGridClass *klass)
   widget_class->realize = na_grid_realize;
   widget_class->unrealize = na_grid_unrealize;
   widget_class->style_updated = na_grid_style_updated;
+  widget_class->size_allocate = na_grid_size_allocate;
 
   g_object_class_install_property (gobject_class, PROP_ICON_PADDING,
     g_param_spec_int ("icon-padding",
@@ -357,7 +435,6 @@ na_grid_new (GtkOrientation  orientation)
 {
   return g_object_new (NA_TYPE_GRID,
                        "orientation", orientation,
-                       "spacing", ICON_SPACING,
                        NULL);
 }
 
