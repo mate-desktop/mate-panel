@@ -21,22 +21,22 @@
  */
 
 /* Well, actuall'y is the Tray itself, the container for the items.  But
- * NaTray is already taken for the XEMBED part, so for now it's called NaBox,
+ * NaTray is already taken for the XEMBED part, so for now it's called NaGrid,
  * don't make a big deal out of it. */
 
 #include "config.h"
 
 #include <gtk/gtk.h>
 
-#include "na-box.h"
+#include "na-grid.h"
 
 #include "system-tray/na-tray.h"
 #include "status-notifier/sn-host-v0.h"
 
 #define ICON_SPACING 1
-#define MIN_BOX_SIZE 3
+#define MIN_GRID_SIZE 3
 
-struct _NaBox
+struct _NaGrid
 {
   GtkBox parent;
 
@@ -54,7 +54,7 @@ enum
   PROP_ICON_SIZE
 };
 
-G_DEFINE_TYPE (NaBox, na_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE (NaGrid, na_grid, GTK_TYPE_BOX)
 
 static gint
 compare_items (gconstpointer a,
@@ -88,10 +88,10 @@ static void
 reorder_items (GtkWidget *widget,
                gpointer   user_data)
 {
-  NaBox *nb;
+  NaGrid *nb;
   gint position;
 
-  nb = NA_BOX (user_data);
+  nb = NA_GRID (user_data);
 
   position = g_slist_index (nb->items, widget);
   gtk_box_reorder_child (GTK_BOX (nb), widget, position);
@@ -100,11 +100,11 @@ reorder_items (GtkWidget *widget,
 static void
 item_added_cb (NaHost *host,
                NaItem *item,
-               NaBox  *self)
+               NaGrid *self)
 {
   g_return_if_fail (NA_IS_HOST (host));
   g_return_if_fail (NA_IS_ITEM (item));
-  g_return_if_fail (NA_IS_BOX (self));
+  g_return_if_fail (NA_IS_GRID (self));
 
   g_object_bind_property (self, "orientation",
                           item, "orientation",
@@ -120,18 +120,18 @@ item_added_cb (NaHost *host,
 static void
 item_removed_cb (NaHost *host,
                  NaItem *item,
-                 NaBox  *self)
+                 NaGrid *self)
 {
   g_return_if_fail (NA_IS_HOST (host));
   g_return_if_fail (NA_IS_ITEM (item));
-  g_return_if_fail (NA_IS_BOX (self));
+  g_return_if_fail (NA_IS_GRID (self));
 
   gtk_container_remove (GTK_CONTAINER (self), GTK_WIDGET (item));
   self->items = g_slist_remove (self->items, item);
 }
 
 static void
-update_size_and_orientation (NaBox          *self,
+update_size_and_orientation (NaGrid         *self,
                              GtkOrientation  orientation)
 {
   /* FIXME: do we really need that?  comes from NaTray */
@@ -141,11 +141,11 @@ update_size_and_orientation (NaBox          *self,
   switch (orientation)
     {
     case GTK_ORIENTATION_VERTICAL:
-      /* Give box a min size so the frame doesn't look dumb */
-      gtk_widget_set_size_request (GTK_WIDGET (self), MIN_BOX_SIZE, -1);
+      /* Give grid a min size so the frame doesn't look dumb */
+      gtk_widget_set_size_request (GTK_WIDGET (self), MIN_GRID_SIZE, -1);
       break;
     case GTK_ORIENTATION_HORIZONTAL:
-      gtk_widget_set_size_request (GTK_WIDGET (self), -1, MIN_BOX_SIZE);
+      gtk_widget_set_size_request (GTK_WIDGET (self), -1, MIN_GRID_SIZE);
       break;
     }
 }
@@ -155,12 +155,12 @@ orientation_notify (GObject    *object,
                     GParamSpec *pspec,
                     gpointer    data)
 {
-  update_size_and_orientation (NA_BOX (object),
+  update_size_and_orientation (NA_GRID (object),
                                gtk_orientable_get_orientation (GTK_ORIENTABLE (object)));
 }
 
 static void
-na_box_init (NaBox *self)
+na_grid_init (NaGrid *self)
 {
   GtkOrientation orientation;
 
@@ -177,7 +177,7 @@ na_box_init (NaBox *self)
 }
 
 static void
-add_host (NaBox  *self,
+add_host (NaGrid *self,
           NaHost *host)
 {
   self->hosts = g_slist_prepend (self->hosts, host);
@@ -194,14 +194,14 @@ add_host (NaBox  *self,
 }
 
 static void
-na_box_style_updated (GtkWidget *widget)
+na_grid_style_updated (GtkWidget *widget)
 {
-  NaBox           *self = NA_BOX (widget);
+  NaGrid          *self = NA_GRID (widget);
   GtkStyleContext *context;
   GSList          *node;
 
-  if (GTK_WIDGET_CLASS (na_box_parent_class)->style_updated)
-    GTK_WIDGET_CLASS (na_box_parent_class)->style_updated (widget);
+  if (GTK_WIDGET_CLASS (na_grid_parent_class)->style_updated)
+    GTK_WIDGET_CLASS (na_grid_parent_class)->style_updated (widget);
 
   context = gtk_widget_get_style_context (widget);
 
@@ -215,20 +215,20 @@ na_box_style_updated (GtkWidget *widget)
 
 /* Custom drawing because system-tray items need weird stuff. */
 static gboolean
-na_box_draw (GtkWidget *box,
-             cairo_t   *cr)
+na_grid_draw (GtkWidget *grid,
+              cairo_t   *cr)
 {
   GList *child;
-  GList *children = gtk_container_get_children (GTK_CONTAINER (box));
+  GList *children = gtk_container_get_children (GTK_CONTAINER (grid));
 
   for (child = children; child; child = child->next)
     {
       if (! NA_IS_ITEM (child->data) ||
-          ! na_item_draw_on_parent (child->data, box, cr))
+          ! na_item_draw_on_parent (child->data, grid, cr))
 	{
 	  if (gtk_widget_is_drawable (child->data) &&
 	      gtk_cairo_should_draw_window (cr, gtk_widget_get_window (child->data)))
-	    gtk_container_propagate_draw (GTK_CONTAINER (box), child->data, cr);
+	    gtk_container_propagate_draw (GTK_CONTAINER (grid), child->data, cr);
 	}
     }
 
@@ -238,14 +238,14 @@ na_box_draw (GtkWidget *box,
 }
 
 static void
-na_box_realize (GtkWidget *widget)
+na_grid_realize (GtkWidget *widget)
 {
-  NaBox *self = NA_BOX (widget);
+  NaGrid *self = NA_GRID (widget);
   GdkScreen *screen;
   GtkOrientation orientation;
   NaHost *tray_host;
 
-  GTK_WIDGET_CLASS (na_box_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (na_grid_parent_class)->realize (widget);
 
   /* Instantiate the hosts now we have a screen */
   screen = gtk_widget_get_screen (GTK_WIDGET (self));
@@ -260,9 +260,9 @@ na_box_realize (GtkWidget *widget)
 }
 
 static void
-na_box_unrealize (GtkWidget *widget)
+na_grid_unrealize (GtkWidget *widget)
 {
-  NaBox *self = NA_BOX (widget);
+  NaGrid *self = NA_GRID (widget);
 
   if (self->hosts != NULL)
     {
@@ -272,16 +272,16 @@ na_box_unrealize (GtkWidget *widget)
 
   g_clear_pointer (&self->items, g_slist_free);
 
-  GTK_WIDGET_CLASS (na_box_parent_class)->unrealize (widget);
+  GTK_WIDGET_CLASS (na_grid_parent_class)->unrealize (widget);
 }
 
 static void
-na_box_get_property (GObject    *object,
-                     guint       property_id,
-                     GValue     *value,
-                     GParamSpec *pspec)
+na_grid_get_property (GObject    *object,
+                      guint       property_id,
+                      GValue     *value,
+                      GParamSpec *pspec)
 {
-  NaBox *self = NA_BOX (object);
+  NaGrid *self = NA_GRID (object);
 
   switch (property_id)
     {
@@ -300,12 +300,12 @@ na_box_get_property (GObject    *object,
 }
 
 static void
-na_box_set_property (GObject      *object,
-                     guint         property_id,
-                     const GValue *value,
-                     GParamSpec   *pspec)
+na_grid_set_property (GObject      *object,
+                      guint         property_id,
+                      const GValue *value,
+                      GParamSpec   *pspec)
 {
-  NaBox *self = NA_BOX (object);
+  NaGrid *self = NA_GRID (object);
 
   switch (property_id)
     {
@@ -324,18 +324,18 @@ na_box_set_property (GObject      *object,
 }
 
 static void
-na_box_class_init (NaBoxClass *klass)
+na_grid_class_init (NaGridClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gobject_class->get_property = na_box_get_property;
-  gobject_class->set_property = na_box_set_property;
+  gobject_class->get_property = na_grid_get_property;
+  gobject_class->set_property = na_grid_set_property;
 
-  widget_class->draw = na_box_draw;
-  widget_class->realize = na_box_realize;
-  widget_class->unrealize = na_box_unrealize;
-  widget_class->style_updated = na_box_style_updated;
+  widget_class->draw = na_grid_draw;
+  widget_class->realize = na_grid_realize;
+  widget_class->unrealize = na_grid_unrealize;
+  widget_class->style_updated = na_grid_style_updated;
 
   g_object_class_install_property (gobject_class, PROP_ICON_PADDING,
     g_param_spec_int ("icon-padding",
@@ -353,19 +353,19 @@ na_box_class_init (NaBoxClass *klass)
 }
 
 GtkWidget *
-na_box_new (GtkOrientation  orientation)
+na_grid_new (GtkOrientation  orientation)
 {
-  return g_object_new (NA_TYPE_BOX,
+  return g_object_new (NA_TYPE_GRID,
                        "orientation", orientation,
                        "spacing", ICON_SPACING,
                        NULL);
 }
 
 void
-na_box_force_redraw (NaBox *box)
+na_grid_force_redraw (NaGrid *grid)
 {
   GSList *node;
 
-  for (node = box->hosts; node; node = node->next)
+  for (node = grid->hosts; node; node = node->next)
     na_host_force_redraw (node->data);
 }
