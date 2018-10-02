@@ -20,8 +20,8 @@ AM_CPPFLAGS =							\
 AM_CFLAGS = $(WARN_CFLAGS)
 
 libtray_la_SOURCES =				\
-	na-box.c				\
-	na-box.h				\
+	na-grid.c				\
+	na-grid.h				\
 	na-host.c				\
 	na-host.h				\
 	na-item.c				\
