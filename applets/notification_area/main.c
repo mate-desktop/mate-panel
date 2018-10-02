@@ -25,9 +25,11 @@
 #include <string.h>
 
 #include <mate-panel-applet.h>
+#include <mate-panel-applet-gsettings.h>
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gio/gio.h>
 
 #include "main.h"
 #include "na-grid.h"
@@ -40,7 +42,10 @@
 
 struct _NaTrayAppletPrivate
 {
-  GtkWidget *grid;
+  GtkWidget               *grid;
+
+  GSettings               *settings;
+  gint                     min_icon_size;
 
 #ifdef PROVIDE_WATCHER_SERVICE
   GfStatusNotifierWatcher *sn_watcher;
@@ -102,6 +107,23 @@ get_gtk_orientation_from_applet_orient (MatePanelAppletOrient orient)
   g_assert_not_reached ();
 
   return GTK_ORIENTATION_HORIZONTAL;
+}
+
+static void
+gsettings_changed_min_icon_size (GSettings    *settings,
+                                 gchar        *key,
+                                 NaTrayApplet *applet)
+{
+  applet->priv->min_icon_size = g_settings_get_int (settings, key);
+
+  na_grid_set_min_icon_size (NA_GRID (applet->priv->grid), applet->priv->min_icon_size);
+}
+
+static void
+setup_gsettings (NaTrayApplet *applet)
+{
+  applet->priv->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (applet), NA_TRAY_SCHEMA);
+  g_signal_connect (applet->priv->settings, "changed::" KEY_MIN_ICON_SIZE, G_CALLBACK (gsettings_changed_min_icon_size), applet);
 }
 
 static void help_cb(GtkAction* action, NaTrayApplet* applet)
@@ -203,6 +225,11 @@ na_tray_applet_realize (GtkWidget *widget)
                                               NA_RESOURCE_PATH "notification-area-menu.xml",
                                               action_group);
   g_object_unref(action_group);
+
+  setup_gsettings (applet);
+
+  // load min icon size
+  gsettings_changed_min_icon_size (applet->priv->settings, KEY_MIN_ICON_SIZE, applet);
 }
 
 static void

@@ -26,6 +26,9 @@
 
 #define NA_RESOURCE_PATH "/org/mate/panel/applet/na/"
 
+#define NA_TRAY_SCHEMA                  "org.mate.panel.applet.notification-area"
+#define KEY_MIN_ICON_SIZE               "min-icon-size"
+
 G_BEGIN_DECLS
 
 #define NA_TYPE_TRAY_APPLET             (na_tray_applet_get_type ())

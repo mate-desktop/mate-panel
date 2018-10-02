@@ -282,6 +282,7 @@ applets/clock/pixmaps/Makefile
 applets/fish/Makefile
 applets/fish/org.mate.panel.applet.fish.gschema.xml
 applets/notification_area/Makefile
+applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml
 applets/notification_area/libstatus-notifier-watcher/Makefile
 applets/notification_area/status-notifier/Makefile
 applets/notification_area/system-tray/Makefile
