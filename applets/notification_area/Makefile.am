@@ -93,6 +93,9 @@ org.mate.panel.applet.NotificationAreaAppletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
+notification_area_gschemas_in = org.mate.panel.applet.notification-area.gschema.xml.in
+gsettings_SCHEMAS = $(notification_area_gschemas_in:.xml.in=.xml)
+
 ui_FILES = \
 	notification-area-menu.xml
 
@@ -106,8 +109,12 @@ BUILT_SOURCES = 		\
 	na-resources.c	\
 	na-resources.h
 
+@INTLTOOL_XML_NOMERGE_RULE@
+@GSETTINGS_RULES@
+
 EXTRA_DIST =								\
 	org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in	\
+	$(notification_area_gschemas_in)				\
 	$(ui_FILES)	\
 	na.gresource.xml \
 	$(service_in_files)
@@ -115,6 +122,7 @@ EXTRA_DIST =								\
 CLEANFILES =			\
 	$(applet_DATA) 		\
 	$(applet_DATA).in	\
-	$(service_DATA)
+	$(service_DATA)		\
+	$(gsettings_SCHEMAS)
 
 -include $(top_srcdir)/git.mk
