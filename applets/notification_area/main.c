@@ -30,7 +30,7 @@
 #include <gtk/gtk.h>
 
 #include "main.h"
-#include "na-box.h"
+#include "na-grid.h"
 
 #ifdef PROVIDE_WATCHER_SERVICE
 # include "libstatus-notifier-watcher/gf-status-notifier-watcher.h"
@@ -40,7 +40,7 @@
 
 struct _NaTrayAppletPrivate
 {
-  GtkWidget *box;
+  GtkWidget *grid;
 
 #ifdef PROVIDE_WATCHER_SERVICE
   GfStatusNotifierWatcher *sn_watcher;
@@ -225,14 +225,14 @@ na_tray_applet_style_updated (GtkWidget *widget)
   if (parent_class_style_updated)
     parent_class_style_updated (widget);
 
-  if (!applet->priv->box)
+  if (!applet->priv->grid)
     return;
 
   gtk_widget_style_get (widget,
                         "icon-padding", &padding,
                         "icon-size", &icon_size,
                         NULL);
-  g_object_set (applet->priv->box,
+  g_object_set (applet->priv->grid,
                 "icon-padding", padding,
                 "icon-size", icon_size,
                 NULL);
@@ -247,8 +247,8 @@ na_tray_applet_change_background(MatePanelApplet* panel_applet, MatePanelAppletB
     parent_class_change_background (panel_applet, type, color, pattern);
   }
 
-  if (applet->priv->box)
-    na_box_force_redraw (NA_BOX (applet->priv->box));
+  if (applet->priv->grid)
+    na_grid_force_redraw (NA_GRID (applet->priv->grid));
 }
 
 static void
@@ -260,10 +260,10 @@ na_tray_applet_change_orient (MatePanelApplet       *panel_applet,
   if (parent_class_change_orient)
     parent_class_change_orient (panel_applet, orient);
 
-  if (!applet->priv->box)
+  if (!applet->priv->grid)
     return;
 
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (applet->priv->box),
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (applet->priv->grid),
                                   get_gtk_orientation_from_applet_orient (orient));
 }
 
@@ -286,10 +286,10 @@ na_tray_applet_focus (GtkWidget        *widget,
 {
   NaTrayApplet *applet = NA_TRAY_APPLET (widget);
 
-  /* We let the box handle the focus movement because we behave more like a
+  /* We let the grid handle the focus movement because we behave more like a
    * container than a single applet.  But if focus didn't move, we let the
    * applet do its thing. */
-  if (gtk_widget_child_focus (applet->priv->box, direction))
+  if (gtk_widget_child_focus (applet->priv->grid, direction))
     return TRUE;
 
   return GTK_WIDGET_CLASS (na_tray_applet_parent_class)->focus (widget, direction);
@@ -353,10 +353,10 @@ na_tray_applet_init (NaTrayApplet *applet)
 #endif
 
   orient = mate_panel_applet_get_orient (MATE_PANEL_APPLET (applet));
-  applet->priv->box = na_box_new (get_gtk_orientation_from_applet_orient (orient));
+  applet->priv->grid = na_grid_new (get_gtk_orientation_from_applet_orient (orient));
 
-  gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (applet->priv->box));
-  gtk_widget_show (GTK_WIDGET (applet->priv->box));
+  gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (applet->priv->grid));
+  gtk_widget_show (GTK_WIDGET (applet->priv->grid));
 
   atko = gtk_widget_get_accessible (GTK_WIDGET (applet));
   atk_object_set_name (atko, _("Panel Notification Area"));
