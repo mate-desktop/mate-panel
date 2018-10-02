@@ -33,8 +33,10 @@
 G_BEGIN_DECLS
 
 #define NA_TYPE_GRID (na_grid_get_type ())
-G_DECLARE_FINAL_TYPE (NaGrid, na_grid, NA, GRID, GtkBox)
+G_DECLARE_FINAL_TYPE (NaGrid, na_grid, NA, GRID, GtkGrid)
 
+void            na_grid_set_min_icon_size       (NaGrid *grid,
+                                                 gint    min_icon_size);
 GtkWidget      *na_grid_new                     (GtkOrientation orientation);
 void            na_grid_force_redraw            (NaGrid *grid);
 
