@@ -40,9 +40,18 @@
 
 #define NOTIFICATION_AREA_ICON "mate-panel-notification-area"
 
+typedef struct
+{
+  GtkWidget *preferences_dialog;
+  GtkWidget *min_icon_size_spin;
+} NAPreferencesDialog;
+
 struct _NaTrayAppletPrivate
 {
   GtkWidget               *grid;
+
+  NAPreferencesDialog     *dialog;
+  GtkBuilder              *builder;
 
   GSettings               *settings;
   gint                     min_icon_size;
@@ -116,6 +125,10 @@ gsettings_changed_min_icon_size (GSettings    *settings,
 {
   applet->priv->min_icon_size = g_settings_get_int (settings, key);
 
+  if (applet->priv->dialog)
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin),
+                               applet->priv->min_icon_size);
+
   na_grid_set_min_icon_size (NA_GRID (applet->priv->grid), applet->priv->min_icon_size);
 }
 
@@ -124,6 +137,78 @@ setup_gsettings (NaTrayApplet *applet)
 {
   applet->priv->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (applet), NA_TRAY_SCHEMA);
   g_signal_connect (applet->priv->settings, "changed::" KEY_MIN_ICON_SIZE, G_CALLBACK (gsettings_changed_min_icon_size), applet);
+}
+
+static void
+na_preferences_dialog_min_icon_size_changed (NaTrayApplet  *applet,
+                                             GtkSpinButton *spin_button)
+{
+  applet->priv->min_icon_size = gtk_spin_button_get_value_as_int (spin_button);
+  g_settings_set_int (applet->priv->settings, KEY_MIN_ICON_SIZE, applet->priv->min_icon_size);
+}
+
+static gboolean
+na_preferences_dialog_hide_event (GtkWidget    *widget,
+                                  GdkEvent     *event,
+                                  NaTrayApplet *applet)
+{
+  gtk_widget_hide (applet->priv->dialog->preferences_dialog);
+  return TRUE;
+}
+
+static void
+na_preferences_dialog_response (NaTrayApplet *applet,
+                                int           response,
+                                GtkWidget    *preferences_dialog)
+{
+  switch (response)
+    {
+    case GTK_RESPONSE_CLOSE:
+      gtk_widget_hide (preferences_dialog);
+      break;
+    default:
+      break;
+    }
+}
+
+static void
+ensure_prefs_window_is_created (NaTrayApplet *applet)
+{  
+  if (applet->priv->dialog)
+    return;
+
+  applet->priv->dialog = g_new0 (NAPreferencesDialog, 1);
+  
+  applet->priv->dialog->preferences_dialog = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "notification_area_preferences_dialog"));
+
+  gtk_window_set_icon_name (GTK_WINDOW (applet->priv->dialog->preferences_dialog), NOTIFICATION_AREA_ICON);
+  
+  applet->priv->dialog->min_icon_size_spin = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "min_icon_size_spin"));
+  g_return_if_fail (applet->priv->dialog->min_icon_size_spin != NULL);
+  
+  gtk_spin_button_set_range (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), 7, 100);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), applet->priv->min_icon_size);
+
+  g_signal_connect_swapped (applet->priv->dialog->min_icon_size_spin, "value_changed",
+                            G_CALLBACK (na_preferences_dialog_min_icon_size_changed),
+                            applet);
+
+  g_signal_connect_swapped (applet->priv->dialog->preferences_dialog, "response",
+                            G_CALLBACK (na_preferences_dialog_response), applet);
+
+  g_signal_connect (G_OBJECT (applet->priv->dialog->preferences_dialog), "delete_event",
+                    G_CALLBACK (na_preferences_dialog_hide_event), applet);
+}
+
+static void
+properties_dialog (GtkAction    *action,
+                   NaTrayApplet *applet)
+{
+  ensure_prefs_window_is_created (applet);
+
+  gtk_window_set_screen (GTK_WINDOW (applet->priv->dialog->preferences_dialog),
+                         gtk_widget_get_screen (GTK_WIDGET (applet)));
+  gtk_window_present (GTK_WINDOW (applet->priv->dialog->preferences_dialog));
 }
 
 static void help_cb(GtkAction* action, NaTrayApplet* applet)
@@ -173,6 +258,7 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 		"Vincent Untz <vuntz@gnome.org>",
 		"Alberts Muktupāvels",
 		"Colomban Wendling <cwendling@hypra.fr>",
+		"Fabien Broquard <braikar@gmail.com>",
 		NULL
 	};
 
@@ -200,6 +286,9 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 }
 
 static const GtkActionEntry menu_actions [] = {
+	{ "SystemTrayPreferences", "document-properties", N_("_Preferences"),
+	  NULL, NULL,
+	  G_CALLBACK (properties_dialog) },
 	{ "SystemTrayHelp", "help-browser", N_("_Help"),
 	  NULL, NULL,
 	  G_CALLBACK (help_cb) },
@@ -230,6 +319,10 @@ na_tray_applet_realize (GtkWidget *widget)
 
   // load min icon size
   gsettings_changed_min_icon_size (applet->priv->settings, KEY_MIN_ICON_SIZE, applet);
+
+  applet->priv->builder = gtk_builder_new ();
+  gtk_builder_set_translation_domain (applet->priv->builder, GETTEXT_PACKAGE);
+  gtk_builder_add_from_resource (applet->priv->builder, NA_RESOURCE_PATH "notification-area-preferences-dialog.ui", NULL);
 }
 
 static void
@@ -238,6 +331,8 @@ na_tray_applet_dispose (GObject *object)
 #ifdef PROVIDE_WATCHER_SERVICE
   g_clear_object (&NA_TRAY_APPLET (object)->priv->sn_watcher);
 #endif
+
+  g_clear_object (&NA_TRAY_APPLET (object)->priv->builder);
 
   G_OBJECT_CLASS (na_tray_applet_parent_class)->dispose (object);
 }

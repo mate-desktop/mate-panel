@@ -97,6 +97,7 @@ notification_area_gschemas_in = org.mate.panel.applet.notification-area.gschema.
 gsettings_SCHEMAS = $(notification_area_gschemas_in:.xml.in=.xml)
 
 ui_FILES = \
+	notification-area-preferences-dialog.ui	\
 	notification-area-menu.xml
 
 na-resources.c: na.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/na.gresource.xml)
