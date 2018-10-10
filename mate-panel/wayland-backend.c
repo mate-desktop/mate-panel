@@ -62,7 +62,7 @@ static void
 layer_surface_handle_closed (void *data,
 			    struct zwlr_layer_surface_v1 *surface)
 {
-	// TODO: close the GTK window
+	// TODO: close the GTK window and destroy the layer shell surface object
 }
 
 struct zwlr_layer_surface_v1_listener layer_surface_listener = {
@@ -128,7 +128,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	g_assert (wl_surface);
 
 	//struct wl_output *wl_output = NULL;
-	uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_TOP;
+	uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_BOTTOM;
 	char *namespace = "mate"; // not sure what this is for
 
 	layer_surface = zwlr_layer_shell_v1_get_layer_surface (layer_shell_global,
@@ -155,9 +155,10 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	wl_display_roundtrip (wl_display);
 }
 
-void xdg_surface_handle_configure (void *data,
-				   struct xdg_surface *xdg_surface,
-				   uint32_t serial)
+static void
+xdg_surface_handle_configure (void *data,
+			      struct xdg_surface *xdg_surface,
+			      uint32_t serial)
 {
 	xdg_surface_ack_configure (xdg_surface, serial);
 }
@@ -166,7 +167,55 @@ static const struct xdg_surface_listener xdg_surface_listener = {
 	.configure = xdg_surface_handle_configure,
 };
 
-void
+static void
+xdg_popup_handle_configure (void *data,
+			    struct xdg_popup *xdg_popup,
+			    int32_t x,
+			    int32_t y,
+			    int32_t width,
+			    int32_t height)
+{
+	GtkWidget *menu = data;
+	gtk_widget_set_size_request (menu, width, height);
+}
+
+static void
+xdg_popup_handle_popup_done (void *data,
+			     struct xdg_popup *xdg_popup)
+{
+	GtkWidget *menu = data;
+	gtk_widget_hide(menu);
+}
+
+static const struct xdg_popup_listener xdg_popup_listener = {
+	.configure = xdg_popup_handle_configure,
+	.popup_done = xdg_popup_handle_popup_done,
+};
+
+static void
+wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *parent, GtkWidget *popup)
+{
+	GtkRequisition popup_size;
+	GdkWindow *toplevel_window;
+	GdkDisplay *display;
+	GdkSeat *seat;
+	GdkDevice *pointer;
+	gint pointer_x, pointer_y;
+
+	gtk_widget_get_preferred_size (popup, NULL, &popup_size);
+	xdg_positioner_set_size (positioner, popup_size.width, popup_size.height);
+	toplevel_window = gtk_widget_get_window (GTK_WIDGET (parent));
+	display = gdk_window_get_display (toplevel_window);
+	seat = gdk_display_get_default_seat (display);
+	pointer = gdk_seat_get_pointer (seat);
+	gdk_window_get_device_position(toplevel_window, pointer, &pointer_x, &pointer_y, NULL);
+	xdg_positioner_set_anchor_rect (positioner, 0, 0, pointer_x, pointer_y);
+	xdg_positioner_set_anchor(positioner, XDG_POSITIONER_ANCHOR_BOTTOM_RIGHT);
+	xdg_positioner_set_gravity(positioner, XDG_POSITIONER_GRAVITY_TOP_RIGHT);
+	xdg_positioner_set_constraint_adjustment(positioner, XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_X | XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_Y);
+}
+
+static void
 wayland_realize_panel_popup_cb (GtkWidget *menu, PanelToplevel *parent)
 {
 	struct xdg_surface *popup_xdg_surface;
@@ -191,18 +240,25 @@ wayland_realize_panel_popup_cb (GtkWidget *menu, PanelToplevel *parent)
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
 	xdg_surface_add_listener(popup_xdg_surface, &xdg_surface_listener, NULL);
 	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
-	xdg_positioner_set_size (positioner, 20, 20);
-	xdg_positioner_set_anchor_rect (positioner, 10, 10, 50, 32);
+	g_assert (GDK_WINDOW (parent));
+	wayland_setup_positioner (positioner, parent, popup_widget);
 	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
+	xdg_positioner_destroy (positioner);
+	xdg_popup_add_listener(popup, &xdg_popup_listener, menu);
 	xdg_surface_set_window_geometry(popup_xdg_surface, 0, 0, 20, 20);
 	zwlr_layer_surface_v1_get_popup (parent->layer_surface, popup);
+
 	wl_surface_commit (popup_wl_surface);
 	wl_display_roundtrip (gdk_wayland_display_get_wl_display (gdk_window_get_display (popup_window)));
+	// TODO: destroy popup_xdg_surface and popup
 }
 
 void
 wayland_menu_popup (GtkMenu *menu, PanelToplevel *parent)
 {
 	g_signal_connect (menu, "realize", G_CALLBACK (wayland_realize_panel_popup_cb), parent);
+
+	// It won't actually pop up at the pointer; we will position it in wayland_realize_panel_popup_cb
+	gtk_menu_popup_at_pointer (menu, NULL);
 }
 
