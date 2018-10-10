@@ -58,6 +58,9 @@ struct _PanelToplevel {
 	GSettings             *queued_settings;
 	GSettings             *background_settings;
 	PanelBackground        background;
+#ifdef HAVE_WAYLAND
+	struct zwlr_layer_surface_v1 *layer_surface;
+#endif
 	PanelToplevelPrivate  *priv;
 };
 

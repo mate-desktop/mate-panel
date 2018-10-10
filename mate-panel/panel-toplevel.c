@@ -4270,6 +4270,9 @@ panel_toplevel_constructor (GType                  type,
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
 	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
+#ifdef HAVE_WAYLAND
+	toplevel->layer_surface = NULL;
+#endif
 
 	return object;
 }

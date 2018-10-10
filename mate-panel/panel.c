@@ -48,6 +48,10 @@
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif
+
 enum {
 	TARGET_URL,
 	TARGET_NETSCAPE_URL,
@@ -367,7 +371,14 @@ panel_popup_menu (PanelToplevel *toplevel,
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY ( gtk_widget_get_display (GTK_WIDGET (panel_widget)))) {
+		wayland_menu_popup (GTK_MENU (menu), toplevel);
+	} else
+#endif
+	{ // Not using Wayland
+		gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
+	}
 
 	return TRUE;
 }
