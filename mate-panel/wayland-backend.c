@@ -155,6 +155,20 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	wl_display_roundtrip (wl_display);
 }
 
+struct _WaylandXdgLayerPopupData {
+	struct xdg_surface *xdg_surface;
+	struct xdg_popup *xdg_popup;
+};
+
+static const char *wayland_popup_data_key = "wayland_popup_data";
+
+static void
+wayland_destroy_popup_data_cb (struct _WaylandXdgLayerPopupData *data) {
+	xdg_surface_destroy (data->xdg_surface);
+	xdg_popup_destroy (data->xdg_popup);
+	free (data);
+}
+
 static void
 xdg_surface_handle_configure (void *data,
 			      struct xdg_surface *xdg_surface,
@@ -184,7 +198,7 @@ xdg_popup_handle_popup_done (void *data,
 			     struct xdg_popup *xdg_popup)
 {
 	GtkWidget *menu = data;
-	gtk_widget_hide(menu);
+	gtk_widget_unmap(menu);
 }
 
 static const struct xdg_popup_listener xdg_popup_listener = {
@@ -193,7 +207,7 @@ static const struct xdg_popup_listener xdg_popup_listener = {
 };
 
 static void
-wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *parent, GtkWidget *popup)
+wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *parent, GtkWidget *popup, gint offset_x, gint offset_y)
 {
 	GtkRequisition popup_size;
 	GdkWindow *toplevel_window;
@@ -210,6 +224,7 @@ wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *pare
 	pointer = gdk_seat_get_pointer (seat);
 	gdk_window_get_device_position(toplevel_window, pointer, &pointer_x, &pointer_y, NULL);
 	xdg_positioner_set_anchor_rect (positioner, 0, 0, pointer_x, pointer_y);
+	xdg_positioner_set_offset(positioner, offset_x, offset_y);
 	xdg_positioner_set_anchor(positioner, XDG_POSITIONER_ANCHOR_BOTTOM_RIGHT);
 	xdg_positioner_set_gravity(positioner, XDG_POSITIONER_GRAVITY_TOP_RIGHT);
 	xdg_positioner_set_constraint_adjustment(positioner, XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_X | XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_Y);
@@ -231,6 +246,7 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 	GdkWindow *popup_window = gtk_widget_get_window (popup_widget);
 	struct wl_surface *popup_wl_surface;
 	gint geom_x, geom_y, geom_width, geom_height;
+	struct _WaylandXdgLayerPopupData *data;
 
 	g_assert (wayland_has_initialized);
 	g_assert (xdg_wm_base_global);
@@ -245,18 +261,34 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
 	xdg_surface_add_listener(popup_xdg_surface, &xdg_surface_listener, NULL);
 	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
-	wayland_setup_positioner (positioner, parent, popup_widget);
+	gdk_window_get_geometry(popup_window, &geom_x, &geom_y, &geom_width, &geom_height);
+	wayland_setup_positioner (positioner, parent, popup_widget, -geom_x, -geom_y);
 	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
 	xdg_positioner_destroy (positioner);
 	xdg_popup_add_listener(popup, &xdg_popup_listener, popup_widget);
-	gdk_window_get_geometry(popup_window, &geom_x, &geom_y, &geom_width, &geom_height);
-	xdg_surface_set_window_geometry(popup_xdg_surface, geom_x, geom_y, geom_width, geom_height);
+// 	xdg_surface_set_window_geometry(popup_xdg_surface, geom_x, geom_y, geom_width, geom_height);
 	zwlr_layer_surface_v1_get_popup (parent->layer_surface, popup);
+
+	data = g_new0 (struct _WaylandXdgLayerPopupData, 1);
+	data->xdg_surface = popup_xdg_surface;
+	data->xdg_popup = popup;
+	g_object_set_data_full (G_OBJECT (popup_widget),
+				wayland_popup_data_key,
+				data,
+				(GDestroyNotify) wayland_destroy_popup_data_cb);
 
 	wl_surface_commit (popup_wl_surface);
 	wl_display_roundtrip (gdk_wayland_display_get_wl_display (gdk_window_get_display (popup_window)));
 
-	// TODO: destroy popup_xdg_surface and popup
+	return TRUE;
+}
+
+static gboolean
+wayland_context_menu_unmap_cb (GtkWidget *popup_widget, PanelData *panel_data)
+{
+	g_object_set_data (G_OBJECT (popup_widget),
+			   wayland_popup_data_key,
+			   NULL);
 
 	return TRUE;
 }
@@ -266,6 +298,7 @@ wayland_menu_setup (GtkWidget *menu, PanelData *panel_data)
 {
 	g_signal_connect (menu, "realize", G_CALLBACK (wayland_context_menu_realize_cb), panel_data);
 	g_signal_connect (menu, "map-event", G_CALLBACK (wayland_context_menu_map_event_cb), panel_data);
+	g_signal_connect (menu, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), panel_data);
 }
 
 void
