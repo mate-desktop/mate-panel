@@ -39,6 +39,10 @@
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
 
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif
+
 #define SMALL_ICON_SIZE 20
 
 static GSList *registered_applets = NULL;
@@ -518,6 +522,12 @@ mate_panel_applet_create_menu (AppletInfo *info)
 			  G_CALLBACK (applet_menu_show), info);
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (applet_menu_deactivate), info);
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (panel_widget)))) {
+		wayland_menu_setup (menu, panel_widget->toplevel);
+	}
+#endif
 
 	for (l = info->user_menu; l; l = l->next) {
 		AppletUserMenu *user_menu = l->data;

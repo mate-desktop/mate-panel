@@ -318,7 +318,7 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 				  G_CALLBACK (context_menu_show), pd);
 #ifdef HAVE_WAYLAND
 		if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (panel)))) {
-			wayland_menu_setup (pd->menu, pd);
+			wayland_menu_setup (pd->menu, PANEL_TOPLEVEL (pd->panel));
 		}
 #endif
 	}

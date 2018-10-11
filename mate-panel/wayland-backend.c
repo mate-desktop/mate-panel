@@ -231,15 +231,14 @@ wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *pare
 }
 
 static void
-wayland_context_menu_realize_cb (GtkWidget *popup_widget, PanelData *panel_data)
+wayland_context_menu_realize_cb (GtkWidget *popup_widget, PanelToplevel *parent)
 {
 	gdk_wayland_window_set_use_custom_surface (gtk_widget_get_window (popup_widget));
 }
 
 static gboolean
-wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, PanelData *panel_data)
+wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, PanelToplevel *parent)
 {
-	PanelToplevel *parent = PANEL_TOPLEVEL (panel_data->panel);
 	struct xdg_surface *popup_xdg_surface;
 	struct xdg_positioner *positioner;
 	struct xdg_popup *popup;
@@ -284,7 +283,7 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 }
 
 static gboolean
-wayland_context_menu_unmap_cb (GtkWidget *popup_widget, PanelData *panel_data)
+wayland_context_menu_unmap_cb (GtkWidget *popup_widget, PanelToplevel *parent)
 {
 	g_object_set_data (G_OBJECT (popup_widget),
 			   wayland_popup_data_key,
@@ -294,10 +293,10 @@ wayland_context_menu_unmap_cb (GtkWidget *popup_widget, PanelData *panel_data)
 }
 
 void
-wayland_menu_setup (GtkWidget *menu, PanelData *panel_data)
+wayland_menu_setup (GtkWidget *menu, PanelToplevel *parent)
 {
-	g_signal_connect (menu, "realize", G_CALLBACK (wayland_context_menu_realize_cb), panel_data);
-	g_signal_connect (menu, "map-event", G_CALLBACK (wayland_context_menu_map_event_cb), panel_data);
-	g_signal_connect (menu, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), panel_data);
+	g_signal_connect (menu, "realize", G_CALLBACK (wayland_context_menu_realize_cb), parent);
+	g_signal_connect (menu, "map-event", G_CALLBACK (wayland_context_menu_map_event_cb), parent);
+	g_signal_connect (menu, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), parent);
 }
 
