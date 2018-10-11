@@ -22,6 +22,5 @@ gboolean is_using_wayland (void);
 void wayland_registry_init (void);
 void wayland_realize_panel_toplevel (GtkWidget *window);
 void wayland_menu_setup (GtkWidget *menu, PanelData *panel_data);
-void wayland_menu_popup (GtkMenu *menu, PanelData *panel_data);
 
 #endif /* __WAYLAND_BACKEND_H__ */

@@ -376,14 +376,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY ( gtk_widget_get_display (GTK_WIDGET (panel_widget)))) {
-		wayland_menu_popup (GTK_MENU (menu), panel_data);
-	} else
-#endif
-	{ // Not using Wayland
-		gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
-	}
+	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
 
 	return TRUE;
 }

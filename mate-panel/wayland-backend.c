@@ -301,10 +301,3 @@ wayland_menu_setup (GtkWidget *menu, PanelData *panel_data)
 	g_signal_connect (menu, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), panel_data);
 }
 
-void
-wayland_menu_popup (GtkMenu *menu, PanelData *panel_data)
-{
-	// It won't actually pop up at the pointer by itself; we will position it in wayland_realize_panel_popup_cb
-	gtk_menu_popup_at_pointer (menu, NULL);
-}
-
