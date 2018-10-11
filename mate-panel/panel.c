@@ -316,6 +316,11 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 				  pd);
 		g_signal_connect (pd->menu, "show",
 				  G_CALLBACK (context_menu_show), pd);
+#ifdef HAVE_WAYLAND
+		if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (panel)))) {
+			wayland_menu_setup (pd->menu, pd);
+		}
+#endif
 	}
 
 	return pd->menu;
@@ -373,7 +378,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY ( gtk_widget_get_display (GTK_WIDGET (panel_widget)))) {
-		wayland_menu_popup (GTK_MENU (menu), toplevel);
+		wayland_menu_popup (GTK_MENU (menu), panel_data);
 	} else
 #endif
 	{ // Not using Wayland

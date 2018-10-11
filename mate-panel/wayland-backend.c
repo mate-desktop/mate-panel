@@ -216,49 +216,62 @@ wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *pare
 }
 
 static void
-wayland_realize_panel_popup_cb (GtkWidget *menu, PanelToplevel *parent)
+wayland_context_menu_realize_cb (GtkWidget *popup_widget, PanelData *panel_data)
 {
+	gdk_wayland_window_set_use_custom_surface (gtk_widget_get_window (popup_widget));
+}
+
+static gboolean
+wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, PanelData *panel_data)
+{
+	PanelToplevel *parent = PANEL_TOPLEVEL (panel_data->panel);
 	struct xdg_surface *popup_xdg_surface;
 	struct xdg_positioner *positioner;
 	struct xdg_popup *popup;
-	GtkWidget *popup_widget;
-	GdkWindow *popup_window;
+	GdkWindow *popup_window = gtk_widget_get_window (popup_widget);
 	struct wl_surface *popup_wl_surface;
+	gint geom_x, geom_y, geom_width, geom_height;
 
 	g_assert (wayland_has_initialized);
 	g_assert (xdg_wm_base_global);
+	g_assert (parent);
 	g_assert (parent->layer_surface);
-
-	popup_widget = GTK_WIDGET (menu);
-	g_assert (popup_widget);
-	popup_window = gtk_widget_get_window (popup_widget);
 	g_assert (popup_window);
+
 	popup_wl_surface = gdk_wayland_window_get_wl_surface (popup_window);
+
 	g_assert (popup_wl_surface);
 
-	gdk_wayland_window_set_use_custom_surface (popup_window);
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
 	xdg_surface_add_listener(popup_xdg_surface, &xdg_surface_listener, NULL);
 	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
-	g_assert (GDK_WINDOW (parent));
 	wayland_setup_positioner (positioner, parent, popup_widget);
 	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
 	xdg_positioner_destroy (positioner);
-	xdg_popup_add_listener(popup, &xdg_popup_listener, menu);
-	xdg_surface_set_window_geometry(popup_xdg_surface, 0, 0, 20, 20);
+	xdg_popup_add_listener(popup, &xdg_popup_listener, popup_widget);
+	gdk_window_get_geometry(popup_window, &geom_x, &geom_y, &geom_width, &geom_height);
+	xdg_surface_set_window_geometry(popup_xdg_surface, geom_x, geom_y, geom_width, geom_height);
 	zwlr_layer_surface_v1_get_popup (parent->layer_surface, popup);
 
 	wl_surface_commit (popup_wl_surface);
 	wl_display_roundtrip (gdk_wayland_display_get_wl_display (gdk_window_get_display (popup_window)));
+
 	// TODO: destroy popup_xdg_surface and popup
+
+	return TRUE;
 }
 
 void
-wayland_menu_popup (GtkMenu *menu, PanelToplevel *parent)
+wayland_menu_setup (GtkWidget *menu, PanelData *panel_data)
 {
-	g_signal_connect (menu, "realize", G_CALLBACK (wayland_realize_panel_popup_cb), parent);
+	g_signal_connect (menu, "realize", G_CALLBACK (wayland_context_menu_realize_cb), panel_data);
+	g_signal_connect (menu, "map-event", G_CALLBACK (wayland_context_menu_map_event_cb), panel_data);
+}
 
-	// It won't actually pop up at the pointer; we will position it in wayland_realize_panel_popup_cb
+void
+wayland_menu_popup (GtkMenu *menu, PanelData *panel_data)
+{
+	// It won't actually pop up at the pointer by itself; we will position it in wayland_realize_panel_popup_cb
 	gtk_menu_popup_at_pointer (menu, NULL);
 }
 
