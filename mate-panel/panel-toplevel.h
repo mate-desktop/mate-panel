@@ -175,6 +175,8 @@ int                  panel_toplevel_get_minimum_size       (PanelToplevel *tople
 int                  panel_toplevel_get_maximum_size       (PanelToplevel *toplevel);
 GSList              *panel_toplevel_list_toplevels         (void);
 
+void                 panel_toplevel_update_wmclass         (PanelToplevel *tpolevel, gboolean transparency);
+
 #ifdef __cplusplus
 }
 #endif
