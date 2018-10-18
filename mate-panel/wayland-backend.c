@@ -103,7 +103,6 @@ wayland_registry_init ()
 void
 wayland_realize_panel_toplevel (GtkWidget *widget)
 {
-	PanelToplevel *toplevel;
 	GdkDisplay *gdk_display;
 	GdkWindow *window;
 	struct wl_surface *wl_surface;
@@ -112,12 +111,10 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 
 	g_assert(wayland_has_initialized);
 
-	toplevel = PANEL_TOPLEVEL (widget);
 	gdk_display = gdk_window_get_display (gtk_widget_get_window (widget));
 
 	g_assert (GDK_IS_WAYLAND_DISPLAY (gdk_display));
 	g_assert (wayland_has_initialized);
-	g_assert (toplevel);
 
 	if (!layer_shell_global) {
 		g_warning ("Layer shell protocol not supported");
@@ -139,7 +136,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 							       layer,
 							       namespace);
 	g_assert (layer_surface);
-	g_object_set_data_full(G_OBJECT (toplevel),
+	g_object_set_data_full(G_OBJECT (window),
 			       wayland_layer_surface_key,
 			       layer_surface,
 			       (GDestroyNotify) zwlr_layer_surface_v1_destroy);
@@ -210,10 +207,9 @@ static const struct xdg_popup_listener xdg_popup_listener = {
 };
 
 static void
-wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *parent, GtkWidget *popup, gint offset_x, gint offset_y)
+wayland_setup_positioner (struct xdg_positioner *positioner, GdkWindow *toplevel_window, GtkWidget *popup, gint offset_x, gint offset_y)
 {
 	GtkRequisition popup_size;
-	GdkWindow *toplevel_window;
 	GdkDisplay *display;
 	GdkSeat *seat;
 	GdkDevice *pointer;
@@ -221,7 +217,6 @@ wayland_setup_positioner (struct xdg_positioner *positioner, PanelToplevel *pare
 
 	gtk_widget_get_preferred_size (popup, NULL, &popup_size);
 	xdg_positioner_set_size (positioner, popup_size.width, popup_size.height);
-	toplevel_window = gtk_widget_get_window (GTK_WIDGET (parent));
 	display = gdk_window_get_display (toplevel_window);
 	seat = gdk_display_get_default_seat (display);
 	pointer = gdk_seat_get_pointer (seat);
@@ -247,6 +242,7 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 	struct xdg_positioner *positioner;
 	struct xdg_popup *popup;
 	GdkWindow *popup_window = gtk_widget_get_window (popup_widget);
+	GdkWindow *toplevel_window = gtk_widget_get_window (GTK_WIDGET (&parent->window_instance));
 	struct wl_surface *popup_wl_surface;
 	gint geom_x, geom_y, geom_width, geom_height;
 	struct _WaylandXdgLayerPopupData *data;
@@ -256,7 +252,7 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 	g_assert (parent);
 	g_assert (popup_window);
 
-	layer_surface = g_object_get_data (G_OBJECT (parent), wayland_layer_surface_key);
+	layer_surface = g_object_get_data (G_OBJECT (toplevel_window), wayland_layer_surface_key);
 	popup_wl_surface = gdk_wayland_window_get_wl_surface (popup_window);
 
 	g_assert (layer_surface);
@@ -266,7 +262,7 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 	xdg_surface_add_listener(popup_xdg_surface, &xdg_surface_listener, NULL);
 	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
 	gdk_window_get_geometry(popup_window, &geom_x, &geom_y, &geom_width, &geom_height);
-	wayland_setup_positioner (positioner, parent, popup_widget, -geom_x, -geom_y);
+	wayland_setup_positioner (positioner, toplevel_window, popup_widget, -geom_x, -geom_y);
 	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
 	xdg_positioner_destroy (positioner);
 	xdg_popup_add_listener(popup, &xdg_popup_listener, popup_widget);
