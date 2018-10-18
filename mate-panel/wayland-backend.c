@@ -9,6 +9,8 @@
 struct zwlr_layer_shell_v1 *layer_shell_global = NULL;
 struct xdg_wm_base *xdg_wm_base_global = NULL;
 static gboolean wayland_has_initialized = FALSE;
+static const char *wayland_popup_data_key = "wayland_popup_data";
+static const char *wayland_layer_surface_key = "wayland_layer_surface";
 
 gboolean
 is_using_wayland ()
@@ -137,7 +139,10 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 							       layer,
 							       namespace);
 	g_assert (layer_surface);
-	toplevel->layer_surface = layer_surface;
+	g_object_set_data_full(G_OBJECT (toplevel),
+			       wayland_layer_surface_key,
+			       layer_surface,
+			       (GDestroyNotify) zwlr_layer_surface_v1_destroy);
 	// GdkRectangle rect;
 	// gdk_monitor_get_geometry(gdk_monitor, &rect);
 	gint width = 0, height = 0;
@@ -159,8 +164,6 @@ struct _WaylandXdgLayerPopupData {
 	struct xdg_surface *xdg_surface;
 	struct xdg_popup *xdg_popup;
 };
-
-static const char *wayland_popup_data_key = "wayland_popup_data";
 
 static void
 wayland_destroy_popup_data_cb (struct _WaylandXdgLayerPopupData *data) {
@@ -239,6 +242,7 @@ wayland_context_menu_realize_cb (GtkWidget *popup_widget, PanelToplevel *parent)
 static gboolean
 wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, PanelToplevel *parent)
 {
+	struct zwlr_layer_surface_v1 *layer_surface;
 	struct xdg_surface *popup_xdg_surface;
 	struct xdg_positioner *positioner;
 	struct xdg_popup *popup;
@@ -250,11 +254,12 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 	g_assert (wayland_has_initialized);
 	g_assert (xdg_wm_base_global);
 	g_assert (parent);
-	g_assert (parent->layer_surface);
 	g_assert (popup_window);
 
+	layer_surface = g_object_get_data (G_OBJECT (parent), wayland_layer_surface_key);
 	popup_wl_surface = gdk_wayland_window_get_wl_surface (popup_window);
 
+	g_assert (layer_surface);
 	g_assert (popup_wl_surface);
 
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
@@ -266,7 +271,7 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, Pan
 	xdg_positioner_destroy (positioner);
 	xdg_popup_add_listener(popup, &xdg_popup_listener, popup_widget);
 // 	xdg_surface_set_window_geometry(popup_xdg_surface, geom_x, geom_y, geom_width, geom_height);
-	zwlr_layer_surface_v1_get_popup (parent->layer_surface, popup);
+	zwlr_layer_surface_v1_get_popup (layer_surface, popup);
 
 	data = g_new0 (struct _WaylandXdgLayerPopupData, 1);
 	data->xdg_surface = popup_xdg_surface;
