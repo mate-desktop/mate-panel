@@ -12,6 +12,178 @@ static gboolean wayland_has_initialized = FALSE;
 static const char *wayland_popup_data_key = "wayland_popup_data";
 static const char *wayland_layer_surface_key = "wayland_layer_surface";
 
+static void
+debug_print_style(const char *style)
+{
+	printf ("\x1b[%sm", style);
+}
+
+static void
+debug_print_window_tree_indent (GList *indent)
+{
+	debug_print_style ("0;37");
+	for (; indent; indent = indent->next) {
+		printf (indent->data ? "   \u2502 " : "     ");
+	}
+}
+
+static void
+debug_print_line_start ()
+{
+	debug_print_window_tree_indent (NULL);
+	printf ("\u258e");
+}
+
+static void
+debug_print_label (const char* label)
+{
+	debug_print_line_start ();
+	printf ("%s: ", label);
+}
+
+static void
+debug_print_bool (const char* label, int value, int default_value, GList *indent)
+{
+	if (value == default_value)
+		return;
+	debug_print_window_tree_indent (indent);
+	debug_print_line_start ();
+	if (value) {
+		debug_print_style ("1;32");
+		printf ("%s: Yes\n", label);
+	} else {
+		debug_print_style ("1;31");
+		printf ("%s: No\n", label);
+	}
+}
+
+static const char *
+debug_print_gdk_window_type_hint_get_name(GdkWindowTypeHint type)
+{
+	switch (type) {
+		case GDK_WINDOW_TYPE_HINT_NORMAL: return "NORMAL";
+		case GDK_WINDOW_TYPE_HINT_DIALOG: return "DIALOG";
+		case GDK_WINDOW_TYPE_HINT_MENU: return "MENU";
+		case GDK_WINDOW_TYPE_HINT_TOOLBAR: return "TOOLBAR";
+		case GDK_WINDOW_TYPE_HINT_SPLASHSCREEN: return "SPLASHSCREEN";
+		case GDK_WINDOW_TYPE_HINT_UTILITY: return "UTILITY";
+		case GDK_WINDOW_TYPE_HINT_DOCK: return "DOCK";
+		case GDK_WINDOW_TYPE_HINT_DESKTOP: return "DESKTOP";
+		case GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU: return "DROPDOWN_MENU";
+		case GDK_WINDOW_TYPE_HINT_POPUP_MENU: return "POPUP_MENU";
+		case GDK_WINDOW_TYPE_HINT_TOOLTIP: return "TOOLTIP";
+		case GDK_WINDOW_TYPE_HINT_NOTIFICATION: return "NOTIFICATION";
+		case GDK_WINDOW_TYPE_HINT_COMBO: return "COMBO";
+		case GDK_WINDOW_TYPE_HINT_DND: return "DND";
+	}
+}
+
+static void
+debug_print_gdk_window_state_print_elem(const char * elem, int show, GList *indent)
+{
+	if (show) {
+		debug_print_window_tree_indent (indent);
+		debug_print_label ("State");
+		debug_print_style ("1;34");
+		printf ("%s\n", elem);
+	}
+}
+
+static void
+debug_print_gdk_window_state_print(GdkWindowState state, GList *indent)
+{
+	debug_print_gdk_window_state_print_elem ("WITHDRAWN", state & GDK_WINDOW_STATE_WITHDRAWN, indent);
+	debug_print_gdk_window_state_print_elem ("ICONIFIED", state & GDK_WINDOW_STATE_ICONIFIED, indent);
+	debug_print_gdk_window_state_print_elem ("MAXIMIZED", state & GDK_WINDOW_STATE_MAXIMIZED, indent);
+	debug_print_gdk_window_state_print_elem ("STICKY", state & GDK_WINDOW_STATE_STICKY, indent);
+	debug_print_gdk_window_state_print_elem ("FULLSCREEN", state & GDK_WINDOW_STATE_FULLSCREEN, indent);
+	debug_print_gdk_window_state_print_elem ("ABOVE", state & GDK_WINDOW_STATE_ABOVE, indent);
+	debug_print_gdk_window_state_print_elem ("BELOW", state & GDK_WINDOW_STATE_BELOW, indent);
+	debug_print_gdk_window_state_print_elem ("FOCUSED", state & GDK_WINDOW_STATE_FOCUSED, indent);
+	debug_print_gdk_window_state_print_elem ("TILED", state & GDK_WINDOW_STATE_TILED, indent);
+	debug_print_gdk_window_state_print_elem ("TOP_TILED", state & GDK_WINDOW_STATE_TOP_TILED, indent);
+	debug_print_gdk_window_state_print_elem ("TOP_RESIZABLE", state & GDK_WINDOW_STATE_TOP_RESIZABLE, indent);
+	debug_print_gdk_window_state_print_elem ("RIGHT_TILED", state & GDK_WINDOW_STATE_RIGHT_TILED, indent);
+	debug_print_gdk_window_state_print_elem ("RIGHT_RESIZABLE", state & GDK_WINDOW_STATE_RIGHT_RESIZABLE, indent);
+	debug_print_gdk_window_state_print_elem ("BOTTOM_TILED", state & GDK_WINDOW_STATE_BOTTOM_TILED, indent);
+	debug_print_gdk_window_state_print_elem ("BOTTOM_RESIZABLE", state & GDK_WINDOW_STATE_BOTTOM_RESIZABLE, indent);
+	debug_print_gdk_window_state_print_elem ("LEFT_TILED", state & GDK_WINDOW_STATE_LEFT_TILED, indent);
+	debug_print_gdk_window_state_print_elem ("LEFT_RESIZABLE", state & GDK_WINDOW_STATE_LEFT_RESIZABLE, indent);
+}
+
+static void
+debug_print_window_info (GdkWindow *window, GdkWindow *highlight, GList *indent)
+{
+	GdkWindowTypeHint window_type;
+	int has_layeer_surface;
+
+	debug_print_label ("Address");
+	debug_print_style ("1;33");
+	printf ("%p\n", window);
+	window_type = gdk_window_get_type_hint (window);
+	if (window_type != GDK_WINDOW_TYPE_HINT_NORMAL) {
+
+		debug_print_window_tree_indent (indent);
+		debug_print_label ("Type");
+		debug_print_style ("1;34");
+		printf ("%s\n", debug_print_gdk_window_type_hint_get_name (window_type));
+	}
+	debug_print_gdk_window_state_print (gdk_window_get_state (window), indent);
+	has_layeer_surface = g_object_get_data(G_OBJECT (window), wayland_layer_surface_key) != NULL;
+	debug_print_bool("Layer Surface", has_layeer_surface, FALSE, indent);
+	debug_print_bool("Special", window == highlight, FALSE, indent);
+	debug_print_bool("Has Visual", gdk_window_get_visual (window) != NULL, TRUE, indent);
+	debug_print_bool("Focusable", gdk_window_get_accept_focus (window), TRUE, indent);
+	debug_print_bool("Decorations", gdk_window_get_decorations (window, NULL), FALSE, indent);
+	debug_print_bool("Native Window", gdk_window_has_native (window), TRUE, indent);
+}
+
+static void
+debuug_print_window_tree_branch (GdkWindow *window, GdkWindow *highlight, GList *indent)
+{
+	GList *list, *elem, *indent_node;
+
+	debug_print_window_info (window, highlight, indent);
+
+	list = gdk_window_get_children (window);
+
+	for (elem = list; elem; elem = elem->next) {
+		debug_print_window_tree_indent (indent);
+		printf("%s\u2502 ", elem == list ? "\u2594\u2594\u2594" : "   ");
+		printf("\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\n");
+		debug_print_window_tree_indent (indent);
+		if (elem->next)
+			printf ("   \u251c\u2500");
+		else
+			printf ("   \u2570\u2500");
+		indent_node = g_list_append (NULL, elem->next); // all we care about is if its NULL or not
+		indent = g_list_concat(indent, indent_node);
+		debuug_print_window_tree_branch (elem->data, highlight, indent);
+		indent = g_list_remove_link(indent, indent_node);
+		g_list_free_1 (indent_node);
+	}
+
+	g_list_free (list);
+
+	debug_print_style ("0");
+	fflush (stdout);
+}
+
+static void
+debug_print_window_tree(GdkWindow *current)
+{
+	GdkWindow *root, *next;
+
+	root = next = current;
+	while (next) {
+		root = next;
+		next = gdk_window_get_parent (next);
+	}
+
+	debuug_print_window_tree_branch (root, current, 0);
+	printf ("\n");
+}
+
 gboolean
 is_using_wayland ()
 {

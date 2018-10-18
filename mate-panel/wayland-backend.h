@@ -14,6 +14,8 @@ struct _PanelToplevel;
 typedef struct _PanelToplevel PanelToplevel;
 #endif
 
+void debug_print_window_tree(GdkWindow *current);
+
 gboolean is_using_wayland (void);
 
 // wayland_* functions must only be called when using Wayland
