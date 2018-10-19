@@ -117,27 +117,45 @@ static void
 debug_print_window_info (GdkWindow *window, GdkWindow *highlight, GList *indent)
 {
 	GdkWindowTypeHint window_type;
+	const char *window_type_name;
 	int has_layeer_surface;
+	int width, height;
+	int has_native;
 
-	debug_print_label ("Address");
-	debug_print_style ("1;33");
-	printf ("%p\n", window);
 	window_type = gdk_window_get_type_hint (window);
-	if (window_type != GDK_WINDOW_TYPE_HINT_NORMAL) {
-
-		debug_print_window_tree_indent (indent);
-		debug_print_label ("Type");
-		debug_print_style ("1;34");
-		printf ("%s\n", debug_print_gdk_window_type_hint_get_name (window_type));
-	}
-	debug_print_gdk_window_state_print (gdk_window_get_state (window), indent);
+	window_type_name = debug_print_gdk_window_type_hint_get_name (window_type);
 	has_layeer_surface = g_object_get_data(G_OBJECT (window), wayland_layer_surface_key) != NULL;
+	width = gdk_window_get_width (window);
+	height = gdk_window_get_height (window);
+	has_native = gdk_window_has_native (window);
+
+	if (has_native) {
+
+		debug_print_label ("Address");
+		debug_print_style ("1;33");
+		printf ("%p\n", window);
+		if (window_type != GDK_WINDOW_TYPE_HINT_NORMAL) {
+
+			debug_print_window_tree_indent (indent);
+			debug_print_label ("Type");
+			debug_print_style ("1;34");
+			printf ("%s\n", window_type_name);
+		}
+		debug_print_gdk_window_state_print (gdk_window_get_state (window), indent);
+		debug_print_window_tree_indent (indent);
+		debug_print_label ("Size");
+		debug_print_style ("1;34");
+		printf ("%d x %d\n", width, height);
+		debug_print_bool("Has Visual", gdk_window_get_visual (window) != NULL, TRUE, indent);
+		debug_print_bool("Focusable", gdk_window_get_accept_focus (window), TRUE, indent);
+		debug_print_bool("Decorations", gdk_window_get_decorations (window, NULL), FALSE, indent);
+	} else {
+		debug_print_label ("Internal Window");
+		printf("%dx%d %s\n", width, height, window_type_name);
+	}
+
 	debug_print_bool("Layer Surface", has_layeer_surface, FALSE, indent);
 	debug_print_bool("Special", window == highlight, FALSE, indent);
-	debug_print_bool("Has Visual", gdk_window_get_visual (window) != NULL, TRUE, indent);
-	debug_print_bool("Focusable", gdk_window_get_accept_focus (window), TRUE, indent);
-	debug_print_bool("Decorations", gdk_window_get_decorations (window, NULL), FALSE, indent);
-	debug_print_bool("Native Window", gdk_window_has_native (window), TRUE, indent);
 }
 
 static void
@@ -171,10 +189,17 @@ debuug_print_window_tree_branch (GdkWindow *window, GdkWindow *highlight, GList 
 	fflush (stdout);
 }
 
-static void
-debug_print_window_tree(GdkWindow *current)
+void
+debug_print_window_tree(GdkWindow *current, const char *code_path, int code_line_num)
 {
 	GdkWindow *root, *next;
+
+	debug_print_style("1;35");
+	printf("%s", code_path);
+	debug_print_style("0");
+	printf(":");
+	debug_print_style("1;37");
+	printf("%d\n", code_line_num);
 
 	root = next = current;
 	while (next) {
