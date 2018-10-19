@@ -523,12 +523,6 @@ mate_panel_applet_create_menu (AppletInfo *info)
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (applet_menu_deactivate), info);
 
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (panel_widget)))) {
-		wayland_menu_setup (menu, panel_widget->toplevel);
-	}
-#endif
-
 	for (l = info->user_menu; l; l = l->next) {
 		AppletUserMenu *user_menu = l->data;
 
@@ -751,6 +745,12 @@ applet_show_menu (AppletInfo     *info,
 
 	if (!gtk_widget_get_realized (info->menu))
 		gtk_widget_show (info->menu);
+
+#ifdef HAVE_WAYLAND
+	if (is_using_wayland ()) {
+		wayland_menu_setup (GTK_WIDGET (info->menu), panel_widget_get_toplevel_window (panel_widget));
+	}
+#endif
 
 	gtk_menu_popup_at_pointer (GTK_MENU (info->menu), NULL);
 }

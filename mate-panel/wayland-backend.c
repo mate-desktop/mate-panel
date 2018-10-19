@@ -503,11 +503,10 @@ wayland_context_menu_unmap_cb (GtkWidget *popup_widget, void *_data)
 }
 
 void
-wayland_menu_setup (GtkWidget *menu, PanelToplevel *toplevel)
+wayland_menu_setup (GtkWidget *menu, GdkWindow *attach_window)
 {
-	GdkWindow *attach_window, *prev_attach_window;
+	GdkWindow *prev_attach_window;
 
-	attach_window = gtk_widget_get_window(GTK_WIDGET (&toplevel->window_instance));
 	prev_attach_window = g_object_get_data (G_OBJECT (menu), wayland_popup_attach_window_key);
 
 	g_assert (attach_window);
@@ -524,6 +523,5 @@ wayland_menu_setup (GtkWidget *menu, PanelToplevel *toplevel)
 				   wayland_popup_attach_window_key,
 				   attach_window);
 	}
-
 }
 
