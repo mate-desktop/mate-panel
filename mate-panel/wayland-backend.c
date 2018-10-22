@@ -12,6 +12,7 @@ static gboolean wayland_has_initialized = FALSE;
 static const char *wayland_popup_data_key = "wayland_popup_data";
 static const char *wayland_popup_attach_window_key = "wayland_popup_attach_window";
 static const char *wayland_layer_surface_key = "wayland_layer_surface";
+static const char *menu_setup_func_key = "popup_menu_setup_func";
 
 static void
 debug_print_style(const char *style)
@@ -321,6 +322,10 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	}
 
 	window = gtk_widget_get_window (widget);
+	// This will allow anyone who can get hold of the window to make a popup
+	g_object_set_data(G_OBJECT (window),
+			  menu_setup_func_key,
+			  wayland_menu_setup);
 	gdk_wayland_window_set_use_custom_surface (window);
 	wl_surface = gdk_wayland_window_get_wl_surface (window);
 	g_assert (wl_surface);
@@ -507,17 +512,19 @@ wayland_menu_setup (GtkWidget *menu, GdkWindow *attach_window)
 {
 	GdkWindow *prev_attach_window;
 
-	prev_attach_window = g_object_get_data (G_OBJECT (menu), wayland_popup_attach_window_key);
-
 	g_assert (attach_window);
 
+	// Get the previous window this menu was attached to
+	prev_attach_window = g_object_get_data (G_OBJECT (menu), wayland_popup_attach_window_key);
+
+	// If there's not already an attached window, the callbacks haven't been set up yet either'
 	if (!prev_attach_window) {
-		// If the callbacks on this popup have not been set up yet
 		g_signal_connect (menu, "realize", G_CALLBACK (wayland_context_menu_realize_cb), NULL);
 		g_signal_connect (menu, "map-event", G_CALLBACK (wayland_context_menu_map_event_cb), NULL);
 		g_signal_connect (menu, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), NULL);
 	}
 
+	// if the attached window was null before or has changed, set it to the new value
 	if (attach_window != prev_attach_window) {
 		g_object_set_data (G_OBJECT (menu),
 				   wayland_popup_attach_window_key,
