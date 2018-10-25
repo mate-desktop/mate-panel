@@ -1200,16 +1200,16 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 			     const char *text)
 {
 	GdkWindow *panel_toplevel_window;
-	void (*widget_tooltip_set_text_func)(GtkWidget *menu, const char *text);
+	void (*tooltip_setup_func) (GtkWidget *widget, gint x, gint y, const char* text);
 
 	if (!panel_global_config_get_tooltips_enabled ())
 		return FALSE;
 
 	panel_toplevel_window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
-	widget_tooltip_set_text_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
-							  "widget_tooltip_set_text_func");
-	if (widget_tooltip_set_text_func) {
-		widget_tooltip_set_text_func(widget, text);
+	tooltip_setup_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
+							"tooltip_setup_func");
+	if (tooltip_setup_func) {
+		tooltip_setup_func(widget, x, y, text);
 	} else {
 		gtk_tooltip_set_text (tooltip, "This be a tooltip");
 	}

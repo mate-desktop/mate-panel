@@ -12,8 +12,9 @@ static gboolean wayland_has_initialized = FALSE;
 static const char *wayland_popup_data_key = "wayland_popup_data";
 static const char *wayland_popup_attach_widget_key = "wayland_popup_attach_widget";
 static const char *wayland_layer_surface_key = "wayland_layer_surface";
+static const char *wayland_pointer_position_key = "wayland_pointer_position";
 static const char *menu_setup_func_key = "popup_menu_setup_func";
-static const char *tooltip_set_text_func_key = "widget_tooltip_set_text_func";
+static const char *tooltip_set_text_func_key = "tooltip_setup_func";
 
 static void
 debug_print_style(const char *style)
@@ -344,7 +345,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 			   wayland_popup_menu_setup);
 	g_object_set_data (G_OBJECT (window),
 			   tooltip_set_text_func_key,
-			   wayland_tooltip_set_text);
+			   wayland_tooltip_setup);
 	gdk_wayland_window_set_use_custom_surface (window);
 	wl_surface = gdk_wayland_window_get_wl_surface (window);
 	g_assert (wl_surface);
@@ -495,7 +496,6 @@ wayland_context_menu_unmap_cb (GtkWidget *popup_widget, void *_data)
 	return TRUE;
 }
 
-
 static gboolean
 wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data)
 {
@@ -554,11 +554,48 @@ wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget)
 	wayland_set_popup_attach_widget (menu, attach_widget, G_CALLBACK (wayland_menu_map_event_cb));
 }
 
-void wayland_tooltip_set_text (GtkWidget *widget, const char* text)
+static gboolean
+wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data)
+{
+	struct xdg_positioner *positioner;
+	GtkWidget *attach_widget;
+	gint geom_x, geom_y;
+	GdkPoint *pointer;
+	gint x, y;
+
+	g_assert (wayland_has_initialized);
+	g_assert (xdg_wm_base_global);
+
+	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
+	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
+	pointer = g_object_get_data (G_OBJECT (attach_widget), wayland_pointer_position_key);
+
+	g_assert (pointer);
+
+	gtk_widget_translate_coordinates(attach_widget, gtk_widget_get_toplevel(attach_widget),
+					 pointer->x, pointer->y,
+					 &x, &y);
+	xdg_positioner_set_anchor_rect (positioner, x, y, 1, 1);
+	gdk_window_get_geometry (gtk_widget_get_window (popup_widget), &geom_x, &geom_y, NULL, NULL);
+	xdg_positioner_set_offset (positioner, -geom_x, -geom_y - 10);
+	xdg_positioner_set_anchor (positioner, XDG_POSITIONER_ANCHOR_TOP_LEFT);
+	xdg_positioner_set_gravity (positioner, XDG_POSITIONER_GRAVITY_TOP);
+	xdg_positioner_set_constraint_adjustment (positioner, XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_X | XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_Y);
+
+	wayland_pop_popup_up (attach_widget, popup_widget, positioner);
+
+	xdg_positioner_destroy (positioner);
+
+	return TRUE;
+}
+
+void
+wayland_tooltip_setup (GtkWidget *widget, gint x, gint y, const char* text)
 {
 	GtkWidget *tooltip_window_widget; // NOTE: Gtk, NOT Gdk
 	GtkWidget *box;
 	GtkWidget *label;
+	GdkPoint *pointer_point_pointer;
 
 	tooltip_window_widget = gtk_window_new (GTK_WINDOW_POPUP);
 	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -568,6 +605,10 @@ void wayland_tooltip_set_text (GtkWidget *widget, const char* text)
 	gtk_widget_show_all (box);
 	gtk_widget_set_tooltip_window (widget, GTK_WINDOW (tooltip_window_widget));
 	// TODO: is tooltip_window_widget now owned by GTK, or do we need to destroy it?
-	wayland_popup_menu_setup (tooltip_window_widget, widget);
+	pointer_point_pointer = g_new0 (GdkPoint, 1);
+	pointer_point_pointer->x = x;
+	pointer_point_pointer->y = y;
+	g_object_set_data_full (G_OBJECT (widget), wayland_pointer_position_key, pointer_point_pointer, g_free);
+	wayland_set_popup_attach_widget (tooltip_window_widget, widget, G_CALLBACK (wayland_tooltip_map_event_cb));
 }
 
