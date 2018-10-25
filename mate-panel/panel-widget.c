@@ -2959,8 +2959,3 @@ panel_widget_register_open_dialog (PanelWidget *panel,
 				 panel,
 				 G_CONNECT_SWAPPED);
 }
-
-GdkWindow *panel_widget_get_toplevel_window (PanelWidget *panel)
-{
-	return gdk_window_get_toplevel (gtk_widget_get_window (GTK_WIDGET (panel)));
-}

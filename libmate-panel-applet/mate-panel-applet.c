@@ -926,7 +926,7 @@ mate_panel_applet_menu_popup (MatePanelApplet *applet,
 {
 	GtkWidget *menu;
 	GdkWindow *panel_toplevel_window;
-	void (*popup_menu_setup_func)(GtkWidget *menu, GdkWindow* attach_window);
+	void (*popup_menu_setup_func)(GtkWidget *menu, GtkWidget* attach_widget);
 
 	menu = gtk_ui_manager_get_widget (applet->priv->ui_manager,
 					  "/MatePanelAppletPopup");
@@ -942,11 +942,11 @@ mate_panel_applet_menu_popup (MatePanelApplet *applet,
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
-	panel_toplevel_window = gdk_window_get_toplevel( gtk_widget_get_window (GTK_WIDGET (applet)));
+	panel_toplevel_window = gdk_window_get_toplevel (gtk_widget_get_window (GTK_WIDGET (applet)));
 	popup_menu_setup_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
 						   "popup_menu_setup_func");
 	if (popup_menu_setup_func)
-		popup_menu_setup_func(menu, panel_toplevel_window);
+		popup_menu_setup_func (menu, GTK_WIDGET (applet));
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL, NULL,
 			(GtkMenuPositionFunc) mate_panel_applet_position_menu,

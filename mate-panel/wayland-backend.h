@@ -21,6 +21,7 @@ gboolean is_using_wayland (void);
 // wayland_* functions must only be called when using Wayland
 void wayland_registry_init (void);
 void wayland_realize_panel_toplevel (GtkWidget *window);
-void wayland_menu_setup (GtkWidget *menu, GdkWindow* attach_window);
+void wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget);
+void wayland_tooltip_set_text (GtkWidget *widget, const char* text);
 
 #endif /* __WAYLAND_BACKEND_H__ */

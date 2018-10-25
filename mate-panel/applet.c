@@ -748,7 +748,7 @@ applet_show_menu (AppletInfo     *info,
 
 #ifdef HAVE_WAYLAND
 	if (is_using_wayland ()) {
-		wayland_menu_setup (GTK_WIDGET (info->menu), panel_widget_get_toplevel_window (panel_widget));
+		wayland_popup_menu_setup (GTK_WIDGET (info->menu), GTK_WIDGET (panel_widget));
 	}
 #endif
 

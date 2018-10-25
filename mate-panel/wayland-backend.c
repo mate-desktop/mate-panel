@@ -10,9 +10,10 @@ struct zwlr_layer_shell_v1 *layer_shell_global = NULL;
 struct xdg_wm_base *xdg_wm_base_global = NULL;
 static gboolean wayland_has_initialized = FALSE;
 static const char *wayland_popup_data_key = "wayland_popup_data";
-static const char *wayland_popup_attach_window_key = "wayland_popup_attach_window";
+static const char *wayland_popup_attach_widget_key = "wayland_popup_attach_widget";
 static const char *wayland_layer_surface_key = "wayland_layer_surface";
 static const char *menu_setup_func_key = "popup_menu_setup_func";
+static const char *tooltip_set_text_func_key = "widget_tooltip_set_text_func";
 
 static void
 debug_print_style(const char *style)
@@ -323,9 +324,12 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 
 	window = gtk_widget_get_window (widget);
 	// This will allow anyone who can get hold of the window to make a popup
-	g_object_set_data(G_OBJECT (window),
-			  menu_setup_func_key,
-			  wayland_menu_setup);
+	g_object_set_data (G_OBJECT (window),
+			   menu_setup_func_key,
+			   wayland_popup_menu_setup);
+	g_object_set_data (G_OBJECT (window),
+			   tooltip_set_text_func_key,
+			   wayland_tooltip_set_text);
 	gdk_wayland_window_set_use_custom_surface (window);
 	wl_surface = gdk_wayland_window_get_wl_surface (window);
 	g_assert (wl_surface);
@@ -449,6 +453,7 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, voi
 	struct xdg_surface *popup_xdg_surface;
 	struct xdg_positioner *positioner;
 	struct xdg_popup *popup;
+	GtkWidget *attach_widget;
 	GdkWindow *popup_window, *attach_window;
 	struct wl_surface *popup_wl_surface;
 	gint geom_x, geom_y, geom_width, geom_height;
@@ -459,7 +464,8 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, voi
 			   NULL);
 
 	popup_window = gtk_widget_get_window (popup_widget);
-	attach_window = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_window_key);
+	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
+	attach_window = gdk_window_get_toplevel (gtk_widget_get_window (attach_widget));
 
 	g_assert (wayland_has_initialized);
 	g_assert (xdg_wm_base_global);
@@ -508,27 +514,30 @@ wayland_context_menu_unmap_cb (GtkWidget *popup_widget, void *_data)
 }
 
 void
-wayland_menu_setup (GtkWidget *menu, GdkWindow *attach_window)
+wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget)
 {
-	GdkWindow *prev_attach_window;
-
-	g_assert (attach_window);
+	GtkWidget *prev_attach_widget;
 
 	// Get the previous window this menu was attached to
-	prev_attach_window = g_object_get_data (G_OBJECT (menu), wayland_popup_attach_window_key);
+	prev_attach_widget = g_object_get_data (G_OBJECT (menu), wayland_popup_attach_widget_key);
 
-	// If there's not already an attached window, the callbacks haven't been set up yet either'
-	if (!prev_attach_window) {
+	// If there's not already an attach widget, the callbacks haven't been set up yet either'
+	if (!prev_attach_widget) {
 		g_signal_connect (menu, "realize", G_CALLBACK (wayland_context_menu_realize_cb), NULL);
 		g_signal_connect (menu, "map-event", G_CALLBACK (wayland_context_menu_map_event_cb), NULL);
 		g_signal_connect (menu, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), NULL);
 	}
 
 	// if the attached window was null before or has changed, set it to the new value
-	if (attach_window != prev_attach_window) {
+	if (attach_widget != prev_attach_widget) {
 		g_object_set_data (G_OBJECT (menu),
-				   wayland_popup_attach_window_key,
-				   attach_window);
+				   wayland_popup_attach_widget_key,
+				   attach_widget);
 	}
+}
+
+void wayland_tooltip_set_text (GtkWidget *widget, const char* text)
+{
+	g_warning("wayland_tooltip_set_text () called for %p with text \"%s\" (not implemented)", widget, text);
 }
 

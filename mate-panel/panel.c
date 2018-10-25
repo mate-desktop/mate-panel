@@ -373,7 +373,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (panel_widget)))) {
-		wayland_menu_setup(menu, panel_widget_get_toplevel_window (panel_widget));
+		wayland_popup_menu_setup(menu, GTK_WIDGET (panel_widget));
 	}
 #endif
 	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
