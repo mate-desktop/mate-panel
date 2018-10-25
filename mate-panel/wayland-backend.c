@@ -220,6 +220,21 @@ is_using_wayland ()
 }
 
 static void
+widget_get_pointer_position (GtkWidget *widget, gint *pointer_x, gint *pointer_y)
+{
+	GdkWindow *window;
+	GdkDisplay *display;
+	GdkSeat *seat;
+	GdkDevice *pointer;
+
+	window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
+	display = gdk_window_get_display (window);
+	seat = gdk_display_get_default_seat (display);
+	pointer = gdk_seat_get_pointer (seat);
+	gdk_window_get_device_position(window, pointer, pointer_x, pointer_y, NULL);
+}
+
+static void
 wl_regitsty_handle_global (void *data,
 			   struct wl_registry *registry,
 			   uint32_t id,
@@ -415,77 +430,36 @@ static const struct xdg_popup_listener xdg_popup_listener = {
 };
 
 static void
-wayland_setup_positioner (struct xdg_positioner *positioner, GdkWindow *panel_window, GtkWidget *popup, gint offset_x, gint offset_y)
+wayland_pop_popup_up (GtkWidget *attach_widget, GtkWidget *popup_widget, struct xdg_positioner *positioner)
 {
 	GtkRequisition popup_size;
-	GdkDisplay *display;
-	GdkSeat *seat;
-	GdkDevice *pointer;
-	gint pointer_x, pointer_y;
-
-	gtk_widget_get_preferred_size (popup, NULL, &popup_size);
-	xdg_positioner_set_size (positioner, popup_size.width, popup_size.height);
-	display = gdk_window_get_display (panel_window);
-	seat = gdk_display_get_default_seat (display);
-	pointer = gdk_seat_get_pointer (seat);
-	gdk_window_get_device_position(panel_window, pointer, &pointer_x, &pointer_y, NULL);
-	xdg_positioner_set_anchor_rect (positioner, 0, 0, pointer_x, pointer_y);
-	xdg_positioner_set_offset(positioner, offset_x, offset_y);
-	xdg_positioner_set_anchor(positioner, XDG_POSITIONER_ANCHOR_BOTTOM_RIGHT);
-	xdg_positioner_set_gravity(positioner, XDG_POSITIONER_GRAVITY_TOP_RIGHT);
-	xdg_positioner_set_constraint_adjustment(positioner, XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_X | XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_Y);
-}
-
-static void
-wayland_context_menu_realize_cb (GtkWidget *popup_widget, void *_data)
-{
-	g_object_set_data (G_OBJECT (popup_widget),
-			   wayland_popup_data_key,
-			   NULL);
-
-	gdk_wayland_window_set_use_custom_surface (gtk_widget_get_window (popup_widget));
-}
-
-static gboolean
-wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data)
-{
-	struct zwlr_layer_surface_v1 *layer_surface;
-	struct xdg_surface *popup_xdg_surface;
-	struct xdg_positioner *positioner;
-	struct xdg_popup *popup;
-	GtkWidget *attach_widget;
 	GdkWindow *popup_window, *attach_window;
+	struct zwlr_layer_surface_v1 *layer_surface;
 	struct wl_surface *popup_wl_surface;
-	gint geom_x, geom_y, geom_width, geom_height;
+	struct xdg_surface *popup_xdg_surface;
+	struct xdg_popup *popup;
 	struct _WaylandXdgLayerPopupData *data;
 
 	g_object_set_data (G_OBJECT (popup_widget),
 			   wayland_popup_data_key,
 			   NULL);
 
+	gtk_widget_get_preferred_size (popup_widget, NULL, &popup_size);
+	xdg_positioner_set_size (positioner, popup_size.width, popup_size.height);
+
 	popup_window = gtk_widget_get_window (popup_widget);
-	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
 	attach_window = gdk_window_get_toplevel (gtk_widget_get_window (attach_widget));
 
-	g_assert (wayland_has_initialized);
-	g_assert (xdg_wm_base_global);
 	g_assert (popup_window);
 	g_assert (attach_window);
 
 	layer_surface = g_object_get_data (G_OBJECT (attach_window), wayland_layer_surface_key);
 	popup_wl_surface = gdk_wayland_window_get_wl_surface (popup_window);
-
-	g_assert (layer_surface);
-	g_assert (popup_wl_surface);
-
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
-	xdg_surface_add_listener(popup_xdg_surface, &xdg_surface_listener, NULL);
-	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
-	gdk_window_get_geometry(popup_window, &geom_x, &geom_y, &geom_width, &geom_height);
-	wayland_setup_positioner (positioner, attach_window, popup_widget, -geom_x, -geom_y);
+	xdg_surface_add_listener (popup_xdg_surface, &xdg_surface_listener, NULL);
+
 	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
-	xdg_positioner_destroy (positioner);
-	xdg_popup_add_listener(popup, &xdg_popup_listener, popup_widget);
+	xdg_popup_add_listener (popup, &xdg_popup_listener, popup_widget);
 // 	xdg_surface_set_window_geometry(popup_xdg_surface, geom_x, geom_y, geom_width, geom_height);
 	zwlr_layer_surface_v1_get_popup (layer_surface, popup);
 
@@ -499,8 +473,16 @@ wayland_context_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, voi
 
 	wl_surface_commit (popup_wl_surface);
 	wl_display_roundtrip (gdk_wayland_display_get_wl_display (gdk_window_get_display (popup_window)));
+}
 
-	return TRUE;
+static void
+wayland_context_menu_realize_cb (GtkWidget *popup_widget, void *_data)
+{
+	g_object_set_data (G_OBJECT (popup_widget),
+			   wayland_popup_data_key,
+			   NULL);
+
+	gdk_wayland_window_set_use_custom_surface (gtk_widget_get_window (popup_widget));
 }
 
 static gboolean
@@ -513,27 +495,63 @@ wayland_context_menu_unmap_cb (GtkWidget *popup_widget, void *_data)
 	return TRUE;
 }
 
-void
-wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget)
+
+static gboolean
+wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data)
+{
+	struct xdg_positioner *positioner;
+	GtkWidget *attach_widget;
+	gint geom_x, geom_y;
+	gint pointer_x, pointer_y;
+
+	g_assert (wayland_has_initialized);
+	g_assert (xdg_wm_base_global);
+
+	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
+	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
+
+	widget_get_pointer_position (attach_widget, &pointer_x, &pointer_y);
+	xdg_positioner_set_anchor_rect (positioner, 0, 0, pointer_x, pointer_y);
+	gdk_window_get_geometry (gtk_widget_get_window (popup_widget), &geom_x, &geom_y, NULL, NULL);
+	xdg_positioner_set_offset (positioner, -geom_x, -geom_y);
+	xdg_positioner_set_anchor (positioner, XDG_POSITIONER_ANCHOR_BOTTOM_RIGHT);
+	xdg_positioner_set_gravity (positioner, XDG_POSITIONER_GRAVITY_TOP_RIGHT);
+	xdg_positioner_set_constraint_adjustment (positioner, XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_X | XDG_POSITIONER_CONSTRAINT_ADJUSTMENT_FLIP_Y);
+
+	wayland_pop_popup_up (attach_widget, popup_widget, positioner);
+
+	xdg_positioner_destroy (positioner);
+
+	return TRUE;
+}
+
+static void
+wayland_set_popup_attach_widget(GtkWidget *popup_widget, GtkWidget* attach_widget, GCallback map_event_cb)
 {
 	GtkWidget *prev_attach_widget;
 
-	// Get the previous window this menu was attached to
-	prev_attach_widget = g_object_get_data (G_OBJECT (menu), wayland_popup_attach_widget_key);
+	// Get the previous window this popup was attached to
+	prev_attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
 
 	// If there's not already an attach widget, the callbacks haven't been set up yet either'
 	if (!prev_attach_widget) {
-		g_signal_connect (menu, "realize", G_CALLBACK (wayland_context_menu_realize_cb), NULL);
-		g_signal_connect (menu, "map-event", G_CALLBACK (wayland_context_menu_map_event_cb), NULL);
-		g_signal_connect (menu, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), NULL);
+		g_signal_connect (popup_widget, "realize", G_CALLBACK (wayland_context_menu_realize_cb), NULL);
+		g_signal_connect (popup_widget, "map-event", map_event_cb, NULL);
+		g_signal_connect (popup_widget, "unmap", G_CALLBACK (wayland_context_menu_unmap_cb), NULL);
 	}
 
 	// if the attached window was null before or has changed, set it to the new value
 	if (attach_widget != prev_attach_widget) {
-		g_object_set_data (G_OBJECT (menu),
+		g_object_set_data (G_OBJECT (popup_widget),
 				   wayland_popup_attach_widget_key,
 				   attach_widget);
 	}
+}
+
+void
+wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget)
+{
+	wayland_set_popup_attach_widget (menu, attach_widget, G_CALLBACK (wayland_menu_map_event_cb));
 }
 
 void wayland_tooltip_set_text (GtkWidget *widget, const char* text)
