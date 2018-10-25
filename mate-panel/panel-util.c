@@ -1211,7 +1211,7 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 	if (tooltip_setup_func) {
 		tooltip_setup_func(widget, x, y, text);
 	} else {
-		gtk_tooltip_set_text (tooltip, "This be a tooltip");
+		gtk_tooltip_set_text (tooltip, text);
 	}
 	return TRUE;
 }
