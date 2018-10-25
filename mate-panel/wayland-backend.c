@@ -538,6 +538,18 @@ wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget)
 
 void wayland_tooltip_set_text (GtkWidget *widget, const char* text)
 {
-	g_warning("wayland_tooltip_set_text () called for %p with text \"%s\" (not implemented)", widget, text);
+	GtkWidget *tooltip_window_widget; // NOTE: Gtk, NOT Gdk
+	GtkWidget *box;
+	GtkWidget *label;
+
+	tooltip_window_widget = gtk_window_new (GTK_WINDOW_POPUP);
+	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	label = gtk_label_new (text);
+	gtk_container_add (GTK_CONTAINER (box), label);
+	gtk_container_add (GTK_CONTAINER (tooltip_window_widget), box);
+	gtk_widget_show_all (box);
+	gtk_widget_set_tooltip_window (widget, GTK_WINDOW (tooltip_window_widget));
+	// TODO: is tooltip_window_widget now owned by GTK, or do we need to destroy it?
+	wayland_popup_menu_setup (tooltip_window_widget, widget);
 }
 

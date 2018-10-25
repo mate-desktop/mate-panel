@@ -55,6 +55,10 @@
 static Atom _net_active_window = None;
 #endif
 
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif
+
 char *
 panel_util_make_exec_uri_for_desktop (const char *exec)
 {
@@ -1195,10 +1199,20 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 			     GtkTooltip *tooltip,
 			     const char *text)
 {
+	GdkWindow *panel_toplevel_window;
+	void (*widget_tooltip_set_text_func)(GtkWidget *menu, const char *text);
+
 	if (!panel_global_config_get_tooltips_enabled ())
 		return FALSE;
 
-	gtk_tooltip_set_text (tooltip, text);
+	panel_toplevel_window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
+	widget_tooltip_set_text_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
+							  "widget_tooltip_set_text_func");
+	if (widget_tooltip_set_text_func) {
+		widget_tooltip_set_text_func(widget, text);
+	} else {
+		gtk_tooltip_set_text (tooltip, "This be a tooltip");
+	}
 	return TRUE;
 }
 
