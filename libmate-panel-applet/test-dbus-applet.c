@@ -169,6 +169,8 @@ test_applet_fill (TestApplet *applet)
 
 	gtk_widget_set_tooltip_text (GTK_WIDGET (applet), "Hello Tip");
 
+	g_signal_connect (GTK_WIDGET (applet), "query-tooltip", G_CALLBACK (mate_panel_applet_query_tooltop_cb), NULL);
+
 	mate_panel_applet_set_flags (MATE_PANEL_APPLET (applet), MATE_PANEL_APPLET_HAS_HANDLE);
 
 	g_signal_connect (G_OBJECT (applet),

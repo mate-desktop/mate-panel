@@ -1637,6 +1637,7 @@ static void set_tooltip(FishApplet* fish)
 
 	desc = g_markup_printf_escaped (desc_format, fish->name);
 	gtk_widget_set_tooltip_markup (GTK_WIDGET (fish), desc);
+	g_signal_connect (GTK_WIDGET (fish), "query-tooltip", G_CALLBACK (mate_panel_applet_query_tooltop_cb), NULL);
 	g_free (desc);
 }
 

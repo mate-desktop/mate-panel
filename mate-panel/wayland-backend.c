@@ -640,18 +640,19 @@ wayland_tooltip_setup (GtkWidget  *widget,
 		       GtkTooltip *tooltip,
 		       void       *_data)
 {
-	const char *tooltip_text;
+	const char *tooltip_text, *tooltip_markup;
 	GtkWidget *tooltip_window_widget; // NOTE: Gtk, NOT Gdk
 	GtkWidget *box;
 	GtkWidget *label;
 	GdkPoint *pointer_point_pointer;
 
 	tooltip_text = gtk_widget_get_tooltip_text (widget);
-	if (tooltip_text == NULL)
-		tooltip_text = gtk_widget_get_tooltip_markup (widget);
 	tooltip_window_widget = gtk_window_new (GTK_WINDOW_POPUP);
 	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	label = gtk_label_new (tooltip_text);
+	tooltip_markup = gtk_widget_get_tooltip_markup (widget);
+	if (tooltip_markup)
+		gtk_label_set_markup (GTK_LABEL (label), tooltip_markup);
 	gtk_container_add (GTK_CONTAINER (box), label);
 	gtk_container_add (GTK_CONTAINER (tooltip_window_widget), box);
 	gtk_widget_show_all (box);

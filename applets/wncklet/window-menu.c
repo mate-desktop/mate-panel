@@ -227,6 +227,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	window_menu->applet = GTK_WIDGET(applet);
 	gtk_widget_set_name (window_menu->applet, "window-menu-applet-button");
 	gtk_widget_set_tooltip_text(window_menu->applet, _("Window Selector"));
+	g_signal_connect (window_menu->applet, "query-tooltip", G_CALLBACK (mate_panel_applet_query_tooltop_cb), NULL);
 
 	mate_panel_applet_set_flags(applet, MATE_PANEL_APPLET_EXPAND_MINOR);
 	window_menu->size = mate_panel_applet_get_size(applet);

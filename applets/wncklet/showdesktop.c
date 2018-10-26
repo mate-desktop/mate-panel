@@ -266,6 +266,7 @@ static void update_button_display(ShowDesktopData* sdd)
 	}
 
 	gtk_widget_set_tooltip_text(sdd->button, tip);
+	g_signal_connect (sdd->button, "query-tooltip", G_CALLBACK (mate_panel_applet_query_tooltop_cb), NULL);
 }
 
 static void update_button_state(ShowDesktopData* sdd)
