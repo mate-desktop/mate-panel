@@ -14,7 +14,7 @@ struct _PanelToplevel;
 typedef struct _PanelToplevel PanelToplevel;
 #endif
 
-void debug_print_window_tree(GdkWindow *current, const char *code_path, int code_line_num);
+void debug_print_window_tree (GdkWindow *current, const char *code_path, int code_line_num);
 
 gboolean is_using_wayland (void);
 

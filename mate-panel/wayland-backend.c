@@ -61,6 +61,24 @@ debug_print_bool (const char* label, int value, int default_value, GList *indent
 	}
 }
 
+static void
+debug_print_g_object_data (GdkWindow *window, const char * key, GList *indent)
+{
+	void *data = g_object_get_data (G_OBJECT (window), key);
+
+	if (!data)
+		return;
+
+	debug_print_window_tree_indent (indent);
+	debug_print_line_start ();
+	debug_print_style ("1;37");
+	printf ("\"%s\"", key);
+	debug_print_style ("0;37");
+	printf (": ");
+	debug_print_style ("0;36");
+	printf ("%p\n", data);
+}
+
 static const char *
 debug_print_gdk_window_type_hint_get_name(GdkWindowTypeHint type)
 {
@@ -121,13 +139,16 @@ debug_print_window_info (GdkWindow *window, GdkWindow *highlight, GList *indent)
 {
 	GdkWindowTypeHint window_type;
 	const char *window_type_name;
-	int has_layeer_surface;
 	int width, height;
 	int has_native;
 
+	if (window == NULL) {
+		debug_print_bool("Valid Window Object", FALSE, TRUE, indent);
+		return;
+	}
+
 	window_type = gdk_window_get_type_hint (window);
 	window_type_name = debug_print_gdk_window_type_hint_get_name (window_type);
-	has_layeer_surface = g_object_get_data(G_OBJECT (window), wayland_layer_surface_key) != NULL;
 	width = gdk_window_get_width (window);
 	height = gdk_window_get_height (window);
 	has_native = gdk_window_has_native (window);
@@ -135,7 +156,7 @@ debug_print_window_info (GdkWindow *window, GdkWindow *highlight, GList *indent)
 	if (has_native) {
 
 		debug_print_label ("Address");
-		debug_print_style ("1;33");
+		debug_print_style ("0;36");
 		printf ("%p\n", window);
 		if (window_type != GDK_WINDOW_TYPE_HINT_NORMAL) {
 
@@ -157,7 +178,12 @@ debug_print_window_info (GdkWindow *window, GdkWindow *highlight, GList *indent)
 		printf("%dx%d %s\n", width, height, window_type_name);
 	}
 
-	debug_print_bool("Layer Surface", has_layeer_surface, FALSE, indent);
+	debug_print_g_object_data (window, wayland_popup_data_key, indent);
+	debug_print_g_object_data (window, wayland_popup_attach_widget_key, indent);
+	debug_print_g_object_data (window, wayland_layer_surface_key, indent);
+	debug_print_g_object_data (window, wayland_pointer_position_key, indent);
+	debug_print_g_object_data (window, menu_setup_func_key, indent);
+	debug_print_g_object_data (window, tooltip_setup_func_key, indent);
 	debug_print_bool("Special", window == highlight, FALSE, indent);
 }
 
@@ -168,25 +194,27 @@ debuug_print_window_tree_branch (GdkWindow *window, GdkWindow *highlight, GList 
 
 	debug_print_window_info (window, highlight, indent);
 
-	list = gdk_window_get_children (window);
+	if (window) {
+			list = gdk_window_get_children (window);
 
-	for (elem = list; elem; elem = elem->next) {
-		debug_print_window_tree_indent (indent);
-		printf("%s\u2502 ", elem == list ? "\u2594\u2594\u2594" : "   ");
-		printf("\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\n");
-		debug_print_window_tree_indent (indent);
-		if (elem->next)
-			printf ("   \u251c\u2500");
-		else
-			printf ("   \u2570\u2500");
-		indent_node = g_list_append (NULL, elem->next); // all we care about is if its NULL or not
-		indent = g_list_concat(indent, indent_node);
-		debuug_print_window_tree_branch (elem->data, highlight, indent);
-		indent = g_list_remove_link(indent, indent_node);
-		g_list_free_1 (indent_node);
+			for (elem = list; elem; elem = elem->next) {
+				debug_print_window_tree_indent (indent);
+				printf("%s\u2502 ", elem == list ? "\u2594\u2594\u2594" : "   ");
+				printf("\u2581\u2581\u2581\u2581\u2581\u2581\u2581\u2581\n");
+				debug_print_window_tree_indent (indent);
+				if (elem->next)
+					printf ("   \u251c\u2500");
+				else
+					printf ("   \u2570\u2500");
+				indent_node = g_list_append (NULL, elem->next); // all we care about is if its NULL or not
+				indent = g_list_concat(indent, indent_node);
+				debuug_print_window_tree_branch (elem->data, highlight, indent);
+				indent = g_list_remove_link(indent, indent_node);
+				g_list_free_1 (indent_node);
+			}
+
+			g_list_free (list);
 	}
-
-	g_list_free (list);
 
 	debug_print_style ("0");
 	fflush (stdout);
@@ -196,19 +224,29 @@ void
 debug_print_window_tree(GdkWindow *current, const char *code_path, int code_line_num)
 {
 	GdkWindow *root, *next;
+	static GdkWindow* cached_root_window = NULL;
+
+	if (current == NULL)
+		current = cached_root_window;
 
 	debug_print_style("1;35");
-	printf("%s", code_path);
-	debug_print_style("0");
-	printf(":");
-	debug_print_style("1;37");
-	printf("%d\n", code_line_num);
+	if (code_path) {
+		printf("%s", code_path);
+		debug_print_style("0");
+		printf(":");
+		debug_print_style("1;37");
+		printf("%d\n", code_line_num);
+	} else {
+		printf("[UNKNOWN CALLER]\n");
+	}
 
 	root = next = current;
 	while (next) {
 		root = next;
 		next = gdk_window_get_parent (next);
 	}
+
+	cached_root_window = root;
 
 	debuug_print_window_tree_branch (root, current, 0);
 	printf ("\n");
