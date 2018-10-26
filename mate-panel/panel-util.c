@@ -1200,18 +1200,24 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 			     const char *text)
 {
 	GdkWindow *panel_toplevel_window;
-	void (*tooltip_setup_func) (GtkWidget *widget, gint x, gint y, const char* text);
+	void (*tooltip_setup_func) (GtkWidget  *widget,
+				    gint        x,
+				    gint        y,
+				    gboolean    keyboard_tip,
+				    GtkTooltip *tooltip,
+				    const char *text);
 
 	if (!panel_global_config_get_tooltips_enabled ())
 		return FALSE;
 
+	gtk_tooltip_set_text (tooltip, text);
+
 	panel_toplevel_window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
 	tooltip_setup_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
-							"tooltip_setup_func");
+						"tooltip_setup_func");
 	if (tooltip_setup_func) {
-		tooltip_setup_func(widget, x, y, text);
-	} else {
-		gtk_tooltip_set_text (tooltip, text);
+		gtk_widget_set_tooltip_text (widget, text);
+		tooltip_setup_func (widget, x, y, keyboard_tip, tooltip, NULL);
 	}
 	return TRUE;
 }

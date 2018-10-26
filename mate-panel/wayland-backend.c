@@ -633,16 +633,25 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_d
 }
 
 void
-wayland_tooltip_setup (GtkWidget *widget, gint x, gint y, const char* text)
+wayland_tooltip_setup (GtkWidget  *widget,
+		       gint        x,
+		       gint        y,
+		       gboolean    keyboard_tip,
+		       GtkTooltip *tooltip,
+		       void       *_data)
 {
+	const char *tooltip_text;
 	GtkWidget *tooltip_window_widget; // NOTE: Gtk, NOT Gdk
 	GtkWidget *box;
 	GtkWidget *label;
 	GdkPoint *pointer_point_pointer;
 
+	tooltip_text = gtk_widget_get_tooltip_text (widget);
+	if (tooltip_text == NULL)
+		tooltip_text = gtk_widget_get_tooltip_markup (widget);
 	tooltip_window_widget = gtk_window_new (GTK_WINDOW_POPUP);
 	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	label = gtk_label_new (text);
+	label = gtk_label_new (tooltip_text);
 	gtk_container_add (GTK_CONTAINER (box), label);
 	gtk_container_add (GTK_CONTAINER (tooltip_window_widget), box);
 	gtk_widget_show_all (box);

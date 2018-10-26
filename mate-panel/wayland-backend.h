@@ -22,6 +22,11 @@ gboolean is_using_wayland (void);
 void wayland_registry_init (void);
 void wayland_realize_panel_toplevel (GtkWidget *window);
 void wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget);
-void wayland_tooltip_setup (GtkWidget *widget, gint x, gint y, const char* text);
+void wayland_tooltip_setup (GtkWidget  *widget,
+			    gint        x,
+			    gint        y,
+			    gboolean    keyboard_tip,
+			    GtkTooltip *tooltip,
+			    void       *_data);
 
 #endif /* __WAYLAND_BACKEND_H__ */

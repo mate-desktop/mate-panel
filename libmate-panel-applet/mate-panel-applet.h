@@ -117,6 +117,15 @@ void mate_panel_applet_setup_menu_from_resource (MatePanelApplet    *applet,
                                                  const gchar        *resource_path,
                                                  GtkActionGroup     *action_group);
 
+// Required to get correct tooltips on Wayland
+// Call at the end of "query-tooltip", or use as the "query-tooltip" callback
+void mate_panel_applet_query_tooltop_cb (GtkWidget  *widget,
+					 gint        x,
+					 gint        y,
+					 gboolean    keyboard_mode,
+					 GtkTooltip *tooltip,
+					 gpointer    _data);
+
 int mate_panel_applet_factory_main(const gchar* factory_id,gboolean  out_process, GType applet_type, MatePanelAppletFactoryCallback callback, gpointer data);
 
 int  mate_panel_applet_factory_setup_in_process (const gchar               *factory_id,

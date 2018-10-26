@@ -668,6 +668,8 @@ update_tooltip (ClockData * cd)
         if (g_strcmp0 (old_tip, tip))
             gtk_widget_set_tooltip_text (cd->panel_button, tip);
 
+        g_signal_connect (cd->panel_button, "query-tooltip", G_CALLBACK (mate_panel_applet_query_tooltop_cb), NULL);
+
         g_free (old_tip);
         if (!cd->showdate)
                 g_free (tip);
