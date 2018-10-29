@@ -50,11 +50,14 @@ static Atom atom_mate_panel_action_kill_dialog = None;
 
 static void
 panel_action_protocol_main_menu (GdkScreen *screen,
-				 guint32    activate_time)
+				 guint32    activate_time, GdkEvent  *event)
 {
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
 	AppletInfo  *info;
+	GdkVisual *visual;
+	GtkWidget *toplevel;
+	GtkStyleContext *context;
 
 	info = mate_panel_applet_get_by_type (PANEL_OBJECT_MENU_BAR, screen);
 	if (info) {
@@ -76,7 +79,16 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 
 	gtk_menu_set_screen (GTK_MENU (menu), screen);
-	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
+/* Set up theme and transparency support */
+	toplevel = gtk_widget_get_toplevel (menu);
+/* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
+	visual = gdk_screen_get_rgba_visual(screen);
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
+/* Set menu and it's toplevel window to follow panel theme */
+	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
+	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
+	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+	gtk_menu_popup_at_pointer (GTK_MENU (menu),event);
 }
 
 static void
@@ -120,11 +132,11 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 		return GDK_FILTER_CONTINUE;
 
 	if (xevent->xclient.data.l [0] == atom_mate_panel_action_main_menu)
-		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
+		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1], event);
 	else if (xevent->xclient.data.l [0] == atom_mate_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
 	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
-		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
+		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1], event);
 	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
 	else if (xevent->xclient.data.l [0] == atom_mate_panel_action_kill_dialog)
