@@ -1355,7 +1355,8 @@ weather_tooltip (GtkWidget   *widget,
                                 continue;
 
                         weather_info_setup_tooltip (info, location, tooltip, cd->format);
-
+                        // TODO: make work with Wayland
+                        // mate_panel_applet_query_tooltop_cb (widget, x, y, keyboard_mode, tooltip, NULL);
                         return TRUE;
                 }
         }

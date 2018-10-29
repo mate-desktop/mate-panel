@@ -311,7 +311,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
         gtk_widget_set_tooltip_text (priv->current_button,
                                      _("Set location as current location and use its timezone for this computer"));
-	g_signal_connect (priv->current_button, "query-tooltip", G_CALLBACK (mate_panel_applet_query_tooltop_cb), NULL);
+        g_signal_connect (priv->current_button, "query-tooltip", G_CALLBACK (mate_panel_applet_query_tooltop_cb), NULL);
 
         priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
         gtk_widget_set_halign (priv->current_marker, GTK_ALIGN_END);
@@ -681,6 +681,8 @@ weather_tooltip (GtkWidget  *widget,
         g_signal_emit (tile, signals[NEED_CLOCK_FORMAT], 0, &clock_format);
 
         weather_info_setup_tooltip (info, priv->location, tooltip, clock_format);
+        // TODO: make work with Wayland
+        // mate_panel_applet_query_tooltop_cb (widget, x, y, keyboard_mode, tooltip, NULL);
 
         return TRUE;
 }
