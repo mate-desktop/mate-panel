@@ -69,7 +69,9 @@ struct _PanelMenuBarPrivate {
 
 	PanelOrientation orientation;
 
-	Window interrupted_window;
+#ifdef HAVE_X11
+	Window interrupted_x11_window;
+#endif
 };
 
 enum {
@@ -91,8 +93,14 @@ static gboolean panel_menu_bar_reinit_tooltip(GtkWidget* widget, PanelMenuBar* m
 static gboolean panel_menu_bar_deactivate (GtkWidget* widget, PanelMenuBar* menubar)
 {
 	GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
-	panel_util_set_current_active_window (toplevel, menubar->priv->interrupted_window);
-	menubar->priv->interrupted_window = None;
+
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget)))
+	{
+		panel_util_set_current_active_x11_window (toplevel, menubar->priv->interrupted_x11_window);
+		menubar->priv->interrupted_x11_window = None;
+	}
+#endif
 
 	return FALSE;
 }
@@ -434,10 +442,13 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 	menu = GTK_MENU(menubar->priv->applications_menu);
 
 	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (menubar));
-	menubar->priv->interrupted_window = panel_util_get_current_active_window (toplevel);
 	window = gtk_widget_get_window (toplevel);
-	panel_util_set_current_active_window (toplevel, GDK_WINDOW_XID(window));
-
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_window_get_display (window))) {
+		menubar->priv->interrupted_x11_window = panel_util_get_current_active_x11_window (toplevel);
+		panel_util_set_current_active_x11_window (toplevel, GDK_WINDOW_XID(window));
+	}
+#endif
 	/*
 	 * We need to call _gtk_menu_shell_activate() here as is done in
 	 * window_key_press_handler in gtkmenubar.c which pops up menu
