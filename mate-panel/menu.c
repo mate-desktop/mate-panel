@@ -568,8 +568,8 @@ show_item_menu (GtkWidget      *item,
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
 
 #ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (panel_widget)))) {
-		wayland_popup_menu_setup(menu, GTK_WIDGET (panel_widget));
+	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (item))) {
+		wayland_popup_menu_setup(menu, item);
 	}
 #endif
 	gtk_menu_popup (GTK_MENU (menu),
