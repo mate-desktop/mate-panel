@@ -30,12 +30,12 @@
 #include <glib-object.h>
 #include <gdk/gdk.h>
 
-// #ifndef HAVE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
-#include <cairo-xlib.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
-// #endif
+#include "xstuff.h"
+#endif
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-bg.h>
@@ -50,9 +50,11 @@ enum {
 
 static void panel_background_monitor_changed (PanelBackgroundMonitor *monitor);
 
+#ifdef HAVE_X11
 static GdkFilterReturn panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 							       GdkEvent  *event,
 							       gpointer   data);
+#endif
 
 struct _PanelBackgroundMonitorClass {
 	GObjectClass   parent_class;
@@ -64,11 +66,13 @@ struct _PanelBackgroundMonitor {
 
 	GdkScreen *screen;
 
-	Window     xwindow;
 	GdkWindow *gdkwindow;
 
+#ifdef HAVE_X11
+	Window     xwindow;
 	Atom       xatom;
 	GdkAtom    gdkatom;
+#endif
 
 	cairo_surface_t *surface;
 	GdkPixbuf *gdkpixbuf;
@@ -97,8 +101,12 @@ panel_background_monitor_finalize (GObject *object)
 
 	monitor = PANEL_BACKGROUND_MONITOR (object);
 
+#ifdef HAVE_X11
+	// should do nothing if not on X (and thus not already added)
 	gdk_window_remove_filter (
 		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);
+#endif
+
 	g_signal_handlers_disconnect_by_func (monitor->screen,
 		panel_background_monitor_changed, monitor);
 
@@ -136,10 +144,14 @@ panel_background_monitor_init (PanelBackgroundMonitor *monitor)
 	monitor->screen = NULL;
 
 	monitor->gdkwindow = NULL;
-	monitor->xwindow   = None;
 
-	monitor->gdkatom = gdk_atom_intern_static_string ("_XROOTPMAP_ID");
-	monitor->xatom   = gdk_x11_atom_to_xatom (monitor->gdkatom);
+#ifdef HAVE_X11
+	if (is_using_x11 ()) {
+		monitor->xwindow = None;
+		monitor->gdkatom = gdk_atom_intern_static_string ("_XROOTPMAP_ID");
+		monitor->xatom   = gdk_x11_atom_to_xatom (monitor->gdkatom);
+	}
+#endif
 
 	monitor->surface = NULL;
 	monitor->gdkpixbuf = NULL;
@@ -152,9 +164,12 @@ panel_background_monitor_connect_to_screen (PanelBackgroundMonitor *monitor,
 					    GdkScreen              *screen)
 {
 	if (monitor->screen != NULL && monitor->gdkwindow != NULL) {
+#ifdef HAVE_X11
+		// should do nothing if not on X (and thus not already added)
 		gdk_window_remove_filter (monitor->gdkwindow,
 					  panel_background_monitor_xevent_filter,
 					  monitor);
+#endif
 	}
 
 	monitor->screen = screen;
@@ -162,14 +177,19 @@ panel_background_monitor_connect_to_screen (PanelBackgroundMonitor *monitor,
 	    G_CALLBACK (panel_background_monitor_changed), monitor);
 
 	monitor->gdkwindow = gdk_screen_get_root_window (screen);
-	monitor->xwindow   = GDK_WINDOW_XID (monitor->gdkwindow);
 
-	gdk_window_add_filter (
-		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_window_get_display (monitor->gdkwindow))) {
+		monitor->xwindow   = GDK_WINDOW_XID (monitor->gdkwindow);
 
-	gdk_window_set_events (
-		monitor->gdkwindow,
-		gdk_window_get_events (monitor->gdkwindow) | GDK_PROPERTY_CHANGE_MASK);
+		gdk_window_add_filter (
+			monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);
+
+		gdk_window_set_events (
+			monitor->gdkwindow,
+			gdk_window_get_events (monitor->gdkwindow) | GDK_PROPERTY_CHANGE_MASK);
+	}
+#endif
 }
 
 static PanelBackgroundMonitor *
@@ -213,6 +233,7 @@ panel_background_monitor_changed (PanelBackgroundMonitor *monitor)
 	g_signal_emit (monitor, signals [CHANGED], 0);
 }
 
+#ifdef HAVE_X11
 static GdkFilterReturn
 panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 					GdkEvent  *event,
@@ -233,6 +254,7 @@ panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 
 	return GDK_FILTER_CONTINUE;
 }
+#endif // HAVE_X11
 
 static GdkPixbuf *
 panel_background_monitor_tile_background (PanelBackgroundMonitor *monitor,
@@ -299,6 +321,8 @@ panel_background_monitor_tile_background (PanelBackgroundMonitor *monitor,
 	return retval;
 }
 
+// TODO: this can be made to work on Wayland as soon as we stop mate_bg_get_surface_from_root making X calls
+#ifdef HAVE_X11
 static void
 panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 {
@@ -308,6 +332,8 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 
 	display = gdk_screen_get_display (monitor->screen);
 
+	g_assert (GDK_IS_X11_DISPLAY (display));
+
 	gdk_x11_display_grab (display);
 	monitor->display_grabbed = TRUE;
 
@@ -316,14 +342,14 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 
 	if (!monitor->surface)
 	{
-		g_warning ("couldn't get background pixmap\n");
+		g_warning ("couldn't get background pixmap");
 		gdk_x11_display_ungrab (display);
 		monitor->display_grabbed = FALSE;
 		return;
 	}
 
-	pwidth = cairo_xlib_surface_get_width (monitor->surface);
-	pheight = cairo_xlib_surface_get_height (monitor->surface);
+	pwidth = cairo_image_surface_get_width (monitor->surface);
+	pheight = cairo_image_surface_get_height (monitor->surface);
 
 	gdk_window_get_geometry (monitor->gdkwindow,
 				 NULL, NULL, &rwidth, &rheight);
@@ -354,6 +380,7 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 		monitor->height = rheight;
 	}
 }
+#endif // HAVE_X11
 
 GdkPixbuf *
 panel_background_monitor_get_region (PanelBackgroundMonitor *monitor,
@@ -366,8 +393,16 @@ panel_background_monitor_get_region (PanelBackgroundMonitor *monitor,
 	int        subwidth, subheight;
 	int        subx, suby;
 
-	if (!monitor->gdkpixbuf)
-		panel_background_monitor_setup_pixbuf (monitor);
+	if (!monitor->gdkpixbuf) {
+#ifdef HAVE_X11
+		if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (monitor->screen))) {
+			panel_background_monitor_setup_pixbuf (monitor);
+		} else
+#endif
+		{ // Not on X11
+			g_warning ("Pixmap background only supported on X");
+		}
+	}
 
 	if (!monitor->gdkpixbuf)
 		return NULL;
