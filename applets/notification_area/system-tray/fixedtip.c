@@ -20,6 +20,8 @@
  * 02110-1301, USA.
  */
 
+#include <config.h>
+
 #include "fixedtip.h"
 
 // #ifdef HAVE_X11

@@ -15,6 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <config.h>
+
 #ifndef HAVE_X11
 #error file should only be built when HAVE_X11 is enabled
 #endif

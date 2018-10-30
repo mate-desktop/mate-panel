@@ -25,6 +25,8 @@
 #ifndef __PANEL_XUTILS_H__
 #define __PANEL_XUTILS_H__
 
+#include <config.h>
+
 #ifndef HAVE_X11
 #error file should only be included when HAVE_X11 is enabled
 #endif

@@ -1,6 +1,8 @@
 #ifndef __XSTUFF_H__
 #define __XSTUFF_H__
 
+#include <config.h>
+
 #ifndef HAVE_X11
 #error file should only be included when HAVE_X11 is enabled
 #endif

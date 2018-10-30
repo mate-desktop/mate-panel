@@ -9,16 +9,6 @@ AM_CPPFLAGS =							\
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-if ENABLE_WAYLAND
-AM_CFLAGS += \
-	-DHAVE_WAYLAND=1
-endif
-
-if ENABLE_X11
-AM_CFLAGS += \
-	-DHAVE_X11=1
-endif
-
 libmate_panel_appletincludedir = $(includedir)/mate-panel-4.0/libmate-panel-applet
 libmate_panel_appletinclude_HEADERS =	\
 	mate-panel-applet.h			\

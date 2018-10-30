@@ -18,13 +18,7 @@ AM_CPPFLAGS = \
 
 if ENABLE_WAYLAND
 AM_CPPFLAGS += \
-	-I$(top_builddir)/mate-panel/wayland-protocols \
-	-DHAVE_WAYLAND=1
-endif
-
-if ENABLE_X11
-AM_CPPFLAGS += \
-	-DHAVE_X11=1
+	-I$(top_builddir)/mate-panel/wayland-protocols
 endif
 
 AM_CFLAGS = $(WARN_CFLAGS)

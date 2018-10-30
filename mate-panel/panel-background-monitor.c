@@ -24,6 +24,8 @@
  *      Mark McLoughlin <mark@skynet.ie>
  */
 
+#include <config.h>
+
 #include <glib.h>
 #include <glib-object.h>
 #include <gdk/gdk.h>

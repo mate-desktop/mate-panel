@@ -1,6 +1,8 @@
 #ifndef PANEL_UTIL_H
 #define PANEL_UTIL_H
 
+#include <config.h>
+
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
