@@ -32,12 +32,10 @@
 #include <time.h>
 
 #include <cairo.h>
-#include <cairo-xlib.h>
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 
@@ -839,8 +837,8 @@ static void display_fortune_dialog(FishApplet* fish)
 		GtkWidget *scrolled;
 		GtkWidget *vbox;
 		GdkScreen *screen;
-		int        screen_width;
-		int        screen_height;
+		GdkMonitor *monitor;
+		GdkRectangle monitor_geom;
 
 		fish->fortune_dialog = gtk_dialog_new ();
 		gtk_window_set_title (GTK_WINDOW (fish->fortune_dialog), "");
@@ -866,12 +864,12 @@ static void display_fortune_dialog(FishApplet* fish)
 
 		screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 
-		screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
-		screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
-
+		monitor = gdk_display_get_monitor_at_window (gtk_widget_get_display (GTK_WIDGET (fish)),
+							     gtk_widget_get_window (GTK_WIDGET (fish)));
+		gdk_monitor_get_geometry(monitor, &monitor_geom);
 		gtk_window_set_default_size (GTK_WINDOW (fish->fortune_dialog),
-					     MIN (600, screen_width  * 0.9),
-					     MIN (350, screen_height * 0.9));
+					     MIN (600, monitor_geom.width  * 0.9),
+					     MIN (350, monitor_geom.height * 0.9));
 
 		fish->fortune_view = gtk_text_view_new ();
 		gtk_text_view_set_editable (GTK_TEXT_VIEW (fish->fortune_view), FALSE);
@@ -1480,8 +1478,8 @@ static gboolean fish_applet_draw(GtkWidget* widget, cairo_t *cr, FishApplet* fis
 
 	g_assert (fish->n_frames > 0);
 
-	width = cairo_xlib_surface_get_width (fish->surface);
-	height = cairo_xlib_surface_get_height (fish->surface);
+	width = cairo_image_surface_get_width (fish->surface);
+	height = cairo_image_surface_get_height (fish->surface);
 	src_x = 0;
 	src_y = 0;
 
