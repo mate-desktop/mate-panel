@@ -119,7 +119,8 @@ panel_applet_container_setup (MatePanelAppletContainer *container)
 		} else
 #endif
 		{ // Not using X11
-			g_warning("Requested out-of-process container, which is only supported on X");
+			g_warning("%s requested out-of-process container, which is only supported on X11",
+				  container->priv->iid);
 		}
 	} else {
 		GtkWidget *applet;
