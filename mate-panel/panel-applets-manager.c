@@ -30,6 +30,10 @@
 
 #include "panel-applets-manager.h"
 
+#ifdef HAVE_X11
+#include "gdk/gdkx.h"
+#endif
+
 G_DEFINE_ABSTRACT_TYPE (MatePanelAppletsManager, mate_panel_applets_manager, G_TYPE_OBJECT)
 
 static void
@@ -117,6 +121,18 @@ mate_panel_applets_manager_factory_activate (const gchar *iid)
 
 	for (l = mate_panel_applets_managers; l != NULL; l = l->next) {
 		MatePanelAppletsManager *manager = MATE_PANEL_APPLETS_MANAGER (l->data);
+
+#ifdef HAVE_X11
+		if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+#endif
+		{ // Not using X11
+			MatePanelAppletInfo *applet_info;
+			applet_info = MATE_PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_info (manager, iid);
+			if (mate_panel_applet_info_get_x11_only (applet_info)) {
+				g_warning ("Failed to load %p, because it only works on X11", iid);
+				return FALSE;
+			}
+		}
 
 		if (MATE_PANEL_APPLETS_MANAGER_GET_CLASS (manager)->factory_activate (manager, iid))
 			return TRUE;
