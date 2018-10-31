@@ -496,6 +496,11 @@ applet_factory (MatePanelApplet *applet,
         strcmp (iid, "SystemTrayApplet") == 0))
     return FALSE;
 
+  if (!GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (applet)))) {
+    g_warning ("Notification area only works on X");
+    return FALSE;
+  }
+
 #ifndef NOTIFICATION_AREA_INPROCESS
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 #endif

@@ -20,6 +20,11 @@
  */
 
 #include <config.h>
+
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include <string.h>
 
 #include "na-tray-child.h"
@@ -27,6 +32,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
+
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
 
@@ -417,6 +423,10 @@ na_tray_child_new (GdkScreen *screen,
    */
 
   display = gdk_screen_get_display (screen);
+  if (!GDK_IS_X11_DISPLAY (display)) {
+    g_warning ("na_tray only works on X11");
+    return NULL;
+  }
   gdk_x11_display_error_trap_push (display);
   result = XGetWindowAttributes (xdisplay, icon_window,
                                  &window_attributes);

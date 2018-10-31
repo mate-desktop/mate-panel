@@ -323,6 +323,9 @@ mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory)
 {
 	gchar *service_name;
 
+	if (!factory)
+		return FALSE;
+
 	service_name = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_SERVICE_NAME, factory->factory_id);
 	factory->owner_id = g_bus_own_name (G_BUS_TYPE_SESSION,
 			service_name,

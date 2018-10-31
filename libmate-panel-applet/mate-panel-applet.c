@@ -2389,8 +2389,10 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 	} else
 #endif
 	{ // not using X11
-		if (out_process)
+		if (out_process) {
 			g_warning("Requested out-of-process applet, which is only supported on X11");
+			return 1;
+		}
 	}
 
 	closure = g_cclosure_new(G_CALLBACK(callback), user_data, NULL);
