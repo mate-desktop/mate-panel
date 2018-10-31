@@ -87,8 +87,9 @@ mate_panel_applet_factory_info_free (MatePanelAppletFactoryInfo *info)
 
 static MatePanelAppletInfo *
 _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
-					const gchar *group,
-					const gchar *factory_id)
+					     const gchar *group,
+					     const gchar *factory_id,
+					     gboolean     in_process)
 {
 	MatePanelAppletInfo  *info;
 	char             *iid;
@@ -96,6 +97,7 @@ _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	char             *comment;
 	char             *icon;
 	char            **old_ids;
+	gboolean          x11_only;
 
 	iid = g_strdup_printf ("%s::%s", factory_id, group);
 	name = g_key_file_get_locale_string (applet_file, group,
@@ -107,7 +109,14 @@ _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	old_ids = g_key_file_get_string_list (applet_file, group,
 					      "MateComponentId", NULL, NULL);
 
-	info = mate_panel_applet_info_new (iid, name, comment, icon, (const char **) old_ids);
+	if (!in_process) {
+		x11_only = TRUE;
+	} else {
+		x11_only = g_key_file_get_boolean (applet_file, group,
+						   "X11Only", NULL);
+	}
+
+	info = mate_panel_applet_info_new (iid, name, comment, icon, (const char **) old_ids, x11_only);
 
 	g_free (iid);
 	g_free (name);
@@ -174,7 +183,9 @@ mate_panel_applets_manager_get_applet_factory_info_from_file (const gchar *filen
 			continue;
 
 		ainfo = _mate_panel_applets_manager_get_applet_info (applet_file,
-								groups[i], info->id);
+								     groups[i],
+								     info->id,
+								     info->in_process);
 		if (mate_panel_applet_info_get_old_ids (ainfo) != NULL)
 			info->has_old_ids = TRUE;
 

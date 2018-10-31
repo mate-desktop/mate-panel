@@ -53,6 +53,10 @@
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"
 
+#ifdef HAVE_X11
+#include "xstuff.h"
+#endif
+
 typedef struct {
 	PanelWidget *panel_widget;
 
@@ -381,6 +385,7 @@ panel_addto_query_applets (GSList *list)
 	for (l = applet_list; l; l = g_list_next (l)) {
 		MatePanelAppletInfo *info;
 		const char *iid, *name, *description, *icon;
+		gboolean x11_only;
 		PanelAddtoItemInfo *applet;
 
 		info = (MatePanelAppletInfo *)l->data;
@@ -389,9 +394,20 @@ panel_addto_query_applets (GSList *list)
 		name = mate_panel_applet_info_get_name (info);
 		description = mate_panel_applet_info_get_description (info);
 		icon = mate_panel_applet_info_get_icon (info);
+		x11_only = mate_panel_applet_info_get_x11_only (info);
 
 		if (!name || panel_lockdown_is_applet_disabled (iid)) {
 			continue;
+		}
+
+#ifdef HAVE_X11
+		if (!is_using_x11 ())
+#endif
+		{ // Not using X11
+			if (x11_only) {
+				g_message ("Not showing %s as it is X11 only", iid);
+				continue;
+			}
 		}
 
 		applet = g_new0 (PanelAddtoItemInfo, 1);

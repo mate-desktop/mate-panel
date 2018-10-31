@@ -32,14 +32,16 @@ struct _MatePanelAppletInfo {
 	gchar  *icon;
 
 	gchar **old_ids;
+	gboolean x11_only;
 };
 
 MatePanelAppletInfo *
 mate_panel_applet_info_new (const gchar  *iid,
-		       const gchar  *name,
-		       const gchar  *comment,
-		       const gchar  *icon,
-		       const gchar **old_ids)
+			    const gchar  *name,
+			    const gchar  *comment,
+			    const gchar  *icon,
+			    const gchar **old_ids,
+			    gboolean      x11_only)
 {
 	MatePanelAppletInfo *info;
 	int len;
@@ -63,6 +65,8 @@ mate_panel_applet_info_new (const gchar  *iid,
 				info->old_ids[i] = g_strdup (old_ids[i]);
 		}
 	}
+
+	info->x11_only = x11_only;
 
 	return info;
 }
@@ -110,4 +114,10 @@ const gchar * const *
 mate_panel_applet_info_get_old_ids (MatePanelAppletInfo *info)
 {
 	return (const gchar * const *) info->old_ids;
+}
+
+gboolean
+mate_panel_applet_info_get_x11_only (MatePanelAppletInfo *info)
+{
+	return info->x11_only;
 }
