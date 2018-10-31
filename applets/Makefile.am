@@ -1,12 +1,11 @@
 SUBDIRS =			\
 	clock			\
-	fish			\
-	wncklet
-
+	fish
 
 if ENABLE_X11
 SUBDIRS += \
-	notification_area
+	notification_area \
+	wncklet
 endif
 
 -include $(top_srcdir)/git.mk
