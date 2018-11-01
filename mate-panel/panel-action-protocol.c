@@ -58,6 +58,8 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	GdkVisual *visual;
 	GtkWidget *toplevel;
 	GtkStyleContext *context;
+	GdkSeat *seat;
+	GdkDevice *device;
 
 	info = mate_panel_applet_get_by_type (PANEL_OBJECT_MENU_BAR, screen);
 	if (info) {
@@ -88,6 +90,11 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+
+	seat = gdk_display_get_default_seat (gdk_display_get_default());
+	device = gdk_seat_get_pointer (seat);
+	gdk_event_set_device (event, device);
+
 	gtk_menu_popup_at_pointer (GTK_MENU (menu),event);
 }
 
