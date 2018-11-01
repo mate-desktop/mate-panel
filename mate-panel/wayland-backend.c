@@ -663,6 +663,9 @@ static gboolean
 wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data)
 {
 	GtkWidget *attach_widget;
+	PanelToplevel *toplevel;
+	enum xdg_positioner_anchor anchor;
+	enum xdg_positioner_gravity gravity;
 
 	// GdkPoint *pointer_on_attach_widget;
 	// gint pointer_x, pointer_y;
@@ -674,10 +677,37 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 
 	g_return_if_fail (attach_widget);
 
+	toplevel = PANEL_TOPLEVEL (gtk_widget_get_toplevel (attach_widget));
+
+	if (toplevel) {
+		switch (panel_toplevel_get_orientation (toplevel)) {
+		case PANEL_ORIENTATION_TOP:
+			anchor = XDG_POSITIONER_ANCHOR_BOTTOM_LEFT;
+			gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
+			break;
+		case PANEL_ORIENTATION_RIGHT:
+			anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
+			gravity = XDG_POSITIONER_GRAVITY_BOTTOM_LEFT;
+			break;
+		case PANEL_ORIENTATION_BOTTOM:
+			anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
+			gravity = XDG_POSITIONER_GRAVITY_TOP_RIGHT;
+			break;
+		case PANEL_ORIENTATION_LEFT:
+			anchor = XDG_POSITIONER_ANCHOR_TOP_RIGHT;
+			gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
+			break;
+		}
+	} else {
+		g_warning ("Failed to find toplevel for popup");
+		anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
+		gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
+	}
+
 	wayland_pop_popup_up_at_widget (attach_widget,
 					popup_widget,
-					XDG_POSITIONER_ANCHOR_TOP_LEFT,
-					XDG_POSITIONER_GRAVITY_TOP_RIGHT,
+					anchor,
+					gravity,
 					(GdkPoint){0, 0});
 
 	return TRUE;
