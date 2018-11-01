@@ -362,9 +362,11 @@ wayland_registry_init ()
 struct _WaylandLayerSurfaceData {
 	struct zwlr_layer_surface_v1 *layer_surface;
 	struct wl_surface *wl_surface;
+	gint width, height;
+
+	gboolean strut_data_set; // if orientation and exclusive_zone have been set
 	PanelOrientation orientation;
 	int exclusive_zone;
-	gboolean strut_data_set; // if orientation and exclusive_zone have been set
 };
 
 static void
@@ -372,6 +374,19 @@ wayland_destroy_layer_surface_data_cb (struct _WaylandLayerSurfaceData *data) {
 	if (data->layer_surface)
 		zwlr_layer_surface_v1_destroy (data->layer_surface);
 	free (data);
+}
+
+static void
+wayland_layer_surface_size_allocate_cb (GtkWidget *widget,
+					GdkRectangle *allocation,
+					struct _WaylandLayerSurfaceData *data)
+{
+	if (data->width  != allocation->width ||
+	    data->height != allocation->height) {
+		data->width  = allocation->width;
+		data->height = allocation->height;
+		zwlr_layer_surface_v1_set_size (data->layer_surface, data->width, data->height);
+	}
 }
 
 void
@@ -405,6 +420,8 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	gdk_wayland_window_set_use_custom_surface (window);
 
 	data = g_new0 (struct _WaylandLayerSurfaceData, 1);
+	data->width = gtk_widget_get_allocated_width (widget);
+	data->height = gtk_widget_get_allocated_height (widget);
 	data->strut_data_set = FALSE;
 	g_object_set_data_full(G_OBJECT (window),
 			       wayland_layer_surface_key,
@@ -413,6 +430,8 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 
 	data->wl_surface = gdk_wayland_window_get_wl_surface (window);
 	g_return_if_fail (data->wl_surface);
+
+	g_signal_connect (widget, "size-allocate", G_CALLBACK (wayland_layer_surface_size_allocate_cb), data);
 
 	//struct wl_output *wl_output = NULL;
 	uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_BOTTOM;
@@ -424,9 +443,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 								     layer,
 								     namespace);
 	g_return_if_fail (data->layer_surface);
-	gint width = 0, height = 0;
-	gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
-	zwlr_layer_surface_v1_set_size (data->layer_surface, width, height);
+	zwlr_layer_surface_v1_set_size (data->layer_surface, data->width, data->height);
 	zwlr_layer_surface_v1_set_keyboard_interactivity (data->layer_surface, TRUE);
 	zwlr_layer_surface_v1_add_listener (data->layer_surface, &layer_surface_listener, data);
 	wl_surface_commit (data->wl_surface);
