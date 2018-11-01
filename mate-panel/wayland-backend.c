@@ -260,6 +260,7 @@ is_using_wayland ()
 	return GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ());
 }
 
+/*
 static void
 widget_get_pointer_position (GtkWidget *widget, gint *pointer_x, gint *pointer_y)
 {
@@ -274,6 +275,7 @@ widget_get_pointer_position (GtkWidget *widget, gint *pointer_x, gint *pointer_y
 	pointer = gdk_seat_get_pointer (seat);
 	gdk_window_get_device_position(window, pointer, pointer_x, pointer_y, NULL);
 }
+*/
 
 static void
 wl_regitsty_handle_global (void *data,
@@ -425,8 +427,6 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	gint width = 0, height = 0;
 	gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
 	zwlr_layer_surface_v1_set_size (data->layer_surface, width, height);
-	zwlr_layer_surface_v1_set_anchor (data->layer_surface,
-					  ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);
 	zwlr_layer_surface_v1_set_keyboard_interactivity (data->layer_surface, TRUE);
 	zwlr_layer_surface_v1_add_listener (data->layer_surface, &layer_surface_listener, data);
 	wl_surface_commit (data->wl_surface);
@@ -442,7 +442,6 @@ wayland_set_strut (GdkWindow        *panel_window,
 		   guint32           strut_end)
 {
 	struct _WaylandLayerSurfaceData *data;
-	struct wl_surface *wl_surface;
 	gboolean needs_commit = FALSE;
 
 	data = g_object_get_data (G_OBJECT (panel_window), wayland_layer_surface_key);
@@ -463,6 +462,9 @@ wayland_set_strut (GdkWindow        *panel_window,
 		case PANEL_ORIENTATION_BOTTOM:
 			anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM;
 			break;
+		default:
+			g_warning ("Invalid panel orientation %d", orientation);
+			anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM;
 		}
 		zwlr_layer_surface_v1_set_anchor (data->layer_surface, anchor);
 		data->orientation = orientation;
@@ -591,7 +593,7 @@ wayland_pop_popup_up_at_widget (GtkWidget *attach_widget,
 	gint popup_width, popup_height; // Size of the Wayland surface
 	GdkPoint attach_widget_on_window; // Location of the attach widget on its parent window
 	GtkAllocation attach_widget_allocation; // Size of the attach widget
-	double popup_anchor_x, popup_anchor_y; // From 0.0 to 1.0, relative to popup surface size, the point on the popup that will be attached
+	double popup_anchor_x = 0, popup_anchor_y = 0; // From 0.0 to 1.0, relative to popup surface size, the point on the popup that will be attached
 	GdkPoint positioner_offset; // The final calculated offset to be sent to the positioner
 
 	g_return_if_fail (wayland_has_initialized);
@@ -689,8 +691,8 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 {
 	GtkWidget *attach_widget;
 	PanelToplevel *toplevel;
-	enum xdg_positioner_anchor anchor;
-	enum xdg_positioner_gravity gravity;
+	enum xdg_positioner_anchor anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
+	enum xdg_positioner_gravity gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
 
 	// GdkPoint *pointer_on_attach_widget;
 	// gint pointer_x, pointer_y;
@@ -699,7 +701,7 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 	// widget_get_pointer_position (attach_widget, &pointer_x, &pointer_y);
 
 	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
-	g_return_if_fail (attach_widget);
+	g_return_val_if_fail (attach_widget, FALSE);
 
 	toplevel = PANEL_TOPLEVEL (gtk_widget_get_toplevel (attach_widget));
 
@@ -724,8 +726,6 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 		}
 	} else {
 		g_warning ("Failed to find toplevel for popup");
-		anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
-		gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
 	}
 
 	wayland_pop_popup_up_at_widget (attach_widget,
@@ -771,13 +771,13 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_d
 {
 	GtkWidget *attach_widget;
 	PanelToplevel *toplevel;
-	enum xdg_positioner_anchor anchor;
-	enum xdg_positioner_gravity gravity;
+	enum xdg_positioner_anchor anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
+	enum xdg_positioner_gravity gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
 	static const int gap = 6;
 	GdkPoint offset = {0, 0};
 
 	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
-	g_return_if_fail (attach_widget);
+	g_return_val_if_fail (attach_widget, FALSE);
 
 	toplevel = PANEL_TOPLEVEL (gtk_widget_get_toplevel (attach_widget));
 
@@ -806,13 +806,11 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_d
 		}
 	} else {
 		g_warning ("Failed to find toplevel for tooltop");
-		anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
-		gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
 	}
 
 	wayland_pop_popup_up_at_widget (attach_widget,
 					popup_widget,
-					gravity,
+					anchor,
 					gravity,
 					offset);
 
