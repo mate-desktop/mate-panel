@@ -674,7 +674,6 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 	// widget_get_pointer_position (attach_widget, &pointer_x, &pointer_y);
 
 	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
-
 	g_return_if_fail (attach_widget);
 
 	toplevel = PANEL_TOPLEVEL (gtk_widget_get_toplevel (attach_widget));
@@ -746,14 +745,51 @@ static gboolean
 wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data)
 {
 	GtkWidget *attach_widget;
+	PanelToplevel *toplevel;
+	enum xdg_positioner_anchor anchor;
+	enum xdg_positioner_gravity gravity;
+	static const int gap = 6;
+	GdkPoint offset = {0, 0};
 
 	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
+	g_return_if_fail (attach_widget);
+
+	toplevel = PANEL_TOPLEVEL (gtk_widget_get_toplevel (attach_widget));
+
+	if (toplevel) {
+		switch (panel_toplevel_get_orientation (toplevel)) {
+		case PANEL_ORIENTATION_TOP:
+			anchor = XDG_POSITIONER_ANCHOR_BOTTOM;
+			gravity = XDG_POSITIONER_GRAVITY_BOTTOM;
+			offset.y = gap;
+			break;
+		case PANEL_ORIENTATION_RIGHT:
+			anchor = XDG_POSITIONER_ANCHOR_LEFT;
+			gravity = XDG_POSITIONER_GRAVITY_LEFT;
+			offset.x = -gap;
+			break;
+		case PANEL_ORIENTATION_BOTTOM:
+			anchor = XDG_POSITIONER_ANCHOR_TOP;
+			gravity = XDG_POSITIONER_GRAVITY_TOP;
+			offset.y = -gap;
+			break;
+		case PANEL_ORIENTATION_LEFT:
+			anchor = XDG_POSITIONER_ANCHOR_RIGHT;
+			gravity = XDG_POSITIONER_GRAVITY_RIGHT;
+			offset.x = gap;
+			break;
+		}
+	} else {
+		g_warning ("Failed to find toplevel for tooltop");
+		anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
+		gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
+	}
 
 	wayland_pop_popup_up_at_widget (attach_widget,
 					popup_widget,
-					XDG_POSITIONER_ANCHOR_TOP,
-					XDG_POSITIONER_GRAVITY_TOP,
-					(GdkPoint){0, -5});
+					gravity,
+					gravity,
+					offset);
 
 	return TRUE;
 }
