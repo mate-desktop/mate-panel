@@ -3088,6 +3088,11 @@ panel_toplevel_realize (GtkWidget *widget)
 	set_background_default_style (widget);
 	panel_background_realized (&toplevel->background, window);
 
+#ifdef HAVE_WAYLAND
+	if (is_using_wayland ())
+		wayland_realize_panel_toplevel (widget);
+#endif
+
 	panel_struts_set_window_hint (toplevel);
 
 	gdk_window_set_group (window, window);
@@ -3096,10 +3101,6 @@ panel_toplevel_realize (GtkWidget *widget)
 
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
 
-#ifdef HAVE_WAYLAND
-	if (is_using_wayland ())
-		wayland_realize_panel_toplevel (widget);
-#endif
 }
 
 static void
