@@ -260,7 +260,6 @@ is_using_wayland ()
 	return GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ());
 }
 
-/*
 static void
 widget_get_pointer_position (GtkWidget *widget, gint *pointer_x, gint *pointer_y)
 {
@@ -275,7 +274,6 @@ widget_get_pointer_position (GtkWidget *widget, gint *pointer_x, gint *pointer_y
 	pointer = gdk_seat_get_pointer (seat);
 	gdk_window_get_device_position(window, pointer, pointer_x, pointer_y, NULL);
 }
-*/
 
 static void
 wl_regitsty_handle_global (void *data,
@@ -710,12 +708,7 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 	PanelToplevel *toplevel;
 	enum xdg_positioner_anchor anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
 	enum xdg_positioner_gravity gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
-
-	// GdkPoint *pointer_on_attach_widget;
-	// gint pointer_x, pointer_y;
-
-	// GdkPoint *pointer_on_attach_widget = g_object_get_data (G_OBJECT (attach_widget), wayland_pointer_position_key);
-	// widget_get_pointer_position (attach_widget, &pointer_x, &pointer_y);
+	GdkPoint offset = {0, 0};
 
 	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
 	g_return_val_if_fail (attach_widget, FALSE);
@@ -745,11 +738,16 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 		g_warning ("Failed to find toplevel for popup");
 	}
 
+	if (attach_widget == GTK_WIDGET (toplevel)) {
+		anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
+		widget_get_pointer_position (attach_widget, &offset.x, &offset.y);
+	}
+
 	wayland_pop_popup_up_at_widget (attach_widget,
 					popup_widget,
 					anchor,
 					gravity,
-					(GdkPoint){0, 0});
+					offset);
 
 	return TRUE;
 }
