@@ -16,6 +16,7 @@ static const char *wayland_popup_attach_widget_key = "wayland_popup_attach_widge
 static const char *wayland_layer_surface_key = "wayland_layer_surface";
 static const char *menu_setup_func_key = "popup_menu_setup_func";
 static const char *tooltip_setup_func_key = "tooltip_setup_func";
+static const char *custom_tooltip_widget_key = "custom_tooltip_widget_data";
 
 static void
 debug_print_style(const char *style)
@@ -816,6 +817,19 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_d
 	return TRUE;
 }
 
+struct _WaylandCustomTooltipData {
+	GtkWidget *window; // NOTE: Gtk, NOT Gdk
+	GtkWidget *box;
+	GtkWidget *label;
+};
+
+static void
+wayland_custom_tooltip_destroy_cb (struct _WaylandCustomTooltipData *data) {
+	gtk_widget_destroy (data->window);
+	// gtk should take care of the child widgets
+	g_free (data);
+}
+
 void
 wayland_tooltip_setup (GtkWidget  *widget,
 		       gint        x,
@@ -825,27 +839,35 @@ wayland_tooltip_setup (GtkWidget  *widget,
 		       void       *_data)
 {
 	const char *tooltip_text, *tooltip_markup;
-	GtkWidget *tooltip_window_widget; // NOTE: Gtk, NOT Gdk
-	GtkWidget *box;
-	GtkWidget *label;
-	GdkPoint *pointer_point_pointer;
+	struct _WaylandCustomTooltipData *widget_data;
 
 	tooltip_text = gtk_widget_get_tooltip_text (widget);
-	tooltip_window_widget = gtk_window_new (GTK_WINDOW_POPUP);
-	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	label = gtk_label_new (tooltip_text);
+
+	widget_data = g_object_get_data (G_OBJECT (widget), custom_tooltip_widget_key);
+	if (!widget_data) {
+		widget_data = g_new0 (struct _WaylandCustomTooltipData, 1);
+		widget_data->window = gtk_window_new (GTK_WINDOW_POPUP);
+		widget_data->box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+		widget_data->label = gtk_label_new ("");
+		gtk_container_add (GTK_CONTAINER (widget_data->box), widget_data->label);
+		gtk_container_add (GTK_CONTAINER (widget_data->window), widget_data->box);
+		gtk_widget_show_all (widget_data->box);
+		// TODO: make the tooltip look nice
+		gtk_widget_set_tooltip_window (widget, GTK_WINDOW (widget_data->window));
+		g_object_set_data_full (G_OBJECT (widget),
+					custom_tooltip_widget_key,
+					widget_data,
+					(GDestroyNotify) wayland_custom_tooltip_destroy_cb);
+		wayland_set_popup_attach_widget (widget_data->window,
+						 widget,
+						 G_CALLBACK (wayland_tooltip_map_event_cb));
+	}
+	tooltip_text = gtk_widget_get_tooltip_text (widget);
 	tooltip_markup = gtk_widget_get_tooltip_markup (widget);
-	if (tooltip_markup)
-		gtk_label_set_markup (GTK_LABEL (label), tooltip_markup);
-	gtk_container_add (GTK_CONTAINER (box), label);
-	gtk_container_add (GTK_CONTAINER (tooltip_window_widget), box);
-	gtk_widget_show_all (box);
-	// TODO: make the tooltip look nice
-	gtk_widget_set_tooltip_window (widget, GTK_WINDOW (tooltip_window_widget));
-	// TODO: is tooltip_window_widget now owned by GTK, or do we need to destroy it?
-	pointer_point_pointer = g_new0 (GdkPoint, 1);
-	pointer_point_pointer->x = x;
-	pointer_point_pointer->y = y;
-	wayland_set_popup_attach_widget (tooltip_window_widget, widget, G_CALLBACK (wayland_tooltip_map_event_cb));
+	if (tooltip_markup) {
+		gtk_label_set_markup (GTK_LABEL (widget_data->label), tooltip_markup);
+	} else {
+		gtk_label_set_text (GTK_LABEL (widget_data->label), tooltip_text);
+	}
 }
 
