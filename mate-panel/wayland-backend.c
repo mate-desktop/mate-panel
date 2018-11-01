@@ -357,13 +357,26 @@ wayland_registry_init ()
 // 		return NULL;
 // }
 
+struct _WaylandLayerSurfaceData {
+	struct zwlr_layer_surface_v1 *layer_surface;
+	struct wl_surface *wl_surface;
+	PanelOrientation orientation;
+	int exclusive_zone;
+};
+
+static void
+wayland_destroy_layer_surface_data_cb (struct _WaylandLayerSurfaceData *data) {
+	if (data->layer_surface)
+		zwlr_layer_surface_v1_destroy (data->layer_surface);
+	free (data);
+}
+
 void
 wayland_realize_panel_toplevel (GtkWidget *widget)
 {
 	GdkDisplay *gdk_display;
 	GdkWindow *window;
-	struct wl_surface *wl_surface;
-	struct zwlr_layer_surface_v1 *layer_surface;
+	struct _WaylandLayerSurfaceData *data;
 	struct wl_display *wl_display;
 
 	g_assert(wayland_has_initialized);
@@ -387,36 +400,34 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 			   tooltip_setup_func_key,
 			   wayland_tooltip_setup);
 	gdk_wayland_window_set_use_custom_surface (window);
-	wl_surface = gdk_wayland_window_get_wl_surface (window);
-	g_assert (wl_surface);
+
+	data = g_new0 (struct _WaylandLayerSurfaceData, 1);
+	g_object_set_data_full(G_OBJECT (window),
+			       wayland_layer_surface_key,
+			       data,
+			       (GDestroyNotify) wayland_destroy_layer_surface_data_cb);
+
+	data->wl_surface = gdk_wayland_window_get_wl_surface (window);
+	g_return_if_fail (data->wl_surface);
 
 	//struct wl_output *wl_output = NULL;
 	uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_BOTTOM;
 	char *namespace = "mate"; // not sure what this is for
 
-	layer_surface = zwlr_layer_shell_v1_get_layer_surface (layer_shell_global,
-							       wl_surface,
-							       NULL,
-							       layer,
-							       namespace);
-	g_assert (layer_surface);
-	g_object_set_data_full(G_OBJECT (window),
-			       wayland_layer_surface_key,
-			       layer_surface,
-			       (GDestroyNotify) zwlr_layer_surface_v1_destroy);
-	// GdkRectangle rect;
-	// gdk_monitor_get_geometry(gdk_monitor, &rect);
+	data->layer_surface = zwlr_layer_shell_v1_get_layer_surface (layer_shell_global,
+								     data->wl_surface,
+								     NULL,
+								     layer,
+								     namespace);
+	g_return_if_fail (data->layer_surface);
 	gint width = 0, height = 0;
 	gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
-	zwlr_layer_surface_v1_set_size (layer_surface, width, height);
-	zwlr_layer_surface_v1_set_anchor (layer_surface,
+	zwlr_layer_surface_v1_set_size (data->layer_surface, width, height);
+	zwlr_layer_surface_v1_set_anchor (data->layer_surface,
 					  ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT);
-	//zwlr_layer_surface_v1_set_exclusive_zone (layer_surface, exclusive_zone);
-	//zwlr_layer_surface_v1_set_margin (layer_surface, margin_top, margin_right, margin_bottom, margin_left);
-	zwlr_layer_surface_v1_set_keyboard_interactivity (layer_surface, FALSE);
-	zwlr_layer_surface_v1_set_exclusive_zone (layer_surface, 200);
-	zwlr_layer_surface_v1_add_listener (layer_surface, &layer_surface_listener, NULL);
-	wl_surface_commit (wl_surface);
+	zwlr_layer_surface_v1_set_keyboard_interactivity (data->layer_surface, TRUE);
+	zwlr_layer_surface_v1_add_listener (data->layer_surface, &layer_surface_listener, data);
+	wl_surface_commit (data->wl_surface);
 	wl_display = gdk_wayland_display_get_wl_display (gdk_display);
 	wl_display_roundtrip (wl_display);
 }
@@ -424,37 +435,35 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 void
 wayland_set_strut (GdkWindow        *panel_window,
 		   PanelOrientation  orientation,
-		   guint32           strut,
+		   guint32           strut_size,
 		   guint32           strut_start,
 		   guint32           strut_end)
 {
-	struct zwlr_layer_surface_v1 *layer_surface;
+	struct _WaylandLayerSurfaceData *data;
 	uint32_t anchor;
 	struct wl_surface *wl_surface;
 
-	layer_surface = g_object_get_data (G_OBJECT (panel_window), wayland_layer_surface_key);
-	g_return_if_fail (layer_surface);
+	data = g_object_get_data (G_OBJECT (panel_window), wayland_layer_surface_key);
+	g_return_if_fail (data);
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_LEFT:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT | ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT | ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT;
 		break;
 	case PANEL_ORIENTATION_TOP:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT | ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT | ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM;
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM;
 		break;
 	}
 
-	zwlr_layer_surface_v1_set_anchor (layer_surface, anchor);
-
-	wl_surface = gdk_wayland_window_get_wl_surface (panel_window);
-	g_return_if_fail (wl_surface);
-	wl_surface_commit (wl_surface);
+	zwlr_layer_surface_v1_set_anchor (data->layer_surface, anchor);
+	zwlr_layer_surface_v1_set_exclusive_zone (data->layer_surface, strut_size);
+	wl_surface_commit (data->wl_surface);
 }
 
 struct _WaylandXdgLayerPopupData {
@@ -513,7 +522,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *attach_widget,
 {
 	GtkRequisition popup_size;
 	GdkWindow *popup_window, *attach_window;
-	struct zwlr_layer_surface_v1 *layer_surface;
+	struct _WaylandLayerSurfaceData *layer;
 	struct wl_surface *popup_wl_surface;
 	struct xdg_surface *popup_xdg_surface;
 	struct xdg_popup *popup;
@@ -532,7 +541,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *attach_widget,
 	g_assert (popup_window);
 	g_assert (attach_window);
 
-	layer_surface = g_object_get_data (G_OBJECT (attach_window), wayland_layer_surface_key);
+	layer = g_object_get_data (G_OBJECT (attach_window), wayland_layer_surface_key);
 	popup_wl_surface = gdk_wayland_window_get_wl_surface (popup_window);
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
 	xdg_surface_add_listener (popup_xdg_surface, &xdg_surface_listener, NULL);
@@ -540,7 +549,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *attach_widget,
 	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
 	xdg_popup_add_listener (popup, &xdg_popup_listener, popup_widget);
 // 	xdg_surface_set_window_geometry(popup_xdg_surface, geom_x, geom_y, geom_width, geom_height);
-	zwlr_layer_surface_v1_get_popup (layer_surface, popup);
+	zwlr_layer_surface_v1_get_popup (layer->layer_surface, popup);
 
 	data = g_new0 (struct _WaylandXdgLayerPopupData, 1);
 	data->xdg_surface = popup_xdg_surface;
