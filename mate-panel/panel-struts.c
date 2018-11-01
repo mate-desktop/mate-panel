@@ -34,6 +34,11 @@
 
 #ifdef HAVE_X11
 #include "panel-xutils.h"
+#include "xstuff.h"
+#endif
+
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
 #endif
 
 typedef struct {
