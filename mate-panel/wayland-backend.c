@@ -362,6 +362,7 @@ struct _WaylandLayerSurfaceData {
 	struct wl_surface *wl_surface;
 	PanelOrientation orientation;
 	int exclusive_zone;
+	gboolean strut_data_set; // if orientation and exclusive_zone have been set
 };
 
 static void
@@ -402,6 +403,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	gdk_wayland_window_set_use_custom_surface (window);
 
 	data = g_new0 (struct _WaylandLayerSurfaceData, 1);
+	data->strut_data_set = FALSE;
 	g_object_set_data_full(G_OBJECT (window),
 			       wayland_layer_surface_key,
 			       data,
@@ -440,30 +442,44 @@ wayland_set_strut (GdkWindow        *panel_window,
 		   guint32           strut_end)
 {
 	struct _WaylandLayerSurfaceData *data;
-	uint32_t anchor;
 	struct wl_surface *wl_surface;
+	gboolean needs_commit = FALSE;
 
 	data = g_object_get_data (G_OBJECT (panel_window), wayland_layer_surface_key);
 	g_return_if_fail (data);
 
-	switch (orientation) {
-	case PANEL_ORIENTATION_LEFT:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT;
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT;
-		break;
-	case PANEL_ORIENTATION_TOP:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM;
-		break;
+	if (!data->strut_data_set || data->orientation != orientation) {
+		uint32_t anchor;
+		switch (orientation) {
+		case PANEL_ORIENTATION_LEFT:
+			anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT;
+			break;
+		case PANEL_ORIENTATION_RIGHT:
+			anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT;
+			break;
+		case PANEL_ORIENTATION_TOP:
+			anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
+			break;
+		case PANEL_ORIENTATION_BOTTOM:
+			anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM;
+			break;
+		}
+		zwlr_layer_surface_v1_set_anchor (data->layer_surface, anchor);
+		data->orientation = orientation;
+		needs_commit = TRUE;
 	}
 
-	zwlr_layer_surface_v1_set_anchor (data->layer_surface, anchor);
-	zwlr_layer_surface_v1_set_exclusive_zone (data->layer_surface, strut_size);
-	wl_surface_commit (data->wl_surface);
+	if (!data->strut_data_set || data->exclusive_zone != strut_size) {
+		zwlr_layer_surface_v1_set_exclusive_zone (data->layer_surface, strut_size);
+		data->exclusive_zone = strut_size;
+		needs_commit = TRUE;
+	}
+
+	if (needs_commit) {
+		wl_surface_commit (data->wl_surface);
+	}
+
+	data->strut_data_set = TRUE;
 }
 
 struct _WaylandXdgLayerPopupData {
