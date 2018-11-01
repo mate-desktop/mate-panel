@@ -14,7 +14,6 @@ static gboolean wayland_has_initialized = FALSE;
 static const char *wayland_popup_data_key = "wayland_popup_data";
 static const char *wayland_popup_attach_widget_key = "wayland_popup_attach_widget";
 static const char *wayland_layer_surface_key = "wayland_layer_surface";
-static const char *wayland_pointer_position_key = "wayland_pointer_position";
 static const char *menu_setup_func_key = "popup_menu_setup_func";
 static const char *tooltip_setup_func_key = "tooltip_setup_func";
 
@@ -183,7 +182,7 @@ debug_print_window_info (GdkWindow *window, GdkWindow *highlight, GList *indent)
 	debug_print_g_object_data (window, wayland_popup_data_key, indent);
 	debug_print_g_object_data (window, wayland_popup_attach_widget_key, indent);
 	debug_print_g_object_data (window, wayland_layer_surface_key, indent);
-	debug_print_g_object_data (window, wayland_pointer_position_key, indent);
+// 	debug_print_g_object_data (window, wayland_pointer_position_key, indent);
 	debug_print_g_object_data (window, menu_setup_func_key, indent);
 	debug_print_g_object_data (window, tooltip_setup_func_key, indent);
 	debug_print_bool("Special", window == highlight, FALSE, indent);
@@ -342,20 +341,6 @@ wayland_registry_init ()
 		g_warning("Layer shell global not bound");
 	wayland_has_initialized = TRUE;
 }
-
-// struct wl_output *
-// get_primary_wl_output (GdkDisplay *gdk_display)
-// {
-// 	GdkMonitor *gdk_monitor = gdk_display_get_primary_monitor (gdk_display);
-//
-// 	if (gdk_monitor == NULL && gdk_display_get_n_monitors (gdk_display) > 0)
-// 		gdk_monitor = gdk_display_get_monitor (gdk_display, 0);
-//
-// 	if (gdk_monitor)
-// 		return gdk_wayland_monitor_get_wl_output (gdk_monitor);
-// 	else
-// 		return NULL;
-// }
 
 struct _WaylandLayerSurfaceData {
 	struct zwlr_layer_surface_v1 *layer_surface;
@@ -581,7 +566,6 @@ wayland_pop_popup_up_at_positioner (GtkWidget *attach_widget,
 
 	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
 	xdg_popup_add_listener (popup, &xdg_popup_listener, popup_widget);
-// 	xdg_surface_set_window_geometry(popup_xdg_surface, geom_x, geom_y, geom_width, geom_height);
 	zwlr_layer_surface_v1_get_popup (layer->layer_surface, popup);
 
 	data = g_new0 (struct _WaylandXdgLayerPopupData, 1);
@@ -862,7 +846,6 @@ wayland_tooltip_setup (GtkWidget  *widget,
 	pointer_point_pointer = g_new0 (GdkPoint, 1);
 	pointer_point_pointer->x = x;
 	pointer_point_pointer->y = y;
-	g_object_set_data_full (G_OBJECT (widget), wayland_pointer_position_key, pointer_point_pointer, g_free);
 	wayland_set_popup_attach_widget (tooltip_window_widget, widget, G_CALLBACK (wayland_tooltip_map_event_cb));
 }
 
