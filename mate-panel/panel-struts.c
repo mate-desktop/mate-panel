@@ -256,9 +256,6 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 void
 panel_struts_set_window_hint (PanelToplevel *toplevel)
 {
-#ifdef HAVE_X11
-	if (!GDK_IS_X11_DISPLAY (gdk_screen_get_display (gtk_window_get_screen (&toplevel->window_instance))))
-		return;
 
 	GtkWidget  *widget;
 	PanelStrut *strut;
@@ -281,8 +278,9 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	scale = gtk_widget_get_scale_factor (widget);
 	strut_size = strut->allocated_strut_size;
 
-	screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
-	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
+	panel_util_get_screen_geometry (strut->screen, &screen_width, &screen_height);
+	screen_width  /= scale;
+	screen_height /= scale;
 
 	panel_struts_get_monitor_geometry (strut->screen,
 					   strut->monitor,
@@ -324,12 +322,25 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 		break;
 	}
 
-	panel_xutils_set_strut (gtk_widget_get_window (widget),
-				strut->orientation,
-				strut_size,
-				strut->allocated_strut_start * scale,
-				strut->allocated_strut_end * scale);
-#endif // HAVE_X11
+#ifdef HAVE_X11
+	if (is_using_x11 ()) {
+		panel_xutils_set_strut (gtk_widget_get_window (widget),
+					strut->orientation,
+					strut_size,
+					strut->allocated_strut_start * scale,
+					strut->allocated_strut_end * scale);
+	}
+#endif
+
+#ifdef HAVE_WAYLAND
+	if (is_using_wayland ()) {
+		wayland_set_strut (gtk_widget_get_window (widget),
+				   strut->orientation,
+				   strut_size,
+				   strut->allocated_strut_start * scale,
+				   strut->allocated_strut_end * scale);
+	}
+#endif
 }
 
 void

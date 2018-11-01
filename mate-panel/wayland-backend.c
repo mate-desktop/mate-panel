@@ -419,6 +419,42 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	wl_display_roundtrip (wl_display);
 }
 
+void
+wayland_set_strut (GdkWindow        *panel_window,
+		   PanelOrientation  orientation,
+		   guint32           strut,
+		   guint32           strut_start,
+		   guint32           strut_end)
+{
+	struct zwlr_layer_surface_v1 *layer_surface;
+	uint32_t anchor;
+	struct wl_surface *wl_surface;
+
+	layer_surface = g_object_get_data (G_OBJECT (panel_window), wayland_layer_surface_key);
+	g_return_if_fail (layer_surface);
+
+	switch (orientation) {
+	case PANEL_ORIENTATION_LEFT:
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT | ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT | ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
+		break;
+	case PANEL_ORIENTATION_TOP:
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT | ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP;
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		anchor = ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT | ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM;
+		break;
+	}
+
+	zwlr_layer_surface_v1_set_anchor (layer_surface, anchor);
+
+	wl_surface = gdk_wayland_window_get_wl_surface (panel_window);
+	g_return_if_fail (wl_surface);
+	wl_surface_commit (wl_surface);
+}
+
 struct _WaylandXdgLayerPopupData {
 	struct xdg_surface *xdg_surface;
 	struct xdg_popup *xdg_popup;
