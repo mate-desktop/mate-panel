@@ -93,6 +93,18 @@ struct zwlr_layer_surface_v1_listener layer_surface_listener = {
 	.closed = layer_surface_handle_closed,
 };
 
+static void
+xdg_surface_handle_configure (void *data,
+			      struct xdg_surface *xdg_surface,
+			      uint32_t serial)
+{
+	xdg_surface_ack_configure (xdg_surface, serial);
+}
+
+struct xdg_surface_listener xdg_surface_listener = {
+	.configure = xdg_surface_handle_configure,
+};
+
 void
 wayland_registry_init ()
 {
@@ -112,6 +124,9 @@ struct _WaylandLayerSurfaceData {
 	struct wl_surface *wl_surface;
 	gint width, height;
 
+	struct xdg_surface *fallback_xdg_surface;
+	struct xdg_toplevel *fallback_xdg_toplevel;
+
 	gboolean strut_data_set; // if orientation and exclusive_zone have been set
 	PanelOrientation orientation;
 	int exclusive_zone;
@@ -121,6 +136,10 @@ static void
 wayland_destroy_layer_surface_data_cb (struct _WaylandLayerSurfaceData *data) {
 	if (data->layer_surface)
 		zwlr_layer_surface_v1_destroy (data->layer_surface);
+	if (data->fallback_xdg_toplevel)
+		xdg_toplevel_destroy (data->fallback_xdg_toplevel);
+	if (data->fallback_xdg_surface)
+		xdg_surface_destroy (data->fallback_xdg_surface);
 	free (data);
 }
 
@@ -133,7 +152,10 @@ wayland_layer_surface_size_allocate_cb (GtkWidget *widget,
 	    data->height != allocation->height) {
 		data->width  = allocation->width;
 		data->height = allocation->height;
-		zwlr_layer_surface_v1_set_size (data->layer_surface, data->width, data->height);
+		if (data->layer_surface)
+			zwlr_layer_surface_v1_set_size (data->layer_surface, data->width, data->height);
+		if (data->fallback_xdg_surface)
+			xdg_surface_set_window_geometry (data->fallback_xdg_surface, 0, 0, data->width, data->height);
 	}
 }
 
@@ -151,11 +173,6 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 
 	g_assert (GDK_IS_WAYLAND_DISPLAY (gdk_display));
 	g_assert (wayland_has_initialized);
-
-	if (!layer_shell_global) {
-		g_warning ("Layer shell protocol not supported");
-		return;
-	}
 
 	window = gtk_widget_get_window (widget);
 	// This will allow anyone who can get hold of the window to make a popup
@@ -185,15 +202,24 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_BOTTOM;
 	char *namespace = "mate"; // not sure what this is for
 
-	data->layer_surface = zwlr_layer_shell_v1_get_layer_surface (layer_shell_global,
-								     data->wl_surface,
-								     NULL,
-								     layer,
-								     namespace);
-	g_return_if_fail (data->layer_surface);
-	zwlr_layer_surface_v1_set_size (data->layer_surface, data->width, data->height);
-	zwlr_layer_surface_v1_set_keyboard_interactivity (data->layer_surface, TRUE);
-	zwlr_layer_surface_v1_add_listener (data->layer_surface, &layer_surface_listener, data);
+	if (layer_shell_global) {
+		data->layer_surface = zwlr_layer_shell_v1_get_layer_surface (layer_shell_global,
+									     data->wl_surface,
+									     NULL,
+									     layer,
+									     namespace);
+		g_return_if_fail (data->layer_surface);
+		zwlr_layer_surface_v1_set_size (data->layer_surface, data->width, data->height);
+		zwlr_layer_surface_v1_set_keyboard_interactivity (data->layer_surface, TRUE);
+		zwlr_layer_surface_v1_add_listener (data->layer_surface, &layer_surface_listener, data);
+	} else {
+		g_return_if_fail (xdg_wm_base_global);
+		g_warning ("Layer shell protocol not supported, panel will not be placed correctly");
+		data->fallback_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global,
+									  data->wl_surface);
+		data->fallback_xdg_toplevel = xdg_surface_get_toplevel (data->fallback_xdg_surface);
+		xdg_surface_add_listener (data->fallback_xdg_surface, &xdg_surface_listener, data);
+	}
 	wl_surface_commit (data->wl_surface);
 	wl_display = gdk_wayland_display_get_wl_display (gdk_display);
 	wl_display_roundtrip (wl_display);
@@ -211,6 +237,8 @@ wayland_set_strut (GdkWindow        *panel_window,
 
 	data = g_object_get_data (G_OBJECT (panel_window), wayland_layer_surface_key);
 	g_return_if_fail (data);
+	if (!data->layer_surface)
+		return;
 
 	if (!data->strut_data_set || data->orientation != orientation) {
 		uint32_t anchor;
@@ -260,18 +288,6 @@ wayland_destroy_popup_data_cb (struct _WaylandXdgLayerPopupData *data) {
 	xdg_popup_destroy (data->xdg_popup);
 	free (data);
 }
-
-static void
-xdg_surface_handle_configure (void *data,
-			      struct xdg_surface *xdg_surface,
-			      uint32_t serial)
-{
-	xdg_surface_ack_configure (xdg_surface, serial);
-}
-
-static const struct xdg_surface_listener xdg_surface_listener = {
-	.configure = xdg_surface_handle_configure,
-};
 
 static void
 xdg_popup_handle_configure (void *data,
@@ -329,9 +345,15 @@ wayland_pop_popup_up_at_positioner (GtkWidget *attach_widget,
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
 	xdg_surface_add_listener (popup_xdg_surface, &xdg_surface_listener, NULL);
 
-	popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
+	if (layer->layer_surface) {
+		popup = xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
+		zwlr_layer_surface_v1_get_popup (layer->layer_surface, popup);
+	} else if (layer->fallback_xdg_surface) {
+		popup = xdg_surface_get_popup (popup_xdg_surface, layer->fallback_xdg_surface, positioner);
+	} else {
+		g_assert_not_reached ();
+	}
 	xdg_popup_add_listener (popup, &xdg_popup_listener, popup_widget);
-	zwlr_layer_surface_v1_get_popup (layer->layer_surface, popup);
 
 	data = g_new0 (struct _WaylandXdgLayerPopupData, 1);
 	data->xdg_surface = popup_xdg_surface;
