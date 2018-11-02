@@ -23,10 +23,11 @@
 #ifndef __NA_TRAY_CHILD_H__
 #define __NA_TRAY_CHILD_H__
 
-// #include <config.h>
-// #ifndef HAVE_X11
-// #error file should only be included when HAVE_X11 is enabled
-// #endif
+#include <config.h>
+
+#ifndef HAVE_X11
+#error file should only be included when HAVE_X11 is enabled
+#endif
 
 #include <gtk/gtk.h>
 
