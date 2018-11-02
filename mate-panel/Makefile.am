@@ -64,7 +64,8 @@ panel_sources = \
 	panel-ditem-editor.c \
 	panel-modules.c \
 	panel-applet-info.c \
-	panel-reset.c
+	panel-reset.c \
+	panel-debug-print.c
 
 if ENABLE_WAYLAND
 panel_sources += \
