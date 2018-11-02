@@ -630,15 +630,20 @@ wayland_tooltip_setup (GtkWidget  *widget,
 	tooltip_text = gtk_widget_get_tooltip_text (widget);
 
 	widget_data = g_object_get_data (G_OBJECT (widget), custom_tooltip_widget_key);
+
 	if (!widget_data) {
+		GtkStyleContext *context;
 		widget_data = g_new0 (struct _WaylandCustomTooltipData, 1);
 		widget_data->window = gtk_window_new (GTK_WINDOW_POPUP);
+		context = gtk_widget_get_style_context (widget_data->window);
+		// TODO: why does this not work?
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOOLTIP);
 		widget_data->box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 		widget_data->label = gtk_label_new ("");
+		gtk_container_set_border_width (GTK_CONTAINER (widget_data->window), 4);
 		gtk_container_add (GTK_CONTAINER (widget_data->box), widget_data->label);
 		gtk_container_add (GTK_CONTAINER (widget_data->window), widget_data->box);
 		gtk_widget_show_all (widget_data->box);
-		// TODO: make the tooltip look nice
 		gtk_widget_set_tooltip_window (widget, GTK_WINDOW (widget_data->window));
 		g_object_set_data_full (G_OBJECT (widget),
 					custom_tooltip_widget_key,
@@ -648,6 +653,7 @@ wayland_tooltip_setup (GtkWidget  *widget,
 						 widget,
 						 G_CALLBACK (wayland_tooltip_map_event_cb));
 	}
+
 	tooltip_text = gtk_widget_get_tooltip_text (widget);
 	tooltip_markup = gtk_widget_get_tooltip_markup (widget);
 	if (tooltip_markup) {
