@@ -24,9 +24,9 @@
 
 #include "fixedtip.h"
 
-// #ifdef HAVE_X11
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
-// #endif
+#endif
 
 /* Signals */
 enum
@@ -160,8 +160,21 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
   parent_width = gdk_window_get_width(parent_window);
   parent_height = gdk_window_get_height(parent_window);
 
-  screen_width = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
-  screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+#ifdef HAVE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
+    screen_width = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
+    screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+  } else
+#endif
+  { // Not using X11
+    GdkMonitor *monitor;
+    GdkRectangle monitor_geom;
+
+    monitor = gdk_display_get_monitor_at_window (gdk_window_get_display (parent_window), parent_window);
+    gdk_monitor_get_geometry(monitor, &monitor_geom);
+    screen_width = monitor_geom.width;
+    screen_height = monitor_geom.height;
+  }
 
   /* pad between panel and message window */
 #define PAD 5
