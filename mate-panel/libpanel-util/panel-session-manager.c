@@ -22,16 +22,15 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
+#include <gio/gio.h>
 #include "panel-cleanup.h"
-#include "panel-dbus-service.h"
-
 #include "panel-session-manager.h"
 
 static GObject *panel_session_manager_constructor (GType                  type,
 						   guint                  n_construct_properties,
 						   GObjectConstructParam *construct_properties);
 
-G_DEFINE_TYPE (PanelSessionManager, panel_session_manager, PANEL_TYPE_DBUS_SERVICE);
+G_DEFINE_TYPE (PanelSessionManager, panel_session_manager, G_TYPE_OBJECT);
 
 static void
 panel_session_manager_class_init (PanelSessionManagerClass *klass)
@@ -54,28 +53,35 @@ panel_session_manager_constructor (GType                  type,
 				   GObjectConstructParam *construct_properties)
 {
 	GObject *obj;
-	GError  *error;
 
 	obj = G_OBJECT_CLASS (panel_session_manager_parent_class)->constructor (
 							type,
 							n_construct_properties,
 							construct_properties);
-
-
-	panel_dbus_service_define_service (PANEL_DBUS_SERVICE (obj),
-					   "org.gnome.SessionManager",
-					   "/org/gnome/SessionManager",
-					   "org.gnome.SessionManager");
-
-	error = NULL;
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (obj),
-						   &error)) {
-		g_message ("Could not connect to session manager: %s",
-			   error->message);
-		g_error_free (error);
-	}
-
 	return obj;
+}
+
+static GDBusProxy *
+get_bus_proxy (void)
+{
+	GError            *error = NULL;
+	static GDBusProxy *proxy = NULL;
+	if ( proxy == NULL) {
+		proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+				G_DBUS_PROXY_FLAGS_NONE,
+				NULL,
+				"org.gnome.SessionManager",
+				"/org/gnome/SessionManager",
+				"org.gnome.SessionManager",
+				NULL,
+				&error);
+		if (proxy == NULL)
+		{
+			g_warning ("Unable to contact datetime settings daemon: %s\n", error->message);
+			g_error_free (error);
+		}
+	}
+	return proxy;
 }
 
 void
@@ -90,15 +96,7 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 
 	error = NULL;
 
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
-						   &error)) {
-		g_warning ("Could not connect to session manager: %s",
-			   error->message);
-		g_error_free (error);
-		return;
-	}
-
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+	proxy = get_bus_proxy ();
 
 	_ret = g_dbus_proxy_call_sync (proxy, "Logout",
 			g_variant_new ("(u)", mode),
@@ -126,15 +124,7 @@ panel_session_manager_request_shutdown (PanelSessionManager *manager)
 
 	error = NULL;
 
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
-						   &error)) {
-		g_warning ("Could not connect to session manager: %s",
-			   error->message);
-		g_error_free (error);
-		return;
-	}
-
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+	proxy = get_bus_proxy ();
 
 	_ret = g_dbus_proxy_call_sync (proxy, "Shutdown",
 			g_variant_new ("()"),
@@ -163,16 +153,7 @@ panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
 
 	error = NULL;
 
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
-						   &error)) {
-		g_warning ("Could not connect to session manager: %s",
-			   error->message);
-		g_error_free (error);
-
-		return FALSE;
-	}
-
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+	proxy = get_bus_proxy ();
 
 	_ret = g_dbus_proxy_call_sync (proxy, "CanShutdown",
 			g_variant_new ("()"),

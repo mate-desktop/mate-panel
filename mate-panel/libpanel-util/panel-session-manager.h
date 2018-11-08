@@ -27,8 +27,6 @@
 
 #include <glib-object.h>
 
-#include "panel-dbus-service.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -44,11 +42,11 @@ typedef struct _PanelSessionManager		PanelSessionManager;
 typedef struct _PanelSessionManagerClass	PanelSessionManagerClass;
 
 struct _PanelSessionManager {
-	PanelDBusService parent;
+	GObject parent;
 };
 
 struct _PanelSessionManagerClass {
-	PanelDBusServiceClass parent_class;
+	GObjectClass parent_class;
 };
 
 GType panel_session_manager_get_type (void);
