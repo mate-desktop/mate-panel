@@ -27,29 +27,10 @@
 
 #include <glib-object.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
 #define PANEL_TYPE_SESSION_MANAGER		(panel_session_manager_get_type ())
-#define PANEL_SESSION_MANAGER(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), PANEL_TYPE_SESSION_MANAGER, PanelSessionManager))
-#define PANEL_SESSION_MANAGER_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), PANEL_TYPE_SESSION_MANAGER, PanelSessionManagerClass))
-#define PANEL_IS_SESSION_MANAGER(obj)		(G_TYPE_CHECK_INSTANCE_TYPE ((obj), PANEL_TYPE_SESSION_MANAGER))
-#define PANEL_IS_SESSION_MANAGER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), PANEL_TYPE_SESSION_MANAGER))
-#define PANEL_SESSION_MANAGER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), PANEL_TYPE_SESSION_MANAGER, PanelSessionManagerClass))
-
-typedef struct _PanelSessionManager		PanelSessionManager;
-typedef struct _PanelSessionManagerClass	PanelSessionManagerClass;
-
-struct _PanelSessionManager {
-	GObject parent;
-};
-
-struct _PanelSessionManagerClass {
-	GObjectClass parent_class;
-};
-
-GType panel_session_manager_get_type (void);
+G_DECLARE_FINAL_TYPE (PanelSessionManager, panel_session_manager, PANEL, SESSION_MANAGER, GObject);
 
 /* Keep in sync with the values defined in mate-session/session.h */
 typedef enum {
@@ -66,8 +47,6 @@ void panel_session_manager_request_shutdown (PanelSessionManager *session);
 
 gboolean panel_session_manager_is_shutdown_available (PanelSessionManager *session);
 
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* PANEL_SESSION_MANAGER_H */
