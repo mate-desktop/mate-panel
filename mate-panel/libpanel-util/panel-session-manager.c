@@ -31,7 +31,7 @@ struct _PanelSessionManager {
 	GDBusProxy *proxy;
 };
 
-G_DEFINE_TYPE (PanelSessionManager, panel_session_manager, G_TYPE_OBJECT);
+G_DEFINE_TYPE (PanelSessionManager, panel_session_manager, G_TYPE_OBJECT)
 
 static void
 panel_session_manager_finalize (GObject *object)
@@ -40,6 +40,8 @@ panel_session_manager_finalize (GObject *object)
 
 	if (manager->proxy != NULL)
 		g_object_unref (manager->proxy);
+
+	G_OBJECT_CLASS (panel_session_manager_parent_class)->finalize (object);
 }
 
 static void
@@ -77,23 +79,23 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 				      PanelSessionManagerLogoutType  mode)
 {
 	GError *error = NULL;
-	GVariant *_ret;
+	GVariant *ret;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
 	g_return_if_fail (manager->proxy != NULL);
 
-	_ret = g_dbus_proxy_call_sync (manager->proxy, "Logout",
-				       g_variant_new ("(u)", mode),
-				       G_DBUS_CALL_FLAGS_NONE,
-				       -1,
-				       NULL,
-				       &error);
-	if (_ret == NULL) {
+	ret = g_dbus_proxy_call_sync (manager->proxy, "Logout",
+				      g_variant_new ("(u)", mode),
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
+	if (ret == NULL) {
 		g_warning ("Could not ask session manager to log out: %s",
 			   error->message);
 		g_error_free (error);
 	} else {
-		g_variant_unref (_ret);
+		g_variant_unref (ret);
 	}
 }
 
@@ -101,23 +103,23 @@ void
 panel_session_manager_request_shutdown (PanelSessionManager *manager)
 {
 	GError *error = NULL;
-	GVariant *_ret;
+	GVariant *ret;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
 	g_return_if_fail (manager->proxy != NULL);
 
-	_ret = g_dbus_proxy_call_sync (manager->proxy, "Shutdown",
-				       g_variant_new ("()"),
-				       G_DBUS_CALL_FLAGS_NONE,
-				       -1,
-				       NULL,
-				       &error);
-	if (_ret == NULL) {
+	ret = g_dbus_proxy_call_sync (manager->proxy, "Shutdown",
+				      g_variant_new ("()"),
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
+	if (ret == NULL) {
 		g_warning ("Could not ask session manager to shut down: %s",
 			   error->message);
 		g_error_free (error);
 	} else {
-		g_variant_unref (_ret);
+		g_variant_unref (ret);
 	}
 }
 
@@ -126,25 +128,25 @@ panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
 {
 	GError *error = NULL;
 	gboolean is_shutdown_available;
-	GVariant *_ret;
+	GVariant *ret;
 
 	g_return_val_if_fail (PANEL_IS_SESSION_MANAGER (manager), FALSE);
 	g_return_val_if_fail (manager->proxy != NULL, FALSE);
 
-	_ret = g_dbus_proxy_call_sync (manager->proxy, "CanShutdown",
-				       g_variant_new ("()"),
-				       G_DBUS_CALL_FLAGS_NONE,
-				       -1,
-				       NULL,
-				       &error);
-	if (_ret == NULL) {
+	ret = g_dbus_proxy_call_sync (manager->proxy, "CanShutdown",
+				      g_variant_new ("()"),
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
+	if (ret == NULL) {
 		g_warning ("Could not ask session manager if shut down is available: %s",
 			   error->message);
 		g_error_free (error);
 		return FALSE;
 	} else {
-		g_variant_get(_ret, "(b)", &is_shutdown_available);
-		g_variant_unref (_ret);
+		g_variant_get (ret, "(b)", &is_shutdown_available);
+		g_variant_unref (ret);
 	}
 
 	return is_shutdown_available;
