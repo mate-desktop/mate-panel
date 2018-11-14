@@ -67,8 +67,7 @@ panel_session_manager_init (PanelSessionManager *manager)
 							"org.gnome.SessionManager",
 							NULL,
 							&error);
-	if (manager->proxy == NULL)
-	{
+	if (manager->proxy == NULL) {
 		g_warning ("Unable to contact session manager daemon: %s\n", error->message);
 		g_error_free (error);
 	}
@@ -82,7 +81,6 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 	GVariant *ret;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
-	g_return_if_fail (manager->proxy != NULL);
 
 	ret = g_dbus_proxy_call_sync (manager->proxy, "Logout",
 				      g_variant_new ("(u)", mode),
@@ -106,7 +104,6 @@ panel_session_manager_request_shutdown (PanelSessionManager *manager)
 	GVariant *ret;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
-	g_return_if_fail (manager->proxy != NULL);
 
 	ret = g_dbus_proxy_call_sync (manager->proxy, "Shutdown",
 				      g_variant_new ("()"),
@@ -131,7 +128,6 @@ panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
 	GVariant *ret;
 
 	g_return_val_if_fail (PANEL_IS_SESSION_MANAGER (manager), FALSE);
-	g_return_val_if_fail (manager->proxy != NULL, FALSE);
 
 	ret = g_dbus_proxy_call_sync (manager->proxy, "CanShutdown",
 				      g_variant_new ("()"),
