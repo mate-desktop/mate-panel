@@ -8,6 +8,10 @@ HELP_FILES = \
 
 HELP_MEDIA = figures/clock_applet.png
 
-HELP_LINGUAS = ar ca cs da de el en_GB es eu fi fr it ja ko nl oc pa pt pt_BR ru sr sv th uk zh_CN zh_HK zh_TW
+# Add linguas to be ignored, e.g. IGNORE_HELP_LINGUAS = ca de es fr
+IGNORE_HELP_LINGUAS =
+HELP_LINGUAS = $(if $(IGNORE_HELP_LINGUAS), \
+	$(filter-out $(IGNORE_HELP_LINGUAS),$(subst /,,$(dir $(wildcard */*.po)))), \
+	$(subst /,,$(dir $(wildcard */*.po))) )
 
 -include $(top_srcdir)/git.mk
