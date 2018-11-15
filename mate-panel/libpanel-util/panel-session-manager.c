@@ -82,6 +82,9 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
 
+	if (manager->proxy == NULL)
+		return;
+
 	ret = g_dbus_proxy_call_sync (manager->proxy, "Logout",
 				      g_variant_new ("(u)", mode),
 				      G_DBUS_CALL_FLAGS_NONE,
@@ -104,6 +107,9 @@ panel_session_manager_request_shutdown (PanelSessionManager *manager)
 	GVariant *ret;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
+
+	if (manager->proxy == NULL)
+		return;
 
 	ret = g_dbus_proxy_call_sync (manager->proxy, "Shutdown",
 				      g_variant_new ("()"),
@@ -128,6 +134,9 @@ panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
 	GVariant *ret;
 
 	g_return_val_if_fail (PANEL_IS_SESSION_MANAGER (manager), FALSE);
+
+	if (manager->proxy == NULL)
+		return FALSE;
 
 	ret = g_dbus_proxy_call_sync (manager->proxy, "CanShutdown",
 				      g_variant_new ("()"),
