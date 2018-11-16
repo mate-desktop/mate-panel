@@ -284,8 +284,8 @@ struct _WaylandXdgLayerPopupData {
 
 static void
 wayland_destroy_popup_data_cb (struct _WaylandXdgLayerPopupData *data) {
-	xdg_surface_destroy (data->xdg_surface);
 	xdg_popup_destroy (data->xdg_popup);
+	xdg_surface_destroy (data->xdg_surface);
 	free (data);
 }
 
