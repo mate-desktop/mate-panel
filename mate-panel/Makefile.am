@@ -128,7 +128,8 @@ panel_headers = \
 	panel-modules.h \
 	panel-applet-info.h \
 	panel-reset.h \
-	panel-schemas.h
+	panel-schemas.h \
+	panel-debug-print.h
 
 if ENABLE_WAYLAND
 panel_sources += \

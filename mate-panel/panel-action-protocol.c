@@ -136,7 +136,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	screen = gdk_event_get_screen (event);
 	display = gdk_screen_get_display (screen);
 	if (!GDK_IS_X11_DISPLAY (display))
-		return;
+		return GDK_FILTER_CONTINUE;
 	window = gdk_x11_window_lookup_for_display (display, xevent->xclient.window);
 	if (!window)
 		return GDK_FILTER_CONTINUE;

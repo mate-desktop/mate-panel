@@ -15,7 +15,7 @@
 
 #include "panel-enums-gsettings.h"
 
-gboolean is_using_x11                   ();
+gboolean is_using_x11                   (void);
 
 void xstuff_zoom_animate                (GtkWidget        *widget,
 					 cairo_surface_t  *surface,
