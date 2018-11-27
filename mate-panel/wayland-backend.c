@@ -5,8 +5,8 @@
 
 #include "panel-toplevel.h"
 
-#include "wlr-layer-shell-unstable-v1-client-protocol.h"
-#include "xdg-shell-client-protocol.h"
+#include "wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h"
+#include "wayland-protocols/xdg-shell-client-protocol.h"
 
 struct zwlr_layer_shell_v1 *layer_shell_global = NULL;
 struct xdg_wm_base *xdg_wm_base_global = NULL;
