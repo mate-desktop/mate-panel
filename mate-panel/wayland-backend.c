@@ -36,7 +36,7 @@ widget_get_pointer_position (GtkWidget *widget, gint *pointer_x, gint *pointer_y
 	display = gdk_window_get_display (window);
 	seat = gdk_display_get_default_seat (display);
 	pointer = gdk_seat_get_pointer (seat);
-	gdk_window_get_device_position(window, pointer, pointer_x, pointer_y, NULL);
+	gdk_window_get_device_position (window, pointer, pointer_x, pointer_y, NULL);
 }
 
 static void
@@ -77,7 +77,7 @@ layer_surface_handle_configure (void *data,
 	//width = w;
 	//height = h;
 	// TODO: resize the GTK window
-	//gtk_window_set_default_size(GTK_WINDOW(window), width, height);
+	//gtk_window_set_default_size (GTK_WINDOW (window), width, height);
 	zwlr_layer_surface_v1_ack_configure (surface, serial);
 }
 
@@ -115,7 +115,7 @@ wayland_registry_init ()
 	wl_registry_add_listener (wl_registry, &wl_registry_listener, NULL);
 	wl_display_roundtrip (wl_display);
 	if (!layer_shell_global)
-		g_warning("Layer shell global not bound");
+		g_warning ("Layer shell global not bound");
 	wayland_has_initialized = TRUE;
 }
 
@@ -167,7 +167,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	struct _WaylandLayerSurfaceData *data;
 	struct wl_display *wl_display;
 
-	g_assert(wayland_has_initialized);
+	g_assert (wayland_has_initialized);
 
 	gdk_display = gdk_window_get_display (gtk_widget_get_window (widget));
 
@@ -188,10 +188,10 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	data->width = gtk_widget_get_allocated_width (widget);
 	data->height = gtk_widget_get_allocated_height (widget);
 	data->strut_data_set = FALSE;
-	g_object_set_data_full(G_OBJECT (window),
-			       wayland_layer_surface_key,
-			       data,
-			       (GDestroyNotify) wayland_destroy_layer_surface_data_cb);
+	g_object_set_data_full (G_OBJECT (window),
+				wayland_layer_surface_key,
+				data,
+				(GDestroyNotify) wayland_destroy_layer_surface_data_cb);
 
 	data->wl_surface = gdk_wayland_window_get_wl_surface (window);
 	g_return_if_fail (data->wl_surface);
@@ -306,7 +306,7 @@ xdg_popup_handle_popup_done (void *data,
 			     struct xdg_popup *xdg_popup)
 {
 	GtkWidget *menu = data;
-	gtk_widget_unmap(menu);
+	gtk_widget_unmap (menu);
 }
 
 static const struct xdg_popup_listener xdg_popup_listener = {
@@ -388,10 +388,10 @@ wayland_pop_popup_up_at_widget (GtkWidget *popup_widget,
 	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
 	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
 
-	gtk_widget_translate_coordinates(attach_widget, gtk_widget_get_toplevel(attach_widget),
-					 0, 0,
-					 &attach_widget_on_window.x, &attach_widget_on_window.y);
-	gtk_widget_get_allocated_size(attach_widget, &attach_widget_allocation, NULL);
+	gtk_widget_translate_coordinates (attach_widget, gtk_widget_get_toplevel (attach_widget),
+					  0, 0,
+					  &attach_widget_on_window.x, &attach_widget_on_window.y);
+	gtk_widget_get_allocated_size (attach_widget, &attach_widget_allocation, NULL);
 	gdk_window_get_geometry (gtk_widget_get_window (popup_widget),
 				 &popup_geom.x, &popup_geom.y,
 				 &popup_geom.width, &popup_geom.height);
@@ -468,10 +468,10 @@ wayland_popup_unmap_override_cb (GtkWidget *popup_widget, void *_data)
 
 	// Call the default unmap handler
 	GValue args[1] = { G_VALUE_INIT };
-	g_value_init (&args[0], G_TYPE_FROM_INSTANCE(popup_widget));
-	g_value_set_object(&args[0], popup_widget);
+	g_value_init (&args[0], G_TYPE_FROM_INSTANCE (popup_widget));
+	g_value_set_object (&args[0], popup_widget);
 	g_signal_chain_from_overridden (args, NULL);
-	g_value_unset(&args[0]);
+	g_value_unset (&args[0]);
 }
 
 static void
@@ -490,7 +490,7 @@ wayland_set_popup_attach_widget (GtkWidget *popup_widget, GtkWidget* attach_widg
 		// To do that, we have to override the default unmap signal
 		GType popup_type = G_TYPE_FROM_INSTANCE (popup_widget);
 		gint unmap_signal_id = g_signal_lookup ("unmap", popup_type);
-		GClosure* closure = g_cclosure_new(G_CALLBACK (wayland_popup_unmap_override_cb), NULL, NULL);
+		GClosure* closure = g_cclosure_new (G_CALLBACK (wayland_popup_unmap_override_cb), NULL, NULL);
 		g_signal_override_class_closure (unmap_signal_id, popup_type, closure);
 
 		g_signal_connect (popup_widget, "realize", G_CALLBACK (wayland_popup_realize_cb), NULL);
