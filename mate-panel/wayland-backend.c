@@ -479,6 +479,8 @@ wayland_set_popup_attach_widget (GtkWidget *popup_widget, GtkWidget* attach_widg
 {
 	GtkWidget *prev_attach_widget;
 
+	popup_widget = gtk_widget_get_toplevel (popup_widget);
+
 	// Get the previous window this popup was attached to
 	prev_attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
 
