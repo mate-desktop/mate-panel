@@ -475,6 +475,29 @@ wayland_popup_unmap_override_cb (GtkWidget *popup_widget, void *_data)
 }
 
 static void
+wayland_popup_override_unmap_signal (GtkWidget *popup_widget)
+{
+	GType popup_type = G_TYPE_FROM_INSTANCE (popup_widget);
+
+	// Keep track of the types we have overridden, so we don't get "is already overridden for signal id" warnings
+	static GHashTable *types_set = NULL;
+	if (!types_set)
+		types_set = g_hash_table_new_full (g_int64_hash, g_int64_equal, g_free, NULL);
+
+	if (!g_hash_table_lookup (types_set, &popup_type)) {
+		// Insert the type into the set
+		GType *type_ptr = g_new (GType, 1);
+		*type_ptr = popup_type;
+		// Insert it as the key and the value, because the key and any non-null value is all we care about
+		g_hash_table_insert (types_set, type_ptr, type_ptr);
+
+		gint unmap_signal_id = g_signal_lookup ("unmap", popup_type);
+		GClosure* closure = g_cclosure_new (G_CALLBACK (wayland_popup_unmap_override_cb), NULL, NULL);
+		g_signal_override_class_closure (unmap_signal_id, popup_type, closure);
+	}
+}
+
+static void
 wayland_set_popup_attach_widget (GtkWidget *popup_widget, GtkWidget* attach_widget, GCallback map_event_cb)
 {
 	GtkWidget *prev_attach_widget;
@@ -488,11 +511,7 @@ wayland_set_popup_attach_widget (GtkWidget *popup_widget, GtkWidget* attach_widg
 	if (!prev_attach_widget) {
 		// On unmap, we need to destroy the shell surface we create before GTK destroys its wl_surface
 		// To do that, we have to override the default unmap signal
-		GType popup_type = G_TYPE_FROM_INSTANCE (popup_widget);
-		gint unmap_signal_id = g_signal_lookup ("unmap", popup_type);
-		GClosure* closure = g_cclosure_new (G_CALLBACK (wayland_popup_unmap_override_cb), NULL, NULL);
-		g_signal_override_class_closure (unmap_signal_id, popup_type, closure);
-
+		wayland_popup_override_unmap_signal (popup_widget);
 		g_signal_connect (popup_widget, "realize", G_CALLBACK (wayland_popup_realize_cb), NULL);
 		g_signal_connect (popup_widget, "map-event", map_event_cb, NULL);
 	}
