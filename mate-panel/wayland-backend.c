@@ -368,6 +368,21 @@ wayland_pop_popup_up_at_positioner (GtkWidget *popup_widget,
 	wl_display_roundtrip (gdk_wayland_display_get_wl_display (gdk_window_get_display (popup_window)));
 }
 
+// Gets the upper left and size of the portion of the window that is actually used (not shadows and whatnot)
+// It does this by walking down the gdk_window tree, as long as there is exactly one child
+static void
+wayland_widget_get_logical_geom (GtkWidget *widget, GdkRectangle *geom)
+{
+	GdkWindow *window;
+	GList *list;
+
+	window = gtk_widget_get_window (widget);
+	list = gdk_window_get_children (window);
+	if (list && !list->next) // If there is exactly one child window
+		window = list->data;
+	gdk_window_get_geometry (window, &geom->x, &geom->y, &geom->width, &geom->height);
+}
+
 static void
 wayland_pop_popup_up_at_widget (GtkWidget *popup_widget,
 				GtkWidget *attach_widget,
@@ -387,15 +402,12 @@ wayland_pop_popup_up_at_widget (GtkWidget *popup_widget,
 	g_return_if_fail (xdg_wm_base_global);
 
 	positioner = xdg_wm_base_create_positioner (xdg_wm_base_global);
-	attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
 
 	gtk_widget_translate_coordinates (attach_widget, gtk_widget_get_toplevel (attach_widget),
 					  0, 0,
 					  &attach_widget_on_window.x, &attach_widget_on_window.y);
 	gtk_widget_get_allocated_size (attach_widget, &attach_widget_allocation, NULL);
-	gdk_window_get_geometry (gtk_widget_get_window (popup_widget),
-				 &popup_geom.x, &popup_geom.y,
-				 &popup_geom.width, &popup_geom.height);
+	wayland_widget_get_logical_geom (popup_widget, &popup_geom);
 	popup_width = gdk_window_get_width (gtk_widget_get_window (popup_widget));
 	popup_height = gdk_window_get_height (gtk_widget_get_window (popup_widget));
 	xdg_positioner_set_anchor_rect (positioner,
@@ -405,7 +417,7 @@ wayland_pop_popup_up_at_widget (GtkWidget *popup_widget,
 	case XDG_POSITIONER_GRAVITY_LEFT:
 	case XDG_POSITIONER_GRAVITY_BOTTOM_LEFT:
 	case XDG_POSITIONER_GRAVITY_TOP_LEFT:
-		popup_anchor_x = 0;
+		popup_anchor_x = 1;
 		break;
 
 	case XDG_POSITIONER_GRAVITY_NONE:
@@ -417,26 +429,26 @@ wayland_pop_popup_up_at_widget (GtkWidget *popup_widget,
 	case XDG_POSITIONER_GRAVITY_RIGHT:
 	case XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT:
 	case XDG_POSITIONER_GRAVITY_TOP_RIGHT:
-		popup_anchor_x = 1;
+		popup_anchor_x = 0;
 		break;
 	}
 	switch (gravity) {
 	case XDG_POSITIONER_GRAVITY_TOP:
 	case XDG_POSITIONER_GRAVITY_TOP_LEFT:
 	case XDG_POSITIONER_GRAVITY_TOP_RIGHT:
-		popup_anchor_y = 0;
+		popup_anchor_y = 1;
 		break;
 
 	case XDG_POSITIONER_GRAVITY_NONE:
 	case XDG_POSITIONER_GRAVITY_LEFT:
 	case XDG_POSITIONER_GRAVITY_RIGHT:
-		popup_anchor_y = 1;
+		popup_anchor_y = 0.5;
 		break;
 
 	case XDG_POSITIONER_GRAVITY_BOTTOM:
 	case XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT:
 	case XDG_POSITIONER_GRAVITY_BOTTOM_LEFT:
-		popup_anchor_y = 0.5;
+		popup_anchor_y = 0;
 		break;
 	}
 	positioner_offset.x = (popup_width  - popup_geom.width)  * popup_anchor_x - popup_geom.x + offset.x;
