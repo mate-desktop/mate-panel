@@ -327,7 +327,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *popup_widget,
 	struct xdg_popup *popup;
 	struct _WaylandXdgLayerPopupData *data;
 
-	g_object_set_data (G_OBJECT (popup_widget),
+	g_object_set_data (G_OBJECT (gtk_widget_get_toplevel (popup_widget)),
 			   wayland_popup_data_key,
 			   NULL);
 
@@ -358,7 +358,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *popup_widget,
 	data = g_new0 (struct _WaylandXdgLayerPopupData, 1);
 	data->xdg_surface = popup_xdg_surface;
 	data->xdg_popup = popup;
-	g_object_set_data_full (G_OBJECT (popup_widget),
+	g_object_set_data_full (G_OBJECT (gtk_widget_get_toplevel (popup_widget)),
 				wayland_popup_data_key,
 				data,
 				(GDestroyNotify) wayland_destroy_popup_data_cb);
@@ -477,7 +477,7 @@ wayland_popup_unmap_override_cb (GtkWidget *popup_widget, void *_data)
 static void
 wayland_popup_override_unmap_signal (GtkWidget *popup_widget)
 {
-	GType popup_type = G_TYPE_FROM_INSTANCE (popup_widget);
+	GType popup_type = G_TYPE_FROM_INSTANCE (gtk_widget_get_toplevel (popup_widget));
 
 	// Keep track of the types we have overridden, so we don't get "is already overridden for signal id" warnings
 	static GHashTable *types_set = NULL;
@@ -501,8 +501,6 @@ static void
 wayland_set_popup_attach_widget (GtkWidget *popup_widget, GtkWidget* attach_widget, GCallback map_event_cb)
 {
 	GtkWidget *prev_attach_widget;
-
-	popup_widget = gtk_widget_get_toplevel (popup_widget);
 
 	// Get the previous window this popup was attached to
 	prev_attach_widget = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_attach_widget_key);
