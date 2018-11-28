@@ -327,7 +327,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *popup_widget,
 	struct xdg_popup *popup;
 	struct _WaylandXdgLayerPopupData *data;
 
-	g_object_set_data (G_OBJECT (gtk_widget_get_toplevel (popup_widget)),
+	g_object_set_data (G_OBJECT (popup_widget),
 			   wayland_popup_data_key,
 			   NULL);
 
@@ -342,6 +342,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *popup_widget,
 
 	layer = g_object_get_data (G_OBJECT (attach_window), wayland_layer_surface_key);
 	popup_wl_surface = gdk_wayland_window_get_wl_surface (popup_window);
+	g_assert (popup_wl_surface);
 	popup_xdg_surface = xdg_wm_base_get_xdg_surface (xdg_wm_base_global, popup_wl_surface);
 	xdg_surface_add_listener (popup_xdg_surface, &xdg_surface_listener, NULL);
 
@@ -358,7 +359,7 @@ wayland_pop_popup_up_at_positioner (GtkWidget *popup_widget,
 	data = g_new0 (struct _WaylandXdgLayerPopupData, 1);
 	data->xdg_surface = popup_xdg_surface;
 	data->xdg_popup = popup;
-	g_object_set_data_full (G_OBJECT (gtk_widget_get_toplevel (popup_widget)),
+	g_object_set_data_full (G_OBJECT (popup_widget),
 				wayland_popup_data_key,
 				data,
 				(GDestroyNotify) wayland_destroy_popup_data_cb);
@@ -477,7 +478,7 @@ wayland_popup_unmap_override_cb (GtkWidget *popup_widget, void *_data)
 static void
 wayland_popup_override_unmap_signal (GtkWidget *popup_widget)
 {
-	GType popup_type = G_TYPE_FROM_INSTANCE (gtk_widget_get_toplevel (popup_widget));
+	GType popup_type = G_TYPE_FROM_INSTANCE (popup_widget);
 
 	// Keep track of the types we have overridden, so we don't get "is already overridden for signal id" warnings
 	static GHashTable *types_set = NULL;
@@ -576,7 +577,7 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, void *_data
 void
 wayland_popup_menu_setup (GtkWidget *menu, GtkWidget *attach_widget)
 {
-	wayland_set_popup_attach_widget (menu, attach_widget, G_CALLBACK (wayland_menu_map_event_cb));
+	wayland_set_popup_attach_widget (gtk_widget_get_toplevel (menu), attach_widget, G_CALLBACK (wayland_menu_map_event_cb));
 }
 
 static gboolean
