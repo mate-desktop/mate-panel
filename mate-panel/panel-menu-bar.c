@@ -28,8 +28,14 @@
 
 #include "panel-menu-bar.h"
 
+#ifdef HAVE_X11
 #include <X11/Xlib.h>
 #include <gdk/gdkx.h>
+#endif
+
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif
 
 #include <string.h>
 #include <glib/gi18n.h>
@@ -192,6 +198,11 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menubar->priv->applications_item), menubar->priv->applications_menu);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->applications_item);
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (menubar)))) {
+		wayland_popup_menu_setup(menubar->priv->applications_menu, menubar->priv->applications_item);
+	}
+#endif
 
 	menubar->priv->places_item = panel_place_menu_item_new(FALSE);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->places_item);
@@ -449,6 +460,7 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 		panel_util_set_current_active_x11_window (toplevel, GDK_WINDOW_XID(window));
 	}
 #endif
+
 	/*
 	 * We need to call _gtk_menu_shell_activate() here as is done in
 	 * window_key_press_handler in gtkmenubar.c which pops up menu

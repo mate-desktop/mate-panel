@@ -36,6 +36,10 @@
 
 #include "panel-menu-items.h"
 
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif
+
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
@@ -1032,6 +1036,11 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	GFile     *file;
 
 	places_menu = panel_create_menu ();
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (place_item)))) {
+		wayland_popup_menu_setup(places_menu, GTK_WIDGET (place_item));
+	}
+#endif
 
 	file = g_file_new_for_path (g_get_home_dir ());
 	uri = g_file_get_uri (file);
@@ -1241,6 +1250,12 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
 	g_object_set_data (G_OBJECT (desktop_menu),
 			   "panel-menu-append-callback-data",
 			   desktop_item);
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (desktop_item)))) {
+		wayland_popup_menu_setup(desktop_menu, GTK_WIDGET (desktop_item));
+	}
+#endif
 
 	return desktop_menu;
 }
