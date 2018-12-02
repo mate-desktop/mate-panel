@@ -183,6 +183,7 @@ GtkWidget *
 panel_image_menu_item_new_from_icon (const gchar *icon_name,
 				     const gchar *label_name)
 {
+	gchar *concat;
 	GtkWidget *icon;
 	GtkStyleContext *context;
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -193,7 +194,8 @@ panel_image_menu_item_new_from_icon (const gchar *icon_name,
 	else
 		icon = gtk_image_new ();
 
-	GtkWidget *label_menu = gtk_label_new_with_mnemonic (g_strconcat (label_name, "     ", NULL));
+	concat = g_strconcat (label_name, "     ", NULL);
+	GtkWidget *label_menu = gtk_label_new_with_mnemonic (concat);
 	GtkWidget *menuitem = gtk_menu_item_new ();
  
 	context = gtk_widget_get_style_context (GTK_WIDGET(icon_box));
@@ -210,6 +212,8 @@ panel_image_menu_item_new_from_icon (const gchar *icon_name,
 	g_settings_bind (icon_settings, "menus-have-icons", icon, "visible",
                          G_SETTINGS_BIND_GET);
 
+	g_free (concat);
+
 	return menuitem;
 }
 
@@ -217,6 +221,7 @@ GtkWidget *
 panel_image_menu_item_new_from_gicon (GIcon       *gicon,
 				      const gchar *label_name)
 {
+	gchar *concat;
 	GtkWidget *icon;
 	GtkStyleContext *context;
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -227,7 +232,8 @@ panel_image_menu_item_new_from_gicon (GIcon       *gicon,
 	else
 		icon = gtk_image_new ();
 
-	GtkWidget *label_menu = gtk_label_new_with_mnemonic (g_strconcat (label_name, "     ", NULL));
+	concat = g_strconcat (label_name, "     ", NULL);
+	GtkWidget *label_menu = gtk_label_new_with_mnemonic (concat);
 	GtkWidget *menuitem = gtk_menu_item_new ();
 
 	context = gtk_widget_get_style_context (GTK_WIDGET(icon_box));
@@ -244,6 +250,8 @@ panel_image_menu_item_new_from_gicon (GIcon       *gicon,
 	g_settings_bind (icon_settings, "menus-have-icons", icon, "visible",
                          G_SETTINGS_BIND_GET);
 
+	g_free (concat);
+
 	return menuitem;
 }
 
@@ -253,9 +261,9 @@ panel_check_menu_item_new (GtkWidget *widget_check)
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget *menuitem = gtk_menu_item_new ();
 	GtkWidget *label_name = gtk_bin_get_child (GTK_BIN (widget_check));
+	gchar *concat = g_strconcat (gtk_label_get_label (GTK_LABEL (label_name)), "     ", NULL);
 
-	gtk_label_set_text_with_mnemonic (GTK_LABEL (label_name),
-					  g_strconcat (gtk_label_get_label (GTK_LABEL (label_name)), "     ", NULL));
+	gtk_label_set_text_with_mnemonic (GTK_LABEL (label_name), concat);
 
 	gtk_widget_set_margin_start (widget_check, 2);
 	gtk_widget_set_margin_start (gtk_bin_get_child (GTK_BIN (widget_check)), 11);
@@ -265,6 +273,8 @@ panel_check_menu_item_new (GtkWidget *widget_check)
 	gtk_widget_show_all (menuitem);
 
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label_name), menuitem);
+
+	g_free (concat);
 
 	return menuitem;
 }
