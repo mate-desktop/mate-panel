@@ -1471,7 +1471,7 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 		retval = PANEL_COLOR_BACKGROUND;
 
 	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-#ifdef HAVE_X11s
+#ifdef HAVE_X11
 		if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
 			Window pixmap_id;
 			int             x, y;
