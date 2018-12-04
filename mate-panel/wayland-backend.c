@@ -309,6 +309,25 @@ wayland_popup_data_destroy (WaylandPopupData *data)
 	g_free(data);
 }
 
+static PanelToplevel *
+wayland_popup_data_get_panel_toplevel (WaylandPopupData *popup_data)
+{
+	while (popup_data) {
+		GtkWidget *toplevel_widget;
+
+		toplevel_widget = gtk_widget_get_toplevel (popup_data->attach_widget);
+		if (PANEL_IS_TOPLEVEL (toplevel_widget)) {
+			return PANEL_TOPLEVEL (toplevel_widget);
+		} else {
+			popup_data = g_object_get_data(G_OBJECT (toplevel_widget),
+						       wayland_popup_data_key);
+		}
+	}
+
+	g_warning ("Wayland popup does not have a PanelToplevel");
+	return NULL;
+}
+
 static void
 xdg_popup_handle_configure (void *data,
 			    struct xdg_popup *xdg_popup,
@@ -554,7 +573,7 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandPopu
 	g_return_val_if_fail (popup_data, FALSE);
 	g_return_val_if_fail (popup_data->widget == popup_widget, FALSE);
 
-	toplevel = PANEL_TOPLEVEL (gtk_widget_get_toplevel (popup_data->attach_widget));
+	toplevel = wayland_popup_data_get_panel_toplevel (popup_data);
 
 	if (toplevel) {
 		switch (panel_toplevel_get_orientation (toplevel)) {
@@ -576,7 +595,7 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandPopu
 			break;
 		}
 	} else {
-		g_warning ("Failed to find toplevel for popup");
+		g_warning ("Orientation unknown because menu has not toplevel");
 	}
 
 	if (popup_data->attach_widget == GTK_WIDGET (toplevel)) {
@@ -612,7 +631,7 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandP
 	g_return_val_if_fail (popup_data, FALSE);
 	g_return_val_if_fail (popup_data->widget == popup_widget, FALSE);
 
-	toplevel = PANEL_TOPLEVEL (gtk_widget_get_toplevel (popup_data->attach_widget));
+	toplevel = wayland_popup_data_get_panel_toplevel (popup_data);
 
 	if (toplevel) {
 		switch (panel_toplevel_get_orientation (toplevel)) {
@@ -638,7 +657,7 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandP
 			break;
 		}
 	} else {
-		g_warning ("Failed to find toplevel for tooltop");
+		g_warning ("Orientation unknown because tooltip has no toplevel");
 	}
 
 	wayland_pop_popup_up_at_widget (popup_data,
