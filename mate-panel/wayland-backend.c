@@ -358,7 +358,7 @@ wayland_get_xdg_popup (struct xdg_surface *popup_xdg_surface, GtkWidget *attach_
 {
 	GdkWindow *attach_window;
 	struct _WaylandLayerSurfaceData *layer_data;
-// 	WaylandPopupData *attach_popup_data;
+	WaylandPopupData *attach_popup_data;
 
 	attach_window = gdk_window_get_toplevel (gtk_widget_get_window (attach_widget));
 	layer_data = g_object_get_data (G_OBJECT (attach_window), wayland_layer_surface_key);
@@ -371,6 +371,11 @@ wayland_get_xdg_popup (struct xdg_surface *popup_xdg_surface, GtkWidget *attach_
 		} else if (layer_data->fallback_xdg_surface) {
 			return xdg_surface_get_popup (popup_xdg_surface, layer_data->fallback_xdg_surface, positioner);
 		}
+	}
+
+	attach_popup_data = g_object_get_data (G_OBJECT (gtk_widget_get_toplevel (attach_widget)), wayland_popup_data_key);
+	if (attach_popup_data && attach_popup_data->xdg_surface) {
+		return xdg_surface_get_popup (popup_xdg_surface, attach_popup_data->xdg_surface, positioner);
 	}
 
 	g_warning ("Was unable to attach a Wayland popup to window %p", attach_window);
@@ -579,6 +584,7 @@ wayland_setup_popup_data (GtkWidget *popup_widget, GtkWidget* attach_widget, GCa
 static gboolean
 wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandPopupData *popup_data)
 {
+	WaylandPopupData *parent_popup_data;
 	PanelToplevel *toplevel;
 	enum xdg_positioner_anchor anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
 	enum xdg_positioner_gravity gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
@@ -587,9 +593,15 @@ wayland_menu_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandPopu
 	g_return_val_if_fail (popup_data, FALSE);
 	g_return_val_if_fail (popup_data->widget == popup_widget, FALSE);
 
+	parent_popup_data = g_object_get_data (G_OBJECT (gtk_widget_get_toplevel (popup_data->attach_widget)),
+					       wayland_popup_data_key);
 	toplevel = wayland_popup_data_get_panel_toplevel (popup_data);
 
-	if (toplevel) {
+	if (parent_popup_data) {
+		// We assume popups on popups behave like nested menus
+		anchor = XDG_POSITIONER_ANCHOR_TOP_RIGHT;
+		gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
+	} else if (toplevel) {
 		switch (panel_toplevel_get_orientation (toplevel)) {
 		case PANEL_ORIENTATION_TOP:
 			anchor = XDG_POSITIONER_ANCHOR_BOTTOM_LEFT;
