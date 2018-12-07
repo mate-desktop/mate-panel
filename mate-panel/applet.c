@@ -38,6 +38,7 @@
 #include "panel-properties-dialog.h"
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
+#include "menu.h"
 
 #ifdef HAVE_WAYLAND
 #include "wayland-backend.h"
