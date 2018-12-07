@@ -71,6 +71,8 @@ GtkWidget      *add_menu_separator   (GtkWidget *menu);
 gboolean menu_dummy_button_press_event (GtkWidget      *menuitem,
 					GdkEventButton *event);
 
+// like gtk_menu_item_set_submenu, but also sets up for Wayland if needed
+void panel_menu_item_set_submenu (GtkMenuItem *menu_item, GtkWidget *submenu);
 
 #ifdef __cplusplus
 }

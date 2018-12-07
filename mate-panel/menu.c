@@ -1410,3 +1410,14 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 	}
 	return retval;
 }
+
+void
+panel_menu_item_set_submenu (GtkMenuItem *menu_item, GtkWidget *submenu)
+{
+	gtk_menu_item_set_submenu (menu_item, submenu);
+#ifdef HAVE_WAYLAND
+	if (is_using_wayland ()) {
+		wayland_popup_menu_setup(submenu, GTK_WIDGET (menu_item));
+	}
+#endif
+}
