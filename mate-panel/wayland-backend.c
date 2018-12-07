@@ -8,6 +8,9 @@
 #include "wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h"
 #include "wayland-protocols/xdg-shell-client-protocol.h"
 
+static const int tooltip_placement_spacing = 6;
+static const int tooltip_border_size = 4;
+
 struct zwlr_layer_shell_v1 *layer_shell_global = NULL;
 struct xdg_wm_base *xdg_wm_base_global = NULL;
 static gboolean wayland_has_initialized = FALSE;
@@ -360,6 +363,7 @@ wayland_get_xdg_popup (struct xdg_surface *popup_xdg_surface, GtkWidget *attach_
 	struct _WaylandLayerSurfaceData *layer_data;
 	WaylandPopupData *attach_popup_data;
 
+	// if attaching to a Layer Surface
 	attach_window = gdk_window_get_toplevel (gtk_widget_get_window (attach_widget));
 	layer_data = g_object_get_data (G_OBJECT (attach_window), wayland_layer_surface_key);
 	if (layer_data) {
@@ -373,6 +377,7 @@ wayland_get_xdg_popup (struct xdg_surface *popup_xdg_surface, GtkWidget *attach_
 		}
 	}
 
+	// If attaching to a parent popup
 	attach_popup_data = g_object_get_data (G_OBJECT (gtk_widget_get_toplevel (attach_widget)), wayland_popup_data_key);
 	if (attach_popup_data && attach_popup_data->xdg_surface) {
 		return xdg_surface_get_popup (popup_xdg_surface, attach_popup_data->xdg_surface, positioner);
@@ -565,7 +570,7 @@ wayland_setup_popup_data (GtkWidget *popup_widget, GtkWidget* attach_widget, GCa
 	attach_gobject = gtk_widget_get_toplevel (attach_widget);
 	if (!g_object_get_data (G_OBJECT (attach_gobject), wayland_popup_data_key) &&
 	    !g_object_get_data (G_OBJECT (gtk_widget_get_window (attach_widget)), wayland_popup_data_key)) {
-		g_warning ("Tried to se up wayland popup with parent widget %p that isn't a custom Wayland surface", attach_widget);
+		g_warning ("Tried to set up wayland popup with parent widget %p that isn't a custom Wayland surface", attach_widget);
 	}
 
 	popup_data = g_object_get_data (G_OBJECT (popup_widget), wayland_popup_data_key);
@@ -659,7 +664,6 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandP
 	PanelToplevel *toplevel;
 	enum xdg_positioner_anchor anchor = XDG_POSITIONER_ANCHOR_TOP_LEFT;
 	enum xdg_positioner_gravity gravity = XDG_POSITIONER_GRAVITY_BOTTOM_RIGHT;
-	static const int gap = 6;
 	GdkPoint offset = {0, 0};
 
 	g_return_val_if_fail (popup_data, FALSE);
@@ -672,22 +676,22 @@ wayland_tooltip_map_event_cb (GtkWidget *popup_widget, GdkEvent *event, WaylandP
 		case PANEL_ORIENTATION_TOP:
 			anchor = XDG_POSITIONER_ANCHOR_BOTTOM;
 			gravity = XDG_POSITIONER_GRAVITY_BOTTOM;
-			offset.y = gap;
+			offset.y = tooltip_placement_spacing;
 			break;
 		case PANEL_ORIENTATION_RIGHT:
 			anchor = XDG_POSITIONER_ANCHOR_LEFT;
 			gravity = XDG_POSITIONER_GRAVITY_LEFT;
-			offset.x = -gap;
+			offset.x = -tooltip_placement_spacing;
 			break;
 		case PANEL_ORIENTATION_BOTTOM:
 			anchor = XDG_POSITIONER_ANCHOR_TOP;
 			gravity = XDG_POSITIONER_GRAVITY_TOP;
-			offset.y = -gap;
+			offset.y = -tooltip_placement_spacing;
 			break;
 		case PANEL_ORIENTATION_LEFT:
 			anchor = XDG_POSITIONER_ANCHOR_RIGHT;
 			gravity = XDG_POSITIONER_GRAVITY_RIGHT;
-			offset.x = gap;
+			offset.x = tooltip_placement_spacing;
 			break;
 		}
 	} else {
@@ -739,7 +743,7 @@ wayland_tooltip_setup (GtkWidget  *widget,
 		gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOOLTIP);
 		widget_data->box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 		widget_data->label = gtk_label_new ("");
-		gtk_container_set_border_width (GTK_CONTAINER (widget_data->window), 4);
+		gtk_container_set_border_width (GTK_CONTAINER (widget_data->window), tooltip_border_size);
 		gtk_container_add (GTK_CONTAINER (widget_data->box), widget_data->label);
 		gtk_container_add (GTK_CONTAINER (widget_data->window), widget_data->box);
 		gtk_widget_show_all (widget_data->box);
