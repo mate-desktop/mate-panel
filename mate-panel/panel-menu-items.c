@@ -479,7 +479,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_
 		gtk_widget_show (item);
 
 		add_menu = create_empty_menu ();
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
+		panel_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
 	}
 
 	for (l = add_bookmarks; l; l = l->next) {
@@ -924,7 +924,7 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 		gtk_widget_show (item);
 
 		add_menu = create_empty_menu ();
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
+		panel_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
 	}
 
 	for (sl = items; sl; sl = sl->next) {
@@ -1011,7 +1011,7 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 		gtk_widget_show (item);
 
 		add_menu = create_empty_menu ();
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
+		panel_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
 	}
 
 	for (sl = add_mounts; sl; sl = sl->next) {
@@ -1156,8 +1156,8 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 	if (place_item->priv->menu) {
 		gtk_widget_destroy (place_item->priv->menu);
 		place_item->priv->menu = panel_place_menu_item_create_menu (place_item);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (place_item),
-					   place_item->priv->menu);
+		panel_menu_item_set_submenu (GTK_MENU_ITEM (place_item),
+					     place_item->priv->menu);
 		mate_panel_applet_menu_set_recurse (GTK_MENU (place_item->priv->menu),
 					       "menu_panel",
 					       place_item->priv->panel);
@@ -1252,7 +1252,7 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
 			   desktop_item);
 
 #ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (desktop_item)))) {
+	if (is_using_wayland ()) {
 		wayland_popup_menu_setup(desktop_menu, GTK_WIDGET (desktop_item));
 	}
 #endif
@@ -1266,8 +1266,8 @@ panel_desktop_menu_item_recreate_menu (PanelDesktopMenuItem *desktop_item)
 	if (desktop_item->priv->menu) {
 		gtk_widget_destroy (desktop_item->priv->menu);
 		desktop_item->priv->menu = panel_desktop_menu_item_create_menu (desktop_item);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (desktop_item),
-					   desktop_item->priv->menu);
+		panel_menu_item_set_submenu (GTK_MENU_ITEM (desktop_item),
+					     desktop_item->priv->menu);
 		mate_panel_applet_menu_set_recurse (GTK_MENU (desktop_item->priv->menu),
 					       "menu_panel",
 					       desktop_item->priv->panel);
@@ -1513,7 +1513,7 @@ GtkWidget* panel_place_menu_item_new(gboolean use_image)
 	menuitem->priv->use_image = use_image;
 
 	menuitem->priv->menu = panel_place_menu_item_create_menu(menuitem);
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), menuitem->priv->menu);
+	panel_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menuitem->priv->menu);
 
 	return GTK_WIDGET(menuitem);
 }
@@ -1546,8 +1546,8 @@ panel_desktop_menu_item_new (gboolean use_image,
 					   menuitem);
 
 	menuitem->priv->menu = panel_desktop_menu_item_create_menu (menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   menuitem->priv->menu);
+	panel_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+				     menuitem->priv->menu);
 
 	return GTK_WIDGET (menuitem);
 }

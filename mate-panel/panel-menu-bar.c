@@ -196,13 +196,8 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 	menubar->priv->applications_item = panel_image_menu_item_new();
 	gtk_menu_item_set_label(GTK_MENU_ITEM(menubar->priv->applications_item), _("Applications"));
 
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menubar->priv->applications_item), menubar->priv->applications_menu);
+	panel_menu_item_set_submenu (GTK_MENU_ITEM(menubar->priv->applications_item), menubar->priv->applications_menu);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->applications_item);
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (menubar)))) {
-		wayland_popup_menu_setup(menubar->priv->applications_menu, menubar->priv->applications_item);
-	}
-#endif
 
 	menubar->priv->places_item = panel_place_menu_item_new(FALSE);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->places_item);

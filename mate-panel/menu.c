@@ -523,7 +523,7 @@ create_item_context_menu (GtkWidget   *item,
 	g_object_set_data (G_OBJECT (submenu), "menu_panel", panel_widget);
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Entire menu"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+	panel_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_widget_show (menuitem);
 
@@ -1015,8 +1015,7 @@ create_submenu (GtkWidget          *menu,
 		menuitem = create_submenu_entry (menu, directory);
 
 	submenu = create_fake_menu (directory);
-
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+	panel_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 
 	/* Keep the infor that we force (or not) the icons to be visible */
 	force_categories_icon = g_object_get_data (G_OBJECT (menu),

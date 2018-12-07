@@ -203,12 +203,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				  PANEL_ICON_RECENT,
 				  _("Recent Documents"));
 	recent_menu = gtk_recent_chooser_menu_new_for_manager (manager);
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (menu_item))) {
-		wayland_popup_menu_setup(recent_menu, menu_item);
-	}
-#endif
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), recent_menu);
+	panel_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), recent_menu);
 
 	g_signal_connect (G_OBJECT (recent_menu), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);

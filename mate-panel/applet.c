@@ -425,8 +425,8 @@ setup_an_item (AppletUserMenu *menu,
 	}
 
 	if(menu->submenu) {
-		gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
-					  menu->submenu);
+		panel_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
+					    menu->submenu);
 		g_signal_connect (G_OBJECT (menu->submenu), "destroy",
 				    G_CALLBACK (gtk_widget_destroyed),
 				    &menu->submenu);
