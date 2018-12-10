@@ -1,4 +1,4 @@
-SUBDIRS = libegg libmate-panel-applet-private libpanel-util
+SUBDIRS = wayland-protocols libegg libmate-panel-applet-private libpanel-util
 
 bin_PROGRAMS = \
 	mate-panel \

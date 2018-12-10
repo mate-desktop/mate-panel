@@ -301,6 +301,7 @@ mate-panel/Makefile
 mate-panel/libegg/Makefile
 mate-panel/libmate-panel-applet-private/Makefile
 mate-panel/libpanel-util/Makefile
+mate-panel/wayland-protocols/Makefile
 mate-panel/mate-panel.desktop.in
 libmate-panel-applet/libmatepanelapplet-4.0.pc
 libmate-panel-applet/libmatepanelapplet-4.0-uninstalled.pc
