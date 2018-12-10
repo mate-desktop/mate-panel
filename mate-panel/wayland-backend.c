@@ -5,8 +5,8 @@
 
 #include "panel-toplevel.h"
 
-#include "wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h"
-#include "wayland-protocols/xdg-shell-client-protocol.h"
+#include "wayland-protocols/wlr-layer-shell-unstable-v1-client.h"
+#include "wayland-protocols/xdg-shell-client.h"
 
 static const int tooltip_placement_spacing = 6;
 static const int tooltip_border_size = 4;

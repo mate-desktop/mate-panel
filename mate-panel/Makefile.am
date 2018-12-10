@@ -70,8 +70,8 @@ panel_sources = \
 if ENABLE_WAYLAND
 panel_sources += \
 	wayland-backend.c \
-	wayland-protocols/wlr-layer-shell-unstable-v1-protocol.c \
-	wayland-protocols/xdg-shell-protocol.c
+	wayland-protocols/wlr-layer-shell-unstable-v1.c \
+	wayland-protocols/xdg-shell.c
 endif
 
 if ENABLE_X11
@@ -134,8 +134,8 @@ panel_headers = \
 if ENABLE_WAYLAND
 panel_sources += \
 	wayland-backend.h \
-	wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h \
-	wayland-protocols/xdg-shell-client-protocol.h
+	wayland-protocols/wlr-layer-shell-unstable-v1-client.h \
+	wayland-protocols/xdg-shell-client.h
 endif
 
 if ENABLE_X11
