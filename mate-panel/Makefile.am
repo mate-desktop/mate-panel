@@ -65,6 +65,12 @@ panel_sources = \
 	panel-applet-info.c \
 	panel-reset.c
 
+if ENABLE_WAYLAND
+panel_sources += \
+	wayland-protocols/wlr-layer-shell-unstable-v1-protocol.c \
+	wayland-protocols/xdg-shell-protocol.c
+endif
+
 panel_headers = \
 	panel-types.h \
 	panel-widget.h \
@@ -117,6 +123,12 @@ panel_headers = \
 	panel-reset.h \
 	panel-schemas.h
 
+if ENABLE_WAYLAND
+panel_headers += \
+	wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h \
+	wayland-protocols/xdg-shell-client-protocol.h
+endif
+
 mate_panel_SOURCES = \
 	$(panel_sources) \
 	$(panel_headers)
@@ -127,6 +139,12 @@ mate_panel_CPPFLAGS = \
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DMATEMENU_I_KNOW_THIS_IS_UNSTABLE
 
+if ENABLE_WAYLAND
+mate_panel_CPPFLAGS += \
+	$(WAYLAND_CFLAGS)
+endif
+
+
 mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/libegg/libegg.la \
 	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private.la \
@@ -136,6 +154,11 @@ mate_panel_LDADD = \
 	$(XRANDR_LIBS) \
 	$(X_LIBS) \
 	-lm
+
+if ENABLE_WAYLAND
+mate_panel_LDADD += \
+	$(WAYLAND_LIBS)
+endif
 
 mate_panel_LDFLAGS = -export-dynamic
 
@@ -261,7 +284,9 @@ EXTRA_DIST = \
 	panel-test-applets.gresource.xml	\
 	panel-marshal.list \
 	$(entries_DATA) \
-	$(desktop_in_files)
+	$(desktop_in_files) \
+	wayland-protocols/wlr-layer-shell-unstable-v1.xml \
+	wayland-protocols/xdg-shell.xml
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
