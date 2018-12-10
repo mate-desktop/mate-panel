@@ -125,8 +125,8 @@ panel_headers = \
 
 if ENABLE_WAYLAND
 panel_headers += \
-	wayland-protocols/wlr-layer-shell-unstable-v1-protocol.h \
-	wayland-protocols/xdg-shell-protocol.h
+	wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h \
+	wayland-protocols/xdg-shell-client-protocol.h
 endif
 
 mate_panel_SOURCES = \
