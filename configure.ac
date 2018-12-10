@@ -167,9 +167,62 @@ AM_CONDITIONAL(WNCKLET_INPROCESS, test -n "$WNCKLET_COMPILE_INPROCESS")
 # For the run dialog
 gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
 
-dnl X development libraries check
+must_enable_x11=no
+must_enable_wayland=no
+try_all_backends=yes
 
-PKG_CHECK_MODULES(X, x11 xau, :, AC_MSG_ERROR([X development libraries not found]))
+AC_ARG_ENABLE(x11,
+              [AC_HELP_STRING([--enable-x11],
+                              [Enable X11 support and disable Wayland (unless it's also enabled explicitly)
+                              @<:@default=yes@:>@])],
+              [must_enable_x11=yes
+               try_all_backends=no],)
+
+AC_ARG_ENABLE(wayland,
+              [AC_HELP_STRING([--enable-wayland],
+                              [Enable Wayland support and disable X11 (unless it's also enabled explicitly)
+                              @<:@default=yes@:>@])],
+              [must_enable_wayland=yes
+               try_all_backends=no],)
+
+# Check if we have wayland-client installed, and thus should build with Wayland support
+
+have_wayland=no
+
+if test "x$must_enable_wayland" = "xyes" -o "x$try_all_backends" = "xyes"; then
+  PKG_CHECK_MODULES(WAYLAND, wayland-client, have_wayland=yes,)
+fi
+
+AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
+
+if test "x$have_wayland" = "xyes"; then
+  AC_DEFINE(HAVE_WAYLAND, 1, [Have the Wayland development library])
+fi
+
+# Error out if Wayland was required but not found
+if test "x$have_wayland" != "xyes" -a "x$must_enable_wayland" = "xyes"; then
+  # The user has explicitly told us to use Wayland, but we can't find the library :(
+  AC_MSG_ERROR([Wayland client library not found])
+fi
+
+# Check if we have the X development libraries
+# (we can compile with X and/or Wayland supported)
+
+have_x11=no
+
+if test "x$must_enable_x11" = "xyes" -o "x$try_all_backends" = "xyes"; then
+  PKG_CHECK_MODULES(X, x11 xau, have_x11=yes, AC_MSG_ERROR([X development libraries not found]))
+fi
+
+AM_CONDITIONAL(ENABLE_X11, [test "x$have_x11" = "xyes"])
+
+if test "x$have_x11" = "xyes"; then
+  AC_DEFINE(HAVE_X11, 1, [Have the X11 development library])
+fi
+
+if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then
+  AC_MSG_ERROR([No usable backend available, install X or Wayland development libraries])
+fi
 
 AC_SUBST(X_LIBS)
 
@@ -308,6 +361,8 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
+        X11 support:                   ${have_x11}
+        Wayland support:               ${have_wayland}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}
