@@ -1,10 +1,6 @@
 if ENABLE_WAYLAND
 all: wlr-layer-shell-unstable-v1-client-protocol.h wlr-layer-shell-unstable-v1-protocol.c xdg-shell-client-protocol.h xdg-shell-protocol.c
 
-EXTRA_DIST = \
-	wlr-layer-shell-unstable-v1.xml \
-	xdg-shell.xml
-
 wlr-layer-shell-unstable-v1-client-protocol.h: wlr-layer-shell-unstable-v1.xml
 	wayland-scanner -c client-header wlr-layer-shell-unstable-v1.xml wlr-layer-shell-unstable-v1-client-protocol.h
 

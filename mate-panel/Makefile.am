@@ -275,7 +275,9 @@ EXTRA_DIST = \
 	panel-test-applets.gresource.xml	\
 	panel-marshal.list \
 	$(entries_DATA) \
-	$(desktop_in_files)
+	$(desktop_in_files) \
+	wayland-protocols/wlr-layer-shell-unstable-v1.xml \
+	wayland-protocols/xdg-shell.xml
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
