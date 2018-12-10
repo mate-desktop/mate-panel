@@ -65,6 +65,12 @@ panel_sources = \
 	panel-applet-info.c \
 	panel-reset.c
 
+if ENABLE_WAYLAND
+panel_sources += \
+	wayland-protocols/wlr-layer-shell-unstable-v1-protocol.c \
+	wayland-protocols/xdg-shell-protocol.c
+endif
+
 panel_headers = \
 	panel-types.h \
 	panel-widget.h \
@@ -117,12 +123,19 @@ panel_headers = \
 	panel-reset.h \
 	panel-schemas.h
 
+if ENABLE_WAYLAND
+panel_headers += \
+	wayland-protocols/wlr-layer-shell-unstable-v1-protocol.h \
+	wayland-protocols/xdg-shell-protocol.h
+endif
+
 mate_panel_SOURCES = \
 	$(panel_sources) \
 	$(panel_headers)
 
 mate_panel_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
+	$(WAYLAND_CFLAGS) \
 	$(XRANDR_CFLAGS) \
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DMATEMENU_I_KNOW_THIS_IS_UNSTABLE
@@ -133,6 +146,7 @@ mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
 	$(DCONF_LIBS) \
+	$(WAYLAND_LIBS) \
 	$(XRANDR_LIBS) \
 	$(X_LIBS) \
 	-lm
