@@ -135,10 +135,15 @@ mate_panel_SOURCES = \
 
 mate_panel_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
-	$(WAYLAND_CFLAGS) \
 	$(XRANDR_CFLAGS) \
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DMATEMENU_I_KNOW_THIS_IS_UNSTABLE
+
+if ENABLE_WAYLAND
+mate_panel_CPPFLAGS += \
+	$(WAYLAND_CFLAGS)
+endif
+
 
 mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/libegg/libegg.la \
@@ -146,10 +151,14 @@ mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
 	$(DCONF_LIBS) \
-	$(WAYLAND_LIBS) \
 	$(XRANDR_LIBS) \
 	$(X_LIBS) \
 	-lm
+
+if ENABLE_WAYLAND
+mate_panel_LDADD += \
+	$(WAYLAND_LIBS)
+endif
 
 mate_panel_LDFLAGS = -export-dynamic
 
