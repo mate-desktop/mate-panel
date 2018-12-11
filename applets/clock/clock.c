@@ -1273,15 +1273,18 @@ clock_update_text_gravity (GtkWidget *label)
 }
 
 static inline void
-force_no_button_padding (GtkWidget *widget)
+force_no_button_vertical_padding (GtkWidget *widget)
 {
         GtkCssProvider  *provider;
 
         provider = gtk_css_provider_new ();
         gtk_css_provider_load_from_data (provider,
                                          "#clock-applet-button {\n"
-                                         " padding: 0px;\n"
-                                         " margin: 0px;\n }",
+                                         "padding-top: 0px;\n"
+                                         "padding-bottom: 0px;\n"
+                                         "margin-top: 0px;\n"
+                                         "margin-bottom: 0px;\n"
+                                         "}",
                                          -1, NULL);
         gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
                                         GTK_STYLE_PROVIDER (provider),
@@ -1300,7 +1303,7 @@ create_main_clock_button (void)
         button = gtk_toggle_button_new ();
         gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
-        force_no_button_padding (button);
+        force_no_button_vertical_padding (button);
 
         return button;
 }
