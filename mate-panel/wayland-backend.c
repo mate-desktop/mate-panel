@@ -201,7 +201,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	g_signal_connect (widget, "size-allocate", G_CALLBACK (wayland_layer_surface_size_allocate_cb), data);
 
 	//struct wl_output *wl_output = NULL;
-	uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_BOTTOM;
+	uint32_t layer = ZWLR_LAYER_SHELL_V1_LAYER_TOP;
 	char *namespace = "mate"; // not sure what this is for
 
 	if (layer_shell_global) {
