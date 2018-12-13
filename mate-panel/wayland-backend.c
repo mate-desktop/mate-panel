@@ -121,6 +121,18 @@ wayland_registry_init ()
 	wayland_has_initialized = TRUE;
 }
 
+static void
+wayland_set_popup_setup_funcs (GtkWidget *widget)
+{
+	GdkWindow *window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
+	g_object_set_data (G_OBJECT (window),
+			   menu_setup_func_key,
+			   wayland_popup_menu_setup);
+	g_object_set_data (G_OBJECT (window),
+			   tooltip_setup_func_key,
+			   wayland_tooltip_setup);
+}
+
 struct _WaylandLayerSurfaceData {
 	struct zwlr_layer_surface_v1 *layer_surface;
 	struct wl_surface *wl_surface;
@@ -176,14 +188,10 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 	g_assert (GDK_IS_WAYLAND_DISPLAY (gdk_display));
 	g_assert (wayland_has_initialized);
 
+	wayland_set_popup_setup_funcs (widget);
+
 	window = gtk_widget_get_window (widget);
 	// This will allow anyone who can get hold of the window to make a popup
-	g_object_set_data (G_OBJECT (window),
-			   menu_setup_func_key,
-			   wayland_popup_menu_setup);
-	g_object_set_data (G_OBJECT (window),
-			   tooltip_setup_func_key,
-			   wayland_tooltip_setup);
 	gdk_wayland_window_set_use_custom_surface (window);
 
 	data = g_new0 (struct _WaylandLayerSurfaceData, 1);
@@ -516,6 +524,7 @@ wayland_pop_popup_up_at_widget (WaylandPopupData *popup_data,
 static void
 wayland_popup_realize_cb (GtkWidget *popup_widget, void *_data)
 {
+	wayland_set_popup_setup_funcs (popup_widget);
 	gdk_wayland_window_set_use_custom_surface (gtk_widget_get_window (popup_widget));
 }
 

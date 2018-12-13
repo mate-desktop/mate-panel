@@ -55,7 +55,7 @@ static Atom _net_active_window = None;
 #endif
 
 #ifdef HAVE_WAYLAND
-#include "wayland-backend.h"
+#include <gdk/gdkwayland.h>
 #endif
 
 char *
@@ -1198,7 +1198,7 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 			     GtkTooltip *tooltip,
 			     const char *text)
 {
-	GdkWindow *panel_toplevel_window;
+	GdkWindow *window;
 	void (*tooltip_setup_func) (GtkWidget  *widget,
 				    gint        x,
 				    gint        y,
@@ -1211,11 +1211,13 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 
 	gtk_tooltip_set_text (tooltip, text);
 
-	panel_toplevel_window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
-	tooltip_setup_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
+	window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
+	tooltip_setup_func = g_object_get_data (G_OBJECT (window),
 						"tooltip_setup_func");
 	if (tooltip_setup_func) {
 		tooltip_setup_func (widget, x, y, keyboard_tip, tooltip, text);
+	} else if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ())) {
+		g_warning ("No tooltip setup func on window %p, which is required on Wayland", window);
 	}
 	return TRUE;
 }
