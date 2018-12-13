@@ -212,7 +212,7 @@ wayland_realize_panel_toplevel (GtkWidget *widget)
 									     namespace);
 		g_return_if_fail (data->layer_surface);
 		zwlr_layer_surface_v1_set_size (data->layer_surface, data->width, data->height);
-		zwlr_layer_surface_v1_set_keyboard_interactivity (data->layer_surface, TRUE);
+		zwlr_layer_surface_v1_set_keyboard_interactivity (data->layer_surface, FALSE);
 		zwlr_layer_surface_v1_add_listener (data->layer_surface, &layer_surface_listener, data);
 	} else {
 		g_return_if_fail (xdg_wm_base_global);
