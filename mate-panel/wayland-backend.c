@@ -564,12 +564,13 @@ static void
 wayland_setup_popup_data (GtkWidget *popup_widget, GtkWidget* attach_widget, GCallback map_event_cb)
 {
 	WaylandPopupData *popup_data;
-	GtkWidget *attach_gobject;
+	GObject *attach_widget_gobject, *attach_window_gobject;
 
 	// Check to make sure the attach widget is one of our custom Wayland surfaces
-	attach_gobject = gtk_widget_get_toplevel (attach_widget);
-	if (!g_object_get_data (G_OBJECT (attach_gobject), wayland_popup_data_key) &&
-	    !g_object_get_data (G_OBJECT (gtk_widget_get_window (attach_widget)), wayland_popup_data_key)) {
+	attach_widget_gobject = G_OBJECT (gtk_widget_get_toplevel (attach_widget));
+	attach_window_gobject = G_OBJECT (gdk_window_get_toplevel (gtk_widget_get_window (attach_widget)));
+	if (!g_object_get_data (attach_widget_gobject, wayland_popup_data_key) &&
+	    !g_object_get_data (attach_window_gobject, wayland_layer_surface_key)) {
 		g_warning ("Tried to set up wayland popup with parent widget %p that isn't a custom Wayland surface", attach_widget);
 	}
 
