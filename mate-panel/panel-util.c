@@ -1215,8 +1215,7 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 	tooltip_setup_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
 						"tooltip_setup_func");
 	if (tooltip_setup_func) {
-		gtk_widget_set_tooltip_text (widget, text);
-		tooltip_setup_func (widget, x, y, keyboard_tip, tooltip, NULL);
+		tooltip_setup_func (widget, x, y, keyboard_tip, tooltip, text);
 	}
 	return TRUE;
 }

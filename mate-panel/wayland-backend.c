@@ -725,7 +725,7 @@ wayland_tooltip_setup (GtkWidget  *widget,
 		       gint        y,
 		       gboolean    keyboard_tip,
 		       GtkTooltip *tooltip,
-		       void       *_data)
+		       void       *text)
 {
 	const char *tooltip_text;
 	struct _WaylandCustomTooltipData *widget_data;
@@ -755,7 +755,9 @@ wayland_tooltip_setup (GtkWidget  *widget,
 					  G_CALLBACK (wayland_tooltip_map_event_cb));
 	}
 
-	if ((tooltip_text = gtk_widget_get_tooltip_text (widget))) {
+	if (text) {
+		gtk_label_set_text (GTK_LABEL (widget_data->label), text);
+	} else if ((tooltip_text = gtk_widget_get_tooltip_text (widget))) {
 		gtk_label_set_text (GTK_LABEL (widget_data->label), tooltip_text);
 	} else if ((tooltip_text = gtk_widget_get_tooltip_markup (widget))) {
 		gtk_label_set_markup (GTK_LABEL (widget_data->label), tooltip_text);
