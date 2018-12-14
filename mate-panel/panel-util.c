@@ -1199,12 +1199,12 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 			     const char *text)
 {
 	GdkWindow *window;
-	void (*tooltip_setup_func) (GtkWidget  *widget,
-				    gint        x,
-				    gint        y,
-				    gboolean    keyboard_tip,
-				    GtkTooltip *tooltip,
-				    const char *text);
+	gboolean (*tooltip_setup_func) (GtkWidget  *widget,
+					gint        x,
+					gint        y,
+					gboolean    keyboard_tip,
+					GtkTooltip *tooltip,
+					const char *text);
 
 	if (!panel_global_config_get_tooltips_enabled ())
 		return FALSE;

@@ -759,7 +759,7 @@ mate_panel_applet_setup_menu_from_resource (MatePanelApplet    *applet,
 	g_bytes_unref (bytes);
 }
 
-void
+gboolean
 mate_panel_applet_query_tooltop_cb (GtkWidget  *widget,
 				    gint        x,
 				    gint        y,
@@ -768,12 +768,12 @@ mate_panel_applet_query_tooltop_cb (GtkWidget  *widget,
 				    gpointer    _data)
 {
 	GdkWindow *panel_toplevel_window;
-	void (*tooltip_setup_func) (GtkWidget  *widget,
-				    gint        x,
-				    gint        y,
-				    gboolean    keyboard_tip,
-				    GtkTooltip *tooltip,
-				    const char *text);
+	gboolean (*tooltip_setup_func) (GtkWidget  *widget,
+					gint        x,
+					gint        y,
+					gboolean    keyboard_tip,
+					GtkTooltip *tooltip,
+					const char *text);
 
 	panel_toplevel_window = gdk_window_get_toplevel (gtk_widget_get_window (widget));
 	tooltip_setup_func = g_object_get_data (G_OBJECT (panel_toplevel_window),
@@ -781,6 +781,7 @@ mate_panel_applet_query_tooltop_cb (GtkWidget  *widget,
 	if (tooltip_setup_func) {
 		tooltip_setup_func (widget, x, y, keyboard_mode, tooltip, NULL);
 	}
+	return TRUE;
 }
 
 static void

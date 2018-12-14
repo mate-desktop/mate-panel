@@ -731,7 +731,7 @@ wayland_custom_tooltip_destroy_cb (struct _WaylandCustomTooltipData *data) {
 	g_free (data);
 }
 
-void
+gboolean
 wayland_tooltip_setup (GtkWidget  *widget,
 		       gint        x,
 		       gint        y,
@@ -774,6 +774,7 @@ wayland_tooltip_setup (GtkWidget  *widget,
 	} else if ((tooltip_text = gtk_widget_get_tooltip_markup (widget))) {
 		gtk_label_set_markup (GTK_LABEL (widget_data->label), tooltip_text);
 	}
+	return TRUE;
 }
 
 static void
