@@ -167,30 +167,31 @@ AM_CONDITIONAL(WNCKLET_INPROCESS, test -n "$WNCKLET_COMPILE_INPROCESS")
 # For the run dialog
 gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
 
-must_enable_x11=no
-must_enable_wayland=no
-try_all_backends=yes
-
+# $enable_x11 and $enable_wayland will be set to "yes", "no" or "auto"
 AC_ARG_ENABLE(x11,
               [AC_HELP_STRING([--enable-x11],
-                              [Enable X11 support and disable Wayland (unless it's also enabled explicitly)
-                              @<:@default=yes@:>@])],
-              [must_enable_x11=yes
-               try_all_backends=no],)
+                              [Explicitly enable or disable X11 support
+                              (default is to enable only if X development libraries are detected)
+                              @<:@default=auto:>@])],
+              [enable_x11=$enableval],
+              [enable_x11=auto])
 
 AC_ARG_ENABLE(wayland,
               [AC_HELP_STRING([--enable-wayland],
-                              [Enable Wayland support and disable X11 (unless it's also enabled explicitly)
-                              @<:@default=yes@:>@])],
-              [must_enable_wayland=yes
-               try_all_backends=no],)
+                              [Explicitly enable or disable Wayland support
+                              (default is to enable only if Wayland client development library is detected)
+                              @<:@default=auto:>@])],
+              [enable_wayland=$enableval],
+              [enable_wayland=auto])
 
 # Check if we have wayland-client installed, and thus should build with Wayland support
-
 have_wayland=no
-
-if test "x$must_enable_wayland" = "xyes" -o "x$try_all_backends" = "xyes"; then
-  PKG_CHECK_MODULES(WAYLAND, wayland-client, have_wayland=yes,)
+if test "x$enable_wayland" != "xno"; then
+  PKG_CHECK_MODULES(WAYLAND, wayland-client, have_wayland=yes, [
+        if test "x$enable_wayland" = "xyes"; then
+          AC_MSG_ERROR([Wayland client library not found])
+        fi
+    ])
 fi
 
 AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
@@ -199,19 +200,14 @@ if test "x$have_wayland" = "xyes"; then
   AC_DEFINE(HAVE_WAYLAND, 1, [Have the Wayland development library])
 fi
 
-# Error out if Wayland was required but not found
-if test "x$have_wayland" != "xyes" -a "x$must_enable_wayland" = "xyes"; then
-  # The user has explicitly told us to use Wayland, but we can't find the library :(
-  AC_MSG_ERROR([Wayland client library not found])
-fi
-
 # Check if we have the X development libraries
-# (we can compile with X and/or Wayland supported)
-
 have_x11=no
-
-if test "x$must_enable_x11" = "xyes" -o "x$try_all_backends" = "xyes"; then
-  PKG_CHECK_MODULES(X, x11 xau, have_x11=yes, AC_MSG_ERROR([X development libraries not found]))
+if test "x$enable_x11" != "xno"; then
+  PKG_CHECK_MODULES(X, x11 xau, have_x11=yes, [
+      if test "x$enable_x11" = "xyes"; then
+        AC_MSG_ERROR([X development libraries not found])
+      fi
+    ])
 fi
 
 AM_CONDITIONAL(ENABLE_X11, [test "x$have_x11" = "xyes"])
@@ -221,7 +217,11 @@ if test "x$have_x11" = "xyes"; then
 fi
 
 if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then
-  AC_MSG_ERROR([No usable backend available, install X or Wayland development libraries])
+  if test "x$enable_wayland" = "xno" -a "x$enable_x11" = "xno"; then
+    AC_MSG_ERROR([At least one backend must be enabled])
+  else
+    AC_MSG_ERROR([No usable backend found, install X11 or Wayland development libraries])
+  fi
 fi
 
 AC_SUBST(X_LIBS)
@@ -362,8 +362,8 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
-        X11 support:                   ${have_x11}
         Wayland support:               ${have_wayland}
+        X11 support:                   ${have_x11}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}
