@@ -171,16 +171,14 @@ gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
 AC_ARG_ENABLE(x11,
               [AC_HELP_STRING([--enable-x11],
                               [Explicitly enable or disable X11 support
-                              (default is to enable only if X development libraries are detected)
-                              @<:@default=auto:>@])],
+                              (default is to enable only if X development libraries are detected)])],
               [enable_x11=$enableval],
               [enable_x11=auto])
 
 AC_ARG_ENABLE(wayland,
               [AC_HELP_STRING([--enable-wayland],
                               [Explicitly enable or disable Wayland support
-                              (default is to enable only if Wayland client development library is detected)
-                              @<:@default=auto:>@])],
+                              (default is to enable only if Wayland client development library is detected)])],
               [enable_wayland=$enableval],
               [enable_wayland=auto])
 
@@ -214,6 +212,8 @@ AM_CONDITIONAL(ENABLE_X11, [test "x$have_x11" = "xyes"])
 
 if test "x$have_x11" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1, [Have the X11 development library])
+else
+  AC_MSG_ERROR([No support yet for non-X11 builds])
 fi
 
 if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then
