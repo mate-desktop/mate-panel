@@ -15,3 +15,9 @@ xdg-shell-client-protocol.h: xdg-shell.xml
 xdg-shell-protocol.c: xdg-shell.xml
 	wayland-scanner -c code xdg-shell.xml xdg-shell-protocol.c
 endif
+
+clean:
+	rm -f wlr-layer-shell-unstable-v1-client-protocol.h
+	rm -f wlr-layer-shell-unstable-v1-protocol.c
+	rm -f xdg-shell-client-protocol.h
+	rm -f xdg-shell-protocol.c
