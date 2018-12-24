@@ -391,9 +391,7 @@ wayland_get_xdg_popup (struct xdg_surface *popup_xdg_surface, GtkWidget *attach_
 		return xdg_surface_get_popup (popup_xdg_surface, attach_popup_data->xdg_surface, positioner);
 	}
 
-	g_warning ("Was unable to attach a Wayland popup to window %p", attach_window);
-	// This will not get mapped, but it will keep this function from returning NULL
-	return xdg_surface_get_popup (popup_xdg_surface, NULL, positioner);
+	return NULL;
 }
 
 static void
@@ -419,6 +417,10 @@ wayland_pop_popup_up_at_positioner (WaylandPopupData *popup_data,
 	xdg_surface_add_listener (popup_data->xdg_surface, &xdg_surface_listener, NULL);
 
 	popup_data->xdg_popup = wayland_get_xdg_popup (popup_data->xdg_surface, popup_data->attach_widget, positioner);
+	if (!popup_data->xdg_popup) {
+		g_warning ("Was unable to attach a Wayland popup to widget %p", popup_data->attach_widget);
+		return;
+	}
 	xdg_popup_add_listener (popup_data->xdg_popup, &xdg_popup_listener, popup_data->widget);
 
 	wl_surface_commit (popup_wl_surface);
