@@ -775,3 +775,28 @@ wayland_tooltip_setup (GtkWidget  *widget,
 		gtk_label_set_markup (GTK_LABEL (widget_data->label), tooltip_text);
 	}
 }
+
+static void
+wayland_menu_shell_insert (GtkMenuShell *menu_shell,
+			   GtkWidget    *child,
+			   gint          position,
+			   gpointer      user_data)
+{
+	wayland_setup_widget(child);
+}
+
+void
+wayland_setup_widget (GtkWidget *widget)
+{
+	GObject *widget_gobject = G_OBJECT (widget);
+	static const char *widget_setup_key = "wayland_widget_is_set_up";
+
+	if (g_object_get_data (widget_gobject, widget_setup_key))
+		return;
+	g_object_set_data (widget_gobject, widget_setup_key, widget_gobject);
+	if (GTK_IS_MENU_SHELL (widget))
+	{
+		g_signal_connect (widget_gobject, "insert", G_CALLBACK (wayland_menu_shell_insert), NULL);
+	}
+	g_signal_connect (widget_gobject, "query-tooltip", G_CALLBACK (wayland_tooltip_setup), NULL);
+}

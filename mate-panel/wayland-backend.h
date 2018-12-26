@@ -30,5 +30,6 @@ void wayland_tooltip_setup (GtkWidget  *widget,
 			    gboolean    keyboard_tip,
 			    GtkTooltip *tooltip,
 			    void       *_data);
+void wayland_setup_widget (GtkWidget *widget);
 
 #endif /* __WAYLAND_BACKEND_H__ */
