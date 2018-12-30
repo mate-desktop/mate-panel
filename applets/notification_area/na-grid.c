@@ -145,6 +145,8 @@ refresh_grid (NaGrid *self)
 
   if (orientation == GTK_ORIENTATION_HORIZONTAL)
     {
+      gtk_grid_set_row_homogeneous (GTK_GRID (self), TRUE);
+      gtk_grid_set_column_homogeneous (GTK_GRID (self), FALSE);
       rows = MAX (1, allocation.height / self->min_icon_size);
       cols = MAX (1, length / rows);
       if (length % rows)
@@ -152,6 +154,8 @@ refresh_grid (NaGrid *self)
     }
   else
     {
+      gtk_grid_set_row_homogeneous (GTK_GRID (self), FALSE);
+      gtk_grid_set_column_homogeneous (GTK_GRID (self), TRUE);
       cols = MAX (1, allocation.width / self->min_icon_size);
       rows = MAX (1, length / cols);
       if (length % cols)
@@ -243,6 +247,7 @@ na_grid_init (NaGrid *self)
   
   gtk_grid_set_row_homogeneous (GTK_GRID (self), TRUE);
   gtk_grid_set_column_homogeneous (GTK_GRID (self), TRUE);
+
 }
 
 static void
