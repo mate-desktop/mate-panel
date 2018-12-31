@@ -179,6 +179,8 @@ struct _ClockData {
         gboolean   can_handle_format_12;
 
         GSettings *settings;
+
+        const gchar *weather_icon_name;
 };
 
 /* Used to count the number of clock instances. It's there to know when we
@@ -1970,12 +1972,37 @@ show_temperature_changed (GSettings    *settings,
 }
 
 static void
+weather_icon_updated_cb (MatePanelApplet *applet,
+                             gint icon_size,
+                             gpointer       data)
+{
+        ClockData *cd = data;
+        GtkIconTheme *theme;
+        cairo_surface_t *surface;
+        gint icon_scale;
+
+        if (cd->weather_icon_name == NULL)
+                return;
+
+        theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (cd->applet)));
+
+        icon_size = mate_panel_applet_get_size (MATE_PANEL_APPLET (cd->applet));
+        icon_scale = gtk_widget_get_scale_factor (GTK_WIDGET (cd->applet));
+
+        surface = gtk_icon_theme_load_surface (theme, cd->weather_icon_name, icon_size, icon_scale,
+                                               NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+
+        gtk_image_set_from_surface (GTK_IMAGE (cd->panel_weather_icon), surface);
+
+        cairo_surface_destroy (surface);
+}
+
+static void
 location_weather_updated_cb (ClockLocation *location,
                              WeatherInfo   *info,
                              gpointer       data)
 {
         ClockData *cd = data;
-        const gchar *icon_name;
         const gchar *temp;
         GtkIconTheme *theme;
         cairo_surface_t *surface;
@@ -1987,8 +2014,8 @@ location_weather_updated_cb (ClockLocation *location,
         if (!clock_location_is_current (location))
                 return;
 
-        icon_name = weather_info_get_icon_name (info);
-        if (icon_name == NULL)
+        cd->weather_icon_name = weather_info_get_icon_name (info);
+        if (cd->weather_icon_name == NULL)
                 return;
 
         theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (cd->applet)));
@@ -1996,7 +2023,7 @@ location_weather_updated_cb (ClockLocation *location,
         icon_size = mate_panel_applet_get_size (MATE_PANEL_APPLET (cd->applet));
         icon_scale = gtk_widget_get_scale_factor (GTK_WIDGET (cd->applet));
 
-        surface = gtk_icon_theme_load_surface (theme, icon_name, icon_size, icon_scale,
+        surface = gtk_icon_theme_load_surface (theme, cd->weather_icon_name, icon_size, icon_scale,
                                                NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
 
         temp = weather_info_get_temp_summary (info);
@@ -2454,6 +2481,12 @@ fill_clock_applet (MatePanelApplet *applet)
         action = gtk_action_group_get_action (action_group, "ClockConfig");
         gtk_action_set_visible (action, can_set_system_time ());
         g_object_unref (action_group);
+
+        /* Make sure the weather icon gets updated when the panel size changes*/
+        g_signal_connect (cd->applet,
+                          "change_size",
+                          G_CALLBACK (weather_icon_updated_cb),
+                          cd);
 
         return TRUE;
 }
