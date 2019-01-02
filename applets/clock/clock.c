@@ -1988,9 +1988,22 @@ weather_icon_updated_cb (MatePanelApplet *applet,
 
         icon_size = mate_panel_applet_get_size (MATE_PANEL_APPLET (cd->applet));
         icon_scale = gtk_widget_get_scale_factor (GTK_WIDGET (cd->applet));
+        /*Iterate through the icon sizes so they can be kept sharp*/
+        if (icon_size < 22)
+                icon_size = 16;
+        else if (icon_size < 24)
+                icon_size = 22;
+        else if (icon_size < 32)
+                icon_size = 24;
+        else if (icon_size < 48)
+                icon_size = 32;
+        else
+                icon_size = 48;
 
         surface = gtk_icon_theme_load_surface (theme, cd->weather_icon_name, icon_size, icon_scale,
-                                               NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+                                               NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK |
+                                                     GTK_ICON_LOOKUP_FORCE_SIZE,
+                                                                          NULL);
 
         gtk_image_set_from_surface (GTK_IMAGE (cd->panel_weather_icon), surface);
 
@@ -2023,8 +2036,22 @@ location_weather_updated_cb (ClockLocation *location,
         icon_size = mate_panel_applet_get_size (MATE_PANEL_APPLET (cd->applet));
         icon_scale = gtk_widget_get_scale_factor (GTK_WIDGET (cd->applet));
 
+        /*Iterate through the icon sizes so they can be kept sharp*/
+        if (icon_size < 22)
+                icon_size = 16;
+        else if (icon_size < 24)
+                icon_size = 22;
+        else if (icon_size < 32)
+                icon_size = 24;
+        else if (icon_size < 48)
+                icon_size = 32;
+        else
+                icon_size = 48;
+
         surface = gtk_icon_theme_load_surface (theme, cd->weather_icon_name, icon_size, icon_scale,
-                                               NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+                                               NULL, GTK_ICON_LOOKUP_GENERIC_FALLBACK |
+                                                     GTK_ICON_LOOKUP_FORCE_SIZE,
+                                                                          NULL);
 
         temp = weather_info_get_temp_summary (info);
 
