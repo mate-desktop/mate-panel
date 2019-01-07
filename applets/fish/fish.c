@@ -81,6 +81,9 @@ typedef struct {
 	GtkRequisition     requisition;
 	GdkRectangle       prev_allocation;
 	cairo_surface_t   *surface;
+	gint               surface_width;
+	gint               surface_height;
+
 	guint              timeout;
 	int                current_frame;
 	gboolean           in_applet;
@@ -1414,6 +1417,8 @@ static void update_pixmap(FishApplet* fish)
 	fish->surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
 													   CAIRO_CONTENT_COLOR_ALPHA,
 													   width, height);
+	fish->surface_width = width;
+	fish->surface_height = height;
 
 	gtk_widget_queue_resize (widget);
 
@@ -1475,8 +1480,8 @@ static gboolean fish_applet_draw(GtkWidget* widget, cairo_t *cr, FishApplet* fis
 
 	g_assert (fish->n_frames > 0);
 
-	width = cairo_image_surface_get_width (fish->surface);
-	height = cairo_image_surface_get_height (fish->surface);
+	width = fish->surface_width;
+	height = fish->surface_height;
 	src_x = 0;
 	src_y = 0;
 
@@ -1519,6 +1524,8 @@ static void fish_applet_unrealize(GtkWidget* widget, FishApplet* fish)
 	if (fish->surface)
 		cairo_surface_destroy (fish->surface);
 	fish->surface = NULL;
+	fish->surface_width = 0;
+	fish->surface_height = 0;
 }
 
 static void fish_applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient orientation)
@@ -1804,6 +1811,8 @@ static void fish_applet_dispose (GObject *object)
 	if (fish->surface)
 		cairo_surface_destroy (fish->surface);
 	fish->surface = NULL;
+	fish->surface_width = 0;
+	fish->surface_height = 0;
 
 	if (fish->pixbuf)
 		g_object_unref (fish->pixbuf);
