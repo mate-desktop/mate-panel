@@ -836,7 +836,6 @@ static void display_fortune_dialog(FishApplet* fish)
 	if (!fish->fortune_dialog) {
 		GtkWidget *scrolled;
 		GtkWidget *vbox;
-		GdkScreen *screen;
 		GdkMonitor *monitor;
 		GdkRectangle monitor_geom;
 
@@ -861,8 +860,6 @@ static void display_fortune_dialog(FishApplet* fish)
 				  G_CALLBACK (delete_event), fish);
 		g_signal_connect (fish->fortune_dialog, "response",
 				  G_CALLBACK (handle_fortune_response), fish);
-
-		screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 
 		monitor = gdk_display_get_monitor_at_window (gtk_widget_get_display (GTK_WIDGET (fish)),
 							     gtk_widget_get_window (GTK_WIDGET (fish)));
