@@ -123,12 +123,15 @@ panel_global_config_notify (GSettings   *settings,
 void
 panel_global_config_load (void)
 {
+	GSettingsSchema *schema;
 	gchar **keys;
 	gint i;
 
 	panel_global_settings = g_settings_new ("org.mate.panel");
 
-	keys = g_settings_list_keys (panel_global_settings);
+	g_object_get (panel_global_settings, "settings-schema", &schema, NULL);
+	keys = g_settings_schema_list_keys (schema);
+	g_settings_schema_unref (schema);
 
 	for (i = 0; keys[i]; i++) {
 		panel_global_config_set_entry (panel_global_settings, keys[i]);
