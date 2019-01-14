@@ -1284,8 +1284,8 @@ force_no_button_vertical_padding (GtkWidget *widget)
                                          "#clock-applet-button {\n"
                                          "padding-top: 0px;\n"
                                          "padding-bottom: 0px;\n"
-                                         "margin-top: 0px;\n"
-                                         "margin-bottom: 0px;\n"
+                                         "padding-left: 4px;\n"
+                                         "padding-right: 4px;\n"
                                          "}",
                                          -1, NULL);
         gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
