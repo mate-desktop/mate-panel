@@ -16,6 +16,11 @@ AM_CPPFLAGS = \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
 
+if ENABLE_WAYLAND
+AM_CPPFLAGS += \
+	-I$(top_builddir)/mate-panel/wayland-protocols
+endif
+
 AM_CFLAGS = $(WARN_CFLAGS)
 
 panel_sources = \
@@ -63,8 +68,8 @@ panel_sources = \
 
 if ENABLE_WAYLAND
 panel_sources += \
-	wayland-protocols/wlr-layer-shell-unstable-v1-protocol.c \
-	wayland-protocols/xdg-shell-protocol.c
+	wayland-protocols/wlr-layer-shell-unstable-v1.c \
+	wayland-protocols/xdg-shell.c
 endif
 
 if ENABLE_X11
@@ -125,8 +130,8 @@ panel_headers = \
 
 if ENABLE_WAYLAND
 panel_headers += \
-	wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h \
-	wayland-protocols/xdg-shell-client-protocol.h
+	wayland-protocols/wlr-layer-shell-unstable-v1-client.h \
+	wayland-protocols/xdg-shell-client.h
 endif
 
 if ENABLE_X11
