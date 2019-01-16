@@ -23,9 +23,13 @@ libmate_panel_applet_4_la_SOURCES =		\
 	mate-panel-applet-factory.c		\
 	mate-panel-applet-gsettings.c		\
 	mate-panel-applet-gsettings.h       \
-	panel-plug.c			\
-	panel-plug-private.h    \
 	panel-applet-private.h
+
+if ENABLE_X11
+libmate_panel_applet_4_la_SOURCES +=	\
+	panel-plug.c			\
+	panel-plug-private.h
+endif
 
 libmate_panel_applet_4_la_LIBADD  = \
 	$(LIBMATE_PANEL_APPLET_LIBS) \
