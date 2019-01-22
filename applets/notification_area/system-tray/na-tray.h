@@ -24,7 +24,9 @@
 #ifndef __NA_TRAY_H__
 #define __NA_TRAY_H__
 
-#ifdef GDK_WINDOWING_X11
+#include <config.h>
+
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #endif
 #include <gtk/gtk.h>
