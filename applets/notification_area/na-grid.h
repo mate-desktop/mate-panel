@@ -25,9 +25,12 @@
 #ifndef NA_GRID_H
 #define NA_GRID_H
 
-#ifdef GDK_WINDOWING_X11
+#include <config.h>
+
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #endif
+
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS

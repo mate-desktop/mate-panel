@@ -22,6 +22,11 @@
  */
 
 #include <config.h>
+
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include <string.h>
 
 #include <mate-panel-applet.h>
@@ -495,6 +500,11 @@ applet_factory (MatePanelApplet *applet,
   if (!(strcmp (iid, "NotificationArea") == 0 ||
         strcmp (iid, "SystemTrayApplet") == 0))
     return FALSE;
+
+  if (!GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (applet)))) {
+    g_warning ("Notification area only works on X");
+    return FALSE;
+  }
 
 #ifndef NOTIFICATION_AREA_INPROCESS
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
