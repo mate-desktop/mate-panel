@@ -15,6 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+// File should only be used on X11
+
 #ifndef PANEL_PLUG_PRIVATE_H
 #define PANEL_PLUG_PRIVATE_H
 
