@@ -33,20 +33,23 @@
 
 #include <glib/gi18n-lib.h>
 #include <cairo.h>
-#include <cairo-xlib.h>
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+
+#ifdef HAVE_X11
+#include <cairo-xlib.h>
+#include <gdk/gdkx.h>
 #include <gtk/gtkx.h>
 #include <X11/Xatom.h>
+#include "panel-plug-private.h"
+#endif
 
 #include "mate-panel-applet.h"
 #include "panel-applet-private.h"
 #include "mate-panel-applet-factory.h"
 #include "mate-panel-applet-marshal.h"
 #include "mate-panel-applet-enums.h"
-#include "panel-plug-private.h"
 
 #define MATE_PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, MatePanelAppletPrivate))
 
@@ -449,6 +452,8 @@ mate_panel_applet_set_locked_down (MatePanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "locked-down");
 }
 
+#ifdef HAVE_X11
+
 static Atom _net_wm_window_type = None;
 static Atom _net_wm_window_type_dock = None;
 static Atom _net_active_window = None;
@@ -533,6 +538,8 @@ mate_panel_applet_find_toplevel_dock_window (MatePanelApplet *applet,
 	return None;
 }
 
+#endif // HAVE_X11
+
 /* This function
  *   1) Gets the window id of the panel that contains the applet
  *	using XQueryTree and XGetWindowProperty to find an ancestor
@@ -543,6 +550,7 @@ void
 mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 			    guint32	  timestamp)
 {
+#ifdef HAVE_X11
 	GdkScreen  *screen;
 	GdkWindow  *root;
 	GdkDisplay *display;
@@ -550,6 +558,9 @@ mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 	Window	    dock_xwindow;
 	Window	    xroot;
 	XEvent	    xev;
+
+	if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+		return;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
 
@@ -582,6 +593,7 @@ mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 		    xroot, False,
 		    SubstructureRedirectMask | SubstructureNotifyMask,
 		    &xev);
+#endif
 }
 
 static GtkAction *
@@ -834,15 +846,20 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
 	GdkDevice      *device;
+	GdkMonitor     *monitor;
 	GdkScreen      *screen;
 	int             menu_x = 0;
 	int             menu_y = 0;
 	int             pointer_x;
 	int             pointer_y;
+	GdkRectangle    screen_geom;
 
 	g_return_if_fail (PANEL_IS_APPLET (widget));
 
 	applet = MATE_PANEL_APPLET (widget);
+
+	monitor = gdk_display_get_monitor_at_window (gtk_widget_get_display (widget), gtk_widget_get_window (widget));
+	gdk_monitor_get_geometry (monitor, &screen_geom);
 
 	screen = gtk_widget_get_screen (widget);
 	gtk_menu_set_screen (menu, screen);
@@ -874,9 +891,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 					       allocation.width - requisition.width);
 			}
 		}
-		menu_x = MIN (menu_x, WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) - requisition.width);
+		menu_x = MIN (menu_x, screen_geom.width - requisition.width);
 
-		if (menu_y > HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / 2)
+		if (menu_y > screen_geom.height / 2)
 			menu_y -= requisition.height;
 		else
 			menu_y += allocation.height;
@@ -884,9 +901,9 @@ mate_panel_applet_position_menu (GtkMenu   *menu,
 		if (pointer_y < allocation.height &&
 		    requisition.height < pointer_y)
 			menu_y += MIN (pointer_y, allocation.height - requisition.height);
-		menu_y = MIN (menu_y, HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) - requisition.height);
+		menu_y = MIN (menu_y, screen_geom.height - requisition.height);
 
-		if (menu_x > WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / 2)
+		if (menu_x > screen_geom.width / 2)
 			menu_x -= requisition.width;
 		else
 			menu_x += allocation.width;
@@ -947,6 +964,7 @@ static gboolean
 mate_panel_applet_button_event (MatePanelApplet      *applet,
 			   GdkEventButton *event)
 {
+#ifdef HAVE_X11
 	GtkWidget *widget;
 	GdkWindow *window;
 	GdkWindow *socket_window;
@@ -965,6 +983,9 @@ mate_panel_applet_button_event (MatePanelApplet      *applet,
 	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
 
 	display = gdk_display_get_default ();
+
+	if (!GDK_IS_X11_DISPLAY (display))
+		return FALSE;
 
 	if (event->type == GDK_BUTTON_PRESS) {
 		GdkSeat *seat;
@@ -1009,6 +1030,9 @@ mate_panel_applet_button_event (MatePanelApplet      *applet,
 	gdk_x11_display_error_trap_pop_ignored (display);
 
 	return TRUE;
+#else
+	return FALSE;
+#endif
 }
 
 static gboolean
@@ -1251,6 +1275,7 @@ mate_panel_applet_parse_color (const gchar *color_str,
 	return gdk_rgba_parse (color, color_str);
 }
 
+#ifdef HAVE_X11
 static gboolean
 mate_panel_applet_parse_pixmap_str (const char *str,
 			       Window          *xid,
@@ -1378,6 +1403,7 @@ mate_panel_applet_get_pattern_from_pixmap (MatePanelApplet *applet,
 
 	return pattern;
 }
+#endif
 
 static MatePanelAppletBackgroundType
 mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
@@ -1410,27 +1436,34 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 		retval = PANEL_COLOR_BACKGROUND;
 
 	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-		Window pixmap_id;
-		int             x, y;
+#ifdef HAVE_X11
+		if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+			Window pixmap_id;
+			int             x, y;
 
-		g_return_val_if_fail (pattern != NULL, PANEL_NO_BACKGROUND);
+			g_return_val_if_fail (pattern != NULL, PANEL_NO_BACKGROUND);
 
-		if (!mate_panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
-			g_warning ("Incomplete '%s' background type received: %s",
-				   elements [0], elements [1]);
+			if (!mate_panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
+				g_warning ("Incomplete '%s' background type received: %s",
+					elements [0], elements [1]);
 
-			g_strfreev (elements);
-			return PANEL_NO_BACKGROUND;
+				g_strfreev (elements);
+				return PANEL_NO_BACKGROUND;
+			}
+
+			*pattern = mate_panel_applet_get_pattern_from_pixmap (applet, pixmap_id, x, y);
+			if (!*pattern) {
+				g_warning ("Failed to get pattern %s", elements [1]);
+				g_strfreev (elements);
+				return PANEL_NO_BACKGROUND;
+			}
+
+			retval = PANEL_PIXMAP_BACKGROUND;
+		} else
+#endif
+		{ // not using X11
+			g_warning("Received pixmap background type, which is only supported on X11");
 		}
-
-		*pattern = mate_panel_applet_get_pattern_from_pixmap (applet, pixmap_id, x, y);
-		if (!*pattern) {
-			g_warning ("Failed to get pattern %s", elements [1]);
-			g_strfreev (elements);
-			return PANEL_NO_BACKGROUND;
-		}
-
-		retval = PANEL_PIXMAP_BACKGROUND;
 	} else
 		g_warning ("Unknown background type received");
 
@@ -1852,6 +1885,14 @@ mate_panel_applet_constructor (GType                  type,
 	if (!applet->priv->out_of_process)
 		return object;
 
+#ifdef HAVE_X11
+	if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+#endif
+	{ // not using X11
+		g_warning ("Requested construction of an out-of-process applet, which is only possible on X11");
+		return object;
+	}
+
 	applet->priv->plug = gtk_plug_new (0);
 
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
@@ -2239,6 +2280,7 @@ static void mate_panel_applet_factory_main_finalized(gpointer data, GObject* obj
 	}
 }
 
+#ifdef HAVE_X11
 static int (*_x_error_func) (Display *, XErrorEvent *);
 
 static int
@@ -2287,6 +2329,7 @@ _mate_panel_applet_setup_x_error_handler (void)
 
 	_x_error_func = XSetErrorHandler (_x_error_handler);
 }
+#endif
 
 static int
 _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
@@ -2303,12 +2346,21 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 	g_return_val_if_fail(callback != NULL, 1);
 	g_assert(g_type_is_a(applet_type, PANEL_TYPE_APPLET));
 
-	/*Use this both in and out of process as the tray applet always uses GtkSocket
-	 *to handle GtkStatusIcons whether the tray itself is built in or out of process
-     */
 
-	_mate_panel_applet_setup_x_error_handler();
-
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+		/*Use this both in and out of process as the tray applet always uses GtkSocket
+		*to handle GtkStatusIcons whether the tray itself is built in or out of process
+		*/
+		_mate_panel_applet_setup_x_error_handler();
+	} else
+#endif
+	{ // not using X11
+		if (out_process) {
+			g_warning("Requested out-of-process applet, which is only supported on X11");
+			return 1;
+		}
+	}
 
 	closure = g_cclosure_new(G_CALLBACK(callback), user_data, NULL);
 	factory = mate_panel_applet_factory_new(factory_id, out_process,  applet_type, closure);
@@ -2370,7 +2422,6 @@ mate_panel_applet_factory_setup_in_process (const gchar               *factory_i
 						    callback, user_data);
 }
 
-
 /**
  * mate_panel_applet_set_background_widget:
  * @applet: a #PanelApplet.
@@ -2393,13 +2444,18 @@ guint32
 mate_panel_applet_get_xid (MatePanelApplet *applet,
 		      GdkScreen   *screen)
 {
+	// out_of_process should only be true on X11, so an extra runtime Wayland check is not needed
 	if (applet->priv->out_of_process == FALSE)
 		return 0;
 
+#ifdef HAVE_X11
 	gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
 	gtk_widget_show (applet->priv->plug);
 
 	return gtk_plug_get_id (GTK_PLUG (applet->priv->plug));
+#else
+	return 0;
+#endif
 }
 
 const gchar *
