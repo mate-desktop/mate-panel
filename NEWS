@@ -1,58 +1,90 @@
 ### mate-panel 1.21.4
 
+  * update translations
+  * libmate-panel-applet: Add comments in headers to explain Wayland behavior
+  * libmate-panel-applet: mate-panel-applet.c Wayland support
+  * libmate-panel-applet: Applet factory Wayland support
+  * libmate-panel-applet: Error if panel-plug is built without X11
+  * libmate-panel-applet: Stop X11 specific files from building on Wayland
+  * eggsmclient: avoid deprecated 'g_type_class_add_private'
+  * clock: set  horizontal padding for clock-button
+  * panel-config-global: avoid deprecated 'g_settings_list_keys'
+  * Store fish surface size to enable rendering without backend specific code
+  * Remove unused screen variable in fish applet
+  * Remove X specific functions from fish applet
+  * README: don't mention dbus-glib which is not needed anymore
+  * Clock: Fix weather icon size selection for panel height
+  * Clock: ensure weather icon resizes with panel
+  * Tray: Fix too-wide icon spacing after mate-polkit has been used w sni
+  * clock: force no button vertical padding and margin
+  * disable deprecation warnings for distcheck
+  * Disallow building without X11 support
+  * Allow for enabling and disabling a backend without affecting the other
+  * Remove generated Wayland files on make clean
+  * Replace wayland-scanner private-code option with code
+  * clock.c: Force negative margin, not passing on clockbutton
+  * Link with Wayland protocols and libraries
+  * Include Wayland protocol generating makefile in build system
+  * Add wayland protocol generating makefile
+  * Updated configure.ac for Wayland support
+  * Add XDG Shell protocol xml
+  * Add Layer Shell protocol xml
+  * Remove legacy X11 package detection
+  * panel-gtk: Fix memory leaks
+
 ### mate-panel 1.21.3
 
-    update translations
-    Use make functions for HELP_LINGUAS
-    Check if manager->proxy is NULL
-    Migrate mate-panel from dbus-glib to gdbus
-    notification-area-preferences-dialog.ui: avoid GtkButton:use-stock
-    Fix GdkSeat warning
-    Ensure alt-F1 can show the menu even if no menu applet on panel
-    na-tray: add preferences dialog and applet menu entry
-    na-tray: wide panels, add GSettings to the applet
-    na-tray: wide panels, convert main GtkBox display to GtkGrid
-    na-tray: wide panels, preliminary batch box to grid rename
-    button-widget: wide panels, more suitable resize limits on Widgets and arrows
-    README - Add dependency list
-    update legal.xml
-    Clock applet help: To Adjust the System Date or Time
-    Clock applet help: Add Show week numbers in calendar
-    Clock applet help: Fix speed unit for meters per second
+  * update translations
+  * Use make functions for HELP_LINGUAS
+  * Check if manager->proxy is NULL
+  * Migrate mate-panel from dbus-glib to gdbus
+  * notification-area-preferences-dialog.ui: avoid GtkButton:use-stock
+  * Fix GdkSeat warning
+  * Ensure alt-F1 can show the menu even if no menu applet on panel
+  * na-tray: add preferences dialog and applet menu entry
+  * na-tray: wide panels, add GSettings to the applet
+  * na-tray: wide panels, convert main GtkBox display to GtkGrid
+  * na-tray: wide panels, preliminary batch box to grid rename
+  * button-widget: wide panels, more suitable resize limits on Widgets and arrows
+  * README - Add dependency list
+  * update legal.xml
+  * Clock applet help: To Adjust the System Date or Time
+  * Clock applet help: Add Show week numbers in calendar
+  * Clock applet help: Fix speed unit for meters per second
 
 ### mate-panel 1.21.2
 
-    sync with transifex
-    menu-bar: transfer focus correctly on alt-F1
-    panel: avoid a critical
-    panel-toplevel: fix memory leak in calculate_minimum_height
-    Change GTK_CHECK_VERSION to match next gtk+ release
-    applets: Guard against GTK scale-factor fixes on GtkSocket
-    window-list: Skip setting size hints until WnckTasklist has items to show.
-    applets: Fix runtime error messages
-    mate-panel-applet: setup_x_error_handler for in-process applets too
-    GTK 3.23: fix applet size allocation
-    fish: avoid deprecated 'gtk_window_set_wmclass'
-    Tray: simplify force-redraw, use code that actually works
-    panel-actions: replace deprecated gtk_menu_popup
-    applet-context-menu: replace deprecated gtk_menu_popup
-    panel-context-menu: replace deprecated gtk_menu_popup
-    GTK 3.23: don't cut tray icons too narrow in HiDPI mode
-    na-tray-child: remove na_tray_child_size_allocate
-    panel-menu-button: replace deprecated gtk_menu_popup
-    na-tray-child: replace deprecated gdk_error_trap_push/pop functions
-    libmate-panel-applet: replace deprecated gdk_error_trap functions
-    panel-xutils: replace deprecated gdk_error_trap functions
-    panel-util: replace deprecated gdk_flush
-    main: replace deprecated gdk_flush
-    panel-widget: replace deprecated gdk_flush
-    panel-toplevel: add position css class
-    panel-force-quit: replace deprecated gdk_device_grab
-    panel-force-quit: replace deprecated gdk_error_trap functions
-    panel-force-quit: replace deprecated gdk_flush
-    menu.c: Fix: Keep spaces in the left if "menus-have-icons" is off
-    Panel-gtk.c: Show menu icons only when "menus-have-icons" is set
-    workspace-switcher: provide themed fallback color
+  * sync with transifex
+  * menu-bar: transfer focus correctly on alt-F1
+  * panel: avoid a critical
+  * panel-toplevel: fix memory leak in calculate_minimum_height
+  * Change GTK_CHECK_VERSION to match next gtk+ release
+  * applets: Guard against GTK scale-factor fixes on GtkSocket
+  * window-list: Skip setting size hints until WnckTasklist has items to show.
+  * applets: Fix runtime error messages
+  * mate-panel-applet: setup_x_error_handler for in-process applets too
+  * GTK 3.23: fix applet size allocation
+  * fish: avoid deprecated 'gtk_window_set_wmclass'
+  * Tray: simplify force-redraw, use code that actually works
+  * panel-actions: replace deprecated gtk_menu_popup
+  * applet-context-menu: replace deprecated gtk_menu_popup
+  * panel-context-menu: replace deprecated gtk_menu_popup
+  * GTK 3.23: don't cut tray icons too narrow in HiDPI mode
+  * na-tray-child: remove na_tray_child_size_allocate
+  * panel-menu-button: replace deprecated gtk_menu_popup
+  * na-tray-child: replace deprecated gdk_error_trap_push/pop functions
+  * libmate-panel-applet: replace deprecated gdk_error_trap functions
+  * panel-xutils: replace deprecated gdk_error_trap functions
+  * panel-util: replace deprecated gdk_flush
+  * main: replace deprecated gdk_flush
+  * panel-widget: replace deprecated gdk_flush
+  * panel-toplevel: add position css class
+  * panel-force-quit: replace deprecated gdk_device_grab
+  * panel-force-quit: replace deprecated gdk_error_trap functions
+  * panel-force-quit: replace deprecated gdk_flush
+  * menu.c: Fix: Keep spaces in the left if "menus-have-icons" is off
+  * Panel-gtk.c: Show menu icons only when "menus-have-icons" is set
+  * workspace-switcher: provide themed fallback color
 
 ### mate-panel 1.21.1
 
