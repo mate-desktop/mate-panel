@@ -6,10 +6,10 @@
 # Translators:
 # ogalho Carlos Dias Martins <ogalho@gmail.com>, 2018
 # alfalb_mansil, 2018
-# Rui <xymarior@yandex.com>, 2018
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2018
 # Martin Wimpress <code@flexion.org>, 2018
 # Diogo Oliveira <diogodesigns@gmail.com>, 2018
+# Rui <xymarior@yandex.com>, 2018
 # ruiflora <rui.flora@gmail.com>, 2018
 # MS <manuelarodsilva@gmail.com>, 2018
 # Carlos Moreira, 2018
@@ -164,11 +164,11 @@ msgstr "%A, %d de %B de %Y"
 
 #: ../applets/clock/clock.c:1636
 msgid "Set System Time..."
-msgstr "Definir a Hora do Sistema..."
+msgstr "Definir Hora do Sistema..."
 
 #: ../applets/clock/clock.c:1637
 msgid "Set System Time"
-msgstr "Definir a Hora do Sistema"
+msgstr "Definir Hora do Sistema"
 
 #: ../applets/clock/clock.c:1652
 msgid "Failed to set the system time"
@@ -560,13 +560,13 @@ msgstr "Se verdadeiro, além da hora apresentar a data no relógio."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:9
 msgid "Show date in tooltip"
-msgstr "Apresentar data na dica"
+msgstr "Apresentar data na dica de contexto"
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"Se verdadeiro, apresentar a data numa notificação quando o rato está sobre o"
-" relógio. "
+"Se verdadeiro, apresentar a data numa dica de contexto quando o ponteiro do "
+"rato está sobre o relógio."
 
 #: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
 msgid "Show weather in clock"
@@ -1263,7 +1263,7 @@ msgid ""
 "A value of 0 will disable the history."
 msgstr ""
 "Controla o tamanho do histórico da caixa de diálogo \"Executar aplicação\". "
-"O valor 0 desactiva o histórico."
+"O valor 0 desativa o histórico."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:13
 msgid "Reverse the history of the \"Run Application\" dialog"
@@ -1301,18 +1301,20 @@ msgid ""
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
 "of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
-"Uma lista de IDs de objectos de painel. Cada ID identifica um objecto "
+"Uma lista de IDs de objetos de painel. Cada ID identifica um objeto "
 "individual de painel (por ex: um iniciador, botão de ação ou botão/barra de "
-"menu). As definições de cada um destes objectos estão armazenadas em "
+"menu). As definições de cada um destes objetos estão armazenadas em "
 "/apps/panel/objects/$(id)."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:19
 msgid "Enable tooltips"
-msgstr "Ativar notificações"
+msgstr "Ativar dicas de contexto"
 
 #: ../data/org.mate.panel.gschema.xml.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Se verdadeiro, são apresentadas as dicas para objectos em painéis."
+msgstr ""
+"Se verdadeiro, são apresentadas as dicas de contexto para objetos em "
+"painéis."
 
 #: ../data/org.mate.panel.gschema.xml.in.h:21
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
@@ -1457,7 +1459,7 @@ msgid ""
 "this to take effect."
 msgstr ""
 "Definir o tamanho de um ícone usado na barra de menus. O painel tem que ser "
-"reiniciado para que a acção tenha efeito."
+"reiniciado para que a ação tenha efeito."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:13
 msgid "Menu items icon size"
@@ -1469,7 +1471,7 @@ msgid ""
 " to take effect."
 msgstr ""
 "Definir o tamanho dos ícones usados na barra de menus. O painel tem que ser "
-"reiniciado para que a acção tenha efeito."
+"reiniciado para que a ação tenha efeito."
 
 #: ../data/org.mate.panel.menubar.gschema.xml.in.h:15
 msgid "Threshold of menu items before submenu is created"
@@ -1508,7 +1510,7 @@ msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
-"A posição deste objecto de painel. A posição é especificada pelo número de "
+"A posição deste objeto de painel. A posição é especificada pelo número de "
 "pixels a partir da margem esquerda (ou superior, se vertical) do painel."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:7
@@ -1546,7 +1548,7 @@ msgid ""
 "object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
 "applet\")."
 msgstr ""
-"O ID de implementação da applet - por ex. "
+"O ID de implementação da mini-aplicação - por ex. "
 "\"ClockAppletFactory::ClockApplet\". Esta chave apenas é relevante se a "
 "chave object_type for \"external-applet\" (ou a obsoleta \"matecomponent-"
 "applet\")."
@@ -1565,7 +1567,7 @@ msgstr ""
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:15
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Notificação mostrada para a gaveta ou menu"
+msgstr "Dica de contexto mostrada para a gaveta ou menu"
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:16
 msgid ""
@@ -1573,8 +1575,9 @@ msgid ""
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
 "object\"."
 msgstr ""
-"O texto a apresentar numa dica para esta gaveta. Esta chave apenas é "
-"relevante se o object_type for \"drawer-object\" ou \"menu-object\"."
+"O texto a apresentar numa dica de contexto para esta gaveta. Esta chave "
+"apenas é relevante se o object_type for \"drawer-object\" ou \"menu-"
+"object\"."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:17
 msgid "Use custom icon for object's button"
@@ -1601,8 +1604,8 @@ msgid ""
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
 "A localização do ficheiro de imagem utilizado como ícone para o botão do "
-"objecto. Esta chave apenas é relevante se o object_type for \"drawer-"
-"object\" ou \"menu-object\" e a chave use_custom_icon for verdadeira."
+"objeto. Esta chave apenas é relevante se o object_type for \"drawer-object\""
+" ou \"menu-object\" e a chave use_custom_icon for verdadeira."
 
 #: ../data/org.mate.panel.object.gschema.xml.in.h:21
 msgid "Use custom path for menu contents"
@@ -1744,7 +1747,7 @@ msgstr ""
 "\"bottom\", \"left\", \"right\". Em modo expandido a chave especifica em que"
 " margem de ecrã o painel está. Em modo não-expandido a diferença entre "
 "\"top\" e \"bottom\" é menos importante - ambas indicam que este é um painel"
-" horizontal - mas ainda dão uma dica útil sobre como alguns objectos de "
+" horizontal - mas ainda dão uma dica útil sobre como alguns objetos de "
 "painel se devem comportar. Por exemplo, num painel \"top\" um botão de menu "
 "irá apresentar o seu menu abaixo do painel, e num painel \"bottom\" o menu "
 "será apresentado acima do painel."
@@ -2028,7 +2031,7 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"Se verdadeiro, a imagem será dimensionada (mantendo o rácio de aspecto da "
+"Se verdadeiro, a imagem será dimensionada (mantendo o rácio de aspeto da "
 "imagem) à altura do painel (se horizontal)."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
@@ -2040,7 +2043,7 @@ msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"Se verdadeiro, a imagem será dimensionada para o painel. O rácio de aspecto "
+"Se verdadeiro, a imagem será dimensionada para o painel. O rácio de aspeto "
 "da imagem não será mantido."
 
 #: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
@@ -2195,7 +2198,7 @@ msgstr "_Propriedades"
 
 #: ../mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
-msgstr "Criar um novo ficheiro no directório indicado"
+msgstr "Criar um novo ficheiro no diretório indicado"
 
 #: ../mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
@@ -2213,7 +2216,7 @@ msgstr "Criar Iniciador"
 #: ../mate-panel/mate-desktop-item-edit.c:169
 #: ../mate-panel/mate-desktop-item-edit.c:192
 msgid "Directory Properties"
-msgstr "Propriedades do Directório"
+msgstr "Propriedades do Diretório"
 
 #: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
 msgid "Launcher Properties"
@@ -2347,7 +2350,7 @@ msgstr "Executar Aplicação..."
 #: ../mate-panel/panel-action-button.c:371
 msgid "Run an application by typing a command or choosing from a list"
 msgstr ""
-"Executar uma aplicação introduzindo um comando ou seleccionando de uma lista"
+"Executar uma aplicação introduzindo um comando ou selecionando de uma lista"
 
 #: ../mate-panel/panel-action-button.c:380
 msgid "Search for Files..."
@@ -2465,14 +2468,14 @@ msgstr "\"%s\" terminou inesperadamente"
 
 #: ../mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
-msgstr "Objecto de painel terminou inesperadamente"
+msgstr "Objeto de painel terminou inesperadamente"
 
 #: ../mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
-"Se reler um objecto de painel, será imediatamente adicionado novamente ao "
+"Se reler um objeto de painel, será imediatamente adicionado novamente ao "
 "painel."
 
 #: ../mate-panel/panel-applet-frame.c:776
@@ -2621,11 +2624,11 @@ msgstr "O nome do iniciador não está definido."
 
 #: ../mate-panel/panel-ditem-editor.c:1338
 msgid "Could not save directory properties"
-msgstr "Incapaz de gravar as propriedades do directório"
+msgstr "Incapaz de gravar as propriedades do diretório"
 
 #: ../mate-panel/panel-ditem-editor.c:1339
 msgid "The name of the directory is not set."
-msgstr "O nome do directório não está definido."
+msgstr "O nome do diretório não está definido."
 
 #: ../mate-panel/panel-ditem-editor.c:1355
 msgid "The command of the launcher is not set."
