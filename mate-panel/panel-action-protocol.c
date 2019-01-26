@@ -24,6 +24,10 @@
 
 #include <config.h>
 
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include "panel-action-protocol.h"
 
 #include <gdk/gdk.h>
@@ -131,6 +135,8 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 
 	screen = gdk_event_get_screen (event);
 	display = gdk_screen_get_display (screen);
+	if (!GDK_IS_X11_DISPLAY (display))
+		return GDK_FILTER_CONTINUE;
 	window = gdk_x11_window_lookup_for_display (display, xevent->xclient.window);
 	if (!window)
 		return GDK_FILTER_CONTINUE;
@@ -160,6 +166,7 @@ panel_action_protocol_init (void)
 	GdkDisplay *display;
 
 	display = gdk_display_get_default ();
+	g_assert(GDK_IS_X11_DISPLAY (display));
 
 	atom_mate_panel_action =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
