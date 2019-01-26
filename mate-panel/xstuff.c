@@ -46,6 +46,11 @@ static gboolean xstuff_display_is_dead = FALSE;
 #define ZOOM_STEPS  14
 #define ZOOM_DELAY 10
 
+gboolean is_using_x11 ()
+{
+	return GDK_IS_X11_DISPLAY (gdk_display_get_default ());
+}
+
 typedef struct {
 	int size;
 	int size_start;
