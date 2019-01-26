@@ -24,6 +24,10 @@
 
 #include "config.h"
 
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include "panel-xutils.h"
 
 #include <glib.h>
@@ -63,6 +67,7 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 	GdkDisplay *display;
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gdk_window_get_display (gdk_window)));
 
 	xdisplay = GDK_WINDOW_XDISPLAY (gdk_window);
 	window = GDK_WINDOW_XID (gdk_window);
@@ -116,6 +121,7 @@ panel_warp_pointer (GdkWindow *gdk_window,
 	GdkDisplay *display;
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gdk_window_get_display (gdk_window)));
 
 	xdisplay = GDK_WINDOW_XDISPLAY (gdk_window);
 	window = GDK_WINDOW_XID (gdk_window);
@@ -143,6 +149,7 @@ panel_get_real_modifier_mask (guint mask)
 		return mask;
 	}
 
+	g_return_val_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()), mask);
 	display = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
 
 	XDisplayKeycodes (display, &min_keycode, &max_keycode);
