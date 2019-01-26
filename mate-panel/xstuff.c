@@ -12,7 +12,13 @@
  *  Copyright (c) 1997-2002 Alfredo K. Kojima
 
  */
+
 #include <config.h>
+
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include <string.h>
 #include <unistd.h>
 
