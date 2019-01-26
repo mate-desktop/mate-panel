@@ -24,6 +24,10 @@
 
 #include <config.h>
 
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include "panel-force-quit.h"
 
 #include <glib/gi18n.h>
@@ -334,6 +338,8 @@ panel_force_quit (GdkScreen *screen,
 	GdkWindow     *root;
 	GdkDisplay    *display;
 	GdkSeat       *seat;
+
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen)));
 
 	popup = display_popup_window (screen);
 
