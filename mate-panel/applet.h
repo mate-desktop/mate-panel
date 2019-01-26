@@ -111,11 +111,6 @@ void        mate_panel_applet_menu_set_recurse (GtkMenu     *menu,
 
 gboolean    mate_panel_applet_toggle_locked  (AppletInfo *info);
 
-void mate_panel_applet_position_menu (GtkMenu   *menu,
-				 int       *x,
-				 int       *y,
-				 gboolean  *push_in,
-				 GtkWidget *applet);
 #ifdef __cplusplus
 }
 #endif
