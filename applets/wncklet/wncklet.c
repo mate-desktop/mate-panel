@@ -25,6 +25,10 @@
 	#include <config.h>
 #endif
 
+#ifndef HAVE_X11
+#error file should only be built when HAVE_X11 is enabled
+#endif
+
 #include <string.h>
 #include <mate-panel-applet.h>
 
