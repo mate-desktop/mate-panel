@@ -7,7 +7,6 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 
 #include "clock.h"
 #include "clock-face.h"
