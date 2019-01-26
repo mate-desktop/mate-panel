@@ -49,8 +49,11 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <gdk/gdkx.h>
 #include <gio/gio.h>
+
+#ifdef HAVE_X11
+#include <gdk/gdkx.h>
+#endif
 
 #include <libmateweather/mateweather-prefs.h>
 #include <libmateweather/location-entry.h>
@@ -848,6 +851,7 @@ create_calendar (ClockData *cd)
 static void
 position_calendar_popup (ClockData *cd)
 {
+#ifdef HAVE_X11
         GtkRequisition  req;
         GtkAllocation   allocation;
         GdkDisplay     *display;
@@ -859,6 +863,9 @@ position_calendar_popup (ClockData *cd)
         int             w, h;
         int             i, n;
         gboolean        found_monitor = FALSE;
+
+        if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+                return;
 
         /* Get root origin of the toggle button, and position above that. */
         gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
@@ -943,6 +950,7 @@ position_calendar_popup (ClockData *cd)
 
         gtk_window_move (GTK_WINDOW (cd->calendar_popup), x, y);
         gtk_window_set_gravity (GTK_WINDOW (cd->calendar_popup), gravity);
+#endif
 }
 
 static void
