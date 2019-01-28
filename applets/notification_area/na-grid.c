@@ -183,9 +183,9 @@ void
 na_grid_set_min_icon_size (NaGrid *grid,
                            gint    min_icon_size)
 {
-  grid->min_icon_size = min_icon_size;
-  
   g_return_if_fail (NA_IS_GRID (grid));
+
+  grid->min_icon_size = min_icon_size;
   
   refresh_grid (grid);
 }
