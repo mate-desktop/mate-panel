@@ -333,6 +333,7 @@ na_tray_applet_realize (GtkWidget *widget)
 static void
 na_tray_applet_dispose (GObject *object)
 {
+  g_clear_object (&NA_TRAY_APPLET (object)->priv->settings);
 #ifdef PROVIDE_WATCHER_SERVICE
   g_clear_object (&NA_TRAY_APPLET (object)->priv->sn_watcher);
 #endif
