@@ -477,6 +477,9 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	                          GDK_GRAVITY_NORTH_WEST,
 	                          NULL);
 
+	/*Ensure scrollbars show up if vertical space is limited*/
+	gtk_menu_reposition (GTK_MENU (button->priv->menu));
+
 	g_signal_connect(GTK_MENU_SHELL (button->priv->menu), "deactivate", G_CALLBACK (panel_menu_button_menu_deactivate), button);
 	toplevel = gtk_widget_get_toplevel(GTK_WIDGET(button->priv->toplevel));
 	button->priv->interrupted_window = panel_util_get_current_active_window (toplevel);

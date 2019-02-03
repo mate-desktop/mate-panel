@@ -100,6 +100,8 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	gdk_event_set_device (event, device);
 
 	gtk_menu_popup_at_pointer (GTK_MENU (menu),event);
+	/*Ensure scrollbars show up if vertical space is limited*/
+	gtk_menu_reposition(GTK_MENU(menu));
 }
 
 static void
