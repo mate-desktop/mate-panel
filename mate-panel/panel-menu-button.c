@@ -471,9 +471,14 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
 	gtk_menu_set_screen (GTK_MENU (button->priv->menu), screen);
 
+	/*using these same anchor points lets default "anchor-hints" properly position the menu
+	 *so that on a vertical panel the menu aligns with the outside edge of a menu button
+	 *placed at the top or bottom of a left or a right panel
+	 */
+
 	gtk_menu_popup_at_widget (GTK_MENU (button->priv->menu),
 	                          GTK_WIDGET (button),
-	                          GDK_GRAVITY_SOUTH_WEST,
+	                          GDK_GRAVITY_NORTH_WEST,
 	                          GDK_GRAVITY_NORTH_WEST,
 	                          NULL);
 
