@@ -5,11 +5,6 @@ language: bash
 services:
   - docker
 
-# Use travis branch for test.
-#branches:
-#  only:
-#  - travis
-
 before_install:
   - curl -L -o docker-build https://github.com/mate-desktop/mate-dev-scripts/raw/travis/travis/docker-build
   - chmod +x docker-build
@@ -137,19 +132,22 @@ variables:
 
 before_scripts:
   - cd ${START_DIR}
-  - if [ ! -d mate-menus-build ]; then git clone --depth 1  https://github.com/mate-desktop/mate-menus.git mate-menus-build;fi
-  - cd mate-menus-build
-  - ./autogen.sh
-  - if [ ${DISTRO_NAME} == "debian" -o ${DISTRO_NAME} == "ubuntu" ];then
-  -     ./autogen.sh --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu --libexecdir=/usr/lib/x86_64-linux-gnu > /dev/null 2>&1
-  - else
-  -     ./autogen.sh --prefix=/usr > /dev/null 2>&1
+  - if [ ! -d mate-menus-build ]; then
+  -     git clone --depth 1  https://github.com/mate-desktop/mate-menus.git mate-menus-build
   - fi
-  - if [ ${TRAVIS} == "false" ]; then make clean; fi
-  - make > /dev/null 2>&1
-  - make install > /dev/null 2>&1
+  - cd mate-menus-build
+  - if [ ${DISTRO_NAME} == "debian" -o ${DISTRO_NAME} == "ubuntu" ];then
+  -     ./autogen.sh --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu --libexecdir=/usr/lib/x86_64-linux-gnu
+  - else
+  -     ./autogen.sh --prefix=/usr
+  - fi
+  - if [ ${TRAVIS} == "false" ]; then
+  -     make clean
+  - fi
+  - make
+  - make install
 
 after_scripts:
-  - make distcheck > /dev/null
+  - make distcheck
     # Just look at the error output and return 0 always.
-  - 'if [ $? -ne 0 ];then RED="\033[0;31m"; NC="\033[0m"; printf "${RED}!!! ERROR: Run make distcheck failed.${NC}\n"; fi'
+  - 'if [ $? -ne 0 ];then RED="\033[0;31m"; ENDC="\033[0m"; printf "${RED}!!! ERROR: Run make distcheck failed.${ENDC}\n"; fi'
