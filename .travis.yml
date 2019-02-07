@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-  - curl -L -o docker-build https://github.com/mate-desktop/mate-dev-scripts/raw/travis/travis/docker-build
+  - curl -Ls -o docker-build https://github.com/mate-desktop/mate-dev-scripts/raw/travis/travis/docker-build
   - chmod +x docker-build
 
 install:
@@ -16,7 +16,7 @@ script:
   - ./docker-build --name ${DISTRO} --verbose --config .travis.yml --build autotools
 
 env:
-  - DISTRO="base/archlinux"
+  - DISTRO="archlinux/base"
   - DISTRO="debian:sid"
   - DISTRO="fedora:29"
   - DISTRO="ubuntu:18.10"
@@ -42,6 +42,7 @@ requires:
     - mate-common
     - mate-desktop
     - mate-menus
+    - which
     - yelp-tools
 
   debian:
@@ -149,5 +150,3 @@ before_scripts:
 
 after_scripts:
   - make distcheck
-    # Just look at the error output and return 0 always.
-  - 'if [ $? -ne 0 ];then RED="\033[0;31m"; ENDC="\033[0m"; printf "${RED}!!! ERROR: Run make distcheck failed.${ENDC}\n"; fi'
