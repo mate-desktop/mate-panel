@@ -124,6 +124,7 @@ mate_panel_applets_manager_get_applet_factory_info_from_file (const gchar *filen
 {
 	MatePanelAppletFactoryInfo *info;
 	GKeyFile               *applet_file;
+	const char             *lib_prefix;
 	gchar                 **groups;
 	gsize                   n_groups;
 	gint                    i;
@@ -162,6 +163,16 @@ mate_panel_applets_manager_get_applet_factory_info_from_file (const gchar *filen
 			g_key_file_free (applet_file);
 
 			return NULL;
+		}
+		lib_prefix = g_getenv ("MATE_PANEL_APPLET_LIB_PREFIX");
+		if (lib_prefix && g_strcmp0 (lib_prefix, "") != 0) {
+			char *location;
+			int location_len = strlen (lib_prefix) + strlen (info->location) + 1;
+			location = g_strnfill (location_len, 0);
+			g_strlcat (location, lib_prefix, location_len);
+			g_strlcat (location, info->location, location_len);
+			g_free (info->location);
+			info->location = location;
 		}
 	}
 
