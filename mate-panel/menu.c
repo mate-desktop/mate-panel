@@ -542,7 +542,7 @@ create_item_context_menu (GtkWidget   *item,
 
 static gboolean
 show_item_menu (GtkWidget      *item,
-		GdkEventButton *bevent)
+		GdkEvent *event)
 {
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
@@ -562,11 +562,18 @@ show_item_menu (GtkWidget      *item,
 
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
-
-	gtk_menu_popup (GTK_MENU (menu),
-			NULL, NULL, NULL, NULL,
-			bevent->button,
-			bevent->time);
+	/* Set up theme and transparency support */
+	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
+	/* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
+	GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
+	GdkVisual *visual = gdk_screen_get_rgba_visual (screen);
+	gtk_widget_set_visual(GTK_WIDGET (toplevel), visual);
+	/* Set menu and it's toplevel window to follow panel theme */
+	GtkStyleContext *context;
+	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
+	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
+	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+	gtk_menu_popup_at_pointer (GTK_MENU (menu), event);
 
 	return TRUE;
 }
@@ -586,7 +593,7 @@ menuitem_button_press_event (GtkWidget      *menuitem,
 			     GdkEventButton *event)
 {
 	if (event->button == 3)
-		return show_item_menu (menuitem, event);
+		return show_item_menu (menuitem, (GdkEvent *) event);
 
 	return FALSE;
 }
@@ -1390,14 +1397,8 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
 		active_menu_item = gtk_menu_shell_get_selected_item (menu_shell);
-		if (active_menu_item && gtk_menu_item_get_submenu (GTK_MENU_ITEM (active_menu_item)) == NULL) {
-			GdkEventButton bevent;
-
-			bevent.button = 3;
-			bevent.time = GDK_CURRENT_TIME;
-			retval = show_item_menu (active_menu_item, &bevent);
-		}
-
+		if (active_menu_item && gtk_menu_item_get_submenu (GTK_MENU_ITEM (active_menu_item)) == NULL)
+			retval = show_item_menu (active_menu_item, (GdkEvent *) event);
 	}
 	return retval;
 }
