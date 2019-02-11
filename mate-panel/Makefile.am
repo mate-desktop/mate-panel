@@ -23,7 +23,6 @@ panel_sources = \
 	main.c \
 	panel-widget.c \
 	button-widget.c \
-	xstuff.c \
 	panel-session.c \
 	panel.c \
 	applet.c \
@@ -47,17 +46,14 @@ panel_sources = \
 	panel-menu-items.c \
 	panel-separator.c \
 	panel-recent.c \
-	panel-action-protocol.c \
 	panel-toplevel.c \
 	panel-struts.c \
 	panel-frame.c \
-	panel-xutils.c \
 	panel-multiscreen.c \
 	panel-a11y.c \
 	panel-bindings.c \
 	panel-layout.c \
 	panel-profile.c \
-	panel-force-quit.c \
 	panel-lockdown.c \
 	panel-addto.c \
 	panel-ditem-editor.c \
@@ -71,12 +67,19 @@ panel_sources += \
 	wayland-protocols/xdg-shell-protocol.c
 endif
 
+if ENABLE_X11
+panel_sources += \
+	xstuff.c \
+	panel-xutils.c \
+	panel-force-quit.c \
+	panel-action-protocol.c
+endif
+
 panel_headers = \
 	panel-types.h \
 	panel-widget.h \
 	panel-globals.h \
 	button-widget.h \
-	xstuff.h \
 	panel-session.h \
 	panel.h \
 	applet.h \
@@ -101,11 +104,9 @@ panel_headers = \
 	panel-menu-items.h \
 	panel-separator.h \
 	panel-recent.h \
-	panel-action-protocol.h \
 	panel-toplevel.h \
 	panel-struts.h \
 	panel-frame.h \
-	panel-xutils.h \
 	panel-multiscreen.h \
 	panel-a11y.h \
 	panel-bindings.h \
@@ -113,7 +114,6 @@ panel_headers = \
 	panel-profile.h \
 	panel-enums-gsettings.h \
 	panel-enums.h \
-	panel-force-quit.h \
 	panel-lockdown.h \
 	panel-addto.h \
 	panel-ditem-editor.h \
@@ -127,6 +127,14 @@ if ENABLE_WAYLAND
 panel_headers += \
 	wayland-protocols/wlr-layer-shell-unstable-v1-client-protocol.h \
 	wayland-protocols/xdg-shell-client-protocol.h
+endif
+
+if ENABLE_X11
+panel_sources += \
+	xstuff.h \
+	panel-xutils.h \
+	panel-force-quit.h \
+	panel-action-protocol.h
 endif
 
 mate_panel_SOURCES = \
@@ -166,14 +174,22 @@ mate_desktop_item_edit_SOURCES = \
 	mate-desktop-item-edit.c \
 	panel-ditem-editor.c \
 	panel-marshal.c \
-	panel-util.c \
+	panel-util.c
+
+if ENABLE_X11
+mate_desktop_item_edit_SOURCES += \
 	xstuff.c
+endif
 
 mate_desktop_item_edit_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
-	$(DCONF_LIBS) \
+	$(DCONF_LIBS)
+
+if ENABLE_X11
+mate_desktop_item_edit_LDADD += \
 	-lX11
+endif
 
 mate_panel_test_applets_SOURCES = \
 	$(panel_test_applets_BUILT_SOURCES)	\
