@@ -23,9 +23,6 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
@@ -43,7 +40,6 @@
 #include <libpanel-util/panel-xdg.h>
 
 #include "applet.h"
-#include "xstuff.h"
 #include "panel-config-global.h"
 #include "panel-schemas.h"
 #include "panel-globals.h"
@@ -51,7 +47,12 @@
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
 
+#ifdef HAVE_X11
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <gdk/gdkx.h>
 static Atom _net_active_window = None;
+#endif
 
 char *
 panel_util_make_exec_uri_for_desktop (const char *exec)
@@ -1248,7 +1249,9 @@ panel_util_get_file_optional_homedir (const char *location)
 	return file;
 }
 
-static void panel_menu_bar_get_net_active_window(Display *xdisplay)
+#ifdef HAVE_X11
+
+static void panel_menu_bar_get_net_active_x11_window(Display *xdisplay)
 {
 	if (_net_active_window == None)
 		_net_active_window = XInternAtom (xdisplay,
@@ -1256,7 +1259,7 @@ static void panel_menu_bar_get_net_active_window(Display *xdisplay)
 						  False);
 }
 
-Window panel_util_get_current_active_window (GtkWidget *toplevel)
+Window panel_util_get_current_active_x11_window (GtkWidget *toplevel)
 {
 	GdkScreen  *screen;
 	GdkDisplay *display;
@@ -1279,7 +1282,7 @@ Window panel_util_get_current_active_window (GtkWidget *toplevel)
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
 	xroot    = GDK_WINDOW_XID (root);
 
-	panel_menu_bar_get_net_active_window (xdisplay);
+	panel_menu_bar_get_net_active_x11_window (xdisplay);
 	if (_net_active_window != None
 	    && XGetWindowProperty (xdisplay, xroot, _net_active_window, 0, 1,
 				   False, XA_WINDOW, &return_type, &return_format,
@@ -1297,7 +1300,7 @@ Window panel_util_get_current_active_window (GtkWidget *toplevel)
 	return res;
 }
 
-void panel_util_set_current_active_window (GtkWidget *toplevel, Window window)
+void panel_util_set_current_active_x11_window (GtkWidget *toplevel, Window window)
 {
 	GdkScreen  *screen;
 	GdkDisplay *display;
@@ -1313,7 +1316,7 @@ void panel_util_set_current_active_window (GtkWidget *toplevel, Window window)
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
 	xroot    = GDK_WINDOW_XID (root);
 
-	panel_menu_bar_get_net_active_window (xdisplay);
+	panel_menu_bar_get_net_active_x11_window (xdisplay);
 	if (_net_active_window == None)
 		return;
 
@@ -1333,3 +1336,5 @@ void panel_util_set_current_active_window (GtkWidget *toplevel, Window window)
 		    SubstructureRedirectMask | SubstructureNotifyMask,
 		    &xev);
 }
+
+#endif
