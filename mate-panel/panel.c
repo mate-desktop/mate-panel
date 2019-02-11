@@ -19,7 +19,10 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+
+#ifdef HAVE_X11
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
+#endif
 
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>
@@ -364,6 +367,8 @@ panel_popup_menu (PanelToplevel *toplevel,
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
+	gtk_window_set_attached_to (GTK_WINDOW (gtk_widget_get_toplevel (menu)),
+				    GTK_WIDGET (toplevel));
 	gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
 
 	return TRUE;
@@ -389,11 +394,14 @@ static gboolean
 panel_key_press_event (GtkWidget   *widget,
 		       GdkEventKey *event)
 {
+#ifdef HAVE_X11
 	/*
   	 * If the focus widget is a GtkSocket, i.e. the
 	 * focus is in an applet in another process, then key 
 	 * bindings do not work. We get around this by
 	 * activating the key bindings here.
+	 *
+	 * Will always be false when not using X
 	 */ 
 	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
 	    event->keyval == GDK_KEY_F10 &&
@@ -401,6 +409,7 @@ panel_key_press_event (GtkWidget   *widget,
 		return gtk_bindings_activate (G_OBJECT (widget),
 					      event->keyval,
 					      event->state);
+#endif
 
 	return FALSE;
 }
