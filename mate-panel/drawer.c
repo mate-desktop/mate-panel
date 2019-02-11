@@ -29,7 +29,6 @@
 #include "panel-config-global.h"
 #include "panel-profile.h"
 #include "panel-util.h"
-#include "xstuff.h"
 #include "panel-globals.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
