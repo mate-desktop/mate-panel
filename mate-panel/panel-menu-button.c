@@ -95,7 +95,9 @@ struct _PanelMenuButtonPrivate {
 	char                  *custom_icon;
 	char                  *tooltip;
 
-	Window                 interrupted_window;
+#ifdef HAVE_X11
+	Window                 interrupted_x11_window;
+#endif
 
 	MenuPathRoot           path_root;
 	guint                  use_menu_path : 1;
@@ -445,8 +447,13 @@ panel_menu_button_recreate_menu (PanelMenuButton *button)
 static gboolean panel_menu_button_menu_deactivate (GtkWidget* widget, PanelMenuButton* button)
 {
 	GtkWidget *toplevel = gtk_widget_get_toplevel(widget);
-	panel_util_set_current_active_window(toplevel, button->priv->interrupted_window);
-	button->priv->interrupted_window = None;
+
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget))) {
+		panel_util_set_current_active_x11_window(toplevel, button->priv->interrupted_x11_window);
+		button->priv->interrupted_x11_window = None;
+	}
+#endif
 
 	return FALSE;
 }
@@ -471,6 +478,9 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
 	gtk_menu_set_screen (GTK_MENU (button->priv->menu), screen);
 
+	gtk_window_set_attached_to (GTK_WINDOW (gtk_widget_get_toplevel (button->priv->menu)),
+				    GTK_WIDGET (button));
+
 	/*using these same anchor points lets default "anchor-hints" properly position the menu
 	 *so that on a vertical panel the menu aligns with the outside edge of a menu button
 	 *placed at the top or bottom of a left or a right panel
@@ -484,9 +494,13 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 
 	g_signal_connect(GTK_MENU_SHELL (button->priv->menu), "deactivate", G_CALLBACK (panel_menu_button_menu_deactivate), button);
 	toplevel = gtk_widget_get_toplevel(GTK_WIDGET(button->priv->toplevel));
-	button->priv->interrupted_window = panel_util_get_current_active_window (toplevel);
 	window = gtk_widget_get_window (toplevel);
-	panel_util_set_current_active_window (toplevel, GDK_WINDOW_XID(window));
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_window_get_display (window))) {
+		button->priv->interrupted_x11_window = panel_util_get_current_active_x11_window (toplevel);
+		panel_util_set_current_active_x11_window (toplevel, GDK_WINDOW_XID(window));
+	}
+#endif
 }
 
 static void
