@@ -12,7 +12,6 @@
 #include <unistd.h>
 
 #include <glib/gi18n.h>
-#include <gdk/gdkx.h>
 #include <gio/gio.h>
 
 #include <libpanel-util/panel-show.h>

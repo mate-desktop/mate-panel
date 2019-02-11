@@ -27,7 +27,6 @@
 #include "panel-background.h"
 
 #include <string.h>
-#include <gdk/gdkx.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <cairo.h>
