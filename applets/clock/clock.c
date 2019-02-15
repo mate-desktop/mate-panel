@@ -3291,15 +3291,12 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
                 NULL
         };
 
-        char copyright[] = \
-                "Copyright \xc2\xa9 2012-2018 MATE developers\n"
-                "Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.";
-
         gtk_show_about_dialog(NULL,
                 "program-name", _("Clock"),
                 "authors", authors,
                 "comments", _("The Clock displays the current time and date"),
-                "copyright", copyright,
+                "copyright", _("Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.\n"
+                               "Copyright \xc2\xa9 2012-2019 MATE developers"),
                 "documenters", documenters,
                 "logo-icon-name", CLOCK_ICON,
                 "translator-credits", _("translator-credits"),

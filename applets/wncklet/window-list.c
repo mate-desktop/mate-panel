@@ -557,16 +557,13 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		NULL
 	};
 
-	char copyright[] = \
-		"Copyright \xc2\xa9 2012-2018 MATE developers\n"
-		"Copyright \xc2\xa9 2011 Perberos\n"
-		"Copyright \xc2\xa9 2002 Red Hat, Inc.";
-
 	gtk_show_about_dialog(GTK_WINDOW(tasklist->applet),
 		"program-name", _("Window List"),
 		"authors", authors,
 		"comments", _("The Window List shows a list of all windows in a set of buttons and lets you browse them."),
-		"copyright", copyright,
+		"copyright", _("Copyright \xc2\xa9 2002 Red Hat, Inc.\n"
+		               "Copyright \xc2\xa9 2011 Perberos\n"
+		               "Copyright \xc2\xa9 2012-2019 MATE developers"),
 		"documenters", documenters,
 		"icon-name", WINDOW_LIST_ICON,
 		"logo-icon-name", WINDOW_LIST_ICON,
