@@ -72,18 +72,15 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		NULL
 	};
 
-	char copyright[] = \
-		"Copyright \xc2\xa9 2012-2018 MATE developers\n"
-		"Copyright \xc2\xa9 2011 Perberos\n"
-		"Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
-		"Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
-		"Copyright \xc2\xa9 2000 Helix Code, Inc.";
-
 	gtk_show_about_dialog(GTK_WINDOW(window_menu->applet),
 		"program-name", _("Window Selector"),
 		"authors", authors,
 		"comments", _("The Window Selector shows a list of all windows in a menu and lets you browse them."),
-		"copyright", copyright,
+		"copyright", _("Copyright \xc2\xa9 2000 Helix Code, Inc.\n"
+		               "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
+		               "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
+		               "Copyright \xc2\xa9 2011 Perberos\n"
+		               "Copyright \xc2\xa9 2012-2019 MATE developers"),
 		"documenters", documenters,
 		"icon-name", WINDOW_MENU_ICON,
 		"logo-icon-name", WINDOW_MENU_ICON,

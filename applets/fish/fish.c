@@ -547,9 +547,6 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 
 	char* authors[3];
 	char* descr;
-	char copyright[] = \
-		"Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.\n"
-		"Copyright \xc2\xa9 2012-2018 MATE developers";
 
 	authors[0] = g_strdup_printf(author_format, fish->name);
 	authors[1] = _("(with minor help from George)");
@@ -561,7 +558,9 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 		"program-name", _("Fish"),
 		"authors", authors,
 		"comments", descr,
-		"copyright", copyright,
+		"copyright", _("Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.\n"
+		               "Copyright \xc2\xa9 2002-2005 Vincent Untz\n"
+		               "Copyright \xc2\xa9 2012-2019 MATE developers"),
 		"documenters", documenters,
 		"logo-icon-name", FISH_ICON,
 		"translator-credits", _("translator-credits"),

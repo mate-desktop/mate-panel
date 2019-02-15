@@ -113,8 +113,9 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 	g_object_set (about,
 		      "program-name",  _("The MATE Panel"),
 		      "version", VERSION,
-		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.\n"
-		                   "Copyright \xc2\xa9 2011-2018 MATE Developers.",
+		      "copyright", _("Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.\n"
+		                     "Copyright \xc2\xa9 2004 Vincent Untz\n"
+		                     "Copyright \xc2\xa9 2011-2019 MATE developers"),
 		      "comments", _("This program is responsible for launching other "
 				    "applications and provides useful utilities."),
 		      "authors", authors,
