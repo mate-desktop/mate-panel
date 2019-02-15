@@ -557,10 +557,6 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		NULL
 	};
 
-		"Copyright \xc2\xa9 2002 Red Hat, Inc.\n";
-                "Copyright \xc2\xa9 2011 Perberos\n"
-                "Copyright \xc2\xa9 2012-2018 MATE developers"
-
 	gtk_show_about_dialog(GTK_WINDOW(tasklist->applet),
 		"program-name", _("Window List"),
 		"authors", authors,
