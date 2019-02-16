@@ -274,6 +274,7 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 
 	gtk_show_about_dialog(NULL,
 		"program-name", _("Notification Area"),
+		"title", _("About Notification Area"),
 		"authors", authors,
 		//"comments", _(comments),
 		"copyright", _("Copyright \xc2\xa9 2002 Red Hat, Inc.\n"

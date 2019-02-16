@@ -632,6 +632,7 @@ static void display_about_dialog(GtkAction* action, PagerData* pager)
 
 	gtk_show_about_dialog(GTK_WINDOW(pager->applet),
 		"program-name", _("Workspace Switcher"),
+		"title", _("About Workspace Switcher"),
 		"authors", authors,
 		"comments", _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
 		"copyright", _("Copyright \xc2\xa9 2002 Red Hat, Inc.\n"
