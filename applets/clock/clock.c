@@ -3293,6 +3293,7 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
 
         gtk_show_about_dialog(NULL,
                 "program-name", _("Clock"),
+                "title", _("About Clock"),
                 "authors", authors,
                 "comments", _("The Clock displays the current time and date"),
                 "copyright", _("Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.\n"

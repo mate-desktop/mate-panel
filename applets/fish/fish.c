@@ -556,6 +556,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 
 	gtk_show_about_dialog(NULL,
 		"program-name", _("Fish"),
+		"title", _("About Fish"),
 		"authors", authors,
 		"comments", descr,
 		"copyright", _("Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.\n"

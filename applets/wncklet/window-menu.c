@@ -74,6 +74,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 
 	gtk_show_about_dialog(GTK_WINDOW(window_menu->applet),
 		"program-name", _("Window Selector"),
+		"title", _("About Window Selector"),
 		"authors", authors,
 		"comments", _("The Window Selector shows a list of all windows in a menu and lets you browse them."),
 		"copyright", _("Copyright \xc2\xa9 2000 Helix Code, Inc.\n"
