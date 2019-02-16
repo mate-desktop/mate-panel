@@ -101,13 +101,6 @@ na_tray_child_realize (GtkWidget *widget)
 
   gtk_widget_set_app_paintable (GTK_WIDGET (child),
                                 child->parent_relative_bg || child->has_alpha);
-
-  /* Double-buffering will interfere with the parent-relative-background fake
-   * transparency, since the double-buffer code doesn't know how to fill in the
-   * background of the double-buffer correctly.
-   */
-  gtk_widget_set_double_buffered (GTK_WIDGET (child),
-                                  child->parent_relative_bg);
 }
 
 static void
