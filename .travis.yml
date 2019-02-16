@@ -10,6 +10,9 @@ before_install:
   - chmod +x docker-build
 
 install:
+  - sudo apt-get install -y python3-pip python3-setuptools
+  - sudo pip3 install --upgrade pip
+  - sudo pip install PyGithub
   - ./docker-build --name ${DISTRO} --config .travis.yml --install
 
 script:
@@ -27,11 +30,9 @@ env:
 requires:
   archlinux:
     # Useful URL: https://git.archlinux.org/svntogit/community.git/tree/mate-panel
+    - dbus-glib
     - gcc
     - git
-    - make
-    # Append new requires below
-    - dbus-glib
     - gobject-introspection
     - intltool
     - itstool
@@ -39,6 +40,7 @@ requires:
     - libmateweather
     - libsm
     - libwnck3
+    - make
     - mate-common
     - mate-desktop
     - mate-menus
@@ -48,10 +50,8 @@ requires:
   debian:
     # Useful URL: https://github.com/mate-desktop/debian-packages
     # Useful URL: https://salsa.debian.org/debian-mate-team/mate-panel
-    - git
-    - make
-    # Append new requires below
     - gir1.2-freedesktop
+    - git
     - gobject-introspection
     - gtk-doc-tools
     - intltool
@@ -74,35 +74,33 @@ requires:
     - libxau-dev
     - libxrandr-dev
     - lsb-release
+    - make
     - mate-common
     - yelp-tools
 
   fedora:
     # Useful URL: https://src.fedoraproject.org/cgit/rpms/mate-panel.git
-    - gcc
-    - git
-    - make
-    - redhat-rpm-config
-    # Append new requires below
     - dbus-glib-devel
     - desktop-file-utils
+    - gcc
+    - git
     - gobject-introspection-devel
     - gtk3-devel
+    - libSM-devel
     - libcanberra-devel
     - libmateweather-devel
-    - libwnck3-devel
     - librsvg2-devel
-    - libSM-devel
+    - libwnck3-devel
+    - make
     - mate-common
     - mate-desktop-devel
     - mate-menus-devel
+    - redhat-rpm-config
     - yelp-tools
 
   ubuntu:
-    - git
-    - make
-    # Append new requires below
     - gir1.2-freedesktop
+    - git
     - gobject-introspection
     - gtk-doc-tools
     - intltool
@@ -125,6 +123,7 @@ requires:
     - libxau-dev
     - libxrandr-dev
     - lsb-release
+    - make
     - mate-common
     - yelp-tools
 
