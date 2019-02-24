@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-25 19:36+0100\n"
+"POT-Creation-Date: 2019-02-17 10:28+0100\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
 "Language-Team: Kannada (https://www.transifex.com/mate/teams/13566/kn/)\n"
@@ -39,14 +39,14 @@ msgstr "ಕ್ಯಾಲೆಂಡರ್"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:434
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:431 ../applets/clock/clock-location-tile.c:504
+#: ../applets/clock/clock.c:434 ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -57,7 +57,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:436 ../applets/clock/clock.c:1571
+#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1579
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -71,9 +71,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:436 ../applets/clock/clock.c:1577
-#: ../applets/clock/clock-location-tile.c:464
-#: ../applets/clock/clock-location-tile.c:511
+#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock-location-tile.c:463
+#: ../applets/clock/clock-location-tile.c:510
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -82,14 +82,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:447
+#: ../applets/clock/clock.c:450
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:457
 #, c-format
 msgid ""
 "%1$s\n"
@@ -101,7 +101,7 @@ msgstr ""
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:462
+#: ../applets/clock/clock.c:465
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -110,19 +110,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:635
+#: ../applets/clock/clock.c:638
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:661
+#: ../applets/clock/clock.c:664
 msgid "Click to hide month calendar"
 msgstr "ತಿಂಗಳ ಕ್ಯಾಲೆಂಡರನ್ನು ಅಡಗಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ"
 
-#: ../applets/clock/clock.c:663
+#: ../applets/clock/clock.c:666
 msgid "Click to view month calendar"
 msgstr "ತಿಂಗಳ ಕ್ಯಾಲೆಂಡರನ್ನು ನೋಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ"
 
-#: ../applets/clock/clock.c:1409
+#: ../applets/clock/clock.c:1417
 msgid "Computer Clock"
 msgstr "ಗಣಕದ ಗಡಿಯಾರ"
 
@@ -132,7 +132,7 @@ msgstr "ಗಣಕದ ಗಡಿಯಾರ"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1556
+#: ../applets/clock/clock.c:1564
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -142,103 +142,113 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1564
+#: ../applets/clock/clock.c:1572
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1610
+#: ../applets/clock/clock.c:1618
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1641
+#: ../applets/clock/clock.c:1649
 msgid "Set System Time..."
 msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಹೊಂದಿಸಿ..."
 
-#: ../applets/clock/clock.c:1642
+#: ../applets/clock/clock.c:1650
 msgid "Set System Time"
 msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಹೊಂದಿಸಿ"
 
-#: ../applets/clock/clock.c:1657
+#: ../applets/clock/clock.c:1665
 msgid "Failed to set the system time"
 msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಹೊಂದಿಸಲು ವಿಫಲವಾಗಿದೆ"
 
-#: ../applets/clock/clock.c:1855 ../applets/fish/fish.c:1694
-#: ../applets/notification_area/main.c:289
+#: ../applets/clock/clock.c:1863 ../applets/fish/fish.c:1694
+#: ../applets/notification_area/main.c:292
 #: ../applets/wncklet/window-list.c:171
 #: ../applets/wncklet/workspace-switcher.c:389
 msgid "_Preferences"
 msgstr "ಆದ್ಯತೆಗಳು(_P)"
 
-#: ../applets/clock/clock.c:1858 ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.c:1866 ../applets/clock/clock.ui.h:7
 #: ../applets/fish/fish.c:1697 ../applets/fish/fish.ui.h:2
-#: ../applets/notification_area/main.c:292
-#: ../applets/wncklet/showdesktop.c:237 ../applets/wncklet/window-list.c:179
-#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/notification_area/main.c:295
+#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:179
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:98
 #: ../applets/wncklet/workspace-switcher.c:397
 #: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
 #: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1241
-#: ../mate-panel/panel-context-menu.c:317
+#: ../mate-panel/panel-context-menu.c:318
 #: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:370
-#: ../mate-panel/panel-menu-button.c:702
+#: ../mate-panel/panel-menu-button.c:707
 #: ../mate-panel/panel-properties-dialog.ui.h:2
 #: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "ನೆರವು(_H)"
 
-#: ../applets/clock/clock.c:1861 ../applets/fish/fish.c:1700
-#: ../applets/notification_area/main.c:295
-#: ../applets/wncklet/showdesktop.c:245 ../applets/wncklet/window-list.c:187
-#: ../applets/wncklet/window-menu.c:108
+#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1700
+#: ../applets/notification_area/main.c:298
+#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:187
+#: ../applets/wncklet/window-menu.c:106
 #: ../applets/wncklet/workspace-switcher.c:405
 msgid "_About"
 msgstr "ಇದರ ಬಗ್ಗೆ(_A)"
 
-#: ../applets/clock/clock.c:1864
+#: ../applets/clock/clock.c:1872
 msgid "Copy _Time"
 msgstr "ಸಮಯವನ್ನು ಕಾಪಿ ಮಾಡು(_T)"
 
-#: ../applets/clock/clock.c:1867
+#: ../applets/clock/clock.c:1875
 msgid "Copy _Date"
 msgstr "ದಿನಾಂಕವನ್ನು ಕಾಪಿ ಮಾಡು(_D)"
 
-#: ../applets/clock/clock.c:1870
+#: ../applets/clock/clock.c:1878
 msgid "Ad_just Date & Time"
 msgstr "ದಿನಾಂಕ ಹಾಗು ಸಮಯವನ್ನು ಹೊಂದಿಸು(_j)"
 
-#: ../applets/clock/clock.c:2866
+#: ../applets/clock/clock.c:2874
 msgid "Choose Location"
 msgstr "ಸ್ಥಳವನ್ನು ಆರಿಸಿ"
 
-#: ../applets/clock/clock.c:2945
+#: ../applets/clock/clock.c:2953
 msgid "Edit Location"
 msgstr "ಸ್ಥಳವನ್ನು ಸಂಪಾದಿಸಿ"
 
-#: ../applets/clock/clock.c:3072
+#: ../applets/clock/clock.c:3080
 msgid "City Name"
 msgstr "ಊರಿನ ಹೆಸರು"
 
-#: ../applets/clock/clock.c:3076
+#: ../applets/clock/clock.c:3084
 msgid "City Time Zone"
 msgstr "ಊರಿನ ಕಾಲವಲಯ"
 
-#: ../applets/clock/clock.c:3291
+#: ../applets/clock/clock.c:3295
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "ಗಡಿಯಾರ"
 
-#: ../applets/clock/clock.c:3293
+#: ../applets/clock/clock.c:3296
+msgid "About Clock"
+msgstr ""
+
+#: ../applets/clock/clock.c:3298
 msgid "The Clock displays the current time and date"
 msgstr "ಗಡಿಯಾರವು ಪ್ರಸ್ತುತ ಸಮಯ ಹಾಗು ದಿನಾಂಕವನ್ನು ತೋರಿಸುತ್ತದೆ"
 
-#: ../applets/clock/clock.c:3297 ../applets/fish/fish.c:567
-#: ../applets/notification_area/main.c:283
-#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:573
-#: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:646
-#: ../mate-panel/panel-context-menu.c:123
+#: ../applets/clock/clock.c:3299
+msgid ""
+"Copyright © 1998-2004 Free Software Foundation, Inc.\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
+#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:567
+#: ../applets/notification_area/main.c:286
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:571
+#: ../applets/wncklet/window-menu.c:88
+#: ../applets/wncklet/workspace-switcher.c:644
+#: ../mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
 msgstr ""
 "ಶಂಕರ್ ಪ್ರಸಾದ್ <svenkate@redhat.com>,ಕಾರ್ತಿಕ ಹೊಳ್ಳ <karthikholla87@gmail.com>"
@@ -248,8 +258,8 @@ msgid "Time & Date"
 msgstr "ದಿನಾಂಕ ಹಾಗು ಸಮಯ"
 
 #: ../applets/clock/clock.ui.h:2 ../mate-panel/libpanel-util/panel-gtk.c:136
-#: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:236
+#: ../mate-panel/panel-context-menu.c:213
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:240
 #: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
 #: ../mate-panel/panel.c:1348
 msgid "_Cancel"
@@ -415,19 +425,19 @@ msgstr "ರೇಖಾಂಶ(_o):"
 msgid "L_atitude:"
 msgstr "ಅಕ್ಷಾಂಶ(_a):"
 
-#: ../applets/clock/clock-location-tile.c:183
+#: ../applets/clock/clock-location-tile.c:182
 msgid "Failed to set the system timezone"
 msgstr "ಗಣಕದ ಕಾಲವಲಯವನ್ನು ಹೊಂದಿಸಲು ವಿಫಲಗೊಂಡಿದೆ"
 
-#: ../applets/clock/clock-location-tile.c:231
+#: ../applets/clock/clock-location-tile.c:230
 msgid "<small>Set...</small>"
 msgstr "<small>ಹೊಂದಿಸು...</small>"
 
-#: ../applets/clock/clock-location-tile.c:232
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set</small>"
 msgstr "<small>ಹೊಂದಿಸು</small>"
 
-#: ../applets/clock/clock-location-tile.c:308
+#: ../applets/clock/clock-location-tile.c:307
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -439,7 +449,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:441
+#: ../applets/clock/clock-location-tile.c:440
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -448,7 +458,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:448
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -456,42 +466,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:458
+#: ../applets/clock/clock-location-tile.c:457
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:599
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:612
-#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:611
+#: ../applets/clock/clock-location-tile.c:620
 msgid "Unknown"
 msgstr "ತಿಳಿಯದ"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:614
+#: ../applets/clock/clock-location-tile.c:613
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, %s ಎಂದೆನಿಸುತ್ತದೆ"
 
-#: ../applets/clock/clock-location-tile.c:637
+#: ../applets/clock/clock-location-tile.c:636
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "ಸೂರ್ಯೋದಯ: %s / ಸೂರ್ಯಾಸ್ತ: %s"
 
 #: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:170
-#: ../applets/notification_area/main.c:233 ../applets/wncklet/wncklet.c:71
+#: ../applets/notification_area/main.c:238 ../applets/wncklet/wncklet.c:75
 #: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "ಸಹಾಯದ ದಸ್ತಾವೇಜು %s ಅನ್ನು ತೋರಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
 #: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:196
-#: ../applets/notification_area/main.c:247 ../applets/wncklet/wncklet.c:88
+#: ../applets/notification_area/main.c:252 ../applets/wncklet/wncklet.c:92
 msgid "Error displaying help document"
 msgstr "ಸಹಾಯದ ದಸ್ತಾವೇಜನ್ನು ತೋರಿಸುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ"
 
@@ -666,14 +676,25 @@ msgstr ""
 "ಮೆಮೊರಿಯನ್ನು ಬಳಸಿಕೊಳ್ಳುತ್ತದೆ. ಇದನ್ನು ಯಾರೆ ಬಳಸಿದ್ದು ಕಂಡು ಬಂದಲ್ಲಿ ಅವರನ್ನು "
 "ನೇರವಾಗಿ ಮಾನಸಿಕ ಸ್ಥಿತಿಯ ಪರಿಶೀಲನೆಗೆ ಕಳುಹಿಸಲಾಗುವುದು."
 
-#: ../applets/fish/fish.c:555
+#: ../applets/fish/fish.c:552
 msgid "(with minor help from George)"
 msgstr "(ಜಾರ್ಜ್‌ನಿಂದ ಒಂದಿಷ್ಟು ನೆರವನ್ನು ಪಡೆದುಕೊಂಡು)"
 
-#: ../applets/fish/fish.c:561
+#: ../applets/fish/fish.c:558
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "ಮೀನು"
+
+#: ../applets/fish/fish.c:559
+msgid "About Fish"
+msgstr ""
+
+#: ../applets/fish/fish.c:562
+msgid ""
+"Copyright © 1998-2002 Free Software Foundation, Inc.\n"
+"Copyright © 2002-2005 Vincent Untz\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
 
 #: ../applets/fish/fish.c:579
 #, c-format
@@ -873,12 +894,25 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:277
+#: ../applets/notification_area/main.c:276
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "ಸೂಚನಾ ಸ್ಥಳ"
 
-#: ../applets/notification_area/main.c:484
+#: ../applets/notification_area/main.c:277
+msgid "About Notification Area"
+msgstr ""
+
+#. "comments", _(comments),
+#: ../applets/notification_area/main.c:280
+msgid ""
+"Copyright © 2002 Red Hat, Inc.\n"
+"Copyright © 2003-2006 Vincent Untz\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
+#: ../applets/notification_area/main.c:488
 msgid "Panel Notification Area"
 msgstr "ಫಲಕದಲ್ಲಿನ ಸೂಚನಾ ಸ್ಥಳ"
 
@@ -1019,7 +1053,7 @@ msgid "Factory for the window navigation related applets"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:229
+#: ../applets/wncklet/window-menu.c:76 ../applets/wncklet/window-menu.c:227
 msgid "Window Selector"
 msgstr "ವಿಂಡೋ ಆಯ್ಕೆಗಾರ"
 
@@ -1028,7 +1062,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:639
+#: ../applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
 msgstr "ಕಾರ್ಯಸ್ಥಳ ಬದಲಾಯಿಸುವವ"
 
@@ -1037,7 +1071,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:566
+#: ../applets/wncklet/window-list.c:561
 msgid "Window List"
 msgstr "ವಿಂಡೊ ಪಟ್ಟಿ"
 
@@ -1053,32 +1087,44 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:180
+#: ../applets/wncklet/showdesktop.c:184
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s ಅನ್ನು ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ವಿಫಲತೆ: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:180
+#: ../applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
 msgstr "ಚಿಹ್ನೆಯು ಕಂಡು ಬಂದಿಲ್ಲ"
 
-#: ../applets/wncklet/showdesktop.c:261
+#: ../applets/wncklet/showdesktop.c:265
 msgid "Click here to restore hidden windows."
 msgstr "ಅಡಗಿಸಲಾದ ವಿಂಡೋಗಳನ್ನು ಮರಳಿ ಬೆಳಕಿಗೆ ತರಲು ಕ್ಲಿಕ್ಕಿಸಿ."
 
-#: ../applets/wncklet/showdesktop.c:265
+#: ../applets/wncklet/showdesktop.c:269
 msgid "Click here to hide all windows and show the desktop."
 msgstr "ಎಲ್ಲಾ ವಿಂಡೋಗಳನ್ನು ಅಡಗಿಸಲು ಹಾಗು ಗಣಕತೆರೆಯನ್ನು ತೋರಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ."
 
-#: ../applets/wncklet/showdesktop.c:435 ../applets/wncklet/showdesktop.c:501
+#: ../applets/wncklet/showdesktop.c:439 ../applets/wncklet/showdesktop.c:498
 msgid "Show Desktop Button"
 msgstr "ಗಣಕತೆರೆ ಗುಂಡಿಯನ್ನು ತೋರಿಸು"
 
-#: ../applets/wncklet/showdesktop.c:503
+#: ../applets/wncklet/showdesktop.c:499
+msgid "About Show Desktop Button"
+msgstr ""
+
+#: ../applets/wncklet/showdesktop.c:501
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "ಈ ಗುಂಡಿಯು ಎಲ್ಲಾ ವಿಂಡೋಗಳನ್ನು ಅಡಗಿಸಲು ಹಾಗು ಗಣಕತೆರೆಯನ್ನು ತೋರಿಸಲು ನಿಮಗೆ ಅನುವು "
 "ಮಾಡಿಕೊಡುತ್ತದೆ."
+
+#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:565
+#: ../applets/wncklet/workspace-switcher.c:638
+msgid ""
+"Copyright © 2002 Red Hat, Inc.\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
 
 #: ../applets/wncklet/showdesktop.c:529
 msgid ""
@@ -1092,7 +1138,11 @@ msgstr ""
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:568
+#: ../applets/wncklet/window-list.c:562
+msgid "About Window List"
+msgstr ""
+
+#: ../applets/wncklet/window-list.c:564
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1144,7 +1194,11 @@ msgstr "ಈಗಿನ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮರ�
 msgid "Restore to na_tive workspace"
 msgstr "ಸ್ಥಳೀಯ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮರಳಿಸ್ಥಾಪಿಸು(_t)"
 
-#: ../applets/wncklet/window-menu.c:85
+#: ../applets/wncklet/window-menu.c:77
+msgid "About Window Selector"
+msgstr ""
+
+#: ../applets/wncklet/window-menu.c:79
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
@@ -1152,18 +1206,31 @@ msgstr ""
 "ವಿಂಡೋ ಆಯ್ಕೆಗಾರವು ಎಲ್ಲಾ ವಿಂಡೋಗಳನ್ನು ಒಂದು ಮೆನುವಿನ ರೂಪದಲ್ಲಿ ತೋರಿಸುತ್ತದೆ ಹಾಗು "
 "ಅವನ್ನು ವೀಕ್ಷಿಸಲು ನಿಮಗೆ ಅನುವು ಮಾಡಿಕೊಡುತ್ತದೆ."
 
+#: ../applets/wncklet/window-menu.c:80
+msgid ""
+"Copyright © 2000 Helix Code, Inc.\n"
+"Copyright © 2001 Free Software Foundation, Inc.\n"
+"Copyright © 2003 Sun Microsystems, Inc.\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
 #: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:941
+#: ../applets/wncklet/workspace-switcher.c:939
 #: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "ಅಡ್ಡಸಾಲುಗಳು"
 
 #: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:941
+#: ../applets/wncklet/workspace-switcher.c:939
 msgid "columns"
 msgstr "ಲಂಬಸಾಲುಗಳು"
 
-#: ../applets/wncklet/workspace-switcher.c:641
+#: ../applets/wncklet/workspace-switcher.c:635
+msgid "About Workspace Switcher"
+msgstr ""
+
+#: ../applets/wncklet/workspace-switcher.c:637
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -2170,7 +2237,7 @@ msgstr "ಜರಗಿಸು"
 msgid "Loc_k To Panel"
 msgstr "ಫಲಕಕ್ಕೆ ಲಾಕ್ ಮಾಡು(_k)"
 
-#: ../mate-panel/applet.c:1388
+#: ../mate-panel/applet.c:1314
 msgid "Cannot find an empty spot"
 msgstr "ಒಂದು ಖಾಲಿ ಸ್ಥಳವು ಕಂಡುಬಂದಿಲ್ಲ"
 
@@ -2185,7 +2252,7 @@ msgstr "ಡ್ರಾಯರಿಗೆ ಸೇರಿಸು(_A)..."
 
 #: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
-#: ../mate-panel/panel-context-menu.c:245
+#: ../mate-panel/panel-context-menu.c:246
 msgid "_Properties"
 msgstr "ಗುಣಲಕ್ಷಣಗಳು(_P)"
 
@@ -2215,11 +2282,11 @@ msgstr "ಕೋಶದ ಗುಣಲಕ್ಷಣಗಳು"
 msgid "Launcher Properties"
 msgstr "ಆರಂಭಕದ ಗುಣಲಕ್ಷಣಗಳು"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:152
+#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:152
 msgid "Panel"
 msgstr "ಫಲಕ"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:2
+#: ../mate-panel/mate-panel.desktop.in.h:2
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2356,7 +2423,7 @@ msgstr ""
 "ಕಡತಕೋಶಗಳನ್ನು ಹುಡುಕಿ"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:246
+#: ../mate-panel/panel-force-quit.c:250
 msgid "Force Quit"
 msgstr "ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚು"
 
@@ -2397,7 +2464,7 @@ msgstr "ಅನ್ವಯದ ಆರಂಭಕ..."
 msgid "Copy a launcher from the applications menu"
 msgstr "ಅನ್ವಯಗಳ ಮೆನುವಿನಿಂದ ಒಂದು ಆರಂಭಕವನ್ನು ಕಾಪಿ ಮಾಡಿ"
 
-#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1131
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1136
 msgid "Main Menu"
 msgstr "ಮುಖ್ಯ ಪರಿವಿಡಿ"
 
@@ -2508,7 +2575,14 @@ msgstr ""
 msgid "The MATE Panel"
 msgstr "MATE ಫಲಕ"
 
-#: ../mate-panel/panel-context-menu.c:118
+#: ../mate-panel/panel-context-menu.c:116
+msgid ""
+"Copyright © 1997-2003 Free Software Foundation, Inc.\n"
+"Copyright © 2004 Vincent Untz\n"
+"Copyright © 2011-2019 MATE developers"
+msgstr ""
+
+#: ../mate-panel/panel-context-menu.c:119
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
@@ -2516,46 +2590,46 @@ msgstr ""
 "ಬೇರೆ ಅನ್ವಯಗಳನ್ನು ಆರಂಭಿಸಲು ಹಾಗು ಉಪಯುಕ್ತ ಸವಲತ್ತುಗಳನ್ನು ಒದಗಿಸಲು ಈ ಪ್ರೊಗ್ರಾಂ "
 "ಕಾರಣವಾಗುತ್ತದೆ."
 
-#: ../mate-panel/panel-context-menu.c:122
+#: ../mate-panel/panel-context-menu.c:123
 msgid "About the MATE Panel"
 msgstr "MATE ಫಲಕದ ಬಗ್ಗೆ"
 
-#: ../mate-panel/panel-context-menu.c:153
+#: ../mate-panel/panel-context-menu.c:154
 msgid "Cannot delete this panel"
 msgstr "ಈ ಫಲಕವನ್ನು ಅಳಿಸಲಾಗಿಲ್ಲ"
 
-#: ../mate-panel/panel-context-menu.c:154
+#: ../mate-panel/panel-context-menu.c:155
 msgid "You must always have at least one panel."
 msgstr "ನಿಮ್ಮಲ್ಲಿ ಯಾವಾಗಲೂ ಕನಿಷ್ಟ ಒಂದು ಫಲಕ ಇರಲೆ ಬೇಕು."
 
-#: ../mate-panel/panel-context-menu.c:198
+#: ../mate-panel/panel-context-menu.c:199
 msgid "Reset this panel?"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:199
+#: ../mate-panel/panel-context-menu.c:200
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:213
-#: ../mate-panel/panel-context-menu.c:255
+#: ../mate-panel/panel-context-menu.c:214
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:235
+#: ../mate-panel/panel-context-menu.c:236
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:263
 msgid "_Delete This Panel"
 msgstr "ಈ ಫಲಕವನ್ನು ಅಳಿಸಿಹಾಕು(_D)"
 
-#: ../mate-panel/panel-context-menu.c:275
+#: ../mate-panel/panel-context-menu.c:276
 msgid "_New Panel"
 msgstr "ಹೊಸ ಫಲಕ(_N)"
 
-#: ../mate-panel/panel-context-menu.c:324
+#: ../mate-panel/panel-context-menu.c:325
 msgid "A_bout Panels"
 msgstr "ಫಲಕಗಳ ಬಗೆಗೆ(_b)"
 
@@ -2635,18 +2709,18 @@ msgstr "ಆರಂಭಕದ ಸ್ಥಳವನ್ನು ಸೂಚಿಸಲಾಗ�
 msgid "Could not display help document"
 msgstr "ನೆರವಿನ ದಸ್ತಾವೇಜನ್ನು ತೋರಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../mate-panel/panel-force-quit.c:82
+#: ../mate-panel/panel-force-quit.c:86
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "ಒಂದು ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚಲು ಅದರ ಮೇಲೆ ಕ್ಲಿಕ್ಕಿಸಿ. ರದ್ದು ಮಾಡಲು "
 "<ESC> ಅನ್ನು ಒತ್ತಿ."
 
-#: ../mate-panel/panel-force-quit.c:228
+#: ../mate-panel/panel-force-quit.c:232
 msgid "Force this application to exit?"
 msgstr "ಈ ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚಬೇಕೆ?"
 
-#: ../mate-panel/panel-force-quit.c:231
+#: ../mate-panel/panel-force-quit.c:235
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2671,7 +2745,7 @@ msgstr ""
 msgid "Applications"
 msgstr "ಅನ್ವಯಗಳು"
 
-#: ../mate-panel/panel-menu-bar.c:375 ../mate-panel/panel-menu-button.c:708
+#: ../mate-panel/panel-menu-bar.c:375 ../mate-panel/panel-menu-button.c:713
 msgid "_Edit Menus"
 msgstr "ಅಂಶಗಳನ್ನು ಸಂಪಾದಿಸು(_E)"
 

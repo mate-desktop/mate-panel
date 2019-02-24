@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-25 19:36+0100\n"
+"POT-Creation-Date: 2019-02-17 10:28+0100\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/mate/teams/13566/bg/)\n"
@@ -45,14 +45,14 @@ msgstr "Календар"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:434
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:431 ../applets/clock/clock-location-tile.c:504
+#: ../applets/clock/clock.c:434 ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -63,7 +63,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:436 ../applets/clock/clock.c:1571
+#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1579
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -77,9 +77,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:436 ../applets/clock/clock.c:1577
-#: ../applets/clock/clock-location-tile.c:464
-#: ../applets/clock/clock-location-tile.c:511
+#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock-location-tile.c:463
+#: ../applets/clock/clock-location-tile.c:510
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -88,14 +88,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:447
+#: ../applets/clock/clock.c:450
 msgid "%a %b %e"
 msgstr "%b %d, %a"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:457
 #, c-format
 msgid ""
 "%1$s\n"
@@ -107,7 +107,7 @@ msgstr ""
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:462
+#: ../applets/clock/clock.c:465
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
@@ -116,19 +116,19 @@ msgstr "%2$s, %1$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:635
+#: ../applets/clock/clock.c:638
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d %B (%%s)"
 
-#: ../applets/clock/clock.c:661
+#: ../applets/clock/clock.c:664
 msgid "Click to hide month calendar"
 msgstr "Натиснете, за да скриете месечния календар"
 
-#: ../applets/clock/clock.c:663
+#: ../applets/clock/clock.c:666
 msgid "Click to view month calendar"
 msgstr "Натиснете, за да видите месечния календар"
 
-#: ../applets/clock/clock.c:1409
+#: ../applets/clock/clock.c:1417
 msgid "Computer Clock"
 msgstr "Компютърен часовник"
 
@@ -138,7 +138,7 @@ msgstr "Компютърен часовник"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1556
+#: ../applets/clock/clock.c:1564
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -148,103 +148,113 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1564
+#: ../applets/clock/clock.c:1572
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1610
+#: ../applets/clock/clock.c:1618
 msgid "%A, %B %d %Y"
 msgstr "%B %d %Y, %A"
 
-#: ../applets/clock/clock.c:1641
+#: ../applets/clock/clock.c:1649
 msgid "Set System Time..."
 msgstr "Задаване на системно време…"
 
-#: ../applets/clock/clock.c:1642
+#: ../applets/clock/clock.c:1650
 msgid "Set System Time"
 msgstr "Задаване на системно време"
 
-#: ../applets/clock/clock.c:1657
+#: ../applets/clock/clock.c:1665
 msgid "Failed to set the system time"
 msgstr "Неуспех при задаването на системно време"
 
-#: ../applets/clock/clock.c:1855 ../applets/fish/fish.c:1694
-#: ../applets/notification_area/main.c:289
+#: ../applets/clock/clock.c:1863 ../applets/fish/fish.c:1694
+#: ../applets/notification_area/main.c:292
 #: ../applets/wncklet/window-list.c:171
 #: ../applets/wncklet/workspace-switcher.c:389
 msgid "_Preferences"
 msgstr "_Настройки"
 
-#: ../applets/clock/clock.c:1858 ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.c:1866 ../applets/clock/clock.ui.h:7
 #: ../applets/fish/fish.c:1697 ../applets/fish/fish.ui.h:2
-#: ../applets/notification_area/main.c:292
-#: ../applets/wncklet/showdesktop.c:237 ../applets/wncklet/window-list.c:179
-#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/notification_area/main.c:295
+#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:179
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:98
 #: ../applets/wncklet/workspace-switcher.c:397
 #: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
 #: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1241
-#: ../mate-panel/panel-context-menu.c:317
+#: ../mate-panel/panel-context-menu.c:318
 #: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:370
-#: ../mate-panel/panel-menu-button.c:702
+#: ../mate-panel/panel-menu-button.c:707
 #: ../mate-panel/panel-properties-dialog.ui.h:2
 #: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "_Помощ"
 
-#: ../applets/clock/clock.c:1861 ../applets/fish/fish.c:1700
-#: ../applets/notification_area/main.c:295
-#: ../applets/wncklet/showdesktop.c:245 ../applets/wncklet/window-list.c:187
-#: ../applets/wncklet/window-menu.c:108
+#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1700
+#: ../applets/notification_area/main.c:298
+#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:187
+#: ../applets/wncklet/window-menu.c:106
 #: ../applets/wncklet/workspace-switcher.c:405
 msgid "_About"
 msgstr "_Относно…"
 
-#: ../applets/clock/clock.c:1864
+#: ../applets/clock/clock.c:1872
 msgid "Copy _Time"
 msgstr "Копиране на _времето"
 
-#: ../applets/clock/clock.c:1867
+#: ../applets/clock/clock.c:1875
 msgid "Copy _Date"
 msgstr "Копиране на _датата"
 
-#: ../applets/clock/clock.c:1870
+#: ../applets/clock/clock.c:1878
 msgid "Ad_just Date & Time"
 msgstr "За_даване на час и дата"
 
-#: ../applets/clock/clock.c:2866
+#: ../applets/clock/clock.c:2874
 msgid "Choose Location"
 msgstr "Избор на местоположение"
 
-#: ../applets/clock/clock.c:2945
+#: ../applets/clock/clock.c:2953
 msgid "Edit Location"
 msgstr "Редактиране на местоположение"
 
-#: ../applets/clock/clock.c:3072
+#: ../applets/clock/clock.c:3080
 msgid "City Name"
 msgstr "Град"
 
-#: ../applets/clock/clock.c:3076
+#: ../applets/clock/clock.c:3084
 msgid "City Time Zone"
 msgstr "Часови пояс"
 
-#: ../applets/clock/clock.c:3291
+#: ../applets/clock/clock.c:3295
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "Часовник"
 
-#: ../applets/clock/clock.c:3293
+#: ../applets/clock/clock.c:3296
+msgid "About Clock"
+msgstr ""
+
+#: ../applets/clock/clock.c:3298
 msgid "The Clock displays the current time and date"
 msgstr "Часовникът показва текущото време и дата"
 
-#: ../applets/clock/clock.c:3297 ../applets/fish/fish.c:567
-#: ../applets/notification_area/main.c:283
-#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:573
-#: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:646
-#: ../mate-panel/panel-context-menu.c:123
+#: ../applets/clock/clock.c:3299
+msgid ""
+"Copyright © 1998-2004 Free Software Foundation, Inc.\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
+#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:567
+#: ../applets/notification_area/main.c:286
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:571
+#: ../applets/wncklet/window-menu.c:88
+#: ../applets/wncklet/workspace-switcher.c:644
+#: ../mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
 msgstr ""
 "Владимир „Kaladan“ Петков <vpetkov@i-space.org>\n"
@@ -261,8 +271,8 @@ msgid "Time & Date"
 msgstr "Време и дата"
 
 #: ../applets/clock/clock.ui.h:2 ../mate-panel/libpanel-util/panel-gtk.c:136
-#: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:236
+#: ../mate-panel/panel-context-menu.c:213
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:240
 #: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
 #: ../mate-panel/panel.c:1348
 msgid "_Cancel"
@@ -428,19 +438,19 @@ msgstr "_Дължина:"
 msgid "L_atitude:"
 msgstr "_Широчина:"
 
-#: ../applets/clock/clock-location-tile.c:183
+#: ../applets/clock/clock-location-tile.c:182
 msgid "Failed to set the system timezone"
 msgstr "Неуспех при задаването на часови пояс на системата"
 
-#: ../applets/clock/clock-location-tile.c:231
+#: ../applets/clock/clock-location-tile.c:230
 msgid "<small>Set...</small>"
 msgstr "<small>Задаване…</small>"
 
-#: ../applets/clock/clock-location-tile.c:232
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set</small>"
 msgstr "<small>Задаване</small>"
 
-#: ../applets/clock/clock-location-tile.c:308
+#: ../applets/clock/clock-location-tile.c:307
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -453,7 +463,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:441
+#: ../applets/clock/clock-location-tile.c:440
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -462,7 +472,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:448
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -470,42 +480,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:458
+#: ../applets/clock/clock-location-tile.c:457
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:599
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:612
-#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:611
+#: ../applets/clock/clock-location-tile.c:620
 msgid "Unknown"
 msgstr "Неизвестно"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:614
+#: ../applets/clock/clock-location-tile.c:613
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, усещане като %s"
 
-#: ../applets/clock/clock-location-tile.c:637
+#: ../applets/clock/clock-location-tile.c:636
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Изгрев: %s / Залез: %s"
 
 #: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:170
-#: ../applets/notification_area/main.c:233 ../applets/wncklet/wncklet.c:71
+#: ../applets/notification_area/main.c:238 ../applets/wncklet/wncklet.c:75
 #: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Документът с помощта „%s “ не може да бъде показан"
 
 #: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:196
-#: ../applets/notification_area/main.c:247 ../applets/wncklet/wncklet.c:88
+#: ../applets/notification_area/main.c:252 ../applets/wncklet/wncklet.c:92
 msgid "Error displaying help document"
 msgstr "Грешка при показване на документа с помощта"
 
@@ -678,14 +688,25 @@ msgstr ""
 "панела и памет. Ако познавате някой, който използва този аплет, трябва "
 "веднага да го заведете на психиатричен преглед."
 
-#: ../applets/fish/fish.c:555
+#: ../applets/fish/fish.c:552
 msgid "(with minor help from George)"
 msgstr "(с малко помощ от George)"
 
-#: ../applets/fish/fish.c:561
+#: ../applets/fish/fish.c:558
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "Риба"
+
+#: ../applets/fish/fish.c:559
+msgid "About Fish"
+msgstr ""
+
+#: ../applets/fish/fish.c:562
+msgid ""
+"Copyright © 1998-2002 Free Software Foundation, Inc.\n"
+"Copyright © 2002-2005 Vincent Untz\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
 
 #: ../applets/fish/fish.c:579
 #, c-format
@@ -883,12 +904,25 @@ msgstr "От къде се взе тази глупава риба?"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Показване на плуваща риба или друго анимирано създание"
 
-#: ../applets/notification_area/main.c:277
+#: ../applets/notification_area/main.c:276
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "Област за уведомяване"
 
-#: ../applets/notification_area/main.c:484
+#: ../applets/notification_area/main.c:277
+msgid "About Notification Area"
+msgstr ""
+
+#. "comments", _(comments),
+#: ../applets/notification_area/main.c:280
+msgid ""
+"Copyright © 2002 Red Hat, Inc.\n"
+"Copyright © 2003-2006 Vincent Untz\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
+#: ../applets/notification_area/main.c:488
 msgid "Panel Notification Area"
 msgstr "Област за уведомяване в панела"
 
@@ -1030,7 +1064,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "Фабрика на аплетите, свързани с навигацията между прозорците"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:229
+#: ../applets/wncklet/window-menu.c:76 ../applets/wncklet/window-menu.c:227
 msgid "Window Selector"
 msgstr "Избор на прозорец"
 
@@ -1039,7 +1073,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Смяна на отворените прозорци с помощта на менюто"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:639
+#: ../applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
 msgstr "Превключвател между работни плотове"
 
@@ -1048,7 +1082,7 @@ msgid "Switch between workspaces"
 msgstr "Смяна на работните места"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:566
+#: ../applets/wncklet/window-list.c:561
 msgid "Window List"
 msgstr "Списък с прозорците"
 
@@ -1064,32 +1098,44 @@ msgstr "Показване на работния плот"
 msgid "Hide application windows and show the desktop"
 msgstr "Скриване на прозорците на приложенията и показване на работния плот"
 
-#: ../applets/wncklet/showdesktop.c:180
+#: ../applets/wncklet/showdesktop.c:184
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Неуспешно зареждане на %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:180
+#: ../applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
 msgstr "Иконката не е намерена"
 
-#: ../applets/wncklet/showdesktop.c:261
+#: ../applets/wncklet/showdesktop.c:265
 msgid "Click here to restore hidden windows."
 msgstr "Натиснете тук, за да се възстановят скритите прозорци."
 
-#: ../applets/wncklet/showdesktop.c:265
+#: ../applets/wncklet/showdesktop.c:269
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "Натиснете тук, за да се скрият всички прозорци и да се покаже работния плот."
 
-#: ../applets/wncklet/showdesktop.c:435 ../applets/wncklet/showdesktop.c:501
+#: ../applets/wncklet/showdesktop.c:439 ../applets/wncklet/showdesktop.c:498
 msgid "Show Desktop Button"
 msgstr "Бутон за показване на работния плот"
 
-#: ../applets/wncklet/showdesktop.c:503
+#: ../applets/wncklet/showdesktop.c:499
+msgid "About Show Desktop Button"
+msgstr ""
+
+#: ../applets/wncklet/showdesktop.c:501
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Този бутон позволява да скриете всички прозорци и да видите работния плот."
+
+#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:565
+#: ../applets/wncklet/workspace-switcher.c:638
+msgid ""
+"Copyright © 2002 Red Hat, Inc.\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
 
 #: ../applets/wncklet/showdesktop.c:529
 msgid ""
@@ -1103,7 +1149,11 @@ msgstr ""
 msgid "_System Monitor"
 msgstr "Наблюдение на системата"
 
-#: ../applets/wncklet/window-list.c:568
+#: ../applets/wncklet/window-list.c:562
+msgid "About Window List"
+msgstr ""
+
+#: ../applets/wncklet/window-list.c:564
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1155,7 +1205,11 @@ msgstr "Възстановяване към теку_щия работен пл�
 msgid "Restore to na_tive workspace"
 msgstr "Възстановяване към _първоначалния работен плот"
 
-#: ../applets/wncklet/window-menu.c:85
+#: ../applets/wncklet/window-menu.c:77
+msgid "About Window Selector"
+msgstr ""
+
+#: ../applets/wncklet/window-menu.c:79
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
@@ -1163,18 +1217,31 @@ msgstr ""
 "Списъкът с прозорци показва всички прозорци и ви позволява да ги "
 "разглеждате."
 
+#: ../applets/wncklet/window-menu.c:80
+msgid ""
+"Copyright © 2000 Helix Code, Inc.\n"
+"Copyright © 2001 Free Software Foundation, Inc.\n"
+"Copyright © 2003 Sun Microsystems, Inc.\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
 #: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:941
+#: ../applets/wncklet/workspace-switcher.c:939
 #: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "реда"
 
 #: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:941
+#: ../applets/wncklet/workspace-switcher.c:939
 msgid "columns"
 msgstr "колони"
 
-#: ../applets/wncklet/workspace-switcher.c:641
+#: ../applets/wncklet/workspace-switcher.c:635
+msgid "About Workspace Switcher"
+msgstr ""
+
+#: ../applets/wncklet/workspace-switcher.c:637
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -2205,7 +2272,7 @@ msgstr "_Преместване"
 msgid "Loc_k To Panel"
 msgstr "_Заключване към панела"
 
-#: ../mate-panel/applet.c:1388
+#: ../mate-panel/applet.c:1314
 msgid "Cannot find an empty spot"
 msgstr "Неуспех при намирането на празно място"
 
@@ -2220,7 +2287,7 @@ msgstr "_Добавяне към шкаф…"
 
 #: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
-#: ../mate-panel/panel-context-menu.c:245
+#: ../mate-panel/panel-context-menu.c:246
 msgid "_Properties"
 msgstr "С_войства"
 
@@ -2250,11 +2317,11 @@ msgstr "Настройки на папката"
 msgid "Launcher Properties"
 msgstr "Настройки на стартера"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:152
+#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:152
 msgid "Panel"
 msgstr "Панел"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:2
+#: ../mate-panel/mate-panel.desktop.in.h:2
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2387,7 +2454,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "Намиране на документи и папки на този компютър по име или съдържание"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:246
+#: ../mate-panel/panel-force-quit.c:250
 msgid "Force Quit"
 msgstr "Принудително спиране"
 
@@ -2428,7 +2495,7 @@ msgstr "Стартер за програма…"
 msgid "Copy a launcher from the applications menu"
 msgstr "Копиране на стартер от менюто „Програми“"
 
-#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1131
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1136
 msgid "Main Menu"
 msgstr "Основно меню"
 
@@ -2538,7 +2605,14 @@ msgstr "И много, много други…"
 msgid "The MATE Panel"
 msgstr "Панелът на MATE"
 
-#: ../mate-panel/panel-context-menu.c:118
+#: ../mate-panel/panel-context-menu.c:116
+msgid ""
+"Copyright © 1997-2003 Free Software Foundation, Inc.\n"
+"Copyright © 2004 Vincent Untz\n"
+"Copyright © 2011-2019 MATE developers"
+msgstr ""
+
+#: ../mate-panel/panel-context-menu.c:119
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
@@ -2546,23 +2620,23 @@ msgstr ""
 "Тази програма отговаря за стартирането на други програми и предоставя "
 "полезни инструменти."
 
-#: ../mate-panel/panel-context-menu.c:122
+#: ../mate-panel/panel-context-menu.c:123
 msgid "About the MATE Panel"
 msgstr "Относно панела на MATE"
 
-#: ../mate-panel/panel-context-menu.c:153
+#: ../mate-panel/panel-context-menu.c:154
 msgid "Cannot delete this panel"
 msgstr "Този панел не може да бъде премахнат"
 
-#: ../mate-panel/panel-context-menu.c:154
+#: ../mate-panel/panel-context-menu.c:155
 msgid "You must always have at least one panel."
 msgstr "Винаги трябва да имате поне един панел."
 
-#: ../mate-panel/panel-context-menu.c:198
+#: ../mate-panel/panel-context-menu.c:199
 msgid "Reset this panel?"
 msgstr "Нулиране на този панел?"
 
-#: ../mate-panel/panel-context-menu.c:199
+#: ../mate-panel/panel-context-menu.c:200
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
@@ -2570,24 +2644,24 @@ msgstr ""
 "Когато един панел бъде нулиран, всички \n"
 "персонализирани настройки се губят."
 
-#: ../mate-panel/panel-context-menu.c:213
-#: ../mate-panel/panel-context-menu.c:255
+#: ../mate-panel/panel-context-menu.c:214
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr "_Нулиране на панела"
 
-#: ../mate-panel/panel-context-menu.c:235
+#: ../mate-panel/panel-context-menu.c:236
 msgid "_Add to Panel…"
 msgstr "_Добавяне към панела…"
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:263
 msgid "_Delete This Panel"
 msgstr "_Премахване на този панел"
 
-#: ../mate-panel/panel-context-menu.c:275
+#: ../mate-panel/panel-context-menu.c:276
 msgid "_New Panel"
 msgstr "_Нов панел"
 
-#: ../mate-panel/panel-context-menu.c:324
+#: ../mate-panel/panel-context-menu.c:325
 msgid "A_bout Panels"
 msgstr "_Относно панелите"
 
@@ -2667,18 +2741,18 @@ msgstr "Стартерът няма зададено местоположени�
 msgid "Could not display help document"
 msgstr "Документът от помощта не може да бъде показан"
 
-#: ../mate-panel/panel-force-quit.c:82
+#: ../mate-panel/panel-force-quit.c:86
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Натиснете върху прозорец, за да го затворите принудително. За да се "
 "откажете, натиснете „ESC“."
 
-#: ../mate-panel/panel-force-quit.c:228
+#: ../mate-panel/panel-force-quit.c:232
 msgid "Force this application to exit?"
 msgstr "Да бъде ли тази програма принудена да спре?"
 
-#: ../mate-panel/panel-force-quit.c:231
+#: ../mate-panel/panel-force-quit.c:235
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2704,7 +2778,7 @@ msgstr ""
 msgid "Applications"
 msgstr "Приложения"
 
-#: ../mate-panel/panel-menu-bar.c:375 ../mate-panel/panel-menu-button.c:708
+#: ../mate-panel/panel-menu-bar.c:375 ../mate-panel/panel-menu-button.c:713
 msgid "_Edit Menus"
 msgstr "_Редактиране на менютата"
 

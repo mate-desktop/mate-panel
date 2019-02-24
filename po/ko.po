@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-25 19:36+0100\n"
+"POT-Creation-Date: 2019-02-17 10:28+0100\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: 박정규(Jung-Kyu Park) <bagjunggyu@gmail.com>, 2018\n"
 "Language-Team: Korean (https://www.transifex.com/mate/teams/13566/ko/)\n"
@@ -41,14 +41,14 @@ msgstr "달력"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:434
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:431 ../applets/clock/clock-location-tile.c:504
+#: ../applets/clock/clock.c:434 ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
@@ -59,7 +59,7 @@ msgstr "%p %l:%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:436 ../applets/clock/clock.c:1571
+#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1579
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -73,9 +73,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:436 ../applets/clock/clock.c:1577
-#: ../applets/clock/clock-location-tile.c:464
-#: ../applets/clock/clock-location-tile.c:511
+#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock-location-tile.c:463
+#: ../applets/clock/clock-location-tile.c:510
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -84,14 +84,14 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:447
+#: ../applets/clock/clock.c:450
 msgid "%a %b %e"
 msgstr "%b %e일 (%a)"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:457
 #, c-format
 msgid ""
 "%1$s\n"
@@ -103,7 +103,7 @@ msgstr ""
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:462
+#: ../applets/clock/clock.c:465
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s %s"
@@ -112,19 +112,19 @@ msgstr "%s %s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:635
+#: ../applets/clock/clock.c:638
 msgid "%A %B %d (%%s)"
 msgstr "%B %d일 %A (%%s)"
 
-#: ../applets/clock/clock.c:661
+#: ../applets/clock/clock.c:664
 msgid "Click to hide month calendar"
 msgstr "달력을 감추려면 누르십시오"
 
-#: ../applets/clock/clock.c:663
+#: ../applets/clock/clock.c:666
 msgid "Click to view month calendar"
 msgstr "달력을 보려면 누르십시오"
 
-#: ../applets/clock/clock.c:1409
+#: ../applets/clock/clock.c:1417
 msgid "Computer Clock"
 msgstr "컴퓨터 시계"
 
@@ -134,7 +134,7 @@ msgstr "컴퓨터 시계"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1556
+#: ../applets/clock/clock.c:1564
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
@@ -144,103 +144,113 @@ msgstr "%p %I:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1564
+#: ../applets/clock/clock.c:1572
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1610
+#: ../applets/clock/clock.c:1618
 msgid "%A, %B %d %Y"
 msgstr "%Y년 %B %d일 %A"
 
-#: ../applets/clock/clock.c:1641
+#: ../applets/clock/clock.c:1649
 msgid "Set System Time..."
 msgstr "시스템 시간 설정..."
 
-#: ../applets/clock/clock.c:1642
+#: ../applets/clock/clock.c:1650
 msgid "Set System Time"
 msgstr "시스템 시간 설정"
 
-#: ../applets/clock/clock.c:1657
+#: ../applets/clock/clock.c:1665
 msgid "Failed to set the system time"
 msgstr "시스템 시간을 설정하는 데 실패했습니다"
 
-#: ../applets/clock/clock.c:1855 ../applets/fish/fish.c:1694
-#: ../applets/notification_area/main.c:289
+#: ../applets/clock/clock.c:1863 ../applets/fish/fish.c:1694
+#: ../applets/notification_area/main.c:292
 #: ../applets/wncklet/window-list.c:171
 #: ../applets/wncklet/workspace-switcher.c:389
 msgid "_Preferences"
 msgstr "기본 설정(_P)"
 
-#: ../applets/clock/clock.c:1858 ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.c:1866 ../applets/clock/clock.ui.h:7
 #: ../applets/fish/fish.c:1697 ../applets/fish/fish.ui.h:2
-#: ../applets/notification_area/main.c:292
-#: ../applets/wncklet/showdesktop.c:237 ../applets/wncklet/window-list.c:179
-#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:100
+#: ../applets/notification_area/main.c:295
+#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:179
+#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:98
 #: ../applets/wncklet/workspace-switcher.c:397
 #: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
 #: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1241
-#: ../mate-panel/panel-context-menu.c:317
+#: ../mate-panel/panel-context-menu.c:318
 #: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:370
-#: ../mate-panel/panel-menu-button.c:702
+#: ../mate-panel/panel-menu-button.c:707
 #: ../mate-panel/panel-properties-dialog.ui.h:2
 #: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
 msgstr "도움말(_H)"
 
-#: ../applets/clock/clock.c:1861 ../applets/fish/fish.c:1700
-#: ../applets/notification_area/main.c:295
-#: ../applets/wncklet/showdesktop.c:245 ../applets/wncklet/window-list.c:187
-#: ../applets/wncklet/window-menu.c:108
+#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1700
+#: ../applets/notification_area/main.c:298
+#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:187
+#: ../applets/wncklet/window-menu.c:106
 #: ../applets/wncklet/workspace-switcher.c:405
 msgid "_About"
 msgstr "정보(_A)"
 
-#: ../applets/clock/clock.c:1864
+#: ../applets/clock/clock.c:1872
 msgid "Copy _Time"
 msgstr "시각 복사(_T)"
 
-#: ../applets/clock/clock.c:1867
+#: ../applets/clock/clock.c:1875
 msgid "Copy _Date"
 msgstr "날짜 복사(_D)"
 
-#: ../applets/clock/clock.c:1870
+#: ../applets/clock/clock.c:1878
 msgid "Ad_just Date & Time"
 msgstr "날짜 및 시간 조정(_J)"
 
-#: ../applets/clock/clock.c:2866
+#: ../applets/clock/clock.c:2874
 msgid "Choose Location"
 msgstr "위치 선택"
 
-#: ../applets/clock/clock.c:2945
+#: ../applets/clock/clock.c:2953
 msgid "Edit Location"
 msgstr "위치 편집"
 
-#: ../applets/clock/clock.c:3072
+#: ../applets/clock/clock.c:3080
 msgid "City Name"
 msgstr "도시 이름"
 
-#: ../applets/clock/clock.c:3076
+#: ../applets/clock/clock.c:3084
 msgid "City Time Zone"
 msgstr "도시 시간대"
 
-#: ../applets/clock/clock.c:3291
+#: ../applets/clock/clock.c:3295
 #: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
 msgid "Clock"
 msgstr "시계"
 
-#: ../applets/clock/clock.c:3293
+#: ../applets/clock/clock.c:3296
+msgid "About Clock"
+msgstr ""
+
+#: ../applets/clock/clock.c:3298
 msgid "The Clock displays the current time and date"
 msgstr "시계는 현재 시간과 날짜를 보여 줍니다"
 
-#: ../applets/clock/clock.c:3297 ../applets/fish/fish.c:567
-#: ../applets/notification_area/main.c:283
-#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:573
-#: ../applets/wncklet/window-menu.c:90
-#: ../applets/wncklet/workspace-switcher.c:646
-#: ../mate-panel/panel-context-menu.c:123
+#: ../applets/clock/clock.c:3299
+msgid ""
+"Copyright © 1998-2004 Free Software Foundation, Inc.\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
+#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:567
+#: ../applets/notification_area/main.c:286
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:571
+#: ../applets/wncklet/window-menu.c:88
+#: ../applets/wncklet/workspace-switcher.c:644
+#: ../mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
 msgstr ""
 "Elex https://launchpad.net/~mysticzizone\n"
@@ -255,8 +265,8 @@ msgid "Time & Date"
 msgstr "시간 및 날짜"
 
 #: ../applets/clock/clock.ui.h:2 ../mate-panel/libpanel-util/panel-gtk.c:136
-#: ../mate-panel/panel-context-menu.c:212
-#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:236
+#: ../mate-panel/panel-context-menu.c:213
+#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:240
 #: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
 #: ../mate-panel/panel.c:1348
 msgid "_Cancel"
@@ -420,19 +430,19 @@ msgstr "경도(_O):"
 msgid "L_atitude:"
 msgstr "위도(_A):"
 
-#: ../applets/clock/clock-location-tile.c:183
+#: ../applets/clock/clock-location-tile.c:182
 msgid "Failed to set the system timezone"
 msgstr "시스템 시간대를 설정하는 데 실패했습니다"
 
-#: ../applets/clock/clock-location-tile.c:231
+#: ../applets/clock/clock-location-tile.c:230
 msgid "<small>Set...</small>"
 msgstr "<small>설정...</small>"
 
-#: ../applets/clock/clock-location-tile.c:232
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set</small>"
 msgstr "<small>설정</small>"
 
-#: ../applets/clock/clock-location-tile.c:308
+#: ../applets/clock/clock-location-tile.c:307
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr "현재 위치를 설정하고 그 위치의 시간대를 이 컴퓨터의 시간대로 맞춥니다"
@@ -443,7 +453,7 @@ msgstr "현재 위치를 설정하고 그 위치의 시간대를 이 컴퓨터�
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:441
+#: ../applets/clock/clock-location-tile.c:440
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -452,7 +462,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:449
+#: ../applets/clock/clock-location-tile.c:448
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -460,42 +470,42 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:458
+#: ../applets/clock/clock-location-tile.c:457
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:599
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API
 #. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:612
-#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:611
+#: ../applets/clock/clock-location-tile.c:620
 msgid "Unknown"
 msgstr "알 수 없음"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:614
+#: ../applets/clock/clock-location-tile.c:613
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, 체감 %s"
 
-#: ../applets/clock/clock-location-tile.c:637
+#: ../applets/clock/clock-location-tile.c:636
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "일출: %s / 일몰: %s"
 
 #: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:170
-#: ../applets/notification_area/main.c:233 ../applets/wncklet/wncklet.c:71
+#: ../applets/notification_area/main.c:238 ../applets/wncklet/wncklet.c:75
 #: ../mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "'%s' 도움말 문서를 표시할 수 없습니다"
 
 #: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:196
-#: ../applets/notification_area/main.c:247 ../applets/wncklet/wncklet.c:88
+#: ../applets/notification_area/main.c:252 ../applets/wncklet/wncklet.c:92
 msgid "Error displaying help document"
 msgstr "도움말 문서 표시에 오류가 발생했습니다"
 
@@ -659,14 +669,25 @@ msgstr ""
 "%s(은)는 아무데도 쓸모가 없습니다.  디스크 공간과 컴파일 시간을 잡아먹을 뿐이고, 실행할 경우에는 소중한 패널의 공간과 메모리까지 "
 "차지합니다.  만약 누군가 이 애플릿을 쓰고 있다면, 그 사람은 빨리 정신 감정을 받으러 가야 할것입니다."
 
-#: ../applets/fish/fish.c:555
+#: ../applets/fish/fish.c:552
 msgid "(with minor help from George)"
 msgstr "(George의 작은 도움으로)"
 
-#: ../applets/fish/fish.c:561
+#: ../applets/fish/fish.c:558
 #: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "물고기"
+
+#: ../applets/fish/fish.c:559
+msgid "About Fish"
+msgstr ""
+
+#: ../applets/fish/fish.c:562
+msgid ""
+"Copyright © 1998-2002 Free Software Foundation, Inc.\n"
+"Copyright © 2002-2005 Vincent Untz\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
 
 #: ../applets/fish/fish.c:579
 #, c-format
@@ -854,12 +875,25 @@ msgstr "멍청한 물고기가 왔어요!"
 msgid "Display a swimming fish or another animated creature"
 msgstr "헤엄치는 물고기를 보여주거나 다른 애니메이션 개체를 표시합니다"
 
-#: ../applets/notification_area/main.c:277
+#: ../applets/notification_area/main.c:276
 #: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
 msgid "Notification Area"
 msgstr "알림 영역"
 
-#: ../applets/notification_area/main.c:484
+#: ../applets/notification_area/main.c:277
+msgid "About Notification Area"
+msgstr ""
+
+#. "comments", _(comments),
+#: ../applets/notification_area/main.c:280
+msgid ""
+"Copyright © 2002 Red Hat, Inc.\n"
+"Copyright © 2003-2006 Vincent Untz\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
+#: ../applets/notification_area/main.c:488
 msgid "Panel Notification Area"
 msgstr "패널 알림 영역"
 
@@ -990,7 +1024,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "창 탐색 관련 애플릿용 팩토리"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:83 ../applets/wncklet/window-menu.c:229
+#: ../applets/wncklet/window-menu.c:76 ../applets/wncklet/window-menu.c:227
 msgid "Window Selector"
 msgstr "창 선택"
 
@@ -999,7 +1033,7 @@ msgid "Switch between open windows using a menu"
 msgstr "메뉴를 사용하여 열어놓은 창을 전환합니다"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:639
+#: ../applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
 msgstr "작업 공간 바꾸기 프로그램"
 
@@ -1008,7 +1042,7 @@ msgid "Switch between workspaces"
 msgstr "작업 공간 사이를 전환합니다"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:566
+#: ../applets/wncklet/window-list.c:561
 msgid "Window List"
 msgstr "창 목록"
 
@@ -1024,30 +1058,42 @@ msgstr "데스크톱 보이기"
 msgid "Hide application windows and show the desktop"
 msgstr "프로그램 창을 숨기고 데스크톱을 보여줍니다"
 
-#: ../applets/wncklet/showdesktop.c:180
+#: ../applets/wncklet/showdesktop.c:184
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s(을)를 읽어 들이는데 실패: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:180
+#: ../applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
 msgstr "아이콘을 찾을 수 없습니다"
 
-#: ../applets/wncklet/showdesktop.c:261
+#: ../applets/wncklet/showdesktop.c:265
 msgid "Click here to restore hidden windows."
 msgstr "누르면 숨긴 창을 되돌립니다."
 
-#: ../applets/wncklet/showdesktop.c:265
+#: ../applets/wncklet/showdesktop.c:269
 msgid "Click here to hide all windows and show the desktop."
 msgstr "누르면 모든 창을 숨기고 바탕 화면을 표시합니다."
 
-#: ../applets/wncklet/showdesktop.c:435 ../applets/wncklet/showdesktop.c:501
+#: ../applets/wncklet/showdesktop.c:439 ../applets/wncklet/showdesktop.c:498
 msgid "Show Desktop Button"
 msgstr "바탕 화면 보기 단추"
 
-#: ../applets/wncklet/showdesktop.c:503
+#: ../applets/wncklet/showdesktop.c:499
+msgid "About Show Desktop Button"
+msgstr ""
+
+#: ../applets/wncklet/showdesktop.c:501
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "이 단추를 누르면 모든 창을 숨기고 바탕 화면을 표시합니다."
+
+#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:565
+#: ../applets/wncklet/workspace-switcher.c:638
+msgid ""
+"Copyright © 2002 Red Hat, Inc.\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
 
 #: ../applets/wncklet/showdesktop.c:529
 msgid ""
@@ -1059,7 +1105,11 @@ msgstr "창 관리자가 바탕 화면 보여주기 단추를 지원하지 않�
 msgid "_System Monitor"
 msgstr "시스템 감시(_S)"
 
-#: ../applets/wncklet/window-list.c:568
+#: ../applets/wncklet/window-list.c:562
+msgid "About Window List"
+msgstr ""
+
+#: ../applets/wncklet/window-list.c:564
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1109,24 +1159,41 @@ msgstr "현재 작업 공간으로 복구(_W)"
 msgid "Restore to na_tive workspace"
 msgstr "본래 작업 공간으로 복구(_T)"
 
-#: ../applets/wncklet/window-menu.c:85
+#: ../applets/wncklet/window-menu.c:77
+msgid "About Window Selector"
+msgstr ""
+
+#: ../applets/wncklet/window-menu.c:79
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr "창 선택 프로그램은 모든 창의 목록을 메뉴에 표시합니다. 여기에서 창 목록을 찾아 볼 수 있습니다."
 
+#: ../applets/wncklet/window-menu.c:80
+msgid ""
+"Copyright © 2000 Helix Code, Inc.\n"
+"Copyright © 2001 Free Software Foundation, Inc.\n"
+"Copyright © 2003 Sun Microsystems, Inc.\n"
+"Copyright © 2011 Perberos\n"
+"Copyright © 2012-2019 MATE developers"
+msgstr ""
+
 #: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:941
+#: ../applets/wncklet/workspace-switcher.c:939
 #: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "행"
 
 #: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:941
+#: ../applets/wncklet/workspace-switcher.c:939
 msgid "columns"
 msgstr "열"
 
-#: ../applets/wncklet/workspace-switcher.c:641
+#: ../applets/wncklet/workspace-switcher.c:635
+msgid "About Workspace Switcher"
+msgstr ""
+
+#: ../applets/wncklet/workspace-switcher.c:637
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -2052,7 +2119,7 @@ msgstr "옮기기(_M)"
 msgid "Loc_k To Panel"
 msgstr "패널에 잠그기(_K)"
 
-#: ../mate-panel/applet.c:1388
+#: ../mate-panel/applet.c:1314
 msgid "Cannot find an empty spot"
 msgstr "비어 있는 위치가 없습니다"
 
@@ -2067,7 +2134,7 @@ msgstr "서랍에 추가(_A)..."
 
 #: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
 #: ../mate-panel/panel-action-button.c:192
-#: ../mate-panel/panel-context-menu.c:245
+#: ../mate-panel/panel-context-menu.c:246
 msgid "_Properties"
 msgstr "속성(_P)"
 
@@ -2097,11 +2164,11 @@ msgstr "디렉터리 속성"
 msgid "Launcher Properties"
 msgstr "실행 아이콘 속성"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:1 ../mate-panel/main.c:152
+#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:152
 msgid "Panel"
 msgstr "패널"
 
-#: ../mate-panel/mate-panel.desktop.in.in.h:2
+#: ../mate-panel/mate-panel.desktop.in.h:2
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2231,7 +2298,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "이 컴퓨터의 문서나 폴더를 이름이나 내용으로 찾습니다"
 
 #: ../mate-panel/panel-action-button.c:389
-#: ../mate-panel/panel-force-quit.c:246
+#: ../mate-panel/panel-force-quit.c:250
 msgid "Force Quit"
 msgstr "강제종료"
 
@@ -2272,7 +2339,7 @@ msgstr "프로그램 실행 아이콘..."
 msgid "Copy a launcher from the applications menu"
 msgstr "프로그램 메뉴에서 실행 아이콘을 복사합니다"
 
-#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1131
+#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1136
 msgid "Main Menu"
 msgstr "주 메뉴"
 
@@ -2381,29 +2448,36 @@ msgstr "그리고, 아주아주 많습니다..."
 msgid "The MATE Panel"
 msgstr "마테 패널"
 
-#: ../mate-panel/panel-context-menu.c:118
+#: ../mate-panel/panel-context-menu.c:116
+msgid ""
+"Copyright © 1997-2003 Free Software Foundation, Inc.\n"
+"Copyright © 2004 Vincent Untz\n"
+"Copyright © 2011-2019 MATE developers"
+msgstr ""
+
+#: ../mate-panel/panel-context-menu.c:119
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr "이 프로그램은 다른 프로그램을 실행하고, 각종 유용한 기능이 들어 있습니다."
 
-#: ../mate-panel/panel-context-menu.c:122
+#: ../mate-panel/panel-context-menu.c:123
 msgid "About the MATE Panel"
 msgstr "마테 패널 정보"
 
-#: ../mate-panel/panel-context-menu.c:153
+#: ../mate-panel/panel-context-menu.c:154
 msgid "Cannot delete this panel"
 msgstr "이 패널을 삭제할 수 없습니다"
 
-#: ../mate-panel/panel-context-menu.c:154
+#: ../mate-panel/panel-context-menu.c:155
 msgid "You must always have at least one panel."
 msgstr "적어도 하나의 패널이 있어야 합니다."
 
-#: ../mate-panel/panel-context-menu.c:198
+#: ../mate-panel/panel-context-menu.c:199
 msgid "Reset this panel?"
 msgstr "이 패널을 초기화할까요?"
 
-#: ../mate-panel/panel-context-menu.c:199
+#: ../mate-panel/panel-context-menu.c:200
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
@@ -2411,24 +2485,24 @@ msgstr ""
 "패널을 초기화하면, 모든 \n"
 "사용자 설정이 사라집니다."
 
-#: ../mate-panel/panel-context-menu.c:213
-#: ../mate-panel/panel-context-menu.c:255
+#: ../mate-panel/panel-context-menu.c:214
+#: ../mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr "패널 초기화(_R)"
 
-#: ../mate-panel/panel-context-menu.c:235
+#: ../mate-panel/panel-context-menu.c:236
 msgid "_Add to Panel…"
 msgstr "패널에 추가(_A)..."
 
-#: ../mate-panel/panel-context-menu.c:262
+#: ../mate-panel/panel-context-menu.c:263
 msgid "_Delete This Panel"
 msgstr "이 패널 삭제(_D)"
 
-#: ../mate-panel/panel-context-menu.c:275
+#: ../mate-panel/panel-context-menu.c:276
 msgid "_New Panel"
 msgstr "새 패널(_N)"
 
-#: ../mate-panel/panel-context-menu.c:324
+#: ../mate-panel/panel-context-menu.c:325
 msgid "A_bout Panels"
 msgstr "패널 정보(_B)"
 
@@ -2508,16 +2582,16 @@ msgstr "실행 아이콘의 위치를 설정하지 않았습니다."
 msgid "Could not display help document"
 msgstr "도움말 문서를 표시할 수 없습니다"
 
-#: ../mate-panel/panel-force-quit.c:82
+#: ../mate-panel/panel-force-quit.c:86
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "강제로 끝내고 싶은 프로그램의 창을 누르십시오.  취소하려면 <Esc>를 누르십시오."
 
-#: ../mate-panel/panel-force-quit.c:228
+#: ../mate-panel/panel-force-quit.c:232
 msgid "Force this application to exit?"
 msgstr "이 프로그램을 강제로 끝내시겠습니까?"
 
-#: ../mate-panel/panel-force-quit.c:231
+#: ../mate-panel/panel-force-quit.c:235
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2539,7 +2613,7 @@ msgstr "바탕 화면 모양과 동작을 바꾸거나, 도움말을 보거나 �
 msgid "Applications"
 msgstr "프로그램"
 
-#: ../mate-panel/panel-menu-bar.c:375 ../mate-panel/panel-menu-button.c:708
+#: ../mate-panel/panel-menu-bar.c:375 ../mate-panel/panel-menu-button.c:713
 msgid "_Edit Menus"
 msgstr "메뉴 편집(_E)"
 
