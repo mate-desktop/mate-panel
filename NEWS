@@ -1,3 +1,25 @@
+### mate-panel 1.22.0
+
+  * update translations
+  * Ensure proper translation of the about dialog title
+  * Make translatable the copyright in about dialog
+  * Fix last menu with gtk_menu_popup and failure to follow panel theme
+  * mate-panel-applet.c: replace deprecated gtk_menu_popup
+  * Properly align button menu positions on vertical panels
+  * initial travis-CI support
+  * fix crash on removing tray
+  * panel-action-protocol: Error if used when X11 is disabled
+  * panel-force-quit: Error if used when X11 is disabled
+  * panel-xutils: Error if used when X11 is disabled
+  * xstuff: include GTK and GDK X11 headers, so including files don't have to
+  * xstuff: add is_using_x11 ()
+  * xstuff: Error if X11 not enabled
+  * Applets: only compile X11 applets when X11 is enabled
+  * Clock: Wayland support
+  * wncklet: Error if compiling without X11 support
+  * Notification area: error if compiling without X11 support
+  * applet.c: Remove unused mate_panel_applet_position_menu ()
+
 ### mate-panel 1.21.4
 
   * update translations
