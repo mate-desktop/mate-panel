@@ -592,7 +592,7 @@ static void panel_toplevel_resize_to_pointer(PanelToplevel* toplevel, int x, int
 	int new_x, new_y;
 	int new_x_right, new_y_bottom;
 	int new_x_centered, new_y_centered;
-	GdkRectangle monitor;
+	GdkRectangle monitor_geom;
 
 	new_size       = toplevel->priv->size;
 	new_x          = toplevel->priv->x;
@@ -602,40 +602,40 @@ static void panel_toplevel_resize_to_pointer(PanelToplevel* toplevel, int x, int
 	new_x_centered = toplevel->priv->x_centered;
 	new_y_centered = toplevel->priv->y_centered;
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	switch (toplevel->priv->grab_op) {
 	case PANEL_GRAB_OP_RESIZE_UP:
 		new_size = toplevel->priv->drag_offset_y - y;
-		new_size = CLAMP (new_size, 0, monitor.height / 4);
+		new_size = CLAMP (new_size, 0, monitor_geom.height / 4);
 		new_y -= (new_size - toplevel->priv->size);
-		if (!toplevel->priv->y_centered && (new_y + new_size / 2) > monitor.height / 2)
-			new_y_bottom = monitor.height - (new_y + new_size);
+		if (!toplevel->priv->y_centered && (new_y + new_size / 2) > monitor_geom.height / 2)
+			new_y_bottom = monitor_geom.height - (new_y + new_size);
 		else
 			new_y_bottom = -1;
 		break;
 	case PANEL_GRAB_OP_RESIZE_DOWN:
 		new_size = y - toplevel->priv->drag_offset_y;
-		new_size = CLAMP (new_size, 0, monitor.height / 4);
-		if (!toplevel->priv->y_centered && (new_y + new_size / 2) > monitor.height / 2)
-			new_y_bottom = monitor.height - (new_y + new_size);
+		new_size = CLAMP (new_size, 0, monitor_geom.height / 4);
+		if (!toplevel->priv->y_centered && (new_y + new_size / 2) > monitor_geom.height / 2)
+			new_y_bottom = monitor_geom.height - (new_y + new_size);
 		else
 			new_y_bottom = -1;
 		break;
 	case PANEL_GRAB_OP_RESIZE_LEFT:
 		new_size = toplevel->priv->drag_offset_x - x;
-		new_size = CLAMP (new_size, 0, monitor.width / 4);
+		new_size = CLAMP (new_size, 0, monitor_geom.width / 4);
 		new_x -= (new_size - toplevel->priv->size);
-		if (!toplevel->priv->x_centered && (new_x + new_size / 2) > monitor.width / 2)
-			new_x_right = monitor.width - (new_x + new_size);
+		if (!toplevel->priv->x_centered && (new_x + new_size / 2) > monitor_geom.width / 2)
+			new_x_right = monitor_geom.width - (new_x + new_size);
 		else
 			new_x_right = -1;
 		break;
 	case PANEL_GRAB_OP_RESIZE_RIGHT:
 		new_size = x - toplevel->priv->drag_offset_x;
-		new_size = CLAMP (new_size, 0, monitor.width / 4);
-		if (!toplevel->priv->x_centered && (new_x + new_size / 2) > monitor.width / 2)
-			new_x_right = monitor.width - (new_x + new_size);
+		new_size = CLAMP (new_size, 0, monitor_geom.width / 4);
+		if (!toplevel->priv->x_centered && (new_x + new_size / 2) > monitor_geom.width / 2)
+			new_x_right = monitor_geom.width - (new_x + new_size);
 		else
 			new_x_right = -1;
 		break;
@@ -738,7 +738,7 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	PanelOrientation  new_orientation;
 	gboolean          x_centered, y_centered;
 	int               screen_width, screen_height;
-	GdkRectangle      monitor;
+	GdkRectangle      monitor_geom;
 	int               width, height;
 	int               new_monitor;
 	int               x, y, x_right, y_bottom;
@@ -775,7 +775,7 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 
 	new_monitor = panel_multiscreen_get_monitor_at_point (screen, new_x, new_y);
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	x_centered = toplevel->priv->x_centered;
 	y_centered = toplevel->priv->y_centered;
@@ -787,7 +787,7 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 		y_centered = FALSE;
 		if (new_y <= snap_tolerance ||
 		    new_y + height >= screen_height - snap_tolerance)
-			x_centered = abs (x - ((monitor.width - width) / 2))
+			x_centered = abs (x - ((monitor_geom.width - width) / 2))
 								<= snap_tolerance;
 		else
 			x_centered = FALSE;
@@ -795,24 +795,24 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 		x_centered = FALSE;
 		if (new_x <= snap_tolerance ||
 		    new_x + width >= screen_width - snap_tolerance)
-			y_centered = abs (y - ((monitor.height - height) / 2))
+			y_centered = abs (y - ((monitor_geom.height - height) / 2))
 								<= snap_tolerance;
 		else
 			y_centered = FALSE;
 	}
 
 	if (x_centered)
-		x = (monitor.width  - width) / 2;
+		x = (monitor_geom.width  - width) / 2;
 	if (y_centered)
-		y = (monitor.height - height) / 2;
+		y = (monitor_geom.height - height) / 2;
 
-	if (!x_centered && (x + width / 2) > monitor.width / 2)
-		x_right = monitor.width - (x + width);
+	if (!x_centered && (x + width / 2) > monitor_geom.width / 2)
+		x_right = monitor_geom.width - (x + width);
 	else
 		x_right = -1;
 
-	if (!y_centered && (y + height / 2) > monitor.height / 2)
-		y_bottom = monitor.height - (y + height);
+	if (!y_centered && (y + height / 2) > monitor_geom.height / 2)
+		y_bottom = monitor_geom.height - (y + height);
 	else
 		y_bottom = -1;
 
@@ -1073,7 +1073,7 @@ static gboolean panel_toplevel_handle_grab_op_motion_event(PanelToplevel* toplev
 static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 {
 	int                screen_width, screen_height;
-	GdkRectangle       monitor;
+	GdkRectangle       monitor_geom;
 	int                x, y;
 	int                snap_tolerance;
 
@@ -1084,16 +1084,16 @@ static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 
 	panel_toplevel_get_screen_geometry (toplevel,
 					    &screen_width, &screen_height);
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	if (toplevel->priv->x_right == -1)
-		x = monitor.x + toplevel->priv->x;
+		x = monitor_geom.x + toplevel->priv->x;
 	else
-		x = monitor.x + (monitor.width - (toplevel->priv->x_right + toplevel->priv->geometry.width));
+		x = monitor_geom.x + (monitor_geom.width - (toplevel->priv->x_right + toplevel->priv->geometry.width));
 	if (toplevel->priv->y_bottom == -1)
-		y = monitor.y + toplevel->priv->y;
+		y = monitor_geom.y + toplevel->priv->y;
 	else
-		y = monitor.y + (monitor.height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
+		y = monitor_geom.y + (monitor_geom.height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
 
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
@@ -1445,7 +1445,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	gboolean          geometry_changed = FALSE;
 	int               strut, strut_start, strut_end;
 	int               x, y, width, height;
-	GdkRectangle	  monitor;
+	GdkRectangle	  monitor_geom;
 
 	if (!toplevel->priv->updated_geometry_initial)
 		return FALSE;
@@ -1470,7 +1470,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 			panel_toplevel_calculate_animation_end_geometry (toplevel);
 	}
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 	screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
 
 	if (end_of_animation) {
@@ -1498,30 +1498,30 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	strut = strut_start = strut_end = 0;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
-		if (y <= monitor.y) {
+		if (y <= monitor_geom.y) {
 			orientation = PANEL_ORIENTATION_TOP;
-			strut = y + height - monitor.y;
-		} else if (y >= monitor.y + monitor.height - height) {
+			strut = y + height - monitor_geom.y;
+		} else if (y >= monitor_geom.y + monitor_geom.height - height) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
-			strut = monitor.y + monitor.height - y;
+			strut = monitor_geom.y + monitor_geom.height - y;
 		}
 
 		if (strut > 0) {
-			strut_start = MAX (x, monitor.x);
-			strut_end = MIN (x + width, monitor.x + monitor.width) - 1;
+			strut_start = MAX (x, monitor_geom.x);
+			strut_end = MIN (x + width, monitor_geom.x + monitor_geom.width) - 1;
 		}
 	} else {
-		if (x <= monitor.x) {
+		if (x <= monitor_geom.x) {
 			orientation = PANEL_ORIENTATION_LEFT;
-			strut = x + width - monitor.x;
-		} else if (x >= monitor.x + monitor.width - width) {
+			strut = x + width - monitor_geom.x;
+		} else if (x >= monitor_geom.x + monitor_geom.width - width) {
 			orientation = PANEL_ORIENTATION_RIGHT;
-			strut = monitor.x + monitor.width - x;
+			strut = monitor_geom.x + monitor_geom.width - x;
 		}
 
 		if (strut > 0) {
-			strut_start = MAX (y, monitor.y);
-			strut_end = MIN (y + height, monitor.y + monitor.height) - 1;
+			strut_start = MAX (y, monitor_geom.y);
+			strut_end = MIN (y + height, monitor_geom.y + monitor_geom.height) - 1;
 		}
 	}
 
@@ -1565,13 +1565,13 @@ void panel_toplevel_update_edges(PanelToplevel* toplevel)
 	PanelFrameEdge   edges;
 	PanelFrameEdge   inner_edges;
 	PanelFrameEdge   outer_edges;
-	GdkRectangle     monitor;
+	GdkRectangle     monitor_geom;
 	int              width, height;
 	gboolean         inner_frame = FALSE;
 
 	widget = GTK_WIDGET (toplevel);
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
@@ -1585,10 +1585,10 @@ void panel_toplevel_update_edges(PanelToplevel* toplevel)
 	if (toplevel->priv->geometry.x > 0)
 		edges |= PANEL_EDGE_LEFT;
 
-	if (toplevel->priv->geometry.y < (monitor.height - height))
+	if (toplevel->priv->geometry.y < (monitor_geom.height - height))
 		edges |= PANEL_EDGE_BOTTOM;
 
-	if (toplevel->priv->geometry.x < (monitor.width - width))
+	if (toplevel->priv->geometry.x < (monitor_geom.width - width))
 		edges |= PANEL_EDGE_RIGHT;
 
 	/* There is a conflict in the position algorithm when a
@@ -1689,7 +1689,7 @@ static void panel_toplevel_update_attached_position(PanelToplevel* toplevel, gbo
 	GdkRectangle      parent_box;
 	GdkRectangle      attach_box;
 	int               x_origin = 0, y_origin = 0;
-	GdkRectangle      monitor;
+	GdkRectangle      monitor_geom;
 
 	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel->priv->attach_toplevel)) ||
 	    !gtk_widget_get_realized (toplevel->priv->attach_widget))
@@ -1757,20 +1757,20 @@ static void panel_toplevel_update_attached_position(PanelToplevel* toplevel, gbo
 		break;
 	}
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
-	*x -= monitor.x;
-	*y -= monitor.y;
+	*x -= monitor_geom.x;
+	*y -= monitor_geom.y;
 
 	if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-		*x = CLAMP (*x, 0, monitor.width  - toplevel->priv->original_width);
+		*x = CLAMP (*x, 0, monitor_geom.width  - toplevel->priv->original_width);
 	else
-		*y = CLAMP (*y, 0, monitor.height - toplevel->priv->original_height);
+		*y = CLAMP (*y, 0, monitor_geom.height - toplevel->priv->original_height);
 }
 
 static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* x, int* y, int* w, int* h)
 {
-	GdkRectangle monitor;
+	GdkRectangle monitor_geom;
 	int          width, height;
 	int          snap_tolerance;
 
@@ -1781,14 +1781,14 @@ static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* 
 		return;
 	}
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	width  = toplevel->priv->original_width;
 	height = toplevel->priv->original_height;
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
-	*x = CLAMP (*x, 0, monitor.width  - width);
-	*y = CLAMP (*y, 0, monitor.height - height);
+	*x = CLAMP (*x, 0, monitor_geom.width  - width);
+	*y = CLAMP (*y, 0, monitor_geom.height - height);
 
 	if (toplevel->priv->x <= snap_tolerance &&
 	    toplevel->priv->x_right == -1 &&
@@ -1797,7 +1797,7 @@ static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* 
 	else if (toplevel->priv->x_right != -1 &&
 		 toplevel->priv->x_right <= snap_tolerance &&
 		 !toplevel->priv->x_centered)
-		*x = monitor.width - width;
+		*x = monitor_geom.width - width;
 
 	if (toplevel->priv->y <= snap_tolerance &&
 	    toplevel->priv->y_bottom == -1 &&
@@ -1806,7 +1806,7 @@ static void panel_toplevel_update_normal_position(PanelToplevel* toplevel, int* 
 	else if (toplevel->priv->y_bottom != -1 &&
 		 toplevel->priv->y_bottom <= snap_tolerance &&
 		 !toplevel->priv->y_centered)
-		*y = monitor.height - height;
+		*y = monitor_geom.height - height;
 }
 
 static void
@@ -1818,7 +1818,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 					  gboolean       for_end_position)
 {
 	int width, height;
-	GdkRectangle monitor;
+	GdkRectangle monitor_geom;
 	int auto_hide_size;
 	int snap_tolerance;
 
@@ -1829,7 +1829,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 		return;
 	}
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	width  = toplevel->priv->original_width;
 	height = toplevel->priv->original_height;
@@ -1850,13 +1850,13 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 		*y = - (height - auto_hide_size);
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		*y = monitor.height - auto_hide_size;
+		*y = monitor_geom.height - auto_hide_size;
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		*x = - (width - auto_hide_size);
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		*x = monitor.width - auto_hide_size;
+		*x = monitor_geom.width - auto_hide_size;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1871,7 +1871,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 		else if (toplevel->priv->x_right != -1 &&
 			 toplevel->priv->x_right <= snap_tolerance &&
 			 !toplevel->priv->x_centered)
-			*x = monitor.width - width;
+			*x = monitor_geom.width - width;
 	} else /* if (toplevel->priv->orientation & PANEL_VERTICAL_MASK) */ {
 		if (toplevel->priv->y <= snap_tolerance &&
 		    toplevel->priv->y_bottom == -1 &&
@@ -1880,7 +1880,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 		else if (toplevel->priv->y_bottom != -1 &&
 			 toplevel->priv->y_bottom <= snap_tolerance &&
 			 !toplevel->priv->y_centered)
-			*y = monitor.height - height;
+			*y = monitor_geom.height - height;
 	}
 }
 
@@ -1898,7 +1898,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 {
 	int width, height;
 	int min_hide_size;
-	GdkRectangle monitor;
+	GdkRectangle monitor_geom;
 	GtkAllocation hide_allocation;
 
 	g_assert (x != NULL && y != NULL);
@@ -1913,7 +1913,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 		return;
 	}
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	width  = toplevel->priv->original_width;
 	height = toplevel->priv->original_height;
@@ -1930,7 +1930,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 	case PANEL_STATE_HIDDEN_DOWN:
 		gtk_widget_get_allocation (toplevel->priv->hide_button_top,
 					   &hide_allocation);
-		*y = monitor.height - MAX (hide_allocation.height, min_hide_size);
+		*y = monitor_geom.height - MAX (hide_allocation.height, min_hide_size);
 		break;
 	case PANEL_STATE_HIDDEN_LEFT:
 		gtk_widget_get_allocation (toplevel->priv->hide_button_right,
@@ -1940,7 +1940,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 	case PANEL_STATE_HIDDEN_RIGHT:
 		gtk_widget_get_allocation (toplevel->priv->hide_button_left,
 					   &hide_allocation);
-		*x = monitor.width - MAX (hide_allocation.width, min_hide_size);
+		*x = monitor_geom.width - MAX (hide_allocation.width, min_hide_size);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -2145,12 +2145,12 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	int              x, y;
 	int              w, h;
 	int              screen_width, screen_height;
-	GdkRectangle     monitor;
+	GdkRectangle     monitor_geom;
 
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	if (toplevel->priv->animating) {
 		panel_toplevel_update_animating_position (toplevel);
@@ -2168,8 +2168,8 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 			toplevel->priv->x -= toplevel->priv->geometry.width  / 2;
 			g_object_notify (G_OBJECT (toplevel), "x");
 
-			if ((toplevel->priv->x + toplevel->priv->geometry.width / 2) > monitor.width / 2)
-				x_right = monitor.width - (toplevel->priv->x + toplevel->priv->geometry.width);
+			if ((toplevel->priv->x + toplevel->priv->geometry.width / 2) > monitor_geom.width / 2)
+				x_right = monitor_geom.width - (toplevel->priv->x + toplevel->priv->geometry.width);
 			else
 				x_right = -1;
 			if (toplevel->priv->x_right != x_right) {
@@ -2185,8 +2185,8 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 			toplevel->priv->y -= toplevel->priv->geometry.height / 2;
 			g_object_notify (G_OBJECT (toplevel), "y");
 
-			if ((toplevel->priv->y + toplevel->priv->geometry.height / 2) > monitor.height / 2)
-				y_bottom = monitor.height - (toplevel->priv->y + toplevel->priv->geometry.height);
+			if ((toplevel->priv->y + toplevel->priv->geometry.height / 2) > monitor_geom.height / 2)
+				y_bottom = monitor_geom.height - (toplevel->priv->y + toplevel->priv->geometry.height);
 			else
 				y_bottom = -1;
 			if (toplevel->priv->y_bottom != y_bottom) {
@@ -2205,17 +2205,17 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	if (toplevel->priv->x_right == -1)
 		x = toplevel->priv->x;
 	else
-		x = monitor.width - (toplevel->priv->x_right + toplevel->priv->geometry.width);
+		x = monitor_geom.width - (toplevel->priv->x_right + toplevel->priv->geometry.width);
 	if (toplevel->priv->y_bottom == -1)
 		y = toplevel->priv->y;
 	else
-		y = monitor.height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height);
+		y = monitor_geom.height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height);
 
 	if (!toplevel->priv->expand) {
 		if (toplevel->priv->x_centered)
-			x = (monitor.width - toplevel->priv->geometry.width) / 2;
+			x = (monitor_geom.width - toplevel->priv->geometry.width) / 2;
 		if (toplevel->priv->y_centered)
-			y = (monitor.height - toplevel->priv->geometry.height) / 2;
+			y = (monitor_geom.height - toplevel->priv->geometry.height) / 2;
 	}
 
 	w = h = -1;
@@ -2264,12 +2264,12 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		    !toplevel->priv->y_centered)
 			y = 0;
 
-		max_size = monitor.width - geometry->width - padding.right;
+		max_size = monitor_geom.width - geometry->width - padding.right;
 		if (x + padding.left >= max_size && x < max_size &&
 		    !toplevel->priv->x_centered)
 			x = max_size;
 
-		max_size = monitor.height - geometry->height - padding.bottom;
+		max_size = monitor_geom.height - geometry->height - padding.bottom;
 		if (y + padding.top >= max_size && y < max_size &&
 		    !toplevel->priv->y_centered)
 			y = max_size;
@@ -2415,7 +2415,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	GtkStyleContext *context;
 	GtkStateFlags    state;
 	GtkBorder        padding;
-	GdkRectangle     monitor;
+	GdkRectangle     monitor_geom;
 	int              width, height;
 	int              minimum_height;
 	int              non_panel_widget_size;
@@ -2428,7 +2428,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	state = gtk_widget_get_state_flags (widget);
 	gtk_style_context_get_padding (context, state, &padding);
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	width  = requisition->width;
 	height = requisition->height;
@@ -2449,15 +2449,15 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 			      minimum_height);
 
 		if (toplevel->priv->expand)
-			width  = monitor.width;
+			width  = monitor_geom.width;
 		else {
 			int max_width;
 
 			if (!toplevel->priv->attached)
-				max_width = monitor.width;
+				max_width = monitor_geom.width;
 			else {
 				if (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel) == PANEL_ORIENTATION_LEFT)
-					max_width = monitor.width
+					max_width = monitor_geom.width
 						    - toplevel->priv->geometry.x;
 				else
 					max_width = toplevel->priv->geometry.x +
@@ -2478,15 +2478,15 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 			     minimum_height);
 
 		if (toplevel->priv->expand)
-			height = monitor.height;
+			height = monitor_geom.height;
 		else {
 			int max_height;
 
 			if (!toplevel->priv->attached)
-				max_height = monitor.height;
+				max_height = monitor_geom.height;
 			else {
 				if (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel) == PANEL_ORIENTATION_TOP)
-					max_height = monitor.height
+					max_height = monitor_geom.height
 						     - toplevel->priv->geometry.y;
 				else
 					max_height = toplevel->priv->geometry.y +
@@ -2512,8 +2512,8 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	if (toplevel->priv->edges & PANEL_EDGE_RIGHT)
 		width += padding.right;
 
-	toplevel->priv->geometry.width  = CLAMP (width,  0, monitor.width);
-	toplevel->priv->geometry.height = CLAMP (height, 0, monitor.height);
+	toplevel->priv->geometry.width  = CLAMP (width,  0, monitor_geom.width);
+	toplevel->priv->geometry.height = CLAMP (height, 0, monitor_geom.height);
 	toplevel->priv->original_width  = toplevel->priv->geometry.width;
 	toplevel->priv->original_height = toplevel->priv->geometry.height;
 }
@@ -3545,23 +3545,23 @@ panel_toplevel_get_animation_time (PanelToplevel *toplevel)
 static void
 panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 {
-	GdkRectangle monitor;
+	GdkRectangle monitor_geom;
 
 	toplevel->priv->animation_end_x      = toplevel->priv->x;
 	toplevel->priv->animation_end_y      = toplevel->priv->y;
 	toplevel->priv->animation_end_width  = -1;
 	toplevel->priv->animation_end_height = -1;
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	if (!toplevel->priv->expand) {
 
 		if (toplevel->priv->x_centered)
 			toplevel->priv->animation_end_x =
-				(monitor.width - toplevel->priv->geometry.width) / 2;
+				(monitor_geom.width - toplevel->priv->geometry.width) / 2;
 		if (toplevel->priv->y_centered)
 			toplevel->priv->animation_end_y =
-				(monitor.height - toplevel->priv->geometry.height) / 2;
+				(monitor_geom.height - toplevel->priv->geometry.height) / 2;
 	}
 
 	/* we consider the toplevels which are in the initial animation stage
@@ -4958,7 +4958,7 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 				PanelOrientation  orientation)
 {
 	gboolean     rotate;
-	GdkRectangle monitor;
+	GdkRectangle monitor_geom;
 
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
@@ -4967,13 +4967,13 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 
 	g_object_freeze_notify (G_OBJECT (toplevel));
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	/* Un-snap from center if no longer along screen edge */
 	if (toplevel->priv->x_centered &&
 	    (orientation & PANEL_VERTICAL_MASK)) {
 		toplevel->priv->x_centered = FALSE;
-		toplevel->priv->x = (monitor.width - toplevel->priv->geometry.width) / 2;
+		toplevel->priv->x = (monitor_geom.width - toplevel->priv->geometry.width) / 2;
 		g_object_notify (G_OBJECT (toplevel), "x");
 		g_object_notify (G_OBJECT (toplevel), "x-centered");
 
@@ -4986,7 +4986,7 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	if (toplevel->priv->y_centered &&
 	    (orientation & PANEL_HORIZONTAL_MASK)) {
 		toplevel->priv->y_centered = FALSE;
-		toplevel->priv->y = (monitor.height - toplevel->priv->geometry.height) / 2;
+		toplevel->priv->y = (monitor_geom.height - toplevel->priv->geometry.height) / 2;
 		g_object_notify (G_OBJECT (toplevel), "y");
 		g_object_notify (G_OBJECT (toplevel), "y-centered");
 
@@ -5574,12 +5574,12 @@ panel_toplevel_get_minimum_size (PanelToplevel *toplevel)
 int
 panel_toplevel_get_maximum_size (PanelToplevel *toplevel)
 {
-	GdkRectangle monitor;
+	GdkRectangle monitor_geom;
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor);
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-		return monitor.height / MAXIMUM_SIZE_SCREEN_RATIO;
+		return monitor_geom.height / MAXIMUM_SIZE_SCREEN_RATIO;
 	else
-		return monitor.width / MAXIMUM_SIZE_SCREEN_RATIO;
+		return monitor_geom.width / MAXIMUM_SIZE_SCREEN_RATIO;
 }
