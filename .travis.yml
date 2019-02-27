@@ -5,8 +5,12 @@ language: bash
 services:
   - docker
 
+branches:
+  except:
+  - gh-pages
+
 before_install:
-  - curl -Ls -o docker-build https://github.com/mate-desktop/mate-dev-scripts/raw/master/travis/docker-build
+  - curl -Ls -o docker-build https://github.com/mate-desktop/mate-dev-scripts/raw/travis/travis/docker-build
   - chmod +x docker-build
 
 install:
@@ -16,20 +20,38 @@ install:
   - ./docker-build --name ${DISTRO} --config .travis.yml --install
 
 script:
-  - ./docker-build --name ${DISTRO} --verbose --config .travis.yml --build autotools
+  - ./docker-build --name ${DISTRO} --verbose --config .travis.yml --build scripts
+
+deploy:
+  provider: pages
+  github-token: $GITHUB_TOKEN
+  #keep-history: true
+  skip_cleanup: true
+  committer-from-gh: true
+  target-branch: gh-pages
+  local-dir: html-report
+  on:
+    all_branches: true
+    condition: ${DISTRO} =~ ^fedora.*$
+
+after_success:
+  - 'if [[ "$TRAVIS_SECURE_ENV_VARS" == "true" && "$TRAVIS_PULL_REQUEST" != "false" && ${DISTRO} =~ ^fedora.*$ ]]; then
+        COMMENT="[Notification]: Clang Analyzer results of $TRAVIS_COMMIT at https://mate-desktop.github.io/${TRAVIS_REPO_SLUG#*/}/";
+        curl -H "Authorization: token $GITHUB_TOKEN" -X POST -d "{\"body\": \"$COMMENT\"}" "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments" >/dev/null;
+    fi'
 
 env:
   - DISTRO="archlinux/base"
   - DISTRO="debian:sid"
   - DISTRO="fedora:29"
   - DISTRO="ubuntu:18.10"
-
 ##########################################################
 # THE FOLLOWING LINES IS USED BY docker-build
 ##########################################################
 requires:
   archlinux:
     # Useful URL: https://git.archlinux.org/svntogit/community.git/tree/mate-panel
+    - clang
     - dbus-glib
     - gcc
     - git
@@ -50,6 +72,8 @@ requires:
   debian:
     # Useful URL: https://github.com/mate-desktop/debian-packages
     # Useful URL: https://salsa.debian.org/debian-mate-team/mate-panel
+    - clang
+    - clang-tools
     - gir1.2-freedesktop
     - git
     - gobject-introspection
@@ -80,6 +104,8 @@ requires:
 
   fedora:
     # Useful URL: https://src.fedoraproject.org/cgit/rpms/mate-panel.git
+    - clang-analyzer
+    - clang
     - dbus-glib-devel
     - desktop-file-utils
     - gcc
@@ -99,6 +125,8 @@ requires:
     - yelp-tools
 
   ubuntu:
+    - clang
+    - clang-tools
     - gir1.2-freedesktop
     - git
     - gobject-introspection
@@ -129,6 +157,30 @@ requires:
 
 variables:
   - CFLAGS="-Wall -Werror=format-security"
+  - 'CHECKERS="
+    -enable-checker deadcode.DeadStores
+    -enable-checker alpha.core.CastSize
+    -enable-checker alpha.core.CastToStruct
+    -enable-checker alpha.core.IdenticalExpr
+    -enable-checker alpha.core.SizeofPtr
+    -enable-checker alpha.security.ArrayBoundV2
+    -enable-checker alpha.security.MallocOverflow
+    -enable-checker alpha.security.ReturnPtrRange
+    -enable-checker alpha.unix.SimpleStream
+    -enable-checker alpha.unix.cstring.BufferOverlap
+    -enable-checker alpha.unix.cstring.NotNullTerminated
+    -enable-checker alpha.unix.cstring.OutOfBounds
+    -enable-checker alpha.core.FixedAddr
+    -enable-checker security.insecureAPI.strcpy"'
+
+build_scripts:
+  - if [ ${DISTRO_NAME} == "fedora" ];then
+  -     curl -Ls -o fedora.sh https://github.com/mate-desktop/mate-dev-scripts/raw/travis/travis/fedora.sh
+  -     bash ./fedora.sh
+  - fi
+  - ./autogen.sh
+  - scan-build $CHECKERS ./configure
+  - scan-build $CHECKERS --keep-cc -o html-report make
 
 before_scripts:
   - cd ${START_DIR}
@@ -148,4 +200,38 @@ before_scripts:
   - make install
 
 after_scripts:
+  - if [ ${DISTRO_NAME} == "fedora" ];then
+  -     cat > index.html <<EOF
+  -     <!DOCTYPE HTML>
+  -     <html lang="en">
+  -     <head>
+  -       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  -       <link rel="icon" href="https://raw.githubusercontent.com/${OWNER_NAME}/${REPO_NAME}/master/icons/16x16/${REPO_NAME}.png" />
+  -       <title>$REPO_NAME Code Analizer</title></head>
+  -     <body>
+  -     <h1>
+  -     <a href="https://github.com/${OWNER_NAME}">${OWNER_NAME}</a>/<a href="https://github.com/${OWNER_NAME}/${REPO_NAME}">$REPO_NAME</a>
+  -     </h1>
+  -       <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}" title="Github"><i class="fa fa-github fa-2x"></i>GitHub</a>
+  -       <a href="$TRAVIS_BUILD_WEB_URL" title="Travis CI"><img src="https://travis-ci.org/${OWNER_NAME}/${REPO_NAME}.svg?branch=master" alt="Build Status" /></a>
+  -     <hr/>
+  -     'Commit: <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}/commit/$TRAVIS_COMMIT">$TRAVIS_COMMIT</a><br/>'
+  -     'Compare: <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}/compare/$TRAVIS_COMMIT_RANGE">$TRAVIS_COMMIT_RANGE</a><br/>'
+  -     'Branch: <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}/tree/$TRAVIS_BRANCH">$TRAVIS_BRANCH</a><br/>'
+  -     'Time: `date --rfc-3339=seconds`<br/>'
+  -     'Messages:<br/>'
+  -     <pre>
+  -     $TRAVIS_COMMIT_MESSAGE
+  -     </pre>
+  -     <hr/>
+  -     <ul>
+  -     EOF
+  -     for i in `ls html-report`;do
+  -       echo "<li><a href=$i>Static analizer result($i)</a></li>" >> index.html
+  -     done
+  -     echo "</ul>" >> index.html
+  -     echo "</body>" >> index.html
+  -     echo "</html>" >> index.html
+  -     mv index.html html-report
+  - fi
   - make distcheck
