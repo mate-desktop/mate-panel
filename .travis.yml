@@ -11,7 +11,8 @@ branches:
 
 before_install:
   - curl -Ls -o docker-build https://github.com/mate-desktop/mate-dev-scripts/raw/travis/travis/docker-build
-  - chmod +x docker-build
+  - curl -Ls -o gen-index https://github.com/mate-desktop/mate-dev-scripts/raw/travis/travis/gen-index.sh
+  - chmod +x docker-build gen-index
 
 install:
   - sudo apt-get install -y python3-pip python3-setuptools
@@ -36,15 +37,21 @@ deploy:
 
 after_success:
   - 'if [[ "$TRAVIS_SECURE_ENV_VARS" == "true" && "$TRAVIS_PULL_REQUEST" != "false" && ${DISTRO} =~ ^fedora.*$ ]]; then
-        COMMENT="[Notification]: Clang Analyzer results of $TRAVIS_COMMIT at https://mate-desktop.github.io/${TRAVIS_REPO_SLUG#*/}/";
-        curl -H "Authorization: token $GITHUB_TOKEN" -X POST -d "{\"body\": \"$COMMENT\"}" "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments" >/dev/null;
-    fi'
+        REPO_SLUG_ARRAY=(${TRAVIS_REPO_SLUG//\// });
+        REPO_NAME=${REPO_SLUG_ARRAY[1]};
+        URL="https://${REPO_NAME}.mate-desktop.dev";
+        COMMENT="Code analysis completed";
+        curl -H "Authorization: token $GITHUB_TOKEN" -X POST
+           -d "{\"state\": \"success\", \"description\": \"$COMMENT\", \"context\":\"scan-build\", \"target_url\": \"$URL\"}"
+           https://api.github.com/repos/${TRAVIS_REPO_SLUG}/statuses/${TRAVIS_PULL_REQUEST_SHA};
+     fi'
 
 env:
   - DISTRO="archlinux/base"
   - DISTRO="debian:sid"
   - DISTRO="fedora:29"
   - DISTRO="ubuntu:18.10"
+
 ##########################################################
 # THE FOLLOWING LINES IS USED BY docker-build
 ##########################################################
@@ -201,37 +208,6 @@ before_scripts:
 
 after_scripts:
   - if [ ${DISTRO_NAME} == "fedora" ];then
-  -     cat > index.html <<EOF
-  -     <!DOCTYPE HTML>
-  -     <html lang="en">
-  -     <head>
-  -       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  -       <link rel="icon" href="https://raw.githubusercontent.com/${OWNER_NAME}/${REPO_NAME}/master/icons/16x16/${REPO_NAME}.png" />
-  -       <title>$REPO_NAME Code Analizer</title></head>
-  -     <body>
-  -     <h1>
-  -     <a href="https://github.com/${OWNER_NAME}">${OWNER_NAME}</a>/<a href="https://github.com/${OWNER_NAME}/${REPO_NAME}">$REPO_NAME</a>
-  -     </h1>
-  -       <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}" title="Github"><i class="fa fa-github fa-2x"></i>GitHub</a>
-  -       <a href="$TRAVIS_BUILD_WEB_URL" title="Travis CI"><img src="https://travis-ci.org/${OWNER_NAME}/${REPO_NAME}.svg?branch=master" alt="Build Status" /></a>
-  -     <hr/>
-  -     'Commit: <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}/commit/$TRAVIS_COMMIT">$TRAVIS_COMMIT</a><br/>'
-  -     'Compare: <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}/compare/$TRAVIS_COMMIT_RANGE">$TRAVIS_COMMIT_RANGE</a><br/>'
-  -     'Branch: <a href="https://github.com/${OWNER_NAME}/${REPO_NAME}/tree/$TRAVIS_BRANCH">$TRAVIS_BRANCH</a><br/>'
-  -     'Time: `date --rfc-3339=seconds`<br/>'
-  -     'Messages:<br/>'
-  -     <pre>
-  -     $TRAVIS_COMMIT_MESSAGE
-  -     </pre>
-  -     <hr/>
-  -     <ul>
-  -     EOF
-  -     for i in `ls html-report`;do
-  -       echo "<li><a href=$i>Static analizer result($i)</a></li>" >> index.html
-  -     done
-  -     echo "</ul>" >> index.html
-  -     echo "</body>" >> index.html
-  -     echo "</html>" >> index.html
-  -     mv index.html html-report
+  -   ./gen-index -i https://raw.githubusercontent.com/${OWNER_NAME}/${REPO_NAME}/master/icons/16x16/${REPO_NAME}.png
   - fi
   - make distcheck
