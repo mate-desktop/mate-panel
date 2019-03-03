@@ -126,11 +126,10 @@ panel_key_file_to_file (GKeyFile     *keyfile,
 		gsize  new_length;
 
 		new_length = length + strlen (KEYFILE_TRUSTED_SHEBANG);
-		new_data = g_malloc (new_length);
+		new_data = g_malloc (new_length + 1);
 
-		strcpy (new_data, KEYFILE_TRUSTED_SHEBANG);
-		memcpy (new_data + strlen (KEYFILE_TRUSTED_SHEBANG),
-			data, length);
+		g_strlcpy (new_data, KEYFILE_TRUSTED_SHEBANG, new_length + 1);
+		g_strlcat (new_data, data, new_length + 1);
 
 		g_free (data);
 		data = new_data;
