@@ -277,6 +277,36 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     return retval;
 }
 
+static void
+panel_layout_apply_minimal_default (int          set_screen_to,
+                                    const char  *schema,
+                                    const char  *path_prefix)
+{
+    const char *unique_id = "bottom";
+    char       *path = NULL;
+    GSettings  *settings = NULL;
+
+    path = g_strdup_printf ("%s%s/", path_prefix, unique_id);
+    settings = g_settings_new_with_path (schema, path);
+    g_return_if_fail(settings);
+    g_free (path);
+
+    g_settings_set_boolean(settings, "expand", TRUE);
+    g_settings_set_string(settings, "orientation", "bottom");
+    g_settings_set_int(settings, "size", 24);
+    g_settings_set_int(settings, "screen", 0);
+
+    GSettings *panel_settings;
+    panel_settings = g_settings_new (PANEL_SCHEMA);
+    g_return_if_fail(panel_settings);
+    mate_gsettings_append_strv (panel_settings,
+                                PANEL_TOPLEVEL_ID_LIST_KEY,
+                                unique_id);
+
+    g_object_unref (panel_settings);
+    g_object_unref (settings);
+}
+
 void
 panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
 {
@@ -350,7 +380,9 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
     }
     else {
         g_warning ("Cant find the layout file!");
-        /* FIXME implement a fallback panel */
+        panel_layout_apply_minimal_default(screen_n,
+                                           PANEL_TOPLEVEL_SCHEMA,
+                                           PANEL_TOPLEVEL_PATH);
     }
 
     if (groups)
