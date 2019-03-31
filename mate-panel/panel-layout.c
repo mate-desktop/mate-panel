@@ -161,9 +161,13 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         dir = "toplevels";
         type = PANEL_GSETTINGS_TOPLEVELS;
     }
-    if (g_strcmp0 (id_list_key, PANEL_OBJECT_ID_LIST_KEY) == 0) {
+    else if (g_strcmp0 (id_list_key, PANEL_OBJECT_ID_LIST_KEY) == 0) {
         dir = "objects";
         type = PANEL_GSETTINGS_OBJECTS;
+    }
+    else {
+        g_critical ("Unknown key \"%s\"", id_list_key);
+	return FALSE;
     }
 
     dconf_path = g_strdup_printf (PANEL_RESOURCE_PATH "/%s", dir);
