@@ -65,7 +65,6 @@ requires:
   archlinux:
     # Useful URL: https://git.archlinux.org/svntogit/community.git/tree/mate-panel
     - clang
-    - cppcheck
     - dbus-glib
     - gcc
     - git
@@ -121,7 +120,6 @@ requires:
     # Useful URL: https://src.fedoraproject.org/cgit/rpms/mate-panel.git
     - clang-analyzer
     - clang
-    - cppcheck
     - dbus-glib-devel
     - desktop-file-utils
     - gcc
@@ -143,7 +141,6 @@ requires:
   ubuntu:
     - clang
     - clang-tools
-    - cppcheck
     - gir1.2-freedesktop
     - git
     - gobject-introspection
@@ -202,7 +199,9 @@ build_scripts:
   - else
   -     scan-build $CHECKERS --keep-cc -o html-report make
   - fi
-  - cppcheck --enable=warning,style,performance,portability,information,missingInclude .
+  - if [ ${DISTRO_NAME} == "debian" ];then
+  -     cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'mate-menus-build' .
+  - fi
 
 before_scripts:
   - cd ${START_DIR}
