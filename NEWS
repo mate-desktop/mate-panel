@@ -1,5 +1,20 @@
 ### mate-panel 1.23.0
 
+  * sync with transifex
+  * add volume-applet to fedora layout
+  * Show single empty panel, even if no default layout is found
+  * Dropped *-protocol suffix from generated files
+  * help: update copyright
+  * [Security] panel-keyfile: Use 'g_strlcpy' instead of 'strcpy'
+  * na-tray-child: avoid deprecated 'gtk_widget_set_double_buffered'
+  * [ci] Enable clang-analyzer
+  * Wayland support for several files
+  * Error if compiling panel-plug-private.h without X11 support
+  * Don't build X11 specific files when X11 support is not enabled
+  * Remove unneeded X11 includes
+  * GdkRectangle monitor -> monitor_geom
+  * Change panel_toplevel_get_monitor_geometry to fill in a GdkRectangle instead of 4 ints
+
 ### mate-panel 1.22.0
 
   * update translations
