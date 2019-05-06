@@ -985,13 +985,19 @@ mate_panel_applet_button_release (GtkWidget      *widget,
 	return mate_panel_applet_button_event (applet, event);
 }
 
+/*Open the applet context menu only on Menu key
+ *Do not open it on Return or some applets won't work
+ */
 static gboolean
 mate_panel_applet_key_press_event (GtkWidget   *widget,
 			      GdkEventKey *event)
 {
-	mate_panel_applet_menu_popup (MATE_PANEL_APPLET (widget), (GdkEvent *) event);
-
-	return TRUE;
+    if (event->keyval == GDK_KEY_Menu) {
+        mate_panel_applet_menu_popup (MATE_PANEL_APPLET (widget), (GdkEvent *) event);
+        return TRUE;
+    }
+    else
+        return FALSE;
 }
 
 static void
