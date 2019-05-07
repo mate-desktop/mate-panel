@@ -1029,16 +1029,6 @@ panel_profile_delete_toplevel (PanelToplevel *toplevel)
 
 	toplevel_id = panel_profile_get_toplevel_id (toplevel);
 
-	/* disable GSettings signals */
-	if (toplevel->settings) {
-		g_object_unref (toplevel->settings);
-		toplevel->settings = NULL;
-	}
-	if (toplevel->background_settings) {
-		g_object_unref (toplevel->background_settings);
-		toplevel->background_settings = NULL;
-	}
-
 	panel_profile_delete_toplevel_objects (toplevel_id);
 
 	panel_profile_remove_from_list (PANEL_GSETTINGS_TOPLEVELS, toplevel_id);
