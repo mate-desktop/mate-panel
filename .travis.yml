@@ -119,6 +119,7 @@ requires:
     # Useful URL: https://src.fedoraproject.org/cgit/rpms/mate-panel.git
     - clang-analyzer
     - clang
+    - cppcheck-htmlreport
     - desktop-file-utils
     - gcc
     - git
@@ -220,7 +221,9 @@ before_scripts:
 
 after_scripts:
   - if [ ${DISTRO_NAME} == "fedora" ];then
-  -   ./gen-index -i https://raw.githubusercontent.com/${OWNER_NAME}/${REPO_NAME}/master/icons/16x16/${REPO_NAME}.png
+  -   cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude -i'mate-menus-build' .
+  -   cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
+  -   ./gen-index -l 20 -i https://raw.githubusercontent.com/${OWNER_NAME}/${REPO_NAME}/master/icons/16x16/${REPO_NAME}.png
   - fi
   - make distcheck
 
