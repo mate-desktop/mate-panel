@@ -246,6 +246,8 @@ static void panel_toplevel_calculate_animation_end_geometry(PanelToplevel *tople
 static void panel_toplevel_update_monitor(PanelToplevel* toplevel);
 static void panel_toplevel_set_monitor_internal(PanelToplevel* toplevel, int monitor, gboolean force_resize);
 
+static void panel_toplevel_drag_threshold_changed (PanelToplevel *toplevel);
+
 static void
 update_style_classes (PanelToplevel *toplevel)
 {
@@ -3072,12 +3074,53 @@ panel_toplevel_dispose (GObject *widget)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 
+	if (toplevel->priv->settings_path) {
+		g_free (toplevel->priv->settings_path);
+		toplevel->priv->settings_path = NULL;
+	}
+
+	if (toplevel->settings) {
+		g_signal_handlers_disconnect_by_data (toplevel->settings, toplevel);
+		g_object_unref (toplevel->settings);
+		toplevel->settings = NULL;
+	}
+
+	if (toplevel->queued_settings) {
+		g_object_unref (toplevel->queued_settings);
+		toplevel->queued_settings = NULL;
+	}
+
+	if (toplevel->background_settings) {
+		g_signal_handlers_disconnect_by_data (toplevel->background_settings, toplevel);
+		g_object_unref (toplevel->background_settings);
+		toplevel->background_settings = NULL;
+	}
+
+	if (toplevel->priv->gtk_settings) {
+		g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
+						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
+						      toplevel);
+		toplevel->priv->gtk_settings = NULL;
+
+		panel_background_free (&toplevel->background);
+	}
+
 	if (toplevel->priv->attached) {
 		panel_toplevel_disconnect_attached (toplevel);
 		toplevel->priv->attached = FALSE;
 
 		toplevel->priv->attach_toplevel = NULL;
 		toplevel->priv->attach_widget   = NULL;
+	}
+
+	if (toplevel->priv->description) {
+		g_free (toplevel->priv->description);
+		toplevel->priv->description = NULL;
+	}
+
+	if (toplevel->priv->name) {
+		g_free (toplevel->priv->name);
+		toplevel->priv->name = NULL;
 	}
 
 	panel_toplevel_disconnect_timeouts (toplevel);
@@ -4217,47 +4260,6 @@ panel_toplevel_finalize (GObject *object)
 	panel_struts_unregister_strut (toplevel);
 
 	toplevel_list = g_slist_remove (toplevel_list, toplevel);
-
-	if (toplevel->priv->settings_path) {
-		g_free (toplevel->priv->settings_path);
-		toplevel->priv->settings_path = NULL;
-	}
-
-	if (toplevel->settings) {
-		g_object_unref (toplevel->settings);
-		toplevel->settings = NULL;
-	}
-
-	if (toplevel->background_settings) {
-		g_object_unref (toplevel->background_settings);
-		toplevel->background_settings = NULL;
-	}
-
-	if (toplevel->priv->gtk_settings) {
-		g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
-						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
-						      toplevel);
-		toplevel->priv->gtk_settings = NULL;
-
-		panel_background_free (&toplevel->background);
-	}
-
-	if (toplevel->priv->attached) {
-		panel_toplevel_disconnect_attached (toplevel);
-
-		toplevel->priv->attached = FALSE;
-
-		toplevel->priv->attach_toplevel = NULL;
-		toplevel->priv->attach_widget   = NULL;
-	}
-
-	if (toplevel->priv->description)
-		g_free (toplevel->priv->description);
-	toplevel->priv->description = NULL;
-
-	if (toplevel->priv->name)
-		g_free (toplevel->priv->name);
-	toplevel->priv->name = NULL;
 
 	G_OBJECT_CLASS (panel_toplevel_parent_class)->finalize (object);
 }
