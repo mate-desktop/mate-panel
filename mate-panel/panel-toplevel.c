@@ -2312,7 +2312,7 @@ calculate_minimum_height (GtkWidget        *widget,
 	pango_font_description_free (font_desc);
 	pango_font_metrics_unref (metrics);
 
-	thickness = orientation & PANEL_HORIZONTAL_MASK ?
+	thickness = (orientation & PANEL_HORIZONTAL_MASK) ?
 		padding.top + padding.bottom :
 		padding.left + padding.right;
 
@@ -4684,7 +4684,7 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 
 	container = panel_widget_new (toplevel,
 				      !toplevel->priv->expand,
-				      toplevel->priv->orientation & PANEL_HORIZONTAL_MASK ?
+				      (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) ?
 						GTK_ORIENTATION_HORIZONTAL :
 						GTK_ORIENTATION_VERTICAL,
 				      toplevel->priv->size);
@@ -5033,7 +5033,7 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 
 	panel_widget_set_orientation (
 		toplevel->priv->panel_widget,
-		toplevel->priv->orientation & PANEL_HORIZONTAL_MASK ?
+		(toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) ?
 					GTK_ORIENTATION_HORIZONTAL :
 					GTK_ORIENTATION_VERTICAL);
 
