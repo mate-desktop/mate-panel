@@ -59,14 +59,6 @@
 
 #define MAX_BOOKMARK_ITEMS      100
 
-G_DEFINE_TYPE(PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
-G_DEFINE_TYPE(PanelDesktopMenuItem, panel_desktop_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
-
-#define PANEL_PLACE_MENU_ITEM_GET_PRIVATE(o) \
-	(G_TYPE_INSTANCE_GET_PRIVATE((o), PANEL_TYPE_PLACE_MENU_ITEM, PanelPlaceMenuItemPrivate))
-#define PANEL_DESKTOP_MENU_ITEM_GET_PRIVATE(o) \
-	(G_TYPE_INSTANCE_GET_PRIVATE((o), PANEL_TYPE_DESKTOP_MENU_ITEM, PanelDesktopMenuItemPrivate))
-
 struct _PanelPlaceMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
@@ -100,6 +92,9 @@ struct _PanelDesktopMenuItemPrivate {
 	guint        use_image : 1;
 	guint        append_lock_logout : 1;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (PanelDesktopMenuItem, panel_desktop_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
 
 static void activate_uri_on_screen(const char* uri, GdkScreen* screen)
 {
@@ -1352,7 +1347,7 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 	char  *bookmarks_filename;
 	GError *error;
 
-	menuitem->priv = PANEL_PLACE_MENU_ITEM_GET_PRIVATE (menuitem);
+	menuitem->priv = panel_place_menu_item_get_instance_private (menuitem);
 
 	if (mate_gsettings_schema_exists (CAJA_DESKTOP_SCHEMA)) {
 		menuitem->priv->caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
@@ -1454,7 +1449,7 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 static void
 panel_desktop_menu_item_init (PanelDesktopMenuItem *menuitem)
 {
-	menuitem->priv = PANEL_DESKTOP_MENU_ITEM_GET_PRIVATE (menuitem);
+	menuitem->priv = panel_desktop_menu_item_get_instance_private (menuitem);
 }
 
 static void
@@ -1463,8 +1458,6 @@ panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 	GObjectClass *gobject_class = (GObjectClass   *) klass;
 
 	gobject_class->finalize  = panel_place_menu_item_finalize;
-
-	g_type_class_add_private (klass, sizeof (PanelPlaceMenuItemPrivate));
 }
 
 static void
@@ -1473,8 +1466,6 @@ panel_desktop_menu_item_class_init (PanelDesktopMenuItemClass *klass)
 	GObjectClass *gobject_class = (GObjectClass   *) klass;
 
 	gobject_class->finalize  = panel_desktop_menu_item_finalize;
-
-	g_type_class_add_private (klass, sizeof (PanelDesktopMenuItemPrivate));
 }
 
 GtkWidget* panel_place_menu_item_new(gboolean use_image)

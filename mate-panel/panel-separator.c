@@ -30,8 +30,6 @@
 
 #define SEPARATOR_SIZE 10
 
-#define PANEL_SEPARATOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_SEPARATOR, PanelSeparatorPrivate))
-
 struct _PanelSeparatorPrivate {
 	AppletInfo     *info;
 	PanelWidget    *panel;
@@ -39,7 +37,7 @@ struct _PanelSeparatorPrivate {
 	GtkOrientation  orientation;
 };
 
-G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
 
 static gboolean
 panel_separator_draw (GtkWidget *widget, cairo_t *cr)
@@ -190,14 +188,12 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 	widget_class->parent_set    = panel_separator_parent_set;
 
 	gtk_widget_class_set_css_name (widget_class, "PanelSeparator");
-
-	g_type_class_add_private (klass, sizeof (PanelSeparator));
 }
 
 static void
 panel_separator_init (PanelSeparator *separator)
 {
-	separator->priv = PANEL_SEPARATOR_GET_PRIVATE (separator);
+	separator->priv = panel_separator_get_instance_private (separator);
 
 	separator->priv->info  = NULL;
 	separator->priv->panel = NULL;

@@ -50,10 +50,6 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
-G_DEFINE_TYPE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET)
-
-#define PANEL_MENU_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BUTTON, PanelMenuButtonPrivate))
-
 enum {
 	PROP_0,
 	PROP_MENU_PATH,
@@ -105,6 +101,8 @@ struct _PanelMenuButtonPrivate {
 	guint                  has_arrow : 1;
 	guint                  dnd_enabled : 1;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET)
 
 static void panel_menu_button_disconnect_from_gsettings (PanelMenuButton *button);
 static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
@@ -192,7 +190,7 @@ panel_menu_scheme_to_path_root (const char *scheme)
 static void
 panel_menu_button_init (PanelMenuButton *button)
 {
-	button->priv = PANEL_MENU_BUTTON_GET_PRIVATE (button);
+	button->priv = panel_menu_button_get_instance_private (button);
 
 	button->priv->applet_id    = NULL;
 	button->priv->toplevel     = NULL;
@@ -558,8 +556,6 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 
 	button_class->clicked = panel_menu_button_clicked;
 	button_class->pressed = panel_menu_button_pressed;
-
-	g_type_class_add_private (klass, sizeof (PanelMenuButtonPrivate));
 
 	g_object_class_install_property (
 			gobject_class,

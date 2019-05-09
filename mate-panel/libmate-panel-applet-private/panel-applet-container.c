@@ -69,9 +69,6 @@ static const AppletPropertyInfo applet_properties [] = {
 	{ "locked-down", "LockedDown" }
 };
 
-#define MATE_PANEL_APPLET_CONTAINER_GET_PRIVATE(o) \
-	(G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_CONTAINER, MatePanelAppletContainerPrivate))
-
 #define MATE_PANEL_APPLET_BUS_NAME            "org.mate.panel.applet.%s"
 #define MATE_PANEL_APPLET_FACTORY_INTERFACE   "org.mate.panel.applet.AppletFactory"
 #define MATE_PANEL_APPLET_FACTORY_OBJECT_PATH "/org/mate/panel/applet/%s"
@@ -79,7 +76,7 @@ static const AppletPropertyInfo applet_properties [] = {
 
 static gboolean mate_panel_applet_container_plug_removed (MatePanelAppletContainer *container);
 
-G_DEFINE_TYPE (MatePanelAppletContainer, mate_panel_applet_container, GTK_TYPE_EVENT_BOX);
+G_DEFINE_TYPE_WITH_PRIVATE (MatePanelAppletContainer, mate_panel_applet_container, GTK_TYPE_EVENT_BOX);
 
 GQuark mate_panel_applet_container_error_quark (void)
 {
@@ -88,7 +85,7 @@ GQuark mate_panel_applet_container_error_quark (void)
 
 static void mate_panel_applet_container_init(MatePanelAppletContainer* container)
 {
-	container->priv = MATE_PANEL_APPLET_CONTAINER_GET_PRIVATE (container);
+	container->priv = mate_panel_applet_container_get_instance_private (container);
 
 	container->priv->pending_ops = g_hash_table_new_full (g_direct_hash,
 							      g_direct_equal,
@@ -174,8 +171,6 @@ static void
 mate_panel_applet_container_class_init (MatePanelAppletContainerClass *klass)
 {
 	GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-	g_type_class_add_private (klass, sizeof (MatePanelAppletContainerPrivate));
 
 	gobject_class->dispose = mate_panel_applet_container_dispose;
 

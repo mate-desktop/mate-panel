@@ -76,10 +76,6 @@ struct _MatePanelAppletFrameActivating {
 
 /* MatePanelAppletFrame implementation */
 
-G_DEFINE_TYPE (MatePanelAppletFrame, mate_panel_applet_frame, GTK_TYPE_EVENT_BOX)
-
-#define MATE_PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, MatePanelAppletFramePrivate))
-
 #define HANDLE_SIZE 10
 #define MATE_PANEL_APPLET_PREFS_PATH "/org/mate/panel/objects/%s/prefs/"
 
@@ -96,6 +92,8 @@ struct _MatePanelAppletFramePrivate {
 
 	guint            has_handle : 1;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (MatePanelAppletFrame, mate_panel_applet_frame, GTK_TYPE_EVENT_BOX)
 
 static gboolean
 mate_panel_applet_frame_draw (GtkWidget *widget,
@@ -459,14 +457,12 @@ mate_panel_applet_frame_class_init (MatePanelAppletFrameClass *klass)
 	widget_class->size_allocate        = mate_panel_applet_frame_size_allocate;
 	widget_class->button_press_event   = mate_panel_applet_frame_button_changed;
 	widget_class->button_release_event = mate_panel_applet_frame_button_changed;
-
-	g_type_class_add_private (klass, sizeof (MatePanelAppletFramePrivate));
 }
 
 static void
 mate_panel_applet_frame_init (MatePanelAppletFrame *frame)
 {
-	frame->priv = MATE_PANEL_APPLET_FRAME_GET_PRIVATE (frame);
+	frame->priv = mate_panel_applet_frame_get_instance_private (frame);
 
 	frame->priv->panel       = NULL;
 	frame->priv->orientation = PANEL_ORIENTATION_TOP;

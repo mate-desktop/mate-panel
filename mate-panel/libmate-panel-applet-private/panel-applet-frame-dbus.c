@@ -35,10 +35,6 @@
 #include "panel-applet-container.h"
 #include "panel-applet-frame-dbus.h"
 
-G_DEFINE_TYPE (MatePanelAppletFrameDBus,
-	       mate_panel_applet_frame_dbus,
-	       PANEL_TYPE_APPLET_FRAME)
-
 struct _MatePanelAppletFrameDBusPrivate
 {
 	MatePanelAppletContainer *container;
@@ -53,6 +49,9 @@ typedef enum {
 	APPLET_HAS_HANDLE   = 1 << 2
 } MatePanelAppletFlags;
 
+G_DEFINE_TYPE_WITH_PRIVATE (MatePanelAppletFrameDBus,
+                            mate_panel_applet_frame_dbus,
+                            PANEL_TYPE_APPLET_FRAME)
 
 static guint
 get_mate_panel_applet_orient (PanelOrientation orientation)
@@ -336,9 +335,7 @@ mate_panel_applet_frame_dbus_init (MatePanelAppletFrameDBus *frame)
 {
 	GtkWidget *container;
 
-	frame->priv = G_TYPE_INSTANCE_GET_PRIVATE (frame,
-						   PANEL_TYPE_APPLET_FRAME_DBUS,
-						   MatePanelAppletFrameDBusPrivate);
+	frame->priv = mate_panel_applet_frame_dbus_get_instance_private (frame);
 
 	container = mate_panel_applet_container_new ();
 	gtk_widget_show (container);
@@ -383,8 +380,6 @@ mate_panel_applet_frame_dbus_class_init (MatePanelAppletFrameDBusClass *class)
 
 	GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (class);
 	gtk_widget_class_set_css_name (widget_class, "MatePanelAppletFrameDBus");
-
-	g_type_class_add_private (class, sizeof (MatePanelAppletFrameDBusPrivate));
 }
 
 static void

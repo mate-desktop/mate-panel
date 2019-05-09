@@ -50,10 +50,6 @@
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
 
-G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
-
-#define PANEL_TOPLEVEL_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelPrivate))
-
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    1
 #define DEFAULT_HIDE_DELAY        300
@@ -237,6 +233,8 @@ enum {
 	PROP_BUTTONS_ENABLED,
 	PROP_ARROWS_ENABLED
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 
 static guint toplevel_signals[LAST_SIGNAL] = {0};
 static GSList* toplevel_list = NULL;
@@ -4312,8 +4310,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->begin_move       = panel_toplevel_begin_move;
 	klass->begin_resize     = panel_toplevel_begin_resize;
 
-	g_type_class_add_private (klass, sizeof (PanelToplevelPrivate));
-
 	g_object_class_install_property (
 		gobject_class,
 		PROP_NAME,
@@ -4712,7 +4708,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	GtkWidget *widget;
 	int i;
 
-	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
+	toplevel->priv = panel_toplevel_get_instance_private (toplevel);
 
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
