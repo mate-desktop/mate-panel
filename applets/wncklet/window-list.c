@@ -22,7 +22,7 @@
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 #include <gio/gio.h>
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 #include <gdk/gdkx.h>
 #endif
 
@@ -34,11 +34,14 @@
 
 #define WINDOW_LIST_ICON "mate-panel-window-list"
 #define WINDOW_LIST_SCHEMA "org.mate.panel.applet.window-list"
+#ifdef HAVE_WINDOW_PREVIEWS
+#define WINDOW_LIST_PREVIEW_SCHEMA "org.mate.panel.applet.window-list-previews"
+#endif
 
 typedef struct {
 	GtkWidget* applet;
 	GtkWidget* tasklist;
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	GtkWidget* preview;
 
 	gboolean show_window_thumbnails;
@@ -60,7 +63,7 @@ typedef struct {
 	GtkWidget* properties_dialog;
 	GtkWidget* show_current_radio;
 	GtkWidget* show_all_radio;
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	GtkWidget* show_thumbnails_radio;
 	GtkWidget* hide_thumbnails_radio;
 	GtkWidget* thumbnail_size_spin;
@@ -73,6 +76,9 @@ typedef struct {
 	GtkWidget* change_workspace_radio;
 
 	GSettings* settings;
+#ifdef HAVE_WINDOW_PREVIEWS
+	GSettings* preview_settings;
+#endif
 } TasklistData;
 
 static void call_system_monitor(GtkAction* action, TasklistData* tasklist);
@@ -152,7 +158,7 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 	}
 }
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 static GdkPixbuf *preview_window_thumbnail (WnckWindow *wnck_window, TasklistData *tasklist)
 {
 	GdkWindow *window;
@@ -407,7 +413,7 @@ static void display_all_workspaces_changed(GSettings* settings, gchar* key, Task
 	tasklist_properties_update_content_radio(tasklist);
 }
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 static void tasklist_update_thumbnails_radio(TasklistData* tasklist)
 {
 	GtkWidget* button;
@@ -534,12 +540,15 @@ static void setup_gsettings(TasklistData* tasklist)
 					  "changed::display-all-workspaces",
 					  G_CALLBACK (display_all_workspaces_changed),
 					  tasklist);
-#if WNCK_CHECK_VERSION (3, 32, 0)
-	g_signal_connect (tasklist->settings,
+
+#ifdef HAVE_WINDOW_PREVIEWS
+	tasklist->preview_settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (tasklist->applet), WINDOW_LIST_PREVIEW_SCHEMA);
+
+	g_signal_connect (tasklist->preview_settings,
 					  "changed::show-window-thumbnails",
 					  G_CALLBACK (window_thumbnails_changed),
 					  tasklist);
-	g_signal_connect (tasklist->settings,
+	g_signal_connect (tasklist->preview_settings,
 					  "changed::thumbnail-window-size",
 					  G_CALLBACK (thumbnail_size_changed),
 					  tasklist);
@@ -662,10 +671,10 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	tasklist->include_all_workspaces = g_settings_get_boolean (tasklist->settings, "display-all-workspaces");
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
-	tasklist->show_window_thumbnails = g_settings_get_boolean (tasklist->settings, "show-window-thumbnails");
+#ifdef HAVE_WINDOW_PREVIEWS
+	tasklist->show_window_thumbnails = g_settings_get_boolean (tasklist->preview_settings, "show-window-thumbnails");
 
-	tasklist->thumbnail_size = g_settings_get_int (tasklist->settings, "thumbnail-window-size");
+	tasklist->thumbnail_size = g_settings_get_int (tasklist->preview_settings, "thumbnail-window-size");
 #endif
 
 	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
@@ -698,7 +707,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
 
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "destroy", G_CALLBACK(destroy_tasklist), tasklist);
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "task_enter_notify", G_CALLBACK(applet_enter_notify_event), tasklist);
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "task_leave_notify", G_CALLBACK(applet_leave_notify_event), tasklist);
 #endif
@@ -835,15 +844,15 @@ static void group_windows_toggled(GtkToggleButton* button, TasklistData* tasklis
 	}
 }
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 static void show_thumbnails_toggled(GtkToggleButton* button, TasklistData* tasklist)
 {
-	g_settings_set_boolean(tasklist->settings, "show-window-thumbnails", gtk_toggle_button_get_active(button));
+	g_settings_set_boolean(tasklist->preview_settings, "show-window-thumbnails", gtk_toggle_button_get_active(button));
 }
 
 static void thumbnail_size_spin_changed(GtkSpinButton* button, TasklistData* tasklist)
 {
-	g_settings_set_int(tasklist->settings, "thumbnail-window-size", gtk_spin_button_get_value_as_int(button));
+	g_settings_set_int(tasklist->preview_settings, "thumbnail-window-size", gtk_spin_button_get_value_as_int(button));
 }
 #endif
 
@@ -890,7 +899,7 @@ static void setup_sensitivity(TasklistData* tasklist, GtkBuilder* builder, const
 static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 {
 	GtkWidget* button;
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	GtkAdjustment *adjustment;
 #endif
 
@@ -905,7 +914,7 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 
 	setup_sensitivity(tasklist, builder, "never_group_radio", "auto_group_radio", "always_group_radio", "group-windows" /* key */);
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	tasklist->show_thumbnails_radio = WID("show_thumbnails_radio");
 	tasklist->hide_thumbnails_radio = WID("hide_thumbnails_radio");
 	tasklist->thumbnail_size_spin = WID("thumbnail_size_spin");
@@ -916,6 +925,8 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	gtk_adjustment_set_lower (adjustment, 0);
 	gtk_adjustment_set_upper (adjustment, 999);
 	gtk_adjustment_set_step_increment (adjustment, 1);
+#else
+	gtk_widget_hide(WID("window_thumbnails"));
 #endif
 
 	tasklist->minimized_windows_label = WID("minimized_windows_label");
@@ -935,7 +946,7 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	g_signal_connect(G_OBJECT(tasklist->auto_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 	g_signal_connect(G_OBJECT(tasklist->always_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	/* show thumbnails on hover: */
 	tasklist_update_thumbnails_radio(tasklist);
 	g_signal_connect(G_OBJECT(tasklist->show_thumbnails_radio), "toggled", (GCallback) show_thumbnails_toggled, tasklist);
@@ -986,8 +997,10 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 {
 	g_signal_handlers_disconnect_by_data (G_OBJECT (tasklist->applet), tasklist);
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	g_signal_handlers_disconnect_by_data (G_OBJECT (tasklist->tasklist), tasklist);
+	g_signal_handlers_disconnect_by_data (tasklist->preview_settings, tasklist);
+	g_object_unref(tasklist->preview_settings);
 #endif
 
 	g_signal_handlers_disconnect_by_data (tasklist->settings, tasklist);
@@ -997,7 +1010,7 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 	if (tasklist->properties_dialog)
 		gtk_widget_destroy(tasklist->properties_dialog);
 
-#if WNCK_CHECK_VERSION (3, 32, 0)
+#ifdef HAVE_WINDOW_PREVIEWS
 	if (tasklist->preview)
 		gtk_widget_destroy(tasklist->preview);
 #endif

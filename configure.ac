@@ -64,6 +64,7 @@ DCONF_REQUIRED=0.13.4
 LIBRSVG_REQUIRED=2.36.2
 GTK_REQUIRED=3.22.0
 LIBWNCK_REQUIRED=3.4.6
+LIBWNCK_PREVIEWS_OPTIONAL=3.32.0
 WEATHER_REQUIRED=1.17.0
 
 dnl pkg-config dependency checks
@@ -89,9 +90,16 @@ PKG_CHECK_MODULES(NOTIFICATION_AREA, gtk+-3.0 >= $GTK_REQUIRED mate-desktop-2.0 
 AC_SUBST(NOTIFICATION_AREA_CFLAGS)
 AC_SUBST(NOTIFICATION_AREA_LIBS)
 
-PKG_CHECK_MODULES(WNCKLET, gtk+-3.0 >= $GTK_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED)
+# Check if we have a version of libwnck that allows for window previews
+PKG_CHECK_MODULES(WNCKLET, gtk+-3.0 >= $GTK_REQUIRED libwnck-3.0 >= $LIBWNCK_PREVIEWS_OPTIONAL mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED, have_window_previews=yes, [
+   PKG_CHECK_MODULES(WNCKLET, gtk+-3.0 >= $GTK_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED, have_window_previews=no)
+])
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
+AM_CONDITIONAL(HAVE_WINDOW_PREVIEWS, [test "x$have_window_previews" = "xyes"])
+if test "x$have_window_previews" = "xyes"; then
+   AC_DEFINE([HAVE_WINDOW_PREVIEWS], 1, [Defined when using a version of libwnck that provides window-list previews])
+fi
 
 AC_CHECK_HEADERS(langinfo.h)
 AC_CHECK_FUNCS(nl_langinfo)
@@ -319,6 +327,7 @@ applets/notification_area/status-notifier/Makefile
 applets/notification_area/system-tray/Makefile
 applets/wncklet/Makefile
 applets/wncklet/org.mate.panel.applet.window-list.gschema.xml
+applets/wncklet/org.mate.panel.applet.window-list-previews.gschema.xml
 applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml
 doc/Makefile
 doc/reference/Makefile
