@@ -177,8 +177,8 @@ button_widget_reload_surface (ButtonWidget *button)
 			panel_load_icon (button->priv->icon_theme,
 					 button->priv->filename,
 					 button->priv->size * scale,
-					 button->priv->orientation & PANEL_VERTICAL_MASK   ? button->priv->size * scale : -1,
-					 button->priv->orientation & PANEL_HORIZONTAL_MASK ? button->priv->size * scale: -1,
+					 (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size * scale : -1,
+					 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size * scale: -1,
 					 &error);
 		if (error) {
 			//FIXME: this is not rendered at button->priv->size
@@ -312,7 +312,7 @@ calc_arrow (PanelOrientation  orientation,
 			button_height = 50;
 	}
 	
-	*size = (orientation & PANEL_HORIZONTAL_MASK ? button_width : button_height) / 2;
+	*size = ((orientation & PANEL_HORIZONTAL_MASK) ? button_width : button_height) / 2;
 	*angle = 0;
 
 	switch (orientation) {
