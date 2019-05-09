@@ -18,8 +18,6 @@
 #include "panel-enums.h"
 #include "panel-enums-gsettings.h"
 
-#define BUTTON_WIDGET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BUTTON_TYPE_WIDGET, ButtonWidgetPrivate))
-
 struct _ButtonWidgetPrivate {
 	GtkIconTheme     *icon_theme;
 	cairo_surface_t  *surface;
@@ -52,7 +50,7 @@ enum {
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
 
-G_DEFINE_TYPE (ButtonWidget, button_widget, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (ButtonWidget, button_widget, GTK_TYPE_BUTTON)
 
 /* colorshift a surface */
 static void
@@ -602,18 +600,18 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 static void
 button_widget_init (ButtonWidget *button)
 {
-	button->priv = BUTTON_WIDGET_GET_PRIVATE (button);
+	button->priv = button_widget_get_instance_private (button);
 
 	button->priv->icon_theme = NULL;
 	button->priv->surface    = NULL;
 	button->priv->surface_hc = NULL;
 
 	button->priv->filename   = NULL;
-	
+
 	button->priv->orientation = PANEL_ORIENTATION_TOP;
 
 	button->priv->size = 0;
-	
+
 	button->priv->activatable   = FALSE;
 	button->priv->ignore_leave  = FALSE;
 	button->priv->arrow         = FALSE;
@@ -631,8 +629,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 	gobject_class->get_property = button_widget_get_property;
 	gobject_class->set_property = button_widget_set_property;
 
-	g_type_class_add_private (klass, sizeof (ButtonWidgetPrivate));
-	  
 	widget_class->realize            = button_widget_realize;
 	widget_class->unrealize          = button_widget_unrealize;
 	widget_class->size_allocate      = button_widget_size_allocate;

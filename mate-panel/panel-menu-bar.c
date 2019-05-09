@@ -54,10 +54,6 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
-G_DEFINE_TYPE (PanelMenuBar, panel_menu_bar, GTK_TYPE_MENU_BAR)
-
-#define PANEL_MENU_BAR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarPrivate))
-
 struct _PanelMenuBarPrivate {
 	AppletInfo* info;
 	PanelWidget* panel;
@@ -80,6 +76,8 @@ enum {
 	PROP_0,
 	PROP_ORIENTATION,
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelMenuBar, panel_menu_bar, GTK_TYPE_MENU_BAR)
 
 static void panel_menu_bar_update_text_gravity(PanelMenuBar* menubar);
 
@@ -170,7 +168,7 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 {
 	GtkCssProvider *provider;
 
-	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE(menubar);
+	menubar->priv = panel_menu_bar_get_instance_private(menubar);
 
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
@@ -328,8 +326,6 @@ static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
 
 	widget_class->parent_set = panel_menu_bar_parent_set;
 	widget_class->size_allocate = panel_menu_bar_size_allocate;
-
-	g_type_class_add_private(klass, sizeof(PanelMenuBarPrivate));
 
 	g_object_class_install_property(gobject_class, PROP_ORIENTATION, g_param_spec_enum("orientation", "Orientation", "The PanelMenuBar orientation", PANEL_TYPE_ORIENTATION, PANEL_ORIENTATION_TOP, G_PARAM_READWRITE));
 }

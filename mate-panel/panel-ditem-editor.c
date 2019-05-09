@@ -168,9 +168,7 @@ enum {
 
 static guint ditem_edit_signals[LAST_SIGNAL] = { 0 };
 
-#define PANEL_DITEM_EDITOR_GET_PRIVATE(o)  (PANEL_DITEM_EDITOR (o)->priv)
-
-G_DEFINE_TYPE (PanelDItemEditor, panel_ditem_editor, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (PanelDItemEditor, panel_ditem_editor, GTK_TYPE_DIALOG)
 
 static void panel_ditem_editor_setup_ui (PanelDItemEditor *dialog);
 
@@ -380,9 +378,6 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
         gobject_class->set_property = panel_ditem_editor_set_property;
 
 	gobject_class->dispose = panel_ditem_editor_dispose;
-
-	g_type_class_add_private (class,
-				  sizeof (PanelDItemEditorPrivate));
 
 	ditem_edit_signals[SAVED] =
 		g_signal_new ("saved",
@@ -1118,9 +1113,7 @@ panel_ditem_editor_init (PanelDItemEditor *dialog)
 {
 	PanelDItemEditorPrivate *priv;
 
-	priv = G_TYPE_INSTANCE_GET_PRIVATE (dialog,
-					    PANEL_TYPE_DITEM_EDITOR,
-					    PanelDItemEditorPrivate);
+	priv = panel_ditem_editor_get_instance_private (dialog);
 
 	dialog->priv = priv;
 

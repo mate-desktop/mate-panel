@@ -60,10 +60,6 @@
 #include "panel-force-quit.h"
 #endif
 
-G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
-
-#define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
-
 enum {
 	PROP_0,
 	PROP_ACTION_TYPE,
@@ -77,6 +73,8 @@ struct _PanelActionButtonPrivate {
 
 	guint                  dnd_enabled : 1;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
 
 static void
 panel_action_button_type_changed (GSettings       *settings,
@@ -630,8 +628,6 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 
 	button_class->clicked       = panel_action_button_clicked;
 
-	g_type_class_add_private (klass, sizeof (PanelActionButtonPrivate));
-
 	g_object_class_install_property (
 			gobject_class,
 			PROP_ACTION_TYPE,
@@ -655,7 +651,7 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 static void
 panel_action_button_init (PanelActionButton *button)
 {
-	button->priv = PANEL_ACTION_BUTTON_GET_PRIVATE (button);
+	button->priv = panel_action_button_get_instance_private (button);
 
 	button->priv->type = PANEL_ACTION_NONE;
 	button->priv->info = NULL;

@@ -31,19 +31,20 @@
 #include "panel-applet-frame-dbus.h"
 #include "panel-applets-manager-dbus.h"
 
-G_DEFINE_TYPE_WITH_CODE (MatePanelAppletsManagerDBus,
-			 mate_panel_applets_manager_dbus,
-			 PANEL_TYPE_APPLETS_MANAGER,
-			 g_io_extension_point_implement (MATE_PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME,
-							 g_define_type_id,
-							 "dbus",
-							 10))
-
 struct _MatePanelAppletsManagerDBusPrivate
 {
 	GHashTable *applet_factories;
 	GList      *monitors;
 };
+
+G_DEFINE_TYPE_WITH_CODE (MatePanelAppletsManagerDBus,
+			 mate_panel_applets_manager_dbus,
+			 PANEL_TYPE_APPLETS_MANAGER,
+			 G_ADD_PRIVATE(MatePanelAppletsManagerDBus)
+			 g_io_extension_point_implement (MATE_PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME,
+							 g_define_type_id,
+							 "dbus",
+							 10))
 
 typedef gint (* ActivateAppletFunc) (void);
 typedef GtkWidget * (* GetAppletWidgetFunc) (const gchar *factory_id,
@@ -600,9 +601,7 @@ mate_panel_applets_manager_dbus_finalize (GObject *object)
 static void
 mate_panel_applets_manager_dbus_init (MatePanelAppletsManagerDBus *manager)
 {
-	manager->priv = G_TYPE_INSTANCE_GET_PRIVATE (manager,
-						     PANEL_TYPE_APPLETS_MANAGER_DBUS,
-						     MatePanelAppletsManagerDBusPrivate);
+	manager->priv = mate_panel_applets_manager_dbus_get_instance_private (manager);
 
 	manager->priv->applet_factories = g_hash_table_new_full (g_str_hash,
 								 g_str_equal,
@@ -627,6 +626,4 @@ mate_panel_applets_manager_dbus_class_init (MatePanelAppletsManagerDBusClass *cl
 	manager_class->get_applet_info_from_old_id = mate_panel_applets_manager_dbus_get_applet_info_from_old_id;
 	manager_class->load_applet = mate_panel_applets_manager_dbus_load_applet;
 	manager_class->get_applet_widget = mate_panel_applets_manager_dbus_get_applet_widget;
-
-	g_type_class_add_private (class, sizeof (MatePanelAppletsManagerDBusPrivate));
 }
