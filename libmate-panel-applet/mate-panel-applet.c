@@ -51,11 +51,8 @@
 #include "mate-panel-applet-marshal.h"
 #include "mate-panel-applet-enums.h"
 
-#define MATE_PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, MatePanelAppletPrivate))
-
 struct _MatePanelAppletPrivate {
 	GtkWidget         *plug;
-	GtkWidget         *applet;
 	GDBusConnection   *connection;
 
 	gboolean           out_of_process;
@@ -153,7 +150,7 @@ static const GtkToggleActionEntry menu_toggle_entries[] = {
 	  G_CALLBACK (mate_panel_applet_menu_cmd_lock) }
 };
 
-G_DEFINE_TYPE (MatePanelApplet, mate_panel_applet, GTK_TYPE_EVENT_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (MatePanelApplet, mate_panel_applet, GTK_TYPE_EVENT_BOX)
 
 #define MATE_PANEL_APPLET_INTERFACE   "org.mate.panel.applet.Applet"
 #define MATE_PANEL_APPLET_OBJECT_PATH "/org/mate/panel/applet/%s/%d"
@@ -1767,7 +1764,7 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 static void
 mate_panel_applet_init (MatePanelApplet *applet)
 {
-	applet->priv = MATE_PANEL_APPLET_GET_PRIVATE (applet);
+	applet->priv = mate_panel_applet_get_instance_private (applet);
 
 	applet->priv->flags  = MATE_PANEL_APPLET_FLAGS_NONE;
 	applet->priv->orient = MATE_PANEL_APPLET_ORIENT_UP;
@@ -1879,8 +1876,6 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 
 
 	gobject_class->finalize = mate_panel_applet_finalize;
-
-	g_type_class_add_private (klass, sizeof (MatePanelAppletPrivate));
 
 	g_object_class_install_property (gobject_class,
 	                  PROP_OUT_OF_PROCESS,
