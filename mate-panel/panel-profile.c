@@ -1435,6 +1435,18 @@ panel_profile_delete_removed_ids (PanelGSettingsKeyType    type,
 	g_slist_free (removed_ids);
 }
 
+static gboolean
+load_default_layout_idle (gpointer unused) {
+	if (g_slist_length (panel_toplevel_list_toplevels ()) != 0) {
+		/* some toplevels are not destroyed yet, waiting */
+		return TRUE;
+	}
+
+	/* load the default layout and stop this handler */
+	panel_profile_ensure_toplevel_per_screen ();
+	return FALSE;
+}
+
 static void
 panel_profile_toplevel_id_list_notify (GSettings *settings,
 									   gchar *key,
@@ -1477,7 +1489,7 @@ panel_profile_toplevel_id_list_notify (GSettings *settings,
 
 	/* if there are no panels, reset layout to default */
 	if (g_slist_length (toplevel_ids) == 0)
-		panel_profile_ensure_toplevel_per_screen ();
+		g_idle_add (load_default_layout_idle, NULL);
 
 	g_slist_free (existing_toplevels);
 	g_slist_free (toplevel_ids);
