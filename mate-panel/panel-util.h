@@ -4,10 +4,6 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
-#ifdef HAVE_X11
-#include <X11/Xlib.h>
-#endif
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -69,13 +65,6 @@ void panel_util_set_tooltip_text (GtkWidget  *widget,
 				  const char *text);
 
 GFile *panel_util_get_file_optional_homedir (const char *location);
-
-#ifdef HAVE_X11
-Window panel_util_get_current_active_x11_window (GtkWidget *toplevel);
-
-void   panel_util_set_current_active_x11_window (GtkWidget *toplevel,
-					     Window     window);
-#endif
 
 #ifdef __cplusplus
 }

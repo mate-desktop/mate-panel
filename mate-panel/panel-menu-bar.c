@@ -28,11 +28,6 @@
 
 #include "panel-menu-bar.h"
 
-#ifdef HAVE_X11
-#include <X11/Xlib.h>
-#include <gdk/gdkx.h>
-#endif
-
 #include <string.h>
 #include <glib/gi18n.h>
 
@@ -66,10 +61,6 @@ struct _PanelMenuBarPrivate {
 	GSettings* settings;
 
 	PanelOrientation orientation;
-
-#ifdef HAVE_X11
-	Window interrupted_x11_window;
-#endif
 };
 
 enum {
@@ -86,21 +77,6 @@ static gboolean panel_menu_bar_reinit_tooltip(GtkWidget* widget, PanelMenuBar* m
 	g_object_set(menubar->priv->applications_item, "has-tooltip", TRUE, NULL);
 	g_object_set(menubar->priv->places_item, "has-tooltip", TRUE, NULL);
 	g_object_set(menubar->priv->desktop_item, "has-tooltip", TRUE, NULL);
-
-	return FALSE;
-}
-
-static gboolean panel_menu_bar_deactivate (GtkWidget* widget, PanelMenuBar* menubar)
-{
-	GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
-
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget)))
-	{
-		panel_util_set_current_active_x11_window (toplevel, menubar->priv->interrupted_x11_window);
-		menubar->priv->interrupted_x11_window = None;
-	}
-#endif
 
 	return FALSE;
 }
@@ -130,7 +106,6 @@ static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 
 	/* Reset tooltip when the menu bar is not used */
 	g_signal_connect(GTK_MENU_SHELL (menubar), "deactivate", G_CALLBACK (panel_menu_bar_reinit_tooltip), menubar);
-	g_signal_connect(GTK_MENU_SHELL (menubar), "deactivate", G_CALLBACK (panel_menu_bar_deactivate), menubar);
 }
 
 static void panel_menu_bar_update_visibility (GSettings* settings, gchar* key, PanelMenuBar* menubar)
@@ -432,21 +407,10 @@ void panel_menu_bar_popup_menu(PanelMenuBar* menubar, guint32 activate_time)
 {
 	GtkMenu* menu;
 	GtkMenuShell* menu_shell;
-	GtkWidget* toplevel;
-	GdkWindow* window;
 
 	g_return_if_fail(PANEL_IS_MENU_BAR(menubar));
 
 	menu = GTK_MENU(menubar->priv->applications_menu);
-
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (menubar));
-	window = gtk_widget_get_window (toplevel);
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_window_get_display (window))) {
-		menubar->priv->interrupted_x11_window = panel_util_get_current_active_x11_window (toplevel);
-		panel_util_set_current_active_x11_window (toplevel, GDK_WINDOW_XID(window));
-	}
-#endif
 
 	/*
 	 * We need to call _gtk_menu_shell_activate() here as is done in
