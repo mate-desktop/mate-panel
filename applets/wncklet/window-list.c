@@ -570,7 +570,7 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		"logo-icon-name", WINDOW_LIST_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://www.mate-desktop.org/",
+		"website", "https://mate-desktop.org/",
 		NULL);
 }
 

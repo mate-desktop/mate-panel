@@ -87,7 +87,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		"logo-icon-name", WINDOW_MENU_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://www.mate-desktop.org/",
+		"website", "https://mate-desktop.org/",
 		NULL);
 }
 
