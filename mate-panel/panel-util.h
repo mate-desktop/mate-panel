@@ -3,7 +3,6 @@
 
 #include <gio/gio.h>
 #include <gtk/gtk.h>
-#include <X11/Xlib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -67,10 +66,6 @@ void panel_util_set_tooltip_text (GtkWidget  *widget,
 
 GFile *panel_util_get_file_optional_homedir (const char *location);
 
-Window panel_util_get_current_active_window (GtkWidget *toplevel);
-
-void   panel_util_set_current_active_window (GtkWidget *toplevel,
-					     Window     window);
 #ifdef __cplusplus
 }
 #endif
