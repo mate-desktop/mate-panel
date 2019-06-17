@@ -26,6 +26,8 @@
 #ifndef __PANEL_ENUMS_GSETTINGS_H__
 #define __PANEL_ENUMS_GSETTINGS_H__
 
+#include <config.h>
+
 #include <glib.h>
 
 G_BEGIN_DECLS
@@ -68,6 +70,9 @@ typedef enum {
 	PANEL_ACTION_FORCE_QUIT,
 	PANEL_ACTION_CONNECT_SERVER,
 	PANEL_ACTION_SHUTDOWN,
+#ifdef HAVE_RDA
+	PANEL_ACTION_SUSPEND,
+#endif
 	PANEL_ACTION_LAST
 } PanelActionButtonType;
 
