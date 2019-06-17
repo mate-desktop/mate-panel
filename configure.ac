@@ -190,12 +190,12 @@ AC_ARG_ENABLE(wayland,
               [enable_wayland=$enableval],
               [enable_wayland=auto])
 
-# Check if we have wayland-client installed, and thus should build with Wayland support
+# Check if we have gtk-layer-shell installed, and thus should build with Wayland support
 have_wayland=no
 if test "x$enable_wayland" != "xno"; then
-  PKG_CHECK_MODULES(WAYLAND, wayland-client, have_wayland=yes, [
+  PKG_CHECK_MODULES(GTK_LAYER_SHELL, gtk-layer-shell-0, have_wayland=yes, [
         if test "x$enable_wayland" = "xyes"; then
-          AC_MSG_ERROR([Wayland client library not found])
+          AC_MSG_ERROR([Wayland enabled but GTK Layer Shell library not found])
         fi
     ])
 fi
@@ -205,6 +205,9 @@ AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
 if test "x$have_wayland" = "xyes"; then
   AC_DEFINE(HAVE_WAYLAND, 1, [Have the Wayland development library])
 fi
+
+AC_SUBST(GTK_LAYER_SHELL_CFLAGS)
+AC_SUBST(GTK_LAYER_SHELL_LIBS)
 
 # Check if we have the X development libraries
 have_x11=no
@@ -309,7 +312,6 @@ mate-panel/Makefile
 mate-panel/libegg/Makefile
 mate-panel/libmate-panel-applet-private/Makefile
 mate-panel/libpanel-util/Makefile
-mate-panel/wayland-protocols/Makefile
 libmate-panel-applet/libmatepanelapplet-4.0.pc
 libmate-panel-applet/libmatepanelapplet-4.0-uninstalled.pc
 libmate-panel-applet/Makefile
