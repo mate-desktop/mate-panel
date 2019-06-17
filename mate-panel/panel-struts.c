@@ -22,6 +22,11 @@
  */
 
 #include <config.h>
+
+#ifndef HAVE_X11
+#error file should only be compiled when HAVE_X11 is enabled
+#endif
+
 #include <gdk/gdkx.h>
 
 #include "panel-struts.h"
@@ -259,6 +264,8 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 
 	widget = GTK_WIDGET (toplevel);
 
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget)));
+
 	if (!gtk_widget_get_realized (widget))
 		return;
 
@@ -321,6 +328,8 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 void
 panel_struts_unset_window_hint (PanelToplevel *toplevel)
 {
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))));
+
 	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		return;
 
@@ -410,6 +419,8 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	gboolean    new_strut = FALSE;
 	int         monitor_x, monitor_y, monitor_width, monitor_height;
 
+	g_return_val_if_fail (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))), FALSE);
+
 	if (!(strut = panel_struts_find_strut (toplevel))) {
 		strut = g_new0 (PanelStrut, 1);
 		new_strut = TRUE;
@@ -486,6 +497,8 @@ panel_struts_unregister_strut (PanelToplevel *toplevel)
 	GdkScreen  *screen;
 	int         monitor;
 
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))));
+
 	if (!(strut = panel_struts_find_strut (toplevel)))
 		return;
 
@@ -507,6 +520,7 @@ panel_struts_update_toplevel_geometry (PanelToplevel *toplevel,
 {
 	PanelStrut *strut;
 
+	g_return_val_if_fail (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))), FALSE);
 	g_return_val_if_fail (x != NULL, FALSE);
 	g_return_val_if_fail (y != NULL, FALSE);
 
