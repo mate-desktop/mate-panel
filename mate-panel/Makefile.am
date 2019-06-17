@@ -47,7 +47,6 @@ panel_sources = \
 	panel-separator.c \
 	panel-recent.c \
 	panel-toplevel.c \
-	panel-struts.c \
 	panel-frame.c \
 	panel-multimonitor.c \
 	panel-a11y.c \
@@ -70,7 +69,8 @@ panel_sources += \
 	panel-xutils.c \
 	panel-force-quit.c \
 	panel-action-protocol.c \
-	panel-background-monitor.c
+	panel-background-monitor.c \
+	panel-struts.c
 endif
 
 panel_headers = \
@@ -102,7 +102,6 @@ panel_headers = \
 	panel-separator.h \
 	panel-recent.h \
 	panel-toplevel.h \
-	panel-struts.h \
 	panel-frame.h \
 	panel-multimonitor.h \
 	panel-a11y.h \
@@ -129,7 +128,8 @@ panel_sources += \
 	panel-xutils.h \
 	panel-force-quit.h \
 	panel-action-protocol.h \
-	panel-background-monitor.h
+	panel-background-monitor.h \
+	panel-struts.h
 endif
 
 mate_panel_SOURCES = \
