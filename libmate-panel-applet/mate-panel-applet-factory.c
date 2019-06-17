@@ -198,7 +198,6 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	gint         screen_num;
 	GVariant    *props;
 	GVariant    *return_value;
-	GdkScreen   *screen;
 	guint32      xid;
 	guint32      uid;
 	const gchar *object_path;
@@ -217,12 +216,13 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	set_applet_constructor_properties (applet, props);
 	g_variant_unref (props);
 
-	screen = screen_num != -1 ?
-		gdk_display_get_default_screen (gdk_display_get_default ()) :
-		gdk_screen_get_default ();
-
 #ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+		GdkScreen   *screen;
+
+		screen = screen_num != -1 ?
+			gdk_display_get_default_screen (gdk_display_get_default ()) :
+			gdk_screen_get_default ();
 		xid = mate_panel_applet_get_xid (MATE_PANEL_APPLET (applet), screen);
 	} else
 #endif
