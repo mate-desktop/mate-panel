@@ -1740,10 +1740,12 @@ void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundTy
 	}
 }
 
+#ifdef HAVE_X11
 static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 {
 	GtkCssProvider  *provider;
 
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()));
 	provider = gtk_css_provider_new ();
 	gtk_css_provider_load_from_data (provider,
 					 "#PanelPlug {\n"
@@ -1761,6 +1763,8 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
 }
+#endif // HAVE_X11
+
 static void
 mate_panel_applet_init (MatePanelApplet *applet)
 {
@@ -1810,29 +1814,29 @@ mate_panel_applet_constructor (GType                  type,
 
 #ifdef HAVE_X11
 	if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+	{
+		applet->priv->plug = gtk_plug_new (0);
+
+		GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (applet->priv->plug));
+		GdkVisual *visual = gdk_screen_get_rgba_visual (screen);
+		gtk_widget_set_visual (GTK_WIDGET (applet->priv->plug), visual);
+		GtkStyleContext *context;
+		context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+		gtk_style_context_add_class (context,"gnome-panel-menu-bar");
+		gtk_style_context_add_class (context,"mate-panel-menu-bar");
+		gtk_widget_set_name (GTK_WIDGET (applet->priv->plug), "PanelPlug");
+		_mate_panel_applet_prepare_css (context);
+
+		g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
+					  G_CALLBACK (mate_panel_applet_setup),
+					  applet);
+
+		gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
+	}
 #endif
 	{ // not using X11
 		g_warning ("Requested construction of an out-of-process applet, which is only possible on X11");
-		return object;
 	}
-
-	applet->priv->plug = gtk_plug_new (0);
-
-	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(applet->priv->plug));
-	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
-	gtk_widget_set_visual(GTK_WIDGET(applet->priv->plug), visual);
-	GtkStyleContext *context;
-	context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
-	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
-	gtk_style_context_add_class(context,"mate-panel-menu-bar");
-	gtk_widget_set_name(GTK_WIDGET(applet->priv->plug), "PanelPlug");
-	_mate_panel_applet_prepare_css(context);
-
-	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
-		                      G_CALLBACK (mate_panel_applet_setup),
-		                      applet);
- 
- 	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 
 	return object;
 }
