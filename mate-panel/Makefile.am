@@ -1,4 +1,4 @@
-SUBDIRS = wayland-protocols libegg libmate-panel-applet-private libpanel-util
+SUBDIRS = libegg libmate-panel-applet-private libpanel-util
 
 bin_PROGRAMS = \
 	mate-panel \
@@ -15,11 +15,7 @@ AM_CPPFLAGS = \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
-
-if ENABLE_WAYLAND
-AM_CPPFLAGS += \
-	-I$(top_builddir)/mate-panel/wayland-protocols
-endif
+	$(GTK_LAYER_SHELL_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
@@ -67,9 +63,6 @@ panel_sources = \
 	panel-reset.c
 
 if ENABLE_WAYLAND
-panel_sources += \
-	wayland-protocols/wlr-layer-shell-unstable-v1.c \
-	wayland-protocols/xdg-shell.c
 endif
 
 if ENABLE_X11
@@ -129,9 +122,6 @@ panel_headers = \
 	panel-schemas.h
 
 if ENABLE_WAYLAND
-panel_headers += \
-	wayland-protocols/wlr-layer-shell-unstable-v1-client.h \
-	wayland-protocols/xdg-shell-client.h
 endif
 
 if ENABLE_X11
@@ -166,6 +156,7 @@ mate_panel_LDADD = \
 	$(DCONF_LIBS) \
 	$(XRANDR_LIBS) \
 	$(X_LIBS) \
+	$(GTK_LAYER_SHELL_LIBS) \
 	-lm
 
 if ENABLE_WAYLAND
@@ -305,9 +296,7 @@ EXTRA_DIST = \
 	panel-test-applets.gresource.xml	\
 	panel-marshal.list \
 	$(entries_DATA) \
-	$(desktop_in_files) \
-	wayland-protocols/wlr-layer-shell-unstable-v1.xml \
-	wayland-protocols/xdg-shell.xml
+	$(desktop_in_files)
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
