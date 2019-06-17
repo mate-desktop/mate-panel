@@ -20,6 +20,12 @@
  * 02110-1301, USA.
  */
 
+#include <config.h>
+
+#ifndef HAVE_X11
+#error file should only be compiled when HAVE_X11 is enabled
+#endif
+
 #include <gdk/gdkx.h>
 #include "fixedtip.h"
 

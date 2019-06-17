@@ -26,9 +26,11 @@
 
 #include <config.h>
 
-#ifdef HAVE_X11
-#include <gdk/gdkx.h>
+#ifndef HAVE_X11
+#error file should only be included when HAVE_X11 is enabled
 #endif
+
+#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
 #include "na-host.h"
