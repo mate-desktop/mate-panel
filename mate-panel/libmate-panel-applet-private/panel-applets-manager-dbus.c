@@ -97,6 +97,9 @@ _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	char             *comment;
 	char             *icon;
 	char            **old_ids;
+	char            **supported_platforms;
+	gboolean          x11_supported;
+	gboolean          wayland_supported;
 
 	iid = g_strdup_printf ("%s::%s", factory_id, group);
 	name = g_key_file_get_locale_string (applet_file, group,
@@ -108,13 +111,40 @@ _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	old_ids = g_key_file_get_string_list (applet_file, group,
 					      "MateComponentId", NULL, NULL);
 
-	info = mate_panel_applet_info_new (iid, name, comment, icon, (const char **) old_ids);
+	supported_platforms = g_key_file_get_string_list (applet_file, group,
+							  "Platforms", NULL, NULL);
+	if (supported_platforms == NULL) {
+		// If supported platforms are not specified, assume all are supported
+		x11_supported = TRUE;
+		wayland_supported = TRUE;
+	} else {
+		int len, i;
+
+		x11_supported = FALSE;
+		wayland_supported = FALSE;
+		len = g_strv_length ((gchar **) supported_platforms);
+		for (i = 0; i < len; i++) {
+			if (g_strcmp0 (supported_platforms[i], "X11") == 0) {
+				x11_supported = TRUE;
+			} else if (g_strcmp0 (supported_platforms[i], "Wayland") == 0) {
+				wayland_supported = TRUE;
+			} else {
+				g_warning ("Unknown platform in %s applet: %s. "
+					   "Valid platforms are X11 and Wayland",
+					   name, supported_platforms[i]);
+			}
+		}
+	}
+
+	info = mate_panel_applet_info_new (iid, name, comment, icon, (const char **) old_ids,
+					   x11_supported, wayland_supported);
 
 	g_free (iid);
 	g_free (name);
 	g_free (comment);
 	g_free (icon);
 	g_strfreev (old_ids);
+	g_strfreev (supported_platforms);
 
 	return info;
 }

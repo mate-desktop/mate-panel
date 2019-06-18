@@ -32,17 +32,20 @@ struct _MatePanelAppletInfo {
 	gchar  *icon;
 
 	gchar **old_ids;
+	gboolean x11_supported;
+	gboolean wayland_supported;
 };
 
 MatePanelAppletInfo *
 mate_panel_applet_info_new (const gchar  *iid,
-		       const gchar  *name,
-		       const gchar  *comment,
-		       const gchar  *icon,
-		       const gchar **old_ids)
+			    const gchar  *name,
+			    const gchar  *comment,
+			    const gchar  *icon,
+			    const gchar **old_ids,
+			    gboolean      x11_supported,
+			    gboolean      wayland_supported)
 {
 	MatePanelAppletInfo *info;
-	int len;
 
 	info = g_slice_new0 (MatePanelAppletInfo);
 
@@ -53,16 +56,21 @@ mate_panel_applet_info_new (const gchar  *iid,
 
 	/* MateComponent compatibility */
 	if (old_ids != NULL) {
+		int i, len;
+
 		len = g_strv_length ((gchar **) old_ids);
 		if (len > 0) {
-			int i;
-
 			info->old_ids = g_new0 (gchar *, len + 1);
-
 			for (i = 0; i < len; i++)
 				info->old_ids[i] = g_strdup (old_ids[i]);
 		}
 	}
+
+	info->x11_supported = x11_supported;
+	info->wayland_supported = wayland_supported;
+
+	if (!x11_supported && !wayland_supported)
+		g_warning ("Applet %s has no supported platforms", name);
 
 	return info;
 }
@@ -110,4 +118,16 @@ const gchar * const *
 mate_panel_applet_info_get_old_ids (MatePanelAppletInfo *info)
 {
 	return (const gchar * const *) info->old_ids;
+}
+
+gboolean
+mate_panel_applet_info_get_x11_supported (MatePanelAppletInfo *info)
+{
+	return info->x11_supported;
+}
+
+gboolean
+mate_panel_applet_info_get_wayland_supported (MatePanelAppletInfo *info)
+{
+	return info->wayland_supported;
 }

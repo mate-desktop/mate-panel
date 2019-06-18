@@ -397,6 +397,7 @@ panel_addto_query_applets (GSList *list)
 	for (l = applet_list; l; l = g_list_next (l)) {
 		MatePanelAppletInfo *info;
 		const char *iid, *name, *description, *icon;
+		gboolean enabled;
 		PanelAddtoItemInfo *applet;
 
 		info = (MatePanelAppletInfo *)l->data;
@@ -410,13 +411,29 @@ panel_addto_query_applets (GSList *list)
 			continue;
 		}
 
+		enabled = TRUE;
+#ifdef HAVE_X11
+		if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) &&
+		    !mate_panel_applet_info_get_x11_supported (info)) {
+			enabled = FALSE;
+			description = _("Not compatible with X11");
+		}
+#endif
+#ifdef HAVE_WAYLAND
+		if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
+		    !mate_panel_applet_info_get_wayland_supported (info)) {
+			enabled = FALSE;
+			description = _("Not compatible with Wayland");
+		}
+#endif
+
 		applet = g_new0 (PanelAddtoItemInfo, 1);
 		applet->type = PANEL_ADDTO_APPLET;
 		applet->name = g_strdup (name);
 		applet->description = g_strdup (description);
 		applet->icon = g_strdup (icon);
 		applet->iid = g_strdup (iid);
-		applet->enabled = TRUE;
+		applet->enabled = enabled;
 		applet->static_data = FALSE;
 
 		list = g_slist_prepend (list, applet);
