@@ -27,7 +27,6 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
-#include <gdk/gdkx.h>
 
 #include <matemenu-tree.h>
 
@@ -53,6 +52,13 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"
+
+#ifdef HAVE_X11
+#include "xstuff.h"
+#endif
+#ifdef HAVE_WAYLAND
+#include "gdk/gdkwayland.h"
+#endif
 
 typedef struct {
 	PanelWidget *panel_widget;
@@ -1375,7 +1381,8 @@ panel_addto_present (GtkMenuItem *item,
 	PanelToplevel *toplevel;
 	PanelData     *pd;
 	GdkScreen *screen;
-	gint screen_height;
+	GdkMonitor *monitor;
+	GdkRectangle monitor_geom;
 	gint height;
 
 	toplevel = panel_widget->toplevel;
@@ -1389,8 +1396,10 @@ panel_addto_present (GtkMenuItem *item,
 				     panel_addto_dialog_quark);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
-	height = MIN (MAX_ADDTOPANEL_HEIGHT, 3 * (screen_height / 4));
+	monitor = gdk_display_get_monitor_at_window (gtk_widget_get_display (GTK_WIDGET (toplevel)),
+						     gtk_widget_get_window (GTK_WIDGET (toplevel)));
+	gdk_monitor_get_geometry (monitor, &monitor_geom);
+	height = MIN (MAX_ADDTOPANEL_HEIGHT, 3 * (monitor_geom.height / 4));
 
 	if (!dialog) {
 		dialog = panel_addto_dialog_new (panel_widget);
