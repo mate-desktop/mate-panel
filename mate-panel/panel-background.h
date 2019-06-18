@@ -25,12 +25,17 @@
 #ifndef __PANEL_BACKGROUND_H__
 #define __PANEL_BACKGROUND_H__
 
+#include <config.h>
+
 #include <glib.h>
 #include <gtk/gtk.h>
 
 #include "panel-enums.h"
 #include "panel-types.h"
+
+#ifdef HAVE_X11
 #include "panel-background-monitor.h"
+#endif
 
 typedef struct _PanelBackground PanelBackground;
 
@@ -54,9 +59,11 @@ struct _PanelBackground {
 	GdkPixbuf              *transformed_image;
 	cairo_pattern_t        *composited_pattern;
 
+#ifdef HAVE_X11
 	PanelBackgroundMonitor *monitor;
 	GdkPixbuf              *desktop;
 	gulong                  monitor_signal;
+#endif // HAVE_X11
 
 	GdkWindow              *window;
 	cairo_pattern_t        *default_pattern;
