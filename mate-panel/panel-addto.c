@@ -110,6 +110,7 @@ typedef struct {
 	char                  *menu_filename;
 	char                  *menu_path;
 	char                  *iid;
+	gboolean               enabled;
 	gboolean               static_data;
 } PanelAddtoItemInfo;
 
@@ -129,6 +130,7 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "LAUNCHER:ASK",
+	  TRUE,
 	  TRUE },
 
 	{ PANEL_ADDTO_LAUNCHER_MENU,
@@ -140,6 +142,7 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "LAUNCHER:MENU",
+	  TRUE,
 	  TRUE }
 
 };
@@ -155,6 +158,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "MENU:MAIN",
+	  TRUE,
 	  TRUE },
 
 	{ PANEL_ADDTO_MENUBAR,
@@ -166,6 +170,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "MENUBAR:NEW",
+	  TRUE,
 	  TRUE },
 
 	{ PANEL_ADDTO_SEPARATOR,
@@ -177,6 +182,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "SEPARATOR:NEW",
+	  TRUE,
 	  TRUE },
 
 	{ PANEL_ADDTO_DRAWER,
@@ -188,6 +194,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "DRAWER:NEW",
+	  TRUE,
 	  TRUE }
 };
 
@@ -196,6 +203,7 @@ enum {
 	COLUMN_TEXT,
 	COLUMN_DATA,
 	COLUMN_SEARCH,
+	COLUMN_ENABLED,
 	NUMBER_COLUMNS
 };
 
@@ -247,6 +255,7 @@ panel_addto_prepend_internal_applets (GSList *list)
 		info->description = g_strdup (panel_action_get_tooltip (i));
 		info->icon        = g_strdup (panel_action_get_icon_name (i));
 		info->iid         = g_strdup (panel_action_get_drag_id (i));
+		info->enabled     = TRUE;
 		info->static_data = FALSE;
 
 		list = g_slist_prepend (list, info);
@@ -407,6 +416,7 @@ panel_addto_query_applets (GSList *list)
 		applet->description = g_strdup (description);
 		applet->icon = g_strdup (icon);
 		applet->iid = g_strdup (iid);
+		applet->enabled = TRUE;
 		applet->static_data = FALSE;
 
 		list = g_slist_prepend (list, applet);
@@ -432,6 +442,7 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 				    COLUMN_TEXT, NULL,
 				    COLUMN_DATA, NULL,
 				    COLUMN_SEARCH, NULL,
+				    COLUMN_ENABLED, TRUE,
 				    -1);
 	} else {
 		gtk_list_store_append (model, &iter);
@@ -444,6 +455,7 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 				    COLUMN_TEXT, text,
 				    COLUMN_DATA, applet,
 				    COLUMN_SEARCH, applet->name,
+				    COLUMN_ENABLED, applet->enabled,
 				    -1);
 
 		g_free (text);
@@ -494,7 +506,8 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 				    G_TYPE_STRING,
 				    G_TYPE_STRING,
 				    G_TYPE_POINTER,
-				    G_TYPE_STRING);
+				    G_TYPE_STRING,
+				    G_TYPE_BOOLEAN);
 
 	if (panel_profile_id_lists_are_writable ()) {
 		panel_addto_append_special_applets (dialog, model);
@@ -660,6 +673,7 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 				    COLUMN_TEXT, text,
 				    COLUMN_DATA, &(data->item_info),
 				    COLUMN_SEARCH, data->item_info.name,
+				    COLUMN_ENABLED, data->item_info.enabled,
 				    -1);
 
 		g_free (text);
@@ -681,7 +695,12 @@ static void panel_addto_make_application_model(PanelAddtoDialog* dialog)
 	if (dialog->filter_application_model != NULL)
 		return;
 
-	store = gtk_tree_store_new(NUMBER_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_STRING);
+	store = gtk_tree_store_new (NUMBER_COLUMNS,
+				    G_TYPE_STRING,
+				    G_TYPE_STRING,
+				    G_TYPE_POINTER,
+				    G_TYPE_STRING,
+				    G_TYPE_BOOLEAN);
 
 	tree = matemenu_tree_new ("mate-applications.menu", MATEMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
 	if (! matemenu_tree_load_sync (tree, &error)) {
@@ -712,7 +731,13 @@ static void panel_addto_make_application_model(PanelAddtoDialog* dialog)
 		GtkTreeIter iter;
 
 		gtk_tree_store_append(store, &iter, NULL);
-		gtk_tree_store_set(store, &iter, COLUMN_ICON_NAME, NULL, COLUMN_TEXT, NULL, COLUMN_DATA, NULL, COLUMN_SEARCH, NULL, -1);
+		gtk_tree_store_set (store, &iter,
+				    COLUMN_ICON_NAME, NULL,
+				    COLUMN_TEXT, NULL,
+				    COLUMN_DATA, NULL,
+				    COLUMN_SEARCH, NULL,
+				    COLUMN_ENABLED, TRUE,
+				    -1);
 
 		panel_addto_make_application_list(&dialog->settings_list, root, "mate-settings.menu");
 		panel_addto_populate_application_model(store, NULL, dialog->settings_list);
@@ -1113,6 +1138,25 @@ panel_addto_search_entry_activated (GtkWidget        *entry,
 			     PANEL_ADDTO_RESPONSE_ADD);
 }
 
+static gboolean
+panel_addto_selection_func (GtkTreeSelection  *selection,
+			    GtkTreeModel      *model,
+			    GtkTreePath       *path,
+			    gboolean           path_currently_selected,
+			    gpointer           data)
+{
+	GtkTreeIter         iter;
+	gboolean            enabled;
+
+	if (!gtk_tree_model_get_iter (model, &iter, path))
+		return FALSE;
+
+	gtk_tree_model_get (model, &iter,
+			    COLUMN_ENABLED, &enabled,
+			    -1);
+	return enabled;
+}
+
 static void
 panel_addto_selection_changed (GtkTreeSelection *selection,
 			       PanelAddtoDialog *dialog)
@@ -1323,6 +1367,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 						     -1, NULL,
 						     renderer,
 						     "icon_name", COLUMN_ICON_NAME,
+						     "sensitive", COLUMN_ENABLED,
 						     NULL);
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (renderer, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
@@ -1330,6 +1375,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 						     -1, NULL,
 						     renderer,
 						     "markup", COLUMN_TEXT,
+						     "sensitive", COLUMN_ENABLED,
 						     NULL);
 
 	//FIXME use the same search than the one for the search entry?
@@ -1348,6 +1394,8 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	column = gtk_tree_view_get_column (GTK_TREE_VIEW (dialog->tree_view),
 					   COLUMN_TEXT);
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+
+	gtk_tree_selection_set_select_function (selection, panel_addto_selection_func, NULL, NULL);
 
 	g_signal_connect (selection, "changed",
 			  G_CALLBACK (panel_addto_selection_changed),
