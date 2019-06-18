@@ -39,7 +39,6 @@ panel_sources = \
 	panel-applets-manager.c \
 	panel-shell.c \
 	panel-background.c \
-	panel-background-monitor.c \
 	panel-stock-icons.c \
 	panel-action-button.c \
 	panel-menu-bar.c \
@@ -70,7 +69,8 @@ panel_sources += \
 	xstuff.c \
 	panel-xutils.c \
 	panel-force-quit.c \
-	panel-action-protocol.c
+	panel-action-protocol.c \
+	panel-background-monitor.c
 endif
 
 panel_headers = \
@@ -94,7 +94,6 @@ panel_headers = \
 	panel-applets-manager.h \
 	panel-shell.h \
 	panel-background.h \
-	panel-background-monitor.h \
 	panel-stock-icons.h \
 	panel-action-button.h \
 	panel-menu-bar.h \
@@ -129,7 +128,8 @@ panel_sources += \
 	xstuff.h \
 	panel-xutils.h \
 	panel-force-quit.h \
-	panel-action-protocol.h
+	panel-action-protocol.h \
+	panel-background-monitor.h
 endif
 
 mate_panel_SOURCES = \
