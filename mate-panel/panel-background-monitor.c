@@ -24,6 +24,12 @@
  *      Mark McLoughlin <mark@skynet.ie>
  */
 
+#include <config.h>
+
+#ifndef HAVE_X11
+#error file should only be compiled when HAVE_X11 is enabled
+#endif
+
 #include <glib.h>
 #include <glib-object.h>
 #include <gdk/gdk.h>
@@ -82,6 +88,7 @@ static guint signals [LAST_SIGNAL] = { 0 };
 
 gboolean gdk_window_check_composited_wm(GdkWindow* window)
 {
+	g_return_val_if_fail (GDK_IS_X11_WINDOW (window), TRUE);
 	return gdk_screen_is_composited(gdk_window_get_screen(window));
 }
 
@@ -182,6 +189,8 @@ panel_background_monitor_new (GdkScreen *screen)
 PanelBackgroundMonitor *
 panel_background_monitor_get_for_screen (GdkScreen *screen)
 {
+	g_return_val_if_fail (GDK_IS_X11_SCREEN (screen), NULL);
+
 	if (!global_background_monitor) {
 		global_background_monitor = panel_background_monitor_new (screen);
 
@@ -360,6 +369,9 @@ panel_background_monitor_get_region (PanelBackgroundMonitor *monitor,
 	GdkPixbuf *pixbuf, *tmpbuf;
 	int        subwidth, subheight;
 	int        subx, suby;
+
+	g_return_val_if_fail (monitor, NULL);
+	g_return_val_if_fail (GDK_IS_X11_WINDOW (monitor->gdkwindow), NULL);
 
 	if (!monitor->gdkpixbuf)
 		panel_background_monitor_setup_pixbuf (monitor);
