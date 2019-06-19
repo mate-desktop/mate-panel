@@ -344,17 +344,13 @@ static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, in
 
 static void panel_toplevel_get_monitor_geometry(PanelToplevel* toplevel, GdkRectangle *geom)
 {
-	GdkScreen* screen;
-
 	g_return_if_fail(PANEL_IS_TOPLEVEL(toplevel));
 	g_return_if_fail(geom);
 
-	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
-
-	geom->x = panel_multiscreen_x(screen, toplevel->priv->monitor);
-	geom->y = panel_multiscreen_y(screen, toplevel->priv->monitor);
-	geom->width  = panel_multiscreen_width(screen, toplevel->priv->monitor);
-	geom->height = panel_multiscreen_height(screen, toplevel->priv->monitor);
+	geom->x = panel_multimonitor_x(toplevel->priv->monitor);
+	geom->y = panel_multimonitor_y(toplevel->priv->monitor);
+	geom->width  = panel_multimonitor_width(toplevel->priv->monitor);
+	geom->height = panel_multimonitor_height(toplevel->priv->monitor);
 }
 
 static GdkCursorType panel_toplevel_grab_op_cursor(PanelToplevel* toplevel, PanelGrabOpType grab_op)
@@ -656,25 +652,22 @@ static void panel_toplevel_resize_to_pointer(PanelToplevel* toplevel, int x, int
 static void panel_toplevel_calc_new_orientation(PanelToplevel* toplevel, int pointer_x, int pointer_y)
 {
 	PanelOrientation  new_orientation;
-	GdkScreen        *screen;
 	int               hborder, vborder;
 	int               monitor;
 	int               monitor_width, monitor_height;
 	int               new_x, new_y;
 
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-
-	monitor = panel_multiscreen_get_monitor_at_point (screen, pointer_x, pointer_y);
+	monitor = panel_multimonitor_get_monitor_at_point (pointer_x, pointer_y);
 
 	if (toplevel->priv->geometry.height < toplevel->priv->geometry.width)
 		vborder = hborder = (3 * toplevel->priv->geometry.height) >> 1;
 	else
 		vborder = hborder = (3 * toplevel->priv->geometry.width)  >> 1;
 
-	new_x = pointer_x - panel_multiscreen_x (screen, monitor);
-	new_y = pointer_y - panel_multiscreen_y (screen, monitor);
-	monitor_width = panel_multiscreen_width (screen, monitor);
-	monitor_height = panel_multiscreen_height (screen, monitor);
+	new_x = pointer_x - panel_multimonitor_x (monitor);
+	new_y = pointer_y - panel_multimonitor_y (monitor);
+	monitor_width = panel_multimonitor_width (monitor);
+	monitor_height = panel_multimonitor_height (monitor);
 
 	new_orientation = toplevel->priv->orientation;
 
@@ -734,7 +727,6 @@ static void panel_toplevel_calc_new_orientation(PanelToplevel* toplevel, int poi
 
 static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y)
 {
-	GdkScreen        *screen;
 	PanelOrientation  new_orientation;
 	gboolean          x_centered, y_centered;
 	int               screen_width, screen_height;
@@ -744,7 +736,7 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	int               x, y, x_right, y_bottom;
 	int               snap_tolerance;
 
-	screen = panel_toplevel_get_screen_geometry (
+	panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
 
 	width  = toplevel->priv->geometry.width;
@@ -773,15 +765,15 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 		 toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		new_orientation = PANEL_ORIENTATION_BOTTOM;
 
-	new_monitor = panel_multiscreen_get_monitor_at_point (screen, new_x, new_y);
+	new_monitor = panel_multimonitor_get_monitor_at_point (new_x, new_y);
 
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	x_centered = toplevel->priv->x_centered;
 	y_centered = toplevel->priv->y_centered;
 
-	x = new_x - panel_multiscreen_x (screen, new_monitor);
-	y = new_y - panel_multiscreen_y (screen, new_monitor);
+	x = new_x - panel_multimonitor_x (new_monitor);
+	y = new_y - panel_multimonitor_y (new_monitor);
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		y_centered = FALSE;
@@ -1441,7 +1433,6 @@ static inline int panel_toplevel_get_effective_auto_hide_size(PanelToplevel* top
 static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean end_of_animation)
 {
 	PanelOrientation  orientation;
-	GdkScreen        *screen;
 	gboolean          geometry_changed = FALSE;
 	int               strut, strut_start, strut_end;
 	int               x, y, width, height;
@@ -1471,13 +1462,12 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	}
 
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
-	screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
 
 	if (end_of_animation) {
 		x = toplevel->priv->animation_end_x;
 		y = toplevel->priv->animation_end_y;
-		x += panel_multiscreen_x (screen, toplevel->priv->monitor);
-		y += panel_multiscreen_y (screen, toplevel->priv->monitor);
+		x += panel_multimonitor_x (toplevel->priv->monitor);
+		y += panel_multimonitor_y (toplevel->priv->monitor);
 		if (toplevel->priv->animation_end_width != -1)
 			width = toplevel->priv->animation_end_width;
 		else
@@ -1537,7 +1527,9 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	if (toplevel->priv->auto_hide && strut > 0)
 		strut = panel_toplevel_get_effective_auto_hide_size (toplevel);
 
-	if (strut > 0)
+	if (strut > 0) {
+		GdkScreen *screen;
+		screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
 		geometry_changed = panel_struts_register_strut (toplevel,
 								screen,
 								toplevel->priv->monitor,
@@ -1546,8 +1538,10 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 								strut_start,
 								strut_end,
 								toplevel->priv->scale);
-	else
+	}
+	else {
 		panel_struts_unregister_strut (toplevel);
+	}
 
 	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
 	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN ||
@@ -1990,17 +1984,14 @@ get_delta (int       src,
 static void
 panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 {
-	GdkScreen *screen;
 	GTimeVal   time_val;
 	int        deltax, deltay, deltaw = 0, deltah = 0;
 	int        monitor_offset_x, monitor_offset_y;
 
 	g_get_current_time (&time_val);
 
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-
-	monitor_offset_x = panel_multiscreen_x (screen, toplevel->priv->monitor);
-	monitor_offset_y = panel_multiscreen_y (screen, toplevel->priv->monitor);
+	monitor_offset_x = panel_multimonitor_x (toplevel->priv->monitor);
+	monitor_offset_y = panel_multimonitor_y (toplevel->priv->monitor);
 
 	if (toplevel->priv->animation_end_width != -1)
 		deltaw = get_delta (toplevel->priv->geometry.width,
@@ -2060,19 +2051,13 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 static void
 panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 {
-	GdkScreen *screen;
 	GdkRectangle monitor_geom;
-	int        screen_width, screen_height;
 	int        x, y;
 	int        x_right, y_bottom;
 	int        monitor;
 
 	if (!toplevel->priv->expand)
 		return;
-
-	screen = panel_toplevel_get_screen_geometry (toplevel,
-						     &screen_width,
-						     &screen_height);
 
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
@@ -2105,12 +2090,12 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 		break;
 	}
 
-	monitor = panel_multiscreen_get_monitor_at_point (screen, x, y);
+	monitor = panel_multimonitor_get_monitor_at_point (x, y);
 
 	panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
-	x -= panel_multiscreen_x (screen, monitor);
-	y -= panel_multiscreen_y (screen, monitor);
+	x -= panel_multimonitor_x (monitor);
+	y -= panel_multimonitor_y (monitor);
 
 	g_object_freeze_notify (G_OBJECT (toplevel));
 
@@ -2141,14 +2126,9 @@ static void
 panel_toplevel_update_position (PanelToplevel *toplevel)
 {
 	PanelBackground *background;
-	GdkScreen       *screen;
 	int              x, y;
 	int              w, h;
-	int              screen_width, screen_height;
 	GdkRectangle     monitor_geom;
-
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
 
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
@@ -2275,8 +2255,8 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 			y = max_size;
 	}
 
-	x += panel_multiscreen_x (screen, toplevel->priv->monitor);
-	y += panel_multiscreen_y (screen, toplevel->priv->monitor);
+	x += panel_multimonitor_x (toplevel->priv->monitor);
+	y += panel_multimonitor_y (toplevel->priv->monitor);
 
 	toplevel->priv->geometry.x = x;
 	toplevel->priv->geometry.y = y;
@@ -3634,7 +3614,6 @@ panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 static void
 panel_toplevel_start_animation (PanelToplevel *toplevel)
 {
-	GdkScreen      *screen;
 	GtkRequisition  requisition;
 	int             deltax, deltay, deltaw = 0, deltah = 0;
 	int             cur_x = -1, cur_y = -1;
@@ -3654,10 +3633,8 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 
 	gdk_window_get_origin (gtk_widget_get_window (GTK_WIDGET (toplevel)), &cur_x, &cur_y);
 
-	screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
-
-	cur_x -= panel_multiscreen_x (screen, toplevel->priv->monitor);
-	cur_y -= panel_multiscreen_y (screen, toplevel->priv->monitor);
+	cur_x -= panel_multimonitor_x (toplevel->priv->monitor);
+	cur_y -= panel_multimonitor_y (toplevel->priv->monitor);
 
 	deltax = toplevel->priv->animation_end_x - cur_x;
 	deltay = toplevel->priv->animation_end_y - cur_y;
@@ -5283,20 +5260,16 @@ panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_monitor (PanelToplevel *toplevel)
 {
-	GdkScreen *screen;
-
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-
 	/* If we were not using the configured monitor, can we use it now? */
 	if ((toplevel->priv->configured_monitor != -1) &&
 	    (toplevel->priv->configured_monitor != toplevel->priv->monitor) &&
-	    toplevel->priv->configured_monitor < panel_multiscreen_monitors (screen)) {
+	    toplevel->priv->configured_monitor < panel_multimonitor_monitors ()) {
 		panel_toplevel_set_monitor_internal (toplevel,
 						     toplevel->priv->configured_monitor,
 						     FALSE);
 
 	/* else, can we still use the monitor we were using? */
-	} else if (toplevel->priv->monitor >= panel_multiscreen_monitors (screen)) {
+	} else if (toplevel->priv->monitor >= panel_multimonitor_monitors ()) {
 		panel_toplevel_set_monitor_internal (toplevel,
 						     0,
 						     FALSE);
@@ -5307,8 +5280,6 @@ void
 panel_toplevel_set_monitor (PanelToplevel *toplevel,
 			    int            monitor)
 {
-	GdkScreen *screen;
-
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
 	if (toplevel->priv->configured_monitor == monitor)
@@ -5318,11 +5289,10 @@ panel_toplevel_set_monitor (PanelToplevel *toplevel,
 
 	/* Only use the configured monitor if it's existing. Else, we ignore
 	 * the non-existing monitor, and keep the old one. The main use case is
-	 * when logging in after having used a multiscreen environment.
+	 * when logging in after having used a multimonitor environment.
 	 * We will put the panel on the monitor 0 for this session, and it will
 	 * move back to the right monitor next time. */
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	if (monitor < panel_multiscreen_monitors (screen))
+	if (monitor < panel_multimonitor_monitors ())
 		panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
 	g_object_notify (G_OBJECT (toplevel), "monitor");
