@@ -28,29 +28,22 @@
 
 #include <gtk/gtk.h>
 
-void	panel_multiscreen_init                  (void);
-void	panel_multiscreen_reinit                (void);
+void	panel_multimonitor_init                  (void);
+void	panel_multimonitor_reinit                (void);
 
-int	panel_multiscreen_screens               (void);
-int	panel_multiscreen_monitors              (GdkScreen *screen);
+int	panel_multimonitor_monitors              (void);
 
-int	panel_multiscreen_x                     (GdkScreen *screen,
-						 int        monitor);
-int	panel_multiscreen_y                     (GdkScreen *screen,
-						 int        monitor);
-int	panel_multiscreen_width                 (GdkScreen *screen,
-						 int        monitor);
-int	panel_multiscreen_height                (GdkScreen *screen,
-						 int        monitor);
-int	panel_multiscreen_locate_widget_monitor (GtkWidget *widget);
-int     panel_multiscreen_get_monitor_at_point  (GdkScreen *screen,
-						 int        x,
-						 int        y);
-void    panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
-						 int        monitor,
-						 gboolean  *leftmost,
-						 gboolean  *rightmost,
-						 gboolean  *topmost,
-						 gboolean  *bottommost);
+int	panel_multimonitor_x                     (int monitor);
+int	panel_multimonitor_y                     (int monitor);
+int	panel_multimonitor_width                 (int monitor);
+int	panel_multimonitor_height                (int monitor);
+
+int	panel_multimonitor_locate_widget_monitor (GtkWidget *widget);
+int	panel_multimonitor_get_monitor_at_point  (int x, int y);
+void	panel_multimonitor_is_at_visible_extreme (int        monitor_id,
+						  gboolean  *leftmost,
+						  gboolean  *rightmost,
+						  gboolean  *topmost,
+						  gboolean  *bottommost);
 
 #endif /* __PANEL_MULTIMONITOR_H__ */
