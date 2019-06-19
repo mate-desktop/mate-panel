@@ -39,7 +39,7 @@
 #include "panel-profile.h"
 #include "panel-frame.h"
 #include "panel-xutils.h"
-#include "panel-multiscreen.h"
+#include "panel-multimonitor.h"
 #include "panel-a11y.h"
 #include "panel-typebuiltins.h"
 #include "panel-marshal.h"

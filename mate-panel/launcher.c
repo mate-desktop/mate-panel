@@ -39,7 +39,6 @@
 #include "panel-toplevel.h"
 #include "panel-a11y.h"
 #include "panel-globals.h"
-#include "panel-multiscreen.h"
 #include "panel-lockdown.h"
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"

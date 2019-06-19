@@ -1,5 +1,5 @@
 /*
- * panel-multiscreen.h: Multi-screen and Xinerama support for the panel.
+ * panel-multimonitor.h: Multi-monitor and Xinerama support for the panel.
  *
  * Copyright (C) 2001 George Lebl <jirka@5z.com>
  *               2002 Sun Microsystems Inc.
@@ -23,8 +23,8 @@
  *          Mark McLoughlin <mark@skynet.ie>
  */
 
-#ifndef __PANEL_MULTISCREEN_H__
-#define __PANEL_MULTISCREEN_H__
+#ifndef __PANEL_MULTIMONITOR_H__
+#define __PANEL_MULTIMONITOR_H__
 
 #include <gtk/gtk.h>
 
@@ -53,4 +53,4 @@ void    panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
 						 gboolean  *topmost,
 						 gboolean  *bottommost);
 
-#endif /* __PANEL_MULTISCREEN_H__ */
+#endif /* __PANEL_MULTIMONITOR_H__ */

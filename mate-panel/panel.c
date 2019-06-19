@@ -41,7 +41,6 @@
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-separator.h"
-#include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"

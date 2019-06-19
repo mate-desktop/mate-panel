@@ -41,7 +41,7 @@
 #include "panel.h"
 #include "panel-widget.h"
 #include "panel-util.h"
-#include "panel-multiscreen.h"
+#include "panel-multimonitor.h"
 #include "panel-toplevel.h"
 #include "panel-lockdown.h"
 #include "panel-schemas.h"

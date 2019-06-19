@@ -57,7 +57,7 @@
 #include "panel-profile.h"
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"
-#include "panel-multiscreen.h"
+#include "panel-multimonitor.h"
 #include "menu.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
