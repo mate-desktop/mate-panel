@@ -23,7 +23,7 @@
 #include "panel-profile.h"
 #include "panel-config-global.h"
 #include "panel-shell.h"
-#include "panel-multiscreen.h"
+#include "panel-multimonitor.h"
 #include "panel-session.h"
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"

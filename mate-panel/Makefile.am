@@ -49,7 +49,7 @@ panel_sources = \
 	panel-toplevel.c \
 	panel-struts.c \
 	panel-frame.c \
-	panel-multiscreen.c \
+	panel-multimonitor.c \
 	panel-a11y.c \
 	panel-bindings.c \
 	panel-layout.c \
@@ -104,7 +104,7 @@ panel_headers = \
 	panel-toplevel.h \
 	panel-struts.h \
 	panel-frame.h \
-	panel-multiscreen.h \
+	panel-multimonitor.h \
 	panel-a11y.h \
 	panel-bindings.h \
 	panel-layout.h \

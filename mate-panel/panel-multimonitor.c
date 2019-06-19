@@ -1,5 +1,5 @@
 /*
- * panel-multiscreen.c: Multi-screen and Xinerama support for the panel.
+ * panel-multimonitor.c: Multi-monitor and Xinerama support for the panel.
  *
  * Copyright (C) 2001 George Lebl <jirka@5z.com>
  *               2002 Sun Microsystems Inc.

@@ -26,7 +26,7 @@
 
 #include "panel-struts.h"
 
-#include "panel-multiscreen.h"
+#include "panel-multimonitor.h"
 #include "panel-xutils.h"
 
 
