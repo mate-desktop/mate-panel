@@ -68,17 +68,16 @@ panel_struts_find_strut (PanelToplevel *toplevel)
 }
 
 static void
-panel_struts_get_monitor_geometry (GdkScreen *screen,
-				   int        monitor,
+panel_struts_get_monitor_geometry (int        monitor,
 				   int       *x,
 				   int       *y,
 				   int       *width,
 				   int       *height)
 {
-        *x      = panel_multiscreen_x      (screen, monitor);
-        *y      = panel_multiscreen_y      (screen, monitor);
-        *width  = panel_multiscreen_width  (screen, monitor);
-        *height = panel_multiscreen_height (screen, monitor);
+        *x      = panel_multimonitor_x      (monitor);
+        *y      = panel_multimonitor_y      (monitor);
+        *width  = panel_multimonitor_width  (monitor);
+        *height = panel_multimonitor_height (monitor);
 }
 
 static PanelStrut *
@@ -201,7 +200,7 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 		if (strut->screen != screen || strut->monitor != monitor)
 			continue;
 
-		panel_struts_get_monitor_geometry (strut->screen, strut->monitor,
+		panel_struts_get_monitor_geometry (strut->monitor,
 						   &monitor_x, &monitor_y,
 						   &monitor_width, &monitor_height);
 
@@ -274,19 +273,17 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	screen_width  = WidthOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
 	screen_height = HeightOfScreen (gdk_x11_screen_get_xscreen (strut->screen)) / scale;
 
-	panel_struts_get_monitor_geometry (strut->screen,
-					   strut->monitor,
+	panel_struts_get_monitor_geometry (strut->monitor,
 					   &monitor_x,
 					   &monitor_y,
 					   &monitor_width,
 					   &monitor_height);
 
-        panel_multiscreen_is_at_visible_extreme (strut->screen,
-                                                 strut->monitor,
-                                                 &leftmost,
-                                                 &rightmost,
-                                                 &topmost,
-                                                 &bottommost);
+        panel_multimonitor_is_at_visible_extreme (strut->monitor,
+                                                  &leftmost,
+                                                  &rightmost,
+                                                  &topmost,
+                                                  &bottommost);
 
 	switch (strut->orientation) {
 	case PANEL_ORIENTATION_TOP:
@@ -434,7 +431,7 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	strut->strut_start = strut_start;
 	strut->strut_end   = strut_end;
 
-	panel_struts_get_monitor_geometry (screen, monitor,
+	panel_struts_get_monitor_geometry (monitor,
 					   &monitor_x, &monitor_y,
 					   &monitor_width, &monitor_height);
 

@@ -134,7 +134,7 @@ main (int argc, char **argv)
 	if (run_dialog == TRUE)
 	{
 		panel_init_stock_icons_and_items ();
-		panel_multiscreen_init ();
+		panel_multimonitor_init ();
 		panel_global_config_load ();
 		panel_lockdown_init ();
 		panel_profile_settings_load ();
@@ -158,7 +158,7 @@ main (int argc, char **argv)
 	}
 
 	panel_action_protocol_init ();
-	panel_multiscreen_init ();
+	panel_multimonitor_init ();
 	panel_init_stock_icons_and_items ();
 
 	panel_global_config_load ();

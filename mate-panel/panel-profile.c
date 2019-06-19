@@ -909,7 +909,7 @@ panel_profile_find_empty_spot (GdkScreen *screen,
 	*monitor = 0;
 	*orientation = PANEL_ORIENTATION_TOP;
 
-	filled_spots = g_new0 (int, panel_multiscreen_monitors (screen));
+	filled_spots = g_new0 (int, panel_multimonitor_monitors ());
 
 	for (li = panel_toplevel_list_toplevels (); li != NULL; li = li->next) {
 		PanelToplevel *toplevel = li->data;
@@ -924,7 +924,7 @@ panel_profile_find_empty_spot (GdkScreen *screen,
 		filled_spots[toplevel_monitor] |= panel_toplevel_get_orientation (toplevel);
 	}
 
-	for (i = 0; i < panel_multiscreen_monitors (screen); i++) {
+	for (i = 0; i < panel_multimonitor_monitors (); i++) {
 		/* These are ordered based on "priority" of the
 		   orientation when picking it */
 		if ( ! (filled_spots[i] & PANEL_ORIENTATION_TOP)) {
