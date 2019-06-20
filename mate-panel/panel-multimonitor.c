@@ -380,6 +380,16 @@ panel_multimonitor_handle_monitor_changed (GdkDisplay *display,
 	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
 }
 
+static void
+panel_multimonitor_handle_monitor_invalidate (GdkMonitor *monitor,
+					      gpointer    user_data)
+{
+	if (reinit_id)
+		return;
+
+	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
+}
+
 #ifdef HAVE_X11
 #ifdef HAVE_RANDR
 static void
@@ -416,6 +426,7 @@ void
 panel_multimonitor_init (void)
 {
 	GdkDisplay *display;
+	int i;
 
 	if (initialized)
 		return;
@@ -437,6 +448,14 @@ panel_multimonitor_init (void)
 			  G_CALLBACK (panel_multimonitor_handle_monitor_changed), NULL);
 	g_signal_connect (display, "monitor-removed",
 			  G_CALLBACK (panel_multimonitor_handle_monitor_changed), NULL);
+	for (i = 0; i < gdk_display_get_n_monitors (display); i++) {
+		GdkMonitor *monitor;
+
+		monitor = gdk_display_get_monitor (display, i);
+		g_signal_handlers_disconnect_by_func (display, panel_multimonitor_handle_monitor_invalidate, NULL);
+		g_signal_connect (monitor, "invalidate",
+			  G_CALLBACK (panel_multimonitor_handle_monitor_invalidate), NULL);
+	}
 
 	panel_multimonitor_get_raw_monitors (&monitor_count, &geometries);
 	panel_multimonitor_compress_overlapping_monitors (&monitor_count, &geometries);
