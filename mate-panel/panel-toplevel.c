@@ -328,28 +328,6 @@ gboolean panel_toplevel_is_last_unattached(PanelToplevel* toplevel)
 	return TRUE;
 }
 
-
-static GdkScreen* panel_toplevel_get_screen_geometry(PanelToplevel* toplevel, int* width, int* height)
-{
-	GdkScreen* screen;
-
-	g_return_val_if_fail(PANEL_IS_TOPLEVEL (toplevel), NULL);
-	g_return_val_if_fail(width != NULL && height != NULL, NULL);
-
-	screen = gtk_window_get_screen(GTK_WINDOW(toplevel));
-
-	/* To scale the panels up for HiDPI displays, we can either multiply a lot of
-	 * toplevel geometry attributes by the scale factor, then correct for all
-	 * sorts of awful misalignments and pretend it's all good. Or we can just
-	 * make this thing think that the screen is scaled down, and because GTK+
-	 * already scaled everything up without the panel knowing about it, the whole
-	 * thing somehow works well... sigh. */
-	*width  = WidthOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
-	*height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen)) / toplevel->priv->scale;
-
-	return screen;
-}
-
 static void panel_toplevel_get_monitor_geometry(PanelToplevel* toplevel, GdkRectangle *geom)
 {
 	g_return_if_fail(PANEL_IS_TOPLEVEL(toplevel));
@@ -746,39 +724,38 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 {
 	PanelOrientation  new_orientation;
 	gboolean          x_centered, y_centered;
-	int               screen_width, screen_height;
+	GdkPoint          display_min, display_max;
 	GdkRectangle      monitor_geom;
 	int               width, height;
 	int               new_monitor;
 	int               x, y, x_right, y_bottom;
 	int               snap_tolerance;
 
-	panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
+	panel_multimonitor_get_bounds (&display_min, &display_max);
 
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
 
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
-	new_x = CLAMP (new_x, 0, screen_width  - width);
-	new_y = CLAMP (new_y, 0, screen_height - height);
+	new_x = CLAMP (new_x, 0, display_max.x - width);
+	new_y = CLAMP (new_y, 0, display_max.y - height);
 
 	new_orientation = toplevel->priv->orientation;
 
-	if (new_x <= snap_tolerance &&
+	if (new_x <= (display_min.x + snap_tolerance) &&
 	    toplevel->priv->orientation & PANEL_VERTICAL_MASK)
 		new_orientation = PANEL_ORIENTATION_LEFT;
 
-	else if ((new_x + width) >= (screen_width - snap_tolerance) &&
+	else if ((new_x + width) >= (display_max.x - snap_tolerance) &&
 		 toplevel->priv->orientation & PANEL_VERTICAL_MASK)
 		new_orientation = PANEL_ORIENTATION_RIGHT;
 
-	if (new_y <= snap_tolerance &&
+	if (new_y <= (display_min.y + snap_tolerance) &&
 	    toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		new_orientation = PANEL_ORIENTATION_TOP;
 
-	else if ((new_y + height) >= (screen_height - snap_tolerance) &&
+	else if ((new_y + height) >= (display_max.y - snap_tolerance) &&
 		 toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		new_orientation = PANEL_ORIENTATION_BOTTOM;
 
@@ -794,16 +771,16 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		y_centered = FALSE;
-		if (new_y <= snap_tolerance ||
-		    new_y + height >= screen_height - snap_tolerance)
+		if (new_y          <= display_min.y + snap_tolerance ||
+		    new_y + height >= display_max.y - snap_tolerance)
 			x_centered = abs (x - ((monitor_geom.width - width) / 2))
 								<= snap_tolerance;
 		else
 			x_centered = FALSE;
 	} else {
 		x_centered = FALSE;
-		if (new_x <= snap_tolerance ||
-		    new_x + width >= screen_width - snap_tolerance)
+		if (new_x         <= display_min.x + snap_tolerance ||
+		    new_x + width >= display_max.x - snap_tolerance)
 			y_centered = abs (y - ((monitor_geom.height - height) / 2))
 								<= snap_tolerance;
 		else
@@ -1091,9 +1068,8 @@ static gboolean panel_toplevel_handle_grab_op_motion_event(PanelToplevel* toplev
 
 static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 {
-	int                screen_width, screen_height;
 	GdkRectangle       monitor_geom;
-	int                x, y;
+	GdkPoint           position_on_monitor;
 	int                snap_tolerance;
 
 	if (toplevel->priv->expand) {
@@ -1101,29 +1077,27 @@ static void panel_toplevel_calc_floating(PanelToplevel* toplevel)
 		return;
 	}
 
-	panel_toplevel_get_screen_geometry (toplevel,
-					    &screen_width, &screen_height);
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
 
 	if (toplevel->priv->x_right == -1)
-		x = monitor_geom.x + toplevel->priv->x;
+		position_on_monitor.x = toplevel->priv->x;
 	else
-		x = monitor_geom.x + (monitor_geom.width - (toplevel->priv->x_right + toplevel->priv->geometry.width));
+		position_on_monitor.x = monitor_geom.width - (toplevel->priv->x_right + toplevel->priv->geometry.width);
 	if (toplevel->priv->y_bottom == -1)
-		y = monitor_geom.y + toplevel->priv->y;
+		position_on_monitor.y =  toplevel->priv->y;
 	else
-		y = monitor_geom.y + (monitor_geom.height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
+		position_on_monitor.y = monitor_geom.height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height);
 
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
-	//FIXME? everywhere else, snap_tolerance is relative to the monitor,
-	//not the screen
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		toplevel->priv->floating =
-			(y > snap_tolerance) && (y < (screen_height - toplevel->priv->geometry.height - snap_tolerance));
+			(position_on_monitor.y > snap_tolerance) &&
+			(position_on_monitor.y < (monitor_geom.height - toplevel->priv->geometry.height - snap_tolerance));
 	else
 		toplevel->priv->floating =
-			(x > snap_tolerance) && (x < (screen_width - toplevel->priv->geometry.width - snap_tolerance));
+			(position_on_monitor.x > snap_tolerance) &&
+			(position_on_monitor.x < (monitor_geom.width - toplevel->priv->geometry.width - snap_tolerance));
 }
 
 void panel_toplevel_push_autohide_disabler(PanelToplevel* toplevel)
