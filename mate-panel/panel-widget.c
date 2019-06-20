@@ -162,7 +162,6 @@ add_all_move_bindings (PanelWidget *panel)
 {
 	GtkWidgetClass *class;
 	GtkBindingSet *binding_set;
-	GtkWidget *focus_widget;
 
 	class = GTK_WIDGET_GET_CLASS (panel);
 
@@ -193,8 +192,9 @@ add_all_move_bindings (PanelWidget *panel)
                                       "end_move", 0);
 
 #ifdef HAVE_X11
-	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->toplevel));
+	GtkWidget *focus_widget;
 
+	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->toplevel));
 	// will always be false when not on X
 	if (GTK_IS_SOCKET (focus_widget)) {
 		/*
@@ -208,7 +208,7 @@ add_all_move_bindings (PanelWidget *panel)
 		gtk_widget_grab_focus (GTK_WIDGET (panel));
 		saved_focus_widget = focus_widget;
 	}
-#endif
+#endif // HAVE_X11
 }
 
 static void
