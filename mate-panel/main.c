@@ -27,12 +27,15 @@
 #include "panel-session.h"
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"
-#include "panel-action-protocol.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 #include "panel-reset.h"
 #include "panel-run-dialog.h"
+
+#ifdef HAVE_X11
+#include "panel-action-protocol.h"
 #include "xstuff.h"
+#endif
 
 /* globals */
 GSList *panels = NULL;
@@ -157,7 +160,13 @@ main (int argc, char **argv)
 		return -1;
 	}
 
-	panel_action_protocol_init ();
+	display = gdk_display_get_default ();
+
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (display))
+		panel_action_protocol_init ();
+#endif
+
 	panel_multimonitor_init ();
 	panel_init_stock_icons_and_items ();
 
@@ -170,11 +179,21 @@ main (int argc, char **argv)
 	                 (GFunc)panel_widget_add_forbidden,
 	                 NULL);
 
-	xstuff_init ();
+	gboolean found_backend = FALSE;
+
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (display)) {
+		xstuff_init ();
+		found_backend = TRUE;
+	}
+#endif
+
+	if (!found_backend) {
+		g_error("GDK platform not supported");
+	}
 
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the caja desktop). */
-	display = gdk_display_get_default ();
 	gdk_display_flush (display);
 
 	/* Do this at the end, to be sure that we're really ready when
