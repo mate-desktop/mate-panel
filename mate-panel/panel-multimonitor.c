@@ -25,10 +25,12 @@
 
 #include <config.h>
 
+#ifdef HAVE_X11
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #include <gdk/gdkx.h>
+#endif // HAVE_X11
 
 #include "panel-multimonitor.h"
 
@@ -47,6 +49,7 @@ static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
 static guint          reinit_id   = 0;
 
+#ifdef HAVE_X11
 #ifdef HAVE_RANDR
 static gboolean
 _panel_multimonitor_output_should_be_first (Display       *xdisplay,
@@ -86,13 +89,11 @@ _panel_multimonitor_output_should_be_first (Display       *xdisplay,
 	 */
 	return (g_ascii_strncasecmp (info->name, "LVDS", strlen ("LVDS")) == 0);
 }
-#endif
 
 static gboolean
 panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 				       GdkRectangle **geometries_ret)
 {
-#ifdef HAVE_RANDR
 	GdkDisplay         *display;
 	GdkScreen          *screen;
 	GdkMonitor         *monitor;
@@ -104,8 +105,10 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 	int                 scale;
 	int                 i;
 
-	if (!have_randr)
-		return FALSE;
+	display = gdk_display_get_default ();
+
+	g_return_val_if_fail (have_randr, FALSE);
+	g_return_val_if_fail (GDK_IS_X11_DISPLAY (display), FALSE);
 
 	/* GTK+ 2.14.x uses the Xinerama API, instead of RANDR, to get the
 	 * monitor geometries. It does this to avoid calling
@@ -129,7 +132,6 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 	 * http://bugzilla.gnome.org/show_bug.cgi?id=562944 for a more
 	 * long-term solution.
 	 */
-	display = gdk_display_get_default ();
 	screen = gdk_display_get_default_screen (display);
 	xdisplay = GDK_SCREEN_XDISPLAY (screen);
 	xroot = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
@@ -206,10 +208,9 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 	*geometries_ret = (GdkRectangle *) g_array_free (geometries, FALSE);
 
 	return TRUE;
-#else
-	return FALSE;
-#endif
 }
+#endif // HAVE_RANDR
+#endif // HAVE_X11
 
 static void
 panel_multimonitor_get_gdk_monitors (int           *monitors_ret,
@@ -235,12 +236,18 @@ static void
 panel_multimonitor_get_raw_monitors (int           *monitors_ret,
 				     GdkRectangle **geometries_ret)
 {
-	gboolean res;
+	gboolean res = FALSE;
 
 	*monitors_ret = 0;
 	*geometries_ret = NULL;
 
-	res = panel_multimonitor_get_randr_monitors (monitors_ret, geometries_ret);
+#ifdef HAVE_X11
+#ifdef HAVE_RANDR
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) && have_randr)
+		res = panel_multimonitor_get_randr_monitors (monitors_ret, geometries_ret);
+#endif // HAVE_RANDR
+#endif // HAVE_X11
+
 	if (res && *monitors_ret > 0)
 		return;
 
@@ -373,17 +380,21 @@ panel_multimonitor_handle_monitor_changed (GdkDisplay *display,
 	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
 }
 
+#ifdef HAVE_X11
+#ifdef HAVE_RANDR
 static void
 panel_multimonitor_init_randr (GdkDisplay *display)
 {
-#ifdef HAVE_RANDR
 	Display *xdisplay;
 	int      event_base, error_base;
-#endif
+
+	g_return_if_fail (GDK_IS_X11_DISPLAY (display));
 
 	have_randr = FALSE;
 
-#ifdef HAVE_RANDR
+	if (!GDK_IS_X11_DISPLAY (display))
+		return;
+
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
 	/* We don't remember the event/error bases, as we expect to get monitor
@@ -397,8 +408,9 @@ panel_multimonitor_init_randr (GdkDisplay *display)
 		if ((major == 1 && minor >= 3) || major > 1)
 			have_randr = TRUE;
 	}
-#endif
 }
+#endif // HAVE_RANDR
+#endif // HAVE_X11
 
 void
 panel_multimonitor_init (void)
@@ -410,7 +422,14 @@ panel_multimonitor_init (void)
 
 	display = gdk_display_get_default ();
 
-	panel_multimonitor_init_randr (display);
+	have_randr = FALSE;
+
+#ifdef HAVE_X11
+#ifdef HAVE_RANDR
+	if (GDK_IS_X11_DISPLAY (display))
+		panel_multimonitor_init_randr (display);
+#endif // HAVE_RANDR
+#endif // HAVE_X11
 
 	/* monitors-changed. Since we'll likely get two signals in some cases,
 	 * we do the real callback in the idle loop. */
