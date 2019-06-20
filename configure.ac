@@ -223,8 +223,6 @@ AM_CONDITIONAL(ENABLE_X11, [test "x$have_x11" = "xyes"])
 
 if test "x$have_x11" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1, [Have the X11 development library])
-else
-  AC_MSG_ERROR([No support yet for non-X11 builds])
 fi
 
 if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then

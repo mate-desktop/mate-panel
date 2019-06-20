@@ -57,6 +57,9 @@
 #include "panel-xutils.h"
 #include "panel-struts.h"
 #endif
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif
 
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    1
@@ -1557,6 +1560,11 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	}
 #endif // HAVE_X11
 
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
+		wayland_panel_toplevel_update_placement (toplevel);
+	}
+#endif // HAVE_WAYLAND
 	return geometry_changed;
 }
 
@@ -4815,6 +4823,12 @@ panel_toplevel_init (PanelToplevel *toplevel)
 			       toplevel);	
 
 	update_style_classes (toplevel);
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ())) {
+		wayland_panel_toplevel_init (toplevel);
+	}
+#endif // HAVE_WAYLAND
 }
 
 PanelWidget *
@@ -5059,6 +5073,12 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	g_object_notify (G_OBJECT (toplevel), "orientation");
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
+		wayland_panel_toplevel_update_placement (toplevel);
+	}
+#endif // HAVE_WAYLAND
 }
 
 PanelOrientation
