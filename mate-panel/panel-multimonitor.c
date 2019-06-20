@@ -670,3 +670,21 @@ panel_multimonitor_is_at_visible_extreme (int        n_monitor,
 	}
 }
 
+void
+panel_multimonitor_get_bounds (GdkPoint *min,
+			       GdkPoint *max)
+{
+	int i;
+
+	g_return_if_fail (monitor_count > 0);
+
+	min->x = min->y = INT_MAX;
+	max->x = max->y = INT_MIN;
+
+	for (i = 0; i < monitor_count; i++) {
+		min->x = MIN (min->x, geometries[i].x);
+		min->y = MIN (min->y, geometries[i].y);
+		max->x = MAX (max->x, geometries[i].x + geometries[i].width);
+		max->y = MAX (max->y, geometries[i].y + geometries[i].height);
+	}
+}
