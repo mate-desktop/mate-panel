@@ -61,6 +61,8 @@ panel_sources = \
 	panel-reset.c
 
 if ENABLE_WAYLAND
+panel_sources += \
+	wayland-backend.c
 endif
 
 if ENABLE_X11
@@ -120,6 +122,8 @@ panel_headers = \
 	panel-schemas.h
 
 if ENABLE_WAYLAND
+panel_headers += \
+	wayland-backend.h
 endif
 
 if ENABLE_X11

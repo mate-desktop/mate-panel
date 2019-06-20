@@ -37,6 +37,10 @@
 #include "xstuff.h"
 #endif
 
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif
+
 /* globals */
 GSList *panels = NULL;
 GSList *panel_list = NULL;
@@ -180,6 +184,12 @@ main (int argc, char **argv)
 	                 NULL);
 
 	gboolean found_backend = FALSE;
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (display)) {
+		found_backend = TRUE;
+	}
+#endif
 
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (display)) {
