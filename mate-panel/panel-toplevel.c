@@ -32,23 +32,31 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
+#ifdef HAVE_X11
+#include <gdk/gdkx.h>
+#endif
+
+#include "panel-util.h"
 #include "panel-profile.h"
 #include "panel-frame.h"
-#include "panel-xutils.h"
 #include "panel-multimonitor.h"
 #include "panel-a11y.h"
 #include "panel-typebuiltins.h"
 #include "panel-marshal.h"
 #include "panel-widget.h"
 #include "panel-bindings.h"
-#include "panel-struts.h"
 #include "panel-config-global.h"
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
+
+#ifdef HAVE_X11
+#include "xstuff.h"
+#include "panel-xutils.h"
+#include "panel-struts.h"
+#endif
 
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    1
@@ -385,8 +393,11 @@ static GdkCursorType panel_toplevel_grab_op_cursor(PanelToplevel* toplevel, Pane
 	return retval;
 }
 
+#ifdef HAVE_X11
 static void panel_toplevel_init_resize_drag_offsets(PanelToplevel* toplevel, PanelGrabOpType grab_op)
 {
+	g_assert (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))));
+
 	toplevel->priv->drag_offset_x = 0;
 	toplevel->priv->drag_offset_y = 0;
 
@@ -418,6 +429,7 @@ static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 	int           x, y;
 
 	widget = GTK_WIDGET (toplevel);
+	g_return_if_fail (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget)));
 
 	geometry = toplevel->priv->geometry;
 
@@ -457,6 +469,7 @@ static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 
 	panel_warp_pointer (gtk_widget_get_window (widget), x, y);
 }
+#endif // HAVE_X11
 
 static void panel_toplevel_begin_attached_move(PanelToplevel* toplevel, gboolean is_keyboard, guint32 time_)
 {
@@ -525,8 +538,12 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 
 	gtk_grab_add (widget);
 
-	if (toplevel->priv->grab_is_keyboard)
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget)) &&
+	    toplevel->priv->grab_is_keyboard) {
 		panel_toplevel_warp_pointer (toplevel);
+	}
+#endif // HAVE_X11
 
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
@@ -854,6 +871,7 @@ static void panel_toplevel_rotate_to_pointer(PanelToplevel* toplevel, int pointe
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
 }
 
+#ifdef HAVE_X11
 static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, int keyval, int increment)
 {
 	GdkScreen *screen;
@@ -862,6 +880,7 @@ static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, i
 	int        new_x, new_y;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	g_return_val_if_fail (GDK_IS_X11_SCREEN (screen), FALSE);
 	root_window = gdk_screen_get_root_window (screen);
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET(root_window))));
 	gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET (root_window)), device, &new_x, &new_y, NULL);
@@ -909,6 +928,8 @@ static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, G
 #undef SMALL_INCREMENT
 #undef NORMAL_INCREMENT
 }
+
+#endif // HAVE_X11
 
 static gboolean panel_toplevel_move_keyboard_expanded(PanelToplevel* toplevel, GdkEventKey* event)
 {
@@ -996,12 +1017,16 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 	case GDK_KEY_KP_Right:
 		switch (toplevel->priv->grab_op) {
 		case PANEL_GRAB_OP_MOVE:
-			if (toplevel->priv->expand)
+			if (toplevel->priv->expand) {
 				retval = panel_toplevel_move_keyboard_expanded (
 									toplevel, event);
-			else
+			}
+#ifdef HAVE_X11
+			else if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 				retval = panel_toplevel_move_keyboard_floating (
 									toplevel, event);
+			}
+#endif // HAVE_X11
 			break;
 		case PANEL_GRAB_OP_RESIZE:
 			retval = panel_toplevel_initial_resize_keypress (toplevel, event);
@@ -1010,8 +1035,10 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 		case PANEL_GRAB_OP_RESIZE_DOWN:
 		case PANEL_GRAB_OP_RESIZE_LEFT:
 		case PANEL_GRAB_OP_RESIZE_RIGHT:
-			retval = panel_toplevel_warp_pointer_increment (
-						toplevel, event->keyval, 1);
+#ifdef HAVE_X11
+			if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))))
+				retval = panel_toplevel_warp_pointer_increment (toplevel, event->keyval, 1);
+#endif // HAVE_X11
 			break;
 		default:
 			g_assert_not_reached ();
@@ -1441,11 +1468,13 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	if (!toplevel->priv->updated_geometry_initial)
 		return FALSE;
 
-	if (toplevel->priv->attached) {
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))) && toplevel->priv->attached) {
 		panel_struts_unregister_strut (toplevel);
 		panel_struts_set_window_hint (toplevel);
 		return FALSE;
 	}
+#endif // HAVE_X11
 
 	/* In the case of the initial animation, we really want the struts to
 	 * represent what is at the end of the animation, to avoid desktop
@@ -1527,28 +1556,32 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	if (toplevel->priv->auto_hide && strut > 0)
 		strut = panel_toplevel_get_effective_auto_hide_size (toplevel);
 
-	if (strut > 0) {
-		GdkScreen *screen;
-		screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
-		geometry_changed = panel_struts_register_strut (toplevel,
-								screen,
-								toplevel->priv->monitor,
-								orientation,
-								strut,
-								strut_start,
-								strut_end,
-								toplevel->priv->scale);
-	}
-	else {
-		panel_struts_unregister_strut (toplevel);
-	}
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
+		if (strut > 0) {
+			GdkScreen *screen;
+			screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
+			geometry_changed = panel_struts_register_strut (toplevel,
+									screen,
+									toplevel->priv->monitor,
+									orientation,
+									strut,
+									strut_start,
+									strut_end,
+									toplevel->priv->scale);
+		}
+		else {
+			panel_struts_unregister_strut (toplevel);
+		}
 
-	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
-	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN ||
-	    toplevel->priv->animating)
-		panel_struts_set_window_hint (toplevel);
-	else
-		panel_struts_unset_window_hint (toplevel);
+		if (toplevel->priv->state == PANEL_STATE_NORMAL ||
+		    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN ||
+		    toplevel->priv->animating)
+			panel_struts_set_window_hint (toplevel);
+		else
+			panel_struts_unset_window_hint (toplevel);
+	}
+#endif // HAVE_X11
 
 	return geometry_changed;
 }
@@ -2508,19 +2541,23 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 
 	panel_toplevel_update_struts (toplevel, FALSE);
 
-	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
-	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
-		panel_struts_update_toplevel_geometry (toplevel,
-						       &toplevel->priv->geometry.x,
-						       &toplevel->priv->geometry.y,
-						       &toplevel->priv->geometry.width,
-						       &toplevel->priv->geometry.height);
-	} else {
-		panel_struts_update_toplevel_geometry (toplevel,
-						       &toplevel->priv->geometry.x,
-						       &toplevel->priv->geometry.y,
-						       NULL, NULL);
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
+		if (toplevel->priv->state == PANEL_STATE_NORMAL ||
+		toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
+			panel_struts_update_toplevel_geometry (toplevel,
+							&toplevel->priv->geometry.x,
+							&toplevel->priv->geometry.y,
+							&toplevel->priv->geometry.width,
+							&toplevel->priv->geometry.height);
+		} else {
+			panel_struts_update_toplevel_geometry (toplevel,
+							&toplevel->priv->geometry.x,
+							&toplevel->priv->geometry.y,
+							NULL, NULL);
+		}
 	}
+#endif // HAVE_X11
 
 	panel_toplevel_update_edges (toplevel);
 	panel_toplevel_update_description (toplevel);
@@ -3011,11 +3048,14 @@ panel_toplevel_realize (GtkWidget *widget)
 	set_background_default_style (widget);
 	panel_background_realized (&toplevel->background, window);
 
-	panel_struts_set_window_hint (toplevel);
+#ifdef HAVE_X11
+	if (GDK_IS_X11_WINDOW (window)) {
+		panel_struts_set_window_hint (toplevel);
+		gdk_window_set_geometry_hints (window, NULL, 0);
+	}
+#endif // HAVE_X11
 
 	gdk_window_set_group (window, window);
-	gdk_window_set_geometry_hints (window, NULL, 0);
-
 	panel_toplevel_initially_hide (toplevel);
 
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
@@ -3624,11 +3664,15 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	toplevel->priv->animating = TRUE;
 
 	panel_toplevel_update_struts (toplevel, TRUE);
-	panel_struts_update_toplevel_geometry (toplevel,
-					       &toplevel->priv->animation_end_x,
-					       &toplevel->priv->animation_end_y,
-					       &toplevel->priv->animation_end_width,
-					       &toplevel->priv->animation_end_height);
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
+		panel_struts_update_toplevel_geometry (toplevel,
+						       &toplevel->priv->animation_end_x,
+						       &toplevel->priv->animation_end_y,
+						       &toplevel->priv->animation_end_width,
+						       &toplevel->priv->animation_end_height);
+	}
+#endif // HAVE_X11
 	panel_toplevel_update_struts (toplevel, FALSE);
 
 	gdk_window_get_origin (gtk_widget_get_window (GTK_WIDGET (toplevel)), &cur_x, &cur_y);
@@ -4232,7 +4276,10 @@ panel_toplevel_finalize (GObject *object)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) object;
 
-	panel_struts_unregister_strut (toplevel);
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))))
+		panel_struts_unregister_strut (toplevel);
+#endif // HAVE_X11
 
 	toplevel_list = g_slist_remove (toplevel_list, toplevel);
 
