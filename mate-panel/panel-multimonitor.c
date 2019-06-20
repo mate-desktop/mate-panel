@@ -370,6 +370,16 @@ panel_multimonitor_reinit_idle (gpointer data)
 }
 
 static void
+panel_multimonitor_handle_screen_changed (GdkScreen *screen,
+					  gpointer    user_data)
+{
+	if (reinit_id)
+		return;
+
+	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
+}
+
+static void
 panel_multimonitor_handle_monitor_changed (GdkDisplay *display,
 					   GdkMonitor *monitor,
 					   gpointer    user_data)
@@ -426,12 +436,14 @@ void
 panel_multimonitor_init (void)
 {
 	GdkDisplay *display;
+	GdkScreen  *screen;
 	int i;
 
 	if (initialized)
 		return;
 
 	display = gdk_display_get_default ();
+	screen = gdk_display_get_default_screen (display);
 
 	have_randr = FALSE;
 
@@ -442,12 +454,23 @@ panel_multimonitor_init (void)
 #endif // HAVE_RANDR
 #endif // HAVE_X11
 
-	/* monitors-changed. Since we'll likely get two signals in some cases,
-	 * we do the real callback in the idle loop. */
+	/*
+	 * The screen signals probably shouldn't be needed, but sometimes on X11 they are
+	 * the only ones that get fired
+	 */
+
+	g_signal_handlers_disconnect_by_func (screen, panel_multimonitor_handle_screen_changed, NULL);
+	g_signal_connect (screen, "size-changed",
+			  G_CALLBACK (panel_multimonitor_handle_screen_changed), NULL);
+	g_signal_connect (screen, "monitors-changed",
+			  G_CALLBACK (panel_multimonitor_handle_screen_changed), NULL);
+
+	g_signal_handlers_disconnect_by_func (display, panel_multimonitor_handle_monitor_changed, NULL);
 	g_signal_connect (display, "monitor-added",
 			  G_CALLBACK (panel_multimonitor_handle_monitor_changed), NULL);
 	g_signal_connect (display, "monitor-removed",
 			  G_CALLBACK (panel_multimonitor_handle_monitor_changed), NULL);
+
 	for (i = 0; i < gdk_display_get_n_monitors (display); i++) {
 		GdkMonitor *monitor;
 
@@ -466,14 +489,10 @@ panel_multimonitor_init (void)
 void
 panel_multimonitor_reinit (void)
 {
-	GdkDisplay *display;
 	GList      *toplevels, *l;
 
 	if (geometries)
 		g_free (geometries);
-
-	display = gdk_display_get_default ();
-	g_signal_handlers_disconnect_by_func (display, panel_multimonitor_handle_monitor_changed, NULL);
 
 	initialized = FALSE;
 	panel_multimonitor_init ();
