@@ -31,7 +31,10 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
+#endif
 
 #include <libpanel-util/panel-list.h>
 #include <libmate-desktop/mate-dconf.h>
@@ -571,10 +574,14 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 
 	g_settings_delay (toplevel->queued_settings);
 
-	if (change->screen_changed)
+#ifdef HAVE_X11
+	if (change->screen_changed &&
+	    GDK_IS_X11_SCREEN (change->screen)) {
 		g_settings_set_int (toplevel->queued_settings,
 							"screen",
 							gdk_x11_screen_get_screen_number (change->screen));
+	}
+#endif
 
 	if (change->monitor_changed)
 		g_settings_set_int (toplevel->queued_settings,
@@ -963,6 +970,7 @@ panel_profile_create_toplevel (GdkScreen *screen)
 	PanelOrientation orientation;
 	int              monitor;
 	GSettings       *settings;
+	int              screen_number;
 
 	g_return_if_fail (screen != NULL);
 
@@ -973,7 +981,14 @@ panel_profile_create_toplevel (GdkScreen *screen)
 	settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
 	g_free (path);
 
-	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, gdk_x11_screen_get_screen_number (screen));
+	screen_number = 0;
+#ifdef HAVE_X11
+	if (GDK_IS_X11_SCREEN (screen)) {
+		screen_number = gdk_x11_screen_get_screen_number (screen);
+	}
+#endif // HAVE_X11
+
+	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, screen_number);
 
 	if (panel_profile_find_empty_spot (screen, &orientation, &monitor)) {
 		g_settings_set_int (settings, PANEL_TOPLEVEL_MONITOR_KEY, monitor);
