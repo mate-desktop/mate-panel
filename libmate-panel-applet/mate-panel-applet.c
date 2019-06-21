@@ -1813,7 +1813,7 @@ mate_panel_applet_constructor (GType                  type,
 		return object;
 
 #ifdef HAVE_X11
-	if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
 		applet->priv->plug = gtk_plug_new (0);
 
@@ -1832,7 +1832,7 @@ mate_panel_applet_constructor (GType                  type,
 					  applet);
 
 		gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
-	}
+	} else
 #endif
 	{ // not using X11
 		g_warning ("Requested construction of an out-of-process applet, which is only possible on X11");
