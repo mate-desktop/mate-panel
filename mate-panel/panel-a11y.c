@@ -36,7 +36,7 @@ panel_a11y_get_is_a11y_enabled (GtkWidget *widget)
 
 void
 panel_a11y_set_atk_name_desc (GtkWidget  *widget,
-			      const char *name, 
+			      const char *name,
 			      const char *desc)
 {
 	AtkObject *aobj;
@@ -69,7 +69,7 @@ panel_a11y_set_atk_relation (GtkWidget *widget,
 {
 	AtkObject      *aobject;
 	AtkRelationSet *relation_set;
-	AtkRelation    *relation; 
+	AtkRelation    *relation;
 	AtkObject      *targets [1];
 
 	g_return_if_fail (GTK_IS_WIDGET(widget));

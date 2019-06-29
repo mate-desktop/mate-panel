@@ -31,7 +31,7 @@ guint32      mate_panel_applet_get_xid           (MatePanelApplet *applet,
 const gchar *mate_panel_applet_get_object_path   (MatePanelApplet *applet);
 
 GtkWidget   *mate_panel_applet_get_applet_widget (const gchar *factory_id,
-                                              guint        uid);       
+                                              guint        uid);
 
 G_END_DECLS
 

@@ -158,7 +158,7 @@ wm_state_set (Display *xdisplay,
 	return TRUE;
 }
 
-static Window 
+static Window
 find_managed_window (Display *xdisplay,
 		     Window   window)
 {
@@ -225,7 +225,7 @@ static void
 kill_window_question (gpointer window)
 {
 	GtkWidget *dialog;
- 
+
 	dialog = gtk_message_dialog_new (NULL, 0,
 					 GTK_MESSAGE_WARNING,
 					 GTK_BUTTONS_NONE,
@@ -243,7 +243,7 @@ kill_window_question (gpointer window)
 	gtk_dialog_add_button (GTK_DIALOG (dialog),
 			       PANEL_STOCK_FORCE_QUIT,
 			       GTK_RESPONSE_ACCEPT);
- 
+
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
 					 GTK_RESPONSE_CANCEL);
 	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
@@ -255,7 +255,7 @@ kill_window_question (gpointer window)
 	gtk_widget_show (dialog);
 }
 
-static void 
+static void
 handle_button_press_event (GtkWidget *popup,
 			   Display *display,
 			   Window subwindow)

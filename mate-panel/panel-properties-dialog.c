@@ -397,7 +397,7 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 	else
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
 					       image);
-	
+
 	if (image)
 		g_free (image);
 
@@ -494,7 +494,7 @@ panel_properties_dialog_background_toggled (PanelPropertiesDialog *dialog,
 
 	panel_profile_set_background_type (dialog->toplevel, background_type);
 }
-				
+
 static void
 panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 						 GtkBuilder            *gui)

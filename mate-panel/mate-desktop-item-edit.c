@@ -44,7 +44,7 @@ validate_for_filename (char *file)
 	char *ptr;
 
 	g_return_if_fail (file != NULL);
-	
+
 	ptr = file;
 	while (*ptr != '\0') {
 		if (*ptr == '/')

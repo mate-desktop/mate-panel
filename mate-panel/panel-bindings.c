@@ -49,8 +49,8 @@ typedef struct {
 } PanelBinding;
 
 static gboolean initialised = FALSE;
-static GSettings *marco_settings = NULL; 
-static GSettings *marco_keybindings_settings = NULL; 
+static GSettings *marco_settings = NULL;
+static GSettings *marco_keybindings_settings = NULL;
 
 static PanelBinding bindings [] = {
 	{ MARCO_ACTIVATE_WINDOW_MENU_KEY, "popup-panel-menu", 0, 0 },
@@ -117,7 +117,7 @@ panel_binding_set_entry (PanelBinding  *binding,
 {
 	binding_set = get_binding_set (binding_set);
 
-        gtk_binding_entry_add_signal (binding_set,	
+        gtk_binding_entry_add_signal (binding_set,
 				      binding->keyval,
 				      binding->modifiers,
 				      binding->signal,

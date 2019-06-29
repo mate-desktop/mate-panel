@@ -84,7 +84,7 @@ panel_g_list_insert_after (GList *list,
 			link->prev = sibling;
 			return list;
 		}
-			
+
 	} else {
 		link->next = list;
 		list->prev = link;

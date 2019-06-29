@@ -39,7 +39,7 @@
 
 typedef struct _PanelBackground PanelBackground;
 
-typedef void (*PanelBackgroundChangedNotify) 
+typedef void (*PanelBackgroundChangedNotify)
 				(PanelBackground *background,
 				 gpointer         user_data);
 
@@ -52,7 +52,7 @@ struct _PanelBackground {
 	GdkRGBA                 color;
 
 	char                   *image;
-	GdkPixbuf              *loaded_image; 
+	GdkPixbuf              *loaded_image;
 
 	GtkOrientation          orientation;
 	GdkRectangle            region;
@@ -90,7 +90,7 @@ void  panel_background_set               (PanelBackground     *background,
 					  const char          *image,
 					  gboolean             fit_image,
 					  gboolean             stretch_image,
-					  gboolean             rotate_image); 
+					  gboolean             rotate_image);
 void  panel_background_set_type          (PanelBackground     *background,
 					  PanelBackgroundType  type);
 void  panel_background_set_opacity       (PanelBackground     *background,

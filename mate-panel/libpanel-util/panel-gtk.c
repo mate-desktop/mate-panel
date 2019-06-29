@@ -197,14 +197,14 @@ panel_image_menu_item_new_from_icon (const gchar *icon_name,
 	concat = g_strconcat (label_name, "     ", NULL);
 	GtkWidget *label_menu = gtk_label_new_with_mnemonic (concat);
 	GtkWidget *menuitem = gtk_menu_item_new ();
- 
+
 	context = gtk_widget_get_style_context (GTK_WIDGET(icon_box));
 	gtk_style_context_add_class(context,"mate-panel-menu-icon-box");
 
 	gtk_container_add (GTK_CONTAINER (icon_box), icon);
 	gtk_container_add (GTK_CONTAINER (box), icon_box);
 	gtk_container_add (GTK_CONTAINER (box), label_menu);
- 
+
 	gtk_container_add (GTK_CONTAINER (menuitem), box);
 	gtk_widget_show_all (menuitem);
 
@@ -238,11 +238,11 @@ panel_image_menu_item_new_from_gicon (GIcon       *gicon,
 
 	context = gtk_widget_get_style_context (GTK_WIDGET(icon_box));
 	gtk_style_context_add_class(context,"mate-panel-menu-icon-box");
- 
+
 	gtk_container_add (GTK_CONTAINER (icon_box), icon);
 	gtk_container_add (GTK_CONTAINER (box), icon_box);
 	gtk_container_add (GTK_CONTAINER (box), label_menu);
- 
+
 	gtk_container_add (GTK_CONTAINER (menuitem), box);
 	gtk_widget_show_all (menuitem);
 

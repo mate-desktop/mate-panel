@@ -191,7 +191,7 @@ panel_key_file_load_from_uri (GKeyFile       *keyfile,
 		ret = g_file_load_contents (file, NULL, &contents, &size,
 					    NULL, NULL);
 		g_object_unref (file);
-		
+
 		if (!ret)
 			return FALSE;
 
@@ -213,7 +213,7 @@ panel_key_file_copy_and_mark_trusted (const char  *source_path,
 	gboolean  res = FALSE;
 
 	key_file = g_key_file_new ();
-	res = g_key_file_load_from_file (key_file, source_path, 
+	res = g_key_file_load_from_file (key_file, source_path,
 					 G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
 					 error);
 	if (!res) {
@@ -260,7 +260,7 @@ panel_key_file_set_locale_string (GKeyFile    *keyfile,
 	for (i = 0; langs_pointer[i] != NULL; i++) {
 		/* find first without encoding  */
 		if (strchr (langs_pointer[i], '.') == NULL) {
-			locale = langs_pointer[i]; 
+			locale = langs_pointer[i];
 			break;
 		}
 	}

@@ -20,7 +20,7 @@
  *     Jonathan Blandford <jrb@redhat.com>
  *     Matthias Clasen <mclasen@redhat.com>
  */
- 
+
 #include <time.h>
 #include <gtk/gtk.h>
 #include <math.h>
@@ -70,7 +70,7 @@ solve_keplers_equation (gdouble e,
 
   /* start with an initial estimate */
   E = M;
-  
+
   d = E - e * sin (E) - M;
 
   while (ABS (d) > ERROR_ACCURACY)

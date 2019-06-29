@@ -270,7 +270,7 @@ mate_panel_applet_size_hints_changed (MatePanelApplet *applet,
 }
 
 /**
- * mate_panel_applet_set_size_hints: 
+ * mate_panel_applet_set_size_hints:
  * @applet: applet
  * @size_hints: (array length=n_elements): List of integers
  * @n_elements: Length of @size_hints
@@ -846,7 +846,7 @@ mate_panel_applet_menu_popup (MatePanelApplet *applet,
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
-	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
 /* Set menu and it's toplevel window to follow panel theme */
 	GtkStyleContext *context;
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
@@ -1840,7 +1840,7 @@ mate_panel_applet_constructor (GType                  type,
 
 	return object;
 }
- 
+
 static void
 mate_panel_applet_constructed (GObject* object)
 {
@@ -2291,7 +2291,7 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 				     GType                      applet_type,
 				     MatePanelAppletFactoryCallback callback,
 					 gpointer                   user_data)
-	
+
 {
 	MatePanelAppletFactory* factory;
 	GClosure* closure;

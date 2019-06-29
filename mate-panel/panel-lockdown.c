@@ -170,7 +170,7 @@ panel_lockdown_init (void)
                                           panel_lockdown.lockdown_settings,
                                           LOCKDOWN_DISABLE_COMMAND_LINE_KEY,
                                           G_CALLBACK (disable_command_line_notify));
-        
+
         panel_lockdown.disable_lock_screen =
                 panel_lockdown_load_bool (&panel_lockdown,
                                           panel_lockdown.lockdown_settings,

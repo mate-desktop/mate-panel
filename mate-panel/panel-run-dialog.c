@@ -2066,6 +2066,6 @@ panel_run_dialog_present (GdkScreen *screen,
 void
 panel_run_dialog_quit_on_destroy (void)
 {
-	g_signal_connect(static_dialog->run_dialog, "destroy", 
+	g_signal_connect(static_dialog->run_dialog, "destroy",
 			 G_CALLBACK(gtk_main_quit), NULL);
 }

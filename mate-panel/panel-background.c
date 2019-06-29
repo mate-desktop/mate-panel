@@ -621,7 +621,7 @@ load_background_file (PanelBackground *background)
 
 	//FIXME add a monitor on the file so that we reload the background
 	//when it changes
-	background->loaded_image = 
+	background->loaded_image =
 		gdk_pixbuf_new_from_file (background->image, &error);
 	if (!background->loaded_image) {
 		g_assert (error != NULL);
@@ -885,7 +885,7 @@ panel_background_change_region (PanelBackground *background,
 			    background->region.height != height) &&
 			   (background->fit_image ||
 			    background->stretch_image)) {
-			/* or if the size changes and we are 
+			/* or if the size changes and we are
 			   stretching or fitting the image */
 			need_to_retransform = TRUE;
 		}

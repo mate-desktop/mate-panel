@@ -108,7 +108,7 @@ obsolete_enum_to_string (ObsoleteEnumStringPair lookup_table[],
                          gint enum_value)
 {
   int i = 0;
-  
+
   while (lookup_table[i].str != NULL)
     {
       if (lookup_table[i].enum_value == enum_value)
@@ -126,7 +126,7 @@ obsolete_string_to_enum (ObsoleteEnumStringPair lookup_table[],
                       gint* enum_value_retloc)
 {
   int i = 0;
-  
+
   while (lookup_table[i].str != NULL)
     {
       if (g_ascii_strcasecmp (lookup_table[i].str, str) == 0)

@@ -323,7 +323,7 @@ setup_options (void)
 		if (dconf_paths)
 			g_strfreev (dconf_paths);
 	}
-	
+
 	prefs_path = g_strdup_printf ("/tmp/%s/", unique_key);
 	if (unique_key)
 		g_free (unique_key);
