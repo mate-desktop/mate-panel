@@ -2925,7 +2925,7 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 
 	if(resize || move)
 	{
-		for(list = toplevel->priv->panel_widget->applet_list;list!=NULL;list = g_list_next(list)) 
+		for(list = toplevel->priv->panel_widget->applet_list;list!=NULL;list = g_list_next(list))
 		{
 			AppletData *ad = list->data;
 			id = mate_panel_applet_get_id_by_widget (ad->applet);
@@ -2975,7 +2975,7 @@ set_background_default_style (GtkWidget *widget)
 		return;
 
 	toplevel = PANEL_TOPLEVEL (widget);
- 
+
 	context = gtk_widget_get_style_context (widget);
 	state = gtk_style_context_get_state (context);
 
@@ -3475,7 +3475,7 @@ panel_toplevel_button_release_event (GtkWidget      *widget,
 static gboolean
 panel_toplevel_configure_event (GtkWidget	  *widget,
 				GdkEventConfigure *event)
-{	
+{
 	PanelToplevel *toplevel;
 
 	toplevel = PANEL_TOPLEVEL (widget);
@@ -4812,7 +4812,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	panel_background_init (&toplevel->background,
 			       (PanelBackgroundChangedNotify) background_changed,
-			       toplevel);	
+			       toplevel);
 
 	update_style_classes (toplevel);
 }

@@ -111,7 +111,7 @@ orient_change_foreach(GtkWidget *w, gpointer data)
 {
 	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
 	PanelWidget *panel = data;
-	
+
 	orientation_change(info,panel);
 }
 
@@ -141,7 +141,7 @@ size_change_foreach(GtkWidget *w, gpointer data)
 {
 	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
 	PanelWidget *panel = data;
-	
+
 	size_change(info,panel);
 }
 
@@ -396,12 +396,12 @@ panel_key_press_event (GtkWidget   *widget,
 #ifdef HAVE_X11
 	/*
   	 * If the focus widget is a GtkSocket, i.e. the
-	 * focus is in an applet in another process, then key 
+	 * focus is in an applet in another process, then key
 	 * bindings do not work. We get around this by
 	 * activating the key bindings here.
 	 *
 	 * Will always be false when not using X
-	 */ 
+	 */
 	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
 	    event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
@@ -482,7 +482,7 @@ drop_url (PanelWidget *panel,
 		g_strfreev (netscape_url);
 		return FALSE;
 	}
-	
+
 	comment = g_strdup_printf (_("Open URL: %s"),
 				   netscape_url[NETSCAPE_URL_URL]);
 
@@ -717,7 +717,7 @@ drop_internal_icon (PanelWidget *panel,
 
 	if (action == GDK_ACTION_MOVE)
 		old_launcher = find_launcher (icon_name);
-	
+
 	if (!panel_launcher_create_copy (panel->toplevel, pos, icon_name))
 		return FALSE;
 
@@ -1053,7 +1053,7 @@ drag_drop_cb (GtkWidget	        *widget,
 	return TRUE;
 }
 
-static void  
+static void
 drag_leave_cb (GtkWidget	*widget,
 	       GdkDragContext   *context,
 	       guint             time,
@@ -1163,9 +1163,9 @@ drag_data_recieved_cb (GtkWidget	*widget,
 	panel_widget = panel_toplevel_get_panel_widget (PANEL_TOPLEVEL (widget));
 
 	pos = panel_widget_get_cursorloc (panel_widget);
-	
-	/* 
-	 * -1 passed to mate_panel_applet_register will turn on 
+
+	/*
+	 * -1 passed to mate_panel_applet_register will turn on
 	 * the insert_at_pos flag for panel_widget_add_full,
 	 * which will not place it after the first applet.
 	 */
@@ -1220,7 +1220,7 @@ panel_setup (PanelToplevel *toplevel)
 	pd->deactivate_idle = 0;
 
 	panel_list = g_slist_append (panel_list, pd);
-	
+
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", pd);
 
 	panel_lockdown_notify_add (G_CALLBACK (panel_recreate_context_menu),
@@ -1248,7 +1248,7 @@ panel_setup (PanelToplevel *toplevel)
 
 	g_signal_connect_swapped (toplevel, "notify::orientation",
 				  G_CALLBACK (panel_orient_change), panel_widget);
- 
+
 	g_signal_connect (toplevel, "destroy", G_CALLBACK (panel_destroy), pd);
 
 	return pd;
@@ -1300,7 +1300,7 @@ panel_delete_without_query (PanelToplevel *toplevel)
 		panel_profile_delete_object (info);
 	} else
 		panel_profile_delete_toplevel (toplevel);
-} 
+}
 
 static void
 panel_deletion_response (GtkWidget     *dialog,
@@ -1348,9 +1348,9 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 			GTK_MESSAGE_WARNING,
 			GTK_BUTTONS_NONE,
 			"%s", text1);
-	
+
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-	                                          "%s", text2);	
+	                                          "%s", text2);
 
 	panel_dialog_add_button (GTK_DIALOG (dialog),
 				 _("_Cancel"), "process-stop",

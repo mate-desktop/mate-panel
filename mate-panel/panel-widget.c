@@ -293,7 +293,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, size_change),
                               NULL,
-                              NULL, 
+                              NULL,
                               g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE,
                               0);
@@ -304,7 +304,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, back_change),
                               NULL,
-                              NULL, 
+                              NULL,
                               g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE,
                               0);
@@ -315,11 +315,11 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_move),
                               NULL,
-                              NULL, 
+                              NULL,
                               g_cclosure_marshal_VOID__POINTER,
                               G_TYPE_NONE,
                               1,
-                              G_TYPE_POINTER); 
+                              G_TYPE_POINTER);
 
 	panel_widget_signals[APPLET_ADDED_SIGNAL] =
                 g_signal_new ("applet_added",
@@ -327,11 +327,11 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_added),
                               NULL,
-                              NULL, 
+                              NULL,
                               g_cclosure_marshal_VOID__POINTER,
                               G_TYPE_NONE,
                               1,
-                              G_TYPE_POINTER); 
+                              G_TYPE_POINTER);
 
 	panel_widget_signals[APPLET_REMOVED_SIGNAL] =
                 g_signal_new ("applet_removed",
@@ -339,11 +339,11 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_removed),
                               NULL,
-                              NULL, 
+                              NULL,
                               g_cclosure_marshal_VOID__POINTER,
                               G_TYPE_NONE,
                               1,
-                              G_TYPE_POINTER); 
+                              G_TYPE_POINTER);
 
 	panel_widget_signals[PUSH_MOVE_SIGNAL] =
 		g_signal_new ("push_move",
@@ -356,7 +356,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_NONE,
                               1,
                               GTK_TYPE_DIRECTION_TYPE);
-	
+
 	panel_widget_signals[SWITCH_MOVE_SIGNAL] =
                 g_signal_new ("switch_move",
                               G_TYPE_FROM_CLASS (class),
@@ -434,7 +434,7 @@ remove_panel_from_forbidden(PanelWidget *panel, PanelWidget *r)
 {
 	GSList *list;
 	GtkWidget *parent_panel;
-	
+
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
 	g_return_if_fail(PANEL_IS_WIDGET(r));
 
@@ -570,9 +570,9 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 
 	g_return_if_fail (PANEL_IS_WIDGET (container));
 	g_return_if_fail (GTK_IS_WIDGET (widget));
-	
+
 	panel = PANEL_WIDGET (container);
-	
+
 	ad = g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA);
 	p = g_object_get_data (G_OBJECT (widget),
 				 MATE_PANEL_APPLET_ASSOC_PANEL_KEY);
@@ -609,7 +609,7 @@ get_applet_list_pos (PanelWidget *panel,
 	GList *l;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), NULL);
-	
+
 	for (l = panel->applet_list; l; l = l->next) {
 		AppletData *ad = l->data;
 
@@ -637,7 +637,7 @@ panel_widget_is_applet_stuck (PanelWidget *panel_widget,
 	if (applet) {
 		GList *applet_list, *l;
 		int    end_pos = -1;
-	
+
 		applet_list = g_list_find (panel_widget->applet_list, applet);
 
 		for (l = applet_list; l; l = l->next) {
@@ -659,7 +659,7 @@ static int
 get_size_from_hints (AppletData *ad, int cells)
 {
 	int i;
-	
+
 	for (i = 0; i < ad->size_hints_len; i += 2) {
 		if (cells > ad->size_hints[i]) {
 			/* Clip to top */
@@ -672,7 +672,7 @@ get_size_from_hints (AppletData *ad, int cells)
 			break;
 		}
 	}
-	
+
 	return MAX (cells, ad->min_cells);
 }
 
@@ -717,7 +717,7 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 {
 	AppletData *ad;
 	AppletData *nad = NULL;
-	
+
 	g_assert (list != NULL);
 
 	ad = list->data;
@@ -741,7 +741,7 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 						nad->constrained + nad->min_cells);
 		return;
 	}
-						  
+
 	nad->constrained = nad->pos = ad->constrained;
 	ad->constrained = ad->pos = ad->constrained + nad->min_cells;
 	panel->applet_list = panel_g_list_swap_next (panel->applet_list, list);
@@ -919,7 +919,7 @@ panel_widget_try_push_left (PanelWidget *panel,
 
 	if (ad->constrained - push < 0)
 		return FALSE;
-	
+
 	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - push)
 		return TRUE;
 
@@ -961,7 +961,7 @@ panel_widget_get_left_switch_pos (PanelWidget *panel,
 	ad = list->data;
 	if (list->prev)
 		pad = list->prev->data;
-	
+
 	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - MOVE_INCREMENT)
 		return ad->constrained - MOVE_INCREMENT;
 
@@ -970,7 +970,7 @@ panel_widget_get_left_switch_pos (PanelWidget *panel,
 						       ad,
 						       list->prev->prev,
 						       pad->constrained - ad->min_cells);
-	
+
 	return pad->constrained;
 }
 
@@ -1035,7 +1035,7 @@ panel_widget_switch_move (PanelWidget *panel,
 
 			panel_widget_switch_applet_left (panel, list);
 		}
-		
+
 	}
 }
 
@@ -1048,7 +1048,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 	AppletData *nad = NULL;
 
 	g_assert (list != NULL);
-	
+
 	ad = list->data;
 	if (ad->constrained + ad->min_cells + push >= panel->size)
 		return FALSE;
@@ -1074,7 +1074,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 	ad->pos = ad->constrained += push;;
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
-	
+
 	return TRUE;
 }
 
@@ -1113,7 +1113,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 	ad->pos = ad->constrained -= push;
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
-	
+
 	return TRUE;
 }
 
@@ -1167,20 +1167,20 @@ panel_widget_right_stick(PanelWidget *panel,int old_size)
 
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
 	g_return_if_fail(old_size>=0);
-	
+
 	if(old_size>=panel->size ||
 	   panel->packed)
 	   	return;
-	
+
 	list = get_applet_list_pos(panel,old_size-1);
 
 	if(!list)
 		return;
-	
+
 	pos = panel->size-1;
 
 	ad = list->data;
-	do { 
+	do {
 		i = ad->pos;
 		ad->pos = ad->constrained = pos--;
 		ad->cells = 1;
@@ -1305,7 +1305,7 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 			panel->applets_using_hint = g_new0 (AppletSizeHintsAlloc, panel->nb_applets_size_hints);
 		}
 	}
-	
+
 	dont_fill = panel->packed && panel->nb_applets_size_hints != 0;
 
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
@@ -1378,7 +1378,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	old_size = panel->size;
 	ltr = gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR;
-	
+
 	gtk_widget_set_allocation (widget, allocation);
 	if (gtk_widget_get_realized (widget))
 		gdk_window_move_resize (gtk_widget_get_window (widget),
@@ -1409,7 +1409,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
 
 			ad->constrained = i;
-			
+
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
@@ -1486,14 +1486,14 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		    list = g_list_previous(list)) {
 			AppletData *ad = list->data;
 			int cells;
-			
+
 			if (ad->constrained + ad->min_cells > i)
 				ad->constrained = MAX (i - ad->min_cells, 0);
-			
+
 			if (ad->expand_major) {
 				cells = (i - ad->constrained) - 1;
 
-				if (ad->size_hints) 
+				if (ad->size_hints)
 					cells = get_size_from_hints (ad, cells);
 				cells = MAX (cells, ad->min_cells);
 				cells = MIN (cells, panel->size);
@@ -1513,10 +1513,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			    list!=NULL;
 			    list = g_list_next(list)) {
 				AppletData *ad = list->data;
-				
+
 				if (ad->constrained < i)
 					ad->constrained = i;
-				
+
 				i = ad->constrained + ad->cells;
 			}
 		}
@@ -1546,10 +1546,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->constrained;
 			}
-			
+
 			challoc.width = MAX(challoc.width, 1);
 			challoc.height = MAX(challoc.height, 1);
-			
+
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}
@@ -1569,7 +1569,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
 
 	widget = panel->drop_widget;
-	
+
 	if(!widget ||
 	   !GTK_IS_WIDGET(widget) ||
 	   !gtk_widget_get_visible(widget))
@@ -1670,7 +1670,7 @@ panel_widget_init (PanelWidget *panel)
 	gtk_widget_set_events (
 		widget,
 		gtk_widget_get_events (widget) | GDK_BUTTON_RELEASE_MASK);
-	
+
 	panel->packed        = FALSE;
 	panel->orient        = GTK_ORIENTATION_HORIZONTAL;
 	panel->size          = 0;
@@ -1760,7 +1760,7 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 	add_all_move_bindings (panel);
 
 	mate_panel_applet_in_drag = TRUE;
-	
+
 	return TRUE;
 }
 
@@ -1870,7 +1870,7 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET(panel))));
 	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET(panel)), device, &x, &y, NULL);
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
-	
+
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 		return (rtl ? panel->size - x : x);
 	else
@@ -2106,7 +2106,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		else if (mods & GDK_MOD1_MASK)
 			movement = PANEL_FREE_MOVE;
 	}
-	
+
 	switch (movement) {
 	case PANEL_SWITCH_MOVE:
 		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
@@ -2161,7 +2161,7 @@ move_timeout_handler(gpointer data)
 	}
 
 	moving_timeout = 0;
-	
+
 	return FALSE;
 }
 
@@ -2196,7 +2196,7 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 
 	/* don't propagate this event */
 	if (panel->currently_dragged_applet) {
-		g_signal_stop_emission (G_OBJECT (widget), 
+		g_signal_stop_emission (G_OBJECT (widget),
 					g_signal_lookup ("button-press-event",
 							 G_OBJECT_TYPE (widget)),
 					0);
@@ -2231,7 +2231,7 @@ panel_widget_applet_button_release_event (GtkWidget      *widget,
 	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
 
 	panel = PANEL_WIDGET (parent);
-	
+
 	/* don't propagate this event */
 	if (panel->currently_dragged_applet) {
 		g_signal_stop_emission (G_OBJECT (widget),
@@ -2260,7 +2260,7 @@ panel_widget_applet_motion_notify_event (GtkWidget *widget,
 		return FALSE;
 
 	panel = PANEL_WIDGET (parent);
-	
+
 	schedule_try_move (panel, FALSE);
 
 	return FALSE;
@@ -2272,7 +2272,7 @@ panel_widget_applet_key_press_event (GtkWidget   *widget,
 {
 	GtkWidget   *parent;
 	PanelWidget *panel;
-	
+
 	parent = gtk_widget_get_parent (widget);
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
@@ -2283,8 +2283,8 @@ panel_widget_applet_key_press_event (GtkWidget   *widget,
 		return FALSE;
 
 	return gtk_bindings_activate (G_OBJECT (panel),
-				      ((GdkEventKey *)event)->keyval, 
-				      ((GdkEventKey *)event)->state);	
+				      ((GdkEventKey *)event)->keyval,
+				      ((GdkEventKey *)event)->state);
 }
 
 static int
@@ -2329,12 +2329,12 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	 * until the event gets to the applet wrapper (the
 	 * GtkEventBox) for processing by us.
 	 */
-	
+
 	if (gtk_widget_get_has_window (widget))
 		g_signal_connect (G_OBJECT(widget), "event",
 				  G_CALLBACK (panel_sub_event_handler),
 				  data);
-	
+
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, data);
@@ -2481,7 +2481,7 @@ panel_widget_add (PanelWidget *panel,
 
 	if (!insert_at_pos || pos < 0) {
 		if (panel->packed) {
-			if (get_applet_list_pos (panel, pos)) 
+			if (get_applet_list_pos (panel, pos))
 				/*this is a slight hack so that this applet
 				  is inserted AFTER an applet with this pos
 				  number*/
@@ -2490,7 +2490,7 @@ panel_widget_add (PanelWidget *panel,
 			int newpos = panel_widget_find_empty_pos (panel, pos);
 			if (newpos >= 0)
 				pos = newpos;
-			else if (get_applet_list_pos (panel, pos)) 
+			else if (get_applet_list_pos (panel, pos))
 				/*this is a slight hack so that this applet
 				  is inserted AFTER an applet with this pos
 				  number*/
@@ -2515,7 +2515,7 @@ panel_widget_add (PanelWidget *panel,
 		ad->size_hints = NULL;
 		g_object_set_data (G_OBJECT (applet),
 				   MATE_PANEL_APPLET_DATA, ad);
-		
+
 		/*this is a completely new applet, which was not yet bound*/
 		bind_top_applet_events (applet);
 	}
@@ -2538,7 +2538,7 @@ panel_widget_add (PanelWidget *panel,
 	g_signal_emit (G_OBJECT(panel),
 		       panel_widget_signals[APPLET_ADDED_SIGNAL],
 		       0, applet);
-	
+
 	/*NOTE: forbidden list is not updated on addition, use the
 	function above for the panel*/
 
@@ -2569,7 +2569,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	 */
 	if (panel_toplevel_get_is_hidden (new_panel->toplevel))
 		return FALSE;
-	
+
 	info = g_object_get_data (G_OBJECT (ad->applet), "applet_info");
 
 	ad->pos = ad->constrained = panel_widget_get_free_spot (new_panel, ad, pos);
@@ -2642,7 +2642,7 @@ panel_widget_set_size (PanelWidget *panel_widget,
 		return;
 
 	panel_widget->sz = size;
-	
+
 	queue_resize_on_all_applets (panel_widget);
 
 	g_signal_emit (panel_widget, panel_widget_signals [SIZE_CHANGE_SIGNAL], 0);
@@ -2656,7 +2656,7 @@ panel_widget_emit_background_changed (PanelWidget *panel)
 	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
 }
 
-static void 
+static void
 panel_widget_push_move_applet (PanelWidget     *panel,
                                GtkDirectionType dir)
 {
@@ -2682,7 +2682,7 @@ panel_widget_push_move_applet (PanelWidget     *panel,
 	panel_widget_push_move (panel, applet, increment);
 }
 
-static void 
+static void
 panel_widget_switch_move_applet (PanelWidget      *panel,
                                  GtkDirectionType  dir)
 {
@@ -2709,7 +2709,7 @@ panel_widget_switch_move_applet (PanelWidget      *panel,
 	}
 }
 
-static void 
+static void
 panel_widget_free_move_applet (PanelWidget      *panel,
                                GtkDirectionType  dir)
 {
@@ -2747,8 +2747,8 @@ panel_widget_tab_move (PanelWidget *panel,
 	ad = panel->currently_dragged_applet;
 
 	if (!ad)
-		return;	
-	
+		return;
+
 	for (l = panels; l; l = l->next) {
 		PanelWidget *panel_in_list = l->data;
 
@@ -2758,7 +2758,7 @@ panel_widget_tab_move (PanelWidget *panel,
 					new_panel = l->next->data;
 				else
 					new_panel = ((GSList *)panels)->data;
-				
+
 			} else {
 				if (previous_panel)
 					new_panel = previous_panel;
@@ -2766,7 +2766,7 @@ panel_widget_tab_move (PanelWidget *panel,
 					continue;
 			}
 			break;
-		} else {		
+		} else {
 			if (!next)
 				previous_panel = panel_in_list;
 		}
@@ -2776,7 +2776,7 @@ panel_widget_tab_move (PanelWidget *panel,
 
 	if (!new_panel && previous_panel)
 		new_panel = previous_panel;
-	
+
 	if (new_panel &&
 	    (new_panel != panel) &&
 	    !panel_lockdown_get_locked_down ())
@@ -2799,7 +2799,7 @@ panel_widget_real_focus (GtkWidget        *widget,
 	return GTK_WIDGET_CLASS (panel_widget_parent_class)->focus (widget, direction);
 }
 
-void 
+void
 panel_widget_focus (PanelWidget *panel_widget)
 {
 	if (panel_toplevel_get_is_attached (panel_widget->toplevel))
@@ -2942,7 +2942,7 @@ mate_panel_applet_is_in_drag (void)
 	return mate_panel_applet_in_drag;
 }
 
-void 
+void
 panel_widget_register_open_dialog (PanelWidget *panel,
 				   GtkWidget   *dialog)
 {
@@ -2953,7 +2953,7 @@ panel_widget_register_open_dialog (PanelWidget *panel,
 
 	panel->open_dialogs = g_slist_append (panel->open_dialogs,
 					      dialog);
-	
+
 	g_signal_connect_object (dialog, "destroy",
 				 G_CALLBACK (panel_widget_open_dialog_destroyed),
 				 panel,

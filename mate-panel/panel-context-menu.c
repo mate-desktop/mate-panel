@@ -248,7 +248,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (panel_properties_dialog_present), 
+				  G_CALLBACK (panel_properties_dialog_present),
 				  panel_widget->toplevel);
 
 	add_menu_separator (menu);
@@ -278,9 +278,9 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_context_menu_create_new_panel), 
+			  G_CALLBACK (panel_context_menu_create_new_panel),
 			  NULL);
-	gtk_widget_set_sensitive (menuitem, 
+	gtk_widget_set_sensitive (menuitem,
 				  panel_profile_id_lists_are_writable ());
 
 	add_menu_separator (menu);
@@ -329,7 +329,7 @@ panel_context_menu_create (PanelWidget *panel)
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_context_menu_show_about_dialog),
 			  NULL);
-	
+
 	//FIXME: can we get rid of this? (needed by menu_get_panel())
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
 
@@ -338,7 +338,7 @@ panel_context_menu_create (PanelWidget *panel)
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
-	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
 /* Set menu and it's toplevel window to follow panel theme */
 	GtkStyleContext *context;
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));

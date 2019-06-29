@@ -949,13 +949,13 @@ create_fake_menu (MateMenuTreeDirectory *directory)
 
 	g_signal_connect (menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-			  
-			  
+
+
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
-	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
 
 	return menu;
 }
@@ -1265,12 +1265,12 @@ create_applications_menu (const char *menu_file,
 	g_signal_connect (menu, "destroy", G_CALLBACK (remove_matemenu_tree_monitor), tree);
 
 	g_object_unref(tree);
-	
+
 /*HACK Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
-	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
 
 	return menu;
 }

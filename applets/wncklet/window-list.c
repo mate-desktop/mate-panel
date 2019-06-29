@@ -736,23 +736,23 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	for (i = 0; i < G_N_ELEMENTS(system_monitors); i += 1)
 	{
 		programpath = g_find_program_in_path(system_monitors[i]);
-		
+
 		if (programpath != NULL)
 		{
 			g_free(programpath);
 			/* we give up */
 			goto _system_monitor_found;
 		}
-		
+
 		/* search another */
 	}
 
 	/* system monitor not found */
 	gtk_action_set_visible(gtk_action_group_get_action(action_group, "TasklistSystemMonitor"), FALSE);
-	
+
 	_system_monitor_found:;
 	/* end of system monitor item */
-	
+
 
 	mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (tasklist->applet),
 	                                            WNCKLET_RESOURCE_PATH "window-list-menu.xml",

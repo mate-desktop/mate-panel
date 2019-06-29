@@ -178,19 +178,19 @@ na_preferences_dialog_response (NaTrayApplet *applet,
 
 static void
 ensure_prefs_window_is_created (NaTrayApplet *applet)
-{  
+{
   if (applet->priv->dialog)
     return;
 
   applet->priv->dialog = g_new0 (NAPreferencesDialog, 1);
-  
+
   applet->priv->dialog->preferences_dialog = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "notification_area_preferences_dialog"));
 
   gtk_window_set_icon_name (GTK_WINDOW (applet->priv->dialog->preferences_dialog), NOTIFICATION_AREA_ICON);
-  
+
   applet->priv->dialog->min_icon_size_spin = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "min_icon_size_spin"));
   g_return_if_fail (applet->priv->dialog->min_icon_size_spin != NULL);
-  
+
   gtk_spin_button_set_range (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), 7, 100);
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), applet->priv->min_icon_size);
 

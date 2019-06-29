@@ -73,7 +73,7 @@ clock_utils_display_help (GtkWidget  *widget,
 	else
 		uri = g_strdup_printf ("help:%s", doc_id);
 
-	gtk_show_uri_on_window (NULL, uri, 
+	gtk_show_uri_on_window (NULL, uri,
 		gtk_get_current_event_time (), &error);
 	g_free (uri);
 

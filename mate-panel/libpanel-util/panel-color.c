@@ -164,7 +164,7 @@ hls_to_rgb (gdouble *h, gdouble *l, gdouble *s)
  * Takes a colour "a", scales the lightness and saturation by a certain amount,
  * and sets "b" to the resulting colour.
  * gtkstyle.c cut-and-pastage.
- */ 
+ */
 void
 gtk_style_shade (GdkRGBA *a, GdkRGBA *b, gdouble k)
 {

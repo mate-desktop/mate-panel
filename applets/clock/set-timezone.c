@@ -223,7 +223,7 @@ set_time_async (SetTimeCallbackData *data)
 				   NULL,
 				   set_time_notify,
 				   data);
-	else 
+	else
 		g_dbus_proxy_call (proxy,
 				   "SetTimezone",
 				   g_variant_new ("(s)", data->filename),

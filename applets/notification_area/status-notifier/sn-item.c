@@ -446,7 +446,7 @@ sn_item_class_init (SnItemClass *item_class)
 
   install_properties (object_class);
   install_signals (item_class);
-  
+
   g_type_class_add_private (item_class, sizeof (SnItemPrivate));
 }
 

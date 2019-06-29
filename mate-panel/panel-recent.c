@@ -61,7 +61,7 @@ recent_documents_activate_cb (GtkRecentChooser *chooser,
 	GError        *error = NULL;
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (chooser));
-	
+
 	recent_info = gtk_recent_chooser_get_current_item (chooser);
 	uri = gtk_recent_info_get_uri (recent_info);
 	mime_type = gtk_recent_info_get_mime_type (recent_info);
@@ -205,7 +205,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (top_menu), menu_item);
 	gtk_widget_show_all (menu_item);
-	
+
 	gtk_recent_chooser_set_local_only (GTK_RECENT_CHOOSER (recent_menu),
 					   FALSE);
 	gtk_recent_chooser_set_show_tips (GTK_RECENT_CHOOSER (recent_menu),

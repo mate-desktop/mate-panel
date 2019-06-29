@@ -88,7 +88,7 @@ launcher_widget_destroy_open_dialogs (Launcher *launcher)
 }
 
 static void
-launcher_register_error_dialog (Launcher *launcher, 
+launcher_register_error_dialog (Launcher *launcher,
 				GtkWidget *dialog)
 {
 	launcher->error_dialogs = g_slist_append (launcher->error_dialogs,
@@ -314,7 +314,7 @@ is_this_drop_ok (GtkWidget      *widget,
 	return l ? TRUE : FALSE;
 }
 
-static void  
+static void
 drag_leave_cb(GtkWidget	       *widget,
 	      GdkDragContext   *context,
 	      guint             time,
@@ -816,7 +816,7 @@ launcher_properties (Launcher  *launcher)
 							launcher->location,
 							_("Launcher Properties"));
 
-	panel_widget_register_open_dialog (PANEL_WIDGET 
+	panel_widget_register_open_dialog (PANEL_WIDGET
 					   (gtk_widget_get_parent (launcher->info->widget)),
 					   launcher->prop_dialog);
 
@@ -902,7 +902,7 @@ launcher_load_from_gsettings (PanelWidget *panel_widget,
 
 	path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
-	g_free (path); 
+	g_free (path);
 
 	launcher_location = g_settings_get_string (settings, PANEL_OBJECT_LAUNCHER_LOCATION_KEY);
 
@@ -1119,7 +1119,7 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 
 	copied = g_file_copy (source, dest, G_FILE_COPY_OVERWRITE,
 			      NULL, NULL, NULL, NULL);
-	
+
 	if (!copied) {
 		g_free (new_location);
 		return FALSE;

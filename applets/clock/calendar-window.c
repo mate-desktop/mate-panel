@@ -206,7 +206,7 @@ create_hig_frame (CalendarWindow *calwin,
 	g_signal_connect (expander, "notify::expanded",
 			  G_CALLBACK (expand_collapse), vbox);
 
-	/* FIXME: this doesn't really work, since "add" does not 
+	/* FIXME: this doesn't really work, since "add" does not
 	 * get emitted for e.g. gtk_box_pack_start
 	 */
 	g_signal_connect (vbox, "add", G_CALLBACK (add_child), expander);

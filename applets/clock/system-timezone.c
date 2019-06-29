@@ -3,7 +3,7 @@
  * Copyright (C) 2008 Novell, Inc.
  *
  * Authors: Vincent Untz <vuntz@gnome.org>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
- * 
+ *
  * Some code is based on previous code in clock-location.c and on code from
  * tz.c (shipped with version <= 2.22.0). Those files were under the same
  * license, with those authors and copyrights:
- * 
+ *
  * clock-location.c:
  * ================
  * No header, but most of the work was done (AFAIK) by
@@ -36,7 +36,7 @@
  * Authors: Hans Petter Jansson <hpj@ximian.com>
  *	    additional functions by Erwann Chenede <erwann.chenede@sun.com>
  *	    reworked by Vincent Untz <vuntz@gnome.org>
- * 
+ *
  * Largely based on Michael Fulbright's work on Anaconda.
  */
 
@@ -161,7 +161,7 @@ system_timezone_init (SystemTimezone *systz)
 
         priv->tz = NULL;
         priv->env_tz = NULL;
-        for (i = 0; i < CHECK_NB; i++) 
+        for (i = 0; i < CHECK_NB; i++)
                 priv->monitors[i] = NULL;
 }
 
@@ -215,7 +215,7 @@ system_timezone_constructor (GType                  type,
 
                 if (priv->monitors[i])
                         g_signal_connect (G_OBJECT (priv->monitors[i]),
-                                          "changed", 
+                                          "changed",
                                           G_CALLBACK (system_timezone_monitor_changed),
                                           obj);
         }
@@ -448,7 +448,7 @@ system_timezone_write_key_file (const char  *filename,
         gboolean   replaced;
         gboolean   retval;
         int        n;
-        
+
         if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
                 return TRUE;
 

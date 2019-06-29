@@ -13,7 +13,7 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
@@ -138,7 +138,7 @@ refresh_grid (NaGrid *self)
   GtkOrientation orientation;
   GtkAllocation allocation;
   gint rows, cols, length;
-  
+
   orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
   gtk_widget_get_allocation (GTK_WIDGET (self), &allocation);
   length = g_slist_length (self->items);
@@ -161,13 +161,13 @@ refresh_grid (NaGrid *self)
       if (length % cols)
         rows++;
     }
-  
+
   if (self->cols != cols || self->rows != rows || self->length != length)
     {
       self->cols = cols;
       self->rows = rows;
       self->length = length;
-      
+
       SortData data;
       data.orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
       data.index = 0;
@@ -186,7 +186,7 @@ na_grid_set_min_icon_size (NaGrid *grid,
   g_return_if_fail (NA_IS_GRID (grid));
 
   grid->min_icon_size = min_icon_size;
-  
+
   refresh_grid (grid);
 }
 
@@ -244,7 +244,7 @@ na_grid_init (NaGrid *self)
 
   self->hosts = NULL;
   self->items = NULL;
-  
+
   gtk_grid_set_row_homogeneous (GTK_GRID (self), TRUE);
   gtk_grid_set_column_homogeneous (GTK_GRID (self), TRUE);
 

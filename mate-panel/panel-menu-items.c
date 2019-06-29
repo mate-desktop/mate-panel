@@ -1124,7 +1124,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	GtkWidget *toplevel = gtk_widget_get_toplevel (places_menu);
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
 	GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
-	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual); 
+	gtk_widget_set_visual(GTK_WIDGET(toplevel), visual);
 
 	return places_menu;
 }

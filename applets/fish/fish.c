@@ -155,7 +155,7 @@ static void show_help(FishApplet* fish, const char* link_id)
 	else
 		uri = g_strdup_printf ("help:%s", FISH_HELP_DOC);
 
-	gtk_show_uri_on_window (NULL, uri, 
+	gtk_show_uri_on_window (NULL, uri,
 			  gtk_get_current_event_time (), &error);
 	g_free (uri);
 

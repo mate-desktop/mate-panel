@@ -309,7 +309,7 @@ calc_arrow (PanelOrientation  orientation,
 		if (button_height > 50)
 			button_height = 50;
 	}
-	
+
 	*size = ((orientation & PANEL_HORIZONTAL_MASK) ? button_width : button_height) / 2;
 	*angle = 0;
 
@@ -454,7 +454,7 @@ button_widget_get_preferred_width (GtkWidget *widget,
 
 		/* should get this value (50) from gsettings, user defined value in properties of the panel (max_icon_size) OR use 48*/
 		if ( size > 50 )
-			size = 50;	
+			size = 50;
 
 	} else
 		size = gtk_widget_get_allocated_width (parent);
@@ -477,11 +477,11 @@ button_widget_get_preferred_height (GtkWidget *widget,
 		size = gtk_widget_get_allocated_height (parent);
 	else {
 		size = gtk_widget_get_allocated_width (parent);
-		
+
 		/* should get this value (50) from gsettings, user defined value in properties of the panel (max_icon_size) OR use 48*/
 		if ( size > 50 )
-			size = 50;	
-	
+			size = 50;
+
 	}
 
 	*minimal_height = *natural_height = size;
@@ -497,14 +497,14 @@ button_widget_size_allocate (GtkWidget     *widget,
 	/* should get this value (50) from gsettings, user defined value in properties of the panel (max_icon_size) OR use 48?*/
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		if ( allocation->height > 50 ) {
-			allocation->width = 50;	
+			allocation->width = 50;
 		}
 	} else {
 		if ( allocation->width > 50 ) {
-			allocation->height = 50;	
+			allocation->height = 50;
 		}
 	}
-	
+
 	GTK_WIDGET_CLASS (button_widget_parent_class)->size_allocate (widget, allocation);
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
@@ -710,7 +710,7 @@ button_widget_new (const char       *filename,
 			"orientation", orientation,
 			"icon-name", filename,
 			NULL);
-	
+
 	return retval;
 }
 
