@@ -852,10 +852,26 @@ mate_panel_applet_menu_popup (MatePanelApplet *applet,
 	context = gtk_widget_get_style_context (GTK_WIDGET(toplevel));
 	gtk_style_context_add_class(context,"gnome-panel-menu-bar");
 	gtk_style_context_add_class(context,"mate-panel-menu-bar");
+	GdkGravity widget_anchor = GDK_GRAVITY_NORTH_WEST;
+	GdkGravity menu_anchor = GDK_GRAVITY_NORTH_WEST;
+	switch (applet->priv->orient) {
+	case MATE_PANEL_APPLET_ORIENT_UP:
+		menu_anchor = GDK_GRAVITY_SOUTH_WEST;
+		break;
+	case MATE_PANEL_APPLET_ORIENT_DOWN:
+		widget_anchor = GDK_GRAVITY_SOUTH_WEST;
+		break;
+	case MATE_PANEL_APPLET_ORIENT_LEFT:
+		menu_anchor = GDK_GRAVITY_NORTH_EAST;
+		break;
+	case MATE_PANEL_APPLET_ORIENT_RIGHT:
+		widget_anchor = GDK_GRAVITY_NORTH_EAST;
+		break;
+	}
 	gtk_menu_popup_at_widget (GTK_MENU (menu),
 	                          GTK_WIDGET (applet),
-	                          GDK_GRAVITY_NORTH_WEST,
-	                          GDK_GRAVITY_NORTH_WEST,
+	                          widget_anchor,
+	                          menu_anchor,
 	                          event);
 }
 
