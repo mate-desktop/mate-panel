@@ -14,7 +14,7 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/mate-panel/libpanel-util \
 	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
-	$(DISABLE_DEPRECATED_CFLAGS)
+	$(DISABLE_DEPRECATED_CFLAGS) \
 	$(GTK_LAYER_SHELL_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
