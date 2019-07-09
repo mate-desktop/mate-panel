@@ -24,7 +24,7 @@
 
 #include <config.h>
 
-#include <gtk-layer-shell/gtk-layer-shell.h>
+#include <gtk-layer-shell.h>
 
 #include "wayland-backend.h"
 
