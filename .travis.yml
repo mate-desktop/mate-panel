@@ -78,6 +78,7 @@ requires:
     - mate-common
     - mate-desktop
     - mate-menus
+    - meson
     - which
     - yelp-tools
 
@@ -113,6 +114,7 @@ requires:
     - lsb-release
     - make
     - mate-common
+    - meson
     - yelp-tools
 
   fedora:
@@ -134,6 +136,7 @@ requires:
     - mate-common
     - mate-desktop-devel
     - mate-menus-devel
+    - meson
     - redhat-rpm-config
     - yelp-tools
 
@@ -166,6 +169,7 @@ requires:
     - lsb-release
     - make
     - mate-common
+    - meson
     - yelp-tools
 
 variables:
@@ -225,16 +229,9 @@ before_scripts:
   -     git clone --depth 1  https://github.com/wmww/gtk-layer-shell.git gtk-layer-shell-build
   - fi
   - cd gtk-layer-shell-build
-  - if [ ${DISTRO_NAME} == "debian" -o ${DISTRO_NAME} == "ubuntu" ];then
-  -     ./autogen.sh --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu --libexecdir=/usr/lib/x86_64-linux-gnu
-  - else
-  -     ./autogen.sh --prefix=/usr
-  - fi
-  - if [ ${TRAVIS} == "false" ]; then
-  -     make clean
-  - fi
-  - make
-  - make install
+  - meson _build --prefix /usr
+  - ninja -C _build
+  - ninja -C _build install
 
 after_scripts:
   - if [ ${DISTRO_NAME} == "fedora" ];then
