@@ -2979,7 +2979,11 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 
 			if (stick) {
 				position = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
-				ad->pos = toplevel->priv->geometry.width - position;
+				if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+					ad->pos = toplevel->priv->geometry.width - position;
+				} else {
+					ad->pos = toplevel->priv->geometry.height - position;
+				}
 			}
 		}
 	}
