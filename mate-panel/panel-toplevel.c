@@ -2964,10 +2964,8 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 				   toplevel->priv->geometry.width,
 				   toplevel->priv->geometry.height);
 
-	if(resize || move)
-	{
-		for(list = toplevel->priv->panel_widget->applet_list;list!=NULL;list = g_list_next(list)) 
-		{
+	if (resize || move) {
+		for (list = toplevel->priv->panel_widget->applet_list; list != NULL; list = g_list_next (list)) {
 			AppletData *ad = list->data;
 			id = mate_panel_applet_get_id_by_widget (ad->applet);
 
@@ -2979,8 +2977,7 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 
 			stick = g_settings_get_boolean (info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
 
-			if(stick)
-			{
+			if (stick) {
 				position = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
 				ad->pos = toplevel->priv->geometry.width - position;
 			}
