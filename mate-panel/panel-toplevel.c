@@ -1269,13 +1269,14 @@ static void panel_toplevel_update_buttons_showing(PanelToplevel* toplevel)
 static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel_size)
 {
 
+	static GtkCssProvider *css_provider = NULL;
 	GtkStyleContext *context = NULL;
+
 	context = gtk_widget_get_style_context(button);
 	gtk_style_context_add_class(context, "panel-button");
 
-	/* memory is managed by gtk */
-	GtkCssProvider *css_provider = NULL;
-	css_provider = gtk_css_provider_get_default ();
+	if (css_provider == NULL)
+		css_provider = gtk_css_provider_new ();
 
 	/* get arrow image */
 	GtkWidget *arrow = NULL;
