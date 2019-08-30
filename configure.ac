@@ -172,8 +172,11 @@ AM_CONDITIONAL(FISH_INPROCESS, test -n "$FISH_COMPILE_INPROCESS")
 AM_CONDITIONAL(NOTIFICATION_AREA_INPROCESS, test -n "$NOTIFICATION_AREA_COMPILE_INPROCESS")
 AM_CONDITIONAL(WNCKLET_INPROCESS, test -n "$WNCKLET_COMPILE_INPROCESS")
 
-# For the run dialog
-gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
+dnl **************************************************************************
+dnl Check if struct dirent contains a d_type member, for run dialog
+dnl **************************************************************************
+
+AC_STRUCT_DIRENT_D_TYPE
 
 # $enable_x11 and $enable_wayland will be set to "yes", "no" or "auto"
 AC_ARG_ENABLE(x11,
