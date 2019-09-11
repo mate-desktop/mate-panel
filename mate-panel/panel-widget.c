@@ -1910,7 +1910,7 @@ is_in_applet (int pos, AppletData *ad)
 	g_return_val_if_fail (ad != NULL, NULL);
 
 	if (ad->constrained <= pos &&
-	    ad->constrained + ad->min_cells > pos)
+	    ad->constrained + ad->cells > pos)
 		return ad->applet;
 	return NULL;
 }
