@@ -22,10 +22,6 @@
 
 static GHashTable *pixbuf_cache = NULL;
 
-#define CLOCK_FACE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), INTL_TYPE_CLOCK_FACE, ClockFacePrivate))
-
-G_DEFINE_TYPE (ClockFace, clock_face, GTK_TYPE_WIDGET)
-
 static void     clock_face_finalize             (GObject *);
 static gboolean clock_face_draw                 (GtkWidget      *clock,
                                                  cairo_t        *cr);
@@ -65,6 +61,8 @@ struct _ClockFacePrivate
         GtkWidget *size_widget;
 };
 
+G_DEFINE_TYPE_WITH_PRIVATE (ClockFace, clock_face, GTK_TYPE_WIDGET)
+
 static void
 clock_face_class_init (ClockFaceClass *class)
 {
@@ -82,14 +80,12 @@ clock_face_class_init (ClockFaceClass *class)
 
         /* GObject signals */
         obj_class->finalize = clock_face_finalize;
-
-        g_type_class_add_private (obj_class, sizeof (ClockFacePrivate));
 }
 
 static void
 clock_face_init (ClockFace *this)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
+        ClockFacePrivate *priv = clock_face_get_instance_private (this);
 
         priv->size = CLOCK_FACE_SMALL;
         priv->timeofday = CLOCK_FACE_INVALID;
@@ -111,7 +107,7 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         /* Hand lengths as a multiple of the clock radius */
         double hour_length, min_length, sec_length;
 
-        priv = CLOCK_FACE_GET_PRIVATE (this);
+        priv = clock_face_get_instance_private (CLOCK_FACE(this));
 
         if (GTK_WIDGET_CLASS (clock_face_parent_class)->draw)
             GTK_WIDGET_CLASS (clock_face_parent_class)->draw (this, cr);
@@ -194,7 +190,7 @@ clock_face_get_preferred_width (GtkWidget *this,
                                 gint      *minimal_width,
                                 gint      *natural_width)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
+        ClockFacePrivate *priv = clock_face_get_instance_private (CLOCK_FACE(this));
 
         if (priv->size_widget != NULL) {
                int child_minimal_height;
@@ -227,7 +223,7 @@ clock_face_get_preferred_height (GtkWidget *this,
                                  gint      *minimal_height,
                                  gint      *natural_height)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
+        ClockFacePrivate *priv = clock_face_get_instance_private (CLOCK_FACE(this));
 
         if (priv->size_widget != NULL) {
                int child_minimal_height;
@@ -283,9 +279,9 @@ update_time_and_face (ClockFace *this,
                       gboolean   force_face_loading)
 {
         ClockFacePrivate *priv;
-	ClockFaceTimeOfDay timeofday;
+        ClockFaceTimeOfDay timeofday;
 
-        priv = CLOCK_FACE_GET_PRIVATE (this);
+        priv = clock_face_get_instance_private (this);
 
         /* update the time */
         if (priv->location) {
@@ -346,7 +342,7 @@ GtkWidget *
 clock_face_new (ClockFaceSize size)
 {
         GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
+        ClockFacePrivate *priv = clock_face_get_instance_private (CLOCK_FACE(obj));
 
         priv->size = size;
 
@@ -359,7 +355,7 @@ clock_face_new_with_location (ClockFaceSize size,
 			      GtkWidget *size_widget)
 {
         GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
+        ClockFacePrivate *priv = clock_face_get_instance_private (CLOCK_FACE(obj));
 
         priv->size = size;
         priv->location = g_object_ref (loc);
@@ -371,7 +367,7 @@ clock_face_new_with_location (ClockFaceSize size,
 static void
 clock_face_finalize (GObject *obj)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
+        ClockFacePrivate *priv = clock_face_get_instance_private (CLOCK_FACE(obj));
 
         if (priv->location) {
                 g_object_unref (priv->location);
@@ -407,11 +403,11 @@ remove_pixbuf_from_cache (const char *key,
 static void
 clock_face_load_face (ClockFace *this, gint width, gint height)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
-	const gchar *size_string[2] = { "small", "large" };
-        const gchar *daytime_string[4] = { "morning", "day", "evening", "night" };
-	gchar *cache_name;
-	gchar *name;
+    ClockFacePrivate *priv = clock_face_get_instance_private (this);
+    const gchar *size_string[2] = { "small", "large" };
+    const gchar *daytime_string[4] = { "morning", "day", "evening", "night" };
+    gchar *cache_name;
+    gchar *name;
 
         if (!pixbuf_cache)
                 pixbuf_cache = g_hash_table_new_full (g_str_hash, g_str_equal,

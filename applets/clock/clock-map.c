@@ -12,8 +12,6 @@
 #include "clock-sunpos.h"
 #include "clock-marshallers.h"
 
-G_DEFINE_TYPE (ClockMap, clock_map, GTK_TYPE_WIDGET)
-
 enum {
 	NEED_LOCATIONS,
 	LAST_SIGNAL
@@ -54,6 +52,8 @@ typedef struct {
         GdkPixbuf *shadow_map_pixbuf;
 } ClockMapPrivate;
 
+G_DEFINE_TYPE_WITH_PRIVATE (ClockMap, clock_map, GTK_TYPE_WIDGET)
+
 static void clock_map_finalize (GObject *);
 static void clock_map_size_allocate (GtkWidget *this,
 					 GtkAllocation *allocation);
@@ -68,8 +68,6 @@ static void clock_map_get_preferred_height (GtkWidget *widget,
 static void clock_map_place_locations (ClockMap *this);
 static void clock_map_render_shadow (ClockMap *this);
 static void clock_map_display (ClockMap *this);
-
-#define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_MAP_TYPE, ClockMapPrivate))
 
 ClockMap *
 clock_map_new (void)
@@ -96,8 +94,6 @@ clock_map_class_init (ClockMapClass *this_class)
 	widget_class->get_preferred_width = clock_map_get_preferred_width;
 	widget_class->get_preferred_height = clock_map_get_preferred_height;
 
-        g_type_class_add_private (this_class, sizeof (ClockMapPrivate));
-
 	/**
 	 * ClockMap::need-locations
 	 *
@@ -122,7 +118,7 @@ static void
 clock_map_init (ClockMap *this)
 {
         int i;
-        ClockMapPrivate *priv = PRIVATE (this);
+        ClockMapPrivate *priv = clock_map_get_instance_private (this);
 
         gtk_widget_set_has_window (GTK_WIDGET (this), FALSE);
 
@@ -146,7 +142,7 @@ clock_map_init (ClockMap *this)
 static void
 clock_map_finalize (GObject *g_obj)
 {
-        ClockMapPrivate *priv = PRIVATE (g_obj);
+        ClockMapPrivate *priv = clock_map_get_instance_private (CLOCK_MAP(g_obj));
 	int i;
 
 	if (priv->highlight_timeout_id) {
@@ -187,7 +183,7 @@ clock_map_finalize (GObject *g_obj)
 void
 clock_map_refresh (ClockMap *this)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+    ClockMapPrivate *priv = clock_map_get_instance_private (this);
 	GtkWidget *widget = GTK_WIDGET (this);
 	GtkAllocation allocation;
 
@@ -225,7 +221,7 @@ clock_map_refresh (ClockMap *this)
 static gboolean
 clock_map_draw (GtkWidget *this, cairo_t *cr)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+    ClockMapPrivate *priv = clock_map_get_instance_private (CLOCK_MAP(this));
 	int width, height;
 	GtkStyleContext *context;
 	GdkRGBA color;
@@ -274,7 +270,7 @@ clock_map_get_preferred_height (GtkWidget *this,
 static void
 clock_map_size_allocate (GtkWidget *this, GtkAllocation *allocation)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+        ClockMapPrivate *priv = clock_map_get_instance_private (CLOCK_MAP(this));
 
 	if (GTK_WIDGET_CLASS (clock_map_parent_class)->size_allocate)
 		GTK_WIDGET_CLASS (clock_map_parent_class)->size_allocate (this, allocation);
@@ -287,7 +283,7 @@ clock_map_size_allocate (GtkWidget *this, GtkAllocation *allocation)
 static void
 clock_map_mark (ClockMap *this, gfloat latitude, gfloat longitude, gint mark)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+        ClockMapPrivate *priv = clock_map_get_instance_private (this);
         GdkPixbuf *marker = priv->location_marker_pixbuf[mark];
         GdkPixbuf *partial = NULL;
 
@@ -432,7 +428,7 @@ clock_map_place_location (ClockMap *this, ClockLocation *loc, gboolean hilight)
 static void
 clock_map_place_locations (ClockMap *this)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+        ClockMapPrivate *priv = clock_map_get_instance_private (this);
         GList *locs;
         ClockLocation *loc;
 
@@ -559,7 +555,7 @@ clock_map_render_shadow_pixbuf (GdkPixbuf *pixbuf)
 static void
 clock_map_render_shadow (ClockMap *this)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+        ClockMapPrivate *priv = clock_map_get_instance_private (this);
 
         if (priv->shadow_pixbuf) {
                 g_object_unref (priv->shadow_pixbuf);
@@ -587,7 +583,7 @@ clock_map_render_shadow (ClockMap *this)
 static void
 clock_map_display (ClockMap *this)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+        ClockMapPrivate *priv = clock_map_get_instance_private (this);
 
         if (priv->width > 0 || priv->height > 0)
                 clock_map_render_shadow (this);
@@ -629,7 +625,7 @@ highlight_destroy (gpointer user_data)
        BlinkData *data = user_data;
        ClockMapPrivate *priv;
 
-       priv = PRIVATE (data->map);
+       priv = clock_map_get_instance_private (data->map);
        priv->highlight_timeout_id = 0;
 
        g_object_unref (data->location);
@@ -642,7 +638,7 @@ clock_map_blink_location (ClockMap *this, ClockLocation *loc)
        BlinkData *data;
        ClockMapPrivate *priv;
 
-       priv = PRIVATE (this);
+       priv = clock_map_get_instance_private (this);
 
        g_return_if_fail (IS_CLOCK_MAP (this));
        g_return_if_fail (IS_CLOCK_LOCATION (loc));
@@ -666,7 +662,7 @@ clock_map_blink_location (ClockMap *this, ClockLocation *loc)
 static gboolean
 clock_map_needs_refresh (ClockMap *this)
 {
-        ClockMapPrivate *priv = PRIVATE (this);
+        ClockMapPrivate *priv = clock_map_get_instance_private (this);
         time_t now_t;
 
         time (&now_t);

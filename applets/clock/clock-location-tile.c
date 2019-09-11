@@ -16,8 +16,6 @@
 #include "clock-marshallers.h"
 #include "set-timezone.h"
 
-G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
-
 enum {
         TILE_PRESSED,
         NEED_CLOCK_FORMAT,
@@ -51,9 +49,9 @@ typedef struct {
         gulong location_weather_updated_id;
 } ClockLocationTilePrivate;
 
-static void clock_location_tile_finalize (GObject *);
+G_DEFINE_TYPE_WITH_PRIVATE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
 
-#define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TILE_TYPE, ClockLocationTilePrivate))
+static void clock_location_tile_finalize (GObject *);
 
 static void clock_location_tile_fill (ClockLocationTile *this);
 static void update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data);
@@ -71,7 +69,8 @@ clock_location_tile_new (ClockLocation *loc,
         ClockLocationTilePrivate *priv;
 
         this = g_object_new (CLOCK_LOCATION_TILE_TYPE, NULL);
-        priv = PRIVATE (this);
+
+        priv = clock_location_tile_get_instance_private (this);
 
         priv->location = g_object_ref (loc);
         priv->size = size;
@@ -96,8 +95,6 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 
         g_obj_class->finalize = clock_location_tile_finalize;
 
-        g_type_class_add_private (this_class, sizeof (ClockLocationTilePrivate));
-
         signals[TILE_PRESSED] = g_signal_new ("tile-pressed",
                                               G_TYPE_FROM_CLASS (g_obj_class),
                                               G_SIGNAL_RUN_FIRST,
@@ -119,7 +116,7 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 static void
 clock_location_tile_init (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (this);
 
         priv->location = NULL;
 
@@ -136,7 +133,11 @@ clock_location_tile_init (ClockLocationTile *this)
 static void
 clock_location_tile_finalize (GObject *g_obj)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (g_obj);
+        ClockLocationTile *this;
+        ClockLocationTilePrivate *priv;
+
+        this = CLOCK_LOCATION_TILE (g_obj);
+        priv = clock_location_tile_get_instance_private (this);
 
         if (priv->location) {
                 g_signal_handler_disconnect (priv->location, priv->location_weather_updated_id);
@@ -192,7 +193,7 @@ make_current_cb (gpointer data, GError *error)
 static void
 make_current (GtkWidget *widget, ClockLocationTile *tile)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (tile);
 
         clock_location_make_current (priv->location,
                                      (GFunc)make_current_cb, tile, NULL);
@@ -203,7 +204,7 @@ enter_or_leave_tile (GtkWidget             *widget,
                      GdkEventCrossing      *event,
                      ClockLocationTile *tile)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (tile);
 
         if (event->mode != GDK_CROSSING_NORMAL) {
                 return TRUE;
@@ -253,7 +254,7 @@ enter_or_leave_tile (GtkWidget             *widget,
 static void
 clock_location_tile_fill (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (this);
         GtkWidget *strut;
         GtkWidget *box;
         GtkWidget *tile;
@@ -356,7 +357,7 @@ clock_location_tile_fill (ClockLocationTile *this)
 static gboolean
 clock_needs_face_refresh (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (this);
         struct tm now;
 
         clock_location_localtime (priv->location, &now);
@@ -380,7 +381,7 @@ clock_needs_face_refresh (ClockLocationTile *this)
 static gboolean
 clock_needs_label_refresh (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (this);
         struct tm now;
         long offset;
 
@@ -519,7 +520,7 @@ convert_time_to_str (time_t now, ClockFormat clock_format)
 void
 clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (this);
         gchar *tmp, *tzname;
         struct tm now;
         long offset;
@@ -661,11 +662,13 @@ weather_tooltip (GtkWidget  *widget,
                  GtkTooltip *tooltip,
                  gpointer    data)
 {
-        ClockLocationTile *tile = data;
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        ClockLocationTile *tile;
+        ClockLocationTilePrivate *priv;
         WeatherInfo *info;
         int clock_format;
 
+        tile = CLOCK_LOCATION_TILE (data);
+        priv = clock_location_tile_get_instance_private (tile);
         info = clock_location_get_weather_info (priv->location);
 
         if (!info || !weather_info_is_valid (info))
@@ -681,8 +684,8 @@ weather_tooltip (GtkWidget  *widget,
 static void
 update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
 {
-        ClockLocationTile *tile = data;
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        ClockLocationTile *tile;
+        ClockLocationTilePrivate *priv;
         cairo_surface_t *surface = NULL;
         GtkIconTheme *theme = NULL;
         const gchar *icon_name;
@@ -691,6 +694,8 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
         if (!info || !weather_info_is_valid (info))
                 return;
 
+        tile = CLOCK_LOCATION_TILE (data);
+        priv = clock_location_tile_get_instance_private (tile);
         theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (priv->weather_icon)));
         icon_name = weather_info_get_icon_name (info);
         icon_scale = gtk_widget_get_scale_factor (GTK_WIDGET (priv->weather_icon));
@@ -711,7 +716,7 @@ clock_location_tile_get_location (ClockLocationTile *this)
 
         g_return_val_if_fail (IS_CLOCK_LOCATION_TILE (this), NULL);
 
-        priv = PRIVATE (this);
+        priv = clock_location_tile_get_instance_private (this);
 
         return g_object_ref (priv->location);
 }
