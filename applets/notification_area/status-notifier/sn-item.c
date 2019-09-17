@@ -56,12 +56,11 @@ static guint signals[LAST_SIGNAL] = { 0 };
 static void na_item_init (NaItemInterface *iface);
 
 G_DEFINE_ABSTRACT_TYPE_WITH_CODE (SnItem, sn_item, SN_TYPE_FLAT_BUTTON,
+                                  G_ADD_PRIVATE (SnItem)
                                   G_IMPLEMENT_INTERFACE (GTK_TYPE_ORIENTABLE,
                                                          NULL)
                                   G_IMPLEMENT_INTERFACE (NA_TYPE_ITEM,
                                                          na_item_init))
-
-#define sn_item_get_instance_private(i) (SN_ITEM (i)->priv)
 
 static void
 sn_item_dispose (GObject *object)
@@ -70,7 +69,7 @@ sn_item_dispose (GObject *object)
   SnItemPrivate *priv;
 
   item = SN_ITEM (object);
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   g_clear_object (&priv->menu);
 
@@ -84,7 +83,7 @@ sn_item_finalize (GObject *object)
   SnItemPrivate *priv;
 
   item = SN_ITEM (object);
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   g_clear_pointer (&priv->bus_name, g_free);
   g_clear_pointer (&priv->object_path, g_free);
@@ -102,7 +101,7 @@ sn_item_get_property (GObject    *object,
   SnItemPrivate *priv;
 
   item = SN_ITEM (object);
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   switch (property_id)
     {
@@ -134,7 +133,7 @@ sn_item_set_property (GObject      *object,
   SnItemPrivate *priv;
 
   item = SN_ITEM (object);
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   switch (property_id)
     {
@@ -168,7 +167,7 @@ sn_item_get_action_coordinates (SnItem *item,
   gint width;
   gint height;
 
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
   widget = GTK_WIDGET (item);
   window = gtk_widget_get_window (widget);
   toplevel = gtk_widget_get_toplevel (widget);
@@ -195,7 +194,7 @@ sn_item_button_press_event (GtkWidget      *widget,
     return GTK_WIDGET_CLASS (sn_item_parent_class)->button_press_event (widget, event);
 
   item = SN_ITEM (widget);
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   sn_item_get_action_coordinates (item, &x, &y);
 
@@ -236,7 +235,7 @@ sn_item_popup_menu (GtkWidget *widget)
   SnItemPrivate *priv;
 
   item = SN_ITEM (widget);
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   if (priv->menu != NULL)
     {
@@ -356,7 +355,7 @@ sn_item_ready (SnItem *item)
   if (menu == NULL || *menu == '\0' || g_strcmp0 (menu, "/") == 0)
     return;
 
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
   priv->menu = sn_dbus_menu_new (priv->bus_name, menu);
   g_object_ref_sink (priv->menu);
 }
@@ -446,14 +445,12 @@ sn_item_class_init (SnItemClass *item_class)
 
   install_properties (object_class);
   install_signals (item_class);
-
-  g_type_class_add_private (item_class, sizeof (SnItemPrivate));
 }
 
 static void
 sn_item_init (SnItem *item)
 {
-  item->priv = G_TYPE_INSTANCE_GET_PRIVATE (item, SN_TYPE_ITEM, SnItemPrivate);
+  item->priv = sn_item_get_instance_private (item);
 
   gtk_widget_add_events (GTK_WIDGET (item), GDK_SCROLL_MASK);
 }
@@ -463,7 +460,7 @@ sn_item_get_bus_name (SnItem *item)
 {
   SnItemPrivate *priv;
 
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   return priv->bus_name;
 }
@@ -473,7 +470,7 @@ sn_item_get_object_path (SnItem *item)
 {
   SnItemPrivate *priv;
 
-  priv = sn_item_get_instance_private (item);
+  priv = SN_ITEM (item)->priv;
 
   return priv->object_path;
 }
