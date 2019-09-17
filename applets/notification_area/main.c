@@ -66,7 +66,7 @@ struct _NaTrayAppletPrivate
 #endif
 };
 
-G_DEFINE_TYPE (NaTrayApplet, na_tray_applet, PANEL_TYPE_APPLET)
+G_DEFINE_TYPE_WITH_PRIVATE (NaTrayApplet, na_tray_applet, PANEL_TYPE_APPLET)
 
 static void (*parent_class_realize) (GtkWidget *widget);
 static void (*parent_class_style_updated) (GtkWidget *widget);
@@ -460,8 +460,6 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
                             0, G_MAXINT, 0,
                             G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
-  g_type_class_add_private (class, sizeof (NaTrayAppletPrivate));
-
   gtk_widget_class_set_css_name (widget_class, "na-tray-applet");
 }
 
@@ -471,8 +469,7 @@ na_tray_applet_init (NaTrayApplet *applet)
   MatePanelAppletOrient orient;
   AtkObject *atko;
 
-  applet->priv = G_TYPE_INSTANCE_GET_PRIVATE (applet, NA_TYPE_TRAY_APPLET,
-                                              NaTrayAppletPrivate);
+  applet->priv = na_tray_applet_get_instance_private (applet);
 
 #ifdef PROVIDE_WATCHER_SERVICE
   applet->priv->sn_watcher = sn_watcher_service_ref ();
