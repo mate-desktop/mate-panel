@@ -93,6 +93,7 @@ static void na_tray_style_updated (NaHost          *host,
 static void na_tray_force_redraw  (NaHost          *host);
 
 G_DEFINE_TYPE_WITH_CODE (NaTray, na_tray, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (NaTray)
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_ORIENTABLE, NULL)
                          G_IMPLEMENT_INTERFACE (NA_TYPE_HOST, na_host_init))
 
@@ -411,7 +412,7 @@ na_tray_init (NaTray *tray)
 {
   NaTrayPrivate *priv;
 
-  priv = tray->priv = G_TYPE_INSTANCE_GET_PRIVATE (tray, NA_TYPE_TRAY, NaTrayPrivate);
+  priv = tray->priv = na_tray_get_instance_private (tray);
 
   priv->screen = NULL;
   priv->orientation = GTK_ORIENTATION_HORIZONTAL;
@@ -635,8 +636,6 @@ na_tray_class_init (NaTrayClass *klass)
 			  G_PARAM_STATIC_NAME |
 			  G_PARAM_STATIC_NICK |
 			  G_PARAM_STATIC_BLURB));
-
-  g_type_class_add_private (gobject_class, sizeof (NaTrayPrivate));
 }
 
 NaHost *
