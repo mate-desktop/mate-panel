@@ -102,7 +102,12 @@ panel_layout_filename ()
 
     settings = g_settings_new (PANEL_SCHEMA);
     layout = g_settings_get_string (settings, PANEL_DEFAULT_LAYOUT);
-    filename = g_strdup_printf (PANEL_LAYOUTS_DIR "%s.layout", layout);
+    if (g_str_has_prefix (layout, "/")) {
+        filename = g_strdup (layout);
+    }
+    else {
+        filename = g_strdup_printf (PANEL_LAYOUTS_DIR "%s.layout", layout);
+    }
     g_free (layout);
     g_object_unref (settings);
 
