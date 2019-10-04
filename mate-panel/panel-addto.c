@@ -150,8 +150,8 @@ static PanelAddtoItemInfo special_addto_items [] = {
 static PanelAddtoItemInfo internal_addto_items [] = {
 
 	{ PANEL_ADDTO_MENU,
-	  N_("Main Menu"),
-	  N_("The main MATE menu"),
+	  N_("Compact Menu"),
+	  N_("A compact menu"),
 	  PANEL_ICON_MAIN_MENU,
 	  PANEL_ACTION_NONE,
 	  NULL,
@@ -162,8 +162,8 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  TRUE },
 
 	{ PANEL_ADDTO_MENUBAR,
-	  N_("Menu Bar"),
-	  N_("A custom menu bar"),
+	  N_("Classic Menu"),
+	  N_("The classic Applications, Places and System menu bar"),
 	  PANEL_ICON_MAIN_MENU,
 	  PANEL_ACTION_NONE,
 	  NULL,
