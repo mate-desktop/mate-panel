@@ -54,6 +54,7 @@ requires:
     - mate-menus
     - which
     - yelp-tools
+    - unzip
 
   debian:
     # Useful URL: https://github.com/mate-desktop/debian-packages
@@ -85,6 +86,7 @@ requires:
     - make
     - mate-common
     - yelp-tools
+    - unzip
 
   fedora:
     # Useful URL: https://src.fedoraproject.org/cgit/rpms/mate-panel.git
@@ -105,6 +107,7 @@ requires:
     - mate-menus-devel
     - redhat-rpm-config
     - yelp-tools
+    - unzip
 
   ubuntu:
     - gir1.2-freedesktop
@@ -134,11 +137,24 @@ requires:
     - make
     - mate-common
     - yelp-tools
+    - unzip
 
 variables:
   - CFLAGS="-Wall -Werror=format-security"
 
 before_scripts:
+  - cd ${START_DIR}
+  - curl -Ls -o mate-common-1.22.zip https://github.com/mate-desktop/mate-common/archive/1.22.zip
+  - unzip mate-common-1.22.zip
+  - cd mate-common-1.22
+  - ./autogen.sh
+  - if [ ${DISTRO_NAME} == "debian" -o ${DISTRO_NAME} == "ubuntu" ];then
+  -     ./configure --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu --libexecdir=/usr/lib/x86_64-linux-gnu
+  - else
+  -     ./configure --prefix=/usr
+  - fi
+  - make
+  - make install
   - cd ${START_DIR}
   - if [ ! -d mate-menus-build ]; then
   -     git clone --depth 1  https://github.com/mate-desktop/mate-menus.git mate-menus-build
