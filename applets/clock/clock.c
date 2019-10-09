@@ -426,6 +426,18 @@ get_updated_timeformat (ClockData *cd)
         const char *time_format;
         const char *date_format;
         char       *clock_format;
+        const gchar *env_language;
+        const gchar *env_lc_time;
+
+        /* Override LANGUAGE with the LC_TIME environment variable
+         * This is needed for gettext to fetch our clock format
+         * according to LC_TIME, and not according to the DE LANGUAGE.
+         */
+        env_language = g_getenv("LANGUAGE");
+        env_lc_time = g_getenv("LC_TIME");
+        if (env_language != NULL && env_lc_time != NULL && env_language != env_lc_time) {
+            g_setenv("LANGUAGE", env_lc_time, TRUE);
+        }
 
         if (cd->format == CLOCK_FORMAT_12)
                 /* Translators: This is a strftime format string.
@@ -465,6 +477,11 @@ get_updated_timeformat (ClockData *cd)
                         clock_format = g_strdup_printf (_("%1$s, %2$s"),
                                                         date_format,
                                                         time_format);
+        }
+
+        /* Set back LANGUAGE the way it was before */
+        if (env_language != NULL && env_lc_time != NULL && env_language != env_lc_time) {
+            g_setenv("LANGUAGE", env_language, TRUE);
         }
 
         result = g_locale_from_utf8 (clock_format, -1, NULL, NULL, NULL);
