@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-17 10:28+0100\n"
+"POT-Creation-Date: 2019-06-23 10:15+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
 "Language-Team: Thai (https://www.transifex.com/mate/teams/13566/th/)\n"
@@ -169,7 +169,7 @@ msgstr "ตั้งเวลาของเครื่องไม่สำเ
 
 #: ../applets/clock/clock.c:1863 ../applets/fish/fish.c:1694
 #: ../applets/notification_area/main.c:292
-#: ../applets/wncklet/window-list.c:171
+#: ../applets/wncklet/window-list.c:357
 #: ../applets/wncklet/workspace-switcher.c:389
 msgid "_Preferences"
 msgstr "_การกำหนดค่า"
@@ -177,14 +177,14 @@ msgstr "_การกำหนดค่า"
 #: ../applets/clock/clock.c:1866 ../applets/clock/clock.ui.h:7
 #: ../applets/fish/fish.c:1697 ../applets/fish/fish.ui.h:2
 #: ../applets/notification_area/main.c:295
-#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:179
+#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:365
 #: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:98
 #: ../applets/wncklet/workspace-switcher.c:397
-#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:563
-#: ../mate-panel/panel-action-button.c:737 ../mate-panel/panel-addto.c:1241
+#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:562
+#: ../mate-panel/panel-action-button.c:753 ../mate-panel/panel-addto.c:1308
 #: ../mate-panel/panel-context-menu.c:318
-#: ../mate-panel/panel-ditem-editor.c:653 ../mate-panel/panel-menu-bar.c:370
-#: ../mate-panel/panel-menu-button.c:707
+#: ../mate-panel/panel-ditem-editor.c:648 ../mate-panel/panel-menu-bar.c:351
+#: ../mate-panel/panel-menu-button.c:684
 #: ../mate-panel/panel-properties-dialog.ui.h:2
 #: ../mate-panel/panel-run-dialog.ui.h:2
 msgid "_Help"
@@ -192,7 +192,7 @@ msgstr "_วิธีใช้"
 
 #: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1700
 #: ../applets/notification_area/main.c:298
-#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:187
+#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:373
 #: ../applets/wncklet/window-menu.c:106
 #: ../applets/wncklet/workspace-switcher.c:405
 msgid "_About"
@@ -247,7 +247,7 @@ msgstr ""
 
 #: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:567
 #: ../applets/notification_area/main.c:286
-#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:571
+#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:831
 #: ../applets/wncklet/window-menu.c:88
 #: ../applets/wncklet/workspace-switcher.c:644
 #: ../mate-panel/panel-context-menu.c:124
@@ -260,9 +260,9 @@ msgstr "วันและเวลา"
 
 #: ../applets/clock/clock.ui.h:2 ../mate-panel/libpanel-util/panel-gtk.c:136
 #: ../mate-panel/panel-context-menu.c:213
-#: ../mate-panel/panel-ditem-editor.c:669 ../mate-panel/panel-force-quit.c:240
-#: ../mate-panel/panel-recent.c:155 ../mate-panel/panel-run-dialog.ui.h:3
-#: ../mate-panel/panel.c:1348
+#: ../mate-panel/panel-ditem-editor.c:664 ../mate-panel/panel-force-quit.c:240
+#: ../mate-panel/panel-recent.c:154 ../mate-panel/panel-run-dialog.ui.h:3
+#: ../mate-panel/panel.c:1356
 msgid "_Cancel"
 msgstr "_ยกเลิก"
 
@@ -291,7 +291,7 @@ msgstr "_ตั้งเวลา"
 #: ../applets/notification_area/notification-area-preferences-dialog.ui.h:2
 #: ../applets/wncklet/window-list.ui.h:3
 #: ../applets/wncklet/workspace-switcher.ui.h:3
-#: ../mate-panel/panel-addto.c:1252 ../mate-panel/panel-ditem-editor.c:665
+#: ../mate-panel/panel-addto.c:1319 ../mate-panel/panel-ditem-editor.c:660
 #: ../mate-panel/panel-properties-dialog.ui.h:3
 #: ../mate-panel/panel-test-applets.ui.h:4
 msgid "_Close"
@@ -338,7 +338,7 @@ msgstr "แสดงอุณหภู_มิ"
 msgid "General"
 msgstr "ทั่วไป"
 
-#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1248
+#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1315
 msgid "_Add"
 msgstr "เ_พิ่ม"
 
@@ -391,8 +391,8 @@ msgid "South"
 msgstr "ใต้"
 
 #: ../applets/clock/clock.ui.h:34 ../mate-panel/libpanel-util/panel-gtk.c:140
-#: ../mate-panel/panel-applet-frame.c:954
-#: ../mate-panel/panel-ditem-editor.c:673
+#: ../mate-panel/panel-applet-frame.c:960
+#: ../mate-panel/panel-ditem-editor.c:668
 msgid "_OK"
 msgstr ""
 
@@ -1053,7 +1053,7 @@ msgid "Switch between workspaces"
 msgstr "สลับไปมาระหว่างพื้นที่ทำงาน"
 
 #: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:561
+#: ../applets/wncklet/window-list.c:821
 msgid "Window List"
 msgstr "ลิสต์หน้าต่าง"
 
@@ -1098,7 +1098,7 @@ msgstr ""
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ปุ่มนี้ช่วยคุณซ่อนหน้าต่างทั้งหมดและแสดงพื้นโต๊ะ"
 
-#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:565
+#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:825
 #: ../applets/wncklet/workspace-switcher.c:638
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1114,15 +1114,15 @@ msgstr ""
 "โปรแกรมจัดการหน้าต่างของคุณ ไม่รองรับปุ่มแสดงพื้นโต๊ะ "
 "หรือคุณไม่ได้ใช้โปรแกรมจัดการหน้าต่างอยู่"
 
-#: ../applets/wncklet/window-list.c:163
+#: ../applets/wncklet/window-list.c:349
 msgid "_System Monitor"
 msgstr "_เครื่องมือเฝ้าสังเกตระบบ"
 
-#: ../applets/wncklet/window-list.c:562
+#: ../applets/wncklet/window-list.c:822
 msgid "About Window List"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:564
+#: ../applets/wncklet/window-list.c:824
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1147,30 +1147,54 @@ msgid "Show windows from a_ll workspaces"
 msgstr "แสดงหน้าต่างจากพื้นที่ทำงาน_ทั้งหมด"
 
 #: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Thumbnails"
+msgstr ""
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Show _thumbnails on hover"
+msgstr ""
+
+#: ../applets/wncklet/window-list.ui.h:9
+msgid "_Hide thumbnails on hover"
+msgstr ""
+
+#: ../applets/wncklet/window-list.ui.h:10
+msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
+msgstr ""
+
+#: ../applets/wncklet/window-list.ui.h:11
+msgid "Thumbnail width:"
+msgstr ""
+
+#: ../applets/wncklet/window-list.ui.h:12
+msgid "px"
+msgstr ""
+
+#: ../applets/wncklet/window-list.ui.h:13
 msgid "Window Grouping"
 msgstr "การรวมกลุ่มหน้าต่าง"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: ../applets/wncklet/window-list.ui.h:14
 msgid "_Never group windows"
 msgstr "ไ_ม่รวมกลุ่มหน้าต่าง"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: ../applets/wncklet/window-list.ui.h:15
 msgid "Group windows when _space is limited"
 msgstr "_รวมกลุ่มหน้าต่างเมื่อมีเนื้อที่จำกัด"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: ../applets/wncklet/window-list.ui.h:16
 msgid "_Always group windows"
 msgstr "รวมกลุ่มหน้าต่างเ_สมอ"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:17
 msgid "Restoring Minimized Windows"
 msgstr "การเรียกคืนหน้าต่างที่ถูกย่อเก็บ"
 
-#: ../applets/wncklet/window-list.ui.h:12
+#: ../applets/wncklet/window-list.ui.h:18
 msgid "Restore to current _workspace"
 msgstr "ขยายคืนกลับพื้นที่ทำงาน_ปัจจุบัน"
 
-#: ../applets/wncklet/window-list.ui.h:13
+#: ../applets/wncklet/window-list.ui.h:19
 msgid "Restore to na_tive workspace"
 msgstr "ขยายคืนกลับพื้นที่ทำงาน_ดั้งเดิม"
 
@@ -2078,37 +2102,37 @@ msgid ""
 "vertically."
 msgstr "ถ้าเลือก ภาพพื้นหลังจะหมุนตามเมื่อจัดวางพาเนลตามแนวตั้ง"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:165
+#: ../mate-panel/libegg/eggdesktopfile.c:168
 #, c-format
 msgid "File is not a valid .desktop file"
 msgstr "แฟ้มนี้ไม่ใช่แฟ้ม .desktop ที่ใช้ได้"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:188
+#: ../mate-panel/libegg/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "ไม่รู้จักแฟ้มเดสก์ท็อปรุ่น '%s'"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:957
+#: ../mate-panel/libegg/eggdesktopfile.c:963
 #, c-format
 msgid "Starting %s"
 msgstr "กำลังเริ่ม %s"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1098
+#: ../mate-panel/libegg/eggdesktopfile.c:1105
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "โปรแกรมไม่รับเอกสารในบรรทัดคำสั่ง"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1166
+#: ../mate-panel/libegg/eggdesktopfile.c:1173
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "ไม่รู้จักตัวเลือกของการเรียกโปรแกรม: %d"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1364
+#: ../mate-panel/libegg/eggdesktopfile.c:1390
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "ไม่สามารถส่ง URI ของเอกสารไปยังรายการเดสก์ท็อปที่มี 'Type=Link'"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1385
+#: ../mate-panel/libegg/eggdesktopfile.c:1411
 #, c-format
 msgid "Not a launchable item"
 msgstr "ไม่ใช่รายการที่เรียกทำงานได้"
@@ -2151,12 +2175,12 @@ msgstr "_เปิด"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:799
-#: ../mate-panel/panel-applet-frame.c:980
+#: ../mate-panel/panel-applet-frame.c:798
+#: ../mate-panel/panel-applet-frame.c:986
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
-#: ../mate-panel/libpanel-util/panel-icon-chooser.c:381
+#: ../mate-panel/libpanel-util/panel-icon-chooser.c:374
 msgid "Choose an icon"
 msgstr "เลือกไอคอน"
 
@@ -2178,37 +2202,37 @@ msgstr "ไม่สามารถเปิดตำแหน่ง '%s'"
 msgid "No application to handle search folders is installed."
 msgstr "ไม่มีโปรแกรมสำหรับจัดการโฟลเดอร์ค้นหาติดตั้งไว้"
 
-#: ../mate-panel/applet.c:469
+#: ../mate-panel/applet.c:468
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:549 ../libmate-panel-applet/mate-panel-applet.c:142
+#: ../mate-panel/applet.c:548 ../libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_ลบออกจากพาเนล"
 
-#: ../mate-panel/applet.c:557 ../libmate-panel-applet/mate-panel-applet.c:145
+#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "ย้า_ย"
 
-#: ../mate-panel/applet.c:575 ../libmate-panel-applet/mate-panel-applet.c:151
+#: ../mate-panel/applet.c:574 ../libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "ล็อ_คติดกับพาเนล"
 
-#: ../mate-panel/applet.c:1314
+#: ../mate-panel/applet.c:1313
 msgid "Cannot find an empty spot"
 msgstr "ไม่มีที่ว่าง"
 
-#: ../mate-panel/drawer.c:444 ../mate-panel/panel-addto.c:177
-#: ../mate-panel/panel-toplevel.c:1658
+#: ../mate-panel/drawer.c:443 ../mate-panel/panel-addto.c:189
+#: ../mate-panel/panel-toplevel.c:1667
 msgid "Drawer"
 msgstr "ลิ้นชัก"
 
-#: ../mate-panel/drawer.c:551
+#: ../mate-panel/drawer.c:550
 msgid "_Add to Drawer..."
 msgstr "เ_พิ่มลงในลิ้นชัก..."
 
-#: ../mate-panel/drawer.c:557 ../mate-panel/launcher.c:596
-#: ../mate-panel/panel-action-button.c:192
+#: ../mate-panel/drawer.c:556 ../mate-panel/launcher.c:602
+#: ../mate-panel/panel-action-button.c:194
 #: ../mate-panel/panel-context-menu.c:246
 msgid "_Properties"
 msgstr "คุณ_สมบัติ"
@@ -2226,7 +2250,7 @@ msgid "- Edit .desktop files"
 msgstr "- แก้ไขแฟ้ม .desktop"
 
 #: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:967
+#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:973
 msgid "Create Launcher"
 msgstr "สร้างปุ่มเรียก"
 
@@ -2235,11 +2259,11 @@ msgstr "สร้างปุ่มเรียก"
 msgid "Directory Properties"
 msgstr "คุณสมบัติไดเรกทอรี"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:811
+#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:817
 msgid "Launcher Properties"
 msgstr "คุณสมบัติปุ่มเรียก"
 
-#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:152
+#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:154
 msgid "Panel"
 msgstr "พาเนล"
 
@@ -2259,51 +2283,51 @@ msgstr "ไม่สามารถแสดง URL นี้ได้"
 msgid "No URL was specified."
 msgstr "ไม่ได้ระบุ URL"
 
-#: ../mate-panel/launcher.c:214
+#: ../mate-panel/launcher.c:217
 msgid "Could not use dropped item"
 msgstr "ไม่สามารถใช้สิ่งที่ลากมาปล่อยได้"
 
-#: ../mate-panel/launcher.c:445
+#: ../mate-panel/launcher.c:451
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "ไม่ได้กำหนด URI ของแฟ้มพื้นโต๊ะของปุ่มเรียกบนพาเนล\n"
 
-#: ../mate-panel/launcher.c:484
+#: ../mate-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "ไม่สามารถเปิดแฟ้มพื้นโต๊ะ %s สำหรับปุ่มเรียกบนพาเนล %s%s\n"
 
-#: ../mate-panel/launcher.c:588
+#: ../mate-panel/launcher.c:594
 msgid "_Launch"
 msgstr "เ_รียกใช้"
 
-#: ../mate-panel/launcher.c:904
+#: ../mate-panel/launcher.c:910
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "ไม่ได้กำหนดค่า %s ไม่สามารถโหลดปุ่มเรียก\n"
 
-#: ../mate-panel/launcher.c:1036 ../mate-panel/panel-ditem-editor.c:1333
-#: ../mate-panel/panel-ditem-editor.c:1367
-#: ../mate-panel/panel-ditem-editor.c:1398
+#: ../mate-panel/launcher.c:1042 ../mate-panel/panel-ditem-editor.c:1326
+#: ../mate-panel/panel-ditem-editor.c:1360
+#: ../mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "ไม่สามารถบันทึกปุ่มเรียกได้"
 
-#: ../mate-panel/main.c:48
+#: ../mate-panel/main.c:50
 msgid "Replace a currently running panel"
 msgstr "แทนที่พาเนลที่กำลังทำงานอยู่"
 
 #. this feature was request in #mate irc channel
-#: ../mate-panel/main.c:50
+#: ../mate-panel/main.c:52
 msgid "Reset the panel configuration to default"
 msgstr ""
 
 #. open run dialog
-#: ../mate-panel/main.c:52
+#: ../mate-panel/main.c:54
 msgid "Execute the run dialog"
 msgstr "เรียกทำงานกล่องโต้ตอบ 'เรียกใช้'"
 
 #. default panels layout
-#: ../mate-panel/main.c:54
+#: ../mate-panel/main.c:56
 msgid "Set the default panel layout"
 msgstr "ตั้งเค้าโครงพาเนลปริยาย"
 
@@ -2327,164 +2351,172 @@ msgstr "เพิ่มลงเป็น_ลิ้นชักในพาเ�
 msgid "Add this as _menu to panel"
 msgstr "เพิ่มลงเป็นเ_มนูในพาเนล"
 
-#: ../mate-panel/panel-action-button.c:180
+#: ../mate-panel/panel-action-button.c:182
 msgid "_Activate Screensaver"
 msgstr "เ_ริ่มแสดงภาพรักษาหน้าจอ"
 
-#: ../mate-panel/panel-action-button.c:186
+#: ../mate-panel/panel-action-button.c:188
 msgid "_Lock Screen"
 msgstr "ล็_อคหน้าจอ"
 
-#: ../mate-panel/panel-action-button.c:314
+#: ../mate-panel/panel-action-button.c:332
 msgid "Could not connect to server"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์ไม่สำเร็จ"
 
-#: ../mate-panel/panel-action-button.c:345
+#: ../mate-panel/panel-action-button.c:363
 msgid "Lock Screen"
 msgstr "ล็อคหน้าจอ"
 
-#: ../mate-panel/panel-action-button.c:346
+#: ../mate-panel/panel-action-button.c:364
 msgid "Protect your computer from unauthorized use"
 msgstr "ป้องกันคอมพิวเตอร์ของคุณจากการใช้งานโดยไม่ได้รับอนุญาต"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../mate-panel/panel-action-button.c:360
+#: ../mate-panel/panel-action-button.c:378
 msgid "Log Out..."
 msgstr "ออกจากระบบ..."
 
-#: ../mate-panel/panel-action-button.c:361
+#: ../mate-panel/panel-action-button.c:379
 msgid "Log out of this session to log in as a different user"
 msgstr "ออกจากวาระนี้ เพื่อเข้าระบบเป็นผู้ใช้อื่น"
 
-#: ../mate-panel/panel-action-button.c:370
+#: ../mate-panel/panel-action-button.c:388
 msgid "Run Application..."
 msgstr "เรียกโปรแกรม..."
 
-#: ../mate-panel/panel-action-button.c:371
+#: ../mate-panel/panel-action-button.c:389
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "เรียกใช้โปรแกรมโดยการพิมพ์คำสั่งหรือเลือกจากรายชื่อ"
 
-#: ../mate-panel/panel-action-button.c:380
+#: ../mate-panel/panel-action-button.c:398
 msgid "Search for Files..."
 msgstr "ค้นหาแฟ้ม..."
 
-#: ../mate-panel/panel-action-button.c:381
+#: ../mate-panel/panel-action-button.c:399
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "ค้นหาเอกสารและโฟลเดอร์ในคอมพิวเตอร์นี้ด้วยชื่อหรือเนื้อหา"
 
-#: ../mate-panel/panel-action-button.c:389
+#: ../mate-panel/panel-action-button.c:407
 #: ../mate-panel/panel-force-quit.c:250
 msgid "Force Quit"
 msgstr "บังคับออก"
 
-#: ../mate-panel/panel-action-button.c:390
+#: ../mate-panel/panel-action-button.c:408
 msgid "Force a misbehaving application to quit"
 msgstr "บังคับโปรแกรมที่เกเรให้ออกจากการทำงาน"
 
 #. FIXME icon
-#: ../mate-panel/panel-action-button.c:399
+#: ../mate-panel/panel-action-button.c:417
 msgid "Connect to Server..."
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์..."
 
-#: ../mate-panel/panel-action-button.c:400
+#: ../mate-panel/panel-action-button.c:418
 msgid "Connect to a remote computer or shared disk"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์ในเครือข่ายหรือดิสก์ที่เปิดใช้ร่วม"
 
-#: ../mate-panel/panel-action-button.c:408
+#: ../mate-panel/panel-action-button.c:426
 msgid "Shut Down..."
 msgstr "ปิดเครื่อง..."
 
-#: ../mate-panel/panel-action-button.c:409
+#: ../mate-panel/panel-action-button.c:427
 msgid "Shut down the computer"
 msgstr "ปิดเครื่องคอมพิวเตอร์"
 
-#: ../mate-panel/panel-addto.c:118
+#: ../mate-panel/panel-addto.c:125
 msgid "Custom Application Launcher"
 msgstr "ปุ่มเรียกโปรแกรมสร้างเอง"
 
-#: ../mate-panel/panel-addto.c:119
+#: ../mate-panel/panel-addto.c:126
 msgid "Create a new launcher"
 msgstr "สร้างปุ่มเรียกใหม่"
 
-#: ../mate-panel/panel-addto.c:129
+#: ../mate-panel/panel-addto.c:137
 msgid "Application Launcher..."
 msgstr "ปุ่มเรียกโปรแกรม..."
 
-#: ../mate-panel/panel-addto.c:130
+#: ../mate-panel/panel-addto.c:138
 msgid "Copy a launcher from the applications menu"
 msgstr "สร้างปุ่มเรียกโดยคัดลอกมาจากเมนูเรียกโปรแกรม"
 
-#: ../mate-panel/panel-addto.c:144 ../mate-panel/panel-menu-button.c:1136
+#: ../mate-panel/panel-addto.c:153 ../mate-panel/panel-menu-button.c:1113
 msgid "Main Menu"
 msgstr "เมนูหลัก"
 
-#: ../mate-panel/panel-addto.c:145
+#: ../mate-panel/panel-addto.c:154
 msgid "The main MATE menu"
 msgstr "เมนูหลักของ MATE"
 
-#: ../mate-panel/panel-addto.c:155
+#: ../mate-panel/panel-addto.c:165
 msgid "Menu Bar"
 msgstr "แถบเมนู"
 
-#: ../mate-panel/panel-addto.c:156
+#: ../mate-panel/panel-addto.c:166
 msgid "A custom menu bar"
 msgstr "แถบเมนูกำหนดเอง"
 
-#: ../mate-panel/panel-addto.c:166
+#: ../mate-panel/panel-addto.c:177
 msgid "Separator"
 msgstr "เส้นแบ่ง"
 
-#: ../mate-panel/panel-addto.c:167
+#: ../mate-panel/panel-addto.c:178
 msgid "A separator to organize the panel items"
 msgstr "เส้นแบ่งเพื่อแบ่งส่วนพาเนลของคุณ"
 
-#: ../mate-panel/panel-addto.c:178
+#: ../mate-panel/panel-addto.c:190
 msgid "A pop out drawer to store other items in"
 msgstr "ลิ้นชักที่เปิดออกได้ สำหรับใส่แอพเพล็ตต่างๆ"
 
-#: ../mate-panel/panel-addto.c:259
+#: ../mate-panel/panel-addto.c:274
 msgid "(empty)"
 msgstr "(ว่างเปล่า)"
 
-#: ../mate-panel/panel-addto.c:1005
+#: ../mate-panel/panel-addto.c:419
+msgid "Not compatible with X11"
+msgstr ""
+
+#: ../mate-panel/panel-addto.c:426
+msgid "Not compatible with Wayland"
+msgstr ""
+
+#: ../mate-panel/panel-addto.c:1053
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "หา_รายการที่จะเพิ่มลงใน \"%s\":"
 
-#: ../mate-panel/panel-addto.c:1009
+#: ../mate-panel/panel-addto.c:1057
 #, c-format
 msgid "Add to Drawer"
 msgstr "เพิ่มลงในลิ้นชัก"
 
-#: ../mate-panel/panel-addto.c:1011
+#: ../mate-panel/panel-addto.c:1059
 msgid "Find an _item to add to the drawer:"
 msgstr "หา_รายการที่จะเพิ่มลงในลิ้นชัก:"
 
-#: ../mate-panel/panel-addto.c:1013
+#: ../mate-panel/panel-addto.c:1061
 #, c-format
 msgid "Add to Panel"
 msgstr "เพิ่มลงในพาเนล"
 
-#: ../mate-panel/panel-addto.c:1015
+#: ../mate-panel/panel-addto.c:1063
 msgid "Find an _item to add to the panel:"
 msgstr "หา_รายการที่จะเพิ่มลงในพาเนล:"
 
-#: ../mate-panel/panel-addto.c:1244
+#: ../mate-panel/panel-addto.c:1311
 msgid "_Back"
 msgstr "ถ_อยกลับ"
 
-#: ../mate-panel/panel-applet-frame.c:760
+#: ../mate-panel/panel-applet-frame.c:759
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" หยุดทำงานกระทันหัน"
 
-#: ../mate-panel/panel-applet-frame.c:762
+#: ../mate-panel/panel-applet-frame.c:761
 msgid "Panel object has quit unexpectedly"
 msgstr "วัตถุพาเนลหยุดทำงานกระทันหัน"
 
-#: ../mate-panel/panel-applet-frame.c:769
+#: ../mate-panel/panel-applet-frame.c:768
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2492,30 +2524,30 @@ msgstr ""
 "การโหลดวัตถุพาเนลใหม่ "
 "จะเป็นการเพิ่มวัตถุพาเนลนั้นกลับเข้าไปในพาเนลอีกครั้งโดยอัตโนมัติ"
 
-#: ../mate-panel/panel-applet-frame.c:776
+#: ../mate-panel/panel-applet-frame.c:775
 msgid "D_elete"
 msgstr "_ลบ"
 
-#: ../mate-panel/panel-applet-frame.c:777
-#: ../mate-panel/panel-applet-frame.c:782
+#: ../mate-panel/panel-applet-frame.c:776
+#: ../mate-panel/panel-applet-frame.c:781
 msgid "_Don't Reload"
 msgstr "ไ_ม่ต้องโหลดใหม่"
 
-#: ../mate-panel/panel-applet-frame.c:778
-#: ../mate-panel/panel-applet-frame.c:783
+#: ../mate-panel/panel-applet-frame.c:777
+#: ../mate-panel/panel-applet-frame.c:782
 msgid "_Reload"
 msgstr "โห_ลดใหม่"
 
-#: ../mate-panel/panel-applet-frame.c:942
+#: ../mate-panel/panel-applet-frame.c:948
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "พาเนลพบกับปัญหาในขณะเรียกใช้ \"%s\""
 
-#: ../mate-panel/panel-applet-frame.c:957
+#: ../mate-panel/panel-applet-frame.c:963
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "คุณต้องการลบแอพเพล็ตนี้จากการกำหนดค่าของคุณหรือไม่?"
 
-#: ../mate-panel/panel-applet-frame.c:964 ../mate-panel/panel.c:1352
+#: ../mate-panel/panel-applet-frame.c:970 ../mate-panel/panel.c:1360
 msgid "_Delete"
 msgstr "_ลบ"
 
@@ -2598,66 +2630,66 @@ msgid "Location"
 msgstr "ตำแหน่งที่ตั้ง"
 
 #. Type
-#: ../mate-panel/panel-ditem-editor.c:607
+#: ../mate-panel/panel-ditem-editor.c:602
 msgid "_Type:"
 msgstr "ช_นิด:"
 
 #. Name
-#: ../mate-panel/panel-ditem-editor.c:614
+#: ../mate-panel/panel-ditem-editor.c:609
 msgid "_Name:"
 msgstr "_ชื่อ:"
 
-#: ../mate-panel/panel-ditem-editor.c:639
+#: ../mate-panel/panel-ditem-editor.c:634
 msgid "_Browse..."
 msgstr "เ_รียกดู..."
 
 #. Comment
-#: ../mate-panel/panel-ditem-editor.c:646
+#: ../mate-panel/panel-ditem-editor.c:641
 msgid "Co_mment:"
 msgstr "คำ_อธิบาย:"
 
-#: ../mate-panel/panel-ditem-editor.c:657
+#: ../mate-panel/panel-ditem-editor.c:652
 msgid "_Revert"
 msgstr "คืน_กลับ"
 
-#: ../mate-panel/panel-ditem-editor.c:983
+#: ../mate-panel/panel-ditem-editor.c:978
 msgid "Choose an application..."
 msgstr "เลือกโปรแกรม..."
 
-#: ../mate-panel/panel-ditem-editor.c:987
+#: ../mate-panel/panel-ditem-editor.c:982
 msgid "Choose a file..."
 msgstr "เลือกแฟ้ม..."
 
-#: ../mate-panel/panel-ditem-editor.c:1153
-#: ../mate-panel/panel-ditem-editor.c:1162
+#: ../mate-panel/panel-ditem-editor.c:1146
+#: ../mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "คำ_สั่ง:"
 
-#: ../mate-panel/panel-ditem-editor.c:1171
+#: ../mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "_ตำแหน่ง:"
 
-#: ../mate-panel/panel-ditem-editor.c:1334
+#: ../mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "ไม่ได้กำหนดชื่อปุ่มเรียก"
 
-#: ../mate-panel/panel-ditem-editor.c:1338
+#: ../mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "ไม่สามารถบันทึกคุณสมบัติของไดเรกทอรี"
 
-#: ../mate-panel/panel-ditem-editor.c:1339
+#: ../mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "ไม่ได้กำหนดชื่อไดเรกทอรี"
 
-#: ../mate-panel/panel-ditem-editor.c:1355
+#: ../mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "ไม่ได้กำหนดคำสั่งของปุ่มเรียก"
 
-#: ../mate-panel/panel-ditem-editor.c:1358
+#: ../mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "ไม่ได้กำหนดตำแหน่งของปุ่มเรียก"
 
-#: ../mate-panel/panel-ditem-editor.c:1435
+#: ../mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
 msgstr "ไม่สามารถแสดงเอกสารวิธีใช้"
 
@@ -2678,104 +2710,104 @@ msgstr ""
 "ถ้าคุณบังคับให้โปรแกรมหยุดทำงาน การเปลี่ยนแปลงในเอกสารใดๆ "
 "ที่ยังไม่ได้บันทึกอาจสูญหาย"
 
-#: ../mate-panel/panel-menu-bar.c:113
+#: ../mate-panel/panel-menu-bar.c:97
 msgid "Browse and run installed applications"
 msgstr "เปิดเมนูเพื่อเรียกใช้โปรแกรมที่ติดตั้งไว้"
 
-#: ../mate-panel/panel-menu-bar.c:114
+#: ../mate-panel/panel-menu-bar.c:98
 msgid "Access documents, folders and network places"
 msgstr "เข้าใช้เอกสาร โฟลเดอร์ และแหล่งต่างๆ ในเครือข่าย"
 
-#: ../mate-panel/panel-menu-bar.c:115
+#: ../mate-panel/panel-menu-bar.c:99
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "เปลี่ยนรูปลักษณ์และพฤติกรรมของพื้นโต๊ะ อ่านวิธีใช้ หรือออกจากระบบ"
 
-#: ../mate-panel/panel-menu-bar.c:183
+#: ../mate-panel/panel-menu-bar.c:166
 msgid "Applications"
 msgstr "แอพพลิเคชั่น"
 
-#: ../mate-panel/panel-menu-bar.c:375 ../mate-panel/panel-menu-button.c:713
+#: ../mate-panel/panel-menu-bar.c:356 ../mate-panel/panel-menu-button.c:690
 msgid "_Edit Menus"
 msgstr "แ_ก้ไขเมนู"
 
-#: ../mate-panel/panel-menu-items.c:472
+#: ../mate-panel/panel-menu-items.c:467
 msgid "Bookmarks"
 msgstr "ที่คั่นหน้า"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:495 ../mate-panel/panel.c:545
+#: ../mate-panel/panel-menu-items.c:490 ../mate-panel/panel.c:553
 #, c-format
 msgid "Open '%s'"
 msgstr "เปิดเอกสาร '%s'"
 
-#: ../mate-panel/panel-menu-items.c:566
+#: ../mate-panel/panel-menu-items.c:561
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "ไม่สามารถตรวจสอบการเปลี่ยนแผ่นใน %s"
 
-#: ../mate-panel/panel-menu-items.c:609
+#: ../mate-panel/panel-menu-items.c:604
 #, c-format
 msgid "Rescan %s"
 msgstr "ตรวจสอบ %s ใหม่"
 
-#: ../mate-panel/panel-menu-items.c:646
+#: ../mate-panel/panel-menu-items.c:641
 #, c-format
 msgid "Unable to mount %s"
 msgstr "ไม่สามารถเมานท์ %s"
 
-#: ../mate-panel/panel-menu-items.c:709
+#: ../mate-panel/panel-menu-items.c:704
 #, c-format
 msgid "Mount %s"
 msgstr "เมานท์ %s"
 
-#: ../mate-panel/panel-menu-items.c:917
+#: ../mate-panel/panel-menu-items.c:912
 msgid "Removable Media"
 msgstr "สื่อถอดเสียบ"
 
-#: ../mate-panel/panel-menu-items.c:1004
+#: ../mate-panel/panel-menu-items.c:999
 msgid "Network Places"
 msgstr "เซิร์ฟเวอร์ในเครือข่าย"
 
-#: ../mate-panel/panel-menu-items.c:1043
+#: ../mate-panel/panel-menu-items.c:1038
 msgid "Open your personal folder"
 msgstr "เปิดโฟลเดอร์ส่วนตัวของคุณ"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../mate-panel/panel-menu-items.c:1062
+#: ../mate-panel/panel-menu-items.c:1057
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "พื้นโต๊ะ"
 
-#: ../mate-panel/panel-menu-items.c:1063
+#: ../mate-panel/panel-menu-items.c:1058
 msgid "Open the contents of your desktop in a folder"
 msgstr "เปิดดูสิ่งต่างๆ บนพื้นโต๊ะในแบบโฟลเดอร์"
 
-#: ../mate-panel/panel-menu-items.c:1079
+#: ../mate-panel/panel-menu-items.c:1074
 msgid "Computer"
 msgstr "คอมพิวเตอร์"
 
-#: ../mate-panel/panel-menu-items.c:1084
+#: ../mate-panel/panel-menu-items.c:1079
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
 "ท่องดูดิสก์และโฟลเดอร์ทั้งหมดในเครื่องและในเครือข่ายที่เข้าถึงได้จากคอมพิวเตอร์นี้"
 
-#: ../mate-panel/panel-menu-items.c:1097
+#: ../mate-panel/panel-menu-items.c:1092
 msgid "Network"
 msgstr "เครือข่าย"
 
-#: ../mate-panel/panel-menu-items.c:1098
+#: ../mate-panel/panel-menu-items.c:1093
 msgid "Browse bookmarked and local network locations"
 msgstr ""
 "ท่องดูตำแหน่งเครือข่ายที่คั่นหน้าไว้ และตำแหน่งต่างๆ ในเครือข่ายเฉพาะที่"
 
-#: ../mate-panel/panel-menu-items.c:1496
+#: ../mate-panel/panel-menu-items.c:1487
 msgid "Places"
 msgstr "สถานที่"
 
-#: ../mate-panel/panel-menu-items.c:1524
+#: ../mate-panel/panel-menu-items.c:1515
 msgid "System"
 msgstr "ระบบ"
 
@@ -2783,7 +2815,7 @@ msgstr "ระบบ"
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: ../mate-panel/panel-menu-items.c:1609
+#: ../mate-panel/panel-menu-items.c:1600
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2792,14 +2824,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1621
+#: ../mate-panel/panel-menu-items.c:1612
 #, c-format
 msgid "Log Out %s..."
 msgstr "ออกจากระบบ (ผู้ใช้ %s)..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1625
+#: ../mate-panel/panel-menu-items.c:1616
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "ออกจากวาระนี้ของผู้ใช้ %s เพื่อเข้าระบบเป็นผู้ใช้อื่น"
@@ -2930,21 +2962,21 @@ msgstr "ขยายให้เ_ต็ม"
 msgid "Rotate image when panel is _vertical"
 msgstr "_หมุนภาพเมื่อพาเนลอยู่ในแนวตั้ง"
 
-#: ../mate-panel/panel-recent.c:79 ../mate-panel/panel-recent.c:89
+#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "ไม่สามารถเปิดเอกสารล่าสุดชื่อ \"%s\" ได้"
 
-#: ../mate-panel/panel-recent.c:91
+#: ../mate-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "เกิดข้อผิดพลาดไม่ทราบสาเหตุขณะพยายามเปิด \"%s\""
 
-#: ../mate-panel/panel-recent.c:148
+#: ../mate-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "ล้างรายชื่อเอกสารล่าสุดหรือไม่?"
 
-#: ../mate-panel/panel-recent.c:150
+#: ../mate-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2954,47 +2986,47 @@ msgstr ""
 "• รายการทั้งหมดในเมนู ที่หลักๆ → เอกสารล่าสุด\n"
 "• รายชื่อเอกสารล่าสุดในโปรแกรมทั้งหมด"
 
-#: ../mate-panel/panel-recent.c:165
+#: ../mate-panel/panel-recent.c:164
 msgid "Clear Recent Documents"
 msgstr "ล้างรายชื่อเอกสารล่าสุด"
 
-#: ../mate-panel/panel-recent.c:200
+#: ../mate-panel/panel-recent.c:199
 msgid "Recent Documents"
 msgstr "เอกสารล่าสุด"
 
-#: ../mate-panel/panel-recent.c:239
+#: ../mate-panel/panel-recent.c:238
 msgid "Clear Recent Documents..."
 msgstr "ล้างรายชื่อเอกสารล่าสุด..."
 
-#: ../mate-panel/panel-recent.c:241
+#: ../mate-panel/panel-recent.c:240
 msgid "Clear all items from the recent documents list"
 msgstr "ล้างรายการเอกสารล่าสุดทั้งหมด"
 
-#: ../mate-panel/panel-run-dialog.c:420
+#: ../mate-panel/panel-run-dialog.c:423
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "ไม่สามารถเรียกใช้คำสั่ง '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:461
+#: ../mate-panel/panel-run-dialog.c:464
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "ไม่สามารถแปลง '%s' จาก UTF-8 ได้"
 
-#: ../mate-panel/panel-run-dialog.c:1254
+#: ../mate-panel/panel-run-dialog.c:1257
 msgid "Choose a file to append to the command..."
 msgstr "เลือกแฟ้มที่จะใช้ต่อท้ายคำสั่ง..."
 
-#: ../mate-panel/panel-run-dialog.c:1636
+#: ../mate-panel/panel-run-dialog.c:1639
 #: ../mate-panel/panel-run-dialog.ui.h:13
 msgid "Select an application to view its description."
 msgstr "เลือกโปรแกรมแล้วจะแสดงรายละเอียด"
 
-#: ../mate-panel/panel-run-dialog.c:1674
+#: ../mate-panel/panel-run-dialog.c:1677
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "จะเรียกใช้คำสั่ง: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1707
+#: ../mate-panel/panel-run-dialog.c:1710
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -3136,53 +3168,53 @@ msgstr "แ_อพเพล็ต:"
 msgid "_Prefs Path:"
 msgstr "เส้นทางค่า_ปรับแต่ง:"
 
-#: ../mate-panel/panel-toplevel.c:1226
+#: ../mate-panel/panel-toplevel.c:1232
 msgid "Hide Panel"
 msgstr "ซ่อนพาเนล"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1664 ../mate-panel/panel-toplevel.c:1674
+#: ../mate-panel/panel-toplevel.c:1673 ../mate-panel/panel-toplevel.c:1683
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1666
+#: ../mate-panel/panel-toplevel.c:1675
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1668
+#: ../mate-panel/panel-toplevel.c:1677
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1670
+#: ../mate-panel/panel-toplevel.c:1679
 msgid "Right Panel"
 msgstr ""
 
-#: ../mate-panel/panel-util.c:356
+#: ../mate-panel/panel-util.c:350
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "ไม่พบไอคอน '%s'"
 
-#: ../mate-panel/panel-util.c:480
+#: ../mate-panel/panel-util.c:474
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "ไม่สามารถเรียกใช้ '%s'"
 
-#: ../mate-panel/panel-util.c:708
+#: ../mate-panel/panel-util.c:702
 msgid "file"
 msgstr "แฟ้ม"
 
-#: ../mate-panel/panel-util.c:881
+#: ../mate-panel/panel-util.c:875
 msgid "Home Folder"
 msgstr "โฟลเดอร์หลัก"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:893
+#: ../mate-panel/panel-util.c:887
 msgid "File System"
 msgstr "ระบบแฟ้ม"
 
-#: ../mate-panel/panel-util.c:1066
+#: ../mate-panel/panel-util.c:1060
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -3190,21 +3222,21 @@ msgstr "ค้นหา"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1112
+#: ../mate-panel/panel-util.c:1106
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:478
+#: ../mate-panel/panel.c:486
 #, c-format
 msgid "Open URL: %s"
 msgstr "เปิด URL: %s"
 
-#: ../mate-panel/panel.c:1328
+#: ../mate-panel/panel.c:1336
 msgid "Delete this drawer?"
 msgstr "ยืนยันการลบลิ้นชักนี้หรือไม่?"
 
-#: ../mate-panel/panel.c:1329
+#: ../mate-panel/panel.c:1337
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3212,11 +3244,11 @@ msgstr ""
 "เมื่อลบลิ้นชัก ลิ้นชักและค่าที่ตั้งไว้จะสูญหาย\n"
 "ลบลิ้นชักนี้หรือไม่?"
 
-#: ../mate-panel/panel.c:1332
+#: ../mate-panel/panel.c:1340
 msgid "Delete this panel?"
 msgstr "ยืนยันการลบพาเนลนี้หรือไม่?"
 
-#: ../mate-panel/panel.c:1333
+#: ../mate-panel/panel.c:1341
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
