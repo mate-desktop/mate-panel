@@ -1,56 +1,82 @@
+### mate-panel 1.23.2
+
+  * update translations
+  * fish: Use a higher resolution image for Wanda the Fish
+  * Fetch clock formats using LC_TIME (as opposed to LANGUAGE)
+  * Change the panel menu descriptions to better identify them
+  * Load layouts from absolute paths
+  * Set compiler debug flags using MATE_DEBUG_CHECK
+  * sn-item: avoid 'g_type_class_add_private'
+  * notification_area/main: avoid 'g_type_class_add_private'
+  * na-tray: avoid 'g_type_class_add_private'
+  * clock-face: fix code formating
+  * clock: avoid deprecated g_type_class_add_private
+  * When determining whether the pos is in the applet, use ad->cells to calc.
+  * build: use AC_STRUCT_DIRENT_D_TYPE instead of custom macro
+  * panel-toplevel: avoid deprecated 'gtk_css_provider_get_default'
+  * panel-toplevel: fix applets placement on expanded vertical panel
+  * panel-toplevel: fix coding style and spacing a bit
+  * Fix GTK Layer Shell include and CFLAGS
+  * [clock-applet] Add scroll interface tabs with mouse wheel
+  * Keep menu button popup from covering up menu on Wayland
+  * Keep applet menus from covering up applets on Wayland
+  * Add comment headers to wayland backend files
+  * Add Wayland backend
+  * Remove trailing whitespaces
+  * Use monitor size instead of screen size in panel-toplevel.c
+  * Add panel_multimonitor_get_bounds ()
+
 ### mate-panel 1.23.1
 
-    tx: update resource for transifex
-    Wayland support for panel-toplevel.c
-    Fix unused variable in panel-widget.c
-    Wayland support for panel-layout.c
-    Wayland support for panel-profile.c
-    Wayland support for main.c
-    Wayland support for panel-applet-container.c
-    Fix out-of-process applets on X11 by fixing mate-panel-applet.c
-    Wayland support for mate-panel-applet.c
-    Wayland support for libegg
-    In mate-panel-applet-factory.c, only set screen when used
-    Make system-tray X11-only
-    Make panel-struts X11-only
-    Reinit panel-multimonitor when screen is changed
-    Reinit panel-multimonitor when a monitor is invalidated
-    Make panel-multimonitor Wayland ready
-    Update to the new panel_multimonitor functions
-    Refactor panel_multiscreen functions into panel_multimonitor ones
-    Rename panel-multiscreen files panel-multimonitor
-    Make panel-background Wayland ready
-    Make panel-background-monitor X11-only
-    CI: add gtk-layer-shell git repo
-    Strings resistance
-    Fix Makefile.am to install in a given prefix path
-    Error in the correct place when applets are loaded on a platform they don't support
-    Add supported platform values to *.mate-panel-applet files
-    Load and store what platforms applets support
-    panel-addto support disabling applets
-    Panel addto Wayland support
-    Add MATE_PANEL_APPLET_LIB_PREFIX environment variable
-    Switch out wayland protocols for gtk-layer-shell dependency
-    Update FSF address
-    revert menu-bar: transfer focus correctly on alt-F1
-    na-tray: avoid deprecated g_type_class_add_private
-    Create FUNDING.yml
-    fix reloading the default layout after panel reset
-    fix random crashes on panel reset
-    [mate-panel] Avoid deprecated g_type_class_add_private
-    [libmate-panel-applet] Avoid deprecated g_type_class_add_private
-    Set compressed="true" for gresource text files
-    panel-toplevel: Clarify calculation precedence for '&' and '?'
-    button-widget: Clarify calculation precedence for '&' and '?'
-    Determine libwnck version during configure
-    Add version check for libwnck
-    window-list: Show window previews on hover
-    Fix panel applet keyboard focus trap
-    [ci] Add cppcheck html report
+  * update translations
+  * Wayland support for panel-toplevel.c
+  * Fix unused variable in panel-widget.c
+  * Wayland support for panel-layout.c
+  * Wayland support for panel-profile.c
+  * Wayland support for main.c
+  * Wayland support for panel-applet-container.c
+  * Fix out-of-process applets on X11 by fixing mate-panel-applet.c
+  * Wayland support for mate-panel-applet.c
+  * Wayland support for libegg
+  * In mate-panel-applet-factory.c, only set screen when used
+  * Make system-tray X11-only
+  * Make panel-struts X11-only
+  * Reinit panel-multimonitor when screen is changed
+  * Reinit panel-multimonitor when a monitor is invalidated
+  * Make panel-multimonitor Wayland ready
+  * Update to the new panel_multimonitor functions
+  * Refactor panel_multiscreen functions into panel_multimonitor ones
+  * Rename panel-multiscreen files panel-multimonitor
+  * Make panel-background Wayland ready
+  * Make panel-background-monitor X11-only
+  * Strings resistance
+  * Fix Makefile.am to install in a given prefix path
+  * Error in the correct place when applets are loaded on a platform they don't support
+  * Add supported platform values to *.mate-panel-applet files
+  * Load and store what platforms applets support
+  * panel-addto support disabling applets
+  * Panel addto Wayland support
+  * Add MATE_PANEL_APPLET_LIB_PREFIX environment variable
+  * Switch out wayland protocols for gtk-layer-shell dependency
+  * Update FSF address
+  * revert menu-bar: transfer focus correctly on alt-F1
+  * na-tray: avoid deprecated g_type_class_add_private
+  * Create FUNDING.yml
+  * fix reloading the default layout after panel reset
+  * fix random crashes on panel reset
+  * [mate-panel] Avoid deprecated g_type_class_add_private
+  * [libmate-panel-applet] Avoid deprecated g_type_class_add_private
+  * Set compressed="true" for gresource text files
+  * panel-toplevel: Clarify calculation precedence for '&' and '?'
+  * button-widget: Clarify calculation precedence for '&' and '?'
+  * Determine libwnck version during configure
+  * Add version check for libwnck
+  * window-list: Show window previews on hover
+  * Fix panel applet keyboard focus trap
 
 ### mate-panel 1.23.0
 
-  * sync with transifex
+  * update translations
   * add volume-applet to fedora layout
   * Show single empty panel, even if no default layout is found
   * Dropped *-protocol suffix from generated files
