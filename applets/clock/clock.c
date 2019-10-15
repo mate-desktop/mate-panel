@@ -74,6 +74,8 @@
 
 #define KEY_FORMAT		"format"
 #define KEY_SHOW_SECONDS	"show-seconds"
+#define KEY_SHOW_LONGDATE	"show-longdate"
+#define KEY_SHOW_SHORTDATE	"show-shortdate"
 #define KEY_SHOW_DATE		"show-date"
 #define KEY_SHOW_WEATHER	"show-weather"
 #define KEY_SHOW_TEMPERATURE	"show-temperature"
@@ -147,6 +149,8 @@ struct _ClockData {
 	ClockFormat  format;
 	char        *custom_format;
 	gboolean     showseconds;
+	gboolean     showlongdate;
+	gboolean     showshortdate;
 	gboolean     showdate;
 	gboolean     showweek;
         gboolean     show_weather;
@@ -173,6 +177,8 @@ struct _ClockData {
 	int fixed_height;
 
         GtkWidget *showseconds_check;
+        GtkWidget *showlongdate_check;
+        GtkWidget *showshortdate_check;
         GtkWidget *showdate_check;
         GtkWidget *showweeks_check;
         GtkWidget *custom_hbox;
@@ -492,17 +498,18 @@ get_updated_timeformat (ClockData *cd)
 	const char *date_format;
 	char       *clock_format;
 
-	if (cd->format == CLOCK_FORMAT_12)
+	if (cd->format == CLOCK_FORMAT_12) {
 		/* Translators: This is a strftime format string.
 		 * It is used to display the time in 12-hours format (eg, like
 		 * in the US: 8:10 am). The %p expands to am/pm. */
 		time_format = cd->showseconds ? _("%l:%M:%S %p") : _("%l:%M %p");
-	else
+        }
+	else {
 		/* Translators: This is a strftime format string.
 		 * It is used to display the time in 24-hours format (eg, like
 		 * in France: 20:10). */
 		time_format = cd->showseconds ? _("%H:%M:%S") : _("%H:%M");
-
+        }
 	if (!cd->showdate)
 		clock_format = g_strdup (time_format);
 
@@ -531,6 +538,87 @@ get_updated_timeformat (ClockData *cd)
 							date_format,
 							time_format);
 	}
+        if (cd->showdate){ 
+        if (cd->showlongdate && !cd->showshortdate){
+		/* Translators: This is a strftime format string.
+		 * It is used to display the date. Replace %e with %d if, when
+		 * the day of the month as a decimal number is a single digit,
+		 * it should begin with a 0 in your locale (e.g. "May 01"
+		 * instead of "May  1"). */
+		date_format = _("%Y年%m月%d日");
+
+		if (use_two_line_format (cd))
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%1$s\n%2$s"),
+							date_format,
+							time_format);
+		else
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%1$s, %2$s"),
+							date_format,
+							time_format);
+        }
+        else if (cd->showshortdate && !cd->showlongdate) {
+		/* Translators: This is a strftime format string.
+		 * It is used to display the date. Replace %e with %d if, when
+		 * the day of the month as a decimal number is a single digit,
+		 * it should begin with a 0 in your locale (e.g. "May 01"
+		 * instead of "May  1"). */
+		date_format = _("%F");
+
+		if (use_two_line_format (cd))
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%1$s\n%2$s"),
+							date_format,
+							time_format);
+		else
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%1$s, %2$s"),
+							date_format,
+							time_format);
+        }
+        else {
+		/* Translators: This is a strftime format string.
+		 * It is used to display the date. Replace %e with %d if, when
+		 * the day of the month as a decimal number is a single digit,
+		 * it should begin with a 0 in your locale (e.g. "May 01"
+		 * instead of "May  1"). */
+		date_format = _("%a %b %e");
+
+		if (use_two_line_format (cd))
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%1$s\n%2$s"),
+							date_format,
+							time_format);
+		else
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%1$s, %2$s"),
+							date_format,
+							time_format);
+
+        }
+        
+
+        }
+
 
 	result = g_locale_from_utf8 (clock_format, -1, NULL, NULL, NULL);
 	g_free (clock_format);
@@ -730,6 +818,55 @@ update_tooltip (ClockData * cd)
                 else
                         tip = _("Click to view month calendar");
         }
+        if (cd->showdate) {
+        if (!cd->showlongdate || !cd->showshortdate) {
+		struct tm *tm;
+		char date[256];
+		char *utf8, *loc;
+                char *zone;
+                time_t now_t;
+                struct tm now;
+
+		tm = localtime (&cd->current_time);
+
+		utf8 = NULL;
+
+                /* Show date in tooltip. */
+		/* Translators: This is a strftime format string.
+		 * It is used to display a date. Please leave "%%s" as it is:
+		 * it will be used to insert the timezone name later. */
+                loc = g_locale_from_utf8 (_("%A %B %c (%%s)"), -1, NULL, NULL, NULL);
+                if (!loc)
+                        strcpy (date, "???");
+                else if (strftime (date, sizeof (date), loc, tm) <= 0)
+                        strcpy (date, "???");
+                g_free (loc);
+
+                utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
+
+                /* Add the timezone name */
+
+                tzset ();
+                time (&now_t);
+                localtime_r (&now_t, &now);
+
+                if (now.tm_isdst > 0) {
+                        zone = tzname[1];
+                } else {
+                        zone = tzname[0];
+                }
+
+                tip = g_strdup_printf (utf8, zone);
+
+                g_free (utf8);
+        } else {
+                if (cd->calendar_popup)
+                        tip = _("Click to hide month calendar");
+                else
+                        tip = _("Click to view month calendar");
+        }
+
+        }
 
         /* Update only when the new tip is different.
          * This can prevent problems with OpenGL on some drivers */
@@ -740,6 +877,10 @@ update_tooltip (ClockData * cd)
         g_free (old_tip);
         if (!cd->showdate)
                 g_free (tip);
+        if (cd->showdate){
+        if (!cd->showlongdate && !cd->showshortdate)
+                g_free (tip);
+        }
 }
 
 static void
@@ -2045,7 +2186,25 @@ show_seconds_changed (GSettings    *settings,
 	clock->showseconds = g_settings_get_boolean (settings, key);
 	refresh_clock_timeout (clock);
 }
+static void
+show_longdate_changed (GSettings    *settings,
+		      gchar        *key,
+		      ClockData    *clock)
+{
+	clock->showlongdate = g_settings_get_boolean (settings, key);
+	update_timeformat (clock);
+        refresh_clock (clock);
+}
 
+static void
+show_shortdate_changed (GSettings    *settings,
+		      gchar        *key,
+		      ClockData    *clock)
+{
+	clock->showshortdate = g_settings_get_boolean (settings, key);
+	update_timeformat (clock);
+        refresh_clock (clock);
+}
 static void
 show_date_changed (GSettings    *settings,
                    gchar        *key,
@@ -2448,6 +2607,8 @@ setup_gsettings (ClockData *cd)
 
         g_signal_connect (cd->settings, "changed::" KEY_FORMAT, G_CALLBACK (format_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_SECONDS, G_CALLBACK (show_seconds_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_LONGDATE, G_CALLBACK (show_longdate_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_SHORTDATE, G_CALLBACK (show_shortdate_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_DATE, G_CALLBACK (show_date_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_WEATHER, G_CALLBACK (show_weather_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_TEMPERATURE, G_CALLBACK (show_temperature_changed), cd);
@@ -2494,6 +2655,8 @@ load_gsettings (ClockData *cd)
 
 	cd->custom_format = g_settings_get_string (cd->settings, KEY_CUSTOM_FORMAT);
 	cd->showseconds = g_settings_get_boolean (cd->settings, KEY_SHOW_SECONDS);
+	cd->showlongdate = g_settings_get_boolean (cd->settings, KEY_SHOW_LONGDATE);
+	cd->showshortdate = g_settings_get_boolean (cd->settings, KEY_SHOW_SHORTDATE);
 	cd->showdate = g_settings_get_boolean (cd->settings, KEY_SHOW_DATE);
         cd->show_weather = g_settings_get_boolean (cd->settings, KEY_SHOW_WEATHER);
         cd->show_temperature = g_settings_get_boolean (cd->settings, KEY_SHOW_TEMPERATURE);
@@ -3137,6 +3300,16 @@ fill_prefs_window (ClockData *cd)
 	/* Set the "Show Seconds" checkbox */
 	widget = _clock_get_widget (cd, "seconds_check");
 	g_settings_bind (cd->settings, KEY_SHOW_SECONDS, widget, "active",
+                         G_SETTINGS_BIND_DEFAULT);
+
+	/* Set the "Show longdate" checkbox */
+	widget = _clock_get_widget (cd, "longdate_check");
+	g_settings_bind (cd->settings, KEY_SHOW_LONGDATE, widget, "active",
+                         G_SETTINGS_BIND_DEFAULT);
+
+	/* Set the "Show shortdate" checkbox */
+	widget = _clock_get_widget (cd, "shortdate_check");
+	g_settings_bind (cd->settings, KEY_SHOW_SHORTDATE, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
         /* Set the "Show Week Numbers" checkbox */
