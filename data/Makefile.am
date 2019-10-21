@@ -23,9 +23,6 @@ panel_gschemas_in = \
 
 gsettings_SCHEMAS = $(panel_gschemas_in:.xml.in=.xml)
 
-%.gschema.xml: %.gschema.xml.in Makefile
-	$(AM_V_GEN) $(SED) -e 's^\@GETTEXT_PACKAGE\@^$(GETTEXT_PACKAGE)^g' < $< > $@
-
 @GSETTINGS_RULES@
 
 EXTRA_DIST = \
