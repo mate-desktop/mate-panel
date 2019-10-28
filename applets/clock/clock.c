@@ -78,6 +78,7 @@
 #define KEY_SHOW_SECONDS        "show-seconds"
 #define KEY_SHOW_LONGDATE	"show-longdate"
 #define KEY_SHOW_SHORTDATE	"show-shortdate"
+#define KEY_SHOW_DEFAULTDATE	"show-default-format"
 #define KEY_SHOW_DATE                "show-date"
 #define KEY_SHOW_WEATHER        "show-weather"
 #define KEY_SHOW_TEMPERATURE        "show-temperature"
@@ -150,6 +151,7 @@ struct _ClockData {
         gboolean     showseconds;
         gboolean     showlongdate;
 	gboolean     showshortdate;
+        gboolean     showdefaultdate;
         gboolean     showdate;
         gboolean     showweek;
         gboolean     show_weather;
@@ -178,6 +180,7 @@ struct _ClockData {
         GtkWidget *showseconds_check;
         GtkWidget *showlongdate_check;
         GtkWidget *showshortdate_check;
+        GtkWidget *showdefaultdate_check;
         GtkWidget *showdate_check;
         GtkWidget *showweeks_check;
         GtkWidget *custom_hbox;
@@ -485,7 +488,7 @@ get_updated_timeformat (ClockData *cd)
                                                         time_format);
         }
 
-        if (cd->showdate){ 
+        if (cd->showdate && !cd->showdefaultdate){ 
         if (cd->showlongdate && !cd->showshortdate){
 		/* Translators: This is a strftime format string.
 		 * It is used to display the date. Replace %e with %d if, when
@@ -2076,6 +2079,15 @@ show_seconds_changed (GSettings    *settings,
 }
 
 static void
+show_defaultdate_changed (GSettings    *settings,
+		      gchar        *key,
+		      ClockData    *clock)
+{
+	clock->showdefaultdate = g_settings_get_boolean (settings, key);
+	update_timeformat (clock);
+        refresh_clock (clock);
+}
+static void
 show_shortdate_changed (GSettings    *settings,
 		      gchar        *key,
 		      ClockData    *clock)
@@ -2559,6 +2571,7 @@ setup_gsettings (ClockData *cd)
         g_signal_connect (cd->settings, "changed::" KEY_FORMAT, G_CALLBACK (format_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_SECONDS, G_CALLBACK (show_seconds_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_LONGDATE, G_CALLBACK (show_longdate_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_DEFAULTDATE, G_CALLBACK (show_defaultdate_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_SHORTDATE, G_CALLBACK (show_shortdate_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_DATE, G_CALLBACK (show_date_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_WEATHER, G_CALLBACK (show_weather_changed), cd);
@@ -2607,6 +2620,7 @@ load_gsettings (ClockData *cd)
         cd->custom_format = g_settings_get_string (cd->settings, KEY_CUSTOM_FORMAT);
         cd->showseconds = g_settings_get_boolean (cd->settings, KEY_SHOW_SECONDS);
 	cd->showlongdate = g_settings_get_boolean (cd->settings, KEY_SHOW_LONGDATE);
+	cd->showdefaultdate = g_settings_get_boolean (cd->settings, KEY_SHOW_DEFAULTDATE);
 	cd->showshortdate = g_settings_get_boolean (cd->settings, KEY_SHOW_SHORTDATE);
         cd->showdate = g_settings_get_boolean (cd->settings, KEY_SHOW_DATE);
         cd->show_weather = g_settings_get_boolean (cd->settings, KEY_SHOW_WEATHER);
@@ -3247,6 +3261,11 @@ fill_prefs_window (ClockData *cd)
 	/* Set the "Show longdate" checkbox */
 	widget = _clock_get_widget (cd, "longdate_check");
 	g_settings_bind (cd->settings, KEY_SHOW_LONGDATE, widget, "active",
+                         G_SETTINGS_BIND_DEFAULT);
+
+	/* Set the "Show defaultdate" checkbox */
+	widget = _clock_get_widget (cd, "defaultdate_check");
+	g_settings_bind (cd->settings, KEY_SHOW_DEFAULTDATE, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
 	/* Set the "Show shortdate" checkbox */
