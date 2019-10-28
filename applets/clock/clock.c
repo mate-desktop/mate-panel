@@ -492,7 +492,7 @@ get_updated_timeformat (ClockData *cd)
 		 * the day of the month as a decimal number is a single digit,
 		 * it should begin with a 0 in your locale (e.g. "May 01"
 		 * instead of "May  1"). */
-		date_format = _("%Y年%m月%d日");
+		date_format = _("%x");
 
 		if (use_two_line_format (cd))
 			/* translators: reverse the order of these arguments
@@ -791,7 +791,7 @@ update_tooltip (ClockData * cd)
                     loc = g_locale_from_utf8 (_("%c (%%s)"), -1, NULL, NULL, NULL);
                 } 
                 else if (cd->showshortdate && !cd->showlongdate) {
-                    loc = g_locale_from_utf8 (_("%F %A %H时%M分%S秒 (%%s)"), -1, NULL, NULL, NULL);
+                    loc = g_locale_from_utf8 (_("%F %A %X (%%s)"), -1, NULL, NULL, NULL);
                 }
                 else {
                     loc = g_locale_from_utf8 (_("%A %B %d (%%s)"), -1, NULL, NULL, NULL);
