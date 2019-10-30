@@ -40,8 +40,8 @@ fish_applet_CFLAGS = $(AM_CFLAGS)
 endif
 
 appletdir       = $(datadir)/mate-panel/applets
-applet_in_files = org.mate.panel.FishApplet.mate-panel-applet.in
-applet_DATA     = $(applet_in_files:.mate-panel-applet.in=.mate-panel-applet)
+applet_in_files = org.mate.panel.FishApplet.mate-panel-applet.desktop.in
+applet_DATA     = $(applet_in_files:.mate-panel-applet.desktop.in=.mate-panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
@@ -50,7 +50,8 @@ $(applet_in_files): $(applet_in_files).in Makefile
 		-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 		$< > $@
 
-@PANEL_INTLTOOL_MATE_PANEL_APPLET_RULE@
+$(applet_DATA): $(applet_in_files)
+	$(AM_V_GEN) $(MSGFMT) --desktop --keyword Name --keyword Description --template $< -d $(top_srcdir)/po -o $@
 
 if !FISH_INPROCESS
 servicedir       = $(datadir)/dbus-1/services
@@ -87,18 +88,17 @@ BUILT_SOURCES = 		\
 
 fish_gschemas_in = org.mate.panel.applet.fish.gschema.xml.in
 gsettings_SCHEMAS = $(fish_gschemas_in:.xml.in=.xml)
-@INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
 EXTRA_DIST = \
 	wanda.svg \
 	$(fishbitmaps_DATA) \
-	org.mate.panel.FishApplet.mate-panel-applet.in.in \
+	org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in \
 	$(service_in_files) \
 	$(ui_FILES)	\
 	fish.gresource.xml \
 	$(fish_gschemas_in)
 
-CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in $(service_DATA) $(gsettings_SCHEMAS)
+CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_in_files) $(service_DATA) $(gsettings_SCHEMAS)
 
 -include $(top_srcdir)/git.mk
