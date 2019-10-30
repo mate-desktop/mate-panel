@@ -1,4 +1,5 @@
 SUBDIRS =			\
+	po				\
 	mate-panel		\
 	libmate-panel-applet		\
 	applets			\
@@ -6,8 +7,7 @@ SUBDIRS =			\
 	help			\
 	icons			\
 	data			\
-	man			\
-	po
+	man
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
@@ -37,7 +37,6 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/configure \
 	$(srcdir)/gtk-doc.make \
 	$(srcdir)/m4/gtk-doc.m4 \
-	$(srcdir)/m4/intltool.m4 \
 	$(srcdir)/m4/libtool.m4 \
 	$(srcdir)/m4/ltoptions.m4 \
 	$(srcdir)/m4/ltsugar.m4 \

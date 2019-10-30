@@ -125,8 +125,8 @@ BUILT_SOURCES =					\
 	clock-typebuiltins.h
 
 appletdir       = $(datadir)/mate-panel/applets
-applet_in_files = org.mate.panel.ClockApplet.mate-panel-applet.in
-applet_DATA     = $(applet_in_files:.mate-panel-applet.in=.mate-panel-applet)
+applet_in_files = org.mate.panel.ClockApplet.mate-panel-applet.desktop.in
+applet_DATA     = $(applet_in_files:.mate-panel-applet.desktop.in=.mate-panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
@@ -135,7 +135,8 @@ $(applet_in_files): $(applet_in_files).in Makefile
 		-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 		$< > $@
 
-@PANEL_INTLTOOL_MATE_PANEL_APPLET_RULE@
+$(applet_DATA): $(applet_in_files)
+	$(AM_V_GEN) $(MSGFMT) --desktop --keyword Name --keyword Description --template $< -d $(top_srcdir)/po -o $@
 
 if !CLOCK_INPROCESS
 servicedir       = $(datadir)/dbus-1/services
@@ -161,11 +162,10 @@ clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourc
 clock_gschemas_in = org.mate.panel.applet.clock.gschema.xml.in
 gsettings_SCHEMAS = $(clock_gschemas_in:.xml.in=.xml)
 
-@INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
 EXTRA_DIST =						\
-	org.mate.panel.ClockApplet.mate-panel-applet.in.in	\
+	org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in	\
 	$(clock_gschemas_in)				\
 	$(ui_FILES)					\
 	clock.gresource.xml				\
@@ -175,7 +175,7 @@ EXTRA_DIST =						\
 CLEANFILES =			\
 	$(BUILT_SOURCES)	\
 	$(applet_DATA) 		\
-	$(applet_DATA).in	\
+	$(applet_in_files) 	\
 	$(service_DATA)		\
 	$(polkit_DATA)		\
 	$(dbus_services_DATA)	\

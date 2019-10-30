@@ -92,13 +92,13 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libmatepanelapplet-4.0.pc
 
 appletdir       = $(datadir)/mate-panel/applets
-applet_in_files = org.mate.panel.TestApplet.mate-panel-applet.in
-noinst_DATA     = $(applet_in_files:.mate-panel-applet.in=.mate-panel-applet)
-
-@PANEL_INTLTOOL_MATE_PANEL_APPLET_RULE@
+applet_in_files = org.mate.panel.TestApplet.mate-panel-applet.desktop.in
+noinst_DATA     = $(applet_in_files:.mate-panel-applet.desktop.in=.mate-panel-applet)
+$(noinst_DATA): $(applet_in_files)
+	$(AM_V_GEN) $(MSGFMT) --desktop --keyword Name --keyword Description --template $< -d $(top_srcdir)/po -o $@
 
 EXTRA_DIST =						\
-	org.mate.panel.TestApplet.mate-panel-applet.in	\
+	org.mate.panel.TestApplet.mate-panel-applet.desktop.in	\
 	mate-panel-applet-marshal.list			\
 	libmatepanelapplet-4.0.pc.in			\
 	libmatepanelapplet-4.0-uninstalled.pc.in
