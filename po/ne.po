@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR MATE Desktop Environment team
+# This file is distributed under the same license as the mate-panel package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
@@ -9,12 +9,11 @@
 # chautari <chautari@gmail.com>, 2018
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
 # 
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: MATE Desktop Environment\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-23 10:15+0200\n"
+"Project-Id-Version: mate-panel 1.23.2\n"
+"Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
+"POT-Creation-Date: 2019-11-14 14:29+0100\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
 "Language-Team: Nepali (https://www.transifex.com/mate/teams/13566/ne/)\n"
@@ -24,29 +23,29 @@ msgstr ""
 "Language: ne\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
+#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:689
 msgid "Locations"
 msgstr "स्थानहरु"
 
-#: ../applets/clock/calendar-window.c:259
+#: applets/clock/calendar-window.c:257
 msgid "Edit"
 msgstr "सम्पादन"
 
-#: ../applets/clock/calendar-window.c:486
+#: applets/clock/calendar-window.c:482
 msgid "Calendar"
 msgstr "क्यालेन्डर"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:434
+#: applets/clock/clock.c:446
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:434 ../applets/clock/clock-location-tile.c:503
+#: applets/clock/clock.c:446 applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -57,7 +56,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1579
+#: applets/clock/clock.c:451 applets/clock/clock.c:1596
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -71,9 +70,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1585
-#: ../applets/clock/clock-location-tile.c:463
-#: ../applets/clock/clock-location-tile.c:510
+#: applets/clock/clock.c:451 applets/clock/clock.c:1602
+#: applets/clock/clock-location-tile.c:464
+#: applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -82,14 +81,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:450
+#: applets/clock/clock.c:462
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:457
+#: applets/clock/clock.c:469
 #, c-format
 msgid ""
 "%1$s\n"
@@ -98,31 +94,27 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:465
+#: applets/clock/clock.c:477
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:638
+#: applets/clock/clock.c:655
 msgid "%A %B %d (%%s)"
 msgstr ""
 
-#: ../applets/clock/clock.c:664
+#: applets/clock/clock.c:681
 msgid "Click to hide month calendar"
 msgstr "महिना क्यालेन्डर लुकाउन क्लिक गर्नुहोस्"
 
-#: ../applets/clock/clock.c:666
+#: applets/clock/clock.c:683
 msgid "Click to view month calendar"
 msgstr "महिना क्यालेन्डर हेर्न क्लिक गर्नुहोस्"
 
-#: ../applets/clock/clock.c:1417
+#: applets/clock/clock.c:1434
 msgid "Computer Clock"
 msgstr "कम्प्युटर घडी"
 
@@ -132,7 +124,7 @@ msgstr "कम्प्युटर घडी"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1564
+#: applets/clock/clock.c:1581
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -142,301 +134,294 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1572
+#: applets/clock/clock.c:1589
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1618
+#: applets/clock/clock.c:1635
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1649
+#: applets/clock/clock.c:1666
 msgid "Set System Time..."
 msgstr ""
 
-#: ../applets/clock/clock.c:1650
+#: applets/clock/clock.c:1667
 msgid "Set System Time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1665
+#: applets/clock/clock.c:1682
 msgid "Failed to set the system time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1863 ../applets/fish/fish.c:1694
-#: ../applets/notification_area/main.c:292
-#: ../applets/wncklet/window-list.c:357
-#: ../applets/wncklet/workspace-switcher.c:389
+#: applets/clock/clock.c:1880 applets/fish/fish.c:1694
+#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:357
+#: applets/wncklet/workspace-switcher.c:389
 msgid "_Preferences"
 msgstr "प्राथमिकता"
 
-#: ../applets/clock/clock.c:1866 ../applets/clock/clock.ui.h:7
-#: ../applets/fish/fish.c:1697 ../applets/fish/fish.ui.h:2
-#: ../applets/notification_area/main.c:295
-#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:365
-#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:98
-#: ../applets/wncklet/workspace-switcher.c:397
-#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:562
-#: ../mate-panel/panel-action-button.c:753 ../mate-panel/panel-addto.c:1308
-#: ../mate-panel/panel-context-menu.c:318
-#: ../mate-panel/panel-ditem-editor.c:648 ../mate-panel/panel-menu-bar.c:351
-#: ../mate-panel/panel-menu-button.c:684
-#: ../mate-panel/panel-properties-dialog.ui.h:2
-#: ../mate-panel/panel-run-dialog.ui.h:2
+#: applets/clock/clock.c:1883 applets/clock/clock.ui:293
+#: applets/fish/fish.c:1697 applets/fish/fish.ui:46
+#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:241
+#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:35
+#: applets/wncklet/window-menu.c:98 applets/wncklet/workspace-switcher.c:397
+#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:562
+#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1308
+#: mate-panel/panel-context-menu.c:318 mate-panel/panel-ditem-editor.c:648
+#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:700
+#: mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "मद्दत"
 
-#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1700
-#: ../applets/notification_area/main.c:298
-#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:373
-#: ../applets/wncklet/window-menu.c:106
-#: ../applets/wncklet/workspace-switcher.c:405
+#: applets/clock/clock.c:1886 applets/fish/fish.c:1700
+#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:249
+#: applets/wncklet/window-list.c:373 applets/wncklet/window-menu.c:106
+#: applets/wncklet/workspace-switcher.c:405
 msgid "_About"
 msgstr "बारेमा"
 
-#: ../applets/clock/clock.c:1872
+#: applets/clock/clock.c:1889
 msgid "Copy _Time"
 msgstr "समय प्रतिलिपि गर्नुहोस्"
 
-#: ../applets/clock/clock.c:1875
+#: applets/clock/clock.c:1892
 msgid "Copy _Date"
 msgstr "मिति प्रतिलिपि गर्नुहोस्"
 
-#: ../applets/clock/clock.c:1878
+#: applets/clock/clock.c:1895
 msgid "Ad_just Date & Time"
 msgstr "मिति र समय मिलाउनुहोस्"
 
-#: ../applets/clock/clock.c:2874
+#: applets/clock/clock.c:2891
 msgid "Choose Location"
 msgstr "स्थान छनौट गर्नुहोस्"
 
-#: ../applets/clock/clock.c:2953
+#: applets/clock/clock.c:2970
 msgid "Edit Location"
 msgstr "स्थान सम्पादन गर्नुहोस्"
 
-#: ../applets/clock/clock.c:3080
+#: applets/clock/clock.c:3097
 msgid "City Name"
 msgstr "शहरको नाम"
 
-#: ../applets/clock/clock.c:3084
+#: applets/clock/clock.c:3101
 msgid "City Time Zone"
 msgstr "शहरको समय क्षेत्र"
 
-#: ../applets/clock/clock.c:3295
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
+#: applets/clock/clock.c:3381
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "घडी"
 
-#: ../applets/clock/clock.c:3296
+#: applets/clock/clock.c:3382
 msgid "About Clock"
 msgstr ""
 
-#: ../applets/clock/clock.c:3298
+#: applets/clock/clock.c:3384
 msgid "The Clock displays the current time and date"
 msgstr "निर्दिष्ट घडीले हालको समय र मिति प्रदर्शन गर्छ"
 
-#: ../applets/clock/clock.c:3299
+#: applets/clock/clock.c:3385
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:567
-#: ../applets/notification_area/main.c:286
-#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:831
-#: ../applets/wncklet/window-menu.c:88
-#: ../applets/wncklet/workspace-switcher.c:644
-#: ../mate-panel/panel-context-menu.c:124
+#: applets/clock/clock.c:3389 applets/fish/fish.c:567
+#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:508
+#: applets/wncklet/window-list.c:831 applets/wncklet/window-menu.c:88
+#: applets/wncklet/workspace-switcher.c:644
+#: mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
 msgstr ""
 "pawan chitrakar <chautari@gmail.com>,Narayan Kumar Magar "
 "<narayan@mpp.org.np>"
 
-#: ../applets/clock/clock.ui.h:1
+#: applets/clock/clock.ui:31
 msgid "Time & Date"
 msgstr "समय र मिति"
 
-#: ../applets/clock/clock.ui.h:2 ../mate-panel/libpanel-util/panel-gtk.c:136
-#: ../mate-panel/panel-context-menu.c:213
-#: ../mate-panel/panel-ditem-editor.c:664 ../mate-panel/panel-force-quit.c:240
-#: ../mate-panel/panel-recent.c:154 ../mate-panel/panel-run-dialog.ui.h:3
-#: ../mate-panel/panel.c:1356
+#: applets/clock/clock.ui:46 applets/clock/clock.ui:923
+#: mate-panel/libpanel-util/panel-gtk.c:136
+#: mate-panel/panel-context-menu.c:213 mate-panel/panel-ditem-editor.c:664
+#: mate-panel/panel-force-quit.c:240 mate-panel/panel-recent.c:154
+#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:1356
 msgid "_Cancel"
 msgstr "रद्द गर्नुहोस्"
 
-#: ../applets/clock/clock.ui.h:3
+#: applets/clock/clock.ui:62
 msgid "_Set System Time"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:4
+#: applets/clock/clock.ui:191
 msgid "_Time:"
 msgstr "_समय:"
 
-#: ../applets/clock/clock.ui.h:5
+#: applets/clock/clock.ui:205
 msgid "Current Time:"
 msgstr "हालको समय:"
 
-#: ../applets/clock/clock.ui.h:6
+#: applets/clock/clock.ui:277
 msgid "Clock Preferences"
 msgstr "घडी प्राथमिकता"
 
-#: ../applets/clock/clock.ui.h:8
+#: applets/clock/clock.ui:309
 msgid "Time _Settings"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:853
-#: ../applets/fish/fish.ui.h:3
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:2
-#: ../applets/wncklet/window-list.ui.h:3
-#: ../applets/wncklet/workspace-switcher.ui.h:3
-#: ../mate-panel/panel-addto.c:1319 ../mate-panel/panel-ditem-editor.c:660
-#: ../mate-panel/panel-properties-dialog.ui.h:3
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: applets/clock/clock.ui:324 applets/fish/fish.c:853 applets/fish/fish.ui:62
+#: applets/notification_area/notification-area-preferences-dialog.ui:65
+#: applets/wncklet/window-list.ui:51 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1319 mate-panel/panel-ditem-editor.c:660
+#: mate-panel/panel-properties-dialog.ui:94
+#: mate-panel/panel-properties-dialog.ui:740
+#: mate-panel/panel-test-applets.ui:52
 msgid "_Close"
 msgstr "_Close"
 
-#: ../applets/clock/clock.ui.h:10
+#: applets/clock/clock.ui:369
 msgid "Clock Format"
 msgstr "समय स्वरूप"
 
-#: ../applets/clock/clock.ui.h:11
+#: applets/clock/clock.ui:393
 msgid "_12 hour format"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:12
+#: applets/clock/clock.ui:408
 msgid "_24 hour format"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:13
+#: applets/clock/clock.ui:448
 msgid "Panel Display"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:14
+#: applets/clock/clock.ui:473
 msgid "Show the _date"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:15
+#: applets/clock/clock.ui:488
 msgid "Show seco_nds"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:16
+#: applets/clock/clock.ui:503
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:17
+#: applets/clock/clock.ui:518
 msgid "Show _weather"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:18
+#: applets/clock/clock.ui:533
 msgid "Show _temperature"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: applets/clock/clock.ui:568 applets/fish/fish.ui:102
+#: mate-panel/panel-properties-dialog.ui:384
 msgid "General"
 msgstr "साधारण"
 
-#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1315
+#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1315
 msgid "_Add"
 msgstr "थप्नुहोस्"
 
-#: ../applets/clock/clock.ui.h:21
+#: applets/clock/clock.ui:636
 msgid "_Edit"
 msgstr "सम्पादन गर्नुहोस्"
 
-#: ../applets/clock/clock.ui.h:22
+#: applets/clock/clock.ui:652
 msgid "_Remove"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:24
+#: applets/clock/clock.ui:713
 msgid "Display"
 msgstr "प्रदर्शन गर्नुहोस्"
 
-#: ../applets/clock/clock.ui.h:25
+#: applets/clock/clock.ui:749
 msgid "_Visibility unit:"
 msgstr "दृश्यात्मक एकाइ:"
 
-#: ../applets/clock/clock.ui.h:26
+#: applets/clock/clock.ui:771
 msgid "_Pressure unit:"
 msgstr "चाप एकाइ:"
 
-#: ../applets/clock/clock.ui.h:27
+#: applets/clock/clock.ui:805
 msgid "_Wind speed unit:"
 msgstr "हावा गति एकाइ:"
 
-#: ../applets/clock/clock.ui.h:28
+#: applets/clock/clock.ui:819
 msgid "_Temperature unit:"
 msgstr "चाप एकाइ:"
 
-#: ../applets/clock/clock.ui.h:29
+#: applets/clock/clock.ui:854
 msgid "Weather"
 msgstr "मौसम"
 
-#: ../applets/clock/clock.ui.h:30
+#: applets/clock/clock.ui:886
 msgid "East"
 msgstr "पुर्व"
 
-#: ../applets/clock/clock.ui.h:31
+#: applets/clock/clock.ui:889
 msgid "West"
 msgstr "पश्चिम"
 
-#: ../applets/clock/clock.ui.h:32
+#: applets/clock/clock.ui:900
 msgid "North"
 msgstr "उत्तर"
 
-#: ../applets/clock/clock.ui.h:33
+#: applets/clock/clock.ui:903
 msgid "South"
 msgstr "दक्षिण"
 
-#: ../applets/clock/clock.ui.h:34 ../mate-panel/libpanel-util/panel-gtk.c:140
-#: ../mate-panel/panel-applet-frame.c:960
-#: ../mate-panel/panel-ditem-editor.c:668
+#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:140
+#: mate-panel/panel-applet-frame.c:960 mate-panel/panel-ditem-editor.c:668
 msgid "_OK"
 msgstr ""
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:36
+#: applets/clock/clock.ui:1012
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:37
+#: applets/clock/clock.ui:1057
 msgid "_Timezone:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:38
+#: applets/clock/clock.ui:1070
 msgid "_Location Name:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:39
+#: applets/clock/clock.ui:1114 applets/clock/clock.ui:1128
 msgid "<i>(optional)</i>"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:40
+#: applets/clock/clock.ui:1171
 msgid "L_ongitude:"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:41
+#: applets/clock/clock.ui:1192
 msgid "L_atitude:"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:182
+#: applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:230
+#: applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:231
+#: applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:307
+#: applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -447,7 +432,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:440
+#: applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr ""
 
@@ -456,7 +441,7 @@ msgstr ""
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:448
+#: applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr ""
 
@@ -464,50 +449,48 @@ msgstr ""
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:457
+#: applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:599
+#: applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr ""
 
-#. FMQ: it's broken to read from another module's translations; add some API
-#. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:611
-#: ../applets/clock/clock-location-tile.c:620
+#: applets/clock/clock-location-tile.c:612
+#: applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "अज्ञात"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:613
+#: applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:636
+#: applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "सूर्योदय: %s सूर्यास्त: %s"
 
-#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:170
-#: ../applets/notification_area/main.c:238 ../applets/wncklet/wncklet.c:75
-#: ../mate-panel/libpanel-util/panel-show.c:234
+#: applets/clock/clock-utils.c:94 applets/fish/fish.c:170
+#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:75
+#: mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "%s!मद्दत कागजात प्रदर्शन गर्न सकेन"
 
-#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:196
-#: ../applets/notification_area/main.c:252 ../applets/wncklet/wncklet.c:92
+#: applets/clock/clock-utils.c:123 applets/fish/fish.c:196
+#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:92
 msgid "Error displaying help document"
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:1
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:29
 msgid "Hour format"
 msgstr "घन्टा ढाँचा"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:2
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:30
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values"
 " are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set"
@@ -527,11 +510,11 @@ msgstr ""
 "गर्दछ उदाहरणका लागि, १९७०-०१-०१ । यदि \"अनुकूल\" मा सेट गरेमा, घडीले समय "
 "अनुकूल कुञ्जीमा निर्दिष्ट गरिएको ढाँचा अनुरूप समय प्रदर्शन गर्दछ ।"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:34
 msgid "Custom format of the clock"
 msgstr "घडीको अनुकूल ढाँचा"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:4
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:35
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -543,99 +526,105 @@ msgstr ""
 "strftime() द्वारा पहिचान गरेको वार्तालाप निर्दिष्टकर्ता प्रयोग गर्न "
 "सक्नुहुन्छ । बढी जानकारीका लागि strftime() म्यानुअल हेर्नुहोस् ।"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:39
 msgid "Show time with seconds"
 msgstr "समयसँग सेकेन्ड देखाउनुहोस्"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:6
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:40
 msgid "If true, display seconds in time."
 msgstr "ठीक भएमा, समयमा सेकेन्ड पनि प्रदर्शन गर्नुहोस् ।"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:7
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:44
 msgid "Show date in clock"
 msgstr "घडीमा मिति देखाउनुहोस्"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:8
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:45
 msgid "If true, display date in the clock, in addition to time."
 msgstr "ठीक भएमा, घडीमा समयको साथसाथै मिति पनि देखाउनुहोस् ।"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:9
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:49
 msgid "Show date in tooltip"
 msgstr "उपकरण टिपमा मिति देखाउनुहोस्"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:50
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "ठीक भएमा, सूचक घडीको माथि हुदा उपकरण टिपमा मिति देखाउनुहोस् ।"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:54
 msgid "Show weather in clock"
 msgstr "घडीमा मौसम देखाउने"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:12
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:55
 msgid "If true, display a weather icon."
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:13
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:59
 msgid "Show temperature in clock"
 msgstr "घडीमा तापक्रम देखाउने"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:14
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:60
 msgid "If true, show the temperature next to the weather icon."
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:15
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:64
 msgid "Show week numbers in calendar"
 msgstr "क्यालेन्डरमा हप्ता नम्बर देखाउनुहोस्"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:16
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:65
 msgid "If true, show week numbers in the calendar."
 msgstr "ठीक भएमा, क्यालेन्डरमा हप्ता नम्बर देखाउनुहोस् ।"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:17
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:69
 msgid "Expand list of locations"
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:18
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:70
 msgid "If true, expand the list of locations in the calendar window."
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:19
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:74
 msgid "List of locations"
 msgstr "स्थानहरुको सूची"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:20
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:75
 msgid "A list of locations to display in the calendar window."
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:21
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:79
 msgid "Temperature unit"
 msgstr "तापमान एकाइ"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:22
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:80
 msgid "The unit to use when showing temperatures."
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:23
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:84
 msgid "Speed unit"
 msgstr "गति एकाइ"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:24
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:85
 msgid "The unit to use when showing wind speed."
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:1
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:6
 msgid "Clock Applet Factory"
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:2
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for clock applet"
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:4
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:11
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:266
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-clock"
+msgstr ""
+
+#: applets/fish/fish.c:266
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -647,17 +636,16 @@ msgstr ""
 "यो अनुपयोगी एप्लेट भएदेखि, तपाईँ यस्तो गर्न नचाहन सक्नुहुन्छ ।\n"
 "एप्लेटलाई \"व्यवहारीक\" वा उपयोगी बनाउने कुनै पनि सामाग्रीका लागि %s को प्रयोग नगर्न हामीले कडाइका साथ तपाईँलाई सुझाव दिन्छौ ।"
 
-#: ../applets/fish/fish.c:428
+#: applets/fish/fish.c:428
 msgid "Images"
 msgstr "छविहरू"
 
-#: ../applets/fish/fish.c:534 ../applets/fish/fish.c:578
-#: ../applets/fish/fish.c:684
+#: applets/fish/fish.c:534 applets/fish/fish.c:578 applets/fish/fish.c:684
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s माछा"
 
-#: ../applets/fish/fish.c:535
+#: applets/fish/fish.c:535
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -668,41 +656,41 @@ msgstr ""
 " र लोड गरिएमा बहुमूल्य प्यानल खालीस्थान र स्मृति पनि लिन्छ ।यसको प्रयोग "
 "गर्ने सबैलाई मनोवैज्ञानिक मुल्याङ्कनका लागि तुरुन्त पठाउन्छ ।"
 
-#: ../applets/fish/fish.c:552
+#: applets/fish/fish.c:552
 msgid "(with minor help from George)"
 msgstr "(जर्जको सानो मद्दतबाट)"
 
-#: ../applets/fish/fish.c:558
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
+#: applets/fish/fish.c:558
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:10
 msgid "Fish"
 msgstr "माछा"
 
-#: ../applets/fish/fish.c:559
+#: applets/fish/fish.c:559
 msgid "About Fish"
 msgstr ""
 
-#: ../applets/fish/fish.c:562
+#: applets/fish/fish.c:562
 msgid ""
 "Copyright © 1998-2002 Free Software Foundation, Inc.\n"
 "Copyright © 2002-2005 Vincent Untz\n"
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/fish/fish.c:579
+#: applets/fish/fish.c:579
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s माछा, एउटा समकालीन पथ प्रदर्शक"
 
-#: ../applets/fish/fish.c:645
+#: applets/fish/fish.c:645
 msgid "Unable to locate the command to execute"
 msgstr "कार्यान्वयन गरिने आदेश तोक्न असमर्थ"
 
-#: ../applets/fish/fish.c:689
+#: applets/fish/fish.c:689
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "माछाले %s भन्छ:"
 
-#: ../applets/fish/fish.c:752
+#: applets/fish/fish.c:752
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -713,17 +701,17 @@ msgstr ""
 "\n"
 "निर्गत पढ्न असमर्थ: %s"
 
-#: ../applets/fish/fish.c:849
+#: applets/fish/fish.c:849
 msgid "_Speak again"
 msgstr "फेरि वाचन गर्नुहोस्"
 
-#: ../applets/fish/fish.c:930
+#: applets/fish/fish.c:930
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "कन्फिगर गरिएको आदेशले कार्य गरिरहेको छैन र यसद्वारा प्रतिस्थापन गरिएको छ: %s"
 
-#: ../applets/fish/fish.c:963
+#: applets/fish/fish.c:963
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -734,7 +722,7 @@ msgstr ""
 "\n"
 "कार्यान्वयन गर्न असमर्थ: %s"
 
-#: ../applets/fish/fish.c:979
+#: applets/fish/fish.c:979
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -745,72 +733,73 @@ msgstr ""
 "\n"
 "पढ्न असमर्थ: %s"
 
-#: ../applets/fish/fish.c:1551
+#: applets/fish/fish.c:1551
 msgid "The water needs changing"
 msgstr "पानी परिवर्तन गरिरहेको हुनुपर्दछ"
 
-#: ../applets/fish/fish.c:1553
+#: applets/fish/fish.c:1553
 msgid "Look at today's date!"
 msgstr "आजको मिति हेर्नुहोस्!"
 
-#: ../applets/fish/fish.c:1635
+#: applets/fish/fish.c:1635
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s माछा, भविश्यवाणी वाचक"
 
-#: ../applets/fish/fish.ui.h:1
+#: applets/fish/fish.ui:32
 msgid "Fish Preferences"
 msgstr "माछा प्राथमिकता"
 
-#: ../applets/fish/fish.ui.h:5
+#: applets/fish/fish.ui:145
 msgid "_Name of fish:"
 msgstr "माछाको प्रकार:"
 
-#: ../applets/fish/fish.ui.h:6
+#: applets/fish/fish.ui:185
 msgid "Co_mmand to run when clicked:"
 msgstr "क्लिक गर्दा चलाइने आदेश:"
 
-#: ../applets/fish/fish.ui.h:7
+#: applets/fish/fish.ui:246
 msgid "Animation"
 msgstr ""
 
-#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
+#: applets/fish/fish.ui:266 mate-panel/panel-properties-dialog.ui:482
+#: mate-panel/panel-properties-dialog.ui:635
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:9
+#: applets/fish/fish.ui:300
 msgid "_File:"
 msgstr "फाइल:"
 
-#: ../applets/fish/fish.ui.h:10
+#: applets/fish/fish.ui:315
 msgid "Select an animation"
 msgstr "एनिमेसन चयन गर्नुहोस्"
 
-#: ../applets/fish/fish.ui.h:11
+#: applets/fish/fish.ui:346
 msgid "_Total frames in animation:"
 msgstr "एनिमेसनका सबै फ्रेम:"
 
-#: ../applets/fish/fish.ui.h:12
+#: applets/fish/fish.ui:361
 msgid "_Pause per frame:"
 msgstr "प्रत्येक फ्रेम पज गर्नुहोस्:"
 
-#: ../applets/fish/fish.ui.h:13
+#: applets/fish/fish.ui:390
 msgid "frames"
 msgstr "फ्रेम"
 
-#: ../applets/fish/fish.ui.h:14
+#: applets/fish/fish.ui:403
 msgid "seconds"
 msgstr "सेकेन्ड"
 
-#: ../applets/fish/fish.ui.h:15
+#: applets/fish/fish.ui:455
 msgid "_Rotate on vertical panels"
 msgstr "ठाडो प्यानलमा घुमाउनुहोस्"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:1
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:5
 msgid "The fish's name"
 msgstr "माछाको नाम"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:2
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:6
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
@@ -818,11 +807,11 @@ msgstr ""
 "बेनामी माछा एउटा ज्यादै निष्क्रिय माछा हो । माछाको नामकरण गरेर जिवित "
 "बनाउनुहोस् ।"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:10
 msgid "The fish's animation pixmap"
 msgstr "माछाको एनिमेसन पिक्सम्याप"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:4
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:11
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
@@ -830,11 +819,11 @@ msgstr ""
 "यस कुञ्जीले पिक्सम्याप डाइरेक्टरीसँग सम्बन्धित माछा एप्लेटमा प्रदर्शित हुने "
 "एनिमेसनका लागि प्रयोग गरिने पिक्सम्यापको फाइलनाम निर्दिष्ट गर्दछ ।"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:15
 msgid "Command to execute on click"
 msgstr "क्लिक गर्दा कार्यान्वयन गरिने आदेश"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:6
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:16
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
@@ -842,59 +831,64 @@ msgstr ""
 "यस कुञ्जीले माछा क्लिक गर्दा कार्यान्वयन गर्न प्रयास गरिने आदेश निर्दिष्ट "
 "गर्दछ ।"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:20
 msgid "Frames in fish's animation"
 msgstr "माछाको एनिमेसनका फ्रेम"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:8
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:21
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
 msgstr ""
 "यस कुञ्जीले माछाको एनिमेसनमा प्रदर्शित हुने फ्रेमको नम्बर निर्दिष्ट गर्दछ ।"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:25
 msgid "Pause per frame"
 msgstr "प्रत्येक फ्रेमलाई पज गर्नुहोस्"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:26
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
 "यस कुञ्जीले प्रदर्शित हुने प्रत्येक कुञ्जीको सेकेन्डको नम्बर निर्दिष्ट गर्दछ"
 " ।"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:30
 msgid "Rotate on vertical panels"
 msgstr "ठाडो प्यानलमा घुमाउनुहोस्"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:31
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "ठीक भएमा, ठाडो प्यानलमा माछाको एनिमेसन घुमाएर प्रदर्शित गरिन्छ ।"
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:6
 msgid "Wanda Factory"
 msgstr ""
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:2
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:7
 msgid "From Whence That Stupid Fish Came"
 msgstr ""
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:4
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:11
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:276
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-fish"
+msgstr ""
+
+#: applets/notification_area/main.c:276
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
 msgstr "सूचना क्षेत्र"
 
-#: ../applets/notification_area/main.c:277
+#: applets/notification_area/main.c:277
 msgid "About Notification Area"
 msgstr ""
 
-#. "comments", _(comments),
-#: ../applets/notification_area/main.c:280
+#: applets/notification_area/main.c:280
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2003-2006 Vincent Untz\n"
@@ -902,52 +896,58 @@ msgid ""
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/notification_area/main.c:488
+#: applets/notification_area/main.c:485
 msgid "Panel Notification Area"
 msgstr "प्यानल सूचना क्षेत्र"
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:1
+#: applets/notification_area/notification-area-preferences-dialog.ui:46
 msgid "Notification Area Preferences"
 msgstr ""
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:3
+#: applets/notification_area/notification-area-preferences-dialog.ui:110
 msgid "_Minimum Icon Size:"
 msgstr ""
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:4
+#: applets/notification_area/notification-area-preferences-dialog.ui:124
 msgid "26"
 msgstr ""
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:5
-#: ../mate-panel/panel-properties-dialog.ui.h:6
+#: applets/notification_area/notification-area-preferences-dialog.ui:139
+#: mate-panel/panel-properties-dialog.ui:221
 msgid "pixels"
 msgstr "पिक्सेलस्"
 
-#: ../applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in.h:1
+#: applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in:5
 msgid "Minimum icon size"
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in.h:2
+#: applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in:6
 msgid "The minimum size an icon can have."
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:1
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:6
 msgid "Notification Area Factory"
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:2
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for notification area"
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:4
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:11
 msgid "Area where notification icons appear"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-notification-area"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:10
 msgid "Show windows from all workspaces"
 msgstr "सबै कार्यस्थानबाट सन्झ्याल देखाउनुहोस्"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:11
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
@@ -955,11 +955,11 @@ msgstr ""
 "ठीक भएमा, सञ्झ्याल सूचीले सबै कार्यस्थानबाट सञ्झ्याल देखाउछ । अन्यथा यसले "
 "हालको कार्यस्थानबाट सन्झ्याल मात्र देखाउछ ।"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:15
 msgid "When to group windows"
 msgstr "सञ्झ्याललाई समूहकृत गर्दा"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:4
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:16
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
@@ -967,11 +967,11 @@ msgstr ""
 "सञ्झ्याल सूचीमा उस्तै अनुप्रयोगबाट कहिले समूह बनाउने निर्णय गर्दछ । सम्भावित"
 " मान \"कहिले पनि\", \"स्वचालित\" र \"सधैँ\" हुन् ।"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:20
 msgid "Move windows to current workspace when unminimized"
 msgstr "बढाउदा सञ्झ्याललाई हालको कार्यस्थानमा सार्नुहोस्"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:21
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
@@ -979,11 +979,11 @@ msgstr ""
 "ठीक भएमा, सञ्झ्याललाई बढाए पछि, यसलाई हालको कार्यस्थानमा सार्नुहोस् ।अन्यथा,"
 " सञ्झ्यालको कार्यस्थानमा स्विच गर्नुहोस् ।"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:5
 msgid "Display workspace names"
 msgstr "कार्यस्थान नाम प्रदर्शन गर्नुहोस्"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:2
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:6
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
@@ -992,11 +992,11 @@ msgstr ""
 "ठीक भएमा, कार्यस्थान स्विचकर्ताका कार्यस्थानले कार्यस्थानका नाम प्रदर्शन "
 "गर्दछ । अन्यथा यिनीहरूले कार्यस्थानमा भएका सन्झ्याल प्रदर्शन गर्दछन् ।"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:10
 msgid "Display all workspaces"
 msgstr "सबै कार्यस्थान प्रदर्शन गर्नुहोस्"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:4
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:11
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
@@ -1004,11 +1004,11 @@ msgstr ""
 "ठीक भएमा, कार्यस्थान स्विचकर्ताले सबै कार्यस्थान देखाउछ । अन्यथा यसले "
 "हालकोकार्यस्थान मात्र देखाउछ ।"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:15
 msgid "Rows in workspace switcher"
 msgstr "कार्यस्थान स्विचकर्तामा पङ्क्ति"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:6
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:16
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
@@ -1018,97 +1018,121 @@ msgstr ""
 "सजावटका लागि) वा स्तम्भ (ठाडो सजावटका लागि) देखाउछ निर्दिष्ट गर्दछ । यो "
 "कुञ्जी प्रदर्शित सबै कार्यस्थान कुञ्जी ठीक भएमा मात्र सम्बन्धित हुन्छ ।"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:20
 msgid "Wrap around on scroll"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:8
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:21
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:6
 msgid "Window Navigation Applet Factory"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:2
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for the window navigation related applets"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:76 ../applets/wncklet/window-menu.c:227
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:10
+#: applets/wncklet/window-menu.c:76 applets/wncklet/window-menu.c:227
 msgid "Window Selector"
 msgstr "सञ्झ्याल चयनकर्ता"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:11
 msgid "Switch between open windows using a menu"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:634
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-window-menu"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
+#: applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
 msgstr "कार्यस्थान स्विचर"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:24
 msgid "Switch between workspaces"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:821
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:26
+msgid "mate-panel-workspace-switcher"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
+#: applets/wncklet/window-list.c:821
 msgid "Window List"
 msgstr "सञ्झ्याल सूची"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:8
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:37
 msgid "Switch between open windows using buttons"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:9
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:39
+msgid "mate-panel-window-list"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:49
 msgid "Show Desktop"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:10
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:50
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:184
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:52
+msgid "user-desktop"
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:184
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s लोड गर्न असफल भयो: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:184
+#: applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
 msgstr "प्रतिमा फेला परेन"
 
-#: ../applets/wncklet/showdesktop.c:265
+#: applets/wncklet/showdesktop.c:265
 msgid "Click here to restore hidden windows."
 msgstr "लुकाइएका सन्झ्याललाई पूर्वावस्थामा ल्याउन यहाँ क्लिक गर्नुहोस् ।"
 
-#: ../applets/wncklet/showdesktop.c:269
+#: applets/wncklet/showdesktop.c:269
 msgid "Click here to hide all windows and show the desktop."
 msgstr "सबै सन्झ्याल लुकाउन र डेस्कटप देखाउन यहाँ क्लिक गर्नुहोस् ।"
 
-#: ../applets/wncklet/showdesktop.c:439 ../applets/wncklet/showdesktop.c:498
+#: applets/wncklet/showdesktop.c:439 applets/wncklet/showdesktop.c:498
 msgid "Show Desktop Button"
 msgstr "डेस्कटप बटन देखाउनुहोस्"
 
-#: ../applets/wncklet/showdesktop.c:499
+#: applets/wncklet/showdesktop.c:499
 msgid "About Show Desktop Button"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:501
+#: applets/wncklet/showdesktop.c:501
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "यस बटनले तपाईँलाई सबै सन्झ्याल लुकाउन र डेस्कटप देखाउन दिन्छ ।"
 
-#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:825
-#: ../applets/wncklet/workspace-switcher.c:638
+#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:825
+#: applets/wncklet/workspace-switcher.c:638
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2011 Perberos\n"
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:529
+#: applets/wncklet/showdesktop.c:529
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
@@ -1116,15 +1140,15 @@ msgstr ""
 "तपाईँको सन्झ्याल प्रबन्धकले डेस्कटप बटन देखाउनेलाई समर्थन गर्दैन, वा तपाईँले"
 " सन्झ्याल प्रबन्धक चलाइ रहनुभएको छैन ।"
 
-#: ../applets/wncklet/window-list.c:349
+#: applets/wncklet/window-list.c:349
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:822
 msgid "About Window List"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:824
+#: applets/wncklet/window-list.c:824
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1132,79 +1156,79 @@ msgstr ""
 "सन्झ्याल सूचीले बटनको सेटमा सबै सन्झ्यालको सूची देखाउछ र तपाईँलाई तिनीहरू "
 "ब्राउज गर्न दिन्छ ।"
 
-#: ../applets/wncklet/window-list.ui.h:1
+#: applets/wncklet/window-list.ui:18
 msgid "Window List Preferences"
 msgstr "सन्झ्याल सूची प्राथमिकता"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: applets/wncklet/window-list.ui:92
 msgid "Window List Content"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: applets/wncklet/window-list.ui:118
 msgid "Sh_ow windows from current workspace"
 msgstr "हालको कार्यस्थानबाट सन्झ्याल देखाउनुहोस्"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: applets/wncklet/window-list.ui:133
 msgid "Show windows from a_ll workspaces"
 msgstr "सबै कार्यस्थानबाट सन्झ्याल देखाउनुहोस्"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: applets/wncklet/window-list.ui:173
 msgid "Window Thumbnails"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: applets/wncklet/window-list.ui:199
 msgid "Show _thumbnails on hover"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: applets/wncklet/window-list.ui:214
 msgid "_Hide thumbnails on hover"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: applets/wncklet/window-list.ui:252
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: applets/wncklet/window-list.ui:253
 msgid "Thumbnail width:"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:12
+#: applets/wncklet/window-list.ui:267
 msgid "px"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:13
+#: applets/wncklet/window-list.ui:305
 msgid "Window Grouping"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:14
+#: applets/wncklet/window-list.ui:331
 msgid "_Never group windows"
 msgstr "सन्झ्याललाई कहिले पनि समूहमा नराख्नुहोस्"
 
-#: ../applets/wncklet/window-list.ui.h:15
+#: applets/wncklet/window-list.ui:346
 msgid "Group windows when _space is limited"
 msgstr "खालीस्थान सिमित हुदा सन्झ्याललाई समूहमा राख्नुहोस्"
 
-#: ../applets/wncklet/window-list.ui.h:16
+#: applets/wncklet/window-list.ui:362
 msgid "_Always group windows"
 msgstr "सन्झ्याललाई सधैँ समूहमा राख्नुहोस्"
 
-#: ../applets/wncklet/window-list.ui.h:17
+#: applets/wncklet/window-list.ui:402
 msgid "Restoring Minimized Windows"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:18
+#: applets/wncklet/window-list.ui:428
 msgid "Restore to current _workspace"
 msgstr "हालको कार्यस्थानलाई पूर्वावस्थामा ल्याउनुहोस्"
 
-#: ../applets/wncklet/window-list.ui.h:19
+#: applets/wncklet/window-list.ui:443
 msgid "Restore to na_tive workspace"
 msgstr "नेटिभ कार्यस्थानलाई पूर्वावस्थामा ल्याउनुहोस्"
 
-#: ../applets/wncklet/window-menu.c:77
+#: applets/wncklet/window-menu.c:77
 msgid "About Window Selector"
 msgstr ""
 
-#: ../applets/wncklet/window-menu.c:79
+#: applets/wncklet/window-menu.c:79
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
@@ -1212,7 +1236,7 @@ msgstr ""
 "सन्झ्याल चयनकर्ताले मेनुमा सबै सन्झ्यालको सूची देखाउछ र तपाईँलाई तिनीहरू "
 "ब्राउज गर्न दिन्छ ।"
 
-#: ../applets/wncklet/window-menu.c:80
+#: applets/wncklet/window-menu.c:80
 msgid ""
 "Copyright © 2000 Helix Code, Inc.\n"
 "Copyright © 2001 Free Software Foundation, Inc.\n"
@@ -1221,22 +1245,22 @@ msgid ""
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:939
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: applets/wncklet/workspace-switcher.c:240
+#: applets/wncklet/workspace-switcher.c:939
+#: applets/wncklet/workspace-switcher.ui:170
 msgid "rows"
 msgstr "पङ्क्ति"
 
-#: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:939
+#: applets/wncklet/workspace-switcher.c:240
+#: applets/wncklet/workspace-switcher.c:939
 msgid "columns"
 msgstr "स्तम्भ"
 
-#: ../applets/wncklet/workspace-switcher.c:635
+#: applets/wncklet/workspace-switcher.c:635
 msgid "About Workspace Switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.c:637
+#: applets/wncklet/workspace-switcher.c:637
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1244,59 +1268,59 @@ msgstr ""
 "कार्यस्थान स्विचकर्ताले तपाईँको कार्यस्थानको एउटा सानो संस्करण देखाउछ जसले "
 "तपाईँलाई आफ्ना सन्झ्याल प्रबन्ध गर्न दिन्छ ।"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:1
+#: applets/wncklet/workspace-switcher.ui:32
 msgid "Workspace Switcher Preferences"
 msgstr "कार्यस्थान स्विचकर्ता प्राथमिकता"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: applets/wncklet/workspace-switcher.ui:113
 msgid "Show _only the current workspace"
 msgstr "हालको कार्यस्थान मात्र देखाउनुहोस्"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: applets/wncklet/workspace-switcher.ui:134
 msgid "Show _all workspaces in:"
 msgstr "यसभित्र सबै कार्यस्थान देखाउनुहोस्:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: applets/wncklet/workspace-switcher.ui:204
 msgid "Switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: applets/wncklet/workspace-switcher.ui:245
 msgid "Number of _workspaces:"
 msgstr "कार्यस्थानको सङ्ख्या:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: applets/wncklet/workspace-switcher.ui:282
 msgid "Workspace na_mes:"
 msgstr "कार्यस्थान नाम:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: applets/wncklet/workspace-switcher.ui:303
 msgid "Workspace Names"
 msgstr "कार्यस्थानका नाम"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: applets/wncklet/workspace-switcher.ui:319
 msgid "Show workspace _names in switcher"
 msgstr "स्विचकर्तामा कार्यस्थानको नाम देखाउनुहोस्"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:12
+#: applets/wncklet/workspace-switcher.ui:334
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:13
+#: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:1
+#: data/org.mate.panel.gschema.xml.in:5
 msgid "Default panel layout"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:2
+#: data/org.mate.panel.gschema.xml.in:6
 msgid "The default panels layout to use when panels are created or resetted."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:3
+#: data/org.mate.panel.gschema.xml.in:10
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr " \"अनुप्रयोग चलाउनुहोस्\" संवादको कार्यक्रम सूची सक्षम पार्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:4
+#: data/org.mate.panel.gschema.xml.in:11
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1306,11 +1330,11 @@ msgstr ""
 "हुन्छ । देखिएको संवादलाई कार्यक्रम सूची देखाउने कुञ्जीद्वारा नियन्त्रण "
 "गरिएको बेलामा सूची विस्तार हुन्छ या हुँदैन ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:5
+#: data/org.mate.panel.gschema.xml.in:15
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr " \"अनुप्रयोग चलाउनुहोस्\" संवादको कार्यक्रम सूची विस्तार गर्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:6
+#: data/org.mate.panel.gschema.xml.in:16
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1320,51 +1344,51 @@ msgstr ""
 "अनुप्रयोग\" सूची विस्तार हुन्छ । यदि कार्यक्रम सूची सक्षम पार्ने कुञ्जी ठीक "
 "भएमा मात्र यो कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:7
+#: data/org.mate.panel.gschema.xml.in:20
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr " \"अनुप्रयोग चलाउनुहोस्\" संवादको स्वत: समाप्ति सक्षम पार्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:8
+#: data/org.mate.panel.gschema.xml.in:21
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr "ठीक भएमा, \"अनुप्रयोग चलाउनुहोस्\" संवादको स्वत: समाप्ति उपलब्ध हुन्छ ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:9
+#: data/org.mate.panel.gschema.xml.in:25
 msgid "History for \"Run Application\" dialog"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:10
+#: data/org.mate.panel.gschema.xml.in:26
 msgid ""
 "This is the list of commands used in \"Run Application\" dialog. The "
 "commands are sorted descendingly by recency (e.g., most recent command comes"
 " first)."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:11
+#: data/org.mate.panel.gschema.xml.in:30
 msgid "Maximum history size for \"Run Application\" dialog"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: data/org.mate.panel.gschema.xml.in:31
 msgid ""
 "Controls the maximum size of the history of the \"Run Application\" dialog. "
 "A value of 0 will disable the history."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: data/org.mate.panel.gschema.xml.in:35
 msgid "Reverse the history of the \"Run Application\" dialog"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: data/org.mate.panel.gschema.xml.in:36
 msgid ""
 "Displays the history in reverse. Provides a consistent view for terminal "
 "users as the up key will select the most recent entry."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: data/org.mate.panel.gschema.xml.in:40
 msgid "Panel ID list"
 msgstr "प्यानल आईडी सूची"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: data/org.mate.panel.gschema.xml.in:41
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -1373,11 +1397,11 @@ msgstr ""
 "पहिचान गर्छ । यी प्रत्येक च्यानलको सेटिङ /apps/panel/toplevels/$(id) मा "
 "भण्डारण गरिन्छन् ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: data/org.mate.panel.gschema.xml.in:45
 msgid "Panel object ID list"
 msgstr "प्यानल वस्तु आईडी सूची"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: data/org.mate.panel.gschema.xml.in:46
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
@@ -1387,24 +1411,24 @@ msgstr ""
 "गर्छ (जस्तै, एउटा सुरुआतकर्ता, कार्य बटन वा मेनु बटन/पट्टी) । यी प्रत्येक "
 "वस्तुका लागि सेटिङ /apps/panel/objects/$(id) मा भण्डारण गरिन्छन् ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: data/org.mate.panel.gschema.xml.in:50
 msgid "Enable tooltips"
 msgstr "उपकरणटिप सक्षम पार्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: data/org.mate.panel.gschema.xml.in:51
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "ठीक भएमा, प्यानलका वस्तुका लागि उपकरणटिपलाई देखाइन्छ ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
+#: data/org.mate.panel.gschema.xml.in:55
+#: data/org.mate.panel.toplevel.gschema.xml.in:70
 msgid "Enable animations"
 msgstr "एनिमेसन सक्षम पार्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: data/org.mate.panel.gschema.xml.in:59
 msgid "Autoclose drawer"
 msgstr "ड्रअरलाई स्वत: बन्द गर्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: data/org.mate.panel.gschema.xml.in:60
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -1412,11 +1436,11 @@ msgstr ""
 "ठीक भएमा, प्रयोगकर्ताले ड्रअरको सुरुआतकर्ता क्लिक गर्दा ड्रअर स्वचालित रूपमा"
 " बन्द हुन्छ ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: data/org.mate.panel.gschema.xml.in:64
 msgid "Confirm panel removal"
 msgstr "प्यानल हटाउन यकीन गर्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: data/org.mate.panel.gschema.xml.in:65
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1424,22 +1448,22 @@ msgstr ""
 "ठीक भएमा, प्रयोगकर्ताले प्यानल हटाउन चाहेको बेलामा यकीनका लागि सोध्ने एउटा "
 "संवाद देखिन्छ ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: data/org.mate.panel.gschema.xml.in:69
 msgid "Highlight launchers on mouseover"
 msgstr "माउसओभर हुदा सुरुआतकर्ता हाइलाइट गर्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: data/org.mate.panel.gschema.xml.in:70
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "ठीक भएमा, प्रयोगकर्ताले सुरुआतकर्ता माथि सूचक बाणलाई सार्दा यो हाइलाइट हुन्छ"
 " ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: data/org.mate.panel.gschema.xml.in:74
 msgid "Complete panel lockdown"
 msgstr "पूरै प्यानलमा ताल्चा लगाउनुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: data/org.mate.panel.gschema.xml.in:75
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
@@ -1449,11 +1473,11 @@ msgstr ""
 " एप्लेटलाई छुट्टाछुट्टै ताल्चा लगाउनु आवश्यक हुन्छ । यसको प्रभाव देख्नका "
 "लागि प्यानल फेरि सुरु गर्नुपर्दछ ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:30
+#: data/org.mate.panel.gschema.xml.in:79
 msgid "Applet IIDs to disable from loading"
 msgstr "लोडिङ गरेर अक्षम पारिने एप्लेट IIDs"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:31
+#: data/org.mate.panel.gschema.xml.in:80
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1466,11 +1490,11 @@ msgstr ""
 "'OAFIID:MATE_MiniCommanderApplet' थप्नुहोस् । यसको प्रभाव पार्नका लागि "
 "प्यानल पुन: सुरुआत गरिएको हुनुपर्दछ ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:32
+#: data/org.mate.panel.gschema.xml.in:84
 msgid "Disable Force Quit"
 msgstr "दवाबमूलक अन्त्य अक्षम पार्नुहोस्"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:33
+#: data/org.mate.panel.gschema.xml.in:85
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1478,105 +1502,105 @@ msgstr ""
 "ठीक भएमा, प्यानलले प्रयोगकर्ताको बलपूर्वक बन्द गर्ने बटनको पहुँच हटाएर "
 "अनुप्रयोगलाई दवाब दिन अनुमति दिदैन ।"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:34
+#: data/org.mate.panel.gschema.xml.in:89
 msgid "Enable SNI support"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:35
+#: data/org.mate.panel.gschema.xml.in:90
 msgid "If true, the panel provides support for SNI."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:1
+#: data/org.mate.panel.menubar.gschema.xml.in:15
 msgid "Show applications menu"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:2
+#: data/org.mate.panel.menubar.gschema.xml.in:16
 msgid "If true, show applications item in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:3
+#: data/org.mate.panel.menubar.gschema.xml.in:20
 msgid "Show places menu"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:4
+#: data/org.mate.panel.menubar.gschema.xml.in:21
 msgid "If true, show places item in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:5
+#: data/org.mate.panel.menubar.gschema.xml.in:25
 msgid "Show desktop menu"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:6
+#: data/org.mate.panel.menubar.gschema.xml.in:26
 msgid "If true, show desktop item in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:7
+#: data/org.mate.panel.menubar.gschema.xml.in:30
 msgid "Show icon"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:8
+#: data/org.mate.panel.menubar.gschema.xml.in:31
 msgid "If true, show icon in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:9
+#: data/org.mate.panel.menubar.gschema.xml.in:35
 msgid "Icon to show in menu bar"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:10
+#: data/org.mate.panel.menubar.gschema.xml.in:36
 msgid "Set the theme icon name to use in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:11
+#: data/org.mate.panel.menubar.gschema.xml.in:40
 msgid "Menu bar icon size"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:12
+#: data/org.mate.panel.menubar.gschema.xml.in:41
 msgid ""
 "Set the size of an icon used in menu bar. The panel must be restarted for "
 "this to take effect."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:13
+#: data/org.mate.panel.menubar.gschema.xml.in:45
 msgid "Menu items icon size"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:14
+#: data/org.mate.panel.menubar.gschema.xml.in:46
 msgid ""
 "Set the size of icons used in the menu. The panel must be restarted for this"
 " to take effect."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:15
+#: data/org.mate.panel.menubar.gschema.xml.in:50
 msgid "Threshold of menu items before submenu is created"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:16
+#: data/org.mate.panel.menubar.gschema.xml.in:51
 msgid ""
 "Maximum number of menu items (i.e. bookmarks) that are displayed without "
 "being put in a submenu."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:1
+#: data/org.mate.panel.object.gschema.xml.in:5
 msgid "Panel object type"
 msgstr "प्यानल वस्तुको प्रकार"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:2
+#: data/org.mate.panel.object.gschema.xml.in:6
 msgid "The type of this panel object."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:3
+#: data/org.mate.panel.object.gschema.xml.in:10
 msgid "Toplevel panel containing object"
 msgstr "उच्चतहको प्यानल समाविष्ट वस्तु"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:4
+#: data/org.mate.panel.object.gschema.xml.in:11
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "उच्चतह प्यानलको पहिचायक जसले यस वस्तुलाई समाविष्ट गर्दछ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:5
+#: data/org.mate.panel.object.gschema.xml.in:15
 msgid "Object's position on the panel"
 msgstr "प्यानलमा वस्तुको स्थिति"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:6
+#: data/org.mate.panel.object.gschema.xml.in:16
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
@@ -1584,11 +1608,11 @@ msgstr ""
 "यस प्यानल वस्तुको स्थिति । स्थितिलाई पिक्सेलको नम्बर अनुसार बायाँ (वा ठाडो "
 "भएमा माथिको) प्यानल किनाराबाट निर्दिष्ट गरिन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:7
+#: data/org.mate.panel.object.gschema.xml.in:20
 msgid "Interpret position relative to bottom/right edge"
 msgstr "तल/दायाँ किनारासँग सम्बन्धित स्थितिको वर्णन गर्नुहोस्"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:8
+#: data/org.mate.panel.object.gschema.xml.in:21
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
@@ -1596,11 +1620,11 @@ msgstr ""
 "ठीक भएमा, प्यानलको दायाँ(वा ठाडो भएमा तल)को किनारसँग सम्बन्धित वस्तुको "
 "स्थिति वर्णन गरिन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:9
+#: data/org.mate.panel.object.gschema.xml.in:25
 msgid "Lock the object to the panel"
 msgstr "प्यानलमा वस्तुलाई ताल्चा लगाउनुहोस्"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:10
+#: data/org.mate.panel.object.gschema.xml.in:26
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
@@ -1608,11 +1632,11 @@ msgstr ""
 "ठीक भएमा, प्रयोगकर्ताले एप्लेटलाई \"अनलक गर्नुहोस्\" मेनु वस्तु प्रयोग गरेर "
 "पहिलो वस्तुलाई अनलक नगरी सार्न सक्दैन ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:11
+#: data/org.mate.panel.object.gschema.xml.in:30
 msgid "Applet IID"
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:12
+#: data/org.mate.panel.object.gschema.xml.in:31
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1620,11 +1644,11 @@ msgid ""
 "applet\")."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:13
+#: data/org.mate.panel.object.gschema.xml.in:35
 msgid "Panel attached to drawer"
 msgstr "ड्रअरमा सङ्लग्न गरिएको प्यानल"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:14
+#: data/org.mate.panel.object.gschema.xml.in:36
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
@@ -1632,11 +1656,11 @@ msgstr ""
 "यस ड्रअरमा सङ्लग्न गरिएका प्यानलको पहिचायक । वस्तु प्रकार कुञ्जी \"ड्रअर-"
 "वस्तु\" भएमा मात्र यो कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:15
+#: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Tooltip displayed for drawer or menu"
 msgstr "ड्रअर वा मेनुका लागि प्रदर्शित उपकरणटिप"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:16
+#: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
@@ -1645,11 +1669,11 @@ msgstr ""
 "यो ड्रअर वा मेनुका लागि उपकरणटिपमा प्रदर्शन गरिने पाठ । वस्तु प्रकार कुञ्जी "
 "\"ड्रअर-वस्तु\" वा \"मेनु-वस्तु\" छ भने मात्र यो कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:17
+#: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Use custom icon for object's button"
 msgstr "वस्तुको बटनका लागि अनुकूल प्रतिमा प्रयोग गर्नुहोस्"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:18
+#: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -1660,11 +1684,11 @@ msgstr ""
 "कुञ्जी \"मेनु-वस्तु\" वा \"ड्रअर-वस्तु\" भएमा मात्र यो कुञ्जी उपयुक्त हुन्छ "
 "।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:19
+#: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Icon used for object's button"
 msgstr "वस्तुको बटनका लागि प्रयोग गरिने प्रतिमा"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:20
+#: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -1674,11 +1698,11 @@ msgstr ""
 "वस्तु प्रकार कुञ्जी \"ड्रअर-वस्तु\" वा \"मेनु-वस्तु\" भएमा र अनुकूल प्रतिमा "
 "प्रयगो गर्ने कुञ्जी ठीक भएमा मात्र उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:21
+#: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Use custom path for menu contents"
 msgstr "मेनु सामाग्रीका लागि अनुकूल मार्ग प्रयोग गर्नुहोस्"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:22
+#: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -1689,11 +1713,11 @@ msgstr ""
 "गरिन्छ । वस्तु प्रकार कुञ्जी \"मेनु-वस्तु\" भएमा मात्र यो कुञ्जी उपयुक्त "
 "हुन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:23
+#: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Menu content path"
 msgstr "मेनु सामग्री मार्ग"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:24
+#: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
@@ -1702,21 +1726,21 @@ msgstr ""
 "मेनु सामाग्री लिङ्क गरिने मार्ग । यो कुञ्जी मेनु मार्ग प्रयोग गर्ने कुञ्जी "
 "ठीक भएमा र वस्तु प्रकार कुञ्जी \"मेनु-वस्तु\" भएमा मात्र उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:25
+#: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Draw arrow in menu button"
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:26
+#: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:27
+#: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Launcher location"
 msgstr "सुरुआतकर्ताको स्थान"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:28
+#: data/org.mate.panel.object.gschema.xml.in:71
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
@@ -1724,11 +1748,11 @@ msgstr ""
 "सुरुआतकर्ता वर्णन गर्ने .डेस्कटप फाइको स्थान । वस्तु प्रकार कुञ्जी "
 "\"सुरुआतकर्ता-वस्तु\" भएमा मात्र यो कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:29
+#: data/org.mate.panel.object.gschema.xml.in:75
 msgid "Action button type"
 msgstr "कार्य बटन प्रकार"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:30
+#: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
@@ -1739,11 +1763,11 @@ msgstr ""
 "\"स्क्रिनसट\" हुन् । वस्तु प्रकार कुञ्जी \"कार्य-एप्लेट\" भएमा मात्र यो "
 "कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
+#: data/org.mate.panel.toplevel.gschema.xml.in:5
 msgid "Name to identify panel"
 msgstr "प्यानल पहिचान गर्नका लागि नाम"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:2
+#: data/org.mate.panel.toplevel.gschema.xml.in:6
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -1753,11 +1777,11 @@ msgstr ""
 "सक्नुहुन्छ । यसको मुख्य उद्देश्य प्यानलको सञ्झ्याललाई शीर्षकका रूपमा कार्य "
 "गर्नु हो जुन प्यानल बीचमा नभिगेसन गर्दा उपयोगी हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
+#: data/org.mate.panel.toplevel.gschema.xml.in:10
 msgid "X screen where the panel is displayed"
 msgstr "प्यानल प्रदर्शित गरिने X पर्दा"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:4
+#: data/org.mate.panel.toplevel.gschema.xml.in:11
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -1765,11 +1789,11 @@ msgstr ""
 "बहुबिध पर्दा सेटअपसँगको, प्रत्येक व्यक्तिगत पर्दामा प्यानल हुनसक्छ ।यस "
 "कुञ्जीले प्यानल प्रदर्शित भएको हालको पर्दा पहिचान गर्दछ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
+#: data/org.mate.panel.toplevel.gschema.xml.in:15
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "प्यानल प्रदर्शित गरिने जिनेरमा मोनिटर"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:6
+#: data/org.mate.panel.toplevel.gschema.xml.in:16
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -1777,11 +1801,11 @@ msgstr ""
 "एउटा जिनेरमा सेटअपमा, तपाईसँग प्रत्येक व्यक्तिगत मोनिटरमा प्यानल हुन सक्छ । "
 "यस कुञ्जीले प्यानल प्रदर्शित हालको मोनिटर पहिचान गर्दछ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
+#: data/org.mate.panel.toplevel.gschema.xml.in:20
 msgid "Expand to occupy entire screen width"
 msgstr "पूरै चौडाइ ओगट्न विस्तार गर्नुहोस्"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:8
+#: data/org.mate.panel.toplevel.gschema.xml.in:21
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge."
@@ -1792,11 +1816,11 @@ msgstr ""
 "ओगट्दछ । यस मोडमा प्यानललाई पर्दाको किनारामा मात्र राख्न सकिन्छ । गलत भएमा, "
 "प्यानलमा एप्लेट, सुरुआतकर्ता र बटन समायोजन गर्न धेरै ठूलो हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
+#: data/org.mate.panel.toplevel.gschema.xml.in:25
 msgid "Panel orientation"
 msgstr "प्यानल अभिमूखीकरण"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:10
+#: data/org.mate.panel.toplevel.gschema.xml.in:26
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", "
 "\"left\", \"right\". In expanded mode the key specifies which screen edge "
@@ -1815,11 +1839,11 @@ msgstr ""
 "बटनले प्यानल तल यसको मेनुलाई पपअप गर्छ, जबकि \"तल\" प्यानलमा मेनु प्यानलको "
 "माथि पपअप हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
+#: data/org.mate.panel.toplevel.gschema.xml.in:30
 msgid "Panel size"
 msgstr "प्यानल साइज"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:12
+#: data/org.mate.panel.toplevel.gschema.xml.in:31
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1830,11 +1854,11 @@ msgstr ""
 " आधारित न्युनतम रनटाइम साइजमा निर्धारण गरिन्छ । अधिकतम साइज पर्दा उचाइ (वा "
 "चौडाइ)को एक चौथाइमा निश्चित गरिन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
+#: data/org.mate.panel.toplevel.gschema.xml.in:35
 msgid "X co-ordinate of panel"
 msgstr "प्यानलको X निर्देशाङ्क"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:14
+#: data/org.mate.panel.toplevel.gschema.xml.in:36
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1844,11 +1868,11 @@ msgstr ""
 "हुन्छ । विस्तारित मोडमा यस कुञ्जीलाई उपेक्षा गरिन्छ र अभिमूखीकरण "
 "कुञ्जीद्वारा निर्दिष्ट गरिएको पर्दा किनारामा प्यानललाई राखिन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
+#: data/org.mate.panel.toplevel.gschema.xml.in:40
 msgid "Y co-ordinate of panel"
 msgstr "प्यानलको Y निर्देशाङ्क"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:16
+#: data/org.mate.panel.toplevel.gschema.xml.in:41
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1858,11 +1882,11 @@ msgstr ""
 "हुन्छ । विस्तारित मोडमा यस कुञ्जीलाई उपेक्षा गरिन्छ र अभिमूखीकरण "
 "कुञ्जीद्वारा निर्दिष्ट गरिएको पर्दा किनारामा प्यानललाई राखिन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
+#: data/org.mate.panel.toplevel.gschema.xml.in:45
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr "पर्दाको दायाँबाट सुरु हुने, प्यानलको X निर्देशाङ्क"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:18
+#: data/org.mate.panel.toplevel.gschema.xml.in:46
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1878,11 +1902,11 @@ msgstr ""
 "गरिन्छ र प्यानललाई अभिमुखिकरण कुञ्जीद्वारा निर्दिष्ट गरिएको पर्दा किनारामा "
 "राखिन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
+#: data/org.mate.panel.toplevel.gschema.xml.in:50
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "पर्दाको तल्लो भागबाट सुरु हुने, प्यानलको Y निर्देशाङ्क"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:20
+#: data/org.mate.panel.toplevel.gschema.xml.in:51
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1897,11 +1921,11 @@ msgstr ""
 "मात्र उपयुक्त हुन्छ । विस्तार गरिएको मोडमा यस कुञ्जीलाई उपेक्षा गरिन्छ र "
 "प्यानललाई अभिमुखिकरण कुञ्जीद्वारा निर्दिष्ट गरिएको पर्दा किनारामा राखिन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
+#: data/org.mate.panel.toplevel.gschema.xml.in:55
 msgid "Center panel on x-axis"
 msgstr " x-अक्षको केन्द्रको प्यानल"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:22
+#: data/org.mate.panel.toplevel.gschema.xml.in:56
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -1913,11 +1937,11 @@ msgstr ""
 "उदाहरणका लागि प्यानल दुबै छेउमा बढाइन्छ । गलत भएमा, x र x दायाँको कुञ्जीले "
 "प्यानलको स्थान निर्दिष्ट गर्दछ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
+#: data/org.mate.panel.toplevel.gschema.xml.in:60
 msgid "Center panel on y-axis"
 msgstr " y-अक्षको केन्द्रको प्यानल"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:24
+#: data/org.mate.panel.toplevel.gschema.xml.in:61
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -1929,11 +1953,11 @@ msgstr ""
 "त्यसैले प्यानल दुबै छेउमा बढाइन्छ । गलत भएमा, y र y तलको कुञ्जीले प्यानलको "
 "स्थान निर्दिष्ट गर्दछ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
+#: data/org.mate.panel.toplevel.gschema.xml.in:65
 msgid "Automatically hide panel into corner"
 msgstr "कुनाम प्यानल स्वचालित रूपमा लुकाउनुहोस्"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:26
+#: data/org.mate.panel.toplevel.gschema.xml.in:66
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -1942,7 +1966,7 @@ msgstr ""
 "ठीक भएमा, सूचकले प्यानल क्षेत्र छोड्दा प्यानल स्वचालित रूपले पर्दाको कुनामा "
 "लुकाइन्छ । सूचकलाई पर्दाको त्यस कुनामा सार्दा प्यानल फेरि देखापर्दछ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
+#: data/org.mate.panel.toplevel.gschema.xml.in:71
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
@@ -1950,11 +1974,11 @@ msgstr ""
 "ठीक भएमा, तुरुन्तै देखाउनुको साटोमा प्यानललाई लुकाउने र देखाउने एनिमेसन "
 "गरिन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
+#: data/org.mate.panel.toplevel.gschema.xml.in:75
 msgid "Enable hide buttons"
 msgstr "लुकाउने बटन सक्षम पार्नुहोस्"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:30
+#: data/org.mate.panel.toplevel.gschema.xml.in:76
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -1962,11 +1986,11 @@ msgstr ""
 "ठीक भएमा, प्यानलको प्रत्येक छेउमा बटन राखिन्छ जसलाई पर्दाको किनारामा, एउटा "
 "मात्र बटन देखाएर प्यानललाई सार्न प्रयोग गर्न सकिन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
+#: data/org.mate.panel.toplevel.gschema.xml.in:80
 msgid "Enable arrows on hide buttons"
 msgstr "लुकेका बटनका बाण सक्षम पार्नुहोस्"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:32
+#: data/org.mate.panel.toplevel.gschema.xml.in:81
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -1974,11 +1998,11 @@ msgstr ""
 "ठीक भएमा, बाणलाई लुकाउने बटनमा राखिन्छ । बटन सक्षम पार्ने कुञ्जी ठीक भएमा "
 "मात्र यो कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
+#: data/org.mate.panel.toplevel.gschema.xml.in:85
 msgid "Panel autohide delay"
 msgstr "स्वचालित रूपले प्यानल लुकाउदाको विलम्ब"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:34
+#: data/org.mate.panel.toplevel.gschema.xml.in:86
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -1988,11 +2012,11 @@ msgstr ""
 "मिलिसेकेन्ड विलम्ब समय निर्दिष्ट गर्दछ । यदि स्वचालित रूपले लुकाउने कुञ्जी "
 "ठीक भएमा मात्र यो कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
+#: data/org.mate.panel.toplevel.gschema.xml.in:90
 msgid "Panel autounhide delay"
 msgstr "स्वचालित रूपले प्यानल लुकाउदाको विलम्ब"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:36
+#: data/org.mate.panel.toplevel.gschema.xml.in:91
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -2002,11 +2026,11 @@ msgstr ""
 "प्रवेश गरेपछिको मिलिसेकेन्ड विलम्ब समय निर्दिष्ट गर्दछ । यदि स्वचालित रूपले "
 "लुकाउने कुञ्जी ठीक भएमा मात्र यो कुञ्जी उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
+#: data/org.mate.panel.toplevel.gschema.xml.in:95
 msgid "Visible pixels when hidden"
 msgstr "लुकाइदा देखिने पिक्सेल"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:38
+#: data/org.mate.panel.toplevel.gschema.xml.in:96
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
@@ -2016,11 +2040,11 @@ msgstr ""
 "गर्छ । स्वचालित रूपले लुकाउने कुञ्जी ठीक भएमा मात्र यो कुञ्जी उपयुक्त हुन्छ "
 "।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
+#: data/org.mate.panel.toplevel.gschema.xml.in:100
 msgid "Animation speed"
 msgstr "एनिमेसन गति"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:40
+#: data/org.mate.panel.toplevel.gschema.xml.in:101
 msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -2029,11 +2053,11 @@ msgstr ""
 "प्यानल एनिमेसनको हुनुपर्ने गति । सम्भावित मान \"ढीला\", \"मध्यम\" र \"छिटो\""
 " हुन् । यो कुञ्जी सक्षम एनिमेसन कुञ्जी ठीक भएमा मात्र उपयुक्त हुन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
+#: data/org.mate.panel.toplevel.gschema.xml.in:108
 msgid "Background type"
 msgstr "पृष्ठभूमि प्रकार"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
+#: data/org.mate.panel.toplevel.gschema.xml.in:109
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -2041,19 +2065,19 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
+#: data/org.mate.panel.toplevel.gschema.xml.in:113
 msgid "Background color"
 msgstr "पृष्ठभूमि रङ"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
+#: data/org.mate.panel.toplevel.gschema.xml.in:114
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "प्यानलका लागि पृष्ठभूमि रङ #RGB ढाँचामा निर्दिष्ट गर्दछ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:45
+#: data/org.mate.panel.toplevel.gschema.xml.in:118
 msgid "Background color opacity"
 msgstr "अस्पष्ट पृष्ठभूमि रङ"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:46
+#: data/org.mate.panel.toplevel.gschema.xml.in:119
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
@@ -2062,11 +2086,11 @@ msgstr ""
 "पृष्ठभूमि रङ ढाँचाको अस्पष्टता निर्दिष्ट गर्छ । यदि रङ पूर्णरूपमा अस्पष्ट "
 "छैन भने (६५५३५ भन्दा न्यून मान), डेस्कटप पृष्ठभूमि छविमा रङलाई मिलाइन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
+#: data/org.mate.panel.toplevel.gschema.xml.in:123
 msgid "Background image"
 msgstr "पृष्ठभूमि छवि"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:48
+#: data/org.mate.panel.toplevel.gschema.xml.in:124
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -2075,11 +2099,11 @@ msgstr ""
 "पृष्ठभूमि छविका लागि प्रयोग हुने फाइल निर्दष्ट गर्दछ । यदि छविमा अल्फा "
 "च्यानल समाविष्ट भएमा यो डेस्कटप पृष्ठभूमि छविमा मिलाइन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
+#: data/org.mate.panel.toplevel.gschema.xml.in:128
 msgid "Fit image to panel"
 msgstr "प्यानलमा छवि मिलाउनुहोस्"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:50
+#: data/org.mate.panel.toplevel.gschema.xml.in:129
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
@@ -2087,11 +2111,11 @@ msgstr ""
 "ठीक भएमा, छविलाई प्यानलको उचाइ (यदि तेर्सो भएमा) (छविको आकार अनुपात कायम "
 "राखेर) मिलाइन्छ ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
+#: data/org.mate.panel.toplevel.gschema.xml.in:133
 msgid "Stretch image to panel"
 msgstr "प्यानलमा छवि विस्तार गर्नुहोस्"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:52
+#: data/org.mate.panel.toplevel.gschema.xml.in:134
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
@@ -2099,182 +2123,171 @@ msgstr ""
 "ठीक भएमा, छविलाई प्यानलका आयाममा मिलाइन्छन् । छविको आकार अनुपात कायम राखिन्छ"
 " ।"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
+#: data/org.mate.panel.toplevel.gschema.xml.in:138
 msgid "Rotate image on vertical panels"
 msgstr "ठाडो प्यानलमा छविलाई घुमाउनुहोस्"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:54
+#: data/org.mate.panel.toplevel.gschema.xml.in:139
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr "ठीक भएमा, प्यानल ठाडो हुदा पृष्ठभूमि छविलाई घुमाइन्छ ।"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:168
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr "फाइल मान्य .डेस्कटप फाइल होइन"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:191
+#: mate-panel/libegg/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr ""
 
-#: ../mate-panel/libegg/eggdesktopfile.c:963
+#: mate-panel/libegg/eggdesktopfile.c:963
 #, c-format
 msgid "Starting %s"
 msgstr "%s सुरु गर्दै"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1105
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1105
 msgid "Application does not accept documents on command line"
 msgstr ""
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1173
+#: mate-panel/libegg/eggdesktopfile.c:1173
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "अपरिचित सुरु विकल्प: %d"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1390
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1390
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1411
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1411
 msgid "Not a launchable item"
 msgstr "एउटा सुरुआतयोग्य वस्तु होइन"
 
-#: ../mate-panel/libegg/eggsmclient.c:222
+#: mate-panel/libegg/eggsmclient.c:222
 msgid "Disable connection to session manager"
 msgstr "सत्र प्रबन्धकमा जडान गर्न असक्षम"
 
-#: ../mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/libegg/eggsmclient.c:225
 msgid "Specify file containing saved configuration"
 msgstr ""
 
-#: ../mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/libegg/eggsmclient.c:225
 msgid "FILE"
 msgstr "फाइल"
 
-#: ../mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/libegg/eggsmclient.c:228
 msgid "Specify session management ID"
 msgstr "सत्र प्रबन्धक आईडी निर्दिष्ट गर्नुहोस्"
 
-#: ../mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/libegg/eggsmclient.c:228
 msgid "ID"
 msgstr "आईडी"
 
-#: ../mate-panel/libegg/eggsmclient.c:249
+#: mate-panel/libegg/eggsmclient.c:249
 msgid "Session management options:"
 msgstr "सत्र प्रबन्ध विकल्प:"
 
-#: ../mate-panel/libegg/eggsmclient.c:250
+#: mate-panel/libegg/eggsmclient.c:250
 msgid "Show session management options"
 msgstr "सत्र प्रबन्ध विकल्प देखाउनुहोस्"
 
-#: ../mate-panel/libpanel-util/panel-gtk.c:138
+#: mate-panel/libpanel-util/panel-gtk.c:138
 msgid "_Open"
 msgstr "खोल्नुहोस्"
 
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:798
-#: ../mate-panel/panel-applet-frame.c:986
+#: mate-panel/libpanel-util/panel-error.c:76
+#: mate-panel/panel-applet-frame.c:798 mate-panel/panel-applet-frame.c:986
 msgid "Error"
 msgstr "त्रुटि"
 
-#: ../mate-panel/libpanel-util/panel-icon-chooser.c:374
+#: mate-panel/libpanel-util/panel-icon-chooser.c:374
 msgid "Choose an icon"
 msgstr ""
 
-#: ../mate-panel/libpanel-util/panel-launch.c:45
+#: mate-panel/libpanel-util/panel-launch.c:45
 #, c-format
 msgid "Could not launch '%s'"
 msgstr ""
 
-#: ../mate-panel/libpanel-util/panel-launch.c:48 ../mate-panel/launcher.c:162
+#: mate-panel/libpanel-util/panel-launch.c:48 mate-panel/launcher.c:162
 msgid "Could not launch application"
 msgstr "अनुप्रयोग सुरुआत गर्न सकेन"
 
-#: ../mate-panel/libpanel-util/panel-show.c:44
+#: mate-panel/libpanel-util/panel-show.c:44
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "स्थान '%s' खोल्न सकेन"
 
-#: ../mate-panel/libpanel-util/panel-show.c:158
+#: mate-panel/libpanel-util/panel-show.c:158
 msgid "No application to handle search folders is installed."
 msgstr ""
 
-#: ../mate-panel/applet.c:468
+#: mate-panel/applet.c:468
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:548 ../libmate-panel-applet/mate-panel-applet.c:139
+#: mate-panel/applet.c:548 libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "प्यानलबाट हटाउनुहोस्"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
+#: mate-panel/applet.c:556 libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "सार्नुहोस्"
 
-#: ../mate-panel/applet.c:574 ../libmate-panel-applet/mate-panel-applet.c:148
+#: mate-panel/applet.c:574 libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "प्यानलमा ताल्चा लगाउनुहोस्"
 
-#: ../mate-panel/applet.c:1313
+#: mate-panel/applet.c:1313
 msgid "Cannot find an empty spot"
 msgstr "एउटा खाली बिन्दु फेला पार्न सकिँदैन"
 
-#: ../mate-panel/drawer.c:443 ../mate-panel/panel-addto.c:189
-#: ../mate-panel/panel-toplevel.c:1667
+#: mate-panel/drawer.c:443 mate-panel/panel-addto.c:189
+#: mate-panel/panel-toplevel.c:1650
 msgid "Drawer"
 msgstr "ड्रअर"
 
-#: ../mate-panel/drawer.c:550
+#: mate-panel/drawer.c:550
 msgid "_Add to Drawer..."
 msgstr "ड्रअरमा थप्नुहोस्..."
 
-#: ../mate-panel/drawer.c:556 ../mate-panel/launcher.c:602
-#: ../mate-panel/panel-action-button.c:194
-#: ../mate-panel/panel-context-menu.c:246
+#: mate-panel/drawer.c:556 mate-panel/launcher.c:602
+#: mate-panel/panel-action-button.c:194 mate-panel/panel-context-menu.c:246
 msgid "_Properties"
 msgstr "_गुणहरु"
 
-#: ../mate-panel/mate-desktop-item-edit.c:27
+#: mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "दिइएको डाइरेक्टरीमा नयाँ फाइल सिर्जना गर्नुहोस्"
 
-#: ../mate-panel/mate-desktop-item-edit.c:28
+#: mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[FILE...]"
 
-#: ../mate-panel/mate-desktop-item-edit.c:106
+#: mate-panel/mate-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- सम्पादन । डेस्कटप फाइल"
 
-#: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:973
+#: mate-panel/mate-desktop-item-edit.c:144
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:973
 msgid "Create Launcher"
 msgstr "सुरुआतकर्ता सिर्जना गर्नुहोस्"
 
-#: ../mate-panel/mate-desktop-item-edit.c:169
-#: ../mate-panel/mate-desktop-item-edit.c:192
+#: mate-panel/mate-desktop-item-edit.c:169
+#: mate-panel/mate-desktop-item-edit.c:192
 msgid "Directory Properties"
 msgstr "डाइरेक्टरी गुण"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:817
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:817
 msgid "Launcher Properties"
 msgstr "सुरुआतकर्ताका गुण"
 
-#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:154
+#: mate-panel/mate-panel.desktop.in:4 mate-panel/main.c:158
 msgid "Panel"
 msgstr "प्यानल"
 
-#: ../mate-panel/mate-panel.desktop.in.h:2
+#: mate-panel/mate-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2282,249 +2295,243 @@ msgstr ""
 "अन्य अनुप्रयोग सुरु गर्नुहोस् र सञ्झ्याल प्रबन्ध गर्न, समय देखाउन, इत्यादि "
 "गर्न विभिन्न उपयोगिता उपलब्ध गर्नुहोस् ।"
 
-#: ../mate-panel/launcher.c:120
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: mate-panel/mate-panel.desktop.in:7
+msgid "mate-panel"
+msgstr ""
+
+#: mate-panel/launcher.c:120
 msgid "Could not show this URL"
 msgstr "यस यूआरएललाई देखाउन सकेन"
 
-#: ../mate-panel/launcher.c:121
+#: mate-panel/launcher.c:121
 msgid "No URL was specified."
 msgstr "यूआरएल निर्दिष्ट गरिएको थिएन ।"
 
-#: ../mate-panel/launcher.c:217
+#: mate-panel/launcher.c:217
 msgid "Could not use dropped item"
 msgstr "छोडिएका सामाग्री प्रयोग गर्न सकेन"
 
-#: ../mate-panel/launcher.c:451
-#, c-format
+#: mate-panel/launcher.c:451
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "प्यानल सुरुआतकर्ता डेस्कटप फाइलका लागि कुनै युआरआई उपलब्ध छैन\n"
 
-#: ../mate-panel/launcher.c:490
+#: mate-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "प्यानल सुरुआतकर्ता%s%s का लागि डेस्कटप फाइल %s खोल्न असक्षम\n"
 
-#: ../mate-panel/launcher.c:594
+#: mate-panel/launcher.c:594
 msgid "_Launch"
 msgstr "सुरुआत गर्नुहोस्"
 
-#: ../mate-panel/launcher.c:910
+#: mate-panel/launcher.c:910
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "कुञ्जी %s सेट भएको छैन, सुरुआतकर्ता लोड गर्न सकिँदैन\n"
 
-#: ../mate-panel/launcher.c:1042 ../mate-panel/panel-ditem-editor.c:1326
-#: ../mate-panel/panel-ditem-editor.c:1360
-#: ../mate-panel/panel-ditem-editor.c:1391
+#: mate-panel/launcher.c:1042 mate-panel/panel-ditem-editor.c:1326
+#: mate-panel/panel-ditem-editor.c:1360 mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "सुरुआतकर्ता बचत गर्न सकेन"
 
-#: ../mate-panel/main.c:50
+#: mate-panel/main.c:54
 msgid "Replace a currently running panel"
 msgstr ""
 
-#. this feature was request in #mate irc channel
-#: ../mate-panel/main.c:52
+#: mate-panel/main.c:56
 msgid "Reset the panel configuration to default"
 msgstr ""
 
-#. open run dialog
-#: ../mate-panel/main.c:54
+#: mate-panel/main.c:58
 msgid "Execute the run dialog"
 msgstr ""
 
-#. default panels layout
-#: ../mate-panel/main.c:56
+#: mate-panel/main.c:60
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:502
+#: mate-panel/menu.c:502
 msgid "Add this launcher to _panel"
 msgstr "यस सुरुआतकर्तालाई प्यानलमा थप्नुहोस्"
 
-#: ../mate-panel/menu.c:509
+#: mate-panel/menu.c:509
 msgid "Add this launcher to _desktop"
 msgstr "यस सुरुआतकर्तालाई डेस्कटपमा थप्नुहोस्"
 
-#: ../mate-panel/menu.c:521
+#: mate-panel/menu.c:521
 msgid "_Entire menu"
 msgstr "पूरै मेनु"
 
-#: ../mate-panel/menu.c:526
+#: mate-panel/menu.c:526
 msgid "Add this as _drawer to panel"
 msgstr "प्यानलमा यसलाई ड्रअरका रूपमा थप्नुहोस्"
 
-#: ../mate-panel/menu.c:533
+#: mate-panel/menu.c:533
 msgid "Add this as _menu to panel"
 msgstr "प्यानलमा यसलाई मनुका रूपमा थप्नुहोस्"
 
-#: ../mate-panel/panel-action-button.c:182
+#: mate-panel/panel-action-button.c:182
 msgid "_Activate Screensaver"
 msgstr "स्क्रिनसेभर सक्रिय पार्नुहोस्"
 
-#: ../mate-panel/panel-action-button.c:188
+#: mate-panel/panel-action-button.c:188
 msgid "_Lock Screen"
 msgstr "पर्दामा ताल्चा लगाउनुहोस्"
 
-#: ../mate-panel/panel-action-button.c:332
+#: mate-panel/panel-action-button.c:332
 msgid "Could not connect to server"
 msgstr "सर्भरमा जडान गर्न सकेन"
 
-#: ../mate-panel/panel-action-button.c:363
+#: mate-panel/panel-action-button.c:363
 msgid "Lock Screen"
 msgstr "पर्दामा ताल्चा लगाउनुहोस्"
 
-#: ../mate-panel/panel-action-button.c:364
+#: mate-panel/panel-action-button.c:364
 msgid "Protect your computer from unauthorized use"
 msgstr "तपाईँको कमप्युटरलाई अनधिकृत प्रयोगबाट बचाउनुहोस्"
 
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: ../mate-panel/panel-action-button.c:378
+#: mate-panel/panel-action-button.c:378
 msgid "Log Out..."
 msgstr "लगआउट गर्नुहोस्..."
 
-#: ../mate-panel/panel-action-button.c:379
+#: mate-panel/panel-action-button.c:379
 msgid "Log out of this session to log in as a different user"
 msgstr "भिन्न प्रयोगकर्ताको रूपमा लगइन गर्न यस सत्रलाई लगआउट गर्नुहोस्"
 
-#: ../mate-panel/panel-action-button.c:388
+#: mate-panel/panel-action-button.c:388
 msgid "Run Application..."
 msgstr "अनुप्रयोग चलाउनुहोस्..."
 
-#: ../mate-panel/panel-action-button.c:389
+#: mate-panel/panel-action-button.c:389
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "आदेश प्रविष्टि गरेर वा सूचीबाट छनौट गरेर अनुप्रयोग चलाउनुहोस्"
 
-#: ../mate-panel/panel-action-button.c:398
+#: mate-panel/panel-action-button.c:398
 msgid "Search for Files..."
 msgstr "...फाइलहरू खोज्नुहोस्"
 
-#: ../mate-panel/panel-action-button.c:399
+#: mate-panel/panel-action-button.c:399
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "यस कम्प्युटरमा नाम वा सामाग्री अनुरूप कागजात र फोल्डर स्थापना गर्नुहोस्"
 
-#: ../mate-panel/panel-action-button.c:407
-#: ../mate-panel/panel-force-quit.c:250
+#: mate-panel/panel-action-button.c:407 mate-panel/panel-force-quit.c:250
 msgid "Force Quit"
 msgstr "अन्त्य गर्न दवाब दिनुहोस्"
 
-#: ../mate-panel/panel-action-button.c:408
+#: mate-panel/panel-action-button.c:408
 msgid "Force a misbehaving application to quit"
 msgstr "एउटा अव्यवहारिक अनुप्रयोगलाई बन्द गर्न दवाब दिनुहोस्"
 
-#. FIXME icon
-#: ../mate-panel/panel-action-button.c:417
+#: mate-panel/panel-action-button.c:417
 msgid "Connect to Server..."
 msgstr "सर्भरमा जडान गर्नुहोस्..."
 
-#: ../mate-panel/panel-action-button.c:418
+#: mate-panel/panel-action-button.c:418
 msgid "Connect to a remote computer or shared disk"
 msgstr "साझा डिस्क वा टाढाको कम्प्युटरमा जडान गर्नुहोस्"
 
-#: ../mate-panel/panel-action-button.c:426
+#: mate-panel/panel-action-button.c:426
 msgid "Shut Down..."
 msgstr "बन्द गर्नुहोस्..."
 
-#: ../mate-panel/panel-action-button.c:427
+#: mate-panel/panel-action-button.c:427
 msgid "Shut down the computer"
 msgstr "कम्प्युटर बन्द गर्नुहोस्"
 
-#: ../mate-panel/panel-addto.c:125
+#: mate-panel/panel-addto.c:125
 msgid "Custom Application Launcher"
 msgstr "अनुप्रयोग सुरुआतकर्ता अनुकूल पार्नुहोस्"
 
-#: ../mate-panel/panel-addto.c:126
+#: mate-panel/panel-addto.c:126
 msgid "Create a new launcher"
 msgstr "नयाँ सुरुआतकर्ता सिर्जना गर्नुहोस्"
 
-#: ../mate-panel/panel-addto.c:137
+#: mate-panel/panel-addto.c:137
 msgid "Application Launcher..."
 msgstr "अनुप्रयोग सुरुआतकर्ता..."
 
-#: ../mate-panel/panel-addto.c:138
+#: mate-panel/panel-addto.c:138
 msgid "Copy a launcher from the applications menu"
 msgstr "अनुप्रयोग मेनुबाट सुरुआतकर्ता प्रतिलिपि गर्नुहोस्"
 
-#: ../mate-panel/panel-addto.c:153 ../mate-panel/panel-menu-button.c:1113
-msgid "Main Menu"
-msgstr "मुख्य मेनु"
+#: mate-panel/panel-addto.c:153
+msgid "Compact Menu"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:154
-msgid "The main MATE menu"
-msgstr "मुख्य जिनोम मेनु"
+#: mate-panel/panel-addto.c:154
+msgid "A compact menu"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:165
-msgid "Menu Bar"
-msgstr "मेनु पट्टी"
+#: mate-panel/panel-addto.c:165
+msgid "Classic Menu"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:166
-msgid "A custom menu bar"
-msgstr "एउटा अनुकूल मेनु पट्टी"
+#: mate-panel/panel-addto.c:166
+msgid "The classic Applications, Places and System menu bar"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:177
+#: mate-panel/panel-addto.c:177
 msgid "Separator"
 msgstr "विभाजक"
 
-#: ../mate-panel/panel-addto.c:178
+#: mate-panel/panel-addto.c:178
 msgid "A separator to organize the panel items"
 msgstr "प्यानल सामाग्री सङ्गठीत गर्ने विभाजक"
 
-#: ../mate-panel/panel-addto.c:190
+#: mate-panel/panel-addto.c:190
 msgid "A pop out drawer to store other items in"
 msgstr "अन्य सामाग्री भण्डारण गर्ने एउटा पप आउट ड्रअर"
 
-#: ../mate-panel/panel-addto.c:274
+#: mate-panel/panel-addto.c:274
 msgid "(empty)"
 msgstr "(खाली)"
 
-#: ../mate-panel/panel-addto.c:419
+#: mate-panel/panel-addto.c:419
 msgid "Not compatible with X11"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:426
+#: mate-panel/panel-addto.c:426
 msgid "Not compatible with Wayland"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:1053
+#: mate-panel/panel-addto.c:1053
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "यस \"%s\" मा थपिने सामाग्रीलाई फेला पार्नुहोस्:"
 
-#: ../mate-panel/panel-addto.c:1057
-#, c-format
+#: mate-panel/panel-addto.c:1057
 msgid "Add to Drawer"
 msgstr "ड्रअरमा थप्नुहोस्"
 
-#: ../mate-panel/panel-addto.c:1059
+#: mate-panel/panel-addto.c:1059
 msgid "Find an _item to add to the drawer:"
 msgstr "ड्रअरमा थपिने एउटा सामाग्रीलाई फेला पार्नुहोस्:"
 
-#: ../mate-panel/panel-addto.c:1061
-#, c-format
+#: mate-panel/panel-addto.c:1061
 msgid "Add to Panel"
 msgstr "प्यानलमा थप्नुहोस्"
 
-#: ../mate-panel/panel-addto.c:1063
+#: mate-panel/panel-addto.c:1063
 msgid "Find an _item to add to the panel:"
 msgstr "प्यानलमा थपिने सामाग्रीलाई फेला पार्नुहोस्:"
 
-#: ../mate-panel/panel-addto.c:1311
+#: mate-panel/panel-addto.c:1311
 msgid "_Back"
 msgstr "पछाडि"
 
-#: ../mate-panel/panel-applet-frame.c:759
+#: mate-panel/panel-applet-frame.c:759
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr " \"%s\" अनपेक्षित रूपमा बन्द भएको छ"
 
-#: ../mate-panel/panel-applet-frame.c:761
+#: mate-panel/panel-applet-frame.c:761
 msgid "Panel object has quit unexpectedly"
 msgstr "प्यानल वस्तु अनपेक्षित रूपमा बन्द भएको छ"
 
-#: ../mate-panel/panel-applet-frame.c:768
+#: mate-panel/panel-applet-frame.c:768
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2532,49 +2539,47 @@ msgstr ""
 "तपाईँले एउटा प्यानल वस्तु पुन: लोड गरेमा, यो प्यानलमा स्वचालित रूपले पुन: "
 "थपिनेछ ।"
 
-#: ../mate-panel/panel-applet-frame.c:775
+#: mate-panel/panel-applet-frame.c:775
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:776
-#: ../mate-panel/panel-applet-frame.c:781
+#: mate-panel/panel-applet-frame.c:776 mate-panel/panel-applet-frame.c:781
 msgid "_Don't Reload"
 msgstr "पुन: लोड नगर्नुहोस्"
 
-#: ../mate-panel/panel-applet-frame.c:777
-#: ../mate-panel/panel-applet-frame.c:782
+#: mate-panel/panel-applet-frame.c:777 mate-panel/panel-applet-frame.c:782
 msgid "_Reload"
 msgstr "पुन:लोड गर्नुहोस्"
 
-#: ../mate-panel/panel-applet-frame.c:948
+#: mate-panel/panel-applet-frame.c:948
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "प्यानलले \"%s\" लोडिङ गर्दा एउटा समस्या सामना गर्यो ।"
 
-#: ../mate-panel/panel-applet-frame.c:963
+#: mate-panel/panel-applet-frame.c:963
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "तपाईँ कन्फिगरेसनबाट एप्लेट मेट्न चाहनुहुन्छ ?"
 
-#: ../mate-panel/panel-applet-frame.c:970 ../mate-panel/panel.c:1360
+#: mate-panel/panel-applet-frame.c:970 mate-panel/panel.c:1360
 msgid "_Delete"
 msgstr "_मेट्नुहोस्"
 
-#: ../mate-panel/panel-context-menu.c:91
+#: mate-panel/panel-context-menu.c:91
 msgid "And many, many others…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:114
+#: mate-panel/panel-context-menu.c:114
 msgid "The MATE Panel"
 msgstr "जिनोम प्यानल"
 
-#: ../mate-panel/panel-context-menu.c:116
+#: mate-panel/panel-context-menu.c:116
 msgid ""
 "Copyright © 1997-2003 Free Software Foundation, Inc.\n"
 "Copyright © 2004 Vincent Untz\n"
 "Copyright © 2011-2019 MATE developers"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:119
+#: mate-panel/panel-context-menu.c:119
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
@@ -2582,411 +2587,404 @@ msgstr ""
 "अन्य अनुप्रयोग सुरुआत गर्न यो कार्यक्रम उत्तरदायी हुन्छ र उपयोगी विशेषता "
 "उपलब्ध गर्छ ।"
 
-#: ../mate-panel/panel-context-menu.c:123
+#: mate-panel/panel-context-menu.c:123
 msgid "About the MATE Panel"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:154
+#: mate-panel/panel-context-menu.c:154
 msgid "Cannot delete this panel"
 msgstr "यस प्यानललाई मेट्न सकिँदैन"
 
-#: ../mate-panel/panel-context-menu.c:155
+#: mate-panel/panel-context-menu.c:155
 msgid "You must always have at least one panel."
 msgstr "तपाईँसँग कम्तिमा पनि एउटा प्यानल सधैँ हुनुपर्छ ।"
 
-#: ../mate-panel/panel-context-menu.c:199
+#: mate-panel/panel-context-menu.c:199
 msgid "Reset this panel?"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:200
+#: mate-panel/panel-context-menu.c:200
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:214
-#: ../mate-panel/panel-context-menu.c:256
+#: mate-panel/panel-context-menu.c:214 mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:236
+#: mate-panel/panel-context-menu.c:236
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:263
+#: mate-panel/panel-context-menu.c:263
 msgid "_Delete This Panel"
 msgstr "यस प्यानललाई मेट्नुहोस्..."
 
-#: ../mate-panel/panel-context-menu.c:276
+#: mate-panel/panel-context-menu.c:276
 msgid "_New Panel"
 msgstr "नयाँ प्यानल"
 
-#: ../mate-panel/panel-context-menu.c:325
+#: mate-panel/panel-context-menu.c:325
 msgid "A_bout Panels"
 msgstr "प्यानलका बारेमा"
 
-#: ../mate-panel/panel-ditem-editor.c:115
+#: mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "अनुप्रयोग"
 
-#: ../mate-panel/panel-ditem-editor.c:117
+#: mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "टर्मिनलको अनुप्रयोग"
 
-#: ../mate-panel/panel-ditem-editor.c:119
+#: mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "स्थान"
 
-#. Type
-#: ../mate-panel/panel-ditem-editor.c:602
+#: mate-panel/panel-ditem-editor.c:602
 msgid "_Type:"
 msgstr "प्रकार:"
 
-#. Name
-#: ../mate-panel/panel-ditem-editor.c:609
+#: mate-panel/panel-ditem-editor.c:609
 msgid "_Name:"
 msgstr "नाम:"
 
-#: ../mate-panel/panel-ditem-editor.c:634
+#: mate-panel/panel-ditem-editor.c:634
 msgid "_Browse..."
 msgstr "ब्राउज गर्नुहोस्..."
 
-#. Comment
-#: ../mate-panel/panel-ditem-editor.c:641
+#: mate-panel/panel-ditem-editor.c:641
 msgid "Co_mment:"
 msgstr "टिप्पणी:"
 
-#: ../mate-panel/panel-ditem-editor.c:652
+#: mate-panel/panel-ditem-editor.c:652
 msgid "_Revert"
 msgstr "उल्टाउनुहोस्"
 
-#: ../mate-panel/panel-ditem-editor.c:978
+#: mate-panel/panel-ditem-editor.c:978
 msgid "Choose an application..."
 msgstr "एउटा अनुप्रयोग रोज्नुहोस्..."
 
-#: ../mate-panel/panel-ditem-editor.c:982
+#: mate-panel/panel-ditem-editor.c:982
 msgid "Choose a file..."
 msgstr "एउटा फाइल रोज्नुहोस्..."
 
-#: ../mate-panel/panel-ditem-editor.c:1146
-#: ../mate-panel/panel-ditem-editor.c:1155
+#: mate-panel/panel-ditem-editor.c:1146 mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "आदेश:"
 
-#: ../mate-panel/panel-ditem-editor.c:1164
+#: mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "स्थान:"
 
-#: ../mate-panel/panel-ditem-editor.c:1327
+#: mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "सुरुआतकर्ताको नाम सेट भएको छैन ।"
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "डाइरेक्टरी गुण बचत गर्न सकेन"
 
-#: ../mate-panel/panel-ditem-editor.c:1332
+#: mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "डाइरेक्टरीको नाम सेट भएको छैन ।"
 
-#: ../mate-panel/panel-ditem-editor.c:1348
+#: mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "सुरुआतकर्ताको आदेश सेट भएको छैन ।"
 
-#: ../mate-panel/panel-ditem-editor.c:1351
+#: mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "सुरुआतकर्ताको स्थान सेट भएको छैन ।"
 
-#: ../mate-panel/panel-ditem-editor.c:1428
+#: mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
 msgstr "मद्दत कागजात प्रदर्शन गर्न सकेन"
 
-#: ../mate-panel/panel-force-quit.c:86
+#: mate-panel/panel-force-quit.c:86
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "अनुप्रयोगलाई अन्त्य गर्न दवाब दिन सञ्झ्यालमा क्लिक गर्नुहोस् । रद्द गर्न "
 "<ESC> थिच्नुहोस् ।"
 
-#: ../mate-panel/panel-force-quit.c:232
+#: mate-panel/panel-force-quit.c:232
 msgid "Force this application to exit?"
 msgstr "यस अनुप्रयोगलाई बाहिर पठाउन दवाब दिनुहुन्छ ?"
 
-#: ../mate-panel/panel-force-quit.c:235
+#: mate-panel/panel-force-quit.c:235
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr ""
 
-#: ../mate-panel/panel-menu-bar.c:97
+#: mate-panel/panel-menu-bar.c:97
 msgid "Browse and run installed applications"
 msgstr "स्थापना गरिएका अनुप्रयोग ब्राउज गर्नुहोस् र चलाउनुहोस्"
 
-#: ../mate-panel/panel-menu-bar.c:98
+#: mate-panel/panel-menu-bar.c:98
 msgid "Access documents, folders and network places"
 msgstr "कागजात, फोल्डर र सञ्जाल स्थान पहुँच गर्नुहोस्"
 
-#: ../mate-panel/panel-menu-bar.c:99
+#: mate-panel/panel-menu-bar.c:99
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
 "डेस्कटप देखावट र व्यावहार परिवर्तन गर्नुहोस्, मद्दत प्राप्त गर्नुहोस्, वा "
 "लगआउट गर्नुहोस्"
 
-#: ../mate-panel/panel-menu-bar.c:166
+#: mate-panel/panel-menu-bar.c:166
 msgid "Applications"
 msgstr "अनुप्रयोग"
 
-#: ../mate-panel/panel-menu-bar.c:356 ../mate-panel/panel-menu-button.c:690
+#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:706
 msgid "_Edit Menus"
 msgstr "मेनु सम्पादन गर्नुहोस्"
 
-#: ../mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-button.c:1129
+msgid "Main Menu"
+msgstr "मुख्य मेनु"
+
+#: mate-panel/panel-menu-items.c:467
 msgid "Bookmarks"
 msgstr "बुकमार्कहरु"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:490 ../mate-panel/panel.c:553
+#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:553
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' खोल्नुहोस्"
 
-#: ../mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:561
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr ""
 
-#: ../mate-panel/panel-menu-items.c:604
+#: mate-panel/panel-menu-items.c:604
 #, c-format
 msgid "Rescan %s"
 msgstr ""
 
-#: ../mate-panel/panel-menu-items.c:641
+#: mate-panel/panel-menu-items.c:641
 #, c-format
 msgid "Unable to mount %s"
 msgstr ""
 
-#: ../mate-panel/panel-menu-items.c:704
+#: mate-panel/panel-menu-items.c:704
 #, c-format
 msgid "Mount %s"
 msgstr ""
 
-#: ../mate-panel/panel-menu-items.c:912
+#: mate-panel/panel-menu-items.c:912
 msgid "Removable Media"
 msgstr "हटाउन सकिने माध्यम"
 
-#: ../mate-panel/panel-menu-items.c:999
+#: mate-panel/panel-menu-items.c:999
 msgid "Network Places"
 msgstr "सञ्जाल स्थान"
 
-#: ../mate-panel/panel-menu-items.c:1038
+#: mate-panel/panel-menu-items.c:1038
 msgid "Open your personal folder"
 msgstr "तपाईँको व्यक्तिगत फोल्डर खोल्नुहोस्"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../mate-panel/panel-menu-items.c:1057
+#: mate-panel/panel-menu-items.c:1057
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "डेस्कटप"
 
-#: ../mate-panel/panel-menu-items.c:1058
+#: mate-panel/panel-menu-items.c:1058
 msgid "Open the contents of your desktop in a folder"
 msgstr "तपाईँको डेस्कटपको फोल्डरमा भएको सामाग्री खोल्नुहोस्"
 
-#: ../mate-panel/panel-menu-items.c:1074
+#: mate-panel/panel-menu-items.c:1074
 msgid "Computer"
 msgstr "कम्प्युटर"
 
-#: ../mate-panel/panel-menu-items.c:1079
+#: mate-panel/panel-menu-items.c:1079
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
 "सबै स्थानीय र टाढाको डिस्कहरू र यो क्मप्युटरबाट पहुँचयोग्य फोल्डरहरू ब्राउज "
 "गर्नुहोस्"
 
-#: ../mate-panel/panel-menu-items.c:1092
+#: mate-panel/panel-menu-items.c:1092
 msgid "Network"
 msgstr "नेटवर्क,संजाल"
 
-#: ../mate-panel/panel-menu-items.c:1093
+#: mate-panel/panel-menu-items.c:1093
 msgid "Browse bookmarked and local network locations"
 msgstr "पुस्तकचिनो लगाइएको र स्थानीय सञ्जाल स्थानहरू ब्राउज गर्नुहोस्"
 
-#: ../mate-panel/panel-menu-items.c:1487
+#: mate-panel/panel-menu-items.c:1487
 msgid "Places"
 msgstr "स्थान"
 
-#: ../mate-panel/panel-menu-items.c:1515
+#: mate-panel/panel-menu-items.c:1515
 msgid "System"
 msgstr "प्रणाली"
 
-#. Below this, we only have log out/shutdown items
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: ../mate-panel/panel-menu-items.c:1600
+#: mate-panel/panel-menu-items.c:1600
 msgctxt "panel:showusername"
 msgid "1"
 msgstr ""
 
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1612
 #, c-format
 msgid "Log Out %s..."
 msgstr " %s लगआउट गर्नुहोस्..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1616
+#: mate-panel/panel-menu-items.c:1616
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "भिन्न प्रयोगकर्ताका रूपमा लगइन गर्न यस सत्रको %s बन्द गर्नुहोस्"
 
-#: ../mate-panel/panel-properties-dialog.c:119
-#: ../mate-panel/panel-test-applets.c:58
+#: mate-panel/panel-properties-dialog.c:119 mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr ""
 
-#: ../mate-panel/panel-properties-dialog.c:120
-#: ../mate-panel/panel-test-applets.c:59
+#: mate-panel/panel-properties-dialog.c:120 mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr ""
 
-#: ../mate-panel/panel-properties-dialog.c:121
-#: ../mate-panel/panel-test-applets.c:60
+#: mate-panel/panel-properties-dialog.c:121 mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "बायाँ"
 
-#: ../mate-panel/panel-properties-dialog.c:122
-#: ../mate-panel/panel-test-applets.c:61
+#: mate-panel/panel-properties-dialog.c:122 mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "दायाँ"
 
-#: ../mate-panel/panel-properties-dialog.c:818
+#: mate-panel/panel-properties-dialog.c:818
 msgid "Drawer Properties"
 msgstr "ड्रअर गुण"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:1
+#: mate-panel/panel-properties-dialog.ui:62
 msgid "Panel Properties"
 msgstr "प्यानल गुण"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: mate-panel/panel-properties-dialog.ui:148
+#: mate-panel/panel-properties-dialog.ui:416
 msgid "Some of these properties are locked down"
 msgstr "यी गुण मध्ये केहीलाई ताल्चा लगाइएको छ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
+#: mate-panel/panel-properties-dialog.ui:189
 msgid "_Icon:"
 msgstr "प्रतिमा:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
-#: ../mate-panel/panel-test-applets.ui.h:7
+#: mate-panel/panel-properties-dialog.ui:249
+#: mate-panel/panel-test-applets.ui:116
 msgid "_Orientation:"
 msgstr "अभिमूखीकरण:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: mate-panel/panel-properties-dialog.ui:263
+#: mate-panel/panel-test-applets.ui:86
 msgid "_Size:"
 msgstr "साइज:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: mate-panel/panel-properties-dialog.ui:281
 msgid "E_xpand"
 msgstr "विस्तार गर्नुहोस्"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: mate-panel/panel-properties-dialog.ui:296
 msgid "_Autohide"
 msgstr "स्वत: लुकाउनुहोस्"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: mate-panel/panel-properties-dialog.ui:317
 msgid "Show hide _buttons"
 msgstr "लुकेका बटन देखाउनुहोस्"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: mate-panel/panel-properties-dialog.ui:348
 msgid "Arro_ws on hide buttons"
 msgstr "लुकेका बटनका वाण"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:14
+#: mate-panel/panel-properties-dialog.ui:433
 msgid "_None (use system theme)"
 msgstr "कुनै पनी होइन(प्रणाली विषयवस्तु प्रयोग गर्नुहोस्)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: mate-panel/panel-properties-dialog.ui:453
 msgid "Solid c_olor"
 msgstr "निश्चित रङ"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: mate-panel/panel-properties-dialog.ui:501
 msgid "Pick a color"
 msgstr "एउटा रङ रोज्नुहोस्"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: mate-panel/panel-properties-dialog.ui:531
 msgid "<small>Transparent</small>"
 msgstr "<small>पारदर्शी</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: mate-panel/panel-properties-dialog.ui:553
 msgid "Co_lor:"
 msgstr "रङ:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: mate-panel/panel-properties-dialog.ui:566
 msgid "S_tyle:"
 msgstr "शैली:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: mate-panel/panel-properties-dialog.ui:580
 msgid "<small>Opaque</small>"
 msgstr "<small>अपारदर्शी</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: mate-panel/panel-properties-dialog.ui:613
 msgid "Background _image:"
 msgstr "पृष्ठभूमि छवि:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: mate-panel/panel-properties-dialog.ui:647
 msgid "Select background"
 msgstr "पृष्ठभूमि चयन गर्नुहोस्"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: mate-panel/panel-properties-dialog.ui:678
 msgid "Background"
 msgstr "पृष्ठभूमि"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: mate-panel/panel-properties-dialog.ui:710
 msgid "Image Background Details"
 msgstr "छवि पृष्ठभूमि विवरण"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: mate-panel/panel-properties-dialog.ui:780
 msgid "_Tile"
 msgstr "टायल"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: mate-panel/panel-properties-dialog.ui:795
 msgid "_Scale"
 msgstr "स्केल"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:28
+#: mate-panel/panel-properties-dialog.ui:811
 msgid "St_retch"
 msgstr "फैलाउनुहोस्"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:29
+#: mate-panel/panel-properties-dialog.ui:834
 msgid "Rotate image when panel is _vertical"
 msgstr "प्यानल ठाडो हुदा छविलाई घुमाउनुहोस्"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: mate-panel/panel-recent.c:78 mate-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "हालै प्रयोग गरिएका कागजात \"%s\" खोल्न सकेन"
 
-#: ../mate-panel/panel-recent.c:90
+#: mate-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "यसलाई खोल्ने प्रयास गर्दा एउटा अज्ञात त्रुटि उत्पन्न भयो \"%s\" ।"
 
-#: ../mate-panel/panel-recent.c:147
+#: mate-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "हालको कागजातको सूची खाली गर्नुहुन्छ ?"
 
-#: ../mate-panel/panel-recent.c:149
+#: mate-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2996,62 +2994,61 @@ msgstr ""
 "• स्थानबाट सबै सामाग्री → हालका कागजात मेनु सामाग्री ।\n"
 "• सबै अनुप्रयगोका हालैका कागजात सूचीबाट सबै सामाग्री ।"
 
-#: ../mate-panel/panel-recent.c:164
+#: mate-panel/panel-recent.c:164
 msgid "Clear Recent Documents"
 msgstr "हालका कागजात खाली गर्नुहोस्"
 
-#: ../mate-panel/panel-recent.c:199
+#: mate-panel/panel-recent.c:199
 msgid "Recent Documents"
 msgstr "हालका कागजात"
 
-#: ../mate-panel/panel-recent.c:238
+#: mate-panel/panel-recent.c:238
 msgid "Clear Recent Documents..."
 msgstr ""
 
-#: ../mate-panel/panel-recent.c:240
+#: mate-panel/panel-recent.c:240
 msgid "Clear all items from the recent documents list"
 msgstr "हालका कागजातको सूचीबाट सबै सामाग्री खाली गर्नुहोस्"
 
-#: ../mate-panel/panel-run-dialog.c:423
+#: mate-panel/panel-run-dialog.c:423
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "आदेश '%s' चलाउन सकेन"
 
-#: ../mate-panel/panel-run-dialog.c:464
+#: mate-panel/panel-run-dialog.c:464
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr " UTF-8 बाट '%s' रुपान्तरण गर्न सकेन"
 
-#: ../mate-panel/panel-run-dialog.c:1257
+#: mate-panel/panel-run-dialog.c:1257
 msgid "Choose a file to append to the command..."
 msgstr "आदेशमा थपिने फाइल रोज्नुहोस्..."
 
-#: ../mate-panel/panel-run-dialog.c:1639
-#: ../mate-panel/panel-run-dialog.ui.h:13
+#: mate-panel/panel-run-dialog.c:1639 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "अनुप्रयोगको वर्णन हेर्न यसलाई चयन गर्नुहोस् ।"
 
-#: ../mate-panel/panel-run-dialog.c:1677
+#: mate-panel/panel-run-dialog.c:1677
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "आदेश चलाउने छ: '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:1710
+#: mate-panel/panel-run-dialog.c:1710
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "चलाउने संवादमा छाडिएको (यूआरआई) सूची गलत ढाँचा (%d) वा लम्बाइ (%d) भएको थियो"
 " \n"
 
-#: ../mate-panel/panel-run-dialog.ui.h:1
+#: mate-panel/panel-run-dialog.ui:23
 msgid "Run Application"
 msgstr "अनुप्रयोग चलाउनुहोस्"
 
-#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
+#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "चलाउनुहोस्"
 
-#: ../mate-panel/panel-run-dialog.ui.h:5
+#: mate-panel/panel-run-dialog.ui:81
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -3059,178 +3056,176 @@ msgstr ""
 "आदेश प्रविष्टि फिल्डमा चयन गरिएका अनुप्रयोग वा आदेश चलाउन यस बटनमा क्लिक "
 "गर्नुहोस् ।"
 
-#: ../mate-panel/panel-run-dialog.ui.h:6
+#: mate-panel/panel-run-dialog.ui:125
 msgid "Command icon"
 msgstr "आदेश प्रतिमा"
 
-#: ../mate-panel/panel-run-dialog.ui.h:7
+#: mate-panel/panel-run-dialog.ui:126
 msgid "The icon of the command to be run."
 msgstr "चलाइने प्रतिमाको आदेश"
 
-#: ../mate-panel/panel-run-dialog.ui.h:8
+#: mate-panel/panel-run-dialog.ui:170
 msgid "Run in _terminal"
 msgstr "टर्मिनलमा चलाउनुहोस्"
 
-#: ../mate-panel/panel-run-dialog.ui.h:9
+#: mate-panel/panel-run-dialog.ui:178
 msgid "Select this box to run the command in a terminal window."
 msgstr "टर्मिनल सञ्झ्यालमा आदेश चलाउन यस बाकसलाई चयन गर्नुहोस् ।"
 
-#: ../mate-panel/panel-run-dialog.ui.h:10
+#: mate-panel/panel-run-dialog.ui:190
 msgid "Run with _file..."
 msgstr "फाइलसँग चलाउनुहोस्..."
 
-#: ../mate-panel/panel-run-dialog.ui.h:11
+#: mate-panel/panel-run-dialog.ui:197
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
 "आदेश स्ट्रिङमा थपिने फाइलको नाम ब्राउज गर्न यस बटनमा क्लिक गर्नुहोस् ।"
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: mate-panel/panel-run-dialog.ui:256
 msgid "List of known applications"
 msgstr "परिचित अनुप्रयगोको सूची"
 
-#: ../mate-panel/panel-run-dialog.ui.h:14
+#: mate-panel/panel-run-dialog.ui:290
 msgid "Show list of known _applications"
 msgstr "परिचित अनुप्रयोगको सूची देखाउनुहोस्"
 
-#: ../mate-panel/panel-stock-icons.c:98
+#: mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
 msgstr "बन्द गर्न बल प्रयोग गर्नुहोस्"
 
-#: ../mate-panel/panel-stock-icons.c:99
+#: mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
 msgstr "खाली गर्नुहोस्"
 
-#: ../mate-panel/panel-stock-icons.c:100
+#: mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
 msgstr "नमेट्नुहोस्"
 
-#: ../mate-panel/panel-test-applets.c:39
+#: mate-panel/panel-test-applets.c:39
 msgid "Specify an applet IID to load"
 msgstr "लोड गरिने एप्लेट IID निर्दिष्ट गर्नुहोस्"
 
-#: ../mate-panel/panel-test-applets.c:40
+#: mate-panel/panel-test-applets.c:40
 msgid ""
 "Specify a gsettings path in which the applet preferences should be stored"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.c:41
+#: mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 "एप्लेटको प्रारम्भिक साइज निर्दष्ट गर्नुहोस् (xx-सानो, मध्यम, ठूलो आदि ।)"
 
-#: ../mate-panel/panel-test-applets.c:42
+#: mate-panel/panel-test-applets.c:42
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "एप्लेटको प्रारम्भिक अभिमूमिखकरण नर्दिष्ट गर्नुहोस् (माथि, तल, बायाँ वा "
 "दायाँ)"
 
-#: ../mate-panel/panel-test-applets.c:66
+#: mate-panel/panel-test-applets.c:66
 msgctxt "Size"
 msgid "XX Small"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.c:67
+#: mate-panel/panel-test-applets.c:67
 msgctxt "Size"
 msgid "X Small"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.c:68
+#: mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
 msgstr "सानो"
 
-#: ../mate-panel/panel-test-applets.c:69
+#: mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.c:70
+#: mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
 msgstr "ठूलो"
 
-#: ../mate-panel/panel-test-applets.c:71
+#: mate-panel/panel-test-applets.c:71
 msgctxt "Size"
 msgid "X Large"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.c:72
+#: mate-panel/panel-test-applets.c:72
 msgctxt "Size"
 msgid "XX Large"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.c:130
+#: mate-panel/panel-test-applets.c:130
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "एप्लेट %s लोड गर्न असफल"
 
 #. This is an utility to easily test various applets
-#: ../mate-panel/panel-test-applets.ui.h:2
+#: mate-panel/panel-test-applets.ui:18
 msgid "Test applet utility"
 msgstr "एप्लेट उपयोगिता जाँच गर्नुहोस्"
 
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: mate-panel/panel-test-applets.ui:35
 msgid "_Execute"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: mate-panel/panel-test-applets.ui:101
 msgid "_Applet:"
 msgstr "एप्लेट:"
 
-#: ../mate-panel/panel-test-applets.ui.h:8
+#: mate-panel/panel-test-applets.ui:131
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1232
+#: mate-panel/panel-toplevel.c:1209
 msgid "Hide Panel"
 msgstr "प्यानल लुकाउनुहोस्"
 
-#. translators: these string will be shown in MetaCity's switch window
-#. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1673 ../mate-panel/panel-toplevel.c:1683
+#: mate-panel/panel-toplevel.c:1656 mate-panel/panel-toplevel.c:1666
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1675
+#: mate-panel/panel-toplevel.c:1658
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1677
+#: mate-panel/panel-toplevel.c:1660
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1679
+#: mate-panel/panel-toplevel.c:1662
 msgid "Right Panel"
 msgstr ""
 
-#: ../mate-panel/panel-util.c:350
+#: mate-panel/panel-util.c:350
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "प्रतिमा '%s' फेला परेन"
 
-#: ../mate-panel/panel-util.c:474
+#: mate-panel/panel-util.c:474
 #, c-format
 msgid "Could not execute '%s'"
 msgstr " '%s' कार्यान्वयन गर्न सकेन"
 
-#: ../mate-panel/panel-util.c:702
+#: mate-panel/panel-util.c:702
 msgid "file"
 msgstr "फाइल"
 
-#: ../mate-panel/panel-util.c:875
+#: mate-panel/panel-util.c:875
 msgid "Home Folder"
 msgstr "गृह फोल्डर"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:887
+#: mate-panel/panel-util.c:887
 msgid "File System"
 msgstr "फाइल प्रणाली"
 
-#: ../mate-panel/panel-util.c:1060
+#: mate-panel/panel-util.c:1060
 msgid "Search"
 msgstr "खोज"
 
@@ -3238,21 +3233,21 @@ msgstr "खोज"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1106
+#: mate-panel/panel-util.c:1106
 #, c-format
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: ../mate-panel/panel.c:486
+#: mate-panel/panel.c:486
 #, c-format
 msgid "Open URL: %s"
 msgstr "यूआरएल खोल्नुहोस्: %s"
 
-#: ../mate-panel/panel.c:1336
+#: mate-panel/panel.c:1336
 msgid "Delete this drawer?"
 msgstr "यस ड्रअरलाई मेट्नुहुन्छ ?"
 
-#: ../mate-panel/panel.c:1337
+#: mate-panel/panel.c:1337
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3260,14 +3255,36 @@ msgstr ""
 "ड्रअर मेटिएको बेलामा, ड्रअर र यसका\n"
 "सेटिङ हराउछन् ।"
 
-#: ../mate-panel/panel.c:1340
+#: mate-panel/panel.c:1340
 msgid "Delete this panel?"
 msgstr "यस प्यानललाई मेट्नुहुन्छ ?"
 
-#: ../mate-panel/panel.c:1341
+#: mate-panel/panel.c:1341
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "प्यानल मेटिएको बेलामा, प्यानल र यसका\n"
 "सेटिङ हराउछन् ।"
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:5
+msgid "Test DBus Applet Factory"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:6
+msgid "Factory for Test DBus Applet"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:9
+msgid "Test DBus Applet"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:10
+msgid "A simple applet for testing the MATE panel"
+msgstr ""
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:12
+msgid "mate-gegl"
+msgstr ""

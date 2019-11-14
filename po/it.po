@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR MATE Desktop Environment team
+# This file is distributed under the same license as the mate-panel package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
@@ -14,12 +14,11 @@
 # andrea pittaro <transifex@andreapittaro.it>, 2019
 # Enrico B. <enricobe@hotmail.com>, 2019
 # 
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: MATE Desktop Environment\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-23 10:15+0200\n"
+"Project-Id-Version: mate-panel 1.23.2\n"
+"Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
+"POT-Creation-Date: 2019-11-14 14:29+0100\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Enrico B. <enricobe@hotmail.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/mate/teams/13566/it/)\n"
@@ -29,29 +28,29 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
+#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:689
 msgid "Locations"
 msgstr "Località"
 
-#: ../applets/clock/calendar-window.c:259
+#: applets/clock/calendar-window.c:257
 msgid "Edit"
 msgstr "Modifica"
 
-#: ../applets/clock/calendar-window.c:486
+#: applets/clock/calendar-window.c:482
 msgid "Calendar"
 msgstr "Calendario"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:434
+#: applets/clock/clock.c:446
 msgid "%l:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:434 ../applets/clock/clock-location-tile.c:503
+#: applets/clock/clock.c:446 applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%k.%M"
 
@@ -62,7 +61,7 @@ msgstr "%k.%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1579
+#: applets/clock/clock.c:451 applets/clock/clock.c:1596
 msgid "%H:%M:%S"
 msgstr "%-H.%M.%S"
 
@@ -76,9 +75,9 @@ msgstr "%-H.%M.%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1585
-#: ../applets/clock/clock-location-tile.c:463
-#: ../applets/clock/clock-location-tile.c:510
+#: applets/clock/clock.c:451 applets/clock/clock.c:1602
+#: applets/clock/clock-location-tile.c:464
+#: applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%k.%M"
 
@@ -87,14 +86,11 @@ msgstr "%k.%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:450
+#: applets/clock/clock.c:462
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:457
+#: applets/clock/clock.c:469
 #, c-format
 msgid ""
 "%1$s\n"
@@ -103,31 +99,27 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:465
+#: applets/clock/clock.c:477
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:638
+#: applets/clock/clock.c:655
 msgid "%A %B %d (%%s)"
 msgstr "%A, %-d %B (%%s)"
 
-#: ../applets/clock/clock.c:664
+#: applets/clock/clock.c:681
 msgid "Click to hide month calendar"
 msgstr "Fare clic per nascondere il calendario del mese"
 
-#: ../applets/clock/clock.c:666
+#: applets/clock/clock.c:683
 msgid "Click to view month calendar"
 msgstr "Fare clic per visualizzare il calendario del mese"
 
-#: ../applets/clock/clock.c:1417
+#: applets/clock/clock.c:1434
 msgid "Computer Clock"
 msgstr "Orologio del computer"
 
@@ -137,7 +129,7 @@ msgstr "Orologio del computer"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1564
+#: applets/clock/clock.c:1581
 msgid "%I:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
@@ -147,102 +139,98 @@ msgstr "%l.%M.%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1572
+#: applets/clock/clock.c:1589
 msgid "%I:%M %p"
 msgstr "%l.%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1618
+#: applets/clock/clock.c:1635
 msgid "%A, %B %d %Y"
 msgstr "%A, %-d %B %Y"
 
-#: ../applets/clock/clock.c:1649
+#: applets/clock/clock.c:1666
 msgid "Set System Time..."
 msgstr "Imposta ora sistema..."
 
-#: ../applets/clock/clock.c:1650
+#: applets/clock/clock.c:1667
 msgid "Set System Time"
 msgstr "Imposta ora sistema"
 
-#: ../applets/clock/clock.c:1665
+#: applets/clock/clock.c:1682
 msgid "Failed to set the system time"
 msgstr "Impostazione dell'ora del sistema non riuscita"
 
-#: ../applets/clock/clock.c:1863 ../applets/fish/fish.c:1694
-#: ../applets/notification_area/main.c:292
-#: ../applets/wncklet/window-list.c:357
-#: ../applets/wncklet/workspace-switcher.c:389
+#: applets/clock/clock.c:1880 applets/fish/fish.c:1694
+#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:357
+#: applets/wncklet/workspace-switcher.c:389
 msgid "_Preferences"
 msgstr "_Preferenze"
 
-#: ../applets/clock/clock.c:1866 ../applets/clock/clock.ui.h:7
-#: ../applets/fish/fish.c:1697 ../applets/fish/fish.ui.h:2
-#: ../applets/notification_area/main.c:295
-#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:365
-#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:98
-#: ../applets/wncklet/workspace-switcher.c:397
-#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:562
-#: ../mate-panel/panel-action-button.c:753 ../mate-panel/panel-addto.c:1308
-#: ../mate-panel/panel-context-menu.c:318
-#: ../mate-panel/panel-ditem-editor.c:648 ../mate-panel/panel-menu-bar.c:351
-#: ../mate-panel/panel-menu-button.c:684
-#: ../mate-panel/panel-properties-dialog.ui.h:2
-#: ../mate-panel/panel-run-dialog.ui.h:2
+#: applets/clock/clock.c:1883 applets/clock/clock.ui:293
+#: applets/fish/fish.c:1697 applets/fish/fish.ui:46
+#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:241
+#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:35
+#: applets/wncklet/window-menu.c:98 applets/wncklet/workspace-switcher.c:397
+#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:562
+#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1308
+#: mate-panel/panel-context-menu.c:318 mate-panel/panel-ditem-editor.c:648
+#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:700
+#: mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "_Aiuto"
 
-#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1700
-#: ../applets/notification_area/main.c:298
-#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:373
-#: ../applets/wncklet/window-menu.c:106
-#: ../applets/wncklet/workspace-switcher.c:405
+#: applets/clock/clock.c:1886 applets/fish/fish.c:1700
+#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:249
+#: applets/wncklet/window-list.c:373 applets/wncklet/window-menu.c:106
+#: applets/wncklet/workspace-switcher.c:405
 msgid "_About"
 msgstr "_Informazioni"
 
-#: ../applets/clock/clock.c:1872
+#: applets/clock/clock.c:1889
 msgid "Copy _Time"
 msgstr "Copia _ora"
 
-#: ../applets/clock/clock.c:1875
+#: applets/clock/clock.c:1892
 msgid "Copy _Date"
 msgstr "Copia _data"
 
-#: ../applets/clock/clock.c:1878
+#: applets/clock/clock.c:1895
 msgid "Ad_just Date & Time"
 msgstr "Re_gola data e ora"
 
-#: ../applets/clock/clock.c:2874
+#: applets/clock/clock.c:2891
 msgid "Choose Location"
 msgstr "Scegli località"
 
-#: ../applets/clock/clock.c:2953
+#: applets/clock/clock.c:2970
 msgid "Edit Location"
 msgstr "Modifica località"
 
-#: ../applets/clock/clock.c:3080
+#: applets/clock/clock.c:3097
 msgid "City Name"
 msgstr "Nome della città"
 
-#: ../applets/clock/clock.c:3084
+#: applets/clock/clock.c:3101
 msgid "City Time Zone"
 msgstr "Fuso orario della città"
 
-#: ../applets/clock/clock.c:3295
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
+#: applets/clock/clock.c:3381
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "Orologio"
 
-#: ../applets/clock/clock.c:3296
+#: applets/clock/clock.c:3382
 msgid "About Clock"
 msgstr "Informazioni su Orologio"
 
-#: ../applets/clock/clock.c:3298
+#: applets/clock/clock.c:3384
 msgid "The Clock displays the current time and date"
 msgstr "Orologio mostra l'ora e la data correnti"
 
-#: ../applets/clock/clock.c:3299
+#: applets/clock/clock.c:3385
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2019 MATE developers"
@@ -250,160 +238,157 @@ msgstr ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2019 Gli sviluppatori di MATE"
 
-#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:567
-#: ../applets/notification_area/main.c:286
-#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:831
-#: ../applets/wncklet/window-menu.c:88
-#: ../applets/wncklet/workspace-switcher.c:644
-#: ../mate-panel/panel-context-menu.c:124
+#: applets/clock/clock.c:3389 applets/fish/fish.c:567
+#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:508
+#: applets/wncklet/window-list.c:831 applets/wncklet/window-menu.c:88
+#: applets/wncklet/workspace-switcher.c:644
+#: mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
 msgstr "Riconoscimenti-traduzione"
 
-#: ../applets/clock/clock.ui.h:1
+#: applets/clock/clock.ui:31
 msgid "Time & Date"
 msgstr "Ora e data"
 
-#: ../applets/clock/clock.ui.h:2 ../mate-panel/libpanel-util/panel-gtk.c:136
-#: ../mate-panel/panel-context-menu.c:213
-#: ../mate-panel/panel-ditem-editor.c:664 ../mate-panel/panel-force-quit.c:240
-#: ../mate-panel/panel-recent.c:154 ../mate-panel/panel-run-dialog.ui.h:3
-#: ../mate-panel/panel.c:1356
+#: applets/clock/clock.ui:46 applets/clock/clock.ui:923
+#: mate-panel/libpanel-util/panel-gtk.c:136
+#: mate-panel/panel-context-menu.c:213 mate-panel/panel-ditem-editor.c:664
+#: mate-panel/panel-force-quit.c:240 mate-panel/panel-recent.c:154
+#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:1356
 msgid "_Cancel"
 msgstr "A_nnulla"
 
-#: ../applets/clock/clock.ui.h:3
+#: applets/clock/clock.ui:62
 msgid "_Set System Time"
 msgstr "Imposta ora _sistema"
 
-#: ../applets/clock/clock.ui.h:4
+#: applets/clock/clock.ui:191
 msgid "_Time:"
 msgstr "_Ora:"
 
-#: ../applets/clock/clock.ui.h:5
+#: applets/clock/clock.ui:205
 msgid "Current Time:"
 msgstr "Ora corrente:"
 
-#: ../applets/clock/clock.ui.h:6
+#: applets/clock/clock.ui:277
 msgid "Clock Preferences"
 msgstr "Preferenze di Orologio"
 
-#: ../applets/clock/clock.ui.h:8
+#: applets/clock/clock.ui:309
 msgid "Time _Settings"
 msgstr "Imposta_zioni ora"
 
-#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:853
-#: ../applets/fish/fish.ui.h:3
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:2
-#: ../applets/wncklet/window-list.ui.h:3
-#: ../applets/wncklet/workspace-switcher.ui.h:3
-#: ../mate-panel/panel-addto.c:1319 ../mate-panel/panel-ditem-editor.c:660
-#: ../mate-panel/panel-properties-dialog.ui.h:3
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: applets/clock/clock.ui:324 applets/fish/fish.c:853 applets/fish/fish.ui:62
+#: applets/notification_area/notification-area-preferences-dialog.ui:65
+#: applets/wncklet/window-list.ui:51 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1319 mate-panel/panel-ditem-editor.c:660
+#: mate-panel/panel-properties-dialog.ui:94
+#: mate-panel/panel-properties-dialog.ui:740
+#: mate-panel/panel-test-applets.ui:52
 msgid "_Close"
 msgstr "_Chiudi"
 
-#: ../applets/clock/clock.ui.h:10
+#: applets/clock/clock.ui:369
 msgid "Clock Format"
 msgstr "Formato orologio"
 
-#: ../applets/clock/clock.ui.h:11
+#: applets/clock/clock.ui:393
 msgid "_12 hour format"
 msgstr "Formato _12 ore"
 
-#: ../applets/clock/clock.ui.h:12
+#: applets/clock/clock.ui:408
 msgid "_24 hour format"
 msgstr "Formato _24 ore"
 
-#: ../applets/clock/clock.ui.h:13
+#: applets/clock/clock.ui:448
 msgid "Panel Display"
 msgstr "Visibili sul pannello"
 
-#: ../applets/clock/clock.ui.h:14
+#: applets/clock/clock.ui:473
 msgid "Show the _date"
 msgstr "Mostrare la _data"
 
-#: ../applets/clock/clock.ui.h:15
+#: applets/clock/clock.ui:488
 msgid "Show seco_nds"
 msgstr "Mostrare i _secondi"
 
-#: ../applets/clock/clock.ui.h:16
+#: applets/clock/clock.ui:503
 msgid "Show wee_k numbers in calendar"
 msgstr "Mostra i numeri di settiman_a nel calendario"
 
-#: ../applets/clock/clock.ui.h:17
+#: applets/clock/clock.ui:518
 msgid "Show _weather"
 msgstr "Mostrare le condizioni _meteo"
 
-#: ../applets/clock/clock.ui.h:18
+#: applets/clock/clock.ui:533
 msgid "Show _temperature"
 msgstr "Mostrare la _temperatura"
 
-#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: applets/clock/clock.ui:568 applets/fish/fish.ui:102
+#: mate-panel/panel-properties-dialog.ui:384
 msgid "General"
 msgstr "Generale"
 
-#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1315
+#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1315
 msgid "_Add"
 msgstr "A_ggiungi"
 
-#: ../applets/clock/clock.ui.h:21
+#: applets/clock/clock.ui:636
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: ../applets/clock/clock.ui.h:22
+#: applets/clock/clock.ui:652
 msgid "_Remove"
 msgstr "_Rimuovi"
 
-#: ../applets/clock/clock.ui.h:24
+#: applets/clock/clock.ui:713
 msgid "Display"
 msgstr "Display"
 
-#: ../applets/clock/clock.ui.h:25
+#: applets/clock/clock.ui:749
 msgid "_Visibility unit:"
 msgstr "Unità di visi_bilità:"
 
-#: ../applets/clock/clock.ui.h:26
+#: applets/clock/clock.ui:771
 msgid "_Pressure unit:"
 msgstr "Unità di _pressione:"
 
-#: ../applets/clock/clock.ui.h:27
+#: applets/clock/clock.ui:805
 msgid "_Wind speed unit:"
 msgstr "Unità di velocità del _vento:"
 
-#: ../applets/clock/clock.ui.h:28
+#: applets/clock/clock.ui:819
 msgid "_Temperature unit:"
 msgstr "Unità di _temperatura:"
 
-#: ../applets/clock/clock.ui.h:29
+#: applets/clock/clock.ui:854
 msgid "Weather"
 msgstr "Condizioni meteo"
 
-#: ../applets/clock/clock.ui.h:30
+#: applets/clock/clock.ui:886
 msgid "East"
 msgstr "Est"
 
-#: ../applets/clock/clock.ui.h:31
+#: applets/clock/clock.ui:889
 msgid "West"
 msgstr "Ovest"
 
-#: ../applets/clock/clock.ui.h:32
+#: applets/clock/clock.ui:900
 msgid "North"
 msgstr "Nord"
 
-#: ../applets/clock/clock.ui.h:33
+#: applets/clock/clock.ui:903
 msgid "South"
 msgstr "Sud"
 
-#: ../applets/clock/clock.ui.h:34 ../mate-panel/libpanel-util/panel-gtk.c:140
-#: ../mate-panel/panel-applet-frame.c:960
-#: ../mate-panel/panel-ditem-editor.c:668
+#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:140
+#: mate-panel/panel-applet-frame.c:960 mate-panel/panel-ditem-editor.c:668
 msgid "_OK"
 msgstr "_OK"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:36
+#: applets/clock/clock.ui:1012
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -411,39 +396,39 @@ msgstr ""
 "<small><i>Digitare un nome di città, regione o nazione, quindi selezionare "
 "una corrispondenza dal menù a comparsa.</i></small>"
 
-#: ../applets/clock/clock.ui.h:37
+#: applets/clock/clock.ui:1057
 msgid "_Timezone:"
 msgstr "_Fuso orario:"
 
-#: ../applets/clock/clock.ui.h:38
+#: applets/clock/clock.ui:1070
 msgid "_Location Name:"
 msgstr "No_me della località:"
 
-#: ../applets/clock/clock.ui.h:39
+#: applets/clock/clock.ui:1114 applets/clock/clock.ui:1128
 msgid "<i>(optional)</i>"
 msgstr "<i>(opzionale)</i>"
 
-#: ../applets/clock/clock.ui.h:40
+#: applets/clock/clock.ui:1171
 msgid "L_ongitude:"
 msgstr "L_ongitudine:"
 
-#: ../applets/clock/clock.ui.h:41
+#: applets/clock/clock.ui:1192
 msgid "L_atitude:"
 msgstr "L_atitudine:"
 
-#: ../applets/clock/clock-location-tile.c:182
+#: applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr "Impostazione del fuso orario del sistema non riuscita"
 
-#: ../applets/clock/clock-location-tile.c:230
+#: applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>Imposta...</small>"
 
-#: ../applets/clock/clock-location-tile.c:231
+#: applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>Imposta</small>"
 
-#: ../applets/clock/clock-location-tile.c:307
+#: applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -456,7 +441,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:440
+#: applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l.%M <small>%p (%A)</small>"
 
@@ -465,7 +450,7 @@ msgstr "%l.%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:448
+#: applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%-H.%M <small>(%A)</small>"
 
@@ -473,50 +458,48 @@ msgstr "%-H.%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:457
+#: applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l.%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:599
+#: applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#. FMQ: it's broken to read from another module's translations; add some API
-#. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:611
-#: ../applets/clock/clock-location-tile.c:620
+#: applets/clock/clock-location-tile.c:612
+#: applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "Sconosciuto"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:613
+#: applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, percepita %s"
 
-#: ../applets/clock/clock-location-tile.c:636
+#: applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Alba: %s / Tramonto: %s"
 
-#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:170
-#: ../applets/notification_area/main.c:238 ../applets/wncklet/wncklet.c:75
-#: ../mate-panel/libpanel-util/panel-show.c:234
+#: applets/clock/clock-utils.c:94 applets/fish/fish.c:170
+#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:75
+#: mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Impossibile mostrare il documento d'aiuto «%s»"
 
-#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:196
-#: ../applets/notification_area/main.c:252 ../applets/wncklet/wncklet.c:92
+#: applets/clock/clock-utils.c:123 applets/fish/fish.c:196
+#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:92
 msgid "Error displaying help document"
 msgstr "Errore nel mostrare il documento d'aiuto"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:1
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:29
 msgid "Hour format"
 msgstr "Formato dell'ora"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:2
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:30
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values"
 " are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set"
@@ -537,11 +520,11 @@ msgstr ""
 "mostra il tempo in accordo col formato indicato dalla chiave "
 "\"custom_format\"."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:34
 msgid "Custom format of the clock"
 msgstr "Formato personalizzato dell'orologio"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:4
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:35
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -553,105 +536,111 @@ msgstr ""
 "formato possono essere usati gli indicatori di conversione gestiti da "
 "strftime(). Consultare il manuale di strftime() per maggiori informazioni."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:39
 msgid "Show time with seconds"
 msgstr "Mostra l'ora con i secondi"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:6
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:40
 msgid "If true, display seconds in time."
 msgstr "Se impostata a VERO, l'orologio mostra anche i secondi nell'ora."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:7
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:44
 msgid "Show date in clock"
 msgstr "Mostra la data nell'orologio"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:8
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:45
 msgid "If true, display date in the clock, in addition to time."
 msgstr ""
 "Se impostata a VERO, mostra nell'orologio anche la data oltre all'ora."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:9
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:49
 msgid "Show date in tooltip"
 msgstr "Mostra la data nel suggerimento"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:50
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Se impostata a VERO, mostra la data in un suggerimento al passaggio del "
 "puntatore sull'orologio."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:54
 msgid "Show weather in clock"
 msgstr "Mostra le condizioni meteo nell'orologio"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:12
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:55
 msgid "If true, display a weather icon."
 msgstr "Se impostata a VERO, mostra un'icona delle condizioni meteo."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:13
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:59
 msgid "Show temperature in clock"
 msgstr "Mostra la temperatura nell'orologio"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:14
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:60
 msgid "If true, show the temperature next to the weather icon."
 msgstr ""
 "Se impostata a VERO, mostra la temperatura accanto all'icona del meteo."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:15
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:64
 msgid "Show week numbers in calendar"
 msgstr "Mostra i numeri di settimana nel calendario"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:16
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:65
 msgid "If true, show week numbers in the calendar."
 msgstr "Se impostata a VERO, mostra nel calendario i numeri di settimana."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:17
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:69
 msgid "Expand list of locations"
 msgstr "Espande l'elenco delle località"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:18
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:70
 msgid "If true, expand the list of locations in the calendar window."
 msgstr ""
 "Se impostata a VERO, espande l'elenco delle località nella finestra del "
 "calendario."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:19
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:74
 msgid "List of locations"
 msgstr "Elenco delle località"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:20
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:75
 msgid "A list of locations to display in the calendar window."
 msgstr "Un elenco di località da mostrare nella finestra calendario."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:21
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:79
 msgid "Temperature unit"
 msgstr "Unità di temperatura"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:22
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:80
 msgid "The unit to use when showing temperatures."
 msgstr "L'unità di misura da usare nel mostrare le temperature."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:23
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:84
 msgid "Speed unit"
 msgstr "Unità di velocità"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:24
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:85
 msgid "The unit to use when showing wind speed."
 msgstr "L'unità di misura da usare nel mostrare la velocità del vento."
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:1
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:6
 msgid "Clock Applet Factory"
 msgstr "Fabbrica applet Orologio"
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:2
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for clock applet"
 msgstr "Fabbrica per l'applet orologio"
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:4
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:11
 msgid "Get the current time and date"
 msgstr "Ottiene l'ora e la data correnti"
 
-#: ../applets/fish/fish.c:266
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-clock"
+msgstr ""
+
+#: applets/fish/fish.c:266
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -665,17 +654,16 @@ msgstr ""
 "Suggeriamo caldamente di non utilizzare «%s» per qualcosa\n"
 "che renda l'applet utile sul piano pratico."
 
-#: ../applets/fish/fish.c:428
+#: applets/fish/fish.c:428
 msgid "Images"
 msgstr "Immagini"
 
-#: ../applets/fish/fish.c:534 ../applets/fish/fish.c:578
-#: ../applets/fish/fish.c:684
+#: applets/fish/fish.c:534 applets/fish/fish.c:578 applets/fish/fish.c:684
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s il pesce"
 
-#: ../applets/fish/fish.c:535
+#: applets/fish/fish.c:535
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -687,20 +675,20 @@ msgstr ""
 "pannello. Chiunque venisse colto a usarlo dovrebbe essere prontamente "
 "mandato da uno psicologo della ASL."
 
-#: ../applets/fish/fish.c:552
+#: applets/fish/fish.c:552
 msgid "(with minor help from George)"
 msgstr "(con un piccolo aiuto da parte di George)"
 
-#: ../applets/fish/fish.c:558
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
+#: applets/fish/fish.c:558
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:10
 msgid "Fish"
 msgstr "Pesce"
 
-#: ../applets/fish/fish.c:559
+#: applets/fish/fish.c:559
 msgid "About Fish"
 msgstr "Informazioni su Pesce"
 
-#: ../applets/fish/fish.c:562
+#: applets/fish/fish.c:562
 msgid ""
 "Copyright © 1998-2002 Free Software Foundation, Inc.\n"
 "Copyright © 2002-2005 Vincent Untz\n"
@@ -710,21 +698,21 @@ msgstr ""
 "Copyright © 2002-2005 Vincent Untz\n"
 "Copyright © 2012-2019 Gli sviluppatori di MATE"
 
-#: ../applets/fish/fish.c:579
+#: applets/fish/fish.c:579
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s il pesce: un oracolo contemporaneo"
 
-#: ../applets/fish/fish.c:645
+#: applets/fish/fish.c:645
 msgid "Unable to locate the command to execute"
 msgstr "Impossibile trovare il comando da eseguire"
 
-#: ../applets/fish/fish.c:689
+#: applets/fish/fish.c:689
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s il pesce dice:"
 
-#: ../applets/fish/fish.c:752
+#: applets/fish/fish.c:752
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -735,16 +723,16 @@ msgstr ""
 "\n"
 "Dettagli: %s"
 
-#: ../applets/fish/fish.c:849
+#: applets/fish/fish.c:849
 msgid "_Speak again"
 msgstr "_Parla ancora"
 
-#: ../applets/fish/fish.c:930
+#: applets/fish/fish.c:930
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Il comando configurato non è operativo ed è stato sostituito da: %s"
 
-#: ../applets/fish/fish.c:963
+#: applets/fish/fish.c:963
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -755,7 +743,7 @@ msgstr ""
 "\n"
 "Dettagli: %s"
 
-#: ../applets/fish/fish.c:979
+#: applets/fish/fish.c:979
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -766,82 +754,83 @@ msgstr ""
 "\n"
 "Dettagli: %s"
 
-#: ../applets/fish/fish.c:1551
+#: applets/fish/fish.c:1551
 msgid "The water needs changing"
 msgstr "Bisogna cambiare l'acqua"
 
-#: ../applets/fish/fish.c:1553
+#: applets/fish/fish.c:1553
 msgid "Look at today's date!"
 msgstr "Ehi, guarda la data di oggi!"
 
-#: ../applets/fish/fish.c:1635
+#: applets/fish/fish.c:1635
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s il pesce, il motteggiatore"
 
-#: ../applets/fish/fish.ui.h:1
+#: applets/fish/fish.ui:32
 msgid "Fish Preferences"
 msgstr "Preferenze del pesce"
 
-#: ../applets/fish/fish.ui.h:5
+#: applets/fish/fish.ui:145
 msgid "_Name of fish:"
 msgstr "_Nome del pesce:"
 
-#: ../applets/fish/fish.ui.h:6
+#: applets/fish/fish.ui:185
 msgid "Co_mmand to run when clicked:"
 msgstr "Co_mando da eseguire quando si fa clic:"
 
-#: ../applets/fish/fish.ui.h:7
+#: applets/fish/fish.ui:246
 msgid "Animation"
 msgstr "Animazione"
 
-#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
+#: applets/fish/fish.ui:266 mate-panel/panel-properties-dialog.ui:482
+#: mate-panel/panel-properties-dialog.ui:635
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:9
+#: applets/fish/fish.ui:300
 msgid "_File:"
 msgstr "_File:"
 
-#: ../applets/fish/fish.ui.h:10
+#: applets/fish/fish.ui:315
 msgid "Select an animation"
 msgstr "Selezionare un'animazione"
 
-#: ../applets/fish/fish.ui.h:11
+#: applets/fish/fish.ui:346
 msgid "_Total frames in animation:"
 msgstr "_Fotogrammi totali nell'animazione:"
 
-#: ../applets/fish/fish.ui.h:12
+#: applets/fish/fish.ui:361
 msgid "_Pause per frame:"
 msgstr "_Durata fotogramma:"
 
-#: ../applets/fish/fish.ui.h:13
+#: applets/fish/fish.ui:390
 msgid "frames"
 msgstr "fotogrammi"
 
-#: ../applets/fish/fish.ui.h:14
+#: applets/fish/fish.ui:403
 msgid "seconds"
 msgstr "secondi"
 
-#: ../applets/fish/fish.ui.h:15
+#: applets/fish/fish.ui:455
 msgid "_Rotate on vertical panels"
 msgstr "_Ruotare nei pannelli verticali"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:1
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:5
 msgid "The fish's name"
 msgstr "Il nome del pesce"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:2
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:6
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr "Un pesce senza nome è triste. Rendilo felice dandogli un bel nome."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:10
 msgid "The fish's animation pixmap"
 msgstr "L'immagine pixmap per l'animazione del pesce"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:4
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:11
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
@@ -849,11 +838,11 @@ msgstr ""
 "Questa chiave indica il nome del file (relativo alla directory delle "
 "immagini) della pixmap usata per visualizzare l'animazione del pesce."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:15
 msgid "Command to execute on click"
 msgstr "Comando da eseguire quando si fa clic"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:6
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:16
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
@@ -861,11 +850,11 @@ msgstr ""
 "Questa chiave indica il comando che si tenta di eseguire quando si fa clic "
 "sul pesce."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:20
 msgid "Frames in fish's animation"
 msgstr "Fotogrammi nell'animazione del pesce"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:8
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:21
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
@@ -873,50 +862,55 @@ msgstr ""
 "Questa chiave indica il numero di fotogrammi mostrati nell'animazione del "
 "pesce."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:25
 msgid "Pause per frame"
 msgstr "Durata fotogramma"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:26
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
 "Questa chiave indica la durata di visualizzazione in secondi di ogni "
 "fotogramma."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:30
 msgid "Rotate on vertical panels"
 msgstr "Ruota nei pannelli verticali"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:31
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
 "Se impostata a VERO, l'animazione del pesce è ruotata nei pannelli "
 "verticali."
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:6
 msgid "Wanda Factory"
 msgstr "Fabbrica di Wanda"
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:2
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:7
 msgid "From Whence That Stupid Fish Came"
 msgstr "Da dove diavolo spunta quello stupido pesce"
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:4
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:11
 msgid "Display a swimming fish or another animated creature"
 msgstr "Mostra un pesce che nuota o un'altra creatura animata"
 
-#: ../applets/notification_area/main.c:276
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-fish"
+msgstr ""
+
+#: applets/notification_area/main.c:276
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
 msgstr "Area di notifica"
 
-#: ../applets/notification_area/main.c:277
+#: applets/notification_area/main.c:277
 msgid "About Notification Area"
 msgstr "Informazioni sull'area delle notifiche"
 
-#. "comments", _(comments),
-#: ../applets/notification_area/main.c:280
+#: applets/notification_area/main.c:280
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2003-2006 Vincent Untz\n"
@@ -928,52 +922,58 @@ msgstr ""
 "Copyright © 2011 Perberos\n"
 "Copyright © 2012-2019 Gli sviluppatori di MATE"
 
-#: ../applets/notification_area/main.c:488
+#: applets/notification_area/main.c:485
 msgid "Panel Notification Area"
 msgstr "Area di notifica del pannello"
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:1
+#: applets/notification_area/notification-area-preferences-dialog.ui:46
 msgid "Notification Area Preferences"
 msgstr "Impostazioni area di notifica"
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:3
+#: applets/notification_area/notification-area-preferences-dialog.ui:110
 msgid "_Minimum Icon Size:"
 msgstr "Dimensione _minima icona:"
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:4
+#: applets/notification_area/notification-area-preferences-dialog.ui:124
 msgid "26"
 msgstr "26"
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:5
-#: ../mate-panel/panel-properties-dialog.ui.h:6
+#: applets/notification_area/notification-area-preferences-dialog.ui:139
+#: mate-panel/panel-properties-dialog.ui:221
 msgid "pixels"
 msgstr "pixel"
 
-#: ../applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in.h:1
+#: applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in:5
 msgid "Minimum icon size"
 msgstr "Dimensione minima icona:"
 
-#: ../applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in.h:2
+#: applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in:6
 msgid "The minimum size an icon can have."
 msgstr "Dimensione minima che può avere un'icona"
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:1
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:6
 msgid "Notification Area Factory"
 msgstr "Fabbrica dell'area di notifica"
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:2
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for notification area"
 msgstr "Fabbrica per l'area di notifica"
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:4
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:11
 msgid "Area where notification icons appear"
 msgstr "Area dove appaiono le icone di notifica"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-notification-area"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:10
 msgid "Show windows from all workspaces"
 msgstr "Mostrare le finestre di tutti gli spazi di lavoro"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:11
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
@@ -982,11 +982,11 @@ msgstr ""
 "presenti su tutti gli spazi di lavoro. In caso contrario solo quelle dello "
 "spazio di lavoro in uso."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:15
 msgid "When to group windows"
 msgstr "Indica quando raggruppare le finestre"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:4
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:16
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
@@ -994,12 +994,12 @@ msgstr ""
 "Indica quando raggruppare le finestre di una stessa applicazione nell'elenco"
 " delle finestre. Valori ammessi sono \"never\", \"auto\" e \"always\"."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:20
 msgid "Move windows to current workspace when unminimized"
 msgstr ""
 "Sposta le finestre nello spazio di lavoro in uso alla deminimizzazione"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:21
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
@@ -1008,11 +1008,11 @@ msgstr ""
 " spazio di lavoro in uso. In caso contrario si passa automaticamente allo "
 "spazio di lavoro nativo della finestra."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:5
 msgid "Display workspace names"
 msgstr "Mostra i nomi degli spazi di lavoro"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:2
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:6
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
@@ -1022,11 +1022,11 @@ msgstr ""
 "in caso contrario sono mostrate le finestre presenti sugli spazi di lavoro. "
 "Questa impostazione funziona solo se il window manager è Marco."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:10
 msgid "Display all workspaces"
 msgstr "Mostra tutti gli spazi di lavoro"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:4
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:11
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
@@ -1034,11 +1034,11 @@ msgstr ""
 "Se impostata a VERO, nel selettore di spazio di lavoro sono mostrati tutti "
 "gli spazi di lavoro, in caso contrario è mostrato solo quello in uso."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:15
 msgid "Rows in workspace switcher"
 msgstr "Righe nel selettore spazio di lavoro"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:6
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:16
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
@@ -1048,11 +1048,11 @@ msgstr ""
 "(per pannelli verticali) sono visualizzate nel selettore. Questa chiave ha "
 "senso solo se la chiave display_all_workspaces è impostata a VERO."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:20
 msgid "Wrap around on scroll"
 msgstr "Scorrimento continuo"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:8
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:21
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
@@ -1060,85 +1060,109 @@ msgstr ""
 "Se abilitato, il selettore spazio di lavoro agirà in modo continuo, "
 "spostandosi dal primo all'ultimo spazio e viceversa tramite lo scorrimento."
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:6
 msgid "Window Navigation Applet Factory"
 msgstr "Fabbrica delle applet navigazione tra finestre"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:2
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for the window navigation related applets"
 msgstr "Fabbrica delle applet relative alla navigazione tra finestre"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:76 ../applets/wncklet/window-menu.c:227
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:10
+#: applets/wncklet/window-menu.c:76 applets/wncklet/window-menu.c:227
 msgid "Window Selector"
 msgstr "Selettore finestra"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:11
 msgid "Switch between open windows using a menu"
 msgstr "Passa da una finestra aperta a un'altra usando un menù"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:634
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-window-menu"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
+#: applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
 msgstr "Selettore spazio di lavoro"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:24
 msgid "Switch between workspaces"
 msgstr "Passa da uno spazio di lavoro all'altro"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:821
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:26
+msgid "mate-panel-workspace-switcher"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
+#: applets/wncklet/window-list.c:821
 msgid "Window List"
 msgstr "Elenco finestre"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:8
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:37
 msgid "Switch between open windows using buttons"
 msgstr "Passa da una finestra aperta a un'altra usando dei pulsanti"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:9
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:39
+msgid "mate-panel-window-list"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:49
 msgid "Show Desktop"
 msgstr "Mostra desktop"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:10
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:50
 msgid "Hide application windows and show the desktop"
 msgstr ""
 "Fare clic qui per nascondere tutte le finestre delle applicazioni e mostrare"
 " la scrivania"
 
-#: ../applets/wncklet/showdesktop.c:184
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:52
+msgid "user-desktop"
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:184
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Caricamento di «%s» non riuscito: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:184
+#: applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
 msgstr "Icona non trovata"
 
-#: ../applets/wncklet/showdesktop.c:265
+#: applets/wncklet/showdesktop.c:265
 msgid "Click here to restore hidden windows."
 msgstr "Fare clic qui per ripristinare le finestre nascoste."
 
-#: ../applets/wncklet/showdesktop.c:269
+#: applets/wncklet/showdesktop.c:269
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "Fare clic qui per nascondere tutte le finestre e mostrare la scrivania."
 
-#: ../applets/wncklet/showdesktop.c:439 ../applets/wncklet/showdesktop.c:498
+#: applets/wncklet/showdesktop.c:439 applets/wncklet/showdesktop.c:498
 msgid "Show Desktop Button"
 msgstr "Pulsante mostra scrivania"
 
-#: ../applets/wncklet/showdesktop.c:499
+#: applets/wncklet/showdesktop.c:499
 msgid "About Show Desktop Button"
 msgstr "Informazioni sul pulsante Mostra Desktop"
 
-#: ../applets/wncklet/showdesktop.c:501
+#: applets/wncklet/showdesktop.c:501
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Questo pulsante consente di nascondere tutte le finestre e mostrare la "
 "scrivania."
 
-#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:825
-#: ../applets/wncklet/workspace-switcher.c:638
+#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:825
+#: applets/wncklet/workspace-switcher.c:638
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2011 Perberos\n"
@@ -1148,7 +1172,7 @@ msgstr ""
 "Copyright © 2011 Perberos\n"
 "Copyright © 2012-2019 Gli sviluppatori di MATE"
 
-#: ../applets/wncklet/showdesktop.c:529
+#: applets/wncklet/showdesktop.c:529
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
@@ -1156,15 +1180,15 @@ msgstr ""
 "Il window manager in uso non supporta il pulsante per mostrare la scrivania,"
 " oppure non c'è alcun window manager in esecuzione."
 
-#: ../applets/wncklet/window-list.c:349
+#: applets/wncklet/window-list.c:349
 msgid "_System Monitor"
 msgstr "Monitor di _sistema"
 
-#: ../applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:822
 msgid "About Window List"
 msgstr "Informazioni sulla Lista di Finestre"
 
-#: ../applets/wncklet/window-list.c:824
+#: applets/wncklet/window-list.c:824
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1172,79 +1196,79 @@ msgstr ""
 "Elenco finestre mostra un elenco di tutte le finestre in un gruppo di "
 "pulsanti, consentendo la loro navigazione."
 
-#: ../applets/wncklet/window-list.ui.h:1
+#: applets/wncklet/window-list.ui:18
 msgid "Window List Preferences"
 msgstr "Preferenze di Elenco finestre"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: applets/wncklet/window-list.ui:92
 msgid "Window List Content"
 msgstr "Contenuto dell'elenco di finestre"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: applets/wncklet/window-list.ui:118
 msgid "Sh_ow windows from current workspace"
 msgstr "Mostrare le finestre dello spazio di lav_oro in uso"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: applets/wncklet/window-list.ui:133
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostrare le finestre di t_utti gli spazi di lavoro"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: applets/wncklet/window-list.ui:173
 msgid "Window Thumbnails"
 msgstr "Miniature delle finestre"
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: applets/wncklet/window-list.ui:199
 msgid "Show _thumbnails on hover"
 msgstr "Mos_tra miniature al passaggio del mouse"
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: applets/wncklet/window-list.ui:214
 msgid "_Hide thumbnails on hover"
 msgstr "Nascondi miniature al passaggio del mouse"
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: applets/wncklet/window-list.ui:252
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr "Larghezza minuature in pixel. Il rapporto di forma verrà mantenuto."
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: applets/wncklet/window-list.ui:253
 msgid "Thumbnail width:"
 msgstr "Larghezza miniature:"
 
-#: ../applets/wncklet/window-list.ui.h:12
+#: applets/wncklet/window-list.ui:267
 msgid "px"
 msgstr "px"
 
-#: ../applets/wncklet/window-list.ui.h:13
+#: applets/wncklet/window-list.ui:305
 msgid "Window Grouping"
 msgstr "Raggruppamento delle finestre"
 
-#: ../applets/wncklet/window-list.ui.h:14
+#: applets/wncklet/window-list.ui:331
 msgid "_Never group windows"
 msgstr "_Non raggruppare le finestre"
 
-#: ../applets/wncklet/window-list.ui.h:15
+#: applets/wncklet/window-list.ui:346
 msgid "Group windows when _space is limited"
 msgstr "Raggruppare le finestre quando lo _spazio è limitato"
 
-#: ../applets/wncklet/window-list.ui.h:16
+#: applets/wncklet/window-list.ui:362
 msgid "_Always group windows"
 msgstr "Ra_ggruppare sempre le finestre"
 
-#: ../applets/wncklet/window-list.ui.h:17
+#: applets/wncklet/window-list.ui:402
 msgid "Restoring Minimized Windows"
 msgstr "Ripristino delle finestre minimizzate"
 
-#: ../applets/wncklet/window-list.ui.h:18
+#: applets/wncklet/window-list.ui:428
 msgid "Restore to current _workspace"
 msgstr "_Ripristinare nello spazio di lavoro in uso"
 
-#: ../applets/wncklet/window-list.ui.h:19
+#: applets/wncklet/window-list.ui:443
 msgid "Restore to na_tive workspace"
 msgstr "Ripris_tinare nello spazio di lavoro nativo"
 
-#: ../applets/wncklet/window-menu.c:77
+#: applets/wncklet/window-menu.c:77
 msgid "About Window Selector"
 msgstr "Informazioni sul Selettore di Finestre"
 
-#: ../applets/wncklet/window-menu.c:79
+#: applets/wncklet/window-menu.c:79
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
@@ -1252,7 +1276,7 @@ msgstr ""
 "Selettore finestre mostra un elenco di tutte le finestre in un menù, "
 "consentendo la loro navigazione"
 
-#: ../applets/wncklet/window-menu.c:80
+#: applets/wncklet/window-menu.c:80
 msgid ""
 "Copyright © 2000 Helix Code, Inc.\n"
 "Copyright © 2001 Free Software Foundation, Inc.\n"
@@ -1266,22 +1290,22 @@ msgstr ""
 "Copyright © 2011 Perberos\n"
 "Copyright © 2012-2019 Gli sviluppatori di MATE"
 
-#: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:939
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: applets/wncklet/workspace-switcher.c:240
+#: applets/wncklet/workspace-switcher.c:939
+#: applets/wncklet/workspace-switcher.ui:170
 msgid "rows"
 msgstr "righe"
 
-#: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:939
+#: applets/wncklet/workspace-switcher.c:240
+#: applets/wncklet/workspace-switcher.c:939
 msgid "columns"
 msgstr "colonne"
 
-#: ../applets/wncklet/workspace-switcher.c:635
+#: applets/wncklet/workspace-switcher.c:635
 msgid "About Workspace Switcher"
 msgstr "Informazioni sullo switch degli spazi di lavoro"
 
-#: ../applets/wncklet/workspace-switcher.c:637
+#: applets/wncklet/workspace-switcher.c:637
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1289,61 +1313,61 @@ msgstr ""
 "Selettore spazio di lavoro mostra una versione ridotta degli spazi di lavoro"
 " e consente di gestire le varie finestre."
 
-#: ../applets/wncklet/workspace-switcher.ui.h:1
+#: applets/wncklet/workspace-switcher.ui:32
 msgid "Workspace Switcher Preferences"
 msgstr "Preferenze di Selettore spazio di lavoro"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: applets/wncklet/workspace-switcher.ui:113
 msgid "Show _only the current workspace"
 msgstr "Mostrare _solo lo spazio di lavoro in uso"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: applets/wncklet/workspace-switcher.ui:134
 msgid "Show _all workspaces in:"
 msgstr "Mostrare _tutti gli spazi di lavoro su:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: applets/wncklet/workspace-switcher.ui:204
 msgid "Switcher"
 msgstr "Selettore"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: applets/wncklet/workspace-switcher.ui:245
 msgid "Number of _workspaces:"
 msgstr "N_umero degli spazi di lavoro:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: applets/wncklet/workspace-switcher.ui:282
 msgid "Workspace na_mes:"
 msgstr "N_omi degli spazi di lavoro:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: applets/wncklet/workspace-switcher.ui:303
 msgid "Workspace Names"
 msgstr "Nomi degli spazi di lavoro"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: applets/wncklet/workspace-switcher.ui:319
 msgid "Show workspace _names in switcher"
 msgstr "Mostrare i _nomi degli spazi di lavoro nel selettore"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:12
+#: applets/wncklet/workspace-switcher.ui:334
 msgid "Allow workspace _wrap around in switcher"
 msgstr "Permettere lo spostamento tra gli spazi di lavoro in modo continuo"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:13
+#: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "Spazi di lavoro"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:1
+#: data/org.mate.panel.gschema.xml.in:5
 msgid "Default panel layout"
 msgstr "Struttura di default del pannello"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:2
+#: data/org.mate.panel.gschema.xml.in:6
 msgid "The default panels layout to use when panels are created or resetted."
 msgstr ""
 "La struttura di default dei pannelli da utilizzare quando i pannelli vengono"
 " creati o reimpostati."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:3
+#: data/org.mate.panel.gschema.xml.in:10
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Abilita elenco dei programmi nel dialogo \"Esegui applicazione\""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:4
+#: data/org.mate.panel.gschema.xml.in:11
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1354,11 +1378,11 @@ msgstr ""
 " espanso nel dialogo in base a quanto definito nella chiave "
 "show_program_list."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:5
+#: data/org.mate.panel.gschema.xml.in:15
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Espande l'elenco dei programmi nel dialogo \"Esegui applicazione\""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:6
+#: data/org.mate.panel.gschema.xml.in:16
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1369,22 +1393,22 @@ msgstr ""
 "Questa chiave ha senso solo se la chiave enable_program_listing è impostata "
 "a VERO."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:7
+#: data/org.mate.panel.gschema.xml.in:20
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Abilita completamento automatico nel dialogo \"Esegui applicazione\""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:8
+#: data/org.mate.panel.gschema.xml.in:21
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
 "Se impostata a VERO, è reso disponibile il completamento automatico nel "
 "dialogo \"Esegui applicazione\"."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:9
+#: data/org.mate.panel.gschema.xml.in:25
 msgid "History for \"Run Application\" dialog"
 msgstr "Cronologia per la finestra \"Esegui applicazione\""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:10
+#: data/org.mate.panel.gschema.xml.in:26
 msgid ""
 "This is the list of commands used in \"Run Application\" dialog. The "
 "commands are sorted descendingly by recency (e.g., most recent command comes"
@@ -1394,12 +1418,12 @@ msgstr ""
 "Questi comandi sono organizzati in ordine discendente dal più recente (p.e. "
 "i comandi più recenti si trovano per primi)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:11
+#: data/org.mate.panel.gschema.xml.in:30
 msgid "Maximum history size for \"Run Application\" dialog"
 msgstr ""
 "La grandezza massima dello storico per la finestra \"Esegui Applicazione\"."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: data/org.mate.panel.gschema.xml.in:31
 msgid ""
 "Controls the maximum size of the history of the \"Run Application\" dialog. "
 "A value of 0 will disable the history."
@@ -1407,11 +1431,11 @@ msgstr ""
 "Controlla la grandezza massima dello storico della finestra \"Esegui "
 "Applicazione\". Un valore pari a 0 disabilita lo storico."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: data/org.mate.panel.gschema.xml.in:35
 msgid "Reverse the history of the \"Run Application\" dialog"
 msgstr "Inverte lo storico della finestra \"Esegui Applicazione\""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: data/org.mate.panel.gschema.xml.in:36
 msgid ""
 "Displays the history in reverse. Provides a consistent view for terminal "
 "users as the up key will select the most recent entry."
@@ -1420,11 +1444,11 @@ msgstr ""
 "per gli utenti da terminale dato che il tasto freccia in su seleziona la "
 "voce più recente."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: data/org.mate.panel.gschema.xml.in:40
 msgid "Panel ID list"
 msgstr "Lista ID pannelli"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: data/org.mate.panel.gschema.xml.in:41
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -1433,11 +1457,11 @@ msgstr ""
 "livello superiore. Le impostazioni per ciascuno di questi pannelli sono "
 "memorizzate in /apps/panel/toplevels/$(ID)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: data/org.mate.panel.gschema.xml.in:45
 msgid "Panel object ID list"
 msgstr "Lista ID oggetti di pannello"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: data/org.mate.panel.gschema.xml.in:46
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
@@ -1448,26 +1472,26 @@ msgstr ""
 "pulsante/barra di menù). Le impostazioni per ciascuno di questi oggetti sono"
 " memorizzate in /apps/panel/objects/$(ID)."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: data/org.mate.panel.gschema.xml.in:50
 msgid "Enable tooltips"
 msgstr "Abilita suggerimenti"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: data/org.mate.panel.gschema.xml.in:51
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 "Se impostata a VERO, per gli oggetti nei pannelli sono mostrati i "
 "suggerimenti."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
+#: data/org.mate.panel.gschema.xml.in:55
+#: data/org.mate.panel.toplevel.gschema.xml.in:70
 msgid "Enable animations"
 msgstr "Abilita animazioni"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: data/org.mate.panel.gschema.xml.in:59
 msgid "Autoclose drawer"
 msgstr "Chiusura automatica cassetto"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: data/org.mate.panel.gschema.xml.in:60
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -1475,11 +1499,11 @@ msgstr ""
 "Se impostata a VERO, i cassetti sono automaticamente chiusi quando si fa "
 "clic su un lanciatore in essi contenuto."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: data/org.mate.panel.gschema.xml.in:64
 msgid "Confirm panel removal"
 msgstr "Conferma rimozione pannello"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: data/org.mate.panel.gschema.xml.in:65
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1487,22 +1511,22 @@ msgstr ""
 "Se impostata a VERO, viene mostrato un dialogo per confermare la rimozione "
 "di un pannello."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: data/org.mate.panel.gschema.xml.in:69
 msgid "Highlight launchers on mouseover"
 msgstr "Evidenzia lanciatori al passaggio del mouse"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: data/org.mate.panel.gschema.xml.in:70
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Se impostata a VERO, i lanciatori sono evidenziati quando l'utente muove il "
 "puntatore sopra di essi."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: data/org.mate.panel.gschema.xml.in:74
 msgid "Complete panel lockdown"
 msgstr "Lockdown totale pannello"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: data/org.mate.panel.gschema.xml.in:75
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
@@ -1513,11 +1537,11 @@ msgstr ""
 "disattivate separatamente. Il pannello deve essere riavviato affinché questa"
 " opzione abbia effetto."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:30
+#: data/org.mate.panel.gschema.xml.in:79
 msgid "Applet IIDs to disable from loading"
 msgstr "IID delle applet per le quali disabilitare il caricamento"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:31
+#: data/org.mate.panel.gschema.xml.in:80
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1530,11 +1554,11 @@ msgstr ""
 "questa lista \"OAFIID:MATE_MiniCommanderApplet\". Il pannello deve essere "
 "riavviato affinché le modifiche abbiano effetto."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:32
+#: data/org.mate.panel.gschema.xml.in:84
 msgid "Disable Force Quit"
 msgstr "Disabilita uscita forzata"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:33
+#: data/org.mate.panel.gschema.xml.in:85
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1543,60 +1567,60 @@ msgstr ""
 "l'utente non può quindi usare il pannello per forzare l'uscita da una "
 "applicazione."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:34
+#: data/org.mate.panel.gschema.xml.in:89
 msgid "Enable SNI support"
 msgstr "Attivare supporto per SNI"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:35
+#: data/org.mate.panel.gschema.xml.in:90
 msgid "If true, the panel provides support for SNI."
 msgstr "Se attivo, il pannello fornisce supporto per SNI."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:1
+#: data/org.mate.panel.menubar.gschema.xml.in:15
 msgid "Show applications menu"
 msgstr "Mostra menu applicazioni"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:2
+#: data/org.mate.panel.menubar.gschema.xml.in:16
 msgid "If true, show applications item in menu bar."
 msgstr ""
 "Se impostato a vero, mostra l'oggetto applicazioni nella barra dei menù."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:3
+#: data/org.mate.panel.menubar.gschema.xml.in:20
 msgid "Show places menu"
 msgstr "Mostra menu risorse"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:4
+#: data/org.mate.panel.menubar.gschema.xml.in:21
 msgid "If true, show places item in menu bar."
 msgstr "Se impostato a vero, mostra l'oggetto posti nella barra dei menù."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:5
+#: data/org.mate.panel.menubar.gschema.xml.in:25
 msgid "Show desktop menu"
 msgstr "Mostra desktop"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:6
+#: data/org.mate.panel.menubar.gschema.xml.in:26
 msgid "If true, show desktop item in menu bar."
 msgstr "Se impostato a vero, mostra l'oggetto desktop nella barra dei menù."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:7
+#: data/org.mate.panel.menubar.gschema.xml.in:30
 msgid "Show icon"
 msgstr "Mostra icona"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:8
+#: data/org.mate.panel.menubar.gschema.xml.in:31
 msgid "If true, show icon in menu bar."
 msgstr "Se impostato a vero, mostra icona nella barra dei menù."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:9
+#: data/org.mate.panel.menubar.gschema.xml.in:35
 msgid "Icon to show in menu bar"
 msgstr "Icona da mostrare nella barra dei menù"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:10
+#: data/org.mate.panel.menubar.gschema.xml.in:36
 msgid "Set the theme icon name to use in menu bar."
 msgstr "Imposta il nome del tema icone da usare nella barra dei menù."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:11
+#: data/org.mate.panel.menubar.gschema.xml.in:40
 msgid "Menu bar icon size"
 msgstr "Dimensione delle icone della barra del menù"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:12
+#: data/org.mate.panel.menubar.gschema.xml.in:41
 msgid ""
 "Set the size of an icon used in menu bar. The panel must be restarted for "
 "this to take effect."
@@ -1604,11 +1628,11 @@ msgstr ""
 "Impostare le dimensioni di un'icona utilizzata nella barra dei menu. Il "
 "pannello deve essere riavviato perché questo abbia effetto."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:13
+#: data/org.mate.panel.menubar.gschema.xml.in:45
 msgid "Menu items icon size"
 msgstr "Dimensione delle icone degli oggetti del menù"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:14
+#: data/org.mate.panel.menubar.gschema.xml.in:46
 msgid ""
 "Set the size of icons used in the menu. The panel must be restarted for this"
 " to take effect."
@@ -1616,11 +1640,11 @@ msgstr ""
 "Impostare la dimensione delle icone utilizzate nel menu. Il pannello deve "
 "essere riavviato perché abbia effetto."
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:15
+#: data/org.mate.panel.menubar.gschema.xml.in:50
 msgid "Threshold of menu items before submenu is created"
 msgstr "Limite delle voci di menu prima che il sottomenu venga creato"
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:16
+#: data/org.mate.panel.menubar.gschema.xml.in:51
 msgid ""
 "Maximum number of menu items (i.e. bookmarks) that are displayed without "
 "being put in a submenu."
@@ -1628,29 +1652,29 @@ msgstr ""
 "Numero massimo di voci del menu (es. segnalibri) che vengono visualizzate "
 "senza essere inserite in un sottomenù."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:1
+#: data/org.mate.panel.object.gschema.xml.in:5
 msgid "Panel object type"
 msgstr "Tipo oggetto pannello"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:2
+#: data/org.mate.panel.object.gschema.xml.in:6
 msgid "The type of this panel object."
 msgstr "Il tipo di questo oggetto del pannello"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:3
+#: data/org.mate.panel.object.gschema.xml.in:10
 msgid "Toplevel panel containing object"
 msgstr "Pannello di livello principale contenente l'oggetto"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:4
+#: data/org.mate.panel.object.gschema.xml.in:11
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr ""
 "L'identificatore del pannello di livello superiore che contiene questo "
 "oggetto."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:5
+#: data/org.mate.panel.object.gschema.xml.in:15
 msgid "Object's position on the panel"
 msgstr "Posizione dell'oggetto sul pannello"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:6
+#: data/org.mate.panel.object.gschema.xml.in:16
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
@@ -1658,11 +1682,11 @@ msgstr ""
 "La posizione di questo oggetto nel pannello. Tale posizione è indicata come "
 "numero di pixel dal bordo sinistro (o superiore se verticale) del pannello."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:7
+#: data/org.mate.panel.object.gschema.xml.in:20
 msgid "Interpret position relative to bottom/right edge"
 msgstr "Considera la posizione relativa al bordo inferiore/destro"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:8
+#: data/org.mate.panel.object.gschema.xml.in:21
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
@@ -1670,11 +1694,11 @@ msgstr ""
 "Se impostata a VERO, la posizione dell'oggetto è considerata relativa al "
 "bordo destro (o inferiore per pannelli verticali) del pannello."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:9
+#: data/org.mate.panel.object.gschema.xml.in:25
 msgid "Lock the object to the panel"
 msgstr "Blocca l'oggetto sul pannello"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:10
+#: data/org.mate.panel.object.gschema.xml.in:26
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
@@ -1682,11 +1706,11 @@ msgstr ""
 "Se impostata a VERO, non è possibile muovere l'applet senza prima aver "
 "sbloccato l'oggetto usando la voce di menù \"Sblocca\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:11
+#: data/org.mate.panel.object.gschema.xml.in:30
 msgid "Applet IID"
 msgstr "IID applet"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:12
+#: data/org.mate.panel.object.gschema.xml.in:31
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1698,11 +1722,11 @@ msgstr ""
 "tipo di oggetto è \"external-aplet\" (o il deprecato \"matecomponent-"
 "applet\")."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:13
+#: data/org.mate.panel.object.gschema.xml.in:35
 msgid "Panel attached to drawer"
 msgstr "Pannello attaccato al cassetto"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:14
+#: data/org.mate.panel.object.gschema.xml.in:36
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
@@ -1710,11 +1734,11 @@ msgstr ""
 "L'identificatore del pannello attaccato a questo cassetto. Questa chiave ha "
 "senso solo se la chiave object-type è \"drawer-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:15
+#: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Tooltip displayed for drawer or menu"
 msgstr "Suggerimento mostrato per il cassetto o menù"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:16
+#: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
@@ -1724,11 +1748,11 @@ msgstr ""
 "chiave ha senso solo se la chiave object_type è \"drawer-object\" o \"menu-"
 "object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:17
+#: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Use custom icon for object's button"
 msgstr "Usa icona personalizzata per il pulsante dell'oggetto"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:18
+#: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -1739,11 +1763,11 @@ msgstr ""
 "impostazione ha senso solo se la chiave \"object_type\" è \"menu-object\" o "
 "\"drawer-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:19
+#: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Icon used for object's button"
 msgstr "Icona usata per il pulsante dell'oggetto"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:20
+#: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -1754,11 +1778,11 @@ msgstr ""
 "\"drawer-object\" o \"menu-object\" e la chiave use_custom_icon è impostata "
 "a VERO."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:21
+#: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Use custom path for menu contents"
 msgstr "Usa percorso personalizzato per il contenuto del menù"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:22
+#: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -1769,11 +1793,11 @@ msgstr ""
 "Questa impostazione ha senso solo se la chiave \"object_type\" è \"menu-"
 "object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:23
+#: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Menu content path"
 msgstr "Percorso contenuto menù"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:24
+#: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
@@ -1783,11 +1807,11 @@ msgstr ""
 "senso solo se la chiave use_menu_path è impostata a VERO e la chiave "
 "object_type è \"menu-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:25
+#: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Draw arrow in menu button"
 msgstr "Mostra la freccia nel pulsante del menu"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:26
+#: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
@@ -1795,11 +1819,11 @@ msgstr ""
 "Se abilitato, viene disegnata una freccia sul pulsante del menu. Se "
 "disabilitato, il pulsante ha soltanto un'icona."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:27
+#: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Launcher location"
 msgstr "Posizione lanciatore"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:28
+#: data/org.mate.panel.object.gschema.xml.in:71
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
@@ -1807,11 +1831,11 @@ msgstr ""
 "La posizione del file .desktop che descrive il lanciatore. Questa chiave ha "
 "senso solo se la chiave object_type è \"launcher-object\"."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:29
+#: data/org.mate.panel.object.gschema.xml.in:75
 msgid "Action button type"
 msgstr "Tipo di pulsante azione"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:30
+#: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
@@ -1821,11 +1845,11 @@ msgstr ""
 "\"lock\", \"logout\", \"run\", \"search\" e \"screenshot\". Questa chiave ha"
 " senso solo se la chiave object_type è \"action-applet\"."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
+#: data/org.mate.panel.toplevel.gschema.xml.in:5
 msgid "Name to identify panel"
 msgstr "Nome per identificare il pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:2
+#: data/org.mate.panel.toplevel.gschema.xml.in:6
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -1835,11 +1859,11 @@ msgstr ""
 " chiave è quello di essere usata come titolo di finestra del pannello, "
 "risultando utile nella navigazione tra pannelli."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
+#: data/org.mate.panel.toplevel.gschema.xml.in:10
 msgid "X screen where the panel is displayed"
 msgstr "Schermo di X dove è visualizzato il pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:4
+#: data/org.mate.panel.toplevel.gschema.xml.in:11
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -1848,11 +1872,11 @@ msgstr ""
 "schermo. Questa chiave identifica lo schermo su cui è attualmente "
 "visualizzato il pannello."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
+#: data/org.mate.panel.toplevel.gschema.xml.in:15
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Monitor Xinerama dove è visualizzato il pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:6
+#: data/org.mate.panel.toplevel.gschema.xml.in:16
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -1861,11 +1885,11 @@ msgstr ""
 "monitor. Questa chiave identifica il monitor su cui è attualmente "
 "visualizzato il pannello."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
+#: data/org.mate.panel.toplevel.gschema.xml.in:20
 msgid "Expand to occupy entire screen width"
 msgstr "Espande per occupare l'intera larghezza dello schermo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:8
+#: data/org.mate.panel.toplevel.gschema.xml.in:21
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge."
@@ -1878,11 +1902,11 @@ msgstr ""
 "grande abbastanza da contenere le applet, i lanciatori e i pulsanti in esso "
 "contenuti."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
+#: data/org.mate.panel.toplevel.gschema.xml.in:25
 msgid "Panel orientation"
 msgstr "Orientamento pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:10
+#: data/org.mate.panel.toplevel.gschema.xml.in:26
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", "
 "\"left\", \"right\". In expanded mode the key specifies which screen edge "
@@ -1902,11 +1926,11 @@ msgstr ""
 "pulsante menù posto su un pannello \"top\" tenderà ad aprire il menù verso "
 "il basso, verso l'alto invece per un pannello \"bottom\"."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
+#: data/org.mate.panel.toplevel.gschema.xml.in:30
 msgid "Panel size"
 msgstr "Dimensione pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:12
+#: data/org.mate.panel.toplevel.gschema.xml.in:31
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1918,11 +1942,11 @@ msgstr ""
 "dimensioni del tipo di carattere ed altri fattori. La dimensione massima è "
 "comunque fissata a un quarto dell'altezza (o larghezza) dello schermo."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
+#: data/org.mate.panel.toplevel.gschema.xml.in:35
 msgid "X co-ordinate of panel"
 msgstr "Coordinata orizzontale del pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:14
+#: data/org.mate.panel.toplevel.gschema.xml.in:36
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1933,11 +1957,11 @@ msgstr ""
 "ignorata ed il pannello è posizionato sul bordo dello schermo indicato dalla"
 " chiave \"orientation\"."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
+#: data/org.mate.panel.toplevel.gschema.xml.in:40
 msgid "Y co-ordinate of panel"
 msgstr "Coordinata verticale del pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:16
+#: data/org.mate.panel.toplevel.gschema.xml.in:41
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1948,12 +1972,12 @@ msgstr ""
 "ignorata ed il pannello è posizionato sul bordo dello schermo indicato dalla"
 " chiave \"orientation\"."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
+#: data/org.mate.panel.toplevel.gschema.xml.in:45
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr ""
 "Coordinata orizzontale del pannello, a partire dalla destra dello schermo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:18
+#: data/org.mate.panel.toplevel.gschema.xml.in:46
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1970,11 +1994,11 @@ msgstr ""
 "posizionato sul bordo dello schermo specificato dalla chiave "
 "\"orientation\"."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
+#: data/org.mate.panel.toplevel.gschema.xml.in:50
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Coordinata verticale del pannello, a partire dal basso dello schermo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:20
+#: data/org.mate.panel.toplevel.gschema.xml.in:51
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1990,11 +2014,11 @@ msgstr ""
 "Nella modalità espansa questa chiave è ignorata e il pannello è posizionato "
 "sul bordo dello schermo specificato dalla chiave \"orientation\"."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
+#: data/org.mate.panel.toplevel.gschema.xml.in:55
 msgid "Center panel on x-axis"
 msgstr "Centra il pannello sull'asse x"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:22
+#: data/org.mate.panel.toplevel.gschema.xml.in:56
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -2007,11 +2031,11 @@ msgstr ""
 "ambo i lati. Se impostata a falso, le chiavi \"x\" e \"x_right\" determinano"
 " la posizione del pannello."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
+#: data/org.mate.panel.toplevel.gschema.xml.in:60
 msgid "Center panel on y-axis"
 msgstr "Centra il pannello sull'asse y"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:24
+#: data/org.mate.panel.toplevel.gschema.xml.in:61
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -2024,11 +2048,11 @@ msgstr ""
 "ambo i lati. Se impostata a falso, le chiavi \"y\" e \"y_bottom\" "
 "determinano la posizione del pannello."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
+#: data/org.mate.panel.toplevel.gschema.xml.in:65
 msgid "Automatically hide panel into corner"
 msgstr "Nasconde automaticamente il pannello sul bordo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:26
+#: data/org.mate.panel.toplevel.gschema.xml.in:66
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -2038,7 +2062,7 @@ msgstr ""
 "dello schermo quando il puntatore abbandona l'area del pannello stesso. "
 "Spostando poi il puntatore su quel bordo, il pannello riappare."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
+#: data/org.mate.panel.toplevel.gschema.xml.in:71
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
@@ -2046,11 +2070,11 @@ msgstr ""
 "Se impostata a VERO, l'apparizione e la scomparsa di questo pannello sono "
 "animate invece che avvenire istantaneamente."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
+#: data/org.mate.panel.toplevel.gschema.xml.in:75
 msgid "Enable hide buttons"
 msgstr "Abilita pulsanti di riduzione"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:30
+#: data/org.mate.panel.toplevel.gschema.xml.in:76
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -2059,11 +2083,11 @@ msgstr ""
 "Tali pulsanti possono essere usati per muovere il pannello sul bordo dello "
 "schermo, lasciando visibile solo un pulsante."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
+#: data/org.mate.panel.toplevel.gschema.xml.in:80
 msgid "Enable arrows on hide buttons"
 msgstr "Abilita frecce su pulsanti di riduzione"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:32
+#: data/org.mate.panel.toplevel.gschema.xml.in:81
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -2071,11 +2095,11 @@ msgstr ""
 "Se impostata a VERO, sono disegnate delle frecce sui pulsanti di riduzione. "
 "Questa chiave ha senso solo se la chiave enable_buttons è impostata a vero."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
+#: data/org.mate.panel.toplevel.gschema.xml.in:85
 msgid "Panel autohide delay"
 msgstr "Ritardo di scomparsa automatica"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:34
+#: data/org.mate.panel.toplevel.gschema.xml.in:86
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -2085,11 +2109,11 @@ msgstr ""
 " pannello e la sparizione automatica di quest'ultimo. Questa chiave ha senso"
 " solo se la chiave auto_hide è impostata a VERO."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
+#: data/org.mate.panel.toplevel.gschema.xml.in:90
 msgid "Panel autounhide delay"
 msgstr "Ritardo di apparizione automatica"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:36
+#: data/org.mate.panel.toplevel.gschema.xml.in:91
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -2099,11 +2123,11 @@ msgstr ""
 "del pannello e la riapparizione automatica di quest'ultimo. Questa chiave ha"
 " senso solo se la chiave auto_hide è impostata a VERO."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
+#: data/org.mate.panel.toplevel.gschema.xml.in:95
 msgid "Visible pixels when hidden"
 msgstr "Pixel visibili quando nascosto"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:38
+#: data/org.mate.panel.toplevel.gschema.xml.in:96
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
@@ -2113,11 +2137,11 @@ msgstr ""
 "automaticamente sul bordo. Questa chiave ha senso solo se la chiave "
 "auto_hide è impostata a VERO."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
+#: data/org.mate.panel.toplevel.gschema.xml.in:100
 msgid "Animation speed"
 msgstr "Velocità animazione"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:40
+#: data/org.mate.panel.toplevel.gschema.xml.in:101
 msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -2127,11 +2151,11 @@ msgstr ""
 "\"medium\" e \"fast\". Questa chiave ha senso solo se la chiave "
 "enable_animation è impostata a VERO."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
+#: data/org.mate.panel.toplevel.gschema.xml.in:108
 msgid "Background type"
 msgstr "Tipo di sfondo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
+#: data/org.mate.panel.toplevel.gschema.xml.in:109
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -2143,19 +2167,19 @@ msgstr ""
 "utilizzato il colore selezionato nella chiave color come sfondo, \"image\" -"
 " verrà utilizzata l'immagine selezionata nella chiave 'image' come sfondo."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
+#: data/org.mate.panel.toplevel.gschema.xml.in:113
 msgid "Background color"
 msgstr "Colore di sfondo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
+#: data/org.mate.panel.toplevel.gschema.xml.in:114
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Indica il colore di sfondo per il pannello nel formato #RGB."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:45
+#: data/org.mate.panel.toplevel.gschema.xml.in:118
 msgid "Background color opacity"
 msgstr "Opacità del colore dello sfondo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:46
+#: data/org.mate.panel.toplevel.gschema.xml.in:119
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
@@ -2165,11 +2189,11 @@ msgstr ""
 "completamente opaco (quindi un valore inferiore a 65535), tale colore è "
 "composto con l'immagine di sfondo della scrivania."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
+#: data/org.mate.panel.toplevel.gschema.xml.in:123
 msgid "Background image"
 msgstr "Immagine di sfondo"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:48
+#: data/org.mate.panel.toplevel.gschema.xml.in:124
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -2179,11 +2203,11 @@ msgstr ""
 " un canale alfa, tale canale è composto con l'immagine di sfondo della "
 "scrivania."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
+#: data/org.mate.panel.toplevel.gschema.xml.in:128
 msgid "Fit image to panel"
 msgstr "Adatta l'immagine al pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:50
+#: data/org.mate.panel.toplevel.gschema.xml.in:129
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
@@ -2191,11 +2215,11 @@ msgstr ""
 "Se impostata a VERO, l'immagine è scalata all'altezza del pannello, se "
 "orizzontale, così da mantenere le sue proporzioni."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
+#: data/org.mate.panel.toplevel.gschema.xml.in:133
 msgid "Stretch image to panel"
 msgstr "Stira l'immagine sul pannello"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:52
+#: data/org.mate.panel.toplevel.gschema.xml.in:134
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
@@ -2203,11 +2227,11 @@ msgstr ""
 "Se impostata a VERO, l'immagine è scalata alle dimensioni del pannello. Le "
 "proporzioni dell'immagine non saranno mantenute."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
+#: data/org.mate.panel.toplevel.gschema.xml.in:138
 msgid "Rotate image on vertical panels"
 msgstr "Ruota l'immagine sui pannelli verticali"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:54
+#: data/org.mate.panel.toplevel.gschema.xml.in:139
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
@@ -2215,174 +2239,163 @@ msgstr ""
 "Se impostata a VERO, l'immagine di sfondo è ruotata quando il pannello è "
 "orientato verticalmente."
 
-#: ../mate-panel/libegg/eggdesktopfile.c:168
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr "Il file non è un file .desktop valido"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:191
+#: mate-panel/libegg/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Versione «%s» del file desktop non riconosciuta"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:963
+#: mate-panel/libegg/eggdesktopfile.c:963
 #, c-format
 msgid "Starting %s"
 msgstr "Avvio di «%s»"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1105
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1105
 msgid "Application does not accept documents on command line"
 msgstr "L'applicazione non accetta documenti sulla riga di comando"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1173
+#: mate-panel/libegg/eggdesktopfile.c:1173
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Opzione di lancio non riconosciuta: %d"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1390
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1390
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "Impossibile passare URI di documenti a un elemento desktop con \"Type=Link\""
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1411
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1411
 msgid "Not a launchable item"
 msgstr "Non è un oggetto lanciabile"
 
-#: ../mate-panel/libegg/eggsmclient.c:222
+#: mate-panel/libegg/eggsmclient.c:222
 msgid "Disable connection to session manager"
 msgstr "Disabilita la connessione al gestore di sessione"
 
-#: ../mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/libegg/eggsmclient.c:225
 msgid "Specify file containing saved configuration"
 msgstr "Specifica il file contenente la configurazione salvata"
 
-#: ../mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/libegg/eggsmclient.c:225
 msgid "FILE"
 msgstr "FILE"
 
-#: ../mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/libegg/eggsmclient.c:228
 msgid "Specify session management ID"
 msgstr "Specifica l'ID di gestione sessione"
 
-#: ../mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/libegg/eggsmclient.c:228
 msgid "ID"
 msgstr "ID"
 
-#: ../mate-panel/libegg/eggsmclient.c:249
+#: mate-panel/libegg/eggsmclient.c:249
 msgid "Session management options:"
 msgstr "Opzioni di gestione sessione:"
 
-#: ../mate-panel/libegg/eggsmclient.c:250
+#: mate-panel/libegg/eggsmclient.c:250
 msgid "Show session management options"
 msgstr "Mostra le opzioni di gestione sessione"
 
-#: ../mate-panel/libpanel-util/panel-gtk.c:138
+#: mate-panel/libpanel-util/panel-gtk.c:138
 msgid "_Open"
 msgstr "_Apri"
 
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:798
-#: ../mate-panel/panel-applet-frame.c:986
+#: mate-panel/libpanel-util/panel-error.c:76
+#: mate-panel/panel-applet-frame.c:798 mate-panel/panel-applet-frame.c:986
 msgid "Error"
 msgstr "Errore"
 
-#: ../mate-panel/libpanel-util/panel-icon-chooser.c:374
+#: mate-panel/libpanel-util/panel-icon-chooser.c:374
 msgid "Choose an icon"
 msgstr "Scegliere una icona"
 
-#: ../mate-panel/libpanel-util/panel-launch.c:45
+#: mate-panel/libpanel-util/panel-launch.c:45
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Impossibile lanciare «%s»"
 
-#: ../mate-panel/libpanel-util/panel-launch.c:48 ../mate-panel/launcher.c:162
+#: mate-panel/libpanel-util/panel-launch.c:48 mate-panel/launcher.c:162
 msgid "Could not launch application"
 msgstr "Impossibile lanciare l'applicazione"
 
-#: ../mate-panel/libpanel-util/panel-show.c:44
+#: mate-panel/libpanel-util/panel-show.c:44
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Impossibile aprire la posizione «%s»"
 
-#: ../mate-panel/libpanel-util/panel-show.c:158
+#: mate-panel/libpanel-util/panel-show.c:158
 msgid "No application to handle search folders is installed."
 msgstr ""
 "Non è installata alcuna applicazione per gestire le cartelle di ricerca."
 
-#: ../mate-panel/applet.c:468
+#: mate-panel/applet.c:468
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:548 ../libmate-panel-applet/mate-panel-applet.c:139
+#: mate-panel/applet.c:548 libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "_Rimuovi dal pannello"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
+#: mate-panel/applet.c:556 libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "M_uovi"
 
-#: ../mate-panel/applet.c:574 ../libmate-panel-applet/mate-panel-applet.c:148
+#: mate-panel/applet.c:574 libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "_Blocca sul pannello"
 
-#: ../mate-panel/applet.c:1313
+#: mate-panel/applet.c:1313
 msgid "Cannot find an empty spot"
 msgstr "Impossibile trovare dello spazio libero"
 
-#: ../mate-panel/drawer.c:443 ../mate-panel/panel-addto.c:189
-#: ../mate-panel/panel-toplevel.c:1667
+#: mate-panel/drawer.c:443 mate-panel/panel-addto.c:189
+#: mate-panel/panel-toplevel.c:1650
 msgid "Drawer"
 msgstr "Cassetto"
 
-#: ../mate-panel/drawer.c:550
+#: mate-panel/drawer.c:550
 msgid "_Add to Drawer..."
 msgstr "A_ggiungi al cassetto..."
 
-#: ../mate-panel/drawer.c:556 ../mate-panel/launcher.c:602
-#: ../mate-panel/panel-action-button.c:194
-#: ../mate-panel/panel-context-menu.c:246
+#: mate-panel/drawer.c:556 mate-panel/launcher.c:602
+#: mate-panel/panel-action-button.c:194 mate-panel/panel-context-menu.c:246
 msgid "_Properties"
 msgstr "Pr_oprietà"
 
-#: ../mate-panel/mate-desktop-item-edit.c:27
+#: mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "Creazione di un nuovo file nella directory specificata"
 
-#: ../mate-panel/mate-desktop-item-edit.c:28
+#: mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[FILE...]"
 
-#: ../mate-panel/mate-desktop-item-edit.c:106
+#: mate-panel/mate-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- Modifica i file .desktop"
 
-#: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:973
+#: mate-panel/mate-desktop-item-edit.c:144
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:973
 msgid "Create Launcher"
 msgstr "Creazione lanciatore"
 
-#: ../mate-panel/mate-desktop-item-edit.c:169
-#: ../mate-panel/mate-desktop-item-edit.c:192
+#: mate-panel/mate-desktop-item-edit.c:169
+#: mate-panel/mate-desktop-item-edit.c:192
 msgid "Directory Properties"
 msgstr "Proprietà della directory"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:817
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:817
 msgid "Launcher Properties"
 msgstr "Proprietà del lanciatore"
 
-#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:154
+#: mate-panel/mate-panel.desktop.in:4 mate-panel/main.c:158
 msgid "Panel"
 msgstr "Pannello"
 
-#: ../mate-panel/mate-panel.desktop.in.h:2
+#: mate-panel/mate-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2390,252 +2403,246 @@ msgstr ""
 "Lancia altre applicazioni e fornisce diverse utilità per gestire le "
 "finestre, mostrare l'ora, ecc."
 
-#: ../mate-panel/launcher.c:120
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: mate-panel/mate-panel.desktop.in:7
+msgid "mate-panel"
+msgstr ""
+
+#: mate-panel/launcher.c:120
 msgid "Could not show this URL"
 msgstr "Impossibile mostrare questo URL"
 
-#: ../mate-panel/launcher.c:121
+#: mate-panel/launcher.c:121
 msgid "No URL was specified."
 msgstr "Non è stato specificato alcun URL."
 
-#: ../mate-panel/launcher.c:217
+#: mate-panel/launcher.c:217
 msgid "Could not use dropped item"
 msgstr "Impossibile usare l'oggetto trascinato"
 
-#: ../mate-panel/launcher.c:451
-#, c-format
+#: mate-panel/launcher.c:451
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "Non è stato fornito alcun URI per il file .desktop del lanciatore da "
 "pannello\n"
 
-#: ../mate-panel/launcher.c:490
+#: mate-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Impossibile aprire il file desktop %s per il lanciatore del pannello %s%s\n"
 
-#: ../mate-panel/launcher.c:594
+#: mate-panel/launcher.c:594
 msgid "_Launch"
 msgstr "_Lancia"
 
-#: ../mate-panel/launcher.c:910
+#: mate-panel/launcher.c:910
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "La chiave «%s» non è impostata, impossibile caricare il lanciatore\n"
 
-#: ../mate-panel/launcher.c:1042 ../mate-panel/panel-ditem-editor.c:1326
-#: ../mate-panel/panel-ditem-editor.c:1360
-#: ../mate-panel/panel-ditem-editor.c:1391
+#: mate-panel/launcher.c:1042 mate-panel/panel-ditem-editor.c:1326
+#: mate-panel/panel-ditem-editor.c:1360 mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "Impossibile salvare il lanciatore"
 
-#: ../mate-panel/main.c:50
+#: mate-panel/main.c:54
 msgid "Replace a currently running panel"
 msgstr "Sostituisce un pannello attualmente in esecuzione"
 
-#. this feature was request in #mate irc channel
-#: ../mate-panel/main.c:52
+#: mate-panel/main.c:56
 msgid "Reset the panel configuration to default"
 msgstr "Reimposta la configurazione dei pannelli predefinita"
 
-#. open run dialog
-#: ../mate-panel/main.c:54
+#: mate-panel/main.c:58
 msgid "Execute the run dialog"
 msgstr "Apre la finestra esegui"
 
-#. default panels layout
-#: ../mate-panel/main.c:56
+#: mate-panel/main.c:60
 msgid "Set the default panel layout"
 msgstr "Imposta la struttura predefinita del pannello"
 
-#: ../mate-panel/menu.c:502
+#: mate-panel/menu.c:502
 msgid "Add this launcher to _panel"
 msgstr "Aggiungi questo lanciatore al _pannello"
 
-#: ../mate-panel/menu.c:509
+#: mate-panel/menu.c:509
 msgid "Add this launcher to _desktop"
 msgstr "Aggiungi questo lanciatore alla _scrivania"
 
-#: ../mate-panel/menu.c:521
+#: mate-panel/menu.c:521
 msgid "_Entire menu"
 msgstr "_Tutto il menù"
 
-#: ../mate-panel/menu.c:526
+#: mate-panel/menu.c:526
 msgid "Add this as _drawer to panel"
 msgstr "Aggiungi questo al pannello come _cassetto"
 
-#: ../mate-panel/menu.c:533
+#: mate-panel/menu.c:533
 msgid "Add this as _menu to panel"
 msgstr "Aggiungi questo al pannello come _menù"
 
-#: ../mate-panel/panel-action-button.c:182
+#: mate-panel/panel-action-button.c:182
 msgid "_Activate Screensaver"
 msgstr "_Attiva salvaschermo"
 
-#: ../mate-panel/panel-action-button.c:188
+#: mate-panel/panel-action-button.c:188
 msgid "_Lock Screen"
 msgstr "_Blocca schermo"
 
-#: ../mate-panel/panel-action-button.c:332
+#: mate-panel/panel-action-button.c:332
 msgid "Could not connect to server"
 msgstr "Impossibile connettersi al server"
 
-#: ../mate-panel/panel-action-button.c:363
+#: mate-panel/panel-action-button.c:363
 msgid "Lock Screen"
 msgstr "Blocca schermo"
 
-#: ../mate-panel/panel-action-button.c:364
+#: mate-panel/panel-action-button.c:364
 msgid "Protect your computer from unauthorized use"
 msgstr "Protegge il computer dall'uso non autorizzato"
 
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: ../mate-panel/panel-action-button.c:378
+#: mate-panel/panel-action-button.c:378
 msgid "Log Out..."
 msgstr "Termina sessione..."
 
-#: ../mate-panel/panel-action-button.c:379
+#: mate-panel/panel-action-button.c:379
 msgid "Log out of this session to log in as a different user"
 msgstr "Termina questa sessione per consentire l'accesso come altro utente"
 
-#: ../mate-panel/panel-action-button.c:388
+#: mate-panel/panel-action-button.c:388
 msgid "Run Application..."
 msgstr "Esegui applicazione..."
 
-#: ../mate-panel/panel-action-button.c:389
+#: mate-panel/panel-action-button.c:389
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Esegue un'applicazione digitando un comando o scegliendo da un elenco"
 
-#: ../mate-panel/panel-action-button.c:398
+#: mate-panel/panel-action-button.c:398
 msgid "Search for Files..."
 msgstr "Cerca file..."
 
-#: ../mate-panel/panel-action-button.c:399
+#: mate-panel/panel-action-button.c:399
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "Individua documenti e cartelle in questo computer per nome o contenuto"
 
-#: ../mate-panel/panel-action-button.c:407
-#: ../mate-panel/panel-force-quit.c:250
+#: mate-panel/panel-action-button.c:407 mate-panel/panel-force-quit.c:250
 msgid "Force Quit"
 msgstr "Uscita forzata"
 
-#: ../mate-panel/panel-action-button.c:408
+#: mate-panel/panel-action-button.c:408
 msgid "Force a misbehaving application to quit"
 msgstr "Forza la chiusura di un'applicazione che non risponde"
 
-#. FIXME icon
-#: ../mate-panel/panel-action-button.c:417
+#: mate-panel/panel-action-button.c:417
 msgid "Connect to Server..."
 msgstr "Connetti al server..."
 
-#: ../mate-panel/panel-action-button.c:418
+#: mate-panel/panel-action-button.c:418
 msgid "Connect to a remote computer or shared disk"
 msgstr "Connette a un computer remoto o disco condiviso"
 
-#: ../mate-panel/panel-action-button.c:426
+#: mate-panel/panel-action-button.c:426
 msgid "Shut Down..."
 msgstr "Arresta..."
 
-#: ../mate-panel/panel-action-button.c:427
+#: mate-panel/panel-action-button.c:427
 msgid "Shut down the computer"
 msgstr "Arresta il computer"
 
-#: ../mate-panel/panel-addto.c:125
+#: mate-panel/panel-addto.c:125
 msgid "Custom Application Launcher"
 msgstr "Lanciatore applicazione personalizzato"
 
-#: ../mate-panel/panel-addto.c:126
+#: mate-panel/panel-addto.c:126
 msgid "Create a new launcher"
 msgstr "Crea un nuovo lanciatore"
 
-#: ../mate-panel/panel-addto.c:137
+#: mate-panel/panel-addto.c:137
 msgid "Application Launcher..."
 msgstr "Lanciatore applicazione..."
 
-#: ../mate-panel/panel-addto.c:138
+#: mate-panel/panel-addto.c:138
 msgid "Copy a launcher from the applications menu"
 msgstr "Copia un lanciatore dal menù delle applicazioni"
 
-#: ../mate-panel/panel-addto.c:153 ../mate-panel/panel-menu-button.c:1113
-msgid "Main Menu"
-msgstr "Menù principale"
+#: mate-panel/panel-addto.c:153
+msgid "Compact Menu"
+msgstr "Menu compatto"
 
-#: ../mate-panel/panel-addto.c:154
-msgid "The main MATE menu"
-msgstr "Il menù principale di MATE"
+#: mate-panel/panel-addto.c:154
+msgid "A compact menu"
+msgstr "Un menu compatto"
 
-#: ../mate-panel/panel-addto.c:165
-msgid "Menu Bar"
-msgstr "Barra dei menù"
+#: mate-panel/panel-addto.c:165
+msgid "Classic Menu"
+msgstr "Menu classico"
 
-#: ../mate-panel/panel-addto.c:166
-msgid "A custom menu bar"
-msgstr "Una barra di menù personalizzata"
+#: mate-panel/panel-addto.c:166
+msgid "The classic Applications, Places and System menu bar"
+msgstr "Barra dei menu classica con Applicazioni, Risorse e Sistema"
 
-#: ../mate-panel/panel-addto.c:177
+#: mate-panel/panel-addto.c:177
 msgid "Separator"
 msgstr "Separatore"
 
-#: ../mate-panel/panel-addto.c:178
+#: mate-panel/panel-addto.c:178
 msgid "A separator to organize the panel items"
 msgstr "Un separatore per organizzare gli elementi del pannello"
 
-#: ../mate-panel/panel-addto.c:190
+#: mate-panel/panel-addto.c:190
 msgid "A pop out drawer to store other items in"
 msgstr "Un cassetto a comparsa in cui inserire altri oggetti"
 
-#: ../mate-panel/panel-addto.c:274
+#: mate-panel/panel-addto.c:274
 msgid "(empty)"
 msgstr "(vuoto)"
 
-#: ../mate-panel/panel-addto.c:419
+#: mate-panel/panel-addto.c:419
 msgid "Not compatible with X11"
 msgstr "Non compatibile con X11"
 
-#: ../mate-panel/panel-addto.c:426
+#: mate-panel/panel-addto.c:426
 msgid "Not compatible with Wayland"
 msgstr "Non compatibile con Wayland"
 
-#: ../mate-panel/panel-addto.c:1053
+#: mate-panel/panel-addto.c:1053
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Trova un ele_mento da aggiungere a «%s»:"
 
-#: ../mate-panel/panel-addto.c:1057
-#, c-format
+#: mate-panel/panel-addto.c:1057
 msgid "Add to Drawer"
 msgstr "Aggiungi al cassetto"
 
-#: ../mate-panel/panel-addto.c:1059
+#: mate-panel/panel-addto.c:1059
 msgid "Find an _item to add to the drawer:"
 msgstr "Trova un ele_mento da aggiungere al cassetto:"
 
-#: ../mate-panel/panel-addto.c:1061
-#, c-format
+#: mate-panel/panel-addto.c:1061
 msgid "Add to Panel"
 msgstr "Aggiungi al pannello"
 
-#: ../mate-panel/panel-addto.c:1063
+#: mate-panel/panel-addto.c:1063
 msgid "Find an _item to add to the panel:"
 msgstr "Trova un ele_mento da aggiungere al pannello:"
 
-#: ../mate-panel/panel-addto.c:1311
+#: mate-panel/panel-addto.c:1311
 msgid "_Back"
 msgstr "_Indietro"
 
-#: ../mate-panel/panel-applet-frame.c:759
+#: mate-panel/panel-applet-frame.c:759
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "Fine inattesa di «%s»"
 
-#: ../mate-panel/panel-applet-frame.c:761
+#: mate-panel/panel-applet-frame.c:761
 msgid "Panel object has quit unexpectedly"
 msgstr "Terminazione dell'oggetto del pannello inattesa"
 
-#: ../mate-panel/panel-applet-frame.c:768
+#: mate-panel/panel-applet-frame.c:768
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2643,43 +2650,41 @@ msgstr ""
 "Scegliendo di ricaricare un oggetto del pannello, tale oggetto viene in modo"
 " automatico aggiunto nuovamente al pannello."
 
-#: ../mate-panel/panel-applet-frame.c:775
+#: mate-panel/panel-applet-frame.c:775
 msgid "D_elete"
 msgstr "C_ancella"
 
-#: ../mate-panel/panel-applet-frame.c:776
-#: ../mate-panel/panel-applet-frame.c:781
+#: mate-panel/panel-applet-frame.c:776 mate-panel/panel-applet-frame.c:781
 msgid "_Don't Reload"
 msgstr "_Non ricaricare"
 
-#: ../mate-panel/panel-applet-frame.c:777
-#: ../mate-panel/panel-applet-frame.c:782
+#: mate-panel/panel-applet-frame.c:777 mate-panel/panel-applet-frame.c:782
 msgid "_Reload"
 msgstr "_Ricarica"
 
-#: ../mate-panel/panel-applet-frame.c:948
+#: mate-panel/panel-applet-frame.c:948
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
 "Il pannello ha riscontrato un problema durante il caricamento di «%s»."
 
-#: ../mate-panel/panel-applet-frame.c:963
+#: mate-panel/panel-applet-frame.c:963
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Eliminare l'applet dalla propria configurazione?"
 
-#: ../mate-panel/panel-applet-frame.c:970 ../mate-panel/panel.c:1360
+#: mate-panel/panel-applet-frame.c:970 mate-panel/panel.c:1360
 msgid "_Delete"
 msgstr "_Elimina"
 
-#: ../mate-panel/panel-context-menu.c:91
+#: mate-panel/panel-context-menu.c:91
 msgid "And many, many others…"
 msgstr "E molti, molti altri..."
 
-#: ../mate-panel/panel-context-menu.c:114
+#: mate-panel/panel-context-menu.c:114
 msgid "The MATE Panel"
 msgstr "Il pannello di MATE"
 
-#: ../mate-panel/panel-context-menu.c:116
+#: mate-panel/panel-context-menu.c:116
 msgid ""
 "Copyright © 1997-2003 Free Software Foundation, Inc.\n"
 "Copyright © 2004 Vincent Untz\n"
@@ -2689,7 +2694,7 @@ msgstr ""
 "Copyright © 2004 Vincent Untz\n"
 "Copyright © 2011-2019 Gli sviluppatori di MATE"
 
-#: ../mate-panel/panel-context-menu.c:119
+#: mate-panel/panel-context-menu.c:119
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
@@ -2697,23 +2702,23 @@ msgstr ""
 "Questo programma si occupa di lanciare altre applicazioni e fornisce "
 "pratiche utilità."
 
-#: ../mate-panel/panel-context-menu.c:123
+#: mate-panel/panel-context-menu.c:123
 msgid "About the MATE Panel"
 msgstr "Informazioni sul pannello di MATE"
 
-#: ../mate-panel/panel-context-menu.c:154
+#: mate-panel/panel-context-menu.c:154
 msgid "Cannot delete this panel"
 msgstr "Impossibile eliminare questo pannello"
 
-#: ../mate-panel/panel-context-menu.c:155
+#: mate-panel/panel-context-menu.c:155
 msgid "You must always have at least one panel."
 msgstr "È necessario avere comunque almeno un pannello."
 
-#: ../mate-panel/panel-context-menu.c:199
+#: mate-panel/panel-context-menu.c:199
 msgid "Reset this panel?"
 msgstr "Ripristinare questo pannello?"
 
-#: ../mate-panel/panel-context-menu.c:200
+#: mate-panel/panel-context-menu.c:200
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
@@ -2721,115 +2726,110 @@ msgstr ""
 "Quando si resetta un pannello, si\n"
 "perdono tutte le personalizzazioni."
 
-#: ../mate-panel/panel-context-menu.c:214
-#: ../mate-panel/panel-context-menu.c:256
+#: mate-panel/panel-context-menu.c:214 mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr "_Ripristina pannello"
 
-#: ../mate-panel/panel-context-menu.c:236
+#: mate-panel/panel-context-menu.c:236
 msgid "_Add to Panel…"
 msgstr "_Aggiungi al pannello..."
 
-#: ../mate-panel/panel-context-menu.c:263
+#: mate-panel/panel-context-menu.c:263
 msgid "_Delete This Panel"
 msgstr "Eli_mina questo pannello"
 
-#: ../mate-panel/panel-context-menu.c:276
+#: mate-panel/panel-context-menu.c:276
 msgid "_New Panel"
 msgstr "_Nuovo pannello"
 
-#: ../mate-panel/panel-context-menu.c:325
+#: mate-panel/panel-context-menu.c:325
 msgid "A_bout Panels"
 msgstr "I_nformazioni sui pannelli"
 
-#: ../mate-panel/panel-ditem-editor.c:115
+#: mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "Applicazione"
 
-#: ../mate-panel/panel-ditem-editor.c:117
+#: mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "Applicazione nel terminale"
 
-#: ../mate-panel/panel-ditem-editor.c:119
+#: mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "Posizione"
 
-#. Type
-#: ../mate-panel/panel-ditem-editor.c:602
+#: mate-panel/panel-ditem-editor.c:602
 msgid "_Type:"
 msgstr "_Tipo:"
 
-#. Name
-#: ../mate-panel/panel-ditem-editor.c:609
+#: mate-panel/panel-ditem-editor.c:609
 msgid "_Name:"
 msgstr "_Nome:"
 
-#: ../mate-panel/panel-ditem-editor.c:634
+#: mate-panel/panel-ditem-editor.c:634
 msgid "_Browse..."
 msgstr "S_foglia..."
 
-#. Comment
-#: ../mate-panel/panel-ditem-editor.c:641
+#: mate-panel/panel-ditem-editor.c:641
 msgid "Co_mment:"
 msgstr "Co_mmento:"
 
-#: ../mate-panel/panel-ditem-editor.c:652
+#: mate-panel/panel-ditem-editor.c:652
 msgid "_Revert"
 msgstr "_Ripristina"
 
-#: ../mate-panel/panel-ditem-editor.c:978
+#: mate-panel/panel-ditem-editor.c:978
 msgid "Choose an application..."
 msgstr "Scegliere un'applicazione..."
 
-#: ../mate-panel/panel-ditem-editor.c:982
+#: mate-panel/panel-ditem-editor.c:982
 msgid "Choose a file..."
 msgstr "Scegliere un file..."
 
-#: ../mate-panel/panel-ditem-editor.c:1146
-#: ../mate-panel/panel-ditem-editor.c:1155
+#: mate-panel/panel-ditem-editor.c:1146 mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "Com_ando:"
 
-#: ../mate-panel/panel-ditem-editor.c:1164
+#: mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "Posi_zione:"
 
-#: ../mate-panel/panel-ditem-editor.c:1327
+#: mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "Non è impostato il nome del lanciatore."
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "Impossibile salvare le proprietà della directory"
 
-#: ../mate-panel/panel-ditem-editor.c:1332
+#: mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "Non è impostato il nome della directory."
 
-#: ../mate-panel/panel-ditem-editor.c:1348
+#: mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "Non è impostato il comando del lanciatore."
 
-#: ../mate-panel/panel-ditem-editor.c:1351
+#: mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "Non è impostata la posizione del lanciatore."
 
-#: ../mate-panel/panel-ditem-editor.c:1428
+#: mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
 msgstr "Impossibile mostrare il documento d'aiuto"
 
-#: ../mate-panel/panel-force-quit.c:86
+#: mate-panel/panel-force-quit.c:86
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Fare clic su una finestra per forzare l'uscita dell'applicazione. Per "
 "annullare premere <ESC>."
 
-#: ../mate-panel/panel-force-quit.c:232
+#: mate-panel/panel-force-quit.c:232
 msgid "Force this application to exit?"
 msgstr "Forzare l'uscita di questa applicazione?"
 
-#: ../mate-panel/panel-force-quit.c:235
+#: mate-panel/panel-force-quit.c:235
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2837,277 +2837,275 @@ msgstr ""
 "Scegliendo di forzare l'uscita di un'applicazione, ogni documento aperto in "
 "essa sarà perduto."
 
-#: ../mate-panel/panel-menu-bar.c:97
+#: mate-panel/panel-menu-bar.c:97
 msgid "Browse and run installed applications"
 msgstr "Esplora ed esegue le applicazioni installate"
 
-#: ../mate-panel/panel-menu-bar.c:98
+#: mate-panel/panel-menu-bar.c:98
 msgid "Access documents, folders and network places"
 msgstr "Accede a documenti, cartelle e risorse di rete"
 
-#: ../mate-panel/panel-menu-bar.c:99
+#: mate-panel/panel-menu-bar.c:99
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
 "Cambia l'aspetto e il comportamento dell'ambiente grafico, mostra l'aiuto o "
 "termina la sessione"
 
-#: ../mate-panel/panel-menu-bar.c:166
+#: mate-panel/panel-menu-bar.c:166
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: ../mate-panel/panel-menu-bar.c:356 ../mate-panel/panel-menu-button.c:690
+#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:706
 msgid "_Edit Menus"
 msgstr "_Modifica menù"
 
-#: ../mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-button.c:1129
+msgid "Main Menu"
+msgstr "Menù principale"
+
+#: mate-panel/panel-menu-items.c:467
 msgid "Bookmarks"
 msgstr "Segnalibri"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:490 ../mate-panel/panel.c:553
+#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:553
 #, c-format
 msgid "Open '%s'"
 msgstr "Apri «%s»"
 
-#: ../mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:561
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Impossibile scansionare «%s» per i cambi di supporto"
 
-#: ../mate-panel/panel-menu-items.c:604
+#: mate-panel/panel-menu-items.c:604
 #, c-format
 msgid "Rescan %s"
 msgstr "Scansiona nuovamente «%s»"
 
-#: ../mate-panel/panel-menu-items.c:641
+#: mate-panel/panel-menu-items.c:641
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Impossibile montare «%s»"
 
-#: ../mate-panel/panel-menu-items.c:704
+#: mate-panel/panel-menu-items.c:704
 #, c-format
 msgid "Mount %s"
 msgstr "Monta «%s»"
 
-#: ../mate-panel/panel-menu-items.c:912
+#: mate-panel/panel-menu-items.c:912
 msgid "Removable Media"
 msgstr "Supporti rimovibili"
 
-#: ../mate-panel/panel-menu-items.c:999
+#: mate-panel/panel-menu-items.c:999
 msgid "Network Places"
 msgstr "Risorse di rete"
 
-#: ../mate-panel/panel-menu-items.c:1038
+#: mate-panel/panel-menu-items.c:1038
 msgid "Open your personal folder"
 msgstr "Apre la propria cartella personale"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../mate-panel/panel-menu-items.c:1057
+#: mate-panel/panel-menu-items.c:1057
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Scrivania"
 
-#: ../mate-panel/panel-menu-items.c:1058
+#: mate-panel/panel-menu-items.c:1058
 msgid "Open the contents of your desktop in a folder"
 msgstr "Apre il contenuto della propria scrivania in una cartella"
 
-#: ../mate-panel/panel-menu-items.c:1074
+#: mate-panel/panel-menu-items.c:1074
 msgid "Computer"
 msgstr "Computer"
 
-#: ../mate-panel/panel-menu-items.c:1079
+#: mate-panel/panel-menu-items.c:1079
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
 "Esplora tutti i dischi e cartelle locali e remoti accessibili da questo "
 "computer"
 
-#: ../mate-panel/panel-menu-items.c:1092
+#: mate-panel/panel-menu-items.c:1092
 msgid "Network"
 msgstr "Rete"
 
-#: ../mate-panel/panel-menu-items.c:1093
+#: mate-panel/panel-menu-items.c:1093
 msgid "Browse bookmarked and local network locations"
 msgstr "Esplora le posizioni di rete locali e nei segnalibri"
 
-#: ../mate-panel/panel-menu-items.c:1487
+#: mate-panel/panel-menu-items.c:1487
 msgid "Places"
 msgstr "Risorse"
 
-#: ../mate-panel/panel-menu-items.c:1515
+#: mate-panel/panel-menu-items.c:1515
 msgid "System"
 msgstr "Sistema"
 
-#. Below this, we only have log out/shutdown items
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: ../mate-panel/panel-menu-items.c:1600
+#: mate-panel/panel-menu-items.c:1600
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
 
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1612
 #, c-format
 msgid "Log Out %s..."
 msgstr "Termina sessione di %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1616
+#: mate-panel/panel-menu-items.c:1616
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "Termina la sessione come «%s» per consentire l'accesso come altro utente"
 
-#: ../mate-panel/panel-properties-dialog.c:119
-#: ../mate-panel/panel-test-applets.c:58
+#: mate-panel/panel-properties-dialog.c:119 mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Alto"
 
-#: ../mate-panel/panel-properties-dialog.c:120
-#: ../mate-panel/panel-test-applets.c:59
+#: mate-panel/panel-properties-dialog.c:120 mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Basso"
 
-#: ../mate-panel/panel-properties-dialog.c:121
-#: ../mate-panel/panel-test-applets.c:60
+#: mate-panel/panel-properties-dialog.c:121 mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Sinistra"
 
-#: ../mate-panel/panel-properties-dialog.c:122
-#: ../mate-panel/panel-test-applets.c:61
+#: mate-panel/panel-properties-dialog.c:122 mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Destra"
 
-#: ../mate-panel/panel-properties-dialog.c:818
+#: mate-panel/panel-properties-dialog.c:818
 msgid "Drawer Properties"
 msgstr "Proprietà del cassetto"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:1
+#: mate-panel/panel-properties-dialog.ui:62
 msgid "Panel Properties"
 msgstr "Proprietà del pannello"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: mate-panel/panel-properties-dialog.ui:148
+#: mate-panel/panel-properties-dialog.ui:416
 msgid "Some of these properties are locked down"
 msgstr "Alcune di queste proprietà sono disattivate"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
+#: mate-panel/panel-properties-dialog.ui:189
 msgid "_Icon:"
 msgstr "_Icona:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
-#: ../mate-panel/panel-test-applets.ui.h:7
+#: mate-panel/panel-properties-dialog.ui:249
+#: mate-panel/panel-test-applets.ui:116
 msgid "_Orientation:"
 msgstr "_Orientamento:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: mate-panel/panel-properties-dialog.ui:263
+#: mate-panel/panel-test-applets.ui:86
 msgid "_Size:"
 msgstr "_Dimensione:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: mate-panel/panel-properties-dialog.ui:281
 msgid "E_xpand"
 msgstr "_Espandere"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: mate-panel/panel-properties-dialog.ui:296
 msgid "_Autohide"
 msgstr "_Nascondere automaticamente"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: mate-panel/panel-properties-dialog.ui:317
 msgid "Show hide _buttons"
 msgstr "Mostrare i _pulsanti di riduzione"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: mate-panel/panel-properties-dialog.ui:348
 msgid "Arro_ws on hide buttons"
 msgstr "_Frecce sui pulsanti di riduzione"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:14
+#: mate-panel/panel-properties-dialog.ui:433
 msgid "_None (use system theme)"
 msgstr "_Nessuno (usare il tema di sistema)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: mate-panel/panel-properties-dialog.ui:453
 msgid "Solid c_olor"
 msgstr "_Tinta unita"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: mate-panel/panel-properties-dialog.ui:501
 msgid "Pick a color"
 msgstr "Selezionare un colore"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: mate-panel/panel-properties-dialog.ui:531
 msgid "<small>Transparent</small>"
 msgstr "<small>Trasparente</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: mate-panel/panel-properties-dialog.ui:553
 msgid "Co_lor:"
 msgstr "C_olore:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: mate-panel/panel-properties-dialog.ui:566
 msgid "S_tyle:"
 msgstr "S_tile:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: mate-panel/panel-properties-dialog.ui:580
 msgid "<small>Opaque</small>"
 msgstr "<small>Opaco</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: mate-panel/panel-properties-dialog.ui:613
 msgid "Background _image:"
 msgstr "I_mmagine di sfondo:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: mate-panel/panel-properties-dialog.ui:647
 msgid "Select background"
 msgstr "Selezione sfondo"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: mate-panel/panel-properties-dialog.ui:678
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: mate-panel/panel-properties-dialog.ui:710
 msgid "Image Background Details"
 msgstr "Dettagli immagine di sfondo"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: mate-panel/panel-properties-dialog.ui:780
 msgid "_Tile"
 msgstr "R_ipetere"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: mate-panel/panel-properties-dialog.ui:795
 msgid "_Scale"
 msgstr "_Scalare"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:28
+#: mate-panel/panel-properties-dialog.ui:811
 msgid "St_retch"
 msgstr "Sti_rare"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:29
+#: mate-panel/panel-properties-dialog.ui:834
 msgid "Rotate image when panel is _vertical"
 msgstr "Ruotare l'immagine per i pannelli _verticali"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: mate-panel/panel-recent.c:78 mate-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Impossibile aprire il documento usato di recente «%s»"
 
-#: ../mate-panel/panel-recent.c:90
+#: mate-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr ""
 "Si è verificato un errore sconosciuto durante il tentativo di aprire «%s»."
 
-#: ../mate-panel/panel-recent.c:147
+#: mate-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "Pulire l'elenco dei documenti recenti?"
 
-#: ../mate-panel/panel-recent.c:149
+#: mate-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -3117,62 +3115,61 @@ msgstr ""
 "• tutte le voci dal menù «Risorse → Documenti recenti»;\n"
 "• tutte le voci negli elenchi dei documenti recenti delle singole applicazioni."
 
-#: ../mate-panel/panel-recent.c:164
+#: mate-panel/panel-recent.c:164
 msgid "Clear Recent Documents"
 msgstr "Pulisci documenti recenti"
 
-#: ../mate-panel/panel-recent.c:199
+#: mate-panel/panel-recent.c:199
 msgid "Recent Documents"
 msgstr "Documenti recenti"
 
-#: ../mate-panel/panel-recent.c:238
+#: mate-panel/panel-recent.c:238
 msgid "Clear Recent Documents..."
 msgstr "Pulisci documenti recenti..."
 
-#: ../mate-panel/panel-recent.c:240
+#: mate-panel/panel-recent.c:240
 msgid "Clear all items from the recent documents list"
 msgstr "Pulisce tutte le voci dall'elenco dei documenti recenti"
 
-#: ../mate-panel/panel-run-dialog.c:423
+#: mate-panel/panel-run-dialog.c:423
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Impossibile eseguire il comando «%s»"
 
-#: ../mate-panel/panel-run-dialog.c:464
+#: mate-panel/panel-run-dialog.c:464
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Impossibile convertire «%s» da UTF-8"
 
-#: ../mate-panel/panel-run-dialog.c:1257
+#: mate-panel/panel-run-dialog.c:1257
 msgid "Choose a file to append to the command..."
 msgstr "Scelta di un file da aggiungere al comando..."
 
-#: ../mate-panel/panel-run-dialog.c:1639
-#: ../mate-panel/panel-run-dialog.ui.h:13
+#: mate-panel/panel-run-dialog.c:1639 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Selezionare un'applicazione per visualizzarne la descrizione."
 
-#: ../mate-panel/panel-run-dialog.c:1677
+#: mate-panel/panel-run-dialog.c:1677
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Esegue il comando «%s»"
 
-#: ../mate-panel/panel-run-dialog.c:1710
+#: mate-panel/panel-run-dialog.c:1710
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "L'elenco di URI trascinato sul dialogo di esecuzione ha formato (%d) o "
 "lunghezza (%d) errata\n"
 
-#: ../mate-panel/panel-run-dialog.ui.h:1
+#: mate-panel/panel-run-dialog.ui:23
 msgid "Run Application"
 msgstr "Esegui applicazione"
 
-#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
+#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Esegui"
 
-#: ../mate-panel/panel-run-dialog.ui.h:5
+#: mate-panel/panel-run-dialog.ui:81
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -3180,29 +3177,29 @@ msgstr ""
 "Fare clic su questo pulsante per eseguire l'applicazione selezionata o il "
 "comando presente nel campo di inserimento del comando."
 
-#: ../mate-panel/panel-run-dialog.ui.h:6
+#: mate-panel/panel-run-dialog.ui:125
 msgid "Command icon"
 msgstr "Icona del comando"
 
-#: ../mate-panel/panel-run-dialog.ui.h:7
+#: mate-panel/panel-run-dialog.ui:126
 msgid "The icon of the command to be run."
 msgstr "L'icona del comando da eseguire."
 
-#: ../mate-panel/panel-run-dialog.ui.h:8
+#: mate-panel/panel-run-dialog.ui:170
 msgid "Run in _terminal"
 msgstr "Esegui nel _terminale"
 
-#: ../mate-panel/panel-run-dialog.ui.h:9
+#: mate-panel/panel-run-dialog.ui:178
 msgid "Select this box to run the command in a terminal window."
 msgstr ""
 "Selezionare questa casella per eseguire il comando in una finestra di "
 "terminale."
 
-#: ../mate-panel/panel-run-dialog.ui.h:10
+#: mate-panel/panel-run-dialog.ui:190
 msgid "Run with _file..."
 msgstr "Esegui con _file..."
 
-#: ../mate-panel/panel-run-dialog.ui.h:11
+#: mate-panel/panel-run-dialog.ui:197
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
@@ -3210,153 +3207,151 @@ msgstr ""
 "Fare clic su questo pulsante per scegliere un file il cui nome aggiungere "
 "alla stringa di comando."
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: mate-panel/panel-run-dialog.ui:256
 msgid "List of known applications"
 msgstr "Elenco delle applicazioni conosciute"
 
-#: ../mate-panel/panel-run-dialog.ui.h:14
+#: mate-panel/panel-run-dialog.ui:290
 msgid "Show list of known _applications"
 msgstr "_Mostra l'elenco delle applicazioni conosciute"
 
-#: ../mate-panel/panel-stock-icons.c:98
+#: mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
 msgstr "_Forza uscita"
 
-#: ../mate-panel/panel-stock-icons.c:99
+#: mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
 msgstr "_Pulisci"
 
-#: ../mate-panel/panel-stock-icons.c:100
+#: mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
 msgstr "Non eli_minare"
 
-#: ../mate-panel/panel-test-applets.c:39
+#: mate-panel/panel-test-applets.c:39
 msgid "Specify an applet IID to load"
 msgstr "Specifica un IID di applet da caricare"
 
-#: ../mate-panel/panel-test-applets.c:40
+#: mate-panel/panel-test-applets.c:40
 msgid ""
 "Specify a gsettings path in which the applet preferences should be stored"
 msgstr ""
 "Specifica il percorso gsettings dove le preferenze dell'applet vengono "
 "salvate"
 
-#: ../mate-panel/panel-test-applets.c:41
+#: mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 "Specifica le dimensioni iniziali dell'applet (xx-small, medium, large, etc.)"
 
-#: ../mate-panel/panel-test-applets.c:42
+#: mate-panel/panel-test-applets.c:42
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "Specifica l'orientamento iniziale dell'applet (alto, basso, destra, "
 "sinistra)"
 
-#: ../mate-panel/panel-test-applets.c:66
+#: mate-panel/panel-test-applets.c:66
 msgctxt "Size"
 msgid "XX Small"
 msgstr "XX Small"
 
-#: ../mate-panel/panel-test-applets.c:67
+#: mate-panel/panel-test-applets.c:67
 msgctxt "Size"
 msgid "X Small"
 msgstr "X Small"
 
-#: ../mate-panel/panel-test-applets.c:68
+#: mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
 msgstr "Piccola"
 
-#: ../mate-panel/panel-test-applets.c:69
+#: mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
 msgstr "Medio"
 
-#: ../mate-panel/panel-test-applets.c:70
+#: mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
 msgstr "Grande"
 
-#: ../mate-panel/panel-test-applets.c:71
+#: mate-panel/panel-test-applets.c:71
 msgctxt "Size"
 msgid "X Large"
 msgstr "X Large"
 
-#: ../mate-panel/panel-test-applets.c:72
+#: mate-panel/panel-test-applets.c:72
 msgctxt "Size"
 msgid "XX Large"
 msgstr "XX Large"
 
-#: ../mate-panel/panel-test-applets.c:130
+#: mate-panel/panel-test-applets.c:130
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Caricamento dell'applet «%s» non riuscito"
 
 #. This is an utility to easily test various applets
-#: ../mate-panel/panel-test-applets.ui.h:2
+#: mate-panel/panel-test-applets.ui:18
 msgid "Test applet utility"
 msgstr "Utilità test applet"
 
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: mate-panel/panel-test-applets.ui:35
 msgid "_Execute"
 msgstr "_Esegui"
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: mate-panel/panel-test-applets.ui:101
 msgid "_Applet:"
 msgstr "_Applet:"
 
-#: ../mate-panel/panel-test-applets.ui.h:8
+#: mate-panel/panel-test-applets.ui:131
 msgid "_Prefs Path:"
 msgstr "Percorso _preferenze:"
 
-#: ../mate-panel/panel-toplevel.c:1232
+#: mate-panel/panel-toplevel.c:1209
 msgid "Hide Panel"
 msgstr "Nascondi pannello"
 
-#. translators: these string will be shown in MetaCity's switch window
-#. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1673 ../mate-panel/panel-toplevel.c:1683
+#: mate-panel/panel-toplevel.c:1656 mate-panel/panel-toplevel.c:1666
 msgid "Top Panel"
 msgstr "Pannello superiore"
 
-#: ../mate-panel/panel-toplevel.c:1675
+#: mate-panel/panel-toplevel.c:1658
 msgid "Bottom Panel"
 msgstr "Pannello inferiore"
 
-#: ../mate-panel/panel-toplevel.c:1677
+#: mate-panel/panel-toplevel.c:1660
 msgid "Left Panel"
 msgstr "Pannello sinistro"
 
-#: ../mate-panel/panel-toplevel.c:1679
+#: mate-panel/panel-toplevel.c:1662
 msgid "Right Panel"
 msgstr "Pannello destro"
 
-#: ../mate-panel/panel-util.c:350
+#: mate-panel/panel-util.c:350
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Icona «%s» non trovata"
 
-#: ../mate-panel/panel-util.c:474
+#: mate-panel/panel-util.c:474
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Impossibile eseguire «%s»"
 
-#: ../mate-panel/panel-util.c:702
+#: mate-panel/panel-util.c:702
 msgid "file"
 msgstr "file"
 
-#: ../mate-panel/panel-util.c:875
+#: mate-panel/panel-util.c:875
 msgid "Home Folder"
 msgstr "Cartella home"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:887
+#: mate-panel/panel-util.c:887
 msgid "File System"
 msgstr "File system"
 
-#: ../mate-panel/panel-util.c:1060
+#: mate-panel/panel-util.c:1060
 msgid "Search"
 msgstr "Ricerca"
 
@@ -3364,21 +3359,21 @@ msgstr "Ricerca"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1106
+#: mate-panel/panel-util.c:1106
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:486
+#: mate-panel/panel.c:486
 #, c-format
 msgid "Open URL: %s"
 msgstr "Apri URL: %s"
 
-#: ../mate-panel/panel.c:1336
+#: mate-panel/panel.c:1336
 msgid "Delete this drawer?"
 msgstr "Eliminare questo cassetto?"
 
-#: ../mate-panel/panel.c:1337
+#: mate-panel/panel.c:1337
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3386,14 +3381,36 @@ msgstr ""
 "Quando un cassetto viene eliminato, il cassetto\n"
 "e le sue impostazioni vengono perse."
 
-#: ../mate-panel/panel.c:1340
+#: mate-panel/panel.c:1340
 msgid "Delete this panel?"
 msgstr "Eliminare questo pannello?"
 
-#: ../mate-panel/panel.c:1341
+#: mate-panel/panel.c:1341
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Quando un pannello viene eliminato, il pannello\n"
 "e le sue impostazioni vengono perse."
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:5
+msgid "Test DBus Applet Factory"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:6
+msgid "Factory for Test DBus Applet"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:9
+msgid "Test DBus Applet"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:10
+msgid "A simple applet for testing the MATE panel"
+msgstr ""
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:12
+msgid "mate-gegl"
+msgstr ""

@@ -1,18 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR MATE Desktop Environment team
+# This file is distributed under the same license as the mate-panel package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
 # Martin Wimpress <code@flexion.org>, 2018
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
 # 
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: MATE Desktop Environment\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-23 10:15+0200\n"
+"Project-Id-Version: mate-panel 1.23.2\n"
+"Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
+"POT-Creation-Date: 2019-11-14 14:29+0100\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
 "Language-Team: Malayalam (https://www.transifex.com/mate/teams/13566/ml/)\n"
@@ -22,29 +21,29 @@ msgstr ""
 "Language: ml\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../applets/clock/calendar-window.c:259 ../applets/clock/clock.ui.h:23
+#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:689
 msgid "Locations"
 msgstr "സ്ഥലങ്ങള്‍"
 
-#: ../applets/clock/calendar-window.c:259
+#: applets/clock/calendar-window.c:257
 msgid "Edit"
 msgstr "ചിട്ടപ്പെടുത്തുക"
 
-#: ../applets/clock/calendar-window.c:486
+#: applets/clock/calendar-window.c:482
 msgid "Calendar"
 msgstr "കലണ്ടര്‍"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:434
+#: applets/clock/clock.c:446
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:434 ../applets/clock/clock-location-tile.c:503
+#: applets/clock/clock.c:446 applets/clock/clock-location-tile.c:504
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -55,7 +54,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1579
+#: applets/clock/clock.c:451 applets/clock/clock.c:1596
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -69,9 +68,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: ../applets/clock/clock.c:439 ../applets/clock/clock.c:1585
-#: ../applets/clock/clock-location-tile.c:463
-#: ../applets/clock/clock-location-tile.c:510
+#: applets/clock/clock.c:451 applets/clock/clock.c:1602
+#: applets/clock/clock-location-tile.c:464
+#: applets/clock/clock-location-tile.c:511
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -80,14 +79,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:450
+#: applets/clock/clock.c:462
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:457
+#: applets/clock/clock.c:469
 #, c-format
 msgid ""
 "%1$s\n"
@@ -96,31 +92,27 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#: ../applets/clock/clock.c:465
+#: applets/clock/clock.c:477
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:638
+#: applets/clock/clock.c:655
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:664
+#: applets/clock/clock.c:681
 msgid "Click to hide month calendar"
 msgstr "ഈ മാസത്തെ കലണ്ടര്‍ അദൃശ്യമാക്കുന്നതിനായി ക്ലിക്ക് ചെയ്യുക"
 
-#: ../applets/clock/clock.c:666
+#: applets/clock/clock.c:683
 msgid "Click to view month calendar"
 msgstr "ഈ മാസത്തെ കലണ്ടര്‍ കാണുന്നതിനായി ക്ലിക്ക് ചെയ്യുക"
 
-#: ../applets/clock/clock.c:1417
+#: applets/clock/clock.c:1434
 msgid "Computer Clock"
 msgstr "കമ്പ്യൂട്ടര്‍ ഘടികാരം"
 
@@ -130,7 +122,7 @@ msgstr "കമ്പ്യൂട്ടര്‍ ഘടികാരം"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1564
+#: applets/clock/clock.c:1581
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -140,263 +132,256 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1572
+#: applets/clock/clock.c:1589
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1618
+#: applets/clock/clock.c:1635
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1649
+#: applets/clock/clock.c:1666
 msgid "Set System Time..."
 msgstr "സിസ്റ്റത്തിലെ സമയം ക്രമികരിയ്ക്കുക..."
 
-#: ../applets/clock/clock.c:1650
+#: applets/clock/clock.c:1667
 msgid "Set System Time"
 msgstr "സിസ്റ്റത്തിലെ സമയം ക്രമികരിക്കുക"
 
-#: ../applets/clock/clock.c:1665
+#: applets/clock/clock.c:1682
 msgid "Failed to set the system time"
 msgstr "സിസ്റ്റത്തിലെ സമയം ക്രമികരിക്കുന്നതില്‍ പരാജയം"
 
-#: ../applets/clock/clock.c:1863 ../applets/fish/fish.c:1694
-#: ../applets/notification_area/main.c:292
-#: ../applets/wncklet/window-list.c:357
-#: ../applets/wncklet/workspace-switcher.c:389
+#: applets/clock/clock.c:1880 applets/fish/fish.c:1694
+#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:357
+#: applets/wncklet/workspace-switcher.c:389
 msgid "_Preferences"
 msgstr "മുന്‍ഗണനകള്‍"
 
-#: ../applets/clock/clock.c:1866 ../applets/clock/clock.ui.h:7
-#: ../applets/fish/fish.c:1697 ../applets/fish/fish.ui.h:2
-#: ../applets/notification_area/main.c:295
-#: ../applets/wncklet/showdesktop.c:241 ../applets/wncklet/window-list.c:365
-#: ../applets/wncklet/window-list.ui.h:2 ../applets/wncklet/window-menu.c:98
-#: ../applets/wncklet/workspace-switcher.c:397
-#: ../applets/wncklet/workspace-switcher.ui.h:2 ../mate-panel/drawer.c:562
-#: ../mate-panel/panel-action-button.c:753 ../mate-panel/panel-addto.c:1308
-#: ../mate-panel/panel-context-menu.c:318
-#: ../mate-panel/panel-ditem-editor.c:648 ../mate-panel/panel-menu-bar.c:351
-#: ../mate-panel/panel-menu-button.c:684
-#: ../mate-panel/panel-properties-dialog.ui.h:2
-#: ../mate-panel/panel-run-dialog.ui.h:2
+#: applets/clock/clock.c:1883 applets/clock/clock.ui:293
+#: applets/fish/fish.c:1697 applets/fish/fish.ui:46
+#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:241
+#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:35
+#: applets/wncklet/window-menu.c:98 applets/wncklet/workspace-switcher.c:397
+#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:562
+#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1308
+#: mate-panel/panel-context-menu.c:318 mate-panel/panel-ditem-editor.c:648
+#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:700
+#: mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "_സഹായം"
 
-#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1700
-#: ../applets/notification_area/main.c:298
-#: ../applets/wncklet/showdesktop.c:249 ../applets/wncklet/window-list.c:373
-#: ../applets/wncklet/window-menu.c:106
-#: ../applets/wncklet/workspace-switcher.c:405
+#: applets/clock/clock.c:1886 applets/fish/fish.c:1700
+#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:249
+#: applets/wncklet/window-list.c:373 applets/wncklet/window-menu.c:106
+#: applets/wncklet/workspace-switcher.c:405
 msgid "_About"
 msgstr "_സംബന്ധിച്ച്"
 
-#: ../applets/clock/clock.c:1872
+#: applets/clock/clock.c:1889
 msgid "Copy _Time"
 msgstr "_സമയം പകര്‍ത്തുക"
 
-#: ../applets/clock/clock.c:1875
+#: applets/clock/clock.c:1892
 msgid "Copy _Date"
 msgstr "_തിയ്യതി പകര്‍ത്തുക"
 
-#: ../applets/clock/clock.c:1878
+#: applets/clock/clock.c:1895
 msgid "Ad_just Date & Time"
 msgstr "തിയ്യതിയും സമയവും _ശരിയാക്കുക"
 
-#: ../applets/clock/clock.c:2874
+#: applets/clock/clock.c:2891
 msgid "Choose Location"
 msgstr "സ്ഥലം തെരഞ്ഞെടുക്കുക"
 
-#: ../applets/clock/clock.c:2953
+#: applets/clock/clock.c:2970
 msgid "Edit Location"
 msgstr "സ്ഥലം മാറ്റുക"
 
-#: ../applets/clock/clock.c:3080
+#: applets/clock/clock.c:3097
 msgid "City Name"
 msgstr "പട്ടണത്തിന്റെ പേര്"
 
-#: ../applets/clock/clock.c:3084
+#: applets/clock/clock.c:3101
 msgid "City Time Zone"
 msgstr "പട്ടണത്തിന്റെ സമയമേഖല"
 
-#: ../applets/clock/clock.c:3295
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:3
+#: applets/clock/clock.c:3381
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "ഘടികാരം"
 
-#: ../applets/clock/clock.c:3296
+#: applets/clock/clock.c:3382
 msgid "About Clock"
 msgstr ""
 
-#: ../applets/clock/clock.c:3298
+#: applets/clock/clock.c:3384
 msgid "The Clock displays the current time and date"
 msgstr "ഘടികാരം ഇപ്പോഴത്തെ സമയവും തിയ്യതിയും കാണിക്കുന്നു"
 
-#: ../applets/clock/clock.c:3299
+#: applets/clock/clock.c:3385
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/clock/clock.c:3303 ../applets/fish/fish.c:567
-#: ../applets/notification_area/main.c:286
-#: ../applets/wncklet/showdesktop.c:508 ../applets/wncklet/window-list.c:831
-#: ../applets/wncklet/window-menu.c:88
-#: ../applets/wncklet/workspace-switcher.c:644
-#: ../mate-panel/panel-context-menu.c:124
+#: applets/clock/clock.c:3389 applets/fish/fish.c:567
+#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:508
+#: applets/wncklet/window-list.c:831 applets/wncklet/window-menu.c:88
+#: applets/wncklet/workspace-switcher.c:644
+#: mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
 msgstr ""
 "അനി പീറ്റര്‍ <peter.ani@gmail.com>\n"
 "പ്രവീണ്‍ അരിമ്പ്രത്തൊടിയില്‍ <pravi.a@gmail.com>"
 
-#: ../applets/clock/clock.ui.h:1
+#: applets/clock/clock.ui:31
 msgid "Time & Date"
 msgstr "സമയവും തിയ്യതിയും"
 
-#: ../applets/clock/clock.ui.h:2 ../mate-panel/libpanel-util/panel-gtk.c:136
-#: ../mate-panel/panel-context-menu.c:213
-#: ../mate-panel/panel-ditem-editor.c:664 ../mate-panel/panel-force-quit.c:240
-#: ../mate-panel/panel-recent.c:154 ../mate-panel/panel-run-dialog.ui.h:3
-#: ../mate-panel/panel.c:1356
+#: applets/clock/clock.ui:46 applets/clock/clock.ui:923
+#: mate-panel/libpanel-util/panel-gtk.c:136
+#: mate-panel/panel-context-menu.c:213 mate-panel/panel-ditem-editor.c:664
+#: mate-panel/panel-force-quit.c:240 mate-panel/panel-recent.c:154
+#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:1356
 msgid "_Cancel"
 msgstr "_റദ്ദാക്കുക"
 
-#: ../applets/clock/clock.ui.h:3
+#: applets/clock/clock.ui:62
 msgid "_Set System Time"
 msgstr "സിസ്റ്റത്തിലെ സമയം _ക്രമീകരിക്കുക"
 
-#: ../applets/clock/clock.ui.h:4
+#: applets/clock/clock.ui:191
 msgid "_Time:"
 msgstr "_സമയം:"
 
-#: ../applets/clock/clock.ui.h:5
+#: applets/clock/clock.ui:205
 msgid "Current Time:"
 msgstr "നിലവിലുള്ള സമയം:"
 
-#: ../applets/clock/clock.ui.h:6
+#: applets/clock/clock.ui:277
 msgid "Clock Preferences"
 msgstr "ഘടികാരത്തിന്റെ മുന്‍ഗണനകള്‍"
 
-#: ../applets/clock/clock.ui.h:8
+#: applets/clock/clock.ui:309
 msgid "Time _Settings"
 msgstr "സമയ ക്രമീ_കരണങ്ങള്‍"
 
-#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.c:853
-#: ../applets/fish/fish.ui.h:3
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:2
-#: ../applets/wncklet/window-list.ui.h:3
-#: ../applets/wncklet/workspace-switcher.ui.h:3
-#: ../mate-panel/panel-addto.c:1319 ../mate-panel/panel-ditem-editor.c:660
-#: ../mate-panel/panel-properties-dialog.ui.h:3
-#: ../mate-panel/panel-test-applets.ui.h:4
+#: applets/clock/clock.ui:324 applets/fish/fish.c:853 applets/fish/fish.ui:62
+#: applets/notification_area/notification-area-preferences-dialog.ui:65
+#: applets/wncklet/window-list.ui:51 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1319 mate-panel/panel-ditem-editor.c:660
+#: mate-panel/panel-properties-dialog.ui:94
+#: mate-panel/panel-properties-dialog.ui:740
+#: mate-panel/panel-test-applets.ui:52
 msgid "_Close"
 msgstr "_അടയ്ക്കു:"
 
-#: ../applets/clock/clock.ui.h:10
+#: applets/clock/clock.ui:369
 msgid "Clock Format"
 msgstr "ഏതു് തരം ഘടികാരം"
 
-#: ../applets/clock/clock.ui.h:11
+#: applets/clock/clock.ui:393
 msgid "_12 hour format"
 msgstr "12 _മണിക്കൂര്‍ സമയരൂപം"
 
-#: ../applets/clock/clock.ui.h:12
+#: applets/clock/clock.ui:408
 msgid "_24 hour format"
 msgstr "24 മ_ണിക്കൂര്‍ സമയരൂപം"
 
-#: ../applets/clock/clock.ui.h:13
+#: applets/clock/clock.ui:448
 msgid "Panel Display"
 msgstr "പാളിയുടെ കാഴ്ച"
 
-#: ../applets/clock/clock.ui.h:14
+#: applets/clock/clock.ui:473
 msgid "Show the _date"
 msgstr "_തിയ്യതി കാണിയ്ക്കുക"
 
-#: ../applets/clock/clock.ui.h:15
+#: applets/clock/clock.ui:488
 msgid "Show seco_nds"
 msgstr "സെ_ക്കന്റുകള്‍ കാണിയ്ക്കുക"
 
-#: ../applets/clock/clock.ui.h:16
+#: applets/clock/clock.ui:503
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: ../applets/clock/clock.ui.h:17
+#: applets/clock/clock.ui:518
 msgid "Show _weather"
 msgstr "_കാലാവസ്ഥ കാണിയ്ക്കുക"
 
-#: ../applets/clock/clock.ui.h:18
+#: applets/clock/clock.ui:533
 msgid "Show _temperature"
 msgstr "_താപനില കാണിയ്ക്കുക"
 
-#: ../applets/clock/clock.ui.h:19 ../applets/fish/fish.ui.h:4
-#: ../mate-panel/panel-properties-dialog.ui.h:13
+#: applets/clock/clock.ui:568 applets/fish/fish.ui:102
+#: mate-panel/panel-properties-dialog.ui:384
 msgid "General"
 msgstr "സാധാരണ"
 
-#: ../applets/clock/clock.ui.h:20 ../mate-panel/panel-addto.c:1315
+#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1315
 msgid "_Add"
 msgstr "_ചേര്‍ക്കുക"
 
-#: ../applets/clock/clock.ui.h:21
+#: applets/clock/clock.ui:636
 msgid "_Edit"
 msgstr "_മാറ്റം വരുത്തുക"
 
-#: ../applets/clock/clock.ui.h:22
+#: applets/clock/clock.ui:652
 msgid "_Remove"
 msgstr "_നീക്കം ചെയ്യുക"
 
-#: ../applets/clock/clock.ui.h:24
+#: applets/clock/clock.ui:713
 msgid "Display"
 msgstr "പ്രദര്‍ശനം"
 
-#: ../applets/clock/clock.ui.h:25
+#: applets/clock/clock.ui:749
 msgid "_Visibility unit:"
 msgstr "ദൃശ്യതയുടെ ഏകകം:"
 
-#: ../applets/clock/clock.ui.h:26
+#: applets/clock/clock.ui:771
 msgid "_Pressure unit:"
 msgstr "_മര്‍ദ്ദം:"
 
-#: ../applets/clock/clock.ui.h:27
+#: applets/clock/clock.ui:805
 msgid "_Wind speed unit:"
 msgstr "_കാറ്റിന്റെ വേഗത:"
 
-#: ../applets/clock/clock.ui.h:28
+#: applets/clock/clock.ui:819
 msgid "_Temperature unit:"
 msgstr "_താപനില:"
 
-#: ../applets/clock/clock.ui.h:29
+#: applets/clock/clock.ui:854
 msgid "Weather"
 msgstr "കാലാവസ്ഥ"
 
-#: ../applets/clock/clock.ui.h:30
+#: applets/clock/clock.ui:886
 msgid "East"
 msgstr "കിഴക്കു്"
 
-#: ../applets/clock/clock.ui.h:31
+#: applets/clock/clock.ui:889
 msgid "West"
 msgstr "പടിഞ്ഞാറു്"
 
-#: ../applets/clock/clock.ui.h:32
+#: applets/clock/clock.ui:900
 msgid "North"
 msgstr "വടക്കു്"
 
-#: ../applets/clock/clock.ui.h:33
+#: applets/clock/clock.ui:903
 msgid "South"
 msgstr "തെക്കു്"
 
-#: ../applets/clock/clock.ui.h:34 ../mate-panel/libpanel-util/panel-gtk.c:140
-#: ../mate-panel/panel-applet-frame.c:960
-#: ../mate-panel/panel-ditem-editor.c:668
+#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:140
+#: mate-panel/panel-applet-frame.c:960 mate-panel/panel-ditem-editor.c:668
 msgid "_OK"
 msgstr ""
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:36
+#: applets/clock/clock.ui:1012
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -404,39 +389,39 @@ msgstr ""
 "<small><i>ഒരു പട്ടണത്തിന്റെ, സംസ്ഥാനത്തിന്റെ അല്ലെങ്കില്‍ രാജ്യത്തിന്റെ "
 "പേരു് നല്‍കി, വരുന്നവയില്‍ നിന്നും പൊരുത്തമുള്ളവ തെരഞ്ഞെടുക്കുക.</i></small>"
 
-#: ../applets/clock/clock.ui.h:37
+#: applets/clock/clock.ui:1057
 msgid "_Timezone:"
 msgstr "_സമയമേഖല:"
 
-#: ../applets/clock/clock.ui.h:38
+#: applets/clock/clock.ui:1070
 msgid "_Location Name:"
 msgstr "_സ്ഥലപ്പേരു്:"
 
-#: ../applets/clock/clock.ui.h:39
+#: applets/clock/clock.ui:1114 applets/clock/clock.ui:1128
 msgid "<i>(optional)</i>"
 msgstr "<i>(വേണമെങ്കില്‍)</i>"
 
-#: ../applets/clock/clock.ui.h:40
+#: applets/clock/clock.ui:1171
 msgid "L_ongitude:"
 msgstr "ലോ_ങ്ങിറ്റ്യൂഡ്:"
 
-#: ../applets/clock/clock.ui.h:41
+#: applets/clock/clock.ui:1192
 msgid "L_atitude:"
 msgstr "_ലാറ്റിറ്റ്യൂഡ്:"
 
-#: ../applets/clock/clock-location-tile.c:182
+#: applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr "സിസ്റ്റത്തിലെ സമയമേഖല ക്രമീകരിക്കുന്നതില്‍ പരാജയം"
 
-#: ../applets/clock/clock-location-tile.c:230
+#: applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>ക്രമീകരിക്കുക...</small>"
 
-#: ../applets/clock/clock-location-tile.c:231
+#: applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>ക്രമീകരിക്കുക</small>"
 
-#: ../applets/clock/clock-location-tile.c:307
+#: applets/clock/clock-location-tile.c:308
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -449,7 +434,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:440
+#: applets/clock/clock-location-tile.c:441
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -458,7 +443,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:448
+#: applets/clock/clock-location-tile.c:449
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -466,50 +451,48 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:457
+#: applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:599
+#: applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#. FMQ: it's broken to read from another module's translations; add some API
-#. to libmateweather.
-#: ../applets/clock/clock-location-tile.c:611
-#: ../applets/clock/clock-location-tile.c:620
+#: applets/clock/clock-location-tile.c:612
+#: applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "അപരിചിതമായ"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:613
+#: applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, %s പോലെ തോന്നുന്നു"
 
-#: ../applets/clock/clock-location-tile.c:636
+#: applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "സൂര്യോദയം: %s / സൂര്യാസ്തമയം: %s"
 
-#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:170
-#: ../applets/notification_area/main.c:238 ../applets/wncklet/wncklet.c:75
-#: ../mate-panel/libpanel-util/panel-show.c:234
+#: applets/clock/clock-utils.c:94 applets/fish/fish.c:170
+#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:75
+#: mate-panel/libpanel-util/panel-show.c:234
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "'%s' സഹായത്തിനുള്ള രേഖ പ്രദര്‍ശിപ്പിക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:196
-#: ../applets/notification_area/main.c:252 ../applets/wncklet/wncklet.c:92
+#: applets/clock/clock-utils.c:123 applets/fish/fish.c:196
+#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:92
 msgid "Error displaying help document"
 msgstr "സഹായത്തിനുളള രേഖ പ്രദര്‍ശിപ്പിക്കുന്നതില്‍ പിശകു്"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:1
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:29
 msgid "Hour format"
 msgstr "സമയ രൂപം"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:2
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:30
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values"
 " are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set"
@@ -530,11 +513,11 @@ msgstr ""
 "1970-01-01. \"യഥേഷ്ടം\" എന്നു് സജ്ജമാക്കിയാല്‍, custom_format കീയില്‍ "
 "വ്യക്തമാക്കിയ ശൈലിയനുുസരിച്ചു്ക്ലോക്ക് സമയം ലഭ്യമാക്കുന്നു. "
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:3
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:34
 msgid "Custom format of the clock"
 msgstr "ഇഷ്ടമുളള സമയരൂപം"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:4
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:35
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -547,104 +530,110 @@ msgstr ""
 "നിങ്ങള്‍ക്കുപയോഗിയ്ക്കാം. കൂടുതല്‍ വിവരത്തിനു് strftime() മാനുവലില്‍ "
 "നോക്കുക.േ"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:5
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:39
 msgid "Show time with seconds"
 msgstr "സെക്കന്റുകളോട് കൂടിയുള്ള സമയം കാണിയ്ക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:6
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:40
 msgid "If true, display seconds in time."
 msgstr "ശരി (ട്രൂ) എങ്കില്‍, സെക്കന്റുകളും സമയത്തില്‍ കാണിയ്ക്കുക."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:7
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:44
 msgid "Show date in clock"
 msgstr "ഘടികാരത്തില്‍ തിയ്യതി കാണിയ്ക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:8
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:45
 msgid "If true, display date in the clock, in addition to time."
 msgstr ""
 "ശരി (ട്രൂ) എങ്കില്‍,ഘടികാരത്തില്‍ സമയത്തിനു പുറമെ തിയ്യതിയും കാണിയ്ക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:9
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:49
 msgid "Show date in tooltip"
 msgstr "തിയ്യതി സൂചനയില്‍ കാണിയ്ക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:10
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:50
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "ശരി (ട്രൂ) എങ്കില്‍, ഘടികാരത്തില്‍ ചൂണ്ടുമ്പോള്‍ സൂചനയില്‍ തിയ്യതി "
 "കാണിയ്ക്കുക."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:11
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:54
 msgid "Show weather in clock"
 msgstr "ഘടികാരത്തില്‍ കാലാവസ്ഥ കാണിയ്ക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:12
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:55
 msgid "If true, display a weather icon."
 msgstr "ശരി (ട്രൂ) എങ്കില്‍, കാലാവസ്ഥയ്ക്കുള്ള ഒരു ചിഹ്നം കാണിയ്ക്കുക."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:13
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:59
 msgid "Show temperature in clock"
 msgstr "ഘടികാരത്തില്‍ താപനില കാണിയ്ക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:14
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:60
 msgid "If true, show the temperature next to the weather icon."
 msgstr ""
 "ശരി (ട്രൂ) എങ്കില്‍, കാലാവസ്ഥയുടെ ചിഹ്നത്തിനടുത്ത് താപനില കാണിയ്ക്കുക."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:15
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:64
 msgid "Show week numbers in calendar"
 msgstr "കലണ്ടറില്‍ എത്രാമതു് ആഴ്ചയാണെന്നു് കാണിയ്ക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:16
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:65
 msgid "If true, show week numbers in the calendar."
 msgstr "ശരി (ട്രൂ) എങ്കില്‍, കലണ്ടറില്‍ എത്രാമതു് ആഴ്ചയാണെന്നു് കാണിയ്ക്കുക."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:17
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:69
 msgid "Expand list of locations"
 msgstr "സ്ഥലങ്ങളുടെ പട്ടിക വലുതാക്കുക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:18
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:70
 msgid "If true, expand the list of locations in the calendar window."
 msgstr ""
 "ശരി (ട്രൂ) എങ്കില്‍, കലണ്ടര്‍ ജാലകത്തില്‍ സ്ഥലങ്ങളുടെ പട്ടിക വലുതാക്കുക."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:19
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:74
 msgid "List of locations"
 msgstr "സ്ഥലങ്ങളുടെ പട്ടിക"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:20
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:75
 msgid "A list of locations to display in the calendar window."
 msgstr "കലണ്ടര്‍ ജാലകത്തില്‍ കാണിക്കേണ്ട സ്ഥലങ്ങളുടെ പട്ടിക."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:21
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:79
 msgid "Temperature unit"
 msgstr "താപനില കാണിയ്ക്കുന്നതിനുള്ള ഏകകം"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:22
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:80
 msgid "The unit to use when showing temperatures."
 msgstr "താപനില കാണിക്കുന്നതിന് ഉപയോഗിക്കുന്ന ഏകകം."
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:23
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:84
 msgid "Speed unit"
 msgstr "വേഗത കാണിയ്ക്കുന്നതിനുള്ള ഏകകം"
 
-#: ../applets/clock/org.mate.panel.applet.clock.gschema.xml.in.h:24
+#: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:85
 msgid "The unit to use when showing wind speed."
 msgstr "കാറ്റിന്റെ വേഗത കാണിക്കുന്ന ഏകകം."
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:1
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:6
 msgid "Clock Applet Factory"
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:2
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for clock applet"
 msgstr ""
 
-#: ../applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.in.in.h:4
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:11
 msgid "Get the current time and date"
 msgstr ""
 
-#: ../applets/fish/fish.c:266
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-clock"
+msgstr ""
+
+#: applets/fish/fish.c:266
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -657,17 +646,16 @@ msgstr ""
 "ആപ്ലെറ്റ് \"പ്രാക്ടിക്കല്‍\" അല്ലെങ്കില്‍ ഉപയോഗപ്രദമാക്കുന്ന ഒരു\n"
 "കാര്യത്തിനെതിരായി %s ഉപയോഗിക്കുവാന്‍ പാടില്ല."
 
-#: ../applets/fish/fish.c:428
+#: applets/fish/fish.c:428
 msgid "Images"
 msgstr "ചിത്രങ്ങള്‍"
 
-#: ../applets/fish/fish.c:534 ../applets/fish/fish.c:578
-#: ../applets/fish/fish.c:684
+#: applets/fish/fish.c:534 applets/fish/fish.c:578 applets/fish/fish.c:684
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s എന്ന മീന്‍"
 
-#: ../applets/fish/fish.c:535
+#: applets/fish/fish.c:535
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -678,41 +666,41 @@ msgstr ""
 "കളയുകയും ചെയ്യുന്നു. ലഭ്യമാക്കിയാല്‍, പാനലിലെ സ്ഥലവും മെമ്മറിയും വെറുതെ "
 "പാഴാകുന്നു. അതിനാല്‍ ഇതിന്റെ ഉപയോഗം ഒഴിവാക്കുക."
 
-#: ../applets/fish/fish.c:552
+#: applets/fish/fish.c:552
 msgid "(with minor help from George)"
 msgstr "(ജോര്‍ജിന്റെ ചെറിയേ സഹായത്തോടെ)"
 
-#: ../applets/fish/fish.c:558
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:3
+#: applets/fish/fish.c:558
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:10
 msgid "Fish"
 msgstr "മീന്‍"
 
-#: ../applets/fish/fish.c:559
+#: applets/fish/fish.c:559
 msgid "About Fish"
 msgstr ""
 
-#: ../applets/fish/fish.c:562
+#: applets/fish/fish.c:562
 msgid ""
 "Copyright © 1998-2002 Free Software Foundation, Inc.\n"
 "Copyright © 2002-2005 Vincent Untz\n"
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/fish/fish.c:579
+#: applets/fish/fish.c:579
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s എന്ന മീന്‍"
 
-#: ../applets/fish/fish.c:645
+#: applets/fish/fish.c:645
 msgid "Unable to locate the command to execute"
 msgstr "പ്രവര്‍ത്തിപ്പിക്കുവാനുളള നിര്‍ദ്ദേശം കണ്ടെത്താന്‍ കഴിഞ്ഞില്ല"
 
-#: ../applets/fish/fish.c:689
+#: applets/fish/fish.c:689
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s എന്ന മീന്‍ പറയുന്നു:"
 
-#: ../applets/fish/fish.c:752
+#: applets/fish/fish.c:752
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -723,16 +711,16 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: ../applets/fish/fish.c:849
+#: applets/fish/fish.c:849
 msgid "_Speak again"
 msgstr "വീണ്ടും _സംസാരിക്കുക"
 
-#: ../applets/fish/fish.c:930
+#: applets/fish/fish.c:930
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "ക്രമീകരിച്ച നിര്‍ദ്ദേശം പ്രവര്‍ത്തിക്കാത്തതിനാല്‍ പകരം മറ്റൊന്ന്: %s"
 
-#: ../applets/fish/fish.c:963
+#: applets/fish/fish.c:963
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -743,7 +731,7 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: ../applets/fish/fish.c:979
+#: applets/fish/fish.c:979
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -754,82 +742,83 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: ../applets/fish/fish.c:1551
+#: applets/fish/fish.c:1551
 msgid "The water needs changing"
 msgstr "മാറ്റം ആവശ്യമാണ്"
 
-#: ../applets/fish/fish.c:1553
+#: applets/fish/fish.c:1553
 msgid "Look at today's date!"
 msgstr "ഇന്നത്തെ തിയ്യതി കാണുക!"
 
-#: ../applets/fish/fish.c:1635
+#: applets/fish/fish.c:1635
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s മീന്‍ എന്ന പ്രവാചകി"
 
-#: ../applets/fish/fish.ui.h:1
+#: applets/fish/fish.ui:32
 msgid "Fish Preferences"
 msgstr "മീനിനുള്ള മുന്‍ഗണനകള്‍"
 
-#: ../applets/fish/fish.ui.h:5
+#: applets/fish/fish.ui:145
 msgid "_Name of fish:"
 msgstr "മീനിന്റെ _പേര്:"
 
-#: ../applets/fish/fish.ui.h:6
+#: applets/fish/fish.ui:185
 msgid "Co_mmand to run when clicked:"
 msgstr "ക്ലിക്ക് ചെയ്യുമ്പോള്‍ പ്രവര്‍ത്തിക്കേണ്ട നിര്‍ദ്ദേശം: (_m)"
 
-#: ../applets/fish/fish.ui.h:7
+#: applets/fish/fish.ui:246
 msgid "Animation"
 msgstr "ആനിമേഷന്‍"
 
-#: ../applets/fish/fish.ui.h:8 ../mate-panel/panel-properties-dialog.ui.h:16
+#: applets/fish/fish.ui:266 mate-panel/panel-properties-dialog.ui:482
+#: mate-panel/panel-properties-dialog.ui:635
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:9
+#: applets/fish/fish.ui:300
 msgid "_File:"
 msgstr "_ഫയല്‍:"
 
-#: ../applets/fish/fish.ui.h:10
+#: applets/fish/fish.ui:315
 msgid "Select an animation"
 msgstr "ഒരു നീക്കം തെരഞ്ഞെടുക്കുക"
 
-#: ../applets/fish/fish.ui.h:11
+#: applets/fish/fish.ui:346
 msgid "_Total frames in animation:"
 msgstr "നീങ്ങുമ്പോള്‍ മുഴുവനായുളള ഫ്രെയിമുകള്‍:"
 
-#: ../applets/fish/fish.ui.h:12
+#: applets/fish/fish.ui:361
 msgid "_Pause per frame:"
 msgstr "ഓരോ ഫ്രെയിമിലും _താല്‍കാലികമായി നിര്‍ത്തുക:"
 
-#: ../applets/fish/fish.ui.h:13
+#: applets/fish/fish.ui:390
 msgid "frames"
 msgstr "ഫ്രെയിമുകള്‍"
 
-#: ../applets/fish/fish.ui.h:14
+#: applets/fish/fish.ui:403
 msgid "seconds"
 msgstr "സെക്കന്‍ഡുകള്‍"
 
-#: ../applets/fish/fish.ui.h:15
+#: applets/fish/fish.ui:455
 msgid "_Rotate on vertical panels"
 msgstr "_കുത്തനെയുള്ള പാളികളില്‍ കറക്കുക"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:1
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:5
 msgid "The fish's name"
 msgstr "മീനിന്റെ പേര്"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:2
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:6
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr "മീനിനു് പേര് നല്‍കുക."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:3
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:10
 msgid "The fish's animation pixmap"
 msgstr "മീനിന്റെ ആനിമേഷന്‍ പിക്സ്മാപ്പ്"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:4
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:11
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
@@ -837,11 +826,11 @@ msgstr ""
 "പിക്സ്‌മാപ് ഡയറക്ടറിയ്ക്കു് യോജിക്കുന്ന ഫിഷ് ആപ്ലെറ്റില്‍ കാണിക്കുന്ന "
 "ആനിമേഷനുപയോഗിക്കുന്ന പിക്സ്‌മാപിന്റെ ഫയല്‍നാമം ഈ കീ വ്യക്തമാക്കുന്നു."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:5
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:15
 msgid "Command to execute on click"
 msgstr "ക്ലിക്ക് ചെയ്യുമ്പോള്‍ പ്രവര്‍ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:6
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:16
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
@@ -849,60 +838,65 @@ msgstr ""
 "മീനില്‍ ക്ലിക്ക് ചെയ്യുമ്പോള്‍ പ്രവര്‍ത്തിക്കുന്ന നിര്‍ദ്ദേശം ഏതെന്ന് "
 "വ്യക്തമാക്കുന്ന കീ"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:7
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:20
 msgid "Frames in fish's animation"
 msgstr "മീനിന്റെ നീക്കത്തിലുളള ഫ്രെയിമുകള്‍"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:8
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:21
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's"
 " animation."
 msgstr ""
 "മീനിന്റെ ആനിമേഷനില്‍ എത്ര ഫ്രെയിമുകള്‍ ഉണ്ട് എന്ന് വ്യക്തമാക്കുന്ന കീ."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:9
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:25
 msgid "Pause per frame"
 msgstr "ഓരോ ഫ്രെയിമിലും താല്‍കാലികമായി നിര്‍ത്തുക"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:10
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:26
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
 "ഓരോ ഫ്രെയിമും എത്ര സമയം പ്രദര്‍ശിപ്പിക്കുന്നു എന്ന് വ്യക്തമാക്കുന്ന കീ."
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:11
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:30
 msgid "Rotate on vertical panels"
 msgstr "കുത്തനെയുള്ള പാളികളില്‍ കറക്കുക"
 
-#: ../applets/fish/org.mate.panel.applet.fish.gschema.xml.in.h:12
+#: applets/fish/org.mate.panel.applet.fish.gschema.xml.in:31
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
 "ശരിയാണെങ്കില്‍, മീനിന്റെ നീക്കങ്ങള്‍ കുത്തനെയുള്ള പാളികളില്‍ കറക്കി "
 "പ്രദര്‍ശിപ്പിയ്ക്കുന്നതായിരിയ്ക്കും."
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:1
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:6
 msgid "Wanda Factory"
 msgstr ""
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:2
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:7
 msgid "From Whence That Stupid Fish Came"
 msgstr ""
 
-#: ../applets/fish/org.mate.panel.FishApplet.mate-panel-applet.in.in.h:4
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:11
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: ../applets/notification_area/main.c:276
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:3
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-fish"
+msgstr ""
+
+#: applets/notification_area/main.c:276
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
 msgstr "അറിയിപ്പു് പരിധി"
 
-#: ../applets/notification_area/main.c:277
+#: applets/notification_area/main.c:277
 msgid "About Notification Area"
 msgstr ""
 
-#. "comments", _(comments),
-#: ../applets/notification_area/main.c:280
+#: applets/notification_area/main.c:280
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2003-2006 Vincent Untz\n"
@@ -910,52 +904,58 @@ msgid ""
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/notification_area/main.c:488
+#: applets/notification_area/main.c:485
 msgid "Panel Notification Area"
 msgstr "പാളി അറിയിപ്പു് പരിധി"
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:1
+#: applets/notification_area/notification-area-preferences-dialog.ui:46
 msgid "Notification Area Preferences"
 msgstr ""
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:3
+#: applets/notification_area/notification-area-preferences-dialog.ui:110
 msgid "_Minimum Icon Size:"
 msgstr ""
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:4
+#: applets/notification_area/notification-area-preferences-dialog.ui:124
 msgid "26"
 msgstr ""
 
-#: ../applets/notification_area/notification-area-preferences-dialog.ui.h:5
-#: ../mate-panel/panel-properties-dialog.ui.h:6
+#: applets/notification_area/notification-area-preferences-dialog.ui:139
+#: mate-panel/panel-properties-dialog.ui:221
 msgid "pixels"
 msgstr "പിക്സലുകള്‍"
 
-#: ../applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in.h:1
+#: applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in:5
 msgid "Minimum icon size"
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in.h:2
+#: applets/notification_area/org.mate.panel.applet.notification-area.gschema.xml.in:6
 msgid "The minimum size an icon can have."
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:1
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:6
 msgid "Notification Area Factory"
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:2
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for notification area"
 msgstr ""
 
-#: ../applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.in.in.h:4
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:11
 msgid "Area where notification icons appear"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:1
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-notification-area"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:10
 msgid "Show windows from all workspaces"
 msgstr "എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള്‍ കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:2
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:11
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it"
 " will only display windows from the current workspace."
@@ -964,11 +964,11 @@ msgstr ""
 "കാണിക്കുന്നു. അല്ലെങ്കില്‍, നിലവിലുള്ള പണിയറയില്‍ നിന്നു മാത്രം ജാലകങ്ങള്‍ "
 "കാണിക്കുന്നു."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:3
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:15
 msgid "When to group windows"
 msgstr "ജാലകങ്ങള്‍ എപ്പോള്‍ കൂട്ടമാക്കണം"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:4
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:16
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
@@ -977,13 +977,13 @@ msgstr ""
 "ചെയ്യണമെന്നു് നിശ്ചയിക്കുന്നു. സാധ്യമായ മൂല്ല്യങ്ങള്‍: \"ഒരിക്കലുമില്ല\", "
 "\"ഓട്ടോ\" , \"എപ്പോഴും\"."
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:5
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:20
 msgid "Move windows to current workspace when unminimized"
 msgstr ""
 "ചെറുതാക്കുന്നതു് ഉപേക്ഷിക്കുമ്പോള്‍ നിലവിലുള്ള പണിയറയിലേക്ക് ജാലകങ്ങള്‍ "
 "നീക്കുക"
 
-#: ../applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in.h:6
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:21
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
@@ -991,11 +991,11 @@ msgstr ""
 "true എങ്കില്‍, ഒരു ജാലകം ചെറുതാക്കുന്നതു് ഉപേക്ഷിച്ചാല്‍, അതു് നിലവിലുള്ള "
 "പണിയറയിലേക്ക് നീക്കുക. അല്ലെങ്കില്‍, ജാലകത്തിന്റെ പണിയറയിലേക്ക് നീങ്ങുക."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:1
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:5
 msgid "Display workspace names"
 msgstr "പണിയറയുടെ പേരുകള്‍ കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:2
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:6
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
@@ -1006,11 +1006,11 @@ msgstr ""
 "നിരീക്ഷകന്‍ മെറ്റാസിറ്റി ആകുമ്പോള്‍ മാത്രമേ ഈ ക്രമീകരണം "
 "പ്രവര്‍ത്തിക്കുകയുള്ളൂ"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:3
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:10
 msgid "Display all workspaces"
 msgstr "എല്ലാ പണിയറകളും കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:4
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:11
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
@@ -1018,11 +1018,11 @@ msgstr ""
 "true എങ്കില്‍, സ്വിച്ചര്‍ എല്ലാ പണിയിടങ്ങളും കാണിക്കുന്നു. അല്ലെങ്കില്‍, "
 "നിലവിലുള്ള പണിയറ മാത്രമേ കാണിക്കൂ."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:5
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:15
 msgid "Rows in workspace switcher"
 msgstr "പണിയറ സ്വിച്ചറിലുളള വരികള്‍"
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:6
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:16
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is"
@@ -1033,101 +1033,125 @@ msgstr ""
 "വ്യക്തമാക്കുന്നുdisplay_all_workspaces കീ true ആണെങ്കില്‍ മാത്രമേ ഈ "
 "കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:7
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:20
 msgid "Wrap around on scroll"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in.h:8
+#: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:21
 msgid ""
 "If true, the workspace switcher will allow wrap-around, which means "
 "switching from the first to the last workspace and vice versa via scrolling."
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:1
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:6
 msgid "Window Navigation Applet Factory"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:2
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:7
 msgid "Factory for the window navigation related applets"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:76 ../applets/wncklet/window-menu.c:227
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:10
+#: applets/wncklet/window-menu.c:76 applets/wncklet/window-menu.c:227
 msgid "Window Selector"
 msgstr "ജാലകം തിരഞ്ഞെടുക്കുന്ന സംവിധാനം"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:4
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:11
 msgid "Switch between open windows using a menu"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:5
-#: ../applets/wncklet/workspace-switcher.c:634
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:13
+msgid "mate-panel-window-menu"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
+#: applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
 msgstr "പണിയറ തിരഞ്ഞെടുക്കുക"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:6
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:24
 msgid "Switch between workspaces"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:7
-#: ../applets/wncklet/window-list.c:821
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:26
+msgid "mate-panel-workspace-switcher"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
+#: applets/wncklet/window-list.c:821
 msgid "Window List"
 msgstr "ജാലകത്തിന്റെ പട്ടിക"
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:8
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:37
 msgid "Switch between open windows using buttons"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:9
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:39
+msgid "mate-panel-window-list"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:49
 msgid "Show Desktop"
 msgstr ""
 
-#: ../applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.in.in.h:10
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:50
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:184
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:52
+msgid "user-desktop"
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:184
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s തുറക്കുവാന്‍ കഴിഞ്ഞില്ല: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:184
+#: applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
 msgstr "പ്രതെരൂപം ലഭ്യമല്ല"
 
-#: ../applets/wncklet/showdesktop.c:265
+#: applets/wncklet/showdesktop.c:265
 msgid "Click here to restore hidden windows."
 msgstr "അദൃശ്യമായ ജാലകങ്ങള്‍ ലഭ്യമാക്കുന്നതിനായി ഇവിടെ ക്ലിക്ക് ചെയ്യുക"
 
-#: ../applets/wncklet/showdesktop.c:269
+#: applets/wncklet/showdesktop.c:269
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "എല്ലാ ജാലകങ്ങളും അദൃശ്യമാക്കി പണിയിടം കാണിക്കുന്നതിനായി ഇവിടെ ക്ലിക്ക് "
 "ചെയ്യുക."
 
-#: ../applets/wncklet/showdesktop.c:439 ../applets/wncklet/showdesktop.c:498
+#: applets/wncklet/showdesktop.c:439 applets/wncklet/showdesktop.c:498
 msgid "Show Desktop Button"
 msgstr "പണിയിടം കാണാനുള്ള ബട്ടണ്‍"
 
-#: ../applets/wncklet/showdesktop.c:499
+#: applets/wncklet/showdesktop.c:499
 msgid "About Show Desktop Button"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:501
+#: applets/wncklet/showdesktop.c:501
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "എല്ലാ ജാലകങ്ങളും അദൃശ്യമാക്കി പണിയിടം കാണിക്കുന്നതിനായി ഈ ബട്ടണ്‍ "
 "ഉപയോഗിക്കുക."
 
-#: ../applets/wncklet/showdesktop.c:502 ../applets/wncklet/window-list.c:825
-#: ../applets/wncklet/workspace-switcher.c:638
+#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:825
+#: applets/wncklet/workspace-switcher.c:638
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2011 Perberos\n"
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/wncklet/showdesktop.c:529
+#: applets/wncklet/showdesktop.c:529
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
@@ -1136,15 +1160,15 @@ msgstr ""
 "പിന്തുണയ്ക്കുന്നില്ല, അല്ലെങ്കില്‍ നിങ്ങള്‍ ഒരു ജാലക നടത്തിപ്പുകാരന്‍ "
 "പ്രവര്‍ത്തിപ്പിയ്ക്കുന്നില്ല."
 
-#: ../applets/wncklet/window-list.c:349
+#: applets/wncklet/window-list.c:349
 msgid "_System Monitor"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:822
 msgid "About Window List"
 msgstr ""
 
-#: ../applets/wncklet/window-list.c:824
+#: applets/wncklet/window-list.c:824
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1152,79 +1176,79 @@ msgstr ""
 "ജാലകങ്ങളുടെ പട്ടിക എല്ലാ ജാലകങ്ങളുടേയും പട്ടിക നിങ്ങള്‍ക്കു് "
 "തെരഞ്ഞെടുക്കാവുന്ന ഒരു കൂട്ടം ബട്ടണുകളായി കാണിയ്ക്കും."
 
-#: ../applets/wncklet/window-list.ui.h:1
+#: applets/wncklet/window-list.ui:18
 msgid "Window List Preferences"
 msgstr "ജാലക നാമാവലി മുന്‍ഗണനകള്‍"
 
-#: ../applets/wncklet/window-list.ui.h:4
+#: applets/wncklet/window-list.ui:92
 msgid "Window List Content"
 msgstr "ജാലക പട്ടികയുടെ ഉള്ളടക്കം"
 
-#: ../applets/wncklet/window-list.ui.h:5
+#: applets/wncklet/window-list.ui:118
 msgid "Sh_ow windows from current workspace"
 msgstr "നിലവിലുളള പണിയറയില്‍ നിന്നും ജാലകങ്ങള്‍ _കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/window-list.ui.h:6
+#: applets/wncklet/window-list.ui:133
 msgid "Show windows from a_ll workspaces"
 msgstr "_എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള്‍ കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/window-list.ui.h:7
+#: applets/wncklet/window-list.ui:173
 msgid "Window Thumbnails"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:8
+#: applets/wncklet/window-list.ui:199
 msgid "Show _thumbnails on hover"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:9
+#: applets/wncklet/window-list.ui:214
 msgid "_Hide thumbnails on hover"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:10
+#: applets/wncklet/window-list.ui:252
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: applets/wncklet/window-list.ui:253
 msgid "Thumbnail width:"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:12
+#: applets/wncklet/window-list.ui:267
 msgid "px"
 msgstr ""
 
-#: ../applets/wncklet/window-list.ui.h:13
+#: applets/wncklet/window-list.ui:305
 msgid "Window Grouping"
 msgstr "ജാലകങ്ങളുടെ കൂട്ടം"
 
-#: ../applets/wncklet/window-list.ui.h:14
+#: applets/wncklet/window-list.ui:331
 msgid "_Never group windows"
 msgstr "ജാലകങ്ങള്‍ _ഒരിക്കലും കൂട്ടമാക്കേണ്ട"
 
-#: ../applets/wncklet/window-list.ui.h:15
+#: applets/wncklet/window-list.ui:346
 msgid "Group windows when _space is limited"
 msgstr "_സ്ഥലം കുറവാകുമ്പോള്‍ ജാലകങ്ങള്‍ കൂട്ടമായി കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/window-list.ui.h:16
+#: applets/wncklet/window-list.ui:362
 msgid "_Always group windows"
 msgstr "ജാലകങ്ങള്‍ _എപ്പോഴും കൂട്ടമാക്കുക"
 
-#: ../applets/wncklet/window-list.ui.h:17
+#: applets/wncklet/window-list.ui:402
 msgid "Restoring Minimized Windows"
 msgstr "ചെറുതാക്കിയ ജാലകങ്ങള്‍ വീണ്ടെടുക്കുന്നു"
 
-#: ../applets/wncklet/window-list.ui.h:18
+#: applets/wncklet/window-list.ui:428
 msgid "Restore to current _workspace"
 msgstr "സജീവ പണിയറ മാത്രം കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/window-list.ui.h:19
+#: applets/wncklet/window-list.ui:443
 msgid "Restore to na_tive workspace"
 msgstr "സ്വതേയുള്ള പണിയറ തെരിച്ചുകൊണ്ടുവരിക"
 
-#: ../applets/wncklet/window-menu.c:77
+#: applets/wncklet/window-menu.c:77
 msgid "About Window Selector"
 msgstr ""
 
-#: ../applets/wncklet/window-menu.c:79
+#: applets/wncklet/window-menu.c:79
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
@@ -1232,7 +1256,7 @@ msgstr ""
 "മെനുവിലുള്ള ജാലകങ്ങളുടെ പട്ടിക ജാലകം തെരഞ്ഞെടുക്കുന്ന പ്രയോഗം "
 "ലഭ്യമാക്കുന്നു. നിങ്ങള്‍ക്കു് അവ തെരയുകയും ചെയ്യാം."
 
-#: ../applets/wncklet/window-menu.c:80
+#: applets/wncklet/window-menu.c:80
 msgid ""
 "Copyright © 2000 Helix Code, Inc.\n"
 "Copyright © 2001 Free Software Foundation, Inc.\n"
@@ -1241,22 +1265,22 @@ msgid ""
 "Copyright © 2012-2019 MATE developers"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:939
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: applets/wncklet/workspace-switcher.c:240
+#: applets/wncklet/workspace-switcher.c:939
+#: applets/wncklet/workspace-switcher.ui:170
 msgid "rows"
 msgstr "വരികള്‍"
 
-#: ../applets/wncklet/workspace-switcher.c:240
-#: ../applets/wncklet/workspace-switcher.c:939
+#: applets/wncklet/workspace-switcher.c:240
+#: applets/wncklet/workspace-switcher.c:939
 msgid "columns"
 msgstr "നിരകള്‍"
 
-#: ../applets/wncklet/workspace-switcher.c:635
+#: applets/wncklet/workspace-switcher.c:635
 msgid "About Workspace Switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.c:637
+#: applets/wncklet/workspace-switcher.c:637
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1264,59 +1288,59 @@ msgstr ""
 "നിങ്ങളുടെ ജാലകങ്ങള്‍ കൈകാര്യം ചെയ്യുന്നതിനുള്ള പണിയറകളുടെ ഒരു ചെറിയ പതിപ്പു്"
 " പണിയറ സ്വിച്ചര്‍ കാണിക്കുന്നു."
 
-#: ../applets/wncklet/workspace-switcher.ui.h:1
+#: applets/wncklet/workspace-switcher.ui:32
 msgid "Workspace Switcher Preferences"
 msgstr "പണിയറയുടെ സ്വിച്ചറിന്റെ മുന്‍ഗണനകള്‍"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: applets/wncklet/workspace-switcher.ui:113
 msgid "Show _only the current workspace"
 msgstr "നിലവിലുളള പണിയറ _മാത്രം കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:5
+#: applets/wncklet/workspace-switcher.ui:134
 msgid "Show _all workspaces in:"
 msgstr "_എല്ലാ പണിയറകളും കാണിയ്ക്കുക:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: applets/wncklet/workspace-switcher.ui:204
 msgid "Switcher"
 msgstr "സ്വിച്ചര്‍"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: applets/wncklet/workspace-switcher.ui:245
 msgid "Number of _workspaces:"
 msgstr "പണിയറകളുടെ എണ്ണം:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: applets/wncklet/workspace-switcher.ui:282
 msgid "Workspace na_mes:"
 msgstr "പണിയറയുടെ _പേരുകള്‍:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: applets/wncklet/workspace-switcher.ui:303
 msgid "Workspace Names"
 msgstr "പണിയറയുടെ പേരുകള്‍"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:11
+#: applets/wncklet/workspace-switcher.ui:319
 msgid "Show workspace _names in switcher"
 msgstr "സ്വിച്ചറില്‍ പണിയിടത്തിന്റെ _പേരുകള്‍ കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:12
+#: applets/wncklet/workspace-switcher.ui:334
 msgid "Allow workspace _wrap around in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.ui.h:13
+#: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "പണിയറകള്‍"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:1
+#: data/org.mate.panel.gschema.xml.in:5
 msgid "Default panel layout"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:2
+#: data/org.mate.panel.gschema.xml.in:6
 msgid "The default panels layout to use when panels are created or resetted."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:3
+#: data/org.mate.panel.gschema.xml.in:10
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "\"പ്രയോഗം പ്രവര്‍ത്തിപ്പിക്കുക\" ഡയലോഗില്‍ പ്രോഗ്രാം പട്ടിക സജ്ജമാക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:4
+#: data/org.mate.panel.gschema.xml.in:11
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1326,12 +1350,12 @@ msgstr ""
 "പ്രയോഗങ്ങള്‍\" ലിസ്റ്റിങ് ലഭ്യമാക്കുന്നു. ഡയലോഗ് ലഭ്യമാകുമ്പോള്‍, "
 "ലിസ്റ്റിങിന്റെ വികസനം show_program_list കീ നിയന്ത്രിക്കുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:5
+#: data/org.mate.panel.gschema.xml.in:15
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr ""
 "\"പ്രയോഗം പ്രവര്‍ത്തിപ്പിക്കുക\" ഡയലോഗില്‍ പ്രോഗ്രാം പട്ടിക വികസിപ്പിക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:6
+#: data/org.mate.panel.gschema.xml.in:16
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1342,55 +1366,55 @@ msgstr ""
 "ലഭ്യമാകുമ്പോള്‍, ലിസ്റ്റിങിന്റെ വികസനം enable_program_list കീ "
 "നിയന്ത്രിക്കുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:7
+#: data/org.mate.panel.gschema.xml.in:20
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "\"പ്രയോഗം പ്രവര്‍ത്തിപ്പിക്കുക\" ഡയലോഗില്‍ സ്വയംപൂര്‍ത്തിയാക്കല്‍ "
 "സജ്ജമാക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:8
+#: data/org.mate.panel.gschema.xml.in:21
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
 "true എങ്കില്‍, \"പ്രയോഗം പ്രവര്‍ത്തിപ്പിക്കുക\" ഡയലോഗിലുള്ള "
 "സ്വയംപൂര്‍ത്തിയാക്കല്‍ സംവിധാനം ലഭ്യമാകുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:9
+#: data/org.mate.panel.gschema.xml.in:25
 msgid "History for \"Run Application\" dialog"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:10
+#: data/org.mate.panel.gschema.xml.in:26
 msgid ""
 "This is the list of commands used in \"Run Application\" dialog. The "
 "commands are sorted descendingly by recency (e.g., most recent command comes"
 " first)."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:11
+#: data/org.mate.panel.gschema.xml.in:30
 msgid "Maximum history size for \"Run Application\" dialog"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:12
+#: data/org.mate.panel.gschema.xml.in:31
 msgid ""
 "Controls the maximum size of the history of the \"Run Application\" dialog. "
 "A value of 0 will disable the history."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:13
+#: data/org.mate.panel.gschema.xml.in:35
 msgid "Reverse the history of the \"Run Application\" dialog"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:14
+#: data/org.mate.panel.gschema.xml.in:36
 msgid ""
 "Displays the history in reverse. Provides a consistent view for terminal "
 "users as the up key will select the most recent entry."
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:15
+#: data/org.mate.panel.gschema.xml.in:40
 msgid "Panel ID list"
 msgstr "പാളി ID ലിസ്റ്റ്"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:16
+#: data/org.mate.panel.gschema.xml.in:41
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -1399,11 +1423,11 @@ msgstr ""
 "തിരിച്ചറിയപ്പെടുന്നുഓരോ പാനലിനുമുള്ള ക്രമീകരണങ്ങള്‍ "
 "/apps/panel/toplevels/$(id)-ല്‍ സൂക്ഷിക്കുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:17
+#: data/org.mate.panel.gschema.xml.in:45
 msgid "Panel object ID list"
 msgstr "പാളി ഒബ്ജക്ട് ID ലിസ്റ്റ്"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:18
+#: data/org.mate.panel.gschema.xml.in:46
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object "
 "(e.g. a launcher, action button or menu button/bar). The settings for each "
@@ -1414,25 +1438,25 @@ msgstr ""
 "മെനു ബട്ടണ്‍/ബാര്‍). ഓരോ ഒബ്ജക്ടിനുമുള്ള ക്രമീകരണങ്ങള്‍ "
 "/apps/panel/objects/$(id)-ല്‍ സൂക്ഷിക്കുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:19
+#: data/org.mate.panel.gschema.xml.in:50
 msgid "Enable tooltips"
 msgstr "സൂചനകള്‍ പ്രാവര്‍ത്തികമാക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:20
+#: data/org.mate.panel.gschema.xml.in:51
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 "true എങ്കില്‍, പാനലിലുള്ള ഒബ്ജക്ടുകള്‍ക്കു് ടൂള്‍ടിപ്പുകള്‍ ലഭ്യമാകുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:21
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:27
+#: data/org.mate.panel.gschema.xml.in:55
+#: data/org.mate.panel.toplevel.gschema.xml.in:70
 msgid "Enable animations"
 msgstr "നീങ്ങുന്നതു് പ്രാവര്‍ത്തികമാക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:22
+#: data/org.mate.panel.gschema.xml.in:59
 msgid "Autoclose drawer"
 msgstr "വലിപ്പു് സ്വയം അടയ്ക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:23
+#: data/org.mate.panel.gschema.xml.in:60
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -1440,11 +1464,11 @@ msgstr ""
 "true എങ്കില്‍, ഒരു ഡ്രോയറില്‍ ഉപയോക്താവു് ഒരു പ്രയോഗിനി അമര്‍ത്തുമ്പോള്‍, "
 "അതു് സ്വയമായി അടച്ചു പൂട്ടുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:24
+#: data/org.mate.panel.gschema.xml.in:64
 msgid "Confirm panel removal"
 msgstr "പാളി നീക്കം ചെയ്യുന്നത് ഉറപ്പ് വരുത്തുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:25
+#: data/org.mate.panel.gschema.xml.in:65
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1452,22 +1476,22 @@ msgstr ""
 "true എങ്കില്‍, ഉപയോക്താവിനു് പാനല്‍ നീക്കം ചെയ്യണമെങ്കില്‍ "
 "ഉറപ്പാക്കുന്നതിനായി ഒരു ഡയലോഗ് ലഭ്യമാകുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:26
+#: data/org.mate.panel.gschema.xml.in:69
 msgid "Highlight launchers on mouseover"
 msgstr "മൌസ് മുകളില്‍ വരുമ്പോള്‍ വിക്ഷേപിണികള്‍ എടുത്തു് കാണിയ്ക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:27
+#: data/org.mate.panel.gschema.xml.in:70
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "true എങ്കില്‍, ഉപയോക്താവു് പ്രയോഗിനിയിലൂടെ പോയിന്റര്‍ നീക്കുമ്പോള്‍, അതു് "
 "എടുത്തുകാണിക്കുന്നു."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:28
+#: data/org.mate.panel.gschema.xml.in:74
 msgid "Complete panel lockdown"
 msgstr "പാളി മുഴുവനായും പൂട്ടിയിടുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:29
+#: data/org.mate.panel.gschema.xml.in:75
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The"
@@ -1478,12 +1502,12 @@ msgstr ""
 "മാറ്റങ്ങള്‍ പ്രാഗല്‍ഭ്യത്തിലാകുന്നതിനു് മുമ്പു് പാനല്‍ വീണ്ടും "
 "ആരംഭിക്കേണ്ടതുണ്ടു്."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:30
+#: data/org.mate.panel.gschema.xml.in:79
 msgid "Applet IIDs to disable from loading"
 msgstr ""
 "ലഭ്യമാക്കുന്നതില്‍ നിന്നും പ്രവര്‍ത്തന രഹിതമാക്കുന്നതിനായുള്ള ആപ്ലെറ്റ് IID"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:31
+#: data/org.mate.panel.gschema.xml.in:80
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1497,11 +1521,11 @@ msgstr ""
 "'OAFIID:MATE_MiniCommanderApplet' ചേര്‍ക്കുക. ഇതു് "
 "പ്രാഗല്‍ഭ്യത്തിലാകുന്നതിനായി പാനല്‍ വീണ്ടും ആരംഭിക്കേണ്ടതാണു്."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:32
+#: data/org.mate.panel.gschema.xml.in:84
 msgid "Disable Force Quit"
 msgstr "നിര്‍ബന്ധപൂര്‍വ്വമുളള അടച്ചുപൂട്ടല്‍ അപ്രാപ്യമാക്കുക"
 
-#: ../data/org.mate.panel.gschema.xml.in.h:33
+#: data/org.mate.panel.gschema.xml.in:85
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1510,105 +1534,105 @@ msgstr ""
 "അനുമതി നീക്കം ചെയ്തു് ഉപയോക്താവു് ഒരു പ്രയോഗം നിര്‍ബന്ധമായും പുറത്തു് "
 "കടക്കുന്നതിനായി പാനല്‍ അനുവദിക്കുന്നില്ല."
 
-#: ../data/org.mate.panel.gschema.xml.in.h:34
+#: data/org.mate.panel.gschema.xml.in:89
 msgid "Enable SNI support"
 msgstr ""
 
-#: ../data/org.mate.panel.gschema.xml.in.h:35
+#: data/org.mate.panel.gschema.xml.in:90
 msgid "If true, the panel provides support for SNI."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:1
+#: data/org.mate.panel.menubar.gschema.xml.in:15
 msgid "Show applications menu"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:2
+#: data/org.mate.panel.menubar.gschema.xml.in:16
 msgid "If true, show applications item in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:3
+#: data/org.mate.panel.menubar.gschema.xml.in:20
 msgid "Show places menu"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:4
+#: data/org.mate.panel.menubar.gschema.xml.in:21
 msgid "If true, show places item in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:5
+#: data/org.mate.panel.menubar.gschema.xml.in:25
 msgid "Show desktop menu"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:6
+#: data/org.mate.panel.menubar.gschema.xml.in:26
 msgid "If true, show desktop item in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:7
+#: data/org.mate.panel.menubar.gschema.xml.in:30
 msgid "Show icon"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:8
+#: data/org.mate.panel.menubar.gschema.xml.in:31
 msgid "If true, show icon in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:9
+#: data/org.mate.panel.menubar.gschema.xml.in:35
 msgid "Icon to show in menu bar"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:10
+#: data/org.mate.panel.menubar.gschema.xml.in:36
 msgid "Set the theme icon name to use in menu bar."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:11
+#: data/org.mate.panel.menubar.gschema.xml.in:40
 msgid "Menu bar icon size"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:12
+#: data/org.mate.panel.menubar.gschema.xml.in:41
 msgid ""
 "Set the size of an icon used in menu bar. The panel must be restarted for "
 "this to take effect."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:13
+#: data/org.mate.panel.menubar.gschema.xml.in:45
 msgid "Menu items icon size"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:14
+#: data/org.mate.panel.menubar.gschema.xml.in:46
 msgid ""
 "Set the size of icons used in the menu. The panel must be restarted for this"
 " to take effect."
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:15
+#: data/org.mate.panel.menubar.gschema.xml.in:50
 msgid "Threshold of menu items before submenu is created"
 msgstr ""
 
-#: ../data/org.mate.panel.menubar.gschema.xml.in.h:16
+#: data/org.mate.panel.menubar.gschema.xml.in:51
 msgid ""
 "Maximum number of menu items (i.e. bookmarks) that are displayed without "
 "being put in a submenu."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:1
+#: data/org.mate.panel.object.gschema.xml.in:5
 msgid "Panel object type"
 msgstr "പാളി വസ്തുവിന്റെ തരം"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:2
+#: data/org.mate.panel.object.gschema.xml.in:6
 msgid "The type of this panel object."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:3
+#: data/org.mate.panel.object.gschema.xml.in:10
 msgid "Toplevel panel containing object"
 msgstr "ഒബ്ജക്ടുള്ള മുകളിലുള്ള പാനല്‍"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:4
+#: data/org.mate.panel.object.gschema.xml.in:11
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "ഈ ഒബ്ജക്ടുള്ള മുകളിലുള്ള പാനല്‍ തിരിച്ചറിയുന്നതിനുള്ള സഹായി."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:5
+#: data/org.mate.panel.object.gschema.xml.in:15
 msgid "Object's position on the panel"
 msgstr "പാളിയില്‍ ഒബ്ജക്ടിന്റെ സ്ഥലം"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:6
+#: data/org.mate.panel.object.gschema.xml.in:16
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
@@ -1616,11 +1640,11 @@ msgstr ""
 "ഈ പാനല്‍ ഒബ്ജക്ടിന്റെ സ്ഥലം. ഇടത്ത് (കുറുകെയെങ്കില്‍ മുകളില്‍) പാനല്‍ "
 "വരമ്പില്‍ നിന്നുമുള്ള പിക്സലുകളുടെ എണ്ണം മുഖേന സ്ഥലം വ്യക്തമാകുന്നു."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:7
+#: data/org.mate.panel.object.gschema.xml.in:20
 msgid "Interpret position relative to bottom/right edge"
 msgstr "താഴെ/വലതു് വരമ്പിലായി സ്ഥലം കണക്കാക്കുക"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:8
+#: data/org.mate.panel.object.gschema.xml.in:21
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
 " bottom if vertical) edge of the panel."
@@ -1628,11 +1652,11 @@ msgstr ""
 "true എങ്കില്‍, ഒബ്ജക്ടിന്റെ സ്ഥലം പാനലിന്റെ വലത്തു് (കുറുകെയെങ്കില്‍ താഴെ) "
 "വരമ്പിലായി കണക്കാക്കുന്നു."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:9
+#: data/org.mate.panel.object.gschema.xml.in:25
 msgid "Lock the object to the panel"
 msgstr "പാളിയിലേയ്ക്കു് ഒബ്ജക്ടിനെ പൂട്ടുക"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:10
+#: data/org.mate.panel.object.gschema.xml.in:26
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
@@ -1640,11 +1664,11 @@ msgstr ""
 "true എങ്കില്‍, \"Unlock\" മെനു വസ്തു ഉപയോഗിച്ചു് ആദ്യം ഒബ്ജക്ട് അണ്‍ലോക്ക് "
 "ചെയ്യാതെ, ഉപയോക്താവു് ആപ്ലെറ്റ് നീക്കുന്നില്ല."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:11
+#: data/org.mate.panel.object.gschema.xml.in:30
 msgid "Applet IID"
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:12
+#: data/org.mate.panel.object.gschema.xml.in:31
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1652,11 +1676,11 @@ msgid ""
 "applet\")."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:13
+#: data/org.mate.panel.object.gschema.xml.in:35
 msgid "Panel attached to drawer"
 msgstr "വലിപ്പിലേയ്ക്കു് പാളി ഘടിപ്പിച്ചിരിയ്ക്കുന്നു"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:14
+#: data/org.mate.panel.object.gschema.xml.in:36
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
@@ -1665,11 +1689,11 @@ msgstr ""
 "object_type കീ \"drawer-object\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് "
 "പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:15
+#: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Tooltip displayed for drawer or menu"
 msgstr "വലിപ്പിനോ മെനുവിനോ സൂചന പ്രദര്‍ശിപ്പിച്ചു"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:16
+#: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
@@ -1679,11 +1703,11 @@ msgstr ""
 "key  \"drawer-object\" അല്ലെങ്കില്‍ \"menu-object\" ആണെങ്കില്‍ മാത്രമേ ഈ "
 "കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:17
+#: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Use custom icon for object's button"
 msgstr "ഒബ്ജക്ടിനുള്ള ബട്ടണിനായി നിങ്ങള്‍ സജ്ജമാക്കിയ ചിഹ്നം ഉപയോഗിക്കുക"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:18
+#: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -1694,11 +1718,11 @@ msgstr ""
 "കീ \"menu-object\" അല്ലെങ്കില്‍ \"drawer-object\" ആണെങ്കില്‍ മാത്രമേ ഈ "
 "കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:19
+#: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Icon used for object's button"
 msgstr "ഒബ്ജക്ടുകളുടെ ബട്ടണ് വേണ്ടി ഉപയോഗിക്കുന്ന പ്രതെരൂപം"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:20
+#: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -1708,11 +1732,11 @@ msgstr ""
 "object_type കീ \"drawer-object\" അല്ലെങ്കില്‍ \"menu-object\", "
 "use_custom_icon കീ true ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:21
+#: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Use custom path for menu contents"
 msgstr "മെനുവിലുള്ളവയ്ക്കായി നിങ്ങള്‍ തയ്യാറാക്കിയ പാഥ് ഉപയോഗിക്കുക"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:22
+#: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -1722,11 +1746,11 @@ msgstr ""
 " false എങ്കില്‍, menu_path കീ ഉപേക്ഷിക്കുന്നു. object_type കീ \"menu-"
 "object\"ആണെങ്കില്‍ മാത്രം ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:23
+#: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Menu content path"
 msgstr "മെനു ഉള്ളടക്കത്തിന്റെ വഴി"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:24
+#: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
@@ -1735,21 +1759,21 @@ msgstr ""
 "മെനു ഉള്ളടക്കം ഉണ്ടാക്കുന്നതിനുള്ള പാഥ്.  use_menu_path കീ true, object_type"
 " കീ \"menu-object\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്ക് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:25
+#: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Draw arrow in menu button"
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:26
+#: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
 msgstr ""
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:27
+#: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Launcher location"
 msgstr "പ്രയോഗിനിയുടെ സ്ഥലം"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:28
+#: data/org.mate.panel.object.gschema.xml.in:71
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
@@ -1757,11 +1781,11 @@ msgstr ""
 "പ്രയോഗിനി വിശേഷിപ്പിക്കുന്ന .desktop ഫയലിന്റെ സ്ഥലം. object_type കീ "
 "\"launcher-object\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:29
+#: data/org.mate.panel.object.gschema.xml.in:75
 msgid "Action button type"
 msgstr "പ്രവര്‍ത്തന ബട്ടണ്‍ തരം"
 
-#: ../data/org.mate.panel.object.gschema.xml.in.h:30
+#: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
@@ -1772,11 +1796,11 @@ msgstr ""
 "object_type കീ  \"action-applet\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് "
 "പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:1
+#: data/org.mate.panel.toplevel.gschema.xml.in:5
 msgid "Name to identify panel"
 msgstr "പാളി തിരിച്ചറിയുന്നതിനായി പേര് നല്‍കുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:2
+#: data/org.mate.panel.toplevel.gschema.xml.in:6
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -1786,11 +1810,11 @@ msgstr ""
 "സാധിക്കുന്ന പേരാണിതു്. പാനലിന്റെ ജാലക തലക്കെട്ടായുപയോഗിക്കുക എന്നതാണു് "
 "ഇതിന്റെ പ്രധാന ഉപയോഗം. പാനലുകളിലൂടെയുള്ള യാത്രയില്‍ ഇതു് സഹായിക്കുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:3
+#: data/org.mate.panel.toplevel.gschema.xml.in:10
 msgid "X screen where the panel is displayed"
 msgstr "പാളി പ്രദര്‍ശിപ്പിച്ചിരിക്കുന്ന X സ്ക്രീന്‍"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:4
+#: data/org.mate.panel.toplevel.gschema.xml.in:11
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -1799,11 +1823,11 @@ msgstr ""
 "പാനലുകള്‍ ലഭിക്കുന്നു. ഏതു് സ്ക്രീനിലാണു് പാനല്‍ ലഭ്യമാകുന്നതെന്നു് ഈ കീ "
 "സൂചിപ്പിക്കുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:5
+#: data/org.mate.panel.toplevel.gschema.xml.in:15
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "പാളി പ്രദര്‍ശിപ്പിച്ചിരിക്കുന്ന Xinerama മോണിറ്റര്‍"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:6
+#: data/org.mate.panel.toplevel.gschema.xml.in:16
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -1812,11 +1836,11 @@ msgstr ""
 "പാനലുകളുണ്ടാവാം. പാനല്‍ ലഭ്യമാകുന്ന നിലവിലുള്ള മോണിറ്റര്‍ ഈ കീ "
 "തിരിച്ചറിയുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:7
+#: data/org.mate.panel.toplevel.gschema.xml.in:20
 msgid "Expand to occupy entire screen width"
 msgstr "സ്ക്രീനിന്റെ മുഴുവന്‍ വീതിയും നിറയുന്ന രീതിയില്‍ വലുതാക്കുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:8
+#: data/org.mate.panel.toplevel.gschema.xml.in:21
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge."
@@ -1829,11 +1853,11 @@ msgstr ""
 "പ്രയോഗിനികള്‍, ബട്ടണുകള്‍ എന്നിവ മാത്രം സ്ഥാപിക്കുവാനുള്ള വലിപ്പത്തിലാണു് "
 "പാനല്‍."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:9
+#: data/org.mate.panel.toplevel.gschema.xml.in:25
 msgid "Panel orientation"
 msgstr "പാളിയുടെ ദിശ"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:10
+#: data/org.mate.panel.toplevel.gschema.xml.in:26
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", "
 "\"left\", \"right\". In expanded mode the key specifies which screen edge "
@@ -1854,11 +1878,11 @@ msgstr ""
 "പാനലില്‍, പാനലിനു് മുകളില്‍ ഒരു മെനു ബട്ടണ്‍ അതിന്റെ മെനു പോപ്പപ്പ് "
 "ചെയ്യുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:11
+#: data/org.mate.panel.toplevel.gschema.xml.in:30
 msgid "Panel size"
 msgstr "പാളിയുടെ വലിപ്പം"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:12
+#: data/org.mate.panel.toplevel.gschema.xml.in:31
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1870,11 +1894,11 @@ msgstr ""
 "വ്യാപ്തി ലഭ്യമാക്കുന്നു. സ്ക്രീനിന്റെ ഉയരത്തിന്റെ (അല്ലെങ്കില്‍ വീതി) ഒരു "
 "നാലിലൊന്നായി ഏറ്റവും കൂടിയ വ്യാപ്തിയായുപയോഗിക്കുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:13
+#: data/org.mate.panel.toplevel.gschema.xml.in:35
 msgid "X co-ordinate of panel"
 msgstr "പാനലിന്റെ X കോര്‍ഡിനേറ്റ്"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:14
+#: data/org.mate.panel.toplevel.gschema.xml.in:36
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1885,11 +1909,11 @@ msgstr ""
 "സംവേദനത്തിനുള്ള കീ വ്യക്തമാക്കിയ സ്ക്രീനിന്റെ വരമ്പിലാണു് പാനല്‍ "
 "സ്ഥാപിക്കുന്നതു്."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:15
+#: data/org.mate.panel.toplevel.gschema.xml.in:40
 msgid "Y co-ordinate of panel"
 msgstr "പാനലിന്റെ Y കോര്‍ഡിനേറ്റ്"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:16
+#: data/org.mate.panel.toplevel.gschema.xml.in:41
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1900,11 +1924,11 @@ msgstr ""
 "സംവേദനത്തിനുള്ള കീ വ്യക്തമാക്കിയ സ്ക്രീനിന്റെ വരമ്പിലാണു് പാനല്‍ "
 "സ്ഥാപിക്കുന്നതു്."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:17
+#: data/org.mate.panel.toplevel.gschema.xml.in:45
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr "സ്ക്രീനിന്റെ വലത് ഭാഗം മുതല്‍ ആരംഭിക്കുന്ന, പാനലിന്റെ X കോര്‍ഡിനേറ്റ്"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:18
+#: data/org.mate.panel.toplevel.gschema.xml.in:46
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1920,11 +1944,11 @@ msgstr ""
 "ഉപേക്ഷിക്കുന്നു. സംവേദന കീ വ്യക്തമാക്കുന്ന സ്ക്രീന്‍ വരമ്പില്‍ പാനല്‍ "
 "സ്ഥാപിക്കുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:19
+#: data/org.mate.panel.toplevel.gschema.xml.in:50
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "സ്ക്രീനിന്റെ താഴെ മുതല്‍ ആരംഭിക്കുന്ന, പാനലിന്റെ Y കോര്‍ഡിനേറ്റ്"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:20
+#: data/org.mate.panel.toplevel.gschema.xml.in:51
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1940,11 +1964,11 @@ msgstr ""
 "ഉപേക്ഷിക്കുന്നു. സംവേദന കീ വ്യക്തമാക്കുന്ന സ്ക്രീന്‍ വരമ്പില്‍ പാനല്‍ "
 "സ്ഥാപിക്കുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:21
+#: data/org.mate.panel.toplevel.gschema.xml.in:55
 msgid "Center panel on x-axis"
 msgstr "മദ്ധ്യത്തിലുളള പാളി x-ആക്സില്‍"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:22
+#: data/org.mate.panel.toplevel.gschema.xml.in:56
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -1957,11 +1981,11 @@ msgstr ""
 "പാനല്‍ രണ്ടു് വശത്തേക്കും വ്യാപിക്കുന്നു. false എങ്കില്‍, x, x_right കീകള്‍ "
 "പാനലിന്റെ സ്ഥലം വ്യക്തമാക്കുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:23
+#: data/org.mate.panel.toplevel.gschema.xml.in:60
 msgid "Center panel on y-axis"
 msgstr "മദ്ധ്യത്തിലുളള പാളി y-ആക്സില്‍"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:24
+#: data/org.mate.panel.toplevel.gschema.xml.in:61
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -1974,11 +1998,11 @@ msgstr ""
 "പാനല്‍ രണ്ടു് വശത്തേക്കും വ്യാപിക്കുന്നു. false എങ്കില്‍, y, y_bottom കീകള്‍"
 " പാനലിന്റെ സ്ഥലം വ്യക്തമാക്കുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:25
+#: data/org.mate.panel.toplevel.gschema.xml.in:65
 msgid "Automatically hide panel into corner"
 msgstr "പാളി സ്വയം മൂലയ്ക്കൊതുക്കുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:26
+#: data/org.mate.panel.toplevel.gschema.xml.in:66
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -1988,7 +2012,7 @@ msgstr ""
 "പാനല്‍ സ്വയം അദൃശ്യമാകുന്നു. ആ മൂലയിലേക്ക് സൂചിക വീണ്ടും നീക്കിയാല്‍, പാനല്‍"
 " വീണ്ടും ലഭ്യമാകുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:28
+#: data/org.mate.panel.toplevel.gschema.xml.in:71
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
@@ -1996,11 +2020,11 @@ msgstr ""
 "true എങ്കില്‍, ഉടനായി സംഭവിക്കുന്നതിനു് പകരം ഈ പാനല്‍ ദൃശ്യവും "
 "അദൃശ്യവുമാകുന്നതു് ആനിമേറ്റ് ചെയ്യപ്പെടുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:29
+#: data/org.mate.panel.toplevel.gschema.xml.in:75
 msgid "Enable hide buttons"
 msgstr "അദൃശ്യമായ ബട്ടണുകള്‍ സജ്ജമാക്കുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:30
+#: data/org.mate.panel.toplevel.gschema.xml.in:76
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -2009,11 +2033,11 @@ msgstr ""
 "രണ്ടു് വശത്തും ബട്ടണുകള്‍ സ്ഥാപിക്കുന്നു. അപ്പോള്‍ ഒരു ബട്ടണ്‍ മാത്രമേ "
 "കാണുകയുള്ളൂ."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:31
+#: data/org.mate.panel.toplevel.gschema.xml.in:80
 msgid "Enable arrows on hide buttons"
 msgstr "ഒളിപ്പിയ്ക്കാനുള്ള ബട്ടണുകളില്‍ അമ്പുകള്‍ പ്രാവര്‍ത്തികമാക്കുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:32
+#: data/org.mate.panel.toplevel.gschema.xml.in:81
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -2021,11 +2045,11 @@ msgstr ""
 "true എങ്കില്‍, അദൃശ്യമായ ബട്ടണുകളില്‍ ആരോകള്‍ സ്ഥാപിക്കപ്പെടുന്നു. "
 "enable_buttons കീ true എങ്കില്‍ മാത്രമേ ഈ കീയ്ക്ക് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:33
+#: data/org.mate.panel.toplevel.gschema.xml.in:85
 msgid "Panel autohide delay"
 msgstr "പാളി സ്വയം ഒളിയ്ക്കാനുള്ള ഇടവേള"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:34
+#: data/org.mate.panel.toplevel.gschema.xml.in:86
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -2036,11 +2060,11 @@ msgstr ""
 "വ്യക്തമാക്കുന്നു. auto_hide കീ true ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് "
 "പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:35
+#: data/org.mate.panel.toplevel.gschema.xml.in:90
 msgid "Panel autounhide delay"
 msgstr "പാളി സ്വയം തിരിച്ചു വരാനുള്ള ഇടവേള"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:36
+#: data/org.mate.panel.toplevel.gschema.xml.in:91
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -2050,11 +2074,11 @@ msgstr ""
 " ലഭ്യമാകുന്നതിനു് ശേഷമുള്ള താമസം മില്ലിസെക്കന്‍ഡുകളില്‍ വ്യക്തമാക്കുന്നു. "
 "auto_hide കീ true ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:37
+#: data/org.mate.panel.toplevel.gschema.xml.in:95
 msgid "Visible pixels when hidden"
 msgstr "അദൃശ്യമാക്കുമ്പോള്‍ കാണുവാന്‍ സാധ്യമാകുന്ന പിക്സലുകള്‍"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:38
+#: data/org.mate.panel.toplevel.gschema.xml.in:96
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is "
@@ -2064,11 +2088,11 @@ msgstr ""
 "എണ്ണം വ്യക്തമാക്കുന്നു. auto_hide കീ true ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് "
 "പ്രാധാന്യമുള്ളൂ."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:39
+#: data/org.mate.panel.toplevel.gschema.xml.in:100
 msgid "Animation speed"
 msgstr "നീക്കത്തിന്റെ വേഗത"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:40
+#: data/org.mate.panel.toplevel.gschema.xml.in:101
 msgid ""
 "The speed in which panel animations should occur. Possible values are "
 "\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -2078,11 +2102,11 @@ msgstr ""
 "\"ഇടത്തരം\" , \"പെട്ടെന്നു്\". enable_animations കീ true ആണെങ്കില്‍ മാത്രമേ "
 "ഈ കീയ്ക്കുപയോഗമുള്ളൂ."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:41
+#: data/org.mate.panel.toplevel.gschema.xml.in:108
 msgid "Background type"
 msgstr "ഏത് തരം പശ്ചാത്തലം"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:42
+#: data/org.mate.panel.toplevel.gschema.xml.in:109
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -2090,19 +2114,19 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:43
+#: data/org.mate.panel.toplevel.gschema.xml.in:113
 msgid "Background color"
 msgstr "പശ്ചാത്തല നിറം"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:44
+#: data/org.mate.panel.toplevel.gschema.xml.in:114
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "പാനലിലേക്കുളള പശ്ചാത്തല നിറം #RGB രീതിയില്‍ നല്‍കുക."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:45
+#: data/org.mate.panel.toplevel.gschema.xml.in:118
 msgid "Background color opacity"
 msgstr "പശ്ചാത്തല നിറത്തിന്റെ അതാര്യത"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:46
+#: data/org.mate.panel.toplevel.gschema.xml.in:119
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited"
@@ -2112,11 +2136,11 @@ msgstr ""
 "ഇരുണ്ടതല്ലെങ്കില്‍ (65535-ല്‍ കുറഞ്ഞൊരു മൂല്ല്യം), പണിയിട "
 "പശ്ചാത്തലത്തിലേക്ക് ഇമേജില്‍ നിറം വേര്‍തിരിക്കപ്പെടുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:47
+#: data/org.mate.panel.toplevel.gschema.xml.in:123
 msgid "Background image"
 msgstr "പശ്ചാത്തലത്തിലുളള ചിത്രം"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:48
+#: data/org.mate.panel.toplevel.gschema.xml.in:124
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -2126,11 +2150,11 @@ msgstr ""
 " ചാനലുണ്ടെങ്കില്‍, പണിയിട പശ്ചാത്തലത്തിലേക്ക് ഇമേജില്‍ നിറം "
 "വേര്‍തിരിക്കപ്പെടുന്നു."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:49
+#: data/org.mate.panel.toplevel.gschema.xml.in:128
 msgid "Fit image to panel"
 msgstr "പാളിയില്‍ ചിത്രം കൊള്ളിയ്ക്കുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:50
+#: data/org.mate.panel.toplevel.gschema.xml.in:129
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
@@ -2138,11 +2162,11 @@ msgstr ""
 "true എങ്കില്‍, ചിത്രം പാനലിന്റെ ഉയരത്തില്‍ (നേരെയെങ്കില്‍) ലഭ്യമാകുന്നു "
 "(ചിത്രത്തിന്റെ ആസ്പെക്ട് റേഷ്യോ സൂക്ഷിക്കുന്നു)."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:51
+#: data/org.mate.panel.toplevel.gschema.xml.in:133
 msgid "Stretch image to panel"
 msgstr "ഇമേജ് പാളിയിലേയ്ക്കു് വലിച്ച് നീട്ടുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:52
+#: data/org.mate.panel.toplevel.gschema.xml.in:134
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
@@ -2150,11 +2174,11 @@ msgstr ""
 "true എങ്കില്‍, ചിത്രം പാനലിന്റെ അളവുകളില്‍ ലഭ്യമാകുന്നു. ചിത്രത്തിന്റെ "
 "ആസ്പെക്ട് റേഷ്യോ കൈകാര്യം ചെയ്യുവാന്‍ സാധ്യമല്ല."
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:53
+#: data/org.mate.panel.toplevel.gschema.xml.in:138
 msgid "Rotate image on vertical panels"
 msgstr "കുറുകെയുളള പാളിയില്‍ ഇമേജ് കറക്കുക"
 
-#: ../data/org.mate.panel.toplevel.gschema.xml.in.h:54
+#: data/org.mate.panel.toplevel.gschema.xml.in:139
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
@@ -2162,175 +2186,164 @@ msgstr ""
 "true എങ്കില്‍, പാനല്‍ കുറുകെ തിരിക്കുമ്പോള്‍ പശ്ചാത്തല ചിത്രവും "
 "തിരിക്കപ്പെടുന്നു."
 
-#: ../mate-panel/libegg/eggdesktopfile.c:168
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr "ഫയല്‍ ശരിയായ ഒരു .desktop ഫയല്‍ അല്ല"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:191
+#: mate-panel/libegg/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "അപരിചിതമായ പണിയിട ഫയല്‍ പതിപ്പു് '%s'"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:963
+#: mate-panel/libegg/eggdesktopfile.c:963
 #, c-format
 msgid "Starting %s"
 msgstr "%s ആരംഭിക്കുന്നു"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1105
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1105
 msgid "Application does not accept documents on command line"
 msgstr "കമാന്‍ഡ് ലൈനില്‍ പ്രയോഗം രേഖകള്‍ സ്വീകരിക്കുന്നതല്ല"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1173
+#: mate-panel/libegg/eggdesktopfile.c:1173
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "അപരിചിതമായ ലഭ്യമാക്കുവാനുള്ള ഉപാധി: %d"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1390
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1390
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "'Type=Link'  പണിയിട അംഗത്തിലേക്കു് ഡോക്യുമെന്റ് URI അയക്കാന്‍ കഴിയില്ല"
 
-#: ../mate-panel/libegg/eggdesktopfile.c:1411
-#, c-format
+#: mate-panel/libegg/eggdesktopfile.c:1411
 msgid "Not a launchable item"
 msgstr "ലഭ്യമാക്കുവാന്‍ സാധിക്കുന്ന വസ്തുവല്ല"
 
-#: ../mate-panel/libegg/eggsmclient.c:222
+#: mate-panel/libegg/eggsmclient.c:222
 msgid "Disable connection to session manager"
 msgstr "സെഷന്‍ മാനേജറിലേക്കുള്ള കണക്ഷന്‍ പ്രവര്‍ത്തന രഹിതമാക്കുക"
 
-#: ../mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/libegg/eggsmclient.c:225
 msgid "Specify file containing saved configuration"
 msgstr "സൂക്ഷിച്ചിട്ടുള്ള ക്രമീകരണം അടങ്ങുന്ന ഫയല്‍ നല്‍കുക"
 
-#: ../mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/libegg/eggsmclient.c:225
 msgid "FILE"
 msgstr "FILE"
 
-#: ../mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/libegg/eggsmclient.c:228
 msgid "Specify session management ID"
 msgstr "സെഷന്‍ മാനേജ്മെന്റ് ID വ്യക്തമാക്കുക"
 
-#: ../mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/libegg/eggsmclient.c:228
 msgid "ID"
 msgstr "ID"
 
-#: ../mate-panel/libegg/eggsmclient.c:249
+#: mate-panel/libegg/eggsmclient.c:249
 msgid "Session management options:"
 msgstr "സെഷന്‍ മാനേജ്മെന്റ് ഉപാധികള്‍:"
 
-#: ../mate-panel/libegg/eggsmclient.c:250
+#: mate-panel/libegg/eggsmclient.c:250
 msgid "Show session management options"
 msgstr "സെഷന്‍ മാനേജ്മെന്റ് ഉപാധികള്‍ കാണിക്കുക"
 
-#: ../mate-panel/libpanel-util/panel-gtk.c:138
+#: mate-panel/libpanel-util/panel-gtk.c:138
 msgid "_Open"
 msgstr "_തുറക്കുക"
 
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../mate-panel/libpanel-util/panel-error.c:76
-#: ../mate-panel/panel-applet-frame.c:798
-#: ../mate-panel/panel-applet-frame.c:986
+#: mate-panel/libpanel-util/panel-error.c:76
+#: mate-panel/panel-applet-frame.c:798 mate-panel/panel-applet-frame.c:986
 msgid "Error"
 msgstr "ടെറര്‍പിശക്"
 
-#: ../mate-panel/libpanel-util/panel-icon-chooser.c:374
+#: mate-panel/libpanel-util/panel-icon-chooser.c:374
 msgid "Choose an icon"
 msgstr "ഒരു ചിഹ്നം തെരഞ്ഞെടുക്കുക"
 
-#: ../mate-panel/libpanel-util/panel-launch.c:45
+#: mate-panel/libpanel-util/panel-launch.c:45
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "'%s' തുടങ്ങാന്‍ സാധിച്ചില്ല"
 
-#: ../mate-panel/libpanel-util/panel-launch.c:48 ../mate-panel/launcher.c:162
+#: mate-panel/libpanel-util/panel-launch.c:48 mate-panel/launcher.c:162
 msgid "Could not launch application"
 msgstr "പ്രയോഗം തുടങ്ങുവാന്‍ സാധ്യമായില്ല"
 
-#: ../mate-panel/libpanel-util/panel-show.c:44
+#: mate-panel/libpanel-util/panel-show.c:44
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "'%s' സ്ഥലം തുറക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../mate-panel/libpanel-util/panel-show.c:158
+#: mate-panel/libpanel-util/panel-show.c:158
 msgid "No application to handle search folders is installed."
 msgstr ""
 "തെരച്ചിലിനുള്ള ഫോള്‍ഡര്‍ ഇന്‍സ്റ്റോള്‍ ചെയ്തിട്ടുണ്ടോ എന്നു് കൈകാര്യം "
 "ചെയ്യുന്നതിനായി പ്രയോഗം ലഭ്യമല്ല."
 
-#: ../mate-panel/applet.c:468
+#: mate-panel/applet.c:468
 msgid "???"
 msgstr "???"
 
-#: ../mate-panel/applet.c:548 ../libmate-panel-applet/mate-panel-applet.c:139
+#: mate-panel/applet.c:548 libmate-panel-applet/mate-panel-applet.c:139
 msgid "_Remove From Panel"
 msgstr "പാളിയില്‍ നിന്നും _നീക്കംചെയ്യുക"
 
-#: ../mate-panel/applet.c:556 ../libmate-panel-applet/mate-panel-applet.c:142
+#: mate-panel/applet.c:556 libmate-panel-applet/mate-panel-applet.c:142
 msgid "_Move"
 msgstr "_നീക്കുക"
 
-#: ../mate-panel/applet.c:574 ../libmate-panel-applet/mate-panel-applet.c:148
+#: mate-panel/applet.c:574 libmate-panel-applet/mate-panel-applet.c:148
 msgid "Loc_k To Panel"
 msgstr "_പാളിയില്‍ പൂട്ടുക"
 
-#: ../mate-panel/applet.c:1313
+#: mate-panel/applet.c:1313
 msgid "Cannot find an empty spot"
 msgstr "കാലിയായ സ്ഥലം ലഭ്യമല്ല"
 
-#: ../mate-panel/drawer.c:443 ../mate-panel/panel-addto.c:189
-#: ../mate-panel/panel-toplevel.c:1667
+#: mate-panel/drawer.c:443 mate-panel/panel-addto.c:189
+#: mate-panel/panel-toplevel.c:1650
 msgid "Drawer"
 msgstr "വലിപ്പ്"
 
-#: ../mate-panel/drawer.c:550
+#: mate-panel/drawer.c:550
 msgid "_Add to Drawer..."
 msgstr "വലിപ്പിലേക്ക് _ചേര്‍ക്കുക..."
 
-#: ../mate-panel/drawer.c:556 ../mate-panel/launcher.c:602
-#: ../mate-panel/panel-action-button.c:194
-#: ../mate-panel/panel-context-menu.c:246
+#: mate-panel/drawer.c:556 mate-panel/launcher.c:602
+#: mate-panel/panel-action-button.c:194 mate-panel/panel-context-menu.c:246
 msgid "_Properties"
 msgstr "സവിശേഷതകള്‍ (_P)"
 
-#: ../mate-panel/mate-desktop-item-edit.c:27
+#: mate-panel/mate-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "പറഞ്ഞിരിക്കുന്ന ഡയറക്ടറിയില്‍ പുതിയ ഫയല്‍ ഉണ്ടാക്കുക"
 
-#: ../mate-panel/mate-desktop-item-edit.c:28
+#: mate-panel/mate-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[FILE...]"
 
-#: ../mate-panel/mate-desktop-item-edit.c:106
+#: mate-panel/mate-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- .desktop ഫയലുകളില്‍ മാറ്റം വരുത്തുക"
 
-#: ../mate-panel/mate-desktop-item-edit.c:144
-#: ../mate-panel/mate-desktop-item-edit.c:198 ../mate-panel/launcher.c:973
+#: mate-panel/mate-desktop-item-edit.c:144
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:973
 msgid "Create Launcher"
 msgstr "വിക്ഷേപിണി നിര്‍മ്മിക്കുക"
 
-#: ../mate-panel/mate-desktop-item-edit.c:169
-#: ../mate-panel/mate-desktop-item-edit.c:192
+#: mate-panel/mate-desktop-item-edit.c:169
+#: mate-panel/mate-desktop-item-edit.c:192
 msgid "Directory Properties"
 msgstr "‌തട്ടിന്റെ ഗുണഗണങ്ങള്‍"
 
-#: ../mate-panel/mate-desktop-item-edit.c:175 ../mate-panel/launcher.c:817
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:817
 msgid "Launcher Properties"
 msgstr "വിക്ഷേപിണിയുടെ ഗുണഗണങ്ങള്‍"
 
-#: ../mate-panel/mate-panel.desktop.in.h:1 ../mate-panel/main.c:154
+#: mate-panel/mate-panel.desktop.in:4 mate-panel/main.c:158
 msgid "Panel"
 msgstr "പാളി"
 
-#: ../mate-panel/mate-panel.desktop.in.h:2
+#: mate-panel/mate-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -2338,259 +2351,253 @@ msgstr ""
 "മറ്റൂ് പ്രയോഗങ്ങള്‍ ലഭ്യമാക്കി, ജാലകങ്ങള്‍ കൈകാര്യം ചെയ്യുക, സമയം "
 "കാണിയ്ക്കുക പോലുള്ള യൂട്ടിലിറ്റികള്‍ നല്‍കുക."
 
-#: ../mate-panel/launcher.c:120
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: mate-panel/mate-panel.desktop.in:7
+msgid "mate-panel"
+msgstr ""
+
+#: mate-panel/launcher.c:120
 msgid "Could not show this URL"
 msgstr "ഈ URL കാണിക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../mate-panel/launcher.c:121
+#: mate-panel/launcher.c:121
 msgid "No URL was specified."
 msgstr "URL പറഞ്ഞിട്ടില്ല."
 
-#: ../mate-panel/launcher.c:217
+#: mate-panel/launcher.c:217
 msgid "Could not use dropped item"
 msgstr "നീക്കിയ ഇനം ഉപയോഗിയ്ക്കാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/launcher.c:451
-#, c-format
+#: mate-panel/launcher.c:451
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "പാനല്‍ ലഭ്യമാക്കുവാനുള്ള പണിയിട ഫയലിനുള്ള യുആര്‍ഐ ലഭ്യമല്ല\n"
 
-#: ../mate-panel/launcher.c:490
+#: mate-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "%s പണിയിട ഫയല്‍ %s%s പാനല്‍ ലഭ്യമാക്കല്‍ പ്രയോഗത്തിനായി തുറക്കുവാന്‍ "
 "സാധ്യമല്ല\n"
 
-#: ../mate-panel/launcher.c:594
+#: mate-panel/launcher.c:594
 msgid "_Launch"
 msgstr "_തുടങ്ങുക"
 
-#: ../mate-panel/launcher.c:910
+#: mate-panel/launcher.c:910
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr ""
 "%s എന്ന കീ ക്രമീകരിച്ചിട്ടില്ല, അതിനാല്‍ പ്രയോഗിനി ലഭ്യമാക്കുവാന്‍ "
 "സാധ്യമായില്ല\n"
 
-#: ../mate-panel/launcher.c:1042 ../mate-panel/panel-ditem-editor.c:1326
-#: ../mate-panel/panel-ditem-editor.c:1360
-#: ../mate-panel/panel-ditem-editor.c:1391
+#: mate-panel/launcher.c:1042 mate-panel/panel-ditem-editor.c:1326
+#: mate-panel/panel-ditem-editor.c:1360 mate-panel/panel-ditem-editor.c:1391
 msgid "Could not save launcher"
 msgstr "വിക്ഷേപിണി സൂക്ഷിക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../mate-panel/main.c:50
+#: mate-panel/main.c:54
 msgid "Replace a currently running panel"
 msgstr "ഇപ്പോള്‍ പ്രവര്‍ത്തിച്ചുകൊണ്ടിരിയ്ക്കുന്ന പാളി മാറ്റി വയ്ക്കുക"
 
-#. this feature was request in #mate irc channel
-#: ../mate-panel/main.c:52
+#: mate-panel/main.c:56
 msgid "Reset the panel configuration to default"
 msgstr ""
 
-#. open run dialog
-#: ../mate-panel/main.c:54
+#: mate-panel/main.c:58
 msgid "Execute the run dialog"
 msgstr ""
 
-#. default panels layout
-#: ../mate-panel/main.c:56
+#: mate-panel/main.c:60
 msgid "Set the default panel layout"
 msgstr ""
 
-#: ../mate-panel/menu.c:502
+#: mate-panel/menu.c:502
 msgid "Add this launcher to _panel"
 msgstr "പാളിയിലേയ്ക്കു് ഈ വിക്ഷേപിണി ചേര്‍ക്കുക"
 
-#: ../mate-panel/menu.c:509
+#: mate-panel/menu.c:509
 msgid "Add this launcher to _desktop"
 msgstr "പണിയിടത്തിലേയ്ക്കു് ഈ വിക്ഷേപിണി ചേര്‍ക്കുക"
 
-#: ../mate-panel/menu.c:521
+#: mate-panel/menu.c:521
 msgid "_Entire menu"
 msgstr "മെനു _മുഴുവനും"
 
-#: ../mate-panel/menu.c:526
+#: mate-panel/menu.c:526
 msgid "Add this as _drawer to panel"
 msgstr "ഇത് _വലിപ്പ് ആയി പാളിയിലേയ്ക്കു് ചേര്‍ക്കുക"
 
-#: ../mate-panel/menu.c:533
+#: mate-panel/menu.c:533
 msgid "Add this as _menu to panel"
 msgstr "ഇത് _മെനു ആയി പാളിയിലേയ്ക്കു് ചേര്‍ക്കുക"
 
-#: ../mate-panel/panel-action-button.c:182
+#: mate-panel/panel-action-button.c:182
 msgid "_Activate Screensaver"
 msgstr "സ്ക്രീന്‍ സേവര്‍ _സജീവമാക്കുക"
 
-#: ../mate-panel/panel-action-button.c:188
+#: mate-panel/panel-action-button.c:188
 msgid "_Lock Screen"
 msgstr "_സ്ക്രീന്‍ പൂട്ടുക"
 
-#: ../mate-panel/panel-action-button.c:332
+#: mate-panel/panel-action-button.c:332
 msgid "Could not connect to server"
 msgstr "സര്‍വറിലേക്ക് കണക്ട് ചെയ്യുവാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/panel-action-button.c:363
+#: mate-panel/panel-action-button.c:363
 msgid "Lock Screen"
 msgstr "സ്ക്രീന്‍ പൂട്ടുക"
 
-#: ../mate-panel/panel-action-button.c:364
+#: mate-panel/panel-action-button.c:364
 msgid "Protect your computer from unauthorized use"
 msgstr "നിങ്ങളുടെ കമ്പ്യൂട്ടര്‍ അനുവാദമില്ലാതെ ഉപയോഗിക്കുന്നത് തടയുക"
 
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: ../mate-panel/panel-action-button.c:378
+#: mate-panel/panel-action-button.c:378
 msgid "Log Out..."
 msgstr "പുറത്തിറങ്ങുക..."
 
-#: ../mate-panel/panel-action-button.c:379
+#: mate-panel/panel-action-button.c:379
 msgid "Log out of this session to log in as a different user"
 msgstr ""
 "മറ്റൊരു ഉപയോക്താവായി പ്രവേശിക്കുന്നതിന് ഈ സെഷനില്‍ നിന്നും പുറത്തിറങ്ങുക"
 
-#: ../mate-panel/panel-action-button.c:388
+#: mate-panel/panel-action-button.c:388
 msgid "Run Application..."
 msgstr "പ്രയോഗം പ്രവര്‍ത്തിപ്പിക്കുക..."
 
-#: ../mate-panel/panel-action-button.c:389
+#: mate-panel/panel-action-button.c:389
 msgid "Run an application by typing a command or choosing from a list"
 msgstr ""
 "ഒരു നിര്‍ദ്ദേശം നല്‍കിയോ പട്ടികയില്‍ നിന്നും തെരഞ്ഞെടുത്തോ പ്രയോഗം "
 "പ്രവര്‍ത്തിപ്പിക്കുക"
 
-#: ../mate-panel/panel-action-button.c:398
+#: mate-panel/panel-action-button.c:398
 msgid "Search for Files..."
 msgstr "ഫയലുകള്‍ തിരയുക..."
 
-#: ../mate-panel/panel-action-button.c:399
+#: mate-panel/panel-action-button.c:399
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "പേരു് അല്ലെങ്കില്‍ ഉള്ളടക്കമനുസരിച്ചു് ഈ കമ്പ്യൂട്ടറില്‍ വിവരണങ്ങള്‍ "
 "അല്ലെങ്കില്‍ ഫോള്‍ഡറുകള്‍ കണ്ടുപിടിക്കുക"
 
-#: ../mate-panel/panel-action-button.c:407
-#: ../mate-panel/panel-force-quit.c:250
+#: mate-panel/panel-action-button.c:407 mate-panel/panel-force-quit.c:250
 msgid "Force Quit"
 msgstr "നിര്‍ബന്ധ പൂര്‍വ്വം പുറത്ത് കടക്കുക"
 
-#: ../mate-panel/panel-action-button.c:408
+#: mate-panel/panel-action-button.c:408
 msgid "Force a misbehaving application to quit"
 msgstr "തകരാറുളള പ്രയോഗം നിര്‍ത്തുന്നതിനായി നിര്‍ബന്ധിക്കുക"
 
-#. FIXME icon
-#: ../mate-panel/panel-action-button.c:417
+#: mate-panel/panel-action-button.c:417
 msgid "Connect to Server..."
 msgstr "സര്‍വറിലേക്ക് കണക്ട് ചെയ്യുക..."
 
-#: ../mate-panel/panel-action-button.c:418
+#: mate-panel/panel-action-button.c:418
 msgid "Connect to a remote computer or shared disk"
 msgstr ""
 "വിദൂരത്തുളള സര്‍വറിലേക്ക് അല്ലെങ്കില്‍ ഷെയര്‍ ചെയ്ത ഡിസ്കുമായി കണക്ട് "
 "ചെയ്യുക"
 
-#: ../mate-panel/panel-action-button.c:426
+#: mate-panel/panel-action-button.c:426
 msgid "Shut Down..."
 msgstr "നിര്‍ത്തിവയ്ക്കുക..."
 
-#: ../mate-panel/panel-action-button.c:427
+#: mate-panel/panel-action-button.c:427
 msgid "Shut down the computer"
 msgstr "കമ്പ്യൂട്ടര്‍ നിര്‍ത്തിവയ്ക്കുക"
 
-#: ../mate-panel/panel-addto.c:125
+#: mate-panel/panel-addto.c:125
 msgid "Custom Application Launcher"
 msgstr "പ്രയോഗിനി നിങ്ങള്‍ക്ക് ഇഷ്ടമുളള രീതിയില്‍ ക്രമീകരിക്കുക"
 
-#: ../mate-panel/panel-addto.c:126
+#: mate-panel/panel-addto.c:126
 msgid "Create a new launcher"
 msgstr "പുതിയ വിക്ഷേപിണി നിര്‍മ്മിക്കുക"
 
-#: ../mate-panel/panel-addto.c:137
+#: mate-panel/panel-addto.c:137
 msgid "Application Launcher..."
 msgstr "പ്രയോഗത്തിനുളള വിക്ഷേപിണി..."
 
-#: ../mate-panel/panel-addto.c:138
+#: mate-panel/panel-addto.c:138
 msgid "Copy a launcher from the applications menu"
 msgstr "പ്രയോഗത്തിന്റെ മെനുവില്‍ നിന്നും ഒരു വിക്ഷേപിണി പകര്‍ത്തുക"
 
-#: ../mate-panel/panel-addto.c:153 ../mate-panel/panel-menu-button.c:1113
-msgid "Main Menu"
-msgstr "പ്രധാന മെനു"
+#: mate-panel/panel-addto.c:153
+msgid "Compact Menu"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:154
-msgid "The main MATE menu"
-msgstr "പ്രധാന ഗ്നോം മെനു"
+#: mate-panel/panel-addto.c:154
+msgid "A compact menu"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:165
-msgid "Menu Bar"
-msgstr "മെനു പട്ട"
+#: mate-panel/panel-addto.c:165
+msgid "Classic Menu"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:166
-msgid "A custom menu bar"
-msgstr "വേണ്ടപോലെ മാറ്റിയ ഒരു മെനു പട്ട"
+#: mate-panel/panel-addto.c:166
+msgid "The classic Applications, Places and System menu bar"
+msgstr ""
 
-#: ../mate-panel/panel-addto.c:177
+#: mate-panel/panel-addto.c:177
 msgid "Separator"
 msgstr "വിടവടയാളം"
 
-#: ../mate-panel/panel-addto.c:178
+#: mate-panel/panel-addto.c:178
 msgid "A separator to organize the panel items"
 msgstr "പാളിയിലുള്ള വസ്തുക്കള്‍ കൈകാര്യം ചെയ്യുന്നതിനായുളള വിടവടയാളം"
 
-#: ../mate-panel/panel-addto.c:190
+#: mate-panel/panel-addto.c:190
 msgid "A pop out drawer to store other items in"
 msgstr "മറ്റിനങ്ങള്‍ സൂക്ഷിയ്ക്കാവുന്ന വലിപ്പു്"
 
-#: ../mate-panel/panel-addto.c:274
+#: mate-panel/panel-addto.c:274
 msgid "(empty)"
 msgstr "(കാലി)"
 
-#: ../mate-panel/panel-addto.c:419
+#: mate-panel/panel-addto.c:419
 msgid "Not compatible with X11"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:426
+#: mate-panel/panel-addto.c:426
 msgid "Not compatible with Wayland"
 msgstr ""
 
-#: ../mate-panel/panel-addto.c:1053
+#: mate-panel/panel-addto.c:1053
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\"-ലേക്ക് ചേര്‍ക്കുന്നതിനായി ഒരു _ഇനം കണ്ടുപിടിക്കുക:"
 
-#: ../mate-panel/panel-addto.c:1057
-#, c-format
+#: mate-panel/panel-addto.c:1057
 msgid "Add to Drawer"
 msgstr "വലിപ്പിലേക്ക് ചേര്‍ക്കുക"
 
-#: ../mate-panel/panel-addto.c:1059
+#: mate-panel/panel-addto.c:1059
 msgid "Find an _item to add to the drawer:"
 msgstr "വലിപ്പിലേക്ക് ചേര്‍ക്കുന്നതിനായി ഒരു _ഇനം കണ്ടുപിടിക്കുക (_i)"
 
-#: ../mate-panel/panel-addto.c:1061
-#, c-format
+#: mate-panel/panel-addto.c:1061
 msgid "Add to Panel"
 msgstr "പാളിയിലേക്ക് ചേര്‍ക്കുക"
 
-#: ../mate-panel/panel-addto.c:1063
+#: mate-panel/panel-addto.c:1063
 msgid "Find an _item to add to the panel:"
 msgstr "പാളിയിലേയ്ക്കു് ചേര്‍ക്കുന്നതിനായി ഒരു _ഇനം കണ്ടുപിടിക്കുക"
 
-#: ../mate-panel/panel-addto.c:1311
+#: mate-panel/panel-addto.c:1311
 msgid "_Back"
 msgstr "പുറകോട്ട്"
 
-#: ../mate-panel/panel-applet-frame.c:759
+#: mate-panel/panel-applet-frame.c:759
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\"അപ്രതീക്ഷിതമായി നിന്നിരിക്കുന്നു"
 
-#: ../mate-panel/panel-applet-frame.c:761
+#: mate-panel/panel-applet-frame.c:761
 msgid "Panel object has quit unexpectedly"
 msgstr "പാളി ഒബ്ജക്ടുകള്‍ അപ്രതീക്ഷിതമായി നിന്നിരിക്കുന്നു"
 
-#: ../mate-panel/panel-applet-frame.c:768
+#: mate-panel/panel-applet-frame.c:768
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2598,49 +2605,47 @@ msgstr ""
 "ഒരു പാളി ഒബ്ജക്ട് റീലോഡ് ചെയ്താല്‍, അത് ഓട്ടോമാറ്റിക്കായി പാളിയിലേയ്ക്കു് "
 "വീണ്ടും ചേര്‍ക്കപ്പെടുന്നു."
 
-#: ../mate-panel/panel-applet-frame.c:775
+#: mate-panel/panel-applet-frame.c:775
 msgid "D_elete"
 msgstr ""
 
-#: ../mate-panel/panel-applet-frame.c:776
-#: ../mate-panel/panel-applet-frame.c:781
+#: mate-panel/panel-applet-frame.c:776 mate-panel/panel-applet-frame.c:781
 msgid "_Don't Reload"
 msgstr "വീണ്ടും ലോഡ് ചെയ്യുവാന്‍ _പാടില്ല"
 
-#: ../mate-panel/panel-applet-frame.c:777
-#: ../mate-panel/panel-applet-frame.c:782
+#: mate-panel/panel-applet-frame.c:777 mate-panel/panel-applet-frame.c:782
 msgid "_Reload"
 msgstr "_വീണ്ടും എടുക്കുക"
 
-#: ../mate-panel/panel-applet-frame.c:948
+#: mate-panel/panel-applet-frame.c:948
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" ലോഡ് ചെയ്യുന്നതില്‍ പാളി ഒരു പ്രശ്നം നേരിട്ടിരിക്കുന്നു."
 
-#: ../mate-panel/panel-applet-frame.c:963
+#: mate-panel/panel-applet-frame.c:963
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "നിങ്ങളുടെ കോണ്‍ഫിഗറേഷനില്‍ നിന്നും ആപ്പ്-ലെറ്റ് വെട്ടി നീക്കണമോ?"
 
-#: ../mate-panel/panel-applet-frame.c:970 ../mate-panel/panel.c:1360
+#: mate-panel/panel-applet-frame.c:970 mate-panel/panel.c:1360
 msgid "_Delete"
 msgstr "നീക്കം ചെയ്യുക (_D)"
 
-#: ../mate-panel/panel-context-menu.c:91
+#: mate-panel/panel-context-menu.c:91
 msgid "And many, many others…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:114
+#: mate-panel/panel-context-menu.c:114
 msgid "The MATE Panel"
 msgstr "ഗ്നോം പാളി"
 
-#: ../mate-panel/panel-context-menu.c:116
+#: mate-panel/panel-context-menu.c:116
 msgid ""
 "Copyright © 1997-2003 Free Software Foundation, Inc.\n"
 "Copyright © 2004 Vincent Untz\n"
 "Copyright © 2011-2019 MATE developers"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:119
+#: mate-panel/panel-context-menu.c:119
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
@@ -2648,137 +2653,132 @@ msgstr ""
 "മറ്റു് പ്രയോഗങ്ങള്‍ ലഭ്യമാക്കുന്നതിനും ഉപയോഗമുള്ള യൂട്ടിലിറ്റികള്‍ "
 "നല്‍കുന്നതിനുള്ള പ്രോഗ്രാം."
 
-#: ../mate-panel/panel-context-menu.c:123
+#: mate-panel/panel-context-menu.c:123
 msgid "About the MATE Panel"
 msgstr "ഗ്നോം പാളിയെക്കുറിച്ചു്"
 
-#: ../mate-panel/panel-context-menu.c:154
+#: mate-panel/panel-context-menu.c:154
 msgid "Cannot delete this panel"
 msgstr "ഈ പാളി വെട്ടി നീക്കുവാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/panel-context-menu.c:155
+#: mate-panel/panel-context-menu.c:155
 msgid "You must always have at least one panel."
 msgstr "നിങ്ങള്‍ക്ക് കുറഞ്ഞത് ഒരു പാളി എങ്കിലും ആവശ്യമുണ്ട്."
 
-#: ../mate-panel/panel-context-menu.c:199
+#: mate-panel/panel-context-menu.c:199
 msgid "Reset this panel?"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:200
+#: mate-panel/panel-context-menu.c:200
 msgid ""
 "When a panel is reset, all \n"
 "custom settings are lost."
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:214
-#: ../mate-panel/panel-context-menu.c:256
+#: mate-panel/panel-context-menu.c:214 mate-panel/panel-context-menu.c:256
 msgid "_Reset Panel"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:236
+#: mate-panel/panel-context-menu.c:236
 msgid "_Add to Panel…"
 msgstr ""
 
-#: ../mate-panel/panel-context-menu.c:263
+#: mate-panel/panel-context-menu.c:263
 msgid "_Delete This Panel"
 msgstr "ഈ പാളി _നീക്കം ചെയ്യുക"
 
-#: ../mate-panel/panel-context-menu.c:276
+#: mate-panel/panel-context-menu.c:276
 msgid "_New Panel"
 msgstr "_പുതിയ പാളി"
 
-#: ../mate-panel/panel-context-menu.c:325
+#: mate-panel/panel-context-menu.c:325
 msgid "A_bout Panels"
 msgstr "പാളിയെ _കുറിച്ച്"
 
-#: ../mate-panel/panel-ditem-editor.c:115
+#: mate-panel/panel-ditem-editor.c:115
 msgid "Application"
 msgstr "പ്രയോഗം"
 
-#: ../mate-panel/panel-ditem-editor.c:117
+#: mate-panel/panel-ditem-editor.c:117
 msgid "Application in Terminal"
 msgstr "ടെര്‍മിനലിലുളള പ്രയോഗം"
 
-#: ../mate-panel/panel-ditem-editor.c:119
+#: mate-panel/panel-ditem-editor.c:119
 msgid "Location"
 msgstr "സ്ഥാനം"
 
-#. Type
-#: ../mate-panel/panel-ditem-editor.c:602
+#: mate-panel/panel-ditem-editor.c:602
 msgid "_Type:"
 msgstr "തരം: (_T)"
 
-#. Name
-#: ../mate-panel/panel-ditem-editor.c:609
+#: mate-panel/panel-ditem-editor.c:609
 msgid "_Name:"
 msgstr "പേര്: (_N)"
 
-#: ../mate-panel/panel-ditem-editor.c:634
+#: mate-panel/panel-ditem-editor.c:634
 msgid "_Browse..."
 msgstr "അന്വേഷണം... (_B)"
 
-#. Comment
-#: ../mate-panel/panel-ditem-editor.c:641
+#: mate-panel/panel-ditem-editor.c:641
 msgid "Co_mment:"
 msgstr "_അഭിപ്രായം:"
 
-#: ../mate-panel/panel-ditem-editor.c:652
+#: mate-panel/panel-ditem-editor.c:652
 msgid "_Revert"
 msgstr "പൂര്‍വ്വസ്ഥിതി"
 
-#: ../mate-panel/panel-ditem-editor.c:978
+#: mate-panel/panel-ditem-editor.c:978
 msgid "Choose an application..."
 msgstr "ഒരു പ്രയോഗം തെരഞ്ഞെടുക്കുക..."
 
-#: ../mate-panel/panel-ditem-editor.c:982
+#: mate-panel/panel-ditem-editor.c:982
 msgid "Choose a file..."
 msgstr "ഒരു ഫയല്‍ തെരഞ്ഞെടുക്കുക..."
 
-#: ../mate-panel/panel-ditem-editor.c:1146
-#: ../mate-panel/panel-ditem-editor.c:1155
+#: mate-panel/panel-ditem-editor.c:1146 mate-panel/panel-ditem-editor.c:1155
 msgid "Comm_and:"
 msgstr "ആജ്ഞ:"
 
-#: ../mate-panel/panel-ditem-editor.c:1164
+#: mate-panel/panel-ditem-editor.c:1164
 msgid "_Location:"
 msgstr "_സ്ഥാനം:"
 
-#: ../mate-panel/panel-ditem-editor.c:1327
+#: mate-panel/panel-ditem-editor.c:1327
 msgid "The name of the launcher is not set."
 msgstr "വിക്ഷേപിണിയുടെ പേര് സെറ്റ് ചെയ്തിട്ടില്ല."
 
-#: ../mate-panel/panel-ditem-editor.c:1331
+#: mate-panel/panel-ditem-editor.c:1331
 msgid "Could not save directory properties"
 msgstr "തട്ടിന്റെ ഗുണഗണങ്ങള്‍ കംപ്യൂട്ടറില്‍ സൂക്ഷിക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../mate-panel/panel-ditem-editor.c:1332
+#: mate-panel/panel-ditem-editor.c:1332
 msgid "The name of the directory is not set."
 msgstr "തട്ടിനു് പേര് നല്‍കിയിട്ടില്ല."
 
-#: ../mate-panel/panel-ditem-editor.c:1348
+#: mate-panel/panel-ditem-editor.c:1348
 msgid "The command of the launcher is not set."
 msgstr "വിക്ഷേപിണിയുടെ നിര്‍ദ്ദേശം സെറ്റ് ചെയ്തിട്ടില്ല."
 
-#: ../mate-panel/panel-ditem-editor.c:1351
+#: mate-panel/panel-ditem-editor.c:1351
 msgid "The location of the launcher is not set."
 msgstr "വിക്ഷേപിണിയുടെ സ്ഥലം സെറ്റ് ചെയ്തിട്ടില്ല."
 
-#: ../mate-panel/panel-ditem-editor.c:1428
+#: mate-panel/panel-ditem-editor.c:1428
 msgid "Could not display help document"
 msgstr "സഹായത്തിനുള്ള വിവരണം ലഭ്യമാക്കുവാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/panel-force-quit.c:86
+#: mate-panel/panel-force-quit.c:86
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "പ്രയോഗം നിര്‍ബന്ധമായി നിര്‍ത്തുന്നതിനായി ജാലകത്തില്‍ ക്ലിക്ക് ചെയ്യുക. "
 "റദ്ദാക്കിന്നതിനായി <ESC> അമര്‍ത്തുക."
 
-#: ../mate-panel/panel-force-quit.c:232
+#: mate-panel/panel-force-quit.c:232
 msgid "Force this application to exit?"
 msgstr "ഈ പ്രയോഗത്തില്‍ നിന്നും പുറത്ത് പോകുന്നതിനായി നിര്‍ബന്ധിക്കണമോ?"
 
-#: ../mate-panel/panel-force-quit.c:235
+#: mate-panel/panel-force-quit.c:235
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2786,276 +2786,274 @@ msgstr ""
 "ഈ പ്രയോഗത്തില്‍ നിന്നും പുറത്ത് പോയാല്‍ തുറന്ന് കിടക്കുന്ന രേഖകളില്‍ "
 "സൂക്ഷിച്ചിട്ടില്ലാത്ത മാറ്റങ്ങള്‍ നഷ്ടമാകും."
 
-#: ../mate-panel/panel-menu-bar.c:97
+#: mate-panel/panel-menu-bar.c:97
 msgid "Browse and run installed applications"
 msgstr ""
 "ഇന്‍സ്റ്റോള്‍ ചെയ്തിരിക്കുന്ന പ്രയോഗങ്ങള്‍ പരതി അവ പ്രവര്‍ത്തിപ്പിയ്ക്കുക"
 
-#: ../mate-panel/panel-menu-bar.c:98
+#: mate-panel/panel-menu-bar.c:98
 msgid "Access documents, folders and network places"
 msgstr "ഫയലുകള്‍, അറകള്‍, ശൃഖലകള്‍ എന്നിവയിലേക്ക് പ്രവേശിക്കുക"
 
-#: ../mate-panel/panel-menu-bar.c:99
+#: mate-panel/panel-menu-bar.c:99
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
 "പണിയിട കാഴ്ചകള്‍ മാറ്റുക, സഹായം ലഭ്യമാക്കുക, അല്ലെങ്കില്‍ പുറത്തു് കടക്കുക"
 
-#: ../mate-panel/panel-menu-bar.c:166
+#: mate-panel/panel-menu-bar.c:166
 msgid "Applications"
 msgstr "പ്രയോഗങ്ങള്‍"
 
-#: ../mate-panel/panel-menu-bar.c:356 ../mate-panel/panel-menu-button.c:690
+#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:706
 msgid "_Edit Menus"
 msgstr "_മെനുവില്‍ മാറ്റം വരുത്തുക"
 
-#: ../mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-button.c:1129
+msgid "Main Menu"
+msgstr "പ്രധാന മെനു"
+
+#: mate-panel/panel-menu-items.c:467
 msgid "Bookmarks"
 msgstr "ബുക്ക് മാര്‍ക്കുകള്‍"
 
 #. Translators: %s is a URI
-#: ../mate-panel/panel-menu-items.c:490 ../mate-panel/panel.c:553
+#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:553
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' തുറക്കുക "
 
-#: ../mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:561
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "മീഡീയാ മാറ്റങ്ങള്‍ക്കായി %s പരിശോധിക്കുവാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/panel-menu-items.c:604
+#: mate-panel/panel-menu-items.c:604
 #, c-format
 msgid "Rescan %s"
 msgstr "%s വീണ്ടും പരിശോധിക്കുക"
 
-#: ../mate-panel/panel-menu-items.c:641
+#: mate-panel/panel-menu-items.c:641
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s മൌണ്ട് ചെയ്യുവാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/panel-menu-items.c:704
+#: mate-panel/panel-menu-items.c:704
 #, c-format
 msgid "Mount %s"
 msgstr "%s മൌണ്ട് ചെയ്യുക"
 
-#: ../mate-panel/panel-menu-items.c:912
+#: mate-panel/panel-menu-items.c:912
 msgid "Removable Media"
 msgstr "മാറ്റുവാന്‍ സാധ്യമാകുന്ന മീഡിയ"
 
-#: ../mate-panel/panel-menu-items.c:999
+#: mate-panel/panel-menu-items.c:999
 msgid "Network Places"
 msgstr "ശൃംഖലാ സ്ഥലങ്ങള്‍"
 
-#: ../mate-panel/panel-menu-items.c:1038
+#: mate-panel/panel-menu-items.c:1038
 msgid "Open your personal folder"
 msgstr "നിങ്ങളുടെ സ്വകാര്യ അറ തുറക്കുക"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../mate-panel/panel-menu-items.c:1057
+#: mate-panel/panel-menu-items.c:1057
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "ഡെസ്ക്ടോപ്പ്"
 
-#: ../mate-panel/panel-menu-items.c:1058
+#: mate-panel/panel-menu-items.c:1058
 msgid "Open the contents of your desktop in a folder"
 msgstr "നിങ്ങളുടെ പണിയിടത്തിലുള്ളവ ഒരു അറയില്‍ തുറക്കുക"
 
-#: ../mate-panel/panel-menu-items.c:1074
+#: mate-panel/panel-menu-items.c:1074
 msgid "Computer"
 msgstr "കമ്പ്യൂട്ടർ"
 
-#: ../mate-panel/panel-menu-items.c:1079
+#: mate-panel/panel-menu-items.c:1079
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "ലഭ്യമായ പ്രാദേശികവും വിദൂരവുമായ എല്ലാ ഡിസ്ക്കുകളും അറകളും പരതുക."
 
-#: ../mate-panel/panel-menu-items.c:1092
+#: mate-panel/panel-menu-items.c:1092
 msgid "Network"
 msgstr "നെറ്റ്‌വർക്ക്"
 
-#: ../mate-panel/panel-menu-items.c:1093
+#: mate-panel/panel-menu-items.c:1093
 msgid "Browse bookmarked and local network locations"
 msgstr ""
 "അടയാളപ്പെടുത്തിയ വെബ് പേജുകളും ലോക്കല്‍ നെറ്റ്‌വര്‍ക്ക്​ സ്ഥാനങ്ങളും തിരയുക"
 
-#: ../mate-panel/panel-menu-items.c:1487
+#: mate-panel/panel-menu-items.c:1487
 msgid "Places"
 msgstr "സ്ഥലങ്ങള്‍"
 
-#: ../mate-panel/panel-menu-items.c:1515
+#: mate-panel/panel-menu-items.c:1515
 msgid "System"
 msgstr "സിസ്റ്റം"
 
-#. Below this, we only have log out/shutdown items
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: ../mate-panel/panel-menu-items.c:1600
+#: mate-panel/panel-menu-items.c:1600
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
 
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1612
 #, c-format
 msgid "Log Out %s..."
 msgstr "പുറത്തിറങ്ങുക %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../mate-panel/panel-menu-items.c:1616
+#: mate-panel/panel-menu-items.c:1616
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "മറ്റൊരു ഉപയോക്താവായി അകത്തു് കയറുന്നതിനായി ഈ സെഷന്റെ %s-ല്‍ നിന്നും പുറത്ത് "
 "കടക്കുക"
 
-#: ../mate-panel/panel-properties-dialog.c:119
-#: ../mate-panel/panel-test-applets.c:58
+#: mate-panel/panel-properties-dialog.c:119 mate-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Top"
 msgstr "മുകളില്‍"
 
-#: ../mate-panel/panel-properties-dialog.c:120
-#: ../mate-panel/panel-test-applets.c:59
+#: mate-panel/panel-properties-dialog.c:120 mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "താഴെ"
 
-#: ../mate-panel/panel-properties-dialog.c:121
-#: ../mate-panel/panel-test-applets.c:60
+#: mate-panel/panel-properties-dialog.c:121 mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Left"
 msgstr "ഇടത്"
 
-#: ../mate-panel/panel-properties-dialog.c:122
-#: ../mate-panel/panel-test-applets.c:61
+#: mate-panel/panel-properties-dialog.c:122 mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Right"
 msgstr "വലത്"
 
-#: ../mate-panel/panel-properties-dialog.c:818
+#: mate-panel/panel-properties-dialog.c:818
 msgid "Drawer Properties"
 msgstr "വലിപ്പിന്റെ ഗുണഗണങ്ങള്‍"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:1
+#: mate-panel/panel-properties-dialog.ui:62
 msgid "Panel Properties"
 msgstr "‌പാളി-ഗുണഗണങ്ങള്‍"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:4
+#: mate-panel/panel-properties-dialog.ui:148
+#: mate-panel/panel-properties-dialog.ui:416
 msgid "Some of these properties are locked down"
 msgstr "ഇവയില്‍ ചില ഗുണഗണങ്ങള്‍ പൂട്ടിയിരിക്കുന്നു"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:5
+#: mate-panel/panel-properties-dialog.ui:189
 msgid "_Icon:"
 msgstr "_ചിഹ്നം:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:7
-#: ../mate-panel/panel-test-applets.ui.h:7
+#: mate-panel/panel-properties-dialog.ui:249
+#: mate-panel/panel-test-applets.ui:116
 msgid "_Orientation:"
 msgstr "_സംവേദനം:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:8
-#: ../mate-panel/panel-test-applets.ui.h:5
+#: mate-panel/panel-properties-dialog.ui:263
+#: mate-panel/panel-test-applets.ui:86
 msgid "_Size:"
 msgstr "_വലിപ്പം:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:9
+#: mate-panel/panel-properties-dialog.ui:281
 msgid "E_xpand"
 msgstr "_വികസിപ്പിക്കുക"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:10
+#: mate-panel/panel-properties-dialog.ui:296
 msgid "_Autohide"
 msgstr "_സ്വയം ഒളിക്കുക"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:11
+#: mate-panel/panel-properties-dialog.ui:317
 msgid "Show hide _buttons"
 msgstr "അദൃശ്യമാക്കിയ _ബട്ടണുകള്‍ കാണിയ്ക്കുക"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:12
+#: mate-panel/panel-properties-dialog.ui:348
 msgid "Arro_ws on hide buttons"
 msgstr "അദൃശ്യമായ ബട്ടണുകളില്‍ _അറോകള്‍"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:14
+#: mate-panel/panel-properties-dialog.ui:433
 msgid "_None (use system theme)"
 msgstr "_ഒന്നുമില്ല (സിസ്റ്റത്തിലെ പ്രമേയം ഉപയോഗിയ്ക്കുക)"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:15
+#: mate-panel/panel-properties-dialog.ui:453
 msgid "Solid c_olor"
 msgstr "ഉറച്ച _നിറം"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:17
+#: mate-panel/panel-properties-dialog.ui:501
 msgid "Pick a color"
 msgstr "ഒരു നിറം തിരഞ്ഞെടുക്കുക"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:18
+#: mate-panel/panel-properties-dialog.ui:531
 msgid "<small>Transparent</small>"
 msgstr "<small>നിര്‍മ്മലമായ</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:19
+#: mate-panel/panel-properties-dialog.ui:553
 msgid "Co_lor:"
 msgstr "_നിറം:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:20
+#: mate-panel/panel-properties-dialog.ui:566
 msgid "S_tyle:"
 msgstr "_ശൈലി:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:21
+#: mate-panel/panel-properties-dialog.ui:580
 msgid "<small>Opaque</small>"
 msgstr "<small>അതാര്യമായ</small>"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:22
+#: mate-panel/panel-properties-dialog.ui:613
 msgid "Background _image:"
 msgstr "പശ്ചാത്തല _ചിത്രം:"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:23
+#: mate-panel/panel-properties-dialog.ui:647
 msgid "Select background"
 msgstr "പശ്ചാത്തലം തെരഞ്ഞെടുക്കുക"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:24
+#: mate-panel/panel-properties-dialog.ui:678
 msgid "Background"
 msgstr "പശ്ചാത്തലം"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:25
+#: mate-panel/panel-properties-dialog.ui:710
 msgid "Image Background Details"
 msgstr "ഇമേജിന്റെ പശ്ചാത്തലത്തിലുള്ള വിശദാംശങ്ങള്‍"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:26
+#: mate-panel/panel-properties-dialog.ui:780
 msgid "_Tile"
 msgstr "_ടൈല്‍"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:27
+#: mate-panel/panel-properties-dialog.ui:795
 msgid "_Scale"
 msgstr "_തോത്"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:28
+#: mate-panel/panel-properties-dialog.ui:811
 msgid "St_retch"
 msgstr "_നീട്ടുക"
 
-#: ../mate-panel/panel-properties-dialog.ui.h:29
+#: mate-panel/panel-properties-dialog.ui:834
 msgid "Rotate image when panel is _vertical"
 msgstr "പാനല്‍ _കുറുകെയാകുമ്പോള്‍ ചിത്രം തിരിക്കുക"
 
-#: ../mate-panel/panel-recent.c:78 ../mate-panel/panel-recent.c:88
+#: mate-panel/panel-recent.c:78 mate-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന \"%s\" എന്ന രേഖ തുറക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../mate-panel/panel-recent.c:90
+#: mate-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "\"%s\" തുറക്കുന്നതിനിടയില്‍ അപരിചിതമായ ഒരു പിശക് ഉണ്ടായിരിക്കുന്നു."
 
-#: ../mate-panel/panel-recent.c:147
+#: mate-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന ഫയലുകളുടെ പട്ടിക വെടിപ്പാക്കണമോ?"
 
-#: ../mate-panel/panel-recent.c:149
+#: mate-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -3065,63 +3063,62 @@ msgstr ""
 "• സ്ഥലങ്ങള്‍ → ഏറ്റവും ഒടുവില്‍ തുറന്ന ഫയലുകളുടെ പട്ടിക മെനുവിലുള്ള എല്ലാ വസ്തുക്കള്‍.\n"
 "• എല്ലാ പ്രയോഗങ്ങളിലുമുള്ള ഏറ്റവും ഒടുവില്‍ തുറന്ന ഫയലുകളുടെ പട്ടികയിലുള്ള വസ്കുക്കള്‍."
 
-#: ../mate-panel/panel-recent.c:164
+#: mate-panel/panel-recent.c:164
 msgid "Clear Recent Documents"
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങള്‍ വെടിപ്പാക്കുക"
 
-#: ../mate-panel/panel-recent.c:199
+#: mate-panel/panel-recent.c:199
 msgid "Recent Documents"
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങള്‍"
 
-#: ../mate-panel/panel-recent.c:238
+#: mate-panel/panel-recent.c:238
 msgid "Clear Recent Documents..."
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങള്‍ വെടിപ്പാക്കുക..."
 
-#: ../mate-panel/panel-recent.c:240
+#: mate-panel/panel-recent.c:240
 msgid "Clear all items from the recent documents list"
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങളുടെ പട്ടിക വെടിപ്പാക്കുക"
 
-#: ../mate-panel/panel-run-dialog.c:423
+#: mate-panel/panel-run-dialog.c:423
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "കമാന്‍ഡ് പ്രവര്‍ത്തിപ്പിക്കുവാന്‍ സാധ്യമായില്ല '%s'"
 
-#: ../mate-panel/panel-run-dialog.c:464
+#: mate-panel/panel-run-dialog.c:464
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "UTF-8-ല്‍ നിന്നും '%s' വേര്‍തിരിക്കുവാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/panel-run-dialog.c:1257
+#: mate-panel/panel-run-dialog.c:1257
 msgid "Choose a file to append to the command..."
 msgstr "കമാന്‍ഡിലേക്ക് ചേര്‍ക്കുവാനുള്ള ഒരു ഫയല്‍ തെരഞ്ഞെടുക്കുക..."
 
-#: ../mate-panel/panel-run-dialog.c:1639
-#: ../mate-panel/panel-run-dialog.ui.h:13
+#: mate-panel/panel-run-dialog.c:1639 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr ""
 "ഒരു പ്രയോഗത്തെക്കുറിച്ചുള്ള വിവരണങ്ങള്‍ കാണുന്നതിനായി അത് തെരഞ്ഞെടുക്കുക."
 
-#: ../mate-panel/panel-run-dialog.c:1677
+#: mate-panel/panel-run-dialog.c:1677
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "%s - നിര്‍ദ്ദേശം പ്രവ‍ര്‍ത്തിയ്ക്കും"
 
-#: ../mate-panel/panel-run-dialog.c:1710
+#: mate-panel/panel-run-dialog.c:1710
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "റണ്‍ ഡയലോഗില്‍ ലഭ്യമായ യുആര്‍ഐ പട്ടികയില്‍ തെറ്റായ മാതൃക (%d) അല്ലെങ്കില്‍ "
 "നീളമാണു് (%d)\n"
 
-#: ../mate-panel/panel-run-dialog.ui.h:1
+#: mate-panel/panel-run-dialog.ui:23
 msgid "Run Application"
 msgstr "പ്രയോഗം പ്രവര്‍ത്തിപ്പിക്കുക"
 
-#: ../mate-panel/panel-run-dialog.ui.h:4 ../mate-panel/panel-stock-icons.c:97
+#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_നടപ്പിലാക്കുക"
 
-#: ../mate-panel/panel-run-dialog.ui.h:5
+#: mate-panel/panel-run-dialog.ui:81
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -3129,29 +3126,29 @@ msgstr ""
 "തെരഞ്ഞെടുത്ത പ്രയോഗം പ്രവര്‍ത്തിക്കുന്നതിനായി അല്ലെങ്കില്‍ കമാന്‍ഡ് എന്‍ട്രി"
 " ഫീള്‍ഡില്‍ കമാന്‍ഡിനായി ഈ ബട്ടണ്‍ ക്ലിക്ക് ചെയ്യുക."
 
-#: ../mate-panel/panel-run-dialog.ui.h:6
+#: mate-panel/panel-run-dialog.ui:125
 msgid "Command icon"
 msgstr "കമാന്‍ഡ് ചിഹ്നം"
 
-#: ../mate-panel/panel-run-dialog.ui.h:7
+#: mate-panel/panel-run-dialog.ui:126
 msgid "The icon of the command to be run."
 msgstr "പ്രവര്‍ത്തിപ്പിക്കേണ്ട നിര്‍ദ്ദേശത്തിനുളള ചിഹ്നം."
 
-#: ../mate-panel/panel-run-dialog.ui.h:8
+#: mate-panel/panel-run-dialog.ui:170
 msgid "Run in _terminal"
 msgstr "_ടെര്‍മിനലില്‍ പ്രവര്‍ത്തിപ്പിക്കുക"
 
-#: ../mate-panel/panel-run-dialog.ui.h:9
+#: mate-panel/panel-run-dialog.ui:178
 msgid "Select this box to run the command in a terminal window."
 msgstr ""
 "ഒരു ടെര്‍മിനലില്‍ കമാന്‍ഡ് പ്രവര്‍ത്തിപ്പിക്കുന്നതിനായി ഈ ബോക്സ് "
 "തെരഞ്ഞെടുക്കുക."
 
-#: ../mate-panel/panel-run-dialog.ui.h:10
+#: mate-panel/panel-run-dialog.ui:190
 msgid "Run with _file..."
 msgstr "_ഫയലുമായി പ്രവര്‍ത്തിപ്പിക്കുക..."
 
-#: ../mate-panel/panel-run-dialog.ui.h:11
+#: mate-panel/panel-run-dialog.ui:197
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
@@ -3159,152 +3156,150 @@ msgstr ""
 "കമാന്‍ഡ് സ്ട്രിങിലേക്ക് ചേര്‍ക്കുവാനുള്ള ഫയല്‍ നാമം തെരയുന്നതിനായി ഈ ബട്ടണ്‍"
 " ക്ലിക്ക് ചെയ്യുക."
 
-#: ../mate-panel/panel-run-dialog.ui.h:12
+#: mate-panel/panel-run-dialog.ui:256
 msgid "List of known applications"
 msgstr "പരിചിതമായ പ്രയോഗങ്ങളുടെ നാമാവലി"
 
-#: ../mate-panel/panel-run-dialog.ui.h:14
+#: mate-panel/panel-run-dialog.ui:290
 msgid "Show list of known _applications"
 msgstr "ലഭ്യമായ _പ്രയോഗങ്ങളുടെ പട്ടിക കാണിയ്ക്കുക"
 
-#: ../mate-panel/panel-stock-icons.c:98
+#: mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
 msgstr "_നിര്‍ബന്ധമായും പുറത്ത് കടക്കുക"
 
-#: ../mate-panel/panel-stock-icons.c:99
+#: mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
 msgstr "വെടിപ്പാക്കുക"
 
-#: ../mate-panel/panel-stock-icons.c:100
+#: mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
 msgstr "നീക്കം _ചെയ്യരുത്"
 
-#: ../mate-panel/panel-test-applets.c:39
+#: mate-panel/panel-test-applets.c:39
 msgid "Specify an applet IID to load"
 msgstr "ലഭ്യമാക്കുന്നതിനുളള ലഘുപ്രയോഗത്തിന്റെ IID നല്‍കുക"
 
-#: ../mate-panel/panel-test-applets.c:40
+#: mate-panel/panel-test-applets.c:40
 msgid ""
 "Specify a gsettings path in which the applet preferences should be stored"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.c:41
+#: mate-panel/panel-test-applets.c:41
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 "ആപ്ലെറ്റിന്റെ പ്രാരംഭ വലിപ്പം നല്‍കുക (വളരെ ചെറിയ, ഇടത്തരം, വലുതു് "
 "എന്നിങ്ങനെ.)"
 
-#: ../mate-panel/panel-test-applets.c:42
+#: mate-panel/panel-test-applets.c:42
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "ആപ്ലെറ്റിന്റെ പ്രാരംഭ സംവേദനം നല്‍കുക (മുകളില്‍, താഴെ, ഇടതു് അല്ലെങ്കില്‍ "
 "വലതു്)"
 
-#: ../mate-panel/panel-test-applets.c:66
+#: mate-panel/panel-test-applets.c:66
 msgctxt "Size"
 msgid "XX Small"
 msgstr "XX ചെറിയ"
 
-#: ../mate-panel/panel-test-applets.c:67
+#: mate-panel/panel-test-applets.c:67
 msgctxt "Size"
 msgid "X Small"
 msgstr "X ചെറിയ"
 
-#: ../mate-panel/panel-test-applets.c:68
+#: mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
 msgstr "ചെറുത്"
 
-#: ../mate-panel/panel-test-applets.c:69
+#: mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
 msgstr "മിതമായ"
 
-#: ../mate-panel/panel-test-applets.c:70
+#: mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
 msgstr "വലുത്"
 
-#: ../mate-panel/panel-test-applets.c:71
+#: mate-panel/panel-test-applets.c:71
 msgctxt "Size"
 msgid "X Large"
 msgstr "X വലിയ"
 
-#: ../mate-panel/panel-test-applets.c:72
+#: mate-panel/panel-test-applets.c:72
 msgctxt "Size"
 msgid "XX Large"
 msgstr "XX വലിയ"
 
-#: ../mate-panel/panel-test-applets.c:130
+#: mate-panel/panel-test-applets.c:130
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "%s എന്ന ആപ്ലെറ്റ് ലഭ്യമാക്കുന്നതില്‍ പരാജയം"
 
 #. This is an utility to easily test various applets
-#: ../mate-panel/panel-test-applets.ui.h:2
+#: mate-panel/panel-test-applets.ui:18
 msgid "Test applet utility"
 msgstr "ലഘുപ്രയോഗ യൂട്ടിലിറ്റി പരീക്ഷിക്കുക"
 
-#: ../mate-panel/panel-test-applets.ui.h:3
+#: mate-panel/panel-test-applets.ui:35
 msgid "_Execute"
 msgstr ""
 
-#: ../mate-panel/panel-test-applets.ui.h:6
+#: mate-panel/panel-test-applets.ui:101
 msgid "_Applet:"
 msgstr "_ലഘുപ്രയോഗം:"
 
-#: ../mate-panel/panel-test-applets.ui.h:8
+#: mate-panel/panel-test-applets.ui:131
 msgid "_Prefs Path:"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1232
+#: mate-panel/panel-toplevel.c:1209
 msgid "Hide Panel"
 msgstr "പാനല്‍ അദൃശ്യമാക്കുക"
 
-#. translators: these string will be shown in MetaCity's switch window
-#. * popup when you pass the focus to a panel
-#: ../mate-panel/panel-toplevel.c:1673 ../mate-panel/panel-toplevel.c:1683
+#: mate-panel/panel-toplevel.c:1656 mate-panel/panel-toplevel.c:1666
 msgid "Top Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1675
+#: mate-panel/panel-toplevel.c:1658
 msgid "Bottom Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1677
+#: mate-panel/panel-toplevel.c:1660
 msgid "Left Panel"
 msgstr ""
 
-#: ../mate-panel/panel-toplevel.c:1679
+#: mate-panel/panel-toplevel.c:1662
 msgid "Right Panel"
 msgstr ""
 
-#: ../mate-panel/panel-util.c:350
+#: mate-panel/panel-util.c:350
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "'%s' ചിഹ്നം കണ്ടില്ല"
 
-#: ../mate-panel/panel-util.c:474
+#: mate-panel/panel-util.c:474
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' പ്രവര്‍ത്തിപ്പിക്കുവാന്‍ സാധ്യമല്ല"
 
-#: ../mate-panel/panel-util.c:702
+#: mate-panel/panel-util.c:702
 msgid "file"
 msgstr "ഫയല്‍"
 
-#: ../mate-panel/panel-util.c:875
+#: mate-panel/panel-util.c:875
 msgid "Home Folder"
 msgstr "ആസ്ഥാന അറ"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: ../mate-panel/panel-util.c:887
+#: mate-panel/panel-util.c:887
 msgid "File System"
 msgstr "ഫയല്‍ സിസ്റ്റം"
 
-#: ../mate-panel/panel-util.c:1060
+#: mate-panel/panel-util.c:1060
 msgid "Search"
 msgstr "തെരച്ചില്‍"
 
@@ -3312,21 +3307,21 @@ msgstr "തെരച്ചില്‍"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: ../mate-panel/panel-util.c:1106
+#: mate-panel/panel-util.c:1106
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../mate-panel/panel.c:486
+#: mate-panel/panel.c:486
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL തുറക്കുക: %s"
 
-#: ../mate-panel/panel.c:1336
+#: mate-panel/panel.c:1336
 msgid "Delete this drawer?"
 msgstr "ഈ വലിപ്പു് നീക്കം ചെയ്യണമോ?"
 
-#: ../mate-panel/panel.c:1337
+#: mate-panel/panel.c:1337
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3334,14 +3329,36 @@ msgstr ""
 "ഒരു വലിപ്പു് നീക്കം ചെയ്യുമ്പോള്‍, അതിനോടൊപ്പം അതിലുളള ക്രമീകരണങ്ങളും\n"
 "നഷ്ടമാകുന്നു."
 
-#: ../mate-panel/panel.c:1340
+#: mate-panel/panel.c:1340
 msgid "Delete this panel?"
 msgstr "ഈ പാളി നീക്കം ചെയ്യണമോ?"
 
-#: ../mate-panel/panel.c:1341
+#: mate-panel/panel.c:1341
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "ഒരു പാളി നീക്കം ചെയ്യുമ്പോള്‍, അതിനോടൊപ്പം അതിലുളള ക്രമീകരണങ്ങളും\n"
 "നഷ്ടമാകുന്നു."
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:5
+msgid "Test DBus Applet Factory"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:6
+msgid "Factory for Test DBus Applet"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:9
+msgid "Test DBus Applet"
+msgstr ""
+
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:10
+msgid "A simple applet for testing the MATE panel"
+msgstr ""
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon
+#. file name)!
+#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:12
+msgid "mate-gegl"
+msgstr ""
