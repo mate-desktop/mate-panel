@@ -191,7 +191,7 @@ ensure_prefs_window_is_created (NaTrayApplet *applet)
   applet->priv->dialog->min_icon_size_spin = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "min_icon_size_spin"));
   g_return_if_fail (applet->priv->dialog->min_icon_size_spin != NULL);
 
-  gtk_spin_button_set_range (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), 7, 100);
+  gtk_spin_button_set_range (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), 7, 130);
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), applet->priv->min_icon_size);
 
   g_signal_connect_swapped (applet->priv->dialog->min_icon_size_spin, "value_changed",
