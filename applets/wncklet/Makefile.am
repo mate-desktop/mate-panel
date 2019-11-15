@@ -5,7 +5,7 @@ AM_CPPFLAGS =							\
 	-I$(top_builddir)/applets/wncklet			\
 	-I$(top_srcdir)/libmate-panel-applet				\
 	-I$(top_builddir)/libmate-panel-applet			\
-	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DMATELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
