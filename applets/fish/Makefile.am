@@ -4,7 +4,7 @@ AM_CPPFLAGS = \
 	-I$(srcdir) \
 	-I$(srcdir)/../../libmate-panel-applet \
 	-I$(top_builddir)/libmate-panel-applet \
-	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DMATELOCALEDIR=\""$(datadir)/locale"\" \
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\" \
 	$(DISABLE_DEPRECATED_CFLAGS)
 

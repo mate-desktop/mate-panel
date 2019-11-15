@@ -41,7 +41,7 @@ CLOCK_CPPFLAGS =						\
 	$(CLOCK_CFLAGS)						\
 	-I$(srcdir)/../../libmate-panel-applet			\
 	-I$(top_builddir)/libmate-panel-applet			\
-	-DMATELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DMATELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DMATEWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
 CLOCK_LDADD =						\
