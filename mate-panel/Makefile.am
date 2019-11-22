@@ -196,6 +196,7 @@ mate_panel_test_applets_SOURCES = \
 	panel-modules.c \
 	panel-applet-info.c \
 	panel-applets-manager.c \
+	panel-a11y.c \
 	panel-test-applets.c
 
 mate_panel_test_applets_CPPFLAGS = \

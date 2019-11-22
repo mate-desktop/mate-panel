@@ -32,6 +32,7 @@
 #include <panel-applets-manager.h>
 #include "panel-applet-container.h"
 #include "panel-marshal.h"
+#include <panel-a11y.h>
 
 struct _MatePanelAppletContainerPrivate {
 	GDBusProxy *applet_proxy;
@@ -99,6 +100,20 @@ static void mate_panel_applet_container_init(MatePanelAppletContainer* container
 							      g_direct_equal,
 							      NULL,
 							      (GDestroyNotify) g_object_unref);
+}
+
+void
+mate_panel_applet_container_set_id_descr (MatePanelAppletContainer *container,
+					  const char *id, const char *descr)
+{
+	const char *name;
+	if (id == NULL) {
+	    char *pos = strrchr (container->priv->iid, ':');
+	    name = pos != NULL ? pos+1 : container->priv->iid;
+	} else {
+	    name = id;
+	}
+	panel_a11y_set_atk_name_desc (container, name, descr);
 }
 
 static void

@@ -53,6 +53,12 @@ G_DEFINE_TYPE_WITH_PRIVATE (MatePanelAppletFrameDBus,
                             mate_panel_applet_frame_dbus,
                             PANEL_TYPE_APPLET_FRAME)
 
+static void
+mate_panel_applet_frame_dbus_set_id_descr (MatePanelAppletFrameDBus *frame)
+{
+	mate_panel_applet_container_set_id_descr (frame->priv->container, NULL, NULL);
+}
+
 static guint
 get_mate_panel_applet_orient (PanelOrientation orientation)
 {
@@ -150,6 +156,7 @@ mate_panel_applet_frame_dbus_init_properties (MatePanelAppletFrame *frame)
 	mate_panel_applet_container_child_get (dbus_frame->priv->container, "size-hints", NULL,
 					  (GAsyncReadyCallback) mate_panel_applet_frame_dbus_get_size_hints_cb,
 					  frame);
+	mate_panel_applet_frame_dbus_set_id_descr (dbus_frame);
 }
 
 static void

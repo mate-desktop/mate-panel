@@ -115,6 +115,9 @@ GVariant  *mate_panel_applet_container_child_get_finish        (MatePanelAppletC
 void       mate_panel_applet_container_cancel_operation (MatePanelAppletContainer *container,
                                                          gconstpointer             operation);
 
+void       mate_panel_applet_container_set_id_descr     (MatePanelAppletContainer *container,
+                                                         const char *id, const char *descr);
+
 #ifdef __cplusplus
 }
 #endif
