@@ -194,9 +194,10 @@ get_surface (SnItemV0       *v0,
     return cairo_surface_reference (pixmap->surface);
 }
 
-static GdkPixbuf *
+static cairo_surface_t *
 get_icon_by_name (const gchar *icon_name,
-                  gint         requested_size)
+                  gint         requested_size,
+                  gint         scale)
 {
   GtkIconTheme *icon_theme;
   gint *sizes;
@@ -227,9 +228,9 @@ get_icon_by_name (const gchar *icon_name,
   if (chosen_size == 0)
     chosen_size = requested_size;
 
-  return gtk_icon_theme_load_icon (icon_theme, icon_name,
-                                   chosen_size, GTK_ICON_LOOKUP_FORCE_SIZE,
-                                   NULL);
+  return gtk_icon_theme_load_surface (icon_theme, icon_name,
+                                      chosen_size, scale,
+                                      NULL, GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
 }
 
 static void
@@ -251,22 +252,33 @@ update (SnItemV0 *v0)
 
   if (v0->icon_name != NULL && v0->icon_name[0] != '\0')
     {
-      GdkPixbuf *pixbuf;
-      pixbuf = get_icon_by_name (v0->icon_name, icon_size);
-      if (!pixbuf){
+      cairo_surface_t *surface;
+      gint scale;
+
+      scale = gtk_widget_get_scale_factor (GTK_WIDGET (image));
+      surface = get_icon_by_name (v0->icon_name, icon_size, scale);
+
+      if (!surface)
+        {
+          GdkPixbuf *pixbuf;
           /*try to find icons specified by path and filename*/
-          pixbuf = gdk_pixbuf_new_from_file(v0->icon_name, NULL);
-          if (pixbuf && icon_size > 1) {
+          pixbuf = gdk_pixbuf_new_from_file (v0->icon_name, NULL);
+          if (pixbuf && icon_size > 1)
+            {
               /*An icon specified by path and filename may be the wrong size for the tray */
-              pixbuf=gdk_pixbuf_scale_simple(pixbuf, icon_size-2, icon_size-2,GDK_INTERP_BILINEAR);
-          }
-      }
-      if (!pixbuf){
+              pixbuf = gdk_pixbuf_scale_simple (pixbuf, icon_size-2, icon_size-2, GDK_INTERP_BILINEAR);
+              surface = gdk_cairo_surface_create_from_pixbuf (pixbuf, scale, NULL);
+            }
+          if (pixbuf)
+            g_object_unref (pixbuf);
+        }
+      if (!surface)
+        {
           /*deal with missing icon or failure to load icon*/
-          pixbuf = get_icon_by_name ("image-missing", icon_size);
-      }
-      gtk_image_set_from_pixbuf (image, pixbuf);
-      g_object_unref (pixbuf);
+          surface = get_icon_by_name ("image-missing", icon_size, scale);
+        }
+      gtk_image_set_from_surface (image, surface);
+      cairo_surface_destroy (surface);
     }
   else if (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL)
     {
