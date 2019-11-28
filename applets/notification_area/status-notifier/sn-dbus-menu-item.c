@@ -197,7 +197,10 @@ sn_dbus_menu_item_new (GVariant *props)
             }
           else if (item->icon_data)
             {
-              image = gtk_image_new_from_pixbuf (item->icon_data);
+              cairo_surface_t *surface;
+              surface = gdk_cairo_surface_create_from_pixbuf (item->icon_data, 0, NULL);
+              image = gtk_image_new_from_surface (surface);
+              cairo_surface_destroy (surface);
             }
 
           item->item = gtk_image_menu_item_new ();
@@ -334,7 +337,10 @@ sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
 
           if (item->icon_data)
             {
-              image = gtk_image_new_from_pixbuf (item->icon_data);
+              cairo_surface_t *surface;
+              surface = gdk_cairo_surface_create_from_pixbuf (item->icon_data, 0, NULL);
+              image = gtk_image_new_from_surface (surface);
+              cairo_surface_destroy (surface);
             }
           else
             {
