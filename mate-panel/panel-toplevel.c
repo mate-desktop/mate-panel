@@ -1695,7 +1695,7 @@ static void panel_toplevel_update_description(PanelToplevel* toplevel)
 				      toplevel->priv->description);
 
 	panel_a11y_set_atk_name_desc (
-		GTK_WIDGET (toplevel->priv->panel_widget),
+		GTK_WIDGET (toplevel),
 		toplevel->priv->name ? toplevel->priv->name :
 				       toplevel->priv->description,
 		toplevel->priv->description);
@@ -4879,7 +4879,7 @@ panel_toplevel_update_name (PanelToplevel *toplevel)
 	gtk_window_set_title (GTK_WINDOW (toplevel), title);
 
 	panel_a11y_set_atk_name_desc (
-		GTK_WIDGET (toplevel->priv->panel_widget),
+		GTK_WIDGET (toplevel),
 		title, toplevel->priv->description);
 }
 
