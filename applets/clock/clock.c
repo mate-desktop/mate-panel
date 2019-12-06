@@ -601,21 +601,26 @@ static void
 update_clock (ClockData * cd)
 {
         gboolean use_markup;
-        char *utf8;
+        char *utf8, *text;
 
         time (&cd->current_time);
         utf8 = format_time (cd);
 
         use_markup = FALSE;
-        if (pango_parse_markup (utf8, -1, 0, NULL, NULL, NULL, NULL))
+        if (pango_parse_markup (utf8, -1, 0, NULL, &text, NULL, NULL))
                 use_markup = TRUE;
+        else
+                text = g_strdup (utf8);
 
         if (use_markup)
                 gtk_label_set_markup (GTK_LABEL (cd->clockw), utf8);
         else
                 gtk_label_set_text (GTK_LABEL (cd->clockw), utf8);
 
+        set_atk_name_description (cd->applet, text, NULL);
+
         g_free (utf8);
+        g_free (text);
 
         update_orient (cd);
         gtk_widget_queue_resize (cd->panel_button);
