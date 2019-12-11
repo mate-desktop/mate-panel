@@ -428,6 +428,7 @@ get_updated_timeformat (ClockData *cd)
         char       *clock_format;
         const gchar *env_language;
         const gchar *env_lc_time;
+        gboolean     use_lctime;
 
         /* Override LANGUAGE with the LC_TIME environment variable
          * This is needed for gettext to fetch our clock format
@@ -435,7 +436,9 @@ get_updated_timeformat (ClockData *cd)
          */
         env_language = g_getenv("LANGUAGE");
         env_lc_time = g_getenv("LC_TIME");
-        if (env_language != NULL && env_lc_time != NULL && env_language != env_lc_time) {
+        use_lctime = (env_language != NULL) && (env_lc_time != NULL) && (g_strcmp0 (env_language, env_lc_time) != 0);
+
+        if (use_lctime) {
             g_setenv("LANGUAGE", env_lc_time, TRUE);
         }
 
@@ -480,7 +483,7 @@ get_updated_timeformat (ClockData *cd)
         }
 
         /* Set back LANGUAGE the way it was before */
-        if (env_language != NULL && env_lc_time != NULL && env_language != env_lc_time) {
+        if (use_lctime) {
             g_setenv("LANGUAGE", env_language, TRUE);
         }
 
