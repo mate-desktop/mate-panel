@@ -7,22 +7,6 @@
     <value nick="internet" value="4"/>
     <value nick="custom" value="5"/>
   </enum>
-  <enum id="org.mate.panel.applet.clock.TemperatureUnit">
-    <value nick="Invalid" value="0"/>
-    <value nick="Default" value="1"/>
-    <value nick="Kelvin" value="2"/>
-    <value nick="Centigrade" value="3"/>
-    <value nick="Fahrenheit" value="4"/>
-  </enum>
-  <enum id="org.mate.panel.applet.clock.SpeedUnit">
-    <value nick="Invalid" value="0"/>
-    <value nick="Default" value="1"/>
-    <value nick="m/s" value="2"/>
-    <value nick="km/h" value="3"/>
-    <value nick="mph" value="4"/>
-    <value nick="knots" value="5"/>
-    <value nick="Beaufort scale" value="6"/>
-  </enum>
   <schema id="org.mate.panel.applet.clock">
     <key name="format" enum="org.mate.panel.applet.clock.ClockFormat">
       <default>'24-hour'</default>
@@ -69,20 +53,10 @@
       <summary>Expand list of locations</summary>
       <description>If true, expand the list of locations in the calendar window.</description>
     </key>
-    <key name="cities" type="as">
+    <key name="locations" type="av">
       <default>[]</default>
       <summary>List of locations</summary>
       <description>A list of locations to display in the calendar window.</description>
-    </key>
-    <key name="temperature-unit" enum="org.mate.panel.applet.clock.TemperatureUnit">
-      <default>'Centigrade'</default>
-      <summary>Temperature unit</summary>
-      <description>The unit to use when showing temperatures.</description>
-    </key>
-    <key name="speed-unit" enum="org.mate.panel.applet.clock.SpeedUnit">
-      <default>'m/s'</default>
-      <summary>Speed unit</summary>
-      <description>The unit to use when showing wind speed.</description>
     </key>
   </schema>
 </schemalist>

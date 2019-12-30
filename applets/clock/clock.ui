@@ -736,6 +736,7 @@
                             <property name="column_homogeneous">True</property>
                             <child>
                               <object class="GtkComboBox" id="visibility_combo">
+                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                               </object>
                               <packing>
@@ -745,6 +746,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="label232">
+                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_Visibility unit:</property>
                                 <property name="use_underline">True</property>
@@ -758,6 +760,7 @@
                             </child>
                             <child>
                               <object class="GtkComboBox" id="pressure_combo">
+                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                               </object>
                               <packing>
@@ -767,6 +770,7 @@
                             </child>
                             <child>
                               <object class="GtkLabel" id="label231">
+                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_Pressure unit:</property>
                                 <property name="use_underline">True</property>
@@ -1082,6 +1086,8 @@
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
                         <property name="hexpand">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="editable">False</property>
                         <property name="invisible_char">•</property>
                       </object>
                       <packing>
@@ -1157,6 +1163,9 @@
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
                         <property name="hexpand">True</property>
+                        <property name="editable">False</property>
+                        <property name="sensitive">False</property>
+
                         <property name="invisible_char">•</property>
                       </object>
                       <packing>
