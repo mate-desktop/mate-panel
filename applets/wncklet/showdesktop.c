@@ -501,7 +501,7 @@ static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)
 		"comments", _("This button lets you hide all windows and show the desktop."),
 		"copyright", _("Copyright \xc2\xa9 2002 Red Hat, Inc.\n"
 		               "Copyright \xc2\xa9 2011 Perberos\n"
-                               "Copyright \xc2\xa9 2012-2019 MATE developers"),
+                               "Copyright \xc2\xa9 2012-2020 MATE developers"),
 		"documenters", documenters,
 		"icon-name", SHOW_DESKTOP_ICON,
 		"logo-icon-name", SHOW_DESKTOP_ICON,
