@@ -230,12 +230,12 @@ static GType clock_box_get_type (void);
 G_DEFINE_TYPE (ClockBox, clock_box, GTK_TYPE_BOX)
 
 static void
-clock_box_init (ClockBox *box)
+clock_box_init (ClockBox *box G_GNUC_UNUSED)
 {
 }
 
 static void
-clock_box_class_init (ClockBoxClass *klass)
+clock_box_class_init (ClockBoxClass *klass G_GNUC_UNUSED)
 {
 }
 
@@ -751,7 +751,7 @@ free_locations (ClockData *cd)
 }
 
 static void
-destroy_clock (GtkWidget * widget, ClockData *cd)
+destroy_clock (GtkWidget * widget G_GNUC_UNUSED, ClockData *cd)
 {
         if (cd->settings)
                 g_signal_handlers_disconnect_by_data( cd->settings, cd);
@@ -804,7 +804,7 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 }
 
 static gboolean
-close_on_escape (GtkWidget       *widget,
+close_on_escape (GtkWidget       *widget G_GNUC_UNUSED,
                  GdkEventKey     *event,
                  GtkToggleButton *toggle_button)
 {
@@ -817,8 +817,8 @@ close_on_escape (GtkWidget       *widget,
 }
 
 static gboolean
-delete_event (GtkWidget       *widget,
-              GdkEvent        *event,
+delete_event (GtkWidget       *widget G_GNUC_UNUSED,
+              GdkEvent        *event G_GNUC_UNUSED,
               GtkToggleButton *toggle_button)
 {
         gtk_toggle_button_set_active (toggle_button, FALSE);
@@ -826,7 +826,7 @@ delete_event (GtkWidget       *widget,
 }
 
 static void
-edit_locations_cb (CalendarWindow *calwin, gpointer data)
+edit_locations_cb (CalendarWindow *calwin G_GNUC_UNUSED, gpointer data)
 {
         ClockData *cd;
 
@@ -1119,7 +1119,7 @@ location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
 }
 
 static ClockFormat
-location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
+location_tile_need_clock_format_cb(ClockLocationTile *tile G_GNUC_UNUSED, gpointer data)
 {
         ClockData *cd = data;
 
@@ -1187,7 +1187,7 @@ create_cities_section (ClockData *cd)
 }
 
 static GList *
-map_need_locations_cb (ClockMap *map, gpointer data)
+map_need_locations_cb (ClockMap *map G_GNUC_UNUSED, gpointer data)
 {
         ClockData *cd = data;
 
@@ -1258,7 +1258,7 @@ update_calendar_popup (ClockData *cd)
 }
 
 static void
-toggle_calendar (GtkWidget *button,
+toggle_calendar (GtkWidget *button G_GNUC_UNUSED,
                  ClockData *cd)
 {
         /* if time is wrong, the user might try to fix it by clicking on the
@@ -1368,10 +1368,10 @@ create_main_clock_label (ClockData *cd)
 }
 
 static gboolean
-weather_tooltip (GtkWidget   *widget,
-                 gint         x,
-                 gint         y,
-                 gboolean     keyboard_mode,
+weather_tooltip (GtkWidget   *widget G_GNUC_UNUSED,
+                 gint         x G_GNUC_UNUSED,
+                 gint         y G_GNUC_UNUSED,
+                 gboolean     keyboard_mode G_GNUC_UNUSED,
                  GtkTooltip  *tooltip,
                  ClockData   *cd)
 {
@@ -1489,7 +1489,7 @@ update_orient (ClockData *cd)
 
 /* this is when the panel orientation changes */
 static void
-applet_change_orient (MatePanelApplet       *applet,
+applet_change_orient (MatePanelApplet       *applet G_GNUC_UNUSED,
                       MatePanelAppletOrient  orient,
                       ClockData         *cd)
 {
@@ -1528,7 +1528,7 @@ applet_change_orient (MatePanelApplet       *applet,
 
 /* this is when the panel size changes */
 static void
-panel_button_change_pixel_size (GtkWidget     *widget,
+panel_button_change_pixel_size (GtkWidget     *widget G_GNUC_UNUSED,
                                 GtkAllocation *allocation,
                                 ClockData        *cd)
 {
@@ -1555,7 +1555,7 @@ panel_button_change_pixel_size (GtkWidget     *widget,
 }
 
 static void
-copy_time (GtkAction *action,
+copy_time (GtkAction *action G_GNUC_UNUSED,
            ClockData *cd)
 {
         char string[256];
@@ -1628,7 +1628,7 @@ copy_time (GtkAction *action,
 }
 
 static void
-copy_date (GtkAction *action,
+copy_date (GtkAction *action G_GNUC_UNUSED,
            ClockData *cd)
 {
         struct tm *tm;
@@ -1704,7 +1704,7 @@ set_time_callback (ClockData *cd, GError *error)
 }
 
 static void
-set_time (GtkWidget *widget, ClockData *cd)
+set_time (GtkWidget *widget G_GNUC_UNUSED, ClockData *cd)
 {
         struct tm t;
         time_t tim;
@@ -1729,7 +1729,7 @@ set_time (GtkWidget *widget, ClockData *cd)
 }
 
 static void
-cancel_time_settings (GtkWidget *button, ClockData *cd)
+cancel_time_settings (GtkWidget *button G_GNUC_UNUSED, ClockData *cd)
 {
         gtk_widget_hide (cd->set_time_window);
 
@@ -1737,7 +1737,7 @@ cancel_time_settings (GtkWidget *button, ClockData *cd)
 }
 
 static gboolean
-delete_time_settings (GtkWidget *widget, GdkEvent *event, gpointer data)
+delete_time_settings (GtkWidget *widget, GdkEvent *event G_GNUC_UNUSED, gpointer data)
 {
         cancel_time_settings (widget, data);
 
@@ -1809,7 +1809,7 @@ wrap_cb (GtkSpinButton *spin, ClockData *cd)
 
 static gboolean
 output_cb (GtkSpinButton *spin,
-           gpointer       data)
+           gpointer       data G_GNUC_UNUSED)
 {
         GtkAdjustment *adj;
         gchar *text;
@@ -1864,7 +1864,7 @@ ensure_time_settings_window_is_created (ClockData *cd)
 }
 
 static void
-run_time_settings (GtkWidget *unused, ClockData *cd)
+run_time_settings (GtkWidget *unused G_GNUC_UNUSED, ClockData *cd)
 {
         ensure_time_settings_window_is_created (cd);
         fill_time_settings_window (cd);
@@ -1877,7 +1877,7 @@ run_time_settings (GtkWidget *unused, ClockData *cd)
 }
 
 static void
-config_date (GtkAction *action,
+config_date (GtkAction *action G_GNUC_UNUSED,
              ClockData *cd)
 {
         run_time_settings (NULL, cd);
@@ -1989,7 +1989,7 @@ update_weather_bool_value_and_toggle_from_gsettings (ClockData *cd, gchar *key,
 }
 
 static void
-show_weather_changed (GSettings    *settings,
+show_weather_changed (GSettings    *settings G_GNUC_UNUSED,
                       gchar        *key,
                       ClockData    *cd)
 {
@@ -1997,7 +1997,7 @@ show_weather_changed (GSettings    *settings,
 }
 
 static void
-show_temperature_changed (GSettings    *settings,
+show_temperature_changed (GSettings    *settings G_GNUC_UNUSED,
                           gchar        *key,
                           ClockData    *cd)
 {
@@ -2005,7 +2005,7 @@ show_temperature_changed (GSettings    *settings,
 }
 
 static void
-weather_icon_updated_cb (MatePanelApplet *applet,
+weather_icon_updated_cb (MatePanelApplet *applet G_GNUC_UNUSED,
                              gint icon_size,
                              gpointer       data)
 {
@@ -2301,8 +2301,8 @@ update_weather_locations (ClockData *cd)
 }
 
 static void
-clock_timezone_changed (SystemTimezone *systz,
-                        const char     *new_tz,
+clock_timezone_changed (SystemTimezone *systz G_GNUC_UNUSED,
+                        const char     *new_tz G_GNUC_UNUSED,
                         ClockData      *cd)
 {
         /* This will refresh the current location */
@@ -2604,7 +2604,7 @@ save_cities_store (ClockData *cd)
 }
 
 static void
-run_prefs_edit_save (GtkButton *button, ClockData *cd)
+run_prefs_edit_save (GtkButton *button G_GNUC_UNUSED, ClockData *cd)
 {
         GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
 
@@ -2753,7 +2753,7 @@ location_update_ok_sensitivity (ClockData *cd)
 }
 
 static void
-location_changed (GObject *object, GParamSpec *param, ClockData *cd)
+location_changed (GObject *object, GParamSpec *param G_GNUC_UNUSED, ClockData *cd)
 {
         MateWeatherLocationEntry *entry = MATEWEATHER_LOCATION_ENTRY (object);
         MateWeatherLocation *gloc;
@@ -2779,13 +2779,13 @@ location_changed (GObject *object, GParamSpec *param, ClockData *cd)
 }
 
 static void
-location_name_changed (GObject *object, ClockData *cd)
+location_name_changed (GObject *object G_GNUC_UNUSED, ClockData *cd)
 {
     location_update_ok_sensitivity (cd);
 }
 
 static void
-location_timezone_changed (GObject *object, GParamSpec *param, ClockData *cd)
+location_timezone_changed (GObject *object G_GNUC_UNUSED, GParamSpec *param G_GNUC_UNUSED, ClockData *cd)
 {
     location_update_ok_sensitivity (cd);
 }
@@ -2810,7 +2810,7 @@ edit_clear (ClockData *cd)
 }
 
 static void
-edit_hide (GtkWidget *unused, ClockData *cd)
+edit_hide (GtkWidget *unused G_GNUC_UNUSED, ClockData *cd)
 {
         GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
 
@@ -2819,7 +2819,7 @@ edit_hide (GtkWidget *unused, ClockData *cd)
 }
 
 static gboolean
-edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd)
+edit_delete (GtkWidget *unused, GdkEvent *event G_GNUC_UNUSED, ClockData *cd)
 {
         edit_hide (unused, cd);
 
@@ -2827,7 +2827,7 @@ edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd)
 }
 
 static gboolean
-edit_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
+edit_hide_event (GtkWidget *widget, GdkEvent *event G_GNUC_UNUSED, ClockData *cd)
 {
         edit_hide (widget, cd);
 
@@ -2851,7 +2851,7 @@ prefs_hide (GtkWidget *widget, ClockData *cd)
 }
 
 static gboolean
-prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
+prefs_hide_event (GtkWidget *widget, GdkEvent *event G_GNUC_UNUSED, ClockData *cd)
 {
         prefs_hide (widget, cd);
 
@@ -2859,14 +2859,14 @@ prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
 }
 
 static void
-prefs_help (GtkWidget *widget, ClockData *cd)
+prefs_help (GtkWidget *widget G_GNUC_UNUSED, ClockData *cd)
 {
         clock_utils_display_help (cd->prefs_window,
                                   "mate-clock", "clock-settings");
 }
 
 static void
-remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+remove_tree_row (GtkTreeModel *model, GtkTreePath *path G_GNUC_UNUSED, GtkTreeIter *iter, gpointer data)
 {
         ClockData *cd = data;
         ClockLocation *loc = NULL;
@@ -2881,7 +2881,7 @@ remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 }
 
 static void
-run_prefs_locations_remove (GtkButton *button, ClockData *cd)
+run_prefs_locations_remove (GtkButton *button G_GNUC_UNUSED, ClockData *cd)
 {
         GtkTreeSelection *sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->prefs_locations));
 
@@ -2889,7 +2889,7 @@ run_prefs_locations_remove (GtkButton *button, ClockData *cd)
 }
 
 static void
-run_prefs_locations_add (GtkButton *button, ClockData *cd)
+run_prefs_locations_add (GtkButton *button G_GNUC_UNUSED, ClockData *cd)
 {
         GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
 
@@ -2913,7 +2913,7 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
 }
 
 static void
-edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+edit_tree_row (GtkTreeModel *model, GtkTreePath *path G_GNUC_UNUSED, GtkTreeIter *iter, gpointer data)
 {
         ClockData *cd = data;
         ClockLocation *loc;
@@ -2980,7 +2980,7 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 }
 
 static void
-run_prefs_locations_edit (GtkButton *unused, ClockData *cd)
+run_prefs_locations_edit (GtkButton *unused G_GNUC_UNUSED, ClockData *cd)
 {
         GtkTreeSelection *sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->prefs_locations));
 
@@ -3271,7 +3271,7 @@ ensure_prefs_window_is_created (ClockData *cd)
 }
 
 static gboolean
-dialog_page_scroll_event_cb (GtkWidget *widget, GdkEventScroll *event, GtkWindow *window)
+dialog_page_scroll_event_cb (GtkWidget *widget, GdkEventScroll *event, GtkWindow *window G_GNUC_UNUSED)
 {
         GtkNotebook *notebook = GTK_NOTEBOOK (widget);
         GtkWidget *child, *event_widget, *action_widget;
@@ -3359,20 +3359,20 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 }
 
 static void
-verb_display_properties_dialog (GtkAction *action,
+verb_display_properties_dialog (GtkAction *action G_GNUC_UNUSED,
                                 ClockData *cd)
 {
         display_properties_dialog (cd, FALSE);
 }
 
 static void
-display_help_dialog (GtkAction *action,
+display_help_dialog (GtkAction *action G_GNUC_UNUSED,
                      ClockData *cd)
 {
         clock_utils_display_help (cd->applet, "mate-clock", NULL);
 }
 
-static void display_about_dialog(GtkAction* action, ClockData* cd)
+static void display_about_dialog(GtkAction* action G_GNUC_UNUSED, ClockData* cd G_GNUC_UNUSED)
 {
         static const gchar* authors[] = {
                 "George Lebl <jirka@5z.com>",
@@ -3403,7 +3403,7 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
 static gboolean
 clock_factory (MatePanelApplet *applet,
                const char  *iid,
-               gpointer     data)
+               gpointer     data G_GNUC_UNUSED)
 {
         gboolean retval = FALSE;
 

@@ -395,7 +395,7 @@ clock_face_finalize (GObject *obj)
 /* The pixbuf is being disposed, so remove it from the cache */
 static void
 remove_pixbuf_from_cache (const char *key,
-                          GObject    *pixbuf)
+                          GObject    *pixbuf G_GNUC_UNUSED)
 {
     g_hash_table_remove (pixbuf_cache, key);
 }

@@ -161,8 +161,8 @@ clock_location_tile_finalize (GObject *g_obj)
 }
 
 static gboolean
-press_on_tile      (GtkWidget             *widget,
-                    GdkEventButton        *event,
+press_on_tile      (GtkWidget             *widget G_GNUC_UNUSED,
+                    GdkEventButton        *event G_GNUC_UNUSED,
                     ClockLocationTile *tile)
 {
         g_signal_emit (tile, signals[TILE_PRESSED], 0);
@@ -171,7 +171,7 @@ press_on_tile      (GtkWidget             *widget,
 }
 
 static void
-make_current_cb (gpointer data, GError *error)
+make_current_cb (gpointer data G_GNUC_UNUSED, GError *error)
 {
         GtkWidget *dialog;
 
@@ -191,7 +191,7 @@ make_current_cb (gpointer data, GError *error)
 }
 
 static void
-make_current (GtkWidget *widget, ClockLocationTile *tile)
+make_current (GtkWidget *widget G_GNUC_UNUSED, ClockLocationTile *tile)
 {
         ClockLocationTilePrivate *priv = clock_location_tile_get_instance_private (tile);
 
@@ -200,7 +200,7 @@ make_current (GtkWidget *widget, ClockLocationTile *tile)
 }
 
 static gboolean
-enter_or_leave_tile (GtkWidget             *widget,
+enter_or_leave_tile (GtkWidget             *widget G_GNUC_UNUSED,
                      GdkEventCrossing      *event,
                      ClockLocationTile *tile)
 {
@@ -655,10 +655,10 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 }
 
 static gboolean
-weather_tooltip (GtkWidget  *widget,
-                 gint        x,
-                 gint        y,
-                 gboolean    keyboard_mode,
+weather_tooltip (GtkWidget  *widget G_GNUC_UNUSED,
+                 gint        x G_GNUC_UNUSED,
+                 gint        y G_GNUC_UNUSED,
+                 gboolean    keyboard_mode G_GNUC_UNUSED,
                  GtkTooltip *tooltip,
                  gpointer    data)
 {
@@ -682,7 +682,7 @@ weather_tooltip (GtkWidget  *widget,
 }
 
 static void
-update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
+update_weather_icon (ClockLocation *loc G_GNUC_UNUSED, WeatherInfo *info, gpointer data)
 {
         ClockLocationTile *tile;
         ClockLocationTilePrivate *priv;

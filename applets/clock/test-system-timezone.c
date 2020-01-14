@@ -48,9 +48,9 @@ timezone_set (const char *new_tz)
 }
 
 static void
-timezone_changed (SystemTimezone *systz,
+timezone_changed (SystemTimezone *systz G_GNUC_UNUSED,
 		  const char     *new_tz,
-		  gpointer        data)
+		  gpointer        data G_GNUC_UNUSED)
 {
 	g_print ("Timezone changed to: %s\n", new_tz);
 }

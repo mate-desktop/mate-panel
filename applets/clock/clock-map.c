@@ -252,17 +252,17 @@ clock_map_draw (GtkWidget *this, cairo_t *cr)
 }
 
 static void
-clock_map_get_preferred_width (GtkWidget *this,
-                                gint *minimum_width,
-                                gint *natural_width)
+clock_map_get_preferred_width (GtkWidget *this G_GNUC_UNUSED,
+                               gint *minimum_width,
+                               gint *natural_width)
 {
         *minimum_width = *natural_width = 250;
 }
 
 static void
-clock_map_get_preferred_height (GtkWidget *this,
-                                 gint *minimum_height,
-                                 gint *natural_height)
+clock_map_get_preferred_height (GtkWidget *this G_GNUC_UNUSED,
+                                gint *minimum_height,
+                                gint *natural_height)
 {
         *minimum_height = *natural_height = 125;
 }

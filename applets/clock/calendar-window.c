@@ -156,7 +156,7 @@ expand_collapse_child (GtkWidget *child,
 
 static void
 expand_collapse (GtkWidget  *expander,
-		 GParamSpec *pspec,
+                 GParamSpec *pspec G_GNUC_UNUSED,
                  gpointer    data)
 {
 	GtkWidget *box = data;
@@ -166,7 +166,7 @@ expand_collapse (GtkWidget  *expander,
 			       expander);
 }
 
-static void add_child (GtkContainer *container,
+static void add_child (GtkContainer *container G_GNUC_UNUSED,
                        GtkWidget    *child,
                        GtkExpander  *expander)
 {

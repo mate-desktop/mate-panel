@@ -160,7 +160,7 @@ clock_location_class_init (ClockLocationClass *this_class)
 }
 
 static void
-network_changed (GNetworkMonitor *monitor,
+network_changed (GNetworkMonitor *monitor G_GNUC_UNUSED,
                  gboolean         available,
                  ClockLocation   *loc)
 {
