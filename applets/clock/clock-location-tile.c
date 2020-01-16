@@ -69,7 +69,7 @@ clock_location_tile_new (ClockLocation *loc,
         ClockLocationTile *this;
         ClockLocationTilePrivate *priv;
 
-        this = g_object_new (CLOCK_LOCATION_TILE_TYPE, NULL);
+        this = g_object_new (CLOCK_TYPE_LOCATION_TILE, NULL);
 
         priv = clock_location_tile_get_instance_private (this);
 
@@ -556,7 +556,7 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
         long offset;
         int format;
 
-        g_return_if_fail (IS_CLOCK_LOCATION_TILE (this));
+        g_return_if_fail (CLOCK_IS_LOCATION_TILE (this));
 
         if (clock_location_is_current (priv->location)) {
                 gtk_widget_hide (priv->current_spacer);
@@ -760,7 +760,7 @@ clock_location_tile_get_location (ClockLocationTile *this)
 {
         ClockLocationTilePrivate *priv;
 
-        g_return_val_if_fail (IS_CLOCK_LOCATION_TILE (this), NULL);
+        g_return_val_if_fail (CLOCK_IS_LOCATION_TILE (this), NULL);
 
         priv = clock_location_tile_get_instance_private (this);
 
