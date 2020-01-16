@@ -1156,6 +1156,7 @@ cities_section_sync (ClockData *cd)
     node = g_list_sort (node, sort_locations_by_time);
     node = g_list_reverse (node);
     while (l != NULL) {
+        debug_print("SSS");
         GList *next = l->next;
         found = FALSE;
         loc = clock_location_tile_get_location (l->data);
@@ -1166,12 +1167,16 @@ cities_section_sync (ClockData *cd)
             }
         }
         if (found) {
+        debug_print("SSS");
             /* Remove existing elements from the new list */
-            node = g_list_delete_link (node, n);
+            node = g_list_remove (node, n);
         } else {
+        debug_print("SSS");
             /* Remove non-existing elements from the old list */
             gtk_container_remove (GTK_CONTAINER (cd->cities_section), l->data);
-            cd->location_tiles = g_list_delete_link (cd->location_tiles, l);
+        debug_print("SSS");
+            cd->location_tiles = g_list_remove (cd->location_tiles, l);
+        debug_print("SSS");
         }
         l = next;
     }
@@ -1179,7 +1184,9 @@ cities_section_sync (ClockData *cd)
     /* Append the remaining elements to the new list */
     for (m = node; m != NULL; m = m->next) {
         loc = m->data;
+        debug_print("SSS");
         city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
+        debug_print("SSS");
         g_signal_connect (city, "tile-pressed",
                 G_CALLBACK (location_tile_pressed_cb), cd);
         g_signal_connect (city, "need-clock-format",
@@ -1191,9 +1198,13 @@ cities_section_sync (ClockData *cd)
 
         gtk_widget_show_all(GTK_WIDGET (city));
         cd->location_tiles = g_list_append(cd->location_tiles, city);
+        debug_print("SSS");
         clock_location_tile_refresh (city, TRUE);
+        debug_print("SSS");
     }
+        debug_print("SSS");
     g_list_free (node);
+        debug_print("SSS");
 }
 
 static void
@@ -2199,11 +2210,14 @@ locations_reset (ClockData *cd)
                         gtk_widget_show (cd->weather_obox);
         }
 
+        debug_print("SSS");
         for (l = cd->locations; l; l = l->next) {
+        debug_print("SSS");
                 loc = l->data;
                 idp = g_object_get_data (G_OBJECT (loc), "weather-updated-id");
                 id = GPOINTER_TO_UINT (idp);
                 if (id == 0) {
+        debug_print("SSS");
                         id = g_signal_connect (loc, "weather-updated",
                                                 G_CALLBACK (location_weather_updated_cb), cd);
                         g_object_set_data (G_OBJECT (loc), "weather-updated-id", GUINT_TO_POINTER (id));
@@ -2215,8 +2229,10 @@ locations_reset (ClockData *cd)
         if (cd->map_widget)
                 clock_map_refresh (CLOCK_MAP (cd->map_widget));
 
-        if (cd->clock_vbox)
+        if (cd->clock_vbox) {
+        debug_print("SSS");
             cities_section_sync (cd);
+        }
 }
 
 static void

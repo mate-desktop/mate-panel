@@ -571,17 +571,25 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
                 }
         }
 
+        debug_print("IIII");
+        /* FIXME */
         if (clock_needs_face_refresh (this)) {
+        debug_print("IIII");
                 clock_face_refresh (CLOCK_FACE (priv->clock_face));
         }
 
         if (!force_refresh && !clock_needs_label_refresh (this)) {
+        debug_print("IIII");
                 return;
         }
 
+        debug_print("IIII");
         clock_location_localtime (priv->location, &now);
+        debug_print("IIII");
         tzname = clock_location_get_tzname (priv->location);
+        debug_print("IIII");
         if (tzname == NULL) {
+        debug_print("IIII");
             tzname = clock_location_get_tzid (priv->location);
         }
 
