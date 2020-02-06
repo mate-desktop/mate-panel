@@ -74,7 +74,7 @@ void panel_background_apply_css (PanelBackground *background, GtkWidget *widget)
 }
 
 static void
-panel_background_prepare_css ()
+panel_background_prepare_css (void)
 {
 	GtkCssProvider      *provider;
 

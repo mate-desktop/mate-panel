@@ -94,7 +94,7 @@ static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
  * distributions
  */
 static gchar *
-panel_layout_filename ()
+panel_layout_filename (void)
 {
     GSettings *settings;
     gchar *layout;
