@@ -528,6 +528,7 @@ panel_addto_prepend_directory (GSList             **parent_list,
 	data->item_info.icon          = gicon ? g_icon_to_string(gicon) : g_strdup(PANEL_ICON_UNKNOWN);
 	data->item_info.menu_filename = g_strdup (filename);
 	data->item_info.menu_path     = matemenu_tree_directory_make_path (directory, NULL);
+	data->item_info.enabled       = TRUE;
 	data->item_info.static_data   = FALSE;
 
 	/* We should set the iid here to something and do
@@ -562,6 +563,7 @@ panel_addto_prepend_entry (GSList         **parent_list,
 	data->item_info.description   = g_strdup (g_app_info_get_description(G_APP_INFO(ginfo)));
 	data->item_info.icon          = gicon ? g_icon_to_string(gicon) : g_strdup(PANEL_ICON_UNKNOWN);
 	data->item_info.launcher_path = g_strdup (matemenu_tree_entry_get_desktop_file_path (entry));
+	data->item_info.enabled       = TRUE;
 	data->item_info.static_data   = FALSE;
 
 	*parent_list = g_slist_prepend (*parent_list, data);
