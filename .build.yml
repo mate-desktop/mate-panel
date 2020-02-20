@@ -1,0 +1,121 @@
+##########################################################
+# THE FOLLOWING LINES IS USED BY docker-build
+##########################################################
+requires:
+  archlinux:
+    # Useful URL: https://git.archlinux.org/svntogit/community.git/tree/mate-panel
+    - dbus-glib
+    - gcc
+    - git
+    - gobject-introspection
+    - intltool
+    - itstool
+    - libcanberra
+    - libmateweather
+    - libsm
+    - libwnck3
+    - make
+    - mate-common
+    - mate-desktop
+    - mate-menus
+    - which
+    - yelp-tools
+
+  debian:
+    # Useful URL: https://github.com/mate-desktop/debian-packages
+    # Useful URL: https://salsa.debian.org/debian-mate-team/mate-panel
+    - gir1.2-freedesktop
+    - git
+    - gobject-introspection
+    - gtk-doc-tools
+    - intltool
+    - libatk1.0-dev
+    - libcairo2-dev
+    - libdconf-dev
+    - libgirepository1.0-dev
+    - libglib2.0-dev
+    - libgtk-3-dev
+    - libice-dev
+    - libmate-desktop-dev
+    - libmate-menu-dev
+    - libmateweather-dev
+    - libpango1.0-dev
+    - librsvg2-dev
+    - libsm-dev
+    - libsoup2.4-dev
+    - libwnck-3-dev
+    - libx11-dev
+    - libxau-dev
+    - libxrandr-dev
+    - lsb-release
+    - make
+    - mate-common
+    - yelp-tools
+
+  fedora:
+    # Useful URL: https://src.fedoraproject.org/cgit/rpms/mate-panel.git
+    - dbus-glib-devel
+    - desktop-file-utils
+    - gcc
+    - git
+    - gobject-introspection-devel
+    - gtk3-devel
+    - libSM-devel
+    - libcanberra-devel
+    - libmateweather-devel
+    - librsvg2-devel
+    - libwnck3-devel
+    - make
+    - mate-common
+    - mate-desktop-devel
+    - mate-menus-devel
+    - redhat-rpm-config
+    - yelp-tools
+
+  ubuntu:
+    - gir1.2-freedesktop
+    - git
+    - gobject-introspection
+    - gtk-doc-tools
+    - intltool
+    - libatk1.0-dev
+    - libcairo2-dev
+    - libdconf-dev
+    - libgirepository1.0-dev
+    - libglib2.0-dev
+    - libgtk-3-dev
+    - libice-dev
+    - libmate-desktop-dev
+    - libmate-menu-dev
+    - libmateweather-dev
+    - libpango1.0-dev
+    - librsvg2-dev
+    - libsm-dev
+    - libsoup2.4-dev
+    - libwnck-3-dev
+    - libx11-dev
+    - libxau-dev
+    - libxrandr-dev
+    - lsb-release
+    - make
+    - mate-common
+    - yelp-tools
+
+variables:
+  - CFLAGS="-Wall -Werror=format-security"
+
+after_scripts:
+  - make distcheck
+
+releases:
+  draft: false
+  prerelease: false
+  checksum: true
+  file_glob: true
+  files: mate-panel-*.tar.xz
+  github_release:
+    tags: true
+    overwrite: true
+    base_version: 1.20.0
+    notify_servers:
+      - https://release.mate-desktop.org/release
