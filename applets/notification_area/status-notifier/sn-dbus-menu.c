@@ -485,7 +485,7 @@ sn_dbus_menu_class_init (SnDBusMenuClass *menu_class)
 static void
 sn_dbus_menu_init (SnDBusMenu *menu)
 {
-  menu->items = g_hash_table_new_full (NULL, NULL, NULL, sn_dubs_menu_item_free);
+  menu->items = g_hash_table_new_full (NULL, NULL, NULL, sn_dbus_menu_item_free);
   menu->cancellable = g_cancellable_new ();
 }
 
