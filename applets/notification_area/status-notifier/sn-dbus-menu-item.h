@@ -51,7 +51,7 @@ typedef struct
 
 SnDBusMenuItem *sn_dbus_menu_item_new          (GVariant       *props);
 
-void            sn_dubs_menu_item_free         (gpointer        data);
+void            sn_dbus_menu_item_free         (gpointer        data);
 
 void            sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
                                                 GVariant       *props);

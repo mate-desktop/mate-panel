@@ -252,7 +252,7 @@ sn_dbus_menu_item_new (GVariant *props)
 }
 
 void
-sn_dubs_menu_item_free (gpointer data)
+sn_dbus_menu_item_free (gpointer data)
 {
   SnDBusMenuItem *item;
 
