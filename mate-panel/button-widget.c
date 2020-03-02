@@ -111,6 +111,7 @@ make_hc_surface (cairo_surface_t *surface)
 	cr = cairo_create (new);
 	cairo_set_operator (cr, CAIRO_OPERATOR_DEST_IN);
 	cairo_mask_surface (cr, surface, 0, 0);
+	cairo_destroy (cr);
 
 	return new;
 }
