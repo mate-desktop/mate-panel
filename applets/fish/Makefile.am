@@ -51,7 +51,7 @@ $(applet_in_files): $(applet_in_files).in Makefile
 		$< > $@
 
 $(applet_DATA): $(applet_in_files)
-	$(AM_V_GEN) $(MSGFMT) --desktop --keyword Name --keyword Description --template $< -d $(top_srcdir)/po -o $@
+	$(AM_V_GEN) $(MSGFMT) --desktop --keyword= --keyword=Name --keyword=Description --template $< -d $(top_srcdir)/po -o $@
 
 if !FISH_INPROCESS
 servicedir       = $(datadir)/dbus-1/services
