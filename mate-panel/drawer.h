@@ -7,6 +7,7 @@
 extern "C" {
 #endif
 
+#define HANDLERS 3
 
 typedef struct {
     char          *tooltip;
@@ -16,6 +17,8 @@ typedef struct {
 
     gboolean       opened_for_drag;
     guint          close_timeout_id;
+
+    gint handler_id[HANDLERS];
 
     AppletInfo    *info;
 } Drawer;

@@ -344,7 +344,6 @@ toplevel_destroyed (GtkWidget *widget,
 
     if (drawer->button) {
         gtk_widget_destroy (drawer->button);
-        drawer->button = NULL;
     }
 }
 
@@ -352,15 +351,22 @@ static void
 destroy_drawer (GtkWidget *widget,
                 Drawer    *drawer)
 {
+    gint i;
+
     if (drawer->toplevel) {
         gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
-        drawer->toplevel = NULL;
     }
 
     if (drawer->close_timeout_id) {
         g_source_remove (drawer->close_timeout_id);
         drawer->close_timeout_id = 0;
     }
+
+    for (i = 0; i < HANDLERS; i++) {
+        g_signal_handler_disconnect (drawer->info->settings, drawer->handler_id[i]);
+    }
+
+    g_object_unref (drawer->button);
 }
 
 static void
@@ -471,20 +477,24 @@ create_drawer_applet (PanelToplevel    *toplevel,
 static void
 panel_drawer_connect_to_gsettings (Drawer *drawer)
 {
-    g_signal_connect (drawer->info->settings,
-                      "changed::" PANEL_OBJECT_USE_CUSTOM_ICON_KEY,
-                      G_CALLBACK (panel_drawer_custom_icon_changed),
-                      drawer);
+    gint handler = 0;
 
-    g_signal_connect (drawer->info->settings,
-                      "changed::" PANEL_OBJECT_CUSTOM_ICON_KEY,
-                      G_CALLBACK (panel_drawer_custom_icon_changed),
-                      drawer);
+    drawer->handler_id[handler] = g_signal_connect (drawer->info->settings,
+                                                    "changed::" PANEL_OBJECT_USE_CUSTOM_ICON_KEY,
+                                                    G_CALLBACK (panel_drawer_custom_icon_changed),
+                                                    drawer);
+    handler++;
 
-    g_signal_connect (drawer->info->settings,
-                      "changed::" PANEL_OBJECT_TOOLTIP_KEY,
-                      G_CALLBACK (panel_drawer_tooltip_changed),
-                      drawer);
+    drawer->handler_id[handler] = g_signal_connect (drawer->info->settings,
+                                                    "changed::" PANEL_OBJECT_CUSTOM_ICON_KEY,
+                                                    G_CALLBACK (panel_drawer_custom_icon_changed),
+                                                    drawer);
+    handler++;
+
+    drawer->handler_id[handler] = g_signal_connect (drawer->info->settings,
+                                                    "changed::" PANEL_OBJECT_TOOLTIP_KEY,
+                                                    G_CALLBACK (panel_drawer_tooltip_changed),
+                                                    drawer);
 }
 
 static void
