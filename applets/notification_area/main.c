@@ -58,6 +58,7 @@ struct _NaTrayAppletPrivate
   NAPreferencesDialog     *dialog;
   GtkBuilder              *builder;
 
+  GSettings               *notification_settings;
   GSettings               *settings;
   gint                     min_icon_size;
 
@@ -300,7 +301,6 @@ static const GtkActionEntry menu_actions [] = {
 	  G_CALLBACK (about_cb) }
 };
 
-
 static void
 na_tray_applet_realize (GtkWidget *widget)
 {
@@ -313,12 +313,19 @@ na_tray_applet_realize (GtkWidget *widget)
   action_group = gtk_action_group_new("NA Applet Menu Actions");
   gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
   gtk_action_group_add_actions(action_group, menu_actions, G_N_ELEMENTS(menu_actions), applet);
+
+  GtkToggleAction *do_not_disturb_toggle_action = gtk_toggle_action_new ("SystemTrayDoNotDisturb", N_("_Do not disturb"), N_("Enable/Disable do-not-disturb mode."), NULL);
+  gtk_action_group_add_action (action_group, do_not_disturb_toggle_action);
+
   mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (applet),
                                               NA_RESOURCE_PATH "notification-area-menu.xml",
                                               action_group);
   g_object_unref(action_group);
 
   setup_gsettings (applet);
+
+  applet->priv->notification_settings = g_settings_new ("org.mate.NotificationDaemon");
+  g_settings_bind (applet->priv->notification_settings, "do-not-disturb", do_not_disturb_toggle_action, "active", G_SETTINGS_BIND_DEFAULT);
 
   // load min icon size
   gsettings_changed_min_icon_size (applet->priv->settings, KEY_MIN_ICON_SIZE, applet);
@@ -332,6 +339,7 @@ static void
 na_tray_applet_dispose (GObject *object)
 {
   g_clear_object (&NA_TRAY_APPLET (object)->priv->settings);
+  g_clear_object (&NA_TRAY_APPLET (object)->priv->notification_settings);
 #ifdef PROVIDE_WATCHER_SERVICE
   g_clear_object (&NA_TRAY_APPLET (object)->priv->sn_watcher);
 #endif
