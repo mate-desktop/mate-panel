@@ -63,7 +63,6 @@ requires:
     - autoconf-archive
     - clang-analyzer
     - clang
-    - cppcheck-htmlreport
     - desktop-file-utils
     - gcc
     - git
@@ -135,11 +134,6 @@ variables:
     -enable-checker security.insecureAPI.strcpy"'
 
 build_scripts:
-# build failed with f30 und using clang patch, fixed in f30?
-#  - if [ ${DISTRO_NAME} == "fedora" ];then
-#  -     curl -Ls -o fedora.sh https://github.com/mate-desktop/mate-dev-scripts/raw/master/travis/fedora.sh
-#  -     bash ./fedora.sh
-#  - fi
   - ./autogen.sh --enable-compile-warnings=maximum
   - scan-build $CHECKERS ./configure --enable-compile-warnings=maximum
   - if [ $CPU_COUNT -gt 1 ]; then
@@ -174,11 +168,6 @@ before_scripts:
   - ninja -C _build install
 
 after_scripts:
-  - if [ ${DISTRO_NAME} == "fedora" ];then
-  -   cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude -i'mate-menus-build' -i'gtk-layer-shell-build' .
-  -   cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
-  -   ./gen-index -l 20 -i https://raw.githubusercontent.com/${OWNER_NAME}/${REPO_NAME}/master/icons/16x16/${REPO_NAME}.png
-  - fi
   - make distcheck
 
 releases:
