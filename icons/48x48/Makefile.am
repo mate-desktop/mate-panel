@@ -3,10 +3,17 @@ size = 48x48
 iconsdir = $(datadir)/icons/hicolor/$(size)/apps
 
 icons_DATA =					\
-	mate-panel.png
-
-icons_SOURCE =					\
-	mate-panel.svg
+	mate-panel-clock.png			\
+	mate-panel-drawer.png			\
+	mate-panel-fish.png			\
+	mate-panel-force-quit.png		\
+	mate-panel-launcher.png			\
+	mate-panel-notification-area.png	\
+	mate-panel.png				\
+	mate-panel-separator.png		\
+	mate-panel-window-list.png		\
+	mate-panel-window-menu.png		\
+	mate-panel-workspace-switcher.png
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
@@ -22,7 +29,6 @@ update-icon-cache:
 	fi
 
 EXTRA_DIST =		\
-	$(icons_DATA)	\
-	$(icons_SOURCE)
+	$(icons_DATA)
 
 -include $(top_srcdir)/git.mk
