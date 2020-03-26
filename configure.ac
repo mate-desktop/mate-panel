@@ -309,6 +309,7 @@ icons/24x24/Makefile
 icons/32x32/Makefile
 icons/48x48/Makefile
 icons/64x64/Makefile
+icons/96x96/Makefile
 icons/256x256/Makefile
 icons/scalable/Makefile
 mate-panel/Makefile
