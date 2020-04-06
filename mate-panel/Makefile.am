@@ -2,7 +2,9 @@ SUBDIRS = libegg libmate-panel-applet-private libpanel-util
 
 bin_PROGRAMS = \
 	mate-panel \
-	mate-desktop-item-edit \
+	mate-desktop-item-edit
+
+noinst_PROGRAMS = \
 	mate-panel-test-applets
 
 AM_CPPFLAGS = \
