@@ -308,7 +308,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 
 	gtk_widget_show (tasklist->preview);
 
-	g_signal_connect_data (G_OBJECT (tasklist->preview), "draw", G_CALLBACK (preview_window_draw), thumbnail, (GClosureNotify) g_object_unref, 0);
+	g_signal_connect_data (G_OBJECT (tasklist->preview), "draw", G_CALLBACK (preview_window_draw), thumbnail, (GClosureNotify) G_CALLBACK (g_object_unref), 0);
 
 	return FALSE;
 }

@@ -39,7 +39,7 @@ MatePanelAppletInfo *mate_panel_applet_info_new (const gchar  *iid,
 						 gboolean      x11_supported,
 						 gboolean      wayland_supported);
 
-void             mate_panel_applet_info_free                            (MatePanelAppletInfo *info);
+void             mate_panel_applet_info_free                            (gpointer data);
 
 const gchar     *mate_panel_applet_info_get_iid                         (MatePanelAppletInfo *info);
 const gchar     *mate_panel_applet_info_get_name                        (MatePanelAppletInfo *info);

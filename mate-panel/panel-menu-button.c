@@ -376,8 +376,12 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 }
 
 static void
-panel_menu_button_menu_detacher	(PanelMenuButton *button)
+panel_menu_button_menu_detacher (GtkWidget *attach_widget,
+                                 GtkMenu   *menu)
 {
+	(void) menu;
+	PanelMenuButton *button = PANEL_MENU_BUTTON (attach_widget);
+
 	/*
 	 * just in case someone still owns a reference to the
 	 * menu (the menu may be up or some such other nonsense)
