@@ -341,7 +341,7 @@ panel_addto_setup_drag (GtkTreeView          *tree_view,
 	g_signal_connect_data (G_OBJECT (tree_view), "drag_data_get",
 			       G_CALLBACK (panel_addto_drag_data_get_cb),
 			       g_strdup (text),
-			       (GClosureNotify) g_free,
+			       (GClosureNotify) G_CALLBACK (g_free),
 			       0 /* connect_flags */);
 	g_signal_connect_after (G_OBJECT (tree_view), "drag-begin",
 	                        G_CALLBACK (panel_addto_drag_begin_cb),

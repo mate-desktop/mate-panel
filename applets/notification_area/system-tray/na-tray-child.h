@@ -73,7 +73,9 @@ char           *na_tray_child_get_title      (NaTrayChild  *child);
 gboolean        na_tray_child_has_alpha      (NaTrayChild  *child);
 void            na_tray_child_set_composited (NaTrayChild  *child,
                                               gboolean      composited);
-void            na_tray_child_force_redraw   (NaTrayChild  *child);
+void            na_tray_child_force_redraw   (gpointer      key,
+                                              gpointer      value,
+                                              gpointer      user_data);
 void            na_tray_child_get_wm_class   (NaTrayChild  *child,
 					      char        **res_name,
 					      char        **res_class);

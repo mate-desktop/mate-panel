@@ -76,8 +76,10 @@ mate_panel_applet_info_new (const gchar  *iid,
 }
 
 void
-mate_panel_applet_info_free (MatePanelAppletInfo *info)
+mate_panel_applet_info_free (gpointer data)
 {
+	MatePanelAppletInfo *info = data;
+
 	if (!info)
 		return;
 

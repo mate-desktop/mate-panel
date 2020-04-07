@@ -715,7 +715,7 @@ idle_redraw_cb (NaTray *tray)
   NaTrayPrivate *priv = tray->priv;
 
   g_hash_table_foreach (priv->trays_screen->icon_table,
-                        (GHFunc) na_tray_child_force_redraw, NULL);
+                        na_tray_child_force_redraw, NULL);
 
   priv->idle_redraw_id = 0;
 

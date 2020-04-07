@@ -1212,7 +1212,7 @@ panel_util_set_tooltip_text (GtkWidget  *widget,
 	g_object_set (widget, "has-tooltip", TRUE, NULL);
 	g_signal_connect_data (widget, "query-tooltip",
 			       G_CALLBACK (panel_util_query_tooltip_cb),
-			       g_strdup (text), (GClosureNotify) g_free, 0);
+			       g_strdup (text), (GClosureNotify) G_CALLBACK (g_free), 0);
 }
 
 /* This is similar to what g_file_new_for_commandline_arg() does, but

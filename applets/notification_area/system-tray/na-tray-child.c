@@ -557,8 +557,13 @@ na_tray_child_set_composited (NaTrayChild *child,
  * the child is shifted with respect to the background.
  */
 void
-na_tray_child_force_redraw (NaTrayChild *child)
+na_tray_child_force_redraw (gpointer key,
+                            gpointer value,
+                            gpointer user_data)
 {
+  (void) value;
+  (void) user_data;
+  NaTrayChild *child = key;
   GtkWidget *widget = GTK_WIDGET (child);
 
   if (gtk_widget_get_mapped (widget))

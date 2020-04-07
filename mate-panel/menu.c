@@ -815,7 +815,7 @@ setup_uri_drag (GtkWidget  *menuitem,
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (uri),
-			       (GClosureNotify)g_free,
+			       (GClosureNotify) G_CALLBACK (g_free),
 			       0 /* connect_flags */);
 	g_signal_connect (G_OBJECT (menuitem), "drag_end",
 			  G_CALLBACK (drag_end_menu_cb), NULL);
@@ -846,7 +846,7 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (panel_action_get_drag_id (type)),
-			       (GClosureNotify)g_free,
+			       (GClosureNotify) G_CALLBACK (g_free),
 			       0 /* connect_flags */);
 	g_signal_connect (G_OBJECT (menuitem), "drag_end",
 			  G_CALLBACK (drag_end_menu_cb), NULL);

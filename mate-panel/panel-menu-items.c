@@ -249,7 +249,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	g_signal_connect_data (item, "activate",
 			       G_CALLBACK (panel_menu_item_activate_desktop_file),
 			       g_strdup (full_path),
-			       (GClosureNotify) g_free, 0);
+			       (GClosureNotify) G_CALLBACK (g_free), 0);
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
@@ -297,7 +297,7 @@ panel_menu_items_append_place_item (const char *icon_name,
 
 	user_data = g_strdup (uri);
 	g_signal_connect_data (item, "activate", callback, user_data,
-			       (GClosureNotify) g_free, 0);
+			       (GClosureNotify) G_CALLBACK (g_free), 0);
 
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
@@ -451,8 +451,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_
 	}
 
 	g_hash_table_destroy (table);
-	g_slist_foreach (lines, (GFunc) g_free, NULL);
-	g_slist_free (lines);
+	g_slist_free_full (lines, g_free);
 
 	add_bookmarks = g_slist_reverse (add_bookmarks);
 
@@ -612,7 +611,7 @@ panel_menu_item_append_drive (GtkWidget *menu,
 	g_signal_connect_data (item, "activate",
 			       G_CALLBACK (panel_menu_item_rescan_drive),
 			       g_object_ref (drive),
-			       (GClosureNotify) g_object_unref, 0);
+			       (GClosureNotify) G_CALLBACK (g_object_unref), 0);
 
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
@@ -712,7 +711,7 @@ panel_menu_item_append_volume (GtkWidget *menu,
 	g_signal_connect_data (item, "activate",
 			       G_CALLBACK (panel_menu_item_mount_volume),
 			       g_object_ref (volume),
-			       (GClosureNotify) g_object_unref, 0);
+			       (GClosureNotify) G_CALLBACK (g_object_unref), 0);
 
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
