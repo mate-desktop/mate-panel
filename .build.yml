@@ -115,7 +115,6 @@ requires:
     - yelp-tools
 
 variables:
-  - CFLAGS="-Wall -Werror=format-security -Wredundant-decls"
   - 'CHECKERS="
     -enable-checker deadcode.DeadStores
     -enable-checker alpha.deadcode.UnreachableCode
@@ -156,8 +155,8 @@ before_scripts:
   - ninja -C _build install
 
 build_scripts:
-  - ./autogen.sh --enable-compile-warnings=maximum
-  - scan-build $CHECKERS ./configure --enable-compile-warnings=maximum
+  - ./autogen.sh
+  - scan-build $CHECKERS ./configure
   - if [ $CPU_COUNT -gt 1 ]; then
   -     scan-build $CHECKERS --keep-cc -o html-report make -j $CPU_COUNT
   - else
