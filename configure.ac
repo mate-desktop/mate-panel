@@ -32,7 +32,7 @@ AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 AC_PATH_PROG([GDBUS_CODEGEN], [gdbus-codegen])
 
-MATE_COMPILE_WARNINGS(maximum)
+MATE_COMPILE_WARNINGS
 
 # Check for introspection
 GOBJECT_INTROSPECTION_CHECK([0.6.7])
