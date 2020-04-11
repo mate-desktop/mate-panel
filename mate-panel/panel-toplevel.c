@@ -149,8 +149,8 @@ struct _PanelToplevelPrivate {
 	int                     animation_end_y;
 	int                     animation_end_width;
 	int                     animation_end_height;
-	GTimeVal                animation_start_time;
-	GTimeVal                animation_end_time;
+	GDateTime              *animation_start_time;
+	GDateTime              *animation_end_time;
 	guint                   animation_timeout;
 
 	PanelWidget            *panel_widget;
@@ -1965,20 +1965,17 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
  * mathematical now :) -- _v_
  */
 static int
-get_delta (int       src,
-	   int       dest,
-	   GTimeVal *start_time,
-	   GTimeVal *end_time,
-	   GTimeVal *cur_time)
+get_delta (int        src,
+           int        dest,
+           GDateTime *start_time,
+           GDateTime *end_time,
+           GDateTime *cur_time)
 {
-	double x, s, n, d, percentage;
+	double x, percentage;
+	GTimeSpan n, d;
 
-	s = start_time->tv_sec + ((double)start_time->tv_usec / G_USEC_PER_SEC);
-	n = cur_time->tv_sec + ((double)cur_time->tv_usec / G_USEC_PER_SEC);
-	d = end_time->tv_sec + ((double)end_time->tv_usec / G_USEC_PER_SEC);
-
-	n -= s;
-	d -= s;
+	n = g_date_time_difference (cur_time, start_time);
+	d = g_date_time_difference (end_time, start_time);
 
 	if (abs (dest - src) <= 1 || n >= d)
 		return dest - src;
@@ -2000,11 +1997,15 @@ get_delta (int       src,
 static void
 panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 {
-	GTimeVal   time_val;
+	GDateTime *now;
 	int        deltax, deltay, deltaw = 0, deltah = 0;
 	int        monitor_offset_x, monitor_offset_y;
 
-	g_get_current_time (&time_val);
+	if ((toplevel->priv->animation_start_time == NULL) ||
+	    (toplevel->priv->animation_end_time == NULL))
+		return;
+
+	now = g_date_time_new_now_local ();
 
 	monitor_offset_x = panel_multimonitor_x (toplevel->priv->monitor);
 	monitor_offset_y = panel_multimonitor_y (toplevel->priv->monitor);
@@ -2012,28 +2013,28 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 	if (toplevel->priv->animation_end_width != -1)
 		deltaw = get_delta (toplevel->priv->geometry.width,
 				    toplevel->priv->animation_end_width,
-				    &toplevel->priv->animation_start_time,
-				    &toplevel->priv->animation_end_time,
-				    &time_val);
+				    toplevel->priv->animation_start_time,
+				    toplevel->priv->animation_end_time,
+				    now);
 
 	if (toplevel->priv->animation_end_height != -1)
 		deltah = get_delta (toplevel->priv->geometry.height,
 				    toplevel->priv->animation_end_height,
-				    &toplevel->priv->animation_start_time,
-				    &toplevel->priv->animation_end_time,
-				    &time_val);
+				    toplevel->priv->animation_start_time,
+				    toplevel->priv->animation_end_time,
+				    now);
 
 	deltax = get_delta (toplevel->priv->geometry.x - monitor_offset_x,
 			    toplevel->priv->animation_end_x,
-			    &toplevel->priv->animation_start_time,
-			    &toplevel->priv->animation_end_time,
-			    &time_val);
+			    toplevel->priv->animation_start_time,
+			    toplevel->priv->animation_end_time,
+			    now);
 
 	deltay = get_delta (toplevel->priv->geometry.y - monitor_offset_y,
 			    toplevel->priv->animation_end_y,
-			    &toplevel->priv->animation_start_time,
-			    &toplevel->priv->animation_end_time,
-			    &time_val);
+			    toplevel->priv->animation_start_time,
+			    toplevel->priv->animation_end_time,
+			    now);
 
 	if (deltaw != 0 && abs (deltaw) > abs (deltax))
 		deltax = deltaw;
@@ -2062,6 +2063,8 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 		if (toplevel->priv->state == PANEL_STATE_NORMAL)
 			g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
 	}
+
+	g_date_time_unref (now);
 }
 
 static void
@@ -3125,6 +3128,16 @@ panel_toplevel_dispose (GObject *widget)
 		toplevel->priv->name = NULL;
 	}
 
+	if (toplevel->priv->animation_start_time) {
+		g_date_time_unref (toplevel->priv->animation_start_time);
+		toplevel->priv->animation_start_time = NULL;
+	}
+
+	if (toplevel->priv->animation_end_time) {
+		g_date_time_unref (toplevel->priv->animation_end_time);
+		toplevel->priv->animation_end_time = NULL;
+	}
+
 	panel_toplevel_disconnect_timeouts (toplevel);
 
 	G_OBJECT_CLASS (panel_toplevel_parent_class)->dispose (widget);
@@ -3543,10 +3556,14 @@ panel_toplevel_animation_timeout (PanelToplevel *toplevel)
 		toplevel->priv->animation_end_y              = 0xdead;
 		toplevel->priv->animation_end_width          = 0xdead;
 		toplevel->priv->animation_end_height         = 0xdead;
-		toplevel->priv->animation_start_time.tv_sec  = 0xdead;
-		toplevel->priv->animation_start_time.tv_usec = 0xdead;
-		toplevel->priv->animation_end_time.tv_sec    = 0xdead;
-		toplevel->priv->animation_end_time.tv_usec   = 0xdead;
+		if (toplevel->priv->animation_start_time) {
+			g_date_time_unref (toplevel->priv->animation_start_time);
+			toplevel->priv->animation_start_time = NULL;
+		}
+		if (toplevel->priv->animation_end_time) {
+			g_date_time_unref (toplevel->priv->animation_end_time);
+			toplevel->priv->animation_end_time   = NULL;
+		}
 		toplevel->priv->animation_timeout            = 0;
 		toplevel->priv->initial_animation_done       = TRUE;
 	}
@@ -3554,26 +3571,26 @@ panel_toplevel_animation_timeout (PanelToplevel *toplevel)
 	return toplevel->priv->animating;
 }
 
-static long
+static GTimeSpan
 panel_toplevel_get_animation_time (PanelToplevel *toplevel)
 {
  /* The number of seconds to complete the animation.
   */
-#define ANIMATION_TIME_FAST   0.4
-#define ANIMATION_TIME_MEDIUM 1.2
-#define ANIMATION_TIME_SLOW   2.0
+#define ANIMATION_TIME_FAST    400
+#define ANIMATION_TIME_MEDIUM 1200
+#define ANIMATION_TIME_SLOW   2000
 
-	long t;
+	GTimeSpan t;
 
 	switch (toplevel->priv->animation_speed) {
 	case PANEL_ANIMATION_SLOW:
-		t = ANIMATION_TIME_SLOW * G_USEC_PER_SEC;
+		t = ANIMATION_TIME_SLOW * G_TIME_SPAN_MILLISECOND;
 		break;
 	case PANEL_ANIMATION_MEDIUM:
-		t = ANIMATION_TIME_MEDIUM * G_USEC_PER_SEC;
+		t = ANIMATION_TIME_MEDIUM *  G_TIME_SPAN_MILLISECOND;
 		break;
 	case PANEL_ANIMATION_FAST:
-		t = ANIMATION_TIME_FAST * G_USEC_PER_SEC;
+		t = ANIMATION_TIME_FAST * G_TIME_SPAN_MILLISECOND;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -3641,7 +3658,6 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	GtkRequisition  requisition;
 	int             deltax, deltay, deltaw = 0, deltah = 0;
 	int             cur_x = -1, cur_y = -1;
-	long            t;
 
 	panel_toplevel_calculate_animation_end_geometry (toplevel);
 
@@ -3695,11 +3711,14 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 		gtk_window_present (GTK_WINDOW (toplevel->priv->attach_toplevel));
 	}
 
-	g_get_current_time (&toplevel->priv->animation_start_time);
+	if (toplevel->priv->animation_start_time)
+		g_date_time_unref (toplevel->priv->animation_start_time);
+	toplevel->priv->animation_start_time = g_date_time_new_now_local ();
 
-	t = panel_toplevel_get_animation_time (toplevel);
-	g_get_current_time (&toplevel->priv->animation_end_time);
-	g_time_val_add (&toplevel->priv->animation_end_time, t);
+	if (toplevel->priv->animation_end_time)
+		g_date_time_unref (toplevel->priv->animation_end_time);
+	toplevel->priv->animation_end_time = g_date_time_add (toplevel->priv->animation_start_time,
+	                                                      panel_toplevel_get_animation_time (toplevel));
 
 	if (!toplevel->priv->animation_timeout)
 		toplevel->priv->animation_timeout =
@@ -4763,10 +4782,8 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->animation_end_y              = 0;
 	toplevel->priv->animation_end_width          = 0;
 	toplevel->priv->animation_end_height         = 0;
-	toplevel->priv->animation_start_time.tv_sec  = 0;
-	toplevel->priv->animation_start_time.tv_usec = 0;
-	toplevel->priv->animation_end_time.tv_sec    = 0;
-	toplevel->priv->animation_end_time.tv_usec   = 0;
+	toplevel->priv->animation_start_time         = NULL;
+	toplevel->priv->animation_end_time           = NULL;
 	toplevel->priv->animation_timeout            = 0;
 
 	toplevel->priv->panel_widget       = NULL;
