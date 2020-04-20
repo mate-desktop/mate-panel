@@ -14,6 +14,7 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-gtk-doc \
 	--disable-introspection \
+	--enable-compile-warnings=no \
 	CFLAGS='-Wno-deprecated-declarations'
 
 EXTRA_DIST = \
