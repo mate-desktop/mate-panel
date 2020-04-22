@@ -150,7 +150,7 @@ struct _PanelToplevelPrivate {
 	int                     animation_end_width;
 	int                     animation_end_height;
 	GDateTime              *animation_start_time;
-	GDateTime              *animation_end_time;
+	GTimeSpan               animation_duration_time;
 	guint                   animation_timeout;
 
 	PanelWidget            *panel_widget;
@@ -1968,23 +1968,22 @@ static int
 get_delta (int        src,
            int        dest,
            GDateTime *start_time,
-           GDateTime *end_time,
+           GTimeSpan  duration_time,
            GDateTime *cur_time)
 {
 	double x, percentage;
-	GTimeSpan n, d;
+	GTimeSpan n;
 
 	n = g_date_time_difference (cur_time, start_time);
-	d = g_date_time_difference (end_time, start_time);
 
-	if (abs (dest - src) <= 1 || n >= d)
+	if (abs (dest - src) <= 1 || n >= duration_time)
 		return dest - src;
 
 	/* The cubic is: p(x) = (-2) x^2 (x-1.5) */
 	/* running p(p(x)) to make it more "pronounced",
 	 * effectively making it a ninth-degree polynomial */
 
-	x = (double)n/d;
+	x = (double)n/duration_time;
 	x = -2 * (x*x) * (x-1.5);
 	/* run it again */
 	percentage = -2 * (x*x) * (x-1.5);
@@ -2002,7 +2001,7 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 	int        monitor_offset_x, monitor_offset_y;
 
 	if ((toplevel->priv->animation_start_time == NULL) ||
-	    (toplevel->priv->animation_end_time == NULL))
+	    (toplevel->priv->animation_duration_time <= 0))
 		return;
 
 	now = g_date_time_new_now_local ();
@@ -2014,26 +2013,26 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 		deltaw = get_delta (toplevel->priv->geometry.width,
 				    toplevel->priv->animation_end_width,
 				    toplevel->priv->animation_start_time,
-				    toplevel->priv->animation_end_time,
+				    toplevel->priv->animation_duration_time,
 				    now);
 
 	if (toplevel->priv->animation_end_height != -1)
 		deltah = get_delta (toplevel->priv->geometry.height,
 				    toplevel->priv->animation_end_height,
 				    toplevel->priv->animation_start_time,
-				    toplevel->priv->animation_end_time,
+				    toplevel->priv->animation_duration_time,
 				    now);
 
 	deltax = get_delta (toplevel->priv->geometry.x - monitor_offset_x,
 			    toplevel->priv->animation_end_x,
 			    toplevel->priv->animation_start_time,
-			    toplevel->priv->animation_end_time,
+			    toplevel->priv->animation_duration_time,
 			    now);
 
 	deltay = get_delta (toplevel->priv->geometry.y - monitor_offset_y,
 			    toplevel->priv->animation_end_y,
 			    toplevel->priv->animation_start_time,
-			    toplevel->priv->animation_end_time,
+			    toplevel->priv->animation_duration_time,
 			    now);
 
 	if (deltaw != 0 && abs (deltaw) > abs (deltax))
@@ -3133,11 +3132,6 @@ panel_toplevel_dispose (GObject *widget)
 		toplevel->priv->animation_start_time = NULL;
 	}
 
-	if (toplevel->priv->animation_end_time) {
-		g_date_time_unref (toplevel->priv->animation_end_time);
-		toplevel->priv->animation_end_time = NULL;
-	}
-
 	panel_toplevel_disconnect_timeouts (toplevel);
 
 	G_OBJECT_CLASS (panel_toplevel_parent_class)->dispose (widget);
@@ -3560,10 +3554,7 @@ panel_toplevel_animation_timeout (PanelToplevel *toplevel)
 			g_date_time_unref (toplevel->priv->animation_start_time);
 			toplevel->priv->animation_start_time = NULL;
 		}
-		if (toplevel->priv->animation_end_time) {
-			g_date_time_unref (toplevel->priv->animation_end_time);
-			toplevel->priv->animation_end_time   = NULL;
-		}
+		toplevel->priv->animation_duration_time      = 0xdead;
 		toplevel->priv->animation_timeout            = 0;
 		toplevel->priv->initial_animation_done       = TRUE;
 	}
@@ -3715,10 +3706,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 		g_date_time_unref (toplevel->priv->animation_start_time);
 	toplevel->priv->animation_start_time = g_date_time_new_now_local ();
 
-	if (toplevel->priv->animation_end_time)
-		g_date_time_unref (toplevel->priv->animation_end_time);
-	toplevel->priv->animation_end_time = g_date_time_add (toplevel->priv->animation_start_time,
-	                                                      panel_toplevel_get_animation_time (toplevel));
+	toplevel->priv->animation_duration_time = panel_toplevel_get_animation_time (toplevel);
 
 	if (!toplevel->priv->animation_timeout)
 		toplevel->priv->animation_timeout =
@@ -4783,7 +4771,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->animation_end_width          = 0;
 	toplevel->priv->animation_end_height         = 0;
 	toplevel->priv->animation_start_time         = NULL;
-	toplevel->priv->animation_end_time           = NULL;
+	toplevel->priv->animation_duration_time      = 0;
 	toplevel->priv->animation_timeout            = 0;
 
 	toplevel->priv->panel_widget       = NULL;
