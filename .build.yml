@@ -156,6 +156,11 @@ before_scripts:
   - ninja -C _build install
 
 build_scripts:
+  - if [ ${DISTRO_NAME} == "debian" ];then
+  -     export CFLAGS+=" -Wsign-compare -Wunused-parameter"
+  -     cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'gtk-layer-shell-build' .
+  - fi
+
   - NOCONFIGURE=1 ./autogen.sh
   - scan-build $CHECKERS ./configure --enable-compile-warnings=maximum
   - if [ $CPU_COUNT -gt 1 ]; then
@@ -163,13 +168,10 @@ build_scripts:
   - else
   -     scan-build $CHECKERS --keep-cc -o html-report make
   - fi
-  - if [ ${DISTRO_NAME} == "debian" ];then
-  -     cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'mate-menus-build' -i'gtk-layer-shell-build' .
-  - fi
 
 after_scripts:
   - if [ ${DISTRO_NAME} == "fedora" ];then
-  -   cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude -i'mate-menus-build' -i'gtk-layer-shell-build' .
+  -   cppcheck --xml --output-file=cppcheck.xml --enable=warning,style,performance,portability,information,missingInclude -i'gtk-layer-shell-build' .
   -   cppcheck-htmlreport --title=${REPO_NAME} --file=cppcheck.xml --report-dir=cppcheck-htmlreport
   -   ./gen-index -l 20 -i https://raw.githubusercontent.com/${OWNER_NAME}/${REPO_NAME}/master/icons/16x16/${REPO_NAME}.png
   - fi
