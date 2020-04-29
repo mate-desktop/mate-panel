@@ -1,4 +1,4 @@
-SUBDIRS = libegg libmate-panel-applet-private libpanel-util
+SUBDIRS = mate-submodules libmate-panel-applet-private libpanel-util
 
 bin_PROGRAMS = \
 	mate-panel \
@@ -11,6 +11,7 @@ AM_CPPFLAGS = \
 	-I. \
 	-I$(srcdir) \
 	-I$(top_builddir)/mate-panel \
+	-I$(top_srcdir)/mate-panel/mate-submodules \
 	-I$(top_builddir)/mate-panel/libpanel-util \
 	-DMATELOCALEDIR=\""$(datadir)/locale"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
@@ -153,7 +154,7 @@ endif
 
 
 mate_panel_LDADD = \
-	$(top_builddir)/mate-panel/libegg/libegg.la \
+	$(top_builddir)/mate-panel/mate-submodules/libegg/libegg.la \
 	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private.la \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
