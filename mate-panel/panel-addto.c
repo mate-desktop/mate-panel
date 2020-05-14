@@ -863,6 +863,8 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 		/* This response only happens when we're showing the
 		 * application list and the user wants to go back to the
 		 * applet list. */
+		gtk_button_set_image (GTK_BUTTON (dialog->add_button),
+				      gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON));
 		panel_addto_present_applets (dialog);
 		break;
 
@@ -894,7 +896,7 @@ panel_addto_present_applications (PanelAddtoDialog *dialog)
 				 dialog->filter_application_model);
 	gtk_window_set_focus (GTK_WINDOW (dialog->addto_dialog),
 			      dialog->search_entry);
-	gtk_widget_set_sensitive (dialog->back_button, TRUE);
+	gtk_widget_show (dialog->back_button);
 
 	if (dialog->applet_search_text)
 		g_free (dialog->applet_search_text);
@@ -913,7 +915,7 @@ panel_addto_present_applets (PanelAddtoDialog *dialog)
 				 dialog->filter_applet_model);
 	gtk_window_set_focus (GTK_WINDOW (dialog->addto_dialog),
 			      dialog->search_entry);
-	gtk_widget_set_sensitive (dialog->back_button, FALSE);
+	gtk_widget_hide (dialog->back_button);
 
 	if (dialog->applet_search_text) {
 		gtk_entry_set_text (GTK_ENTRY (dialog->search_entry),
@@ -1316,6 +1318,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	dialog->add_button = panel_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 						      _("_Add"), "list-add",
 						      PANEL_ADDTO_RESPONSE_ADD);
+	gtk_widget_hide (dialog->back_button);
 
 	panel_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 				 _("_Close"), "window-close",
