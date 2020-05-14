@@ -64,8 +64,8 @@ typedef struct {
 	GtkWidget* show_current_radio;
 	GtkWidget* show_all_radio;
 #ifdef HAVE_WINDOW_PREVIEWS
-	GtkWidget* show_thumbnails_radio;
-	GtkWidget* hide_thumbnails_radio;
+	GtkWidget* show_thumbnails_check;
+	GtkWidget* thumbnail_size_label;
 	GtkWidget* thumbnail_size_spin;
 #endif
 	GtkWidget* never_group_radio;
@@ -414,37 +414,6 @@ static void display_all_workspaces_changed(GSettings* settings, gchar* key, Task
 }
 
 #ifdef HAVE_WINDOW_PREVIEWS
-static void tasklist_update_thumbnails_radio(TasklistData* tasklist)
-{
-	GtkWidget* button;
-
-	if (tasklist->show_thumbnails_radio == NULL || tasklist->hide_thumbnails_radio == NULL)
-		return;
-
-	if (tasklist->show_window_thumbnails)
-	{
-		button = tasklist->show_thumbnails_radio;
-	}
-	else
-	{
-		button = tasklist->hide_thumbnails_radio;
-	}
-
-	if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)))
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-}
-
-static void window_thumbnails_changed(GSettings *settings, gchar* key, TasklistData* tasklist)
-{
-	gboolean value;
-
-	value = g_settings_get_boolean(settings, key);
-
-	tasklist->show_window_thumbnails = (value != 0);
-
-	tasklist_update_thumbnails_radio(tasklist);
-}
-
 static void tasklist_update_thumbnail_size_spin(TasklistData* tasklist)
 {
 	GtkWidget* button;
@@ -544,10 +513,6 @@ static void setup_gsettings(TasklistData* tasklist)
 #ifdef HAVE_WINDOW_PREVIEWS
 	tasklist->preview_settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (tasklist->applet), WINDOW_LIST_PREVIEW_SCHEMA);
 
-	g_signal_connect (tasklist->preview_settings,
-					  "changed::show-window-thumbnails",
-					  G_CALLBACK (window_thumbnails_changed),
-					  tasklist);
 	g_signal_connect (tasklist->preview_settings,
 					  "changed::thumbnail-window-size",
 					  G_CALLBACK (thumbnail_size_changed),
@@ -845,11 +810,6 @@ static void group_windows_toggled(GtkToggleButton* button, TasklistData* tasklis
 }
 
 #ifdef HAVE_WINDOW_PREVIEWS
-static void show_thumbnails_toggled(GtkToggleButton* button, TasklistData* tasklist)
-{
-	g_settings_set_boolean(tasklist->preview_settings, "show-window-thumbnails", gtk_toggle_button_get_active(button));
-}
-
 static void thumbnail_size_spin_changed(GtkSpinButton* button, TasklistData* tasklist)
 {
 	g_settings_set_int(tasklist->preview_settings, "thumbnail-window-size", gtk_spin_button_get_value_as_int(button));
@@ -915,12 +875,21 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	setup_sensitivity(tasklist, builder, "never_group_radio", "auto_group_radio", "always_group_radio", "group-windows" /* key */);
 
 #ifdef HAVE_WINDOW_PREVIEWS
-	tasklist->show_thumbnails_radio = WID("show_thumbnails_radio");
-	tasklist->hide_thumbnails_radio = WID("hide_thumbnails_radio");
+	tasklist->show_thumbnails_check = WID("show_thumbnails_check");
+	tasklist->thumbnail_size_label = WID("thumbnail_size_label");
 	tasklist->thumbnail_size_spin = WID("thumbnail_size_spin");
 
-	setup_sensitivity(tasklist, builder, "show_thumbnails_radio", "hide_thumbnails_radio", NULL, "show-window-thumbnails" /* key */);
-	gtk_widget_set_sensitive(tasklist->thumbnail_size_spin, TRUE);
+	g_settings_bind(tasklist->preview_settings, "show-window-thumbnails", tasklist->show_thumbnails_check, "active", G_SETTINGS_BIND_DEFAULT);
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(tasklist->show_thumbnails_check))) {
+		gtk_widget_set_sensitive (tasklist->thumbnail_size_label, TRUE);
+		gtk_widget_set_sensitive (tasklist->thumbnail_size_spin, TRUE);
+	} else {
+		gtk_widget_set_sensitive (tasklist->thumbnail_size_label, FALSE);
+		gtk_widget_set_sensitive (tasklist->thumbnail_size_spin, FALSE);
+	}
+	g_object_bind_property(tasklist->show_thumbnails_check, "active", tasklist->thumbnail_size_label, "sensitive", G_BINDING_DEFAULT);
+	g_object_bind_property(tasklist->show_thumbnails_check, "active", tasklist->thumbnail_size_spin, "sensitive", G_BINDING_DEFAULT);
+
 	adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(tasklist->thumbnail_size_spin));
 	gtk_adjustment_set_lower (adjustment, 0);
 	gtk_adjustment_set_upper (adjustment, 999);
@@ -947,9 +916,6 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	g_signal_connect(G_OBJECT(tasklist->always_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 
 #ifdef HAVE_WINDOW_PREVIEWS
-	/* show thumbnails on hover: */
-	tasklist_update_thumbnails_radio(tasklist);
-	g_signal_connect(G_OBJECT(tasklist->show_thumbnails_radio), "toggled", (GCallback) show_thumbnails_toggled, tasklist);
 	/* change thumbnail size: */
 	tasklist_update_thumbnail_size_spin(tasklist);
 	g_signal_connect(G_OBJECT(tasklist->thumbnail_size_spin), "value-changed", (GCallback) thumbnail_size_spin_changed, tasklist);
