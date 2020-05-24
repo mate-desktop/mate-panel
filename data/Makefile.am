@@ -28,3 +28,5 @@ EXTRA_DIST = \
 	$(layout_DATA)
 
 CLEANFILES = $(gsettings_SCHEMAS)
+
+-include $(top_srcdir)/git.mk
