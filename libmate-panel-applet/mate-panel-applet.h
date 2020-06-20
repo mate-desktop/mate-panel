@@ -107,7 +107,7 @@ void mate_panel_applet_set_size_hints(MatePanelApplet* applet, const int* size_h
 
 gboolean mate_panel_applet_get_locked_down(MatePanelApplet* applet);
 
-// Does nothing when not on X11
+/* Does nothing when not on X11 */
 void mate_panel_applet_request_focus(MatePanelApplet* applet, guint32 timestamp);
 
 void mate_panel_applet_setup_menu(MatePanelApplet* applet, const gchar* xml, GtkActionGroup* action_group);

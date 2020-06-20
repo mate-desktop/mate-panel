@@ -330,7 +330,7 @@ panel_context_menu_create (PanelWidget *panel)
 			  G_CALLBACK (panel_context_menu_show_about_dialog),
 			  NULL);
 
-	//FIXME: can we get rid of this? (needed by menu_get_panel())
+	/* FIXME: can we get rid of this? (needed by menu_get_panel()) */
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
 
 /* Set up theme and transparency support */

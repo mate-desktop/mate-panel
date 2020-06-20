@@ -1142,9 +1142,9 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY, locked);
 
 	if (locked) {
-		// Until position calculations are refactored to fix the issue of the panel applets
-		// getting reordered on resolution changes...
-		// .. don't save position/right-stick on locked applets
+		/* Until position calculations are refactored to fix the issue of the panel applets
+		   getting reordered on resolution changes...
+		   .. don't save position/right-stick on locked applets */
 		return;
 	}
 

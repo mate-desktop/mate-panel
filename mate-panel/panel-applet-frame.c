@@ -805,7 +805,7 @@ _mate_panel_applet_frame_applet_broken (MatePanelAppletFrame *frame)
 					      gdk_x11_get_server_time (gtk_widget_get_window (GTK_WIDGET (dialog))));
 	else
 #endif
-	{ // Not using X11
+	{ /* Not using X11 */
 		gtk_window_present(GTK_WINDOW (dialog));
 	}
 

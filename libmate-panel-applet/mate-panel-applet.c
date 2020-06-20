@@ -535,7 +535,7 @@ mate_panel_applet_find_toplevel_dock_window (MatePanelApplet *applet,
 	return None;
 }
 
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 /* This function
  *   1) Gets the window id of the panel that contains the applet
@@ -1064,13 +1064,13 @@ mate_panel_applet_get_preferred_height (GtkWidget *widget,
 static GtkSizeRequestMode
 mate_panel_applet_get_request_mode (GtkWidget *widget)
 {
-	/*Do not use GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH
-	 *or GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
-	 *to avoid problems with in-process applets
-	 *when the panel is not expanded
-	 *See https://github.com/mate-desktop/mate-panel/issues/797
-	 *and https://github.com/mate-desktop/mate-panel/issues/799
-	 *Out of process applets already use GTK_SIZE_REQUEST_CONSTANT_SIZE
+	/* Do not use GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH
+	 * or GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
+	 * to avoid problems with in-process applets
+	 * when the panel is not expanded
+	 * See https://github.com/mate-desktop/mate-panel/issues/797
+	 * and https://github.com/mate-desktop/mate-panel/issues/799
+	 * Out of process applets already use GTK_SIZE_REQUEST_CONSTANT_SIZE
 	 */
 	return GTK_SIZE_REQUEST_CONSTANT_SIZE;
 }
@@ -1400,7 +1400,7 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 			retval = PANEL_PIXMAP_BACKGROUND;
 		} else
 #endif
-		{ // not using X11
+		{ /* not using X11 */
 			g_warning("Received pixmap background type, which is only supported on X11");
 		}
 	} else
@@ -1779,7 +1779,7 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
 }
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 static void
 mate_panel_applet_init (MatePanelApplet *applet)
@@ -1850,7 +1850,7 @@ mate_panel_applet_constructor (GType                  type,
 		gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 	} else
 #endif
-	{ // not using X11
+	{ /* not using X11 */
 		g_warning ("Requested construction of an out-of-process applet, which is only possible on X11");
 	}
 
@@ -2325,7 +2325,7 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 		_mate_panel_applet_setup_x_error_handler();
 	} else
 #endif
-	{ // not using X11
+	{ /* not using X11 */
 		if (out_process) {
 			g_warning("Requested out-of-process applet, which is only supported on X11");
 			return 1;
@@ -2414,7 +2414,7 @@ guint32
 mate_panel_applet_get_xid (MatePanelApplet *applet,
 		      GdkScreen   *screen)
 {
-	// out_of_process should only be true on X11, so an extra runtime Wayland check is not needed
+	/* out_of_process should only be true on X11, so an extra runtime Wayland check is not needed */
 	if (applet->priv->out_of_process == FALSE)
 		return 0;
 

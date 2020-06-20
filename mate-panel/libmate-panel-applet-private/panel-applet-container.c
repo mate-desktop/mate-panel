@@ -118,7 +118,7 @@ panel_applet_container_setup (MatePanelAppletContainer *container)
 			gtk_widget_show (container->priv->socket);
 		} else
 #endif
-		{ // Not using X11
+		{ /* Not using X11 */
 			g_warning("%s requested out-of-process container, which is only supported on X11",
 				  container->priv->iid);
 		}
@@ -295,7 +295,7 @@ mate_panel_applet_container_plug_removed (MatePanelAppletContainer *container)
 	 */
 	return FALSE;
 }
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 static void
 mate_panel_applet_container_child_signal (GDBusProxy           *proxy,
@@ -389,7 +389,7 @@ on_proxy_appeared (GObject      *source_object,
 	panel_applet_container_setup (container);
 
 #ifdef HAVE_X11
-	// xid always <= 0 when not using X11
+	/* xid always <= 0 when not using X11 */
 	if (container->priv->xid > 0) {
 		gtk_socket_add_id (GTK_SOCKET (container->priv->socket),
 				   container->priv->xid);
@@ -533,7 +533,7 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 		screen_number = gdk_x11_screen_get_screen_number (screen);
 	} else
 #endif
-	{ // Not using X11
+	{ /* Not using X11 */
 		screen_number = 0;
 	}
 

@@ -30,19 +30,23 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #include <gdk/gdkx.h>
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 #include "panel-multimonitor.h"
 
 #include <string.h>
 
-// The number of logical monitors we are keeping track of
-// May be different than gdk_display_get_n_monitors()
-// (see comment in panel_multimonitor_compress_overlapping_monitors for details)
+/*
+ * The number of logical monitors we are keeping track of
+ * May be different than gdk_display_get_n_monitors()
+ * (see comment in panel_multimonitor_compress_overlapping_monitors for details)
+ */
 static int            monitor_count = 0;
 
-// A dynamically allocated array of monitor geometries
-// monitor_count is the length
+/*
+ * A dynamically allocated array of monitor geometries
+ * monitor_count is the length
+ */
 static GdkRectangle  *geometries = NULL;
 
 static gboolean       initialized = FALSE;
@@ -209,8 +213,8 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 
 	return TRUE;
 }
-#endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* HAVE_RANDR */
+#endif /* HAVE_X11 */
 
 static void
 panel_multimonitor_get_gdk_monitors (int           *monitors_ret,
@@ -245,8 +249,8 @@ panel_multimonitor_get_raw_monitors (int           *monitors_ret,
 #ifdef HAVE_RANDR
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) && have_randr)
 		res = panel_multimonitor_get_randr_monitors (monitors_ret, geometries_ret);
-#endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* HAVE_RANDR */
+#endif /* HAVE_X11 */
 
 	if (res && *monitors_ret > 0)
 		return;
@@ -429,8 +433,8 @@ panel_multimonitor_init_randr (GdkDisplay *display)
 			have_randr = TRUE;
 	}
 }
-#endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* HAVE_RANDR */
+#endif /* HAVE_X11 */
 
 void
 panel_multimonitor_init (void)
@@ -451,8 +455,8 @@ panel_multimonitor_init (void)
 #ifdef HAVE_RANDR
 	if (GDK_IS_X11_DISPLAY (display))
 		panel_multimonitor_init_randr (display);
-#endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* HAVE_RANDR */
+#endif /* HAVE_X11 */
 
 	/*
 	 * The screen signals probably shouldn't be needed, but sometimes on X11 they are

@@ -195,7 +195,7 @@ add_all_move_bindings (PanelWidget *panel)
 	GtkWidget *focus_widget;
 
 	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->toplevel));
-	// will always be false when not on X
+	/* will always be false when not on X */
 	if (GTK_IS_SOCKET (focus_widget)) {
 		/*
 		 * If the focus widget is a GtkSocket, i.e. the
@@ -208,7 +208,7 @@ add_all_move_bindings (PanelWidget *panel)
 		gtk_widget_grab_focus (GTK_WIDGET (panel));
 		saved_focus_widget = focus_widget;
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 }
 
 static void

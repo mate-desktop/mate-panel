@@ -118,7 +118,7 @@ _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	supported_platforms = g_key_file_get_string_list (applet_file, group,
 							  "Platforms", NULL, NULL);
 	if (supported_platforms == NULL) {
-		// If supported platforms are not specified, assume all are supported
+		/* If supported platforms are not specified, assume all are supported */
 		x11_supported = TRUE;
 		wayland_supported = TRUE;
 	} else {

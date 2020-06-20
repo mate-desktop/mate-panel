@@ -986,7 +986,7 @@ panel_profile_create_toplevel (GdkScreen *screen)
 	if (GDK_IS_X11_SCREEN (screen)) {
 		screen_number = gdk_x11_screen_get_screen_number (screen);
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, screen_number);
 

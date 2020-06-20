@@ -1059,8 +1059,9 @@ create_menuitem (GtkWidget          *menu,
 				(GDestroyNotify) matemenu_tree_item_unref);
 
 	if (alias_directory) {
-		//FIXME: we should probably use this data when we do dnd or
-		//context menu for this menu item
+		/* FIXME: we should probably use this data when we do dnd or
+		 * context menu for this menu item
+		 */
 		g_object_set_data_full (G_OBJECT (menuitem),
 					"panel-menu-tree-alias-directory",
 					matemenu_tree_item_ref (alias_directory),

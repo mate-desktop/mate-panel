@@ -413,7 +413,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_CONNECT_SERVER,
-		PANEL_ICON_REMOTE, //FIXME icon
+		PANEL_ICON_REMOTE, /* FIXME icon */
 		N_("Connect to Server..."),
 		N_("Connect to a remote computer or shared disk"),
 		"caja-server-connect",

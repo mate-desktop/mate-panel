@@ -81,9 +81,9 @@ dummy_child_watch (GPid     pid,
 		   gpointer user_data)
 {
 	/* Nothing, this is just to ensure we don't double fork
-	* and break pkexec:
-	* https://bugzilla.gnome.org/show_bug.cgi?id=675789
-	*/
+	 * and break pkexec:
+	 * https://bugzilla.gnome.org/show_bug.cgi?id=675789
+	 */
 }
 
 static void

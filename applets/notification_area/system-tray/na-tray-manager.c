@@ -518,7 +518,7 @@ na_tray_manager_window_filter (GdkXEvent *xev,
 }
 
 #if 0
-//FIXME investigate why this doesn't work
+/* FIXME investigate why this doesn't work */
 static gboolean
 na_tray_manager_selection_clear_event (GtkWidget         *widget,
                                        GdkEventSelection *event,

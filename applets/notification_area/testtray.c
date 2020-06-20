@@ -70,7 +70,7 @@ static void
 tray_added_cb (GtkContainer *box, GtkWidget *icon, TrayData *data)
 {
   g_print ("[Screen %u tray %p] Child %p added to tray: \"%s\"\n",
-	   data->screen_num, data->traybox, icon, "XXX");//na_tray_child_get_title (icon));
+	   data->screen_num, data->traybox, icon, "XXX"); /* na_tray_child_get_title (icon)); */
 
   update_child_count (data);
 }

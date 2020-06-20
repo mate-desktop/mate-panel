@@ -1055,7 +1055,7 @@ panel_util_get_label_for_uri (const char *text_uri)
 
 	label = NULL;
 
-	//FIXME: see caja_query_to_readable_string() to have a nice name
+	/* FIXME: see caja_query_to_readable_string() to have a nice name */
 	if (g_str_has_prefix (text_uri, "x-caja-search:"))
 		return g_strdup (_("Search"));
 

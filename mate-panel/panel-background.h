@@ -63,7 +63,7 @@ struct _PanelBackground {
 	PanelBackgroundMonitor *monitor;
 	GdkPixbuf              *desktop;
 	gulong                  monitor_signal;
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	GdkWindow              *window;
 	cairo_pattern_t        *default_pattern;

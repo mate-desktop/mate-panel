@@ -65,13 +65,13 @@ recent_documents_activate_cb (GtkRecentChooser *chooser,
 	recent_info = gtk_recent_chooser_get_current_item (chooser);
 	uri = gtk_recent_info_get_uri (recent_info);
 	mime_type = gtk_recent_info_get_mime_type (recent_info);
-	//FIXME gtk_recent_info_get_application_info() could be useful
+	/* FIXME gtk_recent_info_get_application_info() could be useful */
 
 	if (show_uri (uri, mime_type, screen, &error) != TRUE) {
 		char *uri_utf8;
 
 		uri_utf8 = g_filename_to_utf8 (uri, -1, NULL, NULL, NULL);
-		//FIXME this could fail... Maybe we want gtk_recent_info_get_display_name()
+		/* FIXME this could fail... Maybe we want gtk_recent_info_get_display_name() */
 
 		if (error) {
 			char *primary;
@@ -218,7 +218,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 			  G_CALLBACK (recent_documents_activate_cb),
 			  NULL);
 
-	//FIXME this is not possible with GtkRecent...: egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());
+	/* FIXME this is not possible with GtkRecent...: egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ()); */
 
 	g_signal_connect_object (manager, "changed",
 				 G_CALLBACK (panel_recent_manager_changed_cb),

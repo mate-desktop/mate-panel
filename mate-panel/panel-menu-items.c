@@ -519,7 +519,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_
 
 		gicon = g_themed_icon_new_with_default_fallbacks (icon);
 
-		//FIXME: drag and drop will be broken for x-caja-search uris
+		/* FIXME: drag and drop will be broken for x-caja-search uris */
 		panel_menu_items_append_place_item (icon, gicon,
 						    label,
 						    tooltip,
@@ -568,8 +568,9 @@ drive_poll_for_media_cb (GObject      *source_object,
 		g_error_free (error);
 	}
 
-	//FIXME: should we mount the volume and activate the root of the new
-	//mount?
+	/* FIXME: should we mount the volume and activate the root of the new
+	 * mount?
+	 */
 }
 
 static void
@@ -735,7 +736,7 @@ panel_menu_item_append_mount (GtkWidget *menu,
 
 	panel_menu_items_append_place_item (NULL, icon,
 					    display_name,
-					    display_name, //FIXME tooltip
+					    display_name, /* FIXME tooltip */
 					    menu,
 					    G_CALLBACK (activate_uri),
 					    activation_uri);

@@ -98,7 +98,7 @@ static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 	panel_util_set_tooltip_text(menubar->priv->places_item, _("Access documents, folders and network places"));
 	panel_util_set_tooltip_text(menubar->priv->desktop_item, _("Change desktop appearance and behavior, get help, or log out"));
 
-	//FIXME: this doesn't handle the right-click case. Sigh.
+	/* FIXME: this doesn't handle the right-click case. Sigh. */
 	/* Hide tooltip if a menu is activated */
 	g_signal_connect(menubar->priv->applications_item, "activate", G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus), menubar);
 	g_signal_connect(menubar->priv->places_item, "activate", G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus), menubar);
