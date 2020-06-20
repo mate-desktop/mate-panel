@@ -180,7 +180,7 @@ button_widget_reload_surface (ButtonWidget *button)
 					 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size * scale: -1,
 					 &error);
 		if (error) {
-			//FIXME: this is not rendered at button->priv->size
+			/* FIXME: this is not rendered at button->priv->size */
 			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
 			button->priv->surface = gtk_icon_theme_load_surface (icon_theme,
 							       "image-missing",
@@ -317,7 +317,7 @@ calc_arrow (PanelOrientation  orientation,
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
 		*x     = (button_width - (*size)) / 2;
-		*y     = button_height * .99 - (*size) / (3/2);	// 3/2 is the approximate ratio of GTK arrows
+		*y     = button_height * .99 - (*size) / (3/2);	/* 3/2 is the approximate ratio of GTK arrows */
 		*angle = G_PI;
 		retval = GTK_ARROW_DOWN;
 		break;
@@ -328,7 +328,7 @@ calc_arrow (PanelOrientation  orientation,
 		retval = GTK_ARROW_UP;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		*x     = button_width * .99 - (*size) / (3/2);	// 3/2 is the approximate ratio of GTK arrows
+		*x     = button_width * .99 - (*size) / (3/2);	/* 3/2 is the approximate ratio of GTK arrows */
 		*y     = (button_height - (*size)) / 2;
 		*angle = G_PI / 2;
 		retval = GTK_ARROW_RIGHT;

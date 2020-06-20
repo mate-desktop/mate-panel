@@ -276,7 +276,7 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 		"program-name", _("Notification Area"),
 		"title", _("About Notification Area"),
 		"authors", authors,
-		//"comments", _(comments),
+		/* "comments", _(comments), */
 		"copyright", _("Copyright \xc2\xa9 2002 Red Hat, Inc.\n"
 		               "Copyright \xc2\xa9 2003-2006 Vincent Untz\n"
 		               "Copyright \xc2\xa9 2011 Perberos\n"
@@ -320,7 +320,7 @@ na_tray_applet_realize (GtkWidget *widget)
 
   setup_gsettings (applet);
 
-  // load min icon size
+  /* load min icon size */
   gsettings_changed_min_icon_size (applet->priv->settings, KEY_MIN_ICON_SIZE, applet);
 
   applet->priv->builder = gtk_builder_new ();

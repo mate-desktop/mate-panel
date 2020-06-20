@@ -15,12 +15,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// File should only be used on X11
+/* File should only be used on X11 */
 
 #ifndef PANEL_PLUG_PRIVATE_H
 #define PANEL_PLUG_PRIVATE_H
 
-#ifdef PACKAGE_NAME // only check HAVE_X11 if config.h has been included
+#ifdef PACKAGE_NAME /* only check HAVE_X11 if config.h has been included */
 #ifndef HAVE_X11
 #error file should only be included when HAVE_X11 is enabled
 #endif

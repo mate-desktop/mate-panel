@@ -603,7 +603,7 @@ panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
 	int                   profile_size;
 
 	/* change the maximum size of the panel */
-	//TODO: we should also do this when the monitor size changes
+	/* TODO: we should also do this when the monitor size changes */
 	max_size = panel_toplevel_get_maximum_size (dialog->toplevel);
 	spin_size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (dialog->size_spin));
 	profile_size = panel_profile_get_toplevel_size (dialog->toplevel);

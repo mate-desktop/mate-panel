@@ -264,7 +264,7 @@ calendar_window_pack_locations (CalendarWindow *calwin, GtkWidget *vbox)
 	gtk_widget_show (calwin->priv->locations_list);
 	gtk_container_add (GTK_CONTAINER (vbox), calwin->priv->locations_list);
 
-	//gtk_box_pack_start (GTK_BOX (vbox), calwin->priv->locations_list, TRUE, FALSE, 0);
+	/* gtk_box_pack_start (GTK_BOX (vbox), calwin->priv->locations_list, TRUE, FALSE, 0); */
 }
 
 static void
@@ -524,7 +524,7 @@ calendar_window_set_invert_order (CalendarWindow *calwin,
 		return;
 
 	calwin->priv->invert_order = invert_order;
-	//FIXME: update the order of the content of the window
+	/* FIXME: update the order of the content of the window */
 
 	g_object_notify (G_OBJECT (calwin), "invert-order");
 }

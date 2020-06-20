@@ -226,7 +226,7 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 		xid = mate_panel_applet_get_xid (MATE_PANEL_APPLET (applet), screen);
 	} else
 #endif
-	{ // Not using X11
+	{ /* Not using X11 */
 		xid = 0;
 	}
 

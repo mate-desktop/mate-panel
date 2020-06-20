@@ -308,8 +308,9 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		 */
 		gtk_image_set_from_pixbuf (GTK_IMAGE (dialog->pixmap), pixbuf);
 
-		//FIXME: it'd be better to set an icon of the correct size,
-		//(ditto for the drag icon?)
+		/* FIXME: it'd be better to set an icon of the correct size,
+		 * (ditto for the drag icon?)
+		 */
 		gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), pixbuf);
 
 		gtk_drag_source_set_icon_gicon (dialog->run_dialog, dialog->icon);
@@ -743,7 +744,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	gtk_tree_path_free (path);
 
 	panel_run_dialog_set_icon (dialog, found_icon, FALSE);
-	//FIXME update dialog->program_label
+	/* FIXME update dialog->program_label */
 
 	g_clear_object (&found_icon);
 	g_free (text);
@@ -933,7 +934,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->program_list),
 				 model_filter);
-	//FIXME use the same search than the fuzzy one?
+	/* FIXME use the same search than the fuzzy one? */
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (dialog->program_list),
 					 COLUMN_NAME);
 
@@ -1068,7 +1069,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	g_free (temp);
 
 	temp = panel_key_file_get_locale_string (key_file, "Comment");
-	//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
+	/* FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed() */
 	gtk_label_set_text (GTK_LABEL (dialog->program_label),
 			    sure_string (temp));
 	g_free (temp);

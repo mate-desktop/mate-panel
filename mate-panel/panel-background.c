@@ -151,8 +151,8 @@ panel_background_prepare (PanelBackground *background)
 		    !gdk_window_check_composited_wm(background->window))
 			set_pixbuf_background (background);
 		else
-#endif // HAVE_X11
-		{ // Not using X11, or pixbuf background not needed
+#endif /* HAVE_X11 */
+		{ /* Not using X11, or pixbuf background not needed */
 			gdk_window_set_background_rgba (background->window,
 			                                &background->color);
 		}
@@ -258,7 +258,7 @@ get_desktop_pixbuf (PanelBackground *background)
 	return desktop;
 }
 
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 static cairo_pattern_t *
 composite_image_onto_desktop (PanelBackground *background)
@@ -297,7 +297,7 @@ composite_image_onto_desktop (PanelBackground *background)
 			}
 		}
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	gdk_cairo_set_source_pixbuf (cr, background->transformed_image, 0, 0);
 	pattern = cairo_get_source (cr);
@@ -343,7 +343,7 @@ composite_color_onto_desktop (PanelBackground *background)
 			}
 		}
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	gdk_cairo_set_source_rgba (cr, &background->color);
 	cairo_paint (cr);
@@ -587,7 +587,7 @@ disconnect_background_monitor (PanelBackground *background)
 		g_object_unref (background->desktop);
 	background->desktop = NULL;
 }
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 static void
 panel_background_update_has_alpha (PanelBackground *background)
@@ -608,7 +608,7 @@ panel_background_update_has_alpha (PanelBackground *background)
 		if (!has_alpha)
 			disconnect_background_monitor (background);
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 }
 
 static void
@@ -619,8 +619,9 @@ load_background_file (PanelBackground *background)
 	if (!g_file_test (background->image, G_FILE_TEST_IS_REGULAR))
 		return;
 
-	//FIXME add a monitor on the file so that we reload the background
-	//when it changes
+	/* FIXME add a monitor on the file so that we reload the background
+	 * when it changes
+	 */
 	background->loaded_image =
 		gdk_pixbuf_new_from_file (background->image, &error);
 	if (!background->loaded_image) {
@@ -908,7 +909,7 @@ panel_background_change_region (PanelBackground *background,
 	if (background->desktop)
 		g_object_unref (background->desktop);
 	background->desktop = NULL;
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	if (need_to_retransform || ! background->transformed)
 		/* only retransform the background if we have in
@@ -953,7 +954,7 @@ panel_background_init (PanelBackground              *background,
 	background->monitor        = NULL;
 	background->desktop        = NULL;
 	background->monitor_signal = -1;
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	background->window   = NULL;
 
@@ -981,7 +982,7 @@ panel_background_free (PanelBackground *background)
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
 		disconnect_background_monitor (background);
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	free_transformed_resources (background);
 
@@ -997,7 +998,7 @@ panel_background_free (PanelBackground *background)
 	if (background->monitor)
 		g_object_unref (background->monitor);
 	background->monitor = NULL;
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	if (background->window)
 		g_object_unref (background->window);

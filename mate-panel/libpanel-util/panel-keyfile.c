@@ -41,7 +41,7 @@ panel_key_file_new_desktop (void)
 
 	retval = g_key_file_new ();
 
-	//FIXME? g_key_file_set_string (retval, G_KEY_FILE_DESKTOP_GROUP, "Name", _("No Name"));
+	/* FIXME? g_key_file_set_string (retval, G_KEY_FILE_DESKTOP_GROUP, "Name", _("No Name")); */
 	g_key_file_set_string (retval, G_KEY_FILE_DESKTOP_GROUP, "Version", "1.0");
 
 	return retval;
@@ -87,7 +87,7 @@ _panel_key_file_make_executable (const gchar *path)
 	g_object_unref (file);
 }
 
-//FIXME: kill this when bug #309224 is fixed
+/* FIXME: kill this when bug #309224 is fixed */
 gboolean
 panel_key_file_to_file (GKeyFile     *keyfile,
 			const gchar  *file,

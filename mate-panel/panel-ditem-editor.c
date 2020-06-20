@@ -250,7 +250,7 @@ panel_ditem_editor_constructor (GType                  type,
 	if (!loaded && dialog->priv->uri) {
 		file = g_file_new_for_uri (dialog->priv->uri);
 		if (g_file_query_exists (file, NULL)) {
-			//FIXME what if there's an error?
+			/* FIXME what if there's an error? */
 			panel_ditem_editor_load_uri (dialog, NULL);
 			dialog->priv->new_file = FALSE;
 		} else {

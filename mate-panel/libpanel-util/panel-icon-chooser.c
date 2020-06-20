@@ -429,8 +429,9 @@ _panel_icon_chooser_clicked (GtkButton *button)
 
 	if (!filechooser_path_set) {
 		char *path;
-		// FIXME? Use current icon theme? But there might not be a lot
-		// of icons there...
+		/* FIXME? Use current icon theme? But there might not be a lot
+		 * of icons there...
+		 */
 		path = g_build_filename (DATADIR, "icons", NULL);
 		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (filechooser),
 						     path);

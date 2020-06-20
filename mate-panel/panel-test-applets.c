@@ -128,7 +128,7 @@ applet_activated_cb (GObject      *source_object,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_CLOSE,
 						 _("Failed to load applet %s"),
-						 error->message); // FIXME
+						 error->message); /* FIXME */
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
 		return;
@@ -150,7 +150,7 @@ load_applet_into_window (const char *title,
 	container = mate_panel_applet_container_new ();
 
 	applet_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	//FIXME: we could set the window icon with the applet icon
+	/* FIXME: we could set the window icon with the applet icon */
 	gtk_window_set_title (GTK_WINDOW (applet_window), title);
 	gtk_container_add (GTK_CONTAINER (applet_window), container);
 	gtk_widget_show (container);

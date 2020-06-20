@@ -183,7 +183,7 @@ drag_data_received_cb (GtkWidget        *widget,
 	int      i;
 	GList   *file_list;
 
-	// The animation uses X specific functionality
+	/* The animation uses X specific functionality */
 #ifdef HAVE_X11
 	if (is_using_x11 () && panel_global_config_get_enable_animations ()) {
 		cairo_surface_t *surface;

@@ -685,8 +685,9 @@ update_weather_info (gpointer data)
                 DISTANCE_UNIT_KM
         };
 
-        // set temperature and speed units only if different from
-        // invalid/default
+        /* set temperature and speed units only if different from
+         * invalid/default
+         */
         if (priv->temperature_unit > TEMP_UNIT_DEFAULT)
                 prefs.temperature_unit = priv->temperature_unit;
         if (priv->speed_unit > SPEED_UNIT_DEFAULT)

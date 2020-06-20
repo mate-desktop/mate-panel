@@ -1397,7 +1397,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 						     "sensitive", COLUMN_ENABLED,
 						     NULL);
 
-	//FIXME use the same search than the one for the search entry?
+	/* FIXME use the same search than the one for the search entry? */
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (dialog->tree_view),
 					 COLUMN_SEARCH);
 

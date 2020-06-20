@@ -715,7 +715,7 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
                              GDK_BUTTON1_MASK,
                              dnd_targets, 1,
                              GDK_ACTION_MOVE);
-        //FIXME: we're forgetting the use_custom_icon case, here
+        /* FIXME: we're forgetting the use_custom_icon case, here */
         gtk_drag_source_set_icon_name (drawer->button, button_widget_get_icon_name (BUTTON_WIDGET (drawer->button)));
 
         gtk_widget_set_has_window (drawer->button, FALSE);
