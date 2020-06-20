@@ -33,7 +33,7 @@
 #include "panel-enums.h"
 #include "panel-types.h"
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include "panel-background-monitor.h"
 #endif
 
@@ -59,11 +59,11 @@ struct _PanelBackground {
 	GdkPixbuf              *transformed_image;
 	cairo_pattern_t        *composited_pattern;
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	PanelBackgroundMonitor *monitor;
 	GdkPixbuf              *desktop;
 	gulong                  monitor_signal;
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 	GdkWindow              *window;
 	cairo_pattern_t        *default_pattern;

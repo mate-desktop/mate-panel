@@ -24,14 +24,11 @@
 
 #include <config.h>
 
-#ifndef HAVE_X11
-#error file should only be built when HAVE_X11 is enabled
-#endif
-
 #include "panel-force-quit.h"
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>

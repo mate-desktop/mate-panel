@@ -23,12 +23,7 @@
 #ifndef __PANEL_STRUTS_H__
 #define __PANEL_STRUTS_H__
 
-#ifdef PACKAGE_NAME // only check HAVE_X11 if config.h has been included
-#ifndef HAVE_X11
-#error file should only be included when HAVE_X11 is enabled
-#endif
-#endif
-
+#include <gdk/gdk.h>
 #include <glib.h>
 #include "panel-toplevel.h"
 

@@ -62,7 +62,7 @@
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include "xstuff.h"
 #endif
 
@@ -2000,7 +2000,7 @@ panel_run_dialog_new (GdkScreen  *screen,
 
 	gtk_widget_grab_focus (dialog->combobox);
 	gtk_widget_realize (dialog->run_dialog);
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (is_using_x11 ())
 		gdk_x11_window_set_user_time (gtk_widget_get_window (dialog->run_dialog),
 					      activate_time);

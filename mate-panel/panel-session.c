@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <libegg/eggsmclient.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include "xstuff.h"
 #endif
 
@@ -73,7 +73,7 @@ panel_session_init (void)
 	g_signal_connect (client, "quit",
 			  G_CALLBACK (panel_session_handle_quit), NULL);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (is_using_x11 ()) {
 		/* We don't want the X WM to try and save/restore our
 		* window position */

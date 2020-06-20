@@ -32,7 +32,7 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
 
@@ -574,7 +574,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 
 	g_settings_delay (toplevel->queued_settings);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (change->screen_changed &&
 	    GDK_IS_X11_SCREEN (change->screen)) {
 		g_settings_set_int (toplevel->queued_settings,
@@ -982,11 +982,11 @@ panel_profile_create_toplevel (GdkScreen *screen)
 	g_free (path);
 
 	screen_number = 0;
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_SCREEN (screen)) {
 		screen_number = gdk_x11_screen_get_screen_number (screen);
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 	g_settings_set_int (settings, PANEL_TOPLEVEL_SCREEN_KEY, screen_number);
 

@@ -55,7 +55,7 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #include "panel-force-quit.h"
 #endif
@@ -286,7 +286,7 @@ panel_action_force_quit (GtkWidget *widget)
 	GtkWidget *dialog;
 	GtkDialogFlags flags;
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget))) {
 		panel_force_quit (gtk_widget_get_screen (widget),
 				  gtk_get_current_event_time ());

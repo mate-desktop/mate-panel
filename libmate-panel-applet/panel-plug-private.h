@@ -20,13 +20,8 @@
 #ifndef PANEL_PLUG_PRIVATE_H
 #define PANEL_PLUG_PRIVATE_H
 
-#ifdef PACKAGE_NAME // only check HAVE_X11 if config.h has been included
-#ifndef HAVE_X11
-#error file should only be included when HAVE_X11 is enabled
-#endif
-#endif
-
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gtk/gtkx.h>
 
 G_BEGIN_DECLS

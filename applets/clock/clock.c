@@ -51,7 +51,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
 
@@ -876,7 +876,7 @@ create_calendar (ClockData *cd)
 static void
 position_calendar_popup (ClockData *cd)
 {
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
         GtkRequisition  req;
         GtkAllocation   allocation;
         GdkDisplay     *display;

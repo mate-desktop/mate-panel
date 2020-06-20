@@ -22,11 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
-#endif
-
-#ifndef HAVE_X11
-#error file should only be built when HAVE_X11 is enabled
+#include <config.h>
 #endif
 
 #include <string.h>
@@ -34,6 +30,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>

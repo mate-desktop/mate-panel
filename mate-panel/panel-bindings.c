@@ -34,7 +34,7 @@
 
 #include "panel-schemas.h"
 #include "panel-profile.h"
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include "xstuff.h"
 #include "panel-xutils.h"
 #endif
@@ -244,7 +244,7 @@ panel_bindings_set_entries (GtkBindingSet *binding_set)
 guint
 panel_bindings_get_mouse_button_modifier_keymask (void)
 {
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (!is_using_x11 ())
 		return 0;
 

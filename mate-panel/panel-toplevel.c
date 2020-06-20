@@ -35,10 +35,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
-#ifdef HAVE_X11
-#include <gdk/gdkx.h>
-#endif
-
 #include "panel-util.h"
 #include "panel-profile.h"
 #include "panel-frame.h"
@@ -52,14 +48,17 @@
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
 
-#ifdef HAVE_X11
+#include <gdk/gdk.h>
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
 #include "xstuff.h"
 #include "panel-xutils.h"
 #include "panel-struts.h"
 #endif
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
+#include <gdk/gdkwayland.h>
 #include "wayland-backend.h"
-#endif
+#endif /* defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND) */
 
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    1
@@ -374,7 +373,7 @@ static GdkCursorType panel_toplevel_grab_op_cursor(PanelToplevel* toplevel, Pane
 	return retval;
 }
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 static void panel_toplevel_init_resize_drag_offsets(PanelToplevel* toplevel, PanelGrabOpType grab_op)
 {
 	g_assert (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))));
@@ -450,7 +449,7 @@ static void panel_toplevel_warp_pointer(PanelToplevel* toplevel)
 
 	panel_warp_pointer (gtk_widget_get_window (widget), x, y);
 }
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 static void panel_toplevel_begin_attached_move(PanelToplevel* toplevel, gboolean is_keyboard, guint32 time_)
 {
@@ -519,12 +518,12 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 
 	gtk_grab_add (widget);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (widget)) &&
 	    toplevel->priv->grab_is_keyboard) {
 		panel_toplevel_warp_pointer (toplevel);
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
@@ -851,7 +850,7 @@ static void panel_toplevel_rotate_to_pointer(PanelToplevel* toplevel, int pointe
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
 }
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, int keyval, int increment)
 {
 	GdkScreen *screen;
@@ -909,7 +908,7 @@ static gboolean panel_toplevel_move_keyboard_floating(PanelToplevel* toplevel, G
 #undef NORMAL_INCREMENT
 }
 
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 static gboolean panel_toplevel_move_keyboard_expanded(PanelToplevel* toplevel, GdkEventKey* event)
 {
@@ -1001,12 +1000,12 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 				retval = panel_toplevel_move_keyboard_expanded (
 									toplevel, event);
 			}
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 			else if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 				retval = panel_toplevel_move_keyboard_floating (
 									toplevel, event);
 			}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 			break;
 		case PANEL_GRAB_OP_RESIZE:
 			retval = panel_toplevel_initial_resize_keypress (toplevel, event);
@@ -1015,10 +1014,10 @@ static gboolean panel_toplevel_handle_grab_op_key_event(PanelToplevel* toplevel,
 		case PANEL_GRAB_OP_RESIZE_DOWN:
 		case PANEL_GRAB_OP_RESIZE_LEFT:
 		case PANEL_GRAB_OP_RESIZE_RIGHT:
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 			if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))))
 				retval = panel_toplevel_warp_pointer_increment (toplevel, event->keyval, 1);
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 			break;
 		default:
 			g_assert_not_reached ();
@@ -1446,13 +1445,13 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	if (!toplevel->priv->updated_geometry_initial)
 		return FALSE;
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))) && toplevel->priv->attached) {
 		panel_struts_unregister_strut (toplevel);
 		panel_struts_set_window_hint (toplevel);
 		return FALSE;
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 	/* In the case of the initial animation, we really want the struts to
 	 * represent what is at the end of the animation, to avoid desktop
@@ -1534,7 +1533,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	if (toplevel->priv->auto_hide && strut > 0)
 		strut = panel_toplevel_get_effective_auto_hide_size (toplevel);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 		if (strut > 0) {
 			GdkScreen *screen;
@@ -1559,13 +1558,13 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		else
 			panel_struts_unset_window_hint (toplevel);
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 		wayland_panel_toplevel_update_placement (toplevel);
 	}
-#endif // HAVE_WAYLAND
+#endif /* defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND) */
 	return geometry_changed;
 }
 
@@ -2516,7 +2515,7 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 
 	panel_toplevel_update_struts (toplevel, FALSE);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 		if (toplevel->priv->state == PANEL_STATE_NORMAL ||
 		toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
@@ -2532,7 +2531,7 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 							NULL, NULL);
 		}
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 	panel_toplevel_update_edges (toplevel);
 	panel_toplevel_update_description (toplevel);
@@ -3024,12 +3023,12 @@ panel_toplevel_realize (GtkWidget *widget)
 	set_background_default_style (widget);
 	panel_background_realized (&toplevel->background, window);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_WINDOW (window)) {
 		panel_struts_set_window_hint (toplevel);
 		gdk_window_set_geometry_hints (window, NULL, 0);
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 	gdk_window_set_group (window, window);
 	panel_toplevel_initially_hide (toplevel);
@@ -3637,7 +3636,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	toplevel->priv->animating = TRUE;
 
 	panel_toplevel_update_struts (toplevel, TRUE);
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 		panel_struts_update_toplevel_geometry (toplevel,
 						       &toplevel->priv->animation_end_x,
@@ -3645,7 +3644,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 						       &toplevel->priv->animation_end_width,
 						       &toplevel->priv->animation_end_height);
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 	panel_toplevel_update_struts (toplevel, FALSE);
 
 	gdk_window_get_origin (gtk_widget_get_window (GTK_WIDGET (toplevel)), &cur_x, &cur_y);
@@ -4246,10 +4245,10 @@ panel_toplevel_finalize (GObject *object)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) object;
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))))
 		panel_struts_unregister_strut (toplevel);
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 	toplevel_list = g_slist_remove (toplevel_list, toplevel);
 
@@ -4810,11 +4809,11 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	update_style_classes (toplevel);
 
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ())) {
 		wayland_panel_toplevel_init (toplevel);
 	}
-#endif // HAVE_WAYLAND
+#endif /* defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND) */
 }
 
 PanelWidget *
@@ -5060,11 +5059,11 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
 
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 	if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 		wayland_panel_toplevel_update_placement (toplevel);
 	}
-#endif // HAVE_WAYLAND
+#endif /* defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND) */
 }
 
 PanelOrientation

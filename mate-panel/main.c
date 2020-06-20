@@ -32,13 +32,16 @@
 #include "panel-reset.h"
 #include "panel-run-dialog.h"
 
-#ifdef HAVE_X11
+#include <gdk/gdk.h>
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
 #include "panel-action-protocol.h"
 #include "xstuff.h"
 #endif
 
-#ifdef HAVE_WAYLAND
-#include "wayland-backend.h"
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
+#include <gdk/gdkwayland.h>
 #endif
 
 /* globals */
@@ -166,7 +169,7 @@ main (int argc, char **argv)
 
 	display = gdk_display_get_default ();
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (display))
 		panel_action_protocol_init ();
 #endif
@@ -185,13 +188,13 @@ main (int argc, char **argv)
 
 	gboolean found_backend = FALSE;
 
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 	if (GDK_IS_WAYLAND_DISPLAY (display)) {
 		found_backend = TRUE;
 	}
 #endif
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (display)) {
 		xstuff_init ();
 		found_backend = TRUE;

@@ -23,10 +23,6 @@
 
 #include <config.h>
 
-#ifndef HAVE_X11
-#error file should only be built when HAVE_X11 is enabled
-#endif
-
 #include <string.h>
 
 #include <mate-panel-applet.h>
@@ -35,12 +31,14 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gio/gio.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 
 #include "main.h"
 #include "na-grid.h"
 
 #ifdef PROVIDE_WATCHER_SERVICE
-# include "libstatus-notifier-watcher/gf-status-notifier-watcher.h"
+#include "libstatus-notifier-watcher/gf-status-notifier-watcher.h"
 #endif
 
 #define NOTIFICATION_AREA_ICON "mate-panel-notification-area"

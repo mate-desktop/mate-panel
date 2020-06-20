@@ -20,7 +20,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
 #endif
 
@@ -393,7 +393,7 @@ static gboolean
 panel_key_press_event (GtkWidget   *widget,
 		       GdkEventKey *event)
 {
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	/*
   	 * If the focus widget is a GtkSocket, i.e. the
 	 * focus is in an applet in another process, then key

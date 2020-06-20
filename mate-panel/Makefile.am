@@ -147,11 +147,17 @@ mate_panel_CPPFLAGS = \
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DMATEMENU_I_KNOW_THIS_IS_UNSTABLE
 
+if ENABLE_X11
+mate_panel_CPPFLAGS += \
+	$(X_CFLAGS) \
+	$(XRANDR_CFLAGS)
+endif
+
+
 if ENABLE_WAYLAND
 mate_panel_CPPFLAGS += \
 	$(WAYLAND_CFLAGS)
 endif
-
 
 mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/mate-submodules/libegg/libegg.la \
@@ -159,10 +165,14 @@ mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS) \
 	$(DCONF_LIBS) \
-	$(XRANDR_LIBS) \
-	$(X_LIBS) \
 	$(GTK_LAYER_SHELL_LIBS) \
 	-lm
+
+if ENABLE_X11
+mate_panel_LDADD += \
+	$(X_LIBS) \
+	$(XRANDR_LIBS)
+endif
 
 if ENABLE_WAYLAND
 mate_panel_LDADD += \

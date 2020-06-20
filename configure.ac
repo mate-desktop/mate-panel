@@ -205,7 +205,7 @@ fi
 AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
 
 if test "x$have_wayland" = "xyes"; then
-  AC_DEFINE(HAVE_WAYLAND, 1, [Have the Wayland development library])
+  AC_DEFINE(ENABLE_WAYLAND, 1, [Have the Wayland development library])
 fi
 
 AC_SUBST(GTK_LAYER_SHELL_CFLAGS)
@@ -235,6 +235,7 @@ if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then
   fi
 fi
 
+AC_SUBST(X_CFLAGS)
 AC_SUBST(X_LIBS)
 
 dnl X RANDR extension

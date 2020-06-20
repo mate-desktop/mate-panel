@@ -53,10 +53,10 @@
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"
 
-#ifdef HAVE_X11
-#include "xstuff.h"
+#ifdef GDK_WINDOWING_X11
+#include "gdk/gdkx.h"
 #endif
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 #include "gdk/gdkwayland.h"
 #endif
 
@@ -412,14 +412,14 @@ panel_addto_query_applets (GSList *list)
 		}
 
 		enabled = TRUE;
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 		if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) &&
 		    !mate_panel_applet_info_get_x11_supported (info)) {
 			enabled = FALSE;
 			description = _("Not compatible with X11");
 		}
 #endif
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 		if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
 		    !mate_panel_applet_info_get_wayland_supported (info)) {
 			enabled = FALSE;

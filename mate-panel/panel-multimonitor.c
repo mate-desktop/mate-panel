@@ -25,12 +25,13 @@
 
 #include <config.h>
 
-#ifdef HAVE_X11
+#include <gdk/gdk.h>
+#if defined(GDK_WINDOWING_X11) && defined(HAVE_X11)
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #include <gdk/gdkx.h>
-#endif // HAVE_X11
+#endif /* defined(GDK_WINDOWING_X11) && defined(HAVE_X11) */
 
 #include "panel-multimonitor.h"
 
@@ -49,7 +50,7 @@ static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
 static guint          reinit_id   = 0;
 
-#ifdef HAVE_X11
+#if defined(GDK_WINDOWING_X11) && defined(HAVE_X11)
 #ifdef HAVE_RANDR
 static gboolean
 _panel_multimonitor_output_should_be_first (Display       *xdisplay,
@@ -210,7 +211,7 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 	return TRUE;
 }
 #endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* defined(GDK_WINDOWING_X11) && defined(HAVE_X11) */
 
 static void
 panel_multimonitor_get_gdk_monitors (int           *monitors_ret,
@@ -241,12 +242,12 @@ panel_multimonitor_get_raw_monitors (int           *monitors_ret,
 	*monitors_ret = 0;
 	*geometries_ret = NULL;
 
-#ifdef HAVE_X11
+#if defined(GDK_WINDOWING_X11) && defined(HAVE_X11)
 #ifdef HAVE_RANDR
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) && have_randr)
 		res = panel_multimonitor_get_randr_monitors (monitors_ret, geometries_ret);
 #endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* defined(GDK_WINDOWING_X11) && defined(HAVE_X11) */
 
 	if (res && *monitors_ret > 0)
 		return;
@@ -400,7 +401,7 @@ panel_multimonitor_handle_monitor_invalidate (GdkMonitor *monitor,
 	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
 }
 
-#ifdef HAVE_X11
+#if defined(GDK_WINDOWING_X11) && defined(HAVE_X11)
 #ifdef HAVE_RANDR
 static void
 panel_multimonitor_init_randr (GdkDisplay *display)
@@ -430,7 +431,7 @@ panel_multimonitor_init_randr (GdkDisplay *display)
 	}
 }
 #endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* defined(GDK_WINDOWING_X11) && defined(HAVE_X11) */
 
 void
 panel_multimonitor_init (void)
@@ -447,12 +448,13 @@ panel_multimonitor_init (void)
 
 	have_randr = FALSE;
 
-#ifdef HAVE_X11
+#if defined(GDK_WINDOWING_X11) && defined(HAVE_X11)
 #ifdef HAVE_RANDR
 	if (GDK_IS_X11_DISPLAY (display))
 		panel_multimonitor_init_randr (display);
 #endif // HAVE_RANDR
-#endif // HAVE_X11
+#endif /* defined(GDK_WINDOWING_X11) && defined(HAVE_X11) */
+
 
 	/*
 	 * The screen signals probably shouldn't be needed, but sometimes on X11 they are

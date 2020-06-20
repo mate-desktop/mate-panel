@@ -42,8 +42,9 @@
 #include "panel-background.h"
 #include "panel-lockdown.h"
 #include "panel-stock-icons.h"
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include "xstuff.h"
+#include <gdk/gdkx.h>
 #endif
 #include "panel-schemas.h"
 
@@ -743,7 +744,7 @@ _mate_panel_applet_frame_applet_broken (MatePanelAppletFrame *frame)
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (frame));
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (is_using_x11 () && xstuff_is_display_dead ())
 		return;
 #endif
@@ -799,7 +800,7 @@ _mate_panel_applet_frame_applet_broken (MatePanelAppletFrame *frame)
 
 	gtk_widget_show (dialog);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (dialog)))
 		gtk_window_present_with_time (GTK_WINDOW (dialog),
 					      gdk_x11_get_server_time (gtk_widget_get_window (GTK_WIDGET (dialog))));

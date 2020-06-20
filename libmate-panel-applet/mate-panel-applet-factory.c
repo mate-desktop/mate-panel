@@ -26,7 +26,7 @@
 
 #include "mate-panel-applet-factory.h"
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
 
@@ -216,7 +216,7 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	set_applet_constructor_properties (applet, props);
 	g_variant_unref (props);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
 		GdkScreen   *screen;
 

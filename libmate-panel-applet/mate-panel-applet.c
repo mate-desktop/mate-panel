@@ -37,7 +37,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <cairo-xlib.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtkx.h>
@@ -449,7 +449,7 @@ mate_panel_applet_set_locked_down (MatePanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "locked-down");
 }
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 
 static Atom _net_wm_window_type = None;
 static Atom _net_wm_window_type_dock = None;
@@ -535,7 +535,7 @@ mate_panel_applet_find_toplevel_dock_window (MatePanelApplet *applet,
 	return None;
 }
 
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 /* This function
  *   1) Gets the window id of the panel that contains the applet
@@ -547,7 +547,7 @@ void
 mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 			    guint32	  timestamp)
 {
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	GdkScreen  *screen;
 	GdkWindow  *root;
 	GdkDisplay *display;
@@ -896,7 +896,7 @@ static gboolean
 mate_panel_applet_button_event (MatePanelApplet      *applet,
 			   GdkEventButton *event)
 {
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	GtkWidget *widget;
 	GdkWindow *window;
 	GdkWindow *socket_window;
@@ -1214,7 +1214,7 @@ mate_panel_applet_parse_color (const gchar *color_str,
 	return gdk_rgba_parse (color, color_str);
 }
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 static gboolean
 mate_panel_applet_parse_pixmap_str (const char *str,
 			       Window          *xid,
@@ -1375,7 +1375,7 @@ mate_panel_applet_handle_background_string (MatePanelApplet  *applet,
 		retval = PANEL_COLOR_BACKGROUND;
 
 	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 		if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
 			Window pixmap_id;
 			int             x, y;
@@ -1756,7 +1756,7 @@ void _mate_panel_applet_apply_css(GtkWidget* widget, MatePanelAppletBackgroundTy
 	}
 }
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 {
 	GtkCssProvider  *provider;
@@ -1779,7 +1779,7 @@ static void _mate_panel_applet_prepare_css (GtkStyleContext *context)
 					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
 }
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 static void
 mate_panel_applet_init (MatePanelApplet *applet)
@@ -1828,7 +1828,7 @@ mate_panel_applet_constructor (GType                  type,
 	if (!applet->priv->out_of_process)
 		return object;
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
 		applet->priv->plug = gtk_plug_new (0);
@@ -2250,7 +2250,7 @@ static void mate_panel_applet_factory_main_finalized(gpointer data, GObject* obj
 	}
 }
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 static int (*_x_error_func) (Display *, XErrorEvent *);
 
 static int
@@ -2317,7 +2317,7 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 	g_assert(g_type_is_a(applet_type, PANEL_TYPE_APPLET));
 
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
 		/*Use this both in and out of process as the tray applet always uses GtkSocket
 		*to handle GtkStatusIcons whether the tray itself is built in or out of process
@@ -2418,7 +2418,7 @@ mate_panel_applet_get_xid (MatePanelApplet *applet,
 	if (applet->priv->out_of_process == FALSE)
 		return 0;
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
 	gtk_widget_show (applet->priv->plug);
 

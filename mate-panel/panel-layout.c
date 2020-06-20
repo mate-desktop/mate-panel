@@ -29,7 +29,8 @@
 #include <glib.h>
 #include <gio/gio.h>
 
-#ifdef HAVE_X11
+#include <gdk/gdk.h>
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
 
@@ -330,7 +331,7 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
     int          i;
 
     screen_n = 0;
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
     if (GDK_IS_X11_SCREEN (screen))
 	screen_n = gdk_x11_screen_get_screen_number (screen);
 #endif // HAVE_11

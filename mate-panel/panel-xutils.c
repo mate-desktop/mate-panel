@@ -24,10 +24,6 @@
 
 #include "config.h"
 
-#ifndef HAVE_X11
-#error file should only be built when HAVE_X11 is enabled
-#endif
-
 #include "panel-xutils.h"
 
 #include <glib.h>

@@ -31,10 +31,10 @@
 #include "panel-applet-frame-dbus.h"
 #include "panel-applets-manager-dbus.h"
 
-#ifdef HAVE_X11
-#include "gdk/gdkx.h"
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
 #endif
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 #include "gdk/gdkwayland.h"
 #endif
 
@@ -452,14 +452,14 @@ mate_panel_applets_manager_dbus_factory_activate (MatePanelAppletsManager *manag
 
 	applet_info = MATE_PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_info (manager, iid);
 	g_return_val_if_fail (applet_info, FALSE);
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) &&
 		!mate_panel_applet_info_get_x11_supported (applet_info)) {
 		g_warning ("Failed to load %p, because it does not support X11", iid);
 		return FALSE;
 	}
 #endif
-#ifdef HAVE_WAYLAND
+#if defined(ENABLE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
 		!mate_panel_applet_info_get_wayland_supported (applet_info)) {
 		g_warning ("Failed to load %p, because it does not support Wayland", iid);

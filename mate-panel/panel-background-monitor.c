@@ -26,10 +26,6 @@
 
 #include <config.h>
 
-#ifndef HAVE_X11
-#error file should only be compiled when HAVE_X11 is enabled
-#endif
-
 #include <glib.h>
 #include <glib-object.h>
 #include <gdk/gdk.h>

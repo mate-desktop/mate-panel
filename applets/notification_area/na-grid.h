@@ -27,7 +27,7 @@
 
 #include <config.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
 

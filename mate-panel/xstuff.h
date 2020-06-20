@@ -1,17 +1,9 @@
 #ifndef __XSTUFF_H__
 #define __XSTUFF_H__
 
-#ifdef PACKAGE_NAME // only check HAVE_X11 if config.h has been included
-#ifndef HAVE_X11
-#error file should only be included when HAVE_X11 is enabled
-#endif
-#endif
-
+#include <cairo.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
-
-#include <gdk/gdkx.h>
-#include <gtk/gtkx.h>
 
 #include "panel-enums-gsettings.h"
 

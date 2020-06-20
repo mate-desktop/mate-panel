@@ -22,10 +22,6 @@
 
 #include <config.h>
 
-#ifndef HAVE_X11
-#error file should only be built when HAVE_X11 is enabled
-#endif
-
 #include <string.h>
 #include <libintl.h>
 
@@ -33,6 +29,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
 

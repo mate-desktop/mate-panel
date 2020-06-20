@@ -12,9 +12,9 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gtk/gtkx.h> /* for GTK_IS_SOCKET */
-#endif
+#endif /* GDK_WINDOWING_X11 */
 
 #include <libpanel-util/panel-list.h>
 
@@ -191,7 +191,7 @@ add_all_move_bindings (PanelWidget *panel)
                                       GDK_KEY_space, 0,
                                       "end_move", 0);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	GtkWidget *focus_widget;
 
 	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->toplevel));
@@ -208,7 +208,7 @@ add_all_move_bindings (PanelWidget *panel)
 		gtk_widget_grab_focus (GTK_WIDGET (panel));
 		saved_focus_widget = focus_widget;
 	}
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 }
 
 static void

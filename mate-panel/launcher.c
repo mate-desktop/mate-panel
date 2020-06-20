@@ -33,7 +33,7 @@
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-profile.h"
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include "xstuff.h"
 #endif
 #include "panel-toplevel.h"
@@ -184,7 +184,7 @@ drag_data_received_cb (GtkWidget        *widget,
 	GList   *file_list;
 
 	// The animation uses X specific functionality
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (is_using_x11 () && panel_global_config_get_enable_animations ()) {
 		cairo_surface_t *surface;
 		surface = button_widget_get_surface (BUTTON_WIDGET (widget));
@@ -405,7 +405,7 @@ clicked_cb (Launcher  *launcher,
 		  GtkWidget        *widget)
 {
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (is_using_x11 () && panel_global_config_get_enable_animations ()) {
 		cairo_surface_t *surface;
 		surface = button_widget_get_surface (BUTTON_WIDGET (widget));

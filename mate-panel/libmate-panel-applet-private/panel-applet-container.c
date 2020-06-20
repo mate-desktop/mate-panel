@@ -25,7 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 #include <gtk/gtkx.h>
 #endif
 
@@ -80,7 +80,7 @@ static const AppletPropertyInfo applet_properties [] = {
 #define MATE_PANEL_APPLET_FACTORY_OBJECT_PATH "/org/mate/panel/applet/%s"
 #define MATE_PANEL_APPLET_INTERFACE           "org.mate.panel.applet.Applet"
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 static gboolean mate_panel_applet_container_plug_removed (MatePanelAppletContainer *container);
 #endif
 
@@ -105,7 +105,7 @@ static void
 panel_applet_container_setup (MatePanelAppletContainer *container)
 {
 	if (container->priv->out_of_process) {
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 		if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
 			container->priv->socket = gtk_socket_new ();
 
@@ -269,7 +269,7 @@ mate_panel_applet_container_new (void)
 	return container;
 }
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 static gboolean
 mate_panel_applet_container_plug_removed (MatePanelAppletContainer *container)
 {
@@ -295,7 +295,7 @@ mate_panel_applet_container_plug_removed (MatePanelAppletContainer *container)
 	 */
 	return FALSE;
 }
-#endif // HAVE_X11
+#endif /* GDK_WINDOWING_X11 */
 
 static void
 mate_panel_applet_container_child_signal (GDBusProxy           *proxy,
@@ -388,7 +388,7 @@ on_proxy_appeared (GObject      *source_object,
 
 	panel_applet_container_setup (container);
 
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	// xid always <= 0 when not using X11
 	if (container->priv->xid > 0) {
 		gtk_socket_add_id (GTK_SOCKET (container->priv->socket),
@@ -528,7 +528,7 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 
 	/* we can't use the screen of the container widget since it's not in a
 	 * widget hierarchy yet */
-#ifdef HAVE_X11
+#ifdef GDK_WINDOWING_X11
 	if (GDK_IS_X11_DISPLAY (gdk_screen_get_display (screen))) {
 		screen_number = gdk_x11_screen_get_screen_number (screen);
 	} else
