@@ -22,7 +22,7 @@
  *	Mark McLoughlin <mark@skynet.ie>
  */
 
-#include "config.h"
+#include <config.h>
 
 #ifndef HAVE_X11
 #error file should only be built when HAVE_X11 is enabled

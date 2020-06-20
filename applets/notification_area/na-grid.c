@@ -24,7 +24,7 @@
  * NaTray is already taken for the XEMBED part, so for now it's called NaGrid,
  * don't make a big deal out of it. */
 
-#include "config.h"
+#include <config.h>
 #include <gtk/gtk.h>
 
 #include "na-grid.h"

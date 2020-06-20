@@ -30,7 +30,7 @@
  *      Stefano Karapetsas
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <stdio.h>
 #include <sys/stat.h>

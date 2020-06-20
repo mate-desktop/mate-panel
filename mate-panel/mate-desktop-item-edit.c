@@ -1,4 +1,4 @@
-#include "config.h"
+#include <config.h>
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>

@@ -22,7 +22,7 @@
  *	Mark McLoughlin <mark@skynet.ie>
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "panel-stock-icons.h"
 
