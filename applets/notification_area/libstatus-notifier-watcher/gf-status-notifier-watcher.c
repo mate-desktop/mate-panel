@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "gf-sn-watcher-v0.h"
 #include "gf-status-notifier-watcher.h"
