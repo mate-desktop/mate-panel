@@ -39,4 +39,7 @@ BUILT_SOURCES = na-marshal.c na-marshal.h
 EXTRA_DIST =		\
 	na-marshal.list
 
+CLEANFILES =		\
+	$(BUILT_SOURCES)
+
 -include $(top_srcdir)/git.mk

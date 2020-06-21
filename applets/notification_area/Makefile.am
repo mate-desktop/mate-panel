@@ -107,7 +107,7 @@ na-resources.c: na.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$
 na-resources.h: na.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/na.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name na $<
 
-BUILT_SOURCES = 		\
+BUILT_SOURCES =		\
 	na-resources.c	\
 	na-resources.h
 
@@ -121,6 +121,7 @@ EXTRA_DIST =								\
 	$(service_in_files)
 
 CLEANFILES =			\
+	$(BUILT_SOURCES)	\
 	$(applet_DATA) 		\
 	$(applet_in_files)	\
 	$(service_DATA)		\
