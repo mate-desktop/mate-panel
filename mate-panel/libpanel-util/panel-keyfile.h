@@ -27,7 +27,7 @@
 #ifndef PANEL_KEYFILE_H
 #define PANEL_KEYFILE_H
 
-#include "glib.h"
+#include <glib.h>
 
 #ifdef __cplusplus
 extern "C" {
