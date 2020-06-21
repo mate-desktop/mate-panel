@@ -25,7 +25,7 @@
 #ifndef PANEL_CLEANUP_H
 #define PANEL_CLEANUP_H
 
-#include "glib.h"
+#include <glib.h>
 
 #ifdef __cplusplus
 extern "C" {

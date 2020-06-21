@@ -32,10 +32,10 @@
 #include "panel-applets-manager-dbus.h"
 
 #ifdef HAVE_X11
-#include "gdk/gdkx.h"
+#include <gdk/gdkx.h>
 #endif
 #ifdef HAVE_WAYLAND
-#include "gdk/gdkwayland.h"
+#include <gdk/gdkwayland.h>
 #endif
 
 struct _MatePanelAppletsManagerDBusPrivate

@@ -57,7 +57,7 @@
 #include "xstuff.h"
 #endif
 #ifdef HAVE_WAYLAND
-#include "gdk/gdkwayland.h"
+#include <gdk/gdkwayland.h>
 #endif
 
 typedef struct {
