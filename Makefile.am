@@ -22,6 +22,9 @@ EXTRA_DIST = \
 	COPYING-DOCS		\
 	HACKING
 
+CLEANFILES = \
+	config.h
+
 MAINTAINERCLEANFILES = \
 	$(srcdir)/INSTALL \
 	$(srcdir)/aclocal.m4 \
