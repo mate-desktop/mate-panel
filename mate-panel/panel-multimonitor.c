@@ -682,8 +682,8 @@ panel_multimonitor_get_bounds (GdkPoint *min,
 
 	g_return_if_fail (monitor_count > 0);
 
-	min->x = min->y = INT_MAX;
-	max->x = max->y = INT_MIN;
+	min->x = min->y = G_MAXINT;
+	max->x = max->y = G_MININT;
 
 	for (i = 0; i < monitor_count; i++) {
 		min->x = MIN (min->x, geometries[i].x);
