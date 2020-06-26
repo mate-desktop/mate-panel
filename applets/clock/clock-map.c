@@ -641,7 +641,7 @@ clock_map_blink_location (ClockMap *this, ClockLocation *loc)
        priv = clock_map_get_instance_private (this);
 
        g_return_if_fail (IS_CLOCK_MAP (this));
-       g_return_if_fail (IS_CLOCK_LOCATION (loc));
+       g_return_if_fail (CLOCK_IS_LOCATION (loc));
 
        data = g_new0 (BlinkData, 1);
        data->map = this;

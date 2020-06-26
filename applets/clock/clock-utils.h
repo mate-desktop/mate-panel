@@ -28,10 +28,9 @@
 #define __CLOCK_UTILS_H__
 
 #include <gtk/gtk.h>
+#include <libgweather/gweather.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
 /* Needs to match the indices in the combo of the prefs dialog */
 typedef enum {
@@ -54,8 +53,11 @@ GdkPixbuf *clock_utils_pixbuf_from_svg_resource_at_size (const char *resource,
 	                                                     int         width,
 	                                                     int         height);
 
-#ifdef __cplusplus
-}
-#endif
+const gchar* clock_utils_get_temp_display_name (GWeatherTemperatureUnit temp);
+const gchar* clock_utils_get_speed_display_name (GWeatherSpeedUnit speed);
+const gchar* clock_utils_get_distance_display_name (GWeatherDistanceUnit distance);
+const gchar* clock_utils_get_pressure_display_name (GWeatherPressureUnit pressure);
+
+G_END_DECLS
 
 #endif /* __CLOCK_UTILS_H__ */

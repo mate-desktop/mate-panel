@@ -174,3 +174,93 @@ out:
 	return pixbuf;
 }
 
+const gchar* clock_utils_get_temp_display_name (GWeatherTemperatureUnit temp)
+{
+    switch (temp) {
+        case GWEATHER_TEMP_UNIT_DEFAULT:
+            return N_("Default");
+        case GWEATHER_TEMP_UNIT_KELVIN:
+            /* translators: Kelvin */
+            return N_("K");
+        case GWEATHER_TEMP_UNIT_CENTIGRADE:
+            /* translators: Celsius */
+            return N_("C");
+        case GWEATHER_TEMP_UNIT_FAHRENHEIT:
+            /* translators: Fahrenheit */
+            return N_("F");
+        default:
+            return N_("Invalid");
+    }
+}
+
+const gchar* clock_utils_get_speed_display_name (GWeatherSpeedUnit speed)
+{
+    switch (speed) {
+        case GWEATHER_SPEED_UNIT_DEFAULT:
+            return N_("Default");
+        case GWEATHER_SPEED_UNIT_MS:
+            /* translators: meters per second */
+            return N_("m/s");
+        case GWEATHER_SPEED_UNIT_KPH:
+            /* translators: kilometers per hour */
+            return N_("km/h");
+        case GWEATHER_SPEED_UNIT_MPH:
+            /* translators: miles per hour */
+            return N_("mph");
+        case GWEATHER_SPEED_UNIT_KNOTS:
+            /* translators: knots (speed unit) */
+            return N_("knots");
+        case GWEATHER_SPEED_UNIT_BFT:
+            /* translators: wind speed */
+            return N_("Beaufort scale");
+        default:
+            return N_("Invalid");
+    }
+}
+
+const gchar* clock_utils_get_distance_display_name (GWeatherDistanceUnit distance)
+{
+    switch (distance) {
+        case GWEATHER_DISTANCE_UNIT_DEFAULT:
+            return N_("Default");
+        case GWEATHER_DISTANCE_UNIT_METERS:
+            /* translators: Meters */
+            return N_("m");
+        case GWEATHER_DISTANCE_UNIT_KM:
+            /* translators: Km*/
+            return N_("km");
+        case GWEATHER_DISTANCE_UNIT_MILES:
+            /* translators: Miles*/
+            return N_("miles");
+        default:
+            return N_("Invalid");
+    }
+}
+
+const gchar* clock_utils_get_pressure_display_name (GWeatherPressureUnit pressure)
+{
+    switch (pressure) {
+        case GWEATHER_PRESSURE_UNIT_DEFAULT:
+            return N_("Default");
+        case GWEATHER_PRESSURE_UNIT_KPA:
+            /* translators: kiloPascal */
+            return N_("kPa");
+        case GWEATHER_PRESSURE_UNIT_HPA:
+            /* translators: hectoPascal */
+            return N_("hPa");
+        case GWEATHER_PRESSURE_UNIT_MB:
+            /* translators: millibars */
+            return N_("mb");
+        case GWEATHER_PRESSURE_UNIT_MM_HG:
+            /* translators: millimeters of mercury */
+            return N_("mmHg");
+        case GWEATHER_PRESSURE_UNIT_INCH_HG:
+            /* translators: inches of mercury */
+            return N_("inHg");
+        case GWEATHER_PRESSURE_UNIT_ATM:
+            /* translators: atmospheres */
+            return N_("atm");
+        default:
+            return N_("Invalid");
+    }
+}
