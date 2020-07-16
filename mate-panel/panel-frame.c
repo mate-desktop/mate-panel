@@ -265,6 +265,8 @@ panel_frame_draw (GtkWidget      *widget,
 			cairo_stroke (cr);
 		}
 	}
+
+	gdk_rgba_free (bg);
 }
 
 static gboolean panel_frame_expose(GtkWidget* widget, cairo_t* cr)
