@@ -102,7 +102,6 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 	MatePanelAppletFrame *frame = MATE_PANEL_APPLET_FRAME (widget);
 	GtkStyleContext *context;
 	GtkStateFlags     state;
-	cairo_pattern_t  *bg_pattern;
 	PanelBackground  *background;
 
 	if (GTK_WIDGET_CLASS (mate_panel_applet_frame_parent_class)->draw)
@@ -118,25 +117,28 @@ mate_panel_applet_frame_draw (GtkWidget *widget,
 
 	cairo_save (cr);
 
-	/* Set the pattern transform so as to correctly render a patterned
-	 * background with the handle */
-	gtk_style_context_get (context, state,
-			       "background-image", &bg_pattern,
-			       NULL);
-
 	background = &frame->priv->panel->toplevel->background;
-	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
-	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
-		cairo_matrix_t ptm;
+	if (background->type == PANEL_BACK_IMAGE ||
+	    (background->type == PANEL_BACK_COLOR && background->has_alpha)) {
+		cairo_pattern_t *bg_pattern;
 
-		cairo_matrix_init_translate (&ptm,
-					     frame->priv->handle_rect.x,
-					     frame->priv->handle_rect.y);
-		cairo_matrix_scale (&ptm,
-				    frame->priv->handle_rect.width,
-				    frame->priv->handle_rect.height);
-		cairo_pattern_set_matrix (bg_pattern, &ptm);
-		cairo_pattern_destroy (bg_pattern);
+		/* Set the pattern transform so as to correctly render a patterned
+		 * background with the handle */
+		gtk_style_context_get (context, state,
+				       "background-image", &bg_pattern,
+				       NULL);
+		if (bg_pattern) {
+			cairo_matrix_t ptm;
+
+			cairo_matrix_init_translate (&ptm,
+						     frame->priv->handle_rect.x,
+						     frame->priv->handle_rect.y);
+			cairo_matrix_scale (&ptm,
+					    frame->priv->handle_rect.width,
+					    frame->priv->handle_rect.height);
+			cairo_pattern_set_matrix (bg_pattern, &ptm);
+			cairo_pattern_destroy (bg_pattern);
+		}
 	}
 
 	cairo_rectangle (cr,
