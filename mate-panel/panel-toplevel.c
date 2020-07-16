@@ -1266,30 +1266,22 @@ static void panel_toplevel_update_buttons_showing(PanelToplevel* toplevel)
 }
 
 /* force set hide button size on panel size < 30px */
-static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel_size)
+static void panel_toplevel_update_hide_buttons_size (GtkWidget *button, int panel_size)
 {
+	GtkCssProvider *css_provider;
+	GtkStyleContext *context;
+	GtkWidget *arrow;
+	GtkSettings *settings;
+	gchar *gtk_theme_name = NULL;
 
-	static GtkCssProvider *css_provider = NULL;
-	GtkStyleContext *context = NULL;
-
-	context = gtk_widget_get_style_context(button);
-	gtk_style_context_add_class(context, "panel-button");
-
-	if (css_provider == NULL)
-		css_provider = gtk_css_provider_new ();
-
-	/* get arrow image */
-	GtkWidget *arrow = NULL;
-	arrow = gtk_bin_get_child (GTK_BIN (button));
+	context = gtk_widget_get_style_context (button);
+	gtk_style_context_add_class (context, "panel-button");
 
 	/* get defaults from theme */
-	GtkSettings * settings = NULL;
 	settings = gtk_settings_get_default ();
-	gchar *gtk_theme_name = NULL;
 	g_object_get (settings, "gtk-theme-name", &gtk_theme_name, NULL);
 	css_provider = gtk_css_provider_get_named (gtk_theme_name, NULL);
 	g_free (gtk_theme_name);
-
 
 	/* set custom css by adding our custom code to the default theme css
 	 *
@@ -1307,8 +1299,10 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel
 		gtk_css_provider_load_from_data (css_provider, ".panel-button {min-height: 13px; min-width: 13px; padding: 0px;}", -1, NULL);
 	}
 
-
 	gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+	/* get arrow image */
+	arrow = gtk_bin_get_child (GTK_BIN (button));
 
 	/* set image size */
 	if (panel_size < 20) {
@@ -1320,7 +1314,6 @@ static void panel_toplevel_update_hide_buttons_size(GtkWidget* button, int panel
 	} else {
 		gtk_image_set_pixel_size (GTK_IMAGE (arrow), 24);
 	}
-
 }
 
 static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
