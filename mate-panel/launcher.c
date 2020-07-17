@@ -655,6 +655,8 @@ setup_button (Launcher *launcher)
 
 	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), icon);
 	g_free (icon);
+	g_free (name);
+	g_free (comment);
 }
 
 static char *
