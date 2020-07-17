@@ -706,6 +706,7 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
         if (surface) {
                 gtk_image_set_from_surface (GTK_IMAGE (priv->weather_icon), surface);
                 gtk_widget_set_margin_end (priv->weather_icon, 6);
+                cairo_surface_destroy (surface);
         }
 }
 
