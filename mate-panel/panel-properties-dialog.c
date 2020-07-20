@@ -877,6 +877,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	dialog->background_settings = g_settings_new_with_path (PANEL_TOPLEVEL_BACKGROUND_SCHEMA,
 								toplevel_background_path);
 	g_free (toplevel_background_path);
+	g_free (toplevel_settings_path);
 
 	g_signal_connect (dialog->settings,
 			  "changed",
