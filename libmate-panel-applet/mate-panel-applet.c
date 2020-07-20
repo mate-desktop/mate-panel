@@ -206,14 +206,14 @@ mate_panel_applet_set_flags (MatePanelApplet      *applet,
 	g_object_notify (G_OBJECT (applet), "flags");
 
 	if (applet->priv->connection) {
-		GVariantBuilder *builder;
-		GVariantBuilder *invalidated_builder;
+		GVariantBuilder  builder;
+		GVariantBuilder  invalidated_builder;
 		GError          *error = NULL;
 
-		builder = g_variant_builder_new (G_VARIANT_TYPE_ARRAY);
-		invalidated_builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
+		g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
+		g_variant_builder_init (&invalidated_builder, G_VARIANT_TYPE ("as"));
 
-		g_variant_builder_add (builder, "{sv}", "Flags",
+		g_variant_builder_add (&builder, "{sv}", "Flags",
 				       g_variant_new_uint32 (applet->priv->flags));
 
 		g_dbus_connection_emit_signal (applet->priv->connection,
@@ -223,14 +223,16 @@ mate_panel_applet_set_flags (MatePanelApplet      *applet,
 					       "PropertiesChanged",
 					       g_variant_new ("(sa{sv}as)",
 							      MATE_PANEL_APPLET_INTERFACE,
-							      builder,
-							      invalidated_builder),
+							      &builder,
+							      &invalidated_builder),
 					       &error);
 		if (error) {
 			g_printerr ("Failed to send signal PropertiesChanged::Flags: %s\n",
 				    error->message);
 			g_error_free (error);
 		}
+		g_variant_builder_clear (&builder);
+		g_variant_builder_clear (&invalidated_builder);
 	}
 }
 
@@ -295,18 +297,18 @@ mate_panel_applet_set_size_hints (MatePanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "size-hints");
 
 	if (applet->priv->connection) {
-		GVariantBuilder *builder;
-		GVariantBuilder *invalidated_builder;
+		GVariantBuilder  builder;
+		GVariantBuilder  invalidated_builder;
 		GVariant       **children;
 		GError          *error = NULL;
 
-		builder = g_variant_builder_new (G_VARIANT_TYPE_ARRAY);
-		invalidated_builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
+		g_variant_builder_init (&builder, G_VARIANT_TYPE_ARRAY);
+		g_variant_builder_init (&invalidated_builder, G_VARIANT_TYPE ("as"));
 
 		children = g_new (GVariant *, applet->priv->size_hints_len);
 		for (i = 0; i < n_elements; i++)
 			children[i] = g_variant_new_int32 (applet->priv->size_hints[i]);
-		g_variant_builder_add (builder, "{sv}", "SizeHints",
+		g_variant_builder_add (&builder, "{sv}", "SizeHints",
 				       g_variant_new_array (G_VARIANT_TYPE_INT32,
 							    children, applet->priv->size_hints_len));
 		g_free (children);
@@ -318,14 +320,16 @@ mate_panel_applet_set_size_hints (MatePanelApplet *applet,
 					       "PropertiesChanged",
 					       g_variant_new ("(sa{sv}as)",
 							      MATE_PANEL_APPLET_INTERFACE,
-							      builder,
-							      invalidated_builder),
+							      &builder,
+							      &invalidated_builder),
 					       &error);
 		if (error) {
 			g_printerr ("Failed to send signal PropertiesChanged::SizeHints: %s\n",
 				    error->message);
 			g_error_free (error);
 		}
+		g_variant_builder_clear (&builder);
+		g_variant_builder_clear (&invalidated_builder);
 	}
 }
 
