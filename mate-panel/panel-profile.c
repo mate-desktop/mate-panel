@@ -1507,7 +1507,7 @@ panel_profile_toplevel_id_list_notify (GSettings *settings,
 		g_idle_add (load_default_layout_idle, NULL);
 
 	g_slist_free (existing_toplevels);
-	g_slist_free (toplevel_ids);
+	g_slist_free_full (toplevel_ids, g_free);
 }
 
 static void
@@ -1542,7 +1542,7 @@ panel_profile_object_id_list_update (gchar **objects)
 									  (PanelProfileDestroyFunc) panel_profile_destroy_object);
 
 	g_slist_free (sublist);
-	g_slist_free (object_ids);
+	g_slist_free_full (object_ids, g_free);
 
 	mate_panel_applet_load_queued_applets (FALSE);
 }
