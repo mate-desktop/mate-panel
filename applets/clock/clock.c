@@ -1022,6 +1022,7 @@ create_cities_store (ClockData *cd)
         GtkTreeIter iter;
         GList *cities = cd->locations;
         GList *list = NULL;
+        GList *l;
 
         if (cd->cities_store) {
                 g_object_unref (G_OBJECT (cd->cities_store));
@@ -1037,8 +1038,8 @@ create_cities_store (ClockData *cd)
         list = g_list_copy (cities);
         list = g_list_sort (list, sort_locations_by_name);
 
-        while (list) {
-                ClockLocation *loc = CLOCK_LOCATION (list->data);
+        for (l = list; l; l = l->next) {
+                ClockLocation *loc = CLOCK_LOCATION (l->data);
 
                 gtk_list_store_append (cd->cities_store, &iter);
                 gtk_list_store_set (cd->cities_store, &iter,
@@ -1047,9 +1048,8 @@ create_cities_store (ClockData *cd)
                                     COL_CITY_TZ, clock_location_get_timezone (loc),
                                     COL_CITY_LOC, loc,
                                     -1);
-
-                list = list->next;
         }
+        g_list_free (list);
 
 
         if (cd->prefs_window) {
@@ -1132,6 +1132,7 @@ create_cities_section (ClockData *cd)
         GList *node;
         ClockLocationTile *city;
         GList *cities;
+        GList *l;
 
         if (cd->cities_section) {
                 gtk_widget_destroy (cd->cities_section);
@@ -1158,8 +1159,8 @@ create_cities_section (ClockData *cd)
         node = g_list_sort (node, sort_locations_by_time);
         node = g_list_reverse (node);
 
-        while (node) {
-                ClockLocation *loc = node->data;
+        for (l = node; l; l = g_list_next (l)) {
+                ClockLocation *loc = l->data;
 
                 city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
                 g_signal_connect (city, "tile-pressed",
@@ -1174,8 +1175,6 @@ create_cities_section (ClockData *cd)
                 cd->location_tiles = g_list_prepend (cd->location_tiles, city);
 
                 clock_location_tile_refresh (city, TRUE);
-
-                node = g_list_next (node);
         }
 
         g_list_free (node);
@@ -2254,6 +2253,7 @@ cities_changed (GSettings    *settings,
 {
         LocationParserData data;
         GSList *cur = NULL;
+        GSList *l;
 
         GMarkupParseContext *context;
 
@@ -2264,11 +2264,11 @@ cities_changed (GSettings    *settings,
 
         cur = mate_panel_applet_settings_get_gslist (settings, key);
 
-        while (cur) {
-                const char *str = cur->data;
+        for (l = cur; l; l = l->next) {
+                char *str = l->data;
                 g_markup_parse_context_parse (context, str, strlen (str), NULL);
-                cur = cur->next;
         }
+        g_slist_free_full (cur, g_free);
 
         g_markup_parse_context_free (context);
 
@@ -2466,6 +2466,7 @@ load_gsettings (ClockData *cd)
         } else {
                 cities = parse_gsettings_cities (cd, values);
         }
+        g_strfreev (values);
 
         set_locations (cd, cities);
 }
