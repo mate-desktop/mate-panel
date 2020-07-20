@@ -256,16 +256,20 @@ static void applet_style_updated (MatePanelApplet *applet, GtkStyleContext *cont
 {
 	GtkCssProvider *provider;
 	GdkRGBA color;
+	gchar *color_str;
+	gchar *bg_css;
 
 	provider = gtk_css_provider_new ();
 
 	/* Provide a fallback color for the highlighted workspace based on the current theme */
 	gtk_style_context_lookup_color (context, "theme_selected_bg_color", &color);
-	gchar *bg_css = g_strconcat (".wnck-pager:selected {\n"
-		                     "	background-color:", gdk_rgba_to_string (&color), ";\n"
-		                     "}", NULL);
+	color_str = gdk_rgba_to_string (&color);
+	bg_css = g_strconcat (".wnck-pager:selected {\n"
+		              "	background-color:", color_str, ";\n"
+		              "}", NULL);
 	gtk_css_provider_load_from_data (provider, bg_css, -1, NULL);
 	g_free (bg_css);
+	g_free (color_str);
 
 	gtk_style_context_add_provider (context,
 					GTK_STYLE_PROVIDER (provider),
