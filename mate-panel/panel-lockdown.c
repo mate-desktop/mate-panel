@@ -109,6 +109,7 @@ disabled_applets_notify (GSettings     *settings,
                          gchar         *key,
                          PanelLockdown *lockdown)
 {
+        g_strfreev (lockdown->disabled_applets);
         lockdown->disabled_applets = g_settings_get_strv (settings, key);
         panel_lockdown_invoke_closures (lockdown);
 }
