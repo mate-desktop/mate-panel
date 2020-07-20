@@ -1070,8 +1070,10 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 		gsettings_name = g_settings_get_string (place_item->priv->caja_desktop_settings,
 								CAJA_DESKTOP_COMPUTER_ICON_NAME_KEY);
 
-	if (PANEL_GLIB_STR_EMPTY (gsettings_name))
+	if (PANEL_GLIB_STR_EMPTY (gsettings_name)) {
+		g_free (gsettings_name);
 		gsettings_name = g_strdup (_("Computer"));
+	}
 
 	panel_menu_items_append_place_item (
 			PANEL_ICON_COMPUTER, NULL,
