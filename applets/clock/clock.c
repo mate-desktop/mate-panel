@@ -155,8 +155,8 @@ struct _ClockData {
         SpeedUnit    speed_unit;
 
         /* Locations */
-        GList *locations;
-        GList *location_tiles;
+        GSList *locations;
+        GSList *location_tiles;
 
         /* runtime data */
         time_t             current_time;
@@ -527,7 +527,7 @@ set_atk_name_description (GtkWidget  *widget,
 static void
 update_location_tiles (ClockData *cd)
 {
-        GList *l;
+        GSList *l;
 
         for (l = cd->location_tiles; l; l = l->next) {
                 ClockLocationTile *tile;
@@ -740,12 +740,12 @@ static void
 free_locations (ClockData *cd)
 {
         if (cd->locations != NULL) {
-                GList *l;
+                GSList *l;
 
                 for (l = cd->locations; l; l = l->next)
                         g_object_unref (l->data);
 
-                g_list_free (cd->locations);
+                g_slist_free (cd->locations);
         }
         cd->locations = NULL;
 }
@@ -782,7 +782,7 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
         free_locations (cd);
 
         if (cd->location_tiles)
-                g_list_free (cd->location_tiles);
+                g_slist_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
         if (cd->systz) {
@@ -1020,9 +1020,9 @@ static void
 create_cities_store (ClockData *cd)
 {
         GtkTreeIter iter;
-        GList *cities = cd->locations;
-        GList *list = NULL;
-        GList *l;
+        GSList *cities = cd->locations;
+        GSList *list = NULL;
+        GSList *l;
 
         if (cd->cities_store) {
                 g_object_unref (G_OBJECT (cd->cities_store));
@@ -1035,8 +1035,8 @@ create_cities_store (ClockData *cd)
                                                G_TYPE_STRING,                /* COL_CITY_TZ */
                                                CLOCK_LOCATION_TYPE);         /* COL_CITY_LOC */
 
-        list = g_list_copy (cities);
-        list = g_list_sort (list, sort_locations_by_name);
+        list = g_slist_copy (cities);
+        list = g_slist_sort (list, sort_locations_by_name);
 
         for (l = list; l; l = l->next) {
                 ClockLocation *loc = CLOCK_LOCATION (l->data);
@@ -1049,7 +1049,7 @@ create_cities_store (ClockData *cd)
                                     COL_CITY_LOC, loc,
                                     -1);
         }
-        g_list_free (list);
+        g_slist_free (list);
 
 
         if (cd->prefs_window) {
@@ -1151,10 +1151,10 @@ location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
 static void
 create_cities_section (ClockData *cd)
 {
-        GList *node;
+        GSList *node;
         ClockLocationTile *city;
-        GList *cities;
-        GList *l;
+        GSList *cities;
+        GSList *l;
 
         if (cd->cities_section) {
                 gtk_widget_destroy (cd->cities_section);
@@ -1162,14 +1162,14 @@ create_cities_section (ClockData *cd)
         }
 
         if (cd->location_tiles)
-                g_list_free (cd->location_tiles);
+                g_slist_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
         cd->cities_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
         gtk_container_set_border_width (GTK_CONTAINER (cd->cities_section), 0);
 
         cities = cd->locations;
-        if (g_list_length (cities) == 0) {
+        if (g_slist_length (cities) == 0) {
                 /* if the list is empty, don't bother showing the
                    cities section */
                 gtk_widget_hide (cd->cities_section);
@@ -1180,7 +1180,7 @@ create_cities_section (ClockData *cd)
         node = g_list_copy (cities);
         node = g_list_sort (node, sort_locations_by_time_reverse_and_name);
 
-        for (l = node; l; l = g_list_next (l)) {
+        for (l = node; l; l = g_slist_next (l)) {
                 ClockLocation *loc = l->data;
 
                 city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
@@ -1193,12 +1193,12 @@ create_cities_section (ClockData *cd)
                                     GTK_WIDGET (city),
                                     FALSE, FALSE, 0);
 
-                cd->location_tiles = g_list_prepend (cd->location_tiles, city);
+                cd->location_tiles = g_slist_prepend (cd->location_tiles, city);
 
                 clock_location_tile_refresh (city, TRUE);
         }
 
-        g_list_free (node);
+        g_slist_free (node);
 
         gtk_box_pack_end (GTK_BOX (cd->clock_vbox),
                           cd->cities_section, FALSE, FALSE, 0);
@@ -1206,7 +1206,7 @@ create_cities_section (ClockData *cd)
         gtk_widget_show_all (cd->cities_section);
 }
 
-static GList *
+static GSList *
 map_need_locations_cb (ClockMap *map, gpointer data)
 {
         ClockData *cd = data;
@@ -1251,7 +1251,7 @@ update_calendar_popup (ClockData *cd)
                         cd->clock_vbox = NULL;
 
                         if (cd->location_tiles)
-                                g_list_free (cd->location_tiles);
+                                g_slist_free (cd->location_tiles);
                         cd->location_tiles = NULL;
                 }
                 update_tooltip (cd);
@@ -1395,7 +1395,7 @@ weather_tooltip (GtkWidget   *widget,
                  GtkTooltip  *tooltip,
                  ClockData   *cd)
 {
-        GList *locations, *l;
+        GSList *locations, *l;
         WeatherInfo *info;
 
         locations = cd->locations;
@@ -1979,7 +1979,7 @@ update_panel_weather (ClockData *cd)
                 gtk_widget_hide (cd->panel_temperature_label);
 
         if ((cd->show_weather || cd->show_temperature) &&
-            g_list_length (cd->locations) > 0)
+            g_slist_length (cd->locations) > 0)
                 gtk_widget_show (cd->weather_obox);
         else
                 gtk_widget_hide (cd->weather_obox);
@@ -2131,7 +2131,7 @@ location_set_current_cb (ClockLocation *loc,
 static void
 locations_changed (ClockData *cd)
 {
-        GList *l;
+        GSList *l;
         ClockLocation *loc;
         glong id;
 
@@ -2171,7 +2171,7 @@ locations_changed (ClockData *cd)
 
 
 static void
-set_locations (ClockData *cd, GList *locations)
+set_locations (ClockData *cd, GSList *locations)
 {
         free_locations (cd);
         cd->locations = locations;
@@ -2179,7 +2179,7 @@ set_locations (ClockData *cd, GList *locations)
 }
 
 typedef struct {
-        GList *cities;
+        GSList *cities;
         ClockData *cd;
 } LocationParserData;
 
@@ -2258,7 +2258,7 @@ location_start_element (GMarkupParseContext *context,
         if (current && clock_location_is_current_timezone (loc))
                 clock_location_make_current (loc, NULL, NULL, NULL);
 
-        data->cities = g_list_append (data->cities, loc);
+        data->cities = g_slist_append (data->cities, loc);
 }
 
 static GMarkupParser location_parser = {
@@ -2298,7 +2298,7 @@ cities_changed (GSettings    *settings,
 static void
 update_weather_locations (ClockData *cd)
 {
-        GList *locations, *l;
+        GSList *locations, *l;
         WeatherPrefs prefs = {
                 FORECAST_STATE,
                 FALSE,
@@ -2429,7 +2429,7 @@ setup_gsettings (ClockData *cd)
         g_signal_connect (cd->settings, "changed::" KEY_SPEED_UNIT, G_CALLBACK (speed_unit_changed), cd);
 }
 
-static GList *
+static GSList *
 parse_gsettings_cities (ClockData *cd, gchar **values)
 {
         gint i;
@@ -2456,7 +2456,7 @@ static void
 load_gsettings (ClockData *cd)
 {
         gchar **values;
-        GList *cities = NULL;
+        GSList *cities = NULL;
 
         cd->format = g_settings_get_enum (cd->settings, KEY_FORMAT);
 
@@ -2611,16 +2611,16 @@ loc_to_string (ClockLocation *loc)
 static void
 save_cities_store (ClockData *cd)
 {
-        GList *locs = NULL;
-        GList *node;
+        GSList *locs = NULL;
+        GSList *node;
 
         for (node = cd->locations; node != NULL; node = node->next) {
-                locs = g_list_prepend (locs, loc_to_string (CLOCK_LOCATION (node->data)));
+                locs = g_slist_prepend (locs, loc_to_string (CLOCK_LOCATION (node->data)));
         }
 
-        locs = g_list_reverse (locs);
-        mate_panel_applet_settings_set_glist (cd->settings, KEY_CITIES, locs);
-        g_list_free_full (locs, g_free);
+        locs = g_slist_reverse (locs);
+        mate_panel_applet_settings_set_gslist (cd->settings, KEY_CITIES, locs);
+        g_slist_free_full (locs, g_free);
 }
 
 static void
@@ -2691,7 +2691,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
                  */
                 clock_location_is_current (loc);
 
-                cd->locations = g_list_append (cd->locations, loc);
+                cd->locations = g_slist_append (cd->locations, loc);
         }
         g_free (name);
         g_free (city);
@@ -2892,7 +2892,7 @@ remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
         ClockLocation *loc = NULL;
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
-        cd->locations = g_list_remove (cd->locations, loc);
+        cd->locations = g_slist_remove (cd->locations, loc);
         g_object_unref (loc);
 
         /* This will update everything related to locations to take into

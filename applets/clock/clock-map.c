@@ -100,7 +100,7 @@ clock_map_class_init (ClockMapClass *this_class)
 	 * The map widget emits this signal when it needs to know which
 	 * locations to display.
 	 *
-	 * Returns: the handler should return a (GList *) of (ClockLocation *).
+	 * Returns: the handler should return a (GSList *) of (ClockLocation *).
 	 * The map widget will not modify this list, so the caller should keep
 	 * it alive.
 	 */
@@ -429,7 +429,7 @@ static void
 clock_map_place_locations (ClockMap *this)
 {
         ClockMapPrivate *priv = clock_map_get_instance_private (this);
-        GList *locs;
+        GSList *locs;
         ClockLocation *loc;
 
         if (priv->location_map_pixbuf) {

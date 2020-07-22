@@ -39,7 +39,7 @@ ClockLocation *clock_location_new (const gchar *name, const gchar *city,
                                    const gchar *code,
                                    WeatherPrefs *prefs);
 
-ClockLocation *clock_location_find_and_ref (GList       *locations,
+ClockLocation *clock_location_find_and_ref (GSList       *locations,
                                             const gchar *name,
                                             const gchar *city,
                                             const gchar *timezone,

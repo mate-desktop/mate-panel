@@ -67,7 +67,7 @@ static void setup_weather_updates (ClockLocation *loc);
 static gchar *clock_location_get_valid_weather_code (const gchar *code);
 
 ClockLocation *
-clock_location_find_and_ref (GList       *locations,
+clock_location_find_and_ref (GSList       *locations,
                              const gchar *name,
                              const gchar *city,
                              const gchar *timezone,
@@ -75,7 +75,7 @@ clock_location_find_and_ref (GList       *locations,
                              gfloat       longitude,
                              const gchar *code)
 {
-        GList *l;
+        GSList *l;
         ClockLocationPrivate *priv;
 
         for (l = locations; l != NULL; l = l->next) {

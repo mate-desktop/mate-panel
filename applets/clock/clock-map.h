@@ -26,7 +26,7 @@ typedef struct
 {
         GtkWidgetClass parent_class;
 
-	GList *(* need_locations) (ClockMap *map);
+	GSList *(* need_locations) (ClockMap *map);
 } ClockMapClass;
 
 GType clock_map_get_type (void);
