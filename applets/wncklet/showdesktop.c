@@ -224,6 +224,7 @@ static void update_icon(ShowDesktopData* sdd)
 		cairo_set_source_surface (cr, icon, 0, 0);
 		cairo_paint (cr);
 		gtk_image_set_from_surface (GTK_IMAGE(sdd->image), scaled);
+		cairo_destroy (cr);
 		cairo_surface_destroy (scaled);
 	}
 	else
