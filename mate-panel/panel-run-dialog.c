@@ -172,8 +172,8 @@ _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
 		model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
 
 		/* reasonable upper bound for zero-terminated array with new command */
-		gchar const *items[gtk_tree_model_iter_n_children (model, NULL) + 2];
-		guint        items_added = 0;
+		gchar *items[gtk_tree_model_iter_n_children (model, NULL) + 2];
+		guint  items_added = 0;
 
 		items[0] = lastcommand;
 
@@ -181,8 +181,10 @@ _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
 			char *command;
 			do {
 				gtk_tree_model_get (model, &iter, 0, &command, -1);
-				if (g_strcmp0 (command, lastcommand) == 0)
+				if (g_strcmp0 (command, lastcommand) == 0) {
+					g_free (command);
 					continue;
+				}
 				items[items_added + 1] = command;
 				items_added++;
 			} while (gtk_tree_model_iter_next (model, &iter));
@@ -192,13 +194,23 @@ _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
 			guint pos;
 			for (pos = 0; pos < items_added / 2; pos++)
 			{
-				gchar const * tmp = items[pos + 1];
+				gchar *tmp = items[pos + 1];
 				items[pos + 1] = items[items_added - pos];
 				items[items_added - pos] = tmp;
 			}
 		}
-		items[history_max_size < items_added + 1 ? history_max_size : items_added + 1] = NULL;
-		g_settings_set_strv (dialog->settings, PANEL_RUN_HISTORY_KEY, items);
+
+		if (history_max_size < items_added + 1) {
+			g_free (items[history_max_size]);
+			items[history_max_size] = NULL;
+		} else {
+			items[items_added + 1] = NULL;
+		}
+		g_settings_set_strv (dialog->settings, PANEL_RUN_HISTORY_KEY, (const gchar **)items);
+
+		/* free the items */
+		for (; items_added; items_added--)
+			g_free (items[items_added]);
 	}
 }
 
