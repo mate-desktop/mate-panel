@@ -212,7 +212,7 @@ query_panel_reset (PanelToplevel *toplevel)
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				_("_Cancel"), GTK_RESPONSE_CANCEL,
 				_("_Reset Panels"), GTK_RESPONSE_OK,
-				NULL);Thu, 23 Jul 2020 02:24:12 -0400 
+				NULL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
