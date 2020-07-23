@@ -1105,6 +1105,12 @@ sort_locations_by_time (gconstpointer a, gconstpointer b)
         return ret;
 }
 
+static gint
+sort_locations_by_time_reverse (gconstpointer a, gconstpointer b)
+{
+        return sort_locations_by_time (b, a);
+}
+
 static void
 location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
 {
@@ -1156,8 +1162,7 @@ create_cities_section (ClockData *cd)
 
         /* Copy the existing list, so we can sort it nondestructively */
         node = g_list_copy (cities);
-        node = g_list_sort (node, sort_locations_by_time);
-        node = g_list_reverse (node);
+        node = g_list_sort (node, sort_locations_by_time_reverse);
 
         for (l = node; l; l = g_list_next (l)) {
                 ClockLocation *loc = l->data;
