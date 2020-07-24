@@ -202,6 +202,7 @@ set_time_notify (GObject *source_object,
 		if (data->callback)
 			data->callback (data->data, NULL);
 	}
+	free_data (data);
 }
 
 static void
