@@ -1692,8 +1692,6 @@ set_time_callback (ClockData *cd, GError *error)
                 g_signal_connect (dialog, "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);
                 gtk_window_present (GTK_WINDOW (dialog));
-
-                g_error_free (error);
         }
         else
                 update_set_time_button (cd);
