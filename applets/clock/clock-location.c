@@ -531,8 +531,6 @@ make_current_cb (gpointer data, GError *error)
 
         if (mcdata->callback)
                 mcdata->callback (mcdata->data, error);
-        else
-                g_error_free (error);
 }
 
 static void
