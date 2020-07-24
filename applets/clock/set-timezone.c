@@ -192,7 +192,6 @@ set_time_notify (GObject *source_object,
 		if (error != NULL) {
 			if (data->callback)
 				data->callback (data->data, error);
-			g_error_free (error);
 		} else {
 			if (data->callback)
 				data->callback (data->data, NULL);
