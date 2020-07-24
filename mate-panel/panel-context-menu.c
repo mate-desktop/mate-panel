@@ -196,8 +196,8 @@ query_panel_reset (PanelToplevel *toplevel)
 	char *text1;
 	char *text2;
 
-	text1 = _("Reset this panel?");
-	text2 = _("When a panel is reset, all \n"
+	text1 = _("Reset all panels?");
+	text2 = _("When the panels are reset, all \n"
 			 "custom settings are lost.");
 
 	dialog = gtk_message_dialog_new (
@@ -211,7 +211,7 @@ query_panel_reset (PanelToplevel *toplevel)
 	                                          "%s", text2);
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				_("_Cancel"), GTK_RESPONSE_CANCEL,
-				_("_Reset Panel"), GTK_RESPONSE_OK,
+				_("_Reset Panels"), GTK_RESPONSE_OK,
 				NULL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
@@ -253,7 +253,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 
 	add_menu_separator (menu);
 
-	menuitem = panel_image_menu_item_new_from_icon ("document-revert", _("_Reset Panel"));
+	menuitem = panel_image_menu_item_new_from_icon ("document-revert", _("_Reset All Panels"));
 
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
