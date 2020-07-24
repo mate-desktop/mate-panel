@@ -166,8 +166,10 @@ clock_utils_pixbuf_from_svg_resource_at_size (const char *resource,
 	cairo_surface_destroy (surface);
 
 out:
-	if (handle)
+	if (handle) {
 		rsvg_handle_close (handle, NULL);
+		rsvg_handle_free (handle);
+	}
 	if (stream)
 		g_object_unref (stream);
 
