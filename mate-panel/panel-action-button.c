@@ -81,63 +81,41 @@ panel_action_button_type_changed (GSettings       *settings,
 								  gchar           *key,
 								  PanelActionButton *button);
 
-/* Utility function converts enumerations to and from strings */
-typedef struct _ObsoleteEnumStringPair ObsoleteEnumStringPair;
-
-struct _ObsoleteEnumStringPair {
-	gint enum_value;
-	const gchar* str;
+static const char *panel_action_type [PANEL_ACTION_LAST] = {
+  [PANEL_ACTION_NONE] =           "none",
+  [PANEL_ACTION_LOCK] =           "lock",
+  [PANEL_ACTION_LOGOUT] =         "logout",
+  [PANEL_ACTION_RUN] =            "run",
+  [PANEL_ACTION_SEARCH] =         "search",
+  [PANEL_ACTION_FORCE_QUIT] =     "force-quit",
+  [PANEL_ACTION_CONNECT_SERVER] = "connect-server",
+  [PANEL_ACTION_SHUTDOWN] =       "shutdown"
 };
 
-static ObsoleteEnumStringPair panel_action_type_map [] = {
-	{ PANEL_ACTION_NONE,           "none"           },
-	{ PANEL_ACTION_LOCK,           "lock"           },
-	{ PANEL_ACTION_LOGOUT,         "logout"         },
-	{ PANEL_ACTION_RUN,            "run"            },
-	{ PANEL_ACTION_SEARCH,         "search"         },
-	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
-	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
-	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
-	{ 0,                           NULL             },
-};
-
-/* FIXME obsolete way to get string for enum */
-/* taken from deprecated mate-conf code */
 static const gchar*
-obsolete_enum_to_string (ObsoleteEnumStringPair lookup_table[],
-                         gint enum_value)
+get_action_type_name (gint id)
 {
-  int i = 0;
-
-  while (lookup_table[i].str != NULL)
-    {
-      if (lookup_table[i].enum_value == enum_value)
-        return lookup_table[i].str;
-
-      ++i;
-    }
+  if ((id >= 0) && (id < PANEL_ACTION_LAST))
+    return panel_action_type [id];
 
   return NULL;
 }
 
 static gboolean
-obsolete_string_to_enum (ObsoleteEnumStringPair lookup_table[],
-                      const gchar* str,
-                      gint* enum_value_retloc)
+get_action_type_id (const gchar *name,
+                    gint        *id)
 {
-  int i = 0;
+  gint i;
 
-  while (lookup_table[i].str != NULL)
+  for (i = 0; i < PANEL_ACTION_LAST; i++)
     {
-      if (g_ascii_strcasecmp (lookup_table[i].str, str) == 0)
+      if (g_ascii_strcasecmp (panel_action_type [i], name) == 0)
         {
-          *enum_value_retloc = lookup_table[i].enum_value;
+          *id = i;
           return TRUE;
         }
-
-      ++i;
     }
-
+  *id = 0;
   return FALSE;
 }
 
@@ -351,13 +329,13 @@ typedef struct {
 
 /* Keep order in sync with PanelActionButtonType
  */
-static PanelAction actions [] = {
-	{
+static PanelAction actions [PANEL_ACTION_LAST] = {
+	[PANEL_ACTION_NONE] = {
 		PANEL_ACTION_NONE,
 		NULL, NULL, NULL, NULL, NULL,
 		NULL, NULL, NULL, NULL
 	},
-	{
+	[PANEL_ACTION_LOCK] = {
 		PANEL_ACTION_LOCK,
 		PANEL_ICON_LOCKSCREEN,
 		N_("Lock Screen"),
@@ -369,7 +347,7 @@ static PanelAction actions [] = {
 		panel_action_lock_invoke_menu,
 		panel_action_lock_is_disabled
 	},
-	{
+	[PANEL_ACTION_LOGOUT] = {
 		PANEL_ACTION_LOGOUT,
 		PANEL_ICON_LOGOUT,
 		/* when changing one of those two strings, don't forget to
@@ -382,7 +360,7 @@ static PanelAction actions [] = {
 		panel_action_logout, NULL, NULL,
 		panel_lockdown_get_disable_log_out
 	},
-	{
+	[PANEL_ACTION_RUN] = {
 		PANEL_ACTION_RUN,
 		PANEL_ICON_RUN,
 		N_("Run Application..."),
@@ -392,7 +370,7 @@ static PanelAction actions [] = {
 		panel_action_run_program, NULL, NULL,
 		panel_lockdown_get_disable_command_line
 	},
-	{
+	[PANEL_ACTION_SEARCH] = {
 		PANEL_ACTION_SEARCH,
 		PANEL_ICON_SEARCHTOOL,
 		N_("Search for Files..."),
@@ -401,7 +379,7 @@ static PanelAction actions [] = {
 		"ACTION:search:NEW",
 		panel_action_search, NULL, NULL, NULL
 	},
-	{
+	[PANEL_ACTION_FORCE_QUIT] = {
 		PANEL_ACTION_FORCE_QUIT,
 		PANEL_ICON_FORCE_QUIT,
 		N_("Force Quit"),
@@ -411,7 +389,7 @@ static PanelAction actions [] = {
 		panel_action_force_quit, NULL, NULL,
 		panel_lockdown_get_disable_force_quit
 	},
-	{
+	[PANEL_ACTION_CONNECT_SERVER] = {
 		PANEL_ACTION_CONNECT_SERVER,
 		PANEL_ICON_REMOTE, /* FIXME icon */
 		N_("Connect to Server..."),
@@ -420,7 +398,7 @@ static PanelAction actions [] = {
 		"ACTION:connect-server:NEW",
 		panel_action_connect_server, NULL, NULL, NULL
 	},
-	{
+	[PANEL_ACTION_SHUTDOWN] = {
 		PANEL_ACTION_SHUTDOWN,
 		PANEL_ICON_SHUTDOWN,
 		N_("Shut Down..."),
@@ -578,7 +556,7 @@ panel_action_button_drag_data_get (GtkWidget          *widget,
 	button = PANEL_ACTION_BUTTON (widget);
 
 	drag_data = g_strdup_printf ("ACTION:%s:%d",
-				     obsolete_enum_to_string (panel_action_type_map, button->priv->type),
+				     get_action_type_name (button->priv->type),
 				     panel_find_applet_index (widget));
 
 	gtk_selection_data_set (
@@ -862,7 +840,7 @@ panel_action_button_load_from_drag (PanelToplevel *toplevel,
 		return retval;
 	}
 
-	if (!obsolete_string_to_enum (panel_action_type_map, elements [1], (gpointer) &type)) {
+	if (!get_action_type_id (elements [1], (gpointer) &type)) {
 		g_strfreev (elements);
 		return retval;
 	}
