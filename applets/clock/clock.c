@@ -1177,8 +1177,8 @@ create_cities_section (ClockData *cd)
         }
 
         /* Copy the existing list, so we can sort it nondestructively */
-        node = g_list_copy (cities);
-        node = g_list_sort (node, sort_locations_by_time_reverse_and_name);
+        node = g_slist_copy (cities);
+        node = g_slist_sort (node, sort_locations_by_time_reverse_and_name);
 
         for (l = node; l; l = g_slist_next (l)) {
                 ClockLocation *loc = l->data;
