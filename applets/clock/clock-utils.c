@@ -168,7 +168,7 @@ clock_utils_pixbuf_from_svg_resource_at_size (const char *resource,
 out:
 	if (handle) {
 		rsvg_handle_close (handle, NULL);
-		rsvg_handle_free (handle);
+		g_object_unref (handle);
 	}
 	if (stream)
 		g_object_unref (stream);
