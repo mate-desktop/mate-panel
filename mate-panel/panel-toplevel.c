@@ -5063,7 +5063,7 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 PanelOrientation
 panel_toplevel_get_orientation (PanelToplevel *toplevel)
 {
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), GTK_ORIENTATION_HORIZONTAL);
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), PANEL_ORIENTATION_TOP);
 
 	return toplevel->priv->orientation;
 }
