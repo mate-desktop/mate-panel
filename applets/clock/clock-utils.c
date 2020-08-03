@@ -34,8 +34,6 @@
 
 #include <gtk/gtk.h>
 
-#include <librsvg/rsvg.h>
-
 #include "clock.h"
 
 #include "clock-utils.h"
@@ -126,53 +124,3 @@ clock_utils_display_help (GtkWidget  *widget,
 		gtk_widget_show (dialog);
 	}
 }
-
-GdkPixbuf *
-clock_utils_pixbuf_from_svg_resource_at_size (const char *resource,
-	                                          int         width,
-	                                          int         height)
-{
-	GInputStream      *stream = NULL;
-	RsvgHandle        *handle = NULL;
-	RsvgDimensionData  svg_dimensions;
-	GdkPixbuf         *pixbuf = NULL;
-	cairo_surface_t   *surface = NULL;
-	cairo_matrix_t     matrix;
-	cairo_t           *cr = NULL;
-
-	stream = g_resources_open_stream (resource, 0, NULL);
-	if (!stream)
-		goto out;
-
-	handle = rsvg_handle_new ();
-	if (!handle)
-		goto out;
-
-	if (!rsvg_handle_read_stream_sync (handle, stream, NULL, NULL))
-		goto out;
-
-	rsvg_handle_get_dimensions (handle, &svg_dimensions);
-
-	surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
-	cr = cairo_create (surface);
-	cairo_matrix_init_scale (&matrix,
-				 ((double) width / svg_dimensions.width),
-				 ((double) height / svg_dimensions.height));
-	cairo_transform (cr, &matrix);
-	rsvg_handle_render_cairo (handle, cr);
-	cairo_destroy (cr);
-
-	pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, width, height);
-	cairo_surface_destroy (surface);
-
-out:
-	if (handle) {
-		rsvg_handle_close (handle, NULL);
-		rsvg_handle_free (handle);
-	}
-	if (stream)
-		g_object_unref (stream);
-
-	return pixbuf;
-}
-

@@ -438,16 +438,14 @@ clock_face_load_face (ClockFace *this, gint width, gint height)
                         "clock-face-", size_string[priv->size],
                         "-", daytime_string[priv->timeofday], ".svg",
                         NULL);
-    priv->face_pixbuf = clock_utils_pixbuf_from_svg_resource_at_size (name,
-                                                                      width, height);
+    priv->face_pixbuf = gdk_pixbuf_new_from_resource_at_scale (name, width, height, TRUE, NULL);
     g_free (name);
 
     if (!priv->face_pixbuf) {
             name = g_strconcat (CLOCK_RESOURCE_PATH "icons/",
                                 "clock-face-", size_string[priv->size], ".svg",
                                 NULL);
-            priv->face_pixbuf = clock_utils_pixbuf_from_svg_resource_at_size (name,
-                                                                              width, height);
+            priv->face_pixbuf = gdk_pixbuf_new_from_resource_at_scale (name, width, height, TRUE, NULL);
             g_free (name);
     }
 
