@@ -293,6 +293,11 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 	if (wnck_window == NULL)
 		return FALSE;
 
+	/* Do not show preview if window is not visible nor in current workspace */
+	if (!wnck_window_is_visible_on_workspace (wnck_window,
+						  wnck_screen_get_active_workspace (wnck_screen_get_default ())))
+		return FALSE;
+
 	thumbnail = preview_window_thumbnail (wnck_window, tasklist);
 
 	if (thumbnail == NULL)
