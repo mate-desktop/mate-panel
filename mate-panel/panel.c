@@ -598,6 +598,109 @@ drop_caja_desktop_uri (PanelWidget *panel,
 	return success;
 }
 
+enum {
+	RESPONSE_SET_BACKGROUND,
+	RESPONSE_CREATE_LAUNCHER
+};
+
+static void
+image_drop_dialog_response (GtkWidget   *dialog,
+                            int          response,
+                            PanelWidget *panel)
+{
+	if (response == RESPONSE_SET_BACKGROUND) {
+		const gchar *uri = g_object_get_data (G_OBJECT (dialog), "uri");
+
+		set_background_image_from_uri (panel->toplevel, uri);
+	} else if (response == RESPONSE_CREATE_LAUNCHER) {
+		const gchar *uri = g_object_get_data (G_OBJECT (dialog), "uri");
+		gint pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "pos"));
+
+		drop_uri (panel, pos, uri, PANEL_ICON_UNKNOWN);
+	}
+
+	gtk_widget_destroy (dialog);
+}
+
+static GtkWidget *
+image_drop_dialog (PanelToplevel *toplevel,
+                   const gchar   *uri)
+{
+	GtkWidget *dialog;
+	GFile *file;
+	GFileInfo *info;
+	gchar *display_name;
+
+	file = g_file_new_for_uri (uri);
+	info = g_file_query_info (file, G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+	                          G_FILE_QUERY_INFO_NONE, NULL, NULL);
+	if (info) {
+		display_name = g_strdup (g_file_info_get_display_name (info));
+		g_object_unref (info);
+	} else {
+		display_name = g_file_get_basename (file);
+	}
+	g_object_unref (file);
+
+	dialog = gtk_message_dialog_new (
+			GTK_WINDOW (toplevel),
+			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_MESSAGE_QUESTION,
+			GTK_BUTTONS_NONE,
+			_("You dropped an image on the panel, what do you want to do?"));
+
+	gtk_message_dialog_format_secondary_text (
+			GTK_MESSAGE_DIALOG (dialog),
+			_("You dropped the image \"%s\" on the panel. "
+			  "Do you want to create a launcher for it or use it "
+			  "as the panel's background?"), display_name);
+
+	g_free (display_name);
+
+	panel_dialog_add_button (GTK_DIALOG (dialog),
+	                         _("_Cancel"), "process-stop",
+	                         GTK_RESPONSE_CANCEL);
+	panel_dialog_add_button (GTK_DIALOG (dialog),
+	                         _("Create _Launcher"), "mate-panel-launcher",
+	                         RESPONSE_CREATE_LAUNCHER);
+	panel_dialog_add_button (GTK_DIALOG (dialog),
+	                         _("Set _Background Image"), "background",
+	                         RESPONSE_SET_BACKGROUND);
+
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+
+	gtk_window_set_screen (GTK_WINDOW (dialog),
+	                       gtk_window_get_screen (GTK_WINDOW (toplevel)));
+
+	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+
+	g_signal_connect_swapped (dialog, "destroy",
+	                          G_CALLBACK (panel_toplevel_pop_autohide_disabler),
+	                          toplevel);
+
+	panel_toplevel_push_autohide_disabler (toplevel);
+
+	return dialog;
+}
+
+static void
+ask_about_image_drop (PanelWidget *panel,
+                      int          pos,
+                      const char  *uri)
+{
+	GtkWidget *dialog;
+
+	dialog = image_drop_dialog (panel->toplevel, uri);
+
+	g_object_set_data (G_OBJECT (dialog), "pos", GINT_TO_POINTER (pos));
+	g_object_set_data_full (G_OBJECT (dialog), "uri", g_strdup (uri), g_free);
+
+	g_signal_connect (dialog, "response",
+	                  G_CALLBACK (image_drop_dialog_response), panel);
+
+	gtk_widget_show (dialog);
+}
+
 static gboolean
 drop_urilist (PanelWidget *panel,
 	      int          pos,
@@ -661,8 +764,7 @@ drop_urilist (PanelWidget *panel,
 
 			if (n_uris == 1 &&
 			    mime && g_str_has_prefix (mime, "image")) {
-				if (!set_background_image_from_uri (panel->toplevel, uri))
-					success = FALSE;
+				ask_about_image_drop (panel, pos, uri);
 			} else if (mime &&
 				   (!strcmp (mime, "application/x-mate-app-info") ||
 				    !strcmp (mime, "application/x-desktop") ||
