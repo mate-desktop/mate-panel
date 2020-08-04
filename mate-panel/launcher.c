@@ -663,15 +663,12 @@ static char *
 panel_launcher_find_writable_uri (const char *launcher_location,
 				  const char *source)
 {
-	char *path;
-	char *uri;
-
 	if (!launcher_location)
 		return panel_make_unique_desktop_uri (NULL, source);
 
 	if (!strchr (launcher_location, G_DIR_SEPARATOR)) {
-		path = panel_make_full_path (NULL, launcher_location);
-		uri = g_filename_to_uri (path, NULL, NULL);
+		char *path = panel_make_full_path (NULL, launcher_location);
+		char *uri  = g_filename_to_uri (path, NULL, NULL);
 		g_free (path);
 		return uri;
 	}
@@ -701,18 +698,13 @@ launcher_changed (PanelDItemEditor *dialog,
 
 static void
 launcher_command_changed (PanelDItemEditor *dialog,
-			  const char       *command,
-			  Launcher         *launcher)
+                          const char       *command,
+                          Launcher         *launcher)
 {
-	char     *exec;
-	char     *old_exec;
-	GKeyFile *revert_key_file;
-
-	revert_key_file = panel_ditem_editor_get_revert_key_file (dialog);
-
+	GKeyFile *revert_key_file = panel_ditem_editor_get_revert_key_file (dialog);
 	if (revert_key_file) {
-		exec = panel_key_file_get_string (launcher->key_file, "Exec");
-		old_exec = panel_key_file_get_string (revert_key_file, "Exec");
+		char *exec = panel_key_file_get_string (launcher->key_file, "Exec");
+		char *old_exec = panel_key_file_get_string (revert_key_file, "Exec");
 
 		if (!old_exec || !exec || strcmp (old_exec, exec))
 			panel_key_file_remove_key (launcher->key_file,
@@ -1163,8 +1155,6 @@ void
 panel_launcher_set_dnd_enabled (Launcher *launcher,
 				gboolean  dnd_enabled)
 {
-	cairo_surface_t *surface;
-
 	if (dnd_enabled) {
 		static GtkTargetEntry dnd_targets[] = {
 			{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
@@ -1176,7 +1166,7 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 				     GDK_BUTTON1_MASK,
 				     dnd_targets, 2,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		surface = button_widget_get_surface (BUTTON_WIDGET (launcher->button));
+		cairo_surface_t *surface = button_widget_get_surface (BUTTON_WIDGET (launcher->button));
 		if (surface) {
 			GdkPixbuf *pixbuf;
 			pixbuf = gdk_pixbuf_get_from_surface (surface,

@@ -380,8 +380,6 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 {
 	MatePanelAppletFrame *frame;
 	gboolean              handled = FALSE;
-	GdkDisplay *display;
-	GdkSeat *seat;
 
 	frame = MATE_PANEL_APPLET_FRAME (widget);
 
@@ -410,8 +408,8 @@ mate_panel_applet_frame_button_changed (GtkWidget      *widget,
 	case 3:
 		if (event->type == GDK_BUTTON_PRESS ||
 		    event->type == GDK_2BUTTON_PRESS) {
-			display = gtk_widget_get_display (widget);
-			seat = gdk_display_get_default_seat (display);
+			GdkDisplay *display = gtk_widget_get_display (widget);
+			GdkSeat    *seat    = gdk_display_get_default_seat (display);
 			gdk_seat_ungrab (seat);
 
 			MATE_PANEL_APPLET_FRAME_GET_CLASS (frame)->popup_menu (frame,

@@ -727,12 +727,8 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 void
 drawer_query_deletion (Drawer *drawer)
 {
-    GtkWidget *dialog;
-
      if (drawer->toplevel) {
-        PanelWidget *panel_widget;
-
-        panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
+        PanelWidget *panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
 
         if (!panel_global_config_get_confirm_panel_remove () ||
             !g_list_length (panel_widget->applet_list)) {
@@ -740,7 +736,7 @@ drawer_query_deletion (Drawer *drawer)
                 return;
         }
 
-        dialog = panel_deletion_dialog (drawer->toplevel);
+        GtkWidget *dialog = panel_deletion_dialog (drawer->toplevel);
 
         g_signal_connect (dialog, "response", G_CALLBACK (drawer_deletion_response), drawer);
 

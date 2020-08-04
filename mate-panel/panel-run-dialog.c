@@ -158,22 +158,19 @@ _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
 				      GtkComboBox      *entry,
 				      char             *lastcommand)
 {
-	GtkTreeModel *model;
-	GtkTreeIter   iter;
-	guint         history_max_size;
-	gboolean      history_reverse;
-
-	history_reverse = g_settings_get_boolean (dialog->settings, PANEL_RUN_HISTORY_REVERSE_KEY);
-	history_max_size = g_settings_get_uint (dialog->settings, PANEL_RUN_HISTORY_MAX_SIZE_KEY);
+	gboolean history_reverse =
+		g_settings_get_boolean (dialog->settings, PANEL_RUN_HISTORY_REVERSE_KEY);
+	guint history_max_size =
+		g_settings_get_uint (dialog->settings, PANEL_RUN_HISTORY_MAX_SIZE_KEY);
 
 	if (history_max_size == 0)
 		g_settings_set_strv (dialog->settings, PANEL_RUN_HISTORY_KEY, NULL);
 	else {
-		model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
-
+		GtkTreeIter   iter;
+		GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
 		/* reasonable upper bound for zero-terminated array with new command */
-		gchar *items[gtk_tree_model_iter_n_children (model, NULL) + 2];
-		guint  items_added = 0;
+		gchar        *items[gtk_tree_model_iter_n_children (model, NULL) + 2];
+		guint         items_added = 0;
 
 		items[0] = lastcommand;
 
@@ -572,7 +569,7 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 				   const char     *file)
 {
 	const char *text;
-	char       *quoted, *temp;
+	char       *quoted;
 	GtkWidget  *entry;
 
 	/* Don't allow filenames beginning with '-' */
@@ -583,7 +580,7 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
 	text = gtk_entry_get_text (GTK_ENTRY (entry));
 	if (text && text [0]) {
-		temp = g_strconcat (text, " ", quoted, NULL);
+		char *temp = g_strconcat (text, " ", quoted, NULL);
 		gtk_entry_set_text (GTK_ENTRY (entry), temp);
 		g_free (temp);
 	} else
@@ -1018,7 +1015,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	GtkTreeIter   iter;
 	GtkTreeIter   filter_iter;
 	char         *temp;
-	char         *path, *stripped;
+	char         *path;
 	gboolean      terminal;
 	GKeyFile     *key_file;
 	GtkWidget    *entry;
@@ -1064,7 +1061,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
 	temp = panel_key_file_get_string (key_file, "Exec");
 	if (temp) {
-		stripped = remove_parameters (temp);
+		char *stripped = remove_parameters (temp);
 		gtk_entry_set_text (GTK_ENTRY (entry), stripped);
 		g_free (stripped);
 	} else {
@@ -1116,8 +1113,6 @@ static void
 panel_run_dialog_setup_program_list (PanelRunDialog *dialog,
 				     GtkBuilder     *gui)
 {
-	GtkTreeSelection *selection;
-
 	dialog->program_list = PANEL_GTK_BUILDER_GET (gui, "program_list");
 	dialog->program_list_box = PANEL_GTK_BUILDER_GET (gui, "program_list_box");
 	dialog->program_label = PANEL_GTK_BUILDER_GET (gui, "program_label");
@@ -1131,7 +1126,9 @@ panel_run_dialog_setup_program_list (PanelRunDialog *dialog,
 	g_object_ref (dialog->program_list_box);
 
 	if (panel_profile_get_enable_program_list ()) {
-		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
+		GtkTreeSelection *selection =
+			gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
+
 		gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
 	        g_signal_connect (selection, "changed",
@@ -1248,10 +1245,9 @@ file_button_browse_response (GtkWidget      *chooser,
 			     gint            response,
 			     PanelRunDialog *dialog)
 {
-	char *file;
 
 	if (response == GTK_RESPONSE_OK) {
-		file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
+		char *file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 		panel_run_dialog_append_file (dialog, file);
 		g_free (file);
 	}
@@ -1367,7 +1363,6 @@ fill_possible_executables (void)
 
 	for (i = 0; pathv [i]; i++) {
 		const char *file;
-		char       *filename;
 		GDir       *dir;
 
 		dir = g_dir_open (pathv [i], 0, NULL);
@@ -1376,8 +1371,7 @@ fill_possible_executables (void)
 			continue;
 
 		while ((file = g_dir_read_name (dir))) {
-			filename = g_build_filename (pathv [i], file, NULL);
-			list = g_list_prepend (list, filename);
+			list = g_list_prepend (list, g_build_filename (pathv [i], file, NULL));
 		}
 
 		g_dir_close (dir);
@@ -1503,7 +1497,6 @@ entry_event (GtkEditable    *entry,
 	     GdkEventKey    *event,
 	     PanelRunDialog *dialog)
 {
-	GtkTreeSelection *selection;
 	char             *prefix;
 	char             *nospace_prefix;
 	char             *nprefix;
@@ -1518,7 +1511,7 @@ entry_event (GtkEditable    *entry,
 	*/
 	dialog->use_program_list = FALSE;
 	if (panel_profile_get_enable_program_list ()) {
-		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
+		GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
 		gtk_tree_selection_unselect_all (selection);
 	}
 
@@ -1618,13 +1611,9 @@ static void
 combobox_changed (GtkComboBox    *combobox,
 		  PanelRunDialog *dialog)
 {
-	char *text;
-	char *start;
-	char *msg;
+	char *text = g_strdup (panel_run_dialog_get_combo_text (dialog));
+	char *start = text;
 
-	text = g_strdup (panel_run_dialog_get_combo_text (dialog));
-
-	start = text;
 	while (*start != '\0' && g_ascii_isspace (*start))
 		start++;
 
@@ -1687,8 +1676,8 @@ combobox_changed (GtkComboBox    *combobox,
 
 	if (panel_profile_get_enable_program_list () &&
 	    !dialog->use_program_list) {
-		msg = g_strdup_printf (_("Will run command: '%s'"),
-				       start);
+		char *msg = g_strdup_printf (_("Will run command: '%s'"),
+		                             start);
 		gtk_label_set_text (GTK_LABEL (dialog->program_label), msg);
 		g_free (msg);
 	}

@@ -430,7 +430,6 @@ clock_map_place_locations (ClockMap *this)
 {
         ClockMapPrivate *priv = clock_map_get_instance_private (this);
         GSList *locs;
-        ClockLocation *loc;
 
         if (priv->location_map_pixbuf) {
                 g_object_unref (priv->location_map_pixbuf);
@@ -443,10 +442,8 @@ clock_map_place_locations (ClockMap *this)
 	g_signal_emit (this, signals[NEED_LOCATIONS], 0, &locs);
 
         while (locs) {
-                loc = CLOCK_LOCATION (locs->data);
-
+                ClockLocation *loc = CLOCK_LOCATION (locs->data);
                 clock_map_place_location (this, loc, FALSE);
-
                 locs = locs->next;
         }
 

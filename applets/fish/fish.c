@@ -261,7 +261,6 @@ static void command_value_changed(GtkEntry* entry, FishApplet *fish)
 	    !strcmp  (text, "uptime")  ||
 	    !strncmp (text, "tail ", 5)) {
 		static gboolean message_given = FALSE;
-		char       *message;
 		const char *warning_format =
 				_("Warning:  The command "
 				  "appears to be something actually useful.\n"
@@ -272,13 +271,10 @@ static void command_value_changed(GtkEntry* entry, FishApplet *fish)
 				   "which would make the applet "
 				   "\"practical\" or useful.");
 
-		if ( ! message_given) {
-			message = g_strdup_printf (warning_format, fish->name);
-
+		if (!message_given) {
+			char *message = g_strdup_printf (warning_format, fish->name);
 			something_fishy_going_on (fish, message);
-
 			g_free (message);
-
 			message_given = TRUE;
 		}
 	}
@@ -729,7 +725,6 @@ static void clear_fortune_text(FishApplet* fish)
 static gboolean fish_read_output(GIOChannel* source, GIOCondition condition, gpointer data)
 {
 	char        output[4096];
-	char       *utf8_output;
 	gsize       bytes_read;
 	GError     *error = NULL;
 	GIOStatus   status;
@@ -763,6 +758,8 @@ static gboolean fish_read_output(GIOChannel* source, GIOCondition condition, gpo
 		return TRUE;
 
 	if (bytes_read > 0) {
+		char *utf8_output;
+
 		/* The output is not guarantied to be in UTF-8 format, most
 		 * likely it's just in ASCII-7 or in the user locale
 		 */

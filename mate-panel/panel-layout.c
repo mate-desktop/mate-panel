@@ -133,21 +133,16 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                   int                        key_definitions_len,
                                   const char                *type_for_error_message)
 {
-    gboolean    retval = FALSE;
-    const char *id;
-    char       *unique_id = NULL;
-    char       *path = NULL;
-    GSettings  *settings = NULL;
-    char      **keyfile_keys = NULL;
-    char       *value_str;
-    int         value_int;
-    gboolean    value_boolean;
-    int         i, j;
-    GError     *error = NULL;
-    gchar     **existing_ids;
-    gboolean    existing_id = FALSE;
-    gchar      *dir = NULL;
-    gchar      *dconf_path = NULL;
+    gboolean     retval       = FALSE;
+    GError      *error        = NULL;
+    gboolean     existing_id  = FALSE;
+    const gchar *dconf_path;
+    const char  *id;
+    gchar      **existing_ids;
+    char        *unique_id;
+    char       **keyfile_keys;
+    GSettings   *settings;
+
     PanelGSettingsKeyType type;
 
     /* Try to extract an id from the group, by stripping the prefix,
@@ -166,11 +161,11 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
     }
 
     if (g_strcmp0 (id_list_key, PANEL_TOPLEVEL_ID_LIST_KEY) == 0) {
-        dir = "toplevels";
+        dconf_path = PANEL_RESOURCE_PATH "/toplevels";
         type = PANEL_GSETTINGS_TOPLEVELS;
     }
     else if (g_strcmp0 (id_list_key, PANEL_OBJECT_ID_LIST_KEY) == 0) {
-        dir = "objects";
+        dconf_path = PANEL_RESOURCE_PATH "/objects";
         type = PANEL_GSETTINGS_OBJECTS;
     }
     else {
@@ -178,38 +173,41 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
 	return FALSE;
     }
 
-    dconf_path = g_strdup_printf (PANEL_RESOURCE_PATH "/%s", dir);
     existing_ids = mate_dconf_list_subdirs (dconf_path, TRUE);
 
     if (id) {
-        if (set_screen_to > 0) {
+        int i;
+
+        if (set_screen_to > 0)
             id = g_strdup_printf ("%s-screen%d", id, set_screen_to);
-        }
+
         for (i = 0; existing_ids[i]; i++) {
                 if (!strcmp (existing_ids[i], id)) {
                     existing_id = TRUE;
+                    break;
                 }
         }
     }
     g_strfreev (existing_ids);
-    g_free (dconf_path);
 
     if (existing_id || !id)
         unique_id = panel_profile_find_new_id (type);
     else
         unique_id = g_strdup (id);
 
-    path = g_strdup_printf ("%s%s/", path_prefix, unique_id);
+    char *path = g_strdup_printf ("%s%s/", path_prefix, unique_id);
     settings = g_settings_new_with_path (schema, path);
     g_free (path);
 
     keyfile_keys = g_key_file_get_keys (keyfile, group, NULL, NULL);
 
     if (keyfile_keys) {
+        int i;
 
         /* validate/add keys from the keyfile */
         for (i = 0; keyfile_keys[i] != NULL; i++) {
             gboolean found = FALSE;
+            int j;
 
             for (j = 0; j < key_definitions_len; j++) {
                 if (g_strcmp0 (keyfile_keys[i],
@@ -221,40 +219,44 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
 
             if (!found) {
                 g_warning ("Unknown key '%s' for %s",
-                             keyfile_keys[i],
-                             unique_id);
+                           keyfile_keys[i],
+                           unique_id);
                 return FALSE;
             }
 
             switch (key_definitions[j].type) {
-                case G_TYPE_STRING:
-                    value_str = g_key_file_get_string (keyfile,
-                                                       group, keyfile_keys[i],
-                                                       NULL);
+                case G_TYPE_STRING: {
+                    char *value_str =
+                        g_key_file_get_string (keyfile,
+                                               group, keyfile_keys[i],
+                                               NULL);
                     if (value_str)
                         g_settings_set_string (settings,
                                                key_definitions[j].name,
                                                value_str);
                     g_free (value_str);
                     break;
-
-                case G_TYPE_INT:
-                    value_int = g_key_file_get_integer (keyfile,
-                                                        group, keyfile_keys[i],
-                                                        NULL);
+                }
+                case G_TYPE_INT: {
+                    gint value_int =
+                        g_key_file_get_integer (keyfile,
+                                                group, keyfile_keys[i],
+                                                NULL);
                     g_settings_set_int (settings,
                                         key_definitions[j].name,
                                         value_int);
                     break;
-
-                case G_TYPE_BOOLEAN:
-                    value_boolean = g_key_file_get_boolean (keyfile,
-                                                            group, keyfile_keys[i],
-                                                            NULL);
+                }
+                case G_TYPE_BOOLEAN: {
+                    gboolean value_boolean =
+                        g_key_file_get_boolean (keyfile,
+                                                group, keyfile_keys[i],
+                                                NULL);
                     g_settings_set_boolean (settings,
                                             key_definitions[j].name,
                                             value_boolean);
                     break;
+                }
                 default:
                     g_assert_not_reached ();
                     break;
@@ -267,11 +269,10 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                 PANEL_TOPLEVEL_SCREEN_KEY,
                                 set_screen_to);
 
-        GSettings *panel_settings;
-        panel_settings = g_settings_new (PANEL_SCHEMA);
+        GSettings *panel_settings = g_settings_new (PANEL_SCHEMA);
         mate_gsettings_append_strv (panel_settings,
-                                     id_list_key,
-                                     unique_id);
+                                    id_list_key,
+                                    unique_id);
         g_object_unref (panel_settings);
 
         retval = TRUE;
@@ -327,7 +328,6 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
     GKeyFile    *keyfile = NULL;
     gchar      **groups = NULL;
     GError      *error = NULL;
-    int          i;
 
     screen_n = 0;
 #ifdef HAVE_X11
@@ -345,6 +345,8 @@ panel_layout_apply_default_from_gkeyfile (GdkScreen *screen)
                                        G_KEY_FILE_NONE,
                                        &error))
         {
+            int i;
+
             groups = g_key_file_get_groups (keyfile, NULL);
 
             for (i = 0; groups[i] != NULL; i++) {

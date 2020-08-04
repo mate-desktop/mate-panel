@@ -181,7 +181,6 @@ create_hig_frame (CalendarWindow *calwin,
                   GCallback   callback)
 {
         GtkWidget *vbox;
-        GtkWidget *label;
         GtkWidget *hbox;
         char      *bold_title;
         GtkWidget *expander;
@@ -211,9 +210,10 @@ create_hig_frame (CalendarWindow *calwin,
 	g_signal_connect (hbox, "add", G_CALLBACK (add_child), expander);
 
         if (button_label) {
+                GtkWidget *label;
                 GtkWidget *button_box;
                 GtkWidget *button;
-                gchar *text;
+                gchar     *text;
 
                 button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
                 gtk_widget_show (button_box);

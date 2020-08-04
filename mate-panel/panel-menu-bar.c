@@ -108,24 +108,27 @@ static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 	g_signal_connect(GTK_MENU_SHELL (menubar), "deactivate", G_CALLBACK (panel_menu_bar_reinit_tooltip), menubar);
 }
 
-static void panel_menu_bar_update_visibility (GSettings* settings, gchar* key, PanelMenuBar* menubar)
+static void
+panel_menu_bar_update_visibility (GSettings    *settings,
+                                  gchar        *key,
+                                  PanelMenuBar *menubar)
 {
-	GtkWidget* image;
-	gchar *str;
-	GtkIconSize icon_size;
-	gint icon_height;
-
 	if (!GTK_IS_WIDGET (menubar))
 		return;
 
-	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->applications_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_APPLICATIONS_KEY));
-	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->places_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_PLACES_KEY));
-	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->desktop_item), g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_DESKTOP_KEY));
+	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->applications_item),
+	                        g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_APPLICATIONS_KEY));
+	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->places_item),
+	                        g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_PLACES_KEY));
+	gtk_widget_set_visible (GTK_WIDGET (menubar->priv->desktop_item),
+	                        g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_DESKTOP_KEY));
 
-	if (g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_ICON_KEY))
-	{
-		str = g_settings_get_string (settings, PANEL_MENU_BAR_ICON_NAME_KEY);
-		icon_size = panel_menu_bar_icon_get_size ();
+	if (g_settings_get_boolean (settings, PANEL_MENU_BAR_SHOW_ICON_KEY)) {
+		GtkWidget   *image;
+		gint         icon_height;
+		gchar       *str = g_settings_get_string (settings, PANEL_MENU_BAR_ICON_NAME_KEY);
+		GtkIconSize  icon_size = panel_menu_bar_icon_get_size ();
+
 		gtk_icon_size_lookup (icon_size, NULL, &icon_height);
 		if (str != NULL && str[0] != 0)
 			image = gtk_image_new_from_icon_name(str, icon_size);

@@ -76,10 +76,11 @@ clock_location_find_and_ref (GSList       *locations,
                              const gchar *code)
 {
         GSList *l;
-        ClockLocationPrivate *priv;
 
         for (l = locations; l != NULL; l = l->next) {
-                priv = clock_location_get_instance_private (l->data);
+
+                ClockLocationPrivate *priv =
+                        clock_location_get_instance_private (l->data);
 
                 if (priv->latitude == latitude &&
                     priv->longitude == longitude &&

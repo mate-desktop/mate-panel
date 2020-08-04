@@ -1320,7 +1320,6 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 {
 
 	int panel_size = toplevel->priv->size;
-	int hb_size = 0;
 
 	if (toplevel->priv->buttons_enabled) {
 		panel_toplevel_update_buttons_showing (toplevel);
@@ -1366,11 +1365,16 @@ static void panel_toplevel_update_hide_buttons(PanelToplevel* toplevel)
 
 	/* set size after setting the arrow */
 	if (toplevel->priv->buttons_enabled) {
+		int hb_size;
 
-		if ( panel_size < 20) { hb_size = 16; }
-		else if ( panel_size < 40) { hb_size = 20; }
-		else if ( panel_size < 60) { hb_size = 26; }
-		else { hb_size = 30; }
+		if (panel_size < 20)
+			hb_size = 16;
+		else if (panel_size < 40)
+			hb_size = 20;
+		else if (panel_size < 60)
+			hb_size = 26;
+		else
+			hb_size = 30;
 
 		gtk_widget_set_size_request (toplevel->priv->hide_button_top, panel_size, hb_size);
 		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, panel_size, hb_size);
@@ -2894,8 +2898,6 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 	GtkWidget *widget;
 
 	GList *list;
-	const char *id;
-	int position;
 	gboolean stick;
 
 	widget = GTK_WIDGET (toplevel);
@@ -2920,7 +2922,7 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 	if (resize || move) {
 		for (list = toplevel->priv->panel_widget->applet_list; list != NULL; list = g_list_next (list)) {
 			AppletData *ad = list->data;
-			id = mate_panel_applet_get_id_by_widget (ad->applet);
+			const char *id = mate_panel_applet_get_id_by_widget (ad->applet);
 
 			if (!id)
 				return;
@@ -2931,7 +2933,7 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 			stick = g_settings_get_boolean (info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
 
 			if (stick) {
-				position = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
+				int position = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
 				if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 					ad->pos = toplevel->priv->geometry.width - position;
 				} else {

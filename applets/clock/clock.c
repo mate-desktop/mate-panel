@@ -424,7 +424,6 @@ get_updated_timeformat (ClockData *cd)
   */
         char       *result;
         const char *time_format;
-        const char *date_format;
         char       *clock_format;
         const gchar *env_language;
         const gchar *env_lc_time;
@@ -462,7 +461,7 @@ get_updated_timeformat (ClockData *cd)
                  * the day of the month as a decimal number is a single digit,
                  * it should begin with a 0 in your locale (e.g. "May 01"
                  * instead of "May  1"). */
-                date_format = _("%a %b %e");
+                const char *date_format = _("%a %b %e");
 
                 if (use_two_line_format (cd))
                         /* translators: reverse the order of these arguments
@@ -1152,7 +1151,6 @@ static void
 create_cities_section (ClockData *cd)
 {
         GSList *node;
-        ClockLocationTile *city;
         GSList *cities;
         GSList *l;
 
@@ -1182,8 +1180,7 @@ create_cities_section (ClockData *cd)
 
         for (l = node; l; l = g_slist_next (l)) {
                 ClockLocation *loc = l->data;
-
-                city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
+                ClockLocationTile *city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
                 g_signal_connect (city, "tile-pressed",
                                   G_CALLBACK (location_tile_pressed_cb), cd);
                 g_signal_connect (city, "need-clock-format",
@@ -1700,14 +1697,13 @@ static void
 set_time_callback (ClockData *cd, GError *error)
 {
         GtkWidget *window;
-        GtkWidget *dialog;
 
         if (error) {
-                dialog = gtk_message_dialog_new (NULL,
-                                                 0,
-                                                 GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_CLOSE,
-                                                 _("Failed to set the system time"));
+                GtkWidget *dialog = gtk_message_dialog_new (NULL,
+                                                            0,
+                                                            GTK_MESSAGE_ERROR,
+                                                            GTK_BUTTONS_CLOSE,
+                                                            _("Failed to set the system time"));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
                 g_signal_connect (dialog, "response",
@@ -2132,7 +2128,6 @@ static void
 locations_changed (ClockData *cd)
 {
         GSList *l;
-        ClockLocation *loc;
         glong id;
 
         if (!cd->locations) {
@@ -2150,7 +2145,7 @@ locations_changed (ClockData *cd)
         }
 
         for (l = cd->locations; l; l = l->next) {
-                loc = l->data;
+                ClockLocation *loc = l->data;
 
                 id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (loc), "weather-updated"));
                 if (id == 0) {

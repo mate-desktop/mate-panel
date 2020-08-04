@@ -828,20 +828,15 @@ panel_util_get_icon_name_from_g_icon (GIcon *gicon)
 static char *
 panel_util_get_file_display_name_if_mount (GFile *file)
 {
-	GFile          *compare;
-	GVolumeMonitor *monitor;
-	GList          *mounts, *l;
-	char           *ret;
-
-	ret = NULL;
+	GList *l;
+	char  *ret = NULL;
 
 	/* compare with all mounts */
-	monitor = g_volume_monitor_get ();
-	mounts = g_volume_monitor_get_mounts (monitor);
+	GVolumeMonitor *monitor = g_volume_monitor_get ();
+	GList *mounts = g_volume_monitor_get_mounts (monitor);
 	for (l = mounts; l != NULL; l = l->next) {
-		GMount *mount;
-		mount = G_MOUNT (l->data);
-		compare = g_mount_get_root (mount);
+		GMount *mount = G_MOUNT (l->data);
+		GFile *compare = g_mount_get_root (mount);
 		if (!ret && g_file_equal (file, compare))
 			ret = g_mount_get_name (mount);
 		g_object_unref (compare);
@@ -860,13 +855,12 @@ panel_util_get_file_display_for_common_files (GFile *file)
 
 	compare = g_file_new_for_path (g_get_home_dir ());
 	if (g_file_equal (file, compare)) {
-		GSettings *caja_desktop_settings;
 		char *caja_home_icon_name = NULL;
 
 		g_object_unref (compare);
 
 		if (mate_gsettings_schema_exists (CAJA_DESKTOP_SCHEMA)) {
-			caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
+			GSettings *caja_desktop_settings = g_settings_new (CAJA_DESKTOP_SCHEMA);
 			caja_home_icon_name = g_settings_get_string (caja_desktop_settings,
 														 CAJA_DESKTOP_HOME_ICON_NAME_KEY);
 			g_object_unref (caja_desktop_settings);
@@ -915,17 +909,12 @@ panel_util_get_file_description (GFile *file)
 
 static char *
 panel_util_get_file_display_name (GFile    *file,
-				  gboolean  use_fallback)
+                                 gboolean  use_fallback)
 {
-	GFileInfo *info;
-	char      *ret;
-
-	ret = NULL;
-
-	info = g_file_query_info (file, "standard::display-name",
-				  G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
-				  NULL, NULL);
-
+	char *ret = NULL;
+	GFileInfo *info = g_file_query_info (file, "standard::display-name",
+	                                     G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+	                                     NULL, NULL);
 	if (info) {
 		ret = g_strdup (g_file_info_get_display_name (info));
 		g_object_unref (info);
@@ -933,9 +922,7 @@ panel_util_get_file_display_name (GFile    *file,
 
 	if (!ret && use_fallback) {
 		/* can happen with URI schemes non supported by gvfs */
-		char *basename;
-
-		basename = g_file_get_basename (file);
+		char *basename = g_file_get_basename (file);
 		ret = g_filename_display_name (basename);
 		g_free (basename);
 	}
@@ -946,20 +933,16 @@ panel_util_get_file_display_name (GFile    *file,
 static char *
 panel_util_get_file_icon_name_if_mount (GFile *file)
 {
-	GFile          *compare;
 	GVolumeMonitor *monitor;
 	GList          *mounts, *l;
-	char           *ret;
-
-	ret = NULL;
+	char           *ret = NULL;
 
 	/* compare with all mounts */
 	monitor = g_volume_monitor_get ();
 	mounts = g_volume_monitor_get_mounts (monitor);
 	for (l = mounts; l != NULL; l = l->next) {
-		GMount *mount;
-		mount = G_MOUNT (l->data);
-		compare = g_mount_get_root (mount);
+		GMount *mount = G_MOUNT (l->data);
+		GFile *compare = g_mount_get_root (mount);
 		if (!ret && g_file_equal (file, compare)) {
 			GIcon *gicon;
 			gicon = g_mount_get_icon (mount);
