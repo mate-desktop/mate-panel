@@ -414,16 +414,35 @@ panel_key_press_event (GtkWidget   *widget,
 }
 
 static gboolean
+can_set_background_image (PanelToplevel *toplevel,
+                          const gchar   *uri,
+                          gchar        **filename)
+{
+	gchar *image;
+
+	if (! panel_profile_background_key_is_writable (toplevel, "type") ||
+	    ! panel_profile_background_key_is_writable (toplevel, "image"))
+		return FALSE;
+
+	image = g_filename_from_uri (uri, NULL, NULL);
+	if (! image)
+		return FALSE;
+
+	if (filename)
+		*filename = image;
+	else
+		g_free (image);
+
+	return TRUE;
+}
+
+static gboolean
 set_background_image_from_uri (PanelToplevel *toplevel,
 			       const char    *uri)
 {
 	char *image;
 
-	if ( ! panel_profile_background_key_is_writable (toplevel, "type") ||
-	     ! panel_profile_background_key_is_writable (toplevel, "image"))
-		return FALSE;
-
-	if (!(image = g_filename_from_uri (uri, NULL, NULL)))
+	if (! can_set_background_image (toplevel, uri, &image))
 		return FALSE;
 
 	panel_profile_set_background_image (toplevel, image);
@@ -630,6 +649,8 @@ image_drop_dialog (PanelToplevel *toplevel,
 	GFile *file;
 	GFileInfo *info;
 	gchar *display_name;
+	gchar *secondary_p1;
+	const gchar *secondary_p2;
 
 	file = g_file_new_for_uri (uri);
 	info = g_file_query_info (file, G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
@@ -649,20 +670,29 @@ image_drop_dialog (PanelToplevel *toplevel,
 			GTK_BUTTONS_NONE,
 			_("You dropped an image on the panel, what do you want to do?"));
 
-	gtk_message_dialog_format_secondary_text (
-			GTK_MESSAGE_DIALOG (dialog),
-			_("You dropped the image \"%s\" on the panel. "
-			  "Do you want to create a launcher for it or use it "
-			  "as the panel's background?"), display_name);
+	secondary_p1 = g_strdup_printf (_("You dropped the image \"%s\" on the panel."),
+	                                display_name);
+	if (panel_profile_id_lists_are_writable ())
+		secondary_p2 = _("Do you want to create a launcher for it or "
+		                 "use it as the panel's background?");
+	else
+		secondary_p2 = _("Do you want to use it as the panel's background?");
 
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+	                                          "%s %s",
+	                                          secondary_p1, secondary_p2);
+
+	g_free (secondary_p1);
 	g_free (display_name);
 
 	panel_dialog_add_button (GTK_DIALOG (dialog),
 	                         _("_Cancel"), "process-stop",
 	                         GTK_RESPONSE_CANCEL);
-	panel_dialog_add_button (GTK_DIALOG (dialog),
-	                         _("Create _Launcher"), "mate-panel-launcher",
-	                         RESPONSE_CREATE_LAUNCHER);
+	if (panel_profile_id_lists_are_writable ()) {
+		panel_dialog_add_button (GTK_DIALOG (dialog),
+		                         _("Create _Launcher"), "mate-panel-launcher",
+		                         RESPONSE_CREATE_LAUNCHER);
+	}
 	panel_dialog_add_button (GTK_DIALOG (dialog),
 	                         _("Set _Background Image"), "background",
 	                         RESPONSE_SET_BACKGROUND);
@@ -683,12 +713,16 @@ image_drop_dialog (PanelToplevel *toplevel,
 	return dialog;
 }
 
-static void
+static gboolean
 ask_about_image_drop (PanelWidget *panel,
                       int          pos,
                       const char  *uri)
 {
 	GtkWidget *dialog;
+
+	/* if it's not possible to set the background image, add a launcher */
+	if (! can_set_background_image (panel->toplevel, uri, NULL))
+		return drop_uri (panel, pos, uri, PANEL_ICON_UNKNOWN);
 
 	dialog = image_drop_dialog (panel->toplevel, uri);
 
@@ -699,6 +733,8 @@ ask_about_image_drop (PanelWidget *panel,
 	                  G_CALLBACK (image_drop_dialog_response), panel);
 
 	gtk_widget_show (dialog);
+
+	return TRUE;
 }
 
 static gboolean
@@ -764,7 +800,8 @@ drop_urilist (PanelWidget *panel,
 
 			if (n_uris == 1 &&
 			    mime && g_str_has_prefix (mime, "image")) {
-				ask_about_image_drop (panel, pos, uri);
+				if (! ask_about_image_drop (panel, pos, uri))
+					success = FALSE;
 			} else if (mime &&
 				   (!strcmp (mime, "application/x-mate-app-info") ||
 				    !strcmp (mime, "application/x-desktop") ||
