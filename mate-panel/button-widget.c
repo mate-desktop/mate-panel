@@ -60,8 +60,6 @@ do_colorshift (cairo_surface_t *dest, cairo_surface_t *src, int shift)
 	gint width, height, has_alpha, srcrowstride, destrowstride;
 	guchar *target_pixels;
 	guchar *original_pixels;
-	guchar *pixsrc;
-	guchar *pixdest;
 	int val;
 	guchar r,g,b;
 
@@ -74,8 +72,8 @@ do_colorshift (cairo_surface_t *dest, cairo_surface_t *src, int shift)
 	target_pixels = cairo_image_surface_get_data (dest);
 
 	for (i = 0; i < height; i++) {
-		pixdest = target_pixels + i*destrowstride;
-		pixsrc = original_pixels + i*srcrowstride;
+		guchar *pixdest = target_pixels + i*destrowstride;
+		guchar *pixsrc = original_pixels + i*srcrowstride;
 		for (j = 0; j < width; j++) {
 			r = *(pixsrc++);
 			g = *(pixsrc++);

@@ -268,7 +268,6 @@ setup_options (void)
 	char                *prefs_path = NULL;
 	char                *unique_key = NULL;
 	gboolean             unique_key_found = FALSE;
-	gchar              **dconf_paths;
 	GtkListStore        *model;
 	GtkTreeIter          iter;
 	GtkCellRenderer     *renderer;
@@ -312,7 +311,7 @@ setup_options (void)
 		g_free (unique_key);
 		unique_key = g_strdup_printf ("mate-panel-test-applet-%d", i);
 		unique_key_found = TRUE;
-		dconf_paths = mate_dconf_list_subdirs ("/tmp/", TRUE);
+		gchar **dconf_paths = mate_dconf_list_subdirs ("/tmp/", TRUE);
 		for (j = 0; dconf_paths[j] != NULL; j++)
 		{
 			if (g_strcmp0(unique_key, dconf_paths[j]) == 0) {
@@ -335,7 +334,6 @@ int
 main (int argc, char **argv)
 {
 	GtkBuilder *builder;
-	char       *applets_dir;
 	GError     *error;
 
 	bindtextdomain (GETTEXT_PACKAGE, MATELOCALEDIR);
@@ -357,11 +355,8 @@ main (int argc, char **argv)
 
 	panel_modules_ensure_loaded ();
 
-	if (g_file_test ("../libmate-panel-applet", G_FILE_TEST_IS_DIR)) {
-		applets_dir = g_strdup_printf ("%s:../libmate-panel-applet", MATE_PANEL_APPLETS_DIR);
-		g_setenv ("MATE_PANEL_APPLETS_DIR", applets_dir, FALSE);
-		g_free (applets_dir);
-	}
+	if (g_file_test ("../libmate-panel-applet", G_FILE_TEST_IS_DIR))
+		g_setenv ("MATE_PANEL_APPLETS_DIR", MATE_PANEL_APPLETS_DIR ":../libmate-panel-applet", FALSE);
 
 	if (cli_iid) {
 		load_applet_from_command_line ();

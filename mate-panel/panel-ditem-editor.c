@@ -223,7 +223,6 @@ panel_ditem_editor_constructor (GType                  type,
 {
 	GObject          *obj;
 	PanelDItemEditor *dialog;
-	GFile            *file;
 	gboolean          loaded;
 	char             *desktop_type;
 
@@ -248,7 +247,7 @@ panel_ditem_editor_constructor (GType                  type,
 	}
 
 	if (!loaded && dialog->priv->uri) {
-		file = g_file_new_for_uri (dialog->priv->uri);
+		GFile *file = g_file_new_for_uri (dialog->priv->uri);
 		if (g_file_query_exists (file, NULL)) {
 			/* FIXME what if there's an error? */
 			panel_ditem_editor_load_uri (dialog, NULL);
@@ -932,25 +931,24 @@ panel_ditem_editor_icon_changed (PanelDItemEditor *dialog,
 
 static void
 command_browse_chooser_response (GtkFileChooser   *chooser,
-				 gint              response_id,
-				 PanelDItemEditor *dialog)
+                                 gint              response_id,
+                                 PanelDItemEditor *dialog)
 {
-	char *uri;
-	char *text;
-
 	if (response_id == GTK_RESPONSE_ACCEPT) {
+		char *uri;
 		switch (panel_ditem_editor_get_item_type (dialog)) {
-		case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
-		case PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION:
-			text = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
-			uri = panel_util_make_exec_uri_for_desktop (text);
-			g_free (text);
-			break;
-		case PANEL_DITEM_EDITOR_TYPE_LINK:
-			uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (chooser));
-			break;
-		default:
-			g_assert_not_reached ();
+			case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
+			case PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION: {
+				char *text = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
+				uri = panel_util_make_exec_uri_for_desktop (text);
+				g_free (text);
+				break;
+			}
+			case PANEL_DITEM_EDITOR_TYPE_LINK:
+				uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (chooser));
+				break;
+			default:
+				g_assert_not_reached ();
 		}
 
 		gtk_entry_set_text (GTK_ENTRY (dialog->priv->command_entry),

@@ -346,8 +346,6 @@ xstuff_zoom_animate (GtkWidget *widget,
 	GdkScreen *gscreen;
 	GdkRectangle rect, dest;
 	GtkAllocation allocation;
-	GdkMonitor *monitor;
-	GdkDisplay *display;
 
 	if (opt_rect)
 		rect = *opt_rect;
@@ -375,8 +373,8 @@ xstuff_zoom_animate (GtkWidget *widget,
 				pixbuf, orientation);
 		g_object_unref (pixbuf);
 	} else {
-		display = gdk_screen_get_display (gscreen);
-		monitor = gdk_display_get_monitor_at_window (display,
+		GdkDisplay *display = gdk_screen_get_display (gscreen);
+		GdkMonitor *monitor = gdk_display_get_monitor_at_window (display,
 							     gtk_widget_get_window (widget));
 		gdk_monitor_get_geometry (monitor, &dest);
 

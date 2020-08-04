@@ -61,10 +61,9 @@ static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 static inline gboolean desktop_is_home_dir(void)
 {
 	gboolean retval = FALSE;
-	GSettings *settings;
 
 	if (mate_gsettings_schema_exists (CAJA_PREFS_SCHEMA)) {
-		settings = g_settings_new (CAJA_PREFS_SCHEMA);
+		GSettings *settings = g_settings_new (CAJA_PREFS_SCHEMA);
 		retval = g_settings_get_boolean (settings, CAJA_PREFS_DESKTOP_IS_HOME_DIR_KEY);
 		g_object_unref (settings);
 	}
@@ -855,31 +854,31 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 static void
 submenu_to_display (GtkWidget *menu)
 {
-	MateMenuTree           *tree;
-	MateMenuTreeDirectory  *directory;
-	const char          *menu_path;
-	void               (*append_callback) (GtkWidget *, gpointer);
-	gpointer             append_data;
+	void      (*append_callback) (GtkWidget *, gpointer);
+	gpointer  append_data;
 
 	if (!g_object_get_data (G_OBJECT (menu), "panel-menu-needs-loading"))
 		return;
 
 	g_object_set_data (G_OBJECT (menu), "panel-menu-needs-loading", NULL);
 
-	directory = g_object_get_data (G_OBJECT (menu),
-				       "panel-menu-tree-directory");
+	MateMenuTreeDirectory *directory =
+		g_object_get_data (G_OBJECT (menu),
+		                   "panel-menu-tree-directory");
 	if (!directory) {
-		menu_path = g_object_get_data (G_OBJECT (menu),
-					       "panel-menu-tree-path");
+		const char *menu_path =
+			g_object_get_data (G_OBJECT (menu),
+		                           "panel-menu-tree-path");
 		if (!menu_path)
 			return;
 
-		tree = g_object_get_data (G_OBJECT (menu), "panel-menu-tree");
+		MateMenuTree *tree =
+			g_object_get_data (G_OBJECT (menu),
+			                   "panel-menu-tree");
 		if (!tree)
 			return;
 
-		directory = matemenu_tree_get_directory_from_path (tree,
-								menu_path);
+		directory = matemenu_tree_get_directory_from_path (tree, menu_path);
 
 		g_object_set_data_full (G_OBJECT (menu),
 					"panel-menu-tree-directory",

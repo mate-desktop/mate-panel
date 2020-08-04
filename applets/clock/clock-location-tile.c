@@ -173,14 +173,12 @@ press_on_tile      (GtkWidget             *widget,
 static void
 make_current_cb (gpointer data, GError *error)
 {
-        GtkWidget *dialog;
-
         if (error) {
-                dialog = gtk_message_dialog_new (NULL,
-                                                 0,
-                                                 GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_CLOSE,
-                                                 _("Failed to set the system timezone"));
+                GtkWidget *dialog = gtk_message_dialog_new (NULL,
+                                                            0,
+                                                            GTK_MESSAGE_ERROR,
+                                                            GTK_BUTTONS_CLOSE,
+                                                            _("Failed to set the system timezone"));
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
                 g_signal_connect (dialog, "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);

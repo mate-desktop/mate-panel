@@ -38,28 +38,25 @@ struct _MatePanelAppletInfo {
 
 MatePanelAppletInfo *
 mate_panel_applet_info_new (const gchar  *iid,
-			    const gchar  *name,
-			    const gchar  *comment,
-			    const gchar  *icon,
-			    const gchar **old_ids,
-			    gboolean      x11_supported,
-			    gboolean      wayland_supported)
+                            const gchar  *name,
+                            const gchar  *comment,
+                            const gchar  *icon,
+                            const gchar **old_ids,
+                            gboolean      x11_supported,
+                            gboolean      wayland_supported)
 {
-	MatePanelAppletInfo *info;
+	MatePanelAppletInfo *info = g_slice_new0 (MatePanelAppletInfo);
 
-	info = g_slice_new0 (MatePanelAppletInfo);
-
-	info->iid = g_strdup (iid);
-	info->name = g_strdup (name);
+	info->iid     = g_strdup (iid);
+	info->name    = g_strdup (name);
 	info->comment = g_strdup (comment);
-	info->icon = g_strdup (icon);
+	info->icon    = g_strdup (icon);
 
 	/* MateComponent compatibility */
 	if (old_ids != NULL) {
-		int i, len;
-
-		len = g_strv_length ((gchar **) old_ids);
-		if (len > 0) {
+		int len;
+		if ((len = g_strv_length ((gchar **) old_ids)) > 0) {
+			int i;
 			info->old_ids = g_new0 (gchar *, len + 1);
 			for (i = 0; i < len; i++)
 				info->old_ids[i] = g_strdup (old_ids[i]);

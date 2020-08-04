@@ -341,18 +341,15 @@ panel_key_file_remove_all_locale_key (GKeyFile    *keyfile,
 
 void
 panel_key_file_ensure_C_key (GKeyFile   *keyfile,
-			     const char *key)
+                             const char *key)
 {
-	char *C_value;
-	char *buffer;
-
 	/* Make sure we set the "C" locale strings to the terms we set here.
 	 * This is so that if the user logs into another locale they get their
 	 * own description there rather then empty. It is not the C locale
 	 * however, but the user created this entry herself so it's OK */
-	C_value = panel_key_file_get_string (keyfile, key);
+	char *C_value = panel_key_file_get_string (keyfile, key);
 	if (C_value == NULL || C_value [0] == '\0') {
-		buffer = panel_key_file_get_locale_string (keyfile, key);
+		char *buffer = panel_key_file_get_locale_string (keyfile, key);
 		if (buffer) {
 			panel_key_file_set_string (keyfile, key, buffer);
 			g_free (buffer);

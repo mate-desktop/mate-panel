@@ -74,7 +74,6 @@ panel_cleanup_unregister (PanelCleanFunc func,
 			  gpointer       data)
 {
 	GSList *l, *next;
-	PanelClean *clean;
 
 	g_return_if_fail (func != NULL);
 
@@ -86,7 +85,7 @@ panel_cleanup_unregister (PanelCleanFunc func,
 	do {
 		next = l->next;
 
-		clean = l->data;
+		PanelClean *clean = l->data;
 		if (clean->func == func && clean->data == data) {
 			g_slice_free (PanelClean, clean);
 			cleaner = g_slist_delete_link (cleaner, l);

@@ -814,7 +814,6 @@ mate_panel_applet_finalize (GObject *object)
 static gboolean
 container_has_focusable_child (GtkContainer *container)
 {
-	GtkWidget *child;
 	GList *list;
 	GList *t;
 	gboolean retval = FALSE;
@@ -822,7 +821,7 @@ container_has_focusable_child (GtkContainer *container)
 	list = gtk_container_get_children (container);
 
 	for (t = list; t; t = t->next) {
-		child = GTK_WIDGET (t->data);
+		GtkWidget *child = GTK_WIDGET (t->data);
 		if (gtk_widget_get_can_focus (child)) {
 			retval = TRUE;
 			break;
@@ -1084,19 +1083,16 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 			    GtkAllocation *allocation)
 {
 	GtkAllocation  child_allocation;
-	GtkBin        *bin;
-	GtkWidget     *child;
-	int            border_width;
 	MatePanelApplet   *applet;
 
 	if (!mate_panel_applet_can_focus (widget)) {
 		GTK_WIDGET_CLASS (mate_panel_applet_parent_class)->size_allocate (widget, allocation);
 	} else {
 
-		border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+		int border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
 		gtk_widget_set_allocation (widget, allocation);
-		bin = GTK_BIN (widget);
+		GtkBin *bin = GTK_BIN (widget);
 
 		child_allocation.x = 0;
 		child_allocation.y = 0;
@@ -1111,7 +1107,7 @@ mate_panel_applet_size_allocate (GtkWidget     *widget,
 						child_allocation.width,
 						child_allocation.height);
 
-		child = gtk_bin_get_child (bin);
+		GtkWidget *child = gtk_bin_get_child (bin);
 		if (child)
 			gtk_widget_size_allocate (child, &child_allocation);
 	}
@@ -1515,8 +1511,7 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 				    GdkRGBA* color,
 				    cairo_pattern_t *pattern)
 {
-	GtkStyleContext* context;
-	GdkWindow* window;
+	GdkWindow *window;
 
 	if (applet->priv->out_of_process)
 		window = gtk_widget_get_window (GTK_WIDGET (applet->priv->plug));
@@ -1553,7 +1548,9 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 	}
 
 	if (applet->priv->out_of_process){
-		context = gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+		GtkStyleContext *context =
+			gtk_widget_get_style_context (GTK_WIDGET(applet->priv->plug));
+
 		if (applet->priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
 			applet->priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN){
 			gtk_style_context_add_class(context,"horizontal");
@@ -2085,16 +2082,15 @@ button_press_event_new (MatePanelApplet *applet,
 
 static void
 method_call_cb (GDBusConnection       *connection,
-		const gchar           *sender,
-		const gchar           *object_path,
-		const gchar           *interface_name,
-		const gchar           *method_name,
-		GVariant              *parameters,
-		GDBusMethodInvocation *invocation,
-		gpointer               user_data)
+                const gchar           *sender,
+                const gchar           *object_path,
+                const gchar           *interface_name,
+                const gchar           *method_name,
+                GVariant              *parameters,
+                GDBusMethodInvocation *invocation,
+                gpointer               user_data)
 {
 	MatePanelApplet *applet = MATE_PANEL_APPLET (user_data);
-	GdkEvent *event;
 
 	if (g_strcmp0 (method_name, "PopupMenu") == 0) {
 		guint button;
@@ -2102,7 +2098,7 @@ method_call_cb (GDBusConnection       *connection,
 
 		g_variant_get (parameters, "(uu)", &button, &time);
 
-		event = button_press_event_new (applet, button, time);
+		GdkEvent *event = button_press_event_new (applet, button, time);
 		mate_panel_applet_menu_popup (applet, event);
 		gdk_event_free (event);
 

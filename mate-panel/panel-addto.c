@@ -449,7 +449,6 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 			 GtkListStore *model,
 			 PanelAddtoItemInfo *applet)
 {
-	char *text;
 	GtkTreeIter iter;
 
 	if (applet == NULL) {
@@ -464,8 +463,8 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 	} else {
 		gtk_list_store_append (model, &iter);
 
-		text = panel_addto_make_text (applet->name,
-					      applet->description);
+		char *text = panel_addto_make_text (applet->name,
+		                                    applet->description);
 
 		gtk_list_store_set (model, &iter,
 				    COLUMN_ICON_NAME, applet->icon,
@@ -673,20 +672,18 @@ panel_addto_make_application_list (GSList             **parent_list,
 
 static void
 panel_addto_populate_application_model (GtkTreeStore *store,
-					GtkTreeIter  *parent,
-					GSList       *app_list)
+                                        GtkTreeIter  *parent,
+                                        GSList       *app_list)
 {
-	PanelAddtoAppList *data;
-	GtkTreeIter        iter;
-	char              *text;
-	GSList            *app;
+	GtkTreeIter  iter;
+	GSList      *app;
 
 	for (app = app_list; app != NULL; app = app->next) {
-		data = app->data;
-		gtk_tree_store_append (store, &iter, parent);
+		PanelAddtoAppList *data = app->data;
 
-		text = panel_addto_make_text (data->item_info.name,
-					      data->item_info.description);
+		gtk_tree_store_append (store, &iter, parent);
+		char *text = panel_addto_make_text (data->item_info.name,
+		                                    data->item_info.description);
 		gtk_tree_store_set (store, &iter,
 				    COLUMN_ICON_NAME, data->item_info.icon,
 				    COLUMN_TEXT, text,
@@ -831,7 +828,6 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 {
 	GtkTreeSelection *selection;
 	GtkTreeModel     *filter_model;
-	GtkTreeModel     *child_model;
 	GtkTreeIter       iter;
 	GtkTreeIter       filter_iter;
 
@@ -850,7 +846,7 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 			gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (filter_model),
 									  &iter,
 									  &filter_iter);
-			child_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filter_model));
+			GtkTreeModel *child_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filter_model));
 			gtk_tree_model_get (child_model, &iter,
 					    COLUMN_DATA, &data, -1);
 
@@ -1185,7 +1181,6 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 	GtkTreeIter         iter;
 	GtkTreeIter         filter_iter;
 	PanelAddtoItemInfo *data;
-	char               *iid;
 
 	if (!gtk_tree_selection_get_selected (selection,
 					      &filter_model,
@@ -1230,7 +1225,9 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 		case PANEL_ADDTO_LAUNCHER_MENU:
 			gtk_tree_view_unset_rows_drag_source (GTK_TREE_VIEW (dialog->tree_view));
 			break;
-		case PANEL_ADDTO_MENU:
+		case PANEL_ADDTO_MENU: {
+			char *iid;
+
 			/* build the iid for menus other than the main menu */
 			if (data->iid == NULL) {
 				iid = g_strdup_printf ("MENU:%s/%s",
@@ -1243,6 +1240,7 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 							        iid);
 			g_free (iid);
 			break;
+		}
 		default:
 			panel_addto_setup_internal_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
 							        data->iid);

@@ -1019,10 +1019,9 @@ panel_widget_switch_move (PanelWidget *panel,
 				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
 	} else {
-		AppletData *nad;
 
 		if (list->next) {
-			nad = list->next->data;
+			AppletData *nad = list->next->data;
 			if (nad->expand_major)
 				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
@@ -1122,7 +1121,6 @@ panel_widget_push_move (PanelWidget *panel,
 			AppletData  *ad,
 			int          moveby)
 {
-	AppletData *pad;
 	int finalpos;
 	GList *list;
 
@@ -1143,7 +1141,7 @@ panel_widget_push_move (PanelWidget *panel,
 				break;
 
                 if (list->prev) {
-			pad = list->prev->data;
+			AppletData *pad = list->prev->data;
 			if (pad->expand_major)
 				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
@@ -1485,13 +1483,12 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		    list!=NULL;
 		    list = g_list_previous(list)) {
 			AppletData *ad = list->data;
-			int cells;
 
 			if (ad->constrained + ad->min_cells > i)
 				ad->constrained = MAX (i - ad->min_cells, 0);
 
 			if (ad->expand_major) {
-				cells = (i - ad->constrained) - 1;
+				int cells = (i - ad->constrained) - 1;
 
 				if (ad->size_hints)
 					cells = get_size_from_hints (ad, cells);
@@ -2125,8 +2122,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 static int
 move_timeout_handler(gpointer data)
 {
-	PanelWidget   *panel = data;
-	GdkDevice      *device;
+	PanelWidget *panel = data;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(data),FALSE);
 
@@ -2139,14 +2135,12 @@ move_timeout_handler(gpointer data)
 	been_moved = FALSE;
 
 	if(panel->currently_dragged_applet && repeat_if_outside) {
-		GtkWidget     *widget;
 		GtkAllocation  allocation;
 		int            x,y;
 		int            w,h;
+		GtkWidget     *widget = panel->currently_dragged_applet->applet;
+		GdkDevice     *device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 
-		widget = panel->currently_dragged_applet->applet;
-
-		device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget)));
 		gdk_window_get_device_position (gtk_widget_get_window (widget), device, &x, &y, NULL);
 
 		gtk_widget_get_allocation (widget, &allocation);

@@ -34,12 +34,10 @@ static void
 panel_modules_ensure_extension_points_registered (void)
 {
 	static gboolean registered_extensions = FALSE;
-	GIOExtensionPoint *ep;
 
 	if (!registered_extensions) {
 		registered_extensions = TRUE;
-
-		ep = g_io_extension_point_register (MATE_PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME);
+		GIOExtensionPoint *ep = g_io_extension_point_register (MATE_PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME);
 		g_io_extension_point_set_required_type (ep, PANEL_TYPE_APPLETS_MANAGER);
 	}
  }
@@ -48,11 +46,11 @@ void
 panel_modules_ensure_loaded (void)
 {
 	static gboolean loaded_dirs = FALSE;
-	const char *module_path;
 
 	panel_modules_ensure_extension_points_registered ();
 
 	if (!loaded_dirs) {
+		const char *module_path;
 		GList *modules;
 		loaded_dirs = TRUE;
 
