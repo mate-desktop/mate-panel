@@ -665,7 +665,6 @@ panel_launcher_find_writable_uri (const char *launcher_location,
 {
 	char *path;
 	char *uri;
-	char *filename;
 
 	if (!launcher_location)
 		return panel_make_unique_desktop_uri (NULL, source);
@@ -677,8 +676,9 @@ panel_launcher_find_writable_uri (const char *launcher_location,
 		return uri;
 	}
 
-	filename = panel_launcher_get_filename (launcher_location);
+	char *filename = panel_launcher_get_filename (launcher_location);
 	if (filename != NULL) {
+		g_free (filename);
 		/* we have a file in the user directory. We either have a path
 		 * or an URI */
 		if (g_path_is_absolute (launcher_location))
@@ -687,8 +687,6 @@ panel_launcher_find_writable_uri (const char *launcher_location,
 		else
 			return g_strdup (launcher_location);
 	}
-
-	g_free (filename);
 
 	return panel_make_unique_desktop_uri (NULL, source);
 }
