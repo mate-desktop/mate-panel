@@ -1236,6 +1236,11 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 	g_settings_set_int (settings, PANEL_OBJECT_POSITION_KEY, position);
 	g_settings_set_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, right_stick);
 
+	/* Force writing the settings in order to reserve the object ID *now*,
+	 * so that a later call to panel_profile_find_new_id() won't find the same
+	 * one. */
+	g_settings_sync ();
+
 	g_free (settings_path);
 	g_object_unref (settings);
 
