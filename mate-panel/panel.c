@@ -604,10 +604,12 @@ drop_urilist (PanelWidget *panel,
 	      char        *urilist)
 {
 	char     **uris;
+	guint      n_uris;
 	gboolean   success;
 	int        i;
 
 	uris = g_uri_list_extract_uris (urilist);
+	n_uris = g_strv_length (uris);
 
 	success = TRUE;
 	for (i = 0; uris[i]; i++) {
@@ -657,8 +659,8 @@ drop_urilist (PanelWidget *panel,
 			can_exec = g_file_info_get_attribute_boolean (info,
 								      G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE);
 
-			if (mime &&
-			    g_str_has_prefix (mime, "image")) {
+			if (n_uris == 1 &&
+			    mime && g_str_has_prefix (mime, "image")) {
 				if (!set_background_image_from_uri (panel->toplevel, uri))
 					success = FALSE;
 			} else if (mime &&
