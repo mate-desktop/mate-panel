@@ -909,6 +909,7 @@ launcher_load_from_gsettings (PanelWidget *panel_widget,
 	if (!launcher_location) {
 		g_printerr (_("Key %s is not set, cannot load launcher\n"),
 			    PANEL_OBJECT_LAUNCHER_LOCATION_KEY);
+		g_object_unref (settings);
 		return;
 	}
 
@@ -1044,6 +1045,7 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 		g_error_free (error);
 	}
 
+	g_free (location);
 	g_key_file_free (key_file);
 }
 
@@ -1106,11 +1108,10 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 			    int            position,
 			    const char    *location)
 {
-	char       *new_location;
-	GFile      *source;
-	GFile      *dest;
-	gboolean    copied;
-	const char *filename;
+	char     *new_location;
+	GFile    *source;
+	GFile    *dest;
+	gboolean  copied;
 
 	new_location = panel_make_unique_desktop_uri (NULL, location);
 
@@ -1120,16 +1121,19 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 	copied = g_file_copy (source, dest, G_FILE_COPY_OVERWRITE,
 			      NULL, NULL, NULL, NULL);
 
-	if (!copied) {
-		g_free (new_location);
-		return FALSE;
+	if (copied) {
+		gchar *filename;
+
+		filename = panel_launcher_get_filename (new_location);
+		panel_launcher_create (toplevel, position, filename);
+		g_free (filename);
 	}
 
-	filename = panel_launcher_get_filename (new_location);
-	panel_launcher_create (toplevel, position, filename);
+	g_object_unref (source);
+	g_object_unref (dest);
 	g_free (new_location);
 
-	return TRUE;
+	return copied;
 }
 
 Launcher *
