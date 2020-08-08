@@ -164,7 +164,6 @@ static GdkPixbuf *preview_window_thumbnail (WnckWindow *wnck_window, TasklistDat
 	GdkWindow *window;
 	GdkPixbuf *screenshot;
 	GdkPixbuf *thumbnail;
-	guchar *pixels;
 	double ratio;
 	int width, height;
 	int scale;
@@ -186,8 +185,7 @@ static GdkPixbuf *preview_window_thumbnail (WnckWindow *wnck_window, TasklistDat
 		return NULL;
 
 	/* Determine whether the contents of the screenshot are empty */
-	pixels = gdk_pixbuf_get_pixels (screenshot);
-	if (!g_strcmp0 ((const char *)pixels, ""))
+	if (gdk_pixbuf_get_byte_length (screenshot) == 0)
 	{
 		g_object_unref (screenshot);
 		return NULL;
