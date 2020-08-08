@@ -1,3 +1,51 @@
+### mate-panel 1.25.1
+
+  * sync with transifex
+  * Handle locked down settings better when dropping an image URI
+  * panel-toplevel: Fix -Wenum-conversion warning
+  * wncklet: Hide window preview on non-visible windows
+  * launcher: Fix memory leaks
+  * panel-action-button: using enum for accessing an array indexed
+  * clock-face: Use gdk_pixbuf_new_from_resource_at_scale
+  * launcher: Fix memory leak
+  * Ask the user what to do when receiving an image drop
+  * Create launchers when dropping multiple image URIs
+  * panel-util: Fix memory leak
+  * Fix creating several launchers at once
+  * clock: assignment to 'GSList *' from incompatible pointer type 'GList *'
+  * clock: Use single-linked lists for locations
+  * clock: sort locations by time reverse and name
+  * clock: merge sorting and reversing node list of selected locations
+  * clock: Fix GError double free
+  * clock: Properly free rsvg handles
+  * wncklet: Fix leaking cairo_t
+  * panel-run-dialog: Fix leaking tree model strings
+  * workspace-switcher: Fix leaking color string
+  * panel-properties-dialog: Fix leaking string
+  * clock: Fix leaking GtkListStore
+  * panel-profile: Fix leaking list elements
+  * clock: Fix list iteration
+  * panel-lockdown: Fix leaking string array
+  * panel-menu-items: Fix leaking string
+  * mate-panel-applet: Fix leaking GVariantBuilder
+  * launcher: Fix leaking strings
+  * clock: Fix leaking cairo surface
+  * Clarify meaning of panel reset option
+  * panel-toplevel: Refactor panel_toplevel_update_hide_buttons_size()
+  * panel-util: Fix leaking root GFile
+  * panel-profile: Fix leaking list elements
+  * panel-frame: Fix leaking background-color
+  * panel-applet-frame: Fix leaking bg_pattern
+  * panel-multimonitor: Do not require limits.h macros
+  * clock: Simplify notebook scroll-event callback
+  * Using #include with system libraries
+  * build: Add built sources to CLEANFILES target
+  * Avoid using single-line cpp comments
+  * build: Add glib-2.0 module in PKG_CHECK_MODULES(LIBEGG)
+  * Use '#include <config.h>' instead of '#include "config.h"'
+  * panel-util: switch to generic header for --disable-x11
+  * add git.mk to generate .gitignore
+
 ### mate-panel 1.25.0
 
   * sync with transifex
