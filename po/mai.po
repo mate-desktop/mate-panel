@@ -8,9 +8,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.23.2\n"
+"Project-Id-Version: mate-panel 1.25.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2020-01-12 18:05+0100\n"
+"POT-Creation-Date: 2020-06-20 16:17+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
 "Language-Team: Maithili (https://www.transifex.com/mate/teams/13566/mai/)\n"
@@ -163,12 +163,12 @@ msgstr "वरीयतासभ (_P)"
 #: applets/clock/clock.c:1891 applets/clock/clock.ui:293
 #: applets/fish/fish.c:1697 applets/fish/fish.ui:46
 #: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:241
-#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:35
+#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:32
 #: applets/wncklet/window-menu.c:98 applets/wncklet/workspace-switcher.c:397
 #: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:562
-#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1308
+#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1310
 #: mate-panel/panel-context-menu.c:318 mate-panel/panel-ditem-editor.c:648
-#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:700
+#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:704
 #: mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
@@ -230,7 +230,7 @@ msgstr ""
 
 #: applets/clock/clock.c:3397 applets/fish/fish.c:567
 #: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:508
-#: applets/wncklet/window-list.c:831 applets/wncklet/window-menu.c:88
+#: applets/wncklet/window-list.c:796 applets/wncklet/window-menu.c:88
 #: applets/wncklet/workspace-switcher.c:644
 #: mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
@@ -270,8 +270,8 @@ msgstr ""
 
 #: applets/clock/clock.ui:324 applets/fish/fish.c:853 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:51 applets/wncklet/workspace-switcher.ui:62
-#: mate-panel/panel-addto.c:1319 mate-panel/panel-ditem-editor.c:660
+#: applets/wncklet/window-list.ui:48 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1321 mate-panel/panel-ditem-editor.c:660
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
 #: mate-panel/panel-test-applets.ui:52
@@ -319,7 +319,7 @@ msgstr ""
 msgid "General"
 msgstr "सामान्य"
 
-#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1315
+#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1317
 msgid "_Add"
 msgstr "जोड़ू (_A)"
 
@@ -610,12 +610,6 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-clock"
-msgstr ""
-
 #: applets/fish/fish.c:266
 #, c-format
 msgid ""
@@ -862,12 +856,6 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-fish"
-msgstr ""
-
 #: applets/notification_area/main.c:276
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
@@ -924,12 +912,6 @@ msgstr ""
 
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:11
 msgid "Area where notification icons appear"
-msgstr ""
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-notification-area"
 msgstr ""
 
 #: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:10
@@ -1033,12 +1015,6 @@ msgstr "विंडो चयनक"
 msgid "Switch between open windows using a menu"
 msgstr ""
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-window-menu"
-msgstr ""
-
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
 #: applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
@@ -1048,25 +1024,13 @@ msgstr "कार्यस्थान स्विचर"
 msgid "Switch between workspaces"
 msgstr ""
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:26
-msgid "mate-panel-workspace-switcher"
-msgstr ""
-
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:786
 msgid "Window List"
 msgstr "विंडो सूची"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:37
 msgid "Switch between open windows using buttons"
-msgstr ""
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:39
-msgid "mate-panel-window-list"
 msgstr ""
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:49
@@ -1075,12 +1039,6 @@ msgstr ""
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:50
 msgid "Hide application windows and show the desktop"
-msgstr ""
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:52
-msgid "user-desktop"
 msgstr ""
 
 #: applets/wncklet/showdesktop.c:184
@@ -1112,7 +1070,7 @@ msgstr ""
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ई बटन सबहि विंडोज़केँ नुकाबै आओर डेस्कटाप देखाबै देत अछि"
 
-#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:825
+#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:790
 #: applets/wncklet/workspace-switcher.c:638
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1132,11 +1090,11 @@ msgstr ""
 msgid "_System Monitor"
 msgstr ""
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:787
 msgid "About Window List"
 msgstr ""
 
-#: applets/wncklet/window-list.c:824
+#: applets/wncklet/window-list.c:789
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1148,67 +1106,63 @@ msgstr ""
 msgid "Window List Preferences"
 msgstr "विंडो सूची वरीयतासभ "
 
-#: applets/wncklet/window-list.ui:92
+#: applets/wncklet/window-list.ui:89
 msgid "Window List Content"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:118
+#: applets/wncklet/window-list.ui:115
 msgid "Sh_ow windows from current workspace"
 msgstr "वर्तमान कार्यस्थानमे सँ विंडोज़ देखाबू ( _o) "
 
-#: applets/wncklet/window-list.ui:133
+#: applets/wncklet/window-list.ui:130
 msgid "Show windows from a_ll workspaces"
 msgstr "सबहि कार्यस्थानमे सँ विंडोज़ देखाबू ( _l) "
 
-#: applets/wncklet/window-list.ui:173
+#: applets/wncklet/window-list.ui:170
 msgid "Window Thumbnails"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:199
+#: applets/wncklet/window-list.ui:196
 msgid "Show _thumbnails on hover"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:214
-msgid "_Hide thumbnails on hover"
-msgstr ""
-
-#: applets/wncklet/window-list.ui:252
+#: applets/wncklet/window-list.ui:233
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 
-#: applets/wncklet/window-list.ui:253
+#: applets/wncklet/window-list.ui:234
 msgid "Thumbnail width:"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:267
+#: applets/wncklet/window-list.ui:248
 msgid "px"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:305
+#: applets/wncklet/window-list.ui:286
 msgid "Window Grouping"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:331
+#: applets/wncklet/window-list.ui:312
 msgid "_Never group windows"
 msgstr "विंडोज़केँ समूहबद्ध कहियो नहि करू ( _N) "
 
-#: applets/wncklet/window-list.ui:346
+#: applets/wncklet/window-list.ui:327
 msgid "Group windows when _space is limited"
 msgstr "जखन जगह कम हुए तँ विंडोज़ समूहबद्ध करू ( _s) "
 
-#: applets/wncklet/window-list.ui:362
+#: applets/wncklet/window-list.ui:343
 msgid "_Always group windows"
 msgstr "विंडोज़केँ हरदम समूहबद्ध करू ( _A) "
 
-#: applets/wncklet/window-list.ui:402
+#: applets/wncklet/window-list.ui:383
 msgid "Restoring Minimized Windows"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:428
+#: applets/wncklet/window-list.ui:409
 msgid "Restore to current _workspace"
 msgstr "वर्तमान कार्यस्थानकेँ पुनर्स्थापित करू ( _w) "
 
-#: applets/wncklet/window-list.ui:443
+#: applets/wncklet/window-list.ui:424
 msgid "Restore to na_tive workspace"
 msgstr "मूल कार्यस्थानकेँ पुनर्स्थापित करू ( _t) "
 
@@ -2097,62 +2051,62 @@ msgid ""
 "vertically."
 msgstr "जँ सत्य अछि पृष्ठभूमि बिंब घुमाओल जएताह जखन फ़लक क' दिशा ठाड़मे हाएत."
 
-#: mate-panel/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr ""
 
-#: mate-panel/libegg/eggdesktopfile.c:191
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr ""
 
-#: mate-panel/libegg/eggdesktopfile.c:963
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
 #, c-format
 msgid "Starting %s"
 msgstr "%s शुरू भ' रहल अछि"
 
-#: mate-panel/libegg/eggdesktopfile.c:1105
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
 msgid "Application does not accept documents on command line"
 msgstr ""
 
-#: mate-panel/libegg/eggdesktopfile.c:1173
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr ""
 
-#: mate-panel/libegg/eggdesktopfile.c:1390
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 
-#: mate-panel/libegg/eggdesktopfile.c:1411
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
 msgid "Not a launchable item"
 msgstr "चलाबैबला मद नहि अछि "
 
-#: mate-panel/libegg/eggsmclient.c:222
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
 msgid "Disable connection to session manager"
 msgstr "सत्र प्रबंधकसँ संपर्क रद करू"
 
-#: mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "Specify file containing saved configuration"
 msgstr ""
 
-#: mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "FILE"
 msgstr "फाइल"
 
-#: mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "Specify session management ID"
 msgstr "सत्र प्रबंधन आईडी निर्दिष्ट करू"
 
-#: mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/libegg/eggsmclient.c:249
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
 msgid "Session management options:"
 msgstr ""
 
-#: mate-panel/libegg/eggsmclient.c:250
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Show session management options"
 msgstr "सत्र प्रबंधन विकल्प देखाबू"
 
@@ -2255,12 +2209,6 @@ msgstr "पटल"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr ""
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: mate-panel/mate-panel.desktop.in:7
-msgid "mate-panel"
 msgstr ""
 
 #: mate-panel/launcher.c:120
@@ -2458,28 +2406,28 @@ msgstr ""
 msgid "Not compatible with Wayland"
 msgstr ""
 
-#: mate-panel/panel-addto.c:1053
+#: mate-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "एकटा मद \"%s\"मे जोड़बाक लेल चुनू (_i):"
 
-#: mate-panel/panel-addto.c:1057
+#: mate-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "दराजमे जोड़ू"
 
-#: mate-panel/panel-addto.c:1059
+#: mate-panel/panel-addto.c:1061
 msgid "Find an _item to add to the drawer:"
 msgstr "दराजमे जोड़बाक लेल एकटा मद चुनू (_i):"
 
-#: mate-panel/panel-addto.c:1061
+#: mate-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "पटलमे जोड़ू"
 
-#: mate-panel/panel-addto.c:1063
+#: mate-panel/panel-addto.c:1065
 msgid "Find an _item to add to the panel:"
 msgstr "पैनलसँ जोड़बाक लेल एकटा मद चुनू (_i):"
 
-#: mate-panel/panel-addto.c:1311
+#: mate-panel/panel-addto.c:1313
 msgid "_Back"
 msgstr "पाछाँ (_B)"
 
@@ -2691,111 +2639,111 @@ msgstr "डेस्कटॉप प्रकटन आओर व्यवहा
 msgid "Applications"
 msgstr "अनुप्रयोग"
 
-#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:706
+#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:710
 msgid "_Edit Menus"
 msgstr "मेनू संपादित करू (_E)"
 
-#: mate-panel/panel-menu-button.c:1129
+#: mate-panel/panel-menu-button.c:1133
 msgid "Main Menu"
 msgstr "मुख्य मेनू"
 
-#: mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-items.c:466
 msgid "Bookmarks"
 msgstr "पुस्तकचिह्न"
 
 #. Translators: %s is a URI
-#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:553
+#: mate-panel/panel-menu-items.c:489 mate-panel/panel.c:553
 #, c-format
 msgid "Open '%s'"
 msgstr "खोलू '%s'"
 
-#: mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:560
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr ""
 
-#: mate-panel/panel-menu-items.c:604
+#: mate-panel/panel-menu-items.c:603
 #, c-format
 msgid "Rescan %s"
 msgstr ""
 
-#: mate-panel/panel-menu-items.c:641
+#: mate-panel/panel-menu-items.c:640
 #, c-format
 msgid "Unable to mount %s"
 msgstr ""
 
-#: mate-panel/panel-menu-items.c:704
+#: mate-panel/panel-menu-items.c:703
 #, c-format
 msgid "Mount %s"
 msgstr ""
 
-#: mate-panel/panel-menu-items.c:912
+#: mate-panel/panel-menu-items.c:911
 msgid "Removable Media"
 msgstr "हटाबै योग्य मीडिया"
 
-#: mate-panel/panel-menu-items.c:999
+#: mate-panel/panel-menu-items.c:998
 msgid "Network Places"
 msgstr "सँजाल स्थान"
 
-#: mate-panel/panel-menu-items.c:1038
+#: mate-panel/panel-menu-items.c:1037
 msgid "Open your personal folder"
 msgstr "अपन निजी फ़ोल्डर खोलू"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: mate-panel/panel-menu-items.c:1057
+#: mate-panel/panel-menu-items.c:1056
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "डेस्कटाप"
 
-#: mate-panel/panel-menu-items.c:1058
+#: mate-panel/panel-menu-items.c:1057
 msgid "Open the contents of your desktop in a folder"
 msgstr ""
 
-#: mate-panel/panel-menu-items.c:1074
+#: mate-panel/panel-menu-items.c:1073
 msgid "Computer"
 msgstr "कम्प्यूटर"
 
-#: mate-panel/panel-menu-items.c:1079
+#: mate-panel/panel-menu-items.c:1078
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "एहि कंप्यूटर सँ पहुँच योग्य सबहि स्थानीय डिस्क आ फोल्डर ब्रॉउज करू"
 
-#: mate-panel/panel-menu-items.c:1092
+#: mate-panel/panel-menu-items.c:1091
 msgid "Network"
 msgstr "नेटवर्क"
 
-#: mate-panel/panel-menu-items.c:1093
+#: mate-panel/panel-menu-items.c:1092
 msgid "Browse bookmarked and local network locations"
 msgstr "पुस्तकचिह्न आ स्थानीय सँजाल अवस्थिति ब्रॉउज करू "
 
-#: mate-panel/panel-menu-items.c:1487
+#: mate-panel/panel-menu-items.c:1486
 msgid "Places"
 msgstr "स्थान"
 
-#: mate-panel/panel-menu-items.c:1515
+#: mate-panel/panel-menu-items.c:1514
 msgid "System"
 msgstr "सिस्टम"
 
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: mate-panel/panel-menu-items.c:1600
+#: mate-panel/panel-menu-items.c:1599
 msgctxt "panel:showusername"
 msgid "1"
 msgstr ""
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1611
 #, c-format
 msgid "Log Out %s..."
 msgstr "लॉग आउट %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1616
+#: mate-panel/panel-menu-items.c:1615
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "आन प्रयोक्ता क' रूपमे लॉगइन करब लेल एहि %s सत्र सँ लॉग आउट करू"
@@ -3229,10 +3177,4 @@ msgstr ""
 
 #: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:10
 msgid "A simple applet for testing the MATE panel"
-msgstr ""
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:12
-msgid "mate-gegl"
 msgstr ""

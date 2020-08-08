@@ -13,9 +13,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.23.2\n"
+"Project-Id-Version: mate-panel 1.25.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2020-01-12 18:05+0100\n"
+"POT-Creation-Date: 2020-06-20 16:17+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: 박정규(Jung-Kyu Park) <bagjunggyu@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/mate/teams/13566/ko/)\n"
@@ -168,12 +168,12 @@ msgstr "기본 설정(_P)"
 #: applets/clock/clock.c:1891 applets/clock/clock.ui:293
 #: applets/fish/fish.c:1697 applets/fish/fish.ui:46
 #: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:241
-#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:35
+#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:32
 #: applets/wncklet/window-menu.c:98 applets/wncklet/workspace-switcher.c:397
 #: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:562
-#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1308
+#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1310
 #: mate-panel/panel-context-menu.c:318 mate-panel/panel-ditem-editor.c:648
-#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:700
+#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:704
 #: mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
@@ -235,7 +235,7 @@ msgstr ""
 
 #: applets/clock/clock.c:3397 applets/fish/fish.c:567
 #: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:508
-#: applets/wncklet/window-list.c:831 applets/wncklet/window-menu.c:88
+#: applets/wncklet/window-list.c:796 applets/wncklet/window-menu.c:88
 #: applets/wncklet/workspace-switcher.c:644
 #: mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
@@ -281,8 +281,8 @@ msgstr "시간 설정(_S)"
 
 #: applets/clock/clock.ui:324 applets/fish/fish.c:853 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:51 applets/wncklet/workspace-switcher.ui:62
-#: mate-panel/panel-addto.c:1319 mate-panel/panel-ditem-editor.c:660
+#: applets/wncklet/window-list.ui:48 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1321 mate-panel/panel-ditem-editor.c:660
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
 #: mate-panel/panel-test-applets.ui:52
@@ -330,7 +330,7 @@ msgstr "온도 표시(_T)"
 msgid "General"
 msgstr "일반"
 
-#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1315
+#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1317
 msgid "_Add"
 msgstr "추가(_A)"
 
@@ -619,12 +619,6 @@ msgstr "시계 애플릿용 팩토리"
 msgid "Get the current time and date"
 msgstr "현재 날짜와 시간을 가져옵니다"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-clock"
-msgstr ""
-
 #: applets/fish/fish.c:266
 #, c-format
 msgid ""
@@ -864,12 +858,6 @@ msgstr "멍청한 물고기가 왔어요!"
 msgid "Display a swimming fish or another animated creature"
 msgstr "헤엄치는 물고기를 보여주거나 다른 애니메이션 개체를 표시합니다"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-fish"
-msgstr ""
-
 #: applets/notification_area/main.c:276
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
@@ -927,12 +915,6 @@ msgstr "알림 영역 팩토리"
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:11
 msgid "Area where notification icons appear"
 msgstr "알림 아이콘을 나타낼 영역입니다"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-notification-area"
-msgstr ""
 
 #: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:10
 msgid "Show windows from all workspaces"
@@ -1032,12 +1014,6 @@ msgstr "창 선택"
 msgid "Switch between open windows using a menu"
 msgstr "메뉴를 사용하여 열어놓은 창을 전환합니다"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-window-menu"
-msgstr ""
-
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
 #: applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
@@ -1047,26 +1023,14 @@ msgstr "작업 공간 바꾸기 프로그램"
 msgid "Switch between workspaces"
 msgstr "작업 공간 사이를 전환합니다"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:26
-msgid "mate-panel-workspace-switcher"
-msgstr ""
-
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:786
 msgid "Window List"
 msgstr "창 목록"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:37
 msgid "Switch between open windows using buttons"
 msgstr "단추를 사용하여 열어놓은 창 사이를 전환합니다"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:39
-msgid "mate-panel-window-list"
-msgstr ""
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:49
 msgid "Show Desktop"
@@ -1075,12 +1039,6 @@ msgstr "데스크톱 보이기"
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:50
 msgid "Hide application windows and show the desktop"
 msgstr "프로그램 창을 숨기고 데스크톱을 보여줍니다"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:52
-msgid "user-desktop"
-msgstr ""
 
 #: applets/wncklet/showdesktop.c:184
 #, c-format
@@ -1111,7 +1069,7 @@ msgstr "바탕화면 보기 버튼 소개"
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "이 단추를 누르면 모든 창을 숨기고 바탕 화면을 표시합니다."
 
-#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:825
+#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:790
 #: applets/wncklet/workspace-switcher.c:638
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1129,11 +1087,11 @@ msgstr "창 관리자가 바탕 화면 보여주기 단추를 지원하지 않�
 msgid "_System Monitor"
 msgstr "시스템 감시(_S)"
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:787
 msgid "About Window List"
 msgstr "창 목록 소개"
 
-#: applets/wncklet/window-list.c:824
+#: applets/wncklet/window-list.c:789
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1143,67 +1101,63 @@ msgstr "창 목록은 모든 창의 목록을 단추 모음으로 표시합니�
 msgid "Window List Preferences"
 msgstr "창 목록 기본 설정"
 
-#: applets/wncklet/window-list.ui:92
+#: applets/wncklet/window-list.ui:89
 msgid "Window List Content"
 msgstr "창 목록 내용"
 
-#: applets/wncklet/window-list.ui:118
+#: applets/wncklet/window-list.ui:115
 msgid "Sh_ow windows from current workspace"
 msgstr "현재 작업 공간의 창 표시(_O)"
 
-#: applets/wncklet/window-list.ui:133
+#: applets/wncklet/window-list.ui:130
 msgid "Show windows from a_ll workspaces"
 msgstr "모든 작업 공간의 창 표시(_L)"
 
-#: applets/wncklet/window-list.ui:173
+#: applets/wncklet/window-list.ui:170
 msgid "Window Thumbnails"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:199
+#: applets/wncklet/window-list.ui:196
 msgid "Show _thumbnails on hover"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:214
-msgid "_Hide thumbnails on hover"
-msgstr ""
-
-#: applets/wncklet/window-list.ui:252
+#: applets/wncklet/window-list.ui:233
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 
-#: applets/wncklet/window-list.ui:253
+#: applets/wncklet/window-list.ui:234
 msgid "Thumbnail width:"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:267
+#: applets/wncklet/window-list.ui:248
 msgid "px"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:305
+#: applets/wncklet/window-list.ui:286
 msgid "Window Grouping"
 msgstr "창 모으기"
 
-#: applets/wncklet/window-list.ui:331
+#: applets/wncklet/window-list.ui:312
 msgid "_Never group windows"
 msgstr "창을 모으지 않기(_N)"
 
-#: applets/wncklet/window-list.ui:346
+#: applets/wncklet/window-list.ui:327
 msgid "Group windows when _space is limited"
 msgstr "공간이 부족할 때 창 모으기(_S)"
 
-#: applets/wncklet/window-list.ui:362
+#: applets/wncklet/window-list.ui:343
 msgid "_Always group windows"
 msgstr "언제나 창을 모으기(_A)"
 
-#: applets/wncklet/window-list.ui:402
+#: applets/wncklet/window-list.ui:383
 msgid "Restoring Minimized Windows"
 msgstr "최소화된 창을 복구"
 
-#: applets/wncklet/window-list.ui:428
+#: applets/wncklet/window-list.ui:409
 msgid "Restore to current _workspace"
 msgstr "현재 작업 공간으로 복구(_W)"
 
-#: applets/wncklet/window-list.ui:443
+#: applets/wncklet/window-list.ui:424
 msgid "Restore to na_tive workspace"
 msgstr "본래 작업 공간으로 복구(_T)"
 
@@ -2051,62 +2005,62 @@ msgid ""
 "vertically."
 msgstr "참이면, 패널 방향이 세로로 바뀌었을 때 배경 그림도 회전합니다."
 
-#: mate-panel/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr "올바른 .desktop 파일이 아닙니다"
 
-#: mate-panel/libegg/eggdesktopfile.c:191
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "desktop 파일 버전을 ('%s') 인식할 수 없습니다"
 
-#: mate-panel/libegg/eggdesktopfile.c:963
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
 #, c-format
 msgid "Starting %s"
 msgstr "%s 시작"
 
-#: mate-panel/libegg/eggdesktopfile.c:1105
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
 msgid "Application does not accept documents on command line"
 msgstr "명령문에서 문서를 지정할 수 없는 프로그램입니다"
 
-#: mate-panel/libegg/eggdesktopfile.c:1173
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "알 수 없는 실행 옵션: %d"
 
-#: mate-panel/libegg/eggdesktopfile.c:1390
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "문서 URI는 'Type=Link' desktop 항목에 넘길 수 없습니다"
 
-#: mate-panel/libegg/eggdesktopfile.c:1411
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
 msgid "Not a launchable item"
 msgstr "실행할 수 있는 항목이 없습니다"
 
-#: mate-panel/libegg/eggsmclient.c:222
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
 msgid "Disable connection to session manager"
 msgstr "세션 관리자에 연결하지 않습니다"
 
-#: mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "Specify file containing saved configuration"
 msgstr "설정을 저장할 파일을 지정합니다"
 
-#: mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "FILE"
 msgstr "<파일>"
 
-#: mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "Specify session management ID"
 msgstr "세션 관리 ID를 지정합니다"
 
-#: mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/libegg/eggsmclient.c:249
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
 msgid "Session management options:"
 msgstr "세션 관리 옵션:"
 
-#: mate-panel/libegg/eggsmclient.c:250
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Show session management options"
 msgstr "세션 관리 옵션을 표시합니다"
 
@@ -2210,12 +2164,6 @@ msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
 msgstr "다른 프로그램을 실행합니다. 그리고 창 관리, 시각 표시 등 여러가지 유틸리티가 들어 있습니다."
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: mate-panel/mate-panel.desktop.in:7
-msgid "mate-panel"
-msgstr ""
 
 #: mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -2412,28 +2360,28 @@ msgstr ""
 msgid "Not compatible with Wayland"
 msgstr ""
 
-#: mate-panel/panel-addto.c:1053
+#: mate-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\"에 추가할 항목 찾기(_I):"
 
-#: mate-panel/panel-addto.c:1057
+#: mate-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "서랍에 추가"
 
-#: mate-panel/panel-addto.c:1059
+#: mate-panel/panel-addto.c:1061
 msgid "Find an _item to add to the drawer:"
 msgstr "서랍에 추가할 항목 찾기(_I):"
 
-#: mate-panel/panel-addto.c:1061
+#: mate-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "패널에 추가"
 
-#: mate-panel/panel-addto.c:1063
+#: mate-panel/panel-addto.c:1065
 msgid "Find an _item to add to the panel:"
 msgstr "패널에 추가할 항목 찾기(_I):"
 
-#: mate-panel/panel-addto.c:1311
+#: mate-panel/panel-addto.c:1313
 msgid "_Back"
 msgstr "뒤로(_B)"
 
@@ -2645,111 +2593,111 @@ msgstr "바탕 화면 모양과 동작을 바꾸거나, 도움말을 보거나 �
 msgid "Applications"
 msgstr "프로그램"
 
-#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:706
+#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:710
 msgid "_Edit Menus"
 msgstr "메뉴 편집(_E)"
 
-#: mate-panel/panel-menu-button.c:1129
+#: mate-panel/panel-menu-button.c:1133
 msgid "Main Menu"
 msgstr "주 메뉴"
 
-#: mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-items.c:466
 msgid "Bookmarks"
 msgstr "책갈피"
 
 #. Translators: %s is a URI
-#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:553
+#: mate-panel/panel-menu-items.c:489 mate-panel/panel.c:553
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s'을(를) 엽니다"
 
-#: mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:560
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s에서 미디어가 바뀌었는지 검사할 수 없습니다"
 
-#: mate-panel/panel-menu-items.c:604
+#: mate-panel/panel-menu-items.c:603
 #, c-format
 msgid "Rescan %s"
 msgstr "%s 다시 검사"
 
-#: mate-panel/panel-menu-items.c:641
+#: mate-panel/panel-menu-items.c:640
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s 장치를 마운트할 수 없습니다"
 
-#: mate-panel/panel-menu-items.c:704
+#: mate-panel/panel-menu-items.c:703
 #, c-format
 msgid "Mount %s"
 msgstr "%s 마운트"
 
-#: mate-panel/panel-menu-items.c:912
+#: mate-panel/panel-menu-items.c:911
 msgid "Removable Media"
 msgstr "이동식 미디어"
 
-#: mate-panel/panel-menu-items.c:999
+#: mate-panel/panel-menu-items.c:998
 msgid "Network Places"
 msgstr "네트워크 위치"
 
-#: mate-panel/panel-menu-items.c:1038
+#: mate-panel/panel-menu-items.c:1037
 msgid "Open your personal folder"
 msgstr "개인 폴더를 엽니다"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: mate-panel/panel-menu-items.c:1057
+#: mate-panel/panel-menu-items.c:1056
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "바탕화면"
 
-#: mate-panel/panel-menu-items.c:1058
+#: mate-panel/panel-menu-items.c:1057
 msgid "Open the contents of your desktop in a folder"
 msgstr "바탕 화면 폴더를 엽니다"
 
-#: mate-panel/panel-menu-items.c:1074
+#: mate-panel/panel-menu-items.c:1073
 msgid "Computer"
 msgstr "컴퓨터"
 
-#: mate-panel/panel-menu-items.c:1079
+#: mate-panel/panel-menu-items.c:1078
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "이 컴퓨터에서 접근할 수 있는 모든 로컬 및 원격 디스크와 폴더를 살펴봅니다"
 
-#: mate-panel/panel-menu-items.c:1092
+#: mate-panel/panel-menu-items.c:1091
 msgid "Network"
 msgstr "네트워크"
 
-#: mate-panel/panel-menu-items.c:1093
+#: mate-panel/panel-menu-items.c:1092
 msgid "Browse bookmarked and local network locations"
 msgstr "저장된 네트워크와 로컬 네트워크를 살펴봅니다"
 
-#: mate-panel/panel-menu-items.c:1487
+#: mate-panel/panel-menu-items.c:1486
 msgid "Places"
 msgstr "위치"
 
-#: mate-panel/panel-menu-items.c:1515
+#: mate-panel/panel-menu-items.c:1514
 msgid "System"
 msgstr "시스템"
 
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: mate-panel/panel-menu-items.c:1600
+#: mate-panel/panel-menu-items.c:1599
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1611
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s 로그아웃..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1616
+#: mate-panel/panel-menu-items.c:1615
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "다른 사용자로 로그인하려 %s의 세션을 로그아웃합니다"
@@ -3180,10 +3128,4 @@ msgstr ""
 
 #: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:10
 msgid "A simple applet for testing the MATE panel"
-msgstr ""
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:12
-msgid "mate-gegl"
 msgstr ""

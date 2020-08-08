@@ -11,7 +11,7 @@
 # Martin Wimpress <code@flexion.org>, 2018
 # Mingye Wang <arthur200126@gmail.com>, 2018
 # Dianjin Wang <1132321739qq@gmail.com>, 2018
-# shuyu liu <liushuyu011@gmail.com>, 2018
+# liushuyu011 <liushuyu011@gmail.com>, 2018
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
 # biqiu-ssw <shenshuaiwen@gmail.com>, 2018
 # Mingcong Bai <jeffbai@aosc.xyz>, 2019
@@ -20,9 +20,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.23.2\n"
+"Project-Id-Version: mate-panel 1.25.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2020-01-12 18:05+0100\n"
+"POT-Creation-Date: 2020-06-20 16:17+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/mate/teams/13566/zh_CN/)\n"
@@ -175,12 +175,12 @@ msgstr "属性(_P)"
 #: applets/clock/clock.c:1891 applets/clock/clock.ui:293
 #: applets/fish/fish.c:1697 applets/fish/fish.ui:46
 #: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:241
-#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:35
+#: applets/wncklet/window-list.c:365 applets/wncklet/window-list.ui:32
 #: applets/wncklet/window-menu.c:98 applets/wncklet/workspace-switcher.c:397
 #: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:562
-#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1308
+#: mate-panel/panel-action-button.c:753 mate-panel/panel-addto.c:1310
 #: mate-panel/panel-context-menu.c:318 mate-panel/panel-ditem-editor.c:648
-#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:700
+#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:704
 #: mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: applets/clock/clock.c:3397 applets/fish/fish.c:567
 #: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:508
-#: applets/wncklet/window-list.c:831 applets/wncklet/window-menu.c:88
+#: applets/wncklet/window-list.c:796 applets/wncklet/window-menu.c:88
 #: applets/wncklet/workspace-switcher.c:644
 #: mate-panel/panel-context-menu.c:124
 msgid "translator-credits"
@@ -294,8 +294,8 @@ msgstr "时间设置(_S)"
 
 #: applets/clock/clock.ui:324 applets/fish/fish.c:853 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:51 applets/wncklet/workspace-switcher.ui:62
-#: mate-panel/panel-addto.c:1319 mate-panel/panel-ditem-editor.c:660
+#: applets/wncklet/window-list.ui:48 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1321 mate-panel/panel-ditem-editor.c:660
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
 #: mate-panel/panel-test-applets.ui:52
@@ -343,7 +343,7 @@ msgstr "显示温度(_T)"
 msgid "General"
 msgstr "通用选项"
 
-#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1315
+#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1317
 msgid "_Add"
 msgstr "添加(_A)"
 
@@ -631,12 +631,6 @@ msgstr "j时钟小程序的工厂"
 msgid "Get the current time and date"
 msgstr "时钟显示当前时间和日期"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-clock"
-msgstr "mate-panel-clock"
-
 #: applets/fish/fish.c:266
 #, c-format
 msgid ""
@@ -879,12 +873,6 @@ msgstr "傻乎乎的小鱼的来源地"
 msgid "Display a swimming fish or another animated creature"
 msgstr "显示游动的小鱼旺达，或其他动画形象"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-fish"
-msgstr "mate-panel-fish"
-
 #: applets/notification_area/main.c:276
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
@@ -946,12 +934,6 @@ msgstr "通知区域的工厂"
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:11
 msgid "Area where notification icons appear"
 msgstr "显示通知图标的地方"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-notification-area"
-msgstr "mate-panel-notification-area"
 
 #: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:10
 msgid "Show windows from all workspaces"
@@ -1042,12 +1024,6 @@ msgstr "窗口选择器"
 msgid "Switch between open windows using a menu"
 msgstr "通过菜单在打开的窗口间切换"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:13
-msgid "mate-panel-window-menu"
-msgstr "mate-panel-window-menu"
-
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
 #: applets/wncklet/workspace-switcher.c:634
 msgid "Workspace Switcher"
@@ -1057,26 +1033,14 @@ msgstr "工作区切换程序"
 msgid "Switch between workspaces"
 msgstr "在工作区之间切换"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:26
-msgid "mate-panel-workspace-switcher"
-msgstr "mate-panel-workspace-switcher"
-
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:786
 msgid "Window List"
 msgstr "窗口列表"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:37
 msgid "Switch between open windows using buttons"
 msgstr "通过按钮在打开的窗口间切换"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:39
-msgid "mate-panel-window-list"
-msgstr "mate-panel-window-list"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:49
 msgid "Show Desktop"
@@ -1085,12 +1049,6 @@ msgstr "显示桌面"
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:50
 msgid "Hide application windows and show the desktop"
 msgstr "隐藏所有的窗口并显示桌面。"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:52
-msgid "user-desktop"
-msgstr "user-desktop"
 
 #: applets/wncklet/showdesktop.c:184
 #, c-format
@@ -1121,7 +1079,7 @@ msgstr "关于显示桌面按钮"
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "这个按钮让您隐藏所有的窗口并显示桌面。"
 
-#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:825
+#: applets/wncklet/showdesktop.c:502 applets/wncklet/window-list.c:790
 #: applets/wncklet/workspace-switcher.c:638
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1142,11 +1100,11 @@ msgstr "您的窗口管理器不支持显示桌面按钮，或者您未运行桌
 msgid "_System Monitor"
 msgstr "系统监视器;(_S)"
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:787
 msgid "About Window List"
 msgstr "关于窗口列表"
 
-#: applets/wncklet/window-list.c:824
+#: applets/wncklet/window-list.c:789
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1156,67 +1114,63 @@ msgstr "窗口列表以按钮集的方式显示了所有窗口的列表，以便
 msgid "Window List Preferences"
 msgstr "窗口列表首选项"
 
-#: applets/wncklet/window-list.ui:92
+#: applets/wncklet/window-list.ui:89
 msgid "Window List Content"
 msgstr "窗口列表内容"
 
-#: applets/wncklet/window-list.ui:118
+#: applets/wncklet/window-list.ui:115
 msgid "Sh_ow windows from current workspace"
 msgstr "显示当前工作区中的窗口(_O)"
 
-#: applets/wncklet/window-list.ui:133
+#: applets/wncklet/window-list.ui:130
 msgid "Show windows from a_ll workspaces"
 msgstr "显示所有工作区中的窗口(_L)"
 
-#: applets/wncklet/window-list.ui:173
+#: applets/wncklet/window-list.ui:170
 msgid "Window Thumbnails"
 msgstr "窗口缩略图"
 
-#: applets/wncklet/window-list.ui:199
+#: applets/wncklet/window-list.ui:196
 msgid "Show _thumbnails on hover"
 msgstr "在悬停时显示_缩略图"
 
-#: applets/wncklet/window-list.ui:214
-msgid "_Hide thumbnails on hover"
-msgstr "_在悬停时隐藏缩略图"
-
-#: applets/wncklet/window-list.ui:252
+#: applets/wncklet/window-list.ui:233
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr "缩略图宽度，以像素为单位窗口纵横比将保持不变。"
 
-#: applets/wncklet/window-list.ui:253
+#: applets/wncklet/window-list.ui:234
 msgid "Thumbnail width:"
 msgstr "缩略图宽度:"
 
-#: applets/wncklet/window-list.ui:267
+#: applets/wncklet/window-list.ui:248
 msgid "px"
 msgstr "像素"
 
-#: applets/wncklet/window-list.ui:305
+#: applets/wncklet/window-list.ui:286
 msgid "Window Grouping"
 msgstr "窗口分组"
 
-#: applets/wncklet/window-list.ui:331
+#: applets/wncklet/window-list.ui:312
 msgid "_Never group windows"
 msgstr "从不对窗口分组(_N)"
 
-#: applets/wncklet/window-list.ui:346
+#: applets/wncklet/window-list.ui:327
 msgid "Group windows when _space is limited"
 msgstr "当空间有限时将窗口分组(_S)"
 
-#: applets/wncklet/window-list.ui:362
+#: applets/wncklet/window-list.ui:343
 msgid "_Always group windows"
 msgstr "总是对窗口分组(_A)"
 
-#: applets/wncklet/window-list.ui:402
+#: applets/wncklet/window-list.ui:383
 msgid "Restoring Minimized Windows"
 msgstr "在恢复最小化的窗口时"
 
-#: applets/wncklet/window-list.ui:428
+#: applets/wncklet/window-list.ui:409
 msgid "Restore to current _workspace"
 msgstr "还原到当前工作区(_W)"
 
-#: applets/wncklet/window-list.ui:443
+#: applets/wncklet/window-list.ui:424
 msgid "Restore to na_tive workspace"
 msgstr "还原到原工作区(_T)"
 
@@ -2030,62 +1984,62 @@ msgid ""
 "vertically."
 msgstr "如果为 true，则在面板为垂直面板时旋转背景图像。"
 
-#: mate-panel/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr "不是一个有效的 .desktop 文件"
 
-#: mate-panel/libegg/eggdesktopfile.c:191
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "不能识别的桌面文件版本“%s”"
 
-#: mate-panel/libegg/eggdesktopfile.c:963
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
 #, c-format
 msgid "Starting %s"
 msgstr "正在启动 %s"
 
-#: mate-panel/libegg/eggdesktopfile.c:1105
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
 msgid "Application does not accept documents on command line"
 msgstr "程序在命令行中不接收文档"
 
-#: mate-panel/libegg/eggdesktopfile.c:1173
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "不能识别的启动选项：%d"
 
-#: mate-panel/libegg/eggdesktopfile.c:1390
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "无法将文档 URL 传递给“Type=Link”的桌面项"
 
-#: mate-panel/libegg/eggdesktopfile.c:1411
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
 msgid "Not a launchable item"
 msgstr "非可启动项目"
 
-#: mate-panel/libegg/eggsmclient.c:222
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
 msgid "Disable connection to session manager"
 msgstr "禁止连接到会话管理器"
 
-#: mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "Specify file containing saved configuration"
 msgstr "指定包含有已保存配置的文件"
 
-#: mate-panel/libegg/eggsmclient.c:225
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "FILE"
 msgstr "文件"
 
-#: mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "Specify session management ID"
 msgstr "指定会话管理 ID"
 
-#: mate-panel/libegg/eggsmclient.c:228
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/libegg/eggsmclient.c:249
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
 msgid "Session management options:"
 msgstr "会话管理选项："
 
-#: mate-panel/libegg/eggsmclient.c:250
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Show session management options"
 msgstr "显示会话管理选项"
 
@@ -2189,12 +2143,6 @@ msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
 msgstr "调用其它应用程序并提供可用来完成管理管理窗口、显示时间等功能的工具。"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: mate-panel/mate-panel.desktop.in:7
-msgid "mate-panel"
-msgstr "mate-panel"
 
 #: mate-panel/launcher.c:120
 msgid "Could not show this URL"
@@ -2391,28 +2339,28 @@ msgstr "与X11不兼容"
 msgid "Not compatible with Wayland"
 msgstr "与Wayland不兼容"
 
-#: mate-panel/panel-addto.c:1053
+#: mate-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "查找要添加到“%s”的项目(_I)："
 
-#: mate-panel/panel-addto.c:1057
+#: mate-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "添加到抽屉"
 
-#: mate-panel/panel-addto.c:1059
+#: mate-panel/panel-addto.c:1061
 msgid "Find an _item to add to the drawer:"
 msgstr "查找要添加到抽屉的项目(_I)："
 
-#: mate-panel/panel-addto.c:1061
+#: mate-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "添加到面板"
 
-#: mate-panel/panel-addto.c:1063
+#: mate-panel/panel-addto.c:1065
 msgid "Find an _item to add to the panel:"
 msgstr "查找要添加到面板的项目(_I)："
 
-#: mate-panel/panel-addto.c:1311
+#: mate-panel/panel-addto.c:1313
 msgid "_Back"
 msgstr "后退(_B)"
 
@@ -2625,111 +2573,111 @@ msgstr "更改桌面外观和行为、获得帮助或注销"
 msgid "Applications"
 msgstr "应用程序"
 
-#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:706
+#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:710
 msgid "_Edit Menus"
 msgstr "编辑菜单(_E)"
 
-#: mate-panel/panel-menu-button.c:1129
+#: mate-panel/panel-menu-button.c:1133
 msgid "Main Menu"
 msgstr "主菜单"
 
-#: mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-items.c:466
 msgid "Bookmarks"
 msgstr "书签"
 
 #. Translators: %s is a URI
-#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:553
+#: mate-panel/panel-menu-items.c:489 mate-panel/panel.c:553
 #, c-format
 msgid "Open '%s'"
 msgstr "打开“%s”"
 
-#: mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:560
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "由于介质改变，无法扫描 %s"
 
-#: mate-panel/panel-menu-items.c:604
+#: mate-panel/panel-menu-items.c:603
 #, c-format
 msgid "Rescan %s"
 msgstr "重新扫描 %s"
 
-#: mate-panel/panel-menu-items.c:641
+#: mate-panel/panel-menu-items.c:640
 #, c-format
 msgid "Unable to mount %s"
 msgstr "无法挂载 %s"
 
-#: mate-panel/panel-menu-items.c:704
+#: mate-panel/panel-menu-items.c:703
 #, c-format
 msgid "Mount %s"
 msgstr "挂载 %s"
 
-#: mate-panel/panel-menu-items.c:912
+#: mate-panel/panel-menu-items.c:911
 msgid "Removable Media"
 msgstr "可移动介质"
 
-#: mate-panel/panel-menu-items.c:999
+#: mate-panel/panel-menu-items.c:998
 msgid "Network Places"
 msgstr "网络位置"
 
-#: mate-panel/panel-menu-items.c:1038
+#: mate-panel/panel-menu-items.c:1037
 msgid "Open your personal folder"
 msgstr "打开个人文件夹"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: mate-panel/panel-menu-items.c:1057
+#: mate-panel/panel-menu-items.c:1056
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "桌面"
 
-#: mate-panel/panel-menu-items.c:1058
+#: mate-panel/panel-menu-items.c:1057
 msgid "Open the contents of your desktop in a folder"
 msgstr "将桌面以文件夹形式打开"
 
-#: mate-panel/panel-menu-items.c:1074
+#: mate-panel/panel-menu-items.c:1073
 msgid "Computer"
 msgstr "计算机"
 
-#: mate-panel/panel-menu-items.c:1079
+#: mate-panel/panel-menu-items.c:1078
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "浏览可从本机访问的所有本地和远程磁盘和文件夹"
 
-#: mate-panel/panel-menu-items.c:1092
+#: mate-panel/panel-menu-items.c:1091
 msgid "Network"
 msgstr "网络"
 
-#: mate-panel/panel-menu-items.c:1093
+#: mate-panel/panel-menu-items.c:1092
 msgid "Browse bookmarked and local network locations"
 msgstr "浏览收藏和本地网络位置"
 
-#: mate-panel/panel-menu-items.c:1487
+#: mate-panel/panel-menu-items.c:1486
 msgid "Places"
 msgstr "位置"
 
-#: mate-panel/panel-menu-items.c:1515
+#: mate-panel/panel-menu-items.c:1514
 msgid "System"
 msgstr "系统"
 
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: mate-panel/panel-menu-items.c:1600
+#: mate-panel/panel-menu-items.c:1599
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1611
 #, c-format
 msgid "Log Out %s..."
 msgstr "注销 %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1616
+#: mate-panel/panel-menu-items.c:1615
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "从本会话中注销 %s 以便让不同的用户登录"
@@ -3162,9 +3110,3 @@ msgstr "测试 DBus 小程序"
 #: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:10
 msgid "A simple applet for testing the MATE panel"
 msgstr "一个测试 MATE 面板的简单小程序"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon
-#. file name)!
-#: libmate-panel-applet/org.mate.panel.TestApplet.mate-panel-applet.desktop.in:12
-msgid "mate-gegl"
-msgstr "mate-gegl"
