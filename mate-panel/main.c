@@ -104,6 +104,14 @@ main (int argc, char **argv)
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
+	#if defined(HAVE_X11) && defined(HAVE_WAYLAND)
+		gdk_set_allowed_backends ("wayland,x11");
+	#elif defined(HAVE_WAYLAND)
+		gdk_set_allowed_backends ("wayland");
+	#else
+		gdk_set_allowed_backends ("x11");
+	#endif
+
 	gtk_init (&argc, &argv);
 
 	error = NULL;
@@ -183,24 +191,11 @@ main (int argc, char **argv)
 	                 (GFunc)panel_widget_add_forbidden,
 	                 NULL);
 
-	gboolean found_backend = FALSE;
-
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (display)) {
-		found_backend = TRUE;
-	}
-#endif
-
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (display)) {
 		xstuff_init ();
-		found_backend = TRUE;
 	}
 #endif
-
-	if (!found_backend) {
-		g_error("GDK platform not supported");
-	}
 
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the caja desktop). */
