@@ -213,7 +213,7 @@ AC_SUBST(GTK_LAYER_SHELL_LIBS)
 # Check if we have the X development libraries
 have_x11=no
 if test "x$enable_x11" != "xno"; then
-  PKG_CHECK_MODULES(X, x11 xau, have_x11=yes, [
+  PKG_CHECK_MODULES(X, x11, have_x11=yes, [
       if test "x$enable_x11" = "xyes"; then
         AC_MSG_ERROR([X development libraries not found])
       fi
