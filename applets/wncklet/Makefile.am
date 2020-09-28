@@ -36,6 +36,11 @@ WNCKLET_LDADD =						\
 	$(WNCKLET_LIBS)					\
 	$(LIBMATE_PANEL_APPLET_LIBS)
 
+if ENABLE_WAYLAND
+WNCKLET_LDADD += \
+	-lwayland-client
+endif
+
 if WNCKLET_INPROCESS
 APPLET_IN_PROCESS = true
 APPLET_LOCATION   = $(pkglibdir)/libwnck-applet.so
