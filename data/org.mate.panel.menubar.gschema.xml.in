@@ -8,6 +8,14 @@
     <value nick="32px" value="32"/>
     <value nick="48px" value="48"/>
   </enum>
+  <enum id="org.mate.panel.menubar.font-size">
+    <value nick="default" value="-1"/>
+    <value nick="14px" value="14"/>
+    <value nick="15px" value="15"/>
+    <value nick="16px" value="16"/>
+    <value nick="17px" value="17"/>
+    <value nick="18px" value="18"/>
+  </enum>
 
   <schema id="org.mate.panel.menubar" path="/org/mate/panel/menubar/">
     <key name="show-applications" type="b">
@@ -34,6 +42,11 @@
       <default>'start-here'</default>
       <summary>Icon to show in menu bar</summary>
       <description>Set the theme icon name to use in menu bar.</description>
+    </key>
+    <key name="font-size" enum="org.mate.panel.menubar.font-size">
+      <default>'default'</default>
+      <summary>Menu bar font size</summary>
+      <description>Set the size of an font used in menu bar. The panel must be restarted for this to take effect.</description>
     </key>
     <key name="icon-size" enum="org.mate.panel.menubar.icon-size">
       <default>'default'</default>
