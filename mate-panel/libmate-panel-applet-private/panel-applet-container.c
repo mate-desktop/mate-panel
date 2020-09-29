@@ -352,22 +352,22 @@ on_proxy_appeared (GObject      *source_object,
 		   GAsyncResult *res,
 		   gpointer      user_data)
 {
-	GSimpleAsyncResult   *result = G_SIMPLE_ASYNC_RESULT (user_data);
+	GTask   *task = G_TASK (user_data);
 	MatePanelAppletContainer *container;
 	GDBusProxy           *proxy;
 	GError               *error = NULL;
 
 	proxy = g_dbus_proxy_new_finish (res, &error);
 	if (!proxy) {
-		g_simple_async_result_set_from_error (result, error);
+		g_task_return_error (task, error);
 		g_error_free (error);
-		g_simple_async_result_complete (result);
-		g_object_unref (result);
+		g_object_unref (task);
 
 		return;
 	}
 
-	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
+	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
+	g_task_return_boolean (task,TRUE);
 
 	container->priv->applet_proxy = proxy;
 	g_signal_connect (container->priv->applet_proxy, "g-signal",
@@ -383,8 +383,7 @@ on_proxy_appeared (GObject      *source_object,
 					    (GDBusSignalCallback) on_property_changed,
 					    container, NULL);
 
-	g_simple_async_result_complete (result);
-	g_object_unref (result);
+	g_object_unref (task);
 
 	panel_applet_container_setup (container);
 
@@ -406,7 +405,7 @@ get_applet_cb (GObject      *source_object,
 	       gpointer      user_data)
 {
 	GDBusConnection      *connection = G_DBUS_CONNECTION (source_object);
-	GSimpleAsyncResult   *result = G_SIMPLE_ASYNC_RESULT (user_data);
+	GTask   *task = G_TASK (user_data);
 	MatePanelAppletContainer *container;
 	GVariant             *retvals;
 	const gchar          *applet_path;
@@ -414,15 +413,14 @@ get_applet_cb (GObject      *source_object,
 
 	retvals = g_dbus_connection_call_finish (connection, res, &error);
 	if (!retvals) {
-		g_simple_async_result_set_from_error (result, error);
+		g_task_return_error (task, error);
 		g_error_free (error);
-		g_simple_async_result_complete (result);
-		g_object_unref (result);
+		g_object_unref (task);
 
 		return;
 	}
 
-	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
+	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
 	g_variant_get (retvals,
 	               "(&obuu)",
 	               &applet_path,
@@ -438,7 +436,7 @@ get_applet_cb (GObject      *source_object,
 			  MATE_PANEL_APPLET_INTERFACE,
 			  NULL,
 			  (GAsyncReadyCallback) on_proxy_appeared,
-			  result);
+			  task);
 
 	g_variant_unref (retvals);
 
@@ -447,7 +445,6 @@ get_applet_cb (GObject      *source_object,
 }
 
 typedef struct {
-	GSimpleAsyncResult *result;
 	gchar              *factory_id;
 	GVariant           *parameters;
 	GCancellable       *cancellable;
@@ -467,14 +464,16 @@ static void
 on_factory_appeared (GDBusConnection   *connection,
 		     const gchar       *name,
 		     const gchar       *name_owner,
-		     AppletFactoryData *data)
+		     GTask             *task)
 {
 	MatePanelAppletContainer *container;
-	gchar                *object_path;
+       	gchar                *object_path;
+       	AppletFactoryData    *data;
 
-	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (data->result)));
+       	data = g_task_get_task_data (task);
+	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
 	container->priv->bus_name = g_strdup (name_owner);
-	object_path = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_OBJECT_PATH, data->factory_id);
+       	object_path = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_OBJECT_PATH, data->factory_id);
 	g_dbus_connection_call (connection,
 				name_owner,
 				object_path,
@@ -486,7 +485,7 @@ on_factory_appeared (GDBusConnection   *connection,
 				-1,
 				data->cancellable,
 				get_applet_cb,
-				data->result);
+				task);
 	g_free (object_path);
 }
 
@@ -499,27 +498,26 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 				   GAsyncReadyCallback   callback,
 				   gpointer              user_data)
 {
-	GSimpleAsyncResult *result;
+	GTask              *task;
 	AppletFactoryData  *data;
 	gint                screen_number;
 	gchar              *bus_name;
 	gchar              *factory_id;
 	gchar              *applet_id;
 
-	result = g_simple_async_result_new (G_OBJECT (container),
-					    callback,
-					    user_data,
-					    mate_panel_applet_container_get_applet);
+	task = g_task_new (G_OBJECT (container),
+                           cancellable,
+                           callback,
+		           user_data);
+	g_task_set_source_tag (task,mate_panel_applet_container_get_applet);
 
 	applet_id = g_strrstr (iid, "::");
 	if (!applet_id) {
-		g_simple_async_result_set_error (result,
-						 MATE_PANEL_APPLET_CONTAINER_ERROR,
-						 MATE_PANEL_APPLET_CONTAINER_INVALID_APPLET,
-						 "Invalid applet iid: %s", iid);
-		g_simple_async_result_complete (result);
-		g_object_unref (result);
-
+		g_task_return_new_error (task,
+				         MATE_PANEL_APPLET_CONTAINER_ERROR,
+					 MATE_PANEL_APPLET_CONTAINER_INVALID_APPLET,
+                                         "Invalid applet iid: %s", iid);
+		g_object_unref (task);
 		return;
 	}
 
@@ -538,10 +536,10 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 	}
 
 	data = g_new (AppletFactoryData, 1);
-	data->result = result;
 	data->factory_id = factory_id;
 	data->parameters = g_variant_new ("(si*)", applet_id, screen_number, props);
 	data->cancellable = cancellable ? g_object_ref (cancellable) : NULL;
+	g_task_set_task_data (task,data,(GDestroyNotify) applet_factory_data_free);
 
 	bus_name = g_strdup_printf (MATE_PANEL_APPLET_BUS_NAME, factory_id);
 
@@ -552,8 +550,8 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 				  G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
 				  (GBusNameAppearedCallback) on_factory_appeared,
 				  NULL,
-				  data,
-				  (GDestroyNotify) applet_factory_data_free);
+				  task,
+				  NULL);
 
 	g_free (bus_name);
 }
@@ -581,11 +579,9 @@ mate_panel_applet_container_add_finish (MatePanelAppletContainer *container,
 				   GAsyncResult         *result,
 				   GError              **error)
 {
-	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (result);
-
-	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == mate_panel_applet_container_get_applet);
-
-	return !g_simple_async_result_propagate_error (simple, error);
+    	g_return_val_if_fail (g_task_is_valid (result, container), FALSE);
+	g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_get_applet);
+    	return g_task_propagate_boolean (G_TASK (result), error);
 }
 
 /* Child Properties */
@@ -595,7 +591,7 @@ set_applet_property_cb (GObject      *source_object,
 			gpointer      user_data)
 {
 	GDBusConnection      *connection = G_DBUS_CONNECTION (source_object);
-	GSimpleAsyncResult   *result = G_SIMPLE_ASYNC_RESULT (user_data);
+	GTask                *task = G_TASK (user_data);
 	MatePanelAppletContainer *container;
 	GVariant             *retvals;
 	GError               *error = NULL;
@@ -604,16 +600,16 @@ set_applet_property_cb (GObject      *source_object,
 	if (!retvals) {
 		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
 			g_warning ("Error setting property: %s\n", error->message);
-		g_simple_async_result_set_from_error (result, error);
+		g_task_return_error (task, error);
 		g_error_free (error);
 	} else {
 		g_variant_unref (retvals);
 	}
 
-	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
-	g_hash_table_remove (container->priv->pending_ops, result);
-	g_simple_async_result_complete (result);
-	g_object_unref (result);
+	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
+	g_task_return_boolean (task,TRUE);
+	g_hash_table_remove (container->priv->pending_ops, task);
+	g_object_unref (task);
 
 	/* g_async_result_get_source_object returns new ref */
 	g_object_unref (container);
@@ -629,32 +625,34 @@ mate_panel_applet_container_child_set (MatePanelAppletContainer *container,
 {
 	GDBusProxy               *proxy = container->priv->applet_proxy;
 	const AppletPropertyInfo *info;
-	GSimpleAsyncResult       *result;
-
+	GTask                    *task;
+    
 	if (!proxy)
 		return NULL;
 
 	info = mate_panel_applet_container_child_property_get_info (property_name);
 	if (!info) {
-		g_simple_async_report_error_in_idle (G_OBJECT (container),
-						     callback, user_data,
-						     MATE_PANEL_APPLET_CONTAINER_ERROR,
-						     MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
-						     "%s: Applet has no child property named `%s'",
-						     G_STRLOC, property_name);
+		g_task_report_new_error (G_OBJECT (container),
+						         callback, user_data,
+                                 NULL,
+						         MATE_PANEL_APPLET_CONTAINER_ERROR,
+						         MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
+						         "%s: Applet has no child property named `%s'",
+						         G_STRLOC, property_name);
 		return NULL;
 	}
 
-	result = g_simple_async_result_new (G_OBJECT (container),
-					    callback,
-					    user_data,
-					    mate_panel_applet_container_child_set);
+	task = g_task_new (G_OBJECT (container),
+                       cancellable,
+                       callback,
+					   user_data);
+    	g_task_set_source_tag (task,mate_panel_applet_container_child_set);
 
 	if (cancellable)
 		g_object_ref (cancellable);
 	else
 		cancellable = g_cancellable_new ();
-	g_hash_table_insert (container->priv->pending_ops, result, cancellable);
+	g_hash_table_insert (container->priv->pending_ops, task, cancellable);
 
 	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
 				g_dbus_proxy_get_name (proxy),
@@ -669,9 +667,9 @@ mate_panel_applet_container_child_set (MatePanelAppletContainer *container,
 				G_DBUS_CALL_FLAGS_NO_AUTO_START,
 				-1, cancellable,
 				set_applet_property_cb,
-				result);
+				task);
 
-	return result;
+	return task;
 }
 
 gboolean
@@ -679,11 +677,9 @@ mate_panel_applet_container_child_set_finish (MatePanelAppletContainer *containe
 					 GAsyncResult         *result,
 					 GError              **error)
 {
-	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (result);
-
-	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == mate_panel_applet_container_child_set);
-
-	return !g_simple_async_result_propagate_error (simple, error);
+    g_return_val_if_fail (g_task_is_valid (result, container), FALSE);
+    g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_child_set);
+    return g_task_propagate_boolean (G_TASK (result), error);
 }
 
 static void
@@ -692,35 +688,32 @@ get_applet_property_cb (GObject      *source_object,
 			gpointer      user_data)
 {
 	GDBusConnection      *connection = G_DBUS_CONNECTION (source_object);
-	GSimpleAsyncResult   *result = G_SIMPLE_ASYNC_RESULT (user_data);
+	GTask   *task = G_TASK (user_data);
 	MatePanelAppletContainer *container;
 	GVariant             *retvals;
 	GError               *error = NULL;
+	GVariant *value, *item;
 
 	retvals = g_dbus_connection_call_finish (connection, res, &error);
 	if (!retvals) {
 		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
 			g_warning ("Error getting property: %s\n", error->message);
-		g_simple_async_result_set_from_error (result, error);
+		g_task_return_error (task, error);
 		g_error_free (error);
-	} else {
-		GVariant *value, *item;
+        	return;
+    	}
 
-		item = g_variant_get_child_value (retvals, 0);
-		value = g_variant_get_variant (item);
-		g_variant_unref (item);
-		g_simple_async_result_set_op_res_gpointer (result, value,
-							   (GDestroyNotify) g_variant_unref);
-		g_variant_unref (retvals);
-	}
-
-	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
-	g_hash_table_remove (container->priv->pending_ops, result);
-	g_simple_async_result_complete (result);
-	g_object_unref (result);
-
-	/* g_async_result_get_source_object returns new ref */
+    	item = g_variant_get_child_value (retvals, 0);
+    	value = g_variant_get_variant (item);
+    	g_variant_unref (item);
+    	g_variant_unref (retvals);
+	
+    	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
+    	g_task_return_pointer (task,value,(GDestroyNotify) g_variant_unref);
+	g_hash_table_remove (container->priv->pending_ops, task);
 	g_object_unref (container);
+	g_object_unref (task);
+	/* g_async_result_get_source_object returns new ref */
 }
 
 gconstpointer
@@ -732,31 +725,33 @@ mate_panel_applet_container_child_get (MatePanelAppletContainer *container,
 {
 	GDBusProxy               *proxy = container->priv->applet_proxy;
 	const AppletPropertyInfo *info;
-	GSimpleAsyncResult       *result;
+	GTask                    *task;
 
 	if (!proxy)
 		return NULL;
 
 	info = mate_panel_applet_container_child_property_get_info (property_name);
 	if (!info) {
-		g_simple_async_report_error_in_idle (G_OBJECT (container),
-						     callback, user_data,
-						     MATE_PANEL_APPLET_CONTAINER_ERROR,
-						     MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
-						     "%s: Applet has no child property named `%s'",
-						     G_STRLOC, property_name);
+		g_task_report_new_error (G_OBJECT (container),
+						         callback, user_data,
+                                 NULL,
+						         MATE_PANEL_APPLET_CONTAINER_ERROR,
+						         MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
+						         "%s: Applet has no child property named `%s'",
+						         G_STRLOC, property_name);
 		return NULL;
 	}
 
-	result = g_simple_async_result_new (G_OBJECT (container),
-					    callback,
-					    user_data,
-					    mate_panel_applet_container_child_get);
+	task = g_task_new (G_OBJECT (container),
+                       cancellable,
+                       callback,
+					   user_data);
+    	g_task_set_source_tag (task,mate_panel_applet_container_child_get);
 	if (cancellable)
 		g_object_ref (cancellable);
 	else
 		cancellable = g_cancellable_new ();
-	g_hash_table_insert (container->priv->pending_ops, result, cancellable);
+	g_hash_table_insert (container->priv->pending_ops, task, cancellable);
 
 	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
 				g_dbus_proxy_get_name (proxy),
@@ -770,9 +765,9 @@ mate_panel_applet_container_child_get (MatePanelAppletContainer *container,
 				G_DBUS_CALL_FLAGS_NO_AUTO_START,
 				-1, cancellable,
 				get_applet_property_cb,
-				result);
+				task);
 
-	return result;
+	return task;
 }
 
 GVariant *
@@ -780,14 +775,10 @@ mate_panel_applet_container_child_get_finish (MatePanelAppletContainer *containe
 					 GAsyncResult         *result,
 					 GError              **error)
 {
-	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (result);
-
-	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == mate_panel_applet_container_child_get);
-
-	if (g_simple_async_result_propagate_error (simple, error))
-		return NULL;
-
-	return g_variant_ref (g_simple_async_result_get_op_res_gpointer (simple));
+    	g_return_val_if_fail (g_task_is_valid (result, container), NULL);
+	g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_child_get);
+   
+    	return g_variant_ref (g_task_propagate_pointer (G_TASK (result), error));
 }
 
 static void
@@ -796,20 +787,20 @@ child_popup_menu_cb (GObject      *source_object,
 		     gpointer      user_data)
 {
 	GDBusConnection    *connection = G_DBUS_CONNECTION (source_object);
-	GSimpleAsyncResult *result = G_SIMPLE_ASYNC_RESULT (user_data);
+	GTask              *task = G_TASK (user_data);
 	GVariant           *retvals;
 	GError             *error = NULL;
 
 	retvals = g_dbus_connection_call_finish (connection, res, &error);
 	if (!retvals) {
-		g_simple_async_result_set_from_error (result, error);
+		g_task_return_error (task, error);
 		g_error_free (error);
 	} else {
 		g_variant_unref (retvals);
 	}
 
-	g_simple_async_result_complete (result);
-	g_object_unref (result);
+	g_task_return_boolean (task,TRUE);
+	g_object_unref (task);
 }
 
 void
@@ -820,16 +811,16 @@ mate_panel_applet_container_child_popup_menu (MatePanelAppletContainer *containe
 					 GAsyncReadyCallback   callback,
 					 gpointer              user_data)
 {
-	GSimpleAsyncResult *result;
+	GTask              *task;
 	GDBusProxy         *proxy = container->priv->applet_proxy;
 
 	if (!proxy)
 		return;
-
-	result = g_simple_async_result_new (G_OBJECT (container),
-					    callback,
-					    user_data,
-					    mate_panel_applet_container_child_popup_menu);
+	task = g_task_new (G_OBJECT (container),
+                           cancellable,
+                           callback,
+			   user_data);
+    	g_task_set_source_tag (task,mate_panel_applet_container_child_popup_menu);
 
 	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
 				g_dbus_proxy_get_name (proxy),
@@ -841,7 +832,7 @@ mate_panel_applet_container_child_popup_menu (MatePanelAppletContainer *containe
 				G_DBUS_CALL_FLAGS_NO_AUTO_START,
 				-1, cancellable,
 				child_popup_menu_cb,
-				result);
+				task);
 }
 
 gboolean
@@ -849,11 +840,10 @@ mate_panel_applet_container_child_popup_menu_finish (MatePanelAppletContainer *c
 						GAsyncResult         *result,
 						GError              **error)
 {
-	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (result);
+    	g_return_val_if_fail (g_task_is_valid (result, container), FALSE);
+	g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_child_popup_menu);
+    	return g_task_propagate_boolean (G_TASK (result), error);
 
-	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == mate_panel_applet_container_child_popup_menu);
-
-	return !g_simple_async_result_propagate_error (simple, error);
 }
 
 void
