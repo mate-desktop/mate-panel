@@ -24,8 +24,6 @@
 #ifndef __WNCKLET_H__
 #define __WNCKLET_H__
 
-#include <libwnck/libwnck.h>
-
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
@@ -35,6 +33,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef struct _WnckScreen WnckScreen;
 
 void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* link_id, const char* icon_name);
 

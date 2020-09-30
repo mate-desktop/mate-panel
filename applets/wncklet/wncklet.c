@@ -25,18 +25,17 @@
 	#include <config.h>
 #endif
 
-#ifndef HAVE_X11
-#error file should only be built when HAVE_X11 is enabled
-#endif
-
 #include <string.h>
 #include <mate-panel-applet.h>
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+
+#ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
+#endif
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -96,8 +95,11 @@ void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* lin
 	}
 }
 
+#ifdef HAVE_X11
 WnckScreen* wncklet_get_screen(GtkWidget* applet)
 {
+	g_return_val_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()), NULL);
+
 	int screen_num;
 
 	if (!gtk_widget_has_screen(applet))
@@ -107,6 +109,7 @@ WnckScreen* wncklet_get_screen(GtkWidget* applet)
 
 	return wnck_screen_get(screen_num);
 }
+#endif // HAVE_X11
 
 void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback func, gpointer func_data, gpointer alive_object)
 {
@@ -120,13 +123,18 @@ void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback 
 static gboolean wncklet_factory(MatePanelApplet* applet, const char* iid, gpointer data)
 {
 	gboolean retval = FALSE;
-	static gboolean type_registered = FALSE;
 
-	if (!type_registered)
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		wnck_set_client_type(WNCK_CLIENT_TYPE_PAGER);
-		type_registered = TRUE;
+		static gboolean type_registered = FALSE;
+		if (!type_registered)
+		{
+			wnck_set_client_type(WNCK_CLIENT_TYPE_PAGER);
+			type_registered = TRUE;
+		}
 	}
+#endif // HAVE_X11
 
 	if (!strcmp(iid, "WindowMenuApplet"))
 		retval = window_menu_applet_fill(applet);
