@@ -35,8 +35,15 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
+#ifdef HAVE_X11
+#include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
+#endif // HAVE_X11
+
+#ifdef HAVE_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif // HAVE_WAYLAND
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -151,6 +158,9 @@ static void window_menu_size_allocate(MatePanelApplet* applet, GtkAllocation* al
 
 	orient = mate_panel_applet_get_orient(applet);
 
+	if (!GTK_IS_CONTAINER (window_menu->selector))
+		return;
+
 	children = gtk_container_get_children(GTK_CONTAINER(window_menu->selector));
 	child = GTK_WIDGET(children->data);
 	g_list_free(children);
@@ -178,7 +188,6 @@ static void window_menu_size_allocate(MatePanelApplet* applet, GtkAllocation* al
 static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* event, WindowMenu* window_menu)
 {
 	GtkMenuShell* menu_shell;
-	WnckSelector* selector;
 
 	switch (event->keyval)
 	{
@@ -188,7 +197,6 @@ static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* even
 		case GDK_KEY_Return:
 		case GDK_KEY_space:
 		case GDK_KEY_KP_Space:
-			selector = WNCK_SELECTOR(window_menu->selector);
 			/*
 			 * We need to call _gtk_menu_shell_activate() here as is done in
 			 * window_key_press_handler in gtkmenubar.c which pops up menu
@@ -196,7 +204,7 @@ static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* even
 			 *
 			 * As that function is private its code is replicated here.
 			 */
-			menu_shell = GTK_MENU_SHELL(selector);
+			menu_shell = GTK_MENU_SHELL(window_menu->selector);
 
 			gtk_menu_shell_select_first(menu_shell, FALSE);
 			return TRUE;
@@ -231,6 +239,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	window_menu->orient = mate_panel_applet_get_orient(applet);
 
 	g_signal_connect(window_menu->applet, "destroy", G_CALLBACK(window_menu_destroy), window_menu);
+	g_signal_connect(window_menu->applet, "key_press_event", G_CALLBACK(window_menu_key_press_event), window_menu);
 
 	action_group = gtk_action_group_new("WindowMenu Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
@@ -240,12 +249,30 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	                                            action_group);
 	g_object_unref(action_group);
 
-	window_menu->selector = wnck_selector_new();
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+	{
+		window_menu->selector = wnck_selector_new();
+		mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(window_menu->applet), GTK_WIDGET(window_menu->selector));
+
+	}
+	else
+#endif // HAVE_X11
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+	{
+		window_menu->selector = gtk_label_new ("[Window menu not supported on Wayland]");
+	}
+	else
+#endif // HAVE_WAYLAND
+
+	{
+		window_menu->selector = gtk_label_new ("[Window menu not supported on this platform]");
+	}
+
 	gtk_container_add(GTK_CONTAINER(window_menu->applet), window_menu->selector);
 
-	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(window_menu->applet), GTK_WIDGET(window_menu->selector));
-
-	g_signal_connect(window_menu->applet, "key_press_event", G_CALLBACK(window_menu_key_press_event), window_menu);
 	g_signal_connect(window_menu->applet, "size-allocate", G_CALLBACK(window_menu_size_allocate), window_menu);
 
 	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);

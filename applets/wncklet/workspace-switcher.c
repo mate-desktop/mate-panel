@@ -21,9 +21,17 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gio/gio.h>
+
+#ifdef HAVE_X11
+#include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
-#include <gio/gio.h>
+#endif // HAVE_X11
+
+#ifdef HAVE_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif // HAVE_WAYLAND
 
 #include <libmate-desktop/mate-gsettings.h>
 
@@ -58,7 +66,10 @@ typedef struct {
 
 	GtkWidget* pager;
 
+#ifdef HAVE_X11
 	WnckScreen* screen;
+#endif // HAVE_X11
+
 	PagerWM wm;
 
 	/* Properties: */
@@ -79,7 +90,7 @@ typedef struct {
 
 	GtkOrientation orientation;
 	int n_rows;				/* for vertical layout this is cols */
-	WnckPagerDisplayMode display_mode;
+	gboolean display_names;			/* if to display names or content */
 	gboolean display_all;
 	gboolean wrap_workspaces;
 
@@ -91,20 +102,34 @@ static void display_help_dialog(GtkAction* action, PagerData* pager);
 static void display_about_dialog(GtkAction* action, PagerData* pager);
 static void destroy_pager(GtkWidget* widget, PagerData* pager);
 
+#ifdef HAVE_X11
+static void pager_update_wnck(PagerData* pager, WnckPager* wnck_pager)
+{
+	WnckPagerDisplayMode display_mode = WNCK_PAGER_DISPLAY_CONTENT;
+
+	if (pager->display_names && (
+		pager->wm == PAGER_WM_MARCO ||
+		pager->wm == PAGER_WM_METACITY ||
+		pager->wm == PAGER_WM_I3))
+	{
+		display_mode = WNCK_PAGER_DISPLAY_NAME;
+	}
+
+	wnck_pager_set_orientation(wnck_pager, pager->orientation);
+	wnck_pager_set_n_rows(wnck_pager, pager->n_rows);
+	wnck_pager_set_show_all(wnck_pager, pager->display_all);
+	wnck_pager_set_display_mode(wnck_pager, display_mode);
+}
+#endif // HAVE_X11
+
 static void pager_update(PagerData* pager)
 {
-	wnck_pager_set_orientation(WNCK_PAGER(pager->pager), pager->orientation);
-	wnck_pager_set_n_rows(WNCK_PAGER(pager->pager), pager->n_rows);
-	wnck_pager_set_show_all(WNCK_PAGER(pager->pager), pager->display_all);
-
-	if (pager->wm == PAGER_WM_MARCO)
-		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
-	else if (pager->wm == PAGER_WM_METACITY)
-		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
-	else if (pager->wm == PAGER_WM_I3)
-		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), pager->display_mode);
-	else
-		wnck_pager_set_display_mode(WNCK_PAGER(pager->pager), WNCK_PAGER_DISPLAY_CONTENT);
+#ifdef HAVE_X11
+	if (WNCK_IS_PAGER(pager->pager))
+	{
+		pager_update_wnck(pager, WNCK_PAGER(pager->pager));
+	}
+#endif // HAVE_X11
 }
 
 static void update_properties_for_wm(PagerData* pager)
@@ -176,11 +201,16 @@ static void update_properties_for_wm(PagerData* pager)
 	}
 }
 
-static void window_manager_changed(WnckScreen* screen, PagerData* pager)
+static void window_manager_changed(PagerData* pager)
 {
-	const char *wm_name;
+	const char *wm_name = NULL;
 
-	wm_name = wnck_screen_get_window_manager_name(screen);
+#ifdef HAVE_X11
+	if (pager->screen)
+	{
+		wm_name = wnck_screen_get_window_manager_name (pager->screen);
+	}
+#endif // HAVE_X11
 
 	if (!wm_name)
 		pager->wm = PAGER_WM_UNKNOWN;
@@ -201,15 +231,22 @@ static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 
 static void applet_realized(MatePanelApplet* applet, PagerData* pager)
 {
-	pager->screen = wncklet_get_screen(GTK_WIDGET(applet));
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+	{
+		pager->screen = wncklet_get_screen(GTK_WIDGET(applet));
+		wncklet_connect_while_alive(pager->screen, "window_manager_changed", G_CALLBACK(window_manager_changed), pager, pager->applet);
+	}
+#endif // HAVE_X11
 
-	window_manager_changed(pager->screen, pager);
-	wncklet_connect_while_alive(pager->screen, "window_manager_changed", G_CALLBACK(window_manager_changed), pager, pager->applet);
+	window_manager_changed(pager);
 }
 
 static void applet_unrealized(MatePanelApplet* applet, PagerData* pager)
 {
+#ifdef HAVE_X11
 	pager->screen = NULL;
+#endif // HAVE_X11
 	pager->wm = PAGER_WM_UNKNOWN;
 }
 
@@ -248,8 +285,13 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
         gtk_style_context_set_path (new_context, gtk_widget_get_path (GTK_WIDGET (pager->pager)));
         g_object_unref (new_context);
 
-        wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
-                type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
+#ifdef HAVE_X11
+	if (WNCK_IS_PAGER(pager->pager))
+	{
+		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
+		        type == PANEL_NO_BACKGROUND ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
+	}
+#endif // HAVE_X11
 }
 
 static void applet_style_updated (MatePanelApplet *applet, GtkStyleContext *context)
@@ -294,8 +336,19 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 	if (event->direction == GDK_SCROLL_SMOOTH)
 		return FALSE;
 
-	index = wnck_workspace_get_number(wnck_screen_get_active_workspace(pager->screen));
-	n_workspaces = wnck_screen_get_workspace_count(pager->screen);
+#ifdef HAVE_X11
+	if (pager->screen)
+	{
+		index = wnck_workspace_get_number(wnck_screen_get_active_workspace(pager->screen));
+		n_workspaces = wnck_screen_get_workspace_count(pager->screen);
+	}
+	else
+#endif // HAVE_X11
+	{
+		index = 0;
+		n_workspaces = 1;
+	}
+
 	n_columns = n_workspaces / pager->n_rows;
 
 	if (n_workspaces % pager->n_rows != 0)
@@ -381,7 +434,12 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 			break;
 	}
 
-	wnck_workspace_activate(wnck_screen_get_workspace(pager->screen, index), event->time);
+#ifdef HAVE_X11
+	if (pager->screen)
+	{
+		wnck_workspace_activate(wnck_screen_get_workspace(pager->screen, index), event->time);
+	}
+#endif // HAVE_X11
 
 	return TRUE;
 }
@@ -434,14 +492,7 @@ static void display_workspace_names_changed(GSettings* settings, gchar* key, Pag
 
 	value = g_settings_get_boolean (settings, key);
 
-	if (value)
-	{
-		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
-	}
-	else
-	{
-		pager->display_mode = WNCK_PAGER_DISPLAY_CONTENT;
-	}
+	pager->display_names = g_settings_get_boolean (settings, key);
 
 	pager_update(pager);
 
@@ -521,7 +572,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 {
 	PagerData* pager;
 	GtkActionGroup* action_group;
-	gboolean display_names;
 
 	pager = g_new0(PagerData, 1);
 
@@ -535,18 +585,9 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 
 	pager->n_rows = CLAMP(pager->n_rows, 1, MAX_REASONABLE_ROWS);
 
-	display_names = g_settings_get_boolean(pager->settings, "display-workspace-names");
+	pager->display_names = g_settings_get_boolean(pager->settings, "display-workspace-names");
 
 	pager->wrap_workspaces = g_settings_get_boolean(pager->settings, "wrap-workspaces");
-
-	if (display_names)
-	{
-		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
-	}
-	else
-	{
-		pager->display_mode = WNCK_PAGER_DISPLAY_CONTENT;
-	}
 
 	pager->display_all = g_settings_get_boolean(pager->settings, "display-all-workspaces");
 
@@ -563,10 +604,29 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
-	pager->pager = wnck_pager_new();
-	pager->screen = NULL;
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+	{
+		pager->pager = wnck_pager_new();
+		wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
+		pager->screen = NULL;
+	}
+	else
+#endif // HAVE_X11
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+	{
+		pager->pager = gtk_label_new ("[Pager not supported on Wayland]");
+	}
+	else
+#endif // HAVE_WAYLAND
+
+	{
+		pager->pager = gtk_label_new ("[Pager not supported on this platform]");
+	}
+
 	pager->wm = PAGER_WM_UNKNOWN;
-	wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
 
 	GtkStyleContext *context;
 	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
@@ -671,9 +731,28 @@ static void num_rows_value_changed(GtkSpinButton* button, PagerData* pager)
 	g_settings_set_int(pager->settings, "num-rows", gtk_spin_button_get_value_as_int(button));
 }
 
+static const char *get_workspace_name(PagerData* pager, int workspace_index)
+{
+#ifdef HAVE_X11
+	if (pager->screen)
+	{
+		WnckWorkspace *workspace = wnck_screen_get_workspace(pager->screen, workspace_index);
+		return wnck_workspace_get_name(workspace);
+	}
+#endif // HAVE_X11
+
+	// Fallback
+	return "workspace";
+}
+
 static void update_workspaces_model(PagerData* pager)
 {
-	int nr_ws = wnck_screen_get_workspace_count (pager->screen);
+	int nr_ws = 1;
+
+#ifdef HAVE_X11
+	if (pager->screen)
+		nr_ws = wnck_screen_get_workspace_count (pager->screen);
+#endif // HAVE_X11
 
 	if (pager->properties_dialog)
 	{
@@ -687,16 +766,19 @@ static void update_workspaces_model(PagerData* pager)
 
 		for (i = 0; i < nr_ws; i++)
 		{
-			WnckWorkspace *workspace = wnck_screen_get_workspace(pager->screen, i);
 			gtk_list_store_append(pager->workspaces_store, &iter);
-			gtk_list_store_set(pager->workspaces_store, &iter, 0, wnck_workspace_get_name(workspace), -1);
+			const char* name = get_workspace_name(pager, i);
+			gtk_list_store_set(pager->workspaces_store, &iter, 0, name, -1);
 		}
 	}
 }
 
+#ifdef HAVE_X11
 static void workspace_renamed(WnckWorkspace* space, PagerData* pager)
 {
 	GtkTreeIter iter;
+
+	g_return_if_fail(WNCK_IS_WORKSPACE(space));
 
 	if (gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (pager->workspaces_store), &iter, NULL, wnck_workspace_get_number (space)))
 		gtk_list_store_set(pager->workspaces_store, &iter, 0, wnck_workspace_get_name(space), -1);
@@ -716,10 +798,17 @@ static void workspace_destroyed(WnckScreen* screen, WnckWorkspace* space, PagerD
 	g_return_if_fail(WNCK_IS_SCREEN(screen));
 	update_workspaces_model(pager);
 }
+#endif // HAVE_X11
 
 static void num_workspaces_value_changed(GtkSpinButton* button, PagerData* pager)
 {
-	wnck_screen_change_workspace_count(pager->screen, gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pager->num_workspaces_spin)));
+#ifdef HAVE_X11
+	if (pager->screen)
+	{
+		int workspace_count = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pager->num_workspaces_spin));
+		wnck_screen_change_workspace_count(pager->screen, workspace_count);
+	}
+#endif // HAVE_X11
 }
 
 static gboolean workspaces_tree_focused_out(GtkTreeView* treeview, GdkEventFocus* event, PagerData* pager)
@@ -733,28 +822,33 @@ static gboolean workspaces_tree_focused_out(GtkTreeView* treeview, GdkEventFocus
 
 static void workspace_name_edited(GtkCellRendererText* cell_renderer_text, const gchar* path, const gchar* new_text, PagerData* pager)
 {
-	const gint* indices;
-	WnckWorkspace* workspace;
-	GtkTreePath* p;
-
-	p = gtk_tree_path_new_from_string(path);
-	indices = gtk_tree_path_get_indices(p);
-	workspace = wnck_screen_get_workspace(pager->screen, indices[0]);
-
-	if (workspace != NULL)
+#ifdef HAVE_X11
+	if (pager->screen)
 	{
-		gchar* temp_name = g_strdup(new_text);
+		const gint* indices;
+		WnckWorkspace* workspace;
+		GtkTreePath* p;
 
-		wnck_workspace_change_name(workspace, g_strstrip(temp_name));
+		p = gtk_tree_path_new_from_string(path);
+		indices = gtk_tree_path_get_indices(p);
+		workspace = wnck_screen_get_workspace(pager->screen, indices[0]);
 
-		g_free(temp_name);
+		if (workspace != NULL)
+		{
+			gchar* temp_name = g_strdup(new_text);
+
+			wnck_workspace_change_name(workspace, g_strstrip(temp_name));
+
+			g_free(temp_name);
+		}
+		else
+		{
+			g_warning("Edited name of workspace %d which no longer exists", indices[0]);
+		}
+
+		gtk_tree_path_free(p);
 	}
-	else
-	{
-		g_warning("Edited name of workspace %d which no longer exists", indices[0]);
-	}
-
-	gtk_tree_path_free(p);
+#endif
 }
 
 static void properties_dialog_destroyed(GtkWidget* widget, PagerData* pager)
@@ -851,7 +945,6 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	gboolean value;
 	GtkTreeViewColumn* column;
 	GtkCellRenderer* cell;
-	int nr_ws, i;
 	GSettings *marco_general_settings = NULL;
 	GSettings *marco_workspaces_settings = NULL;
 
@@ -903,14 +996,7 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 
 	g_signal_connect(G_OBJECT(pager->display_workspaces_toggle), "toggled", (GCallback) display_workspace_names_toggled, pager);
 
-	if (pager->display_mode == WNCK_PAGER_DISPLAY_NAME)
-	{
-		value = TRUE;
-	}
-	else
-	{
-		value = FALSE;
-	}
+	value = pager->display_names;
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(pager->display_workspaces_toggle), value);
 
@@ -944,12 +1030,24 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 
 	g_signal_connect(WID("done_button"), "clicked", (GCallback) close_dialog, pager);
 
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(pager->num_workspaces_spin), wnck_screen_get_workspace_count(pager->screen));
+#ifdef HAVE_X11
+	if (pager->screen)
+	{
+		int i, nr_ws;
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(pager->num_workspaces_spin), wnck_screen_get_workspace_count(pager->screen));
+		wncklet_connect_while_alive(pager->screen, "workspace_created", G_CALLBACK(workspace_created), pager, pager->properties_dialog);
+		wncklet_connect_while_alive(pager->screen, "workspace_destroyed", G_CALLBACK(workspace_destroyed), pager, pager->properties_dialog);
+
+		nr_ws = wnck_screen_get_workspace_count(pager->screen);
+
+		for (i = 0; i < nr_ws; i++)
+		{
+			wncklet_connect_while_alive(G_OBJECT(wnck_screen_get_workspace(pager->screen, i)), "name_changed", G_CALLBACK(workspace_renamed), pager, pager->properties_dialog);
+		}
+	}
+#endif // HAVE_X11
+
 	g_signal_connect(G_OBJECT(pager->num_workspaces_spin), "value_changed", (GCallback) num_workspaces_value_changed, pager);
-
-	wncklet_connect_while_alive(pager->screen, "workspace_created", G_CALLBACK(workspace_created), pager, pager->properties_dialog);
-
-	wncklet_connect_while_alive(pager->screen, "workspace_destroyed", G_CALLBACK(workspace_destroyed), pager, pager->properties_dialog);
 
 	g_signal_connect(G_OBJECT(pager->workspaces_tree), "focus_out_event", (GCallback) workspaces_tree_focused_out, pager);
 
@@ -964,13 +1062,6 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	column = gtk_tree_view_column_new_with_attributes("workspace", cell, "text", 0, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(pager->workspaces_tree), column);
 	g_signal_connect(cell, "edited", (GCallback) workspace_name_edited, pager);
-
-	nr_ws = wnck_screen_get_workspace_count(pager->screen);
-
-	for (i = 0; i < nr_ws; i++)
-	{
-		wncklet_connect_while_alive(G_OBJECT(wnck_screen_get_workspace(pager->screen, i)), "name_changed", G_CALLBACK(workspace_renamed), pager, pager->properties_dialog);
-	}
 
 	update_properties_for_wm(pager);
 }
