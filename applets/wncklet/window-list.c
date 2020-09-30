@@ -27,6 +27,7 @@
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
+#include "wayland-backend.h"
 #endif // HAVE_WAYLAND
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
@@ -138,7 +139,12 @@ static void tasklist_apply_orientation(TasklistData* tasklist)
 	}
 #endif // HAVE_X11
 
-	// Not yet implemented for Wayland
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
+	{
+		wayland_tasklist_set_orientation(tasklist->tasklist, tasklist->orientation);
+	}
+#endif
 }
 
 static void tasklist_set_button_relief(TasklistData* tasklist, GtkReliefStyle relief)
@@ -759,7 +765,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
 	{
-		tasklist->tasklist = gtk_label_new ("[Tasklist not supported on Wayland]");
+		tasklist->tasklist = wayland_tasklist_new();
 	}
 	else
 #endif // HAVE_WAYLAND
