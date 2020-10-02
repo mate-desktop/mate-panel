@@ -16,7 +16,7 @@ AM_CPPFLAGS = \
 	-DMATELOCALEDIR=\""$(datadir)/locale"\" \
 	-DPANELDATADIR=\""$(datadir)/mate-panel"\" \
 	$(DISABLE_DEPRECATED_CFLAGS) \
-	$(GTK_LAYER_SHELL_CFLAGS)
+	$(WAYLAND_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
@@ -152,7 +152,6 @@ mate_panel_CPPFLAGS += \
 	$(WAYLAND_CFLAGS)
 endif
 
-
 mate_panel_LDADD = \
 	$(top_builddir)/mate-panel/mate-submodules/libegg/libegg.la \
 	$(top_builddir)/mate-panel/libmate-panel-applet-private/libmate-panel-applet-private.la \
@@ -161,7 +160,7 @@ mate_panel_LDADD = \
 	$(DCONF_LIBS) \
 	$(XRANDR_LIBS) \
 	$(X_LIBS) \
-	$(GTK_LAYER_SHELL_LIBS) \
+	$(WAYLAND_LIBS) \
 	-lm
 
 if ENABLE_WAYLAND
