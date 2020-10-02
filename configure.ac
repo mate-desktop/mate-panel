@@ -194,7 +194,7 @@ AC_ARG_ENABLE(wayland,
 # Check if we have gtk-layer-shell installed, and thus should build with Wayland support
 have_wayland=no
 if test "x$enable_wayland" != "xno"; then
-  PKG_CHECK_MODULES(GTK_LAYER_SHELL, gtk-layer-shell-0, have_wayland=yes, [
+  PKG_CHECK_MODULES(WAYLAND, gtk-layer-shell-0 wayland-client, have_wayland=yes, [
         if test "x$enable_wayland" = "xyes"; then
           AC_MSG_ERROR([Wayland enabled but GTK Layer Shell library not found])
         fi
@@ -207,8 +207,8 @@ if test "x$have_wayland" = "xyes"; then
   AC_DEFINE(HAVE_WAYLAND, 1, [Have the Wayland development library])
 fi
 
-AC_SUBST(GTK_LAYER_SHELL_CFLAGS)
-AC_SUBST(GTK_LAYER_SHELL_LIBS)
+AC_SUBST(WAYLAND_CFLAGS)
+AC_SUBST(WAYLAND_LIBS)
 
 # Check if we have the X development libraries
 have_x11=no
