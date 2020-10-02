@@ -361,6 +361,7 @@ void
 wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation orient)
 {
 	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+	g_return_if_fail(tasklist);
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (tasklist->list), orient);
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (tasklist->outer_box), orient);
 }
