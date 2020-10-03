@@ -66,10 +66,7 @@ typedef struct {
 
 	GtkWidget* pager;
 
-#ifdef HAVE_X11
 	WnckScreen* screen;
-#endif // HAVE_X11
-
 	PagerWM wm;
 
 	/* Properties: */
@@ -201,7 +198,7 @@ static void update_properties_for_wm(PagerData* pager)
 	}
 }
 
-static void window_manager_changed(PagerData* pager)
+static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 {
 	const char *wm_name = NULL;
 
@@ -239,7 +236,7 @@ static void applet_realized(MatePanelApplet* applet, PagerData* pager)
 	}
 #endif // HAVE_X11
 
-	window_manager_changed(pager);
+	window_manager_changed(pager->screen, pager);
 }
 
 static void applet_unrealized(MatePanelApplet* applet, PagerData* pager)
@@ -609,7 +606,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	{
 		pager->pager = wnck_pager_new();
 		wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
-		pager->screen = NULL;
 	}
 	else
 #endif // HAVE_X11
