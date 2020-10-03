@@ -53,9 +53,7 @@ typedef struct {
 	GtkOrientation orient;
 	int size;
 
-#ifdef HAVE_X11
 	WnckScreen* wnck_screen;
-#endif // HAVE_X11
 
 	guint showing_desktop: 1;
 	guint button_activate;
@@ -73,7 +71,7 @@ static void update_button_display(ShowDesktopData* sdd);
 static void theme_changed_callback(GtkIconTheme* icon_theme, ShowDesktopData* sdd);
 
 static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd);
-static void show_desktop_changed_callback(ShowDesktopData* sdd);
+static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* sdd);
 
 /* this is when the panel orientation changes */
 
@@ -299,13 +297,11 @@ static void applet_destroyed(GtkWidget* applet, ShowDesktopData* sdd)
 		sdd->button_activate = 0;
 	}
 
-#ifdef HAVE_X11
 	if (sdd->wnck_screen != NULL)
 	{
 		g_signal_handlers_disconnect_by_func(sdd->wnck_screen, show_desktop_changed_callback, sdd);
 		sdd->wnck_screen = NULL;
 	}
-#endif // HAVE_X11
 
 	if (sdd->icon_theme != NULL)
 	{
@@ -368,20 +364,22 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 
 	screen = gtk_widget_get_screen(sdd->applet);
 
-#ifdef HAVE_X11
 	if (sdd->wnck_screen != NULL)
 		g_signal_handlers_disconnect_by_func(sdd->wnck_screen, show_desktop_changed_callback, sdd);
 
+	sdd->wnck_screen = NULL;
+
+#ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 		sdd->wnck_screen = wnck_screen_get(gdk_x11_screen_get_screen_number (screen));
+#endif // HAVE_X11
 
 	if (sdd->wnck_screen != NULL)
 		wncklet_connect_while_alive(sdd->wnck_screen, "showing_desktop_changed", G_CALLBACK(show_desktop_changed_callback), sdd, sdd->applet);
 	else
 		g_warning("Could not get WnckScreen!");
-#endif // HAVE_X11
 
-	show_desktop_changed_callback(sdd);
+	show_desktop_changed_callback(sdd->wnck_screen, sdd);
 
 	sdd->icon_theme = gtk_icon_theme_get_for_screen (screen);
 	wncklet_connect_while_alive(sdd->icon_theme, "changed", G_CALLBACK(theme_changed_callback), sdd, sdd->applet);
@@ -573,7 +571,7 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 	update_button_display (sdd);
 }
 
-static void show_desktop_changed_callback(ShowDesktopData* sdd)
+static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* sdd)
 {
 #ifdef HAVE_X11
 	if (sdd->wnck_screen != NULL)
