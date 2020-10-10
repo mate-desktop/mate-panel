@@ -465,13 +465,13 @@ on_factory_appeared (GDBusConnection   *connection,
 		     GTask             *task)
 {
 	MatePanelAppletContainer *container;
-       	gchar                *object_path;
-       	AppletFactoryData    *data;
+    gchar                *object_path;
+    AppletFactoryData    *data;
 
-       	data = g_task_get_task_data (task);
+    data = g_task_get_task_data (task);
 	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
 	container->priv->bus_name = g_strdup (name_owner);
-       	object_path = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_OBJECT_PATH, data->factory_id);
+    object_path = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_OBJECT_PATH, data->factory_id);
 	g_dbus_connection_call (connection,
 				name_owner,
 				object_path,
@@ -512,9 +512,9 @@ mate_panel_applet_container_get_applet (MatePanelAppletContainer *container,
 	applet_id = g_strrstr (iid, "::");
 	if (!applet_id) {
 		g_task_return_new_error (task,
-				         MATE_PANEL_APPLET_CONTAINER_ERROR,
-					 MATE_PANEL_APPLET_CONTAINER_INVALID_APPLET,
-                                         "Invalid applet iid: %s", iid);
+				                 MATE_PANEL_APPLET_CONTAINER_ERROR,
+					             MATE_PANEL_APPLET_CONTAINER_INVALID_APPLET,
+                                 "Invalid applet iid: %s", iid);
 		g_object_unref (task);
 		return;
 	}
@@ -577,9 +577,9 @@ mate_panel_applet_container_add_finish (MatePanelAppletContainer *container,
 				   GAsyncResult         *result,
 				   GError              **error)
 {
-    	g_return_val_if_fail (g_task_is_valid (result, container), FALSE);
-	g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_get_applet);
-    	return g_task_propagate_boolean (G_TASK (result), error);
+    g_return_val_if_fail (g_task_is_valid (result, container), FALSE);
+    g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_get_applet);
+    return g_task_propagate_boolean (G_TASK (result), error);
 }
 
 /* Child Properties */
@@ -601,7 +601,7 @@ set_applet_property_cb (GObject      *source_object,
 		g_task_return_error (task, error);
 	} else {
 		g_variant_unref (retvals);
-	    g_task_return_boolean (task,TRUE);
+        g_task_return_boolean (task,TRUE);
 	}
 
 	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
@@ -623,27 +623,26 @@ mate_panel_applet_container_child_set (MatePanelAppletContainer *container,
 	GDBusProxy               *proxy = container->priv->applet_proxy;
 	const AppletPropertyInfo *info;
 	GTask                    *task;
-    
 	if (!proxy)
 		return NULL;
 
 	info = mate_panel_applet_container_child_property_get_info (property_name);
 	if (!info) {
 		g_task_report_new_error (G_OBJECT (container),
-						         callback, user_data,
+                                 callback, user_data,
                                  NULL,
-						         MATE_PANEL_APPLET_CONTAINER_ERROR,
-						         MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
-						         "%s: Applet has no child property named `%s'",
-						         G_STRLOC, property_name);
+                                 MATE_PANEL_APPLET_CONTAINER_ERROR,
+                                 MATE_PANEL_APPLET_CONTAINER_INVALID_CHILD_PROPERTY,
+                                 "%s: Applet has no child property named `%s'",
+                                 G_STRLOC, property_name);
 		return NULL;
 	}
 
 	task = g_task_new (G_OBJECT (container),
                        cancellable,
                        callback,
-					   user_data);
-    	g_task_set_source_tag (task,mate_panel_applet_container_child_set);
+                       user_data);
+    g_task_set_source_tag (task,mate_panel_applet_container_child_set);
 
 	if (cancellable)
 		g_object_ref (cancellable);
@@ -699,13 +698,13 @@ get_applet_property_cb (GObject      *source_object,
         	return;
     	}
 
-    	item = g_variant_get_child_value (retvals, 0);
-    	value = g_variant_get_variant (item);
-    	g_variant_unref (item);
-    	g_variant_unref (retvals);
+    item = g_variant_get_child_value (retvals, 0);
+    value = g_variant_get_variant (item);
+    g_variant_unref (item);
+    g_variant_unref (retvals);
 	
-    	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
-    	g_task_return_pointer (task,value,(GDestroyNotify) g_variant_unref);
+    container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
+    g_task_return_pointer (task,value,(GDestroyNotify) g_variant_unref);
 	g_hash_table_remove (container->priv->pending_ops, task);
 	g_object_unref (container);
 	g_object_unref (task);
@@ -771,10 +770,10 @@ mate_panel_applet_container_child_get_finish (MatePanelAppletContainer *containe
 					 GAsyncResult         *result,
 					 GError              **error)
 {
-    	g_return_val_if_fail (g_task_is_valid (result, container), NULL);
+    g_return_val_if_fail (g_task_is_valid (result, container), NULL);
 	g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_child_get);
    
-    	return g_variant_ref (g_task_propagate_pointer (G_TASK (result), error));
+    return g_variant_ref (g_task_propagate_pointer (G_TASK (result), error));
 }
 
 static void
@@ -815,7 +814,7 @@ mate_panel_applet_container_child_popup_menu (MatePanelAppletContainer *containe
                            cancellable,
                            callback,
 			   user_data);
-    	g_task_set_source_tag (task,mate_panel_applet_container_child_popup_menu);
+    g_task_set_source_tag (task,mate_panel_applet_container_child_popup_menu);
 
 	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
 				g_dbus_proxy_get_name (proxy),
@@ -835,9 +834,9 @@ mate_panel_applet_container_child_popup_menu_finish (MatePanelAppletContainer *c
 						GAsyncResult         *result,
 						GError              **error)
 {
-    	g_return_val_if_fail (g_task_is_valid (result, container), FALSE);
-	g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_child_popup_menu);
-    	return g_task_propagate_boolean (G_TASK (result), error);
+    g_return_val_if_fail (g_task_is_valid (result, container), FALSE);
+    g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_child_popup_menu);
+    return g_task_propagate_boolean (G_TASK (result), error);
 
 }
 
