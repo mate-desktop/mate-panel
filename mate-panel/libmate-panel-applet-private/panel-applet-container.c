@@ -360,7 +360,6 @@ on_proxy_appeared (GObject      *source_object,
 	proxy = g_dbus_proxy_new_finish (res, &error);
 	if (!proxy) {
 		g_task_return_error (task, error);
-		g_error_free (error);
 		g_object_unref (task);
 
 		return;
@@ -414,7 +413,6 @@ get_applet_cb (GObject      *source_object,
 	retvals = g_dbus_connection_call_finish (connection, res, &error);
 	if (!retvals) {
 		g_task_return_error (task, error);
-		g_error_free (error);
 		g_object_unref (task);
 
 		return;
@@ -601,13 +599,12 @@ set_applet_property_cb (GObject      *source_object,
 		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
 			g_warning ("Error setting property: %s\n", error->message);
 		g_task_return_error (task, error);
-		g_error_free (error);
 	} else {
 		g_variant_unref (retvals);
+	    g_task_return_boolean (task,TRUE);
 	}
 
 	container = MATE_PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
-	g_task_return_boolean (task,TRUE);
 	g_hash_table_remove (container->priv->pending_ops, task);
 	g_object_unref (task);
 
@@ -699,7 +696,6 @@ get_applet_property_cb (GObject      *source_object,
 		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
 			g_warning ("Error getting property: %s\n", error->message);
 		g_task_return_error (task, error);
-		g_error_free (error);
         	return;
     	}
 
@@ -794,7 +790,6 @@ child_popup_menu_cb (GObject      *source_object,
 	retvals = g_dbus_connection_call_finish (connection, res, &error);
 	if (!retvals) {
 		g_task_return_error (task, error);
-		g_error_free (error);
 	} else {
 		g_variant_unref (retvals);
 	}
