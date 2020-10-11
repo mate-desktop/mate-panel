@@ -59,6 +59,8 @@ GTKDOC_LIBS =						\
 
 include $(top_srcdir)/gtk-doc.make
 
+DISTCLEANFILES = $(DOC_MODULE).actions
+
 dist-hook-local:
 #	mkdir $(distdir)/TEXT;          \
 #	for f in $(srcdir)/TEXT/* ; do  \
