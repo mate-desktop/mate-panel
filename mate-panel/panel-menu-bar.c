@@ -178,7 +178,8 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->desktop_item);
 
 	panel_menu_bar_setup_tooltip(menubar);
-	panel_menu_bar_update_visibility(menubar->priv->settings, NULL, menubar);
+	
+    panel_menu_bar_update_visibility(menubar->priv->settings, NULL, menubar);
 	g_signal_connect(menubar->priv->settings, "changed", G_CALLBACK (panel_menu_bar_update_visibility), menubar);
 
 	panel_menu_bar_update_text_gravity(menubar);
