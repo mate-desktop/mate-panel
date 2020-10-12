@@ -142,27 +142,6 @@ panel_menu_bar_update_visibility (GSettings    *settings,
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item), NULL);
 }
 
-static void set_menu_bar_font_size (PanelMenuBar *menubar)
-{
-	GtkCssProvider *provider;
-    gchar          *css = NULL;
-    gint            font_size;
-	
-	menubar->priv = panel_menu_bar_get_instance_private (menubar);
-    font_size = g_settings_get_enum (menubar->priv->settings, "font-size");
-	if (font_size > 0) 
-    {
-	    provider = gtk_css_provider_new ();
-        css = g_strdup_printf ("menubar {font-size: %dpx}",font_size);
-	    gtk_css_provider_load_from_data (provider, css, -1, NULL);
-	    gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (menubar)),
-		GTK_STYLE_PROVIDER (provider),
-		GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-	    g_object_unref (provider);
-	    g_free (css);
-    }
-
-}
 static void panel_menu_bar_init(PanelMenuBar* menubar)
 {
 	GtkCssProvider *provider;
@@ -199,7 +178,6 @@ static void panel_menu_bar_init(PanelMenuBar* menubar)
 	gtk_menu_shell_append(GTK_MENU_SHELL(menubar), menubar->priv->desktop_item);
 
 	panel_menu_bar_setup_tooltip(menubar);
-    set_menu_bar_font_size (menubar);
 	panel_menu_bar_update_visibility(menubar->priv->settings, NULL, menubar);
 	g_signal_connect(menubar->priv->settings, "changed", G_CALLBACK (panel_menu_bar_update_visibility), menubar);
 
