@@ -65,7 +65,7 @@ wl_registry_handle_global (void *_data,
 			   const char *interface,
 			   uint32_t version)
 {
-	// pull out needed globals
+	/* pull out needed globals */
 	if (strcmp (interface, zwlr_foreign_toplevel_manager_v1_interface.name) == 0)
 	{
 		g_warn_if_fail (zwlr_foreign_toplevel_manager_v1_interface.version == 2);
@@ -208,7 +208,7 @@ foreign_toplevel_handle_app_id (void *data,
 				struct zwlr_foreign_toplevel_handle_v1 *toplevel,
 				const char *app_id)
 {
-	// ignore
+	/* ignore */
 }
 
 static void
@@ -216,7 +216,7 @@ foreign_toplevel_handle_output_enter (void *data,
 				      struct zwlr_foreign_toplevel_handle_v1 *toplevel,
 				      struct wl_output *output)
 {
-	// ignore
+	/* ignore */
 }
 
 static void
@@ -224,7 +224,7 @@ foreign_toplevel_handle_output_leave (void *data,
 				      struct zwlr_foreign_toplevel_handle_v1 *toplevel,
 				      struct wl_output *output)
 {
-	// ignore
+	/* ignore */
 }
 
 static void
@@ -257,7 +257,7 @@ static void
 foreign_toplevel_handle_done (void *data,
 			      struct zwlr_foreign_toplevel_handle_v1 *toplevel)
 {
-	// ignore
+	/* ignore */
 }
 
 static void

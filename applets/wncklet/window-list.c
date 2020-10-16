@@ -23,12 +23,12 @@
 #include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
 #include "wayland-backend.h"
-#endif // HAVE_WAYLAND
+#endif /* HAVE_WAYLAND */
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
@@ -41,7 +41,7 @@
 
 #ifdef HAVE_WINDOW_PREVIEWS
 #define WINDOW_LIST_PREVIEW_SCHEMA "org.mate.panel.applet.window-list-previews"
-#endif // HAVE_WINDOW_PREVIEWS
+#endif /* HAVE_WINDOW_PREVIEWS */
 
 typedef enum {
   TASKLIST_NEVER_GROUP,
@@ -125,9 +125,9 @@ static void tasklist_update(TasklistData* tasklist)
 		wnck_tasklist_set_include_all_workspaces(WNCK_TASKLIST(tasklist->tasklist), tasklist->include_all_workspaces);
 		wnck_tasklist_set_switch_workspace_on_unminimize(WNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
-	// Not implemented for Wayland
+	/* Not implemented for Wayland */
 }
 
 static void tasklist_apply_orientation(TasklistData* tasklist)
@@ -137,7 +137,7 @@ static void tasklist_apply_orientation(TasklistData* tasklist)
 	{
 		wnck_tasklist_set_orientation(WNCK_TASKLIST(tasklist->tasklist), tasklist->orientation);
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
@@ -154,9 +154,9 @@ static void tasklist_set_button_relief(TasklistData* tasklist, GtkReliefStyle re
 	{
 		wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), relief);
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
-	// Not implemented for Wayland
+	/* Not implemented for Wayland */
 }
 
 static const int* tasklist_get_size_hint_list(TasklistData* tasklist, int* n_elements)
@@ -167,10 +167,10 @@ static const int* tasklist_get_size_hint_list(TasklistData* tasklist, int* n_ele
 		return wnck_tasklist_get_size_hint_list(WNCK_TASKLIST(tasklist->tasklist), n_elements);
 	}
 	else
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	{
-		// Not implemented for Wayland
+		/* Not implemented for Wayland */
 		*n_elements = 0;
 		return NULL;
 	}
@@ -400,8 +400,8 @@ static gboolean applet_leave_notify_event (WnckTasklist *tl, GList *wnck_windows
 
 	return FALSE;
 }
-#endif // HAVE_WINDOW_PREVIEWS
-#endif // HAVE_X11
+#endif /* HAVE_WINDOW_PREVIEWS */
+#endif /* HAVE_X11 */
 
 static void applet_change_pixel_size(MatePanelApplet* applet, gint size, TasklistData* tasklist)
 {
@@ -639,7 +639,7 @@ static void applet_size_allocate(GtkWidget *widget, GtkAllocation *allocation, T
 }
 
 #ifdef HAVE_X11
-// Currently only used on X11, but should work on Wayland as well when needed
+/* Currently only used on X11, but should work on Wayland as well when needed */
 static GdkPixbuf* icon_loader_func(const char* icon, int size, unsigned int flags, void* data)
 {
 	TasklistData* tasklist;
@@ -685,7 +685,7 @@ static GdkPixbuf* icon_loader_func(const char* icon, int size, unsigned int flag
 
 	return retval;
 }
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 gboolean window_list_applet_fill(MatePanelApplet* applet)
 {
@@ -757,10 +757,10 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_WINDOW_PREVIEWS
 		g_signal_connect(G_OBJECT(tasklist->tasklist), "task_enter_notify", G_CALLBACK(applet_enter_notify_event), tasklist);
 		g_signal_connect(G_OBJECT(tasklist->tasklist), "task_leave_notify", G_CALLBACK(applet_leave_notify_event), tasklist);
-#endif // HAVE_WINDOW_PREVIEWS
+#endif /* HAVE_WINDOW_PREVIEWS */
 	}
 	else
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
@@ -768,7 +768,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 		tasklist->tasklist = wayland_tasklist_new();
 	}
 	else
-#endif // HAVE_WAYLAND
+#endif /* HAVE_WAYLAND */
 
 	{
 		tasklist->tasklist = gtk_label_new ("[Tasklist not supported on this platform]");
@@ -960,7 +960,7 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	GtkWidget* button;
 #ifdef HAVE_WINDOW_PREVIEWS
 	GtkAdjustment *adjustment;
-#endif // HAVE_WINDOW_PREVIEWS
+#endif /* HAVE_WINDOW_PREVIEWS */
 
 	tasklist->show_current_radio = WID("show_current_radio");
 	tasklist->show_all_radio = WID("show_all_radio");

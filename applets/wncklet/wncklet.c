@@ -109,7 +109,7 @@ WnckScreen* wncklet_get_screen(GtkWidget* applet)
 
 	return wnck_screen_get(screen_num);
 }
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback func, gpointer func_data, gpointer alive_object)
 {
@@ -134,7 +134,7 @@ static gboolean wncklet_factory(MatePanelApplet* applet, const char* iid, gpoint
 			type_registered = TRUE;
 		}
 	}
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	if (!strcmp(iid, "WindowMenuApplet"))
 		retval = window_menu_applet_fill(applet);
