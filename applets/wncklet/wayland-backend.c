@@ -314,6 +314,21 @@ toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 	}
 }
 
+static gboolean on_toplevel_button_press (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+{
+	/* Assume event is a button press */
+	if (((GdkEventButton*)event)->button == GDK_BUTTON_SECONDARY)
+	{
+		/* Returning true for secondary clicks suppresses the applet's default context menu,
+		 * which we do not want to show up for task buttons */
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
 static ToplevelTask *
 toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handle_v1 *toplevel)
 {
@@ -338,6 +353,12 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 				toplevel_task_key,
 				task,
 				(GDestroyNotify)toplevel_task_disconnected_from_widget);
+
+	g_signal_connect (G_OBJECT (task->button),
+			  "button-press-event",
+			  G_CALLBACK (on_toplevel_button_press),
+			  task);
+
 	return task;
 }
 
