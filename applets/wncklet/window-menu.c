@@ -39,11 +39,11 @@
 #include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
-#endif // HAVE_WAYLAND
+#endif /* HAVE_WAYLAND */
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -257,7 +257,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 
 	}
 	else
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
@@ -265,7 +265,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 		window_menu->selector = gtk_label_new ("[Window menu not supported on Wayland]");
 	}
 	else
-#endif // HAVE_WAYLAND
+#endif /* HAVE_WAYLAND */
 
 	{
 		window_menu->selector = gtk_label_new ("[Window menu not supported on this platform]");

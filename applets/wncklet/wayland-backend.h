@@ -22,7 +22,7 @@
 #ifndef _WNCKLET_APPLET_WAYLAND_BACKEND_H_
 #define _WNCKLET_APPLET_WAYLAND_BACKEND_H_
 
-#ifdef PACKAGE_NAME // only check HAVE_WAYLAND if config.h has been included
+#ifdef PACKAGE_NAME /* only check HAVE_WAYLAND if config.h has been included */
 #ifndef HAVE_WAYLAND
 #error file should only be included when HAVE_WAYLAND is enabled
 #endif
@@ -43,6 +43,6 @@ void wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientatio
 }
 #endif
 
-#endif // _WNCKLET_APPLET_WAYLAND_BACKEND_H_
+#endif /* _WNCKLET_APPLET_WAYLAND_BACKEND_H_ */
 
 

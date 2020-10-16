@@ -372,7 +372,7 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 		sdd->wnck_screen = wnck_screen_get(gdk_x11_screen_get_screen_number (screen));
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	if (sdd->wnck_screen != NULL)
 		wncklet_connect_while_alive(sdd->wnck_screen, "showing_desktop_changed", G_CALLBACK(show_desktop_changed_callback), sdd, sdd->applet);
@@ -529,7 +529,7 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 	}
 	else
 #endif
-	{ // not using X11
+	{ /* not using X11 */
 		can_show_desktop = FALSE;
 	}
 
@@ -566,7 +566,7 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 #ifdef HAVE_X11
 	if (sdd->wnck_screen != NULL)
 		wnck_screen_toggle_showing_desktop(sdd->wnck_screen, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)));
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	update_button_display (sdd);
 }
@@ -576,7 +576,7 @@ static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* s
 #ifdef HAVE_X11
 	if (sdd->wnck_screen != NULL)
 		sdd->showing_desktop = wnck_screen_get_showing_desktop(sdd->wnck_screen);
-#endif // HAVE_X11
+#endif /* HAVE_X11 */
 
 	update_button_state (sdd);
 }
