@@ -73,6 +73,7 @@ typedef struct {
 
 	/* Properties: */
 	GtkWidget* properties_dialog;
+	GtkWidget* wayland_info_label;
 	GtkWidget* show_current_radio;
 	GtkWidget* show_all_radio;
 #ifdef HAVE_WINDOW_PREVIEWS
@@ -959,6 +960,8 @@ static void setup_sensitivity(TasklistData* tasklist, GtkBuilder* builder, const
 #ifdef HAVE_WAYLAND
 static void setup_dialog_wayland(TasklistData* tasklist)
 {
+	gtk_widget_show(tasklist->wayland_info_label);
+
 	gtk_widget_set_sensitive(tasklist->window_list_content_box, FALSE);
 	gtk_widget_set_sensitive(tasklist->window_grouping_box, FALSE);
 	gtk_widget_set_sensitive(tasklist->minimized_windows_box, FALSE);
@@ -976,6 +979,7 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	GtkAdjustment *adjustment;
 #endif /* HAVE_WINDOW_PREVIEWS */
 
+	tasklist->wayland_info_label = WID("wayland_info_label");
 	tasklist->show_current_radio = WID("show_current_radio");
 	tasklist->show_all_radio = WID("show_all_radio");
 
