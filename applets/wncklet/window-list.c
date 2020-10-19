@@ -76,6 +76,7 @@ typedef struct {
 	GtkWidget* show_current_radio;
 	GtkWidget* show_all_radio;
 #ifdef HAVE_WINDOW_PREVIEWS
+	GtkWidget* window_thumbnail_box;
 	GtkWidget* show_thumbnails_check;
 	GtkWidget* thumbnail_size_label;
 	GtkWidget* thumbnail_size_spin;
@@ -86,6 +87,8 @@ typedef struct {
 	GtkWidget* move_minimized_radio;
 	GtkWidget* change_workspace_radio;
 	GtkWidget* minimized_windows_box;
+	GtkWidget* window_grouping_box;
+	GtkWidget* window_list_content_box;
 
 	GSettings* settings;
 #ifdef HAVE_WINDOW_PREVIEWS
@@ -953,6 +956,19 @@ static void setup_sensitivity(TasklistData* tasklist, GtkBuilder* builder, const
 	}
 }
 
+#ifdef HAVE_WAYLAND
+static void setup_dialog_wayland(TasklistData* tasklist)
+{
+	gtk_widget_set_sensitive(tasklist->window_list_content_box, FALSE);
+	gtk_widget_set_sensitive(tasklist->window_grouping_box, FALSE);
+	gtk_widget_set_sensitive(tasklist->minimized_windows_box, FALSE);
+
+#ifdef HAVE_WINDOW_PREVIEWS
+	gtk_widget_set_sensitive(tasklist->window_thumbnail_box, FALSE);
+#endif /* HAVE_WINDOW_PREVIEWS */
+}
+#endif /* HAVE_WAYLAND */
+
 static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 {
 	GtkWidget* button;
@@ -972,6 +988,7 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	setup_sensitivity(tasklist, builder, "never_group_radio", "auto_group_radio", "always_group_radio", "group-windows" /* key */);
 
 #ifdef HAVE_WINDOW_PREVIEWS
+	tasklist->window_thumbnail_box = WID("window_thumbnail_box");
 	tasklist->show_thumbnails_check = WID("show_thumbnails_check");
 	tasklist->thumbnail_size_label = WID("thumbnail_size_label");
 	tasklist->thumbnail_size_spin = WID("thumbnail_size_spin");
@@ -992,12 +1009,14 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	gtk_adjustment_set_upper (adjustment, 999);
 	gtk_adjustment_set_step_increment (adjustment, 1);
 #else
-	gtk_widget_hide(WID("window_thumbnails"));
+	gtk_widget_hide(WID("window_thumbnail_box"));
 #endif
 
 	tasklist->move_minimized_radio = WID("move_minimized_radio");
 	tasklist->change_workspace_radio = WID("change_workspace_radio");
 	tasklist->minimized_windows_box = WID("minimized_windows_box");
+	tasklist->window_grouping_box = WID("window_grouping_box");
+	tasklist->window_list_content_box = WID("window_list_content_box");
 
 	setup_sensitivity(tasklist, builder, "move_minimized_radio", "change_workspace_radio", NULL, "move-unminimized-windows" /* key */);
 
@@ -1028,6 +1047,12 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 
 	g_signal_connect_swapped(WID("done_button"), "clicked", (GCallback) gtk_widget_hide, tasklist->properties_dialog);
 	g_signal_connect(tasklist->properties_dialog, "response", G_CALLBACK(response_cb), tasklist);
+
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default())) {
+		setup_dialog_wayland(tasklist);
+	}
+#endif /* HAVE_WAYLAND */
 }
 
 static void display_properties_dialog(GtkAction* action, TasklistData* tasklist)
