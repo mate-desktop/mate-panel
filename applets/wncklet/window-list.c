@@ -83,9 +83,9 @@ typedef struct {
 	GtkWidget* never_group_radio;
 	GtkWidget* auto_group_radio;
 	GtkWidget* always_group_radio;
-	GtkWidget* minimized_windows_label;
 	GtkWidget* move_minimized_radio;
 	GtkWidget* change_workspace_radio;
+	GtkWidget* minimized_windows_box;
 
 	GSettings* settings;
 #ifdef HAVE_WINDOW_PREVIEWS
@@ -474,9 +474,7 @@ static void tasklist_properties_update_content_radio(TasklistData* tasklist)
 	if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)))
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
-	gtk_widget_set_sensitive(tasklist->minimized_windows_label, tasklist->include_all_workspaces);
-	gtk_widget_set_sensitive(tasklist->move_minimized_radio, tasklist->include_all_workspaces);
-	gtk_widget_set_sensitive(tasklist->change_workspace_radio, tasklist->include_all_workspaces);
+	gtk_widget_set_sensitive(tasklist->minimized_windows_box, tasklist->include_all_workspaces);
 }
 
 static void display_all_workspaces_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
@@ -997,9 +995,9 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	gtk_widget_hide(WID("window_thumbnails"));
 #endif
 
-	tasklist->minimized_windows_label = WID("minimized_windows_label");
 	tasklist->move_minimized_radio = WID("move_minimized_radio");
 	tasklist->change_workspace_radio = WID("change_workspace_radio");
+	tasklist->minimized_windows_box = WID("minimized_windows_box");
 
 	setup_sensitivity(tasklist, builder, "move_minimized_radio", "change_workspace_radio", NULL, "move-unminimized-windows" /* key */);
 
