@@ -42,15 +42,6 @@
 static gboolean panel_background_composite (PanelBackground *background);
 static void load_background_file (PanelBackground *background);
 
-
-static void
-set_pixbuf_background (PanelBackground *background)
-{
-	g_assert (background->composited_pattern != NULL);
-
-	gdk_window_set_background_pattern (background->window, background->composited_pattern);
-}
-
 void panel_background_apply_css (PanelBackground *background, GtkWidget *widget)
 {
 	GtkStyleContext     *context;
@@ -143,21 +134,12 @@ panel_background_prepare (PanelBackground *background)
 		break;
 
 	case PANEL_BACK_COLOR:
-#ifdef HAVE_X11
-		if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) &&
-		    background->has_alpha &&
-		    !gdk_window_check_composited_wm(background->window))
-			set_pixbuf_background (background);
-		else
-#endif /* HAVE_X11 */
-		{ /* Not using X11, or pixbuf background not needed */
-			gdk_window_set_background_rgba (background->window,
-			                                &background->color);
-		}
+		gdk_window_set_background_rgba (background->window, &background->color);
 		break;
 
 	case PANEL_BACK_IMAGE:
-		set_pixbuf_background (background);
+		g_assert (background->composited_pattern);
+		gdk_window_set_background_pattern (background->window, background->composited_pattern);
 		break;
 
 	default:
@@ -195,69 +177,6 @@ free_composited_resources (PanelBackground *background)
 	background->composited_pattern = NULL;
 }
 
-#ifdef HAVE_X11
-
-static void _panel_background_transparency(GdkScreen* screen,PanelBackground* background)
-{
-	panel_background_composite(background);
-}
-
-static void
-background_changed (PanelBackgroundMonitor *monitor,
-		    PanelBackground        *background)
-{
-	GdkPixbuf *tmp;
-
-	g_return_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()));
-
-	tmp = background->desktop;
-
-	background->desktop = panel_background_monitor_get_region (
-					background->monitor,
-					background->region.x,
-					background->region.y,
-					background->region.width,
-					background->region.height);
-
-	if (tmp)
-		g_object_unref (tmp);
-
-	panel_background_composite (background);
-}
-
-static GdkPixbuf *
-get_desktop_pixbuf (PanelBackground *background)
-{
-	GdkPixbuf *desktop;
-
-	g_return_val_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()), NULL);
-
-	if (!background->monitor) {
-		background->monitor =
-			panel_background_monitor_get_for_screen (
-				gdk_window_get_screen (background->window));
-
-		background->monitor_signal =
-			g_signal_connect (
-			background->monitor, "changed",
-                        G_CALLBACK (background_changed), background);
-	}
-	g_signal_connect(gdk_window_get_screen(background->window), "composited-changed",
-			 G_CALLBACK(_panel_background_transparency),
-			 background);
-
-	desktop = panel_background_monitor_get_region (
-				background->monitor,
-				background->region.x,
-				background->region.y,
-				background->region.width,
-				background->region.height);
-
-	return desktop;
-}
-
-#endif /* HAVE_X11 */
-
 static cairo_pattern_t *
 composite_image_onto_desktop (PanelBackground *background)
 {
@@ -279,24 +198,6 @@ composite_image_onto_desktop (PanelBackground *background)
 
 	cr = cairo_create (surface);
 
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
-		if (!background->desktop)
-			background->desktop = get_desktop_pixbuf (background);
-
-		if(!gdk_window_check_composited_wm (background->window)){
-			cairo_set_source_rgb (cr, 1, 1, 1);
-			cairo_paint (cr);
-
-			if (background->desktop) {
-				gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
-				cairo_rectangle (cr, 0, 0, width, height);
-				cairo_fill (cr);
-			}
-		}
-	}
-#endif /* HAVE_X11 */
-
 	gdk_cairo_set_source_pixbuf (cr, background->transformed_image, 0, 0);
 	pattern = cairo_get_source (cr);
 	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
@@ -311,71 +212,6 @@ composite_image_onto_desktop (PanelBackground *background)
 	return pattern;
 }
 
-static cairo_pattern_t *
-composite_color_onto_desktop (PanelBackground *background)
-{
-	cairo_surface_t *surface;
-	cairo_pattern_t *pattern;
-	cairo_t *cr;
-
-	surface = gdk_window_create_similar_surface (background->window,
-						     CAIRO_CONTENT_COLOR_ALPHA,
-						     background->region.width,
-						     background->region.height);
-	if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS) {
-		cairo_surface_destroy (surface);
-		return NULL;
-	}
-
-	cr = cairo_create (surface);
-
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
-		if (!background->desktop)
-			background->desktop = get_desktop_pixbuf (background);
-
-		if(!gdk_window_check_composited_wm (background->window)){
-			if (background->desktop) {
-				gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
-				cairo_paint (cr);
-			}
-		}
-	}
-#endif /* HAVE_X11 */
-
-	gdk_cairo_set_source_rgba (cr, &background->color);
-	cairo_paint (cr);
-
-	cairo_destroy (cr);
-
-	pattern = cairo_pattern_create_for_surface (surface);
-	cairo_surface_destroy (surface);
-
-	return pattern;
-}
-
-static cairo_pattern_t *
-get_composited_pattern (PanelBackground *background)
-{
-	cairo_pattern_t *retval = NULL;
-
-	switch (background->type) {
-	case PANEL_BACK_NONE:
-		break;
-	case PANEL_BACK_COLOR:
-		retval = composite_color_onto_desktop (background);
-		break;
-	case PANEL_BACK_IMAGE:
-		retval = composite_image_onto_desktop (background);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	return retval;
-}
-
 static gboolean
 panel_background_composite (PanelBackground *background)
 {
@@ -386,16 +222,12 @@ panel_background_composite (PanelBackground *background)
 
 	switch (background->type) {
 	case PANEL_BACK_NONE:
-		break;
 	case PANEL_BACK_COLOR:
-		if (background->has_alpha)
-				background->composited_pattern =
-					get_composited_pattern (background);
 		break;
 	case PANEL_BACK_IMAGE:
         if (background->transformed_image) {
 			background->composited_pattern =
-				get_composited_pattern (background);
+				composite_image_onto_desktop (background);
 		}
 		break;
 	default:
@@ -568,25 +400,6 @@ panel_background_transform (PanelBackground *background)
 	return TRUE;
 }
 
-#ifdef HAVE_X11
-static void
-disconnect_background_monitor (PanelBackground *background)
-{
-	g_return_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()));
-	if (background->monitor) {
-		g_signal_handler_disconnect (
-			background->monitor, background->monitor_signal);
-		background->monitor_signal = -1;
-		g_object_unref (background->monitor);
-	}
-	background->monitor = NULL;
-
-	if (background->desktop)
-		g_object_unref (background->desktop);
-	background->desktop = NULL;
-}
-#endif /* HAVE_X11 */
-
 static void
 panel_background_update_has_alpha (PanelBackground *background)
 {
@@ -600,13 +413,6 @@ panel_background_update_has_alpha (PanelBackground *background)
 		has_alpha = gdk_pixbuf_get_has_alpha (background->loaded_image);
 
 	background->has_alpha = has_alpha;
-
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
-		if (!has_alpha)
-			disconnect_background_monitor (background);
-	}
-#endif /* HAVE_X11 */
 }
 
 static void
@@ -903,12 +709,6 @@ panel_background_change_region (PanelBackground *background,
 
 	background->orientation = orientation;
 
-#ifdef HAVE_X11
-	if (background->desktop)
-		g_object_unref (background->desktop);
-	background->desktop = NULL;
-#endif /* HAVE_X11 */
-
 	if (need_to_retransform || ! background->transformed)
 		/* only retransform the background if we have in
 		   fact changed size/orientation */
@@ -948,12 +748,6 @@ panel_background_init (PanelBackground              *background,
 	background->transformed_image = NULL;
 	background->composited_pattern = NULL;
 
-#ifdef HAVE_X11
-	background->monitor        = NULL;
-	background->desktop        = NULL;
-	background->monitor_signal = -1;
-#endif /* HAVE_X11 */
-
 	background->window   = NULL;
 
 	background->default_pattern     = NULL;
@@ -976,12 +770,6 @@ panel_background_init (PanelBackground              *background,
 void
 panel_background_free (PanelBackground *background)
 {
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
-		disconnect_background_monitor (background);
-	}
-#endif /* HAVE_X11 */
-
 	free_transformed_resources (background);
 
 	if (background->image)
@@ -991,12 +779,6 @@ panel_background_free (PanelBackground *background)
 	if (background->loaded_image)
 		g_object_unref (background->loaded_image);
 	background->loaded_image = NULL;
-
-#ifdef HAVE_X11
-	if (background->monitor)
-		g_object_unref (background->monitor);
-	background->monitor = NULL;
-#endif /* HAVE_X11 */
 
 	if (background->window)
 		g_object_unref (background->window);
@@ -1019,13 +801,7 @@ panel_background_make_string (PanelBackground *background,
 
 	effective_type = panel_background_effective_type (background);
 
-#ifdef HAVE_X11
-	if (is_using_x11 () &&
-	    (effective_type == PANEL_BACK_IMAGE ||
-	     (effective_type == PANEL_BACK_COLOR &&
-	      background->has_alpha &&
-	      !gdk_window_check_composited_wm(background->window)))) {
-
+	if (effective_type == PANEL_BACK_IMAGE) {
 		cairo_surface_t *surface;
 
 		if (!background->composited_pattern)
@@ -1038,9 +814,7 @@ panel_background_make_string (PanelBackground *background,
 			return NULL;
 
 		retval = g_strdup_printf ("pixmap:%d,%d,%d", (guint32)cairo_xlib_surface_get_drawable (surface), x, y);
-	} else
-#endif
-	if (effective_type == PANEL_BACK_COLOR) {
+	} else if (effective_type == PANEL_BACK_COLOR) {
 		gchar *rgba = gdk_rgba_to_string (&background->color);
 		retval = g_strdup_printf (
 				"color:%s",

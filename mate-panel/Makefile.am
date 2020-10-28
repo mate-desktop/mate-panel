@@ -72,7 +72,6 @@ panel_sources += \
 	panel-xutils.c \
 	panel-force-quit.c \
 	panel-action-protocol.c \
-	panel-background-monitor.c \
 	panel-struts.c
 endif
 
@@ -133,7 +132,6 @@ panel_sources += \
 	panel-xutils.h \
 	panel-force-quit.h \
 	panel-action-protocol.h \
-	panel-background-monitor.h \
 	panel-struts.h
 endif
 
