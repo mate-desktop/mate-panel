@@ -239,20 +239,6 @@ void
 panel_profile_set_background_color (PanelToplevel *toplevel,
 				    GdkRGBA       *color)
 {
-	panel_profile_set_background_gdk_rgba (toplevel, color);
-}
-
-void
-panel_profile_get_background_color (PanelToplevel *toplevel,
-				    GdkRGBA       *color)
-{
-	panel_profile_get_background_gdk_rgba (toplevel, color);
-}
-
-void
-panel_profile_set_background_gdk_rgba (PanelToplevel *toplevel,
-					GdkRGBA      *color)
-{
 	char *color_str;
 
 	color_str = gdk_rgba_to_string (color);
@@ -263,8 +249,8 @@ panel_profile_set_background_gdk_rgba (PanelToplevel *toplevel,
 }
 
 void
-panel_profile_get_background_gdk_rgba (PanelToplevel *toplevel,
-					GdkRGBA      *color)
+panel_profile_get_background_color (PanelToplevel *toplevel,
+				    GdkRGBA       *color)
 {
 	char *color_str;
 
@@ -524,7 +510,7 @@ panel_profile_load_background (PanelToplevel *toplevel)
 	background = &panel_widget->toplevel->background;
 	background_type = panel_profile_get_background_type (toplevel);
 
-	panel_profile_get_background_gdk_rgba (toplevel, &color);
+	panel_profile_get_background_color (toplevel, &color);
 
 	image = get_background_image (toplevel, &fit, &stretch, &rotate);
 
