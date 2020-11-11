@@ -493,22 +493,6 @@ panel_profile_is_writable_attached_tooltip (PanelToplevel *toplevel)
 	return is_writable;
 }
 
-static void
-get_background_color (PanelToplevel *toplevel,
-					  GdkRGBA       *color)
-{
-	char       *color_str;
-	color_str = g_settings_get_string (toplevel->background_settings, "color");
-	if (!color_str || !gdk_rgba_parse (color, color_str)) {
-		color->red   = 0;
-		color->green = 0;
-		color->blue  = 0;
-		color->alpha  = 1;
-	}
-
-	g_free (color_str);
-}
-
 static char *
 get_background_image (PanelToplevel *toplevel,
 		      gboolean     *fit,
@@ -540,7 +524,7 @@ panel_profile_load_background (PanelToplevel *toplevel)
 	background = &panel_widget->toplevel->background;
 	background_type = panel_profile_get_background_type (toplevel);
 
-	get_background_color (toplevel, &color);
+	panel_profile_get_background_gdk_rgba (toplevel, &color);
 
 	image = get_background_image (toplevel, &fit, &stretch, &rotate);
 
