@@ -454,11 +454,21 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_opacity_changed),
 				  dialog);
 
+	gboolean slider_active = TRUE;
+
+	if ( ! gdk_screen_is_composited(gdk_screen_get_default())) {
+		slider_active = FALSE;
+	}
+
 	if ( ! panel_profile_background_key_is_writable (dialog->toplevel, "opacity")) {
+		slider_active = FALSE;
+		gtk_widget_show (dialog->writability_warn_background);
+	}
+
+	if ( ! slider_active) {
 		gtk_widget_set_sensitive (dialog->opacity_scale, FALSE);
 		gtk_widget_set_sensitive (dialog->opacity_label, FALSE);
 		gtk_widget_set_sensitive (dialog->opacity_legend, FALSE);
-		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
 
