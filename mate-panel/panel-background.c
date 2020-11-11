@@ -455,26 +455,6 @@ panel_background_set_type (PanelBackground     *background,
 }
 
 static void
-panel_background_set_opacity_no_update (PanelBackground *background,
-				        guint16          opacity)
-{
-	background->color.alpha = opacity / 65535.0;
-	panel_background_update_has_alpha (background);
-}
-
-void
-panel_background_set_opacity (PanelBackground *background,
-			      guint16          opacity)
-{
-	if (background->color.alpha == (opacity / 65535.0))
-		return;
-
-	free_transformed_resources (background);
-	panel_background_set_opacity_no_update (background, opacity);
-	panel_background_transform (background);
-}
-
-static void
 panel_background_set_color_no_update (PanelBackground *background,
 				      const GdkRGBA   *color)
 {
