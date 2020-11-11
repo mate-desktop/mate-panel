@@ -83,8 +83,6 @@ void  panel_background_set               (PanelBackground     *background,
 					  gboolean             rotate_image);
 void  panel_background_set_type          (PanelBackground     *background,
 					  PanelBackgroundType  type);
-void  panel_background_set_opacity       (PanelBackground     *background,
-					  guint16              opacity);
 void  panel_background_set_color         (PanelBackground     *background,
 					  const GdkRGBA             *color);
 void  panel_background_set_image         (PanelBackground     *background,
