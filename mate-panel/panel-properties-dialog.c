@@ -332,7 +332,7 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
 	gtk_color_chooser_get_rgba (color_button, &color);
-	panel_profile_set_background_gdk_rgba (dialog->toplevel, &color);
+	panel_profile_set_background_color (dialog->toplevel, &color);
 	panel_properties_dialog_opacity_changed (dialog);
 }
 

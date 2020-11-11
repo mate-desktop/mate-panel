@@ -114,11 +114,6 @@ void        panel_profile_set_background_color        (PanelToplevel       *topl
 void        panel_profile_get_background_color        (PanelToplevel       *toplevel,
 						       GdkRGBA             *color);
 
-void        panel_profile_set_background_gdk_rgba    (PanelToplevel       *toplevel,
-						       GdkRGBA            *color);
-void        panel_profile_get_background_gdk_rgba    (PanelToplevel       *toplevel,
-						       GdkRGBA            *color);
-
 void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
 						       guint16              opacity);
 guint16     panel_profile_get_background_opacity      (PanelToplevel       *toplevel);
