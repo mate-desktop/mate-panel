@@ -1,3 +1,5 @@
+AUTOMAKE_OPTIONS = subdir-objects
+
 AM_CPPFLAGS =							\
 	$(LIBMATE_PANEL_APPLET_CFLAGS)				\
 	$(WNCKLET_CFLAGS)					\
