@@ -55,7 +55,6 @@ static struct wl_registry *wl_registry_global = NULL;
 static uint32_t foreign_toplevel_manager_global_id = 0;
 static uint32_t foreign_toplevel_manager_global_version = 0;
 
-static TasklistManager *tasklist_manager_new ();
 static ToplevelTask *toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handle_v1 *handle);
 
 static void
@@ -92,7 +91,7 @@ static const struct wl_registry_listener wl_registry_listener = {
 };
 
 static void
-wayland_tasklist_init_if_needed ()
+wayland_tasklist_init_if_needed (void)
 {
 	if (has_initialized)
 		return;
@@ -165,7 +164,7 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 }
 
 static TasklistManager *
-tasklist_manager_new ()
+tasklist_manager_new (void)
 {
 	if (!foreign_toplevel_manager_global_id)
 		return NULL;
