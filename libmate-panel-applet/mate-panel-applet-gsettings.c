@@ -34,7 +34,7 @@ mate_panel_applet_settings_new (MatePanelApplet *applet, gchar *schema)
     GSettings *settings = NULL;
     gchar *path;
 
-    g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
+    g_return_val_if_fail (MATE_PANEL_IS_APPLET (applet), NULL);
 
     path = mate_panel_applet_get_preferences_path (applet);
 
