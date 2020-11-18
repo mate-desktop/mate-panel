@@ -26,28 +26,19 @@
 
 #include "mate-panel-applet.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
-#define PANEL_TYPE_APPLET_FACTORY            (mate_panel_applet_factory_get_type ())
-#define MATE_PANEL_APPLET_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), PANEL_TYPE_APPLET_FACTORY, MatePanelAppletFactory))
-#define MATE_PANEL_APPLET_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), PANEL_TYPE_APPLET_FACTORY, MatePanelAppletFactoryClass))
-#define PANEL_IS_APPLET_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), PANEL_TYPE_APPLET_FACTORY))
+#define PANEL_TYPE_APPLET_FACTORY mate_panel_applet_factory_get_type ()
+G_DECLARE_FINAL_TYPE (MatePanelAppletFactory, mate_panel_applet_factory, MATE_PANEL, APPLET_FACTORY, GObject)
 
-typedef struct _MatePanelAppletFactory        MatePanelAppletFactory;
-typedef struct _MatePanelAppletFactoryClass   MatePanelAppletFactoryClass;
+MatePanelAppletFactory *mate_panel_applet_factory_new               (const gchar            *applet_id,
+                                                                     gboolean                out_of_process,
+                                                                     GType                   applet_type,
+                                                                     GClosure               *closure);
+gboolean                mate_panel_applet_factory_register_service  (MatePanelAppletFactory *factory);
+GtkWidget              *mate_panel_applet_factory_get_applet_widget (const gchar            *id,
+                                                                     guint                   uid);
 
-GType               mate_panel_applet_factory_get_type         (void) G_GNUC_CONST;
-MatePanelAppletFactory *mate_panel_applet_factory_new              (const gchar        *applet_id,
-								gboolean            out_of_process,
-							   GType               applet_type,
-							   GClosure           *closure);
-gboolean            mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory);
-GtkWidget          *mate_panel_applet_factory_get_applet_widget (const gchar        *id,
-                                                            guint               uid);
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* MATE_PANEL_APPLET_FACTORY_H */

@@ -47,10 +47,6 @@ struct _MatePanelAppletFactory {
 	guint            next_uid;
 };
 
-struct _MatePanelAppletFactoryClass {
-	GObjectClass base_class;
-};
-
 #define MATE_PANEL_APPLET_FACTORY_OBJECT_PATH  "/org/mate/panel/applet/%s"
 #define MATE_PANEL_APPLET_FACTORY_SERVICE_NAME "org.mate.panel.applet.%s"
 
