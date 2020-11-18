@@ -31,9 +31,10 @@
 #include <cairo.h>
 #include <cairo-gobject.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
+
+#define PANEL_TYPE_APPLET mate_panel_applet_get_type ()
+G_DECLARE_DERIVABLE_TYPE (MatePanelApplet, mate_panel_applet, MATE_PANEL, APPLET, GtkEventBox)
 
 typedef enum {
 	MATE_PANEL_APPLET_ORIENT_UP,
@@ -43,13 +44,6 @@ typedef enum {
 #define MATE_PANEL_APPLET_ORIENT_FIRST MATE_PANEL_APPLET_ORIENT_UP
 #define MATE_PANEL_APPLET_ORIENT_LAST  MATE_PANEL_APPLET_ORIENT_RIGHT
 } MatePanelAppletOrient;
-
-#define PANEL_TYPE_APPLET              (mate_panel_applet_get_type ())
-#define MATE_PANEL_APPLET(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_APPLET, MatePanelApplet))
-#define MATE_PANEL_APPLET_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_APPLET, MatePanelAppletClass))
-#define PANEL_IS_APPLET(o)             (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_TYPE_APPLET))
-#define PANEL_IS_APPLET_CLASS(k)       (G_TYPE_CHECK_CLASS_TYPE ((k), PANEL_TYPE_APPLET))
-#define MATE_PANEL_APPLET_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_APPLET, MatePanelAppletClass))
 
 typedef enum {
 	PANEL_NO_BACKGROUND,
@@ -65,17 +59,7 @@ typedef enum {
 #define MATE_PANEL_APPLET_FLAGS_ALL (MATE_PANEL_APPLET_EXPAND_MAJOR|MATE_PANEL_APPLET_EXPAND_MINOR|MATE_PANEL_APPLET_HAS_HANDLE)
 } MatePanelAppletFlags;
 
-typedef struct _MatePanelApplet        MatePanelApplet;
-typedef struct _MatePanelAppletClass   MatePanelAppletClass;
-typedef struct _MatePanelAppletPrivate MatePanelAppletPrivate;
-
 typedef gboolean (*MatePanelAppletFactoryCallback) (MatePanelApplet* applet, const gchar *iid, gpointer user_data);
-
-struct _MatePanelApplet {
-	GtkEventBox event_box;
-
-	MatePanelAppletPrivate* priv;
-};
 
 struct _MatePanelAppletClass {
 	GtkEventBoxClass event_box_class;
@@ -88,8 +72,6 @@ struct _MatePanelAppletClass {
 
 	void (*move_focus_out_of_applet) (MatePanelApplet* frame, GtkDirectionType direction);
 };
-
-GType mate_panel_applet_get_type(void) G_GNUC_CONST;
 
 GtkWidget* mate_panel_applet_new(void);
 
@@ -191,8 +173,6 @@ return mate_panel_applet_factory_setup_in_process (factory_id, type,            
                                                callback, data);  \
 }
 
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* __MATE_PANEL_APPLET_H__ */
