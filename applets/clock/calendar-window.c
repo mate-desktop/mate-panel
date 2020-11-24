@@ -474,7 +474,7 @@ calendar_window_init (CalendarWindow *calwin)
 	calwin->priv = calendar_window_get_instance_private (calwin);
 
 	window = GTK_WINDOW (calwin);
-	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_DOCK);
+	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_MENU);
 	gtk_window_set_decorated (window, FALSE);
 	gtk_window_set_resizable (window, FALSE);
 	gtk_window_set_default_size (window, 337, -1);
