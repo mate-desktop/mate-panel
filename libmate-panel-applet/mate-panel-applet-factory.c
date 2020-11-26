@@ -31,13 +31,13 @@
 #endif
 
 struct _MatePanelAppletFactory {
-	GObject    base;
+	GObject          base;
 
-	gchar     *factory_id;
-	guint      n_applets;
-	gboolean   out_of_process;
-	GType      applet_type;
-	GClosure  *closure;
+	gchar           *factory_id;
+	guint            n_applets;
+	gboolean         out_of_process;
+	GType            applet_type;
+	GClosure        *closure;
 
 	GDBusConnection *connection;
 	gint             owner_id;
@@ -60,7 +60,8 @@ mate_panel_applet_factory_finalize (GObject *object)
 	MatePanelAppletFactory *factory = MATE_PANEL_APPLET_FACTORY (object);
 
 	if (factory->registration_id) {
-		g_dbus_connection_unregister_object (factory->connection, factory->registration_id);
+		g_dbus_connection_unregister_object (factory->connection,
+		                                     factory->registration_id);
 		factory->registration_id = 0;
 	}
 
@@ -91,32 +92,33 @@ mate_panel_applet_factory_finalize (GObject *object)
 		factory->closure = NULL;
 	}
 
-	G_OBJECT_CLASS (mate_panel_applet_factory_parent_class)->finalize (object);
+	G_OBJECT_CLASS (mate_panel_applet_factory_parent_class)
+		->finalize (object);
 }
 
 static void
 mate_panel_applet_factory_init (MatePanelAppletFactory *factory)
 {
-	factory->applets = g_hash_table_new (NULL, NULL);
+	factory->applets  = g_hash_table_new (NULL, NULL);
 	factory->next_uid = 1;
 }
 
 static void
 mate_panel_applet_factory_class_init (MatePanelAppletFactoryClass *klass)
 {
-	GObjectClass *g_object_class = G_OBJECT_CLASS (klass);
+	GObjectClass *g_object_class;
 
+	g_object_class = G_OBJECT_CLASS (klass);
 	g_object_class->finalize = mate_panel_applet_factory_finalize;
 }
 
 static void
 mate_panel_applet_factory_applet_removed (MatePanelAppletFactory *factory,
-				     GObject            *applet)
+                                          GObject                *applet)
 {
 	guint uid;
 
-	uid = GPOINTER_TO_UINT (g_object_get_data (applet, "uid"));
-
+	uid  = GPOINTER_TO_UINT (g_object_get_data (applet, "uid"));
 	g_hash_table_remove (factory->applets, GUINT_TO_POINTER (uid));
 
 	factory->n_applets--;
@@ -126,9 +128,9 @@ mate_panel_applet_factory_applet_removed (MatePanelAppletFactory *factory,
 
 MatePanelAppletFactory *
 mate_panel_applet_factory_new (const gchar *factory_id,
-				gboolean     out_of_process,
-			  GType        applet_type,
-			  GClosure    *closure)
+                               gboolean     out_of_process,
+                               GType        applet_type,
+                               GClosure    *closure)
 {
 	MatePanelAppletFactory *factory;
 
@@ -137,9 +139,9 @@ mate_panel_applet_factory_new (const gchar *factory_id,
 	factory->out_of_process = out_of_process;
 	factory->applet_type = applet_type;
 	factory->closure = g_closure_ref (closure);
-	if (factories == NULL) {
+
+	if (factories == NULL)
 		factories = g_hash_table_new (g_str_hash, g_str_equal);
-	}
 
 	g_hash_table_insert (factories, factory->factory_id, factory);
 
@@ -148,7 +150,7 @@ mate_panel_applet_factory_new (const gchar *factory_id,
 
 static void
 set_applet_constructor_properties (GObject  *applet,
-				   GVariant *props)
+                                   GVariant *props)
 {
 	GVariantIter iter;
 	GVariant    *value;
@@ -157,37 +159,30 @@ set_applet_constructor_properties (GObject  *applet,
 	g_variant_iter_init (&iter, props);
 	while (g_variant_iter_loop (&iter, "{sv}", &key, &value)) {
 		switch (g_variant_classify (value)) {
-		case G_VARIANT_CLASS_UINT32: {
-			guint32 v = g_variant_get_uint32 (value);
-
-			g_object_set (applet, key, v, NULL);
-		}
-			break;
-		case G_VARIANT_CLASS_STRING: {
-			const gchar *v = g_variant_get_string (value, NULL);
-
-			g_object_set (applet, key, v, NULL);
-		}
-			break;
-		case G_VARIANT_CLASS_BOOLEAN: {
-			gboolean v = g_variant_get_boolean (value);
-
-			g_object_set (applet, key, v, NULL);
-		}
-			break;
-		default:
-			g_assert_not_reached ();
-			break;
+			case G_VARIANT_CLASS_UINT32: {
+				guint32 v = g_variant_get_uint32 (value);
+				g_object_set (applet, key, v, NULL);
+				break;
+			} case G_VARIANT_CLASS_STRING: {
+				const gchar *v = g_variant_get_string (value, NULL);
+				g_object_set (applet, key, v, NULL);
+				break;
+			} case G_VARIANT_CLASS_BOOLEAN: {
+				gboolean v = g_variant_get_boolean (value);
+				g_object_set (applet, key, v, NULL);
+				break;
+			} default:
+				g_assert_not_reached ();
 		}
 	}
 }
 
 
 static void
-mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
-				 GDBusConnection       *connection,
-				 GVariant              *parameters,
-				 GDBusMethodInvocation *invocation)
+mate_panel_applet_factory_get_applet (MatePanelAppletFactory *factory,
+                                      GDBusConnection        *connection,
+                                      GVariant               *parameters,
+                                      GDBusMethodInvocation  *invocation)
 {
 	GObject     *applet;
 	const gchar *applet_id;
@@ -201,13 +196,15 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 	g_variant_get (parameters, "(&si@a{sv})", &applet_id, &screen_num, &props);
 
 	applet = g_object_new (factory->applet_type,
-                   "out-of-process", factory->out_of_process,
-			       "id", applet_id,
-			       "connection", connection,
-			       "closure", factory->closure,
+	                       "out-of-process", factory->out_of_process,
+	                       "id", applet_id,
+	                       "connection", connection,
+	                       "closure", factory->closure,
 			       NULL);
 	factory->n_applets++;
-	g_object_weak_ref (applet, (GWeakNotify) mate_panel_applet_factory_applet_removed, factory);
+	g_object_weak_ref (applet,
+	                   (GWeakNotify) mate_panel_applet_factory_applet_removed,
+	                   factory);
 
 	set_applet_constructor_properties (applet, props);
 	g_variant_unref (props);
@@ -221,7 +218,7 @@ mate_panel_applet_factory_get_applet (MatePanelAppletFactory    *factory,
 			gdk_screen_get_default ();
 		xid = mate_panel_applet_get_xid (MATE_PANEL_APPLET (applet), screen);
 	} else
-#endif
+#endif /* HAVE_X11 */
 	{ /* Not using X11 */
 		xid = 0;
 	}
@@ -252,9 +249,9 @@ method_call_cb (GDBusConnection       *connection,
 {
 	MatePanelAppletFactory *factory = MATE_PANEL_APPLET_FACTORY (user_data);
 
-	if (g_strcmp0 (method_name, "GetApplet") == 0) {
-		mate_panel_applet_factory_get_applet (factory, connection, parameters, invocation);
-	}
+	if (g_strcmp0 (method_name, "GetApplet") == 0)
+		mate_panel_applet_factory_get_applet (factory, connection,
+		                                      parameters, invocation);
 }
 
 static const gchar introspection_xml[] =
@@ -281,25 +278,31 @@ static const GDBusInterfaceVTable interface_vtable = {
 static GDBusNodeInfo *introspection_data = NULL;
 
 static void
-on_bus_acquired (GDBusConnection    *connection,
-		  const gchar        *name,
-		  MatePanelAppletFactory *factory)
+on_bus_acquired (GDBusConnection        *connection,
+                 const gchar            *name,
+                 MatePanelAppletFactory *factory)
 {
 	gchar  *object_path;
 	GError *error = NULL;
 
 	if (!introspection_data)
-		introspection_data = g_dbus_node_info_new_for_xml (introspection_xml, NULL);
-	object_path = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_OBJECT_PATH, factory->factory_id);
+		introspection_data
+			= g_dbus_node_info_new_for_xml (introspection_xml, NULL);
+
+	object_path = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_OBJECT_PATH,
+	                               factory->factory_id);
+
 	factory->connection = connection;
-	factory->registration_id = g_dbus_connection_register_object (connection,
-					   object_path,
-					   introspection_data->interfaces[0],
-					   &interface_vtable,
-					   factory, NULL,
-					   &error);
+	factory->registration_id
+	        = g_dbus_connection_register_object (connection,
+	                                             object_path,
+	                                             introspection_data->interfaces[0],
+	                                             &interface_vtable,
+	                                             factory, NULL,
+	                                             &error);
 	if (error) {
-		g_printerr ("Failed to register object %s: %s\n", object_path, error->message);
+		g_printerr ("Failed to register object %s: %s\n",
+		            object_path, error->message);
 		g_error_free (error);
 	}
 
@@ -307,9 +310,9 @@ on_bus_acquired (GDBusConnection    *connection,
 }
 
 static void
-on_name_lost (GDBusConnection    *connection,
-	      const gchar        *name,
-	      MatePanelAppletFactory *factory)
+on_name_lost (GDBusConnection        *connection,
+              const gchar            *name,
+              MatePanelAppletFactory *factory)
 {
 	g_object_unref (factory);
 }
@@ -322,14 +325,16 @@ mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory)
 	if (!factory)
 		return FALSE;
 
-	service_name = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_SERVICE_NAME, factory->factory_id);
+	service_name = g_strdup_printf (MATE_PANEL_APPLET_FACTORY_SERVICE_NAME,
+	                                factory->factory_id);
+
 	factory->owner_id = g_bus_own_name (G_BUS_TYPE_SESSION,
-			service_name,
-			G_BUS_NAME_OWNER_FLAGS_NONE,
-			(GBusAcquiredCallback) on_bus_acquired,
-			NULL,
-			(GBusNameLostCallback) on_name_lost,
-			factory, NULL);
+	                                    service_name,
+	                                    G_BUS_NAME_OWNER_FLAGS_NONE,
+	                                    (GBusAcquiredCallback) on_bus_acquired,
+	                                    NULL,
+	                                    (GBusNameLostCallback) on_name_lost,
+	                                    factory, NULL);
 	g_free (service_name);
 
 	return TRUE;
@@ -337,10 +342,10 @@ mate_panel_applet_factory_register_service (MatePanelAppletFactory *factory)
 
 GtkWidget *
 mate_panel_applet_factory_get_applet_widget (const gchar *id,
-                                        guint        uid)
+                                             guint        uid)
 {
 	MatePanelAppletFactory *factory;
-	GObject            *object;
+	GObject                *object;
 
 	if (!factories)
 		return NULL;
