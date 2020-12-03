@@ -237,14 +237,14 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 
 #ifdef HAVE_X11
 #ifdef HAVE_WINDOW_PREVIEWS
-static GdkPixbuf *preview_window_thumbnail (WnckWindow *wnck_window, TasklistData *tasklist)
+static cairo_surface_t *preview_window_thumbnail (WnckWindow *wnck_window, TasklistData *tasklist)
 {
 	GdkWindow *window;
-	GdkPixbuf *screenshot;
-	GdkPixbuf *thumbnail;
+	cairo_surface_t *screenshot;
+	cairo_surface_t *thumbnail;
+	cairo_t *cr;
 	double ratio;
-	int width, height;
-	int scale;
+	int width, height, scale;
 
 	window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), wnck_window_get_xid (wnck_window));
 
@@ -255,50 +255,71 @@ static GdkPixbuf *preview_window_thumbnail (WnckWindow *wnck_window, TasklistDat
 	width = gdk_window_get_width (window) * scale;
 	height = gdk_window_get_height (window) * scale;
 
-	/* Generate window screenshot for preview */
-	screenshot = gdk_pixbuf_get_from_window (window, 0, 0, width / scale, height / scale);
+	/* Get reference to GdkWindow surface */
+	cairo_t *win_cr = gdk_cairo_create (window);
+	cairo_surface_t *win_surface = cairo_get_target (win_cr);
+	/* Flush to ensure all writing to the image was done */
+	cairo_surface_flush (win_surface);
+	cairo_destroy (win_cr);
+
+	/* Create screenshot surface with the GdkWindow as its source */
+	screenshot = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+	cairo_surface_set_device_scale (screenshot, scale, scale);
+	cr = cairo_create (screenshot);
+	cairo_set_source_surface (cr, win_surface, 0, 0);
+	cairo_paint (cr);
+
+	/* Mark the image dirty so Cairo clears its caches */
+	cairo_surface_mark_dirty (win_surface);
+
+	cairo_destroy (cr);
 	g_object_unref (window);
 
 	if (screenshot == NULL)
 		return NULL;
 
-	/* Determine whether the contents of the screenshot are empty */
-	if (gdk_pixbuf_get_byte_length (screenshot) == 0)
-	{
-		g_object_unref (screenshot);
-		return NULL;
-	}
-
 	/* Scale to configured size while maintaining aspect ratio */
 	if (width > height)
 	{
-		ratio = (double) height / (double) width;
-		width = MIN(width, tasklist->thumbnail_size);
-		height = width * ratio;
+		int max_size = MIN (width, tasklist->thumbnail_size);
+		ratio = (double) max_size / (double) width;
+		width = max_size;
+		height = (int) ((double) height * ratio);
 	}
 	else
 	{
-		ratio = (double) width / (double) height;
-		height = MIN(height, tasklist->thumbnail_size);
-		width = height * ratio;
+		int max_size = MIN (height, tasklist->thumbnail_size);
+		ratio = (double) max_size / (double) height;
+		height = max_size;
+		width = (int) ((double) width * ratio);
 	}
 
-	thumbnail = gdk_pixbuf_scale_simple (screenshot, width, height, GDK_INTERP_BILINEAR);
-	g_object_unref (screenshot);
+	thumbnail = cairo_surface_create_similar (screenshot,
+						  cairo_surface_get_content (screenshot),
+						  width, height);
+
+	cr = cairo_create (thumbnail);
+	cairo_scale (cr, scale * ratio, scale * ratio);
+	cairo_set_source_surface (cr, screenshot, 0, 0);
+	cairo_paint (cr);
+
+	cairo_destroy (cr);
+	cairo_surface_destroy (screenshot);
 
 	return thumbnail;
 }
 
 #define PREVIEW_PADDING 5
-static void preview_window_reposition (TasklistData *tasklist, GdkPixbuf *thumbnail)
+static void preview_window_reposition (TasklistData *tasklist, cairo_surface_t *thumbnail)
 {
 	GdkMonitor *monitor;
 	GdkRectangle monitor_geom;
 	int x_pos, y_pos;
-	int width, height;
+	int width, height, scale;
 
-	width = gdk_pixbuf_get_width (thumbnail);
-	height = gdk_pixbuf_get_height (thumbnail);
+	scale = gtk_widget_get_scale_factor (tasklist->preview);
+	width = cairo_image_surface_get_width (thumbnail) / scale;
+	height = cairo_image_surface_get_height (thumbnail) / scale;
 
 	/* Resize window to fit thumbnail */
 	gtk_window_resize (GTK_WINDOW (tasklist->preview), width, height);
@@ -332,19 +353,19 @@ static void preview_window_reposition (TasklistData *tasklist, GdkPixbuf *thumbn
 	gtk_window_move (GTK_WINDOW (tasklist->preview), x_pos, y_pos);
 }
 
-static gboolean preview_window_draw (GtkWidget *widget, cairo_t *cr, GdkPixbuf *thumbnail)
+static gboolean preview_window_draw (GtkWidget *widget, cairo_t *cr, cairo_surface_t *thumbnail)
 {
 	GtkStyleContext *context;
 
 	context = gtk_widget_get_style_context (widget);
-	gtk_render_icon (context, cr, thumbnail, 0, 0);
+	gtk_render_icon_surface (context, cr, thumbnail, 0, 0);
 
 	return FALSE;
 }
 
 static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows, TasklistData *tasklist)
 {
-	GdkPixbuf *thumbnail;
+	cairo_surface_t *thumbnail;
 	WnckWindow *wnck_window = NULL;
 	int n_windows;
 
@@ -389,7 +410,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 
 	gtk_widget_show (tasklist->preview);
 
-	g_signal_connect_data (G_OBJECT (tasklist->preview), "draw", G_CALLBACK (preview_window_draw), thumbnail, (GClosureNotify) G_CALLBACK (g_object_unref), 0);
+	g_signal_connect_data (G_OBJECT (tasklist->preview), "draw", G_CALLBACK (preview_window_draw), thumbnail, (GClosureNotify) G_CALLBACK (cairo_surface_destroy), 0);
 
 	return FALSE;
 }
