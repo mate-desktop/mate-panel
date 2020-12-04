@@ -1455,6 +1455,10 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 
 	type = mate_panel_applet_get_background (applet, &color, &pattern);
 
+	if (!gdk_screen_is_composited (gdk_screen_get_default ())) {
+		color.alpha = 1.;
+	}
+
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
 		g_signal_emit (G_OBJECT (applet),
