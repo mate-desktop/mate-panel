@@ -158,8 +158,7 @@ mate_panel_LDADD = \
 	$(DCONF_LIBS) \
 	$(XRANDR_LIBS) \
 	$(X_LIBS) \
-	$(WAYLAND_LIBS) \
-	-lm
+	$(WAYLAND_LIBS)
 
 if ENABLE_WAYLAND
 mate_panel_LDADD += \

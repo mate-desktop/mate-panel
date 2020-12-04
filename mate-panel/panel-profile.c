@@ -23,7 +23,6 @@
  */
 
 #include <config.h>
-#include <math.h>
 
 #include "panel-profile.h"
 #include "panel-layout.h"
@@ -267,20 +266,20 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 
 void
 panel_profile_set_background_opacity (PanelToplevel *toplevel,
-				      guint16        opacity)
+                                      gdouble        percentage)
 {
 	GdkRGBA color;
 	panel_profile_get_background_color (toplevel, &color);
-	color.alpha = opacity / 65535.0;
+	color.alpha = percentage / 100.0;
 	panel_profile_set_background_color (toplevel, &color);
 }
 
-guint16
+gdouble
 panel_profile_get_background_opacity (PanelToplevel *toplevel)
 {
 	GdkRGBA color;
 	panel_profile_get_background_color (toplevel, &color);
-	return (guint16) round (color.alpha * 65535);
+	return color.alpha * 100.0;
 }
 
 void
