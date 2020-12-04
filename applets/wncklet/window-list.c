@@ -788,8 +788,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	g_signal_connect(G_OBJECT(tasklist->applet), "change_size", G_CALLBACK(applet_change_pixel_size), tasklist);
 	g_signal_connect(G_OBJECT(tasklist->applet), "change_background", G_CALLBACK(applet_change_background), tasklist);
 
-	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(tasklist->applet), GTK_WIDGET(tasklist->applet));
-
 	action_group = gtk_action_group_new("Tasklist Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions(action_group, tasklist_menu_actions, G_N_ELEMENTS(tasklist_menu_actions), tasklist);

@@ -646,8 +646,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	gtk_widget_show(pager->pager);
 	gtk_widget_show(pager->applet);
 
-	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(pager->applet), GTK_WIDGET(pager->applet));
-
 	action_group = gtk_action_group_new("WorkspaceSwitcher Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions(action_group, pager_menu_actions, G_N_ELEMENTS(pager_menu_actions), pager);

@@ -1881,8 +1881,6 @@ static void fish_applet_instance_init(FishApplet* fish, FishAppletClass* klass)
 	fish->april_fools = FALSE;
 
 	mate_panel_applet_set_flags (MATE_PANEL_APPLET (fish), MATE_PANEL_APPLET_EXPAND_MINOR);
-
-	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(fish), GTK_WIDGET(fish));
 }
 
 static void fish_applet_class_init(FishAppletClass* klass)

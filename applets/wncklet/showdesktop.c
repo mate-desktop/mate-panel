@@ -458,8 +458,6 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	   initial oriantation, and we get that during the _add call */
 	g_signal_connect(G_OBJECT (sdd->applet), "change_orient", G_CALLBACK (applet_change_orient), sdd);
 
-	mate_panel_applet_set_background_widget(MATE_PANEL_APPLET (sdd->applet), GTK_WIDGET(sdd->applet));
-
 	action_group = gtk_action_group_new("ShowDesktop Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions(action_group, show_desktop_menu_actions, G_N_ELEMENTS (show_desktop_menu_actions), sdd);
