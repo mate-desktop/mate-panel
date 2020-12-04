@@ -253,8 +253,6 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
 		window_menu->selector = wnck_selector_new();
-		mate_panel_applet_set_background_widget(MATE_PANEL_APPLET(window_menu->applet), GTK_WIDGET(window_menu->selector));
-
 	}
 	else
 #endif /* HAVE_X11 */
