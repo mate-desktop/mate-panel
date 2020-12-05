@@ -27,7 +27,6 @@
 
 #include <config.h>
 
-#include <math.h>
 #include <string.h>
 #include <time.h>
 
@@ -1435,16 +1434,16 @@ static void update_pixmap(FishApplet* fish)
 	if (fish->april_fools) {
 		cairo_matrix_translate (&matrix,
 					pixbuf_width - 1, pixbuf_height - 1);
-		cairo_matrix_rotate (&matrix, M_PI);
+		cairo_matrix_rotate (&matrix, G_PI);
 	}
 
 	if (rotate) {
 		if (fish->orientation == MATE_PANEL_APPLET_ORIENT_RIGHT) {
 			cairo_matrix_translate (&matrix, pixbuf_width - 1, 0);
-			cairo_matrix_rotate (&matrix, M_PI * 0.5);
+			cairo_matrix_rotate (&matrix, G_PI_2);
 		} else {
 			cairo_matrix_translate (&matrix, 0, pixbuf_height - 1);
-			cairo_matrix_rotate (&matrix, M_PI * 1.5);
+			cairo_matrix_rotate (&matrix, G_PI * 1.5);
 		}
 		cairo_matrix_scale (&matrix,
 				    (double) (pixbuf_height - 1) / width,
