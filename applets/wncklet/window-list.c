@@ -237,7 +237,12 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 
 #ifdef HAVE_X11
 #ifdef HAVE_WINDOW_PREVIEWS
-static cairo_surface_t *preview_window_thumbnail (WnckWindow *wnck_window, TasklistData *tasklist)
+static cairo_surface_t*
+preview_window_thumbnail (WnckWindow   *wnck_window,
+                          TasklistData *tasklist,
+                          int          *thumbnail_width,
+                          int          *thumbnail_height,
+                          int          *thumbnail_scale)
 {
 	GdkWindow *window;
 	cairo_surface_t *screenshot;
@@ -251,7 +256,7 @@ static cairo_surface_t *preview_window_thumbnail (WnckWindow *wnck_window, Taskl
 	if (window == NULL)
 		return NULL;
 
-	scale = gdk_window_get_scale_factor (window);
+	*thumbnail_scale = scale = gdk_window_get_scale_factor (window);
 	width = gdk_window_get_width (window) * scale;
 	height = gdk_window_get_height (window) * scale;
 
@@ -281,25 +286,26 @@ static cairo_surface_t *preview_window_thumbnail (WnckWindow *wnck_window, Taskl
 	/* Scale to configured size while maintaining aspect ratio */
 	if (width > height)
 	{
-		int max_size = MIN (width, tasklist->thumbnail_size);
+		int max_size = MIN (width, tasklist->thumbnail_size * scale);
 		ratio = (double) max_size / (double) width;
-		width = max_size;
-		height = (int) ((double) height * ratio);
+		*thumbnail_width = max_size;
+		*thumbnail_height = (int) ((double) height * ratio);
 	}
 	else
 	{
-		int max_size = MIN (height, tasklist->thumbnail_size);
+		int max_size = MIN (height, tasklist->thumbnail_size * scale);
 		ratio = (double) max_size / (double) height;
-		height = max_size;
-		width = (int) ((double) width * ratio);
+		*thumbnail_height = max_size;
+		*thumbnail_width = (int) ((double) width * ratio);
 	}
 
 	thumbnail = cairo_surface_create_similar (screenshot,
-						  cairo_surface_get_content (screenshot),
-						  width, height);
+	                                          cairo_surface_get_content (screenshot),
+	                                          *thumbnail_width,
+	                                          *thumbnail_height);
 
 	cr = cairo_create (thumbnail);
-	cairo_scale (cr, scale * ratio, scale * ratio);
+	cairo_scale (cr, ratio, ratio);
 	cairo_set_source_surface (cr, screenshot, 0, 0);
 	cairo_paint (cr);
 
@@ -310,19 +316,16 @@ static cairo_surface_t *preview_window_thumbnail (WnckWindow *wnck_window, Taskl
 }
 
 #define PREVIEW_PADDING 5
-static void preview_window_reposition (TasklistData *tasklist, cairo_surface_t *thumbnail)
+static void
+preview_window_reposition (TasklistData    *tasklist,
+                           cairo_surface_t *thumbnail,
+                           int              width,
+                           int              height,
+                           int              scale)
 {
 	GdkMonitor *monitor;
 	GdkRectangle monitor_geom;
 	int x_pos, y_pos;
-	int width, height, scale;
-
-	scale = gtk_widget_get_scale_factor (tasklist->preview);
-	width = cairo_image_surface_get_width (thumbnail) / scale;
-	height = cairo_image_surface_get_height (thumbnail) / scale;
-
-	/* Resize window to fit thumbnail */
-	gtk_window_resize (GTK_WINDOW (tasklist->preview), width, height);
 
 	/* Set position at pointer, then re-adjust from there to just outside of the pointer */
 	gtk_window_set_position (GTK_WINDOW (tasklist->preview), GTK_WIN_POS_MOUSE);
@@ -336,13 +339,13 @@ static void preview_window_reposition (TasklistData *tasklist, cairo_surface_t *
 	switch (mate_panel_applet_get_orient (MATE_PANEL_APPLET (tasklist->applet)))
 	{
 		case MATE_PANEL_APPLET_ORIENT_LEFT:
-			x_pos = monitor_geom.width + monitor_geom.x - (width + tasklist->size) - PREVIEW_PADDING;
+			x_pos = monitor_geom.width + monitor_geom.x - (width/scale + tasklist->size) - PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_RIGHT:
 			x_pos = tasklist->size + PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_UP:
-			y_pos = monitor_geom.height + monitor_geom.y - (height + tasklist->size) - PREVIEW_PADDING;
+			y_pos = monitor_geom.height + monitor_geom.y - (height/scale + tasklist->size) - PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_DOWN:
 		default:
@@ -368,6 +371,9 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 	cairo_surface_t *thumbnail;
 	WnckWindow *wnck_window = NULL;
 	int n_windows;
+	int thumbnail_width;
+	int thumbnail_height;
+	int thumbnail_scale;
 
 	if (tasklist->preview != NULL)
 	{
@@ -395,7 +401,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 						  wnck_screen_get_active_workspace (wnck_screen_get_default ())))
 		return FALSE;
 
-	thumbnail = preview_window_thumbnail (wnck_window, tasklist);
+	thumbnail = preview_window_thumbnail (wnck_window, tasklist, &thumbnail_width, &thumbnail_height, &thumbnail_scale);
 
 	if (thumbnail == NULL)
 		return FALSE;
@@ -404,9 +410,10 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 	tasklist->preview = gtk_window_new (GTK_WINDOW_POPUP);
 
 	gtk_widget_set_app_paintable (tasklist->preview, TRUE);
+	gtk_window_set_default_size (GTK_WINDOW (tasklist->preview), thumbnail_width/thumbnail_scale, thumbnail_height/thumbnail_scale);
 	gtk_window_set_resizable (GTK_WINDOW (tasklist->preview), TRUE);
 
-	preview_window_reposition (tasklist, thumbnail);
+	preview_window_reposition (tasklist, thumbnail, thumbnail_width, thumbnail_height, thumbnail_scale);
 
 	gtk_widget_show (tasklist->preview);
 
