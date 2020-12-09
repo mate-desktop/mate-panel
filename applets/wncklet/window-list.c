@@ -255,22 +255,11 @@ static cairo_surface_t *preview_window_thumbnail (WnckWindow *wnck_window, Taskl
 	width = gdk_window_get_width (window) * scale;
 	height = gdk_window_get_height (window) * scale;
 
-	/* Get reference to GdkWindow surface */
-	cairo_t *win_cr = gdk_cairo_create (window);
-	cairo_surface_t *win_surface = cairo_get_target (win_cr);
-	/* Flush to ensure all writing to the image was done */
-	cairo_surface_flush (win_surface);
-	cairo_destroy (win_cr);
-
 	/* Create screenshot surface with the GdkWindow as its source */
-	screenshot = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
-	cairo_surface_set_device_scale (screenshot, scale, scale);
+	screenshot = gdk_window_create_similar_surface (window, CAIRO_CONTENT_COLOR, width, height);
 	cr = cairo_create (screenshot);
-	cairo_set_source_surface (cr, win_surface, 0, 0);
+	gdk_cairo_set_source_window (cr, window, 0, 0);
 	cairo_paint (cr);
-
-	/* Mark the image dirty so Cairo clears its caches */
-	cairo_surface_mark_dirty (win_surface);
 
 	cairo_destroy (cr);
 	g_object_unref (window);
