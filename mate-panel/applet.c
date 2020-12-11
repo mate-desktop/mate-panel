@@ -643,12 +643,10 @@ applet_show_menu (AppletInfo     *info,
 
 	g_return_if_fail (info != NULL);
 
-	panel_widget = mate_panel_applet_get_panel_widget (info);
+	if ((info->menu == NULL) && ((info->menu = mate_panel_applet_create_menu (info)) == NULL))
+		return;
 
-	if (info->menu == NULL) {
-		info->menu = mate_panel_applet_create_menu (info);
-		g_return_if_fail (info->menu != NULL);
-	}
+	panel_widget = mate_panel_applet_get_panel_widget (info);
 
 	mate_panel_applet_menu_set_recurse (GTK_MENU (info->menu),
 				       "menu_panel",
