@@ -467,7 +467,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->frames_spin),
 				   fish->n_frames);
 
-	g_signal_connect (fish->frames_spin, "value_changed",
+	g_signal_connect (fish->frames_spin, "value-changed",
 			  G_CALLBACK (n_frames_value_changed), fish);
 
 	setup_sensitivity (fish, builder,
@@ -479,7 +479,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 	fish->speed_spin = GTK_WIDGET (gtk_builder_get_object (builder, "speed_spin"));
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->speed_spin), fish->speed);
 
-	g_signal_connect (fish->speed_spin, "value_changed",
+	g_signal_connect (fish->speed_spin, "value-changed",
 			  G_CALLBACK (speed_value_changed), fish);
 
 	setup_sensitivity (fish, builder,

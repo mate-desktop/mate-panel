@@ -794,12 +794,14 @@ static void workspace_destroyed(WnckScreen* screen, WnckWorkspace* space, PagerD
 }
 #endif /* HAVE_X11 */
 
-static void num_workspaces_value_changed(GtkSpinButton* button, PagerData* pager)
+static void
+on_num_workspaces_value_changed (GtkSpinButton *button,
+                                 PagerData     *pager)
 {
 #ifdef HAVE_X11
 	if (pager->screen)
 	{
-		int workspace_count = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pager->num_workspaces_spin));
+		int workspace_count = gtk_spin_button_get_value_as_int (button);
 		wnck_screen_change_workspace_count(pager->screen, workspace_count);
 	}
 #endif /* HAVE_X11 */
@@ -1013,7 +1015,7 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	}
 
 	/* Num rows: */
-	g_signal_connect(G_OBJECT(pager->num_rows_spin), "value_changed", (GCallback) num_rows_value_changed, pager);
+	g_signal_connect (pager->num_rows_spin, "value-changed", G_CALLBACK (num_rows_value_changed), pager);
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(pager->num_rows_spin), pager->n_rows);
 	gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
@@ -1041,7 +1043,7 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	}
 #endif /* HAVE_X11 */
 
-	g_signal_connect(G_OBJECT(pager->num_workspaces_spin), "value_changed", (GCallback) num_workspaces_value_changed, pager);
+	g_signal_connect (pager->num_workspaces_spin, "value-changed", G_CALLBACK (on_num_workspaces_value_changed), pager);
 
 	g_signal_connect(G_OBJECT(pager->workspaces_tree), "focus_out_event", (GCallback) workspaces_tree_focused_out, pager);
 
