@@ -238,7 +238,7 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
 				   panel_profile_get_toplevel_size (dialog->toplevel));
 
-	g_signal_connect_swapped (dialog->size_spin, "value_changed",
+	g_signal_connect_swapped (dialog->size_spin, "value-changed",
 				  G_CALLBACK (panel_properties_dialog_size_changed),
 				  dialog);
 
@@ -465,7 +465,7 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 		gtk_widget_set_sensitive (dialog->opacity_legend, FALSE);
 	}
 
-	g_signal_connect_swapped (dialog->opacity_scale, "value_changed",
+	g_signal_connect_swapped (dialog->opacity_scale, "value-changed",
 				  G_CALLBACK (panel_properties_dialog_opacity_changed),
 				  dialog);
 }
