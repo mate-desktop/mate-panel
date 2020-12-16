@@ -1,3 +1,52 @@
+### mate-panel 1.25.2
+
+  * update translations
+  * Signal name is 'value-changed' for GtkSpinButton
+  * applet: Avoid a NULL pointer dereference
+  * mate-panel-applet.h: tabs to spaces
+  * remove function calls to  mate_panel_applet_set_background_widget
+  * window-list: remove intermediate steps to get scaled thumbnail
+  * window-list: Get thumbnail size and scale in preview_window_thumbnail
+  * cppcheck warning: The if condition is the same as the previous one
+  * update issue template
+  * window-list: Render thumbnails as cairo surfaces
+  * panel-applets-manager: Boilerplate
+  * mate-panel-applet-factory: format code
+  * mate-panel-applet-factory: Boilerplate
+  * fish: Do not to include the math.h library to get the PI value
+  * Fix solid color controls after disabling compositor
+  * mate-panel-applet: Boilerplate
+  * Fix applet background for transparency
+  * Don't enable transparency slider if not supported
+  * Don't try to use transparent color if not supported
+  * Fix the opaque label in panel-properties-dialog.ui
+  * Drop panel_profile_set_background_gdk_rgba()
+  * Remove get_background_color() (duplicate of panel_profile_get_background_gdk_rgba())
+  * Drop dead panel_background_set_opacity()
+  * Drop background compositing
+  * wncklet: function declaration isn't a prototype
+  * configure: remove warning about option 'subdir-objects' is disabled
+  * Remove USE_MATE2_MACROS from autogen.sh (legacy)
+  * Use g_task... replace obsolete function g_ simple....
+  * Show label about options not available on Wayland
+  * Disable controls not applicable to Wayland
+  * Set minimized windows control sensitivity with the parent box
+  * Suppress applet's default context menu for window buttons
+  * Switch to C-style comments as requested
+  * Fix workspace switcher on X11
+  * Fix showdesktop applet on X11
+  * Link with libwayland
+  * Link wncklet with libwayland-client (why did this ever work?)
+  * Don't crash if shell doesn't support foreign toplevel
+  * Window list Wayland support
+  * Add foreign toplevel management protocol and generated code
+  * Wncklet applets: don't crash on Wayland
+  * Use gdk_set_allowed_backends () instead of custom check
+  * Drop libxau from .build.yml
+  * Drop 'xau' from PKG_CHECK_MODULES call
+  * Remove variableScope warnings reported by cppcheck
+  * wncklet: Check the length of the pixel data for empty thumbnails
+
 ### mate-panel 1.25.1
 
   * sync with transifex
