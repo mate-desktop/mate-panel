@@ -200,14 +200,13 @@ static void update_properties_for_wm(PagerData* pager)
 
 static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 {
+#ifdef HAVE_X11
 	const char *wm_name = NULL;
 
-#ifdef HAVE_X11
 	if (pager->screen)
 	{
 		wm_name = wnck_screen_get_window_manager_name (pager->screen);
 	}
-#endif /* HAVE_X11 */
 
 	if (!wm_name)
 		pager->wm = PAGER_WM_UNKNOWN;
@@ -221,6 +220,9 @@ static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 		pager->wm = PAGER_WM_COMPIZ;
 	else
 		pager->wm = PAGER_WM_UNKNOWN;
+#else
+	pager->wm = PAGER_WM_UNKNOWN;
+#endif /* HAVE_X11 */
 
 	update_properties_for_wm(pager);
 	pager_update(pager);
