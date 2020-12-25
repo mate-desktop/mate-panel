@@ -120,10 +120,17 @@ static void tasklist_update(TasklistData* tasklist)
 		WnckTasklistGroupingType grouping;
 		switch (tasklist->grouping)
 		{
-			case TASKLIST_NEVER_GROUP: grouping = WNCK_TASKLIST_NEVER_GROUP;
-			case TASKLIST_AUTO_GROUP: grouping = WNCK_TASKLIST_AUTO_GROUP;
-			case TASKLIST_ALWAYS_GROUP: grouping = WNCK_TASKLIST_ALWAYS_GROUP;
-			default: grouping = WNCK_TASKLIST_NEVER_GROUP;
+			case TASKLIST_NEVER_GROUP:
+				grouping = WNCK_TASKLIST_NEVER_GROUP;
+				break;
+			case TASKLIST_AUTO_GROUP:
+				grouping = WNCK_TASKLIST_AUTO_GROUP;
+				break;
+			case TASKLIST_ALWAYS_GROUP:
+				grouping = WNCK_TASKLIST_ALWAYS_GROUP;
+				break;
+			default:
+				grouping = WNCK_TASKLIST_NEVER_GROUP;
 		}
 		wnck_tasklist_set_grouping(WNCK_TASKLIST(tasklist->tasklist), grouping);
 		wnck_tasklist_set_include_all_workspaces(WNCK_TASKLIST(tasklist->tasklist), tasklist->include_all_workspaces);
