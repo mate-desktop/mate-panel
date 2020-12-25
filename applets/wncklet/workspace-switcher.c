@@ -321,11 +321,13 @@ static void applet_style_updated (MatePanelApplet *applet, GtkStyleContext *cont
  */
 static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, PagerData* pager)
 {
+#ifdef HAVE_X11
 	GdkScrollDirection absolute_direction;
 	int index;
 	int n_workspaces;
 	int n_columns;
 	int in_last_row;
+#endif /* HAVE_X11 */
 
 	if (event->type != GDK_SCROLL)
 		return FALSE;
@@ -340,7 +342,6 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 		n_workspaces = wnck_screen_get_workspace_count(pager->screen);
 	}
 	else
-#endif /* HAVE_X11 */
 	{
 		index = 0;
 		n_workspaces = 1;
@@ -431,7 +432,6 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 			break;
 	}
 
-#ifdef HAVE_X11
 	if (pager->screen)
 	{
 		wnck_workspace_activate(wnck_screen_get_workspace(pager->screen, index), event->time);
