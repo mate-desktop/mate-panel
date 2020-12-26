@@ -104,7 +104,7 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 	Window              xroot;
 	XRRScreenResources *resources;
 	RROutput            primary;
-	GArray             *geometries;
+	GArray             *geometries_array;
 	int                 scale;
 	int                 i;
 
@@ -158,9 +158,9 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 	/* Use scale factor to bring geometries down to device pixels to support HiDPI displays */
 	scale = gdk_monitor_get_scale_factor (monitor);
 
-	geometries = g_array_sized_new (FALSE, FALSE,
-					sizeof (GdkRectangle),
-					resources->noutput);
+	geometries_array = g_array_sized_new (FALSE, FALSE,
+	                                      sizeof (GdkRectangle),
+	                                      resources->noutput);
 
 	for (i = 0; i < resources->noutput; i++) {
 		XRROutputInfo *output;
@@ -186,9 +186,9 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 			if (_panel_multimonitor_output_should_be_first (xdisplay,
 									resources->outputs[i],
 									output, primary))
-				g_array_prepend_vals (geometries, &rect, 1);
+				g_array_prepend_vals (geometries_array, &rect, 1);
 			else
-				g_array_append_vals (geometries, &rect, 1);
+				g_array_append_vals (geometries_array, &rect, 1);
 		}
 
 		XRRFreeOutputInfo (output);
@@ -196,19 +196,19 @@ panel_multimonitor_get_randr_monitors (int           *monitors_ret,
 
 	XRRFreeScreenResources (resources);
 
-	if (geometries->len == 0) {
+	if (geometries_array->len == 0) {
 		/* This can happen in at least one case:
 		 * https://bugzilla.novell.com/show_bug.cgi?id=543876 where all
 		 * monitors appear disconnected (possibly because the  screen
 		 * is behing a KVM switch) -- see comment #8.
 		 * There might be other cases too, so we stay on the safe side.
 		 */
-		g_array_free (geometries, TRUE);
+		g_array_free (geometries_array, TRUE);
 		return FALSE;
 	}
 
-	*monitors_ret = geometries->len;
-	*geometries_ret = (GdkRectangle *) g_array_free (geometries, FALSE);
+	*monitors_ret = geometries_array->len;
+	*geometries_ret = (GdkRectangle *) g_array_free (geometries_array, FALSE);
 
 	return TRUE;
 }
@@ -221,18 +221,18 @@ panel_multimonitor_get_gdk_monitors (int           *monitors_ret,
 {
 	GdkDisplay   *display;
 	int           num_monitors;
-	GdkRectangle *geometries;
+	GdkRectangle *geometries_array;
 	int           i;
 
 	display = gdk_display_get_default ();
 	num_monitors = gdk_display_get_n_monitors (display);
-	geometries = g_new (GdkRectangle, num_monitors);
+	geometries_array = g_new (GdkRectangle, num_monitors);
 
 	for (i = 0; i < num_monitors; i++)
-		gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &(geometries[i]));
+		gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &(geometries_array[i]));
 
 	*monitors_ret = num_monitors;
-	*geometries_ret = geometries;
+	*geometries_ret = geometries_array;
 }
 
 static void
@@ -275,11 +275,11 @@ panel_multimonitor_compress_overlapping_monitors (int           *num_monitors_in
 						  GdkRectangle **geometries_inout)
 {
 	int           num_monitors;
-	GdkRectangle *geometries;
+	GdkRectangle *geometries_array;
 	int           i;
 
 	num_monitors = *num_monitors_inout;
-	geometries = *geometries_inout;
+	geometries_array = *geometries_inout;
 
 	/* http://bugzilla.gnome.org/show_bug.cgi?id=530969
 	 * https://bugzilla.novell.com/show_bug.cgi?id=310208
@@ -330,27 +330,27 @@ panel_multimonitor_compress_overlapping_monitors (int           *num_monitors_in
 		long max_pixels;
 		int  j;
 
-		max_pixels = pixels_in_rectangle (&geometries[i]);
+		max_pixels = pixels_in_rectangle (&geometries_array[i]);
 
 		j = i + 1;
 
 		while (j < num_monitors) {
-			if (rectangle_overlaps (&geometries[i],
-						&geometries[j])) {
+			if (rectangle_overlaps (&geometries_array[i],
+						&geometries_array[j])) {
 				long pixels;
 
-				pixels = pixels_in_rectangle (&geometries[j]);
+				pixels = pixels_in_rectangle (&geometries_array[j]);
 				if (pixels > max_pixels) {
 					max_pixels = pixels;
 					/* keep the maximum */
-					geometries[i] = geometries[j];
+					geometries_array[i] = geometries_array[j];
 				}
 
 				/* Shift the remaining monitors to the left */
 				if (num_monitors - j - 1 > 0)
-					memmove (&geometries[j],
-						 &geometries[j + 1],
-						 sizeof (geometries[0]) * (num_monitors - j - 1));
+					memmove (&geometries_array[j],
+						 &geometries_array[j + 1],
+						 sizeof (geometries_array[0]) * (num_monitors - j - 1));
 
 				num_monitors--;
 				g_assert (num_monitors > 0);
@@ -360,7 +360,7 @@ panel_multimonitor_compress_overlapping_monitors (int           *num_monitors_in
 	}
 
 	*num_monitors_inout = num_monitors;
-	*geometries_inout = geometries;
+	*geometries_inout = geometries_array;
 }
 
 static gboolean
