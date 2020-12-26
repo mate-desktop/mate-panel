@@ -830,11 +830,11 @@ panel_properties_dialog_update_for_attached (PanelPropertiesDialog *dialog,
 }
 
 static PanelPropertiesDialog *
-panel_properties_dialog_new (PanelToplevel *toplevel,
-			     GtkBuilder    *gui)
+panel_properties_dialog_new (PanelToplevel *toplevel)
 {
 	PanelPropertiesDialog *dialog;
 	char                  *toplevel_settings_path;
+	GtkBuilder            *gui;
 
 	dialog = g_new0 (PanelPropertiesDialog, 1);
 
@@ -844,6 +844,9 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 				 (GDestroyNotify) panel_properties_dialog_free);
 
 	dialog->toplevel = toplevel;
+
+	gui = gtk_builder_new_from_resource (PANEL_RESOURCE_PATH "panel-properties-dialog.ui");
+	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
 
 	dialog->properties_dialog = PANEL_GTK_BUILDER_GET (gui, "panel_properties_dialog");
 	g_signal_connect_swapped (dialog->properties_dialog, "response",
@@ -908,9 +911,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	panel_toplevel_push_autohide_disabler (dialog->toplevel);
 	panel_widget_register_open_dialog (panel_toplevel_get_panel_widget (dialog->toplevel),
 					   dialog->properties_dialog);
-
-	gtk_widget_show (dialog->properties_dialog);
-
+	g_object_unref (gui);
 	return dialog;
 }
 
@@ -918,7 +919,6 @@ void
 panel_properties_dialog_present (PanelToplevel *toplevel)
 {
 	PanelPropertiesDialog *dialog;
-	GtkBuilder            *gui;
 
 	if (!panel_properties_dialog_quark)
 		panel_properties_dialog_quark =
@@ -929,16 +929,8 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 		gtk_window_set_screen (GTK_WINDOW (dialog->properties_dialog),
 				       gtk_window_get_screen (GTK_WINDOW (toplevel)));
 		gtk_window_present (GTK_WINDOW (dialog->properties_dialog));
-		return;
+	} else {
+		dialog = panel_properties_dialog_new (toplevel);
+		gtk_widget_show (dialog->properties_dialog);
 	}
-
-	gui = gtk_builder_new ();
-	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
-	gtk_builder_add_from_resource (gui,
-	                               PANEL_RESOURCE_PATH "panel-properties-dialog.ui",
-	                               NULL);
-
-	dialog = panel_properties_dialog_new (toplevel, gui);
-
-	g_object_unref (gui);
 }
