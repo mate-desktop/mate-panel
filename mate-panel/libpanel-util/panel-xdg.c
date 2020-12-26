@@ -117,18 +117,12 @@ panel_xdg_icon_name_from_icon_path (const char *path,
 			gboolean  current;
 
 			theme_dir = g_file_get_child (parent, theme_name);
-
-			current = FALSE;
-			if (g_file_has_prefix (file, theme_dir)) {
-				/* it's the current one */
-				current = TRUE;
-			} else {
-				/* it's the default one */
+			if ((current = g_file_has_prefix (file, theme_dir)) == FALSE) {
+				/* fallback icon theme? */
 				g_object_unref (theme_dir);
 				theme_dir = g_file_get_child (parent, DEFAULT_THEME_NAME);
 				current = g_file_has_prefix (file, theme_dir);
 			}
-
 			g_object_unref (theme_dir);
 
 			if (current) {
