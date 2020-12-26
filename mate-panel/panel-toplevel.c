@@ -3241,7 +3241,7 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	GtkBin          *bin = (GtkBin *) widget;
 	GtkStyleContext *context;
 	GtkStateFlags    state;
-	GtkBorder padding;
+	GtkBorder        padding;
 	GtkWidget       *child;
 	GtkAllocation    challoc;
 	GtkAllocation    child_allocation;
@@ -3297,10 +3297,11 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	     challoc.y != child_allocation.y ||
 	     challoc.width  != child_allocation.width ||
 	     challoc.height != child_allocation.height)) {
-		GtkAllocation allocation;
+		GtkAllocation allocation_to_invalidate;
 
-		gtk_widget_get_allocation (widget, &allocation);
-		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &allocation, FALSE);
+		gtk_widget_get_allocation (widget, &allocation_to_invalidate);
+		gdk_window_invalidate_rect (gtk_widget_get_window (widget),
+		                            &allocation_to_invalidate, FALSE);
 	}
 
 	if (child && gtk_widget_get_visible (child))
