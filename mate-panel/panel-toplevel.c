@@ -773,7 +773,6 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 	y = new_y - panel_multimonitor_y (new_monitor);
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		y_centered = FALSE;
 		if (new_y          <= display_min.y + snap_tolerance ||
 		    new_y + height >= display_max.y - snap_tolerance)
 			x_centered = abs (x - ((monitor_geom.width - width) / 2))
@@ -781,7 +780,6 @@ static void panel_toplevel_move_to(PanelToplevel* toplevel, int new_x, int new_y
 		else
 			x_centered = FALSE;
 	} else {
-		x_centered = FALSE;
 		if (new_x         <= display_min.x + snap_tolerance ||
 		    new_x + width >= display_max.x - snap_tolerance)
 			y_centered = abs (y - ((monitor_geom.height - height) / 2))
