@@ -83,7 +83,7 @@ enum
   LAST_PROP
 };
 
-static GParamSpec *properties[LAST_PROP] = { NULL };
+static GParamSpec *obj_properties[LAST_PROP] = { NULL };
 
 G_DEFINE_TYPE (SnItemV0, sn_item_v0, SN_TYPE_ITEM)
 
@@ -1345,15 +1345,15 @@ sn_item_v0_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
-  properties[PROP_ICON_SIZE] =
+  obj_properties[PROP_ICON_SIZE] =
     g_param_spec_int ("icon-size", "Icon size", "Icon size", 0, G_MAXINT, 16,
                       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  properties[PROP_ICON_PADDING] =
+  obj_properties[PROP_ICON_PADDING] =
     g_param_spec_int ("icon-padding", "Icon padding", "Icon padding", 0,
                       G_MAXINT, 0, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_properties (object_class, LAST_PROP, properties);
+  g_object_class_install_properties (object_class, LAST_PROP, obj_properties);
 }
 
 static void
@@ -1465,7 +1465,7 @@ sn_item_v0_set_icon_size (SnItemV0 *v0,
   if (v0->icon_size != size)
     {
       v0->icon_size = size;
-      g_object_notify_by_pspec (G_OBJECT (v0), properties[PROP_ICON_SIZE]);
+      g_object_notify_by_pspec (G_OBJECT (v0), obj_properties[PROP_ICON_SIZE]);
 
       if (v0->id != NULL)
         queue_update (v0);

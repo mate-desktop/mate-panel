@@ -357,7 +357,6 @@ _panel_icon_chooser_clicked (GtkButton *button)
 	GtkWidget        *filechooser;
 	GtkWidget        *toplevel;
 	GtkWindow        *parent;
-	char             *path;
 	gboolean          filechooser_path_set;
 
 	if (chooser->priv->filechooser) {
@@ -382,15 +381,11 @@ _panel_icon_chooser_clicked (GtkButton *button)
 
 	panel_gtk_file_chooser_add_image_preview (GTK_FILE_CHOOSER (filechooser));
 
-	path = g_build_filename (DATADIR, "icons", NULL);
 	gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (filechooser),
-					      path, NULL);
-	g_free (path);
+	                                      DATADIR "/icons", NULL);
 
-	path = g_build_filename (DATADIR, "pixmaps", NULL);
 	gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (filechooser),
-					      path, NULL);
-	g_free (path);
+	                                      DATADIR "/pixmaps", NULL);
 
 	filechooser_path_set = FALSE;
 
@@ -428,14 +423,11 @@ _panel_icon_chooser_clicked (GtkButton *button)
 	}
 
 	if (!filechooser_path_set) {
-		char *path;
 		/* FIXME? Use current icon theme? But there might not be a lot
 		 * of icons there...
 		 */
-		path = g_build_filename (DATADIR, "icons", NULL);
 		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (filechooser),
-						     path);
-		g_free (path);
+						     DATADIR "/icons");
 	}
 
 	gtk_window_set_destroy_with_parent (GTK_WINDOW (filechooser), TRUE);
