@@ -58,6 +58,7 @@ typedef enum {
 	PAGER_WM_METACITY,
 	PAGER_WM_COMPIZ,
 	PAGER_WM_I3,
+	PAGER_WM_XMONAD,
 	PAGER_WM_UNKNOWN
 } PagerWM;
 
@@ -107,7 +108,8 @@ static void pager_update_wnck(PagerData* pager, WnckPager* wnck_pager)
 	if (pager->display_names && (
 		pager->wm == PAGER_WM_MARCO ||
 		pager->wm == PAGER_WM_METACITY ||
-		pager->wm == PAGER_WM_I3))
+		pager->wm == PAGER_WM_I3 ||
+		pager->wm == PAGER_WM_XMONAD))
 	{
 		display_mode = WNCK_PAGER_DISPLAY_NAME;
 	}
@@ -171,6 +173,20 @@ static void update_properties_for_wm(PagerData* pager)
 			if (pager->cell)
 				g_object_set (pager->cell, "editable", FALSE, NULL);
 			break;
+		case PAGER_WM_XMONAD:
+			if (pager->workspaces_frame)
+				gtk_widget_show(pager->workspaces_frame);
+			if (pager->num_workspaces_spin)
+				gtk_widget_set_sensitive(pager->num_workspaces_spin, FALSE);
+			if (pager->workspace_names_label)
+				gtk_widget_hide(pager->workspace_names_label);
+			if (pager->workspace_names_scroll)
+				gtk_widget_hide(pager->workspace_names_scroll);
+			if (pager->display_workspaces_toggle)
+				gtk_widget_show(pager->display_workspaces_toggle);
+			if (pager->cell)
+				g_object_set (pager->cell, "editable", FALSE, NULL);
+			break;
 		case PAGER_WM_COMPIZ:
 			if (pager->workspaces_frame)
 				gtk_widget_show(pager->workspaces_frame);
@@ -216,6 +232,8 @@ static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 		pager->wm = PAGER_WM_METACITY;
 	else if (strcmp(wm_name, "i3") == 0)
 		pager->wm = PAGER_WM_I3;
+	else if (strcmp(wm_name, "xmonad") == 0)
+		pager->wm = PAGER_WM_XMONAD;
 	else if (strcmp(wm_name, "Compiz") == 0)
 		pager->wm = PAGER_WM_COMPIZ;
 	else
