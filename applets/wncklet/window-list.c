@@ -252,6 +252,7 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
                           int          *thumbnail_scale)
 {
 	GdkWindow *window;
+	cairo_surface_t *screenshot;
 	cairo_surface_t *thumbnail;
 	cairo_t *cr;
 	double ratio;
@@ -265,6 +266,29 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	*thumbnail_scale = scale = gdk_window_get_scale_factor (window);
 	width = gdk_window_get_width (window) * scale;
 	height = gdk_window_get_height (window) * scale;
+
+	/* Get reference to GdkWindow surface */
+	cairo_t *win_cr = gdk_cairo_create (window);
+	cairo_surface_t *win_surface = cairo_get_target (win_cr);
+	/* Flush to ensure all writing to the image was done */
+	cairo_surface_flush (win_surface);
+	cairo_destroy (win_cr);
+
+	/* Create screenshot surface with the GdkWindow as its source */
+	screenshot = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+	cairo_surface_set_device_scale (screenshot, scale, scale);
+	cr = cairo_create (screenshot);
+	cairo_set_source_surface (cr, win_surface, 0, 0);
+	cairo_paint (cr);
+
+	/* Mark the image dirty so Cairo clears its caches */
+	cairo_surface_mark_dirty (win_surface);
+
+	cairo_destroy (cr);
+	g_object_unref (window);
+
+	if (screenshot == NULL)
+		return NULL;
 
 	/* Scale to configured size while maintaining aspect ratio */
 	if (width > height)
@@ -282,16 +306,18 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 		*thumbnail_width = (int) ((double) width * ratio);
 	}
 
-	thumbnail = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-	                                        *thumbnail_width,
-	                                        *thumbnail_height);
-	cairo_surface_set_device_scale (thumbnail, scale, scale);
+	thumbnail = cairo_surface_create_similar (screenshot,
+	                                          cairo_surface_get_content (screenshot),
+	                                          *thumbnail_width,
+	                                          *thumbnail_height);
+
 	cr = cairo_create (thumbnail);
 	cairo_scale (cr, ratio, ratio);
-	gdk_cairo_set_source_window (cr, window, 0, 0);
+	cairo_set_source_surface (cr, screenshot, 0, 0);
 	cairo_paint (cr);
+
 	cairo_destroy (cr);
-	g_object_unref (window);
+	cairo_surface_destroy (screenshot);
 
 	return thumbnail;
 }
