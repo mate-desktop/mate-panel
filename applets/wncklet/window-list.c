@@ -252,15 +252,18 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
                           int          *thumbnail_scale)
 {
 	GdkWindow *window;
+	Window win;
 	cairo_surface_t *thumbnail;
 	cairo_t *cr;
 	double ratio;
 	int width, height, scale;
 
-	window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), wnck_window_get_xid (wnck_window));
-
-	if (window == NULL)
-		return NULL;
+	win = wnck_window_get_xid (wnck_window);
+	if ((window = gdk_x11_window_lookup_for_display (gdk_display_get_default (), win)) == NULL)
+	{
+		if ((window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), win)) == NULL)
+			return NULL;
+	}
 
 	*thumbnail_scale = scale = gdk_window_get_scale_factor (window);
 	width = gdk_window_get_width (window) * scale;
