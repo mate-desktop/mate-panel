@@ -499,8 +499,7 @@ get_updated_timeformat (ClockData *cd)
 static void
 update_timeformat (ClockData *cd)
 {
-        if (cd->timeformat)
-                g_free (cd->timeformat);
+        g_free (cd->timeformat);
         cd->timeformat = get_updated_timeformat (cd);
 }
 
@@ -2400,17 +2399,17 @@ show_week_changed (GSettings    *settings,
 static void
 setup_gsettings (ClockData *cd)
 {
+        gint format;
+        gchar *custom_format;
+
         cd->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (cd->applet), CLOCK_SCHEMA);
 
         /* hack to allow users to set custom format in dconf-editor */
-        gint format;
-        gchar *custom_format;
         format = g_settings_get_enum (cd->settings, KEY_FORMAT);
         custom_format = g_settings_get_string (cd->settings, KEY_CUSTOM_FORMAT);
         g_settings_set_enum (cd->settings, KEY_FORMAT, format);
         g_settings_set_string (cd->settings, KEY_CUSTOM_FORMAT, custom_format);
-        if (custom_format != NULL)
-                g_free (custom_format);
+        g_free (custom_format);
 
         g_signal_connect (cd->settings, "changed::" KEY_FORMAT, G_CALLBACK (format_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_SECONDS, G_CALLBACK (show_seconds_changed), cd);

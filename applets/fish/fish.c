@@ -211,7 +211,8 @@ static void name_value_changed(GtkEntry* entry, FishApplet* fish)
 }
 
 static void image_value_changed(GtkFileChooser* chooser, FishApplet* fish)
-{	char *path;
+{
+	char *path;
 	char *image;
 	char *path_gsettings;
 
@@ -998,11 +999,12 @@ static void name_changed_notify(GSettings* settings, gchar* key, FishApplet* fis
 
 	value = g_settings_get_string (settings, key);
 
-	if (!value [0] || (fish->name && !strcmp (fish->name, value)))
+	if (!value || *value == '\0' || (fish->name && !strcmp (fish->name, value))) {
+		g_free (value);
 		return;
+	}
 
-	if (fish->name)
-		g_free (fish->name);
+	g_free (fish->name);
 	fish->name = g_strdup (value);
 
 	update_fortune_dialog (fish);
@@ -1013,8 +1015,7 @@ static void name_changed_notify(GSettings* settings, gchar* key, FishApplet* fis
 	    strcmp (gtk_entry_get_text (GTK_ENTRY (fish->name_entry)), fish->name))
 		gtk_entry_set_text (GTK_ENTRY (fish->name_entry), fish->name);
 
-	if (value)
-		g_free (value);
+	g_free (value);
 }
 
 static void image_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
@@ -1023,11 +1024,12 @@ static void image_changed_notify(GSettings* settings, gchar* key, FishApplet* fi
 
 	value = g_settings_get_string (settings, key);
 
-	if (!value [0] || (fish->image && !strcmp (fish->image, value)))
+	if (!value || *value == '\0' || (fish->image && !strcmp (fish->image, value))) {
+		g_free (value);
 		return;
+	}
 
-	if (fish->image)
-		g_free (fish->image);
+	g_free (fish->image);
 	fish->image = g_strdup (value);
 
 	load_fish_image (fish);
@@ -1047,8 +1049,7 @@ static void image_changed_notify(GSettings* settings, gchar* key, FishApplet* fi
 		g_free (path_chooser);
 	}
 
-	if (value)
-		g_free (value);
+	g_free (value);
 }
 
 static void command_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
@@ -1057,19 +1058,19 @@ static void command_changed_notify(GSettings* settings, gchar* key, FishApplet* 
 
 	value = g_settings_get_string (settings, key);
 
-	if (fish->command && !strcmp (fish->command, value))
+	if (!value || *value == '\0' || (fish->command && !strcmp (fish->command, value))) {
+		g_free (value);
 		return;
+	}
 
-	if (fish->command)
-		g_free (fish->command);
+	g_free (fish->command);
 	fish->command = g_strdup (value);
 
 	if (fish->command_entry &&
 	    strcmp (gtk_entry_get_text (GTK_ENTRY (fish->command_entry)), fish->command))
 		gtk_entry_set_text (GTK_ENTRY (fish->command_entry), fish->command);
 
-	if (value)
-		g_free (value);
+	g_free (value);
 }
 
 static void n_frames_changed_notify(GSettings* settings, gchar* key, FishApplet* fish)
@@ -1792,16 +1793,13 @@ static void fish_applet_dispose (GObject *object)
 		g_object_unref (fish->lockdown_settings);
 	fish->lockdown_settings = NULL;
 
-	if (fish->name)
-		g_free (fish->name);
+	g_free (fish->name);
 	fish->name = NULL;
 
-	if (fish->image)
-		g_free (fish->image);
+	g_free (fish->image);
 	fish->image = NULL;
 
-	if (fish->command)
-		g_free (fish->command);
+	g_free (fish->command);
 	fish->command = NULL;
 
 	if (fish->surface)
