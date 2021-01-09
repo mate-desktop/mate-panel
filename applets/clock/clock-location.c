@@ -210,35 +210,17 @@ clock_location_finalize (GObject *g_obj)
                                               G_CALLBACK (network_changed),
                                               CLOCK_LOCATION (g_obj));
 
-        if (priv->name) {
-                g_free (priv->name);
-                priv->name = NULL;
-        }
-
-        if (priv->city) {
-                g_free (priv->city);
-                priv->city = NULL;
-        }
+        g_free (priv->name);
+        g_free (priv->city);
 
         if (priv->systz) {
                 g_object_unref (priv->systz);
                 priv->systz = NULL;
         }
 
-        if (priv->timezone) {
-                g_free (priv->timezone);
-                priv->timezone = NULL;
-        }
-
-        if (priv->tzname) {
-                g_free (priv->tzname);
-                priv->tzname = NULL;
-        }
-
-        if (priv->weather_code) {
-                g_free (priv->weather_code);
-                priv->weather_code = NULL;
-        }
+        g_free (priv->timezone);
+        g_free (priv->tzname);
+        g_free (priv->weather_code);
 
         if (priv->weather_info) {
                 weather_info_free (priv->weather_info);
@@ -277,11 +259,7 @@ clock_location_set_name (ClockLocation *loc, const gchar *name)
 {
         ClockLocationPrivate *priv = clock_location_get_instance_private (loc);
 
-        if (priv->name) {
-                g_free (priv->name);
-                priv->name = NULL;
-        }
-
+        g_free (priv->name);
         priv->name = g_strdup (name);
 }
 
@@ -298,11 +276,7 @@ clock_location_set_city (ClockLocation *loc, const gchar *city)
 {
         ClockLocationPrivate *priv = clock_location_get_instance_private (loc);
 
-        if (priv->city) {
-                g_free (priv->city);
-                priv->city = NULL;
-        }
-
+        g_free (priv->city);
         priv->city = g_strdup (city);
 }
 
@@ -319,11 +293,7 @@ clock_location_set_timezone (ClockLocation *loc, const gchar *timezone)
 {
         ClockLocationPrivate *priv = clock_location_get_instance_private (loc);
 
-        if (priv->timezone) {
-                g_free (priv->timezone);
-                priv->timezone = NULL;
-        }
-
+        g_free (priv->timezone);
         priv->timezone = g_strdup (timezone);
 }
 
@@ -360,16 +330,11 @@ clock_location_set_tzname (ClockLocation *this, const char *tzname)
 {
         ClockLocationPrivate *priv = clock_location_get_instance_private (CLOCK_LOCATION(this));
 
-        if (priv->tzname) {
-                if (strcmp (priv->tzname, tzname) == 0) {
-                        return;
-                }
+        if (priv->tzname && strcmp (priv->tzname, tzname) == 0)
+                return;
 
-                g_free (priv->tzname);
-                priv->tzname = NULL;
-        }
-
-        if (tzname) {
+        g_free (priv->tzname);
+        if (tzname && *tzname != '\0') {
                 priv->tzname = g_strdup (tzname);
         } else {
                 priv->tzname = NULL;
@@ -596,7 +561,7 @@ clock_location_make_current (ClockLocation *loc,
 static gchar *
 clock_location_get_valid_weather_code (const gchar *code)
 {
-        if (!code || code[0] == '\0')
+        if (!code || *code == '\0')
                 return g_strdup (WEATHER_EMPTY_CODE);
         else
                 return g_strdup (code);

@@ -234,15 +234,8 @@ system_timezone_finalize (GObject *obj)
         systz = SYSTEM_TIMEZONE (obj);
         priv = system_timezone_get_instance_private (systz);
 
-        if (priv->tz) {
-                g_free (priv->tz);
-                priv->tz = NULL;
-        }
-
-        if (priv->env_tz) {
-                g_free (priv->env_tz);
-                priv->env_tz = NULL;
-        }
+        g_free (priv->tz);
+        g_free (priv->env_tz);
 
         for (i = 0; i < CHECK_NB; i++) {
                 if (priv->monitors[i])
@@ -265,8 +258,9 @@ system_timezone_monitor_changed (GFileMonitor *handle,
                                  gpointer user_data)
 {
         SystemTimezonePrivate *priv;
-        priv = system_timezone_get_instance_private (user_data);
         char *new_tz;
+
+        priv = system_timezone_get_instance_private (user_data);
 
         if (event != G_FILE_MONITOR_EVENT_CHANGED &&
             event != G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT &&
@@ -280,13 +274,13 @@ system_timezone_monitor_changed (GFileMonitor *handle,
 
         if (strcmp (priv->tz, new_tz) != 0) {
                 g_free (priv->tz);
-                priv->tz = new_tz;
+                priv->tz = g_strdup (new_tz);
 
                 g_signal_emit (G_OBJECT (user_data),
                                system_timezone_signals[CHANGED],
                                0, priv->tz);
-        } else
-                g_free (new_tz);
+        }
+        g_free (new_tz);
 }
 
 
@@ -413,16 +407,12 @@ system_timezone_read_key_file (const char *filename,
 
                         if (value[0] == '\"') {
                                 if (value[len - 1] == '\"') {
-                                        if (retval)
-                                                g_free (retval);
-
+                                        g_free (retval);
                                         retval = g_strndup (value + 1,
                                                             len - 2);
                                 }
                         } else {
-                                if (retval)
-                                        g_free (retval);
-
+                                g_free (retval);
                                 retval = g_strdup (line + strlen (key_eq));
                         }
 
