@@ -280,7 +280,7 @@ static void about_cb(GtkAction* action, NaTrayApplet* applet)
 		"copyright", _("Copyright \xc2\xa9 2002 Red Hat, Inc.\n"
 		               "Copyright \xc2\xa9 2003-2006 Vincent Untz\n"
 		               "Copyright \xc2\xa9 2011 Perberos\n"
-		               "Copyright \xc2\xa9 2012-2020 MATE developers"),
+		               "Copyright \xc2\xa9 2012-2021 MATE developers"),
 		"documenters", documenters,
 		"logo-icon-name", NOTIFICATION_AREA_ICON,
 		"translator-credits", _("translator-credits"),

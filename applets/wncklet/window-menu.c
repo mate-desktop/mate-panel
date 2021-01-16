@@ -88,7 +88,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		               "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
 		               "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 		               "Copyright \xc2\xa9 2011 Perberos\n"
-		               "Copyright \xc2\xa9 2012-2020 MATE developers"),
+		               "Copyright \xc2\xa9 2012-2021 MATE developers"),
 		"documenters", documenters,
 		"icon-name", WINDOW_MENU_ICON,
 		"logo-icon-name", WINDOW_MENU_ICON,
