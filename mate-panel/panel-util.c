@@ -375,54 +375,28 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	return surface;
 }
 
-static char* panel_lock_screen_action_get_command(const char* action)
+static char*
+panel_lock_screen_action_get_command (const char* action)
 {
-	char* command = NULL;
-	gboolean use_gscreensaver = FALSE;
-
-	if (panel_is_program_in_path("mate-screensaver-command") && panel_is_program_in_path("mate-screensaver-preferences"))
-	{
-		use_gscreensaver = TRUE;
-	}
-	else if (!panel_is_program_in_path("xscreensaver-command"))
-	{
-		return NULL;
-	}
+	char *command = NULL;
 
 	if (strcmp (action, "prefs") == 0)
 	{
-		if (use_gscreensaver)
-		{
-			command = g_strdup ("mate-screensaver-preferences");
-		}
-		else if (panel_is_program_in_path ("xscreensaver-demo"))
-		{
-			command = g_strdup ("xscreensaver-demo");
-		}
-		else
-		{
-			command = NULL;
-		}
+		if (!panel_is_program_in_path ("xscreensaver-demo"))
+			return NULL;
+
+		command = g_strdup ("xscreensaver-demo");
 	}
 	else if (strcmp (action, "activate") == 0 || strcmp(action, "lock") == 0)
 	{
-		/* Neither mate-screensaver or xscreensaver allow root
-		 * to lock the screen */
+		/* Don't allow root to lock the screen */
 		if (geteuid () == 0)
-		{
-			command = NULL;
-		}
-		else
-		{
-			if (use_gscreensaver)
-			{
-				command = g_strdup_printf("mate-screensaver-command --%s", action);
-			}
-			else
-			{
-				command = g_strdup_printf("xscreensaver-command -%s", action);
-			}
-		}
+			return NULL;
+
+		if (!panel_is_program_in_path("xscreensaver-command"))
+			return NULL;
+
+		command = g_strdup_printf("xscreensaver-command -%s", action);
 	}
 
 	return command;
