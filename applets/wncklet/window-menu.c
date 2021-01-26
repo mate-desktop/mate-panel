@@ -26,7 +26,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <string.h>
@@ -94,7 +94,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		"logo-icon-name", WINDOW_MENU_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://www.mate-desktop.org/",
+		"website", PACKAGE_URL,
 		NULL);
 }
 

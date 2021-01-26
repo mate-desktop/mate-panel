@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <glib/gi18n.h>
@@ -510,7 +510,7 @@ static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)
 		"logo-icon-name", SHOW_DESKTOP_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://www.mate-desktop.org/",
+		"website", PACKAGE_URL,
 		NULL);
 }
 

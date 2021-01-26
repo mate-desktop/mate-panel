@@ -561,7 +561,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 		"logo-icon-name", FISH_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION, /* "3.4.7.4ac19" */
-		"website", "http://mate-desktop.org/",
+		"website", PACKAGE_URL,
 		NULL);
 
 	g_free(descr);
