@@ -703,7 +703,7 @@ static void display_about_dialog(GtkAction* action, PagerData* pager)
 		"logo-icon-name", WORKSPACE_SWITCHER_ICON,
 		"translator-credits", _("translator-credits"),
 		"version", VERSION,
-		"website", "http://www.mate-desktop.org/",
+		"website", PACKAGE_URL,
 		NULL);
 }
 

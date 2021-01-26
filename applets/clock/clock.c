@@ -3403,7 +3403,7 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
                 "logo-icon-name", CLOCK_ICON,
                 "translator-credits", _("translator-credits"),
                 "version", VERSION,
-                "website", "http://mate-desktop.org/",
+                "website", PACKAGE_URL,
                 NULL);
 }
 
