@@ -59,6 +59,7 @@ struct _SnItemV0
   gchar         *title;
   gint32         window_id;
   gchar         *icon_name;
+  gchar         *label;
   SnIconPixmap **icon_pixmap;
   gchar         *overlay_icon_name;
   SnIconPixmap **overlay_icon_pixmap;
@@ -329,6 +330,7 @@ update (SnItemV0 *v0)
       gtk_widget_set_tooltip_markup (GTK_WIDGET (v0), NULL);
     }
 
+  gtk_button_set_label (GTK_BUTTON (v0), v0->label);
   accessible = gtk_widget_get_accessible (GTK_WIDGET (v0));
 
   if (v0->title != NULL && *v0->title != '\0')
@@ -848,6 +850,19 @@ new_status_cb (SnItemV0 *v0,
 }
 
 static void
+new_label_cb (SnItemV0 *v0,
+              GVariant *parameters)
+{
+  char *label = NULL;
+
+  g_free (v0->label);
+  g_variant_get (parameters, "(ss)", &label, NULL);
+  v0->label = g_strdup (label);
+
+  queue_update (v0);
+}
+
+static void
 new_icon_theme_path_cb (SnItemV0 *v0,
                         GVariant *parameters)
 {
@@ -895,6 +910,8 @@ g_signal_cb (GDBusProxy *proxy,
     new_title_cb (v0);
   else if (g_strcmp0 (signal_name, "NewIcon") == 0)
     new_icon_cb (v0);
+  else if (g_strcmp0 (signal_name, "XAyatanaNewLabel") == 0)
+    new_label_cb (v0, parameters);
   else if (g_strcmp0 (signal_name, "NewOverlayIcon") == 0)
     new_overlay_icon_cb (v0);
   else if (g_strcmp0 (signal_name, "NewAttentionIcon") == 0)
@@ -955,6 +972,8 @@ get_all_cb (GObject      *source_object,
         v0->window_id = g_variant_get_int32 (value);
       else if (g_strcmp0 (key, "IconName") == 0)
         v0->icon_name = g_variant_dup_string (value, NULL);
+      else if (g_strcmp0 (key, "XAyatanaLabel") == 0)
+        v0->label = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (key, "IconPixmap") == 0)
         v0->icon_pixmap = icon_pixmap_new (value);
       else if (g_strcmp0 (key, "OverlayIconName") == 0)
@@ -1111,6 +1130,7 @@ sn_item_v0_finalize (GObject *object)
 
   g_clear_pointer (&v0->title, g_free);
   g_clear_pointer (&v0->icon_name, g_free);
+  g_clear_pointer (&v0->label, g_free);
   g_clear_pointer (&v0->icon_pixmap, icon_pixmap_free);
   g_clear_pointer (&v0->overlay_icon_name, g_free);
   g_clear_pointer (&v0->overlay_icon_pixmap, icon_pixmap_free);
@@ -1395,7 +1415,7 @@ sn_item_v0_init (SnItemV0 *v0)
   v0->icon_size = 16;
   v0->effective_icon_size = 0;
   v0->image = gtk_image_new ();
-  gtk_container_add (GTK_CONTAINER (v0), v0->image);
+  gtk_button_set_image (GTK_BUTTON (v0), v0->image);
   gtk_widget_show (v0->image);
 }
 
