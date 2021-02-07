@@ -322,8 +322,10 @@ libmate-panel-applet/Makefile
 po/Makefile.in
 applets/Makefile
 applets/clock/Makefile
-applets/clock/org.mate.panel.applet.clock.gschema.xml
-applets/clock/pixmaps/Makefile
+applets/clock/data/Makefile
+applets/clock/data/org.mate.panel.applet.clock.gschema.xml
+applets/clock/data/pixmaps/Makefile
+applets/clock/src/Makefile
 applets/fish/Makefile
 applets/fish/org.mate.panel.applet.fish.gschema.xml
 applets/notification_area/Makefile

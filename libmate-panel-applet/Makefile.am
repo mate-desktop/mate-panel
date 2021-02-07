@@ -1,9 +1,9 @@
 lib_LTLIBRARIES = libmate-panel-applet-4.la
 noinst_PROGRAMS = test-dbus-applet
 
-AM_CPPFLAGS =							\
-	$(LIBMATE_PANEL_APPLET_CFLAGS)				\
-	-I$(top_builddir)/libmate-panel-applet			\
+AM_CPPFLAGS =					\
+	$(LIBMATE_PANEL_APPLET_CFLAGS)		\
+	-I$(top_builddir)/libmate-panel-applet	\
 	-DMATELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
