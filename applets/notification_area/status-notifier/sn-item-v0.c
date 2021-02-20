@@ -912,8 +912,6 @@ g_signal_cb (GDBusProxy *proxy,
     new_title_cb (v0);
   else if (g_strcmp0 (signal_name, "NewIcon") == 0)
     new_icon_cb (v0);
-  else if (g_strcmp0 (signal_name, "XAyatanaNewLabel") == 0)
-    new_label_cb (v0, parameters);
   else if (g_strcmp0 (signal_name, "NewOverlayIcon") == 0)
     new_overlay_icon_cb (v0);
   else if (g_strcmp0 (signal_name, "NewAttentionIcon") == 0)
@@ -924,6 +922,8 @@ g_signal_cb (GDBusProxy *proxy,
     new_status_cb (v0, parameters);
   else if (g_strcmp0 (signal_name, "NewIconThemePath") == 0)
     new_icon_theme_path_cb (v0, parameters);
+  else if (g_strcmp0 (signal_name, "XAyatanaNewLabel") == 0)
+    new_label_cb (v0, parameters);
   else
     g_debug ("signal '%s' not handled!", signal_name);
 }
@@ -974,8 +974,6 @@ get_all_cb (GObject      *source_object,
         v0->window_id = g_variant_get_int32 (value);
       else if (g_strcmp0 (key, "IconName") == 0)
         v0->icon_name = g_variant_dup_string (value, NULL);
-      else if (g_strcmp0 (key, "XAyatanaLabel") == 0)
-        v0->label = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (key, "IconPixmap") == 0)
         v0->icon_pixmap = icon_pixmap_new (value);
       else if (g_strcmp0 (key, "OverlayIconName") == 0)
@@ -996,6 +994,8 @@ get_all_cb (GObject      *source_object,
         v0->menu = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (key, "ItemIsMenu") == 0)
         v0->item_is_menu = g_variant_get_boolean (value);
+      else if (g_strcmp0 (key, "XAyatanaLabel") == 0)
+        v0->label = g_variant_dup_string (value, NULL);
       else
         g_debug ("property '%s' not handled!", key);
 
