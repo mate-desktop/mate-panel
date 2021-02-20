@@ -853,11 +853,13 @@ static void
 new_label_cb (SnItemV0 *v0,
               GVariant *parameters)
 {
-  char *label = NULL;
+  GVariant *variant;
+
+  variant = g_variant_get_child_value (parameters, 0);
 
   g_free (v0->label);
-  g_variant_get (parameters, "(ss)", &label, NULL);
-  v0->label = g_strdup (label);
+  v0->label = g_variant_dup_string (variant, NULL);
+  g_variant_unref (variant);
 
   queue_update (v0);
 }
