@@ -69,12 +69,20 @@
 
     <property name="IconThemePath" type="s" access="read" />
 
+    <property name="ItemIsMenu" type="b" access="read" />
+
     <property name="Menu" type="o" access="read" />
 
-    <property name="ItemIsMenu" type="b" access="read" />
+    <property name="XAyatanaLabel" type="s" access="read" />
 
     <signal name="NewIconThemePath">
       <arg name="icon_theme_path" type="s" />
     </signal>
+
+    <signal name="XAyatanaNewLabel">
+      <arg name="label" type="s" />
+      <arg name="guide" type="s" />
+    </signal>
+
   </interface>
 </node>
