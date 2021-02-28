@@ -81,6 +81,7 @@
 #define KEY_SHOW_TEMPERATURE        "show-temperature"
 #define KEY_CUSTOM_FORMAT        "custom-format"
 #define KEY_SHOW_WEEK                "show-week-numbers"
+#define KEY_SHOW_ALL_LOCATIONS    "show-all-locations"
 #define KEY_CITIES                "cities"
 #define KEY_TEMPERATURE_UNIT        "temperature-unit"
 #define KEY_SPEED_UNIT                "speed-unit"
@@ -148,6 +149,7 @@ struct _ClockData {
         gboolean     showseconds;
         gboolean     showdate;
         gboolean     showweek;
+        gboolean     show_all_locations;
         gboolean     show_weather;
         gboolean     show_temperature;
 
@@ -543,6 +545,7 @@ format_time (ClockData *cd)
         char *utf8;
 
         utf8 = NULL;
+        hour[0] = '\0';
 
         tm = localtime (&cd->current_time);
 
@@ -561,19 +564,46 @@ format_time (ClockData *cd)
                         utf8 = g_strdup_printf ("@%3.2f", itime);
                 else
                         utf8 = g_strdup_printf ("@%3d", (unsigned int) itime);
-        } else if (cd->format == CLOCK_FORMAT_CUSTOM) {
-                char *timeformat = g_locale_from_utf8 (cd->custom_format, -1,
-                                                       NULL, NULL, NULL);
-                if (!timeformat)
-                        strcpy (hour, "???");
-                else if (strftime (hour, sizeof (hour), timeformat, tm)== 0)
-                        strcpy (hour, "???");
-                g_free (timeformat);
-
-                utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
         } else {
-                if (strftime (hour, sizeof (hour), cd->timeformat, tm) == 0)
+                char *timeformat;
+                gboolean timeformat_dynamic = FALSE;
+
+                if (cd->format == CLOCK_FORMAT_CUSTOM) {
+                        timeformat = g_locale_from_utf8 (cd->custom_format, -1,
+                                                       NULL, NULL, NULL);
+                        timeformat_dynamic = TRUE;
+                } else {
+                        timeformat = cd->timeformat;
+                }
+
+                if (!timeformat) {
                         strcpy (hour, "???");
+                } else if (!cd->show_all_locations || g_slist_length (cd->locations) == 0) {
+                        if (strftime (hour, sizeof (hour), timeformat, tm) == 0)
+                                strcpy(hour, "???");
+                } else {
+                        GSList *location_node = cd->locations;
+                        while (location_node) {
+                                ClockLocation *loc = location_node->data;
+                                struct tm tm_local;
+                                clock_location_localtime (loc, &tm_local);
+
+                                char * hour_cur = hour + strnlen(hour, sizeof(hour));
+                                int maxsize = sizeof(hour) - strnlen(hour, sizeof (hour));
+
+                                if (strftime (hour_cur, maxsize, cd->timeformat, &tm_local) == 0)
+                                        strncpy (hour_cur, "???", maxsize);
+
+                                location_node = g_slist_next (location_node);
+
+                                if (location_node) {
+                                        strncat(hour, " / ", sizeof(hour) - strnlen(hour, sizeof (hour)));
+                                }
+                        }
+                        hour[sizeof(hour)-1] = '\0';
+                }
+
+                if (timeformat_dynamic) g_free(timeformat);
 
                 utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
         }
@@ -1961,6 +1991,15 @@ show_date_changed (GSettings    *settings,
 }
 
 static void
+show_all_locations_changed (GSettings    *settings,
+                            gchar        *key,
+                            ClockData    *clock)
+{
+        clock->show_all_locations = g_settings_get_boolean(settings, key);
+        refresh_clock (clock);
+}
+
+static void
 update_panel_weather (ClockData *cd)
 {
         if (cd->show_weather)
@@ -2161,6 +2200,8 @@ locations_changed (ClockData *cd)
 
         if (cd->clock_vbox)
                 create_cities_section (cd);
+
+        refresh_clock (cd);
 }
 
 
@@ -2414,6 +2455,7 @@ setup_gsettings (ClockData *cd)
         g_signal_connect (cd->settings, "changed::" KEY_FORMAT, G_CALLBACK (format_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_SECONDS, G_CALLBACK (show_seconds_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_DATE, G_CALLBACK (show_date_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_SHOW_ALL_LOCATIONS, G_CALLBACK (show_all_locations_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_WEATHER, G_CALLBACK (show_weather_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_TEMPERATURE, G_CALLBACK (show_temperature_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_CUSTOM_FORMAT, G_CALLBACK (custom_format_changed), cd);
@@ -2460,6 +2502,7 @@ load_gsettings (ClockData *cd)
         cd->custom_format = g_settings_get_string (cd->settings, KEY_CUSTOM_FORMAT);
         cd->showseconds = g_settings_get_boolean (cd->settings, KEY_SHOW_SECONDS);
         cd->showdate = g_settings_get_boolean (cd->settings, KEY_SHOW_DATE);
+        cd->show_all_locations = g_settings_get_boolean (cd->settings, KEY_SHOW_ALL_LOCATIONS);
         cd->show_weather = g_settings_get_boolean (cd->settings, KEY_SHOW_WEATHER);
         cd->show_temperature = g_settings_get_boolean (cd->settings, KEY_SHOW_TEMPERATURE);
         cd->showweek = g_settings_get_boolean (cd->settings, KEY_SHOW_WEEK);
@@ -3098,6 +3141,11 @@ fill_prefs_window (ClockData *cd)
         widget = _clock_get_widget (cd, "weeks_check");
         g_settings_bind (cd->settings, KEY_SHOW_WEEK, widget, "active",
         G_SETTINGS_BIND_DEFAULT);
+
+        widget = _clock_get_widget (cd, "all_locations_check");
+        g_settings_bind (cd->settings, KEY_SHOW_ALL_LOCATIONS, widget, "active",
+        G_SETTINGS_BIND_DEFAULT);
+
 
         /* Set the "Show weather" checkbox */
         widget = _clock_get_widget (cd, "weather_check");
