@@ -252,10 +252,11 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	g_list_free (dialog->completion_items);
 	dialog->completion_items = NULL;
 
+	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	if (dialog->completion)
 		g_completion_free (dialog->completion);
 	dialog->completion = NULL;
-
+	G_GNUC_END_IGNORE_DEPRECATIONS
 	panel_run_dialog_disconnect_pixmap (dialog);
 
 	g_free (dialog);
@@ -1436,7 +1437,9 @@ panel_run_dialog_update_completion (PanelRunDialog *dialog,
 	executables = NULL;
 
 	if (!dialog->completion) {
+		G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 		dialog->completion = g_completion_new (NULL);
+		G_GNUC_END_IGNORE_DEPRECATIONS
 		dialog->possible_executables = fill_possible_executables ();
 		dialog->dir_hash = g_hash_table_new_full (g_str_hash,
 							  g_str_equal,
@@ -1485,8 +1488,9 @@ panel_run_dialog_update_completion (PanelRunDialog *dialog,
 
 	if (list == NULL)
 		return;
-
+	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	g_completion_add_items (dialog->completion, list);
+	G_GNUC_END_IGNORE_DEPRECATIONS
 
 	dialog->completion_items = g_list_concat (dialog->completion_items,
 						  list);
@@ -1567,8 +1571,10 @@ entry_event (GtkEditable    *entry,
 		pos = strlen (prefix);
 		nprefix = NULL;
 
+		G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 		g_completion_complete_utf8 (dialog->completion, nospace_prefix,
 					    &nprefix);
+		G_GNUC_END_IGNORE_DEPRECATIONS
 
 		if (nprefix) {
 			int insertpos;
