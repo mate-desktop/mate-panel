@@ -266,8 +266,9 @@ BUILT_SOURCES = 				\
 	$(mate_panel_BUILT_SOURCES)		\
 	$(panel_test_applets_BUILT_SOURCES)
 
-ui_FILES =					\
-	panel-properties-dialog.ui \
+ui_FILES =				\
+	panel-ditem-editor-dialog.ui	\
+	panel-properties-dialog.ui	\
 	panel-run-dialog.ui
 
 panel-resources.c: panel.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/panel.gresource.xml)
