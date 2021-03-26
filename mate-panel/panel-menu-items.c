@@ -1025,6 +1025,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	char      *name;
 	char      *uri;
 	GFile     *file;
+	int        recent_items_limit;
 
 	places_menu = panel_create_menu ();
 
@@ -1120,8 +1121,12 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 						      NULL,
 						      FALSE);
 
+	recent_items_limit = g_settings_get_int (place_item->priv->menubar_settings,
+						 PANEL_MENU_BAR_MAX_RECENT_ITEMS);
+
 	panel_recent_append_documents_menu (places_menu,
-					    place_item->priv->recent_manager);
+					    place_item->priv->recent_manager,
+					    recent_items_limit);
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GtkWidget *toplevel = gtk_widget_get_toplevel (places_menu);
 	GdkScreen *screen = gtk_widget_get_screen(GTK_WIDGET(toplevel));
@@ -1378,6 +1383,10 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 	menuitem->priv->menubar_settings = g_settings_new (PANEL_MENU_BAR_SCHEMA);
 	g_signal_connect (menuitem->priv->menubar_settings,
 			"changed::" PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU,
+			G_CALLBACK (panel_place_menu_item_key_changed),
+			G_OBJECT (menuitem));
+	g_signal_connect (menuitem->priv->menubar_settings,
+			"changed::" PANEL_MENU_BAR_MAX_RECENT_ITEMS,
 			G_CALLBACK (panel_place_menu_item_key_changed),
 			G_OBJECT (menuitem));
 

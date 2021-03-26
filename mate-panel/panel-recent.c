@@ -185,7 +185,8 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 
 void
 panel_recent_append_documents_menu (GtkWidget        *top_menu,
-				    GtkRecentManager *manager)
+				    GtkRecentManager *manager,
+				    int               recent_items_limit)
 {
 	GtkWidget      *recent_menu;
 	GtkWidget      *menu_item;
@@ -199,6 +200,9 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				  _("Recent Documents"));
 	recent_menu = gtk_recent_chooser_menu_new_for_manager (manager);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), recent_menu);
+	
+	gtk_recent_chooser_set_limit (GTK_RECENT_CHOOSER (recent_menu),
+				      recent_items_limit);
 
 	g_signal_connect (G_OBJECT (recent_menu), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
