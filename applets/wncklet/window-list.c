@@ -62,6 +62,7 @@ typedef struct {
 
 	TasklistGroupingType grouping;
 	gboolean move_unminimized_windows;
+	gboolean scroll_enable;
 
 	GtkOrientation orientation;
 	int size;
@@ -86,6 +87,7 @@ typedef struct {
 	GtkWidget* auto_group_radio;
 	GtkWidget* always_group_radio;
 	GtkWidget* move_minimized_radio;
+	GtkWidget* mouse_scroll_check;
 	GtkWidget* change_workspace_radio;
 	GtkWidget* minimized_windows_box;
 	GtkWidget* window_grouping_box;
@@ -135,6 +137,7 @@ static void tasklist_update(TasklistData* tasklist)
 		wnck_tasklist_set_grouping(WNCK_TASKLIST(tasklist->tasklist), grouping);
 		wnck_tasklist_set_include_all_workspaces(WNCK_TASKLIST(tasklist->tasklist), tasklist->include_all_workspaces);
 		wnck_tasklist_set_switch_workspace_on_unminimize(WNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
+		wnck_tasklist_set_scroll_enabled (WNCK_TASKLIST(tasklist->tasklist), tasklist->scroll_enable);
 	}
 #endif /* HAVE_X11 */
 
@@ -608,6 +611,12 @@ static void move_unminimized_windows_changed(GSettings* settings, gchar* key, Ta
 	tasklist_update_unminimization_radio(tasklist);
 }
 
+static void scroll_enabled_changed (GSettings* settings, gchar* key, TasklistData* tasklist)
+{
+	tasklist->scroll_enable = g_settings_get_boolean (settings, key);
+	tasklist_update(tasklist);
+}
+
 static void setup_gsettings(TasklistData* tasklist)
 {
 	tasklist->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (tasklist->applet), WINDOW_LIST_SCHEMA);
@@ -632,6 +641,10 @@ static void setup_gsettings(TasklistData* tasklist)
 	g_signal_connect (tasklist->settings,
 					  "changed::move-unminimized-windows",
 					  G_CALLBACK (move_unminimized_windows_changed),
+					  tasklist);
+	g_signal_connect (tasklist->settings,
+					  "changed::scroll-enabled",
+					  G_CALLBACK (scroll_enabled_changed),
 					  tasklist);
 }
 
@@ -755,6 +768,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
 
 	tasklist->move_unminimized_windows = g_settings_get_boolean (tasklist->settings, "move-unminimized-windows");
+
+	tasklist->scroll_enable = g_settings_get_boolean (tasklist->settings, "scroll-enabled");
 
 	tasklist->size = mate_panel_applet_get_size(applet);
 
@@ -1043,6 +1058,7 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 
 	tasklist->move_minimized_radio = WID("move_minimized_radio");
 	tasklist->change_workspace_radio = WID("change_workspace_radio");
+	tasklist->mouse_scroll_check = WID("mouse_scroll_check");
 	tasklist->minimized_windows_box = WID("minimized_windows_box");
 	tasklist->window_grouping_box = WID("window_grouping_box");
 	tasklist->window_list_content_box = WID("window_list_content_box");
@@ -1059,6 +1075,13 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	g_signal_connect(G_OBJECT(tasklist->never_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 	g_signal_connect(G_OBJECT(tasklist->auto_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
 	g_signal_connect(G_OBJECT(tasklist->always_group_radio), "toggled", (GCallback) group_windows_toggled, tasklist);
+
+	/* Mouse Scroll: */
+	g_settings_bind (tasklist->settings,
+                    "scroll-enabled",
+                     tasklist->mouse_scroll_check,
+                    "active",
+                     G_SETTINGS_BIND_DEFAULT);
 
 #ifdef HAVE_WINDOW_PREVIEWS
 	/* change thumbnail size: */
