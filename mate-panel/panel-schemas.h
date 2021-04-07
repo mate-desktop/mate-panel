@@ -66,6 +66,7 @@
 #define PANEL_MENU_BAR_SHOW_ICON_KEY          "show-icon"
 #define PANEL_MENU_BAR_ICON_NAME_KEY          "icon-name"
 #define PANEL_MENU_BAR_MAX_ITEMS_OR_SUBMENU   "max-items-or-submenu"
+#define PANEL_MENU_BAR_MAX_RECENT_ITEMS       "max-recent-items"
 
 /* external schemas */
 
