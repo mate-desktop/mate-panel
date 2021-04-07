@@ -88,7 +88,7 @@ typedef struct {
 	GHashTable       *dir_hash;
 	GList		 *possible_executables;
 	GList		 *completion_items;
-	GCompletion      *completion;
+	GtkEntryCompletion *completion;
 
 	int	          add_items_idle_id;
 	int		  find_command_idle_id;
@@ -251,10 +251,6 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 		g_free (l->data);
 	g_list_free (dialog->completion_items);
 	dialog->completion_items = NULL;
-
-	if (dialog->completion)
-		g_completion_free (dialog->completion);
-	dialog->completion = NULL;
 
 	panel_run_dialog_disconnect_pixmap (dialog);
 
@@ -1418,6 +1414,33 @@ fill_executables (GList *possible_executables,
 	return list;
 }
 
+static GtkTreeModel *
+create_completion_model (GList *list)
+{
+	GtkListStore *store;
+	GtkTreeIter   iter;
+	GList        *l;
+
+	store = gtk_list_store_new (1, G_TYPE_STRING);
+	for (l = list; l; l = l->next)
+	{
+		gtk_list_store_append (store, &iter);
+		gtk_list_store_set (store, &iter, 0, l->data, -1);
+	}
+
+	return GTK_TREE_MODEL (store);
+}
+
+static void
+completion_add_items (GtkEntryCompletion *completion, GList *list)
+{
+	GtkTreeModel          *completion_model;
+
+	completion_model = create_completion_model (list);
+	gtk_entry_completion_set_model (completion, completion_model);
+	g_object_unref (completion_model);
+}
+
 static void
 panel_run_dialog_update_completion (PanelRunDialog *dialog,
 				    const char     *text)
@@ -1434,14 +1457,6 @@ panel_run_dialog_update_completion (PanelRunDialog *dialog,
 
 	list = NULL;
 	executables = NULL;
-
-	if (!dialog->completion) {
-		dialog->completion = g_completion_new (NULL);
-		dialog->possible_executables = fill_possible_executables ();
-		dialog->dir_hash = g_hash_table_new_full (g_str_hash,
-							  g_str_equal,
-							  g_free, NULL);
-	}
 
 	buf = g_path_get_basename (text);
 	prefix = buf[0];
@@ -1486,8 +1501,7 @@ panel_run_dialog_update_completion (PanelRunDialog *dialog,
 	if (list == NULL)
 		return;
 
-	g_completion_add_items (dialog->completion, list);
-
+	completion_add_items (dialog->completion, list);
 	dialog->completion_items = g_list_concat (dialog->completion_items,
 						  list);
 }
@@ -1499,7 +1513,6 @@ entry_event (GtkEditable    *entry,
 {
 	char             *prefix;
 	char             *nospace_prefix;
-	char             *nprefix;
 	char             *temp;
 	int               pos, tmp;
 
@@ -1562,43 +1575,6 @@ entry_event (GtkEditable    *entry,
 		if (!dialog->completion) {
 			g_free (prefix);
 			return FALSE;
-		}
-
-		pos = strlen (prefix);
-		nprefix = NULL;
-
-		g_completion_complete_utf8 (dialog->completion, nospace_prefix,
-					    &nprefix);
-
-		if (nprefix) {
-			int insertpos;
-			insertpos = 0;
-
-			temp = g_strndup (prefix, nospace_prefix - prefix);
-			g_free (prefix);
-
-			prefix = g_strconcat (temp, nprefix, NULL);
-
-			g_signal_handler_block (dialog->combobox,
-						dialog->changed_id);
-			gtk_editable_delete_text (entry, 0, -1);
-			g_signal_handler_unblock (dialog->combobox,
-						  dialog->changed_id);
-
-			gtk_editable_insert_text (entry,
-						  prefix, strlen (prefix),
-						  &insertpos);
-
- 			gtk_editable_set_position (entry, pos);
-			gtk_editable_select_region (entry, pos, -1);
-
-			dialog->completion_started = TRUE;
-
-			g_free (temp);
-			g_free (nprefix);
-			g_free (prefix);
-
-			return TRUE;
 		}
 
 		g_free (prefix);
@@ -1748,9 +1724,17 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 	GtkWidget             *entry;
 
 	dialog->combobox = PANEL_GTK_BUILDER_GET (gui, "comboboxentry");
+	dialog->possible_executables = fill_possible_executables ();
+	dialog->dir_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
 	gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+
+	dialog->completion = gtk_entry_completion_new ();
+	gtk_entry_completion_set_inline_completion (dialog->completion, TRUE);
+	gtk_entry_completion_set_popup_completion (dialog->completion, FALSE);
+	gtk_entry_set_completion (GTK_ENTRY (entry), dialog->completion);
+	gtk_entry_completion_set_text_column (dialog->completion, 0);
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->combobox),
 				 _panel_run_get_recent_programs_list (dialog));
