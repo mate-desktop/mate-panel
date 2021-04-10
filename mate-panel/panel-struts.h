@@ -17,7 +17,7 @@
  * 02110-1301, USA.
 
  * Authors:
- *	Mark McLoughlin <mark@skynet.ie>
+ *        Mark McLoughlin <mark@skynet.ie>
  */
 
 #ifndef __PANEL_STRUTS_H__
@@ -37,13 +37,13 @@ extern "C" {
 #endif
 
 gboolean panel_struts_register_strut           (PanelToplevel    *toplevel,
-						GdkScreen        *screen,
-						int               monitor,
-						PanelOrientation  orientation,
-						int               strut_size,
-						int               strut_start,
-						int               strut_end,
-						gint              scale);
+                                                GdkScreen        *screen,
+                                                int               monitor,
+                                                PanelOrientation  orientation,
+                                                int               strut_size,
+                                                int               strut_start,
+                                                int               strut_end,
+                                                gint              scale);
 
 void     panel_struts_unregister_strut         (PanelToplevel    *toplevel);
 
@@ -51,10 +51,10 @@ void     panel_struts_set_window_hint          (PanelToplevel    *toplevel);
 void     panel_struts_unset_window_hint        (PanelToplevel    *toplevel);
 
 gboolean panel_struts_update_toplevel_geometry (PanelToplevel    *toplevel,
-						int              *x,
-						int              *y,
-						int              *w,
-						int              *h);
+                                                int              *x,
+                                                int              *y,
+                                                int              *w,
+                                                int              *h);
 
 #ifdef __cplusplus
 }
