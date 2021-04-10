@@ -112,6 +112,30 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 }
 
 void
+panel_xutils_unset_strut (GdkWindow *gdk_window)
+{
+    GdkDisplay *display;
+    Display *xdisplay;
+    Window xwindow;
+
+    display = gdk_window_get_display (gdk_window);
+    xdisplay = gdk_x11_display_get_xdisplay (display);
+    xwindow = gdk_x11_window_get_xid (gdk_window);
+
+    if (net_wm_strut == None)
+        net_wm_strut = XInternAtom (xdisplay, "_NET_WM_STRUT", False);
+    if (net_wm_strut_partial == None)
+        net_wm_strut_partial = XInternAtom (xdisplay, "_NET_WM_STRUT_PARTIAL", False);
+
+    gdk_x11_display_error_trap_push (display);
+
+    XDeleteProperty (xdisplay, xwindow, net_wm_strut);
+    XDeleteProperty (xdisplay, xwindow, net_wm_strut_partial);
+
+    gdk_x11_display_error_trap_pop_ignored (display);
+}
+
+void
 panel_warp_pointer (GdkWindow *gdk_window,
                     int        x,
                     int        y)
