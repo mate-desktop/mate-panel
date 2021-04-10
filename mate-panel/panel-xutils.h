@@ -19,7 +19,7 @@
  * 02110-1301, USA.
  *
  * Authors:
- *	Mark McLoughlin <mark@skynet.ie>
+ *        Mark McLoughlin <mark@skynet.ie>
  */
 
 #ifndef __PANEL_XUTILS_H__
@@ -44,14 +44,14 @@ extern "C" {
 #endif
 
 void panel_xutils_set_strut       (GdkWindow             *gdk_window,
-				   PanelOrientation       orientation,
-				   guint32                strut,
-				   guint32                strut_start,
-				   guint32                strut_end);
+                                   PanelOrientation       orientation,
+                                   guint32                strut,
+                                   guint32                strut_start,
+                                   guint32                strut_end);
 
 void panel_warp_pointer           (GdkWindow             *gdk_window,
-				   int                    x,
-				   int                    y);
+                                   int                    x,
+                                   int                    y);
 
 guint panel_get_real_modifier_mask (guint modifier_mask);
 
