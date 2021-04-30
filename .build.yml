@@ -9,6 +9,7 @@ requires:
     - gcc
     - git
     - gobject-introspection
+    - gtk-layer-shell
     - itstool
     - libcanberra
     - libmateweather
@@ -40,6 +41,7 @@ requires:
     - libgirepository1.0-dev
     - libglib2.0-dev
     - libgtk-3-dev
+    - libgtk-layer-shell-dev
     - libice-dev
     - libmate-desktop-dev
     - libmate-menu-dev
@@ -67,8 +69,8 @@ requires:
     - git
     - gobject-introspection-devel
     - gtk3-devel
+    - gtk-layer-shell-devel
     - libSM-devel
-    - libcanberra-devel
     - libmateweather-devel
     - libwnck3-devel
     - make
@@ -94,6 +96,7 @@ requires:
     - libgirepository1.0-dev
     - libglib2.0-dev
     - libgtk-3-dev
+    - libgtk-layer-shell-dev
     - libice-dev
     - libmate-desktop-dev
     - libmate-menu-dev
@@ -129,14 +132,6 @@ variables:
     -enable-checker security.insecureAPI.strcpy"'
 
 before_scripts:
-  - cd ${START_DIR}
-  - if [ ! -d gtk-layer-shell-build ]; then
-  -     git clone --depth 1  https://github.com/wmww/gtk-layer-shell.git gtk-layer-shell-build
-  - fi
-  - cd gtk-layer-shell-build
-  - meson _build --prefix /usr
-  - ninja -C _build
-  - ninja -C _build install
 
 build_scripts:
   - if [ ${DISTRO_NAME} == "debian" ];then
