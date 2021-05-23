@@ -1227,3 +1227,18 @@ panel_util_get_file_optional_homedir (const char *location)
 	return file;
 }
 
+int
+panel_util_get_window_scaling_factor (void)
+{
+	GValue value = G_VALUE_INIT;
+
+	g_value_init (&value, G_TYPE_INT);
+
+	if (gdk_screen_get_setting (gdk_screen_get_default (),
+	                            "gdk-window-scaling-factor",
+	                            &value))
+		return g_value_get_int (&value);
+
+	return 1;
+}
+
