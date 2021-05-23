@@ -29,6 +29,7 @@
 #endif
 
 #include "panel-xutils.h"
+#include "panel-util.h"
 
 #include <glib.h>
 #include <gdk/gdk.h>
@@ -65,6 +66,7 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
  {
     Display *xdisplay;
     Window   window;
+    int window_scale;
     gulong   struts [12] = { 0, };
     gulong area[4] = { 0, };
     GdkDisplay *display;
@@ -81,6 +83,8 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
         net_wm_strut_partial = XInternAtom (xdisplay, "_NET_WM_STRUT_PARTIAL", False);
     if (gnome_wm_strut_area == None)
         gnome_wm_strut_area = XInternAtom (xdisplay, "_GNOME_WM_STRUT_AREA", False);
+
+    window_scale = panel_util_get_window_scaling_factor ();
 
     switch (orientation) {
     case PANEL_ORIENTATION_LEFT:
@@ -105,10 +109,10 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
         break;
     }
 
-    area[0] = rect->x;
-    area[1] = rect->y;
-    area[2] = rect->width;
-    area[3] = rect->height;
+    area[0] = rect->x * window_scale;
+    area[1] = rect->y * window_scale;
+    area[2] = rect->width * window_scale;
+    area[3] = rect->height * window_scale;
 
     display = gdk_window_get_display (gdk_window);
     gdk_x11_display_error_trap_push (display);
