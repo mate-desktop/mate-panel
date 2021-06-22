@@ -1,5 +1,6 @@
 /* Mate panel: general applet functionality
  * (C) 1997 the Free Software Foundation
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Authors:  George Lebl
  *           Federico Mena

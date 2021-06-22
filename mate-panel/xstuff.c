@@ -3,6 +3,7 @@
  *
  * Copyright (C) 2000, 2001 Eazel, Inc.
  *               2002 Sun Microsystems Inc.
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Authors: George Lebl <jirka@5z.com>
  *          Mark McLoughlin <mark@skynet.ie>

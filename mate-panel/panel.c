@@ -1,6 +1,7 @@
 /* Mate panel: Initialization routines
  * (C) 1997,1998,1999,2000 the Free Software Foundation
  * (C) 2000 Eazel, Inc.
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Authors: Federico Mena
  *          Miguel de Icaza

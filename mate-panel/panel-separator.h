@@ -2,6 +2,7 @@
  * panel-separator.h: panel "Separator" module
  *
  * Copyright (C) 2005 Carlos Garcia Campos <carlosgc@gnome.org>
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

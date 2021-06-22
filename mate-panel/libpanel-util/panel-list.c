@@ -2,6 +2,7 @@
  * panel-list.c: GList & GSList extensions
  *
  * Copyright (C) 2008 Novell, Inc.
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Originally based on code from panel-util.c (there was no relevant copyright
  * header at the time), but the code was:

@@ -1,6 +1,7 @@
 /*
  * MATE panel launcher module.
  * (C) 1997 The Free Software Foundation
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Authors: Miguel de Icaza
  *          Federico Mena

@@ -2,6 +2,7 @@
  * panel-error.c: an easy-to-use error dialog
  *
  * Copyright (C) 2008 Novell, Inc.
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Originally based on code from panel-util.c (there was no relevant copyright
  * header at the time).

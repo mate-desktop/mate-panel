@@ -2,6 +2,7 @@
  * panel-keyfile.c: GKeyFile extensions
  *
  * Copyright (C) 2008 Novell, Inc.
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Based on code from panel-util.c (there was no copyright header at the time)
  *

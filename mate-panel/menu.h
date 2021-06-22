@@ -3,6 +3,7 @@
  * Copyright (C) 2000 Helix Code, Inc.
  * Copyright (C) 2000 Eazel, Inc.
  * Copyright (C) 2004 Red Hat Inc.
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

@@ -1,5 +1,6 @@
 /* Mate panel: panel widget
  * (C) 1997-1998 the Free Software Foundation
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * Authors:  George Lebl
  */

@@ -2,6 +2,7 @@
  * panel-ditem-editor.h:
  *
  * Copyright (C) 2004, 2006 Vincent Untz
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * The Mate Library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public License as

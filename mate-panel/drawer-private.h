@@ -1,5 +1,6 @@
 /*
  * MATE panel drawer module.
+ * Copyright (C) 2012-2021 MATE Developers
  *
  * List static function prototypes separate
  * to prevent errors when compiling panel.c
