@@ -9,18 +9,19 @@
 # Damir Mevkić <damir.mevkic@gmail.com>, 2018
 # jetomit <timotej.lazar@araneo.si>, 2018
 # Marko Šterman <marko.chamillionaire@gmail.com>, 2018
-# Damir Jerovšek <jierro@windowslive.com>, 2018
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
 # Arnold Marko <arnold.marko@gmail.com>, 2019
 # Helena S <ele@tutamail.com>, 2020
+# Damir Jerovšek <jierro@windowslive.com>, 2021
+# neven.bulatovic <neven.bulatovic@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.0\n"
+"Project-Id-Version: mate-panel 1.25.2\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2020-08-08 12:56+0200\n"
+"POT-Creation-Date: 2021-06-22 13:38+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
-"Last-Translator: Helena S <ele@tutamail.com>, 2020\n"
+"Last-Translator: neven.bulatovic <neven.bulatovic@gmail.com>, 2021\n"
 "Language-Team: Slovenian (https://www.transifex.com/mate/teams/13566/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,14 +44,14 @@ msgstr "Koledar"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:449
+#: applets/clock/clock.c:448
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:449 applets/clock/clock-location-tile.c:502
+#: applets/clock/clock.c:448 applets/clock/clock-location-tile.c:500
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -61,7 +62,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: applets/clock/clock.c:454 applets/clock/clock.c:1624
+#: applets/clock/clock.c:453 applets/clock/clock.c:1620
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -75,9 +76,9 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: applets/clock/clock.c:454 applets/clock/clock.c:1630
-#: applets/clock/clock-location-tile.c:462
-#: applets/clock/clock-location-tile.c:509
+#: applets/clock/clock.c:453 applets/clock/clock.c:1626
+#: applets/clock/clock-location-tile.c:460
+#: applets/clock/clock-location-tile.c:507
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -86,11 +87,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: applets/clock/clock.c:465
+#: applets/clock/clock.c:464
 msgid "%a %b %e"
 msgstr "%a %e. %b"
 
-#: applets/clock/clock.c:472
+#: applets/clock/clock.c:471
 #, c-format
 msgid ""
 "%1$s\n"
@@ -99,7 +100,7 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#: applets/clock/clock.c:480
+#: applets/clock/clock.c:479
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -107,19 +108,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: applets/clock/clock.c:663
+#: applets/clock/clock.c:661
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: applets/clock/clock.c:689
+#: applets/clock/clock.c:687
 msgid "Click to hide month calendar"
 msgstr "Kliknite za skrivanje mesečnega koledarja"
 
-#: applets/clock/clock.c:691
+#: applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "Kliknite za ogled mesečnega koledarja"
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1458
 msgid "Computer Clock"
 msgstr "Računalniška ura"
 
@@ -129,7 +130,7 @@ msgstr "Računalniška ura"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1609
+#: applets/clock/clock.c:1605
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -139,110 +140,108 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1617
+#: applets/clock/clock.c:1613
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: applets/clock/clock.c:1663
+#: applets/clock/clock.c:1659
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/clock/clock.c:1694
+#: applets/clock/clock.c:1690
 msgid "Set System Time..."
 msgstr "Nastavitev sistemskega časa ..."
 
-#: applets/clock/clock.c:1695
+#: applets/clock/clock.c:1691
 msgid "Set System Time"
 msgstr "Nastavitev sistemskega časa"
 
-#: applets/clock/clock.c:1710
+#: applets/clock/clock.c:1705
 msgid "Failed to set the system time"
 msgstr "Nastavitev sistemskega časa je spodletela"
 
-#: applets/clock/clock.c:1906 applets/fish/fish.c:1694
-#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:362
-#: applets/wncklet/workspace-switcher.c:393
+#: applets/clock/clock.c:1901 applets/fish/fish.c:1691
+#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:432
+#: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "_Možnosti"
 
-#: applets/clock/clock.c:1909 applets/clock/clock.ui:293
-#: applets/fish/fish.c:1697 applets/fish/fish.ui:46
-#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:242
-#: applets/wncklet/window-list.c:370 applets/wncklet/window-list.ui:32
-#: applets/wncklet/window-menu.c:98 applets/wncklet/workspace-switcher.c:401
-#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:562
-#: mate-panel/panel-action-button.c:731 mate-panel/panel-addto.c:1310
-#: mate-panel/panel-context-menu.c:318 mate-panel/panel-ditem-editor.c:648
-#: mate-panel/panel-menu-bar.c:351 mate-panel/panel-menu-button.c:704
-#: mate-panel/panel-properties-dialog.ui:78
+#: applets/clock/clock.c:1904 applets/clock/clock.ui:293
+#: applets/fish/fish.c:1694 applets/fish/fish.ui:46
+#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:240
+#: applets/wncklet/window-list.c:440 applets/wncklet/window-list.ui:38
+#: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
+#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:563
+#: mate-panel/panel-action-button.c:732 mate-panel/panel-addto.c:1309
+#: mate-panel/panel-context-menu.c:319
+#: mate-panel/panel-ditem-editor-dialog.ui:45 mate-panel/panel-menu-bar.c:355
+#: mate-panel/panel-menu-button.c:705 mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "_Pomoč"
 
-#: applets/clock/clock.c:1912 applets/fish/fish.c:1700
-#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:250
-#: applets/wncklet/window-list.c:378 applets/wncklet/window-menu.c:106
-#: applets/wncklet/workspace-switcher.c:409
+#: applets/clock/clock.c:1907 applets/fish/fish.c:1697
+#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:248
+#: applets/wncklet/window-list.c:448 applets/wncklet/window-menu.c:113
+#: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "_O programu"
 
-#: applets/clock/clock.c:1915
+#: applets/clock/clock.c:1910
 msgid "Copy _Time"
 msgstr "Kopiraj _čas"
 
-#: applets/clock/clock.c:1918
+#: applets/clock/clock.c:1913
 msgid "Copy _Date"
 msgstr "Kopiraj _datum"
 
-#: applets/clock/clock.c:1921
+#: applets/clock/clock.c:1916
 msgid "Ad_just Date & Time"
 msgstr "_Nastavi datum in uro"
 
-#: applets/clock/clock.c:2919
+#: applets/clock/clock.c:2910
 msgid "Choose Location"
 msgstr "Izbor mesta"
 
-#: applets/clock/clock.c:2998
+#: applets/clock/clock.c:2989
 msgid "Edit Location"
 msgstr "Uredi mesto"
 
-#: applets/clock/clock.c:3125
+#: applets/clock/clock.c:3116
 msgid "City Name"
 msgstr "Ime mesta"
 
-#: applets/clock/clock.c:3129
+#: applets/clock/clock.c:3120
 msgid "City Time Zone"
 msgstr "Časovni pas mesta"
 
-#: applets/clock/clock.c:3404
+#: applets/clock/clock.c:3395
 #: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "Ura"
 
-#: applets/clock/clock.c:3405
+#: applets/clock/clock.c:3396
 msgid "About Clock"
 msgstr "O Uri"
 
-#: applets/clock/clock.c:3407
+#: applets/clock/clock.c:3398
 msgid "The Clock displays the current time and date"
 msgstr "Ura prikaže trenutni čas in datum"
 
-#: applets/clock/clock.c:3408
+#: applets/clock/clock.c:3399
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
-"Copyright © 2012-2020 MATE developers"
+"Copyright © 2012-2021 MATE developers"
 msgstr ""
-"Avtorske pravice © 1998-2004 Free Software Foundation, Inc.\n"
-"Avtorske pravice © 2012-2020 razvijalci MATE"
 
-#: applets/clock/clock.c:3412 applets/fish/fish.c:567
-#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:509
-#: applets/wncklet/window-list.c:801 applets/wncklet/window-menu.c:88
-#: applets/wncklet/workspace-switcher.c:648
-#: mate-panel/panel-context-menu.c:124
+#: applets/clock/clock.c:3403 applets/fish/fish.c:563
+#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:511
+#: applets/wncklet/window-list.c:730 applets/wncklet/window-menu.c:95
+#: applets/wncklet/workspace-switcher.c:722
+#: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
 msgstr "zasluge-prevajalcev"
 
@@ -251,11 +250,12 @@ msgid "Time & Date"
 msgstr "Datum in čas"
 
 #: applets/clock/clock.ui:46 applets/clock/clock.ui:923
-#: mate-panel/libpanel-util/panel-gtk.c:136
-#: mate-panel/panel-context-menu.c:213 mate-panel/panel-ditem-editor.c:664
-#: mate-panel/panel-force-quit.c:240 mate-panel/panel-recent.c:154
-#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:689
-#: mate-panel/panel.c:1497
+#: mate-panel/libpanel-util/panel-gtk.c:137
+#: mate-panel/panel-context-menu.c:214
+#: mate-panel/panel-ditem-editor-dialog.ui:92
+#: mate-panel/panel-force-quit.c:241 mate-panel/panel-recent.c:155
+#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:690
+#: mate-panel/panel.c:1498
 msgid "_Cancel"
 msgstr "_Prekliči"
 
@@ -279,10 +279,10 @@ msgstr "Možnosti ure"
 msgid "Time _Settings"
 msgstr "Nastavitve _časa"
 
-#: applets/clock/clock.ui:324 applets/fish/fish.c:853 applets/fish/fish.ui:62
+#: applets/clock/clock.ui:324 applets/fish/fish.c:850 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:48 applets/wncklet/workspace-switcher.ui:62
-#: mate-panel/panel-addto.c:1321 mate-panel/panel-ditem-editor.c:660
+#: applets/wncklet/window-list.ui:54 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1320 mate-panel/panel-ditem-editor-dialog.ui:76
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
 #: mate-panel/panel-test-applets.ui:52
@@ -330,7 +330,7 @@ msgstr "Pokaži _temperaturo"
 msgid "General"
 msgstr "Splošno"
 
-#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1317
+#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1316
 msgid "_Add"
 msgstr "Dod_aj"
 
@@ -382,8 +382,8 @@ msgstr "Sever"
 msgid "South"
 msgstr "Jug"
 
-#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:140
-#: mate-panel/panel-applet-frame.c:962 mate-panel/panel-ditem-editor.c:668
+#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:141
+#: mate-panel/panel-applet-frame.c:961
 msgid "_OK"
 msgstr "_V redu"
 
@@ -417,19 +417,19 @@ msgstr "Geografska _dolžina:"
 msgid "L_atitude:"
 msgstr "Geografska _širina:"
 
-#: applets/clock/clock-location-tile.c:183
+#: applets/clock/clock-location-tile.c:181
 msgid "Failed to set the system timezone"
 msgstr "Nastavitev časovnega pasa je spodletela"
 
-#: applets/clock/clock-location-tile.c:229
+#: applets/clock/clock-location-tile.c:227
 msgid "<small>Set...</small>"
 msgstr "<small>Nastavi ...</small>"
 
-#: applets/clock/clock-location-tile.c:230
+#: applets/clock/clock-location-tile.c:228
 msgid "<small>Set</small>"
 msgstr "<small>Nastavi</small>"
 
-#: applets/clock/clock-location-tile.c:306
+#: applets/clock/clock-location-tile.c:304
 msgid ""
 "Set location as current location and use its timezone for this computer"
 msgstr ""
@@ -442,7 +442,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: applets/clock/clock-location-tile.c:439
+#: applets/clock/clock-location-tile.c:437
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -451,7 +451,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: applets/clock/clock-location-tile.c:447
+#: applets/clock/clock-location-tile.c:445
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -459,40 +459,40 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock-location-tile.c:456
+#: applets/clock/clock-location-tile.c:454
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: applets/clock/clock-location-tile.c:598
+#: applets/clock/clock-location-tile.c:596
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: applets/clock/clock-location-tile.c:610
-#: applets/clock/clock-location-tile.c:619
+#: applets/clock/clock-location-tile.c:608
+#: applets/clock/clock-location-tile.c:617
 msgid "Unknown"
 msgstr "Neznano"
 
 #. Translators: The two strings are temperatures.
-#: applets/clock/clock-location-tile.c:612
+#: applets/clock/clock-location-tile.c:610
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, ki jih občutimo kot %s"
 
-#: applets/clock/clock-location-tile.c:635
+#: applets/clock/clock-location-tile.c:633
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sončni vzhod: %s / Sončni zahod: %s"
 
-#: applets/clock/clock-utils.c:92 applets/fish/fish.c:170
-#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:75
-#: mate-panel/libpanel-util/panel-show.c:234
+#: applets/clock/clock-utils.c:92 applets/fish/fish.c:169
+#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:74
+#: mate-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Ni mogoče prikazati dokumenta pomoči '%s'"
 
-#: applets/clock/clock-utils.c:121 applets/fish/fish.c:196
-#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:92
+#: applets/clock/clock-utils.c:121 applets/fish/fish.c:195
+#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:91
 msgid "Error displaying help document"
 msgstr "Napaka med prikazovanjem dokumenta pomoči"
 
@@ -627,7 +627,7 @@ msgstr "Tovarna za aplet ure"
 msgid "Get the current time and date"
 msgstr "Pridobi trenutni čas in datum"
 
-#: applets/fish/fish.c:266
+#: applets/fish/fish.c:265
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -640,16 +640,16 @@ msgstr ""
 "Uporaba %s za karkoli, kaj bi naredilo aplet\n"
 "koristen oz. uporaben, je močno odsvetovana."
 
-#: applets/fish/fish.c:428
+#: applets/fish/fish.c:424
 msgid "Images"
 msgstr "Slike"
 
-#: applets/fish/fish.c:534 applets/fish/fish.c:578 applets/fish/fish.c:684
+#: applets/fish/fish.c:530 applets/fish/fish.c:574 applets/fish/fish.c:680
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Riba %s"
 
-#: applets/fish/fish.c:535
+#: applets/fish/fish.c:531
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -661,41 +661,41 @@ msgstr ""
 "pomnilniku. V primeru, da jo uporabljate, predlagamo, da si privoščite dolg "
 "odmor."
 
-#: applets/fish/fish.c:552
+#: applets/fish/fish.c:548
 msgid "(with minor help from George)"
 msgstr "(z manjšo pomočjo Georgea)"
 
-#: applets/fish/fish.c:558
+#: applets/fish/fish.c:554
 #: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:10
 msgid "Fish"
 msgstr "Riba"
 
-#: applets/fish/fish.c:559
+#: applets/fish/fish.c:555
 msgid "About Fish"
 msgstr "O Ribi"
 
-#: applets/fish/fish.c:562
+#: applets/fish/fish.c:558
 msgid ""
 "Copyright © 1998-2002 Free Software Foundation, Inc.\n"
 "Copyright © 2002-2005 Vincent Untz\n"
-"Copyright © 2012-2020 MATE developers"
+"Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/fish/fish.c:579
+#: applets/fish/fish.c:575
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Riba %s, sodobni orakelj"
 
-#: applets/fish/fish.c:645
+#: applets/fish/fish.c:641
 msgid "Unable to locate the command to execute"
 msgstr "Ni mogoče najti ukaza za izvedbo"
 
-#: applets/fish/fish.c:689
+#: applets/fish/fish.c:685
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Riba %s pravi:"
 
-#: applets/fish/fish.c:752
+#: applets/fish/fish.c:747
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -706,16 +706,16 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: applets/fish/fish.c:849
+#: applets/fish/fish.c:846
 msgid "_Speak again"
 msgstr "_Spregovori znova"
 
-#: applets/fish/fish.c:930
+#: applets/fish/fish.c:927
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Nastavljen ukaz ne deluje in je bil zamenjan z: %s"
 
-#: applets/fish/fish.c:963
+#: applets/fish/fish.c:960
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -726,7 +726,7 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: applets/fish/fish.c:979
+#: applets/fish/fish.c:976
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -737,15 +737,15 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: applets/fish/fish.c:1551
+#: applets/fish/fish.c:1548
 msgid "The water needs changing"
 msgstr "Treba bo zamenjati vodo"
 
-#: applets/fish/fish.c:1553
+#: applets/fish/fish.c:1550
 msgid "Look at today's date!"
 msgstr "Poglejte današnji datum!"
 
-#: applets/fish/fish.c:1635
+#: applets/fish/fish.c:1632
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Riba %s, prerokovalka"
@@ -888,7 +888,7 @@ msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2003-2006 Vincent Untz\n"
 "Copyright © 2011 Perberos\n"
-"Copyright © 2012-2020 MATE developers"
+"Copyright © 2012-2021 MATE developers"
 msgstr ""
 
 #: applets/notification_area/main.c:485
@@ -968,6 +968,16 @@ msgstr ""
 "Izbrana možnost določa, da se ob povečanju okna to premakne na trenutno "
 "delovno površino, sicer se preklopi cela delovna površina."
 
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:25
+msgid "Whether to enable mouse scrolling in the switch window list"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:26
+msgid ""
+"If true, enable mouse scrolling in window list, otherwise disable mouse "
+"scrolling in window list."
+msgstr ""
+
 #: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:5
 msgid "Display workspace names"
 msgstr "Prikaži imena delovnih površin"
@@ -1029,7 +1039,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "Tovarna za aplete, povezane s krmarjenjem med okni"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:10
-#: applets/wncklet/window-menu.c:76 applets/wncklet/window-menu.c:227
+#: applets/wncklet/window-menu.c:83 applets/wncklet/window-menu.c:235
 msgid "Window Selector"
 msgstr "Izbirnik oken"
 
@@ -1038,7 +1048,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Preklopi med odprtimi okni s pomočjo menija"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
-#: applets/wncklet/workspace-switcher.c:638
+#: applets/wncklet/workspace-switcher.c:712
 msgid "Workspace Switcher"
 msgstr "Preklopnik delovnih površin"
 
@@ -1047,7 +1057,7 @@ msgid "Switch between workspaces"
 msgstr "Preklopi med delovnimi površinami"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:791
+#: applets/wncklet/window-list.c:720
 msgid "Window List"
 msgstr "Seznam oken"
 
@@ -1063,44 +1073,44 @@ msgstr "Pokaži namizje"
 msgid "Hide application windows and show the desktop"
 msgstr "Skrij okna programov in pokaži namizje"
 
-#: applets/wncklet/showdesktop.c:184
+#: applets/wncklet/showdesktop.c:182
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Ni mogoče naložiti %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:184
+#: applets/wncklet/showdesktop.c:182
 msgid "Icon not found"
 msgstr "Ikone ni mogoče najti"
 
-#: applets/wncklet/showdesktop.c:266
+#: applets/wncklet/showdesktop.c:264
 msgid "Click here to restore hidden windows."
 msgstr "Kliknite za povrnitev skritih oken."
 
-#: applets/wncklet/showdesktop.c:270
+#: applets/wncklet/showdesktop.c:268
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknite za skritje vseh oken in prikaz namizja."
 
-#: applets/wncklet/showdesktop.c:440 applets/wncklet/showdesktop.c:499
+#: applets/wncklet/showdesktop.c:444 applets/wncklet/showdesktop.c:501
 msgid "Show Desktop Button"
 msgstr "Pokaži ikono namizja"
 
-#: applets/wncklet/showdesktop.c:500
+#: applets/wncklet/showdesktop.c:502
 msgid "About Show Desktop Button"
 msgstr "O Pokaži ikono namizja"
 
-#: applets/wncklet/showdesktop.c:502
+#: applets/wncklet/showdesktop.c:504
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Gumb omogoča skrivanje vseh oken in prikaz namizja."
 
-#: applets/wncklet/showdesktop.c:503 applets/wncklet/window-list.c:795
-#: applets/wncklet/workspace-switcher.c:642
+#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:724
+#: applets/wncklet/workspace-switcher.c:716
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2011 Perberos\n"
-"Copyright © 2012-2020 MATE developers"
+"Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:530
+#: applets/wncklet/showdesktop.c:551
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
@@ -1108,15 +1118,15 @@ msgstr ""
 "Upravljalnik oken ne podpira prikaza gumba namizja ali pa upravljalnik oken "
 "ni zagnan."
 
-#: applets/wncklet/window-list.c:354
+#: applets/wncklet/window-list.c:424
 msgid "_System Monitor"
 msgstr "_Nadzornik sistema"
 
-#: applets/wncklet/window-list.c:792
+#: applets/wncklet/window-list.c:721
 msgid "About Window List"
 msgstr "O seznamu oken"
 
-#: applets/wncklet/window-list.c:794
+#: applets/wncklet/window-list.c:723
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1124,75 +1134,96 @@ msgstr ""
 "Seznam oken pokaže seznam vseh oken in hkrati omogoča brskanje s pomočjo "
 "gumbov."
 
-#: applets/wncklet/window-list.ui:18
+#: applets/wncklet/window-list.ui:23
 msgid "Window List Preferences"
 msgstr "Možnosti seznama oken"
 
-#: applets/wncklet/window-list.ui:89
-msgid "Window List Content"
-msgstr "Vsebina seznama oken"
-
-#: applets/wncklet/window-list.ui:115
-msgid "Sh_ow windows from current workspace"
-msgstr "Pokaži okna _trenutne delovne površine"
-
-#: applets/wncklet/window-list.ui:130
-msgid "Show windows from a_ll workspaces"
-msgstr "Pokaži okna _vseh delovnih površin"
-
-#: applets/wncklet/window-list.ui:170
+#: applets/wncklet/window-list.ui:98
 msgid "Window Thumbnails"
 msgstr "Sličice okna"
 
-#: applets/wncklet/window-list.ui:196
+#: applets/wncklet/window-list.ui:119
 msgid "Show _thumbnails on hover"
 msgstr "Pokaži _sličice ob prehodu"
 
-#: applets/wncklet/window-list.ui:233
+#: applets/wncklet/window-list.ui:141
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr "Širina sličic v slikovnih pikah. Razmerje med okni se bo ohranilo. "
 
-#: applets/wncklet/window-list.ui:234
+#: applets/wncklet/window-list.ui:142
 msgid "Thumbnail width:"
 msgstr "Širina sličic:"
 
-#: applets/wncklet/window-list.ui:248
+#: applets/wncklet/window-list.ui:155
+msgid "0"
+msgstr "0"
+
+#: applets/wncklet/window-list.ui:157
 msgid "px"
 msgstr "px"
 
-#: applets/wncklet/window-list.ui:286
+#: applets/wncklet/window-list.ui:201
 msgid "Window Grouping"
 msgstr "Združevanje oken"
 
-#: applets/wncklet/window-list.ui:312
+#: applets/wncklet/window-list.ui:222
 msgid "_Never group windows"
 msgstr "_Nikoli ne združi oken"
 
-#: applets/wncklet/window-list.ui:327
+#: applets/wncklet/window-list.ui:239
 msgid "Group windows when _space is limited"
 msgstr "Združi okna v skupine, ko je _prostor omejen"
 
-#: applets/wncklet/window-list.ui:343
+#: applets/wncklet/window-list.ui:256
 msgid "_Always group windows"
 msgstr "_Vedno združi okna"
 
-#: applets/wncklet/window-list.ui:383
+#: applets/wncklet/window-list.ui:295
+msgid "Mouse Scrolling"
+msgstr ""
+
+#: applets/wncklet/window-list.ui:316
+msgid "_Enable mouse scrolling"
+msgstr ""
+
+#: applets/wncklet/window-list.ui:349
+msgid "Behaviour"
+msgstr "Obnašanje"
+
+#: applets/wncklet/window-list.ui:372
+msgid "Window List Content"
+msgstr "Vsebina seznama oken"
+
+#: applets/wncklet/window-list.ui:393
+msgid "Sh_ow windows from current workspace"
+msgstr "Pokaži okna _trenutne delovne površine"
+
+#: applets/wncklet/window-list.ui:409
+msgid "Show windows from a_ll workspaces"
+msgstr "Pokaži okna _vseh delovnih površin"
+
+#: applets/wncklet/window-list.ui:447
 msgid "Restoring Minimized Windows"
 msgstr "Povrnitev skrčenih oken"
 
-#: applets/wncklet/window-list.ui:409
+#: applets/wncklet/window-list.ui:468
 msgid "Restore to current _workspace"
 msgstr "Povrni na trenutno _delovno površino"
 
-#: applets/wncklet/window-list.ui:424
+#: applets/wncklet/window-list.ui:484
 msgid "Restore to na_tive workspace"
 msgstr "Povrni na _izvorno delovno površino"
 
-#: applets/wncklet/window-menu.c:77
+#: applets/wncklet/window-list.ui:521
+#: applets/wncklet/workspace-switcher.ui:356
+msgid "Workspaces"
+msgstr "Delovne površine"
+
+#: applets/wncklet/window-menu.c:84
 msgid "About Window Selector"
 msgstr "O Izbirniku oken"
 
-#: applets/wncklet/window-menu.c:79
+#: applets/wncklet/window-menu.c:86
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
@@ -1200,31 +1231,31 @@ msgstr ""
 "Izbirnik oken prikazuje seznam vseh oken v meniju in vam omogoča brskanje "
 "med njimi."
 
-#: applets/wncklet/window-menu.c:80
+#: applets/wncklet/window-menu.c:87
 msgid ""
 "Copyright © 2000 Helix Code, Inc.\n"
 "Copyright © 2001 Free Software Foundation, Inc.\n"
 "Copyright © 2003 Sun Microsystems, Inc.\n"
 "Copyright © 2011 Perberos\n"
-"Copyright © 2012-2020 MATE developers"
+"Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/wncklet/workspace-switcher.c:240
-#: applets/wncklet/workspace-switcher.c:943
+#: applets/wncklet/workspace-switcher.c:294
+#: applets/wncklet/workspace-switcher.c:1041
 #: applets/wncklet/workspace-switcher.ui:170
 msgid "rows"
 msgstr "vrstice"
 
-#: applets/wncklet/workspace-switcher.c:240
-#: applets/wncklet/workspace-switcher.c:943
+#: applets/wncklet/workspace-switcher.c:294
+#: applets/wncklet/workspace-switcher.c:1041
 msgid "columns"
 msgstr "stolpci"
 
-#: applets/wncklet/workspace-switcher.c:639
+#: applets/wncklet/workspace-switcher.c:713
 msgid "About Workspace Switcher"
 msgstr "O preklopniku delovnih površin"
 
-#: applets/wncklet/workspace-switcher.c:641
+#: applets/wncklet/workspace-switcher.c:715
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1267,10 +1298,6 @@ msgstr "Pokaži imena _delovnih površin v preklopniku"
 #: applets/wncklet/workspace-switcher.ui:334
 msgid "Allow workspace _wrap around in switcher"
 msgstr "Dovoli _ovijanje delovnih površin v preklopniku"
-
-#: applets/wncklet/workspace-switcher.ui:356
-msgid "Workspaces"
-msgstr "Delovne površine"
 
 #: data/org.mate.panel.gschema.xml.in:5
 msgid "Default panel layout"
@@ -1555,6 +1582,16 @@ msgid ""
 msgstr ""
 "Največje število elementov menija (tj. zaznamkov), ki so prikazani, ne da bi"
 " bili v podmeniju."
+
+#: data/org.mate.panel.menubar.gschema.xml.in:56
+msgid "Maximum number of recent documents displayed in the Places menu"
+msgstr ""
+
+#: data/org.mate.panel.menubar.gschema.xml.in:57
+msgid ""
+"Maximum number of recent documents that are displayed in the Places menu at "
+"a time. If this is set to -1, all known recent documents will be displayed."
+msgstr ""
 
 #: data/org.mate.panel.object.gschema.xml.in:5
 msgid "Panel object type"
@@ -2179,12 +2216,12 @@ msgstr "Možnosti upravljanja seje:"
 msgid "Show session management options"
 msgstr "Pokaži možnosti upravljanja seje"
 
-#: mate-panel/libpanel-util/panel-gtk.c:138
+#: mate-panel/libpanel-util/panel-gtk.c:139
 msgid "_Open"
 msgstr "_Odpri"
 
-#: mate-panel/libpanel-util/panel-error.c:76
-#: mate-panel/panel-applet-frame.c:800 mate-panel/panel-applet-frame.c:988
+#: mate-panel/libpanel-util/panel-error.c:77
+#: mate-panel/panel-applet-frame.c:799 mate-panel/panel-applet-frame.c:987
 msgid "Error"
 msgstr "Napaka"
 
@@ -2192,55 +2229,55 @@ msgstr "Napaka"
 msgid "Choose an icon"
 msgstr "Izbor ikone"
 
-#: mate-panel/libpanel-util/panel-launch.c:45
+#: mate-panel/libpanel-util/panel-launch.c:46
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Ni mogoče zagnati '%s'"
 
-#: mate-panel/libpanel-util/panel-launch.c:48 mate-panel/launcher.c:162
+#: mate-panel/libpanel-util/panel-launch.c:49 mate-panel/launcher.c:163
 msgid "Could not launch application"
 msgstr "Programa ni mogoče zagnati"
 
-#: mate-panel/libpanel-util/panel-show.c:44
+#: mate-panel/libpanel-util/panel-show.c:45
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Ni mogoče odpreti mesta '%s'"
 
-#: mate-panel/libpanel-util/panel-show.c:158
+#: mate-panel/libpanel-util/panel-show.c:159
 msgid "No application to handle search folders is installed."
 msgstr "Ni nameščenega programa za iskanje map."
 
-#: mate-panel/applet.c:468
+#: mate-panel/applet.c:469
 msgid "???"
 msgstr "???"
 
-#: mate-panel/applet.c:548 libmate-panel-applet/mate-panel-applet.c:139
+#: mate-panel/applet.c:549 libmate-panel-applet/mate-panel-applet.c:140
 msgid "_Remove From Panel"
 msgstr "_Odstrani s pulta"
 
-#: mate-panel/applet.c:556 libmate-panel-applet/mate-panel-applet.c:142
+#: mate-panel/applet.c:557 libmate-panel-applet/mate-panel-applet.c:143
 msgid "_Move"
 msgstr "_Premakni"
 
-#: mate-panel/applet.c:574 libmate-panel-applet/mate-panel-applet.c:148
+#: mate-panel/applet.c:575 libmate-panel-applet/mate-panel-applet.c:149
 msgid "Loc_k To Panel"
 msgstr "Zak_leni na pult"
 
-#: mate-panel/applet.c:1313
+#: mate-panel/applet.c:1311
 msgid "Cannot find an empty spot"
 msgstr "Ni mogoče najti praznega mesta"
 
-#: mate-panel/drawer.c:443 mate-panel/panel-addto.c:189
-#: mate-panel/panel-toplevel.c:1643
+#: mate-panel/drawer.c:444 mate-panel/panel-addto.c:190
+#: mate-panel/panel-toplevel.c:1646
 msgid "Drawer"
 msgstr "Predalnik"
 
-#: mate-panel/drawer.c:550
+#: mate-panel/drawer.c:551
 msgid "_Add to Drawer..."
 msgstr "_Dodaj v predalnik ..."
 
-#: mate-panel/drawer.c:556 mate-panel/launcher.c:602
-#: mate-panel/panel-action-button.c:172 mate-panel/panel-context-menu.c:246
+#: mate-panel/drawer.c:557 mate-panel/launcher.c:603
+#: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Lasnosti"
 
@@ -2257,7 +2294,7 @@ msgid "- Edit .desktop files"
 msgstr "- Urejanje datotek .desktop"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:974
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:967
 msgid "Create Launcher"
 msgstr "Ustvari zaganjalnik"
 
@@ -2266,11 +2303,11 @@ msgstr "Ustvari zaganjalnik"
 msgid "Directory Properties"
 msgstr "Lastnosti imenika"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:817
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:810
 msgid "Launcher Properties"
 msgstr "Lastnosti zaganjalnika"
 
-#: mate-panel/mate-panel.desktop.in:4 mate-panel/main.c:158
+#: mate-panel/mate-panel.desktop.in:4 mate-panel/main.c:167
 msgid "Panel"
 msgstr "Pult"
 
@@ -2282,54 +2319,54 @@ msgstr ""
 "Zagon drugih programov za zagotovitev različnih pripomočkov za upravljanje z"
 " okni, prikazom časa ..."
 
-#: mate-panel/launcher.c:120
+#: mate-panel/launcher.c:121
 msgid "Could not show this URL"
 msgstr "Ni mogoče prikazati naslova URL"
 
-#: mate-panel/launcher.c:121
+#: mate-panel/launcher.c:122
 msgid "No URL was specified."
 msgstr "Naslov URL ni naveden."
 
-#: mate-panel/launcher.c:217
+#: mate-panel/launcher.c:218
 msgid "Could not use dropped item"
 msgstr "Ni mogoče uporabiti spuščenega predmeta"
 
-#: mate-panel/launcher.c:451
+#: mate-panel/launcher.c:452
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Za datoteko namizja zaganjalnika pulta ni navedenega naslova URI\n"
 
-#: mate-panel/launcher.c:490
+#: mate-panel/launcher.c:491
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Ni mogoče odpreti datoteke namizja %s za zaganjalnik pulta %s%s\n"
 
-#: mate-panel/launcher.c:594
+#: mate-panel/launcher.c:595
 msgid "_Launch"
 msgstr "_Zaženi"
 
-#: mate-panel/launcher.c:910
+#: mate-panel/launcher.c:903
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Ključ %s ni nastavljen, zato ni mogoče naložiti zaganjalnika\n"
 
-#: mate-panel/launcher.c:1043 mate-panel/panel-ditem-editor.c:1326
-#: mate-panel/panel-ditem-editor.c:1360 mate-panel/panel-ditem-editor.c:1391
+#: mate-panel/launcher.c:1036 mate-panel/panel-ditem-editor.c:1179
+#: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
 msgid "Could not save launcher"
 msgstr "Ni mogoče shraniti zaganjalnika"
 
-#: mate-panel/main.c:54
+#: mate-panel/main.c:55
 msgid "Replace a currently running panel"
 msgstr "Zamenjaj trenutno zagnan pult"
 
-#: mate-panel/main.c:56
+#: mate-panel/main.c:57
 msgid "Reset the panel configuration to default"
 msgstr "Ponastavi nastavitve pulta na privzeto vrednost"
 
-#: mate-panel/main.c:58
+#: mate-panel/main.c:59
 msgid "Execute the run dialog"
 msgstr "Izvedi pogovorno okno zagona"
 
-#: mate-panel/main.c:60
+#: mate-panel/main.c:61
 msgid "Set the default panel layout"
 msgstr "Nastavi privzeto postavitev pulta"
 
@@ -2353,165 +2390,165 @@ msgstr "Dodaj kot _predalnik na pult"
 msgid "Add this as _menu to panel"
 msgstr "Dodaj kot _meni na pult"
 
-#: mate-panel/panel-action-button.c:160
+#: mate-panel/panel-action-button.c:161
 msgid "_Activate Screensaver"
 msgstr "_Omogoči ohranjevalnik zaslona"
 
-#: mate-panel/panel-action-button.c:166
+#: mate-panel/panel-action-button.c:167
 msgid "_Lock Screen"
 msgstr "_Zakleni zaslon"
 
-#: mate-panel/panel-action-button.c:310
+#: mate-panel/panel-action-button.c:311
 msgid "Could not connect to server"
 msgstr "S strežnikom se ni mogoče povezati"
 
-#: mate-panel/panel-action-button.c:341
+#: mate-panel/panel-action-button.c:342
 msgid "Lock Screen"
 msgstr "Zakleni zaslon"
 
-#: mate-panel/panel-action-button.c:342
+#: mate-panel/panel-action-button.c:343
 msgid "Protect your computer from unauthorized use"
 msgstr "Zavaruje računalnik pred neodobreno uporabo"
 
-#: mate-panel/panel-action-button.c:356
+#: mate-panel/panel-action-button.c:357
 msgid "Log Out..."
 msgstr "Odjava ..."
 
-#: mate-panel/panel-action-button.c:357
+#: mate-panel/panel-action-button.c:358
 msgid "Log out of this session to log in as a different user"
 msgstr "Odjava iz trenutne seje in prijava z drugimi uporabniškimi podatki"
 
-#: mate-panel/panel-action-button.c:366
+#: mate-panel/panel-action-button.c:367
 msgid "Run Application..."
 msgstr "Zaženi program ..."
 
-#: mate-panel/panel-action-button.c:367
+#: mate-panel/panel-action-button.c:368
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Zagon programa z vpisom ukaza ali izborom iz seznama"
 
-#: mate-panel/panel-action-button.c:376
+#: mate-panel/panel-action-button.c:377
 msgid "Search for Files..."
 msgstr "Poišči datoteke ..."
 
-#: mate-panel/panel-action-button.c:377
+#: mate-panel/panel-action-button.c:378
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Krajevno iskanje dokumentov in map po imenu ali vsebini"
 
-#: mate-panel/panel-action-button.c:385 mate-panel/panel-force-quit.c:250
+#: mate-panel/panel-action-button.c:386 mate-panel/panel-force-quit.c:251
 msgid "Force Quit"
 msgstr "Vsili končanje"
 
-#: mate-panel/panel-action-button.c:386
+#: mate-panel/panel-action-button.c:387
 msgid "Force a misbehaving application to quit"
 msgstr "Vsiljen konec neodzivnega programa"
 
-#: mate-panel/panel-action-button.c:395
+#: mate-panel/panel-action-button.c:396
 msgid "Connect to Server..."
 msgstr "Povezava s strežnikom ..."
 
-#: mate-panel/panel-action-button.c:396
+#: mate-panel/panel-action-button.c:397
 msgid "Connect to a remote computer or shared disk"
 msgstr "Povezava z oddaljenim strežnikom ali diskom v souporabi"
 
-#: mate-panel/panel-action-button.c:404
+#: mate-panel/panel-action-button.c:405
 msgid "Shut Down..."
 msgstr "Izklop ..."
 
-#: mate-panel/panel-action-button.c:405
+#: mate-panel/panel-action-button.c:406
 msgid "Shut down the computer"
 msgstr "Izklopi računalnik"
 
-#: mate-panel/panel-addto.c:125
+#: mate-panel/panel-addto.c:126
 msgid "Custom Application Launcher"
 msgstr "Zaganjalnik programov po meri"
 
-#: mate-panel/panel-addto.c:126
+#: mate-panel/panel-addto.c:127
 msgid "Create a new launcher"
 msgstr "Ustvari nov zaganjalnik"
 
-#: mate-panel/panel-addto.c:137
+#: mate-panel/panel-addto.c:138
 msgid "Application Launcher..."
 msgstr "Zaganjalnik programov ..."
 
-#: mate-panel/panel-addto.c:138
+#: mate-panel/panel-addto.c:139
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiraj zaganjalnik iz menija programov"
 
-#: mate-panel/panel-addto.c:153
+#: mate-panel/panel-addto.c:154
 msgid "Compact Menu"
 msgstr "Strnjen meni"
 
-#: mate-panel/panel-addto.c:154
+#: mate-panel/panel-addto.c:155
 msgid "A compact menu"
 msgstr "Strnjen meni"
 
-#: mate-panel/panel-addto.c:165
+#: mate-panel/panel-addto.c:166
 msgid "Classic Menu"
 msgstr "Klasičen meni"
 
-#: mate-panel/panel-addto.c:166
+#: mate-panel/panel-addto.c:167
 msgid "The classic Applications, Places and System menu bar"
 msgstr "Klasičen Programi, Mesta in Sistem menijska vrstica"
 
-#: mate-panel/panel-addto.c:177
+#: mate-panel/panel-addto.c:178
 msgid "Separator"
 msgstr "Ločilnik"
 
-#: mate-panel/panel-addto.c:178
+#: mate-panel/panel-addto.c:179
 msgid "A separator to organize the panel items"
 msgstr "Ločilnik za razporejanje predmetov na pultu"
 
-#: mate-panel/panel-addto.c:190
+#: mate-panel/panel-addto.c:191
 msgid "A pop out drawer to store other items in"
 msgstr "Pojavni predalnik, v katerega se shrani druge predmete"
 
-#: mate-panel/panel-addto.c:274
+#: mate-panel/panel-addto.c:275
 msgid "(empty)"
 msgstr "(prazno)"
 
-#: mate-panel/panel-addto.c:419
+#: mate-panel/panel-addto.c:420
 msgid "Not compatible with X11"
 msgstr "Ni združljivo z X11"
 
-#: mate-panel/panel-addto.c:426
+#: mate-panel/panel-addto.c:427
 msgid "Not compatible with Wayland"
 msgstr "Ni združljivo z Wayland"
 
-#: mate-panel/panel-addto.c:1055
+#: mate-panel/panel-addto.c:1052
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Najdi _predmet za dodajanje v \"%s\":"
 
-#: mate-panel/panel-addto.c:1059
+#: mate-panel/panel-addto.c:1056
 msgid "Add to Drawer"
 msgstr "Dodaj v predalnik"
 
-#: mate-panel/panel-addto.c:1061
+#: mate-panel/panel-addto.c:1058
 msgid "Find an _item to add to the drawer:"
 msgstr "Najdi _predmet za dodajanje v predalnik:"
 
-#: mate-panel/panel-addto.c:1063
+#: mate-panel/panel-addto.c:1060
 msgid "Add to Panel"
 msgstr "Dodaj na pult"
 
-#: mate-panel/panel-addto.c:1065
+#: mate-panel/panel-addto.c:1062
 msgid "Find an _item to add to the panel:"
 msgstr "Najdi _predmet za dodajanje na pult:"
 
-#: mate-panel/panel-addto.c:1313
+#: mate-panel/panel-addto.c:1312
 msgid "_Back"
 msgstr "Na_zaj"
 
-#: mate-panel/panel-applet-frame.c:761
+#: mate-panel/panel-applet-frame.c:760
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" se je nepričakovano končal"
 
-#: mate-panel/panel-applet-frame.c:763
+#: mate-panel/panel-applet-frame.c:762
 msgid "Panel object has quit unexpectedly"
 msgstr "Predmet pulta se je nepričakovano končal"
 
-#: mate-panel/panel-applet-frame.c:770
+#: mate-panel/panel-applet-frame.c:769
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2519,182 +2556,187 @@ msgstr ""
 "V primeru, da ponovno naložite predmet pulta, se bo samodejno dodal nazaj na"
 " pult."
 
-#: mate-panel/panel-applet-frame.c:777
+#: mate-panel/panel-applet-frame.c:776
 msgid "D_elete"
 msgstr "I_zbriši"
 
-#: mate-panel/panel-applet-frame.c:778 mate-panel/panel-applet-frame.c:783
+#: mate-panel/panel-applet-frame.c:777 mate-panel/panel-applet-frame.c:782
 msgid "_Don't Reload"
 msgstr "_Ne naloži ponovno"
 
-#: mate-panel/panel-applet-frame.c:779 mate-panel/panel-applet-frame.c:784
+#: mate-panel/panel-applet-frame.c:778 mate-panel/panel-applet-frame.c:783
 msgid "_Reload"
 msgstr "_Ponovno naloži"
 
-#: mate-panel/panel-applet-frame.c:950
+#: mate-panel/panel-applet-frame.c:949
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Pult je med nalaganjem \"%s\" naletel na napako."
 
-#: mate-panel/panel-applet-frame.c:965
+#: mate-panel/panel-applet-frame.c:964
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ali želite izbrisati aplet iz nastavitev?"
 
-#: mate-panel/panel-applet-frame.c:972 mate-panel/panel.c:1501
+#: mate-panel/panel-applet-frame.c:971 mate-panel/panel.c:1502
 msgid "_Delete"
 msgstr "_Izbriši"
 
-#: mate-panel/panel-context-menu.c:91
+#: mate-panel/panel-context-menu.c:92
 msgid "And many, many others…"
 msgstr "In veliko, veliko drugih ..."
 
-#: mate-panel/panel-context-menu.c:114
+#: mate-panel/panel-context-menu.c:115
 msgid "The MATE Panel"
 msgstr "Pult namizja MATE"
 
-#: mate-panel/panel-context-menu.c:116
+#: mate-panel/panel-context-menu.c:117
 msgid ""
 "Copyright © 1997-2003 Free Software Foundation, Inc.\n"
 "Copyright © 2004 Vincent Untz\n"
-"Copyright © 2011-2020 MATE developers"
+"Copyright © 2011-2021 MATE developers"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:119
+#: mate-panel/panel-context-menu.c:120
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr "Program omogoča zagon drugih programov in ponuja koristne pripomočke."
 
-#: mate-panel/panel-context-menu.c:123
+#: mate-panel/panel-context-menu.c:124
 msgid "About the MATE Panel"
 msgstr "O pultu namizja MATE"
 
-#: mate-panel/panel-context-menu.c:154
+#: mate-panel/panel-context-menu.c:155
 msgid "Cannot delete this panel"
 msgstr "Pulta ni mogoče izbrisati"
 
-#: mate-panel/panel-context-menu.c:155
+#: mate-panel/panel-context-menu.c:156
 msgid "You must always have at least one panel."
 msgstr "Na namizju mora biti vedno vsaj en pult."
 
-#: mate-panel/panel-context-menu.c:199
+#: mate-panel/panel-context-menu.c:200
 msgid "Reset all panels?"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:200
+#: mate-panel/panel-context-menu.c:201
 msgid ""
 "When the panels are reset, all \n"
 "custom settings are lost."
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:214
+#: mate-panel/panel-context-menu.c:215
 msgid "_Reset Panels"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:236
+#: mate-panel/panel-context-menu.c:237
 msgid "_Add to Panel…"
 msgstr "_Dodaj na pult..."
 
-#: mate-panel/panel-context-menu.c:256
+#: mate-panel/panel-context-menu.c:257
 msgid "_Reset All Panels"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:263
+#: mate-panel/panel-context-menu.c:264
 msgid "_Delete This Panel"
 msgstr "_Izbriši pult"
 
-#: mate-panel/panel-context-menu.c:276
+#: mate-panel/panel-context-menu.c:277
 msgid "_New Panel"
 msgstr "_Nov pult"
 
-#: mate-panel/panel-context-menu.c:325
+#: mate-panel/panel-context-menu.c:326
 msgid "A_bout Panels"
 msgstr "_O pultu ..."
 
-#: mate-panel/panel-ditem-editor.c:115
+#: mate-panel/panel-ditem-editor.c:117
 msgid "Application"
 msgstr "Program"
 
-#: mate-panel/panel-ditem-editor.c:117
+#: mate-panel/panel-ditem-editor.c:119
 msgid "Application in Terminal"
 msgstr "Program terminala"
 
-#: mate-panel/panel-ditem-editor.c:119
+#: mate-panel/panel-ditem-editor.c:121
 msgid "Location"
 msgstr "Mesto"
 
-#: mate-panel/panel-ditem-editor.c:602
-msgid "_Type:"
-msgstr "_Vrsta:"
-
-#: mate-panel/panel-ditem-editor.c:609
-msgid "_Name:"
-msgstr "_Ime:"
-
-#: mate-panel/panel-ditem-editor.c:634
-msgid "_Browse..."
-msgstr "_Brskaj ..."
-
-#: mate-panel/panel-ditem-editor.c:641
-msgid "Co_mment:"
-msgstr "_Ukaz:"
-
-#: mate-panel/panel-ditem-editor.c:652
-msgid "_Revert"
-msgstr "Pov_rni"
-
-#: mate-panel/panel-ditem-editor.c:978
+#: mate-panel/panel-ditem-editor.c:848
 msgid "Choose an application..."
 msgstr "Izbor programa ..."
 
-#: mate-panel/panel-ditem-editor.c:982
+#: mate-panel/panel-ditem-editor.c:852
 msgid "Choose a file..."
 msgstr "Izbor datoteke ..."
 
-#: mate-panel/panel-ditem-editor.c:1146 mate-panel/panel-ditem-editor.c:1155
+#: mate-panel/panel-ditem-editor.c:1004 mate-panel/panel-ditem-editor.c:1013
+#: mate-panel/panel-ditem-editor-dialog.ui:197
 msgid "Comm_and:"
 msgstr "_Ukaz:"
 
-#: mate-panel/panel-ditem-editor.c:1164
+#: mate-panel/panel-ditem-editor.c:1022
 msgid "_Location:"
 msgstr "_Mesto:"
 
-#: mate-panel/panel-ditem-editor.c:1327
+#: mate-panel/panel-ditem-editor.c:1180
 msgid "The name of the launcher is not set."
 msgstr "Ime zaganjalnika ni določeno."
 
-#: mate-panel/panel-ditem-editor.c:1331
+#: mate-panel/panel-ditem-editor.c:1184
 msgid "Could not save directory properties"
 msgstr "Ni mogoče shraniti lastnosti mape"
 
-#: mate-panel/panel-ditem-editor.c:1332
+#: mate-panel/panel-ditem-editor.c:1185
 msgid "The name of the directory is not set."
 msgstr "Ime mape ni določeno."
 
-#: mate-panel/panel-ditem-editor.c:1348
+#: mate-panel/panel-ditem-editor.c:1201
 msgid "The command of the launcher is not set."
 msgstr "Ukaz zaganjalnika ni nastavljen."
 
-#: mate-panel/panel-ditem-editor.c:1351
+#: mate-panel/panel-ditem-editor.c:1204
 msgid "The location of the launcher is not set."
 msgstr "Mesto zaganjalnika ni določeno."
 
-#: mate-panel/panel-ditem-editor.c:1428
+#: mate-panel/panel-ditem-editor.c:1280
 msgid "Could not display help document"
 msgstr "Ni mogoče prikazati dokumenta pomoči"
 
-#: mate-panel/panel-force-quit.c:86
+#: mate-panel/panel-ditem-editor-dialog.ui:60
+msgid "_Revert"
+msgstr "Pov_rni"
+
+#: mate-panel/panel-ditem-editor-dialog.ui:108
+msgid "_Ok"
+msgstr ""
+
+#: mate-panel/panel-ditem-editor-dialog.ui:163
+msgid "_Type:"
+msgstr "_Vrsta:"
+
+#: mate-panel/panel-ditem-editor-dialog.ui:180
+msgid "_Name:"
+msgstr "_Ime:"
+
+#: mate-panel/panel-ditem-editor-dialog.ui:214
+msgid "Co_mment:"
+msgstr "_Ukaz:"
+
+#: mate-panel/panel-ditem-editor-dialog.ui:269
+msgid "_Browse..."
+msgstr "_Brskaj ..."
+
+#: mate-panel/panel-force-quit.c:87
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Kliknite na okno za vsiljen konec programa. Za preklic pritisnite tipko "
 "<ESC>."
 
-#: mate-panel/panel-force-quit.c:232
+#: mate-panel/panel-force-quit.c:233
 msgid "Force this application to exit?"
 msgstr "Ali naj bo program vsiljeno končan?"
 
-#: mate-panel/panel-force-quit.c:235
+#: mate-panel/panel-force-quit.c:236
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2702,154 +2744,154 @@ msgstr ""
 "V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti "
 "dokumenti programa."
 
-#: mate-panel/panel-menu-bar.c:97
+#: mate-panel/panel-menu-bar.c:98
 msgid "Browse and run installed applications"
 msgstr "Brskanje in zaganjanje nameščenih programov"
 
-#: mate-panel/panel-menu-bar.c:98
+#: mate-panel/panel-menu-bar.c:99
 msgid "Access documents, folders and network places"
 msgstr "Dostop do dokumentov, map in omrežnih mest"
 
-#: mate-panel/panel-menu-bar.c:99
+#: mate-panel/panel-menu-bar.c:100
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Spreminjanje videza in obnašanja namizja, dostop do pomoči in odjave."
 
-#: mate-panel/panel-menu-bar.c:166
+#: mate-panel/panel-menu-bar.c:170
 msgid "Applications"
 msgstr "Aplikacije"
 
-#: mate-panel/panel-menu-bar.c:356 mate-panel/panel-menu-button.c:710
+#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:711
 msgid "_Edit Menus"
 msgstr "Ur_edi menije"
 
-#: mate-panel/panel-menu-button.c:1133
+#: mate-panel/panel-menu-button.c:1131
 msgid "Main Menu"
 msgstr "Glavni meni"
 
-#: mate-panel/panel-menu-items.c:466
+#: mate-panel/panel-menu-items.c:467
 msgid "Bookmarks"
 msgstr "Zaznamki"
 
 #. Translators: %s is a URI
-#: mate-panel/panel-menu-items.c:489 mate-panel/panel.c:572
+#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:573
 #, c-format
 msgid "Open '%s'"
 msgstr "Odpri '%s'"
 
-#: mate-panel/panel-menu-items.c:560
+#: mate-panel/panel-menu-items.c:561
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Ni mogoče preiskati %s za spremembe predstavnosti"
 
-#: mate-panel/panel-menu-items.c:604
+#: mate-panel/panel-menu-items.c:605
 #, c-format
 msgid "Rescan %s"
 msgstr "Ponovno preišči %s"
 
-#: mate-panel/panel-menu-items.c:641
+#: mate-panel/panel-menu-items.c:642
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Ni mogoče priklopiti %s"
 
-#: mate-panel/panel-menu-items.c:704
+#: mate-panel/panel-menu-items.c:705
 #, c-format
 msgid "Mount %s"
 msgstr "Priklopi %s"
 
-#: mate-panel/panel-menu-items.c:912
+#: mate-panel/panel-menu-items.c:913
 msgid "Removable Media"
 msgstr "Odstranljivi nosilci"
 
-#: mate-panel/panel-menu-items.c:999
+#: mate-panel/panel-menu-items.c:1000
 msgid "Network Places"
 msgstr "Omrežna mesta"
 
-#: mate-panel/panel-menu-items.c:1038
+#: mate-panel/panel-menu-items.c:1040
 msgid "Open your personal folder"
 msgstr "Odpre vašo osebno mapo"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: mate-panel/panel-menu-items.c:1057
+#: mate-panel/panel-menu-items.c:1059
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Namizje"
 
-#: mate-panel/panel-menu-items.c:1058
+#: mate-panel/panel-menu-items.c:1060
 msgid "Open the contents of your desktop in a folder"
 msgstr "Odpri vsebino namizja v mapi"
 
-#: mate-panel/panel-menu-items.c:1075
+#: mate-panel/panel-menu-items.c:1077
 msgid "Computer"
 msgstr "Računalnik"
 
-#: mate-panel/panel-menu-items.c:1081
+#: mate-panel/panel-menu-items.c:1083
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
 "Brskanje po vseh krajevnih in oddaljenih diskih in mapah, ki so dostopni s "
 "tega računalnika"
 
-#: mate-panel/panel-menu-items.c:1094
+#: mate-panel/panel-menu-items.c:1096
 msgid "Network"
 msgstr "Omrežje"
 
-#: mate-panel/panel-menu-items.c:1095
+#: mate-panel/panel-menu-items.c:1097
 msgid "Browse bookmarked and local network locations"
 msgstr "Brskanje med zaznamki in mesti krajevnega omrežja"
 
-#: mate-panel/panel-menu-items.c:1489
+#: mate-panel/panel-menu-items.c:1499
 msgid "Places"
 msgstr "Mesta"
 
-#: mate-panel/panel-menu-items.c:1517
+#: mate-panel/panel-menu-items.c:1527
 msgid "System"
 msgstr "Sistem"
 
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: mate-panel/panel-menu-items.c:1602
+#: mate-panel/panel-menu-items.c:1612
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1614
+#: mate-panel/panel-menu-items.c:1624
 #, c-format
 msgid "Log Out %s..."
 msgstr "Odjava %s ..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1618
+#: mate-panel/panel-menu-items.c:1628
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Odjava uporabnika %s za prijavo drugega uporabnika"
 
-#: mate-panel/panel-properties-dialog.c:119 mate-panel/panel-test-applets.c:58
+#: mate-panel/panel-properties-dialog.c:120 mate-panel/panel-test-applets.c:59
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Zgoraj"
 
-#: mate-panel/panel-properties-dialog.c:120 mate-panel/panel-test-applets.c:59
+#: mate-panel/panel-properties-dialog.c:121 mate-panel/panel-test-applets.c:60
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Dno"
 
-#: mate-panel/panel-properties-dialog.c:121 mate-panel/panel-test-applets.c:60
+#: mate-panel/panel-properties-dialog.c:122 mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Levo"
 
-#: mate-panel/panel-properties-dialog.c:122 mate-panel/panel-test-applets.c:61
+#: mate-panel/panel-properties-dialog.c:123 mate-panel/panel-test-applets.c:62
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Desno"
 
-#: mate-panel/panel-properties-dialog.c:818
+#: mate-panel/panel-properties-dialog.c:827
 msgid "Drawer Properties"
 msgstr "Lastnosti predalnika"
 
@@ -2908,17 +2950,17 @@ msgstr "Izbor barve"
 msgid "<small>Transparent</small>"
 msgstr "<small>Prozoren</small>"
 
-#: mate-panel/panel-properties-dialog.ui:553
+#: mate-panel/panel-properties-dialog.ui:545
+msgid "<small>Opaque</small>"
+msgstr "<small>Prekriven</small>"
+
+#: mate-panel/panel-properties-dialog.ui:566
 msgid "Co_lor:"
 msgstr "_Barva:"
 
-#: mate-panel/panel-properties-dialog.ui:566
+#: mate-panel/panel-properties-dialog.ui:579
 msgid "S_tyle:"
 msgstr "_Slog:"
-
-#: mate-panel/panel-properties-dialog.ui:580
-msgid "<small>Opaque</small>"
-msgstr "<small>Prekriven</small>"
 
 #: mate-panel/panel-properties-dialog.ui:613
 msgid "Background _image:"
@@ -2952,21 +2994,21 @@ msgstr "_Raztegni"
 msgid "Rotate image when panel is _vertical"
 msgstr "Obrni sliko, kadar je pult postavljen _navpično"
 
-#: mate-panel/panel-recent.c:78 mate-panel/panel-recent.c:88
+#: mate-panel/panel-recent.c:79 mate-panel/panel-recent.c:89
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Ni mogoče najti nedavno uporabljenega dokumenta \"%s\""
 
-#: mate-panel/panel-recent.c:90
+#: mate-panel/panel-recent.c:91
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Med odpiranjem \"%s\" se je pojavila neznana napaka."
 
-#: mate-panel/panel-recent.c:147
+#: mate-panel/panel-recent.c:148
 msgid "Clear the Recent Documents list?"
 msgstr "Ali naj se počisti seznam nedavnih dokumentov?"
 
-#: mate-panel/panel-recent.c:149
+#: mate-panel/panel-recent.c:150
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2976,46 +3018,46 @@ msgstr ""
 "• vsi predmeti iz menija Mesta → predmet menija Nedavni dokumenti.\n"
 "• vsi predmeti iz seznamov nedavnih dokumentov vseh programov."
 
-#: mate-panel/panel-recent.c:164
+#: mate-panel/panel-recent.c:165
 msgid "Clear Recent Documents"
 msgstr "Počisti nedavne dokumente"
 
-#: mate-panel/panel-recent.c:199
+#: mate-panel/panel-recent.c:201
 msgid "Recent Documents"
 msgstr "Nedavni dokumenti"
 
-#: mate-panel/panel-recent.c:238
+#: mate-panel/panel-recent.c:243
 msgid "Clear Recent Documents..."
 msgstr "Počisti nedavne dokumente ..."
 
-#: mate-panel/panel-recent.c:240
+#: mate-panel/panel-recent.c:245
 msgid "Clear all items from the recent documents list"
 msgstr "Počisti vse predmete s seznama nedavnih dokumentov"
 
-#: mate-panel/panel-run-dialog.c:436
+#: mate-panel/panel-run-dialog.c:430
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Ni mogoče zagnati ukaza \"%s\""
 
-#: mate-panel/panel-run-dialog.c:477
+#: mate-panel/panel-run-dialog.c:471
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ni mogoče pretvoriti '%s' iz UTF-8"
 
-#: mate-panel/panel-run-dialog.c:1270
+#: mate-panel/panel-run-dialog.c:1263
 msgid "Choose a file to append to the command..."
 msgstr "Izberite datoteko, ki naj se pripne ukazu ..."
 
-#: mate-panel/panel-run-dialog.c:1652 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1618 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Izberite program za ogled opisa."
 
-#: mate-panel/panel-run-dialog.c:1690
+#: mate-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Izveden bo ukaz '%s'"
 
-#: mate-panel/panel-run-dialog.c:1723
+#: mate-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -3026,7 +3068,7 @@ msgstr ""
 msgid "Run Application"
 msgstr "Zaženi program"
 
-#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:97
+#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:98
 msgid "_Run"
 msgstr "_Zaženi"
 
@@ -3072,73 +3114,73 @@ msgstr "Seznam znanih programov"
 msgid "Show list of known _applications"
 msgstr "Pokaži _seznam znanih programov"
 
-#: mate-panel/panel-stock-icons.c:98
+#: mate-panel/panel-stock-icons.c:99
 msgid "_Force quit"
 msgstr "_Vsili končanje"
 
-#: mate-panel/panel-stock-icons.c:99
+#: mate-panel/panel-stock-icons.c:100
 msgid "C_lear"
 msgstr "P_očisti"
 
-#: mate-panel/panel-stock-icons.c:100
+#: mate-panel/panel-stock-icons.c:101
 msgid "D_on't Delete"
 msgstr "_Ne izbriši"
 
-#: mate-panel/panel-test-applets.c:39
+#: mate-panel/panel-test-applets.c:40
 msgid "Specify an applet IID to load"
 msgstr "Navedi IID apleta za naložitev"
 
-#: mate-panel/panel-test-applets.c:40
+#: mate-panel/panel-test-applets.c:41
 msgid ""
 "Specify a gsettings path in which the applet preferences should be stored"
 msgstr "Navedi pot za gsettings, v kateri naj bodo shranjene možnosti apleta"
 
-#: mate-panel/panel-test-applets.c:41
+#: mate-panel/panel-test-applets.c:42
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 "Navedite začetno velikost apleta (zelo zelo majhna, srednja, velika, itd.)"
 
-#: mate-panel/panel-test-applets.c:42
+#: mate-panel/panel-test-applets.c:43
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Navedite začetno usmerjenost apleta (vrh, dno, levo, desno)"
 
-#: mate-panel/panel-test-applets.c:66
+#: mate-panel/panel-test-applets.c:67
 msgctxt "Size"
 msgid "XX Small"
 msgstr "Najmanjše"
 
-#: mate-panel/panel-test-applets.c:67
+#: mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "X Small"
 msgstr "Zelo majhno"
 
-#: mate-panel/panel-test-applets.c:68
+#: mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Small"
 msgstr "Majhne"
 
-#: mate-panel/panel-test-applets.c:69
+#: mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Medium"
 msgstr "Srednje"
 
-#: mate-panel/panel-test-applets.c:70
+#: mate-panel/panel-test-applets.c:71
 msgctxt "Size"
 msgid "Large"
 msgstr "Velike"
 
-#: mate-panel/panel-test-applets.c:71
+#: mate-panel/panel-test-applets.c:72
 msgctxt "Size"
 msgid "X Large"
 msgstr "Zelo veliko"
 
-#: mate-panel/panel-test-applets.c:72
+#: mate-panel/panel-test-applets.c:73
 msgctxt "Size"
 msgid "XX Large"
 msgstr "Največje"
 
-#: mate-panel/panel-test-applets.c:130
+#: mate-panel/panel-test-applets.c:131
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Nalaganje apleta %s ni uspelo"
@@ -3160,51 +3202,51 @@ msgstr "_Aplet: "
 msgid "_Prefs Path:"
 msgstr "Pot _možnosti:"
 
-#: mate-panel/panel-toplevel.c:1209
+#: mate-panel/panel-toplevel.c:1208
 msgid "Hide Panel"
 msgstr "Skrij pult"
 
-#: mate-panel/panel-toplevel.c:1649 mate-panel/panel-toplevel.c:1659
+#: mate-panel/panel-toplevel.c:1652 mate-panel/panel-toplevel.c:1662
 msgid "Top Panel"
 msgstr "Zgornji pult"
 
-#: mate-panel/panel-toplevel.c:1651
+#: mate-panel/panel-toplevel.c:1654
 msgid "Bottom Panel"
 msgstr "Spodnji pult"
 
-#: mate-panel/panel-toplevel.c:1653
+#: mate-panel/panel-toplevel.c:1656
 msgid "Left Panel"
 msgstr "Levi pult"
 
-#: mate-panel/panel-toplevel.c:1655
+#: mate-panel/panel-toplevel.c:1658
 msgid "Right Panel"
 msgstr "Desni pult"
 
-#: mate-panel/panel-util.c:350
+#: mate-panel/panel-util.c:351
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikone '%s' ni mogoče najti"
 
-#: mate-panel/panel-util.c:474
+#: mate-panel/panel-util.c:475
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Ni mogoče izvršiti '%s'"
 
-#: mate-panel/panel-util.c:702
+#: mate-panel/panel-util.c:703
 msgid "file"
 msgstr "datoteka"
 
-#: mate-panel/panel-util.c:876
+#: mate-panel/panel-util.c:871
 msgid "Home Folder"
 msgstr "Domača mapa"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: mate-panel/panel-util.c:888
+#: mate-panel/panel-util.c:883
 msgid "File System"
 msgstr "Datotečni sistem"
 
-#: mate-panel/panel-util.c:1062
+#: mate-panel/panel-util.c:1046
 msgid "Search"
 msgstr "Iskanje"
 
@@ -3212,47 +3254,47 @@ msgstr "Iskanje"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: mate-panel/panel-util.c:1108
+#: mate-panel/panel-util.c:1092
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: mate-panel/panel.c:505
+#: mate-panel/panel.c:506
 #, c-format
 msgid "Open URL: %s"
 msgstr "Odpri naslov URL: %s"
 
-#: mate-panel/panel.c:671
+#: mate-panel/panel.c:672
 msgid "You dropped an image on the panel, what do you want to do?"
 msgstr ""
 
-#: mate-panel/panel.c:673
+#: mate-panel/panel.c:674
 #, c-format
 msgid "You dropped the image \"%s\" on the panel."
 msgstr ""
 
-#: mate-panel/panel.c:676
+#: mate-panel/panel.c:677
 msgid ""
 "Do you want to create a launcher for it or use it as the panel's background?"
 msgstr ""
 
-#: mate-panel/panel.c:679
+#: mate-panel/panel.c:680
 msgid "Do you want to use it as the panel's background?"
 msgstr ""
 
-#: mate-panel/panel.c:693
+#: mate-panel/panel.c:694
 msgid "Create _Launcher"
 msgstr ""
 
-#: mate-panel/panel.c:697
+#: mate-panel/panel.c:698
 msgid "Set _Background Image"
 msgstr ""
 
-#: mate-panel/panel.c:1477
+#: mate-panel/panel.c:1478
 msgid "Delete this drawer?"
 msgstr "Ali naj se predalnik izbriše?"
 
-#: mate-panel/panel.c:1478
+#: mate-panel/panel.c:1479
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3260,11 +3302,11 @@ msgstr ""
 "Z brisanjem predalnika se izbrišejo tudi\n"
 "vse njegove nastavitve."
 
-#: mate-panel/panel.c:1481
+#: mate-panel/panel.c:1482
 msgid "Delete this panel?"
 msgstr "Ali naj se pult izbriše?"
 
-#: mate-panel/panel.c:1482
+#: mate-panel/panel.c:1483
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
