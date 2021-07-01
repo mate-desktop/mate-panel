@@ -318,6 +318,8 @@ na_grid_realize (GtkWidget *widget)
   GdkScreen *screen;
   GtkOrientation orientation;
   NaHost *tray_host;
+  GSettings *settings;
+  settings = g_settings_new ("org.mate.panel");
 
   GTK_WIDGET_CLASS (na_grid_parent_class)->realize (widget);
 
@@ -330,7 +332,11 @@ na_grid_realize (GtkWidget *widget)
                           G_BINDING_DEFAULT);
 
   add_host (self, tray_host);
-  add_host (self, sn_host_v0_new ());
+
+  if (g_settings_get_boolean (settings, "enable-sni-support") == TRUE)
+    add_host (self, sn_host_v0_new ());
+
+  g_object_unref (settings);
 }
 
 static void
