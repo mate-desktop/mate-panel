@@ -332,6 +332,8 @@ command_is_executable (const char   *command,
 		       char       ***argvp)
 {
 	gboolean   result;
+	g_autofree gchar *home_path = NULL;
+	GRegex    *regex = NULL;
 	char     **argv;
 	char      *path;
 	int        argc;
@@ -341,6 +343,13 @@ command_is_executable (const char   *command,
 	if (!result)
 		return FALSE;
 
+	for (int i = 0; i < g_strv_length (argv); i++)
+	{
+		regex = g_regex_new ("^~/", 0, 0, NULL);
+		home_path = g_build_filename (g_get_home_dir (), "/", NULL);
+		argv[i] = g_regex_replace_literal (regex, argv[i], -1, 0, home_path, 0, NULL);
+		g_regex_unref (regex);
+	}
 	path = g_find_program_in_path (argv[0]);
 
 	if (!path) {
