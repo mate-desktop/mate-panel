@@ -257,6 +257,8 @@ free_launcher (gpointer data)
 		g_free (launcher->location);
 	launcher->location = NULL;
 
+	if (launcher->monitor != NULL)
+		g_object_unref (launcher->monitor);
 	g_free (launcher);
 }
 
@@ -443,6 +445,7 @@ static Launcher *
 create_launcher (const char *location)
 {
 	GKeyFile *key_file;
+	g_autoptr(GFile) file = NULL;
 	gboolean  loaded = FALSE;
 	Launcher *launcher;
 	GError   *error = NULL;
@@ -502,6 +505,7 @@ create_launcher (const char *location)
 
 	if (!new_location)
 		new_location = g_strdup (location);
+	file = g_file_new_for_path (new_location);
 
 	launcher = g_new0 (Launcher, 1);
 
@@ -517,6 +521,10 @@ create_launcher (const char *location)
 					      FALSE,
 					      PANEL_ORIENTATION_TOP);
 
+	launcher->monitor = g_file_monitor_file (file,
+	                                         G_FILE_MONITOR_NONE,
+	                                         NULL,
+	                                         NULL);
 	gtk_widget_show (launcher->button);
 
 	/*gtk_drag_dest_set (GTK_WIDGET (launcher->button),
@@ -846,6 +854,34 @@ launcher_properties_enabled (void)
 	return TRUE;
 }
 
+static void
+app_desktop_file_changed (GFileMonitor      *monitor,
+                          GFile             *file,
+                          GFile             *other_file,
+                          GFileMonitorEvent  event_type,
+                          Launcher          *launcher)
+{
+	if (event_type != G_FILE_MONITOR_EVENT_CHANGED &&
+		event_type != G_FILE_MONITOR_EVENT_CREATED)
+	{
+		return;
+	}
+
+	if (!strchr (launcher->location, G_DIR_SEPARATOR))
+	{
+		g_key_file_load_from_file (launcher->key_file, launcher->location,
+		                           G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
+		                           NULL);
+	}
+	else
+	{
+		panel_key_file_load_from_uri (launcher->key_file, launcher->location,
+		                              G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
+		                              NULL);
+	}
+	setup_button (launcher);
+}
+
 static Launcher *
 load_launcher_applet (const char       *location,
 		      PanelWidget      *panel,
@@ -872,6 +908,11 @@ load_launcher_applet (const char       *location,
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (launcher->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (launcher->button), TRUE);
+
+	g_signal_connect (launcher->monitor,
+	                  "changed",
+	                  G_CALLBACK (app_desktop_file_changed),
+	                  launcher);
 
 	/* setup button according to ditem */
 	setup_button (launcher);
