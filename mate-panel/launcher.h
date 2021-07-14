@@ -26,6 +26,7 @@ typedef struct {
 	char              *location;
 	GKeyFile          *key_file;
 
+	GFileMonitor      *monitor;
 	GtkWidget         *prop_dialog;
 	GSList            *error_dialogs;
 
