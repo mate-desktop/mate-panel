@@ -2252,7 +2252,7 @@ location_start_element (GMarkupParseContext *context,
         if (current && clock_location_is_current_timezone (loc))
                 clock_location_make_current (loc, NULL, NULL, NULL);
 
-        data->cities = g_slist_append (data->cities, loc);
+        data->cities = g_slist_append (data->cities, g_object_ref (loc));
 }
 
 static GMarkupParser location_parser = {
@@ -2682,7 +2682,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
                  */
                 clock_location_is_current (loc);
 
-                cd->locations = g_slist_append (cd->locations, loc);
+                cd->locations = g_slist_append (cd->locations, g_object_ref (loc));
         }
         g_free (name);
         g_free (city);
