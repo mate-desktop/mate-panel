@@ -92,7 +92,7 @@ clock_location_find_and_ref (GSList       *locations,
         }
 
         if (l != NULL)
-                return g_object_ref (CLOCK_LOCATION (l->data));
+                return CLOCK_LOCATION (l->data);
         else
                 return NULL;
 }
