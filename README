@@ -26,13 +26,18 @@ Installation
 
 See the file 'INSTALL'. If you are not using a released version of
 mate-panel (for example, if you checked out the code from git), you
-first need to run './autogen.sh'.
+first need to run :
+
+git submodule init
+git submodule update
+./autogen.sh
 
 Build dependencies
 ==================
 
 On Ubuntu MATE 18.04 (daily 2018-01-30)
 build-essential
+autopoint
 mate-common
 libglib2.0-dev
 yelp-tools
