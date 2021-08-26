@@ -170,6 +170,8 @@ mate_panel_LDFLAGS = -export-dynamic
 mate_desktop_item_edit_SOURCES = \
 	mate-desktop-item-edit.c \
 	panel-ditem-editor.c \
+	panel-resources.c		\
+	panel-resources.h		\
 	panel-marshal.c \
 	panel-util.c
 
@@ -187,6 +189,8 @@ if ENABLE_X11
 mate_desktop_item_edit_LDADD += \
 	-lX11
 endif
+
+mate_desktop_item_edit_LDFLAGS = -export-dynamic
 
 mate_panel_test_applets_SOURCES = \
 	$(panel_test_applets_BUILT_SOURCES)	\
