@@ -43,11 +43,11 @@
 #define WINDOW_LIST_PREVIEW_SCHEMA "org.mate.panel.applet.window-list-previews"
 #endif /* HAVE_WINDOW_PREVIEWS */
 
-enum TasklistGroupingType {
+typedef enum _TasklistGroupingType {
   TASKLIST_NEVER_GROUP,
   TASKLIST_AUTO_GROUP,
   TASKLIST_ALWAYS_GROUP
-};
+} TasklistGroupingType;
 
 typedef struct {
 	GtkWidget* applet;
@@ -66,7 +66,7 @@ typedef struct {
 
 	/* Properties: */
 	GtkWidget* properties_dialog;
-	GtkWidget* display_all_workspaces_radio;
+
 #ifdef HAVE_WINDOW_PREVIEWS
 	GtkWidget* window_thumbnail_box;
 	GtkWidget* show_thumbnails_check;
@@ -77,8 +77,13 @@ typedef struct {
 	GtkWidget* never_group_radio;
 	GtkWidget* auto_group_radio;
 	GtkWidget* always_group_radio;
-	GtkWidget* restore_to_current_workspace_radio;
 	GtkWidget* mouse_scroll_check;
+
+	GtkWidget* show_from_all_workspaces_radio;
+	GtkWidget* show_from_current_workspace_radio;
+	GtkWidget* restore_to_current_workspace_radio;
+	GtkWidget* restore_to_native_workspace_radio;
+
 	GtkWidget* minimized_windows_box;
 	GtkWidget* window_grouping_box;
 	GtkWidget* window_list_content_box;
@@ -591,7 +596,10 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 		wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), TRUE);
 		wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
-
+		wnck_tasklist_set_grouping(WNCK_TASKLIST(tasklist->tasklist), g_settings_get_enum (tasklist->settings, "group-windows"));
+		wnck_tasklist_set_include_all_workspaces(WNCK_TASKLIST(tasklist->tasklist), g_settings_get_boolean (tasklist->settings, "display-all-workspaces"));
+		wnck_tasklist_set_switch_workspace_on_unminimize(WNCK_TASKLIST(tasklist->tasklist), g_settings_get_boolean (tasklist->settings, "move-unminimized-windows"));
+		wnck_tasklist_set_scroll_enabled (WNCK_TASKLIST(tasklist->tasklist), g_settings_get_boolean (tasklist->settings, "scroll-enabled"));
 #ifdef HAVE_WINDOW_PREVIEWS
 		g_signal_connect(G_OBJECT(tasklist->tasklist), "task_enter_notify", G_CALLBACK(applet_enter_notify_event), tasklist);
 		g_signal_connect(G_OBJECT(tasklist->tasklist), "task_leave_notify", G_CALLBACK(applet_leave_notify_event), tasklist);
@@ -773,15 +781,40 @@ static void on_always_group_radio_toggled(GtkRadioButton* button, TasklistData* 
 	wnck_tasklist_set_grouping(WNCK_TASKLIST(tasklist->tasklist), WNCK_TASKLIST_ALWAYS_GROUP);
 }
 
+static void init_radio_buttons(TasklistData* tasklist)
+{
+	TasklistGroupingType type = g_settings_get_enum (tasklist->settings, "group-windows");
+	switch (type)
+	{
+		case TASKLIST_NEVER_GROUP:
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->never_group_radio), TRUE);
+			break;
+		case TASKLIST_AUTO_GROUP:
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->auto_group_radio), TRUE);
+			break;
+		case TASKLIST_ALWAYS_GROUP:
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->always_group_radio), TRUE);
+			break;
+		default:
+			g_warning("window-list: Invalid tasklist grouping type option");
+			/* Reset to default if option is invalid */
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->never_group_radio), TRUE);
+			g_settings_set_enum (tasklist->settings, "group-windows", TASKLIST_NEVER_GROUP);
+			wnck_tasklist_set_grouping(WNCK_TASKLIST(tasklist->tasklist), WNCK_TASKLIST_NEVER_GROUP);
+	}
+
+	gboolean restore_to_native_workspace = g_settings_get_boolean(tasklist->settings, "move-unminimized-windows");
+	gboolean show_windows_from_all_workspaces = g_settings_get_boolean(tasklist->settings, "display-all-workspaces");
+	restore_to_native_workspace ? gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->restore_to_current_workspace_radio), TRUE)
+								: gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->restore_to_native_workspace_radio), TRUE);
+	show_windows_from_all_workspaces ? gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->show_from_all_workspaces_radio), TRUE)
+									 : gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tasklist->show_from_current_workspace_radio), TRUE);
+}
+
 #define GET_WIDGET(s) GTK_WIDGET(gtk_builder_get_object(builder, s))
 
 static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 {
-	tasklist->display_all_workspaces_radio = GET_WIDGET("display_all_workspaces_radio");
-	tasklist->never_group_radio = GET_WIDGET("never_group_radio");
-	tasklist->auto_group_radio = GET_WIDGET("auto_group_radio");
-	tasklist->always_group_radio = GET_WIDGET("always_group_radio");
-
 #ifdef HAVE_WINDOW_PREVIEWS
 	tasklist->window_thumbnail_box = GET_WIDGET("window_thumbnail_box");
 	tasklist->show_thumbnails_check = GET_WIDGET("show_thumbnails_check");
@@ -802,11 +835,21 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	gtk_widget_hide(GET_WIDGET("window_thumbnail_box"));
 #endif
 
+	tasklist->never_group_radio = GET_WIDGET("never_group_radio");
+	tasklist->auto_group_radio = GET_WIDGET("auto_group_radio");
+	tasklist->always_group_radio = GET_WIDGET("always_group_radio");
+
+	tasklist->show_from_all_workspaces_radio = GET_WIDGET("show_from_all_workspaces_radio");
+	tasklist->show_from_current_workspace_radio = GET_WIDGET("show_from_current_workspace_radio");
 	tasklist->restore_to_current_workspace_radio = GET_WIDGET("restore_to_current_workspace_radio");
+	tasklist->restore_to_native_workspace_radio = GET_WIDGET("restore_to_native_workspace_radio");
 	tasklist->mouse_scroll_check = GET_WIDGET("mouse_scroll_check");
+
 	tasklist->minimized_windows_box = GET_WIDGET("minimized_windows_box");
 	tasklist->window_grouping_box = GET_WIDGET("window_grouping_box");
 	tasklist->window_list_content_box = GET_WIDGET("window_list_content_box");
+
+	init_radio_buttons(tasklist);
 
 	g_settings_bind (tasklist->settings, "scroll-enabled",
 					 tasklist->mouse_scroll_check, "active",
@@ -825,14 +868,14 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 					  tasklist);
 
 	g_settings_bind(tasklist->settings, "display-all-workspaces",
-					tasklist->display_all_workspaces_radio, "active",
+					tasklist->show_from_all_workspaces_radio, "active",
 					G_SETTINGS_BIND_DEFAULT);
 	g_signal_connect (tasklist->settings, "changed::display-all-workspaces",
 					  G_CALLBACK (display_all_workspaces_callback),
 					  tasklist);
 
-	gtk_widget_set_sensitive (tasklist->minimized_windows_box, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(tasklist->display_all_workspaces_radio)));
-	g_object_bind_property(tasklist->display_all_workspaces_radio, "active", tasklist->minimized_windows_box, "sensitive", G_BINDING_DEFAULT);
+	gtk_widget_set_sensitive (tasklist->minimized_windows_box, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(tasklist->show_from_all_workspaces_radio)));
+	g_object_bind_property(tasklist->show_from_all_workspaces_radio, "active", tasklist->minimized_windows_box, "sensitive", G_BINDING_DEFAULT);
 
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default())) {

@@ -389,7 +389,7 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkRadioButton" id="show_current_radio">
+                          <object class="GtkRadioButton" id="show_from_current_workspace_radio">
                             <property name="label" translatable="yes">Sh_ow windows from current workspace</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
@@ -405,14 +405,14 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkRadioButton" id="display_all_workspaces_radio">
+                          <object class="GtkRadioButton" id="show_from_all_workspaces_radio">
                             <property name="label" translatable="yes">Show windows from a_ll workspaces</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
                             <property name="use-underline">True</property>
                             <property name="draw-indicator">True</property>
-                            <property name="group">show_current_radio</property>
+                            <property name="group">show_from_current_workspace_radio</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -480,7 +480,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkRadioButton" id="change_workspace_radio">
+                          <object class="GtkRadioButton" id="restore_to_native_workspace_radio">
                             <property name="label" translatable="yes">Restore to na_tive workspace</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
