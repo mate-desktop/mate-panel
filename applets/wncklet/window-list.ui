@@ -24,7 +24,6 @@
     <property name="resizable">False</property>
     <property name="icon-name">mate-panel-window-list</property>
     <property name="type-hint">normal</property>
-    <signal name="response" handler="on_tasklist_properties_dialog_response" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can-focus">False</property>
@@ -159,7 +158,6 @@
                                 <property name="adjustment">adjustment1</property>
                                 <property name="climb-rate">1</property>
                                 <property name="numeric">True</property>
-                                <signal name="value-changed" handler="on_thumbnail_size_spin_value_changed" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -226,7 +224,6 @@
                             <property name="use-underline">True</property>
                             <property name="active">True</property>
                             <property name="draw-indicator">True</property>
-                            <signal name="toggled" handler="on_never_group_radio_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -243,7 +240,6 @@
                             <property name="use-underline">True</property>
                             <property name="draw-indicator">True</property>
                             <property name="group">never_group_radio</property>
-                            <signal name="toggled" handler="on_auto_group_radio_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -260,7 +256,6 @@
                             <property name="use-underline">True</property>
                             <property name="draw-indicator">True</property>
                             <property name="group">never_group_radio</property>
-                            <signal name="toggled" handler="on_always_group_radio_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -405,7 +400,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkRadioButton" id="display_all_workspaces_radio">
+                          <object class="GtkRadioButton" id="show_all_radio">
                             <property name="label" translatable="yes">Show windows from a_ll workspaces</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
@@ -464,7 +459,7 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkRadioButton" id="restore_to_current_workspace_radio">
+                          <object class="GtkRadioButton" id="move_minimized_radio">
                             <property name="label" translatable="yes">Restore to current _workspace</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
@@ -487,7 +482,7 @@
                             <property name="receives-default">False</property>
                             <property name="use-underline">True</property>
                             <property name="draw-indicator">True</property>
-                            <property name="group">restore_to_current_workspace_radio</property>
+                            <property name="group">move_minimized_radio</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
