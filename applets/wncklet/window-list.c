@@ -536,6 +536,11 @@ static void tasklist_update_thumbnail_size_spin(TasklistData* tasklist)
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(button), (gdouble)tasklist->thumbnail_size);
 }
 
+static void show_thumbnails_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
+{
+    tasklist->show_window_thumbnails = g_settings_get_boolean (settings, key);
+}
+
 static void thumbnail_size_changed(GSettings *settings, gchar* key, TasklistData* tasklist)
 {
 	tasklist->thumbnail_size = g_settings_get_int(settings, key);
@@ -628,6 +633,11 @@ static void setup_gsettings(TasklistData* tasklist)
 
 #ifdef HAVE_WINDOW_PREVIEWS
 	tasklist->preview_settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (tasklist->applet), WINDOW_LIST_PREVIEW_SCHEMA);
+
+	g_signal_connect (tasklist->preview_settings,
+					  "changed::show-window-thumbnails",
+					  G_CALLBACK (show_thumbnails_changed),
+					  tasklist);
 
 	g_signal_connect (tasklist->preview_settings,
 					  "changed::thumbnail-window-size",
@@ -1015,9 +1025,7 @@ static void setup_dialog_wayland(TasklistData* tasklist)
 static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 {
 	GtkWidget* button;
-#ifdef HAVE_WINDOW_PREVIEWS
-	GtkAdjustment *adjustment;
-#endif /* HAVE_WINDOW_PREVIEWS */
+
 
 	tasklist->wayland_info_label = WID("wayland_info_label");
 	tasklist->show_current_radio = WID("show_current_radio");
@@ -1048,10 +1056,6 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	g_object_bind_property(tasklist->show_thumbnails_check, "active", tasklist->thumbnail_size_label, "sensitive", G_BINDING_DEFAULT);
 	g_object_bind_property(tasklist->show_thumbnails_check, "active", tasklist->thumbnail_size_spin, "sensitive", G_BINDING_DEFAULT);
 
-	adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(tasklist->thumbnail_size_spin));
-	gtk_adjustment_set_lower (adjustment, 0);
-	gtk_adjustment_set_upper (adjustment, 999);
-	gtk_adjustment_set_step_increment (adjustment, 1);
 #else
 	gtk_widget_hide(WID("window_thumbnail_box"));
 #endif
