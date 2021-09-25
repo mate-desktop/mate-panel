@@ -8,10 +8,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.2\n"
+"Project-Id-Version: mate-panel 1.26.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2021-06-22 13:38+0200\n"
-"PO-Revision-Date: 2018-03-11 19:58+0000\n"
+"POT-Creation-Date: 2021-09-25 17:41+0200\n"
+"PO-Revision-Date: 2021-09-25 17:47+0000\n"
 "Last-Translator: 趙惟倫 <bluebat@member.fsf.org>, 2021\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/mate/teams/13566/cmn/)\n"
 "MIME-Version: 1.0\n"
@@ -155,7 +155,7 @@ msgid "Failed to set the system time"
 msgstr "設定系統時刻失敗"
 
 #: applets/clock/clock.c:1901 applets/fish/fish.c:1691
-#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:432
+#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:469
 #: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "偏好設定(_P)"
@@ -163,7 +163,7 @@ msgstr "偏好設定(_P)"
 #: applets/clock/clock.c:1904 applets/clock/clock.ui:293
 #: applets/fish/fish.c:1694 applets/fish/fish.ui:46
 #: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:240
-#: applets/wncklet/window-list.c:440 applets/wncklet/window-list.ui:38
+#: applets/wncklet/window-list.c:477 applets/wncklet/window-list.ui:37
 #: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
 #: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:563
 #: mate-panel/panel-action-button.c:732 mate-panel/panel-addto.c:1309
@@ -176,7 +176,7 @@ msgstr "求助(_H)"
 
 #: applets/clock/clock.c:1907 applets/fish/fish.c:1697
 #: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:248
-#: applets/wncklet/window-list.c:448 applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-list.c:485 applets/wncklet/window-menu.c:113
 #: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "關於(_A)"
@@ -230,7 +230,7 @@ msgstr ""
 
 #: applets/clock/clock.c:3403 applets/fish/fish.c:563
 #: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:511
-#: applets/wncklet/window-list.c:730 applets/wncklet/window-menu.c:95
+#: applets/wncklet/window-list.c:947 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:722
 #: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
@@ -275,7 +275,7 @@ msgstr "時刻設定值(_S)"
 
 #: applets/clock/clock.ui:324 applets/fish/fish.c:850 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:54 applets/wncklet/workspace-switcher.ui:62
+#: applets/wncklet/window-list.ui:53 applets/wncklet/workspace-switcher.ui:62
 #: mate-panel/panel-addto.c:1320 mate-panel/panel-ditem-editor-dialog.ui:76
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
@@ -1019,7 +1019,7 @@ msgid "Switch between workspaces"
 msgstr "於工作區之間切換"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:720
+#: applets/wncklet/window-list.c:937
 msgid "Window List"
 msgstr "視窗列表"
 
@@ -1064,7 +1064,7 @@ msgstr ""
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "本按鈕可以隱藏所有視窗並顯示桌面。"
 
-#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:724
+#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:941
 #: applets/wncklet/workspace-switcher.c:716
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1078,15 +1078,15 @@ msgid ""
 " running a window manager."
 msgstr "您使用的視窗總理員不支援「顯示桌面」按鈕，或是您根本沒有執行任何視窗總理員。"
 
-#: applets/wncklet/window-list.c:424
+#: applets/wncklet/window-list.c:461
 msgid "_System Monitor"
 msgstr "系統監視器(_S)"
 
-#: applets/wncklet/window-list.c:721
+#: applets/wncklet/window-list.c:938
 msgid "About Window List"
 msgstr ""
 
-#: applets/wncklet/window-list.c:723
+#: applets/wncklet/window-list.c:940
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1096,83 +1096,83 @@ msgstr "「視窗列表」在一組按鈕中顯示視窗列表以供瀏覽。"
 msgid "Window List Preferences"
 msgstr "「視窗列表」偏好設定"
 
-#: applets/wncklet/window-list.ui:98
+#: applets/wncklet/window-list.ui:97
 msgid "Window Thumbnails"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:119
+#: applets/wncklet/window-list.ui:118
 msgid "Show _thumbnails on hover"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:141
+#: applets/wncklet/window-list.ui:140
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 
-#: applets/wncklet/window-list.ui:142
+#: applets/wncklet/window-list.ui:141
 msgid "Thumbnail width:"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:155
+#: applets/wncklet/window-list.ui:154
 msgid "0"
 msgstr "0"
 
-#: applets/wncklet/window-list.ui:157
+#: applets/wncklet/window-list.ui:156
 msgid "px"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:201
+#: applets/wncklet/window-list.ui:199
 msgid "Window Grouping"
 msgstr "視窗合併顯示"
 
-#: applets/wncklet/window-list.ui:222
+#: applets/wncklet/window-list.ui:220
 msgid "_Never group windows"
 msgstr "永不合併同類的視窗(_N)"
 
-#: applets/wncklet/window-list.ui:239
+#: applets/wncklet/window-list.ui:236
 msgid "Group windows when _space is limited"
 msgstr "當面板空間有限時，將同類視窗合併成群組(_S)"
 
-#: applets/wncklet/window-list.ui:256
+#: applets/wncklet/window-list.ui:252
 msgid "_Always group windows"
 msgstr "總是合併同類的視窗(_A)"
 
-#: applets/wncklet/window-list.ui:295
+#: applets/wncklet/window-list.ui:290
 msgid "Mouse Scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:316
+#: applets/wncklet/window-list.ui:311
 msgid "_Enable mouse scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:349
+#: applets/wncklet/window-list.ui:344
 msgid "Behaviour"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:372
+#: applets/wncklet/window-list.ui:367
 msgid "Window List Content"
 msgstr "「視窗列表」內容"
 
-#: applets/wncklet/window-list.ui:393
+#: applets/wncklet/window-list.ui:388
 msgid "Sh_ow windows from current workspace"
 msgstr "顯示目前工作區中的視窗(_O)"
 
-#: applets/wncklet/window-list.ui:409
+#: applets/wncklet/window-list.ui:404
 msgid "Show windows from a_ll workspaces"
 msgstr "顯示所有工作區中的視窗(_L)"
 
-#: applets/wncklet/window-list.ui:447
+#: applets/wncklet/window-list.ui:442
 msgid "Restoring Minimized Windows"
 msgstr "還原最小化狀態中的視窗"
 
-#: applets/wncklet/window-list.ui:468
+#: applets/wncklet/window-list.ui:463
 msgid "Restore to current _workspace"
 msgstr "在目前的工作區還原視窗(_W)"
 
-#: applets/wncklet/window-list.ui:484
+#: applets/wncklet/window-list.ui:479
 msgid "Restore to na_tive workspace"
 msgstr "在原來的工作區還原視窗(_T)"
 
-#: applets/wncklet/window-list.ui:521
+#: applets/wncklet/window-list.ui:516
 #: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "工作區"
@@ -2003,62 +2003,62 @@ msgid ""
 "vertically."
 msgstr "如設定為「true」，在垂直面板中背景圖案會旋轉 90 度顯示。"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
 msgid "File is not a valid .desktop file"
 msgstr "檔案不是有效的 .desktop 檔案"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "無法辨識的桌面檔案版本「%s」"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:976
 #, c-format
 msgid "Starting %s"
 msgstr "準備啟動 %s"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1118
 msgid "Application does not accept documents on command line"
 msgstr "應用程式不接受以命令列開啟文件"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1186
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "無法辨識的啟動選項：%d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1402
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "不能傳送文件 URI 至「Type=Link」桌面項目"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1423
 msgid "Not a launchable item"
 msgstr "不是可以啟動的項目"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
 msgid "Disable connection to session manager"
 msgstr "停用到作業階段管理程式的連線"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "Specify file containing saved configuration"
 msgstr "指定含有已儲存組態的檔案"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "FILE"
 msgstr "檔案"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "Specify session management ID"
 msgstr "指定作業階段管理 ID"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Session management options:"
 msgstr "作業階段管理選項："
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
 msgid "Show session management options"
 msgstr "顯示作業階段管理選項"
 
@@ -2122,7 +2122,7 @@ msgstr "抽屜"
 msgid "_Add to Drawer..."
 msgstr "加入至抽屜(_A)…"
 
-#: mate-panel/drawer.c:557 mate-panel/launcher.c:603
+#: mate-panel/drawer.c:557 mate-panel/launcher.c:611
 #: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "屬性(_P)"
@@ -2140,7 +2140,7 @@ msgid "- Edit .desktop files"
 msgstr "- 編輯 .desktop 檔案"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:967
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1008
 msgid "Create Launcher"
 msgstr "建立啟動圖示"
 
@@ -2149,7 +2149,7 @@ msgstr "建立啟動圖示"
 msgid "Directory Properties"
 msgstr "目錄屬性"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:810
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:818
 msgid "Launcher Properties"
 msgstr "啟動圖示屬性"
 
@@ -2175,25 +2175,25 @@ msgstr "沒有指定 URL。"
 msgid "Could not use dropped item"
 msgstr "無法使用已拖曳的項目"
 
-#: mate-panel/launcher.c:452
+#: mate-panel/launcher.c:455
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "沒有提供任何 URI 給面板啟動圖示的 .desktop 檔案\n"
 
-#: mate-panel/launcher.c:491
+#: mate-panel/launcher.c:494
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "無法開啟面板啟動圖示中指定的 .desktop 檔案 %s%s%s\n"
 
-#: mate-panel/launcher.c:595
+#: mate-panel/launcher.c:603
 msgid "_Launch"
 msgstr "啟動圖示(_L)"
 
-#: mate-panel/launcher.c:903
+#: mate-panel/launcher.c:944
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "設定鍵 %s 並未設定，無法載入啟動圖示\n"
 
-#: mate-panel/launcher.c:1036 mate-panel/panel-ditem-editor.c:1179
+#: mate-panel/launcher.c:1077 mate-panel/panel-ditem-editor.c:1179
 #: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
 msgid "Could not save launcher"
 msgstr "無法儲存啟動圖示"
@@ -2870,30 +2870,30 @@ msgstr "清除最近存取文件…"
 msgid "Clear all items from the recent documents list"
 msgstr "清除最近存取文件列表中的所有項目？"
 
-#: mate-panel/panel-run-dialog.c:430
+#: mate-panel/panel-run-dialog.c:445
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "無法執行「%s」指令"
 
-#: mate-panel/panel-run-dialog.c:471
+#: mate-panel/panel-run-dialog.c:486
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "無法由 UTF-8 轉換為「%s」"
 
-#: mate-panel/panel-run-dialog.c:1263
+#: mate-panel/panel-run-dialog.c:1278
 msgid "Choose a file to append to the command..."
 msgstr "在指令後附加檔案名稱…"
 
-#: mate-panel/panel-run-dialog.c:1618 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1633 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "選取應用程式後可以顯示有關該程式的說明。"
 
-#: mate-panel/panel-run-dialog.c:1656
+#: mate-panel/panel-run-dialog.c:1671
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "將會執行指令：「%s」"
 
-#: mate-panel/panel-run-dialog.c:1689
+#: mate-panel/panel-run-dialog.c:1704
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖曳到執行視窗的 URI 列表的格式 (%d) 或長度 (%d) 錯誤\n"

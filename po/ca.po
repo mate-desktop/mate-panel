@@ -4,18 +4,18 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Martin Wimpress <code@flexion.org>, 2018
-# Pere Orga <gotrunks@gmail.com>, 2018
-# Stefano Karapetsas <stefano@karapetsas.com>, 2018
+# Martin Wimpress <code@flexion.org>, 2021
+# Pere Orga <gotrunks@gmail.com>, 2021
 # Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2021
+# Stefano Karapetsas <stefano@karapetsas.com>, 2021
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.2\n"
+"Project-Id-Version: mate-panel 1.26.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2021-06-22 13:38+0200\n"
-"PO-Revision-Date: 2018-03-11 19:58+0000\n"
-"Last-Translator: Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2021\n"
+"POT-Creation-Date: 2021-09-25 17:41+0200\n"
+"PO-Revision-Date: 2021-09-25 17:47+0000\n"
+"Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2021\n"
 "Language-Team: Catalan (https://www.transifex.com/mate/teams/13566/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -74,7 +74,7 @@ msgstr "%k:%M:%S"
 #: applets/clock/clock-location-tile.c:460
 #: applets/clock/clock-location-tile.c:507
 msgid "%H:%M"
-msgstr "%k:%M"
+msgstr "%-H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the date. Replace %e with %d if, when
@@ -158,7 +158,7 @@ msgid "Failed to set the system time"
 msgstr "No s'ha pogut establir l'hora del sistema"
 
 #: applets/clock/clock.c:1901 applets/fish/fish.c:1691
-#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:432
+#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:469
 #: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "_Preferències"
@@ -166,7 +166,7 @@ msgstr "_Preferències"
 #: applets/clock/clock.c:1904 applets/clock/clock.ui:293
 #: applets/fish/fish.c:1694 applets/fish/fish.ui:46
 #: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:240
-#: applets/wncklet/window-list.c:440 applets/wncklet/window-list.ui:38
+#: applets/wncklet/window-list.c:477 applets/wncklet/window-list.ui:37
 #: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
 #: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:563
 #: mate-panel/panel-action-button.c:732 mate-panel/panel-addto.c:1309
@@ -179,7 +179,7 @@ msgstr "_Ajuda"
 
 #: applets/clock/clock.c:1907 applets/fish/fish.c:1697
 #: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:248
-#: applets/wncklet/window-list.c:448 applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-list.c:485 applets/wncklet/window-menu.c:113
 #: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "_Quant a"
@@ -235,16 +235,13 @@ msgstr ""
 
 #: applets/clock/clock.c:3403 applets/fish/fish.c:563
 #: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:511
-#: applets/wncklet/window-list.c:730 applets/wncklet/window-menu.c:95
+#: applets/wncklet/window-list.c:947 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:722
 #: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
 msgstr ""
-"Ivan Vilata i Balaguer <ivan@selidor.net>\n"
-"Jordi Mallach <jordi@sindominio.net>\n"
-"Pere Orga <pere@orga.cat>\n"
-"Quico Llach <quico@softcatala.org>\n"
-"Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>"
+"Aniol Gervasi <tradueix@gmail.com>, 2009\n"
+"Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2018, 2019, 2020, 2021"
 
 #: applets/clock/clock.ui:31
 msgid "Time & Date"
@@ -282,7 +279,7 @@ msgstr "Ajust_s de l'hora"
 
 #: applets/clock/clock.ui:324 applets/fish/fish.c:850 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:54 applets/wncklet/workspace-switcher.ui:62
+#: applets/wncklet/window-list.ui:53 applets/wncklet/workspace-switcher.ui:62
 #: mate-panel/panel-addto.c:1320 mate-panel/panel-ditem-editor-dialog.ui:76
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
@@ -1087,9 +1084,9 @@ msgid "Switch between workspaces"
 msgstr "Canvieu entre els espais de treball"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:720
+#: applets/wncklet/window-list.c:937
 msgid "Window List"
-msgstr "Llista de les finestres"
+msgstr "Llista de finestres"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:37
 msgid "Switch between open windows using buttons"
@@ -1133,7 +1130,7 @@ msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Aquest botó us permet ocultar totes les finestres i mostrar l'escriptori."
 
-#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:724
+#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:941
 #: applets/wncklet/workspace-switcher.c:716
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1152,15 +1149,15 @@ msgstr ""
 "El vostre gestor de finestres no permet el botó «Mostra l'escriptori», o no "
 "esteu executant cap gestor de finestres."
 
-#: applets/wncklet/window-list.c:424
+#: applets/wncklet/window-list.c:461
 msgid "_System Monitor"
 msgstr "_Monitor del sistema"
 
-#: applets/wncklet/window-list.c:721
+#: applets/wncklet/window-list.c:938
 msgid "About Window List"
 msgstr "Quant a la llista de finestres"
 
-#: applets/wncklet/window-list.c:723
+#: applets/wncklet/window-list.c:940
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1172,85 +1169,85 @@ msgstr ""
 msgid "Window List Preferences"
 msgstr "Preferències de la llista de les finestres"
 
-#: applets/wncklet/window-list.ui:98
+#: applets/wncklet/window-list.ui:97
 msgid "Window Thumbnails"
 msgstr "Miniatures de les finestres"
 
-#: applets/wncklet/window-list.ui:119
+#: applets/wncklet/window-list.ui:118
 msgid "Show _thumbnails on hover"
 msgstr "Mos_tra les miniature en passar el ratolí per sobre"
 
-#: applets/wncklet/window-list.ui:141
+#: applets/wncklet/window-list.ui:140
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 "L'amplada de la miniatura en píxels. Es mantindrà la relació d’aspecte de la"
 " finestra."
 
-#: applets/wncklet/window-list.ui:142
+#: applets/wncklet/window-list.ui:141
 msgid "Thumbnail width:"
 msgstr "Amplada de la miniatura:"
 
-#: applets/wncklet/window-list.ui:155
+#: applets/wncklet/window-list.ui:154
 msgid "0"
 msgstr "0"
 
-#: applets/wncklet/window-list.ui:157
+#: applets/wncklet/window-list.ui:156
 msgid "px"
 msgstr "px"
 
-#: applets/wncklet/window-list.ui:201
+#: applets/wncklet/window-list.ui:199
 msgid "Window Grouping"
 msgstr "Agrupació de les finestres"
 
-#: applets/wncklet/window-list.ui:222
+#: applets/wncklet/window-list.ui:220
 msgid "_Never group windows"
 msgstr "_No agrupis mai les finestres"
 
-#: applets/wncklet/window-list.ui:239
+#: applets/wncklet/window-list.ui:236
 msgid "Group windows when _space is limited"
 msgstr "_Agrupa les finestres quan l'espai sigui limitat"
 
-#: applets/wncklet/window-list.ui:256
+#: applets/wncklet/window-list.ui:252
 msgid "_Always group windows"
 msgstr "Agrupa les finestres _sempre"
 
-#: applets/wncklet/window-list.ui:295
+#: applets/wncklet/window-list.ui:290
 msgid "Mouse Scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:316
+#: applets/wncklet/window-list.ui:311
 msgid "_Enable mouse scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:349
+#: applets/wncklet/window-list.ui:344
 msgid "Behaviour"
 msgstr "Comportament"
 
-#: applets/wncklet/window-list.ui:372
+#: applets/wncklet/window-list.ui:367
 msgid "Window List Content"
 msgstr "Contingut de la llista de les finestres"
 
-#: applets/wncklet/window-list.ui:393
+#: applets/wncklet/window-list.ui:388
 msgid "Sh_ow windows from current workspace"
 msgstr "_Mostra les finestres de l'espai de treball actual"
 
-#: applets/wncklet/window-list.ui:409
+#: applets/wncklet/window-list.ui:404
 msgid "Show windows from a_ll workspaces"
 msgstr "M_ostra les finestres de tots els espais de treball"
 
-#: applets/wncklet/window-list.ui:447
+#: applets/wncklet/window-list.ui:442
 msgid "Restoring Minimized Windows"
 msgstr "Restauració de les finestres minimitzades"
 
-#: applets/wncklet/window-list.ui:468
+#: applets/wncklet/window-list.ui:463
 msgid "Restore to current _workspace"
 msgstr "_Restaura a l'espai de treball actual"
 
-#: applets/wncklet/window-list.ui:484
+#: applets/wncklet/window-list.ui:479
 msgid "Restore to na_tive workspace"
 msgstr "R_estaura a l'espai de treball natiu"
 
-#: applets/wncklet/window-list.ui:521
+#: applets/wncklet/window-list.ui:516
 #: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "Espais de treball"
@@ -2164,7 +2161,7 @@ msgstr ""
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:113
 msgid "Background color"
-msgstr "Color de fons"
+msgstr "Color del fons"
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:114
 msgid "Specifies the background color for the panel in #RGB format."
@@ -2172,7 +2169,7 @@ msgstr "Especifica el color del fons del tauler en format #RGB."
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:118
 msgid "Background color opacity"
-msgstr "Opacitat del color de fons"
+msgstr "Opacitat del color del fons"
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:119
 msgid ""
@@ -2233,64 +2230,64 @@ msgstr ""
 "En cas que fos cert, la imatge de fons es rotarà si el tauler s'orienta "
 "verticalment."
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
 msgid "File is not a valid .desktop file"
 msgstr "El fitxer no és un fitxer .desktop vàlid"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "No es reconeix la versió «%s» del fitxer d'escriptori"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:976
 #, c-format
 msgid "Starting %s"
 msgstr "S'està iniciant %s"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1118
 msgid "Application does not accept documents on command line"
 msgstr "L'aplicació no accepta documents des de la línia d'ordres"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1186
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "No es reconeix l'opció de llançament: %d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1402
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "No es poden passar els URI de document a una entrada d'escriptori "
 "«Type=Link»"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1423
 msgid "Not a launchable item"
 msgstr "No és un element executable"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
 msgid "Disable connection to session manager"
 msgstr "Inhabilita la connexió al gestor de sessions"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "Specify file containing saved configuration"
 msgstr "Especifica el fitxer que conté la configuració desada"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "FILE"
 msgstr "FITXER"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "Specify session management ID"
 msgstr "Especifica l'ID de gestió de la sessió"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "ID"
 msgstr "id."
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Session management options:"
 msgstr "Opcions de gestió de la sessió:"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
 msgid "Show session management options"
 msgstr "Mostra les opcions de gestió de la sessió"
 
@@ -2355,7 +2352,7 @@ msgstr "Calaix"
 msgid "_Add to Drawer..."
 msgstr "_Afegeix al calaix..."
 
-#: mate-panel/drawer.c:557 mate-panel/launcher.c:603
+#: mate-panel/drawer.c:557 mate-panel/launcher.c:611
 #: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Propietats"
@@ -2373,7 +2370,7 @@ msgid "- Edit .desktop files"
 msgstr "- Edita els fitxers .desktop"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:967
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1008
 msgid "Create Launcher"
 msgstr "Crea un llançador"
 
@@ -2382,7 +2379,7 @@ msgstr "Crea un llançador"
 msgid "Directory Properties"
 msgstr "Propietats del directori"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:810
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:818
 msgid "Launcher Properties"
 msgstr "Propietats del llançador"
 
@@ -2410,28 +2407,28 @@ msgstr "No s'ha especificat cap URL."
 msgid "Could not use dropped item"
 msgstr "No s'ha pogut utilitzar l'element deixat anar"
 
-#: mate-panel/launcher.c:452
+#: mate-panel/launcher.c:455
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "No s'ha proporcionat cap URI per al fitxer d'escriptori del llançador del "
 "tauler\n"
 
-#: mate-panel/launcher.c:491
+#: mate-panel/launcher.c:494
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "No es pot obrir el fitxer d'escriptori %s per al llançador del tauler%s%s\n"
 
-#: mate-panel/launcher.c:595
+#: mate-panel/launcher.c:603
 msgid "_Launch"
 msgstr "_Llança"
 
-#: mate-panel/launcher.c:903
+#: mate-panel/launcher.c:944
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "La clau %s no està establerta, no es pot carregar el llançador\n"
 
-#: mate-panel/launcher.c:1036 mate-panel/panel-ditem-editor.c:1179
+#: mate-panel/launcher.c:1077 mate-panel/panel-ditem-editor.c:1179
 #: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
 msgid "Could not save launcher"
 msgstr "No s'ha pogut desar el llançador"
@@ -2979,12 +2976,12 @@ msgstr "Inferior"
 #: mate-panel/panel-properties-dialog.c:122 mate-panel/panel-test-applets.c:61
 msgctxt "Orientation"
 msgid "Left"
-msgstr "Esquerre"
+msgstr "Esquerra"
 
 #: mate-panel/panel-properties-dialog.c:123 mate-panel/panel-test-applets.c:62
 msgctxt "Orientation"
 msgid "Right"
-msgstr "Dret"
+msgstr "Dreta"
 
 #: mate-panel/panel-properties-dialog.c:827
 msgid "Drawer Properties"
@@ -3129,30 +3126,30 @@ msgstr "Neteja la llista dels documents recents..."
 msgid "Clear all items from the recent documents list"
 msgstr "Voleu netejar tots els elements de la llista dels documents recents?"
 
-#: mate-panel/panel-run-dialog.c:430
+#: mate-panel/panel-run-dialog.c:445
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "No s'ha pogut executar l'ordre «%s»"
 
-#: mate-panel/panel-run-dialog.c:471
+#: mate-panel/panel-run-dialog.c:486
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "No s'ha pogut convertir «%s» d'UTF-8"
 
-#: mate-panel/panel-run-dialog.c:1263
+#: mate-panel/panel-run-dialog.c:1278
 msgid "Choose a file to append to the command..."
 msgstr "Seleccioneu un fitxer a afegir a l'ordre..."
 
-#: mate-panel/panel-run-dialog.c:1618 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1633 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Seleccioneu una aplicació per veure la seva descripció."
 
-#: mate-panel/panel-run-dialog.c:1656
+#: mate-panel/panel-run-dialog.c:1671
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "S'executarà l'ordre: «%s»"
 
-#: mate-panel/panel-run-dialog.c:1689
+#: mate-panel/panel-run-dialog.c:1704
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
