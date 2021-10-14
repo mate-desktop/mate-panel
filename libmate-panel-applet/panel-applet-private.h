@@ -20,7 +20,7 @@
  */
 
 #ifndef PANEL_APPLET_PRIVATE_H
-#define PANEL_APPLET_RPIVATE_H
+#define PANEL_APPLET_PRIVATE_H
 
 #include "mate-panel-applet.h"
 
