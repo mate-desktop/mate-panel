@@ -287,8 +287,8 @@ setup_options (void)
 
 		gtk_list_store_append (model, &iter);
 		gtk_list_store_set (model, &iter,
-				    COLUMN_TEXT, g_strdup (mate_panel_applet_info_get_name (info)),
-				    COLUMN_ITEM, g_strdup (mate_panel_applet_info_get_iid (info)),
+				    COLUMN_TEXT, mate_panel_applet_info_get_name (info),
+				    COLUMN_ITEM, mate_panel_applet_info_get_iid (info),
 				    -1);
 	}
 	g_list_free (applet_list);
