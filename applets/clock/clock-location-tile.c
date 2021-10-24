@@ -140,8 +140,16 @@ clock_location_tile_finalize (GObject *g_obj)
         priv = clock_location_tile_get_instance_private (this);
 
         if (priv->location) {
-                g_signal_handler_disconnect (priv->location, priv->location_weather_updated_id);
-                priv->location_weather_updated_id = 0;
+#if GLIB_CHECK_VERSION(2,62,0)
+                g_clear_signal_handler (&priv->location_weather_updated_id,
+                                        priv->location);
+#else
+                if (priv->location_weather_updated_id != 0) {
+                        g_signal_handler_disconnect (priv->location,
+                                                     priv->location_weather_updated_id);
+                        priv->location_weather_updated_id = 0;
+                }
+#endif
 
                 g_object_unref (priv->location);
                 priv->location = NULL;
