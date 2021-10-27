@@ -92,7 +92,6 @@ mate_panel_applet_frame_dbus_update_flags (MatePanelAppletFrame *frame,
 	_mate_panel_applet_frame_update_flags (frame, major, minor, has_handle);
 }
 
-
 static void
 mate_panel_applet_frame_dbus_get_flags_cb (MatePanelAppletContainer *container,
 				      GAsyncResult         *res,

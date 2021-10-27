@@ -167,7 +167,6 @@ panel_file_chooser_dialog_new (const gchar          *title,
 	return result;
 }
 
-
 static void
 ensure_icon_settings (void)
 {

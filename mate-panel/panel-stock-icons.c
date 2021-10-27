@@ -69,7 +69,6 @@ panel_init_stock_icons (GtkIconFactory *factory)
 	GtkIconSource *source;
 	int            i;
 
-
 	source = gtk_icon_source_new ();
 
 	for (i = 0; i < G_N_ELEMENTS (stock_icons); i++) {

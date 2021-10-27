@@ -74,7 +74,6 @@ void            launcher_properties_destroy     (Launcher *launcher);
 void            panel_launcher_set_dnd_enabled  (Launcher *launcher,
 						 gboolean  dnd_enabled);
 
-
 #ifdef __cplusplus
 }
 #endif

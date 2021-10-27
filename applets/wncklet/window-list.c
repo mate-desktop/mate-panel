@@ -603,7 +603,6 @@ static void tasklist_update_unminimization_radio(TasklistData* tasklist)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 }
 
-
 static void move_unminimized_windows_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
 {
 	gboolean value;
@@ -844,7 +843,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions(action_group, tasklist_menu_actions, G_N_ELEMENTS(tasklist_menu_actions), tasklist);
 
-
 	/* disable the item of system monitor, if not exists.
 	 * example, mate-system-monitor, o gnome-system-monitor */
 	char* programpath;
@@ -869,7 +867,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	_system_monitor_found:;
 	/* end of system monitor item */
-
 
 	mate_panel_applet_setup_menu_from_resource (MATE_PANEL_APPLET (tasklist->applet),
 	                                            WNCKLET_RESOURCE_PATH "window-list-menu.xml",
@@ -911,7 +908,6 @@ static void call_system_monitor(GtkAction* action, TasklistData* tasklist)
 		}
 	}
 }
-
 
 static void display_help_dialog(GtkAction* action, TasklistData* tasklist)
 {
@@ -1025,7 +1021,6 @@ static void setup_dialog_wayland(TasklistData* tasklist)
 static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 {
 	GtkWidget* button;
-
 
 	tasklist->wayland_info_label = WID("wayland_info_label");
 	tasklist->show_current_radio = WID("show_current_radio");

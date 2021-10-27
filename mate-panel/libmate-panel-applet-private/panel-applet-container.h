@@ -74,7 +74,6 @@ GType      mate_panel_applet_container_get_type                (void) G_GNUC_CON
 GQuark     mate_panel_applet_container_error_quark             (void) G_GNUC_CONST;
 GtkWidget *mate_panel_applet_container_new                     (void);
 
-
 void       mate_panel_applet_container_add                     (MatePanelAppletContainer *container,
 							   GdkScreen            *screen,
 							   const gchar          *iid,

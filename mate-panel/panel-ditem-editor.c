@@ -1138,7 +1138,6 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 	                    buffer ? buffer : "");
 	g_free (buffer);
 
-
 	/* Icon */
 	buffer = panel_key_file_get_locale_string (key_file, "Icon");
 	setup_icon_chooser (dialog, buffer);

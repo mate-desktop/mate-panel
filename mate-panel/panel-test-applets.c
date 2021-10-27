@@ -62,7 +62,6 @@ static ComboItem orient_items [] = {
 	{ NC_("Orientation", "Right"),  PANEL_ORIENTATION_RIGHT  }
 };
 
-
 static ComboItem size_items [] = {
 	{ NC_("Size", "XX Small"), 12  },
 	{ NC_("Size", "X Small"),  24  },
@@ -240,7 +239,6 @@ setup_combo (GtkWidget  *combo_box,
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box),
 				 GTK_TREE_MODEL (model));
-
 
 	for (i = 0; i < nb_items; i++) {
 		gtk_list_store_append (model, &iter);

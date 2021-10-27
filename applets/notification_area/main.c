@@ -73,7 +73,6 @@ static void (*parent_class_style_updated) (GtkWidget *widget);
 static void (*parent_class_change_background)(MatePanelApplet* panel_applet, MatePanelAppletBackgroundType type, GdkRGBA* color, cairo_pattern_t* pattern);
 static void (*parent_class_change_orient)(MatePanelApplet       *panel_applet, MatePanelAppletOrient  orient);
 
-
 #ifdef PROVIDE_WATCHER_SERVICE
 /* Quite dirty way of providing the org.kde.StatusNotifierWatcher service
  * ourselves, in case the session doesn't already */
@@ -102,7 +101,6 @@ sn_watcher_service_ref (void)
   return sn_watcher_service;
 }
 #endif
-
 
 static GtkOrientation
 get_gtk_orientation_from_applet_orient (MatePanelAppletOrient orient)
@@ -299,7 +297,6 @@ static const GtkActionEntry menu_actions [] = {
 	  NULL, NULL,
 	  G_CALLBACK (about_cb) }
 };
-
 
 static void
 na_tray_applet_realize (GtkWidget *widget)

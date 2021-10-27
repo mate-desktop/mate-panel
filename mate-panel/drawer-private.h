@@ -8,14 +8,12 @@
  * Authors: info@cppsp.de
  */
 
-
 #ifndef DRAWER_PRIVATE_H
 #define DRAWER_PRIVATE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 /* Internal functions */
 /* event handlers */
@@ -138,7 +136,6 @@ static void  panel_drawer_prepare               (const char       *drawer_id,
                                                  gboolean          use_custom_icon,
                                                  const char       *tooltip,
                                                  char            **attached_toplevel_id);
-
 
 #ifdef __cplusplus
 }

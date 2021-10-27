@@ -43,7 +43,6 @@
 #define TIMEOUT_ACTIVATE_SECONDS 1
 #define SHOW_DESKTOP_ICON "user-desktop"
 
-
 typedef struct {
 	/* widgets */
 	GtkWidget* applet;

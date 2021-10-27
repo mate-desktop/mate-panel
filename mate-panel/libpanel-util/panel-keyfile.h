@@ -34,7 +34,6 @@
 extern "C" {
 #endif
 
-
 GKeyFile *panel_key_file_new_desktop  (void);
 gboolean  panel_key_file_to_file      (GKeyFile       *keyfile,
 				       const gchar    *file,

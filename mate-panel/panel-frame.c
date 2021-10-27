@@ -176,7 +176,6 @@ panel_frame_draw (GtkWidget      *widget,
 	GtkBorder         padding;
 	int               x, y, width, height;
 
-
 	if (edges == PANEL_EDGE_NONE)
 		return;
 

@@ -39,4 +39,3 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet);
 
 #endif
 
-

@@ -38,11 +38,9 @@ extern "C" {
 GtkWidget* wayland_tasklist_new (void);
 void wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation orient);
 
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* _WNCKLET_APPLET_WAYLAND_BACKEND_H_ */
-
 

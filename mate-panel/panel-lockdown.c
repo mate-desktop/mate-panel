@@ -50,7 +50,6 @@ typedef struct {
 
 static PanelLockdown panel_lockdown = { 0, };
 
-
 static inline void
 panel_lockdown_invoke_closures (PanelLockdown *lockdown)
 {

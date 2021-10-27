@@ -115,7 +115,6 @@ typedef struct {
 	MatePanelAppletClass klass;
 } FishAppletClass;
 
-
 static gboolean load_fish_image          (FishApplet *fish);
 static void     update_pixmap            (FishApplet *fish);
 static void     something_fishy_going_on (FishApplet *fish, const char *message);

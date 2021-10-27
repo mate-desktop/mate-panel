@@ -326,7 +326,6 @@ drag_leave_cb(GtkWidget	       *widget,
 	button_widget_set_dnd_highlight(BUTTON_WIDGET(widget), FALSE);
 }
 
-
 static gboolean
 drag_motion_cb(GtkWidget *widget,
 	       GdkDragContext *context,
@@ -370,7 +369,6 @@ enum {
 	TARGET_ICON_INTERNAL,
 	TARGET_URI_LIST
 };
-
 
 static void
 drag_data_get_cb (GtkWidget        *widget,
@@ -622,7 +620,6 @@ setup_button (Launcher *launcher)
 		str = g_strdup (name);
 	else
 		str = g_strdup (comment);
-
 
 	/* If we can unescape the string, then we probably have an escaped
 	 * string (a location e.g.). If we can't, then it most probably means

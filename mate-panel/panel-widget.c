@@ -601,7 +601,6 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 	g_object_unref (widget);
 }
 
-
 /*get the list item of the data on the position pos*/
 static GList *
 get_applet_list_pos (PanelWidget *panel,
@@ -1153,7 +1152,6 @@ panel_widget_push_move (PanelWidget *panel,
 	}
 }
 
-
 /*this is a special function and may fail if called improperly, it works
 only under special circumstance when we know there is nothing from
 old_size to panel->size*/
@@ -1604,7 +1602,6 @@ panel_widget_finalize (GObject *obj)
 		g_free (panel->applets_using_hint);
 	panel->applets_using_hint = NULL;
 
-
 	G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
 }
 
@@ -1761,7 +1758,6 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 
 	return TRUE;
 }
-
 
 static void
 panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
@@ -2311,7 +2307,6 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return FALSE;
 }
 
-
 static void
 bind_applet_events(GtkWidget *widget, gpointer data)
 {
@@ -2526,7 +2521,6 @@ panel_widget_add (PanelWidget *panel,
 	else
 		gtk_fixed_put(GTK_FIXED(panel),applet,
 			      0,pos);
-
 
 	gtk_widget_queue_resize(GTK_WIDGET(panel));
 
@@ -2810,7 +2804,6 @@ panel_widget_focus (PanelWidget *panel_widget)
 	gtk_widget_set_can_focus (GTK_WIDGET (panel_widget), TRUE);
 	gtk_widget_grab_focus (GTK_WIDGET (panel_widget));
 }
-
 
 PanelOrientation
 panel_widget_get_applet_orientation (PanelWidget *panel)

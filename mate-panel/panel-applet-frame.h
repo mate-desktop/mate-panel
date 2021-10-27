@@ -102,7 +102,6 @@ void  mate_panel_applet_frame_change_background  (MatePanelAppletFrame    *frame
 void  mate_panel_applet_frame_set_panel          (MatePanelAppletFrame    *frame,
 					     PanelWidget         *panel);
 
-
 /* For module implementations only */
 
 typedef struct _MatePanelAppletFrameActivating        MatePanelAppletFrameActivating;

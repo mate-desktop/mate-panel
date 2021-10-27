@@ -268,7 +268,6 @@ foreign_toplevel_handle_closed (void *data,
 		gtk_widget_destroy (task->button);
 }
 
-
 static const struct zwlr_foreign_toplevel_handle_v1_listener foreign_toplevel_handle_listener = {
 	.title = foreign_toplevel_handle_title,
 	.app_id = foreign_toplevel_handle_app_id,

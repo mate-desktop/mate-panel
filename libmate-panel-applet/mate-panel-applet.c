@@ -1561,7 +1561,6 @@ mate_panel_applet_handle_background (MatePanelApplet *applet)
 
 			       0, PANEL_PIXMAP_BACKGROUND, NULL, pattern);
 
-
 		cairo_pattern_destroy (pattern);
 
 		break;
@@ -2008,7 +2007,6 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 	widget_class->realize = mate_panel_applet_realize;
 	widget_class->key_press_event = mate_panel_applet_key_press_event;
 
-
 	gobject_class->finalize = mate_panel_applet_finalize;
 
 	g_object_class_install_property (gobject_class,
@@ -2429,7 +2427,6 @@ _mate_panel_applet_factory_main_internal (const gchar               *factory_id,
 	g_return_val_if_fail(factory_id != NULL, 1);
 	g_return_val_if_fail(callback != NULL, 1);
 	g_assert(g_type_is_a(applet_type, PANEL_TYPE_APPLET));
-
 
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
