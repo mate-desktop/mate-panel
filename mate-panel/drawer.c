@@ -8,7 +8,6 @@
  *          George Lebl
  */
 
-
 #include <config.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -35,10 +34,8 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
-
 /* Internal functions */
 /* event handlers */
-
 
 static void
 drawer_click (GtkWidget *widget,
@@ -449,7 +446,6 @@ create_drawer_applet (PanelToplevel    *toplevel,
     g_signal_connect (drawer->button, "key_press_event", G_CALLBACK (key_press_drawer), drawer);
     g_signal_connect (drawer->toplevel, "key_press_event", G_CALLBACK (key_press_drawer_widget), drawer);
 
-
     gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0);
 
     g_signal_connect (drawer->button, "drag_data_get", G_CALLBACK (drag_data_get_cb), drawer);
@@ -457,7 +453,6 @@ create_drawer_applet (PanelToplevel    *toplevel,
     g_signal_connect (drawer->button, "drag_drop", G_CALLBACK (drag_drop_cb), drawer);
     g_signal_connect (drawer->button, "drag_data_received", G_CALLBACK (drag_data_received_cb), drawer);
     g_signal_connect (drawer->button, "drag_leave", G_CALLBACK (drag_leave_cb), drawer);
-
 
     g_signal_connect (drawer->button, "destroy", G_CALLBACK (destroy_drawer), drawer);
     g_signal_connect (drawer->toplevel, "destroy", G_CALLBACK (toplevel_destroyed), drawer);

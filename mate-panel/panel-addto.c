@@ -1405,7 +1405,6 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 					      GINT_TO_POINTER (COLUMN_TEXT),
 					      NULL);
 
-
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 

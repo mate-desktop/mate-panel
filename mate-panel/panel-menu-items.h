@@ -21,7 +21,6 @@
  *	Vincent Untz <vincent@vuntz.net>
  */
 
-
 #ifndef __PANEL_MENU_ITEMS_H__
 #define __PANEL_MENU_ITEMS_H__
 
@@ -55,8 +54,6 @@ struct _PanelPlaceMenuItemClass {
 
 GType panel_place_menu_item_get_type (void) G_GNUC_CONST;
 
-
-
 #define PANEL_TYPE_DESKTOP_MENU_ITEM         (panel_desktop_menu_item_get_type ())
 #define PANEL_DESKTOP_MENU_ITEM(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_DESKTOP_MENU_ITEM, PanelDesktopMenuItem))
 #define PANEL_DESKTOP_MENU_ITEM_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_DESKTOP_MENU_ITEM, PanelDesktopMenuItemClass))
@@ -79,7 +76,6 @@ struct _PanelDesktopMenuItemClass {
 };
 
 GType panel_desktop_menu_item_get_type (void) G_GNUC_CONST;
-
 
 GtkWidget* panel_place_menu_item_new(gboolean use_image);
 GtkWidget* panel_desktop_menu_item_new(gboolean use_image, gboolean append_lock_logout);

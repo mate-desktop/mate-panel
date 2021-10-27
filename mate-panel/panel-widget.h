@@ -11,7 +11,6 @@
 #ifndef PANEL_WIDGET_H
 #define PANEL_WIDGET_H
 
-
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "button-widget.h"
@@ -191,7 +190,6 @@ void		panel_widget_draw_all		(PanelWidget *panel,
 /*draw just one icon (applet has to be an icon of course)*/
 void		panel_widget_draw_icon		(PanelWidget *panel,
 						 ButtonWidget *applet);
-
 
 /*tells us if an applet is "stuck" on the right side*/
 int		panel_widget_is_applet_stuck	(PanelWidget *panel,

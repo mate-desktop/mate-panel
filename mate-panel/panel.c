@@ -116,7 +116,6 @@ orient_change_foreach(GtkWidget *w, gpointer data)
 	orientation_change(info,panel);
 }
 
-
 static void
 panel_orient_change (GtkWidget *widget, gpointer data)
 {
@@ -145,7 +144,6 @@ size_change_foreach(GtkWidget *w, gpointer data)
 
 	size_change(info,panel);
 }
-
 
 static void
 panel_size_change (GtkWidget *widget, gpointer data)

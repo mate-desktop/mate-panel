@@ -1049,7 +1049,6 @@ create_cities_store (ClockData *cd)
         }
         g_slist_free (list);
 
-
         if (cd->prefs_window) {
                 GtkWidget *widget = _clock_get_widget (cd, "cities_list");
                 gtk_tree_view_set_model (GTK_TREE_VIEW (widget),
@@ -1341,7 +1340,6 @@ force_no_button_vertical_padding (GtkWidget *widget)
                                         GTK_STYLE_PROVIDER (provider),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
         g_object_unref (provider);
-
 
         gtk_widget_set_name (widget, "clock-applet-button");
 }
@@ -2162,7 +2160,6 @@ locations_changed (ClockData *cd)
         if (cd->clock_vbox)
                 create_cities_section (cd);
 }
-
 
 static void
 set_locations (ClockData *cd, GSList *locations)
@@ -3041,7 +3038,6 @@ speed_combo_changed (GtkComboBox *combo, ClockData *cd)
         g_settings_set_enum (cd->settings, KEY_SPEED_UNIT, value);
 }
 
-
 static void
 fill_prefs_window (ClockData *cd)
 {
@@ -3194,7 +3190,6 @@ ensure_prefs_window_is_created (ClockData *cd)
         cd->prefs_locations = GTK_TREE_VIEW (_clock_get_widget (cd, "cities_list"));
         location_name_label = _clock_get_widget (cd, "location-name-label");
         timezone_label = _clock_get_widget (cd, "timezone-label");
-
 
         if (!clock_locale_supports_am_pm ())
                 gtk_widget_hide (clock_options);

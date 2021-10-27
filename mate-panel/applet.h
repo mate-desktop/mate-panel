@@ -11,7 +11,6 @@
 extern "C" {
 #endif
 
-
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -77,7 +76,6 @@ void mate_panel_applet_queue_applet_to_load (const char      *id,
 void mate_panel_applet_load_queued_applets  (gboolean initial_load);
 gboolean mate_panel_applet_on_load_queue    (const char *id);
 
-
 void            mate_panel_applet_add_callback    (AppletInfo          *info,
 					      const gchar         *callback_name,
 					      const gchar         *stock_item,
@@ -88,7 +86,6 @@ void mate_panel_applet_clear_user_menu (AppletInfo *info);
 
 AppletUserMenu *mate_panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
-
 
 void        mate_panel_applet_save_position           (AppletInfo *applet_info,
 						  const char *id,

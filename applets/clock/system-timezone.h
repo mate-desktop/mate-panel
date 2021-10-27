@@ -35,7 +35,6 @@ extern "C" {
 #define SYSTEM_ZONEINFODIR "/usr/share/zoneinfo"
 #endif
 
-
 #define SYSTEM_TIMEZONE_TYPE         (system_timezone_get_type ())
 #define SYSTEM_TIMEZONE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), SYSTEM_TIMEZONE_TYPE, SystemTimezone))
 #define SYSTEM_TIMEZONE_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), SYSTEM_TIMEZONE_TYPE, SystemTimezoneClass))

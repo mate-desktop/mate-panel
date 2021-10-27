@@ -35,7 +35,6 @@
 #include "panel-multimonitor.h"
 #include "panel-xutils.h"
 
-
 typedef struct {
     PanelToplevel    *toplevel;
 
@@ -54,9 +53,7 @@ typedef struct {
     int               allocated_strut_end;
 } PanelStrut;
 
-
 static GSList *panel_struts_list = NULL;
-
 
 static inline PanelStrut *
 panel_struts_find_strut (PanelToplevel *toplevel)

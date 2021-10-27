@@ -36,7 +36,6 @@ void clock_map_refresh (ClockMap *this);
 void clock_map_update_time (ClockMap *this);
 void clock_map_blink_location (ClockMap *this, ClockLocation *loc);
 
-
 #ifdef __cplusplus
 }
 #endif

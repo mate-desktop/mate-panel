@@ -313,7 +313,6 @@ applet_menu_show (GtkWidget *w,
 	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 }
 
-
 static void
 applet_menu_deactivate (GtkWidget *w,
 			AppletInfo *info)
@@ -1381,7 +1380,6 @@ mate_panel_applet_lockable (AppletInfo *applet)
 {
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
-
 
 	return g_settings_is_writable (applet->settings, PANEL_OBJECT_LOCKED_KEY);
 }

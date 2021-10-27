@@ -28,7 +28,6 @@ GdkScreen *panel_screen_from_panel_widget  (PanelWidget *panel);
 
 gboolean panel_is_applet_right_stick (GtkWidget *applet);
 
-
 gboolean panel_check_dnd_target_data (GtkWidget      *widget,
 				      GdkDragContext *context,
 				      guint          *ret_info,

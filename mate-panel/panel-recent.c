@@ -50,7 +50,6 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 					       error);
 }
 
-
 static void
 recent_documents_activate_cb (GtkRecentChooser *chooser,
 			      gpointer          data)

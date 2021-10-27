@@ -7,7 +7,6 @@
 extern "C" {
 #endif
 
-
 typedef struct {
     char          *tooltip;
 
@@ -19,7 +18,6 @@ typedef struct {
 
     AppletInfo    *info;
 } Drawer;
-
 
 /* API */
 
@@ -44,7 +42,6 @@ void  panel_drawer_set_dnd_enabled              (Drawer           *drawer,
                                                  gboolean          dnd_enabled);
 
 void  drawer_query_deletion                     (Drawer           *drawer);
-
 
 #ifdef __cplusplus
 }

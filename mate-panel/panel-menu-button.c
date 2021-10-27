@@ -590,7 +590,6 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 					      FALSE,
 					      G_PARAM_READWRITE));
 
-
 	g_object_class_install_property (
 			gobject_class,
 			PROP_HAS_ARROW,
@@ -915,7 +914,6 @@ panel_menu_button_set_has_arrow (PanelMenuButton *button,
 
 	button_widget_set_has_arrow (BUTTON_WIDGET (button), has_arrow);
 }
-
 
 void
 panel_menu_button_load_from_gsettings (PanelWidget *panel,

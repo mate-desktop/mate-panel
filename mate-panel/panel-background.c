@@ -39,7 +39,6 @@
 
 #include "panel-util.h"
 
-
 static gboolean panel_background_composite (PanelBackground *background);
 static void load_background_file (PanelBackground *background);
 
@@ -243,7 +242,6 @@ panel_background_composite (PanelBackground *background)
 	}
 
 	background->composited = TRUE;
-
 
 	panel_background_prepare (background);
 
@@ -620,7 +618,6 @@ panel_background_set_default_style (PanelBackground *background,
 	if (background->type == PANEL_BACK_NONE)
 		panel_background_prepare (background);
 }
-
 
 void
 panel_background_realized (PanelBackground *background,

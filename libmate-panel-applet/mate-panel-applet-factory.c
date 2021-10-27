@@ -178,7 +178,6 @@ set_applet_constructor_properties (GObject  *applet,
 	}
 }
 
-
 static void
 mate_panel_applet_factory_get_applet (MatePanelAppletFactory *factory,
                                       GDBusConnection        *connection,

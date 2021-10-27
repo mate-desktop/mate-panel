@@ -519,7 +519,6 @@ static void display_workspace_names_changed(GSettings* settings, gchar* key, Pag
 	}
 }
 
-
 static void all_workspaces_changed(GSettings* settings, gchar* key, PagerData* pager)
 {
 	gboolean value = TRUE; /* Default value */
@@ -685,7 +684,6 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 
 	return TRUE;
 }
-
 
 static void display_help_dialog(GtkAction* action, PagerData* pager)
 {
@@ -997,7 +995,6 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 		g_object_unref (marco_general_settings);
 	if (marco_workspaces_settings != NULL)
 		g_object_unref (marco_workspaces_settings);
-
 
 	/* Wrap workspaces: */
 	if (pager->wrap_workspaces_toggle)

@@ -170,7 +170,6 @@ sun_position (time_t unix_time, gdouble *lat, gdouble *lon)
   *lon = ra;
 }
 
-
 #if 0
 int
 main (int argc, char *argv[])

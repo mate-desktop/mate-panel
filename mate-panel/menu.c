@@ -212,7 +212,6 @@ add_app_to_panel (GtkWidget      *item,
 			       matemenu_tree_entry_get_desktop_file_path (entry));
 }
 
-
 static void
 add_app_to_desktop (GtkWidget      *item,
 		    MateMenuTreeEntry *entry)
@@ -255,7 +254,6 @@ add_app_to_desktop (GtkWidget      *item,
 		g_error_free (error);
 	}
 }
-
 
 static void add_drawers_from_dir (MateMenuTreeDirectory *directory,
 				  int                 pos,
@@ -512,7 +510,6 @@ create_item_context_menu (GtkWidget   *item,
 	gtk_widget_set_sensitive (menuitem, id_lists_writable);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_widget_show (menuitem);
-
 
 	submenu = create_empty_menu ();
 
@@ -949,7 +946,6 @@ create_fake_menu (MateMenuTreeDirectory *directory)
 
 	g_signal_connect (menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-
 
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
 	GtkWidget *toplevel = gtk_widget_get_toplevel (menu);

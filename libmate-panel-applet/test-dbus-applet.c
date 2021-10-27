@@ -202,7 +202,6 @@ test_applet_factory (TestApplet  *applet,
 	return retval;
 }
 
-
 MATE_PANEL_APPLET_OUT_PROCESS_FACTORY ("TestAppletFactory",
 				  test_applet_get_type (),
 				  "A Test Applet for the MATE-3.0 Panel",

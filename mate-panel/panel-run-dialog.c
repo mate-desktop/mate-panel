@@ -1120,7 +1120,6 @@ program_list_selection_activated (GtkTreeView       *view,
 	gtk_dialog_response (GTK_DIALOG (dialog->run_dialog), GTK_RESPONSE_OK);
 }
 
-
 static void
 panel_run_dialog_setup_program_list (PanelRunDialog *dialog,
 				     GtkBuilder     *gui)

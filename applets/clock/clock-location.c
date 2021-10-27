@@ -437,7 +437,6 @@ clock_location_is_current (ClockLocation *loc)
         return FALSE;
 }
 
-
 glong
 clock_location_get_offset (ClockLocation *loc)
 {

@@ -983,7 +983,6 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 		}
 		g_object_unref (root);
 
-
 		add_mounts = g_slist_prepend (add_mounts, mount);
 	}
 	add_mounts = g_slist_reverse (add_mounts);
@@ -1015,7 +1014,6 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 	g_slist_free (add_mounts);
 	g_list_free (mounts);
 }
-
 
 static GtkWidget *
 panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
