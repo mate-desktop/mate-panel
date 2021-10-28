@@ -148,7 +148,8 @@ static const GtkActionEntry menu_entries[] = {
 static const GtkToggleActionEntry menu_toggle_entries[] = {
 	{ "Lock", NULL, N_("Loc_k To Panel"),
 	  NULL, NULL,
-	  G_CALLBACK (mate_panel_applet_menu_cmd_lock) }
+	  G_CALLBACK (mate_panel_applet_menu_cmd_lock),
+	  FALSE }
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (MatePanelApplet, mate_panel_applet, GTK_TYPE_EVENT_BOX)
@@ -2322,7 +2323,8 @@ static const gchar introspection_xml[] =
 static const GDBusInterfaceVTable interface_vtable = {
 	method_call_cb,
 	get_property_cb,
-	set_property_cb
+	set_property_cb,
+	{ 0 }
 };
 
 static GDBusNodeInfo *introspection_data = NULL;

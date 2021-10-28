@@ -272,7 +272,8 @@ static const gchar introspection_xml[] =
 static const GDBusInterfaceVTable interface_vtable = {
 	method_call_cb,
 	NULL,
-	NULL
+	NULL,
+	{ 0 }
 };
 
 static GDBusNodeInfo *introspection_data = NULL;

@@ -233,7 +233,7 @@ draw_zoom_animation (GdkScreen *gscreen,
 	int i, j;
 	GC frame_gc;
 	XGCValues gcv;
-	GdkColor color = { 65535, 65535, 65535 };
+	GdkColor color = { .pixel = 0, .red = 65535, .green = 65535, .blue = 65535 };
 	Display *dpy;
 	Window root_win;
 	int screen;

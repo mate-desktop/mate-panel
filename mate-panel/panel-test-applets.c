@@ -41,7 +41,7 @@ static const GOptionEntry options [] = {
 	{ "prefs-path", 0, 0, G_OPTION_ARG_STRING, &cli_prefs_path, N_("Specify a gsettings path in which the applet preferences should be stored"), NULL},
 	{ "size", 0, 0, G_OPTION_ARG_STRING, &cli_size, N_("Specify the initial size of the applet (xx-small, medium, large etc.)"), NULL},
 	{ "orient", 0, 0, G_OPTION_ARG_STRING, &cli_orient, N_("Specify the initial orientation of the applet (top, bottom, left or right)"), NULL},
-	{ NULL}
+	{ NULL, 0, 0, G_OPTION_ARG_NONE, NULL, NULL, NULL }
 };
 
 enum {
