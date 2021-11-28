@@ -150,32 +150,15 @@ clock_map_finalize (GObject *g_obj)
 		priv->highlight_timeout_id = 0;
 	}
 
-        if (priv->stock_map_pixbuf) {
-                g_object_unref (priv->stock_map_pixbuf);
-                priv->stock_map_pixbuf = NULL;
-        }
+        g_clear_object (&priv->stock_map_pixbuf);
 
 	for (i = 0; i < MARKER_NB; i++) {
-        	if (priv->location_marker_pixbuf[i]) {
-                	g_object_unref (priv->location_marker_pixbuf[i]);
-                	priv->location_marker_pixbuf[i] = NULL;
-        	}
+        	g_clear_object (&priv->location_marker_pixbuf[i]);
 	}
 
-        if (priv->location_map_pixbuf) {
-                g_object_unref (priv->location_map_pixbuf);
-                priv->location_map_pixbuf = NULL;
-        }
-
-        if (priv->shadow_pixbuf) {
-                g_object_unref (priv->shadow_pixbuf);
-                priv->shadow_pixbuf = NULL;
-        }
-
-        if (priv->shadow_map_pixbuf) {
-                g_object_unref (priv->shadow_map_pixbuf);
-                priv->shadow_map_pixbuf = NULL;
-        }
+        g_clear_object (&priv->location_map_pixbuf);
+        g_clear_object (&priv->shadow_pixbuf);
+        g_clear_object (&priv->shadow_map_pixbuf);
 
         G_OBJECT_CLASS (clock_map_parent_class)->finalize (g_obj);
 }

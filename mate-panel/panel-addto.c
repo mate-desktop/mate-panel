@@ -893,9 +893,7 @@ panel_addto_present_applications (PanelAddtoDialog *dialog)
 			      dialog->search_entry);
 	gtk_widget_set_sensitive (dialog->back_button, TRUE);
 
-	if (dialog->applet_search_text)
-		g_free (dialog->applet_search_text);
-
+	g_free (dialog->applet_search_text);
 	dialog->applet_search_text = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->search_entry)));
 	/* show everything */
 	gtk_entry_set_text (GTK_ENTRY (dialog->search_entry), "");
@@ -915,11 +913,8 @@ panel_addto_present_applets (PanelAddtoDialog *dialog)
 	if (dialog->applet_search_text) {
 		gtk_entry_set_text (GTK_ENTRY (dialog->search_entry),
 				    dialog->applet_search_text);
-		gtk_editable_set_position (GTK_EDITABLE (dialog->search_entry),
-					   -1);
-
-		g_free (dialog->applet_search_text);
-		dialog->applet_search_text = NULL;
+		gtk_editable_set_position (GTK_EDITABLE (dialog->search_entry), -1);
+		g_clear_pointer (&dialog->applet_search_text, g_free);
 	}
 }
 
@@ -929,33 +924,13 @@ panel_addto_dialog_free_item_info (PanelAddtoItemInfo *item_info)
 	if (item_info == NULL || item_info->static_data)
 		return;
 
-	if (item_info->name != NULL)
-		g_free (item_info->name);
-	item_info->name = NULL;
-
-	if (item_info->description != NULL)
-		g_free (item_info->description);
-	item_info->description = NULL;
-
-	if (item_info->icon != NULL)
-		g_free (item_info->icon);
-	item_info->icon = NULL;
-
-	if (item_info->iid != NULL)
-		g_free (item_info->iid);
-	item_info->iid = NULL;
-
-	if (item_info->launcher_path != NULL)
-		g_free (item_info->launcher_path);
-	item_info->launcher_path = NULL;
-
-	if (item_info->menu_filename != NULL)
-		g_free (item_info->menu_filename);
-	item_info->menu_filename = NULL;
-
-	if (item_info->menu_path != NULL)
-		g_free (item_info->menu_path);
-	item_info->menu_path = NULL;
+	g_clear_pointer (&item_info->name, g_free);
+	g_clear_pointer (&item_info->description, g_free);
+	g_clear_pointer (&item_info->icon, g_free);
+	g_clear_pointer (&item_info->iid, g_free);
+	g_clear_pointer (&item_info->launcher_path, g_free);
+	g_clear_pointer (&item_info->menu_filename, g_free);
+	g_clear_pointer (&item_info->menu_path, g_free);
 }
 
 static void
@@ -992,13 +967,8 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 					     G_CALLBACK (panel_addto_name_notify),
 					     dialog);
 
-	if (dialog->search_text)
-		g_free (dialog->search_text);
-	dialog->search_text = NULL;
-
-	if (dialog->applet_search_text)
-		g_free (dialog->applet_search_text);
-	dialog->applet_search_text = NULL;
+	g_free (dialog->search_text);
+	g_free (dialog->applet_search_text);
 
 	if (dialog->addto_dialog)
 		gtk_widget_destroy (dialog->addto_dialog);
@@ -1018,22 +988,10 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 	panel_addto_dialog_free_application_list (dialog->application_list);
 	panel_addto_dialog_free_application_list (dialog->settings_list);
 
-	if (dialog->filter_applet_model)
-		g_object_unref (dialog->filter_applet_model);
-	dialog->filter_applet_model = NULL;
-
-	if (dialog->applet_model)
-		g_object_unref (dialog->applet_model);
-	dialog->applet_model = NULL;
-
-	if (dialog->filter_application_model)
-		g_object_unref (dialog->filter_application_model);
-	dialog->filter_application_model = NULL;
-
-	if (dialog->application_model)
-		g_object_unref (dialog->application_model);
-	dialog->application_model = NULL;
-
+	g_clear_object (&dialog->filter_applet_model);
+	g_clear_object (&dialog->applet_model);
+	g_clear_object (&dialog->filter_application_model);
+	g_clear_object (&dialog->application_model);
 	g_clear_object (&dialog->menu_tree);
 
 	g_free (dialog);
@@ -1127,8 +1085,7 @@ panel_addto_search_entry_changed (GtkWidget        *entry,
 		return;
 	}
 
-	if (dialog->search_text)
-		g_free (dialog->search_text);
+	g_free (dialog->search_text);
 	dialog->search_text = new_text;
 
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->tree_view));

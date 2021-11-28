@@ -3061,26 +3061,18 @@ panel_toplevel_dispose (GObject *widget)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 
-	if (toplevel->priv->settings_path) {
-		g_free (toplevel->priv->settings_path);
-		toplevel->priv->settings_path = NULL;
-	}
+	g_clear_pointer (&toplevel->priv->settings_path, g_free);
 
 	if (toplevel->settings) {
 		g_signal_handlers_disconnect_by_data (toplevel->settings, toplevel);
-		g_object_unref (toplevel->settings);
-		toplevel->settings = NULL;
+		g_clear_object (&toplevel->settings);
 	}
 
-	if (toplevel->queued_settings) {
-		g_object_unref (toplevel->queued_settings);
-		toplevel->queued_settings = NULL;
-	}
+	g_clear_object (&toplevel->queued_settings);
 
 	if (toplevel->background_settings) {
 		g_signal_handlers_disconnect_by_data (toplevel->background_settings, toplevel);
-		g_object_unref (toplevel->background_settings);
-		toplevel->background_settings = NULL;
+		g_clear_object (&toplevel->background_settings);
 	}
 
 	if (toplevel->priv->gtk_settings) {
@@ -3100,15 +3092,8 @@ panel_toplevel_dispose (GObject *widget)
 		toplevel->priv->attach_widget   = NULL;
 	}
 
-	if (toplevel->priv->description) {
-		g_free (toplevel->priv->description);
-		toplevel->priv->description = NULL;
-	}
-
-	if (toplevel->priv->name) {
-		g_free (toplevel->priv->name);
-		toplevel->priv->name = NULL;
-	}
+	g_clear_pointer (&toplevel->priv->description, g_free);
+	g_clear_pointer (&toplevel->priv->name, g_free);
 
 	panel_toplevel_disconnect_timeouts (toplevel);
 
@@ -4848,12 +4833,11 @@ panel_toplevel_set_name (PanelToplevel *toplevel,
 	    !strcmp (toplevel->priv->name, name))
 		return;
 
-	if (toplevel->priv->name)
-		g_free (toplevel->priv->name);
-	toplevel->priv->name = NULL;
-
+	g_free (toplevel->priv->name);
 	if (name && name [0])
 		toplevel->priv->name = g_strdup (name);
+	else
+		toplevel->priv->name = NULL;
 
 	panel_toplevel_update_name (toplevel);
 

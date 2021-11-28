@@ -209,8 +209,7 @@ button_widget_finalize (GObject *object)
 
 	button_widget_unset_surfaces (button);
 
-	g_free (button->priv->filename);
-	button->priv->filename = NULL;
+	g_clear_pointer (&button->priv->filename, g_free);
 
 	G_OBJECT_CLASS (button_widget_parent_class)->finalize (object);
 }

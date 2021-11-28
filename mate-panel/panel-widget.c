@@ -1271,12 +1271,8 @@ panel_widget_get_preferred_size(GtkWidget	     *widget,
 	}
 
 	panel->nb_applets_size_hints = 0;
-	if (panel->applets_hints != NULL)
-		g_free (panel->applets_hints);
-	panel->applets_hints = NULL;
-	if (panel->applets_using_hint != NULL)
-		g_free (panel->applets_using_hint);
-	panel->applets_using_hint = NULL;
+	g_clear_pointer (&panel->applets_hints, g_free);
+	g_clear_pointer (&panel->applets_using_hint, g_free);
 
 	if (panel->packed) {
 		/* put the list in the correct order: this is important
@@ -1595,12 +1591,8 @@ panel_widget_finalize (GObject *obj)
 
 	panel = PANEL_WIDGET (obj);
 
-	if (panel->applets_hints != NULL)
-		g_free (panel->applets_hints);
-	panel->applets_hints = NULL;
-	if (panel->applets_using_hint != NULL)
-		g_free (panel->applets_using_hint);
-	panel->applets_using_hint = NULL;
+	g_clear_pointer (&panel->applets_hints, g_free);
+	g_clear_pointer (&panel->applets_using_hint, g_free);
 
 	G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
 }

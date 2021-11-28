@@ -845,36 +845,21 @@ mate_panel_applet_finalize (GObject *object)
 			g_dbus_connection_unregister_object (priv->connection,
 							     priv->object_id);
 		priv->object_id = 0;
-		g_object_unref (priv->connection);
-		priv->connection = NULL;
+		g_clear_object (&priv->connection);
 	}
 
-	if (priv->object_path) {
-		g_free (priv->object_path);
-		priv->object_path = NULL;
-	}
+	g_clear_pointer (&priv->object_path, g_free);
 
 	mate_panel_applet_set_preferences_path (applet, NULL);
 
-	if (priv->applet_action_group) {
-		g_object_unref (priv->applet_action_group);
-		priv->applet_action_group = NULL;
-	}
+	g_clear_object (&priv->applet_action_group);
+	g_clear_object (&priv->panel_action_group);
+	g_clear_object (&priv->ui_manager);
 
-	if (priv->panel_action_group) {
-		g_object_unref (priv->panel_action_group);
-		priv->panel_action_group = NULL;
-	}
-
-	if (priv->ui_manager) {
-		g_object_unref (priv->ui_manager);
-		priv->ui_manager = NULL;
-	}
-
-	g_free (priv->size_hints);
-	g_free (priv->prefs_path);
-	g_free (priv->background);
-	g_free (priv->id);
+	g_clear_pointer (&priv->size_hints, g_free);
+	g_clear_pointer (&priv->prefs_path, g_free);
+	g_clear_pointer (&priv->background, g_free);
+	g_clear_pointer (&priv->id, g_free);
 
 	/* closure is owned by the factory */
 	priv->closure = NULL;

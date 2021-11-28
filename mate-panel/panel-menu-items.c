@@ -1265,23 +1265,14 @@ panel_place_menu_item_finalize (GObject *object)
 {
 	PanelPlaceMenuItem *menuitem = (PanelPlaceMenuItem *) object;
 
-	if (menuitem->priv->caja_desktop_settings) {
-		g_object_unref (menuitem->priv->caja_desktop_settings);
-		menuitem->priv->caja_desktop_settings = NULL;
-	}
-	if (menuitem->priv->caja_prefs_settings) {
-		g_object_unref (menuitem->priv->caja_prefs_settings);
-		menuitem->priv->caja_prefs_settings = NULL;
-	}
-
-	g_object_unref (menuitem->priv->menubar_settings);
-	menuitem->priv->menubar_settings = NULL;
+	g_clear_object (&menuitem->priv->caja_desktop_settings);
+	g_clear_object (&menuitem->priv->caja_prefs_settings);
+	g_clear_object (&menuitem->priv->menubar_settings);
 
 	if (menuitem->priv->bookmarks_monitor != NULL) {
 		g_file_monitor_cancel (menuitem->priv->bookmarks_monitor);
-		g_object_unref (menuitem->priv->bookmarks_monitor);
+		g_clear_object (&menuitem->priv->bookmarks_monitor);
 	}
-	menuitem->priv->bookmarks_monitor = NULL;
 
 	if (menuitem->priv->drive_changed_id)
 		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
@@ -1328,9 +1319,7 @@ panel_place_menu_item_finalize (GObject *object)
 					     menuitem->priv->mount_removed_id);
 	menuitem->priv->mount_removed_id = 0;
 
-	if (menuitem->priv->volume_monitor != NULL)
-		g_object_unref (menuitem->priv->volume_monitor);
-	menuitem->priv->volume_monitor = NULL;
+	g_clear_object (&menuitem->priv->volume_monitor);
 
 	G_OBJECT_CLASS (panel_place_menu_item_parent_class)->finalize (object);
 }

@@ -762,8 +762,6 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 	mate_panel_applet_clear_user_menu (info);
 
 	g_free (info->id);
-	info->id = NULL;
-
 	g_free (info);
 }
 
@@ -791,11 +789,7 @@ static void
 free_applet_to_load (MatePanelAppletToLoad *applet)
 {
 	g_free (applet->id);
-	applet->id = NULL;
-
 	g_free (applet->toplevel_id);
-	applet->toplevel_id = NULL;
-
 	g_free (applet);
 }
 

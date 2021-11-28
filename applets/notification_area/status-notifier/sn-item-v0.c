@@ -640,7 +640,7 @@ update_title (GObject      *source_object,
 
   v0 = SN_ITEM_V0 (user_data);
 
-  g_clear_pointer (&v0->title, g_free);
+  g_free (v0->title);
   v0->title = g_variant_dup_string (variant, NULL);
   g_clear_pointer (&variant, g_variant_unref);
 
@@ -668,7 +668,7 @@ update_icon_name (GObject      *source_object,
 
   v0 = SN_ITEM_V0 (user_data);
 
-  g_clear_pointer (&v0->icon_name, g_free);
+  g_free (v0->icon_name);
   v0->icon_name = g_variant_dup_string (variant, NULL);
   g_clear_pointer (&variant, g_variant_unref);
 
@@ -719,7 +719,7 @@ update_overlay_icon_name (GObject      *source_object,
 
   v0 = SN_ITEM_V0 (user_data);
 
-  g_clear_pointer (&v0->overlay_icon_name, g_free);
+  g_free (v0->overlay_icon_name);
   v0->overlay_icon_name = g_variant_dup_string (variant, NULL);
   g_clear_pointer (&variant, g_variant_unref);
 
@@ -770,7 +770,7 @@ update_attention_icon_name (GObject      *source_object,
 
   v0 = SN_ITEM_V0 (user_data);
 
-  g_clear_pointer (&v0->attention_icon_name, g_free);
+  g_free (v0->attention_icon_name);
   v0->attention_icon_name = g_variant_dup_string (variant, NULL);
   g_clear_pointer (&variant, g_variant_unref);
 
@@ -792,7 +792,7 @@ update_attention_icon_pixmap (GObject      *source_object,
 
   v0 = SN_ITEM_V0 (user_data);
 
-  g_clear_pointer (&v0->attention_icon_pixmap, icon_pixmap_free);
+  icon_pixmap_free (v0->attention_icon_pixmap);
   v0->attention_icon_pixmap = icon_pixmap_new (variant);
   g_clear_pointer (&variant, g_variant_unref);
 
@@ -821,7 +821,7 @@ update_tooltip (GObject      *source_object,
 
   v0 = SN_ITEM_V0 (user_data);
 
-  g_clear_pointer (&v0->tooltip, sn_tooltip_free);
+  sn_tooltip_free (v0->tooltip);
   v0->tooltip = sn_tooltip_new (variant);
   g_clear_pointer (&variant, g_variant_unref);
 

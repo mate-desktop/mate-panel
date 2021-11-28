@@ -1778,28 +1778,14 @@ static void fish_applet_dispose (GObject *object)
 					  fish);
 
 	if (fish->timeout)
-	{
 		g_source_remove (fish->timeout);
-	}
-
 	fish->timeout = 0;
 
-	if (fish->settings)
-		g_object_unref (fish->settings);
-	fish->settings = NULL;
-
-	if (fish->lockdown_settings)
-		g_object_unref (fish->lockdown_settings);
-	fish->lockdown_settings = NULL;
-
-	g_free (fish->name);
-	fish->name = NULL;
-
-	g_free (fish->image);
-	fish->image = NULL;
-
-	g_free (fish->command);
-	fish->command = NULL;
+	g_clear_object (&fish->settings);
+	g_clear_object (&fish->lockdown_settings);
+	g_clear_pointer (&fish->name, g_free);
+	g_clear_pointer (&fish->image, g_free);
+	g_clear_pointer (&fish->command, g_free);
 
 	if (fish->surface)
 		cairo_surface_destroy (fish->surface);
@@ -1807,9 +1793,7 @@ static void fish_applet_dispose (GObject *object)
 	fish->surface_width = 0;
 	fish->surface_height = 0;
 
-	if (fish->pixbuf)
-		g_object_unref (fish->pixbuf);
-	fish->pixbuf = NULL;
+	g_clear_object (&fish->pixbuf);
 
 	if (fish->preferences_dialog)
 		gtk_widget_destroy (fish->preferences_dialog);

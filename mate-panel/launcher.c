@@ -251,14 +251,12 @@ free_launcher (gpointer data)
 
 	if (launcher->key_file)
 		g_key_file_free (launcher->key_file);
-	launcher->key_file = NULL;
 
-	if (launcher->location != NULL)
-		g_free (launcher->location);
-	launcher->location = NULL;
+	g_free (launcher->location);
 
 	if (launcher->monitor != NULL)
 		g_object_unref (launcher->monitor);
+
 	g_free (launcher);
 }
 
@@ -640,10 +638,8 @@ setup_button (Launcher *launcher)
 
 	/* Setup icon */
 	icon = panel_key_file_get_locale_string (launcher->key_file, "Icon");
-	if (icon && icon[0] == '\0') {
-		g_free (icon);
-		icon = NULL;
-	}
+	if (icon && icon[0] == '\0')
+		g_clear_pointer (&icon, g_free);
 
 	if (!icon) {
 		gchar *exec;

@@ -438,8 +438,7 @@ mate_panel_applet_frame_finalize (GObject *object)
 	panel_lockdown_notify_remove (G_CALLBACK (mate_panel_applet_frame_sync_menu_state),
 				      frame);
 
-	g_free (frame->priv->iid);
-	frame->priv->iid = NULL;
+	g_clear_pointer (&frame->priv->iid, g_free);
 
 	G_OBJECT_CLASS (mate_panel_applet_frame_parent_class)->finalize (object);
 }
@@ -552,8 +551,7 @@ void
 _mate_panel_applet_frame_set_iid (MatePanelAppletFrame *frame,
 			     const gchar      *iid)
 {
-	if (frame->priv->iid)
-		g_free (frame->priv->iid);
+	g_free (frame->priv->iid);
 	frame->priv->iid = g_strdup (iid);
 }
 

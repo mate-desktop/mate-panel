@@ -477,8 +477,7 @@ panel_action_button_finalize (GObject *object)
 		g_signal_handlers_disconnect_by_func (button->priv->settings,
 		                                      G_CALLBACK (panel_action_button_type_changed),
 		                                      button);
-		g_object_unref (button->priv->settings);
-		button->priv->settings = NULL;
+		g_clear_object (&button->priv->settings);
 	}
 
 	button->priv->info = NULL;

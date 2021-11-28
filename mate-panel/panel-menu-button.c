@@ -215,17 +215,10 @@ panel_menu_button_finalize (GObject *object)
 		button->priv->menu = NULL;
 	}
 
-	g_free (button->priv->applet_id);
-	button->priv->applet_id = NULL;
-
-	g_free (button->priv->menu_path);
-	button->priv->menu_path = NULL;
-
-	g_free (button->priv->custom_icon);
-	button->priv->custom_icon = NULL;
-
-	g_free (button->priv->tooltip);
-	button->priv->tooltip = NULL;
+	g_clear_pointer (&button->priv->applet_id, g_free);
+	g_clear_pointer (&button->priv->menu_path, g_free);
+	g_clear_pointer (&button->priv->custom_icon, g_free);
+	g_clear_pointer (&button->priv->tooltip, g_free);
 
 	G_OBJECT_CLASS (panel_menu_button_parent_class)->finalize (object);
 }
@@ -824,8 +817,6 @@ panel_menu_button_set_menu_path (PanelMenuButton *button,
 		return;
 
 	g_free (button->priv->menu_path);
-	button->priv->menu_path = NULL;
-
 	button->priv->menu_path = g_strdup (menu_path);
 
 	if (button->priv->menu)
@@ -842,10 +833,10 @@ panel_menu_button_set_custom_icon (PanelMenuButton *button,
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
 	g_free (button->priv->custom_icon);
-	button->priv->custom_icon = NULL;
-
 	if (custom_icon && custom_icon [0])
 		button->priv->custom_icon = g_strdup (custom_icon);
+	else
+		button->priv->custom_icon = NULL;
 
 	panel_menu_button_set_icon (button);
 }
@@ -857,11 +848,11 @@ panel_menu_button_set_tooltip (PanelMenuButton *button,
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
 	g_free (button->priv->tooltip);
-	button->priv->tooltip = NULL;
-
 	if (tooltip && tooltip [0]) {
 		button->priv->tooltip = g_strdup (tooltip);
 		panel_util_set_tooltip_text (GTK_WIDGET (button), tooltip);
+	} else {
+		button->priv->tooltip = NULL;
 	}
 }
 
@@ -878,9 +869,10 @@ panel_menu_button_set_use_menu_path (PanelMenuButton *button,
 
 	button->priv->use_menu_path = use_menu_path;
 
-	if (button->priv->menu)
+	if (button->priv->menu) {
 		gtk_menu_detach (GTK_MENU (button->priv->menu));
-	button->priv->menu = NULL;
+		button->priv->menu = NULL;
+	}
 
 	panel_menu_button_set_icon (button);
 }
