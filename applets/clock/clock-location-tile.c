@@ -143,19 +143,11 @@ clock_location_tile_finalize (GObject *g_obj)
                 g_signal_handler_disconnect (priv->location, priv->location_weather_updated_id);
                 priv->location_weather_updated_id = 0;
 
-                g_object_unref (priv->location);
-                priv->location = NULL;
+                g_clear_object (&priv->location);
         }
 
-        if (priv->button_group) {
-                g_object_unref (priv->button_group);
-                priv->button_group = NULL;
-        }
-
-        if (priv->current_group) {
-                g_object_unref (priv->current_group);
-                priv->current_group = NULL;
-        }
+        g_clear_object (&priv->button_group);
+        g_clear_object (&priv->current_group);
 
         G_OBJECT_CLASS (clock_location_tile_parent_class)->finalize (g_obj);
 }

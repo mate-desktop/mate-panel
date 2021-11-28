@@ -39,8 +39,7 @@ panel_session_manager_finalize (GObject *object)
 {
 	PanelSessionManager *manager = PANEL_SESSION_MANAGER (object);
 
-	if (manager->proxy != NULL)
-		g_object_unref (manager->proxy);
+	g_clear_object (&manager->proxy);
 
 	G_OBJECT_CLASS (panel_session_manager_parent_class)->finalize (object);
 }

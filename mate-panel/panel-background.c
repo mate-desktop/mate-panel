@@ -490,16 +490,13 @@ static void
 panel_background_set_image_no_update (PanelBackground *background,
 				      const char      *image)
 {
-	if (background->loaded_image)
-		g_object_unref (background->loaded_image);
-	background->loaded_image = NULL;
-
-	if (background->image)
-		g_free (background->image);
-	background->image = NULL;
+	g_clear_object (&background->loaded_image);
+	g_free (background->image);
 
 	if (image && image [0])
 		background->image = g_strdup (image);
+	else
+		background->image = NULL;
 
 	panel_background_update_has_alpha (background);
 }
@@ -756,17 +753,10 @@ panel_background_free (PanelBackground *background)
 {
 	free_transformed_resources (background);
 
-	if (background->image)
-		g_free (background->image);
-	background->image = NULL;
+	g_clear_pointer (&background->image, g_free);
 
-	if (background->loaded_image)
-		g_object_unref (background->loaded_image);
-	background->loaded_image = NULL;
-
-	if (background->window)
-		g_object_unref (background->window);
-	background->window = NULL;
+	g_clear_object (&background->loaded_image);
+	g_clear_object (&background->window);
 
 	if (background->default_pattern)
 		cairo_pattern_destroy (background->default_pattern);

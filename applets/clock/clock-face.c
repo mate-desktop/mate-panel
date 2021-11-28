@@ -369,20 +369,9 @@ clock_face_finalize (GObject *obj)
 {
     ClockFacePrivate *priv = clock_face_get_instance_private (CLOCK_FACE(obj));
 
-    if (priv->location) {
-            g_object_unref (priv->location);
-            priv->location = NULL;
-    }
-
-    if (priv->face_pixbuf) {
-            g_object_unref (priv->face_pixbuf);
-            priv->face_pixbuf = NULL;
-    }
-
-    if (priv->size_widget) {
-            g_object_unref (priv->size_widget);
-            priv->size_widget = NULL;
-    }
+    g_clear_object (&priv->location);
+    g_clear_object (&priv->face_pixbuf);
+    g_clear_object (&priv->size_widget);
 
     G_OBJECT_CLASS (clock_face_parent_class)->finalize (obj);
 

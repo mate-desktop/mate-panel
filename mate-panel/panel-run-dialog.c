@@ -199,8 +199,7 @@ _panel_run_save_recent_programs_list (PanelRunDialog   *dialog,
 		}
 
 		if (history_max_size < items_added + 1) {
-			g_free (items[history_max_size]);
-			items[history_max_size] = NULL;
+			g_clear_pointer (&items[history_max_size], g_free);
 		} else {
 			items[items_added + 1] = NULL;
 		}
@@ -221,11 +220,9 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 
 	g_object_unref (dialog->program_list_box);
 
-	g_clear_object (&(dialog->icon));
-	g_free (dialog->desktop_path);
-	dialog->desktop_path = NULL;
-	g_free (dialog->item_name);
-	dialog->item_name = NULL;
+	g_clear_object (&dialog->icon);
+	g_clear_pointer (&dialog->desktop_path, g_free);
+	g_clear_pointer (&dialog->item_name, g_free);
 
 	if (dialog->add_items_idle_id)
 		g_source_remove (dialog->add_items_idle_id);
@@ -235,9 +232,7 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 		g_source_remove (dialog->find_command_idle_id);
 	dialog->find_command_idle_id = 0;
 
-	if (dialog->settings != NULL)
-		g_object_unref (dialog->settings);
-	dialog->settings = NULL;
+	g_clear_object (&dialog->settings);
 
 	if (dialog->dir_hash)
 		g_hash_table_destroy (dialog->dir_hash);
@@ -1059,12 +1054,9 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	}
 
 	dialog->use_program_list = TRUE;
-	if (dialog->desktop_path)
-		g_free (dialog->desktop_path);
+	g_free (dialog->desktop_path);
 	dialog->desktop_path = g_strdup (path);
-	if (dialog->item_name)
-		g_free (dialog->item_name);
-	dialog->item_name = NULL;
+	g_clear_pointer (&dialog->item_name, g_free);
 
 	/* Order is important here. We have to set the text first so that the
 	 * drag source is enabled, otherwise the drag icon can't be set by
@@ -1846,10 +1838,8 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	save_uri = panel_make_unique_desktop_uri (g_get_tmp_dir (), name);
 	disk = g_filename_from_uri (save_uri, NULL, NULL);
 
-	if (!disk || !panel_key_file_to_file (key_file, disk, NULL)) {
-		g_free (save_uri);
-		save_uri = NULL;
-	}
+	if (!disk || !panel_key_file_to_file (key_file, disk, NULL))
+		g_clear_pointer (&save_uri, g_free);
 
 	g_key_file_free (key_file);
 	g_free (disk);

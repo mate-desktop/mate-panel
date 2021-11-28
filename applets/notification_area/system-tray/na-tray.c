@@ -161,13 +161,9 @@ static void
 icon_tip_buffer_free (gpointer data,
                       gpointer userdata)
 {
-  IconTipBuffer *buffer;
-
-  buffer = data;
+  IconTipBuffer *buffer = data;
 
   g_free (buffer->text);
-  buffer->text = NULL;
-
   g_free (buffer);
 }
 

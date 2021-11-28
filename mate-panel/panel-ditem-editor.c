@@ -372,8 +372,7 @@ panel_ditem_editor_dispose (GObject *object)
 		g_key_file_free (dialog->priv->revert_key_file);
 	dialog->priv->revert_key_file = NULL;
 
-	g_free (dialog->priv->uri);
-	dialog->priv->uri = NULL;
+	g_clear_pointer (&dialog->priv->uri, g_free);
 
 	G_OBJECT_CLASS (panel_ditem_editor_parent_class)->dispose (object);
 }

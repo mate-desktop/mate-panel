@@ -234,13 +234,11 @@ system_timezone_finalize (GObject *obj)
         systz = SYSTEM_TIMEZONE (obj);
         priv = system_timezone_get_instance_private (systz);
 
-        g_free (priv->tz);
-        g_free (priv->env_tz);
+        g_clear_pointer (&priv->tz, g_free);
+        g_clear_pointer (&priv->env_tz, g_free);
 
         for (i = 0; i < CHECK_NB; i++) {
-                if (priv->monitors[i])
-                        g_object_unref (priv->monitors[i]);
-                priv->monitors[i] = NULL;
+                g_clear_object (&priv->monitors[i]);
         }
 
         G_OBJECT_CLASS (system_timezone_parent_class)->finalize (obj);

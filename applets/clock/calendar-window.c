@@ -617,17 +617,15 @@ calendar_window_set_prefs_path (CalendarWindow *calwin,
 	    !strcmp (calwin->priv->prefs_path, prefs_path))
 		return;
 
-	if (calwin->priv->prefs_path)
-		g_free (calwin->priv->prefs_path);
-	calwin->priv->prefs_path = NULL;
-
+	g_free (calwin->priv->prefs_path);
 	if (prefs_path && prefs_path [0])
 		calwin->priv->prefs_path = g_strdup (prefs_path);
+	else
+		calwin->priv->prefs_path = NULL;
 
 	g_object_notify (G_OBJECT (calwin), "prefs-path");
 
 	if (calwin->priv->settings)
 		g_object_unref (calwin->priv->settings);
-
 	calwin->priv->settings = g_settings_new_with_path (CLOCK_SCHEMA, calwin->priv->prefs_path);
 }

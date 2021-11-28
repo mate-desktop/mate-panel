@@ -78,10 +78,7 @@ mate_panel_applet_factory_finalize (GObject *object)
 		factories = NULL;
 	}
 
-	if (factory->factory_id) {
-		g_free (factory->factory_id);
-		factory->factory_id = NULL;
-	}
+	g_clear_pointer (&factory->factory_id, g_free);
 
 	if (factory->applets) {
 		g_hash_table_unref (factory->applets);

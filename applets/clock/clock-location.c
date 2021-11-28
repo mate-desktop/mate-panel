@@ -210,17 +210,14 @@ clock_location_finalize (GObject *g_obj)
                                               G_CALLBACK (network_changed),
                                               CLOCK_LOCATION (g_obj));
 
-        g_free (priv->name);
-        g_free (priv->city);
+        g_clear_pointer (&priv->name, g_free);
+        g_clear_pointer (&priv->city, g_free);
 
-        if (priv->systz) {
-                g_object_unref (priv->systz);
-                priv->systz = NULL;
-        }
+        g_clear_object (&priv->systz);
 
-        g_free (priv->timezone);
-        g_free (priv->tzname);
-        g_free (priv->weather_code);
+        g_clear_pointer (&priv->timezone, g_free);
+        g_clear_pointer (&priv->tzname, g_free);
+        g_clear_pointer (&priv->weather_code, g_free);
 
         if (priv->weather_info) {
                 weather_info_free (priv->weather_info);

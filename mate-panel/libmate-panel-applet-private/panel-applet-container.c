@@ -161,25 +161,15 @@ mate_panel_applet_container_dispose (GObject *object)
 		container->priv->pending_ops = NULL;
 	}
 
-	if (container->priv->bus_name) {
-		g_free (container->priv->bus_name);
-		container->priv->bus_name = NULL;
-	}
-
-	if (container->priv->iid) {
-		g_free (container->priv->iid);
-		container->priv->iid = NULL;
-	}
+	g_clear_pointer (&container->priv->bus_name, g_free);
+	g_clear_pointer (&container->priv->iid, g_free);
 
 	if (container->priv->name_watcher_id > 0) {
 		g_bus_unwatch_name (container->priv->name_watcher_id);
 		container->priv->name_watcher_id = 0;
 	}
 
-	if (container->priv->applet_proxy) {
-		g_object_unref (container->priv->applet_proxy);
-		container->priv->applet_proxy = NULL;
-	}
+	g_clear_object (&container->priv->applet_proxy);
 
 	G_OBJECT_CLASS (mate_panel_applet_container_parent_class)->dispose (object);
 }
@@ -765,7 +755,7 @@ mate_panel_applet_container_child_get_finish (MatePanelAppletContainer *containe
 {
 	g_return_val_if_fail (g_task_is_valid (result, container), NULL);
 	g_warn_if_fail (g_task_get_source_tag (G_TASK (result)) == mate_panel_applet_container_child_get);
-	
+
 	return g_variant_ref (g_task_propagate_pointer (G_TASK (result), error));
 }
 

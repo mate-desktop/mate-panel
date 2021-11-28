@@ -293,8 +293,7 @@ panel_key_file_remove_locale_key (GKeyFile    *keyfile,
 						locale_key, NULL))
 				break;
 
-			g_free (locale_key);
-			locale_key = NULL;
+			g_clear_pointer (&locale_key, g_free);
 		}
 	}
 

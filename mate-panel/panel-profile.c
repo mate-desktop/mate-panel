@@ -158,8 +158,7 @@ panel_profile_find_new_id (PanelGSettingsKeyType type)
 
 		for (j = 0; existing_ids[j] != NULL; j++) {
 			if (g_strcmp0 (existing_ids[j], retval) == 0) {
-				g_free (retval);
-				retval = NULL;
+				g_clear_pointer (&retval, g_free);
 				break;
 			}
 		}
@@ -1387,8 +1386,7 @@ panel_profile_load_added_ids (GSList                 *list,
 		if (id && id[0])
 			load_handler (id);
 
-		g_free (l->data);
-		l->data = NULL;
+		g_clear_pointer (&l->data, g_free);
 	}
 
 	g_slist_free (added_ids);
@@ -1419,8 +1417,7 @@ panel_profile_delete_removed_ids (PanelGSettingsKeyType    type,
 		panel_profile_delete_dir (type, id);
 		destroy_handler (id);
 
-		g_free (l->data);
-		l->data = NULL;
+		g_clear_pointer (&l->data, g_free);
 	}
 	g_slist_free (removed_ids);
 }
