@@ -34,8 +34,18 @@ static const int window_button_width = 140;
 
 typedef struct
 {
+	GtkWidget *menu;
+	GtkWidget *maximize;
+	GtkWidget *minimize;
+	GtkWidget *on_top;
+	GtkWidget *close;
+} ContextMenu;
+
+typedef struct
+{
 	GtkWidget *list;
 	GtkWidget *outer_box;
+	ContextMenu *context_menu;
 	struct zwlr_foreign_toplevel_manager_v1 *manager;
 } TasklistManager;
 
@@ -45,6 +55,9 @@ typedef struct
 	GtkWidget *label;
 	struct zwlr_foreign_toplevel_handle_v1 *toplevel;
 	gboolean active;
+	gboolean maximized;
+	gboolean minimized;
+	gboolean fullscreen;
 } ToplevelTask;
 
 static const char *tasklist_manager_key = "tasklist_manager";
@@ -161,6 +174,74 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 
 	if (tasklist->manager)
 		zwlr_foreign_toplevel_manager_v1_stop (tasklist->manager);
+
+	if (tasklist->context_menu)
+	{
+		gtk_widget_destroy (tasklist->context_menu->menu);
+		g_free(tasklist->context_menu);
+		tasklist->context_menu = NULL;
+	}
+}
+
+static void
+menu_on_maximize (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = g_object_get_data (G_OBJECT (item), toplevel_task_key);
+	if (task->toplevel) {
+		if (task->maximized) {
+			zwlr_foreign_toplevel_handle_v1_unset_maximized (task->toplevel);
+		} else {
+			zwlr_foreign_toplevel_handle_v1_set_maximized (task->toplevel);
+		}
+	}
+}
+
+static void
+menu_on_minimize (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = g_object_get_data (G_OBJECT (item), toplevel_task_key);
+	if (task->toplevel) {
+		if (task->minimized) {
+			zwlr_foreign_toplevel_handle_v1_unset_minimized (task->toplevel);
+		} else {
+			zwlr_foreign_toplevel_handle_v1_set_minimized (task->toplevel);
+		}
+	}
+}
+
+static void
+menu_on_close (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = g_object_get_data (G_OBJECT (item), toplevel_task_key);
+	if (task->toplevel) {
+		zwlr_foreign_toplevel_handle_v1_close (task->toplevel);
+	}
+}
+
+static ContextMenu *
+context_menu_new ()
+{
+	ContextMenu * menu = g_new0 (ContextMenu, 1);
+	menu->menu = gtk_menu_new ();
+	menu->maximize = gtk_menu_item_new ();
+	menu->minimize = gtk_menu_item_new ();
+	menu->on_top = gtk_check_menu_item_new_with_label ("Always On Top");
+	menu->close = gtk_menu_item_new_with_label ("Close");
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->maximize);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->minimize);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), gtk_separator_menu_item_new ());
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->on_top);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), gtk_separator_menu_item_new ());
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->close);
+
+	gtk_widget_show_all (menu->menu);
+
+	g_signal_connect (menu->maximize, "activate", G_CALLBACK (menu_on_maximize), NULL);
+	g_signal_connect (menu->minimize, "activate", G_CALLBACK (menu_on_minimize), NULL);
+	g_signal_connect (menu->close, "activate", G_CALLBACK (menu_on_close), NULL);
+	gtk_widget_set_sensitive (menu->on_top, FALSE);
+	return menu;
 }
 
 static TasklistManager *
@@ -186,6 +267,7 @@ tasklist_manager_new (void)
 				tasklist_manager_key,
 				tasklist,
 				(GDestroyNotify)tasklist_manager_disconnected_from_widget);
+	tasklist->context_menu = context_menu_new ();
 	return tasklist;
 }
 
@@ -234,6 +316,9 @@ foreign_toplevel_handle_state (void *data,
 	ToplevelTask *task = data;
 
 	task->active = FALSE;
+	task->maximized = FALSE;
+	task->minimized = FALSE;
+	task->fullscreen = FALSE;
 
 	enum zwlr_foreign_toplevel_handle_v1_state *i;
 	wl_array_for_each (i, state)
@@ -243,7 +328,15 @@ foreign_toplevel_handle_state (void *data,
 		case ZWLR_FOREIGN_TOPLEVEL_HANDLE_V1_STATE_ACTIVATED:
 			task->active = TRUE;
 			break;
-
+		case ZWLR_FOREIGN_TOPLEVEL_HANDLE_V1_STATE_MAXIMIZED:
+			task->maximized = TRUE;
+			break;
+		case ZWLR_FOREIGN_TOPLEVEL_HANDLE_V1_STATE_MINIMIZED:
+			task->minimized = TRUE;
+			break;
+		case ZWLR_FOREIGN_TOPLEVEL_HANDLE_V1_STATE_FULLSCREEN:
+			task->fullscreen = TRUE;
+			break;
 		default:
 			break;
 		}
@@ -312,13 +405,25 @@ toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 	}
 }
 
-static gboolean on_toplevel_button_press (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+static gboolean on_toplevel_button_press (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist)
 {
 	/* Assume event is a button press */
 	if (((GdkEventButton*)event)->button == GDK_BUTTON_SECONDARY)
 	{
-		/* Returning true for secondary clicks suppresses the applet's default context menu,
-		 * which we do not want to show up for task buttons */
+		ContextMenu *menu = tasklist->context_menu;
+		ToplevelTask *task = g_object_get_data (G_OBJECT (button), toplevel_task_key);
+
+		g_object_set_data (G_OBJECT (menu->maximize), toplevel_task_key, task);
+		g_object_set_data (G_OBJECT (menu->minimize), toplevel_task_key, task);
+		g_object_set_data (G_OBJECT (menu->close), toplevel_task_key, task);
+
+		gtk_menu_item_set_label (GTK_MENU_ITEM (menu->minimize),
+				task->minimized ? "Unminimize" : "Minimize");
+		gtk_menu_item_set_label (GTK_MENU_ITEM (menu->maximize),
+				task->maximized ? "Unmaximize" : "Maximize");
+
+		gtk_menu_popup_at_widget (GTK_MENU (menu->menu), button,
+				GDK_GRAVITY_NORTH_WEST, GDK_GRAVITY_SOUTH_WEST, event);
 		return TRUE;
 	}
 	else
@@ -355,7 +460,7 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	g_signal_connect (G_OBJECT (task->button),
 			  "button-press-event",
 			  G_CALLBACK (on_toplevel_button_press),
-			  task);
+			  tasklist);
 
 	return task;
 }
