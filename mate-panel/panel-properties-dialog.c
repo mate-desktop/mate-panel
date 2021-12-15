@@ -171,7 +171,7 @@ panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
 	GtkListStore     *model;
 	GtkTreeIter       iter;
 	GtkCellRenderer  *renderer;
-	int               i;
+	gsize             i;
 
 	dialog->orientation_combo = PANEL_GTK_BUILDER_GET (gui, "orientation_combo");
 	g_return_if_fail (dialog->orientation_combo != NULL);

@@ -162,7 +162,7 @@ mate_panel_applets_manager_get_applet_factory_info_from_file (const gchar *filen
 	const char             *lib_prefix;
 	gchar                 **groups;
 	gsize                   n_groups;
-	gint                    i;
+	gsize                   i;
 	GError                 *error = NULL;
 
 	applet_file = g_key_file_new ();

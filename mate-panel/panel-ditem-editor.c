@@ -1308,7 +1308,7 @@ response_cb (GtkDialog *dialog,
 static void
 panel_ditem_editor_revert (PanelDItemEditor *dialog)
 {
-	int       i;
+	gsize     i;
 	char     *string;
 	gboolean  boolean;
 	GKeyFile *key_file;
@@ -1384,7 +1384,7 @@ panel_ditem_editor_revert (PanelDItemEditor *dialog)
 static void
 panel_ditem_editor_set_revert (PanelDItemEditor *dialog)
 {
-	int       i;
+	gsize     i;
 	char     *string;
 	gboolean  boolean;
 	GKeyFile *key_file;

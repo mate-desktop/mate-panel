@@ -126,8 +126,8 @@ void  _mate_panel_applet_frame_update_flags          (MatePanelAppletFrame *fram
 						 gboolean          has_handle);
 
 void  _mate_panel_applet_frame_update_size_hints     (MatePanelAppletFrame *frame,
-						 gint             *size_hints,
-						 guint             n_elements);
+                                                      gint                 *size_hints,
+                                                      gsize                 n_elements);
 
 char *_mate_panel_applet_frame_get_background_string (MatePanelAppletFrame    *frame,
 						 PanelWidget         *panel,

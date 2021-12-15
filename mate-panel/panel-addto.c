@@ -229,8 +229,9 @@ panel_addto_applet_info_sort_func (PanelAddtoItemInfo *a,
 static GSList *
 panel_addto_prepend_internal_applets (GSList *list)
 {
-	static gboolean translated = FALSE;
-	int             i;
+	static gboolean       translated = FALSE;
+	gsize                 i;
+	PanelActionButtonType p;
 
 	for (i = 0; i < G_N_ELEMENTS (internal_addto_items); i++) {
 		if (!translated) {
@@ -243,19 +244,19 @@ panel_addto_prepend_internal_applets (GSList *list)
 
 	translated = TRUE;
 
-	for (i = PANEL_ACTION_LOCK; i < PANEL_ACTION_LAST; i++) {
+	for (p = PANEL_ACTION_LOCK; p < PANEL_ACTION_LAST; p++) {
 		PanelAddtoItemInfo *info;
 
-		if (panel_action_get_is_disabled (i))
+		if (panel_action_get_is_disabled (p))
 			continue;
 
 		info              = g_new0 (PanelAddtoItemInfo, 1);
 		info->type        = PANEL_ADDTO_ACTION;
-		info->action_type = i;
-		info->name        = g_strdup (panel_action_get_text (i));
-		info->description = g_strdup (panel_action_get_tooltip (i));
-		info->icon        = g_strdup (panel_action_get_icon_name (i));
-		info->iid         = g_strdup (panel_action_get_drag_id (i));
+		info->action_type = p;
+		info->name        = g_strdup (panel_action_get_text (p));
+		info->description = g_strdup (panel_action_get_tooltip (p));
+		info->icon        = g_strdup (panel_action_get_icon_name (p));
+		info->iid         = g_strdup (panel_action_get_drag_id (p));
 		info->enabled     = TRUE;
 		info->static_data = FALSE;
 
@@ -484,7 +485,7 @@ panel_addto_append_special_applets (PanelAddtoDialog *dialog,
 				    GtkListStore *model)
 {
 	static gboolean translated = FALSE;
-	int i;
+	gsize i;
 
 	for (i = 0; i < G_N_ELEMENTS (special_addto_items); i++) {
 		if (!translated) {
