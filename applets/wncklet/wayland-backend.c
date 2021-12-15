@@ -211,8 +211,8 @@ foreign_toplevel_handle_app_id (void *data,
 {
 	ToplevelTask *task = data;
 
-	gchar *app_id_lower = g_utf8_strdown(app_id, -1);
-	gchar *desktop_app_id = g_strdup_printf("%s.desktop", app_id_lower);
+	gchar *app_id_lower = g_utf8_strdown (app_id, -1);
+	gchar *desktop_app_id = g_strdup_printf ("%s.desktop", app_id_lower);
 	GDesktopAppInfo *app_info = g_desktop_app_info_new (desktop_app_id);
 
 	if (app_info) {
@@ -226,10 +226,10 @@ foreign_toplevel_handle_app_id (void *data,
 
 cleanup:
 	if (app_info) {
-		g_object_unref(G_OBJECT (app_info));
+		g_object_unref (G_OBJECT (app_info));
 	}
-	g_free(app_id_lower);
-	g_free(desktop_app_id);
+	g_free (app_id_lower);
+	g_free (desktop_app_id);
 }
 
 static void
@@ -358,13 +358,13 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	task->button = gtk_button_new ();
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
 
-	task->icon = gtk_image_new_from_icon_name("unknown", GTK_ICON_SIZE_MENU);
+	task->icon = gtk_image_new_from_icon_name ("unknown", GTK_ICON_SIZE_MENU);
 
 	task->label = gtk_label_new ("");
 	gtk_label_set_max_width_chars (GTK_LABEL (task->label), 1);
 	gtk_widget_set_size_request (task->label, window_button_width, -1);
 	gtk_label_set_ellipsize (GTK_LABEL (task->label), PANGO_ELLIPSIZE_END);
-	gtk_label_set_xalign(GTK_LABEL (task->label), 0.0);
+	gtk_label_set_xalign (GTK_LABEL (task->label), 0.0);
 
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (GTK_BOX (box), task->icon, FALSE, FALSE, 5);
