@@ -108,7 +108,7 @@ static const char *
 panel_menu_path_root_to_filename (MenuPathRoot path_root)
 {
 	const char *retval;
-	int         i;
+	gsize       i;
 
 	retval = NULL;
 
@@ -126,7 +126,7 @@ static const char *
 panel_menu_filename_to_scheme (const char *filename)
 {
 	const char *retval;
-	int         i;
+	gsize       i;
 	gchar *basename;
 
 	retval = NULL;
@@ -162,7 +162,7 @@ static MenuPathRoot
 panel_menu_scheme_to_path_root (const char *scheme)
 {
 	MenuPathRoot retval;
-	int          i;
+	gsize        i;
 
 	retval = LAST_MENU;
 

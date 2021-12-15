@@ -67,7 +67,7 @@ static void
 panel_init_stock_icons (GtkIconFactory *factory)
 {
 	GtkIconSource *source;
-	int            i;
+	gsize          i;
 
 	source = gtk_icon_source_new ();
 
@@ -104,11 +104,13 @@ static void
 panel_init_stock_items (GtkIconFactory *factory)
 {
 	GtkStockItem *items;
-	int           i;
+	gsize         n_items;
+	gsize         i;
 
-	items = g_new (GtkStockItem, G_N_ELEMENTS (stock_items));
+	n_items = G_N_ELEMENTS (stock_items);
+	items = g_new (GtkStockItem, n_items);
 
-	for (i = 0; i < G_N_ELEMENTS (stock_items); i++) {
+	for (i = 0; i < n_items; i++) {
 		GtkIconSet *icon_set;
 
 		items [i].stock_id           = g_strdup (stock_items [i].stock_id);
@@ -122,7 +124,7 @@ panel_init_stock_items (GtkIconFactory *factory)
 		gtk_icon_factory_add (factory, stock_items [i].stock_id, icon_set);
 	}
 
-	gtk_stock_add_static (items, G_N_ELEMENTS (stock_items));
+	gtk_stock_add_static (items, n_items);
 }
 
 void

@@ -1805,7 +1805,7 @@ mate_panel_applet_setup (MatePanelApplet *applet)
 	MatePanelAppletPrivate *priv;
 	GValue   value = {0, };
 	GArray  *params;
-	gint     i;
+	guint     i;
 	gboolean ret;
 
 	priv = mate_panel_applet_get_instance_private (applet);

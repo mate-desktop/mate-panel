@@ -145,15 +145,18 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (window != gdk_screen_get_root_window (screen))
 		return GDK_FILTER_CONTINUE;
 
-	if (xevent->xclient.data.l [0] == atom_mate_panel_action_main_menu)
+	if (xevent->xclient.data.l [0] < 0)
+		return GDK_FILTER_CONTINUE;
+
+	if (xevent->xclient.data.l [0] == (long) atom_mate_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1], event);
-	else if (xevent->xclient.data.l [0] == atom_mate_panel_action_run_dialog)
+	else if (xevent->xclient.data.l [0] == (long) atom_mate_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
-	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
+	else if (xevent->xclient.data.l [0] == (long) atom_gnome_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1], event);
-	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_run_dialog)
+	else if (xevent->xclient.data.l [0] == (long) atom_gnome_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
-	else if (xevent->xclient.data.l [0] == atom_mate_panel_action_kill_dialog)
+	else if (xevent->xclient.data.l [0] == (long) atom_mate_panel_action_kill_dialog)
 		panel_action_protocol_kill_dialog (screen, xevent->xclient.data.l [1]);
 	else
 		return GDK_FILTER_CONTINUE;

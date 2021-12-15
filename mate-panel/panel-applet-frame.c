@@ -629,12 +629,12 @@ _mate_panel_applet_frame_update_flags (MatePanelAppletFrame *frame,
 
 void
 _mate_panel_applet_frame_update_size_hints (MatePanelAppletFrame *frame,
-				       gint             *size_hints,
-				       guint             n_elements)
+                                            gint                 *size_hints,
+                                            gsize                 n_elements)
 {
 	if (frame->priv->has_handle) {
 		gint extra_size = HANDLE_SIZE + 1;
-		gint i;
+		gsize i;
 
 		for (i = 0; i < n_elements; i++)
 			size_hints[i] += extra_size;

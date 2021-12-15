@@ -93,10 +93,10 @@ static void calendar_mark_today(GtkCalendar *calendar)
 	gtk_calendar_get_date(calendar, &year, &month, &day);
 	time(&now);
 	localtime_r (&now, &tm1);
-	if ((tm1.tm_mon == month) && (tm1.tm_year + 1900 == year)) {
-		gtk_calendar_mark_day (GTK_CALENDAR (calendar), tm1.tm_mday);
+	if ((tm1.tm_mon == (int) month) && (tm1.tm_year + 1900 == (int) year)) {
+		gtk_calendar_mark_day (GTK_CALENDAR (calendar), (guint) tm1.tm_mday);
 	} else {
-		gtk_calendar_unmark_day (GTK_CALENDAR (calendar), tm1.tm_mday);
+		gtk_calendar_unmark_day (GTK_CALENDAR (calendar), (guint) tm1.tm_mday);
 	}
 }
 
@@ -131,8 +131,8 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 
 	localtime_r (calwin->priv->current_time, &tm1);
 	gtk_calendar_select_month (GTK_CALENDAR (calendar),
-				   tm1.tm_mon, tm1.tm_year + 1900);
-	gtk_calendar_select_day (GTK_CALENDAR (calendar), tm1.tm_mday);
+				   (guint) tm1.tm_mon, (guint) (tm1.tm_year + 1900));
+	gtk_calendar_select_day (GTK_CALENDAR (calendar), (guint) tm1.tm_mday);
 	calendar_mark_today (GTK_CALENDAR(calendar));
 
 	g_signal_connect(calendar, "month-changed",

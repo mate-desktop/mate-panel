@@ -1553,7 +1553,7 @@ entry_event (GtkEditable    *entry,
 		if (dialog->completion_started &&
 		    pos != tmp &&
 		    pos != 1 &&
-		    tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
+		    ((size_t) tmp) == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
 	    		gtk_editable_select_region (entry, 0, 0);
 			gtk_editable_set_position (entry, -1);
 
@@ -1566,12 +1566,12 @@ entry_event (GtkEditable    *entry,
 		if (dialog->completion_started &&
 		    pos != tmp &&
 		    pos != 0 &&
-		    tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
+		    ((size_t) tmp) == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
 			temp = gtk_editable_get_chars (entry, 0, pos);
 			prefix = g_strconcat (temp, event->string, NULL);
 			g_free (temp);
 		} else if (pos == tmp &&
-			   tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
+			   ((size_t) tmp) == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
 			prefix = g_strconcat (gtk_entry_get_text (GTK_ENTRY (entry)),
 					      event->string, NULL);
 		} else {

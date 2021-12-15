@@ -138,7 +138,7 @@ PanelState           panel_toplevel_get_state              (PanelToplevel       
 
 void                 panel_toplevel_hide                   (PanelToplevel       *toplevel,
 							    gboolean             auto_hide,
-							    GtkDirectionType     direction);
+							    gint                 direction);
 void                 panel_toplevel_unhide                 (PanelToplevel       *toplevel);
 void                 panel_toplevel_queue_auto_hide        (PanelToplevel       *toplevel);
 void                 panel_toplevel_queue_auto_unhide      (PanelToplevel       *toplevel);

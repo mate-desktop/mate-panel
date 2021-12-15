@@ -1144,7 +1144,7 @@ static void panel_toplevel_hide_button_clicked(PanelToplevel* toplevel, GtkButto
 	arrow_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "arrow-type"));
 
 	if (toplevel->priv->state == PANEL_STATE_NORMAL) {
-		GtkDirectionType direction = -1;
+		GtkDirectionType direction;
 
 		switch (arrow_type) {
 		case GTK_ARROW_UP:
@@ -1164,7 +1164,7 @@ static void panel_toplevel_hide_button_clicked(PanelToplevel* toplevel, GtkButto
 			break;
 		}
 
-		panel_toplevel_hide (toplevel, FALSE, direction);
+		panel_toplevel_hide (toplevel, FALSE, (gint) direction);
 	} else
 		panel_toplevel_unhide (toplevel);
 }
@@ -3689,7 +3689,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 void
 panel_toplevel_hide (PanelToplevel    *toplevel,
 		     gboolean          auto_hide,
-		     GtkDirectionType  direction)
+		     gint              direction)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
@@ -3704,14 +3704,18 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 	if (auto_hide)
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
 	else {
+		GtkDirectionType hide_direction;
+
 		if (direction == -1) {
 			if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-				direction = GTK_DIR_UP;
+				hide_direction = GTK_DIR_UP;
 			else
-				direction = GTK_DIR_LEFT;
+				hide_direction = GTK_DIR_LEFT;
+		} else {
+			hide_direction = (GtkDirectionType) direction;
 		}
 
-		switch (direction) {
+		switch (hide_direction) {
 		case GTK_DIR_UP:
 			g_return_if_fail (toplevel->priv->orientation & PANEL_VERTICAL_MASK);
 			toplevel->priv->state = PANEL_STATE_HIDDEN_UP;

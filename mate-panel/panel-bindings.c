@@ -191,7 +191,7 @@ panel_bindings_mouse_modifier_changed (GSettings *settings,
 static void
 panel_bindings_initialise (void)
 {
-	int          i;
+	gsize        i;
 	char        *str;
 
 	if (initialised)
@@ -229,7 +229,7 @@ panel_bindings_initialise (void)
 void
 panel_bindings_set_entries (GtkBindingSet *binding_set)
 {
-	int i;
+	gsize i;
 
 	if (!initialised)
 		panel_bindings_initialise ();
