@@ -178,7 +178,7 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 	if (tasklist->context_menu)
 	{
 		gtk_widget_destroy (tasklist->context_menu->menu);
-		g_free(tasklist->context_menu);
+		g_free (tasklist->context_menu);
 		tasklist->context_menu = NULL;
 	}
 }
@@ -221,7 +221,7 @@ menu_on_close (GtkMenuItem *item, gpointer user_data)
 static ContextMenu *
 context_menu_new ()
 {
-	ContextMenu * menu = g_new0 (ContextMenu, 1);
+	ContextMenu *menu = g_new0 (ContextMenu, 1);
 	menu->menu = gtk_menu_new ();
 	menu->maximize = gtk_menu_item_new ();
 	menu->minimize = gtk_menu_item_new ();
