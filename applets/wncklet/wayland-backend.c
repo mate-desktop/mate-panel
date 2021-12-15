@@ -26,6 +26,7 @@
 #endif
 
 #include <gdk/gdkwayland.h>
+#include <gio/gdesktopappinfo.h>
 
 #include "wayland-backend.h"
 #include "wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h"
@@ -209,7 +210,26 @@ foreign_toplevel_handle_app_id (void *data,
 				const char *app_id)
 {
 	ToplevelTask *task = data;
-	gtk_image_set_from_icon_name(GTK_IMAGE (task->icon), app_id, GTK_ICON_SIZE_MENU);
+
+	gchar *app_id_lower = g_utf8_strdown(app_id, -1);
+	gchar *desktop_app_id = g_strdup_printf("%s.desktop", app_id_lower);
+	GDesktopAppInfo *app_info = g_desktop_app_info_new (desktop_app_id);
+
+	if (app_info) {
+		GIcon *icon = g_app_info_get_icon (G_APP_INFO (app_info));
+		if (icon) {
+			gtk_image_set_from_gicon (GTK_IMAGE (task->icon), icon, GTK_ICON_SIZE_MENU);
+			goto cleanup;
+		}
+	}
+	gtk_image_set_from_icon_name (GTK_IMAGE (task->icon), app_id_lower, GTK_ICON_SIZE_MENU);
+
+cleanup:
+	if (app_info) {
+		g_object_unref(G_OBJECT (app_info));
+	}
+	g_free(app_id_lower);
+	g_free(desktop_app_id);
 }
 
 static void
