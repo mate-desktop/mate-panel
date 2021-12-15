@@ -1921,7 +1921,8 @@ format_changed (GSettings    *settings,
                 gchar        *key,
                 ClockData    *clock)
 {
-        int          new_format;
+        ClockFormat new_format;
+
         new_format = g_settings_get_enum (settings, key);
 
         if (!clock->can_handle_format_12 && new_format == CLOCK_FORMAT_12)
@@ -2330,11 +2331,13 @@ temperature_unit_changed (GSettings    *settings,
         if (cd->temperature_unit > 0)
         {
                 GtkWidget *widget;
-                gint oldvalue;
+                int        oldvalue;
+
                 widget = _clock_get_widget (cd, "temperature_combo");
                 oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 2;
-                if (oldvalue != cd->speed_unit)
-                        gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->temperature_unit - 2);
+                if (((TempUnit) oldvalue) != cd->temperature_unit)
+                        gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
+                                                  cd->temperature_unit - 2);
         }
         update_weather_locations (cd);
 }
@@ -2348,11 +2351,14 @@ speed_unit_changed (GSettings    *settings,
         if (cd->speed_unit > 0)
         {
                 GtkWidget *widget;
-                gint oldvalue;
+                int        oldvalue;
+
                 widget = _clock_get_widget (cd, "wind_speed_combo");
                 oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 2;
-                if (oldvalue != cd->speed_unit)
-                        gtk_combo_box_set_active (GTK_COMBO_BOX (widget), cd->speed_unit - 2);
+
+                if (((SpeedUnit) oldvalue) != cd->speed_unit)
+                        gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
+                                                  cd->speed_unit - 2);
         }
         update_weather_locations (cd);
 }
