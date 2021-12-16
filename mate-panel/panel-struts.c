@@ -320,7 +320,9 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
                             strut->orientation,
                             strut_size,
                             strut->allocated_strut_start * scale,
-                            strut->allocated_strut_end * scale);
+                            strut->allocated_strut_end * scale,
+                            &strut->allocated_geometry,
+                            scale);
 }
 
 void

@@ -48,7 +48,9 @@ void panel_xutils_set_strut       (GdkWindow             *gdk_window,
                                    PanelOrientation       orientation,
                                    guint32                strut,
                                    guint32                strut_start,
-                                   guint32                strut_end);
+                                   guint32                strut_end,
+                                   GdkRectangle          *rect,
+                                   int                    scale);
 
 void panel_xutils_unset_strut     (GdkWindow             *gdk_window);
 
