@@ -2322,23 +2322,25 @@ clock_timezone_changed (SystemTimezone *systz,
         refresh_click_timeout_time_only (cd);
 }
 
+#define unit_combo_box_set_active(x,y) (gtk_combo_box_set_active (GTK_COMBO_BOX (gtk_builder_get_object (cd->builder, (x))), (y)))
+
 static void
 temperature_unit_changed (GSettings    *settings,
                           gchar        *key,
                           ClockData    *cd)
 {
-        cd->temperature_unit = g_settings_get_enum (settings, key);
-        if (cd->temperature_unit > 0)
-        {
-                GtkWidget *widget;
-                int        oldvalue;
+        TempUnit temperature_unit = g_settings_get_enum (settings, key);
 
-                widget = _clock_get_widget (cd, "temperature_combo");
-                oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 2;
-                if (((TempUnit) oldvalue) != cd->temperature_unit)
-                        gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
-                                                  cd->temperature_unit - 2);
-        }
+        if (cd->temperature_unit == temperature_unit)
+                return;
+
+        /* TEMP_UNIT_INVALID = 0 */
+        if (temperature_unit == TEMP_UNIT_INVALID)
+                return;
+
+        unit_combo_box_set_active ("temperature_combo",
+                                   ((int) temperature_unit) - 2);
+        cd->temperature_unit = temperature_unit;
         update_weather_locations (cd);
 }
 
@@ -2347,19 +2349,18 @@ speed_unit_changed (GSettings    *settings,
                     gchar        *key,
                     ClockData    *cd)
 {
-        cd->speed_unit = g_settings_get_enum (settings, key);
-        if (cd->speed_unit > 0)
-        {
-                GtkWidget *widget;
-                int        oldvalue;
+        SpeedUnit speed_unit = g_settings_get_enum (settings, key);
 
-                widget = _clock_get_widget (cd, "wind_speed_combo");
-                oldvalue = gtk_combo_box_get_active (GTK_COMBO_BOX (widget)) + 2;
+        if (cd->speed_unit == speed_unit)
+                return;
 
-                if (((SpeedUnit) oldvalue) != cd->speed_unit)
-                        gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
-                                                  cd->speed_unit - 2);
-        }
+        /* SPEED_UNIT_INVALID = 0 */
+        if (speed_unit == SPEED_UNIT_INVALID)
+                return;
+
+        unit_combo_box_set_active ("wind_speed_combo",
+                                   ((int) speed_unit) - 2);
+        cd->speed_unit = speed_unit;
         update_weather_locations (cd);
 }
 
