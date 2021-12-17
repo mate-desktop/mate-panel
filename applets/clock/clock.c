@@ -1847,9 +1847,6 @@ ensure_time_settings_window_is_created (ClockData *cd)
         cd->minutes_spin = _clock_get_widget (cd, "minutes_spin");
         cd->seconds_spin = _clock_get_widget (cd, "seconds_spin");
 
-        gtk_entry_set_alignment (GTK_ENTRY (cd->hours_spin), 1.0);
-        gtk_entry_set_alignment (GTK_ENTRY (cd->minutes_spin), 1.0);
-        gtk_entry_set_alignment (GTK_ENTRY (cd->seconds_spin), 1.0);
         g_signal_connect (cd->seconds_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
         g_signal_connect (cd->minutes_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
         g_signal_connect (cd->hours_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
