@@ -4016,10 +4016,9 @@ panel_toplevel_update_gtk_settings (PanelToplevel *toplevel)
 
 	toplevel->priv->gtk_settings = gtk_widget_get_settings (GTK_WIDGET (toplevel->priv->panel_widget));
 
-	g_signal_connect_swapped (G_OBJECT (toplevel->priv->gtk_settings),
-				  "notify::gtk-dnd-drag-threshold",
-				  G_CALLBACK (panel_toplevel_drag_threshold_changed),
-				  toplevel);
+	g_signal_connect_swapped (toplevel->priv->gtk_settings, "notify::gtk-dnd-drag-threshold",
+	                          G_CALLBACK (panel_toplevel_drag_threshold_changed),
+	                          toplevel);
 
 	panel_toplevel_drag_threshold_changed (toplevel);
 }
@@ -4790,7 +4789,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	/* Prevent the window from being deleted via Alt+F4 by accident.  This
 	 * happens with "alternative" window managers such as Sawfish or XFWM4.
 	 */
-	g_signal_connect(GTK_WIDGET(toplevel), "delete-event", G_CALLBACK(gtk_true), NULL);
+	g_signal_connect (toplevel, "delete-event", G_CALLBACK(gtk_true), NULL);
 
 	panel_background_init (&toplevel->background,
 			       (PanelBackgroundChangedNotify) background_changed,

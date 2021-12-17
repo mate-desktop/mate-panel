@@ -200,12 +200,13 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				  _("Recent Documents"));
 	recent_menu = gtk_recent_chooser_menu_new_for_manager (manager);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), recent_menu);
-	
+
 	gtk_recent_chooser_set_limit (GTK_RECENT_CHOOSER (recent_menu),
 				      recent_items_limit);
 
-	g_signal_connect (G_OBJECT (recent_menu), "button-press-event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+	g_signal_connect (recent_menu, "button-press-event",
+			  G_CALLBACK (menu_dummy_button_press_event),
+	                  NULL);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (top_menu), menu_item);
 	gtk_widget_show_all (menu_item);
@@ -217,8 +218,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	gtk_recent_chooser_set_sort_type (GTK_RECENT_CHOOSER (recent_menu),
 					  GTK_RECENT_SORT_MRU);
 
-	g_signal_connect (GTK_RECENT_CHOOSER (recent_menu),
-			  "item-activated",
+	g_signal_connect (recent_menu, "item-activated",
 			  G_CALLBACK (recent_documents_activate_cb),
 			  NULL);
 

@@ -80,9 +80,9 @@ panel_error_dialog (GtkWindow  *parent,
 	gtk_widget_show_all (dialog);
 
 	if (auto_destroy)
-		g_signal_connect_swapped (G_OBJECT (dialog), "response",
-					  G_CALLBACK (gtk_widget_destroy),
-					  G_OBJECT (dialog));
+		g_signal_connect_swapped (dialog, "response",
+		                          G_CALLBACK (gtk_widget_destroy),
+		                          dialog);
 
 	if (freeme)
 		g_free (freeme);

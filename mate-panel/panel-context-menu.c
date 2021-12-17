@@ -238,8 +238,9 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-        g_signal_connect (G_OBJECT (menuitem), "activate",
-	      	       	  G_CALLBACK (panel_addto_present), panel_widget);
+        g_signal_connect (menuitem, "activate",
+	      	       	  G_CALLBACK (panel_addto_present),
+                          panel_widget);
 
 	if (!panel_profile_id_lists_are_writable ())
 		gtk_widget_set_sensitive (menuitem, FALSE);
@@ -265,12 +266,12 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
-				  G_CALLBACK (panel_context_menu_delete_panel),
-				  panel_widget->toplevel);
-	g_signal_connect (G_OBJECT (menu), "show",
-			  G_CALLBACK (panel_context_menu_setup_delete_panel_item),
-			  menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+	                          G_CALLBACK (panel_context_menu_delete_panel),
+	                          panel_widget->toplevel);
+	g_signal_connect (menu, "show",
+	                  G_CALLBACK (panel_context_menu_setup_delete_panel_item),
+	                  menuitem);
 
 	add_menu_separator (menu);
 
@@ -279,8 +280,8 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_context_menu_create_new_panel),
-			  NULL);
+	                  G_CALLBACK (panel_context_menu_create_new_panel),
+	                  NULL);
 	gtk_widget_set_sensitive (menuitem,
 				  panel_profile_id_lists_are_writable ());
 

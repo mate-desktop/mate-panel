@@ -2313,9 +2313,9 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	 */
 
 	if (gtk_widget_get_has_window (widget))
-		g_signal_connect (G_OBJECT(widget), "event",
-				  G_CALLBACK (panel_sub_event_handler),
-				  data);
+		g_signal_connect (widget, "event",
+		                  G_CALLBACK (panel_sub_event_handler),
+		                  data);
 
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
@@ -2354,7 +2354,7 @@ bind_top_applet_events (GtkWidget *widget)
 {
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
-	g_signal_connect (G_OBJECT(widget), "destroy",
+	g_signal_connect (widget, "destroy",
 			  G_CALLBACK (panel_widget_applet_destroy),
 			  NULL);
 

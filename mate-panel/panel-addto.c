@@ -339,12 +339,12 @@ panel_addto_setup_drag (GtkTreeView          *tree_view,
 						GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 						target, 1, GDK_ACTION_COPY);
 
-	g_signal_connect_data (G_OBJECT (tree_view), "drag-data-get",
+	g_signal_connect_data (tree_view, "drag-data-get",
 			       G_CALLBACK (panel_addto_drag_data_get_cb),
 			       g_strdup (text),
 			       (GClosureNotify) G_CALLBACK (g_free),
 			       0 /* connect_flags */);
-	g_signal_connect_after (G_OBJECT (tree_view), "drag-begin",
+	g_signal_connect_after (tree_view, "drag-begin",
 	                        G_CALLBACK (panel_addto_drag_begin_cb),
 	                        NULL);
 }
@@ -1288,10 +1288,12 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 12);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog_vbox), 5);
 
-	g_signal_connect (G_OBJECT (dialog->addto_dialog), "response",
-			  G_CALLBACK (panel_addto_dialog_response), dialog);
+	g_signal_connect (dialog->addto_dialog, "response",
+	                  G_CALLBACK (panel_addto_dialog_response),
+	                  dialog);
 	g_signal_connect (dialog->addto_dialog, "destroy",
-			  G_CALLBACK (panel_addto_dialog_destroy), dialog);
+	                  G_CALLBACK (panel_addto_dialog_destroy),
+	                  dialog);
 
 	inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start (GTK_BOX (dialog_vbox), inner_vbox, TRUE, TRUE, 0);
@@ -1308,10 +1310,12 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 			    FALSE, FALSE, 0);
 
 	dialog->search_entry = gtk_entry_new ();
-	g_signal_connect (G_OBJECT (dialog->search_entry), "changed",
-			  G_CALLBACK (panel_addto_search_entry_changed), dialog);
-	g_signal_connect (G_OBJECT (dialog->search_entry), "activate",
-			  G_CALLBACK (panel_addto_search_entry_activated), dialog);
+	g_signal_connect (dialog->search_entry, "changed",
+	                  G_CALLBACK (panel_addto_search_entry_changed),
+	                  dialog);
+	g_signal_connect (dialog->search_entry, "activate",
+			  G_CALLBACK (panel_addto_search_entry_activated),
+	                  dialog);
 
 	gtk_box_pack_end (GTK_BOX (find_hbox), dialog->search_entry,
 			  TRUE, TRUE, 0);

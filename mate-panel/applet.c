@@ -395,9 +395,9 @@ setup_an_item (AppletUserMenu *menu,
 
 	gtk_widget_show (menu->menuitem);
 
-	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-			  &menu->menuitem);
+	g_signal_connect (menu->menuitem, "destroy",
+	                  G_CALLBACK (gtk_widget_destroyed),
+	                  &menu->menuitem);
 
 	if(submenu)
 		gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menu->menuitem);
@@ -405,11 +405,11 @@ setup_an_item (AppletUserMenu *menu,
 	/*if an item not a submenu*/
 	if (!is_submenu) {
 		g_signal_connect (menu->menuitem, "activate",
-				  G_CALLBACK (applet_callback_callback),
-				  menu);
+		                  G_CALLBACK (applet_callback_callback),
+		                  menu);
 		g_signal_connect (submenu, "destroy",
-				  G_CALLBACK (gtk_widget_destroyed),
-				  &menu->submenu);
+		                  G_CALLBACK (gtk_widget_destroyed),
+		                  &menu->submenu);
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if (!menu->submenu) {
@@ -419,9 +419,9 @@ setup_an_item (AppletUserMenu *menu,
 	if(menu->submenu) {
 		gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
 					  menu->submenu);
-		g_signal_connect (G_OBJECT (menu->submenu), "destroy",
-				    G_CALLBACK (gtk_widget_destroyed),
-				    &menu->submenu);
+		g_signal_connect (menu->submenu, "destroy",
+		                  G_CALLBACK (gtk_widget_destroyed),
+		                  &menu->submenu);
 	}
 
 	gtk_widget_set_sensitive(menu->menuitem,menu->sensitive);

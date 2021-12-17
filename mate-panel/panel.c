@@ -1321,24 +1321,19 @@ drag_data_recieved_cb (GtkWidget	*widget,
 static void
 panel_widget_setup(PanelWidget *panel)
 {
-	g_signal_connect (G_OBJECT(panel),
-			  "applet_added",
+	g_signal_connect (panel, "applet_added",
 			  G_CALLBACK(mate_panel_applet_added),
 			  NULL);
-	g_signal_connect (G_OBJECT(panel),
-			  "applet_removed",
+	g_signal_connect (panel, "applet_removed",
 			  G_CALLBACK(mate_panel_applet_removed),
 			  NULL);
-	g_signal_connect (G_OBJECT(panel),
-			  "applet_move",
+	g_signal_connect (panel, "applet_move",
 			  G_CALLBACK(mate_panel_applet_move),
 			  NULL);
-	g_signal_connect (G_OBJECT (panel),
-			  "back_change",
+	g_signal_connect (panel, "back_change",
 			  G_CALLBACK (panel_back_change),
 			  NULL);
-	g_signal_connect (G_OBJECT (panel),
-			  "size_change",
+	g_signal_connect (panel, "size_change",
 			  G_CALLBACK (panel_size_change),
 			  NULL);
 }
@@ -1507,9 +1502,9 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 
-	 g_signal_connect (dialog, "destroy",
-                           G_CALLBACK (panel_deletion_destroy_dialog),
-                           toplevel);
+	g_signal_connect (dialog, "destroy",
+	                  G_CALLBACK (panel_deletion_destroy_dialog),
+	                  toplevel);
 
 	g_object_set_data (G_OBJECT (toplevel), "panel-delete-dialog", dialog);
 	panel_toplevel_push_autohide_disabler (toplevel);

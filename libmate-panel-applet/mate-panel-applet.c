@@ -1942,7 +1942,7 @@ mate_panel_applet_constructor (GType                  type,
 		gtk_widget_set_name (widget, "PanelPlug");
 		_mate_panel_applet_prepare_css (context);
 
-		g_signal_connect_swapped (G_OBJECT (priv->plug), "embedded",
+		g_signal_connect_swapped (priv->plug, "embedded",
 		                          G_CALLBACK (mate_panel_applet_setup),
 		                          applet);
 

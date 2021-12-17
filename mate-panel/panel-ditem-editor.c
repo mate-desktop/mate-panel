@@ -900,10 +900,10 @@ panel_ditem_editor_connect_signals (PanelDItemEditor *dialog)
 	priv = dialog->priv;
 
 #define CONNECT_CHANGED(widget, callback) \
-	g_signal_connect_swapped (G_OBJECT (widget), "changed", \
+	g_signal_connect_swapped (widget, "changed", \
 				  G_CALLBACK (callback), \
 				  dialog); \
-	g_signal_connect_swapped (G_OBJECT (widget), "changed", \
+	g_signal_connect_swapped (widget, "changed", \
 				  G_CALLBACK (panel_ditem_editor_changed), \
 				  dialog);
 

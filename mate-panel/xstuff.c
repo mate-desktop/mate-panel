@@ -207,8 +207,9 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 
 	gtk_window_move (GTK_WINDOW (win), wx, wy);
 
-	g_signal_connect (G_OBJECT (win), "draw",
-			 G_CALLBACK (zoom_draw), zoom);
+	g_signal_connect (win, "draw",
+	                  G_CALLBACK (zoom_draw),
+	                  zoom);
 
 	/* see doc for gtk_widget_set_app_paintable() */
 	gtk_widget_realize (win);

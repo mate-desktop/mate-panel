@@ -1011,11 +1011,13 @@ ask_about_launcher (const char  *file,
 					    launcher_save_uri,
 					    NULL);
 
-	g_signal_connect (G_OBJECT (dialog), "saved",
-			  G_CALLBACK (launcher_new_saved), NULL);
+	g_signal_connect (dialog, "saved",
+	                  G_CALLBACK (launcher_new_saved),
+	                  NULL);
 
-	g_signal_connect (G_OBJECT (dialog), "error-reported",
-			  G_CALLBACK (launcher_error_reported), NULL);
+	g_signal_connect (dialog, "error-reported",
+	                  G_CALLBACK (launcher_error_reported),
+	                  NULL);
 
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (panel)));

@@ -271,13 +271,23 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 
 	gtk_container_add(GTK_CONTAINER(window_menu->applet), window_menu->selector);
 
-	g_signal_connect(window_menu->applet, "size-allocate", G_CALLBACK(window_menu_size_allocate), window_menu);
+	g_signal_connect (window_menu->applet, "size-allocate",
+	                  G_CALLBACK(window_menu_size_allocate),
+	                  window_menu);
 
-	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-in-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);
-	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-out-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);
-	g_signal_connect_after(G_OBJECT(window_menu->selector), "draw", G_CALLBACK(window_menu_on_draw), window_menu);
+	g_signal_connect_after (window_menu->applet, "focus-in-event",
+	                        G_CALLBACK (gtk_widget_queue_draw),
+	                        window_menu);
+	g_signal_connect_after (window_menu->applet, "focus-out-event",
+	                        G_CALLBACK (gtk_widget_queue_draw),
+	                        window_menu);
+	g_signal_connect_after (window_menu->selector, "draw",
+	                        G_CALLBACK (window_menu_on_draw),
+	                        window_menu);
 
-	g_signal_connect(G_OBJECT(window_menu->selector), "button-press-event", G_CALLBACK(filter_button_press), window_menu);
+	g_signal_connect (window_menu->selector, "button_press_event",
+	                  G_CALLBACK (filter_button_press),
+	                  window_menu);
 
 	gtk_widget_show_all(GTK_WIDGET(window_menu->applet));
 

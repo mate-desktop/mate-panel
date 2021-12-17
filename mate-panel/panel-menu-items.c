@@ -244,8 +244,9 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 			       G_CALLBACK (panel_menu_item_activate_desktop_file),
 			       g_strdup (full_path),
 			       (GClosureNotify) G_CALLBACK (g_free), 0);
-	g_signal_connect (G_OBJECT (item), "button-press-event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+	g_signal_connect (item, "button-press-event",
+	                  G_CALLBACK (menu_dummy_button_press_event),
+	                  NULL);
 
 	uri = g_filename_to_uri (full_path, NULL, NULL);
 
@@ -293,8 +294,9 @@ panel_menu_items_append_place_item (const char *icon_name,
 	g_signal_connect_data (item, "activate", callback, user_data,
 			       (GClosureNotify) G_CALLBACK (g_free), 0);
 
-	g_signal_connect (G_OBJECT (item), "button-press-event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+	g_signal_connect (item, "button-press-event",
+	                  G_CALLBACK (menu_dummy_button_press_event),
+	                  NULL);
 
 	if (g_str_has_prefix (uri, "file:")) /*Links only work for local files*/
 		setup_uri_drag (item, uri, icon_name, GDK_ACTION_LINK);
@@ -323,9 +325,11 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 					panel_action_get_tooltip (action_type));
 
 	g_signal_connect (item, "activate",
-			  panel_action_get_invoke (action_type), NULL);
-	g_signal_connect (G_OBJECT (item), "button-press-event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+			  panel_action_get_invoke (action_type),
+	                  NULL);
+	g_signal_connect (item, "button-press-event",
+	                  G_CALLBACK (menu_dummy_button_press_event),
+	                  NULL);
 	setup_internal_applet_drag (item, action_type);
 
 	return item;
@@ -608,8 +612,9 @@ panel_menu_item_append_drive (GtkWidget *menu,
 			       g_object_ref (drive),
 			       (GClosureNotify) G_CALLBACK (g_object_unref), 0);
 
-	g_signal_connect (G_OBJECT (item), "button-press-event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+	g_signal_connect (item, "button-press-event",
+	                  G_CALLBACK (menu_dummy_button_press_event),
+	                  NULL);
 }
 
 typedef struct {
@@ -708,8 +713,9 @@ panel_menu_item_append_volume (GtkWidget *menu,
 			       g_object_ref (volume),
 			       (GClosureNotify) G_CALLBACK (g_object_unref), 0);
 
-	g_signal_connect (G_OBJECT (item), "button-press-event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+	g_signal_connect (item, "button-press-event",
+	                  G_CALLBACK (menu_dummy_button_press_event),
+	                  NULL);
 }
 
 static void
@@ -1358,8 +1364,7 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 			   bookmarks_filename, error->message);
 		g_error_free (error);
 	} else {
-		g_signal_connect (G_OBJECT (menuitem->priv->bookmarks_monitor),
-				  "changed",
+		g_signal_connect (menuitem->priv->bookmarks_monitor, "changed",
 				  (GCallback) panel_place_menu_item_gtk_bookmarks_changed,
 				  menuitem);
 	}

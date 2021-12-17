@@ -352,8 +352,7 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 				task,
 				(GDestroyNotify)toplevel_task_disconnected_from_widget);
 
-	g_signal_connect (G_OBJECT (task->button),
-			  "button-press-event",
+	g_signal_connect (task->button, "button-press-event",
 			  G_CALLBACK (on_toplevel_button_press),
 			  task);
 
