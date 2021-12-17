@@ -421,7 +421,9 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 	sdd->size = mate_panel_applet_get_size(MATE_PANEL_APPLET(sdd->applet));
 
-	g_signal_connect(G_OBJECT(sdd->applet), "realize", G_CALLBACK(show_desktop_applet_realized), sdd);
+	g_signal_connect (sdd->applet, "realize",
+	                  G_CALLBACK (show_desktop_applet_realized),
+	                  sdd);
 
 	sdd->button = gtk_toggle_button_new ();
 
@@ -441,21 +443,29 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 	atk_obj = gtk_widget_get_accessible(sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));
-	g_signal_connect(G_OBJECT(sdd->button), "button-press-event", G_CALLBACK(do_not_eat_button_press), NULL);
+	g_signal_connect (sdd->button, "button-press-event",
+	                  G_CALLBACK(do_not_eat_button_press),
+	                  NULL);
 
-	g_signal_connect(G_OBJECT(sdd->button), "toggled", G_CALLBACK(button_toggled_callback), sdd);
+	g_signal_connect (sdd->button, "toggled",
+	                  G_CALLBACK (button_toggled_callback),
+	                  sdd);
 
 	gtk_container_set_border_width(GTK_CONTAINER(sdd->button), 0);
 	gtk_container_add(GTK_CONTAINER(sdd->button), sdd->image);
 	gtk_container_add(GTK_CONTAINER(sdd->applet), sdd->button);
 
-	g_signal_connect (G_OBJECT(sdd->button), "size-allocate", G_CALLBACK(button_size_allocated), sdd);
+	g_signal_connect (sdd->button, "size-allocate",
+	                  G_CALLBACK (button_size_allocated),
+	                  sdd);
 
 	/* FIXME: Update this comment. */
 	/* we have to bind change_orient before we do applet_widget_add
 	   since we need to get an initial change_orient signal to set our
 	   initial oriantation, and we get that during the _add call */
-	g_signal_connect(G_OBJECT (sdd->applet), "change-orient", G_CALLBACK (applet_change_orient), sdd);
+	g_signal_connect (sdd->applet, "change-orient",
+	                  G_CALLBACK (applet_change_orient),
+	                  sdd);
 
 	action_group = gtk_action_group_new("ShowDesktop Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
@@ -465,12 +475,18 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	                                            action_group);
 	g_object_unref(action_group);
 
-	g_signal_connect(G_OBJECT(sdd->applet), "destroy", G_CALLBACK(applet_destroyed), sdd);
+	g_signal_connect (sdd->applet, "destroy",
+	                  G_CALLBACK (applet_destroyed),
+	                  sdd);
 
 	gtk_drag_dest_set(GTK_WIDGET(sdd->button), 0, NULL, 0, 0);
 
-	g_signal_connect(G_OBJECT(sdd->button), "drag-motion", G_CALLBACK (button_drag_motion), sdd);
-	g_signal_connect(G_OBJECT(sdd->button), "drag-leave", G_CALLBACK (button_drag_leave), sdd);
+	g_signal_connect (sdd->button, "drag-motion",
+	                  G_CALLBACK (button_drag_motion),
+	                  sdd);
+	g_signal_connect (sdd->button, "drag-leave",
+	                  G_CALLBACK (button_drag_leave),
+	                  sdd);
 
 	gtk_widget_show_all(sdd->applet);
 
@@ -551,7 +567,9 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 
 		g_object_add_weak_pointer(G_OBJECT(dialog), (gpointer) &dialog);
 
-		g_signal_connect(G_OBJECT(dialog), "response", G_CALLBACK(gtk_widget_destroy), NULL);
+		g_signal_connect (dialog, "response",
+		                  G_CALLBACK(gtk_widget_destroy),
+		                  NULL);
 
 		gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
 		gtk_window_set_screen(GTK_WINDOW(dialog), gtk_widget_get_screen(button));

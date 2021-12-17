@@ -649,21 +649,35 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	context = gtk_widget_get_style_context (pager->pager);
 	gtk_style_context_add_class (context, "wnck-pager");
 
-	g_signal_connect(G_OBJECT(pager->pager), "destroy", G_CALLBACK(destroy_pager), pager);
+	g_signal_connect (pager->pager, "destroy",
+	                  G_CALLBACK (destroy_pager),
+	                  pager);
 
 	/* overwrite default WnckPager widget scroll-event */
-	g_signal_connect(G_OBJECT(pager->pager), "scroll-event", G_CALLBACK(applet_scroll), pager);
+	g_signal_connect (pager->pager, "scroll-event",
+	                  G_CALLBACK (applet_scroll),
+	                  pager);
 
 	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
 
-	g_signal_connect(G_OBJECT(pager->applet), "realize", G_CALLBACK(applet_realized), pager);
-	g_signal_connect(G_OBJECT(pager->applet), "unrealize", G_CALLBACK(applet_unrealized), pager);
-	g_signal_connect(G_OBJECT(pager->applet), "change-orient", G_CALLBACK(applet_change_orient), pager);
-	g_signal_connect(G_OBJECT(pager->applet), "change-background", G_CALLBACK(applet_change_background), pager);
-	g_signal_connect(G_OBJECT(pager->applet), "style-updated", G_CALLBACK(applet_style_updated), context);
+	g_signal_connect (pager->applet, "realize",
+	                  G_CALLBACK (applet_realized),
+	                  pager);
+	g_signal_connect (pager->applet, "unrealize",
+	                  G_CALLBACK (applet_unrealized),
+	                  pager);
+	g_signal_connect (pager->applet, "change-orient",
+	                  G_CALLBACK (applet_change_orient),
+	                  pager);
+	g_signal_connect (pager->applet, "change-background",
+	                  G_CALLBACK (applet_change_background),
+	                  pager);
+	g_signal_connect (pager->applet, "style-updated",
+	                  G_CALLBACK (applet_style_updated),
+	                  context);
 
-	gtk_widget_show(pager->pager);
-	gtk_widget_show(pager->applet);
+	gtk_widget_show (pager->pager);
+	gtk_widget_show (pager->applet);
 
 	action_group = gtk_action_group_new("WorkspaceSwitcher Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
@@ -1003,18 +1017,24 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(pager->wrap_workspaces_toggle), pager->wrap_workspaces);
 	}
 
-	g_signal_connect(G_OBJECT(pager->wrap_workspaces_toggle), "toggled", (GCallback) wrap_workspaces_toggled, pager);
+	g_signal_connect (pager->wrap_workspaces_toggle, "toggled",
+	                  (GCallback) wrap_workspaces_toggled,
+	                  pager);
 
 	/* Display workspace names: */
 
-	g_signal_connect(G_OBJECT(pager->display_workspaces_toggle), "toggled", (GCallback) display_workspace_names_toggled, pager);
+	g_signal_connect (pager->display_workspaces_toggle, "toggled",
+	                  (GCallback) display_workspace_names_toggled,
+	                  pager);
 
 	value = pager->display_names;
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(pager->display_workspaces_toggle), value);
 
 	/* Display all workspaces: */
-	g_signal_connect(G_OBJECT(pager->all_workspaces_radio), "toggled", (GCallback) all_workspaces_toggled, pager);
+	g_signal_connect (pager->all_workspaces_radio, "toggled",
+	                  (GCallback) all_workspaces_toggled,
+	                  pager);
 
 	if (pager->display_all)
 	{
@@ -1060,9 +1080,13 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	}
 #endif /* HAVE_X11 */
 
-	g_signal_connect (pager->num_workspaces_spin, "value-changed", G_CALLBACK (on_num_workspaces_value_changed), pager);
+	g_signal_connect (pager->num_workspaces_spin, "value-changed",
+	                  G_CALLBACK (on_num_workspaces_value_changed),
+	                  pager);
 
-	g_signal_connect(G_OBJECT(pager->workspaces_tree), "focus-out-event", (GCallback) workspaces_tree_focused_out, pager);
+	g_signal_connect (pager->workspaces_tree, "focus-out-event",
+	                  (GCallback) workspaces_tree_focused_out,
+	                  pager);
 
 	pager->workspaces_store = gtk_list_store_new(1, G_TYPE_STRING, NULL);
 	update_workspaces_model(pager);

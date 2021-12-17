@@ -82,7 +82,7 @@ clock_location_tile_new (ClockLocation *loc,
 
         g_signal_connect (priv->weather_icon, "query-tooltip",
                           G_CALLBACK (weather_tooltip), this);
-        priv->location_weather_updated_id = g_signal_connect (G_OBJECT (loc), "weather-updated",
+        priv->location_weather_updated_id = g_signal_connect (loc, "weather-updated",
                                                               G_CALLBACK (update_weather_icon), this);
 
         return this;

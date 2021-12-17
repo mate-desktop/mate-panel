@@ -171,18 +171,15 @@ test_applet_fill (TestApplet *applet)
 
 	mate_panel_applet_set_flags (MATE_PANEL_APPLET (applet), MATE_PANEL_APPLET_HAS_HANDLE);
 
-	g_signal_connect (G_OBJECT (applet),
-			  "change-orient",
+	g_signal_connect (applet, "change-orient",
 			  G_CALLBACK (test_applet_handle_orient_change),
 			  NULL);
 
-	g_signal_connect (G_OBJECT (applet),
-			  "change-size",
+	g_signal_connect (applet, "change-size",
 			  G_CALLBACK (test_applet_handle_size_change),
 			  NULL);
 
-	g_signal_connect (G_OBJECT (applet),
-			  "change-background",
+	g_signal_connect (applet, "change-background",
 			  G_CALLBACK (test_applet_handle_background_change),
 			  NULL);
 

@@ -106,7 +106,7 @@ static void panel_menu_bar_setup_tooltip(PanelMenuBar* menubar)
 	g_signal_connect(menubar->priv->desktop_item, "activate", G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus), menubar);
 
 	/* Reset tooltip when the menu bar is not used */
-	g_signal_connect(GTK_MENU_SHELL (menubar), "deactivate", G_CALLBACK (panel_menu_bar_reinit_tooltip), menubar);
+	g_signal_connect(menubar, "deactivate", G_CALLBACK (panel_menu_bar_reinit_tooltip), menubar);
 }
 
 static void

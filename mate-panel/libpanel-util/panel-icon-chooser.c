@@ -431,9 +431,9 @@ _panel_icon_chooser_clicked (GtkButton *button)
 
 	chooser->priv->filechooser = filechooser;
 
-	g_signal_connect (G_OBJECT (filechooser), "destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-			  &chooser->priv->filechooser);
+	g_signal_connect (filechooser, "destroy",
+	                  G_CALLBACK (gtk_widget_destroyed),
+	                  &chooser->priv->filechooser);
 
 	gtk_widget_show (filechooser);
 }

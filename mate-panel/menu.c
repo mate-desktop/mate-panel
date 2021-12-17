@@ -807,15 +807,17 @@ setup_uri_drag (GtkWidget  *menuitem,
 	if (icon != NULL)
 		gtk_drag_source_set_icon_name (menuitem, icon);
 
-	g_signal_connect (G_OBJECT (menuitem), "drag-begin",
-			  G_CALLBACK (drag_begin_menu_cb), NULL);
-	g_signal_connect_data (G_OBJECT (menuitem), "drag-data-get",
-			       G_CALLBACK (drag_data_get_string_cb),
-			       g_strdup (uri),
-			       (GClosureNotify) G_CALLBACK (g_free),
-			       0 /* connect_flags */);
-	g_signal_connect (G_OBJECT (menuitem), "drag-end",
-			  G_CALLBACK (drag_end_menu_cb), NULL);
+	g_signal_connect (menuitem, "drag-begin",
+	                  G_CALLBACK (drag_begin_menu_cb),
+	                  NULL);
+	g_signal_connect_data (menuitem, "drag-data-get",
+	                       G_CALLBACK (drag_data_get_string_cb),
+	                       g_strdup (uri),
+	                       (GClosureNotify) G_CALLBACK (g_free),
+	                       0 /* connect_flags */);
+	g_signal_connect (menuitem, "drag-end",
+	                  G_CALLBACK (drag_end_menu_cb),
+	                  NULL);
 }
 
 void
@@ -838,15 +840,17 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 		gtk_drag_source_set_icon_name (menuitem,
 					       panel_action_get_icon_name (type));
 
-	g_signal_connect (G_OBJECT (menuitem), "drag-begin",
-			  G_CALLBACK (drag_begin_menu_cb), NULL);
-	g_signal_connect_data (G_OBJECT (menuitem), "drag-data-get",
-			       G_CALLBACK (drag_data_get_string_cb),
-			       g_strdup (panel_action_get_drag_id (type)),
-			       (GClosureNotify) G_CALLBACK (g_free),
-			       0 /* connect_flags */);
-	g_signal_connect (G_OBJECT (menuitem), "drag-end",
-			  G_CALLBACK (drag_end_menu_cb), NULL);
+	g_signal_connect (menuitem, "drag-begin",
+	                  G_CALLBACK (drag_begin_menu_cb),
+	                  NULL);
+	g_signal_connect_data (menuitem, "drag-data-get",
+	                       G_CALLBACK (drag_data_get_string_cb),
+	                       g_strdup (panel_action_get_drag_id (type)),
+	                       (GClosureNotify) G_CALLBACK (g_free),
+	                       0 /* connect_flags */);
+	g_signal_connect (menuitem, "drag-end",
+	                  G_CALLBACK (drag_end_menu_cb),
+	                  NULL);
 }
 
 static void
@@ -1117,12 +1121,15 @@ create_menuitem (GtkWidget          *menu,
 			}
 		}
 
-		g_signal_connect (G_OBJECT (menuitem), "drag-begin",
-				  G_CALLBACK (drag_begin_menu_cb), NULL);
+		g_signal_connect (menuitem, "drag-begin",
+		                  G_CALLBACK (drag_begin_menu_cb),
+		                  NULL);
 		g_signal_connect (menuitem, "drag-data-get",
-				  G_CALLBACK (drag_data_get_menu_cb), entry);
+		                  G_CALLBACK (drag_data_get_menu_cb),
+		                  entry);
 		g_signal_connect (menuitem, "drag-end",
-				  G_CALLBACK (drag_end_menu_cb), NULL);
+		                  G_CALLBACK (drag_end_menu_cb),
+		                  NULL);
 	}
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);

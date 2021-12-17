@@ -1414,7 +1414,7 @@ create_clock_widget (ClockData *cd)
                           G_CALLBACK (do_not_eat_button_press), NULL);
         g_signal_connect (cd->panel_button, "toggled",
                           G_CALLBACK (toggle_calendar), cd);
-        g_signal_connect (G_OBJECT (cd->panel_button), "destroy",
+        g_signal_connect (cd->panel_button, "destroy",
                           G_CALLBACK (destroy_clock),
                           cd);
         gtk_widget_show (cd->panel_button);
@@ -2510,13 +2510,11 @@ fill_clock_applet (MatePanelApplet *applet)
         /* we have to bind change_orient before we do applet_widget_add
            since we need to get an initial change_orient signal to set our
            initial oriantation, and we get that during the _add call */
-        g_signal_connect (G_OBJECT (cd->applet),
-                          "change-orient",
+        g_signal_connect (cd->applet, "change-orient",
                           G_CALLBACK (applet_change_orient),
                           cd);
 
-        g_signal_connect (G_OBJECT (cd->panel_button),
-                          "size-allocate",
+        g_signal_connect (cd->panel_button, "size-allocate",
                           G_CALLBACK (panel_button_change_pixel_size),
                           cd);
 
@@ -3191,31 +3189,31 @@ ensure_prefs_window_is_created (ClockData *cd)
                 gtk_widget_hide (clock_options);
 
         selection = gtk_tree_view_get_selection (cd->prefs_locations);
-        g_signal_connect (G_OBJECT (selection), "changed",
+        g_signal_connect (selection, "changed",
                           G_CALLBACK (prefs_locations_changed), cd);
 
-        g_signal_connect (G_OBJECT (cd->prefs_window), "delete-event",
+        g_signal_connect (cd->prefs_window, "delete-event",
                           G_CALLBACK (prefs_hide_event), cd);
 
-        g_signal_connect (G_OBJECT (prefs_close_button), "clicked",
+        g_signal_connect (prefs_close_button, "clicked",
                           G_CALLBACK (prefs_hide), cd);
 
-        g_signal_connect (G_OBJECT (prefs_help_button), "clicked",
+        g_signal_connect (prefs_help_button, "clicked",
                           G_CALLBACK (prefs_help), cd);
 
         cd->prefs_location_remove_button = _clock_get_widget (cd, "prefs-locations-remove-button");
 
-        g_signal_connect (G_OBJECT (cd->prefs_location_remove_button), "clicked",
+        g_signal_connect (cd->prefs_location_remove_button, "clicked",
                           G_CALLBACK (run_prefs_locations_remove), cd);
 
         cd->prefs_location_add_button = _clock_get_widget (cd, "prefs-locations-add-button");
 
-        g_signal_connect (G_OBJECT (cd->prefs_location_add_button), "clicked",
+        g_signal_connect (cd->prefs_location_add_button, "clicked",
                           G_CALLBACK (run_prefs_locations_add), cd);
 
         cd->prefs_location_edit_button = _clock_get_widget (cd, "prefs-locations-edit-button");
 
-        g_signal_connect (G_OBJECT (cd->prefs_location_edit_button), "clicked",
+        g_signal_connect (cd->prefs_location_edit_button, "clicked",
                           G_CALLBACK (run_prefs_locations_edit), cd);
 
         edit_window = _clock_get_widget (cd, "edit-location-window");
@@ -3223,7 +3221,7 @@ ensure_prefs_window_is_created (ClockData *cd)
         gtk_window_set_transient_for (GTK_WINDOW (edit_window),
                                       GTK_WINDOW (cd->prefs_window));
 
-        g_signal_connect (G_OBJECT (edit_window), "delete-event",
+        g_signal_connect (edit_window, "delete-event",
                           G_CALLBACK (edit_hide_event), cd);
 
         edit_cancel_button = _clock_get_widget (cd, "edit-location-cancel-button");
@@ -3239,9 +3237,9 @@ ensure_prefs_window_is_created (ClockData *cd)
         gtk_label_set_mnemonic_widget (GTK_LABEL (location_name_label),
                                        GTK_WIDGET (cd->location_entry));
 
-        g_signal_connect (G_OBJECT (cd->location_entry), "notify::location",
+        g_signal_connect (cd->location_entry, "notify::location",
                           G_CALLBACK (location_changed), cd);
-        g_signal_connect (G_OBJECT (cd->location_entry), "changed",
+        g_signal_connect (cd->location_entry, "changed",
                           G_CALLBACK (location_name_changed), cd);
 
         zone_box = _clock_get_widget (cd, "edit-location-timezone-box");
@@ -3251,15 +3249,15 @@ ensure_prefs_window_is_created (ClockData *cd)
         gtk_label_set_mnemonic_widget (GTK_LABEL (timezone_label),
                                        GTK_WIDGET (cd->zone_combo));
 
-        g_signal_connect (G_OBJECT (cd->zone_combo), "notify::tzid",
+        g_signal_connect (cd->zone_combo, "notify::tzid",
                           G_CALLBACK (location_timezone_changed), cd);
 
         mateweather_location_unref (world);
 
-        g_signal_connect (G_OBJECT (edit_cancel_button), "clicked",
+        g_signal_connect (edit_cancel_button, "clicked",
                           G_CALLBACK (edit_hide), cd);
 
-        g_signal_connect (G_OBJECT (edit_ok_button), "clicked",
+        g_signal_connect (edit_ok_button, "clicked",
                           G_CALLBACK (run_prefs_edit_save), cd);
 
         /* Set up the time setting section */
@@ -3337,8 +3335,7 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 
         GtkWidget *notebook = _clock_get_widget (cd, "notebook");
         gtk_widget_add_events (notebook, GDK_SCROLL_MASK);
-        g_signal_connect (GTK_NOTEBOOK (notebook),
-                          "scroll-event",
+        g_signal_connect (notebook, "scroll-event",
                           G_CALLBACK (on_notebook_scroll_event),
                           NULL);
 
