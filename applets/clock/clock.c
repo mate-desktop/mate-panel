@@ -85,6 +85,8 @@
 #define KEY_TEMPERATURE_UNIT        "temperature-unit"
 #define KEY_SPEED_UNIT                "speed-unit"
 
+#define _clock_get_widget(x,y) (GTK_WIDGET (gtk_builder_get_object ((x)->builder, (y))))
+
 enum {
         COL_CITY_NAME = 0,
         COL_CITY_TZ,
@@ -240,13 +242,6 @@ clock_box_class_init (ClockBoxClass *klass)
 }
 
 /* Clock */
-
-static inline GtkWidget *
-_clock_get_widget (ClockData  *cd,
-                   const char *name)
-{
-        return GTK_WIDGET (gtk_builder_get_object (cd->builder, name));
-}
 
 static void
 unfix_size (ClockData *cd)
