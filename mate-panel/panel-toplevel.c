@@ -2514,7 +2514,7 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)))) {
 		if (toplevel->priv->state == PANEL_STATE_NORMAL ||
-		toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
+		    toplevel->priv->state != PANEL_STATE_AUTO_HIDDEN) {
 			panel_struts_update_toplevel_geometry (toplevel,
 							&toplevel->priv->geometry.x,
 							&toplevel->priv->geometry.y,
