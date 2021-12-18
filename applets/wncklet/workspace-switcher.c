@@ -658,8 +658,8 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 
 	g_signal_connect(G_OBJECT(pager->applet), "realize", G_CALLBACK(applet_realized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "unrealize", G_CALLBACK(applet_unrealized), pager);
-	g_signal_connect(G_OBJECT(pager->applet), "change_orient", G_CALLBACK(applet_change_orient), pager);
-	g_signal_connect(G_OBJECT(pager->applet), "change_background", G_CALLBACK(applet_change_background), pager);
+	g_signal_connect(G_OBJECT(pager->applet), "change-orient", G_CALLBACK(applet_change_orient), pager);
+	g_signal_connect(G_OBJECT(pager->applet), "change-background", G_CALLBACK(applet_change_background), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "style-updated", G_CALLBACK(applet_style_updated), context);
 
 	gtk_widget_show(pager->pager);
@@ -1038,7 +1038,7 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 	gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
 
 	g_signal_connect(pager->properties_dialog, "destroy", G_CALLBACK(properties_dialog_destroyed), pager);
-	g_signal_connect(pager->properties_dialog, "delete_event", G_CALLBACK(delete_event), pager);
+	g_signal_connect(pager->properties_dialog, "delete-event", G_CALLBACK(delete_event), pager);
 	g_signal_connect(pager->properties_dialog, "response", G_CALLBACK(response_cb), pager);
 
 	g_signal_connect(WID("done_button"), "clicked", (GCallback) close_dialog, pager);
@@ -1062,7 +1062,7 @@ static void setup_dialog(GtkBuilder* builder, PagerData* pager)
 
 	g_signal_connect (pager->num_workspaces_spin, "value-changed", G_CALLBACK (on_num_workspaces_value_changed), pager);
 
-	g_signal_connect(G_OBJECT(pager->workspaces_tree), "focus_out_event", (GCallback) workspaces_tree_focused_out, pager);
+	g_signal_connect(G_OBJECT(pager->workspaces_tree), "focus-out-event", (GCallback) workspaces_tree_focused_out, pager);
 
 	pager->workspaces_store = gtk_list_store_new(1, G_TYPE_STRING, NULL);
 	update_workspaces_model(pager);

@@ -1368,13 +1368,13 @@ panel_setup (PanelToplevel *toplevel)
 
 	panel_widget_setup (panel_widget);
 
-	g_signal_connect (toplevel, "drag_data_received",
+	g_signal_connect (toplevel, "drag-data-received",
 			  G_CALLBACK (drag_data_recieved_cb), NULL);
-	g_signal_connect (toplevel, "drag_motion",
+	g_signal_connect (toplevel, "drag-motion",
 			  G_CALLBACK (drag_motion_cb), NULL);
-	g_signal_connect (toplevel, "drag_leave",
+	g_signal_connect (toplevel, "drag-leave",
 			  G_CALLBACK (drag_leave_cb), NULL);
-	g_signal_connect (toplevel, "drag_drop",
+	g_signal_connect (toplevel, "drag-drop",
 			  G_CALLBACK (drag_drop_cb), NULL);
 
 	gtk_drag_dest_set (GTK_WIDGET (toplevel), 0, NULL, 0, 0);

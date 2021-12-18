@@ -218,7 +218,7 @@ static gboolean window_menu_key_press_event(GtkWidget* widget, GdkEventKey* even
 static gboolean filter_button_press(GtkWidget* widget, GdkEventButton* event, gpointer data)
 {
 	if (event->button != 1)
-		g_signal_stop_emission_by_name(widget, "button_press_event");
+		g_signal_stop_emission_by_name(widget, "button-press-event");
 
 	return FALSE;
 }
@@ -239,7 +239,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	window_menu->orient = mate_panel_applet_get_orient(applet);
 
 	g_signal_connect(window_menu->applet, "destroy", G_CALLBACK(window_menu_destroy), window_menu);
-	g_signal_connect(window_menu->applet, "key_press_event", G_CALLBACK(window_menu_key_press_event), window_menu);
+	g_signal_connect(window_menu->applet, "key-press-event", G_CALLBACK(window_menu_key_press_event), window_menu);
 
 	action_group = gtk_action_group_new("WindowMenu Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
@@ -277,7 +277,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	g_signal_connect_after(G_OBJECT(window_menu->applet), "focus-out-event", G_CALLBACK(gtk_widget_queue_draw), window_menu);
 	g_signal_connect_after(G_OBJECT(window_menu->selector), "draw", G_CALLBACK(window_menu_on_draw), window_menu);
 
-	g_signal_connect(G_OBJECT(window_menu->selector), "button_press_event", G_CALLBACK(filter_button_press), window_menu);
+	g_signal_connect(G_OBJECT(window_menu->selector), "button-press-event", G_CALLBACK(filter_button_press), window_menu);
 
 	gtk_widget_show_all(GTK_WIDGET(window_menu->applet));
 

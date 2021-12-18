@@ -207,7 +207,7 @@ main (int argc, char * argv[])
 			dialogs ++;
 			g_signal_connect (G_OBJECT (dlg), "destroy",
 					  G_CALLBACK (dialog_destroyed), NULL);
-			g_signal_connect (G_OBJECT (dlg), "error_reported",
+			g_signal_connect (G_OBJECT (dlg), "error-reported",
 					  G_CALLBACK (error_reported), NULL);
 			gtk_widget_show (dlg);
 		}

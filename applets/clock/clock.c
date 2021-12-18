@@ -854,9 +854,9 @@ create_calendar (ClockData *cd)
         g_signal_connect (window, "edit-locations",
                           G_CALLBACK (edit_locations_cb), cd);
 
-        g_signal_connect (window, "delete_event",
+        g_signal_connect (window, "delete-event",
                           G_CALLBACK (delete_event), cd->panel_button);
-        g_signal_connect (window, "key_press_event",
+        g_signal_connect (window, "key-press-event",
                           G_CALLBACK (close_on_escape), cd->panel_button);
 
         /*Name this window so the default theme can be overridden in panel theme,
@@ -1287,7 +1287,7 @@ do_not_eat_button_press (GtkWidget      *widget,
                          GdkEventButton *event)
 {
         if (event->button != 1)
-                g_signal_stop_emission_by_name (widget, "button_press_event");
+                g_signal_stop_emission_by_name (widget, "button-press-event");
 
         return FALSE;
 }
@@ -1365,11 +1365,11 @@ create_main_clock_label (ClockData *cd)
         label = gtk_label_new (NULL);
 /*Fixme-this is invalid for labels with any recent GTK3 version, maybe all of them*/
 /*
-        g_signal_connect (label, "size_request",
+        g_signal_connect (label, "size-request",
                           G_CALLBACK (clock_size_request),
                           cd);
 */
-        g_signal_connect_swapped (label, "style_set",
+        g_signal_connect_swapped (label, "style-set",
                                   G_CALLBACK (unfix_size),
                                   cd);
         gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
@@ -1415,7 +1415,7 @@ create_clock_widget (ClockData *cd)
 {
         /* Main toggle button */
         cd->panel_button = create_main_clock_button ();
-        g_signal_connect (cd->panel_button, "button_press_event",
+        g_signal_connect (cd->panel_button, "button-press-event",
                           G_CALLBACK (do_not_eat_button_press), NULL);
         g_signal_connect (cd->panel_button, "toggled",
                           G_CALLBACK (toggle_calendar), cd);
@@ -1844,7 +1844,7 @@ ensure_time_settings_window_is_created (ClockData *cd)
                 return;
 
         cd->set_time_window = _clock_get_widget (cd, "set-time-window");
-        g_signal_connect (cd->set_time_window, "delete_event",
+        g_signal_connect (cd->set_time_window, "delete-event",
                           G_CALLBACK (delete_time_settings), cd);
 
         cd->calendar = _clock_get_widget (cd, "calendar");
@@ -2515,12 +2515,12 @@ fill_clock_applet (MatePanelApplet *applet)
            since we need to get an initial change_orient signal to set our
            initial oriantation, and we get that during the _add call */
         g_signal_connect (G_OBJECT (cd->applet),
-                          "change_orient",
+                          "change-orient",
                           G_CALLBACK (applet_change_orient),
                           cd);
 
         g_signal_connect (G_OBJECT (cd->panel_button),
-                          "size_allocate",
+                          "size-allocate",
                           G_CALLBACK (panel_button_change_pixel_size),
                           cd);
 
@@ -2552,7 +2552,7 @@ fill_clock_applet (MatePanelApplet *applet)
 
         /* Make sure the weather icon gets updated when the panel size changes*/
         g_signal_connect (cd->applet,
-                          "change_size",
+                          "change-size",
                           G_CALLBACK (weather_icon_updated_cb),
                           cd);
 
@@ -2909,7 +2909,7 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
 
         if (g_object_get_data (G_OBJECT (edit_window), "delete-handler") == NULL) {
                 g_object_set_data (G_OBJECT (edit_window), "delete-handler",
-                                   GINT_TO_POINTER (g_signal_connect (edit_window, "delete_event", G_CALLBACK (edit_delete), cd)));
+                                   GINT_TO_POINTER (g_signal_connect (edit_window, "delete-event", G_CALLBACK (edit_delete), cd)));
         }
 
         location_update_ok_sensitivity (cd);
@@ -3198,7 +3198,7 @@ ensure_prefs_window_is_created (ClockData *cd)
         g_signal_connect (G_OBJECT (selection), "changed",
                           G_CALLBACK (prefs_locations_changed), cd);
 
-        g_signal_connect (G_OBJECT (cd->prefs_window), "delete_event",
+        g_signal_connect (G_OBJECT (cd->prefs_window), "delete-event",
                           G_CALLBACK (prefs_hide_event), cd);
 
         g_signal_connect (G_OBJECT (prefs_close_button), "clicked",
@@ -3227,7 +3227,7 @@ ensure_prefs_window_is_created (ClockData *cd)
         gtk_window_set_transient_for (GTK_WINDOW (edit_window),
                                       GTK_WINDOW (cd->prefs_window));
 
-        g_signal_connect (G_OBJECT (edit_window), "delete_event",
+        g_signal_connect (G_OBJECT (edit_window), "delete-event",
                           G_CALLBACK (edit_hide_event), cd);
 
         edit_cancel_button = _clock_get_widget (cd, "edit-location-cancel-button");

@@ -128,7 +128,7 @@ na_fixed_tip_init (NaFixedTip *fixedtip)
 
   gtk_widget_add_events (GTK_WIDGET (fixedtip), GDK_BUTTON_PRESS_MASK);
 
-  g_signal_connect (fixedtip, "button_press_event",
+  g_signal_connect (fixedtip, "button-press-event",
                     G_CALLBACK (button_press_handler), NULL);
 
   fixedtip->priv->orientation = GTK_ORIENTATION_HORIZONTAL;

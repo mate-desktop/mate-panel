@@ -443,16 +443,16 @@ create_drawer_applet (PanelToplevel    *toplevel,
     set_tooltip_and_name (drawer, tooltip);
 
     g_signal_connect (drawer->button, "clicked", G_CALLBACK (drawer_click), drawer);
-    g_signal_connect (drawer->button, "key_press_event", G_CALLBACK (key_press_drawer), drawer);
-    g_signal_connect (drawer->toplevel, "key_press_event", G_CALLBACK (key_press_drawer_widget), drawer);
+    g_signal_connect (drawer->button, "key-press-event", G_CALLBACK (key_press_drawer), drawer);
+    g_signal_connect (drawer->toplevel, "key-press-event", G_CALLBACK (key_press_drawer_widget), drawer);
 
     gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0);
 
-    g_signal_connect (drawer->button, "drag_data_get", G_CALLBACK (drag_data_get_cb), drawer);
-    g_signal_connect (drawer->button, "drag_motion", G_CALLBACK (drag_motion_cb), drawer);
-    g_signal_connect (drawer->button, "drag_drop", G_CALLBACK (drag_drop_cb), drawer);
-    g_signal_connect (drawer->button, "drag_data_received", G_CALLBACK (drag_data_received_cb), drawer);
-    g_signal_connect (drawer->button, "drag_leave", G_CALLBACK (drag_leave_cb), drawer);
+    g_signal_connect (drawer->button, "drag-data-get", G_CALLBACK (drag_data_get_cb), drawer);
+    g_signal_connect (drawer->button, "drag-motion", G_CALLBACK (drag_motion_cb), drawer);
+    g_signal_connect (drawer->button, "drag-drop", G_CALLBACK (drag_drop_cb), drawer);
+    g_signal_connect (drawer->button, "drag-data-received", G_CALLBACK (drag_data_received_cb), drawer);
+    g_signal_connect (drawer->button, "drag-leave", G_CALLBACK (drag_leave_cb), drawer);
 
     g_signal_connect (drawer->button, "destroy", G_CALLBACK (destroy_drawer), drawer);
     g_signal_connect (drawer->toplevel, "destroy", G_CALLBACK (toplevel_destroyed), drawer);
@@ -534,7 +534,7 @@ load_drawer_applet (char          *toplevel_id,
         return;
     }
 
-    g_signal_connect_after (drawer->button, "size_allocate", G_CALLBACK (drawer_button_size_allocated), drawer);
+    g_signal_connect_after (drawer->button, "size-allocate", G_CALLBACK (drawer_button_size_allocated), drawer);
 
     panel_widget_add_forbidden (panel_toplevel_get_panel_widget (drawer->toplevel));
     panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);

@@ -2088,7 +2088,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 							       G_PARAM_READWRITE));
 
 	mate_panel_applet_signals [CHANGE_ORIENT] =
-                g_signal_new ("change_orient",
+                g_signal_new ("change-orient",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (MatePanelAppletClass, change_orient),
@@ -2100,7 +2100,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 			      G_TYPE_UINT);
 
 	mate_panel_applet_signals [CHANGE_SIZE] =
-                g_signal_new ("change_size",
+                g_signal_new ("change-size",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (MatePanelAppletClass, change_size),
@@ -2112,7 +2112,7 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 			      G_TYPE_INT);
 
 	mate_panel_applet_signals [CHANGE_BACKGROUND] =
-                g_signal_new ("change_background",
+                g_signal_new ("change-background",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (MatePanelAppletClass, change_background),

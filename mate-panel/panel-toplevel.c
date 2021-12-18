@@ -1218,9 +1218,9 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 
 	g_signal_connect_swapped (button, "clicked",
 				  G_CALLBACK (panel_toplevel_hide_button_clicked), toplevel);
-	g_signal_connect_swapped (button, "button_press_event",
+	g_signal_connect_swapped (button, "button-press-event",
 				  G_CALLBACK (panel_toplevel_hide_button_event), toplevel);
-	g_signal_connect_swapped (button, "button_release_event",
+	g_signal_connect_swapped (button, "button-release-event",
 				  G_CALLBACK (panel_toplevel_hide_button_event), toplevel);
 
 	gtk_grid_attach (GTK_GRID (toplevel->priv->grid), button, left, top, 1, 1);
@@ -2824,7 +2824,7 @@ panel_toplevel_popup_panel_menu (PanelToplevel *toplevel)
 {
 	gboolean retval = FALSE;
 
-	g_signal_emit_by_name (toplevel, "popup_menu", &retval);
+	g_signal_emit_by_name (toplevel, "popup-menu", &retval);
 
 	return retval;
 }

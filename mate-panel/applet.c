@@ -1309,11 +1309,11 @@ mate_panel_applet_register (GtkWidget       *applet,
 
 	if (BUTTON_IS_WIDGET (applet) ||
 	    gtk_widget_get_has_window (applet)) {
-		g_signal_connect (applet, "button_press_event",
+		g_signal_connect (applet, "button-press-event",
 				  G_CALLBACK (applet_button_press),
 				  info);
 
-		g_signal_connect (applet, "popup_menu",
+		g_signal_connect (applet, "popup-menu",
 				  G_CALLBACK (applet_popup_menu),
 				  info);
 	}

@@ -501,7 +501,7 @@ static void display_preferences_dialog(GtkAction* action, FishApplet* fish)
 			   NULL /* label_post */,
 			   FISH_ROTATE_KEY /* key */);
 
-	g_signal_connect (fish->preferences_dialog, "delete_event",
+	g_signal_connect (fish->preferences_dialog, "delete-event",
 			  G_CALLBACK (delete_event), fish);
 	g_signal_connect (fish->preferences_dialog, "response",
 			  G_CALLBACK (handle_response), fish);
@@ -855,7 +855,7 @@ static void display_fortune_dialog(FishApplet* fish)
 		gtk_dialog_set_default_response (
 			GTK_DIALOG (fish->fortune_dialog), GTK_RESPONSE_CLOSE);
 
-		g_signal_connect (fish->fortune_dialog, "delete_event",
+		g_signal_connect (fish->fortune_dialog, "delete-event",
 				  G_CALLBACK (delete_event), fish);
 		g_signal_connect (fish->fortune_dialog, "response",
 				  G_CALLBACK (handle_fortune_response), fish);
@@ -1660,15 +1660,15 @@ static void setup_fish_widget(FishApplet* fish)
 				       GDK_LEAVE_NOTIFY_MASK |
 				       GDK_BUTTON_RELEASE_MASK);
 
-	g_signal_connect_swapped (widget, "enter_notify_event",
+	g_signal_connect_swapped (widget, "enter-notify-event",
 				  G_CALLBACK (fish_enter_notify), fish);
-	g_signal_connect_swapped (widget, "leave_notify_event",
+	g_signal_connect_swapped (widget, "leave-notify-event",
 				  G_CALLBACK (fish_leave_notify), fish);
-	g_signal_connect_swapped (widget, "button_release_event",
+	g_signal_connect_swapped (widget, "button-release-event",
 				  G_CALLBACK (handle_button_release), fish);
 
 	gtk_widget_add_events (fish->drawing_area, GDK_BUTTON_RELEASE_MASK);
-	g_signal_connect_swapped (fish->drawing_area, "button_release_event",
+	g_signal_connect_swapped (fish->drawing_area, "button-release-event",
 				  G_CALLBACK (handle_button_release), fish);
 
 	load_fish_image (fish);
@@ -1680,7 +1680,7 @@ static void setup_fish_widget(FishApplet* fish)
 	set_tooltip (fish);
 	set_ally_name_desc (GTK_WIDGET (fish), fish);
 
-	g_signal_connect (fish, "key_press_event",
+	g_signal_connect (fish, "key-press-event",
 			  G_CALLBACK (handle_keypress), fish);
 
 	gtk_widget_show_all (widget);
