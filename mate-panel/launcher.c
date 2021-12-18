@@ -530,15 +530,15 @@ create_launcher (const char *location)
 	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   0, NULL, 0, 0);
 
-	g_signal_connect (launcher->button, "drag_data_get",
+	g_signal_connect (launcher->button, "drag-data-get",
 			   G_CALLBACK (drag_data_get_cb), launcher);
-	g_signal_connect (launcher->button, "drag_data_received",
+	g_signal_connect (launcher->button, "drag-data-received",
 			   G_CALLBACK (drag_data_received_cb), launcher);
-	g_signal_connect (launcher->button, "drag_motion",
+	g_signal_connect (launcher->button, "drag-motion",
 			   G_CALLBACK (drag_motion_cb), launcher);
-	g_signal_connect (launcher->button, "drag_drop",
+	g_signal_connect (launcher->button, "drag-drop",
 			   G_CALLBACK (drag_drop_cb), launcher);
-	g_signal_connect (launcher->button, "drag_leave",
+	g_signal_connect (launcher->button, "drag-leave",
 			   G_CALLBACK (drag_leave_cb), launcher);
 	g_signal_connect_swapped (launcher->button, "clicked",
 				  G_CALLBACK (clicked_cb), launcher);
@@ -821,13 +821,13 @@ launcher_properties (Launcher  *launcher)
 	g_signal_connect (launcher->prop_dialog, "changed",
 			  G_CALLBACK (launcher_changed), launcher);
 
-	g_signal_connect (launcher->prop_dialog, "command_changed",
+	g_signal_connect (launcher->prop_dialog, "command-changed",
 			  G_CALLBACK (launcher_command_changed), launcher);
 
 	g_signal_connect (launcher->prop_dialog, "saved",
 			  G_CALLBACK (launcher_saved), launcher);
 
-	g_signal_connect (launcher->prop_dialog, "error_reported",
+	g_signal_connect (launcher->prop_dialog, "error-reported",
 			  G_CALLBACK (launcher_error_reported), NULL);
 
 	g_signal_connect (launcher->prop_dialog, "destroy",
@@ -1014,7 +1014,7 @@ ask_about_launcher (const char  *file,
 	g_signal_connect (G_OBJECT (dialog), "saved",
 			  G_CALLBACK (launcher_new_saved), NULL);
 
-	g_signal_connect (G_OBJECT (dialog), "error_reported",
+	g_signal_connect (G_OBJECT (dialog), "error-reported",
 			  G_CALLBACK (launcher_error_reported), NULL);
 
 	gtk_window_set_screen (GTK_WINDOW (dialog),

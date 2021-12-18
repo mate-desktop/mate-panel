@@ -356,7 +356,7 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 	gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 	                            &color);
 
-	g_signal_connect_swapped (dialog->color_button, "color_set",
+	g_signal_connect_swapped (dialog->color_button, "color-set",
 				  G_CALLBACK (panel_properties_dialog_color_changed),
 				  dialog);
 

@@ -168,7 +168,7 @@ panel_create_menu (void)
 
 	gtk_widget_set_name (retval, "mate-panel-main-menu");
 
-	g_signal_connect (retval, "key_press_event",
+	g_signal_connect (retval, "key-press-event",
 			  G_CALLBACK (panel_menu_key_press_handler),
 			  NULL);
 
@@ -186,7 +186,7 @@ create_empty_menu (void)
 
 	/* intercept all right button clicks makes sure they don't
 	   go to the object itself */
-	g_signal_connect (retval, "button_press_event",
+	g_signal_connect (retval, "button-press-event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	return retval;
@@ -807,14 +807,14 @@ setup_uri_drag (GtkWidget  *menuitem,
 	if (icon != NULL)
 		gtk_drag_source_set_icon_name (menuitem, icon);
 
-	g_signal_connect (G_OBJECT (menuitem), "drag_begin",
+	g_signal_connect (G_OBJECT (menuitem), "drag-begin",
 			  G_CALLBACK (drag_begin_menu_cb), NULL);
-	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
+	g_signal_connect_data (G_OBJECT (menuitem), "drag-data-get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (uri),
 			       (GClosureNotify) G_CALLBACK (g_free),
 			       0 /* connect_flags */);
-	g_signal_connect (G_OBJECT (menuitem), "drag_end",
+	g_signal_connect (G_OBJECT (menuitem), "drag-end",
 			  G_CALLBACK (drag_end_menu_cb), NULL);
 }
 
@@ -838,14 +838,14 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 		gtk_drag_source_set_icon_name (menuitem,
 					       panel_action_get_icon_name (type));
 
-	g_signal_connect (G_OBJECT (menuitem), "drag_begin",
+	g_signal_connect (G_OBJECT (menuitem), "drag-begin",
 			  G_CALLBACK (drag_begin_menu_cb), NULL);
-	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
+	g_signal_connect_data (G_OBJECT (menuitem), "drag-data-get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (panel_action_get_drag_id (type)),
 			       (GClosureNotify) G_CALLBACK (g_free),
 			       0 /* connect_flags */);
-	g_signal_connect (G_OBJECT (menuitem), "drag_end",
+	g_signal_connect (G_OBJECT (menuitem), "drag-end",
 			  G_CALLBACK (drag_end_menu_cb), NULL);
 }
 
@@ -944,7 +944,7 @@ create_fake_menu (MateMenuTreeDirectory *directory)
 				GUINT_TO_POINTER (idle_id),
 				remove_submenu_to_display_idle);
 
-	g_signal_connect (menu, "button_press_event",
+	g_signal_connect (menu, "button-press-event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 /* Fix any failures of compiz/other wm's to communicate with gtk for transparency */
@@ -1093,7 +1093,7 @@ create_menuitem (GtkWidget          *menu,
 		}
 	}
 
-	g_signal_connect_after (menuitem, "button_press_event",
+	g_signal_connect_after (menuitem, "button-press-event",
 				G_CALLBACK (menuitem_button_press_event), NULL);
 
 	if (!panel_lockdown_get_locked_down ()) {
@@ -1117,11 +1117,11 @@ create_menuitem (GtkWidget          *menu,
 			}
 		}
 
-		g_signal_connect (G_OBJECT (menuitem), "drag_begin",
+		g_signal_connect (G_OBJECT (menuitem), "drag-begin",
 				  G_CALLBACK (drag_begin_menu_cb), NULL);
-		g_signal_connect (menuitem, "drag_data_get",
+		g_signal_connect (menuitem, "drag-data-get",
 				  G_CALLBACK (drag_data_get_menu_cb), entry);
-		g_signal_connect (menuitem, "drag_end",
+		g_signal_connect (menuitem, "drag-end",
 				  G_CALLBACK (drag_end_menu_cb), NULL);
 	}
 
@@ -1255,7 +1255,7 @@ create_applications_menu (const char *menu_file,
 				GUINT_TO_POINTER (idle_id),
 				remove_submenu_to_display_idle);
 
-	g_signal_connect (menu, "button_press_event",
+	g_signal_connect (menu, "button-press-event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	g_signal_connect (tree, "changed", G_CALLBACK (handle_matemenu_tree_changed), menu);

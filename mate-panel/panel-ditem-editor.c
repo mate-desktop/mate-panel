@@ -427,7 +427,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *klass)
 			      G_TYPE_STRING);
 
 	ditem_edit_signals[COMMAND_CHANGED] =
-		g_signal_new ("command_changed",
+		g_signal_new ("command-changed",
 			      G_TYPE_FROM_CLASS (gobject_class),
 			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (PanelDItemEditorClass,
@@ -463,7 +463,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *klass)
 			      G_TYPE_STRING);
 
 	ditem_edit_signals[ERROR_REPORTED] =
-		g_signal_new ("error_reported",
+		g_signal_new ("error-reported",
 			      G_TYPE_FROM_CLASS (gobject_class),
 			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (PanelDItemEditorClass,

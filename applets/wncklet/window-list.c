@@ -808,8 +808,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 		wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
 
 #ifdef HAVE_WINDOW_PREVIEWS
-		g_signal_connect(G_OBJECT(tasklist->tasklist), "task_enter_notify", G_CALLBACK(applet_enter_notify_event), tasklist);
-		g_signal_connect(G_OBJECT(tasklist->tasklist), "task_leave_notify", G_CALLBACK(applet_leave_notify_event), tasklist);
+		g_signal_connect(G_OBJECT(tasklist->tasklist), "task-enter-notify", G_CALLBACK(applet_enter_notify_event), tasklist);
+		g_signal_connect(G_OBJECT(tasklist->tasklist), "task-leave-notify", G_CALLBACK(applet_leave_notify_event), tasklist);
 #endif /* HAVE_WINDOW_PREVIEWS */
 	}
 	else
@@ -830,14 +830,14 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	tasklist_apply_orientation(tasklist);
 
 	g_signal_connect(G_OBJECT(tasklist->tasklist), "destroy", G_CALLBACK(destroy_tasklist), tasklist);
-	g_signal_connect(G_OBJECT(tasklist->applet), "size_allocate", G_CALLBACK(applet_size_allocate), tasklist);
+	g_signal_connect(G_OBJECT(tasklist->applet), "size-allocate", G_CALLBACK(applet_size_allocate), tasklist);
 
 	gtk_container_add(GTK_CONTAINER(tasklist->applet), tasklist->tasklist);
 
 	g_signal_connect(G_OBJECT(tasklist->applet), "realize", G_CALLBACK(applet_realized), tasklist);
-	g_signal_connect(G_OBJECT(tasklist->applet), "change_orient", G_CALLBACK(applet_change_orient), tasklist);
-	g_signal_connect(G_OBJECT(tasklist->applet), "change_size", G_CALLBACK(applet_change_pixel_size), tasklist);
-	g_signal_connect(G_OBJECT(tasklist->applet), "change_background", G_CALLBACK(applet_change_background), tasklist);
+	g_signal_connect(G_OBJECT(tasklist->applet), "change-orient", G_CALLBACK(applet_change_orient), tasklist);
+	g_signal_connect(G_OBJECT(tasklist->applet), "change-size", G_CALLBACK(applet_change_pixel_size), tasklist);
+	g_signal_connect(G_OBJECT(tasklist->applet), "change-background", G_CALLBACK(applet_change_background), tasklist);
 
 	action_group = gtk_action_group_new("Tasklist Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);

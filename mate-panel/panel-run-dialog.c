@@ -1769,7 +1769,7 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 			   GDK_ACTION_COPY);
 	gtk_drag_dest_add_uri_targets (dialog->combobox);
 
-	g_signal_connect (dialog->combobox, "drag_data_received",
+	g_signal_connect (dialog->combobox, "drag-data-received",
 			  G_CALLBACK (entry_drag_data_received), dialog);
 }
 
@@ -1912,7 +1912,7 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 			  G_CALLBACK (panel_run_dialog_screen_changed),
 			  dialog);
 
-	g_signal_connect (dialog->run_dialog, "drag_data_get",
+	g_signal_connect (dialog->run_dialog, "drag-data-get",
 			  G_CALLBACK (pixmap_drag_data_get),
 			  dialog);
 }

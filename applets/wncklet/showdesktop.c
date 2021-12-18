@@ -315,7 +315,7 @@ static gboolean do_not_eat_button_press(GtkWidget* widget, GdkEventButton* event
 {
 	if (event->button != 1)
 	{
-		g_signal_stop_emission_by_name(widget, "button_press_event");
+		g_signal_stop_emission_by_name(widget, "button-press-event");
 	}
 
 	return FALSE;
@@ -441,7 +441,7 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 	atk_obj = gtk_widget_get_accessible(sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));
-	g_signal_connect(G_OBJECT(sdd->button), "button_press_event", G_CALLBACK(do_not_eat_button_press), NULL);
+	g_signal_connect(G_OBJECT(sdd->button), "button-press-event", G_CALLBACK(do_not_eat_button_press), NULL);
 
 	g_signal_connect(G_OBJECT(sdd->button), "toggled", G_CALLBACK(button_toggled_callback), sdd);
 
@@ -449,13 +449,13 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	gtk_container_add(GTK_CONTAINER(sdd->button), sdd->image);
 	gtk_container_add(GTK_CONTAINER(sdd->applet), sdd->button);
 
-	g_signal_connect (G_OBJECT(sdd->button), "size_allocate", G_CALLBACK(button_size_allocated), sdd);
+	g_signal_connect (G_OBJECT(sdd->button), "size-allocate", G_CALLBACK(button_size_allocated), sdd);
 
 	/* FIXME: Update this comment. */
 	/* we have to bind change_orient before we do applet_widget_add
 	   since we need to get an initial change_orient signal to set our
 	   initial oriantation, and we get that during the _add call */
-	g_signal_connect(G_OBJECT (sdd->applet), "change_orient", G_CALLBACK (applet_change_orient), sdd);
+	g_signal_connect(G_OBJECT (sdd->applet), "change-orient", G_CALLBACK (applet_change_orient), sdd);
 
 	action_group = gtk_action_group_new("ShowDesktop Applet Actions");
 	gtk_action_group_set_translation_domain(action_group, GETTEXT_PACKAGE);
@@ -469,8 +469,8 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 
 	gtk_drag_dest_set(GTK_WIDGET(sdd->button), 0, NULL, 0, 0);
 
-	g_signal_connect(G_OBJECT(sdd->button), "drag_motion", G_CALLBACK (button_drag_motion), sdd);
-	g_signal_connect(G_OBJECT(sdd->button), "drag_leave", G_CALLBACK (button_drag_leave), sdd);
+	g_signal_connect(G_OBJECT(sdd->button), "drag-motion", G_CALLBACK (button_drag_motion), sdd);
+	g_signal_connect(G_OBJECT(sdd->button), "drag-leave", G_CALLBACK (button_drag_leave), sdd);
 
 	gtk_widget_show_all(sdd->applet);
 

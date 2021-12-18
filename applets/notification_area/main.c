@@ -199,7 +199,7 @@ ensure_prefs_window_is_created (NaTrayApplet *applet)
   g_signal_connect_swapped (applet->priv->dialog->preferences_dialog, "response",
                             G_CALLBACK (na_preferences_dialog_response), applet);
 
-  g_signal_connect (G_OBJECT (applet->priv->dialog->preferences_dialog), "delete_event",
+  g_signal_connect (G_OBJECT (applet->priv->dialog->preferences_dialog), "delete-event",
                     G_CALLBACK (na_preferences_dialog_hide_event), applet);
 }
 

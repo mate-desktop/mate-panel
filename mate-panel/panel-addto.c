@@ -339,7 +339,7 @@ panel_addto_setup_drag (GtkTreeView          *tree_view,
 						GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 						target, 1, GDK_ACTION_COPY);
 
-	g_signal_connect_data (G_OBJECT (tree_view), "drag_data_get",
+	g_signal_connect_data (G_OBJECT (tree_view), "drag-data-get",
 			       G_CALLBACK (panel_addto_drag_data_get_cb),
 			       g_strdup (text),
 			       (GClosureNotify) G_CALLBACK (g_free),

@@ -452,16 +452,16 @@ na_tray_constructor (GType type,
         {
           trays_screens [screen_number].tray_manager = tray_manager;
 
-          g_signal_connect (tray_manager, "tray_icon_added",
+          g_signal_connect (tray_manager, "tray-icon-added",
                             G_CALLBACK (tray_added),
                             &trays_screens [screen_number]);
-          g_signal_connect (tray_manager, "tray_icon_removed",
+          g_signal_connect (tray_manager, "tray-icon-removed",
                             G_CALLBACK (tray_removed),
                             &trays_screens [screen_number]);
-          g_signal_connect (tray_manager, "message_sent",
+          g_signal_connect (tray_manager, "message-sent",
                             G_CALLBACK (message_sent),
                             &trays_screens [screen_number]);
-          g_signal_connect (tray_manager, "message_cancelled",
+          g_signal_connect (tray_manager, "message-cancelled",
                             G_CALLBACK (message_cancelled),
                             &trays_screens [screen_number]);
 

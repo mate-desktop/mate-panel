@@ -204,7 +204,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	gtk_recent_chooser_set_limit (GTK_RECENT_CHOOSER (recent_menu),
 				      recent_items_limit);
 
-	g_signal_connect (G_OBJECT (recent_menu), "button_press_event",
+	g_signal_connect (G_OBJECT (recent_menu), "button-press-event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (top_menu), menu_item);
