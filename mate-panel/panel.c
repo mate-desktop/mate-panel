@@ -1321,19 +1321,19 @@ drag_data_recieved_cb (GtkWidget	*widget,
 static void
 panel_widget_setup(PanelWidget *panel)
 {
-	g_signal_connect (panel, "applet_added",
+	g_signal_connect (panel, "applet-added",
 			  G_CALLBACK(mate_panel_applet_added),
 			  NULL);
-	g_signal_connect (panel, "applet_removed",
+	g_signal_connect (panel, "applet-removed",
 			  G_CALLBACK(mate_panel_applet_removed),
 			  NULL);
-	g_signal_connect (panel, "applet_move",
+	g_signal_connect (panel, "applet-move",
 			  G_CALLBACK(mate_panel_applet_move),
 			  NULL);
-	g_signal_connect (panel, "back_change",
+	g_signal_connect (panel, "back-change",
 			  G_CALLBACK (panel_back_change),
 			  NULL);
-	g_signal_connect (panel, "size_change",
+	g_signal_connect (panel, "size-change",
 			  G_CALLBACK (panel_size_change),
 			  NULL);
 }

@@ -289,7 +289,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
 
 	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
-                g_signal_new ("size_change",
+                g_signal_new ("size-change",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, size_change),
@@ -300,7 +300,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               0);
 
 	panel_widget_signals[BACK_CHANGE_SIGNAL] =
-                g_signal_new ("back_change",
+                g_signal_new ("back-change",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, back_change),
@@ -311,7 +311,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               0);
 
 	panel_widget_signals[APPLET_MOVE_SIGNAL] =
-                g_signal_new ("applet_move",
+                g_signal_new ("applet-move",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_move),
@@ -323,7 +323,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_POINTER);
 
 	panel_widget_signals[APPLET_ADDED_SIGNAL] =
-                g_signal_new ("applet_added",
+                g_signal_new ("applet-added",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_added),
@@ -335,7 +335,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_POINTER);
 
 	panel_widget_signals[APPLET_REMOVED_SIGNAL] =
-                g_signal_new ("applet_removed",
+                g_signal_new ("applet-removed",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_removed),
