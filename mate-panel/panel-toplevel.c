@@ -1518,10 +1518,6 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 		}
 	}
 
-	/* Adjust strut size based on scale factor */
-	if (strut > 0)
-		strut += toplevel->priv->size * (toplevel->priv->scale - 1);
-
 	if (orientation != toplevel->priv->orientation) {
 		toplevel->priv->orientation = orientation;
 		g_object_notify (G_OBJECT (toplevel), "orientation");
@@ -1541,8 +1537,7 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 									orientation,
 									strut,
 									strut_start,
-									strut_end,
-									toplevel->priv->scale);
+									strut_end);
 		}
 		else {
 			panel_struts_unregister_strut (toplevel);
