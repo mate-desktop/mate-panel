@@ -92,6 +92,10 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
     if (gnome_wm_strut_area == None)
         gnome_wm_strut_area = XInternAtom (xdisplay, "_GNOME_WM_STRUT_AREA", False);
 
+    strut *= scale;
+    strut_start *= scale;
+    strut_end *= scale;
+
     switch (orientation) {
     case PANEL_ORIENTATION_LEFT:
         struts [STRUT_LEFT] = strut;
