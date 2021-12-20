@@ -1689,7 +1689,7 @@ panel_widget_new (PanelToplevel  *toplevel,
 	panel->orient = orient;
 	panel->sz = sz;
 
-	panel->packed = packed;
+	panel->packed = (packed != FALSE);
 	panel->size = 0;
 
 	panel->toplevel    = toplevel;
@@ -2493,7 +2493,7 @@ panel_widget_add (PanelWidget *panel,
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
-		ad->locked = locked;
+		ad->locked = (locked != FALSE);
 		ad->size_hints = NULL;
 		g_object_set_data (G_OBJECT (applet),
 				   MATE_PANEL_APPLET_DATA, ad);
@@ -2599,7 +2599,7 @@ void
 panel_widget_set_packed (PanelWidget *panel_widget,
 			 gboolean     packed)
 {
-	panel_widget->packed = packed;
+	panel_widget->packed = (packed != FALSE);
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
@@ -2822,7 +2822,7 @@ panel_widget_set_applet_size_constrained (PanelWidget *panel,
 	if (ad->size_constrained == size_constrained)
 		return;
 
-	ad->size_constrained = size_constrained;
+	ad->size_constrained = (size_constrained != FALSE);
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }
@@ -2845,8 +2845,8 @@ panel_widget_set_applet_expandable (PanelWidget *panel,
 	if (ad->expand_major == major && ad->expand_minor == minor)
 		return;
 
-	ad->expand_major = major;
-	ad->expand_minor = minor;
+	ad->expand_major = (major != FALSE);
+	ad->expand_minor = (minor != FALSE);
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }
@@ -2887,7 +2887,7 @@ panel_widget_set_applet_locked (PanelWidget *panel,
 	if (!ad)
 		return;
 
-	ad->locked = locked;
+	ad->locked = (locked != FALSE);
 }
 
 gboolean

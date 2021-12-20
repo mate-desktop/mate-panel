@@ -546,7 +546,7 @@ na_tray_child_set_composited (NaTrayChild *child,
   if (child->composited == composited)
     return;
 
-  child->composited = composited;
+  child->composited = (composited != FALSE);
   if (gtk_widget_get_realized (GTK_WIDGET (child)))
     gdk_window_set_composited (gtk_widget_get_window (GTK_WIDGET (child)),
                                composited);

@@ -506,7 +506,7 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	window = gtk_widget_get_window (widget);
 
 	toplevel->priv->grab_op          = op_type;
-	toplevel->priv->grab_is_keyboard = grab_keyboard;
+	toplevel->priv->grab_is_keyboard = (grab_keyboard != FALSE);
 
 	toplevel->priv->orig_monitor     = toplevel->priv->monitor;
 	toplevel->priv->orig_x           = toplevel->priv->x;
@@ -5148,7 +5148,7 @@ panel_toplevel_set_x (PanelToplevel *toplevel,
 	}
 
 	if (toplevel->priv->x_centered != x_centered) {
-		toplevel->priv->x_centered = x_centered;
+		toplevel->priv->x_centered = (x_centered != FALSE);
 		changed = TRUE;
 		g_object_notify (G_OBJECT (toplevel), "x-centered");
 	}
@@ -5186,7 +5186,7 @@ panel_toplevel_set_y (PanelToplevel *toplevel,
 	}
 
 	if (toplevel->priv->y_centered != y_centered) {
-		toplevel->priv->y_centered = y_centered;
+		toplevel->priv->y_centered = (y_centered != FALSE);
 		changed = TRUE;
 		g_object_notify (G_OBJECT (toplevel), "y-centered");
 	}
@@ -5329,7 +5329,7 @@ panel_toplevel_set_auto_hide (PanelToplevel *toplevel,
 	if (toplevel->priv->auto_hide == auto_hide)
 		return;
 
-	toplevel->priv->auto_hide = auto_hide;
+	toplevel->priv->auto_hide = (auto_hide != FALSE);
 
 	if (toplevel->priv->auto_hide)
 		panel_toplevel_queue_auto_hide (toplevel);
@@ -5405,7 +5405,7 @@ panel_toplevel_set_animate (PanelToplevel *toplevel,
 	if (toplevel->priv->animate == animate)
 		return;
 
-	toplevel->priv->animate = animate;
+	toplevel->priv->animate = (animate != FALSE);
 
 	g_object_notify (G_OBJECT (toplevel), "animate");
 }
@@ -5475,7 +5475,7 @@ panel_toplevel_set_enable_arrows (PanelToplevel *toplevel,
 	if (toplevel->priv->arrows_enabled == enable_arrows)
 		return;
 
-	toplevel->priv->arrows_enabled = enable_arrows;
+	toplevel->priv->arrows_enabled = (enable_arrows != FALSE);
 
 	panel_toplevel_update_hide_buttons (toplevel);
 

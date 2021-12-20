@@ -1456,7 +1456,7 @@ GtkWidget* panel_place_menu_item_new(gboolean use_image)
 
 	setup_menuitem(GTK_WIDGET(menuitem), image ? panel_menu_icon_get_size() : GTK_ICON_SIZE_INVALID, image, _("Places"));
 
-	menuitem->priv->use_image = use_image;
+	menuitem->priv->use_image = (use_image != FALSE);
 
 	menuitem->priv->menu = panel_place_menu_item_create_menu(menuitem);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), menuitem->priv->menu);
@@ -1484,9 +1484,9 @@ panel_desktop_menu_item_new (gboolean use_image,
 			image,
 			_("System"));
 
-	menuitem->priv->use_image = use_image;
+	menuitem->priv->use_image = (use_image != FALSE);
 
-	menuitem->priv->append_lock_logout = append_lock_logout;
+	menuitem->priv->append_lock_logout = (append_lock_logout != FALSE);
 	if (append_lock_logout)
 		panel_lockdown_notify_add (G_CALLBACK (panel_desktop_menu_item_recreate_menu),
 					   menuitem);
