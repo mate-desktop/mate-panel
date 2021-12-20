@@ -613,7 +613,7 @@ _mate_panel_applet_frame_update_flags (MatePanelAppletFrame *frame,
 		frame->priv->panel, GTK_WIDGET (frame), major, minor);
 
 	old_has_handle = frame->priv->has_handle;
-	frame->priv->has_handle = has_handle;
+	frame->priv->has_handle = (has_handle != FALSE);
 
 	if (!old_has_handle && frame->priv->has_handle) {
 		/* we've added an handle, so we need to get the background for

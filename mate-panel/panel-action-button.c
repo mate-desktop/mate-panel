@@ -888,7 +888,7 @@ panel_action_button_set_dnd_enabled (PanelActionButton *button,
 	} else
 		gtk_drag_source_unset (GTK_WIDGET (button));
 
-	button->priv->dnd_enabled = enabled;
+	button->priv->dnd_enabled = (enabled != FALSE);
 
 	g_object_notify (G_OBJECT (button), "dnd-enabled");
 }

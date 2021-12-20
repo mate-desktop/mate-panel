@@ -590,7 +590,7 @@ static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* s
 {
 #ifdef HAVE_X11
 	if (sdd->wnck_screen != NULL)
-		sdd->showing_desktop = wnck_screen_get_showing_desktop(sdd->wnck_screen);
+		sdd->showing_desktop = (wnck_screen_get_showing_desktop(sdd->wnck_screen) != FALSE);
 #endif /* HAVE_X11 */
 
 	update_button_state (sdd);

@@ -867,7 +867,7 @@ panel_menu_button_set_use_menu_path (PanelMenuButton *button,
 	if (button->priv->use_menu_path == use_menu_path)
 		return;
 
-	button->priv->use_menu_path = use_menu_path;
+	button->priv->use_menu_path = (use_menu_path != FALSE);
 
 	if (button->priv->menu) {
 		gtk_menu_detach (GTK_MENU (button->priv->menu));

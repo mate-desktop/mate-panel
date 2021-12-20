@@ -417,7 +417,7 @@ panel_background_update_has_alpha (PanelBackground *background)
 		 background->loaded_image)
 		has_alpha = gdk_pixbuf_get_has_alpha (background->loaded_image);
 
-	background->has_alpha = has_alpha;
+	background->has_alpha = (has_alpha != FALSE);
 }
 
 static void

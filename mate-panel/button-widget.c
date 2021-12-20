@@ -720,7 +720,7 @@ button_widget_set_activatable (ButtonWidget *button,
 	activatable = activatable != FALSE;
 
 	if (button->priv->activatable != activatable) {
-		button->priv->activatable = activatable;
+		button->priv->activatable = (activatable != FALSE);
 
 		if (gtk_widget_is_drawable (GTK_WIDGET (button)))
 			gtk_widget_queue_draw (GTK_WIDGET (button));
@@ -802,7 +802,7 @@ button_widget_set_has_arrow (ButtonWidget *button,
 	if (button->priv->arrow == has_arrow)
 		return;
 
-	button->priv->arrow = has_arrow;
+	button->priv->arrow = (has_arrow != FALSE);
 
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 
@@ -828,7 +828,7 @@ button_widget_set_dnd_highlight (ButtonWidget *button,
 	if (button->priv->dnd_highlight == dnd_highlight)
 		return;
 
-	button->priv->dnd_highlight = dnd_highlight;
+	button->priv->dnd_highlight = (dnd_highlight != FALSE);
 
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 
@@ -854,7 +854,7 @@ button_widget_set_ignore_leave (ButtonWidget *button,
 	if (button->priv->ignore_leave == ignore_leave)
 		return;
 
-	button->priv->ignore_leave = ignore_leave;
+	button->priv->ignore_leave = (ignore_leave != FALSE);
 
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 
