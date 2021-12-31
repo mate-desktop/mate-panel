@@ -403,6 +403,8 @@ calendar_window_dispose (GObject *object)
 
 	calwin = CALENDAR_WINDOW (object);
 
+	g_clear_pointer (&calwin->priv->prefs_path, g_free);
+
 	if (calwin->priv->settings)
 		g_object_unref (calwin->priv->settings);
 	calwin->priv->settings = NULL;
