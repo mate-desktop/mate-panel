@@ -86,12 +86,16 @@ tray_removed_cb (GtkContainer *box, GtkWidget *icon, TrayData *data)
 
 static void orientation_changed_cb (GtkComboBox *combo, TrayData *data)
 {
-  GtkOrientation orientation = (GtkOrientation) gtk_combo_box_get_active (combo);
+  gint active;
 
-  g_print ("[Screen %u tray %p] Setting orientation to \"%s\"\n",
-	   data->screen_num, data->traybox, orientation == 0 ? "horizontal" : "vertical");
-
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (data->traybox), orientation);
+  if ((active = gtk_combo_box_get_active (combo)) != -1) {
+    GtkOrientation orientation = (GtkOrientation) active;
+    g_print ("[Screen %u tray %p] Setting orientation to \"%s\"\n",
+             data->screen_num,
+             data->traybox,
+             orientation == GTK_ORIENTATION_HORIZONTAL ? "horizontal" : "vertical");
+    gtk_orientable_set_orientation (GTK_ORIENTABLE (data->traybox), orientation);
+  }
 }
 
 static void
