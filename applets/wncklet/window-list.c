@@ -255,7 +255,6 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
                           int          *thumbnail_scale)
 {
 	GdkWindow *window;
-	GdkWindow *window_wrapper = NULL;
 	Window win;
 	cairo_surface_t *thumbnail;
 	cairo_t *cr;
@@ -264,20 +263,9 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 
 	win = wnck_window_get_xid (wnck_window);
 
-	if ((window = gdk_x11_window_lookup_for_display (gdk_display_get_default (), win)) == NULL)
+	if ((window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), win)) == NULL)
 	{
-		if ((window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), win)) == NULL)
-		{
-			return NULL;
-		}
-		else
-		{
-			window_wrapper = window;
-		}
-	}
-	else
-	{
-		g_object_ref (window);
+		return NULL;
 	}
 
 	*thumbnail_scale = scale = gdk_window_get_scale_factor (window);
@@ -310,8 +298,6 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	cairo_paint (cr);
 	cairo_destroy (cr);
 
-	if (window_wrapper)
-		g_object_unref (window_wrapper);
 	g_object_unref (window);
 
 	return thumbnail;
