@@ -490,11 +490,12 @@ static const GtkActionEntry pager_menu_actions[] = {
 
 static void num_rows_changed(GSettings* settings, gchar* key, PagerData* pager)
 {
-	int n_rows = DEFAULT_ROWS;
+	int n_rows;
 
-	n_rows = g_settings_get_int (settings, key);
-
-	n_rows = CLAMP(n_rows, 1, MAX_REASONABLE_ROWS);
+	n_rows = CLAMP (g_settings_get_int (settings, key),
+	                1,
+	                MIN (wnck_screen_get_workspace_count (pager->screen),
+	                     MAX_REASONABLE_ROWS));
 
 	pager->n_rows = n_rows;
 	pager_update(pager);
@@ -835,6 +836,8 @@ on_num_workspaces_value_changed (GtkSpinButton *button,
 	{
 		int workspace_count = gtk_spin_button_get_value_as_int (button);
 		wnck_screen_change_workspace_count(pager->screen, workspace_count);
+		if (workspace_count < pager->n_rows)
+			g_settings_set_int (pager->settings, "num-rows", workspace_count);
 	}
 #endif /* HAVE_X11 */
 }
