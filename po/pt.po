@@ -20,9 +20,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.2\n"
+"Project-Id-Version: mate-panel 1.25.3\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2021-06-22 13:38+0200\n"
+"POT-Creation-Date: 2021-08-04 18:05+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: José Vieira <jvieira33@sapo.pt>, 2021\n"
 "Language-Team: Portuguese (https://www.transifex.com/mate/teams/13566/pt/)\n"
@@ -993,13 +993,15 @@ msgstr ""
 
 #: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:25
 msgid "Whether to enable mouse scrolling in the switch window list"
-msgstr ""
+msgstr "Ativar ou não o rolar com o rato na lista de janelas"
 
 #: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:26
 msgid ""
 "If true, enable mouse scrolling in window list, otherwise disable mouse "
 "scrolling in window list."
 msgstr ""
+"Se sim, ativar o rolar com o rato na lista de janelas; no caso contrário, "
+"desativar."
 
 #: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:5
 msgid "Display workspace names"
@@ -1211,11 +1213,11 @@ msgstr "_Agrupar sempre as janelas"
 
 #: applets/wncklet/window-list.ui:295
 msgid "Mouse Scrolling"
-msgstr ""
+msgstr "Rolar com o Rato"
 
 #: applets/wncklet/window-list.ui:316
 msgid "_Enable mouse scrolling"
-msgstr ""
+msgstr "_Ativar o rolar com o rato"
 
 #: applets/wncklet/window-list.ui:349
 msgid "Behaviour"
@@ -1563,11 +1565,11 @@ msgstr "Se verdadeiro, mostrar o item de aplicações na barra do menu."
 
 #: data/org.mate.panel.menubar.gschema.xml.in:20
 msgid "Show places menu"
-msgstr "Mostrar menu de lugares"
+msgstr "Mostrar menu de localizações"
 
 #: data/org.mate.panel.menubar.gschema.xml.in:21
 msgid "If true, show places item in menu bar."
-msgstr "Se verdadeiro, mostrar o item de lugares na barra do menu."
+msgstr "Se verdadeiro, mostrar o item de localizações na barra do menu."
 
 #: data/org.mate.panel.menubar.gschema.xml.in:25
 msgid "Show desktop menu"
@@ -1632,13 +1634,16 @@ msgstr ""
 
 #: data/org.mate.panel.menubar.gschema.xml.in:56
 msgid "Maximum number of recent documents displayed in the Places menu"
-msgstr ""
+msgstr "Número máximo de documentos recentes mostrados no menu Localizações"
 
 #: data/org.mate.panel.menubar.gschema.xml.in:57
 msgid ""
 "Maximum number of recent documents that are displayed in the Places menu at "
 "a time. If this is set to -1, all known recent documents will be displayed."
 msgstr ""
+"Número máximo de documentos recentes mostrados de cada vez no menu "
+"Localizações. Se definido para -1, serão mostrados todos os documentos "
+"recentes detectados."
 
 #: data/org.mate.panel.object.gschema.xml.in:5
 msgid "Panel object type"
@@ -2213,64 +2218,64 @@ msgstr ""
 "Se verdadeiro, a imagem de fundo será rodada quando o painel tem orientação "
 "vertical."
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
 msgid "File is not a valid .desktop file"
 msgstr "O ficheiro não é um ficheiro .desktop válido"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Versão de ficheiro .desktop \"%s\" não reconhecida"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:976
 #, c-format
 msgid "Starting %s"
 msgstr "A iniciar %s"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1118
 msgid "Application does not accept documents on command line"
 msgstr "A aplicação não aceita documentos na linha de comando"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1186
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Opção de arranque desconhecida: %d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1402
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "Não pode enviar URIs de documento para uma entrada da área de trabalho "
 "'Tipo=Hiperligação'"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1423
 msgid "Not a launchable item"
 msgstr "Não é um item de iniciação"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
 msgid "Disable connection to session manager"
 msgstr "Desativar a ligação ao gestor de sessões"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "Specify file containing saved configuration"
 msgstr "Especifique o ficheiro que contém a configuração guardada"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "FILE"
 msgstr "FICHEIRO"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "Specify session management ID"
 msgstr "Especifique a ID de gestão de sessão"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "ID"
 msgstr "ID."
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Session management options:"
 msgstr "Opções do gestor de sessão:"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
 msgid "Show session management options"
 msgstr "Mostrar as opções de gestão de sessões"
 
@@ -2335,7 +2340,7 @@ msgstr "Gaveta"
 msgid "_Add to Drawer..."
 msgstr "_Adicionar à Gaveta..."
 
-#: mate-panel/drawer.c:557 mate-panel/launcher.c:603
+#: mate-panel/drawer.c:557 mate-panel/launcher.c:611
 #: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Propriedades"
@@ -2353,7 +2358,7 @@ msgid "- Edit .desktop files"
 msgstr "- Editar ficheiros .desktop"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:967
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1008
 msgid "Create Launcher"
 msgstr "Criar Iniciador"
 
@@ -2362,7 +2367,7 @@ msgstr "Criar Iniciador"
 msgid "Directory Properties"
 msgstr "Propriedades do Diretório"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:810
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:818
 msgid "Launcher Properties"
 msgstr "Propriedades do Iniciador"
 
@@ -2390,27 +2395,27 @@ msgstr "Não foi especificado nenhum URL."
 msgid "Could not use dropped item"
 msgstr "Incapaz de utilizar o item largado"
 
-#: mate-panel/launcher.c:452
+#: mate-panel/launcher.c:455
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Nenhum URI indicado para o ficheiro de área do iniciador de painel\n"
 
-#: mate-panel/launcher.c:491
+#: mate-panel/launcher.c:494
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Incapaz de abrir ficheiro de área de trabalho %s para o iniciador de "
 "painel%s%s\n"
 
-#: mate-panel/launcher.c:595
+#: mate-panel/launcher.c:603
 msgid "_Launch"
 msgstr "_Iniciar"
 
-#: mate-panel/launcher.c:903
+#: mate-panel/launcher.c:944
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Chave %s não está definida, incapaz de ler iniciador\n"
 
-#: mate-panel/launcher.c:1036 mate-panel/panel-ditem-editor.c:1179
+#: mate-panel/launcher.c:1077 mate-panel/panel-ditem-editor.c:1179
 #: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
 msgid "Could not save launcher"
 msgstr "Incapaz de gravar o iniciador"
@@ -3106,30 +3111,30 @@ msgstr "Limpar os Documentos Recentes..."
 msgid "Clear all items from the recent documents list"
 msgstr "Limpar todos os itens da lista de documentos recentes"
 
-#: mate-panel/panel-run-dialog.c:430
+#: mate-panel/panel-run-dialog.c:445
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Incapaz de executar o comando '%s'"
 
-#: mate-panel/panel-run-dialog.c:471
+#: mate-panel/panel-run-dialog.c:486
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Incapaz de converter '%s' de UTF-8"
 
-#: mate-panel/panel-run-dialog.c:1263
+#: mate-panel/panel-run-dialog.c:1278
 msgid "Choose a file to append to the command..."
 msgstr "Escolha um ficheiro a acrescentar ao comando..."
 
-#: mate-panel/panel-run-dialog.c:1618 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1633 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Selecione uma aplicação para ver a sua descrição."
 
-#: mate-panel/panel-run-dialog.c:1656
+#: mate-panel/panel-run-dialog.c:1671
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Irá executar comando: '%s'"
 
-#: mate-panel/panel-run-dialog.c:1689
+#: mate-panel/panel-run-dialog.c:1704
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""

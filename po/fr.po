@@ -24,9 +24,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.2\n"
+"Project-Id-Version: mate-panel 1.25.3\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2021-06-22 13:38+0200\n"
+"POT-Creation-Date: 2021-08-04 18:05+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Tubuntu, 2021\n"
 "Language-Team: French (https://www.transifex.com/mate/teams/13566/fr/)\n"
@@ -535,15 +535,15 @@ msgid ""
 " the custom_format key."
 msgstr ""
 "Cette clé indique le format d'heure utilisé par l'applet horloge. Les "
-"valeurs possibles sont « 12-hour » (12 heures), « 24-hour » (24 heures), « "
-"internet » (Internet), « unix » (Unix) et « custom » (personnalisé). Si elle"
-" est définie à « internet », l'horloge affiche le temps Internet. Le système"
-" de temps Internet divise le jour en 1 000 segments. Il n'y a pas de fuseaux"
-" horaires dans ce système, donc le temps est le même partout dans le monde. "
-"Si elle est définie à « unix », l'horloge affiche le temps en secondes "
-"depuis Epoch, c'est à dire le 1er janvier 1970. Si elle est définie à « "
-"custom » (personnalisé), l'horloge affiche l'heure en fonction du format "
-"indiqué dans la clé custom_format."
+"valeurs possibles sont « 12-hour » (12 heures), « 24-hour » (24 heures), "
+"« internet » (Internet), « unix » (Unix) et « custom » (personnalisé). Si "
+"elle est définie à « internet », l'horloge affiche le temps Internet. Le "
+"système de temps Internet divise le jour en 1 000 segments. Il n'y a pas de "
+"fuseaux horaires dans ce système, donc le temps est le même partout dans le "
+"monde. Si elle est définie à « unix », l'horloge affiche le temps en "
+"secondes depuis Epoch, c'est à dire le 1er janvier 1970. Si elle est définie"
+" à « custom » (personnalisé), l'horloge affiche l'heure en fonction du "
+"format indiqué dans la clé custom_format."
 
 #: applets/clock/org.mate.panel.applet.clock.gschema.xml.in:34
 msgid "Custom format of the clock"
@@ -1388,8 +1388,8 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Si vrai, la liste des « Applications connues » dans la boîte de dialogue « "
-"Lancer une application » est rendue disponible. La clé show_program_list "
+"Si vrai, la liste des « Applications connues » dans la boîte de dialogue "
+"« Lancer une application » est rendue disponible. La clé show_program_list "
 "contrôle l'ouverture de la liste lorsque la boîte de dialogue est affichée."
 
 #: data/org.mate.panel.gschema.xml.in:15
@@ -1404,15 +1404,15 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"Si vrai, la liste des « Applications connues » dans la boîte de dialogue « "
-"Lancer une application » est ouverte. Ce réglage n'est valable que si la clé"
-" enable_program_list est à vrai."
+"Si vrai, la liste des « Applications connues » dans la boîte de dialogue "
+"« Lancer une application » est ouverte. Ce réglage n'est valable que si la "
+"clé enable_program_list est à vrai."
 
 #: data/org.mate.panel.gschema.xml.in:20
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
-"Active l'auto-complétion dans la boîte de dialogue « Lancer une application "
-"»"
+"Active l'auto-complétion dans la boîte de dialogue « Lancer une "
+"application »"
 
 #: data/org.mate.panel.gschema.xml.in:21
 msgid ""
@@ -1446,8 +1446,8 @@ msgid ""
 "Controls the maximum size of the history of the \"Run Application\" dialog. "
 "A value of 0 will disable the history."
 msgstr ""
-"Contrôle la taille maximum de l'historique pour la boite de dialogue « "
-"Lancer une application ». Un valeur de 0 désactivera l'historique."
+"Contrôle la taille maximum de l'historique pour la boite de dialogue "
+"« Lancer une application ». Un valeur de 0 désactivera l'historique."
 
 #: data/org.mate.panel.gschema.xml.in:35
 msgid "Reverse the history of the \"Run Application\" dialog"
@@ -1867,10 +1867,10 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
-"Le type d'action que ce bouton représente. Les valeurs possibles sont « lock"
-" » (verrouiller), « logout » (se déconnecter), « run » (lancer), « search » "
-"(rechercher) et « screenshot » (capture d'écran). Cette clé n'est valable "
-"que si la clé object_type est « action-applet »."
+"Le type d'action que ce bouton représente. Les valeurs possibles sont "
+"« lock » (verrouiller), « logout » (se déconnecter), « run » (lancer), "
+"« search » (rechercher) et « screenshot » (capture d'écran). Cette clé n'est"
+" valable que si la clé object_type est « action-applet »."
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:5
 msgid "Name to identify panel"
@@ -1943,16 +1943,16 @@ msgid ""
 " panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"L'orientation du tableau de bord. Les quatre valeurs possibles sont : « top "
-"» (haut), « bottom » (bas), « left » (gauche) et « right » (droite). En mode"
-" étendu, la clé indique sur quel côté de l'écran placer le tableau de bord. "
-"En mode non étendu, la différence entre « top » et « bottom » est moins "
-"importante - les deux indiquent que c'est un tableau de bord horizontal - "
-"mais donne toutefois une indication utile sur la manière dont certains "
-"éléments de tableau de bord doivent se comporter. Par exemple, sur un "
-"tableau de bord « top », un bouton de menu affiche le menu sous le tableau "
-"de bord, alors qu'avec un tableau de bord « bottom » le menu est affiché au-"
-"dessus du tableau de bord."
+"L'orientation du tableau de bord. Les quatre valeurs possibles sont : "
+"« top » (haut), « bottom » (bas), « left » (gauche) et « right » (droite). "
+"En mode étendu, la clé indique sur quel côté de l'écran placer le tableau de"
+" bord. En mode non étendu, la différence entre « top » et « bottom » est "
+"moins importante - les deux indiquent que c'est un tableau de bord "
+"horizontal - mais donne toutefois une indication utile sur la manière dont "
+"certains éléments de tableau de bord doivent se comporter. Par exemple, sur "
+"un tableau de bord « top », un bouton de menu affiche le menu sous le "
+"tableau de bord, alors qu'avec un tableau de bord « bottom » le menu est "
+"affiché au-dessus du tableau de bord."
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:30
 msgid "Panel size"
@@ -2190,8 +2190,8 @@ msgid ""
 msgstr ""
 "Le type d'arrière-plan à utiliser pour ce tableau de bord. Les valeurs "
 "possibles sont « none » - l'arrière-plan par défaut des widget GTK+ sera "
-"utilisé, « color » - la clef de la couleur sera utilisée comme couleur d"
-"'arrière-plan ou « image » - l'image spécifiée par la clef de l'image sera "
+"utilisé, « color » - la clef de la couleur sera utilisée comme couleur "
+"d'arrière-plan ou « image » - l'image spécifiée par la clef de l'image sera "
 "utilisée en tant qu'arrière-plan."
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:113
@@ -2267,64 +2267,64 @@ msgstr ""
 "Si vrai, l'image d'arrière-plan est pivotée lorsque le tableau de bord est "
 "orienté verticalement."
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
 msgid "File is not a valid .desktop file"
 msgstr "Le fichier n'est pas un fichier .desktop valide"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Version « %s » du fichier .desktop non reconnue"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:976
 #, c-format
 msgid "Starting %s"
 msgstr "Démarrage de %s"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1118
 msgid "Application does not accept documents on command line"
 msgstr "L'application n'accepte pas les documents en ligne de commande"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1186
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Option de lancement non reconnue : %d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1402
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
-"Impossible de passer les URI de documents vers une entrée .desktop de type «"
-" Type=Link »"
+"Impossible de passer les URI de documents vers une entrée .desktop de type "
+"« Type=Link »"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1423
 msgid "Not a launchable item"
 msgstr "L'élément ne peut pas être lancé"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
 msgid "Disable connection to session manager"
 msgstr "Désactive la connexion au gestionnaire de sessions"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "Specify file containing saved configuration"
 msgstr "Indique le fichier contenant la configuration enregistrée"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "FILE"
 msgstr "FICHIER"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "Specify session management ID"
 msgstr "Indique l'ID de la gestion de sessions"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Session management options:"
 msgstr "Options de gestion de sessions :"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
 msgid "Show session management options"
 msgstr "Afficher les options de gestion de sessions"
 
@@ -2390,7 +2390,7 @@ msgstr "Tiroir"
 msgid "_Add to Drawer..."
 msgstr "A_jouter au tiroir..."
 
-#: mate-panel/drawer.c:557 mate-panel/launcher.c:603
+#: mate-panel/drawer.c:557 mate-panel/launcher.c:611
 #: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Propriétés"
@@ -2408,7 +2408,7 @@ msgid "- Edit .desktop files"
 msgstr "- Modifier les fichiers .desktop"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:967
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1008
 msgid "Create Launcher"
 msgstr "Créer un lanceur"
 
@@ -2417,7 +2417,7 @@ msgstr "Créer un lanceur"
 msgid "Directory Properties"
 msgstr "Propriétés du répertoire"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:810
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:818
 msgid "Launcher Properties"
 msgstr "Propriétés du lanceur"
 
@@ -2445,28 +2445,28 @@ msgstr "Aucun URL n'a été indiqué."
 msgid "Could not use dropped item"
 msgstr "Impossible de déposer l'élément"
 
-#: mate-panel/launcher.c:452
+#: mate-panel/launcher.c:455
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "Aucun URI fourni pour le fichier de bureau du lanceur du tableau de bord\n"
 
-#: mate-panel/launcher.c:491
+#: mate-panel/launcher.c:494
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Impossible d'ouvrir le fichier de bureau %s pour le lanceur du tableau de "
 "bord%s%s\n"
 
-#: mate-panel/launcher.c:595
+#: mate-panel/launcher.c:603
 msgid "_Launch"
 msgstr "_Lancer"
 
-#: mate-panel/launcher.c:903
+#: mate-panel/launcher.c:944
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "La clé %s n'est pas définie, impossible de charger le lanceur\n"
 
-#: mate-panel/launcher.c:1036 mate-panel/panel-ditem-editor.c:1179
+#: mate-panel/launcher.c:1077 mate-panel/panel-ditem-editor.c:1179
 #: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
 msgid "Could not save launcher"
 msgstr "Impossible d'enregistrer le lanceur"
@@ -3171,30 +3171,30 @@ msgstr "Effacer la liste..."
 msgid "Clear all items from the recent documents list"
 msgstr "Efface tous les éléments de la liste des documents récents"
 
-#: mate-panel/panel-run-dialog.c:430
+#: mate-panel/panel-run-dialog.c:445
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Impossible de lancer la commande « %s »"
 
-#: mate-panel/panel-run-dialog.c:471
+#: mate-panel/panel-run-dialog.c:486
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Impossible de convertir « %s » depuis UTF-8"
 
-#: mate-panel/panel-run-dialog.c:1263
+#: mate-panel/panel-run-dialog.c:1278
 msgid "Choose a file to append to the command..."
 msgstr "Choisissez un fichier à ajouter à la commande..."
 
-#: mate-panel/panel-run-dialog.c:1618 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1633 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Sélectionnez une application pour voir sa description."
 
-#: mate-panel/panel-run-dialog.c:1656
+#: mate-panel/panel-run-dialog.c:1671
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Démarrage de  « %s »"
 
-#: mate-panel/panel-run-dialog.c:1689
+#: mate-panel/panel-run-dialog.c:1704
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
