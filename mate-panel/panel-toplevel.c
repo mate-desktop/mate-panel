@@ -2678,8 +2678,6 @@ panel_toplevel_disconnect_attached (PanelToplevel *toplevel)
 	}
 
 	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++) {
-		g_clear_signal_handler (&toplevel->priv->attach_widget_signals [i],
-		                        toplevel->priv->attach_widget);
 		if (toplevel->priv->attach_widget_signals [i] != 0) {
 			g_signal_handler_disconnect (toplevel->priv->attach_widget,
 			                             toplevel->priv->attach_widget_signals [i]);
