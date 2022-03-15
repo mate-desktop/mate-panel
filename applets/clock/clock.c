@@ -1819,11 +1819,11 @@ output_cb (GtkSpinButton *spin,
 {
         GtkAdjustment *adj;
         gchar *text;
-        int value;
+        gdouble value;
 
         adj = gtk_spin_button_get_adjustment (spin);
-        value = (int) gtk_adjustment_get_value (adj);
-        text = g_strdup_printf ("%02d", value);
+        value = gtk_adjustment_get_value (adj);
+        text = g_strdup_printf ("%02.0f", value);
         gtk_entry_set_text (GTK_ENTRY (spin), text);
         g_free (text);
 
