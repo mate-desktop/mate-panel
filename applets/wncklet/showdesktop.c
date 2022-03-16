@@ -370,15 +370,20 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-		sdd->wnck_screen = wnck_screen_get(gdk_x11_screen_get_screen_number (screen));
+	{
+		sdd->wnck_screen = wnck_screen_get (gdk_x11_screen_get_screen_number (screen));
+		if (sdd->wnck_screen != NULL)
+			wncklet_connect_while_alive (sdd->wnck_screen,
+			                             "showing_desktop_changed",
+			                             G_CALLBACK (show_desktop_changed_callback),
+			                             sdd,
+			                             sdd->applet);
+		else
+			g_warning ("Could not get WnckScreen!");
+	}
 #endif /* HAVE_X11 */
 
-	if (sdd->wnck_screen != NULL)
-		wncklet_connect_while_alive(sdd->wnck_screen, "showing_desktop_changed", G_CALLBACK(show_desktop_changed_callback), sdd, sdd->applet);
-	else
-		g_warning("Could not get WnckScreen!");
-
-	show_desktop_changed_callback(sdd->wnck_screen, sdd);
+	show_desktop_changed_callback (sdd->wnck_screen, sdd);
 
 	sdd->icon_theme = gtk_icon_theme_get_for_screen (screen);
 	wncklet_connect_while_alive(sdd->icon_theme, "changed", G_CALLBACK(theme_changed_callback), sdd, sdd->applet);
