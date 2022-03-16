@@ -240,20 +240,22 @@ static void
 panel_multimonitor_get_raw_monitors (int           *monitors_ret,
 				     GdkRectangle **geometries_ret)
 {
-	gboolean res = FALSE;
-
 	*monitors_ret = 0;
 	*geometries_ret = NULL;
 
 #ifdef HAVE_X11
 #ifdef HAVE_RANDR
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) && have_randr)
-		res = panel_multimonitor_get_randr_monitors (monitors_ret, geometries_ret);
+	{
+		gboolean res;
+
+		res = panel_multimonitor_get_randr_monitors (monitors_ret,
+		                                             geometries_ret);
+		if (res && *monitors_ret > 0)
+			return;
+	}
 #endif /* HAVE_RANDR */
 #endif /* HAVE_X11 */
-
-	if (res && *monitors_ret > 0)
-		return;
 
 	panel_multimonitor_get_gdk_monitors (monitors_ret, geometries_ret);
 }
