@@ -288,6 +288,8 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 		*thumbnail_width = (int) ((double) width * ratio);
 	}
 
+	gdk_x11_display_error_trap_push (gdk_window_get_display (window));
+
 	thumbnail = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
 	                                        *thumbnail_width,
 	                                        *thumbnail_height);
@@ -297,6 +299,12 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	gdk_cairo_set_source_window (cr, window, 0, 0);
 	cairo_paint (cr);
 	cairo_destroy (cr);
+
+	if (gdk_x11_display_error_trap_pop (gdk_window_get_display (window)))
+	{
+		cairo_surface_destroy (thumbnail);
+		thumbnail = NULL;
+	}
 
 	g_object_unref (window);
 
