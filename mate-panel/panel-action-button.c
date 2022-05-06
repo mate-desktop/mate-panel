@@ -751,7 +751,7 @@ panel_action_button_create (PanelToplevel         *toplevel,
 	char        *id;
 	char        *path;
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_ACTION, toplevel, position, FALSE);
+	id = panel_profile_prepare_object (PANEL_OBJECT_ACTION, toplevel, position);
 
 	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);

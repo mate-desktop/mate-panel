@@ -622,7 +622,7 @@ panel_drawer_create (PanelToplevel *toplevel,
 {
     char *id;
 
-    id = panel_profile_prepare_object (PANEL_OBJECT_DRAWER, toplevel, position, FALSE);
+    id = panel_profile_prepare_object (PANEL_OBJECT_DRAWER, toplevel, position);
 
     panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, NULL);
 
@@ -641,7 +641,7 @@ panel_drawer_create_with_id (const char    *toplevel_id,
     char *id;
     char *attached_toplevel_id = NULL;
 
-    id = panel_profile_prepare_object_with_id (PANEL_OBJECT_DRAWER, toplevel_id, position, FALSE);
+    id = panel_profile_prepare_object_with_id (PANEL_OBJECT_DRAWER, toplevel_id, position);
 
     panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, &attached_toplevel_id);
 

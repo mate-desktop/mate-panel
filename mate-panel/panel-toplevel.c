@@ -2898,8 +2898,8 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 {
 	GtkWidget *widget;
 
-	GList *list;
-	gboolean stick;
+/*	GList *list;
+	PanelObjectEdgeRelativity edge_relativity;*/
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -2919,30 +2919,6 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 		gdk_window_resize (gtk_widget_get_window (widget),
 				   toplevel->priv->geometry.width,
 				   toplevel->priv->geometry.height);
-
-	if (resize || move) {
-		for (list = toplevel->priv->panel_widget->applet_list; list != NULL; list = g_list_next (list)) {
-			AppletData *ad = list->data;
-			const char *id = mate_panel_applet_get_id_by_widget (ad->applet);
-
-			if (!id)
-				return;
-
-			AppletInfo *info;
-			info = mate_panel_applet_get_by_id (id);
-
-			stick = g_settings_get_boolean (info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
-
-			if (stick) {
-				int position = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
-				if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-					ad->pos = toplevel->priv->geometry.width - position;
-				} else {
-					ad->pos = toplevel->priv->geometry.height - position;
-				}
-			}
-		}
-	}
 }
 
 static void
