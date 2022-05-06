@@ -61,6 +61,12 @@ typedef enum {
 } PanelObjectType;
 
 typedef enum {
+	PANEL_EDGE_START  = 0,
+	PANEL_EDGE_CENTER = 1,
+	PANEL_EDGE_END    = 2
+} PanelObjectEdgeRelativity;
+
+typedef enum {
 	PANEL_ACTION_NONE = 0,
 	PANEL_ACTION_LOCK,
 	PANEL_ACTION_LOGOUT,

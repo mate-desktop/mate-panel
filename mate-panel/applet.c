@@ -766,12 +766,12 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 }
 
 typedef struct {
-	char            *id;
-	PanelObjectType  type;
-	char            *toplevel_id;
-	int              position;
-	guint            right_stick : 1;
-	guint            locked : 1;
+	char                      *id;
+	PanelObjectType            type;
+	char                      *toplevel_id;
+	int                        position;
+	PanelObjectEdgeRelativity  edge_relativity;
+	guint                      locked : 1;
 } MatePanelAppletToLoad;
 
 /* Each time those lists get both empty,
@@ -894,9 +894,14 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-	if (applet->right_stick) {
-		if (!panel_widget->packed)
-			applet->position = panel_widget->size - applet->position;
+	if (applet->edge_relativity == PANEL_EDGE_CENTER ||
+	    applet->edge_relativity == PANEL_EDGE_END) {
+		if (!panel_widget->packed) {
+			if (applet->edge_relativity == PANEL_EDGE_CENTER)
+				applet->position = panel_widget->size/2 + applet->position;
+			else if (applet->edge_relativity == PANEL_EDGE_END)
+				applet->position = panel_widget->size - applet->position;
+		}
 		else
 			applet->position = -1;
 	}
@@ -971,12 +976,12 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 }
 
 void
-mate_panel_applet_queue_applet_to_load (const char      *id,
-				   PanelObjectType  type,
-				   const char      *toplevel_id,
-				   int              position,
-				   gboolean         right_stick,
-				   gboolean         locked)
+mate_panel_applet_queue_applet_to_load (const char                *id,
+					PanelObjectType            type,
+					const char                *toplevel_id,
+					int                        position,
+					PanelObjectEdgeRelativity  edge_relativity,
+					gboolean                   locked)
 {
 	MatePanelAppletToLoad *applet;
 
@@ -987,12 +992,12 @@ mate_panel_applet_queue_applet_to_load (const char      *id,
 
 	applet = g_new0 (MatePanelAppletToLoad, 1);
 
-	applet->id          = g_strdup (id);
-	applet->type        = type;
-	applet->toplevel_id = g_strdup (toplevel_id);
-	applet->position    = position;
-	applet->right_stick = right_stick != FALSE;
-	applet->locked      = locked != FALSE;
+	applet->id              = g_strdup (id);
+	applet->type            = type;
+	applet->toplevel_id     = g_strdup (toplevel_id);
+	applet->position        = position;
+	applet->edge_relativity = edge_relativity;
+	applet->locked          = locked != FALSE;
 
 	mate_panel_applets_to_load = g_slist_prepend (mate_panel_applets_to_load, applet);
 }
@@ -1005,8 +1010,8 @@ mate_panel_applet_compare (const MatePanelAppletToLoad *a,
 
 	if ((c = strcmp (a->toplevel_id, b->toplevel_id)))
 		return c;
-	else if (a->right_stick != b->right_stick)
-		return b->right_stick ? -1 : 1;
+	else if (a->edge_relativity != b->edge_relativity)
+		return a->edge_relativity - b->edge_relativity;
 	else
 		return a->position - b->position;
 }
@@ -1087,12 +1092,12 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 			    const char *id,
 			    gboolean    immediate)
 {
-	PanelWidget       *panel_widget;
-	const char        *toplevel_id;
-	char              *old_toplevel_id;
-	gboolean           right_stick;
-	gboolean           locked;
-	int                position;
+	PanelWidget               *panel_widget;
+	const char                *toplevel_id;
+	char                      *old_toplevel_id;
+	PanelObjectEdgeRelativity  edge_relativity;
+	gboolean                   locked;
+	int                        position;
 
 	g_return_if_fail (applet_info != NULL);
 
@@ -1124,7 +1129,7 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 	g_free (old_toplevel_id);
 
 	/* Note: changing some properties of the panel that may not be locked down
-	   (e.g. background) can change the state of the "panel_right_stick" and
+	   (e.g. background) can change the state of the "relative-to-edge" and
 	   "position" properties of an applet that may in fact be locked down.
 	   So check if these are writable before attempting to write them */
 
@@ -1135,18 +1140,32 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 	if (locked) {
 		/* Until position calculations are refactored to fix the issue of the panel applets
 		   getting reordered on resolution changes...
-		   .. don't save position/right-stick on locked applets */
+		   .. don't save position/relative-to-edge on locked applets */
 		return;
 	}
 
-	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
+	edge_relativity = panel_determine_applet_edge_relativity (applet_info->widget);
+	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY) &&
+	    g_settings_get_enum (applet_info->settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY) != edge_relativity)
+		g_settings_set_enum (applet_info->settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY, edge_relativity);
+
+	/*
+	 * If the deprecated `panel-right-stick` setting is set, unset it.
+	 * See the `panel_profile_load_object ()` function in the file
+	 * `panel-profile.c` for a lengthy comment detailing why this is
+	 * done.
+	 */
 	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) &&
-	    (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) ? 1 : 0) != right_stick)
-		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, right_stick);
+	    g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY))
+		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, FALSE);
 
 	position = mate_panel_applet_get_position (applet_info);
-	if (right_stick && !panel_widget->packed)
-		position = panel_widget->size - position;
+	if (!panel_widget->packed) {
+		if (edge_relativity == PANEL_EDGE_CENTER)
+			position -= panel_widget->size/2;
+		else if (edge_relativity == PANEL_EDGE_END)
+			position = panel_widget->size - position;
+	}
 
 	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_POSITION_KEY) &&
 	    g_settings_get_int (applet_info->settings, PANEL_OBJECT_POSITION_KEY) != position)
@@ -1363,7 +1382,7 @@ mate_panel_applet_can_freely_move (AppletInfo *applet)
 	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_TOPLEVEL_ID_KEY))
 		return FALSE;
 
-	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY))
+	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY))
 		return FALSE;
 
 	return TRUE;

@@ -30,8 +30,11 @@
 #include "panel-globals.h"
 #include "panel-profile.h"
 #include "panel-lockdown.h"
+#include "panel-schemas.h"
 
-#define MOVE_INCREMENT 1
+#define MOVE_INCREMENT            1
+/* The following was originally from panel-toplevel.c */
+#define SNAP_TOLERANCE_FACTOR     6
 
 typedef enum {
 	PANEL_SWITCH_MOVE = 0,
@@ -623,36 +626,92 @@ get_applet_list_pos (PanelWidget *panel,
 	return NULL;
 }
 
-/*tells us if an applet is "stuck" on the right side*/
-int
-panel_widget_is_applet_stuck (PanelWidget *panel_widget,
-			      GtkWidget   *widget)
+/*
+ * This function determines whether the given panel applet should be positioned
+ * relative to the center or end of the panel; that is, whether the applet
+ * is part of a contiguous group of other applets, one of which touches the
+ * center or end of the panel.
+ */
+PanelObjectEdgeRelativity
+panel_widget_determine_applet_edge_relativity (PanelWidget *panel_widget,
+					       GtkWidget   *widget)
 {
-	AppletData *applet;
+	AppletData *applet_in_question;
+	gboolean    applet_is_centered = FALSE;
 
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel_widget), FALSE);
-	g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel_widget), PANEL_EDGE_START);
+	g_return_val_if_fail (GTK_IS_WIDGET (widget), PANEL_EDGE_START);
 
-	applet = g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA);
-	if (applet) {
-		GList *applet_list, *l;
-		int    end_pos = -1;
+	applet_in_question = g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA);
+	if (applet_in_question) {
+		GList      *applet_list, *l;
+		AppletData *applet;
+		int         start_pos, end_pos;
 
-		applet_list = g_list_find (panel_widget->applet_list, applet);
+		applet_list = g_list_find (panel_widget->applet_list, applet_in_question);
+		start_pos = applet_in_question->pos + applet_in_question->cells;
+		end_pos = applet_in_question->pos;
 
-		for (l = applet_list; l; l = l->next) {
+		/*
+		 * Start by moving towards the start of the panel, checking
+		 * whether any applets lie on the panel's center.
+		 */
+		for (l = applet_list; l; l = l->prev)
+		{
 			applet = l->data;
 
-			if (end_pos != -1 && applet->pos != end_pos)
+			if (applet->pos + applet->cells < end_pos)
 				break;
 
-			end_pos = applet->pos + applet->cells;
-			if (end_pos >= panel_widget->size)
-				return TRUE;
+			if (applet->pos <= panel_widget->size/2 &&
+			    applet->pos + applet->cells > panel_widget->size/2)
+				applet_is_centered = TRUE;
+
+			end_pos -= applet->cells;
+			if (end_pos <= 0)
+				/*
+				 * If the applet in question is part of a line
+				 * of contiguous applets, the first of which
+				 * touches the start of the panel, then don't
+				 * center this applet under any circumstances.
+				 */
+				return PANEL_EDGE_START;
+		}
+
+		if (applet_is_centered)
+			return PANEL_EDGE_CENTER;
+
+		/*
+		 * Now move towards the panel's end, looking for applets that
+		 * cross the center of the panel.
+		 */
+		for (l = applet_list; l; l = l->next)
+		{
+			applet = l->data;
+
+			if (applet->pos > start_pos)
+				break;
+
+			if (applet->pos <= panel_widget->size/2 &&
+			    applet->pos + applet->cells > panel_widget->size/2)
+				applet_is_centered = TRUE;
+
+			start_pos += applet->cells;
+			if (start_pos >= panel_widget->size)
+				/*
+				 * If the applet in question is part of a line
+				 * of contiguous applets, the last of which
+				 * touches the end of the panel, then the
+				 * applet is actually end-relative.
+				 */
+				return PANEL_EDGE_END;
 		}
 	}
 
-	return FALSE;
+	if (applet_is_centered)
+			return PANEL_EDGE_CENTER;
+	else
+		return PANEL_EDGE_START;
 }
 
 static int
@@ -674,6 +733,24 @@ get_size_from_hints (AppletData *ad, int cells)
 	}
 
 	return MAX (cells, ad->min_cells);
+}
+
+/*
+ * A utility function to adjust an applet's position by its allocated size,
+ * if the applet is end-relative or centered.
+ */
+static void
+adjust_applet_position (PanelWidget *panel,
+			AppletData  *ad)
+{
+	PanelObjectEdgeRelativity edge_relativity;
+
+	edge_relativity = panel_widget_determine_applet_edge_relativity (panel, ad->applet);
+
+	if (edge_relativity == PANEL_EDGE_CENTER)
+		ad->pos += ad->cells/2;
+	else if (edge_relativity == PANEL_EDGE_END)
+		ad->pos += ad->cells;
 }
 
 static void
@@ -705,6 +782,7 @@ panel_widget_jump_applet_right (PanelWidget *panel,
 
  jump_right:
 	ad->pos = ad->constrained = pos;
+	adjust_applet_position (panel, ad);
 	panel->applet_list = g_list_remove_link (panel->applet_list, list);
 	panel->applet_list = panel_g_list_insert_before (panel->applet_list, next, list);
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
@@ -729,6 +807,7 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 
 	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + MOVE_INCREMENT) {
 		ad->pos = ad->constrained += MOVE_INCREMENT;
+		adjust_applet_position (panel, ad);
 		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return;
@@ -744,6 +823,8 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 
 	nad->constrained = nad->pos = ad->constrained;
 	ad->constrained = ad->pos = ad->constrained + nad->min_cells;
+	adjust_applet_position (panel, nad);
+	adjust_applet_position (panel, ad);
 	panel->applet_list = panel_g_list_swap_next (panel->applet_list, list);
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
@@ -781,6 +862,7 @@ panel_widget_jump_applet_left (PanelWidget *panel,
 
  jump_left:
 	ad->pos = ad->constrained = pos;
+	adjust_applet_position (panel, ad);
 	panel->applet_list = g_list_remove_link (panel->applet_list, list);
 	panel->applet_list = panel_g_list_insert_after (panel->applet_list, prev, list);
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
@@ -803,6 +885,7 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 
 	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - MOVE_INCREMENT) {
 		ad->pos = ad->constrained -= MOVE_INCREMENT;
+		adjust_applet_position (panel, ad);
 		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return;
@@ -818,6 +901,8 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 
 	ad->constrained = ad->pos = pad->constrained;
 	pad->constrained = pad->pos = ad->constrained + ad->min_cells;
+	adjust_applet_position (panel, ad);
+	adjust_applet_position (panel, pad);
 	panel->applet_list = panel_g_list_swap_prev (panel->applet_list, list);
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
@@ -1060,6 +1145,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 
 	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + push) {
 		ad->pos = ad->constrained += push;
+		adjust_applet_position (panel, ad);
 		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return TRUE;
@@ -1071,6 +1157,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 		return FALSE;
 
 	ad->pos = ad->constrained += push;;
+	adjust_applet_position (panel, ad);
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
 
@@ -1099,6 +1186,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 
 	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - push) {
 		ad->pos = ad->constrained -= push;
+		adjust_applet_position (panel, ad);
 		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return TRUE;
@@ -1110,6 +1198,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 		return FALSE;
 
 	ad->pos = ad->constrained -= push;
+	adjust_applet_position (panel, ad);
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
 
@@ -1150,46 +1239,6 @@ panel_widget_push_move (PanelWidget *panel,
 			if (!panel_widget_push_applet_left (panel, list, 1))
 				break;
 	}
-}
-
-/*this is a special function and may fail if called improperly, it works
-only under special circumstance when we know there is nothing from
-old_size to panel->size*/
-static void
-panel_widget_right_stick(PanelWidget *panel,int old_size)
-{
-	int i,pos;
-	GList *list,*prev;
-	AppletData *ad;
-
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	g_return_if_fail(old_size>=0);
-
-	if(old_size>=panel->size ||
-	   panel->packed)
-	   	return;
-
-	list = get_applet_list_pos(panel,old_size-1);
-
-	if(!list)
-		return;
-
-	pos = panel->size-1;
-
-	ad = list->data;
-	do {
-		i = ad->pos;
-		ad->pos = ad->constrained = pos--;
-		ad->cells = 1;
-		prev = list;
-		list = g_list_previous(list);
-		if(!list)
-			break;
-		ad = list->data;
-	} while(ad->pos + ad->cells == i);
-
-	for (list = prev; list; list = list->next)
-		emit_applet_moved (panel, list->data);
 }
 
 static void
@@ -1361,7 +1410,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	PanelWidget *panel;
 	GList *list;
 	int i;
-	int old_size;
 	gboolean ltr;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
@@ -1369,7 +1417,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	panel = PANEL_WIDGET(widget);
 
-	old_size = panel->size;
 	ltr = gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR;
 
 	gtk_widget_set_allocation (widget, allocation);
@@ -1384,8 +1431,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		panel->size = allocation->width;
 	else
 		panel->size = allocation->height;
-	if(old_size<panel->size)
-		panel_widget_right_stick(panel,old_size);
 
 	if (panel->packed) {
 		/* we're assuming the order is the same as the one that was
@@ -1442,13 +1487,30 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	} else { /*not packed*/
 
-		/* First make sure there's enough room on the left */
+		/*
+		 * First, recalculate the ideal position for each applet on the
+		 * panel, since the panel changed size, and the position of
+		 * end-relative and center-relative applets depends on the
+		 * exact size of the panel.
+		 *
+		 * However, if some applet uses a large amount of space on the
+		 * panel, it's possible that the ideal applet positions cannot
+		 * be attained, unless of course panel applets were to overlap.
+		 * Since we don't want any panel applets to overlap, shift any
+		 * following applets further over to the right as much as
+		 * necessary.
+		 */
+
 		i = 0;
-		for (list = panel->applet_list;
-		     list != NULL;
-		     list = g_list_next (list)) {
+		for (list = panel->applet_list; list; list = list->next)
+		{
 			AppletData *ad = list->data;
 			GtkRequisition chreq;
+			const char *id;
+			AppletInfo *info;
+			int position = ad->pos;
+			PanelObjectEdgeRelativity edge_relativity = PANEL_EDGE_START;
+			gboolean right_stuck = FALSE;
 
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
 
@@ -1464,10 +1526,96 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				ad->min_cells = ad->size_hints [ad->size_hints_len - 1];
 			}
 
-			ad->constrained = ad->pos;
+			id = mate_panel_applet_get_id_by_widget (ad->applet);
+			if (id)
+			{
+				info = mate_panel_applet_get_by_id (id);
+				position = g_settings_get_int (info->settings,
+							       PANEL_OBJECT_POSITION_KEY);
+				edge_relativity = g_settings_get_enum (info->settings,
+								       PANEL_OBJECT_RELATIVE_TO_EDGE_KEY);
+				right_stuck = g_settings_get_boolean (info->settings,
+								      PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
+			}
+
+			/*
+			 * Do not attempt to re-position the applet if it is
+			 * currently being dragged or otherwise moved by the
+			 * user; otherwise, we'll immediately undo the user's
+			 * last move and thus thwart all the user's attempts
+			 * to move the applet!
+			 */
+			if (ad != panel->currently_dragged_applet)
+			{
+				if (edge_relativity == PANEL_EDGE_CENTER)
+				{
+					ad->pos = panel->size/2 + position;
+					ad->constrained = ad->pos - ad->cells/2;
+				}
+				else if (edge_relativity == PANEL_EDGE_END)
+				{
+					ad->pos = panel->size - position;
+					/*
+					 * If the `panel-right-stick` property
+					 * is set on the applet, position the
+					 * left side of the applet relative to
+					 * the right side of the panel, not
+					 * the right side of the applet relative
+					 * to the right side of the panel like
+					 * we'd normally do.  This is a hack for
+					 * better backward compatibility.  See
+					 * the huge comment in the function
+					 * `panel_profile_load_object ()` in
+					 * the file `panel-profile.c` for much,
+					 * much more discussion of this hack.
+					 */
+					if (right_stuck)
+						ad->constrained = ad->pos;
+					else
+						ad->constrained = ad->pos - ad->cells;
+				}
+				else
+				{
+					ad->pos = position;
+					ad->constrained = ad->pos;
+				}
+			}
+
+			/*
+			 * Now if the previous applet uses too much room on the
+			 * panel to ideally fit this applet, move this applet
+			 * further over to the right to compensate.
+			 *
+			 * Centered applets are a somewhat different story.
+			 * If the current applet is centered, and the previous
+			 * applet is also centered and has a negative relative
+			 * position (so the previous applet is "left" of
+			 * center), move the *previous* applet over to the
+			 * *left* to compensate.  This way, applets at dead
+			 * center will remain at or near dead center.
+			 */
 
 			if (ad->constrained < i)
-				ad->constrained = i;
+			{
+				AppletData *pad = NULL;
+				PanelObjectEdgeRelativity previous_edge_relativity;
+
+				previous_edge_relativity = PANEL_EDGE_START;
+
+				if (list->prev)
+				{
+					pad = list->prev->data;
+					previous_edge_relativity = panel_widget_determine_applet_edge_relativity (panel, pad->applet);
+				}
+
+				if (edge_relativity == PANEL_EDGE_CENTER &&
+				    pad &&
+				    previous_edge_relativity == PANEL_EDGE_CENTER &&
+				    pad->constrained + pad->cells/2 < panel->size/2)
+					pad->constrained = ad->constrained - pad->cells;
+				else
+					ad->constrained = i;
+			}
 
 			i = ad->constrained + ad->cells;
 		}
@@ -1754,12 +1902,20 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 static void
 panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 {
+	AppletInfo *info;
+
 	g_return_if_fail (panel != NULL);
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 
 #ifdef PANEL_WIDGET_DEBUG
 	g_message("Ending drag\n");
 #endif
+
+	/* Immediately save the new position of the applet. */
+	info = g_object_get_data (G_OBJECT (panel->currently_dragged_applet->applet), "applet_info");
+	if (info)
+		mate_panel_applet_save_position (info, info->id, TRUE);
+
 	panel->currently_dragged_applet = NULL;
 	mate_panel_applet_in_drag = FALSE;
 
@@ -2000,6 +2156,7 @@ panel_widget_nice_move (PanelWidget *panel,
 		return;
 
 	ad->pos = ad->constrained = pos;
+	adjust_applet_position (panel, ad);
 
 	panel->applet_list =
 		panel_g_list_resort_item (panel->applet_list, ad,
@@ -2025,6 +2182,10 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	GSList *forb;
 	GdkModifierType mods;
 	AppletData *ad;
+	GtkSettings *settings;
+	int drag_threshold;
+	int absolute_moveby;
+	int centered_applet_position;
 
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
 
@@ -2093,16 +2254,51 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			movement = PANEL_FREE_MOVE;
 	}
 
+	moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
+
+	/*
+	 * If the applet is currently positioned at the dead center of the
+	 * panel, or if the user moved the mouse across the center of the
+	 * panel (but not farther from the center than the drag-and-drop
+	 * threshold times a specific constant), make the applet "stick" to
+	 * the center of the panel until the user tries to drag the applet far
+	 * away from the center again.  This way, the user can move an applet
+	 * to the center of the panel without needing superhuman muscle
+	 * control to get the applet perfectly centered.
+	 */
+	settings = gtk_widget_get_settings (GTK_WIDGET (panel));
+	g_object_get (G_OBJECT (settings),
+		      "gtk-dnd-drag-threshold", &drag_threshold,
+		      NULL);
+
+	centered_applet_position = panel->size/2 - ad->cells/2;
+
+	if ((moveby < 0 && pos > centered_applet_position &&
+	     pos+moveby <= centered_applet_position &&
+	     pos+moveby >= centered_applet_position - drag_threshold*SNAP_TOLERANCE_FACTOR) ||
+	    (moveby > 0 && pos < centered_applet_position &&
+	     pos+moveby >= centered_applet_position &&
+	     pos+moveby <= centered_applet_position + drag_threshold*SNAP_TOLERANCE_FACTOR))
+		moveby = centered_applet_position - pos;
+	else if (pos == centered_applet_position)
+	{
+		if (moveby < 0)
+			absolute_moveby = -moveby;
+		else
+			absolute_moveby = moveby;
+
+		if (absolute_moveby < drag_threshold*SNAP_TOLERANCE_FACTOR)
+			return;
+	}
+
 	switch (movement) {
 	case PANEL_SWITCH_MOVE:
-		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
 		panel_widget_switch_move (panel, ad, moveby);
 		break;
 	case PANEL_FREE_MOVE:
 		panel_widget_nice_move (panel, ad, panel_widget_get_cursorloc (panel));
 		break;
 	case PANEL_PUSH_MOVE:
-		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
 		panel_widget_push_move (panel, ad, moveby);
 		break;
 	}
@@ -2573,6 +2769,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	if (info && info->type == PANEL_OBJECT_APPLET)
 		mate_panel_applet_frame_set_panel (MATE_PANEL_APPLET_FRAME (ad->applet), new_panel);
+	adjust_applet_position (new_panel, ad);
 
 	if (gtk_widget_get_can_focus (GTK_WIDGET (new_panel)))
 		gtk_widget_set_can_focus (GTK_WIDGET (new_panel), FALSE);

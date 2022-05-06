@@ -17,8 +17,13 @@
     </key>
     <key name="panel-right-stick" type="b">
       <default>false</default>
-      <summary>Interpret position relative to bottom/right edge</summary>
-      <description>If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel.</description>
+      <summary>Interpret position relative to bottom/right edge (DEPRECATED)</summary>
+      <description>If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel.  This key is provided only for backward compatibility with old panel layouts; please set the "relative-to-edge" property instead.</description>
+    </key>
+    <key name="relative-to-edge" enum="org.mate.panel.PanelObjectEdgeRelativity">
+      <default>'start'</default>
+      <summary>Whether to interpret the value of the "position" key relative to the start, center or end of the panel</summary>
+      <description>The position of the object is interpreted relative to one edge of the panel.  The value of this key determines whether the object is positioned relative to the start (left/top edge), center, or end (right/bottom edge) of the panel.  Valid values for this key are 'start', 'center', and 'end'.</description>
     </key>
     <key name="locked" type="b">
       <default>false</default>

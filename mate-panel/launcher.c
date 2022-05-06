@@ -1093,8 +1093,7 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 
 	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER,
 						   toplevel_id,
-						   position,
-						   FALSE);
+						   position);
 
 	path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);

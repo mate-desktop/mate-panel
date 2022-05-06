@@ -26,7 +26,7 @@ PanelData *panel_setup (PanelToplevel *toplevel);
 
 GdkScreen *panel_screen_from_panel_widget  (PanelWidget *panel);
 
-gboolean panel_is_applet_right_stick (GtkWidget *applet);
+PanelObjectEdgeRelativity panel_determine_applet_edge_relativity (GtkWidget *applet);
 
 gboolean panel_check_dnd_target_data (GtkWidget      *widget,
 				      GdkDragContext *context,
