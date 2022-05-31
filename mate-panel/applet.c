@@ -36,8 +36,6 @@
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
 
-#define SMALL_ICON_SIZE 20
-
 static GSList *registered_applets = NULL;
 static GSList *queued_position_saves = NULL;
 static guint   queued_position_source = 0;
