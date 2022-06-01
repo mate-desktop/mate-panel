@@ -293,7 +293,7 @@ if test "x$enable_rebuilds" = "xyes" && \
 fi
 AC_SUBST(REBUILD)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 data/Makefile
 data/theme/Makefile
@@ -343,6 +343,7 @@ help/mate-clock/Makefile
 help/mate-fish/Makefile
 man/Makefile
 ])
+AC_OUTPUT
 
 if echo foo | xgettext --from-code=UTF-8 -LC -o - - 2>/dev/null ; then
 :;
