@@ -368,7 +368,7 @@ calculate_minimum_height (GtkWidget        *widget,
 {
         GtkStateFlags    state;
         GtkStyleContext *style_context;
-        const PangoFontDescription *font_desc;
+        PangoFontDescription *font_desc;
         GtkBorder        padding;
         PangoContext     *pango_context;
         PangoFontMetrics *metrics;
@@ -389,6 +389,7 @@ calculate_minimum_height (GtkWidget        *widget,
         descent = pango_font_metrics_get_descent (metrics);
 
         pango_font_metrics_unref (metrics);
+        pango_font_description_free (font_desc);
 
         gtk_style_context_get_padding (style_context, state, &padding);
 
