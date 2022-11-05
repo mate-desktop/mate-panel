@@ -11,9 +11,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.3\n"
+"Project-Id-Version: mate-panel 1.27.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2021-08-04 18:05+0200\n"
+"POT-Creation-Date: 2022-10-29 15:36+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@disroot.org>, 2021\n"
 "Language-Team: Basque (https://www.transifex.com/mate/teams/13566/eu/)\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Language: eu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:689
+#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:708
 msgid "Locations"
 msgstr "Kokalekuak"
 
@@ -31,21 +31,21 @@ msgstr "Kokalekuak"
 msgid "Edit"
 msgstr "Editatu"
 
-#: applets/clock/calendar-window.c:482
+#: applets/clock/calendar-window.c:484
 msgid "Calendar"
 msgstr "Egutegia"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:448
+#: applets/clock/clock.c:444
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:448 applets/clock/clock-location-tile.c:500
+#: applets/clock/clock.c:444 applets/clock/clock-location-tile.c:500
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -56,7 +56,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: applets/clock/clock.c:453 applets/clock/clock.c:1620
+#: applets/clock/clock.c:449 applets/clock/clock.c:1614
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -70,7 +70,7 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: applets/clock/clock.c:453 applets/clock/clock.c:1626
+#: applets/clock/clock.c:449 applets/clock/clock.c:1620
 #: applets/clock/clock-location-tile.c:460
 #: applets/clock/clock-location-tile.c:507
 msgid "%H:%M"
@@ -81,11 +81,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: applets/clock/clock.c:464
+#: applets/clock/clock.c:460
 msgid "%a %b %e"
 msgstr "%a, %b %d"
 
-#: applets/clock/clock.c:471
+#: applets/clock/clock.c:467
 #, c-format
 msgid ""
 "%1$s\n"
@@ -94,7 +94,7 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#: applets/clock/clock.c:479
+#: applets/clock/clock.c:475
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -102,19 +102,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: applets/clock/clock.c:661
+#: applets/clock/clock.c:657
 msgid "%A %B %d (%%s)"
 msgstr "%A, %B %d (%%s)"
 
-#: applets/clock/clock.c:687
+#: applets/clock/clock.c:683
 msgid "Click to hide month calendar"
 msgstr "Egin klik hileko egutegia ezkutatzeko"
 
-#: applets/clock/clock.c:689
+#: applets/clock/clock.c:685
 msgid "Click to view month calendar"
 msgstr "Egin klik hileko egutegia ikusteko"
 
-#: applets/clock/clock.c:1458
+#: applets/clock/clock.c:1452
 msgid "Computer Clock"
 msgstr "Ordenagailuaren erlojua"
 
@@ -124,7 +124,7 @@ msgstr "Ordenagailuaren erlojua"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1605
+#: applets/clock/clock.c:1599
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -134,107 +134,107 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1613
+#: applets/clock/clock.c:1607
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: applets/clock/clock.c:1659
+#: applets/clock/clock.c:1653
 msgid "%A, %B %d %Y"
 msgstr "%A, %Y %B %d"
 
-#: applets/clock/clock.c:1690
+#: applets/clock/clock.c:1684
 msgid "Set System Time..."
 msgstr "Ezarri sistemako ordua..."
 
-#: applets/clock/clock.c:1691
+#: applets/clock/clock.c:1685
 msgid "Set System Time"
 msgstr "Ezarri sistemako ordua"
 
-#: applets/clock/clock.c:1705
+#: applets/clock/clock.c:1699
 msgid "Failed to set the system time"
 msgstr "Huts egin du sistemako ordua ezartzean"
 
-#: applets/clock/clock.c:1901 applets/fish/fish.c:1691
-#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:432
+#: applets/clock/clock.c:1889 applets/fish/fish.c:1690
+#: applets/notification_area/main.c:290 applets/wncklet/window-list.c:466
 #: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "_Hobespenak"
 
-#: applets/clock/clock.c:1904 applets/clock/clock.ui:293
-#: applets/fish/fish.c:1694 applets/fish/fish.ui:46
-#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:240
-#: applets/wncklet/window-list.c:440 applets/wncklet/window-list.ui:38
+#: applets/clock/clock.c:1892 applets/clock/clock.ui:312
+#: applets/fish/fish.c:1693 applets/fish/fish.ui:46
+#: applets/notification_area/main.c:293 applets/wncklet/showdesktop.c:239
+#: applets/wncklet/window-list.c:474 applets/wncklet/window-list.ui:37
 #: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
-#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:563
-#: mate-panel/panel-action-button.c:732 mate-panel/panel-addto.c:1309
-#: mate-panel/panel-context-menu.c:319
+#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:558
+#: mate-panel/panel-action-button.c:730 mate-panel/panel-addto.c:1267
+#: mate-panel/panel-context-menu.c:320
 #: mate-panel/panel-ditem-editor-dialog.ui:45 mate-panel/panel-menu-bar.c:355
-#: mate-panel/panel-menu-button.c:705 mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-menu-button.c:697 mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: applets/clock/clock.c:1907 applets/fish/fish.c:1697
-#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:248
-#: applets/wncklet/window-list.c:448 applets/wncklet/window-menu.c:113
+#: applets/clock/clock.c:1895 applets/fish/fish.c:1696
+#: applets/notification_area/main.c:296 applets/wncklet/showdesktop.c:247
+#: applets/wncklet/window-list.c:482 applets/wncklet/window-menu.c:113
 #: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "Honi _buruz"
 
-#: applets/clock/clock.c:1910
+#: applets/clock/clock.c:1898
 msgid "Copy _Time"
 msgstr "Kopiatu _ordua"
 
-#: applets/clock/clock.c:1913
+#: applets/clock/clock.c:1901
 msgid "Copy _Date"
 msgstr "Kopiatu _data"
 
-#: applets/clock/clock.c:1916
+#: applets/clock/clock.c:1904
 msgid "Ad_just Date & Time"
 msgstr "D_oitu data eta ordua"
 
-#: applets/clock/clock.c:2910
+#: applets/clock/clock.c:2902
 msgid "Choose Location"
 msgstr "Aukeratu kokalekua"
 
-#: applets/clock/clock.c:2989
+#: applets/clock/clock.c:2981
 msgid "Edit Location"
 msgstr "Editatu kokalekua"
 
-#: applets/clock/clock.c:3116
+#: applets/clock/clock.c:3107
 msgid "City Name"
 msgstr "Herriaren izena"
 
-#: applets/clock/clock.c:3120
+#: applets/clock/clock.c:3111
 msgid "City Time Zone"
 msgstr "Herriaren ordu-zona"
 
-#: applets/clock/clock.c:3395
+#: applets/clock/clock.c:3384
 #: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "Erlojua"
 
-#: applets/clock/clock.c:3396
+#: applets/clock/clock.c:3385
 msgid "About Clock"
 msgstr ""
 
-#: applets/clock/clock.c:3398
+#: applets/clock/clock.c:3387
 msgid "The Clock displays the current time and date"
 msgstr "Uneko data eta ordua erakusten ditu erlojuak"
 
-#: applets/clock/clock.c:3399
+#: applets/clock/clock.c:3388
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/clock/clock.c:3403 applets/fish/fish.c:563
-#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:511
-#: applets/wncklet/window-list.c:730 applets/wncklet/window-menu.c:95
-#: applets/wncklet/workspace-switcher.c:722
+#: applets/clock/clock.c:3392 applets/fish/fish.c:562
+#: applets/notification_area/main.c:284 applets/wncklet/showdesktop.c:531
+#: applets/wncklet/window-list.c:956 applets/wncklet/window-menu.c:95
+#: applets/wncklet/workspace-switcher.c:735
 #: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
 msgstr ""
@@ -245,13 +245,13 @@ msgstr ""
 msgid "Time & Date"
 msgstr "Ordua eta data"
 
-#: applets/clock/clock.ui:46 applets/clock/clock.ui:923
+#: applets/clock/clock.ui:46 applets/clock/clock.ui:952
 #: mate-panel/libpanel-util/panel-gtk.c:137
 #: mate-panel/panel-context-menu.c:214
 #: mate-panel/panel-ditem-editor-dialog.ui:92
-#: mate-panel/panel-force-quit.c:241 mate-panel/panel-recent.c:155
-#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:690
-#: mate-panel/panel.c:1498
+#: mate-panel/panel-force-quit.c:241 mate-panel/panel-recent.c:154
+#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:688
+#: mate-panel/panel.c:1491
 msgid "_Cancel"
 msgstr "_Utzi"
 
@@ -259,133 +259,133 @@ msgstr "_Utzi"
 msgid "_Set System Time"
 msgstr "Ezarri _sistemako ordua"
 
-#: applets/clock/clock.ui:191
+#: applets/clock/clock.ui:198
 msgid "_Time:"
 msgstr "_Ordua:"
 
-#: applets/clock/clock.ui:205
+#: applets/clock/clock.ui:212
 msgid "Current Time:"
 msgstr "Uneko ordua:"
 
-#: applets/clock/clock.ui:277
+#: applets/clock/clock.ui:296
 msgid "Clock Preferences"
 msgstr "Erlojuaren hobespenak"
 
-#: applets/clock/clock.ui:309
+#: applets/clock/clock.ui:328
 msgid "Time _Settings"
 msgstr "Orduaren _ezarpenak"
 
-#: applets/clock/clock.ui:324 applets/fish/fish.c:850 applets/fish/fish.ui:62
+#: applets/clock/clock.ui:343 applets/fish/fish.c:849 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:54 applets/wncklet/workspace-switcher.ui:62
-#: mate-panel/panel-addto.c:1320 mate-panel/panel-ditem-editor-dialog.ui:76
+#: applets/wncklet/window-list.ui:53 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1278 mate-panel/panel-ditem-editor-dialog.ui:76
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
 #: mate-panel/panel-test-applets.ui:52
 msgid "_Close"
 msgstr "_Itxi"
 
-#: applets/clock/clock.ui:369
+#: applets/clock/clock.ui:388
 msgid "Clock Format"
 msgstr "Ordulariaren formatua"
 
-#: applets/clock/clock.ui:393
+#: applets/clock/clock.ui:412
 msgid "_12 hour format"
 msgstr "_12 orduko formatua"
 
-#: applets/clock/clock.ui:408
+#: applets/clock/clock.ui:427
 msgid "_24 hour format"
 msgstr "_24 orduko formatua"
 
-#: applets/clock/clock.ui:448
+#: applets/clock/clock.ui:467
 msgid "Panel Display"
 msgstr "Panela bistaratzea"
 
-#: applets/clock/clock.ui:473
+#: applets/clock/clock.ui:492
 msgid "Show the _date"
 msgstr "Erakutsi _data"
 
-#: applets/clock/clock.ui:488
+#: applets/clock/clock.ui:507
 msgid "Show seco_nds"
 msgstr "Erakutsi segu_ndoak"
 
-#: applets/clock/clock.ui:503
+#: applets/clock/clock.ui:522
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: applets/clock/clock.ui:518
+#: applets/clock/clock.ui:537
 msgid "Show _weather"
 msgstr "Erakutsi _eguraldia"
 
-#: applets/clock/clock.ui:533
+#: applets/clock/clock.ui:552
 msgid "Show _temperature"
 msgstr "Erakutsi _tenperatura"
 
-#: applets/clock/clock.ui:568 applets/fish/fish.ui:102
+#: applets/clock/clock.ui:587 applets/fish/fish.ui:102
 #: mate-panel/panel-properties-dialog.ui:384
 msgid "General"
 msgstr "Orokorra"
 
-#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1316
+#: applets/clock/clock.ui:639 mate-panel/panel-addto.c:1274
 msgid "_Add"
 msgstr "_Gehitu"
 
-#: applets/clock/clock.ui:636
+#: applets/clock/clock.ui:655
 msgid "_Edit"
 msgstr "_Editatu"
 
-#: applets/clock/clock.ui:652
+#: applets/clock/clock.ui:671
 msgid "_Remove"
 msgstr "_Kendu"
 
-#: applets/clock/clock.ui:713
+#: applets/clock/clock.ui:732
 msgid "Display"
 msgstr "Bistaratu"
 
-#: applets/clock/clock.ui:749
+#: applets/clock/clock.ui:769
 msgid "_Visibility unit:"
 msgstr "_Ikusgaitasun-unitatea:"
 
-#: applets/clock/clock.ui:771
+#: applets/clock/clock.ui:791
 msgid "_Pressure unit:"
 msgstr "_Presio-unitatea:"
 
-#: applets/clock/clock.ui:805
+#: applets/clock/clock.ui:825
 msgid "_Wind speed unit:"
 msgstr "_Haizearen abiadura-unitatea:"
 
-#: applets/clock/clock.ui:819
+#: applets/clock/clock.ui:839
 msgid "_Temperature unit:"
 msgstr "_Tenperatura unitatea:"
 
-#: applets/clock/clock.ui:854
+#: applets/clock/clock.ui:886
 msgid "Weather"
 msgstr "Eguraldia"
 
-#: applets/clock/clock.ui:886
+#: applets/clock/clock.ui:915
 msgid "East"
 msgstr "Ekialdea"
 
-#: applets/clock/clock.ui:889
+#: applets/clock/clock.ui:918
 msgid "West"
 msgstr "Mendebaldea"
 
-#: applets/clock/clock.ui:900
+#: applets/clock/clock.ui:929
 msgid "North"
 msgstr "Iparraldea"
 
-#: applets/clock/clock.ui:903
+#: applets/clock/clock.ui:932
 msgid "South"
 msgstr "Hegoaldea"
 
-#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:141
-#: mate-panel/panel-applet-frame.c:961
+#: applets/clock/clock.ui:968 mate-panel/libpanel-util/panel-gtk.c:141
+#: mate-panel/panel-applet-frame.c:959
 msgid "_OK"
 msgstr "_Ados"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: applets/clock/clock.ui:1012
+#: applets/clock/clock.ui:1043
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -393,23 +393,23 @@ msgstr ""
 "<small><i>Idatzi herri, eskualde edo estatuaren izena eta hautatu bat "
 "datorrena laster-menutik.</i></small>"
 
-#: applets/clock/clock.ui:1057
+#: applets/clock/clock.ui:1088
 msgid "_Timezone:"
 msgstr "Ordu-_zona:"
 
-#: applets/clock/clock.ui:1070
+#: applets/clock/clock.ui:1101
 msgid "_Location Name:"
 msgstr "Kokalekuaren _izena:"
 
-#: applets/clock/clock.ui:1114 applets/clock/clock.ui:1128
+#: applets/clock/clock.ui:1145 applets/clock/clock.ui:1159
 msgid "<i>(optional)</i>"
 msgstr "<i>(aukerakoa)</i>"
 
-#: applets/clock/clock.ui:1171
+#: applets/clock/clock.ui:1202
 msgid "L_ongitude:"
 msgstr "L_ongitudea:"
 
-#: applets/clock/clock.ui:1192
+#: applets/clock/clock.ui:1223
 msgid "L_atitude:"
 msgstr "_Latitudea:"
 
@@ -480,15 +480,15 @@ msgstr "%s. Honakoa dirudi: %s"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Eguna argitu: %s / Eguzki-sartzea: %s"
 
-#: applets/clock/clock-utils.c:92 applets/fish/fish.c:169
-#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:74
+#: applets/clock/clock-utils.c:92 applets/fish/fish.c:168
+#: applets/notification_area/main.c:236 applets/wncklet/wncklet.c:74
 #: mate-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Ezin izan da laguntzako '%s' dokumentua bistaratu"
 
-#: applets/clock/clock-utils.c:121 applets/fish/fish.c:195
-#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:91
+#: applets/clock/clock-utils.c:121 applets/fish/fish.c:194
+#: applets/notification_area/main.c:250 applets/wncklet/wncklet.c:91
 msgid "Error displaying help document"
 msgstr "Errorea laguntzako dokumentua bistaratzean"
 
@@ -627,7 +627,7 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: applets/fish/fish.c:265
+#: applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -640,16 +640,16 @@ msgstr ""
 "%s \"praktiko\" edo baliagarri bihur lezakeen\n"
 "ezertarako ez erabiltzeko gomendioa egiten dizugu."
 
-#: applets/fish/fish.c:424
+#: applets/fish/fish.c:423
 msgid "Images"
 msgstr "Irudiak"
 
-#: applets/fish/fish.c:530 applets/fish/fish.c:574 applets/fish/fish.c:680
+#: applets/fish/fish.c:529 applets/fish/fish.c:573 applets/fish/fish.c:679
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s arraina"
 
-#: applets/fish/fish.c:531
+#: applets/fish/fish.c:530
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -661,41 +661,41 @@ msgstr ""
 " egiten du. Inor miniaplikazio hau erabiltzen ikusiz gero, ebaluazio "
 "psikiatrikoa egitera bidali beharko litzateke."
 
-#: applets/fish/fish.c:548
+#: applets/fish/fish.c:547
 msgid "(with minor help from George)"
 msgstr "(George-ren laguntza pixka batez)"
 
-#: applets/fish/fish.c:554
+#: applets/fish/fish.c:553
 #: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:10
 msgid "Fish"
 msgstr "Arraina"
 
-#: applets/fish/fish.c:555
+#: applets/fish/fish.c:554
 msgid "About Fish"
 msgstr ""
 
-#: applets/fish/fish.c:558
+#: applets/fish/fish.c:557
 msgid ""
 "Copyright © 1998-2002 Free Software Foundation, Inc.\n"
 "Copyright © 2002-2005 Vincent Untz\n"
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/fish/fish.c:575
+#: applets/fish/fish.c:574
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s arraina, gure garaiko orakulua."
 
-#: applets/fish/fish.c:641
+#: applets/fish/fish.c:640
 msgid "Unable to locate the command to execute"
 msgstr "Ezin da aurkitu exekutatu beharreko komandoa"
 
-#: applets/fish/fish.c:685
+#: applets/fish/fish.c:684
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s arrainak esana:"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:746
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -706,17 +706,17 @@ msgstr ""
 "\n"
 "Xehetasunak: %s"
 
-#: applets/fish/fish.c:846
+#: applets/fish/fish.c:845
 msgid "_Speak again"
 msgstr "_Hitzegin berriro"
 
-#: applets/fish/fish.c:927
+#: applets/fish/fish.c:926
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "Konfiguratutako komandoa ez da exekutatzen ari eta honek ordeztu du: %s"
 
-#: applets/fish/fish.c:960
+#: applets/fish/fish.c:959
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -727,7 +727,7 @@ msgstr ""
 "\n"
 "Xehetasunak: %s"
 
-#: applets/fish/fish.c:976
+#: applets/fish/fish.c:975
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -738,15 +738,15 @@ msgstr ""
 "\n"
 "Xehetasunak: %s"
 
-#: applets/fish/fish.c:1548
+#: applets/fish/fish.c:1547
 msgid "The water needs changing"
 msgstr "Ura aldatu beharrean dago"
 
-#: applets/fish/fish.c:1550
+#: applets/fish/fish.c:1549
 msgid "Look at today's date!"
 msgstr "Begiratu gaurko datari"
 
-#: applets/fish/fish.c:1632
+#: applets/fish/fish.c:1631
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s arraina, fortuna-kontalaria"
@@ -875,16 +875,16 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: applets/notification_area/main.c:276
+#: applets/notification_area/main.c:274
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
 msgstr "Jakinarazpen-area"
 
-#: applets/notification_area/main.c:277
+#: applets/notification_area/main.c:275
 msgid "About Notification Area"
 msgstr ""
 
-#: applets/notification_area/main.c:280
+#: applets/notification_area/main.c:278
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2003-2006 Vincent Untz\n"
@@ -892,7 +892,7 @@ msgid ""
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/notification_area/main.c:485
+#: applets/notification_area/main.c:482
 msgid "Panel Notification Area"
 msgstr "Paneleko jakinarazpen-area"
 
@@ -1047,7 +1047,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
-#: applets/wncklet/workspace-switcher.c:712
+#: applets/wncklet/workspace-switcher.c:725
 msgid "Workspace Switcher"
 msgstr "Laneko arearen aldatzailea"
 
@@ -1056,7 +1056,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:720
+#: applets/wncklet/window-list.c:946
 msgid "Window List"
 msgstr "Leiho-zerrenda"
 
@@ -1072,44 +1072,44 @@ msgstr "Erakutsi mahaigaina"
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:182
+#: applets/wncklet/showdesktop.c:181
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Huts egin du %s kargatzean: %s\n"
 
-#: applets/wncklet/showdesktop.c:182
+#: applets/wncklet/showdesktop.c:181
 msgid "Icon not found"
 msgstr "Ikonoa ez da aurkitu"
 
-#: applets/wncklet/showdesktop.c:264
+#: applets/wncklet/showdesktop.c:263
 msgid "Click here to restore hidden windows."
 msgstr "Egin klik hemen ezkutatutako leihoak leheneratzeko."
 
-#: applets/wncklet/showdesktop.c:268
+#: applets/wncklet/showdesktop.c:267
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Egin klik hemen leiho guztiak ezkutatu eta mahaigaina ikusteko."
 
-#: applets/wncklet/showdesktop.c:444 applets/wncklet/showdesktop.c:501
+#: applets/wncklet/showdesktop.c:450 applets/wncklet/showdesktop.c:521
 msgid "Show Desktop Button"
 msgstr "Erakutsi mahaigainaren botoia"
 
-#: applets/wncklet/showdesktop.c:502
+#: applets/wncklet/showdesktop.c:522
 msgid "About Show Desktop Button"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:504
+#: applets/wncklet/showdesktop.c:524
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Botoi honek leiho guztiak ezkutatu eta mahaigaina erakusten du."
 
-#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:724
-#: applets/wncklet/workspace-switcher.c:716
+#: applets/wncklet/showdesktop.c:525 applets/wncklet/window-list.c:950
+#: applets/wncklet/workspace-switcher.c:729
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2011 Perberos\n"
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:551
+#: applets/wncklet/showdesktop.c:571
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
@@ -1117,15 +1117,15 @@ msgstr ""
 "Zure leiho-kudeatzaileak ez du onartzen mahaigaina erakusteko botoia, edo ez"
 " zara leiho-kudeatzailea erabiltzen ari."
 
-#: applets/wncklet/window-list.c:424
+#: applets/wncklet/window-list.c:458
 msgid "_System Monitor"
 msgstr "_Sistema-monitorea"
 
-#: applets/wncklet/window-list.c:721
+#: applets/wncklet/window-list.c:947
 msgid "About Window List"
 msgstr ""
 
-#: applets/wncklet/window-list.c:723
+#: applets/wncklet/window-list.c:949
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1137,83 +1137,83 @@ msgstr ""
 msgid "Window List Preferences"
 msgstr "Leiho-zerrendaren hobespenak"
 
-#: applets/wncklet/window-list.ui:98
+#: applets/wncklet/window-list.ui:97
 msgid "Window Thumbnails"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:119
+#: applets/wncklet/window-list.ui:118
 msgid "Show _thumbnails on hover"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:141
+#: applets/wncklet/window-list.ui:140
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 
-#: applets/wncklet/window-list.ui:142
+#: applets/wncklet/window-list.ui:141
 msgid "Thumbnail width:"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:155
+#: applets/wncklet/window-list.ui:154
 msgid "0"
 msgstr "0"
 
-#: applets/wncklet/window-list.ui:157
+#: applets/wncklet/window-list.ui:156
 msgid "px"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:201
+#: applets/wncklet/window-list.ui:199
 msgid "Window Grouping"
 msgstr "Leiho-elkartzea"
 
-#: applets/wncklet/window-list.ui:222
+#: applets/wncklet/window-list.ui:220
 msgid "_Never group windows"
 msgstr "_Inoiz ere ez elkartu leihorik"
 
-#: applets/wncklet/window-list.ui:239
+#: applets/wncklet/window-list.ui:236
 msgid "Group windows when _space is limited"
 msgstr "_Elkartu leihoak leku gutxi dagoenean"
 
-#: applets/wncklet/window-list.ui:256
+#: applets/wncklet/window-list.ui:252
 msgid "_Always group windows"
 msgstr "_Beti elkartu leihoak"
 
-#: applets/wncklet/window-list.ui:295
+#: applets/wncklet/window-list.ui:290
 msgid "Mouse Scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:316
+#: applets/wncklet/window-list.ui:311
 msgid "_Enable mouse scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:349
+#: applets/wncklet/window-list.ui:344
 msgid "Behaviour"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:372
+#: applets/wncklet/window-list.ui:367
 msgid "Window List Content"
 msgstr "Leiho-zerrendaren edukia"
 
-#: applets/wncklet/window-list.ui:393
+#: applets/wncklet/window-list.ui:388
 msgid "Sh_ow windows from current workspace"
 msgstr "Erakut_si uneko laneko areako leihoak"
 
-#: applets/wncklet/window-list.ui:409
+#: applets/wncklet/window-list.ui:404
 msgid "Show windows from a_ll workspaces"
 msgstr "Erakuts_i laneko area guztietako leihoak"
 
-#: applets/wncklet/window-list.ui:447
+#: applets/wncklet/window-list.ui:442
 msgid "Restoring Minimized Windows"
 msgstr "Minimizatutako leihoak leheneratzea"
 
-#: applets/wncklet/window-list.ui:468
+#: applets/wncklet/window-list.ui:463
 msgid "Restore to current _workspace"
 msgstr "Leheneratu uneko _laneko areara"
 
-#: applets/wncklet/window-list.ui:484
+#: applets/wncklet/window-list.ui:479
 msgid "Restore to na_tive workspace"
 msgstr "Leheneratu jato_rrizko laneko areara"
 
-#: applets/wncklet/window-list.ui:521
+#: applets/wncklet/window-list.ui:516
 #: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "Laneko areak"
@@ -1240,21 +1240,21 @@ msgid ""
 msgstr ""
 
 #: applets/wncklet/workspace-switcher.c:294
-#: applets/wncklet/workspace-switcher.c:1041
+#: applets/wncklet/workspace-switcher.c:1061
 #: applets/wncklet/workspace-switcher.ui:170
 msgid "rows"
 msgstr "errenkadak"
 
 #: applets/wncklet/workspace-switcher.c:294
-#: applets/wncklet/workspace-switcher.c:1041
+#: applets/wncklet/workspace-switcher.c:1061
 msgid "columns"
 msgstr "zutabeak"
 
-#: applets/wncklet/workspace-switcher.c:713
+#: applets/wncklet/workspace-switcher.c:726
 msgid "About Workspace Switcher"
 msgstr ""
 
-#: applets/wncklet/workspace-switcher.c:715
+#: applets/wncklet/workspace-switcher.c:728
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1613,22 +1613,36 @@ msgstr ""
 "bertikala bada) zenbat pixeletara egongo den zehazten da."
 
 #: data/org.mate.panel.object.gschema.xml.in:20
-msgid "Interpret position relative to bottom/right edge"
-msgstr "Interpretatu kokalekua beheko/eskuineko ertzetik"
+msgid "Interpret position relative to bottom/right edge (DEPRECATED)"
+msgstr ""
 
 #: data/org.mate.panel.object.gschema.xml.in:21
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
-" bottom if vertical) edge of the panel."
+" bottom if vertical) edge of the panel. This key is provided only for "
+"backward compatibility with old panel layouts; please set the \"relative-to-"
+"edge\" property instead."
 msgstr ""
-"Hautatzen bada, objektuaren kokalekua panelaren eskuineko ertzetik hasita "
-"interpretatuko da (edo behetik hasita, panela bertikala bada)."
 
 #: data/org.mate.panel.object.gschema.xml.in:25
+msgid ""
+"Whether to interpret the value of the \"position\" key relative to the "
+"start, center or end of the panel"
+msgstr ""
+
+#: data/org.mate.panel.object.gschema.xml.in:26
+msgid ""
+"The position of the object is interpreted relative to one edge of the panel."
+" The value of this key determines whether the object is positioned relative "
+"to the start (left/top edge), center, or end (right/bottom edge) of the "
+"panel. Valid values for this key are 'start', 'center', and 'end'."
+msgstr ""
+
+#: data/org.mate.panel.object.gschema.xml.in:30
 msgid "Lock the object to the panel"
 msgstr "Blokeatu objektua panelean"
 
-#: data/org.mate.panel.object.gschema.xml.in:26
+#: data/org.mate.panel.object.gschema.xml.in:31
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
@@ -1636,11 +1650,11 @@ msgstr ""
 "Hautatzen bada, miniaplikazioa kendu ahal izateko objektua desblokeatu "
 "beharko da lehenik \"Desblokeatu\" menu-elementua hautatuta."
 
-#: data/org.mate.panel.object.gschema.xml.in:30
+#: data/org.mate.panel.object.gschema.xml.in:35
 msgid "Applet IID"
 msgstr "Apletaren IID"
 
-#: data/org.mate.panel.object.gschema.xml.in:31
+#: data/org.mate.panel.object.gschema.xml.in:36
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1648,11 +1662,11 @@ msgid ""
 "applet\")."
 msgstr ""
 
-#: data/org.mate.panel.object.gschema.xml.in:35
+#: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Panel attached to drawer"
 msgstr "Tiraderari uztartutako panela"
 
-#: data/org.mate.panel.object.gschema.xml.in:36
+#: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
@@ -1660,11 +1674,11 @@ msgstr ""
 "Tiradera honi uztartutako panelaren identifikatzailea. object_type gakoa "
 "\"drawer-object\" denerako bakarrik."
 
-#: data/org.mate.panel.object.gschema.xml.in:40
+#: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Tooltip displayed for drawer or menu"
 msgstr "Tiraderan edo menuan erakusteko argibidea."
 
-#: data/org.mate.panel.object.gschema.xml.in:41
+#: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
@@ -1673,11 +1687,11 @@ msgstr ""
 "Tiraderaren edo menuaren argibidean erakusteko testua. object_type gakoa "
 "\"drawer-object\" denean bakarrik erabiltzen da."
 
-#: data/org.mate.panel.object.gschema.xml.in:45
+#: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Use custom icon for object's button"
 msgstr "Erabili ikono pertsonalizatua objektuaren botoian"
 
-#: data/org.mate.panel.object.gschema.xml.in:46
+#: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -1688,11 +1702,11 @@ msgstr ""
 "object_type gakoa \"menu-object\" edo \"drawer-object\" denean bakarrik "
 "erabiltzen da gako hau."
 
-#: data/org.mate.panel.object.gschema.xml.in:50
+#: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Icon used for object's button"
 msgstr "Objektuaren botoiaren ikonoa"
 
-#: data/org.mate.panel.object.gschema.xml.in:51
+#: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -1702,11 +1716,11 @@ msgstr ""
 "kokalekua. object_type gakoa \"drawer-object\" edo \"menu-object\" denean "
 "eta use_custom_icon gakoaren balioa 'egiazkoa' denean erabiltzen da."
 
-#: data/org.mate.panel.object.gschema.xml.in:55
+#: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Use custom path for menu contents"
 msgstr "Erabili ikono pertsonalizatua menu-edukietan"
 
-#: data/org.mate.panel.object.gschema.xml.in:56
+#: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -1716,11 +1730,11 @@ msgstr ""
 "bide-izen gisa. Bestela, menu_path gakoari ez zaio jaramonik egingo. "
 "object_type gakoa \"menu-object\" denean bakarrik balio du gako honek."
 
-#: data/org.mate.panel.object.gschema.xml.in:60
+#: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Menu content path"
 msgstr "Menuaren edukiaren bide-izena"
 
-#: data/org.mate.panel.object.gschema.xml.in:61
+#: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
@@ -1730,21 +1744,21 @@ msgstr ""
 "hautatuta dagoenean eta object_type key \"menu-object\" denean bakarrik "
 "erabiltzen da."
 
-#: data/org.mate.panel.object.gschema.xml.in:65
+#: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Draw arrow in menu button"
 msgstr ""
 
-#: data/org.mate.panel.object.gschema.xml.in:66
+#: data/org.mate.panel.object.gschema.xml.in:71
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
 msgstr ""
 
-#: data/org.mate.panel.object.gschema.xml.in:70
+#: data/org.mate.panel.object.gschema.xml.in:75
 msgid "Launcher location"
 msgstr "Abiarazlearen kokalekua"
 
-#: data/org.mate.panel.object.gschema.xml.in:71
+#: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
@@ -1752,11 +1766,11 @@ msgstr ""
 "Abiarazlea deskribatzen duen mahaigaineko fitxategiaren kokalekua. "
 "object_type gakoa \"launcher-object\" denean bakarrik erabiltzen da."
 
-#: data/org.mate.panel.object.gschema.xml.in:75
+#: data/org.mate.panel.object.gschema.xml.in:80
 msgid "Action button type"
 msgstr "Ekintza-botoiaren mota"
 
-#: data/org.mate.panel.object.gschema.xml.in:76
+#: data/org.mate.panel.object.gschema.xml.in:81
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
@@ -2144,62 +2158,62 @@ msgstr ""
 "Hautatzen bada, atzeko planoko irudia biratu egingo da panela bertikalki "
 "jartzen denean."
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr "Fitxategia ez da baliozko .desktop fitxategia"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Mahaigaineko (.desktop) fitxategiaren '%s' bertsioa ezezaguna"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:976
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
 #, c-format
 msgid "Starting %s"
 msgstr "%s hasieratzen"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1118
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
 msgid "Application does not accept documents on command line"
 msgstr "Aplikazioak ez ditu dokumenturik onartzen komando-lerroan"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1186
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Abiarazteko aukera ezezaguna: %d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1402
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "Ezin zaio dokumentuen URIrik eman 'Type=Link' mahaigaineko sarrerari"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1423
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
 msgid "Not a launchable item"
 msgstr "Ez da elementu abiarazgarria"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
 msgid "Disable connection to session manager"
 msgstr "Desgaitu saio-kudeatzailearen konexioa"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "Specify file containing saved configuration"
 msgstr "Zehaztu gordetako konfigurazioa duen fitxategia"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "FILE"
 msgstr "FITXATEGIA"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "Specify session management ID"
 msgstr "Zehaztu saio-kudeatzailearen IDa"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "ID"
 msgstr "IDa"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
 msgid "Session management options:"
 msgstr "Saio-kudeaketaren aukerak:"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Show session management options"
 msgstr "Erakutsi saio-kudeaketaren aukerak"
 
@@ -2208,11 +2222,11 @@ msgid "_Open"
 msgstr "_Ireki"
 
 #: mate-panel/libpanel-util/panel-error.c:77
-#: mate-panel/panel-applet-frame.c:799 mate-panel/panel-applet-frame.c:987
+#: mate-panel/panel-applet-frame.c:797 mate-panel/panel-applet-frame.c:985
 msgid "Error"
 msgstr "Errorea"
 
-#: mate-panel/libpanel-util/panel-icon-chooser.c:374
+#: mate-panel/libpanel-util/panel-icon-chooser.c:366
 msgid "Choose an icon"
 msgstr "Hautatu ikono bat"
 
@@ -2234,37 +2248,37 @@ msgstr "Ezin izan da '%s' kokalekua ireki"
 msgid "No application to handle search folders is installed."
 msgstr "Aplikaziorik ez dago instalatuta bilaketako karpetak kudeatzeko."
 
-#: mate-panel/applet.c:469
+#: mate-panel/applet.c:466
 msgid "???"
 msgstr "???"
 
-#: mate-panel/applet.c:549 libmate-panel-applet/mate-panel-applet.c:140
+#: mate-panel/applet.c:546 libmate-panel-applet/mate-panel-applet.c:140
 msgid "_Remove From Panel"
 msgstr "_Kendu paneletik"
 
-#: mate-panel/applet.c:557 libmate-panel-applet/mate-panel-applet.c:143
+#: mate-panel/applet.c:554 libmate-panel-applet/mate-panel-applet.c:143
 msgid "_Move"
 msgstr "Aldatu _lekuz"
 
-#: mate-panel/applet.c:575 libmate-panel-applet/mate-panel-applet.c:149
+#: mate-panel/applet.c:572 libmate-panel-applet/mate-panel-applet.c:149
 msgid "Loc_k To Panel"
 msgstr "_Blokeatu panelean"
 
-#: mate-panel/applet.c:1311
+#: mate-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "Ezin da leku hutsik aurkitu"
 
-#: mate-panel/drawer.c:444 mate-panel/panel-addto.c:190
-#: mate-panel/panel-toplevel.c:1646
+#: mate-panel/drawer.c:441 mate-panel/panel-addto.c:190
+#: mate-panel/panel-toplevel.c:1640
 msgid "Drawer"
 msgstr "Tiradera"
 
-#: mate-panel/drawer.c:551
+#: mate-panel/drawer.c:546
 msgid "_Add to Drawer..."
 msgstr "_Gehitu tiraderari..."
 
-#: mate-panel/drawer.c:557 mate-panel/launcher.c:611
-#: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
+#: mate-panel/drawer.c:552 mate-panel/launcher.c:607
+#: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:248
 msgid "_Properties"
 msgstr "_Propietateak"
 
@@ -2281,7 +2295,7 @@ msgid "- Edit .desktop files"
 msgstr " - Editatu '.desktop' fitxategiak"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1008
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1001
 msgid "Create Launcher"
 msgstr "Sortu abiarazlea"
 
@@ -2290,7 +2304,7 @@ msgstr "Sortu abiarazlea"
 msgid "Directory Properties"
 msgstr "Direktorioaren propietateak"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:818
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Abiarazlearen propietateak"
 
@@ -2318,26 +2332,26 @@ msgstr "Ez da URLa zehaztu."
 msgid "Could not use dropped item"
 msgstr "Ezin izan da jaregindako elementua erabili"
 
-#: mate-panel/launcher.c:455
+#: mate-panel/launcher.c:451
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ez da URIrik eman panel-abiarazlearen mahaigaineko fitxategiarentzat\n"
 
-#: mate-panel/launcher.c:494
+#: mate-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Ezin da ireki panel-abiarazlearen mahaigaineko %s fitxategia%s%s\n"
 
-#: mate-panel/launcher.c:603
+#: mate-panel/launcher.c:599
 msgid "_Launch"
 msgstr "_Abiarazi"
 
-#: mate-panel/launcher.c:944
+#: mate-panel/launcher.c:937
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "%s gakoa ez dago ezarrita, ezin da abiarazlea kargatu\n"
 
-#: mate-panel/launcher.c:1077 mate-panel/panel-ditem-editor.c:1179
-#: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
+#: mate-panel/launcher.c:1072 mate-panel/panel-ditem-editor.c:1177
+#: mate-panel/panel-ditem-editor.c:1211 mate-panel/panel-ditem-editor.c:1241
 msgid "Could not save launcher"
 msgstr "Ezin izan da abiarazlea gorde"
 
@@ -2357,23 +2371,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: mate-panel/menu.c:502
+#: mate-panel/menu.c:500
 msgid "Add this launcher to _panel"
 msgstr "Gehitu abiarazle hau p_anelari"
 
-#: mate-panel/menu.c:509
+#: mate-panel/menu.c:507
 msgid "Add this launcher to _desktop"
 msgstr "Gehitu abiarazle hau _mahaigainari"
 
-#: mate-panel/menu.c:521
+#: mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "Menu _osoa"
 
-#: mate-panel/menu.c:526
+#: mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Gehitu hau _tiradera gisa panelari"
 
-#: mate-panel/menu.c:533
+#: mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Gehitu hau _menu gisa panelari"
 
@@ -2491,81 +2505,81 @@ msgstr "Paneleko elementuak antolatzeko bereizlea"
 msgid "A pop out drawer to store other items in"
 msgstr "Elementuak gordetzeko tiradera bat"
 
-#: mate-panel/panel-addto.c:275
+#: mate-panel/panel-addto.c:276
 msgid "(empty)"
 msgstr "(hutsik)"
 
-#: mate-panel/panel-addto.c:420
+#: mate-panel/panel-addto.c:421
 msgid "Not compatible with X11"
 msgstr ""
 
-#: mate-panel/panel-addto.c:427
+#: mate-panel/panel-addto.c:428
 msgid "Not compatible with Wayland"
 msgstr ""
 
-#: mate-panel/panel-addto.c:1052
+#: mate-panel/panel-addto.c:1011
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Bilatu _elementu bat \"%s\"(r)i gehitzeko:"
 
-#: mate-panel/panel-addto.c:1056
+#: mate-panel/panel-addto.c:1015
 msgid "Add to Drawer"
 msgstr "_Gehitu tiraderari..."
 
-#: mate-panel/panel-addto.c:1058
+#: mate-panel/panel-addto.c:1017
 msgid "Find an _item to add to the drawer:"
 msgstr "Bilatu _elementu bat tiraderari gehitzeko:"
 
-#: mate-panel/panel-addto.c:1060
+#: mate-panel/panel-addto.c:1019
 msgid "Add to Panel"
 msgstr "Gehitu panelari"
 
-#: mate-panel/panel-addto.c:1062
+#: mate-panel/panel-addto.c:1021
 msgid "Find an _item to add to the panel:"
 msgstr "Bilatu _elementu bat panelari gehitzeko:"
 
-#: mate-panel/panel-addto.c:1312
+#: mate-panel/panel-addto.c:1270
 msgid "_Back"
 msgstr "_Atzera"
 
-#: mate-panel/panel-applet-frame.c:760
+#: mate-panel/panel-applet-frame.c:758
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" ustekabean amaitu da"
 
-#: mate-panel/panel-applet-frame.c:762
+#: mate-panel/panel-applet-frame.c:760
 msgid "Panel object has quit unexpectedly"
 msgstr "Paneleko objektua ustekabean amaitu da"
 
-#: mate-panel/panel-applet-frame.c:769
+#: mate-panel/panel-applet-frame.c:767
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 "Paneleko objektu bat birkargatzean automatikoki panelari gehituko zaio."
 
-#: mate-panel/panel-applet-frame.c:776
+#: mate-panel/panel-applet-frame.c:774
 msgid "D_elete"
 msgstr ""
 
-#: mate-panel/panel-applet-frame.c:777 mate-panel/panel-applet-frame.c:782
+#: mate-panel/panel-applet-frame.c:775 mate-panel/panel-applet-frame.c:780
 msgid "_Don't Reload"
 msgstr "_Ez birkargatu"
 
-#: mate-panel/panel-applet-frame.c:778 mate-panel/panel-applet-frame.c:783
+#: mate-panel/panel-applet-frame.c:776 mate-panel/panel-applet-frame.c:781
 msgid "_Reload"
 msgstr "_Birkargatu"
 
-#: mate-panel/panel-applet-frame.c:949
+#: mate-panel/panel-applet-frame.c:947
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelak arazoak izan ditu \"%s\" kargatzean."
 
-#: mate-panel/panel-applet-frame.c:964
+#: mate-panel/panel-applet-frame.c:962
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Applet hori konfiguraziotik ezabatu nahi duzu?"
 
-#: mate-panel/panel-applet-frame.c:971 mate-panel/panel.c:1502
+#: mate-panel/panel-applet-frame.c:969 mate-panel/panel.c:1495
 msgid "_Delete"
 msgstr "_Ezabatu"
 
@@ -2622,19 +2636,19 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:257
+#: mate-panel/panel-context-menu.c:258
 msgid "_Reset All Panels"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:264
+#: mate-panel/panel-context-menu.c:265
 msgid "_Delete This Panel"
 msgstr "_Ezabatu panel hau"
 
-#: mate-panel/panel-context-menu.c:277
+#: mate-panel/panel-context-menu.c:278
 msgid "_New Panel"
 msgstr "_Panel berria"
 
-#: mate-panel/panel-context-menu.c:326
+#: mate-panel/panel-context-menu.c:327
 msgid "A_bout Panels"
 msgstr "Panelei _buruz"
 
@@ -2650,44 +2664,44 @@ msgstr "Aplikazioa terminalean"
 msgid "Location"
 msgstr "Kokalekua"
 
-#: mate-panel/panel-ditem-editor.c:848
+#: mate-panel/panel-ditem-editor.c:847
 msgid "Choose an application..."
 msgstr "Aukeratu aplikazioa..."
 
-#: mate-panel/panel-ditem-editor.c:852
+#: mate-panel/panel-ditem-editor.c:851
 msgid "Choose a file..."
 msgstr "Aukeratu fitxategia..."
 
-#: mate-panel/panel-ditem-editor.c:1004 mate-panel/panel-ditem-editor.c:1013
+#: mate-panel/panel-ditem-editor.c:1003 mate-panel/panel-ditem-editor.c:1012
 #: mate-panel/panel-ditem-editor-dialog.ui:197
 msgid "Comm_and:"
 msgstr "_Komandoa:"
 
-#: mate-panel/panel-ditem-editor.c:1022
+#: mate-panel/panel-ditem-editor.c:1021
 msgid "_Location:"
 msgstr "_Kokalekua:"
 
-#: mate-panel/panel-ditem-editor.c:1180
+#: mate-panel/panel-ditem-editor.c:1178
 msgid "The name of the launcher is not set."
 msgstr "Ez da abiarazlearen izena ezarri."
 
-#: mate-panel/panel-ditem-editor.c:1184
+#: mate-panel/panel-ditem-editor.c:1182
 msgid "Could not save directory properties"
 msgstr "Ezin izan da direktorioaren propietaterik gorde"
 
-#: mate-panel/panel-ditem-editor.c:1185
+#: mate-panel/panel-ditem-editor.c:1183
 msgid "The name of the directory is not set."
 msgstr "Ez da direktorioaren izena ezarri."
 
-#: mate-panel/panel-ditem-editor.c:1201
+#: mate-panel/panel-ditem-editor.c:1199
 msgid "The command of the launcher is not set."
 msgstr "Ez da abiarazlearen komandoa ezarri."
 
-#: mate-panel/panel-ditem-editor.c:1204
+#: mate-panel/panel-ditem-editor.c:1202
 msgid "The location of the launcher is not set."
 msgstr "Ez da abiarazlearen kokalekua ezarri."
 
-#: mate-panel/panel-ditem-editor.c:1280
+#: mate-panel/panel-ditem-editor.c:1278
 msgid "Could not display help document"
 msgstr "Ezin izan da laguntzako dokumentua bistaratu"
 
@@ -2750,113 +2764,113 @@ msgstr ""
 msgid "Applications"
 msgstr "Aplikazioak"
 
-#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:711
+#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:703
 msgid "_Edit Menus"
 msgstr "_Editatu menuak"
 
-#: mate-panel/panel-menu-button.c:1131
+#: mate-panel/panel-menu-button.c:1121
 msgid "Main Menu"
 msgstr "Menu nagusia"
 
-#: mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-items.c:464
 msgid "Bookmarks"
 msgstr "Laster-markak"
 
 #. Translators: %s is a URI
-#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:573
+#: mate-panel/panel-menu-items.c:487 mate-panel/panel.c:571
 #, c-format
 msgid "Open '%s'"
 msgstr "Ireki '%s'"
 
-#: mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:558
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Ezin da %s eskaneatu euskarrien aldaketa bilatzeko"
 
-#: mate-panel/panel-menu-items.c:605
+#: mate-panel/panel-menu-items.c:602
 #, c-format
 msgid "Rescan %s"
 msgstr "Eskaneatu %s berriro"
 
-#: mate-panel/panel-menu-items.c:642
+#: mate-panel/panel-menu-items.c:640
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Ezin da %s muntatu"
 
-#: mate-panel/panel-menu-items.c:705
+#: mate-panel/panel-menu-items.c:703
 #, c-format
 msgid "Mount %s"
 msgstr "Muntatu %s"
 
-#: mate-panel/panel-menu-items.c:913
+#: mate-panel/panel-menu-items.c:912
 msgid "Removable Media"
 msgstr "Euskarri aldagarria"
 
-#: mate-panel/panel-menu-items.c:1000
+#: mate-panel/panel-menu-items.c:998
 msgid "Network Places"
 msgstr "Sareko helbidea"
 
-#: mate-panel/panel-menu-items.c:1040
+#: mate-panel/panel-menu-items.c:1037
 msgid "Open your personal folder"
 msgstr "Ireki karpeta pertsonala"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: mate-panel/panel-menu-items.c:1059
+#: mate-panel/panel-menu-items.c:1056
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Mahaigaina"
 
-#: mate-panel/panel-menu-items.c:1060
+#: mate-panel/panel-menu-items.c:1057
 msgid "Open the contents of your desktop in a folder"
 msgstr "Ireki mahaigaineko edukia karpeta batean"
 
-#: mate-panel/panel-menu-items.c:1077
+#: mate-panel/panel-menu-items.c:1074
 msgid "Computer"
 msgstr "Ordenagailua"
 
-#: mate-panel/panel-menu-items.c:1083
+#: mate-panel/panel-menu-items.c:1080
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
 "Arakatu ordenagailu honetatik atzi daitezkeen lokaleko eta urruneko disko "
 "eta karpeta guztiak"
 
-#: mate-panel/panel-menu-items.c:1096
+#: mate-panel/panel-menu-items.c:1093
 msgid "Network"
 msgstr "Sarea"
 
-#: mate-panel/panel-menu-items.c:1097
+#: mate-panel/panel-menu-items.c:1094
 msgid "Browse bookmarked and local network locations"
 msgstr "Arakatu laster-markatutako eta sare lokaleko kokalekuak"
 
-#: mate-panel/panel-menu-items.c:1499
+#: mate-panel/panel-menu-items.c:1457
 msgid "Places"
 msgstr "Lekuak"
 
-#: mate-panel/panel-menu-items.c:1527
+#: mate-panel/panel-menu-items.c:1485
 msgid "System"
 msgstr "Sistema"
 
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1570
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1624
+#: mate-panel/panel-menu-items.c:1582
 #, c-format
 msgid "Log Out %s..."
 msgstr "Amaitu %s(r)en saioa..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1628
+#: mate-panel/panel-menu-items.c:1586
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Atera %s saiotik beste erabiltzaile-izen batekin sartzeko"
@@ -2984,21 +2998,21 @@ msgstr "_Tiratu"
 msgid "Rotate image when panel is _vertical"
 msgstr "_Biratu irudia panela bertikala denean"
 
-#: mate-panel/panel-recent.c:79 mate-panel/panel-recent.c:89
+#: mate-panel/panel-recent.c:78 mate-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Ezin izan da orain dela gutxi erabilitako \"%s\" dokumentua ireki"
 
-#: mate-panel/panel-recent.c:91
+#: mate-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Errore ezezagun bat gertatu da \"%s\" irekitzen saiatzean."
 
-#: mate-panel/panel-recent.c:148
+#: mate-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "Garbitu azken dokumentuen zerrenda?"
 
-#: mate-panel/panel-recent.c:150
+#: mate-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -3008,46 +3022,46 @@ msgstr ""
 " • 'Lekuak' menuko elementu guztiak → Azken dokumentuak menuko elementu guztiak.\n"
 " • Aplikazio guztietako azken dokumentuen zerrendako elementu guztiak."
 
-#: mate-panel/panel-recent.c:165
+#: mate-panel/panel-recent.c:164
 msgid "Clear Recent Documents"
 msgstr "Garbitu azken dokumentuak"
 
-#: mate-panel/panel-recent.c:201
+#: mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Azken dokumentuak"
 
-#: mate-panel/panel-recent.c:243
+#: mate-panel/panel-recent.c:242
 msgid "Clear Recent Documents..."
 msgstr "Garbitu azken dokumentuak..."
 
-#: mate-panel/panel-recent.c:245
+#: mate-panel/panel-recent.c:244
 msgid "Clear all items from the recent documents list"
 msgstr "Garbitu azken dokumentuen zerrendako elementu guztiak?"
 
-#: mate-panel/panel-run-dialog.c:445
+#: mate-panel/panel-run-dialog.c:440
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Ezin izan da '%s' komandoa exekutatu"
 
-#: mate-panel/panel-run-dialog.c:486
+#: mate-panel/panel-run-dialog.c:481
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ezin izan da '%s' UTF-8 kodera bihurtu"
 
-#: mate-panel/panel-run-dialog.c:1278
+#: mate-panel/panel-run-dialog.c:1269
 msgid "Choose a file to append to the command..."
 msgstr "Aukeratu fitxategi bat komandoari eransteko..."
 
-#: mate-panel/panel-run-dialog.c:1633 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1623 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Hautatu aplikazio bat azalpena ikusteko."
 
-#: mate-panel/panel-run-dialog.c:1671
+#: mate-panel/panel-run-dialog.c:1661
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Komando hau exekutatuko da: '%s'"
 
-#: mate-panel/panel-run-dialog.c:1704
+#: mate-panel/panel-run-dialog.c:1694
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -3058,7 +3072,7 @@ msgstr ""
 msgid "Run Application"
 msgstr "Exekutatu aplikazioa"
 
-#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:98
+#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "E_xekutatu"
 
@@ -3106,15 +3120,15 @@ msgstr "Aplikazio ezagunen zerrenda"
 msgid "Show list of known _applications"
 msgstr "Erakutsi _aplikazio ezagunen zerrenda"
 
-#: mate-panel/panel-stock-icons.c:99
+#: mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
 msgstr "_Behartu ixtera"
 
-#: mate-panel/panel-stock-icons.c:100
+#: mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
 msgstr "_Garbitu"
 
-#: mate-panel/panel-stock-icons.c:101
+#: mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
 msgstr "E_z ezabatu"
 
@@ -3140,42 +3154,42 @@ msgstr ""
 "Zehaztu miniaplikazioaren hasierako orientazioa (goian, behean, ezkerrean "
 "edo eskuinean)"
 
-#: mate-panel/panel-test-applets.c:67
+#: mate-panel/panel-test-applets.c:66
 msgctxt "Size"
 msgid "XX Small"
 msgstr "Oso oso txikia"
 
-#: mate-panel/panel-test-applets.c:68
+#: mate-panel/panel-test-applets.c:67
 msgctxt "Size"
 msgid "X Small"
 msgstr "Oso txikia"
 
-#: mate-panel/panel-test-applets.c:69
+#: mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
 msgstr "Txikia"
 
-#: mate-panel/panel-test-applets.c:70
+#: mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
 msgstr "Tartekoa"
 
-#: mate-panel/panel-test-applets.c:71
+#: mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
 msgstr "Handia"
 
-#: mate-panel/panel-test-applets.c:72
+#: mate-panel/panel-test-applets.c:71
 msgctxt "Size"
 msgid "X Large"
 msgstr "Oso handia"
 
-#: mate-panel/panel-test-applets.c:73
+#: mate-panel/panel-test-applets.c:72
 msgctxt "Size"
 msgid "XX Large"
 msgstr "Oso oso handia"
 
-#: mate-panel/panel-test-applets.c:131
+#: mate-panel/panel-test-applets.c:130
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Huts egin du %s miniaplikazioa kargatzean"
@@ -3197,23 +3211,23 @@ msgstr "_Applet-a:"
 msgid "_Prefs Path:"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1208
+#: mate-panel/panel-toplevel.c:1207
 msgid "Hide Panel"
 msgstr "Ezkutatu panela"
 
-#: mate-panel/panel-toplevel.c:1652 mate-panel/panel-toplevel.c:1662
+#: mate-panel/panel-toplevel.c:1646 mate-panel/panel-toplevel.c:1656
 msgid "Top Panel"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1654
+#: mate-panel/panel-toplevel.c:1648
 msgid "Bottom Panel"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1656
+#: mate-panel/panel-toplevel.c:1650
 msgid "Left Panel"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1658
+#: mate-panel/panel-toplevel.c:1652
 msgid "Right Panel"
 msgstr ""
 
@@ -3227,21 +3241,21 @@ msgstr "Ez da '%s' ikonoa aurkitu"
 msgid "Could not execute '%s'"
 msgstr "Ezin izan da '%s' exekutatu"
 
-#: mate-panel/panel-util.c:703
+#: mate-panel/panel-util.c:702
 msgid "file"
 msgstr "fitxategia"
 
-#: mate-panel/panel-util.c:871
+#: mate-panel/panel-util.c:870
 msgid "Home Folder"
 msgstr "Karpeta nagusia"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: mate-panel/panel-util.c:883
+#: mate-panel/panel-util.c:882
 msgid "File System"
 msgstr "Fitxategi-sistema"
 
-#: mate-panel/panel-util.c:1046
+#: mate-panel/panel-util.c:1045
 msgid "Search"
 msgstr "Bilatu"
 
@@ -3249,47 +3263,47 @@ msgstr "Bilatu"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: mate-panel/panel-util.c:1092
+#: mate-panel/panel-util.c:1091
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: mate-panel/panel.c:506
+#: mate-panel/panel.c:504
 #, c-format
 msgid "Open URL: %s"
 msgstr "Ireki URLa: %s"
 
-#: mate-panel/panel.c:672
+#: mate-panel/panel.c:670
 msgid "You dropped an image on the panel, what do you want to do?"
 msgstr ""
 
-#: mate-panel/panel.c:674
+#: mate-panel/panel.c:672
 #, c-format
 msgid "You dropped the image \"%s\" on the panel."
 msgstr ""
 
-#: mate-panel/panel.c:677
+#: mate-panel/panel.c:675
 msgid ""
 "Do you want to create a launcher for it or use it as the panel's background?"
 msgstr ""
 
-#: mate-panel/panel.c:680
+#: mate-panel/panel.c:678
 msgid "Do you want to use it as the panel's background?"
 msgstr ""
 
-#: mate-panel/panel.c:694
+#: mate-panel/panel.c:692
 msgid "Create _Launcher"
 msgstr ""
 
-#: mate-panel/panel.c:698
+#: mate-panel/panel.c:696
 msgid "Set _Background Image"
 msgstr ""
 
-#: mate-panel/panel.c:1478
+#: mate-panel/panel.c:1471
 msgid "Delete this drawer?"
 msgstr "Ezabatu tiradera?"
 
-#: mate-panel/panel.c:1479
+#: mate-panel/panel.c:1472
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3297,11 +3311,11 @@ msgstr ""
 "Tiradera bat ezabatzen denean, panela eta bere\n"
 "ezarpenak galdu egiten dira."
 
-#: mate-panel/panel.c:1482
+#: mate-panel/panel.c:1475
 msgid "Delete this panel?"
 msgstr "Ezabatu tiradera hau?"
 
-#: mate-panel/panel.c:1483
+#: mate-panel/panel.c:1476
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."

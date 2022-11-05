@@ -13,14 +13,15 @@
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
 # Taras Panchenko <top39@ukr.net>, 2021
 # Микола Ткач <chistomov@gmail.com>, 2021
+# Sergiy <sergiy@gorichenko.com>, 2022
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.3\n"
+"Project-Id-Version: mate-panel 1.27.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2021-08-04 18:05+0200\n"
+"POT-Creation-Date: 2022-10-29 15:36+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
-"Last-Translator: Микола Ткач <chistomov@gmail.com>, 2021\n"
+"Last-Translator: Sergiy <sergiy@gorichenko.com>, 2022\n"
 "Language-Team: Ukrainian (https://www.transifex.com/mate/teams/13566/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +29,7 @@ msgstr ""
 "Language: uk\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:689
+#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:708
 msgid "Locations"
 msgstr "Місцевості"
 
@@ -36,21 +37,21 @@ msgstr "Місцевості"
 msgid "Edit"
 msgstr "Зміни"
 
-#: applets/clock/calendar-window.c:482
+#: applets/clock/calendar-window.c:484
 msgid "Calendar"
 msgstr "Календар"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:448
+#: applets/clock/clock.c:444
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:448 applets/clock/clock-location-tile.c:500
+#: applets/clock/clock.c:444 applets/clock/clock-location-tile.c:500
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -61,7 +62,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: applets/clock/clock.c:453 applets/clock/clock.c:1620
+#: applets/clock/clock.c:449 applets/clock/clock.c:1614
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -75,7 +76,7 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: applets/clock/clock.c:453 applets/clock/clock.c:1626
+#: applets/clock/clock.c:449 applets/clock/clock.c:1620
 #: applets/clock/clock-location-tile.c:460
 #: applets/clock/clock-location-tile.c:507
 msgid "%H:%M"
@@ -86,11 +87,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: applets/clock/clock.c:464
+#: applets/clock/clock.c:460
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
-#: applets/clock/clock.c:471
+#: applets/clock/clock.c:467
 #, c-format
 msgid ""
 "%1$s\n"
@@ -99,7 +100,7 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#: applets/clock/clock.c:479
+#: applets/clock/clock.c:475
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -107,19 +108,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: applets/clock/clock.c:661
+#: applets/clock/clock.c:657
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d %B (%%s)"
 
-#: applets/clock/clock.c:687
+#: applets/clock/clock.c:683
 msgid "Click to hide month calendar"
 msgstr "Натисніть, щоб сховати календар на місяць"
 
-#: applets/clock/clock.c:689
+#: applets/clock/clock.c:685
 msgid "Click to view month calendar"
 msgstr "Натисніть для перегляду календаря на місяць"
 
-#: applets/clock/clock.c:1458
+#: applets/clock/clock.c:1452
 msgid "Computer Clock"
 msgstr "Комп'ютерний годинник"
 
@@ -129,7 +130,7 @@ msgstr "Комп'ютерний годинник"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1605
+#: applets/clock/clock.c:1599
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S %p"
 
@@ -139,98 +140,98 @@ msgstr "%H:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1613
+#: applets/clock/clock.c:1607
 msgid "%I:%M %p"
 msgstr "%H:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: applets/clock/clock.c:1659
+#: applets/clock/clock.c:1653
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/clock/clock.c:1690
+#: applets/clock/clock.c:1684
 msgid "Set System Time..."
 msgstr "Встановити системний час..."
 
-#: applets/clock/clock.c:1691
+#: applets/clock/clock.c:1685
 msgid "Set System Time"
 msgstr "Встановити системний час"
 
-#: applets/clock/clock.c:1705
+#: applets/clock/clock.c:1699
 msgid "Failed to set the system time"
 msgstr "Помилка при встановленні системного часу"
 
-#: applets/clock/clock.c:1901 applets/fish/fish.c:1691
-#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:432
+#: applets/clock/clock.c:1889 applets/fish/fish.c:1690
+#: applets/notification_area/main.c:290 applets/wncklet/window-list.c:466
 #: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "_Налаштування"
 
-#: applets/clock/clock.c:1904 applets/clock/clock.ui:293
-#: applets/fish/fish.c:1694 applets/fish/fish.ui:46
-#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:240
-#: applets/wncklet/window-list.c:440 applets/wncklet/window-list.ui:38
+#: applets/clock/clock.c:1892 applets/clock/clock.ui:312
+#: applets/fish/fish.c:1693 applets/fish/fish.ui:46
+#: applets/notification_area/main.c:293 applets/wncklet/showdesktop.c:239
+#: applets/wncklet/window-list.c:474 applets/wncklet/window-list.ui:37
 #: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
-#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:563
-#: mate-panel/panel-action-button.c:732 mate-panel/panel-addto.c:1309
-#: mate-panel/panel-context-menu.c:319
+#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:558
+#: mate-panel/panel-action-button.c:730 mate-panel/panel-addto.c:1267
+#: mate-panel/panel-context-menu.c:320
 #: mate-panel/panel-ditem-editor-dialog.ui:45 mate-panel/panel-menu-bar.c:355
-#: mate-panel/panel-menu-button.c:705 mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-menu-button.c:697 mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "_Допомога"
 
-#: applets/clock/clock.c:1907 applets/fish/fish.c:1697
-#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:248
-#: applets/wncklet/window-list.c:448 applets/wncklet/window-menu.c:113
+#: applets/clock/clock.c:1895 applets/fish/fish.c:1696
+#: applets/notification_area/main.c:296 applets/wncklet/showdesktop.c:247
+#: applets/wncklet/window-list.c:482 applets/wncklet/window-menu.c:113
 #: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "_Про програму"
 
-#: applets/clock/clock.c:1910
+#: applets/clock/clock.c:1898
 msgid "Copy _Time"
 msgstr "Копіювати _час"
 
-#: applets/clock/clock.c:1913
+#: applets/clock/clock.c:1901
 msgid "Copy _Date"
 msgstr "Копіювати да_ту"
 
-#: applets/clock/clock.c:1916
+#: applets/clock/clock.c:1904
 msgid "Ad_just Date & Time"
 msgstr "_Встановити дату та час..."
 
-#: applets/clock/clock.c:2910
+#: applets/clock/clock.c:2902
 msgid "Choose Location"
 msgstr "Оберіть розташування"
 
-#: applets/clock/clock.c:2989
+#: applets/clock/clock.c:2981
 msgid "Edit Location"
 msgstr "Змінити розташування"
 
-#: applets/clock/clock.c:3116
+#: applets/clock/clock.c:3107
 msgid "City Name"
 msgstr "Назва міста"
 
-#: applets/clock/clock.c:3120
+#: applets/clock/clock.c:3111
 msgid "City Time Zone"
 msgstr "Часовий пояс міста"
 
-#: applets/clock/clock.c:3395
+#: applets/clock/clock.c:3384
 #: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "Годинник"
 
-#: applets/clock/clock.c:3396
+#: applets/clock/clock.c:3385
 msgid "About Clock"
 msgstr "Про годинник"
 
-#: applets/clock/clock.c:3398
+#: applets/clock/clock.c:3387
 msgid "The Clock displays the current time and date"
 msgstr "Годинник показує поточні дату та час"
 
-#: applets/clock/clock.c:3399
+#: applets/clock/clock.c:3388
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2021 MATE developers"
@@ -238,10 +239,10 @@ msgstr ""
 "Авторське право © 1998-2004 Фонд вільного програмного забезпечення, Inc.\n"
 "Авторське право © 2012-2021 Розробники MATE"
 
-#: applets/clock/clock.c:3403 applets/fish/fish.c:563
-#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:511
-#: applets/wncklet/window-list.c:730 applets/wncklet/window-menu.c:95
-#: applets/wncklet/workspace-switcher.c:722
+#: applets/clock/clock.c:3392 applets/fish/fish.c:562
+#: applets/notification_area/main.c:284 applets/wncklet/showdesktop.c:531
+#: applets/wncklet/window-list.c:956 applets/wncklet/window-menu.c:95
+#: applets/wncklet/workspace-switcher.c:735
 #: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
 msgstr ""
@@ -253,13 +254,13 @@ msgstr ""
 msgid "Time & Date"
 msgstr "Час і Дата"
 
-#: applets/clock/clock.ui:46 applets/clock/clock.ui:923
+#: applets/clock/clock.ui:46 applets/clock/clock.ui:952
 #: mate-panel/libpanel-util/panel-gtk.c:137
 #: mate-panel/panel-context-menu.c:214
 #: mate-panel/panel-ditem-editor-dialog.ui:92
-#: mate-panel/panel-force-quit.c:241 mate-panel/panel-recent.c:155
-#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:690
-#: mate-panel/panel.c:1498
+#: mate-panel/panel-force-quit.c:241 mate-panel/panel-recent.c:154
+#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:688
+#: mate-panel/panel.c:1491
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -267,133 +268,133 @@ msgstr "_Скасувати"
 msgid "_Set System Time"
 msgstr "_Встановити системний час"
 
-#: applets/clock/clock.ui:191
+#: applets/clock/clock.ui:198
 msgid "_Time:"
 msgstr "_Час:"
 
-#: applets/clock/clock.ui:205
+#: applets/clock/clock.ui:212
 msgid "Current Time:"
 msgstr "Поточний час:"
 
-#: applets/clock/clock.ui:277
+#: applets/clock/clock.ui:296
 msgid "Clock Preferences"
 msgstr "Параметри аплету годинника"
 
-#: applets/clock/clock.ui:309
+#: applets/clock/clock.ui:328
 msgid "Time _Settings"
 msgstr "_Параметри часу"
 
-#: applets/clock/clock.ui:324 applets/fish/fish.c:850 applets/fish/fish.ui:62
+#: applets/clock/clock.ui:343 applets/fish/fish.c:849 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:54 applets/wncklet/workspace-switcher.ui:62
-#: mate-panel/panel-addto.c:1320 mate-panel/panel-ditem-editor-dialog.ui:76
+#: applets/wncklet/window-list.ui:53 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1278 mate-panel/panel-ditem-editor-dialog.ui:76
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
 #: mate-panel/panel-test-applets.ui:52
 msgid "_Close"
 msgstr "_Закрити"
 
-#: applets/clock/clock.ui:369
+#: applets/clock/clock.ui:388
 msgid "Clock Format"
 msgstr "Формат годинника"
 
-#: applets/clock/clock.ui:393
+#: applets/clock/clock.ui:412
 msgid "_12 hour format"
 msgstr "_12 годинний формат"
 
-#: applets/clock/clock.ui:408
+#: applets/clock/clock.ui:427
 msgid "_24 hour format"
 msgstr "_24 годинний формат"
 
-#: applets/clock/clock.ui:448
+#: applets/clock/clock.ui:467
 msgid "Panel Display"
 msgstr "Показувати на панелі"
 
-#: applets/clock/clock.ui:473
+#: applets/clock/clock.ui:492
 msgid "Show the _date"
 msgstr "Показувати да_ту"
 
-#: applets/clock/clock.ui:488
+#: applets/clock/clock.ui:507
 msgid "Show seco_nds"
 msgstr "Показувати _секунди"
 
-#: applets/clock/clock.ui:503
+#: applets/clock/clock.ui:522
 msgid "Show wee_k numbers in calendar"
 msgstr "Показувати номери тижнів у календарі"
 
-#: applets/clock/clock.ui:518
+#: applets/clock/clock.ui:537
 msgid "Show _weather"
 msgstr "Показувати _погоду"
 
-#: applets/clock/clock.ui:533
+#: applets/clock/clock.ui:552
 msgid "Show _temperature"
 msgstr "Показувати т_емпературу"
 
-#: applets/clock/clock.ui:568 applets/fish/fish.ui:102
+#: applets/clock/clock.ui:587 applets/fish/fish.ui:102
 #: mate-panel/panel-properties-dialog.ui:384
 msgid "General"
 msgstr "Загальні"
 
-#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1316
+#: applets/clock/clock.ui:639 mate-panel/panel-addto.c:1274
 msgid "_Add"
 msgstr "Д_одати"
 
-#: applets/clock/clock.ui:636
+#: applets/clock/clock.ui:655
 msgid "_Edit"
 msgstr "_Зміни"
 
-#: applets/clock/clock.ui:652
+#: applets/clock/clock.ui:671
 msgid "_Remove"
 msgstr "В_илучити"
 
-#: applets/clock/clock.ui:713
+#: applets/clock/clock.ui:732
 msgid "Display"
 msgstr "Зовнішній вигляд"
 
-#: applets/clock/clock.ui:749
+#: applets/clock/clock.ui:769
 msgid "_Visibility unit:"
 msgstr "Одиниці види_мости:"
 
-#: applets/clock/clock.ui:771
+#: applets/clock/clock.ui:791
 msgid "_Pressure unit:"
 msgstr "Одиниці т_иску:"
 
-#: applets/clock/clock.ui:805
+#: applets/clock/clock.ui:825
 msgid "_Wind speed unit:"
 msgstr "Одиниці швидкости _вітру:"
 
-#: applets/clock/clock.ui:819
+#: applets/clock/clock.ui:839
 msgid "_Temperature unit:"
 msgstr "_Температурні одиниці:"
 
-#: applets/clock/clock.ui:854
+#: applets/clock/clock.ui:886
 msgid "Weather"
 msgstr "Погода"
 
-#: applets/clock/clock.ui:886
+#: applets/clock/clock.ui:915
 msgid "East"
 msgstr "Східний"
 
-#: applets/clock/clock.ui:889
+#: applets/clock/clock.ui:918
 msgid "West"
 msgstr "Західний"
 
-#: applets/clock/clock.ui:900
+#: applets/clock/clock.ui:929
 msgid "North"
 msgstr "Північний"
 
-#: applets/clock/clock.ui:903
+#: applets/clock/clock.ui:932
 msgid "South"
 msgstr "Південний"
 
-#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:141
-#: mate-panel/panel-applet-frame.c:961
+#: applets/clock/clock.ui:968 mate-panel/libpanel-util/panel-gtk.c:141
+#: mate-panel/panel-applet-frame.c:959
 msgid "_OK"
 msgstr "_Так"
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: applets/clock/clock.ui:1012
+#: applets/clock/clock.ui:1043
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -401,23 +402,23 @@ msgstr ""
 "<small><i>Уведіть назву міста, области, чи країни й оберіть відповідне поле "
 "з виринного меню.</i></small>"
 
-#: applets/clock/clock.ui:1057
+#: applets/clock/clock.ui:1088
 msgid "_Timezone:"
 msgstr "Часовий _пояс:"
 
-#: applets/clock/clock.ui:1070
+#: applets/clock/clock.ui:1101
 msgid "_Location Name:"
 msgstr "Назва _місцевости:"
 
-#: applets/clock/clock.ui:1114 applets/clock/clock.ui:1128
+#: applets/clock/clock.ui:1145 applets/clock/clock.ui:1159
 msgid "<i>(optional)</i>"
 msgstr "<i>(не обов'язково)</i>"
 
-#: applets/clock/clock.ui:1171
+#: applets/clock/clock.ui:1202
 msgid "L_ongitude:"
 msgstr "Д_овгота:"
 
-#: applets/clock/clock.ui:1192
+#: applets/clock/clock.ui:1223
 msgid "L_atitude:"
 msgstr "_Широта:"
 
@@ -488,15 +489,15 @@ msgstr "%s, самопочуття %s"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Схід сонця: %s / Захід сонця: %s"
 
-#: applets/clock/clock-utils.c:92 applets/fish/fish.c:169
-#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:74
+#: applets/clock/clock-utils.c:92 applets/fish/fish.c:168
+#: applets/notification_area/main.c:236 applets/wncklet/wncklet.c:74
 #: mate-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Не вдається вивести документ довідки '%s'"
 
-#: applets/clock/clock-utils.c:121 applets/fish/fish.c:195
-#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:91
+#: applets/clock/clock-utils.c:121 applets/fish/fish.c:194
+#: applets/notification_area/main.c:250 applets/wncklet/wncklet.c:91
 msgid "Error displaying help document"
 msgstr "При виведенні довідки виникла помилка"
 
@@ -634,7 +635,7 @@ msgstr "Фабрика для аплету годинника"
 msgid "Get the current time and date"
 msgstr "Отримати значення поточних часу та дати"
 
-#: applets/fish/fish.c:265
+#: applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -645,16 +646,16 @@ msgstr ""
 "Увага: Схоже, що команда буде робити щось справді корисне.\n"
 "Зваживши на те, що це непотрібний аплет, Ви можливо не забажаєте робити цього. Ми наполегливо радимо уникати використання \"%s\" для будь-чого що може зробити цей аплет \"практичним\", чи корисним."
 
-#: applets/fish/fish.c:424
+#: applets/fish/fish.c:423
 msgid "Images"
 msgstr "Зображення"
 
-#: applets/fish/fish.c:530 applets/fish/fish.c:574 applets/fish/fish.c:680
+#: applets/fish/fish.c:529 applets/fish/fish.c:573 applets/fish/fish.c:679
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Рибка %s"
 
-#: applets/fish/fish.c:531
+#: applets/fish/fish.c:530
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -666,20 +667,20 @@ msgstr ""
 " пам'яті. Того, хто знайшов застосування цьому аплету, треба відправити на "
 "психіатричне обстеження."
 
-#: applets/fish/fish.c:548
+#: applets/fish/fish.c:547
 msgid "(with minor help from George)"
 msgstr "(з невеличкою допомогою Жоржа)"
 
-#: applets/fish/fish.c:554
+#: applets/fish/fish.c:553
 #: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:10
 msgid "Fish"
 msgstr "Рибка"
 
-#: applets/fish/fish.c:555
+#: applets/fish/fish.c:554
 msgid "About Fish"
 msgstr "Про рибку"
 
-#: applets/fish/fish.c:558
+#: applets/fish/fish.c:557
 msgid ""
 "Copyright © 1998-2002 Free Software Foundation, Inc.\n"
 "Copyright © 2002-2005 Vincent Untz\n"
@@ -689,21 +690,21 @@ msgstr ""
 "Авторське право © 2002-2005 Вінсент Унц\n"
 "Авторське право © 2012-2021 Розробники MATE"
 
-#: applets/fish/fish.c:575
+#: applets/fish/fish.c:574
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "\"Рибка %s\", сучасний оракул"
 
-#: applets/fish/fish.c:641
+#: applets/fish/fish.c:640
 msgid "Unable to locate the command to execute"
 msgstr "Не вдається знайти команду для виконання"
 
-#: applets/fish/fish.c:685
+#: applets/fish/fish.c:684
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Рибка %s говорить:"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:746
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -714,16 +715,16 @@ msgstr ""
 "\n"
 "Докладно: %s"
 
-#: applets/fish/fish.c:846
+#: applets/fish/fish.c:845
 msgid "_Speak again"
 msgstr "_Вимовити слова"
 
-#: applets/fish/fish.c:927
+#: applets/fish/fish.c:926
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Налаштована команда не працює, була замінена на: %s"
 
-#: applets/fish/fish.c:960
+#: applets/fish/fish.c:959
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -734,7 +735,7 @@ msgstr ""
 "\n"
 "Докладно: %s"
 
-#: applets/fish/fish.c:976
+#: applets/fish/fish.c:975
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -745,15 +746,15 @@ msgstr ""
 "\n"
 "Докладно: %s"
 
-#: applets/fish/fish.c:1548
+#: applets/fish/fish.c:1547
 msgid "The water needs changing"
 msgstr "Необхідно замінити воду!"
 
-#: applets/fish/fish.c:1550
+#: applets/fish/fish.c:1549
 msgid "Look at today's date!"
 msgstr "Подивіться на сьогоднішню дату"
 
-#: applets/fish/fish.c:1632
+#: applets/fish/fish.c:1631
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Рибка %s для середовища MATE"
@@ -881,16 +882,16 @@ msgstr "Звідки ця дурна риба прийшла"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Показує рибу, що плаває, або инше анімоване створіння"
 
-#: applets/notification_area/main.c:276
+#: applets/notification_area/main.c:274
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
 msgstr "Зона сповіщення"
 
-#: applets/notification_area/main.c:277
+#: applets/notification_area/main.c:275
 msgid "About Notification Area"
 msgstr "Про область сповіщень"
 
-#: applets/notification_area/main.c:280
+#: applets/notification_area/main.c:278
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2003-2006 Vincent Untz\n"
@@ -902,7 +903,7 @@ msgstr ""
 "Авторське право © 2011 Перберос\n"
 "Авторське право © 2012-2021 Розробники MATE"
 
-#: applets/notification_area/main.c:485
+#: applets/notification_area/main.c:482
 msgid "Panel Notification Area"
 msgstr "Зона сповіщення панелі"
 
@@ -1062,7 +1063,7 @@ msgid "Switch between open windows using a menu"
 msgstr "Перемикатися між відкритими вікнами через меню"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
-#: applets/wncklet/workspace-switcher.c:712
+#: applets/wncklet/workspace-switcher.c:725
 msgid "Workspace Switcher"
 msgstr "Перемикання робочих просторів"
 
@@ -1071,7 +1072,7 @@ msgid "Switch between workspaces"
 msgstr "Перемикатися між робочими просторами"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:720
+#: applets/wncklet/window-list.c:946
 msgid "Window List"
 msgstr "Перелік вікон"
 
@@ -1087,37 +1088,37 @@ msgstr "Показати стільницю"
 msgid "Hide application windows and show the desktop"
 msgstr "Приховати вікна додатків і показати стільницю"
 
-#: applets/wncklet/showdesktop.c:182
+#: applets/wncklet/showdesktop.c:181
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Помилка при завантаженні %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:182
+#: applets/wncklet/showdesktop.c:181
 msgid "Icon not found"
 msgstr "Файл не знайдено"
 
-#: applets/wncklet/showdesktop.c:264
+#: applets/wncklet/showdesktop.c:263
 msgid "Click here to restore hidden windows."
 msgstr "Написніть тут, щоб відновити приховані вікна."
 
-#: applets/wncklet/showdesktop.c:268
+#: applets/wncklet/showdesktop.c:267
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Натисніть тут, щоб сховати всі вікна та показати стільницю."
 
-#: applets/wncklet/showdesktop.c:444 applets/wncklet/showdesktop.c:501
+#: applets/wncklet/showdesktop.c:450 applets/wncklet/showdesktop.c:521
 msgid "Show Desktop Button"
 msgstr "Кнопка показу стільниці"
 
-#: applets/wncklet/showdesktop.c:502
+#: applets/wncklet/showdesktop.c:522
 msgid "About Show Desktop Button"
 msgstr "Про кнопку показу стільниці"
 
-#: applets/wncklet/showdesktop.c:504
+#: applets/wncklet/showdesktop.c:524
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Ця кнопка дозволяє сховати всі вікна та розчистити стільницю."
 
-#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:724
-#: applets/wncklet/workspace-switcher.c:716
+#: applets/wncklet/showdesktop.c:525 applets/wncklet/window-list.c:950
+#: applets/wncklet/workspace-switcher.c:729
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2011 Perberos\n"
@@ -1127,7 +1128,7 @@ msgstr ""
 "Авторське право © 2011 Перберос\n"
 "Авторське право © 2012-2021 Розробники MATE"
 
-#: applets/wncklet/showdesktop.c:551
+#: applets/wncklet/showdesktop.c:571
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
@@ -1135,15 +1136,15 @@ msgstr ""
 "Або Ваш упорядник вікон не підтримує кнопку показу стільниці, або він не "
 "запущений."
 
-#: applets/wncklet/window-list.c:424
+#: applets/wncklet/window-list.c:458
 msgid "_System Monitor"
 msgstr "_Системний монітор"
 
-#: applets/wncklet/window-list.c:721
+#: applets/wncklet/window-list.c:947
 msgid "About Window List"
 msgstr "Про Перелік вікон"
 
-#: applets/wncklet/window-list.c:723
+#: applets/wncklet/window-list.c:949
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1153,83 +1154,83 @@ msgstr "Перелік вікон показує всі вікна та дозв
 msgid "Window List Preferences"
 msgstr "Параметри переліку вікон"
 
-#: applets/wncklet/window-list.ui:98
+#: applets/wncklet/window-list.ui:97
 msgid "Window Thumbnails"
 msgstr "Ескізи вікон"
 
-#: applets/wncklet/window-list.ui:119
+#: applets/wncklet/window-list.ui:118
 msgid "Show _thumbnails on hover"
 msgstr "Показати _ мініатюри при наведенні"
 
-#: applets/wncklet/window-list.ui:141
+#: applets/wncklet/window-list.ui:140
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr "Ширина мініатюри у пікселях. Відношення вікон буде збережено."
 
-#: applets/wncklet/window-list.ui:142
+#: applets/wncklet/window-list.ui:141
 msgid "Thumbnail width:"
 msgstr "Ширина мініатюри:"
 
-#: applets/wncklet/window-list.ui:155
+#: applets/wncklet/window-list.ui:154
 msgid "0"
 msgstr "0"
 
-#: applets/wncklet/window-list.ui:157
+#: applets/wncklet/window-list.ui:156
 msgid "px"
 msgstr "px"
 
-#: applets/wncklet/window-list.ui:201
+#: applets/wncklet/window-list.ui:199
 msgid "Window Grouping"
 msgstr "Групування вікон"
 
-#: applets/wncklet/window-list.ui:222
+#: applets/wncklet/window-list.ui:220
 msgid "_Never group windows"
 msgstr "_Ніколи не групувати вікна"
 
-#: applets/wncklet/window-list.ui:239
+#: applets/wncklet/window-list.ui:236
 msgid "Group windows when _space is limited"
 msgstr "Групувати вікна коли простір _обмежений"
 
-#: applets/wncklet/window-list.ui:256
+#: applets/wncklet/window-list.ui:252
 msgid "_Always group windows"
 msgstr "Завжди _групувати вікна"
 
-#: applets/wncklet/window-list.ui:295
+#: applets/wncklet/window-list.ui:290
 msgid "Mouse Scrolling"
 msgstr "Прокрутка миші"
 
-#: applets/wncklet/window-list.ui:316
+#: applets/wncklet/window-list.ui:311
 msgid "_Enable mouse scrolling"
 msgstr "_Увімкнути прокрутку миші"
 
-#: applets/wncklet/window-list.ui:349
+#: applets/wncklet/window-list.ui:344
 msgid "Behaviour"
 msgstr "Поведінка"
 
-#: applets/wncklet/window-list.ui:372
+#: applets/wncklet/window-list.ui:367
 msgid "Window List Content"
 msgstr "Вміст переліку вікон"
 
-#: applets/wncklet/window-list.ui:393
+#: applets/wncklet/window-list.ui:388
 msgid "Sh_ow windows from current workspace"
 msgstr "Показувати вікна з _поточного робочого простору"
 
-#: applets/wncklet/window-list.ui:409
+#: applets/wncklet/window-list.ui:404
 msgid "Show windows from a_ll workspaces"
 msgstr "Показувати вікна з _усіх робочих просторів"
 
-#: applets/wncklet/window-list.ui:447
+#: applets/wncklet/window-list.ui:442
 msgid "Restoring Minimized Windows"
 msgstr "Відновлення унайменшених вікон"
 
-#: applets/wncklet/window-list.ui:468
+#: applets/wncklet/window-list.ui:463
 msgid "Restore to current _workspace"
 msgstr "Відновлювати у по_точний робочий простір"
 
-#: applets/wncklet/window-list.ui:484
+#: applets/wncklet/window-list.ui:479
 msgid "Restore to na_tive workspace"
 msgstr "Відновлювати у по_чатковий робочий простір"
 
-#: applets/wncklet/window-list.ui:521
+#: applets/wncklet/window-list.ui:516
 #: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "Робочі простори"
@@ -1259,21 +1260,21 @@ msgstr ""
 "Авторське право © 2012-2021 Розробники MATEs"
 
 #: applets/wncklet/workspace-switcher.c:294
-#: applets/wncklet/workspace-switcher.c:1041
+#: applets/wncklet/workspace-switcher.c:1061
 #: applets/wncklet/workspace-switcher.ui:170
 msgid "rows"
 msgstr "рядків"
 
 #: applets/wncklet/workspace-switcher.c:294
-#: applets/wncklet/workspace-switcher.c:1041
+#: applets/wncklet/workspace-switcher.c:1061
 msgid "columns"
 msgstr "стовпчиків"
 
-#: applets/wncklet/workspace-switcher.c:713
+#: applets/wncklet/workspace-switcher.c:726
 msgid "About Workspace Switcher"
 msgstr "Про Перемикач робочих просторів"
 
-#: applets/wncklet/workspace-switcher.c:715
+#: applets/wncklet/workspace-switcher.c:728
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1641,32 +1642,46 @@ msgstr ""
 "лівого (чи верхнього, для вертикальних панелей) краю панелі."
 
 #: data/org.mate.panel.object.gschema.xml.in:20
-msgid "Interpret position relative to bottom/right edge"
-msgstr "Інтерпретувати позицію відносно нижнього (правого) краю панелі."
+msgid "Interpret position relative to bottom/right edge (DEPRECATED)"
+msgstr ""
 
 #: data/org.mate.panel.object.gschema.xml.in:21
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
-" bottom if vertical) edge of the panel."
+" bottom if vertical) edge of the panel. This key is provided only for "
+"backward compatibility with old panel layouts; please set the \"relative-to-"
+"edge\" property instead."
 msgstr ""
-"Чи інтерпретувати позицію об'єкту відносно правого (або нижнього, для "
-"вертикальних панелей) краю панелі."
 
 #: data/org.mate.panel.object.gschema.xml.in:25
+msgid ""
+"Whether to interpret the value of the \"position\" key relative to the "
+"start, center or end of the panel"
+msgstr ""
+
+#: data/org.mate.panel.object.gschema.xml.in:26
+msgid ""
+"The position of the object is interpreted relative to one edge of the panel."
+" The value of this key determines whether the object is positioned relative "
+"to the start (left/top edge), center, or end (right/bottom edge) of the "
+"panel. Valid values for this key are 'start', 'center', and 'end'."
+msgstr ""
+
+#: data/org.mate.panel.object.gschema.xml.in:30
 msgid "Lock the object to the panel"
 msgstr "Блокування положення об'єкту на панелі"
 
-#: data/org.mate.panel.object.gschema.xml.in:26
+#: data/org.mate.panel.object.gschema.xml.in:31
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
 msgstr "Чи забороняти користувачу переносити аплет без його розблокування."
 
-#: data/org.mate.panel.object.gschema.xml.in:30
+#: data/org.mate.panel.object.gschema.xml.in:35
 msgid "Applet IID"
 msgstr "IID аплету"
 
-#: data/org.mate.panel.object.gschema.xml.in:31
+#: data/org.mate.panel.object.gschema.xml.in:36
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1678,11 +1693,11 @@ msgstr ""
 "ключ object_type містить «external-applet» (або застарілий «matecomponent-"
 "applet»)."
 
-#: data/org.mate.panel.object.gschema.xml.in:35
+#: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Panel attached to drawer"
 msgstr "Приєднана до шухляди панель"
 
-#: data/org.mate.panel.object.gschema.xml.in:36
+#: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
@@ -1690,11 +1705,11 @@ msgstr ""
 "Ідентифікатор панелі приєднаної до цієї шухляди. Цей параметр має сенс лише "
 "тоді, коли ключ типу об'єкту (object_type) містить \"drawer-object\"."
 
-#: data/org.mate.panel.object.gschema.xml.in:40
+#: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Tooltip displayed for drawer or menu"
 msgstr "Підказка для шухляди чи меню"
 
-#: data/org.mate.panel.object.gschema.xml.in:41
+#: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
@@ -1704,11 +1719,11 @@ msgstr ""
 "цього меню. Цей параметр має сенс лише тоді, коли object_type містить "
 "\"drawer-object\" або \"menu-object\"."
 
-#: data/org.mate.panel.object.gschema.xml.in:45
+#: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Use custom icon for object's button"
 msgstr "Використовувати вказану користувачем піктограму до кнопки об'єкту"
 
-#: data/org.mate.panel.object.gschema.xml.in:46
+#: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -1719,11 +1734,11 @@ msgstr ""
 "значення custom_icon нехтується. Цей параметр має сенс лише тоді, коли тип "
 "об'єкту містить значення \"menu-object\", або \"drawer-object\"."
 
-#: data/org.mate.panel.object.gschema.xml.in:50
+#: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Icon used for object's button"
 msgstr "Піктограма для кнопки об'єкту"
 
-#: data/org.mate.panel.object.gschema.xml.in:51
+#: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -1734,11 +1749,11 @@ msgstr ""
 "містить \"drawer-object\", або \"menu-object\" і встановлено параметр "
 "use_custom_icon."
 
-#: data/org.mate.panel.object.gschema.xml.in:55
+#: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Use custom path for menu contents"
 msgstr "Використовувати вказаний користувачем шлях до вмісту меню"
 
-#: data/org.mate.panel.object.gschema.xml.in:56
+#: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -1749,11 +1764,11 @@ msgstr ""
 " то параметр menu_path нехтується. Цей параметр має сенс лише тоді коли, тип"
 " об'єкту містить значення \"menu-object\"."
 
-#: data/org.mate.panel.object.gschema.xml.in:60
+#: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Menu content path"
 msgstr "Шлях до вмісту меню"
 
-#: data/org.mate.panel.object.gschema.xml.in:61
+#: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
@@ -1763,11 +1778,11 @@ msgstr ""
 "коли встановлено параметр use_menu_path і параметр object_type має значення "
 "\"menu-object\"."
 
-#: data/org.mate.panel.object.gschema.xml.in:65
+#: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Draw arrow in menu button"
 msgstr "Малювати стрілку на кнопці меню"
 
-#: data/org.mate.panel.object.gschema.xml.in:66
+#: data/org.mate.panel.object.gschema.xml.in:71
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
@@ -1775,11 +1790,11 @@ msgstr ""
 "Якщо істина, поверх піктограми кнопки меню буде намальовано стрілку. Якщо "
 "брехня, кнопка меню буде мати лише піктограму."
 
-#: data/org.mate.panel.object.gschema.xml.in:70
+#: data/org.mate.panel.object.gschema.xml.in:75
 msgid "Launcher location"
 msgstr "Розташування пускача"
 
-#: data/org.mate.panel.object.gschema.xml.in:71
+#: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
@@ -1788,11 +1803,11 @@ msgstr ""
 "лише тоді, коли ключ типу об'єкту (object_type) містить \"launcher-"
 "object\"\"\"."
 
-#: data/org.mate.panel.object.gschema.xml.in:75
+#: data/org.mate.panel.object.gschema.xml.in:80
 msgid "Action button type"
 msgstr "Тип дії кнопки"
 
-#: data/org.mate.panel.object.gschema.xml.in:76
+#: data/org.mate.panel.object.gschema.xml.in:81
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
@@ -2189,62 +2204,62 @@ msgstr ""
 "Якщо встановлено, то зображення тла буде повернуто, якщо панель зорієнтовано"
 " вертикально."
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr "Файл не є коректним файлом .desktop"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Невідома версія файлу .desktop «%s»"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:976
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
 #, c-format
 msgid "Starting %s"
 msgstr "Запускаю '%s'"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1118
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
 msgid "Application does not accept documents on command line"
 msgstr "Програма не може приймати документи з командного рядка"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1186
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Невідомий параметр запуску: %d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1402
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "Неможливо передати URI документу у лейбу типу «Посилання»"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1423
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
 msgid "Not a launchable item"
 msgstr "Елемент не запускається"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
 msgid "Disable connection to session manager"
 msgstr "Заборонити під’єднання до керівника сеансів"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "Specify file containing saved configuration"
 msgstr "Вказати файл, що містить збережені налаштування"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "FILE"
 msgstr "ФАЙЛ"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "Specify session management ID"
 msgstr "Визначити ідентифікатор для керівника сеансів"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
 msgid "Session management options:"
 msgstr "Параметри керування сеансом"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Show session management options"
 msgstr "Показати параметри взаємодії з керівником сеансів"
 
@@ -2253,11 +2268,11 @@ msgid "_Open"
 msgstr "_Відкрити"
 
 #: mate-panel/libpanel-util/panel-error.c:77
-#: mate-panel/panel-applet-frame.c:799 mate-panel/panel-applet-frame.c:987
+#: mate-panel/panel-applet-frame.c:797 mate-panel/panel-applet-frame.c:985
 msgid "Error"
 msgstr "Помилка"
 
-#: mate-panel/libpanel-util/panel-icon-chooser.c:374
+#: mate-panel/libpanel-util/panel-icon-chooser.c:366
 msgid "Choose an icon"
 msgstr "Оберіть піктограму"
 
@@ -2279,37 +2294,37 @@ msgstr "Не вдається відкрити адресу \"%s\""
 msgid "No application to handle search folders is installed."
 msgstr "Немає програми для опрацювання встановлених тек пошуку."
 
-#: mate-panel/applet.c:469
+#: mate-panel/applet.c:466
 msgid "???"
 msgstr "без назви"
 
-#: mate-panel/applet.c:549 libmate-panel-applet/mate-panel-applet.c:140
+#: mate-panel/applet.c:546 libmate-panel-applet/mate-panel-applet.c:140
 msgid "_Remove From Panel"
 msgstr "В_илучити з панелі"
 
-#: mate-panel/applet.c:557 libmate-panel-applet/mate-panel-applet.c:143
+#: mate-panel/applet.c:554 libmate-panel-applet/mate-panel-applet.c:143
 msgid "_Move"
 msgstr "Пере_містити"
 
-#: mate-panel/applet.c:575 libmate-panel-applet/mate-panel-applet.c:149
+#: mate-panel/applet.c:572 libmate-panel-applet/mate-panel-applet.c:149
 msgid "Loc_k To Panel"
 msgstr "П_рикріпити до панелі"
 
-#: mate-panel/applet.c:1311
+#: mate-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "Не вдається знайти порожнє місце"
 
-#: mate-panel/drawer.c:444 mate-panel/panel-addto.c:190
-#: mate-panel/panel-toplevel.c:1646
+#: mate-panel/drawer.c:441 mate-panel/panel-addto.c:190
+#: mate-panel/panel-toplevel.c:1640
 msgid "Drawer"
 msgstr "Шухляда"
 
-#: mate-panel/drawer.c:551
+#: mate-panel/drawer.c:546
 msgid "_Add to Drawer..."
 msgstr "Д_одати до шухляди..."
 
-#: mate-panel/drawer.c:557 mate-panel/launcher.c:611
-#: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
+#: mate-panel/drawer.c:552 mate-panel/launcher.c:607
+#: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:248
 msgid "_Properties"
 msgstr "В_ластивості"
 
@@ -2326,7 +2341,7 @@ msgid "- Edit .desktop files"
 msgstr "- Редагування файлів .desktop"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1008
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1001
 msgid "Create Launcher"
 msgstr "Створити пускача"
 
@@ -2335,7 +2350,7 @@ msgstr "Створити пускача"
 msgid "Directory Properties"
 msgstr "Властивості каталогу"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:818
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "Властивості пускача"
 
@@ -2363,26 +2378,26 @@ msgstr "Не вказано URL."
 msgid "Could not use dropped item"
 msgstr "Не вдається використати кинутий елемент"
 
-#: mate-panel/launcher.c:455
+#: mate-panel/launcher.c:451
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Не встановлено URI для файлу пускача панелі\n"
 
-#: mate-panel/launcher.c:494
+#: mate-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Не вдається відкрити файл %s для пускача панелі%s%s\n"
 
-#: mate-panel/launcher.c:603
+#: mate-panel/launcher.c:599
 msgid "_Launch"
 msgstr "_Запустити"
 
-#: mate-panel/launcher.c:944
+#: mate-panel/launcher.c:937
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Ключ %s не встановлено, неможливо завантажити пускача\n"
 
-#: mate-panel/launcher.c:1077 mate-panel/panel-ditem-editor.c:1179
-#: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
+#: mate-panel/launcher.c:1072 mate-panel/panel-ditem-editor.c:1177
+#: mate-panel/panel-ditem-editor.c:1211 mate-panel/panel-ditem-editor.c:1241
 msgid "Could not save launcher"
 msgstr "Не вдається зберегти пускача"
 
@@ -2402,29 +2417,29 @@ msgstr "Виконати діалог запуску"
 msgid "Set the default panel layout"
 msgstr "Встановити типове компонування панелі"
 
-#: mate-panel/menu.c:502
+#: mate-panel/menu.c:500
 msgid "Add this launcher to _panel"
 msgstr "Додати цього пускача до _панелі"
 
-#: mate-panel/menu.c:509
+#: mate-panel/menu.c:507
 msgid "Add this launcher to _desktop"
 msgstr "Додати цього пускача на _стільницю"
 
-#: mate-panel/menu.c:521
+#: mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "Ус_е меню"
 
-#: mate-panel/menu.c:526
+#: mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "Додати до панелі як _шухляду"
 
-#: mate-panel/menu.c:533
+#: mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "Додати до панелі як _меню"
 
 #: mate-panel/panel-action-button.c:161
 msgid "_Activate Screensaver"
-msgstr "_Активувати зберігач екрану"
+msgstr "_Активувати Екранну заставку"
 
 #: mate-panel/panel-action-button.c:167
 msgid "_Lock Screen"
@@ -2535,53 +2550,53 @@ msgstr "Розділювач для впорядкування елементі�
 msgid "A pop out drawer to store other items in"
 msgstr "Висувна шухляда для зберігання инших елементів"
 
-#: mate-panel/panel-addto.c:275
+#: mate-panel/panel-addto.c:276
 msgid "(empty)"
 msgstr "(порожньо)"
 
-#: mate-panel/panel-addto.c:420
+#: mate-panel/panel-addto.c:421
 msgid "Not compatible with X11"
 msgstr "Не сумісний з X11"
 
-#: mate-panel/panel-addto.c:427
+#: mate-panel/panel-addto.c:428
 msgid "Not compatible with Wayland"
 msgstr "Не сумісний із Wayland"
 
-#: mate-panel/panel-addto.c:1052
+#: mate-panel/panel-addto.c:1011
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Знайти _елемент для додавання до \"%s\":"
 
-#: mate-panel/panel-addto.c:1056
+#: mate-panel/panel-addto.c:1015
 msgid "Add to Drawer"
 msgstr "Додати до шухляди"
 
-#: mate-panel/panel-addto.c:1058
+#: mate-panel/panel-addto.c:1017
 msgid "Find an _item to add to the drawer:"
 msgstr "Знайти _елемент для додавання до шухляди:"
 
-#: mate-panel/panel-addto.c:1060
+#: mate-panel/panel-addto.c:1019
 msgid "Add to Panel"
 msgstr "Додати до панелі"
 
-#: mate-panel/panel-addto.c:1062
+#: mate-panel/panel-addto.c:1021
 msgid "Find an _item to add to the panel:"
 msgstr "Знайти _елемент для додавання до панелі:"
 
-#: mate-panel/panel-addto.c:1312
+#: mate-panel/panel-addto.c:1270
 msgid "_Back"
 msgstr "_Назад"
 
-#: mate-panel/panel-applet-frame.c:760
+#: mate-panel/panel-applet-frame.c:758
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "Робота \"%s\" несподівано закінчилась"
 
-#: mate-panel/panel-applet-frame.c:762
+#: mate-panel/panel-applet-frame.c:760
 msgid "Panel object has quit unexpectedly"
 msgstr "Об'єкт на панелі несподівано закінчив роботу"
 
-#: mate-panel/panel-applet-frame.c:769
+#: mate-panel/panel-applet-frame.c:767
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2589,28 +2604,28 @@ msgstr ""
 "Якщо Ви перезавантажите об'єкт панелі, його буде автоматично додано назад до"
 " панелі."
 
-#: mate-panel/panel-applet-frame.c:776
+#: mate-panel/panel-applet-frame.c:774
 msgid "D_elete"
 msgstr "Ви_лучити"
 
-#: mate-panel/panel-applet-frame.c:777 mate-panel/panel-applet-frame.c:782
+#: mate-panel/panel-applet-frame.c:775 mate-panel/panel-applet-frame.c:780
 msgid "_Don't Reload"
 msgstr "_Не перезавантажувати"
 
-#: mate-panel/panel-applet-frame.c:778 mate-panel/panel-applet-frame.c:783
+#: mate-panel/panel-applet-frame.c:776 mate-panel/panel-applet-frame.c:781
 msgid "_Reload"
 msgstr "_Оновити"
 
-#: mate-panel/panel-applet-frame.c:949
+#: mate-panel/panel-applet-frame.c:947
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Виявлено проблему при завантаженні \"%s\"."
 
-#: mate-panel/panel-applet-frame.c:964
+#: mate-panel/panel-applet-frame.c:962
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Вилучити аплет із поточної конфігурації?"
 
-#: mate-panel/panel-applet-frame.c:971 mate-panel/panel.c:1502
+#: mate-panel/panel-applet-frame.c:969 mate-panel/panel.c:1495
 msgid "_Delete"
 msgstr "В_илучити"
 
@@ -2672,19 +2687,19 @@ msgstr "_Скинути панелі"
 msgid "_Add to Panel…"
 msgstr "_Додати на панель…"
 
-#: mate-panel/panel-context-menu.c:257
+#: mate-panel/panel-context-menu.c:258
 msgid "_Reset All Panels"
 msgstr "_Скинути всі панелі"
 
-#: mate-panel/panel-context-menu.c:264
+#: mate-panel/panel-context-menu.c:265
 msgid "_Delete This Panel"
 msgstr "В_илучити цю панель"
 
-#: mate-panel/panel-context-menu.c:277
+#: mate-panel/panel-context-menu.c:278
 msgid "_New Panel"
 msgstr "_Створити панель"
 
-#: mate-panel/panel-context-menu.c:326
+#: mate-panel/panel-context-menu.c:327
 msgid "A_bout Panels"
 msgstr "_Про панелі"
 
@@ -2700,44 +2715,44 @@ msgstr "Виконати у терміналі..."
 msgid "Location"
 msgstr "Розташування"
 
-#: mate-panel/panel-ditem-editor.c:848
+#: mate-panel/panel-ditem-editor.c:847
 msgid "Choose an application..."
 msgstr "Обрати програму..."
 
-#: mate-panel/panel-ditem-editor.c:852
+#: mate-panel/panel-ditem-editor.c:851
 msgid "Choose a file..."
 msgstr "Обрати файл..."
 
-#: mate-panel/panel-ditem-editor.c:1004 mate-panel/panel-ditem-editor.c:1013
+#: mate-panel/panel-ditem-editor.c:1003 mate-panel/panel-ditem-editor.c:1012
 #: mate-panel/panel-ditem-editor-dialog.ui:197
 msgid "Comm_and:"
 msgstr "_Команда:"
 
-#: mate-panel/panel-ditem-editor.c:1022
+#: mate-panel/panel-ditem-editor.c:1021
 msgid "_Location:"
 msgstr "_Місцерозташування:"
 
-#: mate-panel/panel-ditem-editor.c:1180
+#: mate-panel/panel-ditem-editor.c:1178
 msgid "The name of the launcher is not set."
 msgstr "Назви пускача не встановлено."
 
-#: mate-panel/panel-ditem-editor.c:1184
+#: mate-panel/panel-ditem-editor.c:1182
 msgid "Could not save directory properties"
 msgstr "Не вдається записати властивості каталогу"
 
-#: mate-panel/panel-ditem-editor.c:1185
+#: mate-panel/panel-ditem-editor.c:1183
 msgid "The name of the directory is not set."
 msgstr "Назви каталогу не встановлено."
 
-#: mate-panel/panel-ditem-editor.c:1201
+#: mate-panel/panel-ditem-editor.c:1199
 msgid "The command of the launcher is not set."
 msgstr "Не встановлено команди для пускача."
 
-#: mate-panel/panel-ditem-editor.c:1204
+#: mate-panel/panel-ditem-editor.c:1202
 msgid "The location of the launcher is not set."
 msgstr "Не встановлено адреси для пускача."
 
-#: mate-panel/panel-ditem-editor.c:1280
+#: mate-panel/panel-ditem-editor.c:1278
 msgid "Could not display help document"
 msgstr "Не вдається вивести довідку"
 
@@ -2800,113 +2815,113 @@ msgstr "Змінити оздоблення та поведінку, отрим�
 msgid "Applications"
 msgstr "Програми"
 
-#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:711
+#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:703
 msgid "_Edit Menus"
 msgstr "_Змінити меню"
 
-#: mate-panel/panel-menu-button.c:1131
+#: mate-panel/panel-menu-button.c:1121
 msgid "Main Menu"
 msgstr "Головне меню"
 
-#: mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-items.c:464
 msgid "Bookmarks"
 msgstr "Закладки"
 
 #. Translators: %s is a URI
-#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:573
+#: mate-panel/panel-menu-items.c:487 mate-panel/panel.c:571
 #, c-format
 msgid "Open '%s'"
 msgstr "Відкрити '%s'"
 
-#: mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:558
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Не вдається визначити зміну носія в %s"
 
-#: mate-panel/panel-menu-items.c:605
+#: mate-panel/panel-menu-items.c:602
 #, c-format
 msgid "Rescan %s"
 msgstr "Пересканувати %s"
 
-#: mate-panel/panel-menu-items.c:642
+#: mate-panel/panel-menu-items.c:640
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Не вдається змонтувати %s"
 
-#: mate-panel/panel-menu-items.c:705
+#: mate-panel/panel-menu-items.c:703
 #, c-format
 msgid "Mount %s"
 msgstr "Змонтувати %s"
 
-#: mate-panel/panel-menu-items.c:913
+#: mate-panel/panel-menu-items.c:912
 msgid "Removable Media"
 msgstr "Від’єднувані носії"
 
-#: mate-panel/panel-menu-items.c:1000
+#: mate-panel/panel-menu-items.c:998
 msgid "Network Places"
 msgstr "Мережеве оточення"
 
-#: mate-panel/panel-menu-items.c:1040
+#: mate-panel/panel-menu-items.c:1037
 msgid "Open your personal folder"
 msgstr "Відкрити Вашу особисту теку"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: mate-panel/panel-menu-items.c:1059
+#: mate-panel/panel-menu-items.c:1056
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Стільниця"
 
-#: mate-panel/panel-menu-items.c:1060
+#: mate-panel/panel-menu-items.c:1057
 msgid "Open the contents of your desktop in a folder"
 msgstr "Відкрити вміст стільниці у теці"
 
-#: mate-panel/panel-menu-items.c:1077
+#: mate-panel/panel-menu-items.c:1074
 msgid "Computer"
 msgstr "Комп'ютер"
 
-#: mate-panel/panel-menu-items.c:1083
+#: mate-panel/panel-menu-items.c:1080
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
 "Переглянути всі локальні та віддалені диски, і теки доступні з цього "
 "комп’ютера"
 
-#: mate-panel/panel-menu-items.c:1096
+#: mate-panel/panel-menu-items.c:1093
 msgid "Network"
 msgstr "Мережа"
 
-#: mate-panel/panel-menu-items.c:1097
+#: mate-panel/panel-menu-items.c:1094
 msgid "Browse bookmarked and local network locations"
 msgstr "Переглянути закладки та локальні мережеві адреси"
 
-#: mate-panel/panel-menu-items.c:1499
+#: mate-panel/panel-menu-items.c:1457
 msgid "Places"
 msgstr "Місця"
 
-#: mate-panel/panel-menu-items.c:1527
+#: mate-panel/panel-menu-items.c:1485
 msgid "System"
 msgstr "Система"
 
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1570
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1624
+#: mate-panel/panel-menu-items.c:1582
 #, c-format
 msgid "Log Out %s..."
 msgstr "Завершити сеанс %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1628
+#: mate-panel/panel-menu-items.c:1586
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Вийти з сеансу користувача %s та зайти під иншим ім'ям"
@@ -3034,21 +3049,21 @@ msgstr "Розтя_гувати"
 msgid "Rotate image when panel is _vertical"
 msgstr "Повертати зображення на _вертикальних панелях"
 
-#: mate-panel/panel-recent.c:79 mate-panel/panel-recent.c:89
+#: mate-panel/panel-recent.c:78 mate-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Не вдається відкрити нещодавно використаний документ \"%s\""
 
-#: mate-panel/panel-recent.c:91
+#: mate-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Невідома помилка при спробі відкрити \"%s\""
 
-#: mate-panel/panel-recent.c:148
+#: mate-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "Очистити перелік нещодавно використаних документів?"
 
-#: mate-panel/panel-recent.c:150
+#: mate-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -3058,46 +3073,46 @@ msgstr ""
 "• Усі елементи з пункту меню Місця → Нещодавні документи.\n"
 "• Усі елементи з переліку нещодавно використаних документів усіх програм."
 
-#: mate-panel/panel-recent.c:165
+#: mate-panel/panel-recent.c:164
 msgid "Clear Recent Documents"
 msgstr "Очищення нещодавніх документів"
 
-#: mate-panel/panel-recent.c:201
+#: mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "Нещодавні документи"
 
-#: mate-panel/panel-recent.c:243
+#: mate-panel/panel-recent.c:242
 msgid "Clear Recent Documents..."
 msgstr "Очищення нещодавніх документів..."
 
-#: mate-panel/panel-recent.c:245
+#: mate-panel/panel-recent.c:244
 msgid "Clear all items from the recent documents list"
 msgstr "Очистити всі елементи з переліку нещодавно використаних документів"
 
-#: mate-panel/panel-run-dialog.c:445
+#: mate-panel/panel-run-dialog.c:440
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Не вдається запустити команду \"%s\""
 
-#: mate-panel/panel-run-dialog.c:486
+#: mate-panel/panel-run-dialog.c:481
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Не вдається перетворити '%s' з UTF-8"
 
-#: mate-panel/panel-run-dialog.c:1278
+#: mate-panel/panel-run-dialog.c:1269
 msgid "Choose a file to append to the command..."
 msgstr "Обрати файл, щоб додати його до команди..."
 
-#: mate-panel/panel-run-dialog.c:1633 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1623 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Обрати програму перегляду опису."
 
-#: mate-panel/panel-run-dialog.c:1671
+#: mate-panel/panel-run-dialog.c:1661
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Буде запущено: \"%s\""
 
-#: mate-panel/panel-run-dialog.c:1704
+#: mate-panel/panel-run-dialog.c:1694
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -3108,7 +3123,7 @@ msgstr ""
 msgid "Run Application"
 msgstr "Виконати програму"
 
-#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:98
+#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "_Виконати"
 
@@ -3156,15 +3171,15 @@ msgstr "Перелік відомих програм"
 msgid "Show list of known _applications"
 msgstr "Показувати перелік відомих _програм"
 
-#: mate-panel/panel-stock-icons.c:99
+#: mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
 msgstr "Примусово за_вершити"
 
-#: mate-panel/panel-stock-icons.c:100
+#: mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
 msgstr "О_чистити"
 
-#: mate-panel/panel-stock-icons.c:101
+#: mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
 msgstr "_Не вилучати"
 
@@ -3187,42 +3202,42 @@ msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Вказати початкову орієнтацію аплету (top, bottom, left чи right)"
 
-#: mate-panel/panel-test-applets.c:67
+#: mate-panel/panel-test-applets.c:66
 msgctxt "Size"
 msgid "XX Small"
 msgstr "Малесенький"
 
-#: mate-panel/panel-test-applets.c:68
+#: mate-panel/panel-test-applets.c:67
 msgctxt "Size"
 msgid "X Small"
 msgstr "Маленький"
 
-#: mate-panel/panel-test-applets.c:69
+#: mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
 msgstr "Малий"
 
-#: mate-panel/panel-test-applets.c:70
+#: mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
 msgstr "Середній"
 
-#: mate-panel/panel-test-applets.c:71
+#: mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
 msgstr "Великий"
 
-#: mate-panel/panel-test-applets.c:72
+#: mate-panel/panel-test-applets.c:71
 msgctxt "Size"
 msgid "X Large"
 msgstr "Дуже великий"
 
-#: mate-panel/panel-test-applets.c:73
+#: mate-panel/panel-test-applets.c:72
 msgctxt "Size"
 msgid "XX Large"
 msgstr "Величезний"
 
-#: mate-panel/panel-test-applets.c:131
+#: mate-panel/panel-test-applets.c:130
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Не вдається завантажити аплет %s"
@@ -3244,23 +3259,23 @@ msgstr "_Аплет:"
 msgid "_Prefs Path:"
 msgstr "Шлях _параметрів:"
 
-#: mate-panel/panel-toplevel.c:1208
+#: mate-panel/panel-toplevel.c:1207
 msgid "Hide Panel"
 msgstr "Сховати панель"
 
-#: mate-panel/panel-toplevel.c:1652 mate-panel/panel-toplevel.c:1662
+#: mate-panel/panel-toplevel.c:1646 mate-panel/panel-toplevel.c:1656
 msgid "Top Panel"
 msgstr "Горішня панель"
 
-#: mate-panel/panel-toplevel.c:1654
+#: mate-panel/panel-toplevel.c:1648
 msgid "Bottom Panel"
 msgstr "Долішня панель"
 
-#: mate-panel/panel-toplevel.c:1656
+#: mate-panel/panel-toplevel.c:1650
 msgid "Left Panel"
 msgstr "Ліва панель"
 
-#: mate-panel/panel-toplevel.c:1658
+#: mate-panel/panel-toplevel.c:1652
 msgid "Right Panel"
 msgstr "Права панель"
 
@@ -3274,21 +3289,21 @@ msgstr "Піктограми «%s» не знайдено"
 msgid "Could not execute '%s'"
 msgstr "Не вдається виконати \"%s\""
 
-#: mate-panel/panel-util.c:703
+#: mate-panel/panel-util.c:702
 msgid "file"
 msgstr "файл"
 
-#: mate-panel/panel-util.c:871
+#: mate-panel/panel-util.c:870
 msgid "Home Folder"
 msgstr "Домашня тека"
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: mate-panel/panel-util.c:883
+#: mate-panel/panel-util.c:882
 msgid "File System"
 msgstr "Файлова система"
 
-#: mate-panel/panel-util.c:1046
+#: mate-panel/panel-util.c:1045
 msgid "Search"
 msgstr "Пошук"
 
@@ -3296,48 +3311,48 @@ msgstr "Пошук"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: mate-panel/panel-util.c:1092
+#: mate-panel/panel-util.c:1091
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: mate-panel/panel.c:506
+#: mate-panel/panel.c:504
 #, c-format
 msgid "Open URL: %s"
 msgstr "Відкрити URL посилання: %s"
 
-#: mate-panel/panel.c:672
+#: mate-panel/panel.c:670
 msgid "You dropped an image on the panel, what do you want to do?"
 msgstr "Ви помістили зображення на панель, що ви хочете зробити? "
 
-#: mate-panel/panel.c:674
+#: mate-panel/panel.c:672
 #, c-format
 msgid "You dropped the image \"%s\" on the panel."
 msgstr "Ви скинули зображення \"%s\" на панелі."
 
-#: mate-panel/panel.c:677
+#: mate-panel/panel.c:675
 msgid ""
 "Do you want to create a launcher for it or use it as the panel's background?"
 msgstr ""
 "Ви волієте створити для нього пускача чи використовувати його як тло панелі?"
 
-#: mate-panel/panel.c:680
+#: mate-panel/panel.c:678
 msgid "Do you want to use it as the panel's background?"
 msgstr "Ви волієте використовувати його як тло панелі?"
 
-#: mate-panel/panel.c:694
+#: mate-panel/panel.c:692
 msgid "Create _Launcher"
 msgstr "Створити _пускача"
 
-#: mate-panel/panel.c:698
+#: mate-panel/panel.c:696
 msgid "Set _Background Image"
 msgstr "Встановити _зображення тла"
 
-#: mate-panel/panel.c:1478
+#: mate-panel/panel.c:1471
 msgid "Delete this drawer?"
 msgstr "Вилучити цю шухляду?"
 
-#: mate-panel/panel.c:1479
+#: mate-panel/panel.c:1472
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3345,11 +3360,11 @@ msgstr ""
 "При вилученні шухляди буде втрачено\n"
 "всі її параметри."
 
-#: mate-panel/panel.c:1482
+#: mate-panel/panel.c:1475
 msgid "Delete this panel?"
 msgstr "Вилучити цю панель?"
 
-#: mate-panel/panel.c:1483
+#: mate-panel/panel.c:1476
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."

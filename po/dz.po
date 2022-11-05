@@ -8,9 +8,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.25.3\n"
+"Project-Id-Version: mate-panel 1.27.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2021-08-04 18:05+0200\n"
+"POT-Creation-Date: 2022-10-29 15:36+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
 "Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>, 2018\n"
 "Language-Team: Dzongkha (https://www.transifex.com/mate/teams/13566/dz/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Language: dz\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:689
+#: applets/clock/calendar-window.c:257 applets/clock/clock.ui:708
 msgid "Locations"
 msgstr "གནས་ཁོངས་ཚུ་ "
 
@@ -28,21 +28,21 @@ msgstr "གནས་ཁོངས་ཚུ་ "
 msgid "Edit"
 msgstr "ཞུན་དག་རྐྱབས།"
 
-#: applets/clock/calendar-window.c:482
+#: applets/clock/calendar-window.c:484
 msgid "Calendar"
 msgstr "ཟླ་ཐོ།"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:448
+#: applets/clock/clock.c:444
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:448 applets/clock/clock-location-tile.c:500
+#: applets/clock/clock.c:444 applets/clock/clock-location-tile.c:500
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -53,7 +53,7 @@ msgstr "%l:%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: applets/clock/clock.c:453 applets/clock/clock.c:1620
+#: applets/clock/clock.c:449 applets/clock/clock.c:1614
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -67,7 +67,7 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: applets/clock/clock.c:453 applets/clock/clock.c:1626
+#: applets/clock/clock.c:449 applets/clock/clock.c:1620
 #: applets/clock/clock-location-tile.c:460
 #: applets/clock/clock-location-tile.c:507
 msgid "%H:%M"
@@ -78,11 +78,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: applets/clock/clock.c:464
+#: applets/clock/clock.c:460
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
-#: applets/clock/clock.c:471
+#: applets/clock/clock.c:467
 #, c-format
 msgid ""
 "%1$s\n"
@@ -91,7 +91,7 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#: applets/clock/clock.c:479
+#: applets/clock/clock.c:475
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -99,19 +99,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: applets/clock/clock.c:661
+#: applets/clock/clock.c:657
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: applets/clock/clock.c:687
+#: applets/clock/clock.c:683
 msgid "Click to hide month calendar"
 msgstr "ཟླ་བའི་ཟླ་ཐོ་ དབྱིབས་ནིའི་དོན་ལུ་ ཨེབ་གཏང་འབད"
 
-#: applets/clock/clock.c:689
+#: applets/clock/clock.c:685
 msgid "Click to view month calendar"
 msgstr "ཟླ་བའི་ཟླ་ཐོ་ བལྟ་ནིའི་དོན་ལུ་ ཨེབ་གཏང་འབད།"
 
-#: applets/clock/clock.c:1458
+#: applets/clock/clock.c:1452
 msgid "Computer Clock"
 msgstr "གློག་རིག་ཆེ་འཁོར།"
 
@@ -121,7 +121,7 @@ msgstr "གློག་རིག་ཆེ་འཁོར།"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1605
+#: applets/clock/clock.c:1599
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -131,107 +131,107 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1613
+#: applets/clock/clock.c:1607
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: applets/clock/clock.c:1659
+#: applets/clock/clock.c:1653
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1690
+#: applets/clock/clock.c:1684
 msgid "Set System Time..."
 msgstr "རིམ་ལུགས་ ཆུ་ཚོད་ གཞི་སྒྲིག་འབད་་་་"
 
-#: applets/clock/clock.c:1691
+#: applets/clock/clock.c:1685
 msgid "Set System Time"
 msgstr "རིམ་ལུགས་ཀྱི་ ཆུ་ཚོད་ གཞི་སྒྲིག་འབད་ "
 
-#: applets/clock/clock.c:1705
+#: applets/clock/clock.c:1699
 msgid "Failed to set the system time"
 msgstr "རིམ་ལུགས་ཀྱི་ ཆུ་ཚོད་ གཞི་སྒྲིག་འབད་ནི་ལུ་ འཐུས་ཤོར་འབྱུང་ཡོདཔ་ "
 
-#: applets/clock/clock.c:1901 applets/fish/fish.c:1691
-#: applets/notification_area/main.c:292 applets/wncklet/window-list.c:432
+#: applets/clock/clock.c:1889 applets/fish/fish.c:1690
+#: applets/notification_area/main.c:290 applets/wncklet/window-list.c:466
 #: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "དགའ་གདམ་ཚུ།(_P)"
 
-#: applets/clock/clock.c:1904 applets/clock/clock.ui:293
-#: applets/fish/fish.c:1694 applets/fish/fish.ui:46
-#: applets/notification_area/main.c:295 applets/wncklet/showdesktop.c:240
-#: applets/wncklet/window-list.c:440 applets/wncklet/window-list.ui:38
+#: applets/clock/clock.c:1892 applets/clock/clock.ui:312
+#: applets/fish/fish.c:1693 applets/fish/fish.ui:46
+#: applets/notification_area/main.c:293 applets/wncklet/showdesktop.c:239
+#: applets/wncklet/window-list.c:474 applets/wncklet/window-list.ui:37
 #: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
-#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:563
-#: mate-panel/panel-action-button.c:732 mate-panel/panel-addto.c:1309
-#: mate-panel/panel-context-menu.c:319
+#: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:558
+#: mate-panel/panel-action-button.c:730 mate-panel/panel-addto.c:1267
+#: mate-panel/panel-context-menu.c:320
 #: mate-panel/panel-ditem-editor-dialog.ui:45 mate-panel/panel-menu-bar.c:355
-#: mate-panel/panel-menu-button.c:705 mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-menu-button.c:697 mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "གྲོགས་རམ།(_H)"
 
-#: applets/clock/clock.c:1907 applets/fish/fish.c:1697
-#: applets/notification_area/main.c:298 applets/wncklet/showdesktop.c:248
-#: applets/wncklet/window-list.c:448 applets/wncklet/window-menu.c:113
+#: applets/clock/clock.c:1895 applets/fish/fish.c:1696
+#: applets/notification_area/main.c:296 applets/wncklet/showdesktop.c:247
+#: applets/wncklet/window-list.c:482 applets/wncklet/window-menu.c:113
 #: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "སྐོར་ལས།(_A)"
 
-#: applets/clock/clock.c:1910
+#: applets/clock/clock.c:1898
 msgid "Copy _Time"
 msgstr "ཆུ་ཚོད་འདྲ་བཤུས་རྐྱབས།(_T)"
 
-#: applets/clock/clock.c:1913
+#: applets/clock/clock.c:1901
 msgid "Copy _Date"
 msgstr "ཚེས་གྲངས་འདྲ་བཤུས་རྐྱབས།(_D)"
 
-#: applets/clock/clock.c:1916
+#: applets/clock/clock.c:1904
 msgid "Ad_just Date & Time"
 msgstr "ཚེས་གྲངས་དང་ཆུ་ཚོད་བདེ་སྒྲིག་འབད།(_j)"
 
-#: applets/clock/clock.c:2910
+#: applets/clock/clock.c:2902
 msgid "Choose Location"
 msgstr ""
 
-#: applets/clock/clock.c:2989
+#: applets/clock/clock.c:2981
 msgid "Edit Location"
 msgstr ""
 
-#: applets/clock/clock.c:3116
+#: applets/clock/clock.c:3107
 msgid "City Name"
 msgstr "གྲོང་སྡེའི་ མིང་"
 
-#: applets/clock/clock.c:3120
+#: applets/clock/clock.c:3111
 msgid "City Time Zone"
 msgstr "གྲོང་སྡེའི་ ཆུ་ཚོད་གླིང་སྡེ་ "
 
-#: applets/clock/clock.c:3395
+#: applets/clock/clock.c:3384
 #: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "ཆེ་འཁོར།"
 
-#: applets/clock/clock.c:3396
+#: applets/clock/clock.c:3385
 msgid "About Clock"
 msgstr ""
 
-#: applets/clock/clock.c:3398
+#: applets/clock/clock.c:3387
 msgid "The Clock displays the current time and date"
 msgstr "ཆེ་འཁོར་གྱིས་ ད་ལྟོའི་ཆུ་ཚོད་དང་ཚེས་གྲངས་ བཀྲམ་སྟོན་འབདཝ་ཨིན།"
 
-#: applets/clock/clock.c:3399
+#: applets/clock/clock.c:3388
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/clock/clock.c:3403 applets/fish/fish.c:563
-#: applets/notification_area/main.c:286 applets/wncklet/showdesktop.c:511
-#: applets/wncklet/window-list.c:730 applets/wncklet/window-menu.c:95
-#: applets/wncklet/workspace-switcher.c:722
+#: applets/clock/clock.c:3392 applets/fish/fish.c:562
+#: applets/notification_area/main.c:284 applets/wncklet/showdesktop.c:531
+#: applets/wncklet/window-list.c:956 applets/wncklet/window-menu.c:95
+#: applets/wncklet/workspace-switcher.c:735
 #: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
 msgstr ""
@@ -243,13 +243,13 @@ msgstr ""
 msgid "Time & Date"
 msgstr ""
 
-#: applets/clock/clock.ui:46 applets/clock/clock.ui:923
+#: applets/clock/clock.ui:46 applets/clock/clock.ui:952
 #: mate-panel/libpanel-util/panel-gtk.c:137
 #: mate-panel/panel-context-menu.c:214
 #: mate-panel/panel-ditem-editor-dialog.ui:92
-#: mate-panel/panel-force-quit.c:241 mate-panel/panel-recent.c:155
-#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:690
-#: mate-panel/panel.c:1498
+#: mate-panel/panel-force-quit.c:241 mate-panel/panel-recent.c:154
+#: mate-panel/panel-run-dialog.ui:55 mate-panel/panel.c:688
+#: mate-panel/panel.c:1491
 msgid "_Cancel"
 msgstr "ཆ་མེད།(_C)"
 
@@ -257,155 +257,155 @@ msgstr "ཆ་མེད།(_C)"
 msgid "_Set System Time"
 msgstr ""
 
-#: applets/clock/clock.ui:191
+#: applets/clock/clock.ui:198
 msgid "_Time:"
 msgstr "ཆུ་ཚོད་:(_T)"
 
-#: applets/clock/clock.ui:205
+#: applets/clock/clock.ui:212
 msgid "Current Time:"
 msgstr "ད་ལྟོའི་ ཆུ་ཚོད:"
 
-#: applets/clock/clock.ui:277
+#: applets/clock/clock.ui:296
 msgid "Clock Preferences"
 msgstr "ཆེ་འཁོར་གྱི་དགའ་གདམ་ཚུ།"
 
-#: applets/clock/clock.ui:309
+#: applets/clock/clock.ui:328
 msgid "Time _Settings"
 msgstr "ཆུ་ཚོད་ གཞི་སྒྲིག་ཚུ་ (_S)"
 
-#: applets/clock/clock.ui:324 applets/fish/fish.c:850 applets/fish/fish.ui:62
+#: applets/clock/clock.ui:343 applets/fish/fish.c:849 applets/fish/fish.ui:62
 #: applets/notification_area/notification-area-preferences-dialog.ui:65
-#: applets/wncklet/window-list.ui:54 applets/wncklet/workspace-switcher.ui:62
-#: mate-panel/panel-addto.c:1320 mate-panel/panel-ditem-editor-dialog.ui:76
+#: applets/wncklet/window-list.ui:53 applets/wncklet/workspace-switcher.ui:62
+#: mate-panel/panel-addto.c:1278 mate-panel/panel-ditem-editor-dialog.ui:76
 #: mate-panel/panel-properties-dialog.ui:94
 #: mate-panel/panel-properties-dialog.ui:740
 #: mate-panel/panel-test-applets.ui:52
 msgid "_Close"
 msgstr "ཁ་བསྡམས།(_C)"
 
-#: applets/clock/clock.ui:369
+#: applets/clock/clock.ui:388
 msgid "Clock Format"
 msgstr ""
 
-#: applets/clock/clock.ui:393
+#: applets/clock/clock.ui:412
 msgid "_12 hour format"
 msgstr ""
 
-#: applets/clock/clock.ui:408
+#: applets/clock/clock.ui:427
 msgid "_24 hour format"
 msgstr ""
 
-#: applets/clock/clock.ui:448
+#: applets/clock/clock.ui:467
 msgid "Panel Display"
 msgstr ""
 
-#: applets/clock/clock.ui:473
+#: applets/clock/clock.ui:492
 msgid "Show the _date"
 msgstr "ཚེས་གྲངས་ སྟོན་  (_D)"
 
-#: applets/clock/clock.ui:488
+#: applets/clock/clock.ui:507
 msgid "Show seco_nds"
 msgstr "སྐར་ཆ་ཚུ་སྟོན  (_N)"
 
-#: applets/clock/clock.ui:503
+#: applets/clock/clock.ui:522
 msgid "Show wee_k numbers in calendar"
 msgstr ""
 
-#: applets/clock/clock.ui:518
+#: applets/clock/clock.ui:537
 msgid "Show _weather"
 msgstr "གནམ་གཤིས་ ་སྟོན་ (_W)"
 
-#: applets/clock/clock.ui:533
+#: applets/clock/clock.ui:552
 msgid "Show _temperature"
 msgstr "ཚ་དྲདོ་ སྟོན་ (_T)"
 
-#: applets/clock/clock.ui:568 applets/fish/fish.ui:102
+#: applets/clock/clock.ui:587 applets/fish/fish.ui:102
 #: mate-panel/panel-properties-dialog.ui:384
 msgid "General"
 msgstr "ཡོངས་ཁྱབ།"
 
-#: applets/clock/clock.ui:620 mate-panel/panel-addto.c:1316
+#: applets/clock/clock.ui:639 mate-panel/panel-addto.c:1274
 msgid "_Add"
 msgstr "ཁ་སྐོང་རྐྱབས།(_A)"
 
-#: applets/clock/clock.ui:636
+#: applets/clock/clock.ui:655
 msgid "_Edit"
 msgstr "ཞུན་དག(_)"
 
-#: applets/clock/clock.ui:652
+#: applets/clock/clock.ui:671
 msgid "_Remove"
 msgstr ""
 
-#: applets/clock/clock.ui:713
+#: applets/clock/clock.ui:732
 msgid "Display"
 msgstr "བཀྲམ་སྟོན།"
 
-#: applets/clock/clock.ui:749
+#: applets/clock/clock.ui:769
 msgid "_Visibility unit:"
 msgstr "མཐོང་གསལ་ཆ་ཕྲན་:(_V)"
 
-#: applets/clock/clock.ui:771
+#: applets/clock/clock.ui:791
 msgid "_Pressure unit:"
 msgstr "ཨེབ་ཤུགས་ཆ་ཕྲན་:(_P)"
 
-#: applets/clock/clock.ui:805
+#: applets/clock/clock.ui:825
 msgid "_Wind speed unit:"
 msgstr "རླུང་མའི་མགྱོགས་ཚད་ཆ་ཕྲན་:(_W)"
 
-#: applets/clock/clock.ui:819
+#: applets/clock/clock.ui:839
 msgid "_Temperature unit:"
 msgstr "དྲོད་ཤུགས་ཆ་ཕྲན་:(_T)"
 
-#: applets/clock/clock.ui:854
+#: applets/clock/clock.ui:886
 msgid "Weather"
 msgstr "གནམ་གཤིས་ "
 
-#: applets/clock/clock.ui:886
+#: applets/clock/clock.ui:915
 msgid "East"
 msgstr "ཤར།"
 
-#: applets/clock/clock.ui:889
+#: applets/clock/clock.ui:918
 msgid "West"
 msgstr "ནུབ།"
 
-#: applets/clock/clock.ui:900
+#: applets/clock/clock.ui:929
 msgid "North"
 msgstr "བྱང་།"
 
-#: applets/clock/clock.ui:903
+#: applets/clock/clock.ui:932
 msgid "South"
 msgstr "ལྷོ།"
 
-#: applets/clock/clock.ui:939 mate-panel/libpanel-util/panel-gtk.c:141
-#: mate-panel/panel-applet-frame.c:961
+#: applets/clock/clock.ui:968 mate-panel/libpanel-util/panel-gtk.c:141
+#: mate-panel/panel-applet-frame.c:959
 msgid "_OK"
 msgstr ""
 
 #. Languages that have a single word that translates as either "state" or
 #. "province" should use that instead of "region".
-#: applets/clock/clock.ui:1012
+#: applets/clock/clock.ui:1043
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr ""
 
-#: applets/clock/clock.ui:1057
+#: applets/clock/clock.ui:1088
 msgid "_Timezone:"
 msgstr ""
 
-#: applets/clock/clock.ui:1070
+#: applets/clock/clock.ui:1101
 msgid "_Location Name:"
 msgstr ""
 
-#: applets/clock/clock.ui:1114 applets/clock/clock.ui:1128
+#: applets/clock/clock.ui:1145 applets/clock/clock.ui:1159
 msgid "<i>(optional)</i>"
 msgstr "<i>(optional)</i>"
 
-#: applets/clock/clock.ui:1171
+#: applets/clock/clock.ui:1202
 msgid "L_ongitude:"
 msgstr ""
 
-#: applets/clock/clock.ui:1192
+#: applets/clock/clock.ui:1223
 msgid "L_atitude:"
 msgstr ""
 
@@ -474,15 +474,15 @@ msgstr "%s, བཟུམ་སྦེ་ ཚོར་སྣང་  %s"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "ཉི་ཤར་: %s / ཉི་ནུབ་: %s"
 
-#: applets/clock/clock-utils.c:92 applets/fish/fish.c:169
-#: applets/notification_area/main.c:238 applets/wncklet/wncklet.c:74
+#: applets/clock/clock-utils.c:92 applets/fish/fish.c:168
+#: applets/notification_area/main.c:236 applets/wncklet/wncklet.c:74
 #: mate-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr ""
 
-#: applets/clock/clock-utils.c:121 applets/fish/fish.c:195
-#: applets/notification_area/main.c:252 applets/wncklet/wncklet.c:91
+#: applets/clock/clock-utils.c:121 applets/fish/fish.c:194
+#: applets/notification_area/main.c:250 applets/wncklet/wncklet.c:91
 msgid "Error displaying help document"
 msgstr ""
 
@@ -628,7 +628,7 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: applets/fish/fish.c:265
+#: applets/fish/fish.c:264
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -641,16 +641,16 @@ msgstr ""
 "ང་བཅས་ཀྱིས་ཁྱོད་ལུ་%sདེ་ ག་ཅི་གི་དོན་ལུ་ཨིན་རུང་ཟེར་ ལག་ལེན་མ་འཐབ་ཟེར་ \n"
 " བསླབ་བྱ་བྱིན་མི་དེ་ཡང་ དེ་གིས་ཨེཔ་ལེཊི་དེ་ \"practical\" ཡང་ན་ ཕན་ཐོགས་ཅན་བཟོཝ་ཨིན།"
 
-#: applets/fish/fish.c:424
+#: applets/fish/fish.c:423
 msgid "Images"
 msgstr "གཟུགས་བརྙན་ཚུ།"
 
-#: applets/fish/fish.c:530 applets/fish/fish.c:574 applets/fish/fish.c:680
+#: applets/fish/fish.c:529 applets/fish/fish.c:573 applets/fish/fish.c:679
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%sགི་ཉ།"
 
-#: applets/fish/fish.c:531
+#: applets/fish/fish.c:530
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -662,41 +662,41 @@ msgstr ""
 "པེ་ནཱལ་གྱི་ས་སྟོང་དང་ དྲན་ཚད་ལེ་ཤ་དབངམ་ཨིན། ག་ར་ཨིན་རུང་ "
 "འདི་ལག་ལེན་འཐབ་སར་མཐོང་པ་ཅིན་ དེ་འཕྲལ་ལས་ སེམས་ཁམས་ཀྱི་བརྟག་ཞིབ་ལུ་གཏང་དགོ"
 
-#: applets/fish/fish.c:548
+#: applets/fish/fish.c:547
 msgid "(with minor help from George)"
 msgstr "(ཇོརཇི་ལས་ གྲོགས་རམ་དུམ་གྲ་ཅིག་གི་ཐོག་ལས)"
 
-#: applets/fish/fish.c:554
+#: applets/fish/fish.c:553
 #: applets/fish/org.mate.panel.FishApplet.mate-panel-applet.desktop.in.in:10
 msgid "Fish"
 msgstr "ཉ།"
 
-#: applets/fish/fish.c:555
+#: applets/fish/fish.c:554
 msgid "About Fish"
 msgstr ""
 
-#: applets/fish/fish.c:558
+#: applets/fish/fish.c:557
 msgid ""
 "Copyright © 1998-2002 Free Software Foundation, Inc.\n"
 "Copyright © 2002-2005 Vincent Untz\n"
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/fish/fish.c:575
+#: applets/fish/fish.c:574
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "ཉ%sདེ་ དུས་མཉམ་གྱི་ ལམ་སྟོན་པ་ཅིག་ཨིན།"
 
-#: applets/fish/fish.c:641
+#: applets/fish/fish.c:640
 msgid "Unable to locate the command to execute"
 msgstr "ལག་ལེན་འཐབ་ནིའི་དོན་ལུ་ བརྡ་བཀོད་དེ་འཚོལ་མ་ཐོབ།"
 
-#: applets/fish/fish.c:685
+#: applets/fish/fish.c:684
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "ཉ་ %s གིས་ སླབ་ཨིན་མས།"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:746
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -707,16 +707,16 @@ msgstr ""
 "\n"
 "རྒྱས་བཤད་: %s"
 
-#: applets/fish/fish.c:846
+#: applets/fish/fish.c:845
 msgid "_Speak again"
 msgstr "ལོག་སྟེ་ཁ་སླབ།(_S)"
 
-#: applets/fish/fish.c:927
+#: applets/fish/fish.c:926
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "རིམ་སྒྲིག་འབད་མི་བརྡ་བཀོད་དེ་ ལཱ་འབད་མི་བཏུབ་ལས་ དེ་གི་ཚབ་%sབཙུགས་ཅི།"
 
-#: applets/fish/fish.c:960
+#: applets/fish/fish.c:959
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -727,7 +727,7 @@ msgstr ""
 "\n"
 "རྒྱས་བཤད་: %s"
 
-#: applets/fish/fish.c:976
+#: applets/fish/fish.c:975
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -738,15 +738,15 @@ msgstr ""
 "\n"
 "རྒྱས་བཤད་: %s"
 
-#: applets/fish/fish.c:1548
+#: applets/fish/fish.c:1547
 msgid "The water needs changing"
 msgstr "ཆུ་དེ་ལུ་བསྒྱུར་བཅོས་དགོ་པས་"
 
-#: applets/fish/fish.c:1550
+#: applets/fish/fish.c:1549
 msgid "Look at today's date!"
 msgstr "ད་རིས་ཀྱི་ཚེས་གྲངས་ལུ་ལྟ!"
 
-#: applets/fish/fish.c:1632
+#: applets/fish/fish.c:1631
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "ཉ་%s དེ་ བསོད་ནམས་བཤད་མི་ཨིན།"
@@ -882,16 +882,16 @@ msgstr ""
 msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
-#: applets/notification_area/main.c:276
+#: applets/notification_area/main.c:274
 #: applets/notification_area/org.mate.panel.NotificationAreaApplet.mate-panel-applet.desktop.in.in:10
 msgid "Notification Area"
 msgstr "བརྡ་བསྐུལ་མངའ་ཁོངས་།"
 
-#: applets/notification_area/main.c:277
+#: applets/notification_area/main.c:275
 msgid "About Notification Area"
 msgstr ""
 
-#: applets/notification_area/main.c:280
+#: applets/notification_area/main.c:278
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2003-2006 Vincent Untz\n"
@@ -899,7 +899,7 @@ msgid ""
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/notification_area/main.c:485
+#: applets/notification_area/main.c:482
 msgid "Panel Notification Area"
 msgstr "པེ་ནཱལ་བརྡ་བསྐུལ་མངའ་ཁོངས་།"
 
@@ -1062,7 +1062,7 @@ msgid "Switch between open windows using a menu"
 msgstr ""
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:23
-#: applets/wncklet/workspace-switcher.c:712
+#: applets/wncklet/workspace-switcher.c:725
 msgid "Workspace Switcher"
 msgstr "ལཱ་གི་ས་སྒོ་ སོར་བསྒྱུར་འབད་མི།"
 
@@ -1071,7 +1071,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:720
+#: applets/wncklet/window-list.c:946
 msgid "Window List"
 msgstr "སྒོ་སྒྲིག་གི་ཐོ་ཡིག།"
 
@@ -1087,47 +1087,47 @@ msgstr ""
 msgid "Hide application windows and show the desktop"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:182
+#: applets/wncklet/showdesktop.c:181
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s: %s མངོན་གསལ་འབད་མ་ཚུགས། \n"
 
-#: applets/wncklet/showdesktop.c:182
+#: applets/wncklet/showdesktop.c:181
 msgid "Icon not found"
 msgstr "ངོས་དཔར་མ་ཐོབ།"
 
-#: applets/wncklet/showdesktop.c:264
+#: applets/wncklet/showdesktop.c:263
 msgid "Click here to restore hidden windows."
 msgstr ""
 "སྦ་སྟེ་ཡོད་པའི་སྒོ་སྒྲིག་ཚུ་ སོར་ཆུད་འབད་ནིའི་དོན་ལུ་ ནཱ་ལུ་ཨེབ་གཏང་འབད།"
 
-#: applets/wncklet/showdesktop.c:268
+#: applets/wncklet/showdesktop.c:267
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "སྒོ་སྒྲིག་ཆ་མཉམ་སྦ་བཞག་ཞིནམ་ལས་ ཌེཀསི་ཊོཔ་་སྟོན་ནིའི་དོན་ལུ་ "
 "ནཱ་ལུ་ཨེབ་གཏང་འབད།"
 
-#: applets/wncklet/showdesktop.c:444 applets/wncklet/showdesktop.c:501
+#: applets/wncklet/showdesktop.c:450 applets/wncklet/showdesktop.c:521
 msgid "Show Desktop Button"
 msgstr "ཌེཀསི་ཊོཔ་གི་ཨེབ་རྟ་སྟོན།"
 
-#: applets/wncklet/showdesktop.c:502
+#: applets/wncklet/showdesktop.c:522
 msgid "About Show Desktop Button"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:504
+#: applets/wncklet/showdesktop.c:524
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ཨེབ་རྟ་འདི་གིས་ སྒོ་སྒྲིག་ག་ར་ སྦ་བཞག་སྟེ་ ཌེཀསི་ཊོཔ་སྟོན་བཅུགཔ་ཨིན།"
 
-#: applets/wncklet/showdesktop.c:505 applets/wncklet/window-list.c:724
-#: applets/wncklet/workspace-switcher.c:716
+#: applets/wncklet/showdesktop.c:525 applets/wncklet/window-list.c:950
+#: applets/wncklet/workspace-switcher.c:729
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
 "Copyright © 2011 Perberos\n"
 "Copyright © 2012-2021 MATE developers"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:551
+#: applets/wncklet/showdesktop.c:571
 msgid ""
 "Your window manager does not support the show desktop button, or you are not"
 " running a window manager."
@@ -1136,15 +1136,15 @@ msgstr ""
 "རྒྱབ་བསྐྱོར་མི་འབད་བས། ཡང་ན་ ཁྱོད་ཀྱིས་སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་ཅིག་ "
 "གཡོག་བཀོལ་དོ་མེདཔ་འོང་ནི་མས།"
 
-#: applets/wncklet/window-list.c:424
+#: applets/wncklet/window-list.c:458
 msgid "_System Monitor"
 msgstr ""
 
-#: applets/wncklet/window-list.c:721
+#: applets/wncklet/window-list.c:947
 msgid "About Window List"
 msgstr ""
 
-#: applets/wncklet/window-list.c:723
+#: applets/wncklet/window-list.c:949
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1156,83 +1156,83 @@ msgstr ""
 msgid "Window List Preferences"
 msgstr "སྒོ་སྒྲིག་ཐོ་ཡིག་གི་ དགའ་གདམ་ཚུ།"
 
-#: applets/wncklet/window-list.ui:98
+#: applets/wncklet/window-list.ui:97
 msgid "Window Thumbnails"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:119
+#: applets/wncklet/window-list.ui:118
 msgid "Show _thumbnails on hover"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:141
+#: applets/wncklet/window-list.ui:140
 msgid "Thumbnail width in pixels. Window aspect ratio will be maintained."
 msgstr ""
 
-#: applets/wncklet/window-list.ui:142
+#: applets/wncklet/window-list.ui:141
 msgid "Thumbnail width:"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:155
+#: applets/wncklet/window-list.ui:154
 msgid "0"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:157
+#: applets/wncklet/window-list.ui:156
 msgid "px"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:201
+#: applets/wncklet/window-list.ui:199
 msgid "Window Grouping"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:222
+#: applets/wncklet/window-list.ui:220
 msgid "_Never group windows"
 msgstr "སྒོ་སྒྲིག་ཚུ་ ནམ་ཡང་སྡེ་ཚན་མ་བཟོ།(_N)"
 
-#: applets/wncklet/window-list.ui:239
+#: applets/wncklet/window-list.ui:236
 msgid "Group windows when _space is limited"
 msgstr "ས་སྒོ་ཚད་ཅིག་ལས་མེད་པའི་སྐབས་ལུ་ སྒོ་སྒྲིག་ཚུ་སྡེ་ཚན་བཟོ།(_s)"
 
-#: applets/wncklet/window-list.ui:256
+#: applets/wncklet/window-list.ui:252
 msgid "_Always group windows"
 msgstr "སྒོ་སྒྲིག་ཚུ་ ཨ་རྟག་རང་སྡེ་ཚན་བསྡོམས་ཏེ་བཞག(_A)"
 
-#: applets/wncklet/window-list.ui:295
+#: applets/wncklet/window-list.ui:290
 msgid "Mouse Scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:316
+#: applets/wncklet/window-list.ui:311
 msgid "_Enable mouse scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:349
+#: applets/wncklet/window-list.ui:344
 msgid "Behaviour"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:372
+#: applets/wncklet/window-list.ui:367
 msgid "Window List Content"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:393
+#: applets/wncklet/window-list.ui:388
 msgid "Sh_ow windows from current workspace"
 msgstr "ད་ལྟོའི་ལཱ་གི་ས་སྒོ་ནང་ལས་ སྒོ་སྒྲིག་ཚུ་སྟོན།(_o)"
 
-#: applets/wncklet/window-list.ui:409
+#: applets/wncklet/window-list.ui:404
 msgid "Show windows from a_ll workspaces"
 msgstr "ལཱ་གི་ས་སྒོ་ཆ་མཉམ་ནང་ལས་ སྒོ་སྒྲིག་ཚུ་སྟོན།(_l)"
 
-#: applets/wncklet/window-list.ui:447
+#: applets/wncklet/window-list.ui:442
 msgid "Restoring Minimized Windows"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:468
+#: applets/wncklet/window-list.ui:463
 msgid "Restore to current _workspace"
 msgstr "ད་ལྟོའི་ལཱ་གི་ས་སྒོ་ལུ་ སོར་ཆུད་འབད།(_w)"
 
-#: applets/wncklet/window-list.ui:484
+#: applets/wncklet/window-list.ui:479
 msgid "Restore to na_tive workspace"
 msgstr "རང་ཡུལ་ལཱ་གི་ས་སྒོ་ལུ་ སོར་ཆུད་འབད།(_t)"
 
-#: applets/wncklet/window-list.ui:521
+#: applets/wncklet/window-list.ui:516
 #: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr ""
@@ -1259,21 +1259,21 @@ msgid ""
 msgstr ""
 
 #: applets/wncklet/workspace-switcher.c:294
-#: applets/wncklet/workspace-switcher.c:1041
+#: applets/wncklet/workspace-switcher.c:1061
 #: applets/wncklet/workspace-switcher.ui:170
 msgid "rows"
 msgstr "གྲལ་ཐིག་ཚུ།"
 
 #: applets/wncklet/workspace-switcher.c:294
-#: applets/wncklet/workspace-switcher.c:1041
+#: applets/wncklet/workspace-switcher.c:1061
 msgid "columns"
 msgstr "ཀེར་ཐིག་ཚུ།"
 
-#: applets/wncklet/workspace-switcher.c:713
+#: applets/wncklet/workspace-switcher.c:726
 msgid "About Workspace Switcher"
 msgstr ""
 
-#: applets/wncklet/workspace-switcher.c:715
+#: applets/wncklet/workspace-switcher.c:728
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1639,22 +1639,36 @@ msgstr ""
 "(ཡང་ན་ཀེར་ཕྲང་ཨིན་པ་ཅིན་མགོ་ལས)"
 
 #: data/org.mate.panel.object.gschema.xml.in:20
-msgid "Interpret position relative to bottom/right edge"
-msgstr "གནས་ས་ འོག་ལུ་/གཡས་མཐའ་དང་འབྲེལ་ཏེ་ ཁ་བསྒྱུར་འབད།"
+msgid "Interpret position relative to bottom/right edge (DEPRECATED)"
+msgstr ""
 
 #: data/org.mate.panel.object.gschema.xml.in:21
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or"
-" bottom if vertical) edge of the panel."
+" bottom if vertical) edge of the panel. This key is provided only for "
+"backward compatibility with old panel layouts; please set the \"relative-to-"
+"edge\" property instead."
 msgstr ""
-"བདེན་པ་ཨིན་པ་ཅིན་ དངོས་པོའི་གནས་ས་དེ་ པེ་ནཱལ་གྱི་གཡས་མཐའ་དང་འབྲེལ་དེ་ "
-"ཁ་བསྒྱུར་འབདཝ་ཨིན། (ཀེར་ཕྲང་ཨིན་པ་ཅིན་འོག་ལུ་)"
 
 #: data/org.mate.panel.object.gschema.xml.in:25
+msgid ""
+"Whether to interpret the value of the \"position\" key relative to the "
+"start, center or end of the panel"
+msgstr ""
+
+#: data/org.mate.panel.object.gschema.xml.in:26
+msgid ""
+"The position of the object is interpreted relative to one edge of the panel."
+" The value of this key determines whether the object is positioned relative "
+"to the start (left/top edge), center, or end (right/bottom edge) of the "
+"panel. Valid values for this key are 'start', 'center', and 'end'."
+msgstr ""
+
+#: data/org.mate.panel.object.gschema.xml.in:30
 msgid "Lock the object to the panel"
 msgstr "དངོས་པོ་དེ་ པེ་ནཱལ་གུ་ལྡེ་མིག་རྐྱབས།"
 
-#: data/org.mate.panel.object.gschema.xml.in:26
+#: data/org.mate.panel.object.gschema.xml.in:31
 msgid ""
 "If true, the user may not move the applet without first unlocking the object"
 " using the \"Unlock\" menuitem."
@@ -1663,11 +1677,11 @@ msgstr ""
 "ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ དང་པ་རང་དངོས་པོ་དེ་ ལྡེ་མིག་ཕྱེ་ཞིནམ་ལས་མ་གཏོགས་ "
 "ཨེཔ་ལེཊི་དེ་ སྤོ་བཤུད་འབད་ནི་མི་འོང་།"
 
-#: data/org.mate.panel.object.gschema.xml.in:30
+#: data/org.mate.panel.object.gschema.xml.in:35
 msgid "Applet IID"
 msgstr ""
 
-#: data/org.mate.panel.object.gschema.xml.in:31
+#: data/org.mate.panel.object.gschema.xml.in:36
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
@@ -1675,11 +1689,11 @@ msgid ""
 "applet\")."
 msgstr ""
 
-#: data/org.mate.panel.object.gschema.xml.in:35
+#: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Panel attached to drawer"
 msgstr "བཤུད་སྒྲོམ་གུ་ མཉམ་སྦྲགས་ཡོད་པའི་པེ་ནཱལ།"
 
-#: data/org.mate.panel.object.gschema.xml.in:36
+#: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
@@ -1688,12 +1702,12 @@ msgstr ""
 "དངོས་པོའི་དབྱེ་བའི་ལྡེ་མིག་དེ་ \"drawer-object\" ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་ "
 "ལྡེ་མིག་འདི་འབྲེལ་བ་ཡོད།"
 
-#: data/org.mate.panel.object.gschema.xml.in:40
+#: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Tooltip displayed for drawer or menu"
 msgstr ""
 "བཤུད་སྒྲོམ་མམ་ དཀར་ཆག་གི་དོན་ལུ་ བཀྲམ་སྟོན་འབད་ཡོད་པའི་ ལག་ཆས་ཕན་བསླབ།"
 
-#: data/org.mate.panel.object.gschema.xml.in:41
+#: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-"
@@ -1703,11 +1717,11 @@ msgstr ""
 "བཀྲམ་སྟོན་འབད་ནིའི་ཚིག་ཡིག དངོས་པོ་དབྱེ་བའི་ལྡེ་མིག་དེ་ \"drawer-object\" "
 "ཡང་ན་\"menu-object\"ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་ ལྡེ་མིག་འདི་འབྲེལ་བ་ཡོད།"
 
-#: data/org.mate.panel.object.gschema.xml.in:45
+#: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Use custom icon for object's button"
 msgstr "དངོས་པོའི་ཨེབ་རྟའི་དོན་ལུ་ སྲོལ་སྒྲིག་ངོས་དཔར་ ལག་ལེན་འཐབ།"
 
-#: data/org.mate.panel.object.gschema.xml.in:46
+#: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -1719,11 +1733,11 @@ msgstr ""
 "དངོས་པོའི་དབྱེ་བའི་ལྡེ་མིག་དེ་ \"menu-object\" ཡང་ན་ \"drawer-object\" "
 "ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་ ལྡེ་མིག་འདི་འབྲེལ་བ་ཡོད།"
 
-#: data/org.mate.panel.object.gschema.xml.in:50
+#: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Icon used for object's button"
 msgstr "དངོས་པོའི་ཨེབ་རྟ་གི་དོན་ལུ་ ལག་ལེན་འཐབ་མི་ ངོས་དཔར།"
 
-#: data/org.mate.panel.object.gschema.xml.in:51
+#: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -1735,11 +1749,11 @@ msgstr ""
 "ལག་ལེན་གྱི་སྲོལ་སྒྲིག་ངོས་དཔར་ལྡེ་མིག་དེ་ བདེན་པ་ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་ "
 "ལྡེ་མིག་འདི་འབྲེལ་བ་ཡོད།"
 
-#: data/org.mate.panel.object.gschema.xml.in:55
+#: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Use custom path for menu contents"
 msgstr "དཀར་ཆག་ནང་དོན་གྱི་དོན་ལུ་ སྲོལ་སྒྲིག་འགྲུལ་ལམ་ ལག་ལེན་འཐབ།"
 
-#: data/org.mate.panel.object.gschema.xml.in:56
+#: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -1751,11 +1765,11 @@ msgstr ""
 "དངོས་པོའི་དབྱེ་བའི་ལྡེ་མིག་དེ་ \"menu-object\" ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་ "
 "ལྡེ་མིག་འདི་འབྲེལ་བ་ཡོད།"
 
-#: data/org.mate.panel.object.gschema.xml.in:60
+#: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Menu content path"
 msgstr "དཀར་ཆག་ནང་དོན་གྱི་འགྲུལ་ལམ།"
 
-#: data/org.mate.panel.object.gschema.xml.in:61
+#: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
@@ -1766,21 +1780,21 @@ msgstr ""
 "དངོས་པོའི་དབྱེ་བའི་ལྡེ་མིག་དེ་ \"menu-object\"ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་ "
 "ལྡེ་མིག་འདི་འབྲེལ་བ་ཡོད།"
 
-#: data/org.mate.panel.object.gschema.xml.in:65
+#: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Draw arrow in menu button"
 msgstr ""
 
-#: data/org.mate.panel.object.gschema.xml.in:66
+#: data/org.mate.panel.object.gschema.xml.in:71
 msgid ""
 "If true, an arrow is drawn over the menu button icon. If false, menu button "
 "has only the icon."
 msgstr ""
 
-#: data/org.mate.panel.object.gschema.xml.in:70
+#: data/org.mate.panel.object.gschema.xml.in:75
 msgid "Launcher location"
 msgstr "གསར་བཙུགས་འབད་མིའི་གནས་ཁོངས།"
 
-#: data/org.mate.panel.object.gschema.xml.in:71
+#: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
@@ -1789,11 +1803,11 @@ msgstr ""
 "ལྡེ་མིག་འདི་ དངོས་པའི་དབྱེ་བའི་ལྡེ་མིག་དེ་ \"launcher-object\" "
 "ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་ འབྲེལ་བ་ཡོད"
 
-#: data/org.mate.panel.object.gschema.xml.in:75
+#: data/org.mate.panel.object.gschema.xml.in:80
 msgid "Action button type"
 msgstr "བྱ་བའི་ཨེབ་རྟའི་དབྱེ་བ།"
 
-#: data/org.mate.panel.object.gschema.xml.in:76
+#: data/org.mate.panel.object.gschema.xml.in:81
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
@@ -2208,62 +2222,62 @@ msgstr ""
 "བདེན་པ་ཨིན་པ་ཅིན་ པེ་ནཱལ་དེ་ ཀེར་ཕྲང་ཕྱོགས་སྟོན་སྐབས་ "
 "རྒྱབ་གཞིའི་གཟུགས་བརྙན་དེ་ པད་སྐོར་བསྒྱིར་འོང་།"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
 msgid "File is not a valid .desktop file"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:976
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
 #, c-format
 msgid "Starting %s"
 msgstr "%s འགོ་བཙུགས་དོ།"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1118
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
 msgid "Application does not accept documents on command line"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1186
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1402
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1423
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
 msgid "Not a launchable item"
 msgstr "གསར་བཙུགས་འབད་བཏུབ་པའི་ རྣམ་གྲངས་ཅིག་མེན་པས།"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
 msgid "Disable connection to session manager"
 msgstr "ལཱ་ཡུན་འཛིན་སྐྱོང་པ་ལུ་ མཐུད་ལམ་ལྕོགས་མིན་བཟོ།"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "Specify file containing saved configuration"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
 msgid "FILE"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "Specify session management ID"
 msgstr "ལཱ་ཡུན་འཛིན་སྐྱོང་གིཨའི་ཌི་ གསལ་བཀོད་འབད།"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
 msgid "ID"
 msgstr "ཨའི་ཌི།"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
 msgid "Session management options:"
 msgstr ""
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Show session management options"
 msgstr "ལཱ་ཡུན་འཛིན་སྐྱོང༌གི་གདམ་ཁ་ཚུ་སྟོན།"
 
@@ -2272,11 +2286,11 @@ msgid "_Open"
 msgstr "ཁ་ཕྱེ།(_O)"
 
 #: mate-panel/libpanel-util/panel-error.c:77
-#: mate-panel/panel-applet-frame.c:799 mate-panel/panel-applet-frame.c:987
+#: mate-panel/panel-applet-frame.c:797 mate-panel/panel-applet-frame.c:985
 msgid "Error"
 msgstr "འཛོལ་བ།"
 
-#: mate-panel/libpanel-util/panel-icon-chooser.c:374
+#: mate-panel/libpanel-util/panel-icon-chooser.c:366
 msgid "Choose an icon"
 msgstr ""
 
@@ -2298,37 +2312,37 @@ msgstr "གནས་ཁོངས་'%s'ཁ་ཕྱེ་མ་ཚུགས།"
 msgid "No application to handle search folders is installed."
 msgstr ""
 
-#: mate-panel/applet.c:469
+#: mate-panel/applet.c:466
 msgid "???"
 msgstr "???"
 
-#: mate-panel/applet.c:549 libmate-panel-applet/mate-panel-applet.c:140
+#: mate-panel/applet.c:546 libmate-panel-applet/mate-panel-applet.c:140
 msgid "_Remove From Panel"
 msgstr "པེ་ནཱལ་ལས་ རྩ་བསྐྲད་གཏང་།(_R)"
 
-#: mate-panel/applet.c:557 libmate-panel-applet/mate-panel-applet.c:143
+#: mate-panel/applet.c:554 libmate-panel-applet/mate-panel-applet.c:143
 msgid "_Move"
 msgstr "སྤོ།(_M)"
 
-#: mate-panel/applet.c:575 libmate-panel-applet/mate-panel-applet.c:149
+#: mate-panel/applet.c:572 libmate-panel-applet/mate-panel-applet.c:149
 msgid "Loc_k To Panel"
 msgstr "པེ་ནཱལ་ལུ་ལྡེ་མིག་རྐྱབས།(_k)"
 
-#: mate-panel/applet.c:1311
+#: mate-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "ས་ཁོངས་སྟོངམ་ཅིག་ འཚོལ་མ་འཐོབ།"
 
-#: mate-panel/drawer.c:444 mate-panel/panel-addto.c:190
-#: mate-panel/panel-toplevel.c:1646
+#: mate-panel/drawer.c:441 mate-panel/panel-addto.c:190
+#: mate-panel/panel-toplevel.c:1640
 msgid "Drawer"
 msgstr "བཤུད་སྒྲོམ།"
 
-#: mate-panel/drawer.c:551
+#: mate-panel/drawer.c:546
 msgid "_Add to Drawer..."
 msgstr "བཤུད་སྒྲོམ་ལུ་ ཁ་སྐོང་རྐྱབས་...(_A)"
 
-#: mate-panel/drawer.c:557 mate-panel/launcher.c:611
-#: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:247
+#: mate-panel/drawer.c:552 mate-panel/launcher.c:607
+#: mate-panel/panel-action-button.c:173 mate-panel/panel-context-menu.c:248
 msgid "_Properties"
 msgstr "རྒྱུ་དངོས་ཚུ།(_P)"
 
@@ -2345,7 +2359,7 @@ msgid "- Edit .desktop files"
 msgstr "- ཌེཀསི་ཊོཔ་ཡིག་སྣོད་ཚུ་ ཞུན་དག་རྐྱབས།"
 
 #: mate-panel/mate-desktop-item-edit.c:144
-#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1008
+#: mate-panel/mate-desktop-item-edit.c:198 mate-panel/launcher.c:1001
 msgid "Create Launcher"
 msgstr "གསར་བཙུགས་འབད་མི་ གསར་བསྐྲུན།"
 
@@ -2354,7 +2368,7 @@ msgstr "གསར་བཙུགས་འབད་མི་ གསར་བས�
 msgid "Directory Properties"
 msgstr "སྣོད་ཐོའི་རྒྱུ་དངོས་ཚུ།"
 
-#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:818
+#: mate-panel/mate-desktop-item-edit.c:175 mate-panel/launcher.c:811
 msgid "Launcher Properties"
 msgstr "གསར་བཙུགས་འབད་མིའི་རྒྱུ་དངོས།"
 
@@ -2382,31 +2396,31 @@ msgstr "ཡུ་ཨར་ཨེལ་གསལ་བཀོད་མ་འབད
 msgid "Could not use dropped item"
 msgstr "བཀོག་བཞག་པའི་རྣམ་གྲངས་ལག་ལེན་འཐབ་མ་ཚུགས།"
 
-#: mate-panel/launcher.c:455
+#: mate-panel/launcher.c:451
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "པེ་ནཱལ་གསར་བཙུགས་འབད་མི་ ཌེཀསི་ཊོཔ་ཡིག་སྣོད་ཀྱི་དོན་ལུ་ ཡུ་ཨར་ཨའི་ "
 "མ་བྱིན་པས། \n"
 
-#: mate-panel/launcher.c:494
+#: mate-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "པེ་ནཱལ་གསར་བཙུགས་འབད་མི་ %s%sགི་དོན་ལུ་ "
 "ཌེཀསི་ཊོཔ་ཡིག་སྣོད་་%sཁ་ཕྱེ་མི་ཚུགས་པས། \n"
 
-#: mate-panel/launcher.c:603
+#: mate-panel/launcher.c:599
 msgid "_Launch"
 msgstr "འགོ་བཙུགས།(_L)"
 
-#: mate-panel/launcher.c:944
+#: mate-panel/launcher.c:937
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr ""
 "ལྡེ་མིག་%sགཞི་སྒྲིག་མ་འབདཝ་ལས་ གསར་བཙུགས་འབད་མི་ མངོན་གསལ་འབད་མི་ཚུགས་པས། \n"
 
-#: mate-panel/launcher.c:1077 mate-panel/panel-ditem-editor.c:1179
-#: mate-panel/panel-ditem-editor.c:1213 mate-panel/panel-ditem-editor.c:1243
+#: mate-panel/launcher.c:1072 mate-panel/panel-ditem-editor.c:1177
+#: mate-panel/panel-ditem-editor.c:1211 mate-panel/panel-ditem-editor.c:1241
 msgid "Could not save launcher"
 msgstr "གསར་བཙུགས་འབད་མི་ སྲུང་བཞག་འབད་མ་ཚུགས།"
 
@@ -2426,23 +2440,23 @@ msgstr ""
 msgid "Set the default panel layout"
 msgstr ""
 
-#: mate-panel/menu.c:502
+#: mate-panel/menu.c:500
 msgid "Add this launcher to _panel"
 msgstr "གསར་བཙུགས་འབད་མི་འདི་ པེ་ནཱལ་གུ་ཁ་སྐོང་རྐྱབས།(_p)"
 
-#: mate-panel/menu.c:509
+#: mate-panel/menu.c:507
 msgid "Add this launcher to _desktop"
 msgstr "གསར་བཙུགས་འབད་མི་འདི་ ཌེཀསི་ཊོཔ་གུ་ཁ་སྐོང་རྐྱབས།(_d)"
 
-#: mate-panel/menu.c:521
+#: mate-panel/menu.c:518
 msgid "_Entire menu"
 msgstr "དཀར་ཆག་ཡོངས་རྫོགས།(_E)"
 
-#: mate-panel/menu.c:526
+#: mate-panel/menu.c:523
 msgid "Add this as _drawer to panel"
 msgstr "འདི་པེ་ནཱལ་གུ་ བཤུད་སྒྲོམ་སྦེ་ ཁ་སྐོང་རྐྱབས།(_d)"
 
-#: mate-panel/menu.c:533
+#: mate-panel/menu.c:530
 msgid "Add this as _menu to panel"
 msgstr "འདི་པེ་ནཱལ་གུ་དཀར་ཆག་སྦེ་ཁ་སྐོང་རྐྱབས།(_m)"
 
@@ -2565,53 +2579,53 @@ msgstr "པེ་ནཱལ་རྣམ་གྲངས་ཚུ་ འགོ་�
 msgid "A pop out drawer to store other items in"
 msgstr "རྣམ་གྲངས་གཞན་ གསོག་འཇོག་འབད་ནིའི་དོན་ལུ་ པོཔ་ཨའུཊི་་བཤུད་སྒྲོམ་ཅིག"
 
-#: mate-panel/panel-addto.c:275
+#: mate-panel/panel-addto.c:276
 msgid "(empty)"
 msgstr "(སྟོངམ)"
 
-#: mate-panel/panel-addto.c:420
+#: mate-panel/panel-addto.c:421
 msgid "Not compatible with X11"
 msgstr ""
 
-#: mate-panel/panel-addto.c:427
+#: mate-panel/panel-addto.c:428
 msgid "Not compatible with Wayland"
 msgstr ""
 
-#: mate-panel/panel-addto.c:1052
+#: mate-panel/panel-addto.c:1011
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\"ལུ་ ཁ་སྐོང་བརྐྱབ་ནའི་དོན་ལུ་ རྣམ་གྲངས་ཅིག་འཚོལ།(_i)"
 
-#: mate-panel/panel-addto.c:1056
+#: mate-panel/panel-addto.c:1015
 msgid "Add to Drawer"
 msgstr "བཤུད་སྒྲོམ་ལུ་ཁ་སྐོང་རྐྱབས།"
 
-#: mate-panel/panel-addto.c:1058
+#: mate-panel/panel-addto.c:1017
 msgid "Find an _item to add to the drawer:"
 msgstr "བཤུད་སྒྲོམ་ལུ་ཁ་སྐོང་བརྐྱབ་ནིའི་ རྣམ་གྲངས་ཅིག་འཚོལ།(_i)"
 
-#: mate-panel/panel-addto.c:1060
+#: mate-panel/panel-addto.c:1019
 msgid "Add to Panel"
 msgstr "པེ་ནཱལ་ལུ་ ཁ་སྐོང་རྐྱབས།"
 
-#: mate-panel/panel-addto.c:1062
+#: mate-panel/panel-addto.c:1021
 msgid "Find an _item to add to the panel:"
 msgstr "པེ་ནཱལ་ལུ་ཁ་སྐོང་བརྐྱབ་ནིའི་ རྣམ་གྲངས་ཅིག་འཚོལ།(_i)"
 
-#: mate-panel/panel-addto.c:1312
+#: mate-panel/panel-addto.c:1270
 msgid "_Back"
 msgstr "རྒྱབ་བསྐྱོད།(_B)"
 
-#: mate-panel/panel-applet-frame.c:760
+#: mate-panel/panel-applet-frame.c:758
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" དེ་ རེ་བ་མེད་པར་ སྤངས་ད་ནུག"
 
-#: mate-panel/panel-applet-frame.c:762
+#: mate-panel/panel-applet-frame.c:760
 msgid "Panel object has quit unexpectedly"
 msgstr "པེ་ནཱལ་གྱི་དངོས་པོ་དེ་ རེ་བ་མེད་པར་སྤངས་ད་ནུག"
 
-#: mate-panel/panel-applet-frame.c:769
+#: mate-panel/panel-applet-frame.c:767
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2619,28 +2633,28 @@ msgstr ""
 "ཁྱོད་ཀྱིས་པེ་ནཱལ་དངོས་པོ་ཅིག་ སླར་མངོན་གསལ་འབད་བ་ཅིན་ རང་བཞིན་གྱིས་ "
 "ལོག་སྟེ་པེ་ནཱལ་གུ་ ཁ་སྐོང་བརྐྱབ་འོང་།"
 
-#: mate-panel/panel-applet-frame.c:776
+#: mate-panel/panel-applet-frame.c:774
 msgid "D_elete"
 msgstr ""
 
-#: mate-panel/panel-applet-frame.c:777 mate-panel/panel-applet-frame.c:782
+#: mate-panel/panel-applet-frame.c:775 mate-panel/panel-applet-frame.c:780
 msgid "_Don't Reload"
 msgstr "སླར་མངོན་གསལ་མ་འབད།(_D)"
 
-#: mate-panel/panel-applet-frame.c:778 mate-panel/panel-applet-frame.c:783
+#: mate-panel/panel-applet-frame.c:776 mate-panel/panel-applet-frame.c:781
 msgid "_Reload"
 msgstr "སླར་མངོན་གསལ་འབད།(_R)"
 
-#: mate-panel/panel-applet-frame.c:949
+#: mate-panel/panel-applet-frame.c:947
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\"མངོན་གསལ་འབད་བའི་སྐབས་ པེ་ནཱལ་དེ་ལུ་ དཀའ་ངལ་ཅིག་བྱུང་ནུག"
 
-#: mate-panel/panel-applet-frame.c:964
+#: mate-panel/panel-applet-frame.c:962
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "ཁྱོད་རའི་རིམ་སྒྲིག་ནང་ལས་ ཨེཔ་ལེཊི་ བཏོན་གཏང་དགོ་མནོཝ་ཨིན་ན?"
 
-#: mate-panel/panel-applet-frame.c:971 mate-panel/panel.c:1502
+#: mate-panel/panel-applet-frame.c:969 mate-panel/panel.c:1495
 msgid "_Delete"
 msgstr "བཏོན་གཏང་།(_D)"
 
@@ -2697,19 +2711,19 @@ msgstr ""
 msgid "_Add to Panel…"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:257
+#: mate-panel/panel-context-menu.c:258
 msgid "_Reset All Panels"
 msgstr ""
 
-#: mate-panel/panel-context-menu.c:264
+#: mate-panel/panel-context-menu.c:265
 msgid "_Delete This Panel"
 msgstr "པེ་ནཱལ་འདི་བཏོན་གཏང་(_D)"
 
-#: mate-panel/panel-context-menu.c:277
+#: mate-panel/panel-context-menu.c:278
 msgid "_New Panel"
 msgstr "པེ་ནཱལ་གསརཔ།(_N)"
 
-#: mate-panel/panel-context-menu.c:326
+#: mate-panel/panel-context-menu.c:327
 msgid "A_bout Panels"
 msgstr "པེ་ནཱལ་ཚུ་གི་སྐོར་ལས།(_b)"
 
@@ -2725,44 +2739,44 @@ msgstr "ཊར་མི་ནཱལ་ནང་གི་གློག་རིམ
 msgid "Location"
 msgstr "གནས་ཁོངས།"
 
-#: mate-panel/panel-ditem-editor.c:848
+#: mate-panel/panel-ditem-editor.c:847
 msgid "Choose an application..."
 msgstr "གློག་རིམ་ཅིག་གདམ་ཁ་རྐྱབས་..."
 
-#: mate-panel/panel-ditem-editor.c:852
+#: mate-panel/panel-ditem-editor.c:851
 msgid "Choose a file..."
 msgstr "ཡིག་སྣོད་ཅིག་གདམ་ཁ་རྐྱབས་་་་"
 
-#: mate-panel/panel-ditem-editor.c:1004 mate-panel/panel-ditem-editor.c:1013
+#: mate-panel/panel-ditem-editor.c:1003 mate-panel/panel-ditem-editor.c:1012
 #: mate-panel/panel-ditem-editor-dialog.ui:197
 msgid "Comm_and:"
 msgstr "བརྡ་བཀོད་:(_a)"
 
-#: mate-panel/panel-ditem-editor.c:1022
+#: mate-panel/panel-ditem-editor.c:1021
 msgid "_Location:"
 msgstr "གནས་ཁོངས་:(_L)"
 
-#: mate-panel/panel-ditem-editor.c:1180
+#: mate-panel/panel-ditem-editor.c:1178
 msgid "The name of the launcher is not set."
 msgstr "གསར་བཙུགས་པའི་མིང་དེ་ གཞི་སྒྲིག་མ་འབད་བས།"
 
-#: mate-panel/panel-ditem-editor.c:1184
+#: mate-panel/panel-ditem-editor.c:1182
 msgid "Could not save directory properties"
 msgstr "སྣོད་ཐོ་རྒྱུ་དངོས་ཚུ་སྲུང་བཞག་འབད་མ་ཚུགས"
 
-#: mate-panel/panel-ditem-editor.c:1185
+#: mate-panel/panel-ditem-editor.c:1183
 msgid "The name of the directory is not set."
 msgstr "སྣོད་ཐོ་གི་མིང་འདི་གཞི་སྒྲིག་མ་འབད་བས།"
 
-#: mate-panel/panel-ditem-editor.c:1201
+#: mate-panel/panel-ditem-editor.c:1199
 msgid "The command of the launcher is not set."
 msgstr "གསར་བཙུགས་པའི་བརྡ་བཀོད་དེ་ གཞི་སྒྲིག་མ་འབད་བས།"
 
-#: mate-panel/panel-ditem-editor.c:1204
+#: mate-panel/panel-ditem-editor.c:1202
 msgid "The location of the launcher is not set."
 msgstr "གསར་བཙུགས་པའི་གནས་ཁོངས་དེ་ གཞི་སྒྲིག་མ་འབད་བས།"
 
-#: mate-panel/panel-ditem-editor.c:1280
+#: mate-panel/panel-ditem-editor.c:1278
 msgid "Could not display help document"
 msgstr "གྲོགས་རམ་ཡིག་ཆ་ བཀྲམ་སྟོན་འབད་མ་ཚུགས།"
 
@@ -2824,113 +2838,113 @@ msgstr ""
 msgid "Applications"
 msgstr "གློག་རིམ།"
 
-#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:711
+#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:703
 msgid "_Edit Menus"
 msgstr "དཀར་ཆག་ཚུ་ ཞུན་དག་རྐྱབས།(_E)"
 
-#: mate-panel/panel-menu-button.c:1131
+#: mate-panel/panel-menu-button.c:1121
 msgid "Main Menu"
 msgstr "དཀར་ཆག་ངོ་མ་"
 
-#: mate-panel/panel-menu-items.c:467
+#: mate-panel/panel-menu-items.c:464
 msgid "Bookmarks"
 msgstr "དེབ་རྟགས་ཚུ།"
 
 #. Translators: %s is a URI
-#: mate-panel/panel-menu-items.c:490 mate-panel/panel.c:573
+#: mate-panel/panel-menu-items.c:487 mate-panel/panel.c:571
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s'ཁ་ཕྱེ།"
 
-#: mate-panel/panel-menu-items.c:561
+#: mate-panel/panel-menu-items.c:558
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "བརྡ་ལམ་ བསྒྱུར་བཅོས་ཚུ་གི་དོན་ལུ་  %s ཞིབ་ལྟ་འབད་མི་ཚུགས་པས་ "
 
-#: mate-panel/panel-menu-items.c:605
+#: mate-panel/panel-menu-items.c:602
 #, c-format
 msgid "Rescan %s"
 msgstr "%s ལོག་ ཞིབ་ལྟ་འབད་ "
 
-#: mate-panel/panel-menu-items.c:642
+#: mate-panel/panel-menu-items.c:640
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s སྦྱར་བརྩེགས་འབད་མ་ཚུགས་ "
 
-#: mate-panel/panel-menu-items.c:705
+#: mate-panel/panel-menu-items.c:703
 #, c-format
 msgid "Mount %s"
 msgstr " %s སྦྱར་བརྩེགས་འབད་ "
 
-#: mate-panel/panel-menu-items.c:913
+#: mate-panel/panel-menu-items.c:912
 msgid "Removable Media"
 msgstr "རྩ་བསྐྲད་གཏང་བཏུབ་པའི་བརྡ་ལམ།"
 
-#: mate-panel/panel-menu-items.c:1000
+#: mate-panel/panel-menu-items.c:998
 msgid "Network Places"
 msgstr "ཡོངས་འབྲེལ་གྱི་ས་གནས།"
 
-#: mate-panel/panel-menu-items.c:1040
+#: mate-panel/panel-menu-items.c:1037
 msgid "Open your personal folder"
 msgstr "ཁྱོད་རའི་ སྒེར་དོན་གྱི་ སྣོད་འཛིན་ ཁ་ཕྱེ་ "
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: mate-panel/panel-menu-items.c:1059
+#: mate-panel/panel-menu-items.c:1056
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "ཌེཀསི་ཊོཔ།"
 
-#: mate-panel/panel-menu-items.c:1060
+#: mate-panel/panel-menu-items.c:1057
 msgid "Open the contents of your desktop in a folder"
 msgstr "ཁྱོད་རའི་ཌེཀསི་ཊོཔ་གི་སྣོད་འཛིན་གཅིག་ནང་ ནང་དོན་ཚུ་ཁ་ཕྱེ་"
 
-#: mate-panel/panel-menu-items.c:1077
+#: mate-panel/panel-menu-items.c:1074
 msgid "Computer"
 msgstr "གློག་རིག"
 
-#: mate-panel/panel-menu-items.c:1083
+#: mate-panel/panel-menu-items.c:1080
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
 "འ་ནི་གློག་རིག་འདི་ལས་འཛུལ་སྤྱོད་འབད་བཏུབ་པའི་ ཉེ་གནས་དང་ཐག་རིང་གི་ཌིཀསི་དང་ "
 "སྣོད་འཛིན་ཚུ་ བརྡ་འཚོལ་འབད་"
 
-#: mate-panel/panel-menu-items.c:1096
+#: mate-panel/panel-menu-items.c:1093
 msgid "Network"
 msgstr "ཡོངས་འབྲེལ་"
 
-#: mate-panel/panel-menu-items.c:1097
+#: mate-panel/panel-menu-items.c:1094
 msgid "Browse bookmarked and local network locations"
 msgstr "དེབ་རྟགས་བཀལ་ཡོད་མི་དང་ ཉེ་གནས་ཡོངས་འབྲེལ་གནས་ཁོངས་ཚུ་ བརྡ་འཚོལ་འབད་"
 
-#: mate-panel/panel-menu-items.c:1499
+#: mate-panel/panel-menu-items.c:1457
 msgid "Places"
 msgstr "ས་གནས་ཚུ།"
 
-#: mate-panel/panel-menu-items.c:1527
+#: mate-panel/panel-menu-items.c:1485
 msgid "System"
 msgstr "རིམ་ལུགས་"
 
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
-#: mate-panel/panel-menu-items.c:1612
+#: mate-panel/panel-menu-items.c:1570
 msgctxt "panel:showusername"
 msgid "1"
 msgstr ""
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1624
+#: mate-panel/panel-menu-items.c:1582
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s ཕྱིར་བསྐྱོད་འབད་..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: mate-panel/panel-menu-items.c:1628
+#: mate-panel/panel-menu-items.c:1586
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
@@ -3060,22 +3074,22 @@ msgstr "བསྣར།(_r)"
 msgid "Rotate image when panel is _vertical"
 msgstr "པེ་ནཱལ་ཀེར་ཕྲང་ཨིན་པའི་སྐབས་ གཟུགས་བརྙན་པད་སྐོར་བསྒྱིར།(_v)"
 
-#: mate-panel/panel-recent.c:79 mate-panel/panel-recent.c:89
+#: mate-panel/panel-recent.c:78 mate-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "འཕྲལ་ཁམས་ལག་ལེན་འཐབ་མི་ཡིག་ཆ་\"%s\"ཁ་ཕྱེ་མ་ཚུགས།"
 
-#: mate-panel/panel-recent.c:91
+#: mate-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr ""
 "\"%s\"ཁ་ཕྱེ་ནི་ལུ་ འབད་རྩོལ་བསྐྱེད་པའི་སྐབས་ མ་ཤེས་པའི་འཛོལ་བ་ཅིག་བྱུང་ཡི།"
 
-#: mate-panel/panel-recent.c:148
+#: mate-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "འཕྲལ་ཁམས་ཀྱི་ཡིག་ཆའི་ཐོ་ཡིག་དེ་བསལ།"
 
-#: mate-panel/panel-recent.c:150
+#: mate-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -3085,46 +3099,46 @@ msgstr ""
 "•ས་གནས་ཚུ་ནང་ལས་རྣམ་གྲངས་ཆ་མཉམ་→འཕྲལ་གྱི་ཡིག་ཆའི་དཀར་ཆག་རྣམ་གྲངས། \n"
 "•གློག་རིམ་ཆ་མཉམ་ནང་གི་ འཕྲལ་གྱི་ཡིག་ཆའི་ཐོ་ཡིག་ནང་ལས་ རྣམ་གྲངས་ཆ་མཉམ།"
 
-#: mate-panel/panel-recent.c:165
+#: mate-panel/panel-recent.c:164
 msgid "Clear Recent Documents"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆ་བསལ་གཏང་།"
 
-#: mate-panel/panel-recent.c:201
+#: mate-panel/panel-recent.c:200
 msgid "Recent Documents"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆ་ཚུ།"
 
-#: mate-panel/panel-recent.c:243
+#: mate-panel/panel-recent.c:242
 msgid "Clear Recent Documents..."
 msgstr ""
 
-#: mate-panel/panel-recent.c:245
+#: mate-panel/panel-recent.c:244
 msgid "Clear all items from the recent documents list"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆའི་ཐོ་ཡིག་ནང་ལས་ རྣམ་གྲངས་ཆ་མཉམབསལ་གཏང་།"
 
-#: mate-panel/panel-run-dialog.c:445
+#: mate-panel/panel-run-dialog.c:440
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "བརྡ་བཀོད་'%s' གཡོག་བཀོལ་མ་ཚུགས།"
 
-#: mate-panel/panel-run-dialog.c:486
+#: mate-panel/panel-run-dialog.c:481
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "ཡུ་ཊི་ཨེཕ་-༨ ནང་ལས་'%sགཞི་བསྒྱུར་འབད་མ་ཚུགས།"
 
-#: mate-panel/panel-run-dialog.c:1278
+#: mate-panel/panel-run-dialog.c:1269
 msgid "Choose a file to append to the command..."
 msgstr "བརྡ་བཀོད་ལུ་ མཇུག་བསྣོན་འབད་ནིའི་ཡིག་སྣོད་ཅིག་ གདམ་ཁ་རྐྱབས།"
 
-#: mate-panel/panel-run-dialog.c:1633 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1623 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "དེ་གི་འགྲེལ་བཤད་བལྟ་ནིའི་དོན་ལུ་ གློག་རིམ་ཅིག་ སེལ་འཐུ་འབད།"
 
-#: mate-panel/panel-run-dialog.c:1671
+#: mate-panel/panel-run-dialog.c:1661
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "བརྡ་བཀོད་ཡོག་བཀོལ་འོང་། :'%s'"
 
-#: mate-panel/panel-run-dialog.c:1704
+#: mate-panel/panel-run-dialog.c:1694
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -3135,7 +3149,7 @@ msgstr ""
 msgid "Run Application"
 msgstr "གློག་རིམ་གཡོག་བཀོལ།"
 
-#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:98
+#: mate-panel/panel-run-dialog.ui:71 mate-panel/panel-stock-icons.c:97
 msgid "_Run"
 msgstr "གཡོག་བཀོལ།(_R)"
 
@@ -3185,15 +3199,15 @@ msgstr "མ་ཤེས་པའི་གློག་རིམ་ཚུ་གི
 msgid "Show list of known _applications"
 msgstr "ཤེས་པའི་གློག་རིམ་ཚུ་གི་ ཐོ་ཡིག་སྟོན།(_a)"
 
-#: mate-panel/panel-stock-icons.c:99
+#: mate-panel/panel-stock-icons.c:98
 msgid "_Force quit"
 msgstr "བང་ཅན་སྦེ་སྤངས།(_F)"
 
-#: mate-panel/panel-stock-icons.c:100
+#: mate-panel/panel-stock-icons.c:99
 msgid "C_lear"
 msgstr "བསལ།(_l)"
 
-#: mate-panel/panel-stock-icons.c:101
+#: mate-panel/panel-stock-icons.c:100
 msgid "D_on't Delete"
 msgstr "བཏོན་མ་གཏང་།(_o)"
 
@@ -3217,42 +3231,42 @@ msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "ཨེཔ་ལེཊི་གི་ འགོ་ཐོག་ཕྱོགས་ གསལ་བཀོད་འབད། (མགུ་ མཇུག་ གཡོན་ གཡས)"
 
-#: mate-panel/panel-test-applets.c:67
+#: mate-panel/panel-test-applets.c:66
 msgctxt "Size"
 msgid "XX Small"
 msgstr ""
 
-#: mate-panel/panel-test-applets.c:68
+#: mate-panel/panel-test-applets.c:67
 msgctxt "Size"
 msgid "X Small"
 msgstr ""
 
-#: mate-panel/panel-test-applets.c:69
+#: mate-panel/panel-test-applets.c:68
 msgctxt "Size"
 msgid "Small"
 msgstr "ཆུང་ཀུ"
 
-#: mate-panel/panel-test-applets.c:70
+#: mate-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "Medium"
 msgstr ""
 
-#: mate-panel/panel-test-applets.c:71
+#: mate-panel/panel-test-applets.c:70
 msgctxt "Size"
 msgid "Large"
 msgstr "ཆེ་བ་ "
 
-#: mate-panel/panel-test-applets.c:72
+#: mate-panel/panel-test-applets.c:71
 msgctxt "Size"
 msgid "X Large"
 msgstr ""
 
-#: mate-panel/panel-test-applets.c:73
+#: mate-panel/panel-test-applets.c:72
 msgctxt "Size"
 msgid "XX Large"
 msgstr ""
 
-#: mate-panel/panel-test-applets.c:131
+#: mate-panel/panel-test-applets.c:130
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "ཨེཔ་ལེཊི་%s མངོན་གསལ་འབད་མ་ཚུགས།"
@@ -3274,23 +3288,23 @@ msgstr "ཨེཔ་ལེཊི་:(_A)"
 msgid "_Prefs Path:"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1208
+#: mate-panel/panel-toplevel.c:1207
 msgid "Hide Panel"
 msgstr "པེ་ནཱལ་སྦ་བཞག"
 
-#: mate-panel/panel-toplevel.c:1652 mate-panel/panel-toplevel.c:1662
+#: mate-panel/panel-toplevel.c:1646 mate-panel/panel-toplevel.c:1656
 msgid "Top Panel"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1654
+#: mate-panel/panel-toplevel.c:1648
 msgid "Bottom Panel"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1656
+#: mate-panel/panel-toplevel.c:1650
 msgid "Left Panel"
 msgstr ""
 
-#: mate-panel/panel-toplevel.c:1658
+#: mate-panel/panel-toplevel.c:1652
 msgid "Right Panel"
 msgstr ""
 
@@ -3304,21 +3318,21 @@ msgstr "ངོས་དཔར་'%s'མ་ཐོབ།"
 msgid "Could not execute '%s'"
 msgstr "'%s' ལག་ལེན་འཐབ་མ་ཚུགས།"
 
-#: mate-panel/panel-util.c:703
+#: mate-panel/panel-util.c:702
 msgid "file"
 msgstr "ཡིག་སྣོད།"
 
-#: mate-panel/panel-util.c:871
+#: mate-panel/panel-util.c:870
 msgid "Home Folder"
 msgstr "ཁྱིམ་གྱི་ སྣོད་འཛིན་ "
 
 #. Translators: this is the same string as the one found in
 #. * caja
-#: mate-panel/panel-util.c:883
+#: mate-panel/panel-util.c:882
 msgid "File System"
 msgstr "ཡིག་སྣོད་རིམ་ལུགས།"
 
-#: mate-panel/panel-util.c:1046
+#: mate-panel/panel-util.c:1045
 msgid "Search"
 msgstr "འཚོལ་ཞིབ།"
 
@@ -3326,47 +3340,47 @@ msgstr "འཚོལ་ཞིབ།"
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
-#: mate-panel/panel-util.c:1092
+#: mate-panel/panel-util.c:1091
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: mate-panel/panel.c:506
+#: mate-panel/panel.c:504
 #, c-format
 msgid "Open URL: %s"
 msgstr "ཡུ་ཨར་ཨེལ་: %sཁ་ཕྱེ།"
 
-#: mate-panel/panel.c:672
+#: mate-panel/panel.c:670
 msgid "You dropped an image on the panel, what do you want to do?"
 msgstr ""
 
-#: mate-panel/panel.c:674
+#: mate-panel/panel.c:672
 #, c-format
 msgid "You dropped the image \"%s\" on the panel."
 msgstr ""
 
-#: mate-panel/panel.c:677
+#: mate-panel/panel.c:675
 msgid ""
 "Do you want to create a launcher for it or use it as the panel's background?"
 msgstr ""
 
-#: mate-panel/panel.c:680
+#: mate-panel/panel.c:678
 msgid "Do you want to use it as the panel's background?"
 msgstr ""
 
-#: mate-panel/panel.c:694
+#: mate-panel/panel.c:692
 msgid "Create _Launcher"
 msgstr ""
 
-#: mate-panel/panel.c:698
+#: mate-panel/panel.c:696
 msgid "Set _Background Image"
 msgstr ""
 
-#: mate-panel/panel.c:1478
+#: mate-panel/panel.c:1471
 msgid "Delete this drawer?"
 msgstr "བཤུད་སྒྲོམ་འདི་ བཏོན་གཏང་ག?"
 
-#: mate-panel/panel.c:1479
+#: mate-panel/panel.c:1472
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3374,11 +3388,11 @@ msgstr ""
 "བཤུད་སྒྲོམ་ཅིག་ བཏོན་བཏང་བའི་སྐབས་ བཤུད་སྒྲོམ་དེ་དང་ དེ་གི་\n"
 "གཞི་སྒྲིག་ཚུ་ བརླག་སྟོར་འགྱོཝ་ཨིན།"
 
-#: mate-panel/panel.c:1482
+#: mate-panel/panel.c:1475
 msgid "Delete this panel?"
 msgstr "པེ་ནཱལ་འདི་ བཏོན་གཏང་ནི་ཨིན་ན?"
 
-#: mate-panel/panel.c:1483
+#: mate-panel/panel.c:1476
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
