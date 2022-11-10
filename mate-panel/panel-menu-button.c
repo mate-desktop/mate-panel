@@ -459,19 +459,21 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	switch (panel_toplevel_get_orientation (button->priv->toplevel)) {
 	case PANEL_ORIENTATION_TOP:
 		widget_anchor = GDK_GRAVITY_SOUTH_WEST;
-		g_message ("PANEL_ORIENTATION_TOP");
+		/*g_message ("PANEL_ORIENTATION_TOP");  comment this out by default, 
+         *it is useful in debugging menu issues in wayland so don't remove it
+         */
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		menu_anchor = GDK_GRAVITY_SOUTH_WEST;
-		g_message ("PANEL_ORIENTATION_BOTTOM");
+		/*g_message ("PANEL_ORIENTATION_BOTTOM");*/
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		widget_anchor = GDK_GRAVITY_NORTH_EAST;
-		g_message ("PANEL_ORIENTATION_LEFT");
+		/*g_message ("PANEL_ORIENTATION_LEFT");*/
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 		menu_anchor = GDK_GRAVITY_NORTH_EAST;
-		g_message ("PANEL_ORIENTATION_RIGHT");
+		/*g_message ("PANEL_ORIENTATION_RIGHT");*/
 		break;
 	}
 
