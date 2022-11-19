@@ -312,42 +312,82 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 }
 
 #define PREVIEW_PADDING 5
+#define constrain(x, min, max) x < min ? min : (x > max ? max : x)
 static void
-preview_window_reposition (TasklistData    *tasklist,
-                           cairo_surface_t *thumbnail,
+preview_window_reposition (WnckTasklist    *tl,
+                           TasklistData    *tasklist,
                            int              width,
-                           int              height,
-                           int              scale)
+                           int              height)
 {
 	GdkMonitor *monitor;
 	GdkRectangle monitor_geom;
+	MatePanelAppletOrient orient;
 	int x_pos, y_pos;
+	int x_offset, y_offset;
 
-	/* Set position at pointer, then re-adjust from there to just outside of the pointer */
-	gtk_window_set_position (GTK_WINDOW (tasklist->preview), GTK_WIN_POS_MOUSE);
-	gtk_window_get_position (GTK_WINDOW (tasklist->preview), &x_pos, &y_pos);
+	/* Get mouse position */
+	gdk_device_get_position (gdk_seat_get_pointer (gdk_display_get_default_seat (gdk_display_get_default ())), NULL, &x_pos, &y_pos);
 
 	/* Get geometry of monitor where tasklist is located to calculate correct position of preview */
 	monitor = gdk_display_get_monitor_at_point (gdk_display_get_default (), x_pos, y_pos);
 	gdk_monitor_get_geometry (monitor, &monitor_geom);
 
+	/* Get the position where the window list applet starts */
+	gdk_window_get_origin (gtk_widget_get_window (gtk_widget_get_parent (GTK_WIDGET(tl))), &x_offset, &y_offset);
+
+	/* Get panel orientation */
+	orient = mate_panel_applet_get_orient (MATE_PANEL_APPLET (tasklist->applet));
+
 	/* Add padding to clear the panel */
-	switch (mate_panel_applet_get_orient (MATE_PANEL_APPLET (tasklist->applet)))
+	switch (orient)
 	{
 		case MATE_PANEL_APPLET_ORIENT_LEFT:
-			x_pos = monitor_geom.width + monitor_geom.x - (width/scale + tasklist->size) - PREVIEW_PADDING;
+			x_pos = monitor_geom.width + monitor_geom.x - width - tasklist->size - PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_RIGHT:
 			x_pos = tasklist->size + PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_UP:
-			y_pos = monitor_geom.height + monitor_geom.y - (height/scale + tasklist->size) - PREVIEW_PADDING;
+			y_pos = monitor_geom.height + monitor_geom.y - height - tasklist->size - PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_DOWN:
 		default:
 			y_pos = tasklist->size + PREVIEW_PADDING;
 			break;
 	}
+
+	/* Center preview window above or next to the window list button */
+	GList* children = gtk_container_get_children (GTK_CONTAINER(tl));
+	while (children != NULL)
+	{
+		if (g_strcmp0 (gtk_widget_get_name (children->data), "tasklist-button") == 0) {
+			GtkAllocation alloc;
+			gtk_widget_get_allocation (children->data, &alloc);
+			if (orient == MATE_PANEL_APPLET_ORIENT_LEFT || orient == MATE_PANEL_APPLET_ORIENT_RIGHT)
+			{
+				if (y_offset + alloc.height > y_pos)
+				{
+					y_pos = y_offset + (alloc.height - height) / 2;
+					break;
+				}
+				y_offset += alloc.height;
+			}
+			else if (orient == MATE_PANEL_APPLET_ORIENT_UP || orient == MATE_PANEL_APPLET_ORIENT_DOWN)
+			{
+				if (x_offset + alloc.width > x_pos)
+				{
+					x_pos = x_offset + (alloc.width - width) / 2;
+					break;
+				}
+				x_offset += alloc.width;
+			}
+		}
+		children = children->next;
+	}
+
+	/* Don't let the preview window go off screen */
+	x_pos = constrain(x_pos, monitor_geom.x + PREVIEW_PADDING, monitor_geom.width - width - PREVIEW_PADDING);
+	y_pos = constrain(y_pos, monitor_geom.y + PREVIEW_PADDING, monitor_geom.height - height - PREVIEW_PADDING);
 
 	gtk_window_move (GTK_WINDOW (tasklist->preview), x_pos, y_pos);
 }
@@ -408,8 +448,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 	gtk_widget_set_app_paintable (tasklist->preview, TRUE);
 	gtk_window_set_default_size (GTK_WINDOW (tasklist->preview), thumbnail_width/thumbnail_scale, thumbnail_height/thumbnail_scale);
 	gtk_window_set_resizable (GTK_WINDOW (tasklist->preview), TRUE);
-
-	preview_window_reposition (tasklist, thumbnail, thumbnail_width, thumbnail_height, thumbnail_scale);
+	preview_window_reposition (tl, tasklist, thumbnail_width/thumbnail_scale, thumbnail_height/thumbnail_scale);
 
 	gtk_widget_show (tasklist->preview);
 
