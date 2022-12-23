@@ -311,8 +311,29 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	return thumbnail;
 }
 
+static int g_int_compare(gconstpointer a, gconstpointer b)
+{
+	gint a_val = GPOINTER_TO_INT(a);
+	gint b_val = GPOINTER_TO_INT(b);
+	if (a_val > b_val) return -1;
+	if (a_val == b_val) return 0;
+	return 1;
+}
+
+static int find_offset(GList *list, int target)
+{
+	GList *node = list;
+	while (node != NULL) {
+		int value = GPOINTER_TO_INT(node->data);
+		if (value <= target)
+			return value;
+		node = node->next;
+	}
+	return -1;
+}
+
 #define PREVIEW_PADDING 5
-#define constrain(x, min, max) x < min ? min : (x > max ? max : x)
+#define CONSTRAIN(x, min, max) x < min ? min : (x > max ? max : x)
 static void
 preview_window_reposition (WnckTasklist    *tl,
                            TasklistData    *tasklist,
@@ -356,38 +377,56 @@ preview_window_reposition (WnckTasklist    *tl,
 			break;
 	}
 
-	/* Center preview window above or next to the window list button */
+	/* Collect the allocation.x/y values of each button into lists.
+	 * We need to iterate over all of them because grouped buttons will be the last children,
+	 * even though they are positioned at the beginning. And not all buttons will have the exact same width.
+	 * This allows us to avoid off-by-one errors that would cause the preview to be positioned over the adjacent button. */
+	GList *alloc_x_list = NULL;
+	GList *alloc_y_list = NULL;
+	GtkAllocation last_alloc;
 	GList* children = gtk_container_get_children (GTK_CONTAINER(tl));
 	while (children != NULL)
 	{
 		if (g_strcmp0 (gtk_widget_get_name (children->data), "tasklist-button") == 0) {
 			GtkAllocation alloc;
 			gtk_widget_get_allocation (children->data, &alloc);
-			if (orient == MATE_PANEL_APPLET_ORIENT_LEFT || orient == MATE_PANEL_APPLET_ORIENT_RIGHT)
+
+			/* Skip grouped buttons: these usually have alloc width/heigh=1, except right after grouping is toggled.
+			 * Then simply open or close a new window to get the correct offset. */
+			if (alloc.width < 2 || alloc.height < 2)
 			{
-				if (y_offset + alloc.height > y_pos)
-				{
-					y_pos = y_offset + (alloc.height - height) / 2;
-					break;
-				}
-				y_offset += alloc.height;
+				children = children->next;
+				continue;
 			}
-			else if (orient == MATE_PANEL_APPLET_ORIENT_UP || orient == MATE_PANEL_APPLET_ORIENT_DOWN)
-			{
-				if (x_offset + alloc.width > x_pos)
-				{
-					x_pos = x_offset + (alloc.width - width) / 2;
-					break;
-				}
-				x_offset += alloc.width;
-			}
+
+			/* Keep x and y offsets in sorted lists */
+			alloc_x_list = g_list_insert_sorted (alloc_x_list, GINT_TO_POINTER(alloc.x), g_int_compare);
+			alloc_y_list = g_list_insert_sorted (alloc_y_list, GINT_TO_POINTER(alloc.y), g_int_compare);
+
+			/* The width/height from the last allocation will be used for centering the preview.
+			 * It might be off by a pixel because not all buttons have the exact same width/height but this isn't critical. */
+			last_alloc = alloc;
 		}
 		children = children->next;
 	}
 
+	/* Vertical panel */
+	if (orient == MATE_PANEL_APPLET_ORIENT_LEFT || orient == MATE_PANEL_APPLET_ORIENT_RIGHT)
+	{
+		y_pos = y_offset + find_offset (alloc_y_list, y_pos - y_offset) + (last_alloc.height - height) / 2;
+	}
+	/* Horizontal panel */
+	else if (orient == MATE_PANEL_APPLET_ORIENT_UP || orient == MATE_PANEL_APPLET_ORIENT_DOWN)
+	{
+		x_pos = x_offset + find_offset (alloc_x_list, x_pos - x_offset) + (last_alloc.width - width) / 2;
+	}
+
+	g_list_free (alloc_x_list);
+	g_list_free (alloc_y_list);
+
 	/* Don't let the preview window go off screen */
-	x_pos = constrain(x_pos, monitor_geom.x + PREVIEW_PADDING, monitor_geom.width - width - PREVIEW_PADDING);
-	y_pos = constrain(y_pos, monitor_geom.y + PREVIEW_PADDING, monitor_geom.height - height - PREVIEW_PADDING);
+	x_pos = CONSTRAIN (x_pos, monitor_geom.x + PREVIEW_PADDING, monitor_geom.width - width - PREVIEW_PADDING);
+	y_pos = CONSTRAIN (y_pos, monitor_geom.y + PREVIEW_PADDING, monitor_geom.height - height - PREVIEW_PADDING);
 
 	gtk_window_move (GTK_WINDOW (tasklist->preview), x_pos, y_pos);
 }
