@@ -338,8 +338,16 @@ static void
 preview_window_reposition (WnckTasklist    *tl,
                            TasklistData    *tasklist,
                            int              width,
-                           int              height)
+                           int              height,
+                           int              scale)
 {
+	/* Known issues:
+	 * - When grouping is toggled the previews won't be centered correctly until a new window is opened or one is closed.
+	 * - We don't center previews when scaling is enabled because hovering over the first or last pixels of each button
+	 *   would cause the preview to appear centered above the adjecent button instead.
+	 * - Previews are not shown at all for grouped windows, this function is not called when hovering over those.
+	 */
+
 	GdkMonitor *monitor;
 	GdkRectangle monitor_geom;
 	MatePanelAppletOrient orient;
@@ -410,15 +418,24 @@ preview_window_reposition (WnckTasklist    *tl,
 		children = children->next;
 	}
 
-	/* Vertical panel */
+	/* Center preview at the midpoint of the tasklist button.
+	 * Except when scaling is enabled we position it near the pointer instead because scaling can cause
+	 * the preview to appear above the wrong button when the pointer is over the first or last pixel. */
 	if (orient == MATE_PANEL_APPLET_ORIENT_LEFT || orient == MATE_PANEL_APPLET_ORIENT_RIGHT)
 	{
-		y_pos = y_offset + find_offset (alloc_y_list, y_pos - y_offset) + (last_alloc.height - height) / 2;
+		/* Vertical panel */
+		if (scale == 1)
+			y_pos = y_offset + find_offset (alloc_y_list, y_pos - y_offset) + (last_alloc.height - height) / 2;
+		else
+			y_pos -= height / 2;
 	}
-	/* Horizontal panel */
 	else if (orient == MATE_PANEL_APPLET_ORIENT_UP || orient == MATE_PANEL_APPLET_ORIENT_DOWN)
 	{
-		x_pos = x_offset + find_offset (alloc_x_list, x_pos - x_offset) + (last_alloc.width - width) / 2;
+		/* Horizontal panel */
+		if (scale == 1)
+			x_pos = x_offset + find_offset (alloc_x_list, x_pos - x_offset) + (last_alloc.width - width) / 2;
+		else
+			x_pos -= width / 2;
 	}
 
 	g_list_free (alloc_x_list);
@@ -487,7 +504,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 	gtk_widget_set_app_paintable (tasklist->preview, TRUE);
 	gtk_window_set_default_size (GTK_WINDOW (tasklist->preview), thumbnail_width/thumbnail_scale, thumbnail_height/thumbnail_scale);
 	gtk_window_set_resizable (GTK_WINDOW (tasklist->preview), TRUE);
-	preview_window_reposition (tl, tasklist, thumbnail_width/thumbnail_scale, thumbnail_height/thumbnail_scale);
+	preview_window_reposition (tl, tasklist, thumbnail_width/thumbnail_scale, thumbnail_height/thumbnail_scale, thumbnail_scale);
 
 	gtk_widget_show (tasklist->preview);
 
