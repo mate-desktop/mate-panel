@@ -333,7 +333,6 @@ static int find_offset(GList *list, int target)
 }
 
 #define PREVIEW_PADDING 5
-#define CONSTRAIN(x, min, max) x < min ? min : (x > max ? max : x)
 static void
 preview_window_reposition (WnckTasklist    *tl,
                            TasklistData    *tasklist,
@@ -428,6 +427,7 @@ preview_window_reposition (WnckTasklist    *tl,
 			y_pos = y_offset + find_offset (alloc_y_list, y_pos - y_offset) + (last_alloc.height - height) / 2;
 		else
 			y_pos -= height / 2;
+		y_pos = y_pos < PREVIEW_PADDING ? PREVIEW_PADDING : y_pos;
 	}
 	else if (orient == MATE_PANEL_APPLET_ORIENT_UP || orient == MATE_PANEL_APPLET_ORIENT_DOWN)
 	{
@@ -436,14 +436,11 @@ preview_window_reposition (WnckTasklist    *tl,
 			x_pos = x_offset + find_offset (alloc_x_list, x_pos - x_offset) + (last_alloc.width - width) / 2;
 		else
 			x_pos -= width / 2;
+		x_pos = x_pos < PREVIEW_PADDING ? PREVIEW_PADDING : x_pos;
 	}
 
 	g_list_free (alloc_x_list);
 	g_list_free (alloc_y_list);
-
-	/* Don't let the preview window go off screen */
-	x_pos = CONSTRAIN (x_pos, monitor_geom.x + PREVIEW_PADDING, monitor_geom.width - width - PREVIEW_PADDING);
-	y_pos = CONSTRAIN (y_pos, monitor_geom.y + PREVIEW_PADDING, monitor_geom.height - height - PREVIEW_PADDING);
 
 	gtk_window_move (GTK_WINDOW (tasklist->preview), x_pos, y_pos);
 }
