@@ -320,7 +320,7 @@ static int g_int_compare(gconstpointer a, gconstpointer b)
 	return 1;
 }
 
-static int find_offset(GList *list, int target)
+static int find_offset(GList *list, gdouble target)
 {
 	GList *node = list;
 	while (node != NULL) {
@@ -342,19 +342,17 @@ preview_window_reposition (WnckTasklist    *tl,
 {
 	/* Known issues:
 	 * - When grouping is toggled the previews won't be centered correctly until a new window is opened or one is closed.
-	 * - We don't center previews when scaling is enabled because hovering over the first or last pixels of each button
-	 *   would cause the preview to appear centered above the adjecent button instead.
 	 * - Previews are not shown at all for grouped windows, this function is not called when hovering over those.
 	 */
 
 	GdkMonitor *monitor;
 	GdkRectangle monitor_geom;
 	MatePanelAppletOrient orient;
-	int x_pos, y_pos;
+	gdouble x_pos, y_pos;
 	int x_offset, y_offset;
 
 	/* Get mouse position */
-	gdk_device_get_position (gdk_seat_get_pointer (gdk_display_get_default_seat (gdk_display_get_default ())), NULL, &x_pos, &y_pos);
+	gdk_device_get_position_double (gdk_seat_get_pointer (gdk_display_get_default_seat (gdk_display_get_default ())), NULL, &x_pos, &y_pos);
 
 	/* Get geometry of monitor where tasklist is located to calculate correct position of preview */
 	monitor = gdk_display_get_monitor_at_point (gdk_display_get_default (), x_pos, y_pos);
@@ -417,25 +415,17 @@ preview_window_reposition (WnckTasklist    *tl,
 		children = children->next;
 	}
 
-	/* Center preview at the midpoint of the tasklist button.
-	 * Except when scaling is enabled we position it near the pointer instead because scaling can cause
-	 * the preview to appear above the wrong button when the pointer is over the first or last pixel. */
+	/* Center preview at the midpoint of the tasklist button */
 	if (orient == MATE_PANEL_APPLET_ORIENT_LEFT || orient == MATE_PANEL_APPLET_ORIENT_RIGHT)
 	{
 		/* Vertical panel */
-		if (scale == 1)
-			y_pos = y_offset + find_offset (alloc_y_list, y_pos - y_offset) + (last_alloc.height - height) / 2;
-		else
-			y_pos -= height / 2;
+		y_pos = y_offset + find_offset (alloc_y_list, y_pos - y_offset) + (last_alloc.height - height) / 2;
 		y_pos = y_pos < PREVIEW_PADDING ? PREVIEW_PADDING : y_pos;
 	}
 	else if (orient == MATE_PANEL_APPLET_ORIENT_UP || orient == MATE_PANEL_APPLET_ORIENT_DOWN)
 	{
 		/* Horizontal panel */
-		if (scale == 1)
-			x_pos = x_offset + find_offset (alloc_x_list, x_pos - x_offset) + (last_alloc.width - width) / 2;
-		else
-			x_pos -= width / 2;
+		x_pos = x_offset + find_offset (alloc_x_list, x_pos - x_offset) + (last_alloc.width - width) / 2;
 		x_pos = x_pos < PREVIEW_PADDING ? PREVIEW_PADDING : x_pos;
 	}
 
