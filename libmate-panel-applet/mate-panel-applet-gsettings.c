@@ -29,6 +29,67 @@
 #include "mate-panel-applet.h"
 #include "mate-panel-applet-gsettings.h"
 
+static GVariant *
+add_to_dict (GVariant *dict, const gchar *schema, const gchar *path)
+{
+    GVariantIter iter;
+    GVariantBuilder builder;
+    gboolean already_contains;
+
+    gchar *key;
+    gchar *value;
+
+    g_variant_builder_init (&builder, (const GVariantType *) "a{ss}");
+    g_variant_iter_init (&iter, dict);
+
+    already_contains = FALSE;
+    while (g_variant_iter_next (&iter, "{ss}", &key, &value)) {
+        if ( g_strcmp0 (key, schema) == 0 && g_strcmp0 (value, path) == 0) {
+            already_contains = TRUE;
+        }
+
+        if (!already_contains) {
+            g_variant_builder_add (&builder, "{ss}", key, value);
+        }
+
+        g_free (key);
+        g_free (value);
+
+        if (already_contains) {
+            break;
+        }
+    }
+
+    if (!already_contains) {
+        g_variant_builder_add (&builder, "{ss}", schema, path);
+        return g_variant_ref_sink (g_variant_builder_end (&builder));
+    } else {
+        g_variant_builder_clear (&builder);
+        return g_variant_ref (dict);
+    }
+}
+
+static void
+register_dconf_editor_relocatable_schema (const gchar *schema, const gchar *path)
+{
+    GSettings *dconf_editor_settings;
+    dconf_editor_settings = g_settings_new ("ca.desrt.dconf-editor.Settings");
+
+    if (dconf_editor_settings && g_settings_is_writable (dconf_editor_settings, "relocatable-schemas-user-paths")) {
+        GVariant *relocatable_schemas = g_settings_get_value (dconf_editor_settings, "relocatable-schemas-user-paths");
+
+        if (g_variant_is_of_type (relocatable_schemas, G_VARIANT_TYPE_DICTIONARY)) {
+            GVariant * new_relocatable_schemas = add_to_dict (relocatable_schemas, schema, path);
+            g_settings_set_value (dconf_editor_settings, "relocatable-schemas-user-paths", new_relocatable_schemas);
+            g_variant_unref (new_relocatable_schemas);
+        }
+
+        g_variant_unref (relocatable_schemas);
+    }
+
+    g_object_unref (dconf_editor_settings);
+}
+
 GSettings *
 mate_panel_applet_settings_new (MatePanelApplet *applet, gchar *schema)
 {
@@ -41,6 +102,7 @@ mate_panel_applet_settings_new (MatePanelApplet *applet, gchar *schema)
 
     if (path) {
         settings = g_settings_new_with_path (schema, path);
+        register_dconf_editor_relocatable_schema (schema, path);
         g_free (path);
     }
 
