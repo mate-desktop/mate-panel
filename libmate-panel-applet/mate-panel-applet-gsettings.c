@@ -34,7 +34,9 @@ add_to_dict (GVariant *dict, const gchar *schema, const gchar *path)
 {
     GVariantIter iter;
     GVariantBuilder builder;
-    gboolean already_contains;
+    gboolean is_schema_found;
+    gboolean is_incorrect_schema;
+    gint path_counter;
 
     gchar *key;
     gchar *value;
@@ -42,30 +44,46 @@ add_to_dict (GVariant *dict, const gchar *schema, const gchar *path)
     g_variant_builder_init (&builder, (const GVariantType *) "a{ss}");
     g_variant_iter_init (&iter, dict);
 
-    already_contains = FALSE;
+    is_schema_found = FALSE;
+    is_incorrect_schema = FALSE;
+    path_counter = 0;
+
     while (g_variant_iter_next (&iter, "{ss}", &key, &value)) {
-        if ( g_strcmp0 (key, schema) == 0 && g_strcmp0 (value, path) == 0) {
-            already_contains = TRUE;
+        gboolean path_is_found = FALSE;
+        if (g_strcmp0 (value, path) == 0) {
+            path_is_found = TRUE;
+            path_counter++;
+            if (g_strcmp0 (key, schema) == 0) {
+                is_schema_found = TRUE;
+            } else {
+                // skip incoorect schema for path
+                is_incorrect_schema = TRUE;
+                g_free (key);
+                g_free (value);
+                continue;
+            }
         }
 
-        if (!already_contains) {
+        gboolean need_add_to_dict = !path_is_found || path_counter < 2;
+
+        if (need_add_to_dict) {
             g_variant_builder_add (&builder, "{ss}", key, value);
         }
 
         g_free (key);
         g_free (value);
-
-        if (already_contains) {
-            break;
-        }
     }
 
-    if (!already_contains) {
+    if (!is_schema_found) {
         g_variant_builder_add (&builder, "{ss}", schema, path);
+    }
+
+    if (!is_schema_found || is_incorrect_schema || (path_counter > 1)) {
         return g_variant_ref_sink (g_variant_builder_end (&builder));
     } else {
         g_variant_builder_clear (&builder);
-        return g_variant_ref (dict);
+        // no changes
+        return NULL;
     }
 }
 
@@ -80,8 +98,10 @@ register_dconf_editor_relocatable_schema (const gchar *schema, const gchar *path
 
         if (g_variant_is_of_type (relocatable_schemas, G_VARIANT_TYPE_DICTIONARY)) {
             GVariant * new_relocatable_schemas = add_to_dict (relocatable_schemas, schema, path);
-            g_settings_set_value (dconf_editor_settings, "relocatable-schemas-user-paths", new_relocatable_schemas);
-            g_variant_unref (new_relocatable_schemas);
+            if (new_relocatable_schemas) {
+                g_settings_set_value (dconf_editor_settings, "relocatable-schemas-user-paths", new_relocatable_schemas);
+                g_variant_unref (new_relocatable_schemas);
+            }
         }
 
         g_variant_unref (relocatable_schemas);

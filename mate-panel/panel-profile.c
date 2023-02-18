@@ -852,7 +852,7 @@ remove_from_dict (GVariant *dict, const gchar *path)
             g_variant_builder_add (&builder, "{ss}", key, value);
         }
 
-	g_free (key);
+        g_free (key);
         g_free (value);
     }
 
