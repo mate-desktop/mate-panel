@@ -80,6 +80,8 @@
 #define KEY_SHOW_WEATHER        "show-weather"
 #define KEY_SHOW_TEMPERATURE        "show-temperature"
 #define KEY_CUSTOM_FORMAT        "custom-format"
+#define KEY_USE_CUSTOM_FONT      "use-custom-font"
+#define KEY_CUSTOM_FONT          "custom-font"
 #define KEY_SHOW_WEEK                "show-week-numbers"
 #define KEY_CITIES                "cities"
 #define KEY_TEMPERATURE_UNIT        "temperature-unit"
@@ -147,6 +149,8 @@ struct _ClockData {
         /* preferences */
         ClockFormat  format;
         char        *custom_format;
+        char        *custom_font;
+        gboolean     use_custom_font;
         gboolean     showseconds;
         gboolean     showdate;
         gboolean     showweek;
@@ -184,6 +188,7 @@ struct _ClockData {
         gboolean   can_handle_format_12;
 
         GSettings *settings;
+        GtkCssProvider * custom_font_css_provider;
 
         const gchar *weather_icon_name;
 };
@@ -197,6 +202,7 @@ static int clock_numbers = 0;
 static void  update_clock (ClockData * cd);
 static void  update_tooltip (ClockData * cd);
 static void  update_panel_weather (ClockData *cd);
+static gboolean update_custom_font (ClockData *cd);
 static int   clock_timeout_callback (gpointer data);
 static float get_itime    (time_t current_time);
 
@@ -773,6 +779,8 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 
         g_free (cd->custom_format);
 
+        g_free (cd->custom_font);
+
         free_locations (cd);
 
         if (cd->location_tiles)
@@ -1319,17 +1327,17 @@ clock_update_text_gravity (GtkWidget *label)
 }
 
 static inline void
-force_no_button_vertical_padding (GtkWidget *widget)
+force_no_button_padding (GtkWidget *widget)
 {
         GtkCssProvider  *provider;
 
         provider = gtk_css_provider_new ();
         gtk_css_provider_load_from_data (provider,
                                          "#clock-applet-button {\n"
-                                         "padding-top: 0px;\n"
-                                         "padding-bottom: 0px;\n"
-                                         "padding-left: 4px;\n"
-                                         "padding-right: 4px;\n"
+                                         "  padding-top: 0px;\n"
+                                         "  padding-bottom: 0px;\n"
+                                         "  padding-left: 0px;\n"
+                                         "  padding-right: 0px;\n"
                                          "}",
                                          -1, NULL);
         gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
@@ -1348,7 +1356,7 @@ create_main_clock_button (void)
         button = gtk_toggle_button_new ();
         gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
-        force_no_button_vertical_padding (button);
+        force_no_button_padding (button);
 
         return button;
 }
@@ -1465,6 +1473,7 @@ create_clock_widget (ClockData *cd)
         applet_change_orient (MATE_PANEL_APPLET (cd->applet),
                               mate_panel_applet_get_orient (MATE_PANEL_APPLET (cd->applet)),
                               cd);
+        update_custom_font (cd);
 }
 
 static void
@@ -2370,6 +2379,74 @@ custom_format_changed (GSettings    *settings,
         g_free (value);
 }
 
+static gboolean
+update_custom_font (ClockData *cd)
+{
+        gboolean need_refresh_clock;
+
+        need_refresh_clock = FALSE;
+
+        if (cd->custom_font_css_provider != NULL) {
+                gtk_style_context_remove_provider (gtk_widget_get_style_context (cd->panel_button), GTK_STYLE_PROVIDER (cd->custom_font_css_provider));
+                g_object_unref (cd->custom_font_css_provider);
+                cd->custom_font_css_provider = NULL;
+                need_refresh_clock = TRUE;
+        }
+
+        if (cd->use_custom_font && cd->custom_font != NULL && cd->custom_font[0] != '\0') {
+                GtkCssProvider *provider;
+                gchar *css;
+
+                provider = gtk_css_provider_new ();
+                css = g_strdup_printf (
+                        "#clock-applet-button {\n"
+                        "  font: %s, inherit;"
+                        "}", cd->custom_font);
+
+                if (gtk_css_provider_load_from_data (provider, css, -1, NULL)) {
+                        gtk_style_context_add_provider (gtk_widget_get_style_context (cd->panel_button),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
+                        cd->custom_font_css_provider = g_object_ref (provider);
+                        need_refresh_clock = TRUE;
+                }
+                g_free (css);
+                g_object_unref (provider);
+        }
+
+        return need_refresh_clock;
+}
+
+static void
+use_custom_font_changed (GSettings    *settings,
+                     gchar        *key,
+                     ClockData    *clock)
+{
+        clock->use_custom_font = g_settings_get_boolean (settings, key);
+
+        if (update_custom_font (clock)) {
+                refresh_clock (clock);
+        }
+}
+
+static void
+custom_font_changed (GSettings    *settings,
+                     gchar        *key,
+                     ClockData    *clock)
+{
+        gchar *value;
+
+        value = g_settings_get_string (settings, key);
+
+        g_free (clock->custom_font);
+        clock->custom_font = g_strdup (g_strstrip (value));
+        if (update_custom_font (clock)) {
+                refresh_clock (clock);
+        }
+
+        g_free (value);
+}
+
 static void
 show_week_changed (GSettings    *settings,
                    gchar        *key,
@@ -2411,6 +2488,8 @@ setup_gsettings (ClockData *cd)
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_WEATHER, G_CALLBACK (show_weather_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_TEMPERATURE, G_CALLBACK (show_temperature_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_CUSTOM_FORMAT, G_CALLBACK (custom_format_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_USE_CUSTOM_FONT, G_CALLBACK (use_custom_font_changed), cd);
+        g_signal_connect (cd->settings, "changed::" KEY_CUSTOM_FONT, G_CALLBACK (custom_font_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_SHOW_WEEK, G_CALLBACK (show_week_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_CITIES, G_CALLBACK (cities_changed), cd);
         g_signal_connect (cd->settings, "changed::" KEY_TEMPERATURE_UNIT, G_CALLBACK (temperature_unit_changed), cd);
@@ -2458,6 +2537,8 @@ load_gsettings (ClockData *cd)
         cd->show_temperature = g_settings_get_boolean (cd->settings, KEY_SHOW_TEMPERATURE);
         cd->showweek = g_settings_get_boolean (cd->settings, KEY_SHOW_WEEK);
         cd->timeformat = NULL;
+        cd->use_custom_font = g_settings_get_boolean (cd->settings, KEY_USE_CUSTOM_FONT);
+        cd->custom_font = g_settings_get_string (cd->settings, KEY_CUSTOM_FONT);
 
         cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
         if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
