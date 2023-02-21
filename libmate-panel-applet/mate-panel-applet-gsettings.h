@@ -35,7 +35,15 @@
 
 G_BEGIN_DECLS
 
+/**
+ * mate_panel_applet_settings_new:
+ * @applet A #MatePanelApplet
+ * @schema applet's schema id
+ *
+ * Returns: (transfer full): a #GSettings. free when you used it
+ */
 GSettings* mate_panel_applet_settings_new (MatePanelApplet *applet, gchar *schema);
+
 GList*     mate_panel_applet_settings_get_glist (GSettings *settings, gchar *key);
 void       mate_panel_applet_settings_set_glist (GSettings *settings, gchar *key, GList *list);
 GSList*    mate_panel_applet_settings_get_gslist (GSettings *settings, gchar *key);
