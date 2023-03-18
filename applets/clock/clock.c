@@ -85,6 +85,16 @@
 #define KEY_TEMPERATURE_UNIT        "temperature-unit"
 #define KEY_SPEED_UNIT                "speed-unit"
 
+/* For watching for when the system resumes from sleep mode (e.g. suspend)
+ * and updating the clock as soon as that happens. */
+#define LOGIND_RUNNING() (access("/run/systemd/seats/", F_OK) >= 0)
+#define SYSTEMD_LOGIND_SERVICE   "org.freedesktop.login1"
+#define SYSTEMD_LOGIND_PATH      "/org/freedesktop/login1"
+#define SYSTEMD_LOGIND_INTERFACE "org.freedesktop.login1.Manager"
+#define CK_SERVICE               "org.freedesktop.ConsoleKit"
+#define CK_MANAGER_PATH          "/org/freedesktop/ConsoleKit/Manager"
+#define CK_MANAGER_INTERFACE     "org.freedesktop.ConsoleKit.Manager"
+
 #define _clock_get_widget(x,y) (GTK_WIDGET (gtk_builder_get_object ((x)->builder, (y))))
 
 enum {
@@ -186,6 +196,8 @@ struct _ClockData {
         GSettings *settings;
 
         const gchar *weather_icon_name;
+
+        GDBusProxy *system_manager_proxy;
 };
 
 /* Used to count the number of clock instances. It's there to know when we
@@ -747,6 +759,12 @@ free_locations (ClockData *cd)
 static void
 destroy_clock (GtkWidget * widget, ClockData *cd)
 {
+        if (cd->system_manager_proxy)
+        {
+                g_signal_handlers_disconnect_by_data (cd->system_manager_proxy, cd);
+                g_object_unref (cd->system_manager_proxy);
+        }
+
         if (cd->settings)
                 g_signal_handlers_disconnect_by_data( cd->settings, cd);
 
@@ -2478,6 +2496,86 @@ load_gsettings (ClockData *cd)
         set_locations (cd, cities);
 }
 
+/* When the system manager (ConsoleKit or systemd-logind) reports that
+ * the system has just resumed from sleep mode (e.g. suspend/hibernate),
+ * update the clock and the weather/temperature readings.  That way, if
+ * the user suspended the system for an hour and then wakes the system up,
+ * the user will immediately see the current time and (if possible)
+ * updated weather data.  Without this extra code, the user would most
+ * likely wake the system up and see the weather from an hour ago, and if
+ * the clock is set to not display seconds (only minutes), the clock may
+ * show an inaccurate time for up to a minute after resume.
+ */
+static void
+system_manager_signal_cb (GDBusProxy *proxy,
+                          gchar      *sender_name,
+                          gchar      *signal_name,
+                          GVariant   *parameters,
+                          ClockData  *cd)
+{
+        GVariant *variant;
+        gboolean active;
+
+        if (g_strcmp0 (signal_name, "PrepareForSleep") == 0)
+        {
+                variant = g_variant_get_child_value (parameters, 0);
+                active = g_variant_get_boolean (variant);
+                g_variant_unref (variant);
+
+                /* The PrepareForSleep signal is emitted by ConsoleKit2 and
+                 * logind, both before sleep mode is entered, and
+                 * immediately after the system has resumed from sleep mode.
+                 * Listeners of this signal distinguish between the two
+                 * states by checking the parameter to this signal.  If the
+                 * parameter is TRUE, the system is about to enter sleep
+                 * mode; if FALSE, the system has resumed from sleep mode.
+                 * We only care about updating the clock after resumption,
+                 * so test if the parameter is FALSE.
+                 */
+                if (active == FALSE)
+                {
+                        update_clock (cd);
+                        update_weather_locations (cd);
+                }
+        }
+}
+
+static void
+setup_monitor_for_resume (ClockData *cd)
+{
+        gboolean logind_running;
+        const char * service;
+        const char * path;
+        const char * interface;
+
+        /* If logind is running, connect to logind; otherwise use ConsoleKit.
+         */
+        logind_running = LOGIND_RUNNING ();
+        if (logind_running) {
+                service = SYSTEMD_LOGIND_SERVICE;
+                path = SYSTEMD_LOGIND_PATH;
+                interface = SYSTEMD_LOGIND_INTERFACE;
+        } else {
+                service = CK_SERVICE;
+                path = CK_MANAGER_PATH;
+                interface = CK_MANAGER_INTERFACE;
+        }
+
+        cd->system_manager_proxy = g_dbus_proxy_new_for_bus_sync
+                (G_BUS_TYPE_SYSTEM,
+                 G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+                 NULL,
+                 service, path, interface,
+                 NULL, NULL);
+
+        if (cd->system_manager_proxy != NULL) {
+                g_signal_connect (cd->system_manager_proxy,
+                                  "g-signal",
+                                  G_CALLBACK (system_manager_signal_cb),
+                                  cd);
+        }
+}
+
 static gboolean
 fill_clock_applet (MatePanelApplet *applet)
 {
@@ -2550,6 +2648,11 @@ fill_clock_applet (MatePanelApplet *applet)
                           "change-size",
                           G_CALLBACK (weather_icon_updated_cb),
                           cd);
+
+        /* If ConsoleKit or systemd-logind is available, set up to update
+         * the clock if/when the system resumes from sleep (e.g. suspend/
+         * hibernate). */
+        setup_monitor_for_resume (cd);
 
         return TRUE;
 }
