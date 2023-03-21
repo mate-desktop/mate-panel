@@ -37,6 +37,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <regex.h>
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
@@ -99,6 +100,8 @@ typedef struct {
 	GIcon		 *icon;
 	char             *desktop_path;
 	char		 *item_name;
+
+	regex_t		  regex_remove_parameters;
 
 	GSettings        *settings;
 } PanelRunDialog;
@@ -247,6 +250,8 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 		g_free (l->data);
 	g_list_free (dialog->completion_items);
 	dialog->completion_items = NULL;
+
+	regfree(&dialog->regex_remove_parameters);
 
 	panel_run_dialog_disconnect_pixmap (dialog);
 
@@ -978,33 +983,12 @@ static char *
 remove_parameters (const char *exec)
 {
 	GString *str;
-	char    *retval, *p;
+	char    *retval;
+	regmatch_t  pmatch[1];
 
 	str = g_string_new (exec);
-
-	while ((p = strstr (str->str, "%"))) {
-		switch (p [1]) {
-		case '%':
-			g_string_erase (str, p - str->str, 1);
-			break;
-		case 'U':
-		case 'F':
-		case 'N':
-		case 'D':
-		case 'f':
-		case 'u':
-		case 'd':
-		case 'n':
-		case 'm':
-		case 'i':
-		case 'c':
-		case 'k':
-		case 'v':
-			g_string_erase (str, p - str->str, 2);
-			break;
-		default:
-			break;
-		}
+	while(!regexec(&static_dialog->regex_remove_parameters, str->str, G_N_ELEMENTS(pmatch), pmatch, 0)) {
+		g_string_erase (str, pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
 	}
 
 	retval = str->str;
@@ -1966,6 +1950,12 @@ panel_run_dialog_new (GdkScreen  *screen,
 	dialog->terminal_checkbox = PANEL_GTK_BUILDER_GET (gui, "terminal_checkbox");
 
 	dialog->settings = g_settings_new (PANEL_RUN_SCHEMA);
+
+	int regex_return = regcomp (&dialog->regex_remove_parameters, "\%[UFNDfudnmickv]", 0);
+	if (regex_return)
+	{
+		fprintf (stderr, "panel-run-dialog: Could not compile regex\n");
+	}
 
 	panel_run_dialog_setup_pixmap        (dialog, gui);
 	panel_run_dialog_setup_entry         (dialog, gui);
