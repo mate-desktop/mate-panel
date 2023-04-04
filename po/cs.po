@@ -6,7 +6,7 @@
 # Translators:
 # Ondřej Kolín <ondrej.kolin@gmail.com>, 2018
 # huskyviking <husky.viking@seznam.cz>, 2018
-# Jaroslav Lichtblau <jlichtblau@seznam.cz>, 2018
+# Jaroslav Lichtblau <l10n@lichtblau.cz>, 2018
 # Petr Šimáček <petr.simacek@gmail.com>, 2018
 # Martin Wimpress <code@flexion.org>, 2018
 # Radek kohout <radekpv@seznam.cz>, 2018
@@ -14,11 +14,11 @@
 # 6e833d5535e2fe0dd9dfa7fe5bf473f2_d78f422 <64c38a0ff10419c64e8e03d54c72b3bd_352524>, 2018
 # Lukáš Kvídera <lukas.kvidera@seznam.cz>, 2018
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
-# ToMáš Marný, 2021
 # Michal <sinope@seznam.cz>, 2021
 # 1e6459e9b1241af8afa03d508d281c17_dbe0d8b, 2021
 # Roman Horník <roman.hornik@debian-linux.cz>, 2021
 # Lukáš Lommer <drom@kdyne.net>, 2021
+# ToMáš Marný, 2022
 # 
 msgid ""
 msgstr ""
@@ -26,8 +26,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
 "POT-Creation-Date: 2022-10-29 15:36+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
-"Last-Translator: Lukáš Lommer <drom@kdyne.net>, 2021\n"
-"Language-Team: Czech (https://www.transifex.com/mate/teams/13566/cs/)\n"
+"Last-Translator: ToMáš Marný, 2022\n"
+"Language-Team: Czech (https://app.transifex.com/mate/teams/13566/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1564,7 +1564,7 @@ msgstr "Zobrazit nabídku \"místa\""
 
 #: data/org.mate.panel.menubar.gschema.xml.in:21
 msgid "If true, show places item in menu bar."
-msgstr "Pokud je „true”, bude v nabídce zobrazena položka „Místa”, "
+msgstr "Pokud je povoleno, bude v nabídce zobrazena položka „Místa“."
 
 #: data/org.mate.panel.menubar.gschema.xml.in:25
 msgid "Show desktop menu"
@@ -1669,7 +1669,7 @@ msgstr ""
 
 #: data/org.mate.panel.object.gschema.xml.in:20
 msgid "Interpret position relative to bottom/right edge (DEPRECATED)"
-msgstr ""
+msgstr "Interpretovat pozici relativně ke spodnímu/pravému okraji (ZASTARALÉ)"
 
 #: data/org.mate.panel.object.gschema.xml.in:21
 msgid ""
@@ -1678,6 +1678,10 @@ msgid ""
 "backward compatibility with old panel layouts; please set the \"relative-to-"
 "edge\" property instead."
 msgstr ""
+"Pokud je povoleno, poloha objektu se interpretuje vzhledem k pravému (nebo "
+"spodnímu, pokud je vertikální) okraji panelu. Tento klíč je poskytován pouze"
+" pro zpětnou kompatibilitu se starými rozloženími panelů; místo toho "
+"nastavte vlastnost „relative-to-edge“."
 
 #: data/org.mate.panel.object.gschema.xml.in:25
 msgid ""
@@ -1692,6 +1696,10 @@ msgid ""
 "to the start (left/top edge), center, or end (right/bottom edge) of the "
 "panel. Valid values for this key are 'start', 'center', and 'end'."
 msgstr ""
+"Poloha objektu je interpretována vzhledem k jednomu okraji panelu. Hodnota "
+"tohoto klíče určuje, zda je objekt umístěn vzhledem k začátku (levý/horní "
+"okraj), středu nebo konci (pravý/spodní okraj) panelu. Platné hodnoty pro "
+"tento klíč jsou „start“, „center“ a „end“."
 
 #: data/org.mate.panel.object.gschema.xml.in:30
 msgid "Lock the object to the panel"
