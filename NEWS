@@ -1,3 +1,32 @@
+### mate-panel 1.27.1
+  * update translations
+  * Clock Applet: Update date/time and weather after resume from sleep mode
+  * Update window-list.c
+  * Update window-list.ui
+  * Update org.mate.panel.applet.window-list.gschema.xml.in
+  * wncklet: center previews when scaling is enabled
+  * wncklet: fix incorrect preview positions for multiple monitors
+  * wncklet: disable preview centering when scaling is enabled
+  * wncklet: center preview windows when grouping is enabled
+  * wncklet: center preview windows
+  * panel-menu-button: comment out wayland debugging message
+  * windows-list.ui: lower gtk3 required version
+  * configure.ac: The macro 'AC_HELP_STRING' is obsolete
+  * Fix center- and right-sticking of expanding applets
+  * panel-applet: Fix leak in no-background code path
+  * clock: Fix memory leak
+  * applet: SMALL_ICON_SIZE macro is not used [-Wunused-macros]
+  * notification_area: Reduce lifetime of the settings local variable (#1309)
+  * build warning: AC_OUTPUT should be used without arguments
+  * Add "center-stick" capability applets on the panel
+  * wncklet: Fix crash thumbnailing dying or otherwise inaccessible windows
+  * Register SNI host only if SNI is enabled
+  * fix undefined reference to g_clear_signal_handler (glib < 2.62)
+  * wncklet: Condition 'sdd->wnck_screen!=NULL' is always false
+  * panel-multimonitor: Condition '*monitors_ret>0' is always false
+  * clock: cast from function call of type 'gdouble' to non-matching type
+  * wncklet: do not exceed workspace number when setting n_rows
+
 ### mate-panel 1.27.0
   * update translations
   * wncklet: The values stored in the wrapper hash table are incorrect
