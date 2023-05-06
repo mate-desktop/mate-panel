@@ -766,18 +766,18 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		gtk_tree_model_get (model, &iter, COLUMN_VISIBLE, &visible, -1);
 		if (visible && visible_program_idx < G_N_ELEMENTS (accelerator_key_mapping)) {
 			gtk_list_store_set (dialog->program_list_store,
-								&iter,
-								COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[visible_program_idx].modifier,
-								COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[visible_program_idx].key_id,
-								-1);
+					    &iter,
+					    COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[visible_program_idx].modifier,
+					    COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[visible_program_idx].key_id,
+					    -1);
 			g_hash_table_insert (accelerator_keys_to_tree_iter_map, GUINT_TO_POINTER(accelerator_key_mapping[visible_program_idx].key_id), GINT_TO_POINTER(visible_program_idx));
 			visible_program_idx++;
 		} else {
 			gtk_list_store_set (dialog->program_list_store,
-								&iter,
-								COLUMN_ACCELERATOR_MASK, 0,
-								COLUMN_ACCELERATOR_KEY_VALUE, 0,
-								-1);
+					    &iter,
+					    COLUMN_ACCELERATOR_MASK, 0,
+					    COLUMN_ACCELERATOR_KEY_VALUE, 0,
+					    -1);
 		}
 
 		g_free (exec);
@@ -982,17 +982,17 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 				    COLUMN_VISIBLE,   TRUE,
 				    -1);
 		if (i < G_N_ELEMENTS (accelerator_key_mapping)) {
-			gtk_list_store_set(dialog->program_list_store, &iter,
-								COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[i].modifier,
-								COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[i].key_id,
-								-1);
+			gtk_list_store_set (dialog->program_list_store, &iter,
+					    COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[i].modifier,
+					    COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[i].key_id,
+					    -1);
 			g_hash_table_insert (accelerator_keys_to_tree_iter_map, GUINT_TO_POINTER(accelerator_key_mapping[i].key_id), GINT_TO_POINTER(i));
 			i++;
 		} else {
-			gtk_list_store_set(dialog->program_list_store, &iter,
-								COLUMN_ACCELERATOR_MASK, (gint)GDK_MOD1_MASK,
-								COLUMN_ACCELERATOR_KEY_VALUE, 0,
-								-1);
+			gtk_list_store_set (dialog->program_list_store, &iter,
+					    COLUMN_ACCELERATOR_MASK, (gint)GDK_MOD1_MASK,
+					    COLUMN_ACCELERATOR_KEY_VALUE, 0,
+					    -1);
 		}
 	}
 	g_slist_free_full (all_applications, matemenu_tree_item_unref);
@@ -1707,18 +1707,18 @@ combobox_changed (GtkComboBox    *combobox,
 			for (valid = gtk_tree_model_get_iter_first (model, &iter); valid; valid = gtk_tree_model_iter_next (model, &iter)) {
 				if (i < G_N_ELEMENTS (accelerator_key_mapping)) {
 					gtk_list_store_set (GTK_LIST_STORE (GTK_TREE_MODEL (dialog->program_list_store)), &iter,
-										COLUMN_VISIBLE, TRUE,
-										COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[i].modifier,
-										COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[i].key_id,
-										-1);
+							    COLUMN_VISIBLE, TRUE,
+							    COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[i].modifier,
+							    COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[i].key_id,
+							    -1);
 					g_hash_table_insert (accelerator_keys_to_tree_iter_map, GUINT_TO_POINTER (accelerator_key_mapping[i].key_id), GINT_TO_POINTER(i));
 					i++;
 				} else {
 					gtk_list_store_set (GTK_LIST_STORE (GTK_TREE_MODEL (dialog->program_list_store)), &iter,
-										COLUMN_VISIBLE, TRUE,
-										COLUMN_ACCELERATOR_MASK, (gint)GDK_MOD1_MASK,
-										COLUMN_ACCELERATOR_KEY_VALUE, 0,
-										-1);
+							    COLUMN_VISIBLE, TRUE,
+							    COLUMN_ACCELERATOR_MASK, (gint)GDK_MOD1_MASK,
+							    COLUMN_ACCELERATOR_KEY_VALUE, 0,
+							    -1);
 				}
 			}
 
