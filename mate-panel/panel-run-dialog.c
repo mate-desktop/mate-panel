@@ -775,7 +775,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		} else {
 			gtk_list_store_set (dialog->program_list_store,
 								&iter,
-								COLUMN_ACCELERATOR_MASK, (gint)GDK_MOD1_MASK,
+								COLUMN_ACCELERATOR_MASK, 0,
 								COLUMN_ACCELERATOR_KEY_VALUE, 0,
 								-1);
 		}
