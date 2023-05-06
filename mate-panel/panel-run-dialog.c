@@ -2063,8 +2063,9 @@ panel_run_dialog_new (GdkScreen  *screen,
 	g_signal_connect_swapped (dialog->run_dialog, "destroy",
 				  G_CALLBACK (panel_run_dialog_destroy), dialog);
 
-	GtkAccelGroup* accel_group = gtk_accel_group_new();
-	gtk_window_add_accel_group(GTK_WINDOW(dialog->run_dialog), accel_group);
+	GtkAccelGroup* accel_group = gtk_accel_group_new ();
+	gtk_window_add_accel_group (GTK_WINDOW(dialog->run_dialog), accel_group);
+	g_object_unref (accel_group);
 	for (gint i = 0; i < G_N_ELEMENTS (accelerator_key_mapping); i++)
 	{
 		GClosure *closure_key = g_cclosure_new (
