@@ -2138,7 +2138,7 @@ panel_run_dialog_present (GdkScreen *screen,
 			  guint32    activate_time)
 {
 	GtkBuilder *gui;
-	accelerator_keys_to_tree_iter_map = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, NULL);
+	accelerator_keys_to_tree_iter_map = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, NULL);
 
 	if (panel_lockdown_get_disable_command_line ())
 		return;
