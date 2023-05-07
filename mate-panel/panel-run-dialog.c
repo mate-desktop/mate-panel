@@ -39,6 +39,7 @@
 #include <unistd.h>
 
 #include <glib/gi18n.h>
+#include <glib.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 #include <matemenu-tree.h>
@@ -106,12 +107,36 @@ typedef struct {
 enum {
 	COLUMN_GICON,
 	COLUMN_NAME,
+	COLUMN_ACCELERATOR_MASK,
+	COLUMN_ACCELERATOR_KEY_VALUE,
 	COLUMN_COMMENT,
 	COLUMN_PATH,
 	COLUMN_EXEC,
 	COLUMN_VISIBLE,
 	NUM_COLUMNS
 };
+
+typedef struct {
+        gint list_item_idx;
+        GdkModifierType modifier;
+        guint key_id;
+} AcceleratorKeyMapping;
+
+const AcceleratorKeyMapping accelerator_key_mapping[] =
+{
+        {0, GDK_MOD1_MASK, GDK_KEY_1 },
+        {1, GDK_MOD1_MASK, GDK_KEY_2 },
+        {2, GDK_MOD1_MASK, GDK_KEY_3 },
+        {3, GDK_MOD1_MASK, GDK_KEY_4 },
+        {4, GDK_MOD1_MASK, GDK_KEY_5 },
+        {5, GDK_MOD1_MASK, GDK_KEY_6 },
+        {6, GDK_MOD1_MASK, GDK_KEY_7 },
+        {7, GDK_MOD1_MASK, GDK_KEY_8 },
+        {8, GDK_MOD1_MASK, GDK_KEY_9 },
+        {9, GDK_MOD1_MASK, GDK_KEY_0 },
+};
+
+static GHashTable *accelerator_keys_to_tree_iter_map = NULL;
 
 static PanelRunDialog *static_dialog = NULL;
 
@@ -237,6 +262,10 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	if (dialog->dir_hash)
 		g_hash_table_destroy (dialog->dir_hash);
 	dialog->dir_hash = NULL;
+
+	if (accelerator_keys_to_tree_iter_map)
+		g_hash_table_destroy (accelerator_keys_to_tree_iter_map);
+	accelerator_keys_to_tree_iter_map = NULL;
 
 	for (l = dialog->possible_executables; l; l = l->next)
 		g_free (l->data);
@@ -664,19 +693,6 @@ fuzzy_command_match (const char *cmd1,
 }
 
 static gboolean
-panel_run_dialog_make_all_list_visible (GtkTreeModel *model,
-					GtkTreePath  *path,
-					GtkTreeIter  *iter,
-					gpointer      data)
-{
-	gtk_list_store_set (GTK_LIST_STORE (model), iter,
-			    COLUMN_VISIBLE, TRUE,
-			    -1);
-
-	return FALSE;
-}
-
-static gboolean
 panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 {
 	GtkTreeIter   iter;
@@ -686,6 +702,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	GIcon        *found_icon;
 	char         *found_name;
 	gboolean      fuzzy;
+	gint          visible_program_idx = 0;
 
 	model = GTK_TREE_MODEL (dialog->program_list_store);
 	path = gtk_tree_path_new_first ();
@@ -704,12 +721,14 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	found_icon = NULL;
 	found_name = NULL;
 	fuzzy = FALSE;
+	g_hash_table_remove_all (accelerator_keys_to_tree_iter_map);
 
 	do {
 		char *exec = NULL;
 		GIcon *icon = NULL;
 		char *name = NULL;
 		char *comment = NULL;
+		gboolean visible = FALSE;
 
 		gtk_tree_model_get (model, &iter,
 				    COLUMN_EXEC,      &exec,
@@ -741,6 +760,23 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 			gtk_list_store_set (dialog->program_list_store,
 					    &iter,
 					    COLUMN_VISIBLE, FALSE,
+					    -1);
+		}
+
+		gtk_tree_model_get (model, &iter, COLUMN_VISIBLE, &visible, -1);
+		if (visible && visible_program_idx < G_N_ELEMENTS (accelerator_key_mapping)) {
+			gtk_list_store_set (dialog->program_list_store,
+					    &iter,
+					    COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[visible_program_idx].modifier,
+					    COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[visible_program_idx].key_id,
+					    -1);
+			g_hash_table_insert (accelerator_keys_to_tree_iter_map, GUINT_TO_POINTER(accelerator_key_mapping[visible_program_idx].key_id), GINT_TO_POINTER(visible_program_idx));
+			visible_program_idx++;
+		} else {
+			gtk_list_store_set (dialog->program_list_store,
+					    &iter,
+					    COLUMN_ACCELERATOR_MASK, 0,
+					    COLUMN_ACCELERATOR_KEY_VALUE, 0,
 					    -1);
 		}
 
@@ -895,6 +931,8 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	dialog->program_list_store = gtk_list_store_new (NUM_COLUMNS,
 							 G_TYPE_ICON,
 							 G_TYPE_STRING,
+							 G_TYPE_INT, // For accelerator modifier mask
+							 G_TYPE_UINT, // For accelerator key value
 							 G_TYPE_STRING,
 							 G_TYPE_STRING,
 							 G_TYPE_STRING,
@@ -922,6 +960,9 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 		}
 	}
 
+	gint i = 0;
+	g_hash_table_remove_all (accelerator_keys_to_tree_iter_map);
+
 	for (l = all_applications; l; l = l->next) {
 		MateMenuTreeEntry *entry = l->data;
 		GtkTreeIter    iter;
@@ -940,6 +981,19 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 				    COLUMN_PATH,      matemenu_tree_entry_get_desktop_file_path (entry),
 				    COLUMN_VISIBLE,   TRUE,
 				    -1);
+		if (i < G_N_ELEMENTS (accelerator_key_mapping)) {
+			gtk_list_store_set (dialog->program_list_store, &iter,
+					    COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[i].modifier,
+					    COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[i].key_id,
+					    -1);
+			g_hash_table_insert (accelerator_keys_to_tree_iter_map, GUINT_TO_POINTER(accelerator_key_mapping[i].key_id), GINT_TO_POINTER(i));
+			i++;
+		} else {
+			gtk_list_store_set (dialog->program_list_store, &iter,
+					    COLUMN_ACCELERATOR_MASK, (gint)GDK_MOD1_MASK,
+					    COLUMN_ACCELERATOR_KEY_VALUE, 0,
+					    -1);
+		}
 	}
 	g_slist_free_full (all_applications, matemenu_tree_item_unref);
 
@@ -963,11 +1017,23 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
                                              NULL);
 
 	renderer = gtk_cell_renderer_text_new ();
-	gtk_tree_view_column_pack_start (column, renderer, TRUE);
+	gtk_tree_view_column_pack_start (column, renderer, FALSE);
 	gtk_tree_view_column_set_attributes (column, renderer,
                                              "text", COLUMN_NAME,
                                              NULL);
 
+	gtk_tree_view_column_set_sizing (column, 
+	                                 GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+
+	gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->program_list), column);
+
+	renderer = gtk_cell_renderer_accel_new ();
+	g_object_set (renderer, "accel-mode", GTK_CELL_RENDERER_ACCEL_MODE_GTK,
+	             "editable", FALSE, NULL);
+
+	column = gtk_tree_view_column_new_with_attributes ("Shortcut", renderer,
+	                                                  "accel-mods", COLUMN_ACCELERATOR_MASK, "accel-key",
+	                                                  COLUMN_ACCELERATOR_KEY_VALUE, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->program_list), column);
 
 	dialog->add_items_idle_id = 0;
@@ -1630,12 +1696,31 @@ combobox_changed (GtkComboBox    *combobox,
 		}
 
 		if (panel_profile_get_enable_program_list ()) {
-			GtkTreeIter  iter;
-			GtkTreePath *path;
+			GtkTreeIter   iter;
+			GtkTreePath  *path;
+			GtkTreeModel *model;
+			gint          i = 0;
+			gboolean      valid = FALSE;
 
-			gtk_tree_model_foreach (GTK_TREE_MODEL (dialog->program_list_store),
-						panel_run_dialog_make_all_list_visible,
-						NULL);
+			g_hash_table_remove_all (accelerator_keys_to_tree_iter_map);
+			model = GTK_TREE_MODEL (dialog->program_list_store);
+			for (valid = gtk_tree_model_get_iter_first (model, &iter); valid; valid = gtk_tree_model_iter_next (model, &iter)) {
+				if (i < G_N_ELEMENTS (accelerator_key_mapping)) {
+					gtk_list_store_set (GTK_LIST_STORE (GTK_TREE_MODEL (dialog->program_list_store)), &iter,
+							    COLUMN_VISIBLE, TRUE,
+							    COLUMN_ACCELERATOR_MASK, (gint)accelerator_key_mapping[i].modifier,
+							    COLUMN_ACCELERATOR_KEY_VALUE, accelerator_key_mapping[i].key_id,
+							    -1);
+					g_hash_table_insert (accelerator_keys_to_tree_iter_map, GUINT_TO_POINTER (accelerator_key_mapping[i].key_id), GINT_TO_POINTER(i));
+					i++;
+				} else {
+					gtk_list_store_set (GTK_LIST_STORE (GTK_TREE_MODEL (dialog->program_list_store)), &iter,
+							    COLUMN_VISIBLE, TRUE,
+							    COLUMN_ACCELERATOR_MASK, (gint)GDK_MOD1_MASK,
+							    COLUMN_ACCELERATOR_KEY_VALUE, 0,
+							    -1);
+				}
+			}
 
 			path = gtk_tree_path_new_first ();
 			if (gtk_tree_model_get_iter (gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->program_list)),
@@ -1945,6 +2030,22 @@ key_press_event (GtkWidget    *run_dialog,
 	return FALSE;
 }
 
+static void
+panel_run_dialog_accelerator_key_pressed (GtkAccelGroup   *accel_group,
+					  GObject         *acceleratable,
+					  guint            keyval,
+					  GdkModifierType  modifier,
+					  PanelRunDialog  *dialog)
+{
+	GtkTreePath *path;
+	gpointer index_of_entry;
+	gboolean found = g_hash_table_lookup_extended (accelerator_keys_to_tree_iter_map, GUINT_TO_POINTER(keyval), NULL, &index_of_entry);
+	if (!found) return;
+	path = gtk_tree_path_new_from_indices(GPOINTER_TO_INT(index_of_entry), -1);
+	gtk_tree_view_set_cursor (GTK_TREE_VIEW (dialog->program_list), path, NULL, FALSE);
+	gtk_widget_grab_focus (dialog->program_list);
+}
+
 static PanelRunDialog *
 panel_run_dialog_new (GdkScreen  *screen,
 		      GtkBuilder *gui,
@@ -1961,6 +2062,20 @@ panel_run_dialog_new (GdkScreen  *screen,
 
 	g_signal_connect_swapped (dialog->run_dialog, "destroy",
 				  G_CALLBACK (panel_run_dialog_destroy), dialog);
+
+	GtkAccelGroup* accel_group = gtk_accel_group_new ();
+	gtk_window_add_accel_group (GTK_WINDOW(dialog->run_dialog), accel_group);
+	g_object_unref (accel_group);
+	for (gint i = 0; i < G_N_ELEMENTS (accelerator_key_mapping); i++)
+	{
+		GClosure *closure_key = g_cclosure_new (
+			G_CALLBACK (panel_run_dialog_accelerator_key_pressed), dialog, NULL);
+		gtk_accel_group_connect (accel_group,
+					 accelerator_key_mapping[i].key_id,
+					 accelerator_key_mapping[i].modifier,
+					 0,
+					 closure_key);
+	}
 
 	dialog->run_button = PANEL_GTK_BUILDER_GET (gui, "run_button");
 	dialog->terminal_checkbox = PANEL_GTK_BUILDER_GET (gui, "terminal_checkbox");
@@ -2023,6 +2138,7 @@ panel_run_dialog_present (GdkScreen *screen,
 			  guint32    activate_time)
 {
 	GtkBuilder *gui;
+	accelerator_keys_to_tree_iter_map = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, NULL);
 
 	if (panel_lockdown_get_disable_command_line ())
 		return;
