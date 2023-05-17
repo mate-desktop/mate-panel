@@ -26,6 +26,7 @@
 #endif
 
 #include <gdk/gdkwayland.h>
+#include <gio/gdesktopappinfo.h>
 
 #include "wayland-backend.h"
 #include "wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h"
@@ -52,6 +53,7 @@ typedef struct
 typedef struct
 {
 	GtkWidget *button;
+	GtkWidget *icon;
 	GtkWidget *label;
 	struct zwlr_foreign_toplevel_handle_v1 *toplevel;
 	gboolean active;
@@ -289,7 +291,27 @@ foreign_toplevel_handle_app_id (void *data,
 				struct zwlr_foreign_toplevel_handle_v1 *toplevel,
 				const char *app_id)
 {
-	/* ignore */
+	ToplevelTask *task = data;
+
+	gchar *app_id_lower = g_utf8_strdown (app_id, -1);
+	gchar *desktop_app_id = g_strdup_printf ("%s.desktop", app_id_lower);
+	GDesktopAppInfo *app_info = g_desktop_app_info_new (desktop_app_id);
+
+	if (app_info) {
+		GIcon *icon = g_app_info_get_icon (G_APP_INFO (app_info));
+		if (icon) {
+			gtk_image_set_from_gicon (GTK_IMAGE (task->icon), icon, GTK_ICON_SIZE_MENU);
+			goto cleanup;
+		}
+	}
+	gtk_image_set_from_icon_name (GTK_IMAGE (task->icon), app_id_lower, GTK_ICON_SIZE_MENU);
+
+cleanup:
+	if (app_info) {
+		g_object_unref (G_OBJECT (app_info));
+	}
+	g_free (app_id_lower);
+	g_free (desktop_app_id);
 }
 
 static void
@@ -377,6 +399,7 @@ toplevel_task_disconnected_from_widget (ToplevelTask *task)
 	struct zwlr_foreign_toplevel_handle_v1 *toplevel = task->toplevel;
 
 	task->button = NULL;
+	task->icon = NULL;
 	task->label = NULL;
 	task->toplevel = NULL;
 
@@ -440,12 +463,18 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	task->button = gtk_button_new ();
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
 
+	task->icon = gtk_image_new_from_icon_name ("unknown", GTK_ICON_SIZE_MENU);
+
 	task->label = gtk_label_new ("");
 	gtk_label_set_max_width_chars (GTK_LABEL (task->label), 1);
 	gtk_widget_set_size_request (task->label, window_button_width, -1);
 	gtk_label_set_ellipsize (GTK_LABEL (task->label), PANGO_ELLIPSIZE_END);
-	gtk_container_add (GTK_CONTAINER(task->button), task->label);
+	gtk_label_set_xalign (GTK_LABEL (task->label), 0.0);
 
+	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_box_pack_start (GTK_BOX (box), task->icon, FALSE, FALSE, 5);
+	gtk_box_pack_start (GTK_BOX (box), task->label, TRUE, TRUE, 5);
+	gtk_container_add (GTK_CONTAINER (task->button), box);
 	gtk_widget_show_all (task->button);
 
 	task->toplevel = toplevel;
