@@ -5,6 +5,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 
 #include "button-widget.h"
 #include "panel-widget.h"
@@ -157,6 +158,8 @@ button_widget_unset_surfaces (ButtonWidget *button)
 static void
 button_widget_reload_surface (ButtonWidget *button)
 {
+    GdkDisplay *display;
+    gint scale;
 	button_widget_unset_surfaces (button);
 
 	if (button->priv->size <= 1 || button->priv->icon_theme == NULL)
@@ -164,18 +167,31 @@ button_widget_reload_surface (ButtonWidget *button)
 
 	if (button->priv->filename != NULL &&
 	    button->priv->filename [0] != '\0') {
-		gint scale;
 		char *error = NULL;
 
+		display = gdk_display_get_default ();
 		scale = gtk_widget_get_scale_factor (GTK_WIDGET (button));
-
-		button->priv->surface =
-			panel_load_icon (button->priv->icon_theme,
+		if  (GDK_IS_X11_DISPLAY (display))
+		{
+		    button->priv->surface =
+			    panel_load_icon (button->priv->icon_theme,
 					 button->priv->filename,
 					 button->priv->size * scale,
 					 (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size * scale : -1,
 					 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size * scale: -1,
 					 &error);
+		}
+		else
+		{
+		    button->priv->surface =
+			    panel_load_icon (button->priv->icon_theme,
+					 button->priv->filename,
+					 button->priv->size * scale,
+					 (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size  : -1,
+					 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size  : -1,
+					 &error);
+		}
+	
 		if (error) {
 			/* FIXME: this is not rendered at button->priv->size */
 			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
@@ -349,6 +365,7 @@ button_widget_draw (GtkWidget *widget,
 	int height;
 	GtkStyleContext *context;
 	GtkStateFlags state_flags;
+	GdkDisplay *display;
 	int off;
 	int x, y, w, h;
 	int scale;
@@ -370,10 +387,21 @@ button_widget_draw (GtkWidget *widget,
 		(state_flags & GTK_STATE_FLAG_PRELIGHT) && (state_flags & GTK_STATE_FLAG_ACTIVE)) ?
 		BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
 
-	w = cairo_image_surface_get_width (button_widget->priv->surface) / scale;
-	h = cairo_image_surface_get_height (button_widget->priv->surface) / scale;
-	x = off + (width - w) / 2;
-	y = off + (height - h) / 2;
+	display = gdk_display_get_default ();
+	if  (GDK_IS_X11_DISPLAY (display))
+	{
+		w = cairo_image_surface_get_width (button_widget->priv->surface) / scale;
+		h = cairo_image_surface_get_height (button_widget->priv->surface) / scale;
+		x = off + (width - w) / 2;
+		y = off + (height - h) / 2;
+	}
+	else
+	{
+		w = cairo_image_surface_get_width (button_widget->priv->surface);
+		h = cairo_image_surface_get_height (button_widget->priv->surface);
+		x = off + (width - w) / 2;
+		y = off + (height - h) / 2;
+	}
 
 	cairo_save (cr);
 
