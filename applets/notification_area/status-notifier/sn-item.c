@@ -358,6 +358,7 @@ sn_item_ready (SnItem *item)
   priv = SN_ITEM (item)->priv;
   priv->menu = sn_dbus_menu_new (priv->bus_name, menu);
   g_object_ref_sink (priv->menu);
+  gtk_button_set_always_show_image (GTK_BUTTON (item),TRUE);
 }
 
 static const gchar *

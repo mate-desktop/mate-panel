@@ -204,6 +204,7 @@ sn_dbus_menu_item_new (GVariant *props)
             }
 
           item->item = gtk_image_menu_item_new ();
+          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (item->item), TRUE);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
                                          image);
         }
