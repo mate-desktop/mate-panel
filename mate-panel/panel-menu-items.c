@@ -1630,6 +1630,9 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	}
 
+#ifdef HAVE_RDA
+	if (rda_session_is_local()) {
+#endif /* HAVE_RDA */
 	item = panel_menu_items_create_action_item (PANEL_ACTION_SHUTDOWN);
 	if (item != NULL) {
 		if (!separator_inserted)
@@ -1637,6 +1640,9 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	}
+#ifdef HAVE_RDA
+	}
+#endif /* HAVE_RDA */
 }
 
 void
