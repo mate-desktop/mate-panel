@@ -142,9 +142,13 @@ mate_panel_SOURCES = \
 mate_panel_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(XRANDR_CFLAGS) \
-	$(RDA_CFLAGS) \
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DMATEMENU_I_KNOW_THIS_IS_UNSTABLE
+
+if ENABLE_RDA
+mate_panel_CPPFLAGS += \
+	$(RDA_CFLAGS)
+endif
 
 if ENABLE_WAYLAND
 mate_panel_CPPFLAGS += \
@@ -158,9 +162,13 @@ mate_panel_LDADD = \
 	$(PANEL_LIBS) \
 	$(DCONF_LIBS) \
 	$(XRANDR_LIBS) \
-	$(RDA_LIBS) \
 	$(X_LIBS) \
 	$(WAYLAND_LIBS)
+
+if ENABLE_RDA
+mate_panel_LDADD += \
+	$(RDA_LIBS)
+endif
 
 if ENABLE_WAYLAND
 mate_panel_LDADD += \
