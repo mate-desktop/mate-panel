@@ -95,7 +95,7 @@ appletdir       = $(datadir)/mate-panel/applets
 applet_in_files = org.mate.panel.TestApplet.mate-panel-applet.desktop.in
 noinst_DATA     = $(applet_in_files:.mate-panel-applet.desktop.in=.mate-panel-applet)
 $(noinst_DATA): $(applet_in_files)
-	$(AM_V_GEN) $(MSGFMT) --desktop --keyword Name --keyword Description --template $< -d $(top_srcdir)/po -o $@
+	$(AM_V_GEN) $(MSGFMT) --desktop --keyword=Name --keyword=Description --template $< -d $(top_srcdir)/po -o $@
 
 EXTRA_DIST =						\
 	org.mate.panel.TestApplet.mate-panel-applet.desktop.in	\
