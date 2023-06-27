@@ -51,6 +51,13 @@
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 
+#ifdef CLOCK_INPROCESS
+#ifdef HAVE_WAYLAND
+#include <gdk/gdkwayland.h>
+#include <gtk-layer-shell/gtk-layer-shell.h>
+#endif
+#endif
+
 #ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #endif
@@ -889,6 +896,8 @@ static void
 position_calendar_popup (ClockData *cd)
 {
 #ifdef HAVE_X11
+    if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
         GtkRequisition  req;
         GtkAllocation   allocation;
         GdkDisplay     *display;
@@ -987,6 +996,80 @@ position_calendar_popup (ClockData *cd)
 
         gtk_window_move (GTK_WINDOW (cd->calendar_popup), x, y);
         gtk_window_set_gravity (GTK_WINDOW (cd->calendar_popup), gravity);
+    }
+#endif
+    /*Only build wayland support when building in process*/
+#ifdef CLOCK_INPROCESS
+#ifdef HAVE_WAYLAND
+
+    if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    {
+        GtkWindow *window;
+        GdkWindow *panelwin;
+        GtkWidget *toplevel;
+        int  x, y, w, h, panel_w, panel_h;
+
+        /*Get the calendar window dimensions*/
+        window = (GTK_WINDOW (cd->calendar_popup));
+        gtk_window_get_size (window, &w, &h);
+        /*Find the position of the applet*/
+        gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
+                                                                      &x, &y);
+
+        /*Get the panel dimensions*/
+        toplevel = gtk_widget_get_toplevel (cd->applet);
+        panelwin = gtk_widget_get_window (toplevel);
+        gdk_window_get_geometry (panelwin, NULL, NULL, &panel_w, &panel_h);
+
+        /*Set up GTK Layer Shell*/
+        gtk_layer_init_for_window (window);
+        gtk_layer_set_layer (window, GTK_LAYER_SHELL_LAYER_TOP);
+
+        switch (cd->orient) {
+            case MATE_PANEL_APPLET_ORIENT_RIGHT:
+            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+            if (y < (panel_h -h))
+            {
+                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_TOP, y);
+            }
+            else
+                 gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+            break;
+        case MATE_PANEL_APPLET_ORIENT_LEFT:
+            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+            if (y < (panel_h - h))
+            {
+                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_TOP, y);
+            }
+            else
+                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+            break;
+        case MATE_PANEL_APPLET_ORIENT_DOWN:
+            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+            if (x < (panel_w -w))
+            {
+                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_LEFT, x);
+            }
+            else
+                gtk_layer_set_anchor(window,GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+            break;
+        case MATE_PANEL_APPLET_ORIENT_UP:
+            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+            if (x < (panel_w -w))
+                {
+                    gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                    gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_LEFT, x);
+                }
+            else
+                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+            break;
+        }
+    return;
+	}
+#endif
 #endif
 }
 
