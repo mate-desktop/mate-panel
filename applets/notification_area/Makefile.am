@@ -83,9 +83,9 @@ $(applet_in_files): $(applet_in_files).in Makefile
 		-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 		$< > $@
 
+service_in_files = org.mate.panel.applet.NotificationAreaAppletFactory.service.in
 if !NOTIFICATION_AREA_INPROCESS
 servicedir       = $(datadir)/dbus-1/services
-service_in_files = org.mate.panel.applet.NotificationAreaAppletFactory.service.in
 service_DATA     = $(service_in_files:.service.in=.service)
 
 org.mate.panel.applet.NotificationAreaAppletFactory.service: $(service_in_files)

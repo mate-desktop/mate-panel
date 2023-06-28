@@ -78,9 +78,9 @@ $(applet_in_files): $(applet_in_files).in Makefile
 $(applet_DATA): $(applet_in_files)
 	$(AM_V_GEN) $(MSGFMT) --desktop --keyword= --keyword=Name --keyword=Description --template $< -d $(top_srcdir)/po -o $@
 
+service_in_files = org.mate.panel.applet.WnckletFactory.service.in
 if !WNCKLET_INPROCESS
 servicedir       = $(datadir)/dbus-1/services
-service_in_files = org.mate.panel.applet.WnckletFactory.service.in
 service_DATA     = $(service_in_files:.service.in=.service)
 
 org.mate.panel.applet.WnckletFactory.service: $(service_in_files)
