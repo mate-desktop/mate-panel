@@ -51,11 +51,9 @@
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 
-#ifdef CLOCK_INPROCESS
-#ifdef HAVE_WAYLAND
+#if defined (CLOCK_INPROCESS) && defined (HAVE_WAYLAND)
 #include <gdk/gdkwayland.h>
 #include <gtk-layer-shell/gtk-layer-shell.h>
-#endif
 #endif
 
 #ifdef HAVE_X11
@@ -895,181 +893,181 @@ create_calendar (ClockData *cd)
 static void
 position_calendar_popup (ClockData *cd)
 {
-#ifdef HAVE_X11
-    if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    {
-        GtkRequisition  req;
-        GtkAllocation   allocation;
-        GdkDisplay     *display;
-        GdkScreen      *screen;
-        GdkRectangle    monitor;
-        GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
-        int             button_w, button_h;
-        int             x, y;
-        int             w, h;
-        int             i, n;
-        gboolean        found_monitor = FALSE;
+#if defined(HAVE_X11) && defined(GDK_WINDOWING_X11)
+        if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+        {
+                GtkRequisition  req;
+                GtkAllocation   allocation;
+                GdkDisplay     *display;
+                GdkScreen      *screen;
+                GdkRectangle    monitor;
+                GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
+                int             button_w, button_h;
+                int             x, y;
+                int             w, h;
+                int             i, n;
+                gboolean        found_monitor = FALSE;
 
-        if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-                return;
 
-        /* Get root origin of the toggle button, and position above that. */
-        gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
-                               &x, &y);
+                /* Get root origin of the toggle button, and position above that. */
+                gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
+                                       &x, &y);
 
-        gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
-        gtk_widget_get_preferred_size (cd->calendar_popup, &req, NULL);
-        w = req.width;
-        h = req.height;
+                gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
+                gtk_widget_get_preferred_size (cd->calendar_popup, &req, NULL);
+                w = req.width;
+                h = req.height;
 
-        gtk_widget_get_allocation (cd->panel_button, &allocation);
-        button_w = allocation.width;
-        button_h = allocation.height;
+                gtk_widget_get_allocation (cd->panel_button, &allocation);
+                button_w = allocation.width;
+                button_h = allocation.height;
 
-        screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
-        display = gdk_screen_get_display (screen);
+                screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
+                display = gdk_screen_get_display (screen);
 
-        n = gdk_display_get_n_monitors (display);
-        for (i = 0; i < n; i++) {
-                gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &monitor);
-                if (x >= monitor.x && x <= monitor.x + monitor.width &&
-                    y >= monitor.y && y <= monitor.y + monitor.height) {
-                        found_monitor = TRUE;
+                n = gdk_display_get_n_monitors (display);
+                for (i = 0; i < n; i++) {
+                        gdk_monitor_get_geometry (gdk_display_get_monitor (display, i), &monitor);
+                        if (x >= monitor.x && x <= monitor.x + monitor.width &&
+                                y >= monitor.y && y <= monitor.y + monitor.height) {
+                                found_monitor = TRUE;
                         break;
+                        }
                 }
-        }
 
-        if (!found_monitor) {
-                /* eek, we should be on one of those xinerama
-                   monitors */
-                monitor.x = 0;
-                monitor.y = 0;
-                monitor.width = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
-                monitor.height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
-        }
+                if (!found_monitor) {
+                        /* eek, we should be on one of those xinerama
+                        monitors */
+                        monitor.x = 0;
+                        monitor.y = 0;
+                        monitor.width = WidthOfScreen (gdk_x11_screen_get_xscreen (screen));
+                        monitor.height = HeightOfScreen (gdk_x11_screen_get_xscreen (screen));
+                }
 
-        /* Based on panel orientation, position the popup.
-         * Ignore window gravity since the window is undecorated.
-         * The orientations are all named backward from what
-         * I expected.
-         */
-        switch (cd->orient) {
-        case MATE_PANEL_APPLET_ORIENT_RIGHT:
-                x += button_w;
-                if ((y + h) > monitor.y + monitor.height)
-                        y -= (y + h) - (monitor.y + monitor.height);
+                /* Based on panel orientation, position the popup.
+                 * Ignore window gravity since the window is undecorated.
+                 * The orientations are all named backward from what
+                 * I expected.
+                 */
+                switch (cd->orient) {
+                case MATE_PANEL_APPLET_ORIENT_RIGHT:
+                        x += button_w;
+                        if ((y + h) > monitor.y + monitor.height)
+                                y -= (y + h) - (monitor.y + monitor.height);
 
-                if ((y + h) > (monitor.height / 2))
-                        gravity = GDK_GRAVITY_SOUTH_WEST;
-                else
-                        gravity = GDK_GRAVITY_NORTH_WEST;
+                        if ((y + h) > (monitor.height / 2))
+                                gravity = GDK_GRAVITY_SOUTH_WEST;
+                        else
+                                gravity = GDK_GRAVITY_NORTH_WEST;
 
-                break;
-        case MATE_PANEL_APPLET_ORIENT_LEFT:
-                x -= w;
-                if ((y + h) > monitor.y + monitor.height)
-                        y -= (y + h) - (monitor.y + monitor.height);
+                        break;
+                case MATE_PANEL_APPLET_ORIENT_LEFT:
+                        x -= w;
+                        if ((y + h) > monitor.y + monitor.height)
+                                y -= (y + h) - (monitor.y + monitor.height);
 
-                if ((y + h) > (monitor.height / 2))
+                        if ((y + h) > (monitor.height / 2))
                         gravity = GDK_GRAVITY_SOUTH_EAST;
-                else
+                        else
                         gravity = GDK_GRAVITY_NORTH_EAST;
 
-                break;
-        case MATE_PANEL_APPLET_ORIENT_DOWN:
-                y += button_h;
-                if ((x + w) > monitor.x + monitor.width)
-                        x -= (x + w) - (monitor.x + monitor.width);
+                        break;
+                case MATE_PANEL_APPLET_ORIENT_DOWN:
+                        y += button_h;
+                        if ((x + w) > monitor.x + monitor.width)
+                                x -= (x + w) - (monitor.x + monitor.width);
 
-                gravity = GDK_GRAVITY_NORTH_WEST;
+                        gravity = GDK_GRAVITY_NORTH_WEST;
 
-                break;
-        case MATE_PANEL_APPLET_ORIENT_UP:
-                y -= h;
-                if ((x + w) > monitor.x + monitor.width)
-                        x -= (x + w) - (monitor.x + monitor.width);
+                        break;
+                case MATE_PANEL_APPLET_ORIENT_UP:
+                        y -= h;
+                        if ((x + w) > monitor.x + monitor.width)
+                                x -= (x + w) - (monitor.x + monitor.width);
 
-                gravity = GDK_GRAVITY_SOUTH_WEST;
+                        gravity = GDK_GRAVITY_SOUTH_WEST;
 
-                break;
+                        break;
+                        }
+
+                gtk_window_move (GTK_WINDOW (cd->calendar_popup), x, y);
+                gtk_window_set_gravity (GTK_WINDOW (cd->calendar_popup), gravity);
         }
-
-        gtk_window_move (GTK_WINDOW (cd->calendar_popup), x, y);
-        gtk_window_set_gravity (GTK_WINDOW (cd->calendar_popup), gravity);
-    }
 #endif
+
     /*Only build wayland support when building in process*/
-#ifdef CLOCK_INPROCESS
-#ifdef HAVE_WAYLAND
+#if defined(CLOCK_INPROCESS) && defined(HAVE_WAYLAND) && defined(GDK_WINDOWING_WAYLAND)
+        if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+        {
+                GtkWindow *window;
+                GdkWindow *panelwin;
+                GtkWidget *toplevel;
+                int  x, y, w, h, panel_w, panel_h;
 
-    if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-    {
-        GtkWindow *window;
-        GdkWindow *panelwin;
-        GtkWidget *toplevel;
-        int  x, y, w, h, panel_w, panel_h;
-
-        /*Get the calendar window dimensions*/
-        window = (GTK_WINDOW (cd->calendar_popup));
-        gtk_window_get_size (window, &w, &h);
-        /*Find the position of the applet*/
-        gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
+                /*Get the calendar window dimensions*/
+                window = (GTK_WINDOW (cd->calendar_popup));
+                gtk_window_get_size (window, &w, &h);
+                /*Find the position of the applet*/
+                gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
                                                                       &x, &y);
 
-        /*Get the panel dimensions*/
-        toplevel = gtk_widget_get_toplevel (cd->applet);
-        panelwin = gtk_widget_get_window (toplevel);
-        gdk_window_get_geometry (panelwin, NULL, NULL, &panel_w, &panel_h);
+                /*Get the panel dimensions*/
+                toplevel = gtk_widget_get_toplevel (cd->applet);
+                panelwin = gtk_widget_get_window (toplevel);
+                gdk_window_get_geometry (panelwin, NULL, NULL, &panel_w, &panel_h);
 
-        /*Set up GTK Layer Shell*/
-        gtk_layer_init_for_window (window);
-        gtk_layer_set_layer (window, GTK_LAYER_SHELL_LAYER_TOP);
+                /*Set up GTK Layer Shell*/
+                gtk_layer_init_for_window (window);
+                gtk_layer_set_layer (window, GTK_LAYER_SHELL_LAYER_TOP);
 
-        switch (cd->orient) {
-            case MATE_PANEL_APPLET_ORIENT_RIGHT:
-            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
-            if (y < (panel_h -h))
-            {
-                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_TOP, TRUE);
-                gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_TOP, y);
-            }
-            else
-                 gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
-            break;
-        case MATE_PANEL_APPLET_ORIENT_LEFT:
-            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
-            if (y < (panel_h - h))
-            {
-                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_TOP, TRUE);
-                gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_TOP, y);
-            }
-            else
-                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
-            break;
-        case MATE_PANEL_APPLET_ORIENT_DOWN:
-            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_TOP, TRUE);
-            if (x < (panel_w -w))
-            {
-                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
-                gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_LEFT, x);
-            }
-            else
-                gtk_layer_set_anchor(window,GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
-            break;
-        case MATE_PANEL_APPLET_ORIENT_UP:
-            gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
-            if (x < (panel_w -w))
-                {
-                    gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
-                    gtk_layer_set_margin (window,GTK_LAYER_SHELL_EDGE_LEFT, x);
+                switch (cd->orient) {
+                case MATE_PANEL_APPLET_ORIENT_RIGHT:
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                        if (y < (panel_h -h))
+                        {
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                                gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_TOP, y);
+                        }
+                        else
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+
+                        break;
+                case MATE_PANEL_APPLET_ORIENT_LEFT:
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+                        if (y < (panel_h - h))
+                        {
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                                gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_TOP, y);
+                        }
+                        else
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+
+                        break;
+                case MATE_PANEL_APPLET_ORIENT_DOWN:
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                        if (x < (panel_w -w))
+                        {
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                                gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_LEFT, x);
+                        }
+                        else
+                                gtk_layer_set_anchor(window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+
+                        break;
+                case MATE_PANEL_APPLET_ORIENT_UP:
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+                        if (x < (panel_w -w))
+                        {
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                                gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_LEFT, x);
+                        }
+                        else
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+
+                        break;
                 }
-            else
-                gtk_layer_set_anchor (window,GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
-            break;
+                return;
         }
-    return;
-	}
-#endif
 #endif
 }
 
