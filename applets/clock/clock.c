@@ -911,7 +911,7 @@ position_calendar_popup (ClockData *cd)
 
                 /* Get root origin of the toggle button, and position above that. */
                 gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
-                                      &x, &y);
+                                       &x, &y);
 
                 gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
                 gtk_widget_get_preferred_size (cd->calendar_popup, &req, NULL);
@@ -1023,47 +1023,70 @@ position_calendar_popup (ClockData *cd)
                 switch (cd->orient) {
                 case MATE_PANEL_APPLET_ORIENT_RIGHT:
                         gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                        gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_LEFT, 0);
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
                         if (y < (panel_h - h))
                         {
                                 gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
                                 gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_TOP, y);
                         }
                         else
+                        {
                                 gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
-
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, FALSE);
+                        }
                         break;
+
                 case MATE_PANEL_APPLET_ORIENT_LEFT:
                         gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+                        gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_RIGHT, 0);
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, FALSE);
                         if (y < (panel_h - h))
                         {
                                 gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
                                 gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_TOP, y);
                         }
                         else
+                        {
                                 gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
-
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, FALSE);
+                        }
                         break;
+
                 case MATE_PANEL_APPLET_ORIENT_DOWN:
                         gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+                        gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_TOP, 0);
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
                         if (x < (panel_w - w))
                         {
                                 gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
                                 gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_LEFT, x);
                         }
                         else
+                        {
                                 gtk_layer_set_anchor(window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
-
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, FALSE);
+                        }
                         break;
+
                 case MATE_PANEL_APPLET_ORIENT_UP:
                         gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+                        gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_BOTTOM, 0);
+                        gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_TOP, FALSE);
                         if (x < (panel_w - w))
                         {
                                 gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
                                 gtk_layer_set_margin (window, GTK_LAYER_SHELL_EDGE_LEFT, x);
                         }
                         else
+                        {
                                 gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
-
+                                gtk_layer_set_anchor (window, GTK_LAYER_SHELL_EDGE_LEFT, FALSE);
+                        }
                         break;
                 }
                 return;
