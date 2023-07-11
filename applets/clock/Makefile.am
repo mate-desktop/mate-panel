@@ -67,6 +67,14 @@ libclock_applet_la_LIBADD = $(CLOCK_LDADD)
 libclock_applet_la_LDFLAGS = -module -avoid-version
 libclock_applet_la_CFLAGS = $(AM_CFLAGS)
 $(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
+
+if ENABLE_WAYLAND
+libclock_applet_la_LIBADD += \
+	$(WAYLAND_LIBS)
+
+AM_CPPFLAGS += \
+	$(WAYLAND_CFLAGS)
+endif
 else
 APPLET_IN_PROCESS = false
 APPLET_LOCATION = $(libexecdir)/clock-applet
