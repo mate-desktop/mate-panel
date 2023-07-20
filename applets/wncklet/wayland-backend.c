@@ -472,6 +472,7 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	gtk_box_pack_start (GTK_BOX (box), task->icon, FALSE, FALSE, 2);
 	gtk_box_pack_start (GTK_BOX (box), task->label, TRUE, TRUE, 3);
 	gtk_container_add (GTK_CONTAINER (task->button), box);
+	gtk_widget_set_name (task->button , "tasklist-button");
 	gtk_widget_show_all (task->button);
 
 	task->toplevel = toplevel;
