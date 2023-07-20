@@ -31,8 +31,6 @@
 #include "wayland-backend.h"
 #include "wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h"
 
-static const int window_button_width = 140;
-
 typedef struct
 {
 	GtkWidget *menu;
@@ -466,14 +464,13 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	task->icon = gtk_image_new_from_icon_name ("unknown", GTK_ICON_SIZE_MENU);
 
 	task->label = gtk_label_new ("");
-	gtk_label_set_max_width_chars (GTK_LABEL (task->label), 1);
-	gtk_widget_set_size_request (task->label, window_button_width, -1);
+	gtk_label_set_width_chars (GTK_LABEL (task->label), -1);
 	gtk_label_set_ellipsize (GTK_LABEL (task->label), PANGO_ELLIPSIZE_END);
 	gtk_label_set_xalign (GTK_LABEL (task->label), 0.0);
 
 	GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_pack_start (GTK_BOX (box), task->icon, FALSE, FALSE, 5);
-	gtk_box_pack_start (GTK_BOX (box), task->label, TRUE, TRUE, 5);
+	gtk_box_pack_start (GTK_BOX (box), task->icon, FALSE, FALSE, 2);
+	gtk_box_pack_start (GTK_BOX (box), task->label, TRUE, TRUE, 3);
 	gtk_container_add (GTK_CONTAINER (task->button), box);
 	gtk_widget_show_all (task->button);
 
