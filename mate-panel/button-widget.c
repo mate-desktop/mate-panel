@@ -33,6 +33,7 @@ struct _ButtonWidgetPrivate {
 	guint             ignore_leave  : 1;
 	guint             arrow         : 1;
 	guint             dnd_highlight : 1;
+	gboolean          needs_move;
 };
 
 static void button_widget_icon_theme_changed (ButtonWidget *button);
@@ -158,50 +159,67 @@ button_widget_unset_surfaces (ButtonWidget *button)
 static void
 button_widget_reload_surface (ButtonWidget *button)
 {
-    GdkDisplay *display;
-    gint scale;
+	GdkDisplay *display;
+	gint scale;
 	button_widget_unset_surfaces (button);
 
+	button->priv->needs_move = FALSE;
 	if (button->priv->size <= 1 || button->priv->icon_theme == NULL)
 		return;
 
 	if (button->priv->filename != NULL &&
 	    button->priv->filename [0] != '\0') {
 		char *error = NULL;
-
+		/* icons findable in the icon theme can be handled by gtk directly*/
 		display = gdk_display_get_default ();
 		scale = gtk_widget_get_scale_factor (GTK_WIDGET (button));
-		if  (GDK_IS_X11_DISPLAY (display))
+		GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
+		button->priv->surface =
+			gtk_icon_theme_load_surface (icon_theme,
+				button->priv->filename,
+				button->priv->size,
+				scale,
+				NULL,
+				GTK_ICON_LOOKUP_FORCE_SIZE | GTK_ICON_LOOKUP_FORCE_SVG,
+				NULL);
+
+		/*fallback to catch the case of custom icons in x11*/
+		if (!button->priv->surface && GDK_IS_X11_DISPLAY (display))
 		{
-		    button->priv->surface =
-			    panel_load_icon (button->priv->icon_theme,
+			button->priv->surface =
+				panel_load_icon (button->priv->icon_theme,
 					 button->priv->filename,
 					 button->priv->size * scale,
 					 (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size * scale : -1,
 					 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size * scale: -1,
 					 &error);
 		}
-		else
+		else if (!button->priv->surface)
 		{
-		    button->priv->surface =
-			    panel_load_icon (button->priv->icon_theme,
-					 button->priv->filename,
-					 button->priv->size * scale,
-					 (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size  : -1,
-					 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size  : -1,
-					 &error);
+			/*fallback to catch the case of custom icons not in x11*/
+			button->priv->needs_move = TRUE;
+			button->priv->surface =
+				panel_load_icon (button->priv->icon_theme,
+					button->priv->filename,
+					button->priv->size * scale,
+					(button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size  : -1,
+					(button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size  : -1,
+					&error);
 		}
-	
 		if (error) {
-			/* FIXME: this is not rendered at button->priv->size */
+			/*Last fallback for case of icon not found
+			* FIXME: this is not rendered at button->priv->size
+			*/
+			button->priv->needs_move = FALSE;
 			GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
-			button->priv->surface = gtk_icon_theme_load_surface (icon_theme,
-							       "image-missing",
-							       GTK_ICON_SIZE_BUTTON,
-							       scale,
-							       NULL,
-							       GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
-							       NULL);
+			button->priv->surface =
+				gtk_icon_theme_load_surface (icon_theme,
+					"image-missing",
+					GTK_ICON_SIZE_BUTTON,
+					scale,
+					NULL,
+					GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
+					NULL);
 			g_free (error);
 		}
 	}
@@ -365,7 +383,6 @@ button_widget_draw (GtkWidget *widget,
 	int height;
 	GtkStyleContext *context;
 	GtkStateFlags state_flags;
-	GdkDisplay *display;
 	int off;
 	int x, y, w, h;
 	int scale;
@@ -387,21 +404,19 @@ button_widget_draw (GtkWidget *widget,
 		(state_flags & GTK_STATE_FLAG_PRELIGHT) && (state_flags & GTK_STATE_FLAG_ACTIVE)) ?
 		BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
 
-	display = gdk_display_get_default ();
-	if  (GDK_IS_X11_DISPLAY (display))
+	if (button_widget->priv->needs_move)
 	{
-		w = cairo_image_surface_get_width (button_widget->priv->surface) / scale;
-		h = cairo_image_surface_get_height (button_widget->priv->surface) / scale;
-		x = off + (width - w) / 2;
-		y = off + (height - h) / 2;
+		/*This is for custom icons using the older code in wayland*/
+		w = cairo_image_surface_get_width (button_widget->priv->surface);
+		h = cairo_image_surface_get_height (button_widget->priv->surface);
 	}
 	else
 	{
-		w = cairo_image_surface_get_width (button_widget->priv->surface);
-		h = cairo_image_surface_get_height (button_widget->priv->surface);
-		x = off + (width - w) / 2;
-		y = off + (height - h) / 2;
+		w = cairo_image_surface_get_width (button_widget->priv->surface) / scale;
+		h = cairo_image_surface_get_height (button_widget->priv->surface) / scale;
 	}
+	x = off + (width - w) / 2;
+	y = off + (height - h) / 2;
 
 	cairo_save (cr);
 
