@@ -57,12 +57,12 @@ G_DEFINE_TYPE_WITH_PRIVATE (ButtonWidget, button_widget, GTK_TYPE_BUTTON)
 static void
 do_colorshift (cairo_surface_t *dest, cairo_surface_t *src, int shift)
 {
-    gint i, j;
-    gint width, height, has_alpha, srcrowstride, destrowstride;
+    gint    i, j;
+    gint    width, height, has_alpha, srcrowstride, destrowstride;
     guchar *target_pixels;
     guchar *original_pixels;
-    int val;
-    guchar r,g,b;
+    int     val;
+    guchar  r,g,b;
 
     has_alpha = cairo_surface_get_content (src) != CAIRO_CONTENT_COLOR;
     width = cairo_image_surface_get_width (src);
@@ -94,16 +94,16 @@ do_colorshift (cairo_surface_t *dest, cairo_surface_t *src, int shift)
 static cairo_surface_t *
 make_hc_surface (cairo_surface_t *surface)
 {
-    cairo_t *cr;
+    cairo_t         *cr;
     cairo_surface_t *new;
 
     if (!surface)
         return NULL;
 
     new = cairo_surface_create_similar (surface,
-                                       cairo_surface_get_content (surface),
-                                       cairo_image_surface_get_width (surface),
-                                       cairo_image_surface_get_height (surface));
+                                        cairo_surface_get_content (surface),
+                                        cairo_image_surface_get_width (surface),
+                                        cairo_image_surface_get_height (surface));
 
     do_colorshift (new, surface, 30);
 
@@ -119,17 +119,17 @@ static void
 button_widget_realize(GtkWidget *widget)
 {
     gtk_widget_add_events (widget, GDK_POINTER_MOTION_MASK |
-                   GDK_POINTER_MOTION_HINT_MASK |
-                   GDK_KEY_PRESS_MASK);
+                           GDK_POINTER_MOTION_HINT_MASK |
+                           GDK_KEY_PRESS_MASK);
 
     GTK_WIDGET_CLASS (button_widget_parent_class)->realize (widget);
 
     BUTTON_WIDGET (widget)->priv->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
     g_signal_connect_object (BUTTON_WIDGET (widget)->priv->icon_theme,
-                            "changed",
-                            G_CALLBACK (button_widget_icon_theme_changed),
-                            widget,
-                            G_CONNECT_SWAPPED);
+                             "changed",
+                             G_CALLBACK (button_widget_icon_theme_changed),
+                             widget,
+                             G_CONNECT_SWAPPED);
 
     button_widget_reload_surface (BUTTON_WIDGET (widget));
 }
@@ -138,8 +138,8 @@ static void
 button_widget_unrealize (GtkWidget *widget)
 {
     g_signal_handlers_disconnect_by_func (BUTTON_WIDGET (widget)->priv->icon_theme,
-                                         G_CALLBACK (button_widget_icon_theme_changed),
-                                         widget);
+                                          G_CALLBACK (button_widget_icon_theme_changed),
+                                          widget);
 
     GTK_WIDGET_CLASS (button_widget_parent_class)->unrealize (widget);
 }
@@ -149,10 +149,12 @@ button_widget_unset_surfaces (ButtonWidget *button)
 {
     if (button->priv->surface)
         cairo_surface_destroy (button->priv->surface);
+
     button->priv->surface = NULL;
 
     if (button->priv->surface_hc)
         cairo_surface_destroy (button->priv->surface_hc);
+
     button->priv->surface_hc = NULL;
 }
 
@@ -160,15 +162,14 @@ static void
 button_widget_reload_surface (ButtonWidget *button)
 {
     GdkDisplay *display;
-    gint scale;
+    gint       scale;
     button_widget_unset_surfaces (button);
 
     button->priv->needs_move = FALSE;
     if (button->priv->size <= 1 || button->priv->icon_theme == NULL)
         return;
 
-    if (button->priv->filename != NULL &&
-        button->priv->filename [0] != '\0') {
+    if (button->priv->filename != NULL && button->priv->filename [0] != '\0') {
         char *error = NULL;
         /* icons findable in the icon theme can be handled by gtk directly*/
         display = gdk_display_get_default ();
@@ -176,52 +177,50 @@ button_widget_reload_surface (ButtonWidget *button)
         GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
         button->priv->surface =
             gtk_icon_theme_load_surface (icon_theme,
-                                        button->priv->filename,
-                                        button->priv->size,
-                                        scale,
-                                        NULL,
-                                        GTK_ICON_LOOKUP_FORCE_SIZE | GTK_ICON_LOOKUP_FORCE_SVG,
-                                        NULL);
+                                         button->priv->filename,
+                                         button->priv->size,
+                                         scale,
+                                         NULL,
+                                         GTK_ICON_LOOKUP_FORCE_SIZE | GTK_ICON_LOOKUP_FORCE_SVG,
+                                         NULL);
 
         /*fallback to catch the case of custom icons in x11*/
-        if (!button->priv->surface && GDK_IS_X11_DISPLAY (display))
-        {
+        if (!button->priv->surface && GDK_IS_X11_DISPLAY (display)) {
             button->priv->surface =
                 panel_load_icon (button->priv->icon_theme,
-                                button->priv->filename,
-                                button->priv->size * scale,
-                                (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size * scale : -1,
-                                (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size * scale: -1,
-                                &error);
+                                 button->priv->filename,
+                                 button->priv->size * scale,
+                                 (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size * scale : -1,
+                                 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size * scale: -1,
+                                 &error);
         }
-        else if (!button->priv->surface)
-        {
+        else if (!button->priv->surface) {
             /*fallback to catch the case of custom icons not in x11*/
             button->priv->needs_move = TRUE;
             button->priv->surface =
                 panel_load_icon (button->priv->icon_theme,
-                                button->priv->filename,
-                                button->priv->size * scale,
-                                (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size  : -1,
-                                (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size  : -1,
-                                &error);
+                                 button->priv->filename,
+                                 button->priv->size * scale,
+                                 (button->priv->orientation & PANEL_VERTICAL_MASK)   ? button->priv->size  : -1,
+                                 (button->priv->orientation & PANEL_HORIZONTAL_MASK) ? button->priv->size  : -1,
+                                 &error);
         }
-        if (error)
-        {
+        if (error) {
             /*Last fallback for case of icon not found
             * FIXME: this is not rendered at button->priv->size
             */
             button->priv->needs_move = FALSE;
-            GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
+            GtkIconTheme *icon_theme = gtk_icon_theme_get_default ();
             button->priv->surface =
                 gtk_icon_theme_load_surface (icon_theme,
-                                            "image-missing",
-                                            GTK_ICON_SIZE_BUTTON,
-                                            scale,
-                                            NULL,
-                                            GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
-                                            NULL);
-                                            g_free (error);
+                                             "image-missing",
+                                             GTK_ICON_SIZE_BUTTON,
+                                             scale,
+                                             NULL,
+                                             GTK_ICON_LOOKUP_FORCE_SVG | GTK_ICON_LOOKUP_USE_BUILTIN,
+                                             NULL);
+
+            g_free (error);
         }
     }
 
@@ -251,9 +250,9 @@ button_widget_finalize (GObject *object)
 
 static void
 button_widget_get_property (GObject    *object,
-                guint       prop_id,
-                GValue     *value,
-                GParamSpec *pspec)
+                            guint       prop_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
 {
     ButtonWidget *button;
 
@@ -288,9 +287,9 @@ button_widget_get_property (GObject    *object,
 
 static void
 button_widget_set_property (GObject      *object,
-                guint         prop_id,
-                const GValue *value,
-                GParamSpec   *pspec)
+                            guint         prop_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
 {
     ButtonWidget *button;
 
@@ -325,12 +324,12 @@ button_widget_set_property (GObject      *object,
 
 static GtkArrowType
 calc_arrow (PanelOrientation  orientation,
-        int               button_width,
-        int               button_height,
-        int              *x,
-        int              *y,
-        gdouble          *angle,
-        gdouble          *size)
+            int               button_width,
+            int               button_height,
+            int              *x,
+            int              *y,
+            gdouble          *angle,
+            gdouble          *size)
 {
     GtkArrowType retval = GTK_ARROW_UP;
 
@@ -377,16 +376,16 @@ calc_arrow (PanelOrientation  orientation,
 
 static gboolean
 button_widget_draw (GtkWidget *widget,
-            cairo_t *cr)
+                    cairo_t   *cr)
 {
-    ButtonWidget *button_widget;
-    int width;
-    int height;
+    ButtonWidget    *button_widget;
+    int              width;
+    int              height;
     GtkStyleContext *context;
-    GtkStateFlags state_flags;
-    int off;
-    int x, y, w, h;
-    int scale;
+    GtkStateFlags    state_flags;
+    int              off;
+    int              x, y, w, h;
+    int              scale;
 
     g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
@@ -405,14 +404,12 @@ button_widget_draw (GtkWidget *widget,
         (state_flags & GTK_STATE_FLAG_PRELIGHT) && (state_flags & GTK_STATE_FLAG_ACTIVE)) ?
         BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
 
-    if (button_widget->priv->needs_move)
-    {
+    if (button_widget->priv->needs_move) {
         /*This is for custom icons using the older code in wayland*/
         w = cairo_image_surface_get_width (button_widget->priv->surface);
         h = cairo_image_surface_get_height (button_widget->priv->surface);
     }
-    else
-    {
+    else {
         w = cairo_image_surface_get_width (button_widget->priv->surface) / scale;
         h = cairo_image_surface_get_height (button_widget->priv->surface) / scale;
     }
@@ -426,10 +423,12 @@ button_widget_draw (GtkWidget *widget,
         cairo_mask_surface (cr, button_widget->priv->surface, x, y);
         cairo_set_operator (cr, CAIRO_OPERATOR_HSL_SATURATION);
         cairo_set_source_rgba (cr, 0, 0, 0, 0.2);
-    } else if (panel_global_config_get_highlight_when_over () &&
-           (state_flags & GTK_STATE_FLAG_PRELIGHT || gtk_widget_has_focus (widget))) {
+    }
+    else if (panel_global_config_get_highlight_when_over () &&
+        (state_flags & GTK_STATE_FLAG_PRELIGHT || gtk_widget_has_focus (widget))) {
         cairo_set_source_surface (cr, button_widget->priv->surface_hc, x, y);
-    } else {
+    }
+    else {
         cairo_set_source_surface (cr, button_widget->priv->surface, x, y);
     }
 
@@ -444,9 +443,9 @@ button_widget_draw (GtkWidget *widget,
         gtk_style_context_set_state (context, state_flags);
 
         calc_arrow (button_widget->priv->orientation,
-                     width, height,
-                     &x, &y,
-                     &angle, &size);
+                    width, height,
+                    &x, &y,
+                    &angle, &size);
 
         cairo_save (cr);
         gtk_render_arrow (context, cr, angle, x, y, size);
@@ -456,7 +455,6 @@ button_widget_draw (GtkWidget *widget,
     }
 
     if (button_widget->priv->dnd_highlight) {
-
         cairo_save (cr);
         cairo_set_line_width (cr, 1);
         cairo_set_source_rgb (cr, 0., 0., 0.);
@@ -481,8 +479,8 @@ button_widget_draw (GtkWidget *widget,
 
 static void
 button_widget_get_preferred_width (GtkWidget *widget,
-                   gint *minimal_width,
-                   gint *natural_width)
+                                   gint      *minimal_width,
+                                   gint      *natural_width)
 {
     ButtonWidget *button_widget = BUTTON_WIDGET (widget);
     GtkWidget *parent;
@@ -490,11 +488,11 @@ button_widget_get_preferred_width (GtkWidget *widget,
 
     parent = gtk_widget_get_parent (widget);
 
-    if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK){
+    if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK) {
         size = gtk_widget_get_allocated_height (parent);
 
         /* should get this value (50) from gsettings, user defined value in properties of the panel (max_icon_size) OR use 48*/
-        if ( size > 50 )
+        if (size > 50)
             size = 50;
 
     } else
@@ -505,8 +503,8 @@ button_widget_get_preferred_width (GtkWidget *widget,
 
 static void
 button_widget_get_preferred_height (GtkWidget *widget,
-                    gint *minimal_height,
-                    gint *natural_height)
+                                    gint *minimal_height,
+                                    gint *natural_height)
 {
     ButtonWidget *button_widget = BUTTON_WIDGET (widget);
     GtkWidget *parent;
@@ -520,9 +518,8 @@ button_widget_get_preferred_height (GtkWidget *widget,
         size = gtk_widget_get_allocated_width (parent);
 
         /* should get this value (50) from gsettings, user defined value in properties of the panel (max_icon_size) OR use 48*/
-        if ( size > 50 )
+        if (size > 50)
             size = 50;
-
     }
 
     *minimal_height = *natural_height = size;
@@ -530,18 +527,19 @@ button_widget_get_preferred_height (GtkWidget *widget,
 
 static void
 button_widget_size_allocate (GtkWidget     *widget,
-                 GtkAllocation *allocation)
+                             GtkAllocation *allocation)
 {
     ButtonWidget *button_widget = BUTTON_WIDGET (widget);
     int           size;
 
     /* should get this value (50) from gsettings, user defined value in properties of the panel (max_icon_size) OR use 48?*/
     if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK) {
-        if ( allocation->height > 50 ) {
+        if (allocation->height > 50) {
             allocation->width = 50;
         }
-    } else {
-        if ( allocation->width > 50 ) {
+    }
+    else {
+        if (allocation->width > 50) {
             allocation->height = 50;
         }
     }
@@ -599,7 +597,8 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 }
 
 static gboolean
-button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
+button_widget_enter_notify (GtkWidget        *widget,
+                            GdkEventCrossing *event)
 {
     gboolean in_button;
 
@@ -619,7 +618,8 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 }
 
 static gboolean
-button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
+button_widget_leave_notify (GtkWidget        *widget,
+                            GdkEventCrossing *event)
 {
     gboolean in_button;
 
@@ -670,93 +670,93 @@ button_widget_class_init (ButtonWidgetClass *klass)
     gobject_class->get_property = button_widget_get_property;
     gobject_class->set_property = button_widget_set_property;
 
-    widget_class->realize            = button_widget_realize;
-    widget_class->unrealize          = button_widget_unrealize;
-    widget_class->size_allocate      = button_widget_size_allocate;
-    widget_class->get_preferred_width = button_widget_get_preferred_width;
+    widget_class->realize              = button_widget_realize;
+    widget_class->unrealize            = button_widget_unrealize;
+    widget_class->size_allocate        = button_widget_size_allocate;
+    widget_class->get_preferred_width  = button_widget_get_preferred_width;
     widget_class->get_preferred_height = button_widget_get_preferred_height;
-    widget_class->draw               = button_widget_draw;
-    widget_class->button_press_event = button_widget_button_press;
-    widget_class->enter_notify_event = button_widget_enter_notify;
-    widget_class->leave_notify_event = button_widget_leave_notify;
+    widget_class->draw                 = button_widget_draw;
+    widget_class->button_press_event   = button_widget_button_press;
+    widget_class->enter_notify_event   = button_widget_enter_notify;
+    widget_class->leave_notify_event   = button_widget_leave_notify;
 
     button_class->activate = button_widget_activate;
 
     g_object_class_install_property (
-            gobject_class,
-            PROP_ACTIVATABLE,
-            g_param_spec_boolean ("activatable",
-                          "Activatable",
-                          "Whether the button is activatable",
-                          TRUE,
-                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+        gobject_class,
+        PROP_ACTIVATABLE,
+        g_param_spec_boolean ("activatable",
+                              "Activatable",
+                              "Whether the button is activatable",
+                              TRUE,
+                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     g_object_class_install_property (
-            gobject_class,
-            PROP_IGNORE_LEAVE,
-            g_param_spec_boolean ("ignore-leave",
-                          "Ignore leaving to not unhighlight the icon",
-                          "Whether or not to unhighlight the icon when the cursor leaves it",
-                          FALSE,
-                          G_PARAM_READWRITE));
+        gobject_class,
+        PROP_IGNORE_LEAVE,
+        g_param_spec_boolean ("ignore-leave",
+                              "Ignore leaving to not unhighlight the icon",
+                              "Whether or not to unhighlight the icon when the cursor leaves it",
+                              FALSE,
+                              G_PARAM_READWRITE));
 
     g_object_class_install_property (
-            gobject_class,
-            PROP_HAS_ARROW,
-            g_param_spec_boolean ("has-arrow",
-                          "Has Arrow",
-                          "Whether or not to draw an arrow indicator",
-                          FALSE,
-                          G_PARAM_READWRITE));
+        gobject_class,
+        PROP_HAS_ARROW,
+        g_param_spec_boolean ("has-arrow",
+                              "Has Arrow",
+                              "Whether or not to draw an arrow indicator",
+                              FALSE,
+                              G_PARAM_READWRITE));
 
     g_object_class_install_property (
-            gobject_class,
-            PROP_DND_HIGHLIGHT,
-            g_param_spec_boolean ("dnd-highlight",
-                          "Drag and drop Highlight",
-                          "Whether or not to highlight the icon during drag and drop",
-                          FALSE,
-                          G_PARAM_READWRITE));
+        gobject_class,
+        PROP_DND_HIGHLIGHT,
+        g_param_spec_boolean ("dnd-highlight",
+                              "Drag and drop Highlight",
+                              "Whether or not to highlight the icon during drag and drop",
+                              FALSE,
+                              G_PARAM_READWRITE));
 
     g_object_class_install_property (
-            gobject_class,
-            PROP_ORIENTATION,
-            g_param_spec_enum ("orientation",
-                       "Orientation",
-                       "The ButtonWidget orientation",
-                       PANEL_TYPE_ORIENTATION,
-                       PANEL_ORIENTATION_TOP,
-                       G_PARAM_READWRITE));
+        gobject_class,
+        PROP_ORIENTATION,
+        g_param_spec_enum ("orientation",
+                           "Orientation",
+                           "The ButtonWidget orientation",
+                           PANEL_TYPE_ORIENTATION,
+                           PANEL_ORIENTATION_TOP,
+                           G_PARAM_READWRITE));
 
     g_object_class_install_property (
-            gobject_class,
-            PROP_ICON_NAME,
-            g_param_spec_string ("icon-name",
-                         "Icon Name",
-                         "The desired icon for the ButtonWidget",
-                         NULL,
-                         G_PARAM_READWRITE));
+        gobject_class,
+        PROP_ICON_NAME,
+        g_param_spec_string ("icon-name",
+                             "Icon Name",
+                             "The desired icon for the ButtonWidget",
+                             NULL,
+                             G_PARAM_READWRITE));
 }
 
 GtkWidget *
 button_widget_new (const char       *filename,
-           gboolean          arrow,
-           PanelOrientation  orientation)
+                   gboolean          arrow,
+                   PanelOrientation  orientation)
 {
     GtkWidget *retval;
 
     retval = g_object_new (BUTTON_TYPE_WIDGET,
-                          "has-arrow", arrow,
-                          "orientation", orientation,
-                          "icon-name", filename,
-                           NULL);
+                           "has-arrow", arrow,
+                           "orientation", orientation,
+                           "icon-name", filename,
+                            NULL);
 
     return retval;
 }
 
 void
 button_widget_set_activatable (ButtonWidget *button,
-                   gboolean      activatable)
+                               gboolean      activatable)
 {
     g_return_if_fail (BUTTON_IS_WIDGET (button));
 
@@ -782,7 +782,7 @@ button_widget_get_activatable (ButtonWidget *button)
 
 void
 button_widget_set_icon_name (ButtonWidget *button,
-                 const char   *icon_name)
+                             const char   *icon_name)
 {
     g_return_if_fail (BUTTON_IS_WIDGET (button));
 
@@ -810,7 +810,7 @@ button_widget_get_icon_name (ButtonWidget *button)
 
 void
 button_widget_set_orientation (ButtonWidget     *button,
-                   PanelOrientation  orientation)
+                               PanelOrientation  orientation)
 {
     g_return_if_fail (BUTTON_IS_WIDGET (button));
 
@@ -837,7 +837,7 @@ button_widget_get_orientation (ButtonWidget *button)
 
 void
 button_widget_set_has_arrow (ButtonWidget *button,
-                 gboolean      has_arrow)
+                             gboolean      has_arrow)
 {
     g_return_if_fail (BUTTON_IS_WIDGET (button));
 
@@ -863,7 +863,7 @@ button_widget_get_has_arrow (ButtonWidget *button)
 
 void
 button_widget_set_dnd_highlight (ButtonWidget *button,
-                 gboolean      dnd_highlight)
+                                 gboolean      dnd_highlight)
 {
     g_return_if_fail (BUTTON_IS_WIDGET (button));
 
@@ -889,7 +889,7 @@ button_widget_get_dnd_highlight (ButtonWidget *button)
 
 void
 button_widget_set_ignore_leave (ButtonWidget *button,
-                gboolean      ignore_leave)
+                                gboolean      ignore_leave)
 {
     g_return_if_fail (BUTTON_IS_WIDGET (button));
 
