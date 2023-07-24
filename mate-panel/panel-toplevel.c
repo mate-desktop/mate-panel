@@ -4220,6 +4220,10 @@ panel_toplevel_finalize (GObject *object)
 static void
 panel_toplevel_class_init (PanelToplevelClass *klass)
 {
+	GdkDisplay *display;
+
+	display = gdk_screen_get_display (gdk_screen_get_default());
+
 	GObjectClass      *gobject_class   = (GObjectClass      *) klass;
 	GtkWidgetClass    *widget_class    = (GtkWidgetClass    *) klass;
 	GtkContainerClass *container_class = (GtkContainerClass *) klass;
@@ -4246,7 +4250,9 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->button_release_event = panel_toplevel_button_release_event;
 	widget_class->configure_event      = panel_toplevel_configure_event;
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
-	widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
+	if (GDK_IS_X11_DISPLAY(display))
+		widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
+
 	widget_class->enter_notify_event   = panel_toplevel_enter_notify_event;
 	widget_class->leave_notify_event   = panel_toplevel_leave_notify_event;
 	widget_class->screen_changed       = panel_toplevel_screen_changed;
