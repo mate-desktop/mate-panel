@@ -141,7 +141,7 @@ static void
 setup_gsettings (NaTrayApplet *applet)
 {
   applet->priv->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (applet), NA_TRAY_SCHEMA);
-  g_signal_connect (applet->priv->settings, "changed::" KEY_MIN_ICON_SIZE, G_CALLBACK (gsettings_changed_min_icon_size), applet);
+  g_signal_connect_object (G_OBJECT(applet->priv->settings), "changed::" KEY_MIN_ICON_SIZE, G_CALLBACK (gsettings_changed_min_icon_size), applet, 0);
 }
 
 static void
