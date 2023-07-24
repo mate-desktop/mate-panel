@@ -3499,6 +3499,15 @@ static gboolean
 panel_toplevel_motion_notify_event (GtkWidget      *widget,
 				    GdkEventMotion *event)
 {
+	PanelToplevel*   toplevel = (PanelToplevel*) widget;
+#ifdef HAVE_WAYLAND
+	/*FIXME: this disables dragging the panel in wayland entirely
+	 *But it hasn't worked properl in wayland ever
+	 *We also need to stop the cursor changing to the hand symbol given this
+	 */
+	if ((toplevel->priv->expand = TRUE) && ((GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))))
+		return FALSE;
+#endif
 	if (gdk_event_get_screen ((GdkEvent *)event) ==
 	    gtk_window_get_screen (GTK_WINDOW (widget)))
 		return panel_toplevel_handle_grab_op_motion_event (
