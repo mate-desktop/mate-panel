@@ -475,6 +475,16 @@ static void panel_toplevel_begin_grab_op(PanelToplevel* toplevel, PanelGrabOpTyp
 	GdkSeat *seat;
 	GdkSeatCapabilities capabilities;
 
+#ifdef HAVE_WAYLAND
+	/*FIXME: this disables dragging the panel in wayland entirely
+	 *But it hasn't worked properly in wayland ever (panel "jumps to top or left)
+	 *and a nonexpanded panel is forcibly centered by gtk-layer-shell so cannot
+	 *be dragged along the screen edge
+	 */
+	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
+		return;
+#endif
+
 	if (toplevel->priv->state != PANEL_STATE_NORMAL ||
 	    toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
 		return;
@@ -3498,6 +3508,15 @@ static gboolean
 panel_toplevel_motion_notify_event (GtkWidget      *widget,
 				    GdkEventMotion *event)
 {
+#ifdef HAVE_WAYLAND
+	/*FIXME: this disables dragging the panel in wayland entirely
+	 *But it hasn't worked properly in wayland ever (panel "jumps to top or left)
+	 *and a nonexpanded panel is forcibly centered by gtk-layer-shell so cannot
+	 *be dragged along the screen edge
+	 */
+	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
+		return FALSE;
+#endif
 	if (gdk_event_get_screen ((GdkEvent *)event) ==
 	    gtk_window_get_screen (GTK_WINDOW (widget)))
 		return panel_toplevel_handle_grab_op_motion_event (
