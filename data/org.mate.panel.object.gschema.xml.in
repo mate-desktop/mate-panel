@@ -33,37 +33,37 @@
     <key name="applet-iid" type="s">
       <default>''</default>
       <summary>Applet IID</summary>
-      <description>The implementation ID of the applet - e.g. "ClockAppletFactory::ClockApplet". This key is only relevant if the object_type key is "external-applet" (or the deprecated "matecomponent-applet").</description>
+      <description>The implementation ID of the applet - e.g. "ClockAppletFactory::ClockApplet". This key is only relevant if the object-type key is 'applet'.</description>
     </key>
     <key name="attached-toplevel-id" type="s">
       <default>''</default>
       <summary>Panel attached to drawer</summary>
-      <description>The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is "drawer-object".</description>
+      <description>The identifier of the panel attached to this drawer. This key is only relevant if the object-type key is 'drawer'.</description>
     </key>
     <key name="tooltip" type="s">
       <default>''</default>
       <summary>Tooltip displayed for drawer or menu</summary>
-      <description>The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is "drawer-object" or "menu-object".</description>
+      <description>The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object-type key is 'drawer' or 'menu'.</description>
     </key>
     <key name="use-custom-icon" type="b">
       <default>false</default>
       <summary>Use custom icon for object's button</summary>
-      <description>If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is "menu-object" or "drawer-object".</description>
+      <description>If true, the custom_icon key is used as a custom icon for the button. If false, the custom-icon key is ignored. This key is only relevant if the object-type key is 'menu' or 'drawer-object'.</description>
     </key>
     <key name="custom-icon" type="s">
       <default>''</default>
       <summary>Icon used for object's button</summary>
-      <description>The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is "drawer-object" or "menu-object" and the use_custom_icon key is true.</description>
+      <description>The location of the image file used as the icon for the object's button. This key is only relevant if the object-type key is 'drawer' or 'menu' and the use-custom-icon key is true.</description>
     </key>
     <key name="use-menu-path" type="b">
       <default>false</default>
       <summary>Use custom path for menu contents</summary>
-      <description>If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is "menu-object".</description>
+      <description>If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu-path key is ignored. This key is only relevant if the object-type key is 'menu'.</description>
     </key>
     <key name="menu-path" type="s">
       <default>'applications:/'</default>
       <summary>Menu content path</summary>
-      <description>The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is "menu-object".</description>
+      <description>The path from which the menu contents is contructed. This key is only relevant if the use-menu-path key is true and the object-type key is 'menu'.</description>
     </key>
     <key name="has-arrow" type="b">
       <default>true</default>
@@ -73,12 +73,12 @@
     <key name="launcher-location" type="s">
       <default>''</default>
       <summary>Launcher location</summary>
-      <description>The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is "launcher-object".</description>
+      <description>The location of the .desktop file describing the launcher. This key is only relevant if the object-type key is 'launcher'.</description>
     </key>
     <key name="action-type" enum="org.mate.panel.PanelActionButtonType">
       <default>'none'</default>
       <summary>Action button type</summary>
-      <description>The action type this button represents. Possible values are "lock", "logout", "run", "search" and "screenshot". This key is only relevant if the object_type key is "action-applet".</description>
+      <description>The action type this button represents. Possible values are 'none', 'lock', 'logout', 'run', 'search', 'force-quit', 'connect-server' and 'shutdown'. This key is only relevant if the object-type key is 'action'.</description>
     </key>
   </schema>
 </schemalist>
