@@ -31,6 +31,9 @@
 #include "wayland-backend.h"
 #include "wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h"
 
+/*shorter than wnck-tasklist due to common use of larger fonts*/
+#define TASKLIST_TEXT_MAX_WIDTH 16
+
 /*In the future this could be changable from the panel-prefs dialog*/
 static const int max_button_width = 180;
 static const int icon_size = 16;
@@ -552,7 +555,7 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	task->icon = gtk_image_new_from_icon_name ("unknown", icon_size);
 
 	task->label = gtk_label_new ("");
-	gtk_label_set_width_chars (GTK_LABEL (task->label), -1);
+	gtk_label_set_max_width_chars (GTK_LABEL (task->label), TASKLIST_TEXT_MAX_WIDTH);
 	gtk_label_set_ellipsize (GTK_LABEL (task->label), PANGO_ELLIPSIZE_END);
 	gtk_label_set_xalign (GTK_LABEL (task->label), 0.0);
 
