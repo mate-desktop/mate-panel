@@ -61,6 +61,11 @@
 #include "panel-force-quit.h"
 #endif
 
+#ifdef HAVE_WAYLAND
+#include <gdk/gdkwayland.h>
+
+#endif
+
 enum {
 	PROP_0,
 	PROP_ACTION_TYPE,
@@ -213,13 +218,202 @@ panel_action_logout (GtkWidget *widget)
 						      PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL);
 }
 
+/* Shutdown
+ */
+#ifdef HAVE_WAYLAND
+static void
+show_error_dialog (GtkWidget *label)
+{
+	GtkWidget *dialog, *box, *content_area, *button, *image;
+	dialog = gtk_dialog_new ();
+	button = gtk_dialog_add_button (GTK_DIALOG(dialog),
+			       "Cancel",
+			       GTK_RESPONSE_CANCEL);
+
+	image = gtk_image_new_from_icon_name ("process-stop", GTK_ICON_SIZE_MENU);
+	gtk_button_set_image (GTK_BUTTON (button), image);
+
+	content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	gtk_box_pack_start (GTK_BOX (box), label, TRUE, TRUE, 6);
+	gtk_container_set_border_width (GTK_CONTAINER (box), 16);
+	gtk_container_add (GTK_CONTAINER (content_area), box);
+	g_signal_connect_swapped (dialog, "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  dialog);
+
+	gtk_widget_show_all (dialog);
+}
+static void wayland_shutdown_response_cb (GtkWidget *dialog, gint response_id)
+	{
+		int ret;
+
+		if (response_id == GTK_RESPONSE_CANCEL)
+		{
+			gtk_widget_destroy (dialog);
+			return;
+		}
+
+		if (response_id == GTK_RESPONSE_OK)
+		{
+			gtk_widget_destroy (dialog);
+			system ("shutdown now");
+			/*Try the system shutdown command first.
+			 *This will fail if root is logged in
+			 *Note that if -f --force was used this would block proper unmounting
+			 *if this fails try systemd in case it's installed as it commonly is
+			 *FIXME: we also need a logind equivalent for non-systemd users
+			 *with session managers running as root
+			 */
+			system ("systemctl poweroff -i");
+			return;
+		}
+
+		if (response_id == GTK_RESPONSE_ACCEPT)
+		{
+			gtk_widget_destroy (dialog);
+			system ("reboot now");
+			/*Same approach as shutdown command
+			 *FIXME: we also need a logind equivalent for non-systemd users
+			 *with session managers running as root
+			 */
+			system ("systemctl reboot -i");
+			return;
+		}
+
+		if (response_id == GTK_RESPONSE_REJECT)
+		{
+			gtk_widget_destroy (dialog);
+			/*FIXME: we also need a logind equivalent for non-systemd users
+			 *with session managers running as root
+			 */
+			ret = system ("systemctl hibernate -i");
+			if (ret != 0)
+			{
+				GtkWidget *label;
+				label = gtk_label_new ("Hibernation not supported on this system" "\n" "\n"
+						      "The \"resume = \"  boot command line option must be set to a swap partition or file" "\n"
+						      "Swapfile or partition must be large enough to support hibernation" "\n"
+						      "System and hardware must support hibernation");
+				show_error_dialog (label);
+			}
+			return;
+		}
+
+		if (response_id == GTK_RESPONSE_APPLY)
+		{
+			gtk_widget_destroy (dialog);
+			/*FIXME: we also need a logind equivalent for non-systemd users
+			 *with session managers running as root
+			 */
+			ret = system ("systemctl suspend -i");
+			if (ret != 0)
+			{
+				GtkWidget *label;
+				label = gtk_label_new ("Suspend not supported on this system" "\n" "\n"
+						      "Hardware and Firmware must support sleep / suspend");
+				show_error_dialog (label);
+			}
+
+			return;
+		}
+	}
+
+static GtkWidget*
+wayland_shutdown_dialog_add_button (GtkDialog   *dialog,
+				    const gchar *button_text,
+				    const gchar *icon_name,
+				    gint         response_id)
+{
+	GtkWidget *button;
+
+	button = gtk_button_new_with_mnemonic (button_text);
+	gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON));
+
+	gtk_button_set_use_underline (GTK_BUTTON (button), TRUE);
+	gtk_style_context_add_class (gtk_widget_get_style_context (button), "text-button");
+	gtk_widget_set_can_default (button, TRUE);
+	gtk_widget_show (button);
+	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, response_id);
+
+	return button;
+}
+#endif
 static void
 panel_action_shutdown (GtkWidget *widget)
 {
-	PanelSessionManager *manager;
+#ifdef HAVE_WAYLAND
+	GdkDisplay *display = gdk_screen_get_display (gdk_screen_get_default ());
+	if (GDK_IS_WAYLAND_DISPLAY (display))
+	{
+		GtkWidget *dialog, *hbox, *buttonbox, *shutdown_btn, *label;
+		GtkStyleContext *context;
 
-	manager = panel_session_manager_get ();
-	panel_session_manager_request_shutdown (manager);
+		dialog = gtk_dialog_new_with_buttons ("System Shutdown",
+						     NULL,
+						     GTK_DIALOG_DESTROY_WITH_PARENT,
+						     NULL,
+						     NULL,
+						     NULL);
+
+		/*Window icons in dialogs are currently broken or unsupported
+		 *in many wayland compositors but this may not always be so
+		 */
+		gtk_window_set_icon_name (GTK_WINDOW (dialog), "system-shutdown");
+		context = gtk_widget_get_style_context (GTK_WIDGET (dialog));
+		gtk_style_context_add_class (context, "logout-dialog");
+		context = NULL;
+
+		/*We use the inbuilt gtk response types for simplicity*/
+		wayland_shutdown_dialog_add_button (GTK_DIALOG (dialog),
+						    _("S_uspend"), "battery",
+						    GTK_RESPONSE_APPLY);
+
+		wayland_shutdown_dialog_add_button (GTK_DIALOG (dialog),
+						    _("_Hibernate"), "drive-harddisk",
+						    GTK_RESPONSE_REJECT);
+
+		wayland_shutdown_dialog_add_button (GTK_DIALOG (dialog),
+						    _("_Restart"), "view-refresh",
+						    GTK_RESPONSE_ACCEPT);
+
+		wayland_shutdown_dialog_add_button (GTK_DIALOG (dialog),
+						    _("_Cancel"), "process-stop",
+						    GTK_RESPONSE_CANCEL);
+
+		shutdown_btn = wayland_shutdown_dialog_add_button (GTK_DIALOG (dialog),
+								   _("_Shut Down"), "system-shutdown",
+								   GTK_RESPONSE_OK);
+
+		g_signal_connect_swapped (dialog, "response",
+					  G_CALLBACK (wayland_shutdown_response_cb),
+					  dialog);
+
+		hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+
+		label = gtk_label_new ("Shut this system down now?");
+		gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+		gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+		gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 6);
+		gtk_container_set_border_width (GTK_CONTAINER (hbox), 16);
+		gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+						  hbox);
+		gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+		buttonbox = gtk_widget_get_parent (shutdown_btn);
+		gtk_widget_set_halign (buttonbox,GTK_ALIGN_CENTER);
+		context = gtk_widget_get_style_context (buttonbox);
+		gtk_style_context_add_class (context, "linked");
+		context = NULL;
+		gtk_widget_show_all (dialog);
+	}
+	else
+#endif
+	{
+		PanelSessionManager *manager;
+		manager = panel_session_manager_get ();
+		panel_session_manager_request_shutdown (manager);
+	}
 }
 
 static gboolean
@@ -229,7 +423,11 @@ panel_action_shutdown_reboot_is_disabled (void)
 
 	if (panel_lockdown_get_disable_log_out())
 		return TRUE;
-
+#ifdef HAVE_WAYLAND
+	GdkDisplay *display = gdk_screen_get_display (gdk_screen_get_default());
+	if (!(panel_lockdown_get_disable_log_out()) && (GDK_IS_WAYLAND_DISPLAY (display)))
+		return FALSE;
+#endif
 	manager = panel_session_manager_get ();
 
 	return (!panel_session_manager_is_shutdown_available (manager));
