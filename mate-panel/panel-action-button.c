@@ -471,7 +471,7 @@ panel_action_force_quit (GtkWidget *widget)
 	}
 #endif
 	flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-	dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
+	dialog = gtk_message_dialog_new (NULL,
 					 flags,
 					 GTK_MESSAGE_ERROR,
 					 GTK_BUTTONS_CLOSE,
