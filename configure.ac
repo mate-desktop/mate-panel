@@ -64,6 +64,7 @@ GTK_REQUIRED=3.22.0
 LIBWNCK_REQUIRED=3.4.6
 LIBWNCK_PREVIEWS_OPTIONAL=3.32.0
 WEATHER_REQUIRED=1.17.0
+RDA_REQUIRED=0.0.3
 
 dnl pkg-config dependency checks
 
@@ -243,6 +244,34 @@ if test "x$have_randr" = "xyes"; then
   AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
 fi
 
+dnl Remote Desktop Awareness
+
+AC_ARG_ENABLE(rda,
+              [AS_HELP_STRING([--enable-rda],
+                              [Enable RDA (Remote Desktop Awareness,
+                               default is to enable only if RDA development library is detected)])],,
+              [enable_rda=$enableval],
+              [enable_rda=auto])
+
+# Check if we have librda installed, and thus should build with Wayland support
+have_rda=no
+if test "x$enable_rda" != "xno"; then
+  PKG_CHECK_MODULES(RDA, rda >= $RDA_REQUIRED, have_rda=yes, [
+        if test "x$enable_rda" = "xyes"; then
+          AC_MSG_ERROR([Remote Desktop Awareness enabled but RDA library not found])
+        fi
+    ])
+fi
+
+AM_CONDITIONAL(ENABLE_RDA, [test "x$have_rda" = "xyes"])
+
+if test "x$have_rda" = "xyes"; then
+  AC_DEFINE(HAVE_RDA, 1, [Have the Remote Desktop Awareness library])
+fi
+
+AC_SUBST(RDA_CFLAGS)
+AC_SUBST(RDA_LIBS)
+
 dnl Modules dir
 AC_SUBST([modulesdir],"\$(libdir)/mate-panel/modules")
 
@@ -381,6 +410,7 @@ echo "
         Wayland support:               ${have_wayland}
         X11 support:                   ${have_x11}
         XRandr support:                ${have_randr}
+        RDA support:                   ${have_rda}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}
 

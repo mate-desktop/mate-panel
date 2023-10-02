@@ -1,3 +1,5 @@
+#include <config.h>
+
 #ifndef PANEL_ICON_NAMES_H
 #define PANEL_ICON_NAMES_H
 
@@ -21,6 +23,9 @@
 #define PANEL_ICON_LAUNCHER		"mate-panel-launcher"
 #define PANEL_ICON_LOCKSCREEN		"system-lock-screen"
 #define PANEL_ICON_LOGOUT		"system-log-out"
+#ifdef HAVE_RDA
+#define PANEL_ICON_SUSPEND		"stock_media-pause"
+#endif
 #define PANEL_ICON_MAIN_MENU		"start-here"
 #define PANEL_ICON_NETWORK		"network-workgroup"
 #define PANEL_ICON_NETWORK_SERVER	"network-server"
