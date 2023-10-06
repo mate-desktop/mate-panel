@@ -32,6 +32,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <libmate-desktop/mate-gsettings.h>
+#include <libmate-desktop/mate-image-menu-item.h>
 #include <matemenu-tree.h>
 
 #include <libpanel-util/panel-keyfile.h>
@@ -768,7 +769,7 @@ setup_menuitem (GtkWidget   *menuitem,
 
 		gtk_icon_size_lookup (icon_size, NULL, &icon_height);
 		gtk_widget_show (image);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
+		mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (menuitem),
 					       image);
 		gtk_image_set_pixel_size (GTK_IMAGE(image), icon_height);
 	}
@@ -964,9 +965,7 @@ panel_image_menu_item_new (void)
 {
 	GtkWidget *menuitem;
 
-	menuitem = gtk_image_menu_item_new ();
-	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem),
-						   TRUE);
+	menuitem = mate_image_menu_item_new ();
 	return menuitem;
 }
 
@@ -983,7 +982,7 @@ create_submenu_entry (GtkWidget          *menu,
 	if (force_categories_icon)
 		menuitem = panel_image_menu_item_new ();
 	else
-		menuitem = gtk_image_menu_item_new ();
+		menuitem = mate_image_menu_item_new ();
 
 	setup_menuitem_with_icon (menuitem,
 				  panel_menu_icon_get_size (),

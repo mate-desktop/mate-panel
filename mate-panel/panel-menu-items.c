@@ -41,6 +41,7 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <libmate-desktop/mate-gsettings.h>
+#include <libmate-desktop/mate-image-menu-item.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -231,7 +232,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	if (use_icon) {
 		item = panel_image_menu_item_new ();
         } else {
-		item = gtk_image_menu_item_new ();
+		item = mate_image_menu_item_new ();
 	}
 
 	setup_menuitem_with_icon (item, panel_menu_icon_get_size (),
@@ -312,7 +313,7 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 	if (panel_action_get_is_disabled (action_type))
 		return NULL;
 
-	item = gtk_image_menu_item_new ();
+	item = mate_image_menu_item_new ();
         setup_menuitem_with_icon (item,
 				  panel_menu_icon_get_size (),
 				  NULL,
@@ -458,7 +459,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_
 	} else {
 		GtkWidget *item;
 
-		item = gtk_image_menu_item_new ();
+		item = mate_image_menu_item_new ();
 		setup_menuitem_with_icon (item, panel_menu_icon_get_size (),
 					  NULL, PANEL_ICON_BOOKMARKS,
 					  _("Bookmarks"));
@@ -905,7 +906,7 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	} else {
 		GtkWidget  *menu_item;
 
-		menu_item = gtk_image_menu_item_new ();
+		menu_item = mate_image_menu_item_new ();
 		setup_menuitem_with_icon (menu_item, panel_menu_icon_get_size (),
 		                          NULL,
 		                          PANEL_ICON_REMOVABLE_MEDIA,

@@ -32,6 +32,8 @@
 #include <string.h>
 #include <glib/gi18n.h>
 
+#include <libmate-desktop/mate-image-menu-item.h>
+
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-show.h>
@@ -135,12 +137,12 @@ panel_menu_bar_update_visibility (GSettings    *settings,
 			image = gtk_image_new_from_icon_name(str, icon_size);
 		else
 			image = gtk_image_new_from_icon_name(PANEL_ICON_MAIN_MENU, icon_size);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item), image);
+		mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (menubar->priv->applications_item), image);
 		gtk_image_set_pixel_size (GTK_IMAGE (image), icon_height);
 		g_free (str);
 	}
 	else
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item), NULL);
+		mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (menubar->priv->applications_item), NULL);
 }
 
 static void panel_menu_bar_init(PanelMenuBar* menubar)

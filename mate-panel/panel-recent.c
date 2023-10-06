@@ -30,6 +30,8 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
+#include <libmate-desktop/mate-image-menu-item.h>
+
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-gtk.h>
@@ -192,7 +194,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	GtkWidget      *menu_item;
 	int             size;
 
-	menu_item = gtk_image_menu_item_new ();
+	menu_item = mate_image_menu_item_new ();
 	setup_menuitem_with_icon (menu_item,
 				  panel_menu_icon_get_size (),
 				  NULL,
@@ -234,7 +236,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 
 	add_menu_separator (recent_menu);
 
-	menu_item = gtk_image_menu_item_new ();
+	menu_item = mate_image_menu_item_new ();
 	setup_menuitem_with_icon (menu_item,
 				   panel_menu_icon_get_size (),
 				   NULL,
