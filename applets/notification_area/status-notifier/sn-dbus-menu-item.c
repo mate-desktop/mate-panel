@@ -16,6 +16,7 @@
  */
 
 #include <config.h>
+#include <libmate-desktop/mate-image-menu-item.h>
 
 #include "sn-dbus-menu-item.h"
 
@@ -203,9 +204,8 @@ sn_dbus_menu_item_new (GVariant *props)
               cairo_surface_destroy (surface);
             }
 
-          item->item = gtk_image_menu_item_new ();
-          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (item->item), TRUE);
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+          item->item = mate_image_menu_item_new ();
+          mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (item->item),
                                          image);
         }
 
@@ -326,7 +326,7 @@ sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
               image = NULL;
             }
 
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+          mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (item->item),
                                          image);
         }
       else if (g_strcmp0 (prop, "icon-data") == 0)
@@ -348,7 +348,7 @@ sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
               image = NULL;
             }
 
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+          mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (item->item),
                                          image);
         }
       else if (g_strcmp0 (prop, "label") == 0)
@@ -438,18 +438,18 @@ sn_dbus_menu_item_remove_props (SnDBusMenuItem *item,
       else if (g_strcmp0 (prop, "icon-name") == 0)
         {
           g_clear_pointer (&item->icon_name, g_free);
-          if (GTK_IS_IMAGE_MENU_ITEM (item->item))
+          if (MATE_IS_IMAGE_MENU_ITEM (item->item))
             {
-              gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+              mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (item->item),
                                              NULL);
             }
         }
       else if (g_strcmp0 (prop, "icon-data") == 0)
         {
           g_clear_object (&item->icon_data);
-          if (GTK_IS_IMAGE_MENU_ITEM (item->item))
+          if (MATE_IS_IMAGE_MENU_ITEM (item->item))
             {
-              gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+              mate_image_menu_item_set_image (MATE_IMAGE_MENU_ITEM (item->item),
                                              NULL);
             }
         }
