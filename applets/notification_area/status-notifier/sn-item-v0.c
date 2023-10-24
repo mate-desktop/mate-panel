@@ -156,7 +156,7 @@ compare_size (gconstpointer a,
 }
 
 static cairo_surface_t *
-get_surface (SnItemV0       *v0,
+get_surface (SnIconPixmap  **icon_pixmap,
              GtkOrientation  orientation,
              gint            size)
 {
@@ -165,10 +165,10 @@ get_surface (SnItemV0       *v0,
   SnIconPixmap *pixmap = NULL;
   GList *l;
 
-  g_assert (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL);
+  g_assert (icon_pixmap != NULL && icon_pixmap[0] != NULL);
 
-  for (i = 0; v0->icon_pixmap[i] != NULL; i++)
-    pixmaps = g_list_prepend (pixmaps, v0->icon_pixmap[i]);
+  for (i = 0; icon_pixmap[i] != NULL; i++)
+    pixmaps = g_list_prepend (pixmaps, icon_pixmap[i]);
 
   pixmaps = g_list_sort_with_data (pixmaps, compare_size,
                                    GUINT_TO_POINTER (orientation));
@@ -234,6 +234,9 @@ get_icon_by_name (const gchar *icon_name,
                                       NULL, GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
 }
 
+#define ICON_NAME_VALID(icon_name) (icon_name && icon_name[0] != '\0')
+#define ICON_PIXMAP_VALID(icon_pixmap) (icon_pixmap && icon_pixmap[0] != NULL)
+
 static void
 update (SnItemV0 *v0)
 {
@@ -242,6 +245,9 @@ update (SnItemV0 *v0)
   SnTooltip *tip;
   gint icon_size;
   gboolean visible;
+  const gchar *icon_name;
+  SnIconPixmap **icon_pixmap;
+
   g_return_if_fail (SN_IS_ITEM_V0 (v0));
 
   image = GTK_IMAGE (v0->image);
@@ -251,19 +257,34 @@ update (SnItemV0 *v0)
   else
     icon_size = MAX (1, v0->effective_icon_size);
 
-  if (v0->icon_name != NULL && v0->icon_name[0] != '\0')
+  /* If the item requests attention and has a specific icon for it, use that
+   * instead of the default icon. */
+  if (g_strcmp0 (v0->status, "NeedsAttention") == 0 &&
+      (ICON_NAME_VALID (v0->attention_icon_name) ||
+       ICON_PIXMAP_VALID (v0->attention_icon_pixmap)))
+    {
+      icon_name = v0->attention_icon_name;
+      icon_pixmap = v0->attention_icon_pixmap;
+    }
+  else
+    {
+      icon_name = v0->icon_name;
+      icon_pixmap = v0->icon_pixmap;
+    }
+
+  if (ICON_NAME_VALID (icon_name))
     {
       cairo_surface_t *surface;
       gint scale;
 
       scale = gtk_widget_get_scale_factor (GTK_WIDGET (image));
-      surface = get_icon_by_name (v0->icon_name, icon_size, scale);
+      surface = get_icon_by_name (icon_name, icon_size, scale);
 
       if (!surface)
         {
           GdkPixbuf *pixbuf;
           /*try to find icons specified by path and filename*/
-          pixbuf = gdk_pixbuf_new_from_file (v0->icon_name, NULL);
+          pixbuf = gdk_pixbuf_new_from_file (icon_name, NULL);
           if (pixbuf && icon_size > 1)
             {
               /*An icon specified by path and filename may be the wrong size for the tray */
@@ -281,11 +302,11 @@ update (SnItemV0 *v0)
       gtk_image_set_from_surface (image, surface);
       cairo_surface_destroy (surface);
     }
-  else if (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL)
+  else if (ICON_PIXMAP_VALID (icon_pixmap))
     {
       cairo_surface_t *surface;
 
-      surface = get_surface (v0,
+      surface = get_surface (icon_pixmap,
                              gtk_orientable_get_orientation (GTK_ORIENTABLE (v0)),
                              icon_size);
       if (surface != NULL)
