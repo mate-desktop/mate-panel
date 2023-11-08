@@ -82,6 +82,7 @@ jobs:
           path: mate-panel
           submodules: true
 
+      # TODO: cache mate-desktop build/install?
       - name: Checkout mate-desktop
         uses: actions/checkout@v3
         with:
@@ -147,8 +148,14 @@ jobs:
         run: cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'gtk-layer-shell-build' .
 
   debian-testing-build:
+    name: Build on Debian Testing with in-process=${{matrix.in-process}}
     runs-on: ubuntu-latest
     container: debian:testing
+
+    strategy:
+      fail-fast: false
+      matrix:
+        in-process: [all, none]
 
     env:
       CC: ccache gcc
@@ -203,7 +210,7 @@ jobs:
         run: |
           cd mate-panel
           NOCONFIGURE=1 ./autogen.sh
-          { ./configure || { cat config.log; exit 1; } ; }
+          { ./configure --with-in-process-applets=${{matrix.in-process}} || { cat config.log; exit 1; } ; }
 
       - name: Build
         run: make -C mate-panel -j ${{ env.JOBS }}
