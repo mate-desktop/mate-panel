@@ -59,104 +59,17 @@ env:
     clang-tools
 
 jobs:
-  build:
-    name: Build on Ubuntu
+  # Build on Debian and compatible
+  debian-based-build:
+    name: Build on ${{matrix.container}} with in-process=${{matrix.in-process}}
     runs-on: ubuntu-latest
-
-    env:
-      CC: ccache gcc
-      CXX: ccache g++
-      BASE_INSTALL_PATH: ${{github.workspace}}/_install
-
-    steps:
-      - name: Setup environment
-        run: |
-          echo "PATH=${BASE_INSTALL_PATH}/bin:${PATH}" >> "$GITHUB_ENV"
-          echo "PKG_CONFIG_PATH=${BASE_INSTALL_PATH}/lib/pkgconfig:${PKG_CONFIG_PATH}" >> "$GITHUB_ENV"
-
-      - name: Show environment
-        run: env | sort
-        if: ${{ env.DEBUG == '1' }}
-
-      - uses: actions/checkout@v3
-        with:
-          path: mate-panel
-          submodules: true
-
-      # TODO: cache mate-desktop build/install?
-      - name: Checkout mate-desktop
-        uses: actions/checkout@v3
-        with:
-          repository: mate-desktop/mate-desktop
-          ref: v1.27.1
-          path: mate-desktop
-          submodules: true
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install --assume-yes --no-install-recommends \
-            ${BUILD_DEPS} ${LIBRARY_DEPS}
-
-      - name: ccache
-        uses: hendrikmuhs/ccache-action@v1.2
-
-      - name: Configure mate-desktop
-        run: |
-          cd mate-desktop
-          NOCONFIGURE=1 ./autogen.sh
-          { ./configure --prefix="$BASE_INSTALL_PATH" || { cat config.log; exit 1; } ; }
-
-      - name: Build mate-desktop
-        run: make -C mate-desktop -j ${{ env.JOBS }}
-
-      - name: Install mate-desktop
-        run: make -C mate-desktop -j ${{ env.JOBS }} install
-
-      - name: Configure
-        run: |
-          cd mate-panel
-          NOCONFIGURE=1 ./autogen.sh
-          { ./configure ${CONFIGURE_FLAGS} || { cat config.log; exit 1; } ; }
-
-      - name: Build
-        run: make -C mate-panel -j ${{ env.JOBS }}
-
-      - name: Run Tests
-        run: make -C mate-panel -j ${{ env.JOBS }} check
-
-      - name: Run distcheck
-        run: make -C mate-panel -j ${{ env.JOBS }} distcheck
-
-  # Do we need the real build for cppcheck run?  I don't think so
-  cppcheck:
-    name: Run cppcheck
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      # Install code dependencies so that cppcheck has more info
-      - name: Install dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install --assume-yes --no-install-recommends \
-            cppcheck ${LIBRARY_DEPS}
-
-      - name: cppcheck
-        run: cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'gtk-layer-shell-build' .
-
-  debian-testing-build:
-    name: Build on Debian Testing with in-process=${{matrix.in-process}}
-    runs-on: ubuntu-latest
-    container: debian:testing
+    container: ${{matrix.container}}
 
     strategy:
       fail-fast: false
       matrix:
         in-process: [all, none]
+        container: ['debian:testing', 'ubuntu:rolling']
 
     env:
       CC: ccache gcc
@@ -184,6 +97,7 @@ jobs:
           path: mate-panel
           submodules: true
 
+      # TODO: cache mate-desktop build/install?
       - name: Checkout mate-desktop
         uses: actions/checkout@v3
         with:
@@ -221,3 +135,23 @@ jobs:
 
       - name: Run distcheck
         run: make -C mate-panel -j ${{ env.JOBS }} distcheck
+
+  # Do we need the real build for cppcheck run?  I don't think so
+  cppcheck:
+    name: Run cppcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      # Install code dependencies so that cppcheck has more info
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --assume-yes --no-install-recommends \
+            cppcheck ${LIBRARY_DEPS}
+
+      - name: cppcheck
+        run: cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'gtk-layer-shell-build' .
