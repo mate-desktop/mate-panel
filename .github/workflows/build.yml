@@ -134,6 +134,7 @@ jobs:
         run: make -C mate-panel -j ${{ env.JOBS }} check
 
       - name: Run distcheck
+        if: ${{ startsWith(matrix.container, 'debian:') }}
         run: make -C mate-panel -j ${{ env.JOBS }} distcheck
 
   # Do we need the real build for cppcheck run?  I don't think so
