@@ -19,7 +19,9 @@ env:
   CFLAGS: -g -O2 -Werror=pointer-arith -Werror=implicit-function-declaration
   JOBS: 2
   DEBUG: 1
-  LIBRARY_DEPS: |
+  # Useful URL: https://github.com/mate-desktop/debian-packages
+  # Useful URL: https://salsa.debian.org/debian-mate-team/mate-panel
+  DEB_LIBRARY_DEPS: |
     libatk1.0-dev
     libcairo2-dev
     libdconf-dev
@@ -38,7 +40,7 @@ env:
     libx11-dev
     libxrandr-dev
     libgirepository1.0-dev
-  BUILD_DEPS: |
+  DEB_BUILD_DEPS: |
     ccache
     autoconf-archive
     autopoint
@@ -54,13 +56,36 @@ env:
     iso-codes
     gobject-introspection
   # TODO
-  SCAN_BUILD_DEPS: |
+  DEB_SCAN_BUILD_DEPS: |
     clang
     clang-tools
+  # Useful URL: https://git.archlinux.org/svntogit/community.git/tree/mate-panel
+  # + mate-desktop dependencies
+  ARCH_BUILD_DEPS: |
+    ccache
+    autoconf-archive
+    clang
+    gcc
+    git
+    gobject-introspection
+    gtk-layer-shell
+    itstool
+    libcanberra
+    libmateweather
+    libsm
+    libwnck3
+    make
+    mate-common
+    mate-desktop
+    mate-menus
+    meson
+    which
+    yelp-tools
+    iso-codes
+    gobject-introspection
 
 jobs:
-  # Build on Debian and compatible
-  debian-based-build:
+  build:
     name: Build on ${{matrix.container}} with in-process=${{matrix.in-process}}
     runs-on: ubuntu-latest
     container: ${{matrix.container}}
@@ -69,7 +94,7 @@ jobs:
       fail-fast: false
       matrix:
         in-process: [all, none]
-        container: ['debian:testing', 'ubuntu:rolling']
+        container: ['debian:testing', 'ubuntu:rolling', 'archlinux:latest']
 
     env:
       CC: ccache gcc
@@ -86,11 +111,23 @@ jobs:
         run: env | sort
         if: ${{ env.DEBUG == '1' }}
 
+      # For Debian and Ubuntu (apt-based with reasonably compatible packages)
       - name: Install dependencies
+        if: ${{ startsWith(matrix.container, 'debian:') || startsWith(matrix.container, 'ubuntu:') }}
         run: |
           apt-get update -qq
           apt-get install --assume-yes --no-install-recommends \
-            ${BUILD_DEPS} ${LIBRARY_DEPS}
+            ${DEB_BUILD_DEPS} ${DEB_LIBRARY_DEPS}
+
+      # For ArchLinux
+      - name: Install dependencies
+        if: ${{ startsWith(matrix.container, 'archlinux:') }}
+        # don't upgrade, although told otherwise (see link below), because
+        # apparently in the container it doesn't quit work...
+        # https://wiki.archlinux.org/title/System_maintenance#Partial_upgrades_are_unsupported
+        run: |
+          pacman --noconfirm -Sy
+          pacman --noconfirm -S ${ARCH_BUILD_DEPS}
 
       - uses: actions/checkout@v3
         with:
@@ -152,7 +189,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install --assume-yes --no-install-recommends \
-            cppcheck ${LIBRARY_DEPS}
+            cppcheck ${DEB_LIBRARY_DEPS}
 
       - name: cppcheck
         run: cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'gtk-layer-shell-build' .
