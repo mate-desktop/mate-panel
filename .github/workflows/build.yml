@@ -15,6 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  CONFIGURE_FLAGS: --enable-compile-warnings=maximum
   CFLAGS: -g -O2 -Werror=pointer-arith -Werror=implicit-function-declaration
   JOBS: 2
   DEBUG: 1
@@ -116,7 +117,7 @@ jobs:
         run: |
           cd mate-panel
           NOCONFIGURE=1 ./autogen.sh
-          { ./configure || { cat config.log; exit 1; } ; }
+          { ./configure ${CONFIGURE_FLAGS} || { cat config.log; exit 1; } ; }
 
       - name: Build
         run: make -C mate-panel -j ${{ env.JOBS }}
@@ -210,7 +211,7 @@ jobs:
         run: |
           cd mate-panel
           NOCONFIGURE=1 ./autogen.sh
-          { ./configure --with-in-process-applets=${{matrix.in-process}} || { cat config.log; exit 1; } ; }
+          { ./configure ${CONFIGURE_FLAGS} --with-in-process-applets=${{matrix.in-process}} || { cat config.log; exit 1; } ; }
 
       - name: Build
         run: make -C mate-panel -j ${{ env.JOBS }}
