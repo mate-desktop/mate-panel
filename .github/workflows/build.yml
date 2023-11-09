@@ -15,6 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  MATE_PANEL_DEP: 1.27.1
   CONFIGURE_FLAGS: --enable-compile-warnings=maximum
   CFLAGS: -g -O2 -Werror=pointer-arith -Werror=implicit-function-declaration
   JOBS: 2
@@ -99,13 +100,13 @@ jobs:
     env:
       CC: ccache gcc
       CXX: ccache g++
-      BASE_INSTALL_PATH: ${{github.workspace}}/_install
+      MATE_DESKTOP_INSTALL_PATH: ${{github.workspace}}/mate-desktop-install
 
     steps:
       - name: Setup environment
         run: |
-          echo "PATH=${BASE_INSTALL_PATH}/bin:${PATH}" >> "$GITHUB_ENV"
-          echo "PKG_CONFIG_PATH=${BASE_INSTALL_PATH}/lib/pkgconfig:${PKG_CONFIG_PATH}" >> "$GITHUB_ENV"
+          echo "PATH=${MATE_DESKTOP_INSTALL_PATH}/bin:${PATH}" >> "$GITHUB_ENV"
+          echo "PKG_CONFIG_PATH=${MATE_DESKTOP_INSTALL_PATH}/lib/pkgconfig:${PKG_CONFIG_PATH}" >> "$GITHUB_ENV"
 
       - name: Show environment
         run: env | sort
@@ -134,29 +135,33 @@ jobs:
           path: mate-panel
           submodules: true
 
-      # TODO: cache mate-desktop build/install?
-      - name: Checkout mate-desktop
-        uses: actions/checkout@v3
-        with:
-          repository: mate-desktop/mate-desktop
-          ref: v1.27.1
-          path: mate-desktop
-          submodules: true
-
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2
 
-      - name: Configure mate-desktop
+      - name: Cache mate-desktop v${{env.MATE_PANEL_DEP}} dependency
+        uses: actions/cache@v3
+        id: cache-mate-desktop
+        with:
+          path: ${{env.MATE_DESKTOP_INSTALL_PATH}}
+          key: ${{runner.os}}-${{runner.arch}}-${{matrix.container}}-build-mate-desktop-${{env.MATE_PANEL_DEP}}
+
+      - name: Checkout mate-desktop v${{env.MATE_PANEL_DEP}}
+        uses: actions/checkout@v3
+        if: ${{ steps.cache-mate-desktop.outputs.cache-hit != 'true' }}
+        with:
+          repository: mate-desktop/mate-desktop
+          ref: v${{env.MATE_PANEL_DEP}}
+          path: mate-desktop
+          submodules: true
+
+      - name: Install mate-desktop v${{env.MATE_PANEL_DEP}}
+        if: ${{ steps.cache-mate-desktop.outputs.cache-hit != 'true' }}
         run: |
           cd mate-desktop
           NOCONFIGURE=1 ./autogen.sh
-          { ./configure --prefix="$BASE_INSTALL_PATH" || { cat config.log; exit 1; } ; }
-
-      - name: Build mate-desktop
-        run: make -C mate-desktop -j ${{ env.JOBS }}
-
-      - name: Install mate-desktop
-        run: make -C mate-desktop -j ${{ env.JOBS }} install
+          { ./configure --prefix="${MATE_DESKTOP_INSTALL_PATH}" || { cat config.log; exit 1; } ; }
+          make -j ${{ env.JOBS }}
+          make -j ${{ env.JOBS }} install
 
       - name: Configure
         run: |
