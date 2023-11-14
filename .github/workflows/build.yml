@@ -92,7 +92,7 @@ env:
 
 jobs:
   build:
-    name: Build on ${{matrix.container}} with in-process=${{matrix.in-process}}
+    name: Build on ${{matrix.container}} with in-process=${{matrix.in-process}} (using ${{matrix.cc}})
     runs-on: ubuntu-latest
     container: ${{matrix.container}}
 
@@ -101,11 +101,23 @@ jobs:
       matrix:
         in-process: [all, none]
         container: ['debian:testing', 'ubuntu:rolling', 'archlinux:latest']
+        cc: ['gcc']
+        cxx: ['g++']
+        include:
+          # test with clang on archlinux:latest
+          - container: 'archlinux:latest'
+            cc: 'clang'
+            cxx: 'clang++'
+            in-process: all
+          - container: 'archlinux:latest'
+            cc: 'clang'
+            cxx: 'clang++'
+            in-process: none
 
     env:
       # Speed up build with ccache
-      CC: ccache gcc
-      CXX: ccache g++
+      CC: ccache ${{matrix.cc}}
+      CXX: ccache ${{matrix.cxx}}
       # root install path for the mate-desktop dependency
       MATE_DESKTOP_INSTALL_PATH: ${{github.workspace}}/mate-desktop-install
 
