@@ -231,5 +231,37 @@ jobs:
           sudo apt-get install --assume-yes --no-install-recommends \
             cppcheck ${DEB_LIBRARY_DEPS} ${DEB_LIBRARY_DEPS_MATE_DESKTOP}
 
+      # - define relevant configuration I can think of
+      #   - X11-related stuff
+      #   - Wayland-related stuff
+      #   - in-process for Wayland
+      #   - optional features
+      # - -I flags from pkg-config (grepped from configure.ac)
+      # - ignore non-source directories
       - name: cppcheck
-        run: cppcheck --enable=warning,style,performance,portability,information,missingInclude -i'gtk-layer-shell-build' .
+        env:
+          checks: warning,style,performance,portability,information,missingInclude
+          defines: >
+            -DHAVE_X11 -DHAVE_RANDR
+            -DHAVE_WAYLAND
+            -DCLOCK_INPROCESS -DFISH_INPROCESS -DNOTIFICATION_AREA_INPROCESS -DWNCKLET_INPROCESS
+            -DHAVE_WINDOW_PREVIEWS
+            -DHAVE_LANGINFO_H -DHAVE_NL_LANGINFO
+            -DGETTEXT_PACKAGE="mate-panel"
+          packages: >
+            gdk-pixbuf-2.0
+            gio-unix-2.0
+            gmodule-2.0
+            gtk+-3.0
+            ice
+            libwnck-3.0
+            mate-desktop-2.0
+            sm
+        run: |
+          cppcheck --enable="$checks"                       \
+            -j $JOBS                                        \
+            $defines                                        \
+            $(pkg-config --cflags-only-I $packages)         \
+            -i gtk-layer-shell-build                        \
+            -i mate-panel/mate-submodules/                  \
+            .
