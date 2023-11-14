@@ -92,22 +92,27 @@ jobs:
     container: ${{matrix.container}}
 
     strategy:
-      fail-fast: false
+      fail-fast: false  # don't cancel other jobs in the matrix if one fails
       matrix:
         in-process: [all, none]
         container: ['debian:testing', 'ubuntu:rolling', 'archlinux:latest']
 
     env:
+      # Speed up build with ccache
       CC: ccache gcc
       CXX: ccache g++
+      # root install path for the mate-desktop dependency
       MATE_DESKTOP_INSTALL_PATH: ${{github.workspace}}/mate-desktop-install
 
     steps:
+      # We can't *extend* the environment in 'env' directly, so use GITHUB_ENV
+      # output variable to do so.
       - name: Setup environment
         run: |
           echo "PATH=${MATE_DESKTOP_INSTALL_PATH}/bin:${PATH}" >> "$GITHUB_ENV"
           echo "PKG_CONFIG_PATH=${MATE_DESKTOP_INSTALL_PATH}/lib/pkgconfig:${PKG_CONFIG_PATH}" >> "$GITHUB_ENV"
 
+      # Debugging
       - name: Show environment
         run: env | sort
         if: ${{ env.DEBUG == '1' }}
@@ -130,21 +135,27 @@ jobs:
           pacman --noconfirm -Sy
           pacman --noconfirm -S ${ARCH_BUILD_DEPS}
 
+      # Checkout the repository
       - uses: actions/checkout@v3
         with:
           path: mate-panel
           submodules: true
 
+      # Setup ccache cache
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2
 
+      # Cache the build of the mate-desktop dependency
       - name: Cache mate-desktop v${{env.MATE_PANEL_DEP}} dependency
         uses: actions/cache@v3
         id: cache-mate-desktop
         with:
           path: ${{env.MATE_DESKTOP_INSTALL_PATH}}
+          # We try and be as specific as possible not to use the wrongly cached
+          # build, as this is a *binary*.
           key: ${{runner.os}}-${{runner.arch}}-${{matrix.container}}-build-mate-desktop-${{env.MATE_PANEL_DEP}}
 
+      # Checkout mate-desktop dep, if not already cached
       - name: Checkout mate-desktop v${{env.MATE_PANEL_DEP}}
         uses: actions/checkout@v3
         if: ${{ steps.cache-mate-desktop.outputs.cache-hit != 'true' }}
@@ -154,6 +165,7 @@ jobs:
           path: mate-desktop
           submodules: true
 
+      # Build and install mate-desktop dep, if not already cached
       - name: Install mate-desktop v${{env.MATE_PANEL_DEP}}
         if: ${{ steps.cache-mate-desktop.outputs.cache-hit != 'true' }}
         run: |
@@ -162,6 +174,8 @@ jobs:
           { ./configure --prefix="${MATE_DESKTOP_INSTALL_PATH}" || { cat config.log; exit 1; } ; }
           make -j ${{ env.JOBS }}
           make -j ${{ env.JOBS }} install
+
+      # Follows regular mate-panel build and test steps
 
       - name: Configure
         run: |
@@ -176,6 +190,9 @@ jobs:
         run: make -C mate-panel -j ${{ env.JOBS }} check
 
       - name: Run distcheck
+        # We only run distcheck on one container, because it takes time and
+        # doesn't seem so useful to repeat everywhere -- it mostly checks the
+        # build system itself, rather than the build.
         if: ${{ startsWith(matrix.container, 'debian:') }}
         run: make -C mate-panel -j ${{ env.JOBS }} distcheck
 
