@@ -138,7 +138,7 @@ jobs:
         # apparently in the container it doesn't quit work...
         # https://wiki.archlinux.org/title/System_maintenance#Partial_upgrades_are_unsupported
         run: |
-          pacman --noconfirm -Sy
+          pacman --noconfirm -Syu
           pacman --noconfirm -S ${ARCH_BUILD_DEPS} ${ARCH_BUILD_DEPS_MATE_DESKTOP}
 
       # Checkout the repository
