@@ -598,7 +598,7 @@ panel_background_set (PanelBackground     *background,
 
 void
 panel_background_set_default_style (PanelBackground *background,
-				    GdkRGBA         *color,
+				    const GdkRGBA   *color,
 				    cairo_pattern_t *pattern)
 {
 	g_return_if_fail (color != NULL);
