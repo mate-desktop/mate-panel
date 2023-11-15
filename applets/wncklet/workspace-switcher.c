@@ -522,9 +522,7 @@ static void display_workspace_names_changed(GSettings* settings, gchar* key, Pag
 
 static void all_workspaces_changed(GSettings* settings, gchar* key, PagerData* pager)
 {
-	gboolean value = TRUE; /* Default value */
-
-	value = g_settings_get_boolean (settings, key);
+	gboolean value = g_settings_get_boolean (settings, key);
 
 	pager->display_all = value;
 	pager_update(pager);
