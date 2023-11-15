@@ -210,7 +210,6 @@ button_widget_reload_surface (ButtonWidget *button)
             * FIXME: this is not rendered at button->priv->size
             */
             button->priv->needs_move = FALSE;
-            GtkIconTheme *icon_theme = gtk_icon_theme_get_default ();
             button->priv->surface =
                 gtk_icon_theme_load_surface (icon_theme,
                                              "image-missing",
