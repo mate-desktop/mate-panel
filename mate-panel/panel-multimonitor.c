@@ -71,7 +71,6 @@ _panel_multimonitor_output_should_be_first (Display       *xdisplay,
 	unsigned long  nitems;
 	unsigned long  bytes_after;
 	unsigned char *prop;
-	gboolean       retval;
 
 	connector_type_atom = XInternAtom (xdisplay, "ConnectorType", False);
 
@@ -81,7 +80,7 @@ _panel_multimonitor_output_should_be_first (Display       *xdisplay,
 				  &nitems, &bytes_after, &prop) == Success) {
 		if (actual_type == XA_ATOM && nitems == 1 && actual_format == 32) {
 			char *connector_type = XGetAtomName (xdisplay, prop[0]);
-			retval = g_strcmp0 (connector_type, "Panel") == 0;
+			gboolean retval = g_strcmp0 (connector_type, "Panel") == 0;
 			XFree (connector_type);
 			return retval;
 		}

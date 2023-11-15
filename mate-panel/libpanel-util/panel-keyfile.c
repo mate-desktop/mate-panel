@@ -53,8 +53,6 @@ _panel_key_file_make_executable (const gchar *path)
 {
 	GFile     *file;
 	GFileInfo *info;
-	guint32    current_perms;
-	guint32    new_perms;
 
 	file = g_file_new_for_path (path);
 
@@ -72,6 +70,9 @@ _panel_key_file_make_executable (const gchar *path)
 	}
 
 	if (g_file_info_has_attribute (info, G_FILE_ATTRIBUTE_UNIX_MODE)) {
+		guint32    current_perms;
+		guint32    new_perms;
+
 		current_perms = g_file_info_get_attribute_uint32 (info,
 								  G_FILE_ATTRIBUTE_UNIX_MODE);
 		new_perms = current_perms | S_IXGRP | S_IXUSR | S_IXOTH;

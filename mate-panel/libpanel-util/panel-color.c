@@ -17,7 +17,6 @@ rgb_to_hls (gdouble *r, gdouble *g, gdouble *b)
 	gdouble green;
 	gdouble blue;
 	gdouble h, l, s;
-	gdouble delta;
 
 	red = *r;
 	green = *g;
@@ -50,6 +49,8 @@ rgb_to_hls (gdouble *r, gdouble *g, gdouble *b)
 	h = 0;
 
 	if (max != min) {
+		gdouble delta;
+
 		if (l <= 0.5)
 			s = (max - min) / (max + min);
 		else
@@ -84,11 +85,9 @@ rgb_to_hls (gdouble *r, gdouble *g, gdouble *b)
 static void
 hls_to_rgb (gdouble *h, gdouble *l, gdouble *s)
 {
-	gdouble hue;
 	gdouble lightness;
 	gdouble saturation;
 	gdouble m1, m2;
-	gdouble r, g, b;
 
 	lightness = *l;
 	saturation = *s;
@@ -104,6 +103,9 @@ hls_to_rgb (gdouble *h, gdouble *l, gdouble *s)
 		*l = lightness;
 		*s = lightness;
 	} else {
+		gdouble hue;
+		gdouble r, g, b;
+
 		hue = *h + 120;
 		while (hue > 360)
 			hue -= 360;

@@ -178,13 +178,12 @@ static void
 load_applet_from_command_line (void)
 {
 	guint size = 24, orient = PANEL_ORIENTATION_TOP;
-	gsize i;
 
 	g_assert (cli_iid != NULL);
 
 	if (cli_size || cli_orient) {
 		if (cli_size) {
-			for (i = 0; i < G_N_ELEMENTS (size_items); i++) {
+			for (gsize i = 0; i < G_N_ELEMENTS (size_items); i++) {
 				if (strcmp (g_dpgettext2 (NULL, "Size", size_items[i].name), cli_size) == 0) {
 					size = size_items[i].value;
 					break;
@@ -193,7 +192,7 @@ load_applet_from_command_line (void)
 		}
 
 		if (cli_orient) {
-			for (i = 0; i < G_N_ELEMENTS (orient_items); i++) {
+			for (gsize i = 0; i < G_N_ELEMENTS (orient_items); i++) {
 				if (strcmp (g_dpgettext2 (NULL, "Orientation", orient_items[i].name), cli_orient) == 0) {
 					orient = orient_items[i].value;
 					break;

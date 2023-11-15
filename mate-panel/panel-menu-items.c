@@ -143,7 +143,6 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	char      *uri;
 	char      *type;
 	gboolean   is_application;
-	char      *tryexec;
 	char      *icon;
 	char      *name;
 	char      *comment;
@@ -198,7 +197,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	g_free (type);
 
 	if (is_application) {
-		tryexec = panel_key_file_get_string (key_file, "TryExec");
+		char *tryexec = panel_key_file_get_string (key_file, "TryExec");
 		if (tryexec) {
 			char *prog;
 
@@ -409,7 +408,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_
 		char *line = (char*) l->data;
 
 		if (line[0] && !g_hash_table_lookup (table, line)) {
-			GFile    *file;
 			char     *space;
 			char     *label;
 			gboolean  keep;
@@ -430,7 +428,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu, guint max_items_or_
 				keep = TRUE;
 
 			if (!keep) {
-				file = g_file_new_for_uri (line);
+				GFile *file = g_file_new_for_uri (line);
 				keep = !g_file_is_native (file) ||
 				       g_file_query_exists (file, NULL);
 				g_object_unref (file);
@@ -544,15 +542,16 @@ drive_poll_for_media_cb (GObject      *source_object,
 			 GAsyncResult *res,
 			 gpointer      user_data)
 {
-	GdkScreen *screen;
-	GError    *error;
-	char      *primary;
-	char      *name;
+	GError *error;
 
 	error = NULL;
 	if (!g_drive_poll_for_media_finish (G_DRIVE (source_object),
 					    res, &error)) {
 		if (error->code != G_IO_ERROR_FAILED_HANDLED) {
+			GdkScreen *screen;
+			char      *primary;
+			char      *name;
+
 			screen = GDK_SCREEN (user_data);
 
 			name = g_drive_get_name (G_DRIVE (source_object));
@@ -633,10 +632,10 @@ volume_mount_cb (GObject      *source_object,
 
 	error = NULL;
 	if (!g_volume_mount_finish (G_VOLUME (source_object), res, &error)) {
-		char *primary;
-		char *name;
-
 		if (error->code != G_IO_ERROR_FAILED_HANDLED) {
+			char *primary;
+			char *name;
+
 			name = g_volume_get_name (G_VOLUME (source_object));
 			primary = g_strdup_printf (_("Unable to mount %s"),
 						   name);
@@ -1019,7 +1018,6 @@ static GtkWidget *
 panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 {
 	GtkWidget *places_menu;
-	GtkWidget *item;
 	char      *gsettings_name = NULL;
 	char      *name;
 	char      *uri;
@@ -1101,7 +1099,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	if (panel_is_program_in_path ("caja-connect-server") ||
 	    panel_is_program_in_path ("nautilus-connect-server") ||
 	    panel_is_program_in_path ("nemo-connect-server")) {
-		item = panel_menu_items_create_action_item (PANEL_ACTION_CONNECT_SERVER);
+		GtkWidget *item = panel_menu_items_create_action_item (PANEL_ACTION_CONNECT_SERVER);
 		if (item != NULL)
 			gtk_menu_shell_append (GTK_MENU_SHELL (places_menu),
 					       item);
