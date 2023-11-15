@@ -123,7 +123,6 @@ main (int argc, char * argv[])
 	for (i = 0; desktops[i] != NULL; i++) {
 		GFile     *file;
 		GFileInfo *info;
-		GFileType  type;
 		char      *uri;
 		char      *path;
 		GtkWidget *dlg = NULL;
@@ -136,7 +135,7 @@ main (int argc, char * argv[])
 		g_object_unref (file);
 
 		if (info) {
-			type = g_file_info_get_file_type (info);
+			GFileType type = g_file_info_get_file_type (info);
 
 			if (type == G_FILE_TYPE_DIRECTORY && create_new) {
 

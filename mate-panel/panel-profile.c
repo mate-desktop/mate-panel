@@ -1583,11 +1583,9 @@ panel_profile_load_list (GSettings              *settings,
 						 PanelProfileLoadFunc    load_handler,
 						 GCallback               notify_handler)
 {
-
 	const gchar *key = key_from_type (type);
 	gchar  *changed_signal;
 	gchar **list;
-	gint    i;
 
 	changed_signal = g_strdup_printf ("changed::%s", key);
 	g_signal_connect (settings, changed_signal, G_CALLBACK (notify_handler), NULL);
@@ -1595,7 +1593,7 @@ panel_profile_load_list (GSettings              *settings,
 
 	list = g_settings_get_strv (settings, key);
 
-	for (i = 0; list[i]; i++) {
+	for (gint i = 0; list[i]; i++) {
 		load_handler (list[i]);
 	}
 

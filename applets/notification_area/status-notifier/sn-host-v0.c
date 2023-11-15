@@ -193,7 +193,6 @@ register_host_cb (GObject      *source_object,
   GError *error;
   SnHostV0 *v0;
   gchar **items;
-  gint i;
 
   error = NULL;
   sn_watcher_v0_gen_call_register_host_finish (SN_WATCHER_V0_GEN (source_object),
@@ -224,7 +223,7 @@ register_host_cb (GObject      *source_object,
   items = sn_watcher_v0_gen_dup_registered_items (v0->watcher);
 
   if (items) {
-    for (i = 0; items[i] != NULL; i++)
+    for (gint i = 0; items[i] != NULL; i++)
       add_registered_item (v0, items[i]);
   }
 

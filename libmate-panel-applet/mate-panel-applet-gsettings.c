@@ -149,9 +149,9 @@ void
 mate_panel_applet_settings_set_glist (GSettings *settings, gchar *key, GList *list)
 {
     GArray *array;
-    GList *l;
+
     array = g_array_new (TRUE, TRUE, sizeof (gchar *));
-    for (l = list; l; l = l->next) {
+    for (GList *l = list; l; l = l->next) {
         array = g_array_append_val (array, l->data);
     }
     g_settings_set_strv (settings, key, (const gchar **) array->data);
@@ -178,9 +178,9 @@ void
 mate_panel_applet_settings_set_gslist (GSettings *settings, gchar *key, GSList *list)
 {
     GArray *array;
-    GSList *l;
+
     array = g_array_new (TRUE, TRUE, sizeof (gchar *));
-    for (l = list; l; l = l->next) {
+    for (GSList *l = list; l; l = l->next) {
         array = g_array_append_val (array, l->data);
     }
     g_settings_set_strv (settings, key, (const gchar **) array->data);

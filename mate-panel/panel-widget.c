@@ -1449,7 +1449,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		     list = g_list_next (list)) {
 			AppletData *ad = list->data;
 			GtkRequisition chreq;
-
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
 
 			if (!ad->expand_major || !ad->size_hints) {
@@ -1465,7 +1464,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			}
 
 			ad->constrained = ad->pos;
-
 			if (ad->constrained < i)
 				ad->constrained = i;
 
