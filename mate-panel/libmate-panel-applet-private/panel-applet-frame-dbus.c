@@ -70,7 +70,7 @@ get_mate_panel_applet_orient (PanelOrientation orientation)
 		return 2;
 	default:
 		g_assert_not_reached ();
-		break;
+		return 0;
 	}
 }
 
