@@ -603,7 +603,6 @@ mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 			    guint32	  timestamp)
 {
 #ifdef HAVE_X11
-	MatePanelAppletPrivate *priv;
 	GdkScreen  *screen;
 	GdkWindow  *root;
 	GdkDisplay *display;
@@ -617,7 +616,6 @@ mate_panel_applet_request_focus (MatePanelApplet	 *applet,
 
 	g_return_if_fail (MATE_PANEL_IS_APPLET (applet));
 
-	priv    = mate_panel_applet_get_instance_private (applet);
 	screen  = gdk_screen_get_default(); /*There is only one screen since GTK 3.22*/
 	root	= gdk_screen_get_root_window (screen);
 	display = gdk_screen_get_display (screen);
