@@ -269,12 +269,10 @@ panel_lockdown_get_disable_force_quit (void)
 gboolean
 panel_lockdown_is_applet_disabled (const char *iid)
 {
-        gint i;
-
         g_assert (panel_lockdown.initialized != FALSE);
 
         if (panel_lockdown.disabled_applets)
-                for (i = 0; panel_lockdown.disabled_applets[i]; i++)
+                for (gint i = 0; panel_lockdown.disabled_applets[i]; i++)
                         if (!strcmp (panel_lockdown.disabled_applets[i], iid))
                                 return TRUE;
 
@@ -286,9 +284,7 @@ panel_lockdown_notify_find (GSList    *closures,
                             GCallback  callback_func,
                             gpointer   user_data)
 {
-        GSList *l;
-
-        for (l = closures; l; l = l->next) {
+        for (GSList *l = closures; l; l = l->next) {
                 GCClosure *cclosure = l->data;
                 GClosure  *closure  = l->data;
 
