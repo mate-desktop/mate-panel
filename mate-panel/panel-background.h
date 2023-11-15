@@ -95,7 +95,7 @@ void  panel_background_set_stretch       (PanelBackground     *background,
 void  panel_background_set_rotate        (PanelBackground     *background,
 					  gboolean             rotate_image);
 void  panel_background_set_default_style (PanelBackground     *background,
-					  GdkRGBA             *color,
+					  const GdkRGBA       *color,
 					  cairo_pattern_t     *pattern);
 void  panel_background_realized          (PanelBackground     *background,
 					  GdkWindow           *window);
