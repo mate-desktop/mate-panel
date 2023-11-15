@@ -236,6 +236,16 @@ jobs:
       #   - Wayland-related stuff
       #   - in-process for Wayland
       #   - optional features
+      #   - _Noreturn: this is to avoid false positive with functions that
+      #     don't return, like g_assert(false).  Here, we rely on G_NORETURN
+      #     (GLib 2.68+) using _Noreturn C11 attribute if __STDC_VERSION__ is
+      #     high enough (cppcheck sets it for us in newer versions, but not on
+      #     here yet); but the version of cppcheck we run on don't know about
+      #     the C11 attribute, so map it to the GCC one it does know.
+      #     This is a tad over-specific, but it removes some spurious warnings,
+      #     and defining e.g. __GNUC__=12 is simpler, but is a *lot* slower
+      #     (more than 3 times slower), and doesn't seem to yield other
+      #     benefits for the moment.
       # - -I flags from pkg-config (grepped from configure.ac)
       # - ignore non-source directories
       - name: cppcheck
@@ -248,6 +258,7 @@ jobs:
             -DHAVE_WINDOW_PREVIEWS
             -DHAVE_LANGINFO_H -DHAVE_NL_LANGINFO
             -DGETTEXT_PACKAGE="mate-panel"
+            -D__STDC_VERSION__=201112 -D_Noreturn=__attribute__((__noreturn__))
           packages: >
             gdk-pixbuf-2.0
             gio-unix-2.0
