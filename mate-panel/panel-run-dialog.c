@@ -162,9 +162,7 @@ _panel_run_get_recent_programs_list (PanelRunDialog *dialog)
 	history_max_size = g_settings_get_uint (dialog->settings, PANEL_RUN_HISTORY_MAX_SIZE_KEY);
 	history_reverse = g_settings_get_boolean (dialog->settings, PANEL_RUN_HISTORY_REVERSE_KEY);
 	items = g_settings_get_strv (dialog->settings, PANEL_RUN_HISTORY_KEY);
-	for (i = 0;
-	     items[i] && i < history_max_size;
-	     i++) {
+	for (i = 0; i < history_max_size && items[i]; i++) {
 		GtkTreeIter iter;
 		/* add history in reverse */
 		if (history_reverse)
