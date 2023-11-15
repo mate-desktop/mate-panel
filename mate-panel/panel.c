@@ -892,8 +892,7 @@ move_applet (PanelWidget *panel, int pos, int applet_index)
 
 	parent = gtk_widget_get_parent (info->widget);
 
-	if (info != NULL &&
-	    info->widget != NULL &&
+	if (info->widget != NULL &&
 	    parent != NULL &&
 	    PANEL_IS_WIDGET (parent)) {
 		GSList *forb;
