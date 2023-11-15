@@ -119,7 +119,6 @@ panel_file_chooser_dialog_new_valist (const gchar          *title,
 {
 	GtkWidget *result;
 	const char *button_text = first_button_text;
-	gint response_id;
 
 	result = g_object_new (GTK_TYPE_FILE_CHOOSER_DIALOG,
 			       "title", title,
@@ -131,7 +130,7 @@ panel_file_chooser_dialog_new_valist (const gchar          *title,
 
 	while (button_text)
 		{
-			response_id = va_arg (varargs, gint);
+			gint response_id = va_arg (varargs, gint);
 
 			if (g_strcmp0 (button_text, "process-stop") == 0)
 				panel_dialog_add_button (GTK_DIALOG (result), _("_Cancel"), button_text, response_id);
