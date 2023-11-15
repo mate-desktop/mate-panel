@@ -513,7 +513,6 @@ panel_action_connect_server (GtkWidget *widget)
 }
 
 typedef struct {
-	PanelActionButtonType   type;
 	char                   *icon_name;
 	char                   *text;
 	char                   *tooltip;
@@ -530,12 +529,10 @@ typedef struct {
  */
 static PanelAction actions [PANEL_ACTION_LAST] = {
 	[PANEL_ACTION_NONE] = {
-		PANEL_ACTION_NONE,
 		NULL, NULL, NULL, NULL, NULL,
 		NULL, NULL, NULL, NULL
 	},
 	[PANEL_ACTION_LOCK] = {
-		PANEL_ACTION_LOCK,
 		PANEL_ICON_LOCKSCREEN,
 		N_("Lock Screen"),
 		N_("Protect your computer from unauthorized use"),
@@ -547,7 +544,6 @@ static PanelAction actions [PANEL_ACTION_LAST] = {
 		panel_action_lock_is_disabled
 	},
 	[PANEL_ACTION_LOGOUT] = {
-		PANEL_ACTION_LOGOUT,
 		PANEL_ICON_LOGOUT,
 		/* when changing one of those two strings, don't forget to
 		 * update the ones in panel-menu-items.c (look for
@@ -560,7 +556,6 @@ static PanelAction actions [PANEL_ACTION_LAST] = {
 		panel_lockdown_get_disable_log_out
 	},
 	[PANEL_ACTION_RUN] = {
-		PANEL_ACTION_RUN,
 		PANEL_ICON_RUN,
 		N_("Run Application..."),
 		N_("Run an application by typing a command or choosing from a list"),
@@ -570,7 +565,6 @@ static PanelAction actions [PANEL_ACTION_LAST] = {
 		panel_lockdown_get_disable_command_line
 	},
 	[PANEL_ACTION_SEARCH] = {
-		PANEL_ACTION_SEARCH,
 		PANEL_ICON_SEARCHTOOL,
 		N_("Search for Files..."),
 		N_("Locate documents and folders on this computer by name or content"),
@@ -579,7 +573,6 @@ static PanelAction actions [PANEL_ACTION_LAST] = {
 		panel_action_search, NULL, NULL, NULL
 	},
 	[PANEL_ACTION_FORCE_QUIT] = {
-		PANEL_ACTION_FORCE_QUIT,
 		PANEL_ICON_FORCE_QUIT,
 		N_("Force Quit"),
 		N_("Force a misbehaving application to quit"),
@@ -589,7 +582,6 @@ static PanelAction actions [PANEL_ACTION_LAST] = {
 		panel_lockdown_get_disable_force_quit
 	},
 	[PANEL_ACTION_CONNECT_SERVER] = {
-		PANEL_ACTION_CONNECT_SERVER,
 		PANEL_ICON_REMOTE, /* FIXME icon */
 		N_("Connect to Server..."),
 		N_("Connect to a remote computer or shared disk"),
@@ -598,7 +590,6 @@ static PanelAction actions [PANEL_ACTION_LAST] = {
 		panel_action_connect_server, NULL, NULL, NULL
 	},
 	[PANEL_ACTION_SHUTDOWN] = {
-		PANEL_ACTION_SHUTDOWN,
 		PANEL_ICON_SHUTDOWN,
 		N_("Shut Down..."),
 		N_("Shut down the computer"),
