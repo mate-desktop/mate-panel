@@ -134,15 +134,15 @@ mate_panel_applet_settings_get_glist (GSettings *settings, gchar *key)
 {
     gchar **array;
     GList *list = NULL;
-    gint i;
+
     array = g_settings_get_strv (settings, key);
     if (array != NULL) {
-        for (i = 0; array[i]; i++) {
-            list = g_list_append (list, g_strdup (array[i]));
+        for (gint i = 0; array[i]; i++) {
+            list = g_list_prepend (list, array[i]);
         }
+        g_free (array);
     }
-    g_strfreev (array);
-    return list;
+    return g_list_reverse (list);
 }
 
 void
@@ -163,15 +163,15 @@ mate_panel_applet_settings_get_gslist (GSettings *settings, gchar *key)
 {
     gchar **array;
     GSList *list = NULL;
-    gint i;
+
     array = g_settings_get_strv (settings, key);
     if (array != NULL) {
-        for (i = 0; array[i]; i++) {
-            list = g_slist_append (list, g_strdup (array[i]));
+        for (gint i = 0; array[i]; i++) {
+            list = g_slist_prepend (list, array[i]);
         }
+        g_free (array);
     }
-    g_strfreev (array);
-    return list;
+    return g_slist_reverse (list);
 }
 
 void
