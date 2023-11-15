@@ -1676,7 +1676,7 @@ combobox_changed (GtkComboBox    *combobox,
 	}
 
 	/* desensitize run button if no text entered */
-	if (!start || !start [0]) {
+	if (!start [0]) {
 		g_free (text);
 
 		gtk_widget_set_sensitive (dialog->run_button, FALSE);
