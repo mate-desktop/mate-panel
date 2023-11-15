@@ -1187,35 +1187,17 @@ sort_locations_by_time (gconstpointer a, gconstpointer b)
         clock_location_localtime (loc_a, &tm_a);
         clock_location_localtime (loc_b, &tm_b);
 
-        ret = (tm_a.tm_year == tm_b.tm_year) ? 0 : 1;
-        if (ret) {
-                return (tm_a.tm_year < tm_b.tm_year) ? -1 : 1;
-        }
-
-        ret = (tm_a.tm_mon == tm_b.tm_mon) ? 0 : 1;
-        if (ret) {
-                return (tm_a.tm_mon < tm_b.tm_mon) ? -1 : 1;
-        }
-
-        ret = (tm_a.tm_mday == tm_b.tm_mday) ? 0 : 1;
-        if (ret) {
-                return (tm_a.tm_mday < tm_b.tm_mday) ? -1 : 1;
-        }
-
-        ret = (tm_a.tm_hour == tm_b.tm_hour) ? 0 : 1;
-        if (ret) {
-                return (tm_a.tm_hour < tm_b.tm_hour) ? -1 : 1;
-        }
-
-        ret = (tm_a.tm_min == tm_b.tm_min) ? 0 : 1;
-        if (ret) {
-                return (tm_a.tm_min < tm_b.tm_min) ? -1 : 1;
-        }
-
-        ret = (tm_a.tm_sec == tm_b.tm_sec) ? 0 : 1;
-        if (ret) {
-                return (tm_a.tm_sec < tm_b.tm_sec) ? -1 : 1;
-        }
+        ret = tm_a.tm_year - tm_b.tm_year;
+        if (! ret)
+                ret = tm_a.tm_mon - tm_b.tm_mon;
+        if (! ret)
+                ret = tm_a.tm_mday - tm_b.tm_mday;
+        if (! ret)
+                ret = tm_a.tm_hour - tm_b.tm_hour;
+        if (! ret)
+                ret = tm_a.tm_min - tm_b.tm_min;
+        if (! ret)
+                ret = tm_a.tm_sec - tm_b.tm_sec;
 
         return ret;
 }
