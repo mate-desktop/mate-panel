@@ -36,6 +36,7 @@
 #include <libmate-desktop/mate-gsettings.h>
 
 #include "workspace-switcher.h"
+#include "pager-container.h"
 
 #include "wncklet.h"
 
@@ -65,6 +66,7 @@ typedef enum {
 typedef struct {
 	GtkWidget* applet;
 
+	GtkWidget* pager_container;
 	GtkWidget* pager;
 
 	WnckScreen* screen;
@@ -289,6 +291,8 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 	pager->orientation = new_orient;
 	pager_update(pager);
+
+	pager_container_set_orientation(PAGER_CONTAINER(pager->pager_container), pager->orientation);
 
 	if (pager->label_row_col)
 		gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
@@ -659,7 +663,8 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	                  G_CALLBACK (applet_scroll),
 	                  pager);
 
-	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
+	pager->pager_container = pager_container_new(pager->pager, pager->orientation);
+	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager_container);
 
 	g_signal_connect (pager->applet, "realize",
 	                  G_CALLBACK (applet_realized),
@@ -678,6 +683,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	                  context);
 
 	gtk_widget_show (pager->pager);
+	gtk_widget_show (pager->pager_container);
 	gtk_widget_show (pager->applet);
 
 	action_group = gtk_action_group_new("WorkspaceSwitcher Applet Actions");

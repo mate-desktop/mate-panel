@@ -23,6 +23,8 @@ WNCKLET_SOURCES = \
 	workspace-switcher.h \
 	showdesktop.c \
 	showdesktop.h \
+	pager-container.c \
+	pager-container.h \
 	$(BUILT_SOURCES)
 
 WNCKLET_LDADD =						\
