@@ -53,6 +53,153 @@
 
 #define WORKSPACE_SWITCHER_ICON "mate-panel-workspace-switcher"
 
+/* Container for the WnckPager to work around the sizing issues we have in the
+ * panel.  See
+ * https://github.com/mate-desktop/mate-panel/issues/1230#issuecomment-1046235088 */
+
+typedef struct _PagerContainer PagerContainer;
+typedef GtkBinClass PagerContainerClass;
+
+static GType pager_container_get_type (void);
+
+#define PAGER_CONTAINER_TYPE (pager_container_get_type ())
+#define PAGER_CONTAINER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAGER_CONTAINER_TYPE, PagerContainer))
+
+struct _PagerContainer
+{
+	GtkBin          parent;
+	GtkOrientation  orientation;
+	int             size;
+};
+
+G_DEFINE_TYPE (PagerContainer, pager_container, GTK_TYPE_BIN)
+
+static gboolean
+queue_resize_idle_cb (gpointer user_data)
+{
+	gtk_widget_queue_resize (GTK_WIDGET (user_data));
+	return G_SOURCE_REMOVE;
+}
+
+static void
+pager_container_get_preferred_width (GtkWidget *widget,
+                                     int       *minimum_width,
+                                     int       *natural_width)
+{
+	PagerContainer *self;
+
+	self = PAGER_CONTAINER (widget);
+
+	if (self->orientation == GTK_ORIENTATION_VERTICAL)
+	{
+		/* self->size is panel width */
+		*minimum_width = *natural_width = self->size;
+	}
+	else
+	{
+		/* self->size is panel size/height, that will get allocated to pager, request width for this size */
+		gtk_widget_get_preferred_width_for_height (gtk_bin_get_child (GTK_BIN (self)),
+		                                           self->size,
+		                                           minimum_width,
+		                                           natural_width);
+	}
+}
+
+static void
+pager_container_get_preferred_height (GtkWidget *widget,
+                                      int       *minimum_height,
+                                      int       *natural_height)
+{
+	PagerContainer *self;
+
+	self = PAGER_CONTAINER (widget);
+
+	if (self->orientation == GTK_ORIENTATION_VERTICAL)
+	{
+		/* self->size is panel size/width that will get allocated to pager, request height for this size */
+		gtk_widget_get_preferred_height_for_width (gtk_bin_get_child (GTK_BIN (self)),
+		                                           self->size,
+		                                           minimum_height,
+		                                           natural_height);
+	}
+	else
+	{
+		/* self->size is panel height */
+		*minimum_height = *natural_height = self->size;
+	}
+}
+
+static void
+pager_container_size_allocate (GtkWidget     *widget,
+                               GtkAllocation *allocation)
+{
+	PagerContainer *self;
+	int size;
+
+	self = PAGER_CONTAINER (widget);
+
+	if (self->orientation == GTK_ORIENTATION_VERTICAL)
+		size = allocation->width;
+	else
+		size = allocation->height;
+
+	size = MAX (size, 1);
+
+	if (self->size != size)
+	{
+		self->size = size;
+		g_idle_add (queue_resize_idle_cb, self);
+		return;
+	}
+
+	GTK_WIDGET_CLASS (pager_container_parent_class)->size_allocate (widget,
+	                                                                allocation);
+}
+
+static void
+pager_container_class_init (PagerContainerClass *self_class)
+{
+	GtkWidgetClass *widget_class;
+
+	widget_class = GTK_WIDGET_CLASS (self_class);
+
+	widget_class->get_preferred_width = pager_container_get_preferred_width;
+	widget_class->get_preferred_height = pager_container_get_preferred_height;
+	widget_class->size_allocate = pager_container_size_allocate;
+}
+
+static void
+pager_container_init (PagerContainer *self)
+{
+}
+
+static GtkWidget *
+pager_container_new (GtkWidget     *child,
+                     GtkOrientation orientation)
+{
+	PagerContainer *self;
+
+	self = g_object_new (PAGER_CONTAINER_TYPE, "child", child, NULL);
+
+	self->orientation = orientation;
+
+	return GTK_WIDGET (self);
+}
+
+static void
+pager_container_set_orientation (PagerContainer *self,
+                                 GtkOrientation  orientation)
+{
+	if (self->orientation == orientation)
+		return;
+
+	self->orientation = orientation;
+
+	gtk_widget_queue_resize (GTK_WIDGET (self));
+}
+
+/* Pager applet itself */
+
 typedef enum {
 	PAGER_WM_MARCO,
 	PAGER_WM_METACITY,
@@ -65,6 +212,7 @@ typedef enum {
 typedef struct {
 	GtkWidget* applet;
 
+	GtkWidget* pager_container;
 	GtkWidget* pager;
 
 	WnckScreen* screen;
@@ -289,6 +437,8 @@ static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient 
 
 	pager->orientation = new_orient;
 	pager_update(pager);
+
+	pager_container_set_orientation(PAGER_CONTAINER(pager->pager_container), pager->orientation);
 
 	if (pager->label_row_col)
 		gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
@@ -656,7 +806,8 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	/* overwrite default WnckPager widget scroll-event */
 	g_signal_connect(G_OBJECT(pager->pager), "scroll-event", G_CALLBACK(applet_scroll), pager);
 
-	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager);
+	pager->pager_container = pager_container_new(pager->pager, pager->orientation);
+	gtk_container_add(GTK_CONTAINER(pager->applet), pager->pager_container);
 
 	g_signal_connect(G_OBJECT(pager->applet), "realize", G_CALLBACK(applet_realized), pager);
 	g_signal_connect(G_OBJECT(pager->applet), "unrealize", G_CALLBACK(applet_unrealized), pager);
@@ -665,6 +816,7 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 	g_signal_connect(G_OBJECT(pager->applet), "style-updated", G_CALLBACK(applet_style_updated), context);
 
 	gtk_widget_show(pager->pager);
+	gtk_widget_show(pager->pager_container);
 	gtk_widget_show(pager->applet);
 
 	action_group = gtk_action_group_new("WorkspaceSwitcher Applet Actions");
