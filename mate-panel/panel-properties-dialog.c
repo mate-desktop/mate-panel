@@ -737,6 +737,21 @@ panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
 }
 
 static void
+panel_properties_dialog_update_opacity (PanelPropertiesDialog *dialog,
+                                        gdouble                percentage)
+{
+	gboolean slider_active;
+
+	slider_active = gdk_screen_is_composited (gdk_screen_get_default ());
+
+	if (!slider_active) {
+		percentage = 100.0;
+	}
+
+	gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
+}
+
+static void
 panel_properties_dialog_background_notify (GSettings             *settings,
 					   gchar                 *key,
 					   PanelPropertiesDialog *dialog)
@@ -750,6 +765,8 @@ panel_properties_dialog_background_notify (GSettings             *settings,
 	{
 		char *color = g_settings_get_string (settings, key);
 		panel_properties_dialog_update_background_color (dialog, color);
+		gdouble percentage = panel_profile_get_background_opacity (dialog->toplevel);
+		panel_properties_dialog_update_opacity (dialog, percentage);
 		g_free (color);
 	}
 	else if (!strcmp (key, "image"))
