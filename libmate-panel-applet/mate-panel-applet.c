@@ -1042,12 +1042,22 @@ mate_panel_applet_button_press (GtkWidget      *widget,
 		}
 	}
 
+#ifdef HAVE_WAYLAND
+	/*Limit the window list's applet menu to the handle area*/
+	if (!(GDK_IS_X11_DISPLAY (gdk_display_get_default ())))
+	{
+		MatePanelAppletFlags flags;
+		flags = mate_panel_applet_get_flags (applet);
+		if (flags & MATE_PANEL_APPLET_EXPAND_MAJOR)
+			return FALSE;
+    }
+#endif
+
 	if (event->button == 3) {
 		mate_panel_applet_menu_popup (applet, (GdkEvent *) event);
 
 		return TRUE;
 	}
-
 	return mate_panel_applet_button_event (applet, event);
 }
 
