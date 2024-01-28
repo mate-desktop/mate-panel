@@ -537,6 +537,7 @@ na_tray_manager_unmanage (NaTrayManager *manager)
 {
 #ifdef GDK_WINDOWING_X11
   GdkDisplay *display;
+  guint32     timestamp;
   GtkWidget  *invisible;
   GdkWindow  *window;
 
@@ -555,7 +556,7 @@ na_tray_manager_unmanage (NaTrayManager *manager)
   if (gdk_selection_owner_get_for_display (display, manager->selection_atom) ==
       window)
     {
-      guint32 timestamp = gdk_x11_get_server_time (window);
+      timestamp = gdk_x11_get_server_time (window);
       gdk_selection_owner_set_for_display (display,
                                            NULL,
                                            manager->selection_atom,

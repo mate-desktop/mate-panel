@@ -161,6 +161,8 @@ button_widget_unset_surfaces (ButtonWidget *button)
 static void
 button_widget_reload_surface (ButtonWidget *button)
 {
+    GdkDisplay *display;
+    gint       scale;
     button_widget_unset_surfaces (button);
 
     button->priv->needs_move = FALSE;
@@ -168,9 +170,7 @@ button_widget_reload_surface (ButtonWidget *button)
         return;
 
     if (button->priv->filename != NULL && button->priv->filename [0] != '\0') {
-        GdkDisplay *display;
-        gint        scale;
-        char       *error = NULL;
+        char *error = NULL;
         /* icons findable in the icon theme can be handled by gtk directly*/
         display = gdk_display_get_default ();
         scale = gtk_widget_get_scale_factor (GTK_WIDGET (button));

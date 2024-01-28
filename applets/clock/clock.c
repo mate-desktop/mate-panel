@@ -2219,6 +2219,9 @@ location_set_current_cb (ClockLocation *loc,
 static void
 locations_changed (ClockData *cd)
 {
+        GSList *l;
+        glong id;
+
         if (!cd->locations) {
                 if (cd->weather_obox)
                         gtk_widget_hide (cd->weather_obox);
@@ -2233,9 +2236,8 @@ locations_changed (ClockData *cd)
                         gtk_widget_show (cd->weather_obox);
         }
 
-        for (GSList *l = cd->locations; l; l = l->next) {
+        for (l = cd->locations; l; l = l->next) {
                 ClockLocation *loc = l->data;
-                glong id;
 
                 id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (loc), "weather-updated"));
                 if (id == 0) {
@@ -2512,6 +2514,7 @@ setup_gsettings (ClockData *cd)
 static GSList *
 parse_gsettings_cities (ClockData *cd, gchar **values)
 {
+        gint i;
         LocationParserData data;
         GMarkupParseContext *context;
 
@@ -2521,7 +2524,7 @@ parse_gsettings_cities (ClockData *cd, gchar **values)
         context = g_markup_parse_context_new (&location_parser, 0, &data, NULL);
 
         if (values) {
-            for (gint i = 0; values[i]; i++) {
+            for (i = 0; values[i]; i++) {
                     g_markup_parse_context_parse (context, values[i], strlen(values[i]), NULL);
             }
         }
@@ -2586,11 +2589,11 @@ system_manager_signal_cb (GDBusProxy *proxy,
                           GVariant   *parameters,
                           ClockData  *cd)
 {
+        GVariant *variant;
+        gboolean active;
+
         if (g_strcmp0 (signal_name, "PrepareForSleep") == 0)
         {
-                GVariant *variant;
-                gboolean active;
-
                 variant = g_variant_get_child_value (parameters, 0);
                 active = g_variant_get_boolean (variant);
                 g_variant_unref (variant);
