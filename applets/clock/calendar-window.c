@@ -543,6 +543,8 @@ void
 calendar_window_set_show_weeks (CalendarWindow *calwin,
 				gboolean        show_weeks)
 {
+	GtkCalendarDisplayOptions options;
+
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
 	if (show_weeks == calwin->priv->show_weeks)
@@ -551,8 +553,6 @@ calendar_window_set_show_weeks (CalendarWindow *calwin,
 	calwin->priv->show_weeks = show_weeks;
 
 	if (calwin->priv->calendar) {
-		GtkCalendarDisplayOptions options;
-
 		options = gtk_calendar_get_display_options (GTK_CALENDAR (calwin->priv->calendar));
 
 		if (show_weeks)

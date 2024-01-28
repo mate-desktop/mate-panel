@@ -317,6 +317,8 @@ na_grid_realize (GtkWidget *widget)
   NaGrid *self = NA_GRID (widget);
   GdkScreen *screen;
   GdkDisplay *display;
+  GtkOrientation orientation;
+  NaHost *tray_host;
   GSettings *settings;
 
   GTK_WIDGET_CLASS (na_grid_parent_class)->realize (widget);
@@ -326,9 +328,6 @@ na_grid_realize (GtkWidget *widget)
   screen = gtk_widget_get_screen (GTK_WIDGET (self));
   if  (GDK_IS_X11_DISPLAY (display))
   {
-    GtkOrientation orientation;
-    NaHost *tray_host;
-
     orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (self));
     tray_host = na_tray_new_for_screen (screen, orientation);
     g_object_bind_property (self, "orientation",

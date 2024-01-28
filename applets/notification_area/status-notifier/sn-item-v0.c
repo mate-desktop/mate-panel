@@ -244,6 +244,7 @@ update (SnItemV0 *v0)
   GtkImage *image;
   SnTooltip *tip;
   gint icon_size;
+  gboolean visible;
   const gchar *icon_name;
   SnIconPixmap **icon_pixmap;
 
@@ -361,7 +362,7 @@ update (SnItemV0 *v0)
   /* TODO: hide "Passive" items with a setting? */
   /*Special case mate-polkit*/
   if (g_strcmp0 (v0->status, "password-dialog") != 0){
-    gboolean visible = g_strcmp0 (v0->status, "Passive") != 0;
+    visible = g_strcmp0 (v0->status, "Passive") != 0;
     gtk_widget_set_visible (GTK_WIDGET (v0), visible);
     }
   else

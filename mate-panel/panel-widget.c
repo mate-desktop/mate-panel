@@ -1504,6 +1504,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			AppletData *ad = list->data;
 			GtkRequisition chreq;
 			const char *id;
+			AppletInfo *info;
 			int position = ad->pos;
 			PanelObjectEdgeRelativity edge_relativity = PANEL_EDGE_START;
 			gboolean right_stuck = FALSE;
@@ -1525,7 +1526,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			id = mate_panel_applet_get_id_by_widget (ad->applet);
 			if (id)
 			{
-				AppletInfo *info = mate_panel_applet_get_by_id (id);
+				info = mate_panel_applet_get_by_id (id);
 				position = g_settings_get_int (info->settings,
 							       PANEL_OBJECT_POSITION_KEY);
 				edge_relativity = g_settings_get_enum (info->settings,
@@ -1671,8 +1672,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 			if (ad->expand_major) {
 				const char *id;
+				AppletInfo *info;
 				PanelObjectEdgeRelativity edge_relativity = PANEL_EDGE_START;
 				gboolean right_stuck;
+				AppletData *pad;
 				int prior_space;
 				int following_space;
 				int additional_space;
@@ -1680,7 +1683,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				id = mate_panel_applet_get_id_by_widget (ad->applet);
 				if (id)
 				{
-					AppletInfo *info = mate_panel_applet_get_by_id (id);
+					info = mate_panel_applet_get_by_id (id);
 					edge_relativity = g_settings_get_enum (info->settings,
 									       PANEL_OBJECT_RELATIVE_TO_EDGE_KEY);
 					right_stuck = g_settings_get_boolean (info->settings,
@@ -1690,7 +1693,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				prior_space = ad->constrained;
 				if (list->prev)
 				{
-					AppletData *pad = list->prev->data;
+					pad = list->prev->data;
 					prior_space -= pad->constrained + pad->min_cells;
 				}
 
