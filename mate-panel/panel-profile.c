@@ -1229,9 +1229,10 @@ panel_profile_destroy_toplevel (const char *id)
 }
 
 char *
-panel_profile_prepare_object_with_id (PanelObjectType            object_type,
-				      const char                *toplevel_id,
-				      int                        position)
+panel_profile_prepare_object_with_id (PanelObjectType  object_type,
+				      const char      *toplevel_id,
+				      int              position,
+				      gboolean         right_stick)
 {
 	PanelGSettingsKeyType  key_type;
 	char              *id;
@@ -1248,6 +1249,7 @@ panel_profile_prepare_object_with_id (PanelObjectType            object_type,
 	g_settings_set_enum (settings, PANEL_OBJECT_TYPE_KEY, object_type);
 	g_settings_set_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY, toplevel_id);
 	g_settings_set_int (settings, PANEL_OBJECT_POSITION_KEY, position);
+	g_settings_set_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, right_stick);
 
 	/* Force writing the settings in order to reserve the object ID *now*,
 	 * so that a later call to panel_profile_find_new_id() won't find the same
@@ -1261,13 +1263,15 @@ panel_profile_prepare_object_with_id (PanelObjectType            object_type,
 }
 
 char *
-panel_profile_prepare_object (PanelObjectType            object_type,
-			      PanelToplevel             *toplevel,
-			      int                        position)
+panel_profile_prepare_object (PanelObjectType  object_type,
+			      PanelToplevel   *toplevel,
+			      int              position,
+			      gboolean         right_stick)
 {
 	return panel_profile_prepare_object_with_id (object_type,
 						     panel_profile_get_toplevel_id (toplevel),
-						     position);
+						     position,
+						     right_stick);
 }
 
 void
@@ -1285,13 +1289,13 @@ panel_profile_delete_object (AppletInfo *applet_info)
 static void
 panel_profile_load_object (char *id)
 {
-	PanelObjectType            object_type;
-	char                      *object_path;
-	char                      *toplevel_id;
-	int                        position;
-	PanelObjectEdgeRelativity  edge_relativity;
-	gboolean                   locked;
-	GSettings                 *settings;
+	PanelObjectType  object_type;
+	char            *object_path;
+	char            *toplevel_id;
+	int              position;
+	gboolean         right_stick;
+	gboolean         locked;
+	GSettings       *settings;
 
 	object_path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, object_path);
@@ -1299,53 +1303,14 @@ panel_profile_load_object (char *id)
 	object_type = g_settings_get_enum (settings, PANEL_OBJECT_TYPE_KEY);
 	position = g_settings_get_int (settings, PANEL_OBJECT_POSITION_KEY);
 	toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
-	edge_relativity = g_settings_get_enum (settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY);
+	right_stick = g_settings_get_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
 	locked = g_settings_get_boolean (settings, PANEL_OBJECT_LOCKED_KEY);
-
-	/* If a panel layout uses the deprecated 'panel-right-stick' property,
-	 * interpret the position of the applet relative to the applet's left
-	 * side, rather than its right like we'd do for end-relative objects.
-	 * The position of an end-relative applet is relative to the *right*
-	 * side of the applet, which makes more sense, IMHO.  The difference
-	 * between these two positioning schemes is on the order of the width
-	 * of the applet; without this backwards-compatible safeguard, many of
-	 * the user's manually-placed right-stuck applets may be moved far out
-	 * of place when they upgrade the panel to this version.
-	 *
-	 * The `panel-right-stick` property will, unfortunately, remain set,
-	 * unless and until the user explicitly moves the applet under the new
-	 * version of the panel.  Keeping the `panel-right-stick` property set
-	 * is necessary since we can't know the equivalent 'edge-relative'
-	 * position to use in the place of the old, 'right-stuck' position;
-	 * after all, we have no idea of the size of the applet when it was
-	 * first positioned on the panel.  (Some applets dynamically change
-	 * size; sure, chances are right-stuck applets will be forced /
-	 * constrained to the very far right side of the panel, but who knows,
-	 * somebody might have set the positions of their applets using a
-	 * layout file or directly via GSettings.)
-	 *
-	 * If the user moves the applets, of course, the applets will be
-	 * repositioned edge-relatively, which is good -- unless the user ever
-	 * downgrades the panel, in which case the applets will be in the wrong
-	 * places.  However, there's a limit to what you can do -- hopefully
-	 * the user will only downgrade the panel if they know what they are
-	 * doing, and the user will have a completely screwed-up panel if they
-	 * *center*-stuck applets and then downgraded.  So the point of this
-	 * hack is to ensure the user experiences a seamless (or nearly
-	 * seamless) transition forward, but if the user moves backward a few
-	 * versions, then we really can't help them.
-	 */
-	if (g_settings_get_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY)) {
-		edge_relativity = PANEL_EDGE_END;
-		g_settings_set_enum (settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY, edge_relativity);
-	}
-
 
 	mate_panel_applet_queue_applet_to_load (id,
 					   object_type,
 					   toplevel_id,
 					   position,
-					   edge_relativity,
+					   right_stick,
 					   locked);
 
 	g_free (toplevel_id);

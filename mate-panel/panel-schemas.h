@@ -47,7 +47,6 @@
 #define PANEL_OBJECT_TOPLEVEL_ID_KEY         "toplevel-id"
 #define PANEL_OBJECT_POSITION_KEY            "position"
 #define PANEL_OBJECT_PANEL_RIGHT_STICK_KEY   "panel-right-stick"
-#define PANEL_OBJECT_RELATIVE_TO_EDGE_KEY    "relative-to-edge"
 #define PANEL_OBJECT_LOCKED_KEY              "locked"
 #define PANEL_OBJECT_APPLET_IID_KEY          "applet-iid"
 #define PANEL_OBJECT_ATTACHED_TOPLEVEL_ID_KEY "attached-toplevel-id"

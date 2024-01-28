@@ -1397,24 +1397,24 @@ panel_screen_from_panel_widget (PanelWidget *panel)
 	return gtk_window_get_screen (GTK_WINDOW (panel->toplevel));
 }
 
-PanelObjectEdgeRelativity
-panel_determine_applet_edge_relativity (GtkWidget *applet)
+gboolean
+panel_is_applet_right_stick (GtkWidget *applet)
 {
 	GtkWidget   *parent;
 	PanelWidget *panel_widget;
 
-	g_return_val_if_fail (GTK_IS_WIDGET (applet), PANEL_EDGE_START);
+	g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
 
 	parent = gtk_widget_get_parent (applet);
 
-	g_return_val_if_fail (PANEL_IS_WIDGET (parent), PANEL_EDGE_START);
+	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
 
 	panel_widget = PANEL_WIDGET (parent);
 
 	if (!panel_toplevel_get_expand (panel_widget->toplevel))
-		return PANEL_EDGE_START;
+		return FALSE;
 
-	return panel_widget_determine_applet_edge_relativity (panel_widget, applet);
+	return panel_widget_is_applet_stuck (panel_widget, applet);
 }
 
 static void

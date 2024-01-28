@@ -191,9 +191,9 @@ void		panel_widget_draw_all		(PanelWidget *panel,
 void		panel_widget_draw_icon		(PanelWidget *panel,
 						 ButtonWidget *applet);
 
-/*Tells us to which panel edge (start, center, end) the applet is relative*/
-PanelObjectEdgeRelativity	panel_widget_determine_applet_edge_relativity	(PanelWidget *panel,
-										 GtkWidget *applet);
+/*tells us if an applet is "stuck" on the right side*/
+int		panel_widget_is_applet_stuck	(PanelWidget *panel,
+						 GtkWidget *applet);
 /*get pos of the cursor location in panel coordinates*/
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
 

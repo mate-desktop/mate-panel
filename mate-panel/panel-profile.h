@@ -50,21 +50,23 @@ gboolean    panel_profile_is_writable_show_program_list (void);
 gboolean    panel_profile_get_enable_program_list (void);
 gboolean    panel_profile_get_enable_autocompletion (void);
 
-void           panel_profile_add_to_list            (PanelGSettingsKeyType      type,
-						     const char                *id);
-void           panel_profile_remove_from_list       (PanelGSettingsKeyType      type,
-						     const char                *id);
+void           panel_profile_add_to_list            (PanelGSettingsKeyType  type,
+						     const char        *id);
+void           panel_profile_remove_from_list       (PanelGSettingsKeyType  type,
+						     const char        *id);
 gboolean       panel_profile_id_lists_are_writable  (void);
-void           panel_profile_create_toplevel        (GdkScreen                 *screen);
-PanelToplevel *panel_profile_load_toplevel          (const char                *toplevel_id);
-void           panel_profile_delete_toplevel        (PanelToplevel             *toplevel);
-char          *panel_profile_prepare_object         (PanelObjectType            object_type,
-						     PanelToplevel             *toplevel,
-						     int                        position);
-char          *panel_profile_prepare_object_with_id (PanelObjectType            object_type,
-						     const char                *toplevel_id,
-						     int                        position);
-void           panel_profile_delete_object          (AppletInfo                *applet_info);
+void           panel_profile_create_toplevel        (GdkScreen         *screen);
+PanelToplevel *panel_profile_load_toplevel          (const char        *toplevel_id);
+void           panel_profile_delete_toplevel        (PanelToplevel     *toplevel);
+char          *panel_profile_prepare_object         (PanelObjectType    object_type,
+						     PanelToplevel     *toplevel,
+						     int                position,
+						     gboolean           right_stick);
+char          *panel_profile_prepare_object_with_id (PanelObjectType    object_type,
+						     const char        *toplevel_id,
+						     int                position,
+						     gboolean           right_stick);
+void           panel_profile_delete_object          (AppletInfo        *applet_info);
 
 gboolean    panel_profile_key_is_writable            (PanelToplevel *toplevel,
 						      gchar         *key);
