@@ -649,8 +649,8 @@ panel_widget_determine_applet_edge_relativity (PanelWidget *panel_widget,
 		int         start_pos, end_pos;
 
 		applet_list = g_list_find (panel_widget->applet_list, applet_in_question);
-		start_pos = applet_in_question->constrained;
-		end_pos = applet_in_question->constrained;
+		start_pos = applet_in_question->pos + applet_in_question->cells;
+		end_pos = applet_in_question->pos;
 
 		/*
 		 * Start by moving towards the start of the panel, checking
@@ -660,14 +660,14 @@ panel_widget_determine_applet_edge_relativity (PanelWidget *panel_widget,
 		{
 			applet = l->data;
 
-			if (applet->constrained + applet->cells < end_pos)
+			if (applet->pos + applet->cells < end_pos)
 				break;
 
-			if (applet->constrained <= panel_widget->size/2 &&
-			    applet->constrained + applet->cells > panel_widget->size/2)
+			if (applet->pos <= panel_widget->size/2 &&
+			    applet->pos + applet->cells > panel_widget->size/2)
 				applet_is_centered = TRUE;
 
-			end_pos = applet->constrained;
+			end_pos -= applet->cells;
 			if (end_pos <= 0)
 				/*
 				 * If the applet in question is part of a line
@@ -678,6 +678,9 @@ panel_widget_determine_applet_edge_relativity (PanelWidget *panel_widget,
 				return PANEL_EDGE_START;
 		}
 
+		if (applet_is_centered)
+			return PANEL_EDGE_CENTER;
+
 		/*
 		 * Now move towards the panel's end, looking for applets that
 		 * cross the center of the panel.
@@ -686,11 +689,11 @@ panel_widget_determine_applet_edge_relativity (PanelWidget *panel_widget,
 		{
 			applet = l->data;
 
-			if (applet->constrained > start_pos)
+			if (applet->pos > start_pos)
 				break;
 
-			if (applet->constrained <= panel_widget->size/2 &&
-			    applet->constrained + applet->cells > panel_widget->size/2)
+			if (applet->pos <= panel_widget->size/2 &&
+			    applet->pos + applet->cells > panel_widget->size/2)
 				applet_is_centered = TRUE;
 
 			start_pos += applet->cells;
@@ -706,9 +709,9 @@ panel_widget_determine_applet_edge_relativity (PanelWidget *panel_widget,
 	}
 
 	if (applet_is_centered)
-		return PANEL_EDGE_CENTER;
-
-	return PANEL_EDGE_START;
+			return PANEL_EDGE_CENTER;
+	else
+		return PANEL_EDGE_START;
 }
 
 static int
@@ -1547,7 +1550,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				if (edge_relativity == PANEL_EDGE_CENTER)
 				{
 					ad->pos = panel->size/2 + position;
-					ad->constrained = ad->pos - ad->min_cells/2;
+					ad->constrained = ad->pos - ad->cells/2;
 				}
 				else if (edge_relativity == PANEL_EDGE_END)
 				{
@@ -1569,7 +1572,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					if (right_stuck)
 						ad->constrained = ad->pos;
 					else
-						ad->constrained = ad->pos - ad->min_cells;
+						ad->constrained = ad->pos - ad->cells;
 				}
 				else
 				{
@@ -1608,59 +1611,16 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				if (edge_relativity == PANEL_EDGE_CENTER &&
 				    pad &&
 				    previous_edge_relativity == PANEL_EDGE_CENTER &&
-				    pad->constrained + pad->min_cells/2 < panel->size/2)
-					pad->constrained = ad->constrained - pad->min_cells;
+				    pad->constrained + pad->cells/2 < panel->size/2)
+					pad->constrained = ad->constrained - pad->cells;
 				else
 					ad->constrained = i;
 			}
 
-			i = ad->constrained + ad->min_cells;
+			i = ad->constrained + ad->cells;
 		}
 
-		/*
-		 * Now step through the list of panel applets backwards --
-		 * from the end of the panel to the start -- and if an applet
-		 * doesn't fit on the panel, push it closer to the start
-		 * (left/top) of the panel so that everything fits.
-		 *
-		 * Far more importantly, though, this is where expanding
-		 * applets are dealt with.  For applets which are positioned
-		 * relative to the start of the panel (and applets which are
-		 * end-relative but right-stuck for backward compatibility),
-		 * the applet's positioning reference point is the start of
-		 * the applet.  Therefore, expand the applet towards the end
-		 * (right/bottom) of the panel.
-		 *
-		 * If the applet is end-relative (and is not right-stuck),
-		 * the applet's position is relative to the end of the applet,
-		 * so the user expects that if the applet is going to expand,
-		 * the applet should expand towards the start of the panel
-		 * (in other words, the end-relative position of the applet
-		 * should not change when the applet is expanded).  Not only
-		 * does the applet's size change, but so does the applet's
-		 * actual position on the panel (ad->constrained).
-		 *
-		 * If the applet is center-relative, the applet's position is
-		 * relative to the center of the applet, and thus the center
-		 * of the applet should not move; the applet should grow
-		 * equally in both directions so that the applet stays truly
-		 * centered.  Look for empty space on the panel before
-		 * (to the left/above) and after (to the right/below) the
-		 * applet, and increase the applet's allocation by double the
-		 * smaller of the two figures.  So if there's 18px of empty
-		 * space immediately to the left and 14px of empty space to
-		 * the right, increase the applet's allocation by 2*14px, or
-		 * 28px.  On top of that, move the applet's actual position
-		 * towards the start of the panel by 14px so that the applet
-		 * remains totally centered.
-		 *
-		 * Once the number of cells has been expanded, use the
-		 * applet's size hints (if any) to modify the final allocation.
-		 * Only once the size hints have been consulted (and the cell
-		 * allocation thus potentially adjusted once again) does the
-		 * actual ("constrained") position get recalculated, as was
-		 * described above.
-		 */
+		/* Now expand from the right */
 		i = panel->size;
 		for(list = g_list_last(panel->applet_list);
 		    list!=NULL;
@@ -1671,69 +1631,14 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				ad->constrained = MAX (i - ad->min_cells, 0);
 
 			if (ad->expand_major) {
-				const char *id;
-				AppletInfo *info;
-				PanelObjectEdgeRelativity edge_relativity = PANEL_EDGE_START;
-				gboolean right_stuck;
-				AppletData *pad;
-				int prior_space;
-				int following_space;
-				int additional_space;
-
-				id = mate_panel_applet_get_id_by_widget (ad->applet);
-				if (id)
-				{
-					info = mate_panel_applet_get_by_id (id);
-					edge_relativity = g_settings_get_enum (info->settings,
-									       PANEL_OBJECT_RELATIVE_TO_EDGE_KEY);
-					right_stuck = g_settings_get_boolean (info->settings,
-									      PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
-				}
-
-				prior_space = ad->constrained;
-				if (list->prev)
-				{
-					pad = list->prev->data;
-					prior_space -= pad->constrained + pad->min_cells;
-				}
-
-				following_space = i - (ad->constrained + ad->min_cells);
-
-				/*
-				 * Also, do not attempt to re-position the
-				 * applet if it is currently being dragged or
-				 * otherwise moved by the user; otherwise,
-				 * we'll just interfere with the user's
-				 * attempts to move the applet, and the applet
-				 * will jump in unexpected directions.
-				 */
-
-				if (ad != panel->currently_dragged_applet &&
-				    edge_relativity == PANEL_EDGE_END &&
-				    ! right_stuck)
-					ad->cells += prior_space;
-				else if (ad != panel->currently_dragged_applet &&
-				         edge_relativity == PANEL_EDGE_CENTER)
-				{
-					additional_space = MIN (prior_space, following_space);
-					additional_space = MAX (additional_space, 0);
-					ad->cells += additional_space * 2;
-				}
-				else
-					ad->cells += following_space;
+				int cells = (i - ad->constrained) - 1;
 
 				if (ad->size_hints)
-					ad->cells = get_size_from_hints (ad, ad->cells);
-				ad->cells = MAX (ad->cells, ad->min_cells);
-				ad->cells = MIN (ad->cells, panel->size);
+					cells = get_size_from_hints (ad, cells);
+				cells = MAX (cells, ad->min_cells);
+				cells = MIN (cells, panel->size);
 
-				if (ad != panel->currently_dragged_applet)
-				{
-					if (edge_relativity == PANEL_EDGE_END && ! right_stuck)
-						ad->constrained -= ad->cells - ad->min_cells;
-					else if (edge_relativity == PANEL_EDGE_CENTER)
-						ad->constrained -= (ad->cells - ad->min_cells) / 2;
-				}
+				ad->cells = cells;
 			}
 
 			i = ad->constrained;
