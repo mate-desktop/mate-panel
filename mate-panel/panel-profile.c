@@ -1628,13 +1628,12 @@ panel_profile_load_list (GSettings              *settings,
 
 	list = g_settings_get_strv (settings, key);
 
-	if (list) {
-		for (gint i = 0; list[i]; i++) {
-			load_handler (list[i]);
-		}
-
-		g_strfreev (list);
+	for (gint i = 0; list[i]; i++) {
+		load_handler (list[i]);
 	}
+
+	if (list)
+		g_strfreev (list);
 }
 
 static void
