@@ -381,7 +381,7 @@ void panel_menu_bar_create(PanelToplevel* toplevel, int position)
 {
 	char* id;
 
-	id = panel_profile_prepare_object(PANEL_OBJECT_MENU_BAR, toplevel, position);
+	id = panel_profile_prepare_object(PANEL_OBJECT_MENU_BAR, toplevel, position, FALSE);
 	panel_profile_add_to_list(PANEL_GSETTINGS_OBJECTS, id);
 	g_free(id);
 }

@@ -263,7 +263,7 @@ panel_separator_create (PanelToplevel *toplevel,
 	char *id;
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_SEPARATOR,
-					   toplevel, position);
+					   toplevel, position, FALSE);
 	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 	g_free (id);
 }
