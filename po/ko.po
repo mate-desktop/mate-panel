@@ -9,16 +9,16 @@
 # D.K Kim <pepct84@gmail.com>, 2018
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
 # 1763f4a4329a2376c933c5e919a36cbc_341ca53 <1f851310383599d03339229d772e1290_119292>, 2019
-# JungHee Lee <daemul72@gmail.com>, 2021
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2021
+# Junghee Lee <daemul72@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.27.0\n"
+"Project-Id-Version: mate-panel 1.27.2\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2022-10-29 15:36+0200\n"
+"POT-Creation-Date: 2023-09-02 19:26+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
-"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>, 2021\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2023\n"
 "Language-Team: Korean (https://app.transifex.com/mate/teams/13566/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,14 +41,14 @@ msgstr "달력"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:444
+#: applets/clock/clock.c:461
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:444 applets/clock/clock-location-tile.c:500
+#: applets/clock/clock.c:461 applets/clock/clock-location-tile.c:500
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
@@ -59,7 +59,7 @@ msgstr "%p %l:%M"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: applets/clock/clock.c:449 applets/clock/clock.c:1614
+#: applets/clock/clock.c:466 applets/clock/clock.c:1736
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -73,7 +73,7 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: applets/clock/clock.c:449 applets/clock/clock.c:1620
+#: applets/clock/clock.c:466 applets/clock/clock.c:1742
 #: applets/clock/clock-location-tile.c:460
 #: applets/clock/clock-location-tile.c:507
 msgid "%H:%M"
@@ -84,11 +84,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: applets/clock/clock.c:460
+#: applets/clock/clock.c:477
 msgid "%a %b %e"
 msgstr "%b %e일 (%a)"
 
-#: applets/clock/clock.c:467
+#: applets/clock/clock.c:484
 #, c-format
 msgid ""
 "%1$s\n"
@@ -97,7 +97,7 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#: applets/clock/clock.c:475
+#: applets/clock/clock.c:492
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -105,19 +105,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: applets/clock/clock.c:657
+#: applets/clock/clock.c:674
 msgid "%A %B %d (%%s)"
 msgstr "%B %d일 %A (%%s)"
 
-#: applets/clock/clock.c:683
+#: applets/clock/clock.c:700
 msgid "Click to hide month calendar"
 msgstr "달력을 감추려면 누르십시오"
 
-#: applets/clock/clock.c:685
+#: applets/clock/clock.c:702
 msgid "Click to view month calendar"
 msgstr "달력을 보려면 누르십시오"
 
-#: applets/clock/clock.c:1452
+#: applets/clock/clock.c:1574
 msgid "Computer Clock"
 msgstr "컴퓨터 시계"
 
@@ -127,7 +127,7 @@ msgstr "컴퓨터 시계"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1599
+#: applets/clock/clock.c:1721
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
@@ -137,98 +137,98 @@ msgstr "%p %I:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1607
+#: applets/clock/clock.c:1729
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: applets/clock/clock.c:1653
+#: applets/clock/clock.c:1775
 msgid "%A, %B %d %Y"
 msgstr "%Y년 %B %d일 %A"
 
-#: applets/clock/clock.c:1684
+#: applets/clock/clock.c:1806
 msgid "Set System Time..."
 msgstr "시스템 시간 설정..."
 
-#: applets/clock/clock.c:1685
+#: applets/clock/clock.c:1807
 msgid "Set System Time"
 msgstr "시스템 시간 설정"
 
-#: applets/clock/clock.c:1699
+#: applets/clock/clock.c:1821
 msgid "Failed to set the system time"
 msgstr "시스템 시간을 설정하는 데 실패했습니다"
 
-#: applets/clock/clock.c:1889 applets/fish/fish.c:1690
-#: applets/notification_area/main.c:290 applets/wncklet/window-list.c:466
+#: applets/clock/clock.c:2011 applets/fish/fish.c:1690
+#: applets/notification_area/main.c:290 applets/wncklet/window-list.c:551
 #: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "기본 설정(_P)"
 
-#: applets/clock/clock.c:1892 applets/clock/clock.ui:312
+#: applets/clock/clock.c:2014 applets/clock/clock.ui:312
 #: applets/fish/fish.c:1693 applets/fish/fish.ui:46
 #: applets/notification_area/main.c:293 applets/wncklet/showdesktop.c:239
-#: applets/wncklet/window-list.c:474 applets/wncklet/window-list.ui:37
+#: applets/wncklet/window-list.c:559 applets/wncklet/window-list.ui:37
 #: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
 #: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:558
 #: mate-panel/panel-action-button.c:730 mate-panel/panel-addto.c:1267
 #: mate-panel/panel-context-menu.c:320
 #: mate-panel/panel-ditem-editor-dialog.ui:45 mate-panel/panel-menu-bar.c:355
-#: mate-panel/panel-menu-button.c:697 mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-menu-button.c:699 mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "도움말(_H)"
 
-#: applets/clock/clock.c:1895 applets/fish/fish.c:1696
+#: applets/clock/clock.c:2017 applets/fish/fish.c:1696
 #: applets/notification_area/main.c:296 applets/wncklet/showdesktop.c:247
-#: applets/wncklet/window-list.c:482 applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-list.c:567 applets/wncklet/window-menu.c:113
 #: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "정보(_A)"
 
-#: applets/clock/clock.c:1898
+#: applets/clock/clock.c:2020
 msgid "Copy _Time"
 msgstr "시각 복사(_T)"
 
-#: applets/clock/clock.c:1901
+#: applets/clock/clock.c:2023
 msgid "Copy _Date"
 msgstr "날짜 복사(_D)"
 
-#: applets/clock/clock.c:1904
+#: applets/clock/clock.c:2026
 msgid "Ad_just Date & Time"
 msgstr "날짜 및 시간 조정(_J)"
 
-#: applets/clock/clock.c:2902
+#: applets/clock/clock.c:3099
 msgid "Choose Location"
 msgstr "위치 선택"
 
-#: applets/clock/clock.c:2981
+#: applets/clock/clock.c:3178
 msgid "Edit Location"
 msgstr "위치 편집"
 
-#: applets/clock/clock.c:3107
+#: applets/clock/clock.c:3304
 msgid "City Name"
 msgstr "도시 이름"
 
-#: applets/clock/clock.c:3111
+#: applets/clock/clock.c:3308
 msgid "City Time Zone"
 msgstr "도시 시간대"
 
-#: applets/clock/clock.c:3384
+#: applets/clock/clock.c:3581
 #: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "시계"
 
-#: applets/clock/clock.c:3385
+#: applets/clock/clock.c:3582
 msgid "About Clock"
 msgstr "시계 소개"
 
-#: applets/clock/clock.c:3387
+#: applets/clock/clock.c:3584
 msgid "The Clock displays the current time and date"
 msgstr "시계는 현재 시간과 날짜를 보여 줍니다"
 
-#: applets/clock/clock.c:3388
+#: applets/clock/clock.c:3585
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2021 MATE developers"
@@ -236,9 +236,9 @@ msgstr ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2021 MATE developers"
 
-#: applets/clock/clock.c:3392 applets/fish/fish.c:562
+#: applets/clock/clock.c:3589 applets/fish/fish.c:562
 #: applets/notification_area/main.c:284 applets/wncklet/showdesktop.c:531
-#: applets/wncklet/window-list.c:956 applets/wncklet/window-menu.c:95
+#: applets/wncklet/window-list.c:1052 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:735
 #: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
@@ -972,6 +972,16 @@ msgid ""
 "scrolling in window list."
 msgstr ""
 
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:30
+msgid "Close window on middle mouse click"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:31
+msgid ""
+"If true, then clicking the middle mouse button over a taskbar item will "
+"close the window."
+msgstr ""
+
 #: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:5
 msgid "Display workspace names"
 msgstr "작업 공간 이름 보여 주기"
@@ -1047,7 +1057,7 @@ msgid "Switch between workspaces"
 msgstr "작업 공간 사이를 전환합니다"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:946
+#: applets/wncklet/window-list.c:1042
 msgid "Window List"
 msgstr "창 목록"
 
@@ -1092,7 +1102,7 @@ msgstr "바탕화면 보기 버튼 소개"
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "이 버튼을 누르면 모든 창을 숨기고 바탕 화면을 표시합니다."
 
-#: applets/wncklet/showdesktop.c:525 applets/wncklet/window-list.c:950
+#: applets/wncklet/showdesktop.c:525 applets/wncklet/window-list.c:1046
 #: applets/wncklet/workspace-switcher.c:729
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1109,15 +1119,15 @@ msgid ""
 " running a window manager."
 msgstr "창 관리자가 바탕 화면 보여주기 버튼을 지원하지 않거나, 창 관리자를 실행하고 있지 않습니다."
 
-#: applets/wncklet/window-list.c:458
+#: applets/wncklet/window-list.c:543
 msgid "_System Monitor"
 msgstr "시스템 감시(_S)"
 
-#: applets/wncklet/window-list.c:947
+#: applets/wncklet/window-list.c:1043
 msgid "About Window List"
 msgstr "창 목록 소개"
 
-#: applets/wncklet/window-list.c:949
+#: applets/wncklet/window-list.c:1045
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1168,42 +1178,50 @@ msgid "_Always group windows"
 msgstr "언제나 창을 모으기(_A)"
 
 #: applets/wncklet/window-list.ui:290
+msgid "Middle mouse button"
+msgstr "가운데 마우스 버튼"
+
+#: applets/wncklet/window-list.ui:311
+msgid "_Click to close window"
+msgstr ""
+
+#: applets/wncklet/window-list.ui:348
 msgid "Mouse Scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:311
+#: applets/wncklet/window-list.ui:369
 msgid "_Enable mouse scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:344
+#: applets/wncklet/window-list.ui:402
 msgid "Behaviour"
 msgstr "동작"
 
-#: applets/wncklet/window-list.ui:367
+#: applets/wncklet/window-list.ui:425
 msgid "Window List Content"
 msgstr "창 목록 내용"
 
-#: applets/wncklet/window-list.ui:388
+#: applets/wncklet/window-list.ui:446
 msgid "Sh_ow windows from current workspace"
 msgstr "현재 작업 공간의 창 표시(_O)"
 
-#: applets/wncklet/window-list.ui:404
+#: applets/wncklet/window-list.ui:462
 msgid "Show windows from a_ll workspaces"
 msgstr "모든 작업 공간의 창 표시(_L)"
 
-#: applets/wncklet/window-list.ui:442
+#: applets/wncklet/window-list.ui:500
 msgid "Restoring Minimized Windows"
 msgstr "최소화된 창을 복구"
 
-#: applets/wncklet/window-list.ui:463
+#: applets/wncklet/window-list.ui:521
 msgid "Restore to current _workspace"
 msgstr "현재 작업 공간으로 복구(_W)"
 
-#: applets/wncklet/window-list.ui:479
+#: applets/wncklet/window-list.ui:537
 msgid "Restore to na_tive workspace"
 msgstr "본래 작업 공간으로 복구(_T)"
 
-#: applets/wncklet/window-list.ui:516
+#: applets/wncklet/window-list.ui:574
 #: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "작업 공간"
@@ -1628,11 +1646,8 @@ msgstr "애플릿 IID"
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
-"object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
-"applet\")."
+"object-type key is 'applet'."
 msgstr ""
-"\"ClockAppletFactory::ClockApplet\" 같은 애플릿의 구현체 ID입니다. 이 키는 object_type 키가 "
-"\"external-applet\"(또는 오래된 \"matecomponent-applet\")일 경우에만 해당합니다"
 
 #: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Panel attached to drawer"
@@ -1641,8 +1656,8 @@ msgstr "서랍에 붙어 있는 패널"
 #: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
-"relevant if the object_type key is \"drawer-object\"."
-msgstr "이 서랍에 붙어 있는 패널의 ID. 이 키는 object_type 키가 \"drawer-object\"일 경우에만 의미가 있습니다."
+"relevant if the object-type key is 'drawer'."
+msgstr ""
 
 #: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Tooltip displayed for drawer or menu"
@@ -1651,11 +1666,8 @@ msgstr "서랍 또는 메뉴에 대해 표시되는 도구 설명"
 #: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
-"only relevant if the object_type key is \"drawer-object\" or \"menu-"
-"object\"."
+"only relevant if the object-type key is 'drawer' or 'menu'."
 msgstr ""
-"이 서랍 또는 메뉴의 설명으로 보여줄 텍스트. 이 키는 object_type 키가 \"drawer-object\" 또는 \"menu-"
-"object\"일 경우에만 의미가 있습니다."
 
 #: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Use custom icon for object's button"
@@ -1664,11 +1676,9 @@ msgstr "오브젝트의 버튼에 사용자 지정 아이콘 사용"
 #: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
-"false, the custom_icon key is ignored. This key is only relevant if the "
-"object_type key is \"menu-object\" or \"drawer-object\"."
+"false, the custom-icon key is ignored. This key is only relevant if the "
+"object-type key is 'menu' or 'drawer-object'."
 msgstr ""
-"참이면, custom_icon 키를 이 버튼의 사용자 설정 아이콘으로 사용합니다. 거짓이면, custom_icon 키를 무시합니다. 이 "
-"설정은 object_type 키가 \"menu-object\"이거나 \"drawer-object\"일 경우에만 의미가 있습니다."
 
 #: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Icon used for object's button"
@@ -1677,11 +1687,9 @@ msgstr "오브젝트의 버튼에 쓸 아이콘"
 #: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "The location of the image file used as the icon for the object's button. "
-"This key is only relevant if the object_type key is \"drawer-object\" or "
-"\"menu-object\" and the use_custom_icon key is true."
+"This key is only relevant if the object-type key is 'drawer' or 'menu' and "
+"the use-custom-icon key is true."
 msgstr ""
-"오브젝트의 버튼에 아이콘으로 사용할 그림 파일의 위치. 이 키는 object_type 키가 \"drawer-object\"이거나 "
-"\"menu-object\"이고 use_custom_icon 키가 참일 경우에만 의미가 있습니다."
 
 #: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Use custom path for menu contents"
@@ -1690,11 +1698,9 @@ msgstr "메뉴 내용에 사용자 지정 경로 사용"
 #: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
-"should be constructed. If false, the menu_path key is ignored. This key is "
-"only relevant if the object_type key is \"menu-object\"."
+"should be constructed. If false, the menu-path key is ignored. This key is "
+"only relevant if the object-type key is 'menu'."
 msgstr ""
-"참이면, menu_path 키를 메뉴 내용 읽어들일 경로로 사용합니다. 거짓이면 menu_path 키를 무시합니다. 이 설정은 "
-"object_type 키가 \"menu-object\"일 경우에만 의미가 있습니다."
 
 #: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Menu content path"
@@ -1703,11 +1709,8 @@ msgstr "메뉴 내용 경로"
 #: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
-"relevant if the use_menu_path key is true and the object_type key is \"menu-"
-"object\"."
+"relevant if the use-menu-path key is true and the object-type key is 'menu'."
 msgstr ""
-"메뉴 내용을 만들 경로. 이 키는 use_menu_path 키가 참이고 object_type 키가 \"menu-object\"일 경우에만"
-" 의미가 있습니다."
 
 #: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Draw arrow in menu button"
@@ -1726,10 +1729,8 @@ msgstr "실행 아이콘 위치"
 #: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
+"relevant if the object-type key is 'launcher'."
 msgstr ""
-"실행 아이콘에 대한 정보가 들어 있는 .desktop 파일의 위치. 이 키는 object_type 키가 \"launcher-"
-"object\"일 경우에만 의미가 있습니다."
 
 #: data/org.mate.panel.object.gschema.xml.in:80
 msgid "Action button type"
@@ -1737,12 +1738,10 @@ msgstr "동작 버튼 종류"
 
 #: data/org.mate.panel.object.gschema.xml.in:81
 msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
-"relevant if the object_type key is \"action-applet\"."
+"The action type this button represents. Possible values are 'none', 'lock', "
+"'logout', 'run', 'search', 'force-quit', 'connect-server' and 'shutdown'. "
+"This key is only relevant if the object-type key is 'action'."
 msgstr ""
-"이 버튼의 액션 타입. 가능한 값은 \"lock\", \"logout\", \"run\", \"search\", 그리고 "
-"\"screenshot\"입니다. 이 키는 object_type 키가 \"action-applet\"일 경우에만 의미가 있습니다."
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:5
 msgid "Name to identify panel"
@@ -2079,62 +2078,62 @@ msgid ""
 "vertically."
 msgstr "참이면, 패널 방향이 세로로 바뀌었을 때 배경 그림도 회전합니다."
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
 msgid "File is not a valid .desktop file"
 msgstr "올바른 .desktop 파일이 아닙니다"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "desktop 파일 버전을 ('%s') 인식할 수 없습니다"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:984
 #, c-format
 msgid "Starting %s"
 msgstr "%s 시작"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1126
 msgid "Application does not accept documents on command line"
 msgstr "명령문에서 문서를 지정할 수 없는 프로그램입니다"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1194
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "알 수 없는 실행 옵션: %d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1410
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "문서 URI는 'Type=Link' desktop 항목에 넘길 수 없습니다"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1431
 msgid "Not a launchable item"
 msgstr "실행할 수 있는 항목이 없습니다"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
 msgid "Disable connection to session manager"
 msgstr "세션 관리자에 연결하지 않습니다"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "Specify file containing saved configuration"
 msgstr "설정을 저장할 파일을 지정합니다"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "FILE"
 msgstr "<파일>"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "Specify session management ID"
 msgstr "세션 관리 ID를 지정합니다"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Session management options:"
 msgstr "세션 관리 옵션:"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
 msgid "Show session management options"
 msgstr "세션 관리 옵션을 표시합니다"
 
@@ -2677,11 +2676,11 @@ msgstr "바탕 화면 모양과 동작을 바꾸거나, 도움말을 보거나 �
 msgid "Applications"
 msgstr "프로그램"
 
-#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:703
+#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:705
 msgid "_Edit Menus"
 msgstr "메뉴 편집(_E)"
 
-#: mate-panel/panel-menu-button.c:1121
+#: mate-panel/panel-menu-button.c:1123
 msgid "Main Menu"
 msgstr "주 메뉴"
 
@@ -2949,30 +2948,30 @@ msgstr "최근 문서 지우기..."
 msgid "Clear all items from the recent documents list"
 msgstr "최근 문서 목록의 모든 항목을 지우시겠습니까?"
 
-#: mate-panel/panel-run-dialog.c:440
+#: mate-panel/panel-run-dialog.c:469
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' 명령을 실행할 수 없습니다"
 
-#: mate-panel/panel-run-dialog.c:481
+#: mate-panel/panel-run-dialog.c:510
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s'을(를) UTF-8에서 변환할 수 없습니다"
 
-#: mate-panel/panel-run-dialog.c:1269
+#: mate-panel/panel-run-dialog.c:1335
 msgid "Choose a file to append to the command..."
 msgstr "명령어에 덧붙일 파일을 선택하십시오..."
 
-#: mate-panel/panel-run-dialog.c:1623 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1689 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "설명을 볼 프로그램을 선택하십시오."
 
-#: mate-panel/panel-run-dialog.c:1661
+#: mate-panel/panel-run-dialog.c:1746
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "다음 명령을 실행합니다: '%s'"
 
-#: mate-panel/panel-run-dialog.c:1694
+#: mate-panel/panel-run-dialog.c:1779
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "실행 대화 상자에 지정된 URI 목록의 형식(%d)이나 길이(%d)가 틀렸습니다\n"

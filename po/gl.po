@@ -7,15 +7,15 @@
 # Martin Wimpress <code@flexion.org>, 2018
 # André Rivero Castillo <hab130@gmail.com>, 2018
 # Stefano Karapetsas <stefano@karapetsas.com>, 2018
-# Miguel Anxo Bouzada <mbouzada@gmail.com>, 2021
+# Miguel Anxo Bouzada <mbouzada@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: mate-panel 1.27.0\n"
+"Project-Id-Version: mate-panel 1.27.2\n"
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
-"POT-Creation-Date: 2022-10-29 15:36+0200\n"
+"POT-Creation-Date: 2023-09-02 19:26+0200\n"
 "PO-Revision-Date: 2018-03-11 19:58+0000\n"
-"Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>, 2021\n"
+"Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>, 2023\n"
 "Language-Team: Galician (https://app.transifex.com/mate/teams/13566/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,14 +38,14 @@ msgstr "Calendario"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:444
+#: applets/clock/clock.c:461
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: applets/clock/clock.c:444 applets/clock/clock-location-tile.c:500
+#: applets/clock/clock.c:461 applets/clock/clock-location-tile.c:500
 msgid "%l:%M %p"
 msgstr "%l.%M %p"
 
@@ -56,7 +56,7 @@ msgstr "%l.%M %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: applets/clock/clock.c:449 applets/clock/clock.c:1614
+#: applets/clock/clock.c:466 applets/clock/clock.c:1736
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -70,7 +70,7 @@ msgstr "%H:%M:%S"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
-#: applets/clock/clock.c:449 applets/clock/clock.c:1620
+#: applets/clock/clock.c:466 applets/clock/clock.c:1742
 #: applets/clock/clock-location-tile.c:460
 #: applets/clock/clock-location-tile.c:507
 msgid "%H:%M"
@@ -81,11 +81,11 @@ msgstr "%H:%M"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: applets/clock/clock.c:460
+#: applets/clock/clock.c:477
 msgid "%a %b %e"
 msgstr "%a %e de %b"
 
-#: applets/clock/clock.c:467
+#: applets/clock/clock.c:484
 #, c-format
 msgid ""
 "%1$s\n"
@@ -94,7 +94,7 @@ msgstr ""
 "%1$s\n"
 "%2$s"
 
-#: applets/clock/clock.c:475
+#: applets/clock/clock.c:492
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -102,19 +102,19 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: applets/clock/clock.c:657
+#: applets/clock/clock.c:674
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: applets/clock/clock.c:683
+#: applets/clock/clock.c:700
 msgid "Click to hide month calendar"
 msgstr "Prema para agochar o calendario do mes"
 
-#: applets/clock/clock.c:685
+#: applets/clock/clock.c:702
 msgid "Click to view month calendar"
 msgstr "Prema para ver o calendario do mes"
 
-#: applets/clock/clock.c:1452
+#: applets/clock/clock.c:1574
 msgid "Computer Clock"
 msgstr "Reloxo do computador"
 
@@ -124,7 +124,7 @@ msgstr "Reloxo do computador"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1599
+#: applets/clock/clock.c:1721
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
@@ -134,98 +134,98 @@ msgstr "%H:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: applets/clock/clock.c:1607
+#: applets/clock/clock.c:1729
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: applets/clock/clock.c:1653
+#: applets/clock/clock.c:1775
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: applets/clock/clock.c:1684
+#: applets/clock/clock.c:1806
 msgid "Set System Time..."
 msgstr "Estabelecer a hora do sistema..."
 
-#: applets/clock/clock.c:1685
+#: applets/clock/clock.c:1807
 msgid "Set System Time"
 msgstr "Estabelecer a hora do sistema"
 
-#: applets/clock/clock.c:1699
+#: applets/clock/clock.c:1821
 msgid "Failed to set the system time"
 msgstr "Produciuse un fallo ao estabelecer a hora do sistema"
 
-#: applets/clock/clock.c:1889 applets/fish/fish.c:1690
-#: applets/notification_area/main.c:290 applets/wncklet/window-list.c:466
+#: applets/clock/clock.c:2011 applets/fish/fish.c:1690
+#: applets/notification_area/main.c:290 applets/wncklet/window-list.c:551
 #: applets/wncklet/workspace-switcher.c:468
 msgid "_Preferences"
 msgstr "_Preferencias"
 
-#: applets/clock/clock.c:1892 applets/clock/clock.ui:312
+#: applets/clock/clock.c:2014 applets/clock/clock.ui:312
 #: applets/fish/fish.c:1693 applets/fish/fish.ui:46
 #: applets/notification_area/main.c:293 applets/wncklet/showdesktop.c:239
-#: applets/wncklet/window-list.c:474 applets/wncklet/window-list.ui:37
+#: applets/wncklet/window-list.c:559 applets/wncklet/window-list.ui:37
 #: applets/wncklet/window-menu.c:105 applets/wncklet/workspace-switcher.c:476
 #: applets/wncklet/workspace-switcher.ui:46 mate-panel/drawer.c:558
 #: mate-panel/panel-action-button.c:730 mate-panel/panel-addto.c:1267
 #: mate-panel/panel-context-menu.c:320
 #: mate-panel/panel-ditem-editor-dialog.ui:45 mate-panel/panel-menu-bar.c:355
-#: mate-panel/panel-menu-button.c:697 mate-panel/panel-properties-dialog.ui:78
+#: mate-panel/panel-menu-button.c:699 mate-panel/panel-properties-dialog.ui:78
 #: mate-panel/panel-properties-dialog.ui:724 mate-panel/panel-run-dialog.ui:39
 msgid "_Help"
 msgstr "_Axuda"
 
-#: applets/clock/clock.c:1895 applets/fish/fish.c:1696
+#: applets/clock/clock.c:2017 applets/fish/fish.c:1696
 #: applets/notification_area/main.c:296 applets/wncklet/showdesktop.c:247
-#: applets/wncklet/window-list.c:482 applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-list.c:567 applets/wncklet/window-menu.c:113
 #: applets/wncklet/workspace-switcher.c:484
 msgid "_About"
 msgstr "_Sobre"
 
-#: applets/clock/clock.c:1898
+#: applets/clock/clock.c:2020
 msgid "Copy _Time"
 msgstr "Copiar a _hora"
 
-#: applets/clock/clock.c:1901
+#: applets/clock/clock.c:2023
 msgid "Copy _Date"
 msgstr "Copiar a _data"
 
-#: applets/clock/clock.c:1904
+#: applets/clock/clock.c:2026
 msgid "Ad_just Date & Time"
 msgstr "A_xustar a data e hora"
 
-#: applets/clock/clock.c:2902
+#: applets/clock/clock.c:3099
 msgid "Choose Location"
 msgstr "Escoller a localización"
 
-#: applets/clock/clock.c:2981
+#: applets/clock/clock.c:3178
 msgid "Edit Location"
 msgstr "Editar a localización"
 
-#: applets/clock/clock.c:3107
+#: applets/clock/clock.c:3304
 msgid "City Name"
 msgstr "Nome da cidade"
 
-#: applets/clock/clock.c:3111
+#: applets/clock/clock.c:3308
 msgid "City Time Zone"
 msgstr "Fuso horario da cidade"
 
-#: applets/clock/clock.c:3384
+#: applets/clock/clock.c:3581
 #: applets/clock/org.mate.panel.ClockApplet.mate-panel-applet.desktop.in.in:10
 msgid "Clock"
 msgstr "Reloxo"
 
-#: applets/clock/clock.c:3385
+#: applets/clock/clock.c:3582
 msgid "About Clock"
 msgstr "Sobre o Reloxo"
 
-#: applets/clock/clock.c:3387
+#: applets/clock/clock.c:3584
 msgid "The Clock displays the current time and date"
 msgstr "O reloxo amosa a hora e a data actuais"
 
-#: applets/clock/clock.c:3388
+#: applets/clock/clock.c:3585
 msgid ""
 "Copyright © 1998-2004 Free Software Foundation, Inc.\n"
 "Copyright © 2012-2021 MATE developers"
@@ -233,9 +233,9 @@ msgstr ""
 "Dereitos de autoría © 1998-2004 Free Software Foundation, Inc.\n"
 "Dereitos de autoría © 2012-2021 Os desenvolvedores do MATE"
 
-#: applets/clock/clock.c:3392 applets/fish/fish.c:562
+#: applets/clock/clock.c:3589 applets/fish/fish.c:562
 #: applets/notification_area/main.c:284 applets/wncklet/showdesktop.c:531
-#: applets/wncklet/window-list.c:956 applets/wncklet/window-menu.c:95
+#: applets/wncklet/window-list.c:1052 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:735
 #: mate-panel/panel-context-menu.c:125
 msgid "translator-credits"
@@ -995,6 +995,16 @@ msgid ""
 "scrolling in window list."
 msgstr ""
 
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:30
+msgid "Close window on middle mouse click"
+msgstr ""
+
+#: applets/wncklet/org.mate.panel.applet.window-list.gschema.xml.in:31
+msgid ""
+"If true, then clicking the middle mouse button over a taskbar item will "
+"close the window."
+msgstr ""
+
 #: applets/wncklet/org.mate.panel.applet.workspace-switcher.gschema.xml.in:5
 msgid "Display workspace names"
 msgstr "Amosar os nomes do espazo de traballo"
@@ -1078,7 +1088,7 @@ msgid "Switch between workspaces"
 msgstr "Cambiar entre os espazos de traballo"
 
 #: applets/wncklet/org.mate.panel.Wncklet.mate-panel-applet.desktop.in.in:36
-#: applets/wncklet/window-list.c:946
+#: applets/wncklet/window-list.c:1042
 msgid "Window List"
 msgstr "Lista de xanelas"
 
@@ -1123,7 +1133,7 @@ msgstr "Sobre o Botón para amosar o escritorio"
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Este botón permítelle agochar todas as xanelas e amosar o escritorio."
 
-#: applets/wncklet/showdesktop.c:525 applets/wncklet/window-list.c:950
+#: applets/wncklet/showdesktop.c:525 applets/wncklet/window-list.c:1046
 #: applets/wncklet/workspace-switcher.c:729
 msgid ""
 "Copyright © 2002 Red Hat, Inc.\n"
@@ -1142,15 +1152,15 @@ msgstr ""
 "O xestor de xanelas non admite o botón para amosar o escritorio ou non se "
 "está executando ningún xestor de xanelas."
 
-#: applets/wncklet/window-list.c:458
+#: applets/wncklet/window-list.c:543
 msgid "_System Monitor"
 msgstr "Monitor do _sistema"
 
-#: applets/wncklet/window-list.c:947
+#: applets/wncklet/window-list.c:1043
 msgid "About Window List"
 msgstr "Sobre a Lista de xanelas"
 
-#: applets/wncklet/window-list.c:949
+#: applets/wncklet/window-list.c:1045
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you"
 " browse them."
@@ -1204,42 +1214,50 @@ msgid "_Always group windows"
 msgstr "_Agrupar sempre as xanelas"
 
 #: applets/wncklet/window-list.ui:290
+msgid "Middle mouse button"
+msgstr "Botón central do rato"
+
+#: applets/wncklet/window-list.ui:311
+msgid "_Click to close window"
+msgstr ""
+
+#: applets/wncklet/window-list.ui:348
 msgid "Mouse Scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:311
+#: applets/wncklet/window-list.ui:369
 msgid "_Enable mouse scrolling"
 msgstr ""
 
-#: applets/wncklet/window-list.ui:344
+#: applets/wncklet/window-list.ui:402
 msgid "Behaviour"
 msgstr "Comportamento"
 
-#: applets/wncklet/window-list.ui:367
+#: applets/wncklet/window-list.ui:425
 msgid "Window List Content"
 msgstr "Contido da lista de xanelas"
 
-#: applets/wncklet/window-list.ui:388
+#: applets/wncklet/window-list.ui:446
 msgid "Sh_ow windows from current workspace"
 msgstr "Am_osar as xanelas do espazo de traballo actual"
 
-#: applets/wncklet/window-list.ui:404
+#: applets/wncklet/window-list.ui:462
 msgid "Show windows from a_ll workspaces"
 msgstr "Amosar as xanelas de _todos os espazos de traballo"
 
-#: applets/wncklet/window-list.ui:442
+#: applets/wncklet/window-list.ui:500
 msgid "Restoring Minimized Windows"
 msgstr "Restauración de xanelas minimizadas"
 
-#: applets/wncklet/window-list.ui:463
+#: applets/wncklet/window-list.ui:521
 msgid "Restore to current _workspace"
 msgstr "Restaurar no espa_zo de traballo actual"
 
-#: applets/wncklet/window-list.ui:479
+#: applets/wncklet/window-list.ui:537
 msgid "Restore to na_tive workspace"
 msgstr "Restaurar no espazo de traballo _orixinal"
 
-#: applets/wncklet/window-list.ui:516
+#: applets/wncklet/window-list.ui:574
 #: applets/wncklet/workspace-switcher.ui:356
 msgid "Workspaces"
 msgstr "Nomes dos espazos de traballo"
@@ -1704,12 +1722,8 @@ msgstr "IID da miniaplicación"
 msgid ""
 "The implementation ID of the applet - e.g. "
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
-"object_type key is \"external-applet\" (or the deprecated \"matecomponent-"
-"applet\")."
+"object-type key is 'applet'."
 msgstr ""
-"O ID de implementación da miniaplicación; p.ex. "
-"«ClockAppletFactory::ClockApplet». Esta clave só é relevante se a clave "
-"object_type é «external-applet» (ou a obsoleta «matecomponent-applet»)."
 
 #: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Panel attached to drawer"
@@ -1718,10 +1732,8 @@ msgstr "Panel asociado ao caixón"
 #: data/org.mate.panel.object.gschema.xml.in:41
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
-"relevant if the object_type key is \"drawer-object\"."
+"relevant if the object-type key is 'drawer'."
 msgstr ""
-"O identificador do panel asociado a este caixón. Esta clave só ten "
-"relevancia se a clave object_type é «drawer-object»."
 
 #: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Tooltip displayed for drawer or menu"
@@ -1730,11 +1742,8 @@ msgstr "Suxestión amosada para os caixóns e menús"
 #: data/org.mate.panel.object.gschema.xml.in:46
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
-"only relevant if the object_type key is \"drawer-object\" or \"menu-"
-"object\"."
+"only relevant if the object-type key is 'drawer' or 'menu'."
 msgstr ""
-"O texto que se amosará nunha suxestión para este caixón ou menú. Esta clave "
-"só ten relevancia se a clave object_type é «drawer-object» ou «menu-object»."
 
 #: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Use custom icon for object's button"
@@ -1743,12 +1752,9 @@ msgstr "Usar icona personalizada para o botón do obxecto"
 #: data/org.mate.panel.object.gschema.xml.in:51
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
-"false, the custom_icon key is ignored. This key is only relevant if the "
-"object_type key is \"menu-object\" or \"drawer-object\"."
+"false, the custom-icon key is ignored. This key is only relevant if the "
+"object-type key is 'menu' or 'drawer-object'."
 msgstr ""
-"Se é verdadeiro, a clave custom_icon úsase como a icona personalizada para o"
-" botón. Se é falso, ignórase a clave. Esta clave só ten relevancia se a "
-"clave object_type é «menu-object» ou «drawer-object»."
 
 #: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Icon used for object's button"
@@ -1757,12 +1763,9 @@ msgstr "Icona usada para o botón do obxecto"
 #: data/org.mate.panel.object.gschema.xml.in:56
 msgid ""
 "The location of the image file used as the icon for the object's button. "
-"This key is only relevant if the object_type key is \"drawer-object\" or "
-"\"menu-object\" and the use_custom_icon key is true."
+"This key is only relevant if the object-type key is 'drawer' or 'menu' and "
+"the use-custom-icon key is true."
 msgstr ""
-"A localización do ficheiro de imaxe usado como a icona para o botón do "
-"obxecto. Esta clave só ten relevancia se a clave object_type é «drawer-"
-"object» ou «menu-object» e a clave use_custom_icon é verdadeiro."
 
 #: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Use custom path for menu contents"
@@ -1771,12 +1774,9 @@ msgstr "Usar un camiño personalizado para os contidos do menú"
 #: data/org.mate.panel.object.gschema.xml.in:61
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
-"should be constructed. If false, the menu_path key is ignored. This key is "
-"only relevant if the object_type key is \"menu-object\"."
+"should be constructed. If false, the menu-path key is ignored. This key is "
+"only relevant if the object-type key is 'menu'."
 msgstr ""
-"Se é verdadeiro, a clave menu_path úsase como o camiño a partir do que se "
-"elaboran os contidos do menú. Se é falso, a clave ignórase. Esta clave só "
-"ten relevancia se a clave object_type é «menu-object»."
 
 #: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Menu content path"
@@ -1785,12 +1785,8 @@ msgstr "Camiño do contido do menú"
 #: data/org.mate.panel.object.gschema.xml.in:66
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
-"relevant if the use_menu_path key is true and the object_type key is \"menu-"
-"object\"."
+"relevant if the use-menu-path key is true and the object-type key is 'menu'."
 msgstr ""
-"A ruta a partir da que se elaboran os contidos do menú. Esta clave só ten "
-"relevancia se a clave use_menu_path é verdadeiro e a clave object_type é "
-"«menú-object»."
 
 #: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Draw arrow in menu button"
@@ -1811,10 +1807,8 @@ msgstr "Localización do lanzador"
 #: data/org.mate.panel.object.gschema.xml.in:76
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
+"relevant if the object-type key is 'launcher'."
 msgstr ""
-"A localización do ficheiro .desktop que describe este iniciador. Esta clave "
-"só ten relevancia se a clave object_type é «launcher-object»."
 
 #: data/org.mate.panel.object.gschema.xml.in:80
 msgid "Action button type"
@@ -1822,14 +1816,10 @@ msgstr "Tipo de botón de acción"
 
 #: data/org.mate.panel.object.gschema.xml.in:81
 msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
-"relevant if the object_type key is \"action-applet\"."
+"The action type this button represents. Possible values are 'none', 'lock', "
+"'logout', 'run', 'search', 'force-quit', 'connect-server' and 'shutdown'. "
+"This key is only relevant if the object-type key is 'action'."
 msgstr ""
-"O tipo de acción que representa este botón. Os valores posíbeis son «lock» "
-"(bloquear), «logout» (terminar sesión), «run» (executar), «search» (buscar) "
-"e «screenshot» (captura de pantalla). Esta clave só ten relevancia se a "
-"clave object_type é «action-applet»."
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:5
 msgid "Name to identify panel"
@@ -2212,64 +2202,64 @@ msgstr ""
 "Se é verdadeiro, a imaxe de fondo rotará cando o panel teña orientación "
 "vertical."
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:168
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:169
 msgid "File is not a valid .desktop file"
 msgstr "O ficheiro non é un ficheiro .desktop válido"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:193
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:194
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Non se recoñece a versión do ficheiro desktop «%s»"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:975
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:984
 #, c-format
 msgid "Starting %s"
 msgstr "Iniciando %s"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1117
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1126
 msgid "Application does not accept documents on command line"
 msgstr "A aplicación non acepta documentos na liña de ordes"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1185
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1194
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Opción de inicio non recoñecida: %d"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1401
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1410
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "Non se lle poden pasar URI de documento a unha entrada de escritorio "
 "«Type=Link»"
 
-#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1422
+#: mate-panel/mate-submodules/libegg/eggdesktopfile.c:1431
 msgid "Not a launchable item"
 msgstr "Non é un elemento executábel"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:233
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:234
 msgid "Disable connection to session manager"
 msgstr "Desactivar a conexión co xestor de sesións"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "Specify file containing saved configuration"
 msgstr "Especifique o ficheiro que contén a configuración gardada"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:238
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:239
 msgid "FILE"
 msgstr "FICHEIRO"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "Specify session management ID"
 msgstr "Especifique o ID de xestión de sesión"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:243
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:244
 msgid "ID"
 msgstr "ID"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:269
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
 msgid "Session management options:"
 msgstr "Amosar as opcións da xestión de sesión:"
 
-#: mate-panel/mate-submodules/libegg/eggsmclient.c:270
+#: mate-panel/mate-submodules/libegg/eggsmclient.c:271
 msgid "Show session management options"
 msgstr "Amosar as opcións da xestión de sesións"
 
@@ -2830,11 +2820,11 @@ msgstr ""
 msgid "Applications"
 msgstr "Aplicacións"
 
-#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:703
+#: mate-panel/panel-menu-bar.c:360 mate-panel/panel-menu-button.c:705
 msgid "_Edit Menus"
 msgstr "_Editar menús"
 
-#: mate-panel/panel-menu-button.c:1121
+#: mate-panel/panel-menu-button.c:1123
 msgid "Main Menu"
 msgstr "Menú principal"
 
@@ -3104,30 +3094,30 @@ msgstr "Limpar os documentos recentes..."
 msgid "Clear all items from the recent documents list"
 msgstr "Limpar todos os elementos da lista de documentos recentes"
 
-#: mate-panel/panel-run-dialog.c:440
+#: mate-panel/panel-run-dialog.c:469
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Non foi posíbel executar a orde «%s»"
 
-#: mate-panel/panel-run-dialog.c:481
+#: mate-panel/panel-run-dialog.c:510
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Non foi posíbel converter «%s» dende UTF-8"
 
-#: mate-panel/panel-run-dialog.c:1269
+#: mate-panel/panel-run-dialog.c:1335
 msgid "Choose a file to append to the command..."
 msgstr "Escoller un ficheiro para engadirlle á orde..."
 
-#: mate-panel/panel-run-dialog.c:1623 mate-panel/panel-run-dialog.ui:272
+#: mate-panel/panel-run-dialog.c:1689 mate-panel/panel-run-dialog.ui:272
 msgid "Select an application to view its description."
 msgstr "Seleccionar unha aplicación para ver a súa descrición."
 
-#: mate-panel/panel-run-dialog.c:1661
+#: mate-panel/panel-run-dialog.c:1746
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Executarase a orde: «%s»"
 
-#: mate-panel/panel-run-dialog.c:1694
+#: mate-panel/panel-run-dialog.c:1779
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
