@@ -1,24 +1,57 @@
+### mate-panel 1.27.3
+
+  * update translations
+  * Revert "Add "center-stick" capability applets on the panel"
+  * Revert "Fix center- and right-sticking of expanding applets"
+  * wayland: keep window list menu off space not used for buttons
+  * run-dialog: Don't needlessly override DISPLAY environment variable
+  * Update opacity when changed gsettings color value
+  * wnck-pager: Fix workspace switcher aspect ratio
+  * Constify some pointer references in locals
+  * Reduce scope of more code
+  * Remove a redundant NULL check
+  * Avoid a redundant NULL check
+  * Constify a parameter
+  * Return a value even after an assertion failure
+  * Remove redundant shadowing variable
+  * Remove unused-but-set variable
+  * wncklet: Remove double assignment
+  * Reduce scope of variables
+  * Remove unused member PanelAction::type
+  * Optimize mate_panel_applet_settings_get_g*list()
+  * clock: Simplify sort_locations_by_time()
+  * Do not perform useless incoherent NULL check
+  * Reorder array index limit check
+  * status-notifier: Show AttentionIcon when Status is NeedsAttention
+  * status-notifier: fix typo
+  * Main menus: fix missing Places, System icons
+  * replace deprecated gtk-image-menu-item*
+  * Wayland: Fix force-quit unsupported message dialog
+  * Wayland: Make panel shutdown button work under wayland
+  * Force-quit/x11: Fix misalignment of popup with multimonitors
+  * Hidpi x11: center panel force-quit popup window
+
 ### mate-panel 1.27.2
 
   * update translations
-    libmate-panel-applet: don't use panel plug to find the screen
-    wayland-tasklist: really set maximum label width
-    wayland tasklist:  fit buttons to tasklist, limit button size, hide contents as necessary
-    notification-area: stop warning on removal
-    Update org.mate.panel.object schema descriptions
-    button-widget.c: replace tabs with 4 spaces
-    Wayland: Fix blurry rendering of panel launcher icons
-    Wayland: ensure tasklist buttons get widget name
-    wayland: stop tasklist overflowing over other applets
-    Clock applet/wayland: position calendar window same as in x11
-    libmate-panel-applet/Makefile.am: Fix build with gettext 0.22
-    Fix distribution of applet service files
-    Wayland, Tray applet: allow in-process applet to load, using SNI only (#1372)
-    Wayland, hidpi: do not scale buttons in wayland (#1370)
-    tell dconf-edit about relocatable schemas (#1355)
-    applets/wncklet/wayland-backend: Add basic icon support (#1275)
-    applets/wncklet/wayland-backend: Add basic context menu (#1276)
-    panel-run-dialog: Add accelerator keys for "list of known applications" (#1359)
+  * libmate-panel-applet: don't use panel plug to find the screen
+  * wayland-tasklist: really set maximum label width
+  * wayland tasklist:  fit buttons to tasklist, limit button size, hide contents as necessary
+  * notification-area: stop warning on removal
+  * Update org.mate.panel.object schema descriptions
+  * button-widget.c: replace tabs with 4 spaces
+  * Wayland: Fix blurry rendering of panel launcher icons
+  * Wayland: ensure tasklist buttons get widget name
+  * wayland: stop tasklist overflowing over other applets
+  * Clock applet/wayland: position calendar window same as in x11
+  * libmate-panel-applet/Makefile.am: Fix build with gettext 0.22
+  * Fix distribution of applet service files
+  * Wayland, Tray applet: allow in-process applet to load, using SNI only (#1372)
+  * Wayland, hidpi: do not scale buttons in wayland (#1370)
+  * tell dconf-edit about relocatable schemas (#1355)
+  * applets/wncklet/wayland-backend: Add basic icon support (#1275)
+  * applets/wncklet/wayland-backend: Add basic context menu (#1276)
+  * panel-run-dialog: Add accelerator keys for "list of known applications" (#1359)
 
 ### mate-panel 1.27.1
 
