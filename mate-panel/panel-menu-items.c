@@ -88,8 +88,8 @@ struct _PanelDesktopMenuItemPrivate {
 	guint        append_lock_logout : 1;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (PanelPlaceMenuItem, panel_place_menu_item, MATE_TYPE_IMAGE_MENU_ITEM)
-G_DEFINE_TYPE_WITH_PRIVATE (PanelDesktopMenuItem, panel_desktop_menu_item, MATE_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (PanelDesktopMenuItem, panel_desktop_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
 
 static void activate_uri_on_screen(const char* uri, GdkScreen* screen)
 {
