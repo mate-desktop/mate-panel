@@ -1437,6 +1437,84 @@ panel_desktop_menu_item_class_init (PanelDesktopMenuItemClass *klass)
 	gobject_class->finalize  = panel_desktop_menu_item_finalize;
 }
 
+static char *
+menu_escape_underscores_and_prepend (const char *text)
+{
+	GString    *escaped_text;
+	const char *src;
+	int         inserted;
+
+	if (!text)
+		return g_strdup (text);
+
+	escaped_text = g_string_sized_new (strlen (text) + 1);
+	g_string_printf (escaped_text, "_%s", text);
+
+	src = text;
+	inserted = 1;
+
+	while (*src) {
+		gunichar c;
+
+		c = g_utf8_get_char (src);
+
+		if (c == (gunichar)-1) {
+			g_warning ("Invalid input string for underscore escaping");
+			g_string_free (escaped_text, TRUE);
+			return g_strdup (text);
+		} else if (c == '_') {
+			g_string_insert_c (escaped_text,
+					   src - text + inserted, '_');
+			inserted++;
+		}
+
+		src = g_utf8_next_char (src);
+	}
+
+	return g_string_free (escaped_text, FALSE);
+}
+
+
+static void
+setup_gtk_image_menuitem (GtkWidget   *menuitem,
+		GtkIconSize  icon_size,
+		GtkWidget   *image,
+		const char  *title)
+
+{
+	GtkWidget *label;
+	char      *_title;
+
+	/* this creates a label with an invisible mnemonic */
+	label = g_object_new (GTK_TYPE_ACCEL_LABEL, NULL);
+	_title = menu_escape_underscores_and_prepend (title);
+	gtk_label_set_text_with_mnemonic (GTK_LABEL (label), _title);
+	g_free (_title);
+
+	gtk_label_set_pattern (GTK_LABEL (label), "");
+
+	gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (label), menuitem);
+
+	gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+	gtk_label_set_yalign (GTK_LABEL (label), 0.5);
+	gtk_widget_show (label);
+
+	gtk_container_add (GTK_CONTAINER (menuitem), label);
+
+	if (image) {
+		gint icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
+
+		gtk_icon_size_lookup (icon_size, NULL, &icon_height);
+		gtk_widget_show (image);
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
+					       image);
+		gtk_image_set_pixel_size (GTK_IMAGE(image), icon_height);
+	}
+
+	gtk_widget_show (menuitem);
+}
+
+
 GtkWidget* panel_place_menu_item_new(gboolean use_image)
 {
 	PanelPlaceMenuItem* menuitem;
@@ -1453,7 +1531,7 @@ GtkWidget* panel_place_menu_item_new(gboolean use_image)
 		image = NULL;
 	}
 
-	setup_menuitem(GTK_WIDGET(menuitem), image ? panel_menu_icon_get_size() : GTK_ICON_SIZE_INVALID, image, _("Places"));
+	setup_gtk_image_menuitem(GTK_WIDGET(menuitem), image ? panel_menu_icon_get_size() : GTK_ICON_SIZE_INVALID, image, _("Places"));
 
 	menuitem->priv->use_image = (use_image != FALSE);
 
@@ -1478,7 +1556,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 	else
 		image = NULL;
 
-	setup_menuitem (GTK_WIDGET (menuitem),
+	setup_gtk_image_menuitem (GTK_WIDGET (menuitem),
 			image ? panel_menu_icon_get_size () : GTK_ICON_SIZE_INVALID,
 			image,
 			_("System"));
