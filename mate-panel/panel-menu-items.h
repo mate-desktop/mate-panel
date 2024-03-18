@@ -26,6 +26,7 @@
 
 #include <gtk/gtk.h>
 #include "panel-widget.h"
+#include <libmate-desktop/mate-image-menu-item.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,13 +44,13 @@ typedef struct _PanelPlaceMenuItemClass   PanelPlaceMenuItemClass;
 typedef struct _PanelPlaceMenuItemPrivate PanelPlaceMenuItemPrivate;
 
 struct _PanelPlaceMenuItem {
-	GtkImageMenuItem            menuitem;
+	MateImageMenuItem            menuitem;
 
 	PanelPlaceMenuItemPrivate  *priv;
 };
 
 struct _PanelPlaceMenuItemClass {
-	GtkImageMenuItemClass       menuitem_class;
+	MateImageMenuItemClass       menuitem_class;
 };
 
 GType panel_place_menu_item_get_type (void) G_GNUC_CONST;
@@ -66,13 +67,13 @@ typedef struct _PanelDesktopMenuItemClass   PanelDesktopMenuItemClass;
 typedef struct _PanelDesktopMenuItemPrivate PanelDesktopMenuItemPrivate;
 
 struct _PanelDesktopMenuItem{
-	GtkImageMenuItem            menuitem;
+	MateImageMenuItem            menuitem;
 
 	PanelDesktopMenuItemPrivate  *priv;
 };
 
 struct _PanelDesktopMenuItemClass {
-	GtkImageMenuItemClass       menuitem_class;
+	MateImageMenuItemClass       menuitem_class;
 };
 
 GType panel_desktop_menu_item_get_type (void) G_GNUC_CONST;
