@@ -781,55 +781,6 @@ static void applet_size_allocate(GtkWidget *widget, GtkAllocation *allocation, T
 		mate_panel_applet_set_size_hints(MATE_PANEL_APPLET(tasklist->applet), size_hints, len, 0);
 }
 
-#ifdef HAVE_X11
-/* Currently only used on X11, but should work on Wayland as well when needed */
-static GdkPixbuf* icon_loader_func(const char* icon, int size, unsigned int flags, void* data)
-{
-	TasklistData* tasklist;
-	GdkPixbuf* retval;
-	char* icon_no_extension;
-	char* p;
-
-	tasklist = data;
-
-	if (icon == NULL || strcmp(icon, "") == 0)
-		return NULL;
-
-	if (g_path_is_absolute(icon))
-	{
-		if (g_file_test(icon, G_FILE_TEST_EXISTS))
-		{
-			return gdk_pixbuf_new_from_file_at_size(icon, size, size, NULL);
-		}
-		else
-		{
-			char* basename;
-
-			basename = g_path_get_basename(icon);
-			retval = icon_loader_func(basename, size, flags, data);
-			g_free(basename);
-
-			return retval;
-		}
-	}
-
-	/* This is needed because some .desktop files have an icon name *and*
-	* an extension as icon */
-	icon_no_extension = g_strdup(icon);
-	p = strrchr(icon_no_extension, '.');
-
-	if (p && (strcmp(p, ".png") == 0 || strcmp(p, ".xpm") == 0 || strcmp(p, ".svg") == 0))
-	{
-		*p = 0;
-	}
-
-	retval = gtk_icon_theme_load_icon(tasklist->icon_theme, icon_no_extension, size, 0, NULL);
-	g_free(icon_no_extension);
-
-	return retval;
-}
-#endif /* HAVE_X11 */
-
 gboolean window_list_applet_fill(MatePanelApplet* applet)
 {
 	TasklistData* tasklist;
@@ -897,8 +848,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
 		tasklist->tasklist = wnck_tasklist_new();
-
-		wnck_tasklist_set_icon_loader(WNCK_TASKLIST(tasklist->tasklist), icon_loader_func, tasklist, NULL);
 
 #ifdef HAVE_WINDOW_PREVIEWS
 		g_signal_connect (tasklist->tasklist, "task-enter-notify",
