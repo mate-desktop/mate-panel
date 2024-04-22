@@ -71,8 +71,6 @@ typedef struct {
 	gboolean needs_hints;
 #endif
 
-	GtkIconTheme* icon_theme;
-
 	/* Properties: */
 	GtkWidget* properties_dialog;
 	GtkWidget* wayland_info_label;
@@ -203,11 +201,6 @@ static void response_cb(GtkWidget* widget, int id, TasklistData* tasklist)
 	{
 		gtk_widget_hide(widget);
 	}
-}
-
-static void applet_realized(MatePanelApplet* applet, TasklistData* tasklist)
-{
-	tasklist->icon_theme = gtk_icon_theme_get_for_screen(gtk_widget_get_screen(tasklist->applet));
 }
 
 static void applet_change_orient(MatePanelApplet* applet, MatePanelAppletOrient orient, TasklistData* tasklist)
@@ -884,9 +877,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	gtk_container_add(GTK_CONTAINER(tasklist->applet), tasklist->tasklist);
 
-	g_signal_connect (tasklist->applet, "realize",
-	                  G_CALLBACK (applet_realized),
-	                  tasklist);
 	g_signal_connect (tasklist->applet, "change-orient",
 	                  G_CALLBACK (applet_change_orient),
 	                  tasklist);
