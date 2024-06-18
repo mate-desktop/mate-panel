@@ -39,8 +39,7 @@ notifications:
 
 deploy:
   - provider: script
-    edge:
-      branch: v2.0.3-beta.4
+    edge: true
     script: ./docker-build --verbose --config .build.yml --release github
     on:
       tags: true
