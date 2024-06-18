@@ -287,7 +287,12 @@ update (SnItemV0 *v0)
           if (pixbuf && icon_size > 1)
             {
               /*An icon specified by path and filename may be the wrong size for the tray */
-              pixbuf = gdk_pixbuf_scale_simple (pixbuf, icon_size-2, icon_size-2, GDK_INTERP_BILINEAR);
+              GdkPixbuf *scaled_pixbuf;
+
+              scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf, icon_size-2, icon_size-2, GDK_INTERP_BILINEAR);
+              g_object_unref (pixbuf);
+              pixbuf = scaled_pixbuf;
+
               surface = gdk_cairo_surface_create_from_pixbuf (pixbuf, scale, NULL);
             }
           if (pixbuf)
