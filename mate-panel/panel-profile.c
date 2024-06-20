@@ -862,8 +862,21 @@ remove_from_dict (GVariant *dict, const gchar *path)
 static void
 unregister_dconf_editor_relocatable_schema (const gchar *path)
 {
-    GSettings *dconf_editor_settings;
-    dconf_editor_settings = g_settings_new ("ca.desrt.dconf-editor.Settings");
+    GSettingsSchemaSource *source;
+    GSettingsSchema       *dconf_editor_schema;
+    GSettings             *dconf_editor_settings;
+
+    source = g_settings_schema_source_get_default ();
+
+    if (! source)
+        return;
+
+    dconf_editor_schema = g_settings_schema_source_lookup (source, "ca.desrt.dconf-editor.Settings", FALSE);
+
+    if (! dconf_editor_schema)
+        return;
+
+    dconf_editor_settings = g_settings_new_full (dconf_editor_schema, NULL, NULL);
 
     if (dconf_editor_settings && g_settings_is_writable (dconf_editor_settings, "relocatable-schemas-user-paths")) {
         GVariant *relocatable_schemas = g_settings_get_value (dconf_editor_settings, "relocatable-schemas-user-paths");
@@ -878,6 +891,7 @@ unregister_dconf_editor_relocatable_schema (const gchar *path)
     }
 
     g_object_unref (dconf_editor_settings);
+    g_settings_schema_unref (dconf_editor_schema);
 }
 
 
