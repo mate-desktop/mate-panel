@@ -458,7 +458,7 @@ get_updated_timeformat (ClockData *cd)
                 /* Translators: This is a strftime format string.
                  * It is used to display the time in 12-hours format (eg, like
                  * in the US: 8:10 am). The %p expands to am/pm. */
-                time_format = cd->showseconds ? _("%l:%M:%S %p") : _("%l:%M %p");
+                time_format = cd->showseconds ? _("%_I:%M:%S %p") : _("%_I:%M %p");
         else
                 /* Translators: This is a strftime format string.
                  * It is used to display the time in 24-hours format (eg, like

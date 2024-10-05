@@ -434,7 +434,7 @@ format_time (struct tm   *now,
                          * weekday differs from the weekday at the location
                          * (the %A expands to the weekday). The %p expands to
                          * am/pm. */
-                        format = _("%l:%M <small>%p (%A)</small>");
+                        format = _("%_I:%M <small>%p (%A)</small>");
                 }
                 else {
                         /* Translators: This is a strftime format string.
@@ -451,7 +451,7 @@ format_time (struct tm   *now,
                          * It is used to display the time in 12-hours format
                          * (eg, like in the US: 8:10 am). The %p expands to
                          * am/pm. */
-                        format = _("%l:%M <small>%p</small>");
+                        format = _("%_I:%M <small>%p</small>");
                 }
                 else {
                         /* Translators: This is a strftime format string.
@@ -497,7 +497,7 @@ convert_time_to_str (time_t now, ClockFormat clock_format)
                  * It is used to display the time in 12-hours format (eg, like
                  * in the US: 8:10 am). The %p expands to am/pm.
                  */
-                format = _("%l:%M %p");
+                format = _("%_I:%M %p");
         }
         else {
                 /* Translators: This is a strftime format string.
