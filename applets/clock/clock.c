@@ -1248,6 +1248,7 @@ location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
 static void
 create_cities_section (ClockData *cd)
 {
+        GtkWidget *cities_box;
         GSList *node;
         GSList *cities;
         GSList *l;
@@ -1261,8 +1262,16 @@ create_cities_section (ClockData *cd)
                 g_slist_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
-        cd->cities_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-        gtk_container_set_border_width (GTK_CONTAINER (cd->cities_section), 0);
+        cd->cities_section = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (cd->cities_section),
+                                        GTK_POLICY_NEVER,
+                                        GTK_POLICY_AUTOMATIC);
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (cd->cities_section),
+                                             GTK_SHADOW_NONE);
+        gtk_scrolled_window_set_propagate_natural_height (GTK_SCROLLED_WINDOW (cd->cities_section),
+                                                          TRUE);
+
+        cities_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
         cities = cd->locations;
         if (g_slist_length (cities) == 0) {
@@ -1284,7 +1293,7 @@ create_cities_section (ClockData *cd)
                 g_signal_connect (city, "need-clock-format",
                                   G_CALLBACK (location_tile_need_clock_format_cb), cd);
 
-                gtk_box_pack_start (GTK_BOX (cd->cities_section),
+                gtk_box_pack_start (GTK_BOX (cities_box),
                                     GTK_WIDGET (city),
                                     FALSE, FALSE, 0);
 
@@ -1294,6 +1303,8 @@ create_cities_section (ClockData *cd)
         }
 
         g_slist_free (node);
+
+        gtk_container_add (GTK_CONTAINER (cd->cities_section), cities_box);
 
         gtk_box_pack_end (GTK_BOX (cd->clock_vbox),
                           cd->cities_section, FALSE, FALSE, 0);
