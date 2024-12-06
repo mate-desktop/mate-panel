@@ -43,6 +43,7 @@ notifications:
 before_deploy:
   - yes | gem update --system --force
   - gem install bundler
+  - gem install faraday-net_http -v '3.3.0' # Avoid faraday version problem
   - gem install uri
   - gem install logger
 
