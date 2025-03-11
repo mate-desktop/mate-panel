@@ -11,7 +11,7 @@ on:
 
 # cancel already running builds of the same branch or pull request
 concurrency:
-  group: ci-${{ github.head_ref }} || concat(${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.head_ref || github.sha }}
   cancel-in-progress: true
 
 env:
