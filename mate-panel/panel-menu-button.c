@@ -694,6 +694,8 @@ panel_menu_button_load (const char  *menu_path,
 		return;
 	}
 
+	gtk_widget_set_name(GTK_WIDGET (button),"mate-panel-main-menu-button");
+
 	button->priv->applet_id = g_strdup (info->id);
 
 	mate_panel_applet_add_callback (info, "help", "help-browser", _("_Help"), NULL);
