@@ -415,6 +415,10 @@ button_widget_draw (GtkWidget *widget,
     x = off + (width - w) / 2;
     y = off + (height - h) / 2;
 
+    context = gtk_widget_get_style_context (widget);
+    gtk_render_background (context, cr, 0, 0, width, height);
+    gtk_render_frame (context, cr, 0, 0, width, height);
+
     cairo_save (cr);
 
     if (!button_widget->priv->activatable) {
@@ -433,10 +437,6 @@ button_widget_draw (GtkWidget *widget,
 
     cairo_paint (cr);
     cairo_restore (cr);
-
-    context = gtk_widget_get_style_context (widget);
-    gtk_render_background (context, cr, 0, 0, width, height);
-    gtk_render_frame (context, cr, 0, 0, width, height);
 
     if (button_widget->priv->arrow) {
         gdouble angle, size;
