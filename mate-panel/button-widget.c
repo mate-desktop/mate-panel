@@ -435,6 +435,8 @@ button_widget_draw (GtkWidget *widget,
     cairo_restore (cr);
 
     context = gtk_widget_get_style_context (widget);
+    gtk_render_background (context, cr, 0, 0, width, height);
+    gtk_render_frame (context, cr, 0, 0, width, height);
 
     if (button_widget->priv->arrow) {
         gdouble angle, size;
