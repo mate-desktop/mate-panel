@@ -416,7 +416,7 @@ button_widget_draw (GtkWidget *widget,
     y = off + (height - h) / 2;
 
     context = gtk_widget_get_style_context (widget);
-    gtk_style_context_add_class (context, "flat-panel-button");
+    gtk_style_context_add_class (context, "mate-panel-button");
     gtk_render_background (context, cr, 0, 0, width, height);
     gtk_render_frame (context, cr, 0, 0, width, height);
 
