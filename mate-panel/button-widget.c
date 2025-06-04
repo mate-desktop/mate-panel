@@ -665,7 +665,7 @@ button_widget_map (GtkWidget *widget)
 {
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
     gtk_style_context_add_class (context, "mate-panel-button");
-    GTK_WIDGET_CLASS (button_widget_parent_class)->ma (widget);
+    GTK_WIDGET_CLASS (button_widget_parent_class)->map (widget);
 }
 
 static void
