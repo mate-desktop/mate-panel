@@ -1,7 +1,9 @@
 SUBDIRS =			\
 	clock			\
 	fish			\
-	wncklet
+	wncklet			\
+	notification_area
+
 
 if ENABLE_X11
 SUBDIRS += \

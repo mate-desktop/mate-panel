@@ -71,6 +71,7 @@ wayland_panel_toplevel_update_placement (PanelToplevel* toplevel)
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		anchor[GTK_LAYER_SHELL_EDGE_BOTTOM] = TRUE;
+		anchor[GTK_LAYER_SHELL_EDGE_RIGHT] = TRUE;
 		anchor[GTK_LAYER_SHELL_EDGE_TOP] = FALSE;
 		break;
 	default:
