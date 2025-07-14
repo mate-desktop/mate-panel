@@ -454,7 +454,8 @@ set_background_image_from_uri (PanelToplevel *toplevel,
 
 static gboolean
 set_background_color (PanelToplevel *toplevel,
-		      guint16       *dropped)
+		      guint16       *dropped,
+		      gint          length)
 {
 	GdkRGBA color;
 
@@ -465,10 +466,11 @@ set_background_color (PanelToplevel *toplevel,
 	     ! panel_profile_background_key_is_writable (toplevel, "type"))
 		return FALSE;
 
-	color.red   = dropped [0];
-	color.green = dropped [1];
-	color.blue  = dropped [2];
-	color.alpha = 1.;
+	const gdouble scale = 1.0 / 65535.0;
+	color.red   = dropped[0] * scale;
+	color.green = dropped[1] * scale;
+	color.blue  = dropped[2] * scale;
+	color.alpha = (length > 3) ? dropped[3] * scale : 1.0;
 
 	panel_profile_set_background_color (toplevel, &color);
 	panel_profile_set_background_type (toplevel, PANEL_BACK_COLOR);
@@ -1232,7 +1234,9 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		success = drop_url (panel, pos, (char *)data);
 		break;
 	case TARGET_COLOR:
-		success = set_background_color (panel->toplevel, (guint16 *) data);
+		gint n_bytes = gtk_selection_data_get_length (selection_data);
+		gint length = n_bytes / sizeof (guint16);
+		success = set_background_color (panel->toplevel, (guint16 *) data, length);
 		break;
 	case TARGET_BGIMAGE:
 		success = set_background_image_from_uri (panel->toplevel, (char *) data);
