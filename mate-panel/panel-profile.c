@@ -36,6 +36,11 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifndef HAVE_X11
+#include <gdk/gdkwayland.h>
+#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
+#endif
+
 #include <libpanel-util/panel-list.h>
 #include <libmate-desktop/mate-dconf.h>
 #include <libmate-desktop/mate-gsettings.h>

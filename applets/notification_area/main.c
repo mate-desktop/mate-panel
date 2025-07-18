@@ -23,10 +23,6 @@
 
 #include <config.h>
 
-#ifndef HAVE_X11
-#error file should only be built when HAVE_X11 is enabled
-#endif
-
 #include <string.h>
 
 #include <mate-panel-applet.h>
@@ -302,7 +298,6 @@ static void
 na_tray_applet_realize (GtkWidget *widget)
 {
   NaTrayApplet      *applet = NA_TRAY_APPLET (widget);
-
   if (parent_class_realize)
     parent_class_realize (widget);
 
