@@ -19,11 +19,17 @@ WNCKLET_SOURCES = \
 	window-menu.h \
 	window-list.c \
 	window-list.h \
-	workspace-switcher.c \
-	workspace-switcher.h \
 	showdesktop.c \
 	showdesktop.h \
 	$(BUILT_SOURCES)
+
+if ENABLE_X11
+WNCKLET_SOURCES += \
+	workspace-switcher.c \
+	workspace-switcher.h
+endif
+
+
 
 WNCKLET_LDADD =						\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
@@ -93,9 +99,17 @@ ui_FILES = \
 	showdesktop-menu.xml \
 	window-list-menu.xml \
 	window-list.ui \
-	window-menu-menu.xml \
+	window-menu-menu.xml
+
+if ENABLE_X11
+ui_FILES += \
 	workspace-switcher-menu.xml \
 	workspace-switcher.ui
+
+endif
+
+
+
 
 wncklet-resources.c: wncklet.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/wncklet.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name wncklet $<

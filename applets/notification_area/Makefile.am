@@ -1,10 +1,15 @@
 SUBDIRS =				\
 	libstatus-notifier-watcher	\
-	status-notifier			\
-	system-tray
+	status-notifier
+
+if ENABLE_X11
+SUBDIRS += \
+        system-tray
+
+noinst_PROGRAMS = testtray
+endif
 
 noinst_LTLIBRARIES = libtray.la
-noinst_PROGRAMS = testtray
 
 AM_CPPFLAGS =							\
 	$(NOTIFICATION_AREA_CFLAGS)				\
@@ -29,8 +34,17 @@ libtray_la_SOURCES =				\
 
 libtray_la_LIBADD =							\
 	libstatus-notifier-watcher/libstatus-notifier-watcher.la	\
-	status-notifier/libstatus-notifier.la				\
+	status-notifier/libstatus-notifier.la	
+
+if ENABLE_X11
+libtray_la_LIBADD +=							\
 	system-tray/libsystem-tray.la
+
+testtray_SOURCES = testtray.c
+testtray_LDADD =			\
+	libtray.la \
+	$(NOTIFICATION_AREA_LIBS)
+endif 
 
 NOTIFICATION_AREA_SOURCES = \
 	main.c \
@@ -42,12 +56,6 @@ NOTIFICATION_AREA_LDADD =				\
 	libtray.la \
 	$(NOTIFICATION_AREA_LIBS)			\
 	$(LIBMATE_PANEL_APPLET_LIBS)
-
-
-testtray_SOURCES = testtray.c
-testtray_LDADD =			\
-	libtray.la \
-	$(NOTIFICATION_AREA_LIBS)
 
 if NOTIFICATION_AREA_INPROCESS
 APPLET_IN_PROCESS = true
