@@ -962,8 +962,8 @@ mate_panel_applet_frame_loading_failed (const char  *iid,
 					_("Do you want to delete the applet "
 					  "from your configuration?"));
 
-		gtk_dialog_add_button (GTK_DIALOG (dialog),
-				       PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE);
+		panel_dialog_add_button (GTK_DIALOG (dialog),
+					 _("_Don't Delete"), "gtk-cancel", LOADING_FAILED_RESPONSE_DONT_DELETE);
 
 		panel_dialog_add_button (GTK_DIALOG (dialog),
 					 _("_Delete"), "edit-delete", LOADING_FAILED_RESPONSE_DELETE);
