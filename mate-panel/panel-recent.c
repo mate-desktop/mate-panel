@@ -156,9 +156,9 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 				 _("_Cancel"), "process-stop",
 				 GTK_RESPONSE_CANCEL);
 
-	gtk_dialog_add_button (GTK_DIALOG (clear_recent_dialog),
-			       PANEL_STOCK_CLEAR,
-			       GTK_RESPONSE_ACCEPT);
+	panel_dialog_add_button (GTK_DIALOG (clear_recent_dialog),
+				 _("_Clear"), "edit-clear",
+				 GTK_RESPONSE_ACCEPT);
 
 	gtk_container_set_border_width (GTK_CONTAINER (clear_recent_dialog), 6);
 
