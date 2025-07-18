@@ -29,7 +29,10 @@
 
 #include "na-grid.h"
 
+#ifdef HAVE_X11 
 #include "system-tray/na-tray.h"
+#endif
+
 #include "status-notifier/sn-host-v0.h"
 
 #define MIN_ICON_SIZE_DEFAULT 24
@@ -324,6 +327,7 @@ na_grid_realize (GtkWidget *widget)
   display = gdk_display_get_default ();
   /* Instantiate the hosts now we have a screen */
   screen = gtk_widget_get_screen (GTK_WIDGET (self));
+#ifdef HAVE_X11
   if  (GDK_IS_X11_DISPLAY (display))
   {
     GtkOrientation orientation;
@@ -337,6 +341,7 @@ na_grid_realize (GtkWidget *widget)
 
     add_host (self, tray_host);
   }
+#endif
   settings = g_settings_new ("org.mate.panel");
   if (g_settings_get_boolean (settings, "enable-sni-support"))
     add_host (self, sn_host_v0_new ());

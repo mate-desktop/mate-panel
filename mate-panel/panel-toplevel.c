@@ -61,6 +61,9 @@
 #ifdef HAVE_WAYLAND
 #include "wayland-backend.h"
 #endif
+#ifndef HAVE_X11
+#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
+#endif
 
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    1

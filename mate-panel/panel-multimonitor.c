@@ -33,6 +33,11 @@
 #include <gdk/gdkx.h>
 #endif /* HAVE_X11 */
 
+#ifndef HAVE_X11
+#include <gdk/gdkwayland.h>
+#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
+#endif
+
 #include "panel-multimonitor.h"
 
 #include <string.h>
