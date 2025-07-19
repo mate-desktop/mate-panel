@@ -403,6 +403,49 @@ mate_panel_applet_get_orient (MatePanelApplet *applet)
 	return priv->orient;
 }
 
+static void
+update_style_classes (MatePanelAppletPrivate *toplevelpriv, GtkWidget *widget)
+{
+	GtkStyleContext *context;
+	context = gtk_widget_get_style_context (widget);
+
+	gtk_style_context_add_class (context, "gnome-panel-menu-bar");
+	gtk_style_context_add_class (context, "mate-panel-menu-bar");
+
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_RIGHT);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_LEFT);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_TOP);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_BOTTOM);
+		
+	switch (toplevelpriv->orient) {
+	case MATE_PANEL_APPLET_ORIENT_UP:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_BOTTOM);
+		break;
+
+	case MATE_PANEL_APPLET_ORIENT_LEFT:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_RIGHT);
+		break;
+
+	case MATE_PANEL_APPLET_ORIENT_DOWN:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOP);
+		break;
+
+	case MATE_PANEL_APPLET_ORIENT_RIGHT:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_LEFT);
+		break;
+
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
 /* Applets cannot set their orientation, so API is not public. */
 static void
 mate_panel_applet_set_orient (MatePanelApplet      *applet,
@@ -423,6 +466,7 @@ mate_panel_applet_set_orient (MatePanelApplet      *applet,
 		       0, orient);
 
 	g_object_notify (G_OBJECT (applet), "orient");
+	update_style_classes (priv, priv->plug);
 }
 
 static void
@@ -1639,18 +1683,6 @@ mate_panel_applet_change_background(MatePanelApplet *applet,
 			g_assert_not_reached ();
 			break;
 	}
-
-	if (priv->out_of_process){
-		GtkStyleContext *context;
-
-		context = gtk_widget_get_style_context (GTK_WIDGET (priv->plug));
-
-		if (priv->orient == MATE_PANEL_APPLET_ORIENT_UP ||
-		    priv->orient == MATE_PANEL_APPLET_ORIENT_DOWN)
-			gtk_style_context_add_class (context, "horizontal");
-		else
-			gtk_style_context_add_class (context, "vertical");
-	}
 }
 
 static void
@@ -1938,18 +1970,13 @@ mate_panel_applet_constructor (GType                  type,
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		GtkStyleContext *context;
-		GtkWidget       *widget;
-
+		GtkWidget *widget;
 		priv->plug = gtk_plug_new (0);
 		widget = GTK_WIDGET (priv->plug);
-		gtk_widget_set_visual (widget,
-		                       gdk_screen_get_rgba_visual (gtk_widget_get_screen (widget)));
-		context = gtk_widget_get_style_context (widget);
-		gtk_style_context_add_class (context, "gnome-panel-menu-bar");
-		gtk_style_context_add_class (context, "mate-panel-menu-bar");
+		gtk_widget_set_visual (widget, gdk_screen_get_rgba_visual (gtk_widget_get_screen (widget)));
+		update_style_classes (priv, widget);
 		gtk_widget_set_name (widget, "PanelPlug");
-		_mate_panel_applet_prepare_css (context);
+		_mate_panel_applet_prepare_css (gtk_widget_get_style_context (widget));
 
 		g_signal_connect_swapped (priv->plug, "embedded",
 		                          G_CALLBACK (mate_panel_applet_setup),
