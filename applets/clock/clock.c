@@ -89,6 +89,8 @@
 #define KEY_CITIES                "cities"
 #define KEY_TEMPERATURE_UNIT        "temperature-unit"
 #define KEY_SPEED_UNIT                "speed-unit"
+#define KEY_SHOW_CALENDAR_EVENTS    "show-calendar-events"
+#define KEY_SHOW_TASKS              "show-tasks"
 
 /* For watching for when the system resumes from sleep mode (e.g. suspend)
  * and updating the clock as soon as that happens. */
@@ -127,6 +129,7 @@ struct _ClockData {
 
         GtkWidget *props;
         GtkWidget *calendar_popup;
+        gboolean   calendar_popup_destroying;
 
         GtkWidget *clock_vbox;
         GtkSizeGroup *clock_group;
@@ -788,9 +791,12 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
                 gtk_widget_destroy (cd->props);
         cd->props = NULL;
 
-        if (cd->calendar_popup)
+        if (cd->calendar_popup && !cd->calendar_popup_destroying) {
+                cd->calendar_popup_destroying = TRUE;
                 gtk_widget_destroy (cd->calendar_popup);
+        }
         cd->calendar_popup = NULL;
+        cd->calendar_popup_destroying = FALSE;
 
         g_free (cd->timeformat);
 
@@ -861,7 +867,8 @@ create_calendar (ClockData *cd)
         prefs_path = mate_panel_applet_get_preferences_path (MATE_PANEL_APPLET (cd->applet));
         window = calendar_window_new (&cd->current_time,
                                       prefs_path,
-                                      cd->orient == MATE_PANEL_APPLET_ORIENT_UP);
+                                      cd->orient == MATE_PANEL_APPLET_ORIENT_UP,
+                                      cd->settings);
         g_free (prefs_path);
 
         calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
@@ -1348,9 +1355,11 @@ static void
 update_calendar_popup (ClockData *cd)
 {
         if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->panel_button))) {
-                if (cd->calendar_popup) {
+                if (cd->calendar_popup && !cd->calendar_popup_destroying) {
+                        cd->calendar_popup_destroying = TRUE;
                         gtk_widget_destroy (cd->calendar_popup);
                         cd->calendar_popup = NULL;
+                        cd->calendar_popup_destroying = FALSE;
                         cd->cities_section = NULL;
                         cd->map_widget = NULL;
                         cd->clock_vbox = NULL;
@@ -1363,7 +1372,7 @@ update_calendar_popup (ClockData *cd)
                 return;
         }
 
-        if (!cd->calendar_popup) {
+        if (!cd->calendar_popup && !cd->calendar_popup_destroying) {
                 cd->calendar_popup = create_calendar (cd);
                 g_object_add_weak_pointer (G_OBJECT (cd->calendar_popup),
                                            (gpointer *) &cd->calendar_popup);
@@ -3285,6 +3294,35 @@ fill_prefs_window (ClockData *cd)
         widget = _clock_get_widget (cd, "temperature_check");
         g_settings_bind (cd->settings, KEY_SHOW_TEMPERATURE, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
+
+#ifdef HAVE_EDS
+        /* Set the EDS calendar event checkboxes */
+        widget = _clock_get_widget (cd, "show_calendar_events_check");
+        if (widget) {
+                /* Bind to gsettings - this should sync with calendar window automatically */
+                g_settings_bind (cd->settings, KEY_SHOW_CALENDAR_EVENTS, widget, "active",
+                                 G_SETTINGS_BIND_DEFAULT);
+        } else {
+                g_warning ("Could not find show_calendar_events_check widget in preferences");
+        }
+
+        /* Set the EDS tasks checkboxes */
+        widget = _clock_get_widget (cd, "show_tasks_check");
+        if (widget) {
+                /* Bind to gsettings - this should sync with calendar window automatically */
+                g_settings_bind (cd->settings, KEY_SHOW_TASKS, widget, "active",
+                                 G_SETTINGS_BIND_DEFAULT);
+        } else {
+                g_warning ("Could not find show_tasks_check widget in preferences");
+        }
+
+#else
+        /* Hide the Calendar tab if EDS is not available */
+        widget = _clock_get_widget (cd, "vbox-calendar");
+        gtk_widget_hide (widget);
+        widget = _clock_get_widget (cd, "label-calendar-tab");
+        gtk_widget_hide (widget);
+#endif
 
         /* Fill the Cities list */
         widget = _clock_get_widget (cd, "cities_list");

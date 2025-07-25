@@ -161,7 +161,7 @@ load_applet_into_window (const char *title,
 
 	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 	g_variant_builder_add (&builder, "{sv}",
-			       "prefs-path", g_variant_new_string (prefs_path));
+			       "prefs-path", g_variant_new_string (prefs_path ? prefs_path : ""));
 	g_variant_builder_add (&builder, "{sv}",
 			       "size", g_variant_new_uint32 (size));
 	g_variant_builder_add (&builder, "{sv}",
