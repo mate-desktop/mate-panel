@@ -35,6 +35,15 @@ CLOCK_SOURCES = 		\
 	set-timezone.h		\
 	$(BUILT_SOURCES)
 
+if HAVE_EDS
+CLOCK_SOURCES += \
+	calendar-client.c	\
+	calendar-client.h	\
+	calendar-sources.c	\
+	calendar-sources.h	\
+	calendar-debug.h
+endif
+
 CLOCK_CPPFLAGS =						\
 	$(AM_CPPFLAGS)						\
 	$(LIBMATE_PANEL_APPLET_CFLAGS)				\
@@ -44,12 +53,20 @@ CLOCK_CPPFLAGS =						\
 	-DMATELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DMATEWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
+if HAVE_EDS
+CLOCK_CPPFLAGS += $(EDS_CFLAGS)
+endif
+
 CLOCK_LDADD =						\
 	../../libmate-panel-applet/libmate-panel-applet-4.la	\
 	$(CLOCK_LIBS)					\
 	$(LIBMATE_PANEL_APPLET_LIBS)				\
 	libsystem-timezone.la				\
 	-lm
+
+if HAVE_EDS
+CLOCK_LDADD += $(EDS_LIBS)
+endif
 
 test_system_timezone_SOURCES = 	\
 	test-system-timezone.c

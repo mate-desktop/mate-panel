@@ -110,6 +110,27 @@ PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
+# Check for Evolution Data Server support for calendar integration
+AC_ARG_ENABLE([eds],
+  AS_HELP_STRING([--enable-eds], [Enable Evolution Data Server calendar integration @<:@default=auto@:>@]),
+  [enable_eds=$enableval],
+  [enable_eds=auto])
+
+if test "x$enable_eds" != "xno"; then
+  PKG_CHECK_MODULES(EDS, [libecal-2.0 >= 3.33.2 libedataserver-1.2 >= 3.5.3], have_eds=yes, have_eds=no)
+  if test "x$have_eds" = "xyes"; then
+    AC_DEFINE(HAVE_EDS, 1, [Define if evolution-data-server is available])
+  elif test "x$enable_eds" = "xyes"; then
+    AC_MSG_ERROR([EDS support requested but evolution-data-server development libraries not found])
+  fi
+else
+  have_eds=no
+fi
+
+AM_CONDITIONAL(HAVE_EDS, test "x$have_eds" = "xyes")
+AC_SUBST(EDS_CFLAGS)
+AC_SUBST(EDS_LIBS)
+
 # Make it possible to compile the applets in-process
 PANEL_INPROCESS_NONE=
 PANEL_INPROCESS_ALL=
@@ -381,6 +402,7 @@ echo "
         Wayland support:               ${have_wayland}
         X11 support:                   ${have_x11}
         XRandr support:                ${have_randr}
+        Evolution Data Server support: ${have_eds}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}
 

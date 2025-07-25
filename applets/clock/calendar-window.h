@@ -61,7 +61,8 @@ struct _CalendarWindowClass {
 GType      calendar_window_get_type (void) G_GNUC_CONST;
 GtkWidget *calendar_window_new      (time_t     *static_current_time,
 				     const char *prefs_dir,
-				     gboolean    invert_order);
+				     gboolean    invert_order,
+				     GSettings  *settings);
 
 void       calendar_window_refresh  (CalendarWindow *calwin);
 
