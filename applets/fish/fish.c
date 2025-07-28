@@ -937,8 +937,7 @@ static void display_fortune_dialog(FishApplet* fish)
 
 	clear_fortune_text (fish);
 
-	screen = gtk_widget_get_screen (GTK_WIDGET (fish));
-	display = gdk_screen_get_display (screen);
+	display = gtk_widget_get_display (GTK_WIDGET (fish));
 	display_name = g_strdup (gdk_display_get_name (display));
 	g_spawn_async_with_pipes (NULL, /* working directory */
 							  argv,

@@ -346,7 +346,7 @@ static void
 panel_action_shutdown (GtkWidget *widget)
 {
 #ifdef HAVE_WAYLAND
-	GdkDisplay *display = gdk_screen_get_display (gdk_screen_get_default ());
+	GdkDisplay *display = gdk_display_get_default ();
 	if (GDK_IS_WAYLAND_DISPLAY (display))
 	{
 		GtkWidget *dialog, *hbox, *buttonbox, *shutdown_btn, *label;
@@ -427,7 +427,7 @@ panel_action_shutdown_reboot_is_disabled (void)
 	if (panel_lockdown_get_disable_log_out())
 		return TRUE;
 #ifdef HAVE_WAYLAND
-	GdkDisplay *display = gdk_screen_get_display (gdk_screen_get_default());
+	GdkDisplay *display = gdk_display_get_default ();
 	if (!(panel_lockdown_get_disable_log_out()) && (GDK_IS_WAYLAND_DISPLAY (display)))
 		return FALSE;
 #endif

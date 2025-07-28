@@ -927,8 +927,7 @@ position_calendar_popup (ClockData *cd)
                 button_w = allocation.width;
                 button_h = allocation.height;
 
-                screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
-                display = gdk_screen_get_display (screen);
+                display = gtk_widget_get_display (GTK_WIDGET (cd->calendar_popup));
 
                 n = gdk_display_get_n_monitors (display);
                 for (i = 0; i < n; i++) {

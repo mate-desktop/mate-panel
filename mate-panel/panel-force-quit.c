@@ -249,9 +249,9 @@ kill_window_question (gpointer window)
 				 _("_Cancel"), "process-stop",
 				 GTK_RESPONSE_CANCEL);
 
-	gtk_dialog_add_button (GTK_DIALOG (dialog),
-			       PANEL_STOCK_FORCE_QUIT,
-			       GTK_RESPONSE_ACCEPT);
+	panel_dialog_add_button (GTK_DIALOG (dialog),
+				 _("_Force Quit"), "process-stop",
+				 GTK_RESPONSE_ACCEPT);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
 					 GTK_RESPONSE_CANCEL);

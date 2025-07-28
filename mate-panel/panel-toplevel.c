@@ -855,12 +855,11 @@ static void panel_toplevel_rotate_to_pointer(PanelToplevel* toplevel, int pointe
 #ifdef HAVE_X11
 static gboolean panel_toplevel_warp_pointer_increment(PanelToplevel* toplevel, int keyval, int increment)
 {
-	GdkScreen *screen;
 	GdkWindow *root_window;
 	GdkDevice      *device;
 	int        new_x, new_y;
 
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
 	g_return_val_if_fail (GDK_IS_X11_SCREEN (screen), FALSE);
 	root_window = gdk_screen_get_root_window (screen);
 	device = gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET(root_window))));
