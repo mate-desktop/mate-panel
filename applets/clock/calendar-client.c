@@ -33,6 +33,7 @@
 
 #include <libecal/libecal.h>
 #include "calendar-sources.h"
+#include "system-timezone.h"
 #endif
 
 #undef CALENDAR_ENABLE_DEBUG
@@ -201,7 +202,28 @@ calendar_client_class_init (CalendarClientClass *klass)
 static gchar *
 calendar_client_config_get_timezone (GSettings *calendar_settings)
 {
-  return g_settings_get_string (calendar_settings, "timezone");
+  gchar *timezone = NULL;
+
+  if (calendar_settings == NULL)
+    return NULL;
+
+  /* Check if we can list the keys to see if timezone exists */
+  gchar **keys = g_settings_list_keys (calendar_settings);
+  gboolean has_timezone = FALSE;
+
+  for (gint i = 0; keys[i] != NULL; i++) {
+    if (g_strcmp0 (keys[i], "timezone") == 0) {
+      has_timezone = TRUE;
+      break;
+    }
+  }
+  g_strfreev (keys);
+
+  if (has_timezone) {
+    timezone = g_settings_get_string (calendar_settings, "timezone");
+  }
+
+  return timezone;
 }
 
 static ICalTimezone *
@@ -896,82 +918,6 @@ calendar_appointment_init (CalendarAppointment  *appointment,
                                                       default_zone);
 }
 
-static ICalTimezone *
-resolve_timezone_id (const char    *tzid,
-                     gpointer       user_data,
-                     GCancellable  *cancellable,
-                     GError       **error)
-{
-  ECalClient *client;
-  ICalTimezone *retval;
-
-  client = E_CAL_CLIENT (user_data);
-  retval = i_cal_timezone_get_builtin_timezone_from_tzid (tzid);
-
-  if (!retval)
-    e_cal_client_get_timezone_sync (client, tzid, &retval, NULL, NULL);
-
-  return retval;
-}
-
-static gboolean
-calendar_appointment_collect_occurrence (ICalComponent  *component,
-                                         ICalTime       *occurrence_start,
-                                         ICalTime       *occurrence_end,
-                                         gpointer        user_data,
-                                         GCancellable   *cancellable,
-                                         GError        **error)
-{
-  time_t start;
-  time_t end;
-  CalendarOccurrence *occurrence;
-  GSList **collect_loc = user_data;
-
-  start = i_cal_time_as_timet (occurrence_start);
-  end = i_cal_time_as_timet (occurrence_end);
-
-  occurrence = g_new0 (CalendarOccurrence, 1);
-  occurrence->start_time = start;
-  occurrence->end_time = end;
-
-  *collect_loc = g_slist_prepend (*collect_loc, occurrence);
-
-  return TRUE;
-}
-
-static void
-calendar_appointment_generate_ocurrences (CalendarAppointment *appointment,
-                                          ICalComponent       *component,
-                                          ECalClient          *source,
-                                          time_t               start,
-                                          time_t               end,
-                                          ICalTimezone        *default_zone)
-{
-  ICalTime *start_time;
-  ICalTime *end_time;
-
-  g_assert (appointment->occurrences == NULL);
-
-  start_time = i_cal_time_new_from_timet_with_zone (start, FALSE, NULL);
-  end_time = i_cal_time_new_from_timet_with_zone (end, FALSE, NULL);
-
-  e_cal_recur_generate_instances_sync (component,
-                                       start_time,
-                                       end_time,
-                                       calendar_appointment_collect_occurrence,
-                                       &appointment->occurrences,
-                                       resolve_timezone_id,
-                                       source,
-                                       default_zone,
-                                       NULL,
-                                       NULL);
-
-  g_object_unref (start_time);
- g_object_unref (end_time);
-
-  appointment->occurrences = g_slist_reverse (appointment->occurrences);
-}
-
 static inline gboolean
 calendar_task_equal (CalendarTask *a,
 		     CalendarTask *b)
@@ -1177,25 +1123,6 @@ calendar_event_equal (CalendarEvent *a,
   return FALSE;
 }
 
-static void
-calendar_event_generate_ocurrences (CalendarEvent *event,
-                                    ICalComponent *component,
-                                    ECalClient    *source,
-                                    time_t         start,
-                                    time_t         end,
-                                    ICalTimezone  *default_zone)
-{
-  if (event->type != CALENDAR_EVENT_APPOINTMENT)
-    return;
-
-  calendar_appointment_generate_ocurrences (CALENDAR_APPOINTMENT (event),
-                                            component,
-                                            source,
-                                            start,
-                                            end,
-                                            default_zone);
-}
-
 static inline void
 calendar_event_debug_dump (CalendarEvent *event)
 {
@@ -1287,180 +1214,6 @@ goddamn_this_is_crack (CalendarClientSource *source,
 }
 
 static void
-calendar_client_handle_query_completed (CalendarClientSource *source,
-                                        GError               *error,
-                                        ECalClientView       *view)
-{
-  CalendarClientQuery *query;
-
-  query = goddamn_this_is_crack (source, view, NULL);
-
-  if (error != NULL)
-    {
-      g_warning ("Calendar query failed: %s", error->message);
-      calendar_client_stop_query (source->client, source, query);
-      return;
-    }
-
-  g_assert (source->query_in_progress != FALSE);
-  g_assert (query == &source->in_progress_query);
-
-  calendar_client_query_finalize (&source->completed_query);
-
-  source->completed_query = source->in_progress_query;
-  source->query_completed = TRUE;
-
-  source->query_in_progress        = FALSE;
-  source->in_progress_query.view   = NULL;
-  source->in_progress_query.events = NULL;
-
-  g_signal_emit (source->client, source->changed_signal_id, 0);
-}
-
-static void
-calendar_client_handle_query_result (CalendarClientSource *source,
-                                     GList                *objects,
-                                     ECalClientView       *view)
-{
-  CalendarClientQuery *query;
-  CalendarClient      *client;
-  gboolean             emit_signal;
-  gboolean             events_changed;
-  GList               *l;
-  time_t               month_begin;
-  time_t               month_end;
-
-  client = source->client;
-
-  query = goddamn_this_is_crack (source, view, &emit_signal);
-
-  month_begin = make_time_for_day_begin (1,
-					 client->priv->month,
-					 client->priv->year);
-
-  month_end = make_time_for_day_begin (1,
-				       client->priv->month + 1,
-				       client->priv->year);
-
-  events_changed = FALSE;
-  for (l = objects; l; l = l->next)
-    {
-      CalendarEvent *event;
-      CalendarEvent *old_event;
-      ICalComponent *component = l->data;
-      char          *uid;
-
-      event = calendar_event_new (component, source, client->priv->zone);
-      if (!event)
-	      continue;
-
-      calendar_event_generate_ocurrences (event,
-                                          component,
-                                          source->source,
-                                          month_begin,
-                                          month_end,
-                                          client->priv->zone);
-
-      uid = calendar_event_get_uid (event);
-
-      old_event = g_hash_table_lookup (query->events, uid);
-
-      if (!calendar_event_equal (event, old_event))
-	{
-	  calendar_event_debug_dump (event);
-
-	  g_hash_table_replace (query->events, uid, event);
-
-	  events_changed = TRUE;
-	}
-      else
-	{
-	  calendar_event_free (event);
-	  g_free (uid);
-	}
-    }
-
-  if (emit_signal && events_changed)
-    {
-      g_signal_emit (source->client, source->changed_signal_id, 0);
-    }
-}
-
-static gboolean
-check_object_remove (gpointer key,
-                     gpointer value,
-                     gpointer data)
-{
-  char *uid;
-  size_t len;
-
-  uid = data;
-  len = strlen (uid);
-
-  if (len <= strlen (key) && strncmp (uid, key, len) == 0)
-    {
-      calendar_event_debug_dump (value);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static void
-calendar_client_handle_objects_removed (CalendarClientSource *source,
-                                        GList                *ids,
-                                        ECalClientView       *view)
-{
-  CalendarClientQuery *query;
-  gboolean             emit_signal;
-  gboolean             events_changed;
-  GList               *l;
-
-  query = goddamn_this_is_crack (source, view, &emit_signal);
-
-  events_changed = FALSE;
-  for (l = ids; l; l = l->next)
-    {
-      CalendarEvent *event;
-      ECalComponentId *id;
-      const char *uid;
-      const char *rid;
-      char  *key;
-
-      id = l->data;
-      uid = e_cal_component_id_get_uid (id);
-      rid = e_cal_component_id_get_rid (id);
-      key = g_strdup_printf ("%s%s", uid, rid ? rid : "");
-
-      if (!rid || !*rid)
-        {
-          guint size = g_hash_table_size (query->events);
-
-          g_hash_table_foreach_remove (query->events, check_object_remove, (gpointer) uid);
-
-          if (size != g_hash_table_size (query->events))
-            events_changed = TRUE;
-        }
-      else if ((event = g_hash_table_lookup (query->events, key)))
-        {
-          calendar_event_debug_dump (event);
-
-          g_assert (g_hash_table_remove (query->events, key));
-
-          events_changed = TRUE;
-        }
-
-      g_free (key);
-    }
-
-  if (emit_signal && events_changed)
-    {
-      g_signal_emit (source->client, source->changed_signal_id, 0);
-    }
-}
-
-static void
 calendar_client_query_finalize (CalendarClientQuery *query)
 {
   if (query->view)
@@ -1495,49 +1248,176 @@ calendar_client_stop_query (CalendarClient       *client,
   calendar_client_query_finalize (query);
 }
 
+typedef struct {
+  CalendarClient *client;
+  CalendarClientSource *source;
+  time_t start_time;
+  time_t end_time;
+  gboolean events_changed;
+  ICalTimezone *system_timezone;
+} InstanceGenerationData;
+
+static gboolean
+calendar_client_instance_cb (ICalComponent *icomp,
+                             ICalTime *instance_start,
+                             ICalTime *instance_end,
+                             gpointer user_data,
+                             GCancellable *cancellable,
+                             GError **error)
+{
+  InstanceGenerationData *data = user_data;
+  CalendarEvent *event;
+  CalendarEvent *old_event;
+  char *uid;
+  time_t start_time_t, end_time_t;
+
+  /* Convert instance times from their timezone to local time */
+  ICalTimezone *event_tz = i_cal_time_get_timezone(instance_start);
+
+  ICalTime *local_start = i_cal_time_clone(instance_start);
+  ICalTime *local_end = i_cal_time_clone(instance_end);
+
+  /* Convert to local timezone */
+  if (event_tz && data->system_timezone && event_tz != data->system_timezone) {
+    i_cal_time_convert_timezone(local_start, event_tz, data->system_timezone);
+    i_cal_time_convert_timezone(local_end, event_tz, data->system_timezone);
+  }
+
+  start_time_t = i_cal_time_as_timet (local_start);
+  end_time_t = i_cal_time_as_timet (local_end);
+
+  g_object_unref(local_start);
+  g_object_unref(local_end);
+
+  /* Create event from the component */
+  event = calendar_event_new (icomp, data->source, data->client->priv->zone);
+  if (!event)
+    return TRUE;
+
+  /* Override the times with the instance times (already converted to local timezone) */
+  if (event->type == CALENDAR_EVENT_APPOINTMENT) {
+    CALENDAR_APPOINTMENT (event)->start_time = start_time_t;
+    CALENDAR_APPOINTMENT (event)->end_time = end_time_t;
+
+    /* Create a single occurrence for this instance */
+    CalendarOccurrence *occurrence = g_new0 (CalendarOccurrence, 1);
+    occurrence->start_time = start_time_t;
+    occurrence->end_time = end_time_t;
+    CALENDAR_APPOINTMENT (event)->occurrences = g_slist_prepend (NULL, occurrence);
+  }
+
+  uid = calendar_event_get_uid (event);
+  old_event = g_hash_table_lookup (data->source->in_progress_query.events, uid);
+
+  if (!calendar_event_equal (event, old_event)) {
+    calendar_event_debug_dump (event);
+    g_hash_table_replace (data->source->in_progress_query.events, uid, event);
+    data->events_changed = TRUE;
+  } else {
+    calendar_event_free (event);
+    g_free (uid);
+  }
+
+  return TRUE;
+}
+
 static void
 calendar_client_start_query (CalendarClient       *client,
 			     CalendarClientSource *source,
 			     const char           *query)
 {
-  ECalClientView *view = NULL;
+  time_t month_begin, month_end;
+  GSList *objects = NULL;
   GError *error = NULL;
+  InstanceGenerationData instance_data;
 
-  if (!e_cal_client_get_view_sync (source->source, query, &view, NULL, &error))
-    {
-      g_warning ("Error preparing the query: '%s': %s",
-                 query, error->message);
+  /* Validate that client is properly initialized */
+  if (client->priv->month == G_MAXUINT || client->priv->year == G_MAXUINT) {
+    return;
+  }
 
-      g_error_free (error);
-      return;
-    }
+  /* Calculate time range */
+  month_begin = make_time_for_day_begin (1, client->priv->month, client->priv->year);
 
-  g_assert (view != NULL);
+  /* Handle year rollover when month is December (11) */
+  if (client->priv->month == 11) {  /* December */
+    month_end = make_time_for_day_begin (1, 0, client->priv->year + 1);  /* January next year */
+  } else {
+    month_end = make_time_for_day_begin (1, client->priv->month + 1, client->priv->year);
+  }
+
+  /* Validate time range */
+  if (month_begin == -1 || month_end == -1) {
+    g_warning ("Invalid time range: month_begin=%ld, month_end=%ld", (long)month_begin, (long)month_end);
+    calendar_client_stop_query (client, source, &source->in_progress_query);
+    return;
+  }
 
   if (source->query_in_progress)
     calendar_client_stop_query (client, source, &source->in_progress_query);
 
   source->query_in_progress        = TRUE;
-  source->in_progress_query.view   = view;
+  source->in_progress_query.view = NULL; /* No view needed for instance generation */
   source->in_progress_query.events = g_hash_table_new_full (g_str_hash,
 							    g_str_equal,
 							    g_free,
 							    (GDestroyNotify) calendar_event_free);
 
-  g_signal_connect_swapped (view, "objects-added",
-			    G_CALLBACK (calendar_client_handle_query_result),
-			    source);
-  g_signal_connect_swapped (view, "objects-modified",
-			    G_CALLBACK (calendar_client_handle_query_result),
-			    source);
-  g_signal_connect_swapped (view, "objects-removed",
-			    G_CALLBACK (calendar_client_handle_objects_removed),
-			    source);
-  g_signal_connect_swapped (view, "complete",
-			    G_CALLBACK (calendar_client_handle_query_completed),
-			    source);
+  /* Get all objects for the month using query */
+  if (!e_cal_client_get_object_list_sync (source->source, query, &objects, NULL, &error)) {
+    g_warning ("Error getting calendar objects: %s", error->message);
+    g_error_free (error);
+    calendar_client_stop_query (client, source, &source->in_progress_query);
+    return;
+  }
 
-  e_cal_client_view_start (view, NULL);
+  /* Get system timezone once for all instances */
+  SystemTimezone *systz = system_timezone_new();
+  const char *system_tz_name = system_timezone_get(systz);
+  ICalTimezone *system_timezone = i_cal_timezone_get_builtin_timezone(system_tz_name);
+  g_object_unref(systz);
+
+  /* Set up instance generation data */
+  instance_data.client = client;
+  instance_data.source = source;
+  instance_data.start_time = month_begin;
+  instance_data.end_time = month_end;
+  instance_data.events_changed = FALSE;
+  instance_data.system_timezone = system_timezone;
+
+  /* Generate instances for each object with automatic timezone conversion */
+  for (GSList *l = objects; l; l = l->next) {
+    ICalComponent *component = l->data;
+
+    /* Some instances of recurring events may yield negative months - I think these are safe to skip */
+    if (month_begin < 0 || month_end < 0) {
+      continue;
+    }
+
+    e_cal_client_generate_instances_for_object_sync (source->source,
+                                                     component,
+                                                     month_begin,
+                                                     month_end,
+                                                     NULL, /* cancellable */
+                                                     calendar_client_instance_cb,
+                                                     &instance_data);
+  }
+
+  g_slist_free_full (objects, g_object_unref);
+
+  /* Query is now completed */
+  calendar_client_query_finalize (&source->completed_query);
+  source->completed_query = source->in_progress_query;
+  source->query_completed = TRUE;
+
+  source->query_in_progress = FALSE;
+  source->in_progress_query.view = NULL;
+  source->in_progress_query.events = NULL;
+
+  /* Emit signal to capture changed events */
+  if (instance_data.events_changed) {
+    g_signal_emit (source->client, source->changed_signal_id, 0);
+  }
 }
 
 static void
