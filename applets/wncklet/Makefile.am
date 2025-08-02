@@ -107,16 +107,10 @@ BUILT_SOURCES = 		\
 	wncklet-resources.c	\
 	wncklet-resources.h
 
-if HAVE_WINDOW_PREVIEWS
 wncklet_gschemas_in = \
 	org.mate.panel.applet.window-list.gschema.xml.in \
 	org.mate.panel.applet.window-list-previews.gschema.xml.in \
 	org.mate.panel.applet.workspace-switcher.gschema.xml.in
-else
-wncklet_gschemas_in = \
-	org.mate.panel.applet.window-list.gschema.xml.in \
-	org.mate.panel.applet.workspace-switcher.gschema.xml.in
-endif
 gsettings_SCHEMAS = $(wncklet_gschemas_in:.xml.in=.xml)
 
 @GSETTINGS_RULES@
