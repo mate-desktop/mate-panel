@@ -857,8 +857,19 @@ create_calendar (ClockData *cd)
 {
         GtkWidget *window;
         char      *prefs_path;
+        char      *fallback_path = NULL;
 
         prefs_path = mate_panel_applet_get_preferences_path (MATE_PANEL_APPLET (cd->applet));
+
+        /* Provide a fallback preferences path in case the applet doesn't
+         * provide one. This happens when running outside the actual panel,
+         * like in mate-panel-test-applets */
+        if (!prefs_path || !prefs_path[0]) {
+                fallback_path = g_strdup ("/org/mate/panel/applets/clock/");
+                g_free (prefs_path);
+                prefs_path = fallback_path;
+        }
+
         window = calendar_window_new (&cd->current_time,
                                       prefs_path,
                                       cd->orient == MATE_PANEL_APPLET_ORIENT_UP);
