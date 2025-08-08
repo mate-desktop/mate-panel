@@ -52,6 +52,10 @@ typedef struct {
 	GtkWidget* tasklist;
 	GtkWidget* preview;
 
+#ifdef HAVE_X11
+	WnckHandle* wnck_handle;
+#endif
+
 	gboolean show_window_thumbnails;
 	gint thumbnail_size;
 	gboolean include_all_workspaces;
@@ -60,6 +64,7 @@ typedef struct {
 	gboolean move_unminimized_windows;
 	gboolean scroll_enable;
 	gboolean middle_click_close;
+	gboolean show_tooltips;
 
 	GtkOrientation orientation;
 	int size;
@@ -82,6 +87,7 @@ typedef struct {
 	GtkWidget* move_minimized_radio;
 	GtkWidget* mouse_scroll_check;
 	GtkWidget* middle_click_close_check;
+	GtkWidget* show_tooltips_check;
 	GtkWidget* change_workspace_radio;
 	GtkWidget* minimized_windows_box;
 	GtkWidget* window_grouping_box;
@@ -131,6 +137,7 @@ static void tasklist_update(TasklistData* tasklist)
 		wnck_tasklist_set_switch_workspace_on_unminimize(WNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
 		wnck_tasklist_set_scroll_enabled (WNCK_TASKLIST(tasklist->tasklist), tasklist->scroll_enable);
 		wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), tasklist->middle_click_close);
+		wnck_tasklist_set_tooltips_enabled (WNCK_TASKLIST (tasklist->tasklist), tasklist->show_tooltips);
 	}
 #endif /* HAVE_X11 */
 
@@ -464,7 +471,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 
 	/* Do not show preview if window is not visible nor in current workspace */
 	if (!wnck_window_is_visible_on_workspace (wnck_window,
-						  wnck_screen_get_active_workspace (wnck_screen_get_default ())))
+						  wnck_screen_get_active_workspace (wncklet_get_screen (tasklist->wnck_handle, tasklist->applet))))
 		return FALSE;
 
 	thumbnail = preview_window_thumbnail (wnck_window, tasklist, &thumbnail_width, &thumbnail_height, &thumbnail_scale);
@@ -690,6 +697,12 @@ static void middle_click_close_changed (GSettings* settings, gchar* key, Tasklis
 	tasklist_update(tasklist);
 }
 
+static void show_tooltips_changed (GSettings* settings, gchar* key, TasklistData* tasklist)
+{
+	tasklist->show_tooltips = g_settings_get_boolean (settings, key);
+	tasklist_update(tasklist);
+}
+
 static void setup_gsettings(TasklistData* tasklist)
 {
 	tasklist->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (tasklist->applet), WINDOW_LIST_SCHEMA);
@@ -725,6 +738,10 @@ static void setup_gsettings(TasklistData* tasklist)
 	g_signal_connect (tasklist->settings,
 					  "changed::middle-click-close",
 					  G_CALLBACK (middle_click_close_changed),
+					  tasklist);
+	g_signal_connect (tasklist->settings,
+					  "changed::show-tooltips",
+					  G_CALLBACK (show_tooltips_changed),
 					  tasklist);
 }
 
@@ -801,6 +818,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	tasklist->middle_click_close = g_settings_get_boolean (tasklist->settings, "middle-click-close");
 
+	tasklist->show_tooltips = g_settings_get_boolean (tasklist->settings, "show-tooltips");
+
 	tasklist->size = mate_panel_applet_get_size(applet);
 
 #if !defined(WNCKLET_INPROCESS) && !GTK_CHECK_VERSION (3, 23, 0)
@@ -823,7 +842,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		tasklist->tasklist = wnck_tasklist_new();
+		tasklist->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
+		tasklist->tasklist = wnck_tasklist_new_with_handle(tasklist->wnck_handle);
 
 		g_signal_connect (tasklist->tasklist, "task-enter-notify",
 		                  G_CALLBACK (applet_enter_notify_event),
@@ -1079,6 +1099,7 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	tasklist->change_workspace_radio = WID("change_workspace_radio");
 	tasklist->mouse_scroll_check = WID("mouse_scroll_check");
 	tasklist->middle_click_close_check = WID("middle_click_close_check");
+	tasklist->show_tooltips_check = WID("show_tooltips_check");
 	tasklist->minimized_windows_box = WID("minimized_windows_box");
 	tasklist->window_grouping_box = WID("window_grouping_box");
 	tasklist->window_list_content_box = WID("window_list_content_box");
@@ -1113,6 +1134,13 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	g_settings_bind (tasklist->settings,
                     "middle-click-close",
                      tasklist->middle_click_close_check,
+                    "active",
+                     G_SETTINGS_BIND_DEFAULT);
+
+	/* Show tooltips: */
+	g_settings_bind (tasklist->settings,
+                    "show-tooltips",
+                     tasklist->show_tooltips_check,
                     "active",
                      G_SETTINGS_BIND_DEFAULT);
 
@@ -1191,6 +1219,10 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 
 	if (tasklist->preview)
 		gtk_widget_destroy(tasklist->preview);
+
+#ifdef HAVE_X11
+	g_clear_object(&tasklist->wnck_handle);
+#endif
 
 	g_free(tasklist);
 }

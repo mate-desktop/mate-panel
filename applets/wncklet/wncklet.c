@@ -96,18 +96,19 @@ void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* lin
 }
 
 #ifdef HAVE_X11
-WnckScreen* wncklet_get_screen(GtkWidget* applet)
+WnckScreen* wncklet_get_screen(WnckHandle* handle, GtkWidget* applet)
 {
+	g_return_val_if_fail (WNCK_IS_HANDLE (handle), NULL);
 	g_return_val_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()), NULL);
 
 	int screen_num;
 
 	if (!gtk_widget_has_screen(applet))
-		return wnck_screen_get_default();
+		return wnck_handle_get_default_screen(handle);
 
 	screen_num = gdk_x11_screen_get_screen_number(gtk_widget_get_screen(applet));
 
-	return wnck_screen_get(screen_num);
+	return wnck_handle_get_screen(handle, screen_num);
 }
 #endif /* HAVE_X11 */
 
@@ -123,18 +124,6 @@ void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback 
 static gboolean wncklet_factory(MatePanelApplet* applet, const char* iid, gpointer data)
 {
 	gboolean retval = FALSE;
-
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-	{
-		static gboolean type_registered = FALSE;
-		if (!type_registered)
-		{
-			wnck_set_client_type(WNCK_CLIENT_TYPE_PAGER);
-			type_registered = TRUE;
-		}
-	}
-#endif /* HAVE_X11 */
 
 	if (!strcmp(iid, "WindowMenuApplet"))
 		retval = window_menu_applet_fill(applet);
