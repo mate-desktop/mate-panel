@@ -28,17 +28,18 @@
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
 
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
+#include <libwnck/libwnck.h>
+
 #define WNCKLET_RESOURCE_PATH "/org/mate/panel/applet/wncklet/"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _WnckScreen WnckScreen;
-
 void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* link_id, const char* icon_name);
 
-WnckScreen* wncklet_get_screen(GtkWidget* applet);
+WnckScreen* wncklet_get_screen(WnckHandle* handle, GtkWidget* applet);
 
 void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback func, gpointer func_data, gpointer alive_object);
 

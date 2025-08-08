@@ -53,6 +53,9 @@
 typedef struct {
 	GtkWidget* applet;
 	GtkWidget* selector;
+#ifdef HAVE_X11
+	WnckHandle* wnck_handle;
+#endif
 	int size;
 	MatePanelAppletOrient orient;
 } WindowMenu;
@@ -119,6 +122,9 @@ static const GtkActionEntry window_menu_actions[] = {
 
 static void window_menu_destroy(GtkWidget* widget, WindowMenu* window_menu)
 {
+#ifdef HAVE_X11
+	g_clear_object(&window_menu->wnck_handle);
+#endif
 	g_free(window_menu);
 }
 
@@ -252,7 +258,8 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		window_menu->selector = wnck_selector_new();
+		window_menu->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
+		window_menu->selector = wnck_selector_new_with_handle(window_menu->wnck_handle);
 	}
 	else
 #endif /* HAVE_X11 */

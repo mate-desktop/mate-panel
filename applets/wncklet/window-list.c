@@ -52,6 +52,10 @@ typedef struct {
 	GtkWidget* tasklist;
 	GtkWidget* preview;
 
+#ifdef HAVE_X11
+	WnckHandle* wnck_handle;
+#endif
+
 	gboolean show_window_thumbnails;
 	gint thumbnail_size;
 	gboolean include_all_workspaces;
@@ -464,7 +468,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 
 	/* Do not show preview if window is not visible nor in current workspace */
 	if (!wnck_window_is_visible_on_workspace (wnck_window,
-						  wnck_screen_get_active_workspace (wnck_screen_get_default ())))
+						  wnck_screen_get_active_workspace (wncklet_get_screen (tasklist->wnck_handle, tasklist->applet))))
 		return FALSE;
 
 	thumbnail = preview_window_thumbnail (wnck_window, tasklist, &thumbnail_width, &thumbnail_height, &thumbnail_scale);
@@ -823,7 +827,8 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		tasklist->tasklist = wnck_tasklist_new();
+		tasklist->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
+		tasklist->tasklist = wnck_tasklist_new_with_handle(tasklist->wnck_handle);
 
 		g_signal_connect (tasklist->tasklist, "task-enter-notify",
 		                  G_CALLBACK (applet_enter_notify_event),
@@ -1191,6 +1196,10 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 
 	if (tasklist->preview)
 		gtk_widget_destroy(tasklist->preview);
+
+#ifdef HAVE_X11
+	g_clear_object(&tasklist->wnck_handle);
+#endif
 
 	g_free(tasklist);
 }
