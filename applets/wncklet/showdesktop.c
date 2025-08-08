@@ -52,6 +52,9 @@ typedef struct {
 	GtkOrientation orient;
 	int size;
 
+#ifdef HAVE_X11
+	WnckHandle* wnck_handle;
+#endif
 	WnckScreen* wnck_screen;
 
 	guint showing_desktop: 1;
@@ -308,6 +311,10 @@ static void applet_destroyed(GtkWidget* applet, ShowDesktopData* sdd)
 		sdd->icon_theme = NULL;
 	}
 
+#ifdef HAVE_X11
+	g_clear_object(&sdd->wnck_handle);
+#endif
+
 	g_free (sdd);
 }
 
@@ -371,7 +378,7 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		sdd->wnck_screen = wnck_screen_get (gdk_x11_screen_get_screen_number (screen));
+		sdd->wnck_screen = wncklet_get_screen (sdd->wnck_handle, sdd->applet);
 		if (sdd->wnck_screen != NULL)
 			wncklet_connect_while_alive (sdd->wnck_screen,
 			                             "showing_desktop_changed",
@@ -425,6 +432,13 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	}
 
 	sdd->size = mate_panel_applet_get_size(MATE_PANEL_APPLET(sdd->applet));
+
+#ifdef HAVE_X11
+	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+	{
+		sdd->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
+	}
+#endif
 
 	g_signal_connect (sdd->applet, "realize",
 	                  G_CALLBACK (show_desktop_applet_realized),
