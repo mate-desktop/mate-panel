@@ -763,6 +763,7 @@ panel_background_free (PanelBackground *background)
 	background->default_pattern = NULL;
 }
 
+#ifdef HAVE_X11
 char *
 panel_background_make_string (PanelBackground *background,
 			      int              x,
@@ -799,6 +800,7 @@ panel_background_make_string (PanelBackground *background,
 
 	return retval;
 }
+#endif
 
 PanelBackgroundType
 panel_background_get_type (PanelBackground *background)

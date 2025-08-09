@@ -38,6 +38,9 @@
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
 #endif
+#ifndef HAVE_X11
+#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
+#endif
 
 struct _MatePanelAppletsManagerDBusPrivate
 {

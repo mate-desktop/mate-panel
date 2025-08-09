@@ -245,6 +245,7 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
 	MatePanelAppletFrameDBusPrivate *priv = dbus_frame->priv;
 	char *bg_str;
 
+#ifdef HAVE_X11
 	bg_str = _mate_panel_applet_frame_get_background_string (
 			frame, PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame))), type);
 
@@ -261,6 +262,7 @@ mate_panel_applet_frame_dbus_change_background (MatePanelAppletFrame    *frame,
 
 		g_free (bg_str);
 	}
+#endif
 }
 
 static void

@@ -35,11 +35,15 @@
 #include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
+#include "workspace-switcher.h"
+#endif
+#ifndef HAVE_X11
+#include <gdk/gdkwayland.h>
+#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
 #endif
 
 #include "wncklet.h"
 #include "window-menu.h"
-#include "workspace-switcher.h"
 #include "window-list.h"
 #include "showdesktop.h"
 
@@ -138,8 +142,10 @@ static gboolean wncklet_factory(MatePanelApplet* applet, const char* iid, gpoint
 
 	if (!strcmp(iid, "WindowMenuApplet"))
 		retval = window_menu_applet_fill(applet);
+#ifdef HAVE_X11
 	else if (!strcmp(iid, "WorkspaceSwitcherApplet") || !strcmp(iid, "PagerApplet"))
 		retval = workspace_switcher_applet_fill(applet);
+#endif
 	else if (!strcmp(iid, "WindowListApplet") || !strcmp(iid, "TasklistApplet"))
 		retval = window_list_applet_fill(applet);
 	else if (!strcmp(iid, "ShowDesktopApplet"))

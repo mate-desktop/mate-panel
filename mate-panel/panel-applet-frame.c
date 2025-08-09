@@ -645,6 +645,7 @@ _mate_panel_applet_frame_update_size_hints (MatePanelAppletFrame *frame,
 					    n_elements);
 }
 
+#ifdef HAVE_X11
 char *
 _mate_panel_applet_frame_get_background_string (MatePanelAppletFrame    *frame,
 					   PanelWidget         *panel,
@@ -679,6 +680,8 @@ _mate_panel_applet_frame_get_background_string (MatePanelAppletFrame    *frame,
 
 	return panel_background_make_string (&panel->toplevel->background, x, y);
 }
+#endif
+
 
 static void
 mate_panel_applet_frame_reload_response (GtkWidget        *dialog,
