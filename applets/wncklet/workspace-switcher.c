@@ -215,6 +215,9 @@ typedef struct {
 	GtkWidget* pager_container;
 	GtkWidget* pager;
 
+#ifdef HAVE_X11
+	WnckHandle* wnck_handle;
+#endif
 	WnckScreen* screen;
 	PagerWM wm;
 
@@ -399,7 +402,7 @@ static void applet_realized(MatePanelApplet* applet, PagerData* pager)
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		pager->screen = wncklet_get_screen(GTK_WIDGET(applet));
+		pager->screen = wncklet_get_screen(pager->wnck_handle, GTK_WIDGET(applet));
 		wncklet_connect_while_alive(pager->screen, "window_manager_changed", G_CALLBACK(window_manager_changed), pager, pager->applet);
 	}
 #endif /* HAVE_X11 */
@@ -772,7 +775,8 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
-		pager->pager = wnck_pager_new();
+		pager->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
+		pager->pager = wnck_pager_new_with_handle(pager->wnck_handle);
 		wnck_pager_set_shadow_type(WNCK_PAGER(pager->pager), GTK_SHADOW_IN);
 	}
 	else
@@ -1288,5 +1292,10 @@ static void destroy_pager(GtkWidget* widget, PagerData* pager)
 
 	if (pager->properties_dialog)
 		gtk_widget_destroy(pager->properties_dialog);
+
+#ifdef HAVE_X11
+	g_clear_object(&pager->wnck_handle);
+#endif
+
 	g_free(pager);
 }
