@@ -819,7 +819,6 @@ static void display_fortune_dialog(FishApplet* fish)
 	int          argc;
 	char       **argv;
 	GdkDisplay  *display;
-	GdkScreen   *screen;
 	char        *display_name;
 
 	/* if there is still a pipe, close it */
