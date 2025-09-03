@@ -769,7 +769,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	TasklistData* tasklist;
 	GtkActionGroup* action_group;
 	GtkCssProvider  *provider;
-	GdkScreen *screen;
 
 	tasklist = g_new0(TasklistData, 1);
 
