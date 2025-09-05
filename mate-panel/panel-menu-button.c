@@ -364,8 +364,7 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 {
 	panel_toplevel_pop_autohide_disabler (button->priv->toplevel);
 
-	gtk_widget_unset_state_flags (GTK_WIDGET (button),
-				      GTK_STATE_FLAG_PRELIGHT);
+	gtk_widget_unset_state_flags (GTK_WIDGET (button), GTK_STATE_FLAG_PRELIGHT | GTK_STATE_FLAG_CHECKED);
 	button_widget_set_ignore_leave (BUTTON_WIDGET (button), FALSE);
 }
 
@@ -446,6 +445,7 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 
 	panel_toplevel_push_autohide_disabler (button->priv->toplevel);
 
+	gtk_widget_set_state_flags (GTK_WIDGET (button), GTK_STATE_FLAG_CHECKED, FALSE);
 	button_widget_set_ignore_leave (BUTTON_WIDGET (button), TRUE);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
@@ -694,7 +694,7 @@ panel_menu_button_load (const char  *menu_path,
 		return;
 	}
 
-	gtk_widget_set_name (GTK_WIDGET (button), "mate-panel-main-menu-button");
+	gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (button)), "mate-panel-compact-menu-button");
 
 	button->priv->applet_id = g_strdup (info->id);
 
