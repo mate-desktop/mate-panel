@@ -94,6 +94,7 @@ enum {
 	CHANGE_SIZE,
 	CHANGE_BACKGROUND,
 	MOVE_FOCUS_OUT_OF_APPLET,
+	ACTIVATE,
 	LAST_SIGNAL
 };
 
@@ -2150,6 +2151,19 @@ mate_panel_applet_class_init (MatePanelAppletClass *klass)
 			      1,
 			      GTK_TYPE_DIRECTION_TYPE);
 
+	mate_panel_applet_signals [ACTIVATE] =
+		g_signal_new ("activate",
+			      G_TYPE_FROM_CLASS (klass),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (MatePanelAppletClass, activate),
+			      g_signal_accumulator_true_handled,
+			      NULL,
+			      NULL,
+			      G_TYPE_BOOLEAN,
+			      2,
+			      G_TYPE_STRING,
+			      G_TYPE_UINT);
+
 	binding_set = gtk_binding_set_by_class (gobject_class);
 	add_tab_bindings (binding_set, 0, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
@@ -2213,6 +2227,15 @@ method_call_cb (GDBusConnection       *connection,
 		gdk_event_free (event);
 
 		g_dbus_method_invocation_return_value (invocation, NULL);
+	} else if (g_strcmp0 (method_name, "Activate") == 0) {
+		const gchar *action;
+		guint32 timestamp;
+		gboolean success = FALSE;
+
+		g_variant_get (parameters, "(&su)", &action, &timestamp);
+
+		g_signal_emit_by_name (applet, "activate", action, timestamp, &success);
+		g_dbus_method_invocation_return_value (invocation, g_variant_new ("(b)", success));
 	}
 }
 
@@ -2302,6 +2325,11 @@ static const gchar introspection_xml[] =
 	    "<method name='PopupMenu'>"
 	      "<arg name='button' type='u' direction='in'/>"
 	      "<arg name='time' type='u' direction='in'/>"
+	    "</method>"
+	    "<method name='Activate'>"
+	      "<arg name='action' type='s' direction='in'/>"
+	      "<arg name='timestamp' type='u' direction='in'/>"
+	      "<arg name='success' type='b' direction='out'/>"
 	    "</method>"
 	    "<property name='PrefsPath' type='s' access='readwrite'/>"
 	    "<property name='Orient' type='u' access='readwrite' />"
