@@ -78,6 +78,10 @@ struct _MatePanelAppletClass {
 
     void    (*move_focus_out_of_applet) (MatePanelApplet    *frame,
                                          GtkDirectionType    direction);
+
+    gboolean (*activate)                (MatePanelApplet    *applet,
+                                         const gchar        *action,
+                                         guint32             timestamp);
 };
 
 GtkWidget*              mate_panel_applet_new                       (void);
