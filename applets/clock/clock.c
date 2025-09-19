@@ -1436,6 +1436,21 @@ toggle_calendar (GtkWidget *button,
 }
 
 static gboolean
+clock_applet_activate (MatePanelApplet *applet,
+                       const gchar     *action,
+                       guint32          timestamp,
+                       ClockData       *cd)
+{
+        if (g_strcmp0 (action, "toggle-calendar") == 0) {
+                /* Toggle the button state first, then activate popup */
+                gboolean current_state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->panel_button));
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->panel_button), !current_state);
+                return TRUE;
+        }
+        return FALSE;
+}
+
+static gboolean
 do_not_eat_button_press (GtkWidget      *widget,
                          GdkEventButton *event)
 {
@@ -2737,6 +2752,10 @@ fill_clock_applet (MatePanelApplet *applet)
            initial oriantation, and we get that during the _add call */
         g_signal_connect (cd->applet, "change-orient",
                           G_CALLBACK (applet_change_orient),
+                          cd);
+
+        g_signal_connect (cd->applet, "activate",
+                          G_CALLBACK (clock_applet_activate),
                           cd);
 
         g_signal_connect (cd->panel_button, "size-allocate",
