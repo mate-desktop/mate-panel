@@ -45,6 +45,11 @@
 
 #include <string.h>
 
+#ifdef HAVE_WAYLAND
+#include "wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h"
+#include "wayland-backend.h"
+#include <gdk/gdkwayland.h>
+#endif
 #define TIMEOUT_ACTIVATE_SECONDS 1
 #define SHOW_DESKTOP_ICON "user-desktop"
 
@@ -79,6 +84,11 @@ static void theme_changed_callback(GtkIconTheme* icon_theme, ShowDesktopData* sd
 
 static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd);
 static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* sdd);
+
+#ifdef HAVE_WAYLAND
+GtkWidget* tasklist;
+gboolean desktop_showing;
+#endif
 
 /* this is when the panel orientation changes */
 
@@ -394,7 +404,14 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 			g_warning ("Could not get WnckScreen!");
 	}
 #endif /* HAVE_X11 */
-
+#ifdef HAVE_WAYLAND
+if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+{
+	/*/initialize wayland show desktop applet*/
+	tasklist = wayland_tasklist_new();
+	desktop_showing = FALSE;
+}
+#endif
 	show_desktop_changed_callback (sdd->wnck_screen, sdd);
 
 	sdd->icon_theme = gtk_icon_theme_get_for_screen (screen);
@@ -564,9 +581,39 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 								       gdk_atom_intern("_NET_SHOWING_DESKTOP",
 								       FALSE));
 	}
-	else
+#ifdef HAVE_WAYLAND
+	else if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
 #endif
-	{ /* not using X11 */
+#endif
+#ifdef HAVE_WAYLAND
+#ifndef HAVE_X11
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+#endif
+	{
+		static GtkWidget* outer_box;
+		GList *children1, *children2;
+		if (desktop_showing == FALSE)
+			desktop_showing = TRUE;
+
+		else
+			desktop_showing = FALSE;
+
+		can_show_desktop = TRUE;
+		children1 = gtk_container_get_children (GTK_CONTAINER (tasklist));
+		outer_box = g_list_first(children1)->data;
+		children2 = gtk_container_get_children (GTK_CONTAINER (outer_box));
+		while (children2 != NULL)
+		{
+			button = GTK_WIDGET (children2->data);
+			toggle_show_desktop (button, desktop_showing);
+			children2 = children2->next;
+		}
+	}
+#endif
+
+else
+
+	{ /* not using X11 or wayland */
 		can_show_desktop = FALSE;
 	}
 
@@ -606,6 +653,7 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 	if (sdd->wnck_screen != NULL)
 		wnck_screen_toggle_showing_desktop(sdd->wnck_screen, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)));
 #endif /* HAVE_X11 */
+
 
 	update_button_display (sdd);
 }

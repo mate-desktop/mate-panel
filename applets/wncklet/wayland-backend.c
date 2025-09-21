@@ -79,6 +79,8 @@ static ToplevelTask *toplevel_task_new (TasklistManager *tasklist, struct zwlr_f
 
 guint buttons, tasklist_width;
 
+gboolean window_hidden;
+
 static void
 wl_registry_handle_global (void *_data,
 			   struct wl_registry *registry,
@@ -494,6 +496,34 @@ toplevel_task_disconnected_from_widget (ToplevelTask *task)
 	g_free (task);
 }
 
+/*We have to use the "activate" signal here
+ *as only signals valid for GtkButton work,
+ *"clicked" is taken, and we need to separate
+ *showing the desktop from mouse clicks on window buttons
+ */
+void
+toggle_show_desktop(GtkWidget *button, gboolean desktop_showing)
+{
+	window_hidden = desktop_showing;
+	g_signal_emit_by_name (button, "activate");
+}
+
+static void
+toggle_window(GtkButton *button, ToplevelTask *task)
+{
+	if (task->toplevel)
+	{
+		if (window_hidden)
+		{
+			zwlr_foreign_toplevel_handle_v1_set_minimized (task->toplevel);
+		}
+		else
+		{
+			zwlr_foreign_toplevel_handle_v1_unset_minimized (task->toplevel);
+		}
+	}
+}
+
 static void
 toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 {
@@ -551,6 +581,7 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	orient = gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box));
 	task->button = gtk_button_new ();
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
+	g_signal_connect (task->button, "activate", G_CALLBACK (toggle_window), task);
 
 	task->icon = gtk_image_new_from_icon_name ("unknown", icon_size);
 
