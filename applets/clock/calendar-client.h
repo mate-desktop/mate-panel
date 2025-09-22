@@ -144,6 +144,9 @@ void            calendar_client_set_task_completed       (CalendarClient     *cl
 gboolean        calendar_client_create_task              (CalendarClient     *client,
 							  const char         *summary);
 
+void            calendar_client_update_appointments      (CalendarClient *client);
+void            calendar_client_update_tasks             (CalendarClient *client);
+
 void calendar_event_free (CalendarEvent *event);
 
 G_END_DECLS

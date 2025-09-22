@@ -447,10 +447,6 @@ calendar_window_fill (CalendarWindow *calwin)
 	calwin->priv->calendar = calendar_window_create_calendar (calwin);
         gtk_widget_show (calwin->priv->calendar);
 
-#ifdef HAVE_EDS
-        /* Calendar client will be initialized later in calendar_window_pack_pim */
-#endif
-
 	if (!calwin->priv->invert_order) {
                 gtk_box_pack_start (GTK_BOX (vbox),
 				    calwin->priv->calendar, TRUE, FALSE, 0);
@@ -715,12 +711,32 @@ calendar_window_new (time_t     *static_current_time,
 	return GTK_WIDGET (calwin);
 }
 
+#ifdef HAVE_EDS
+static void
+refresh_once (gpointer user_data)
+{
+	CalendarWindow *calwin = CALENDAR_WINDOW (user_data);
+	if (calwin->priv->client) {
+		calendar_client_update_appointments (calwin->priv->client);
+		calendar_client_update_tasks (calwin->priv->client);
+
+		handle_appointments_changed (calwin);
+		handle_tasks_changed (calwin);
+	}
+}
+#endif
+
 void
 calendar_window_refresh (CalendarWindow *calwin)
 {
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
 #ifdef HAVE_EDS
+	/* Reload evolution calendar data after a small delay to not slow down the UI */
+	if (calwin->priv->client) {
+		g_timeout_add_once (100, refresh_once, calwin);
+	}
+
 	if (calwin->priv->appointments_filter && calwin->priv->appointment_list)
 		gtk_tree_model_filter_refilter (calwin->priv->appointments_filter);
 
