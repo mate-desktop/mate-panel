@@ -447,10 +447,6 @@ calendar_window_fill (CalendarWindow *calwin)
 	calwin->priv->calendar = calendar_window_create_calendar (calwin);
         gtk_widget_show (calwin->priv->calendar);
 
-#ifdef HAVE_EDS
-        /* Calendar client will be initialized later in calendar_window_pack_pim */
-#endif
-
 	if (!calwin->priv->invert_order) {
                 gtk_box_pack_start (GTK_BOX (vbox),
 				    calwin->priv->calendar, TRUE, FALSE, 0);
@@ -597,7 +593,8 @@ calendar_window_dispose (GObject *object)
 			calwin->priv->client_tasks_changed_id = 0;
 		}
 		g_signal_handlers_disconnect_by_data (calwin->priv->client, calwin);
-		g_object_unref (calwin->priv->client);
+
+		/* Client is owned by ClockData, don't unref it */
 		calwin->priv->client = NULL;
 	}
 #endif
@@ -714,12 +711,32 @@ calendar_window_new (time_t     *static_current_time,
 	return GTK_WIDGET (calwin);
 }
 
+#ifdef HAVE_EDS
+static void
+refresh_once (gpointer user_data)
+{
+	CalendarWindow *calwin = CALENDAR_WINDOW (user_data);
+	if (calwin->priv->client) {
+		calendar_client_update_appointments (calwin->priv->client);
+		calendar_client_update_tasks (calwin->priv->client);
+
+		handle_appointments_changed (calwin);
+		handle_tasks_changed (calwin);
+	}
+}
+#endif
+
 void
 calendar_window_refresh (CalendarWindow *calwin)
 {
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
 #ifdef HAVE_EDS
+	/* Reload evolution calendar data after a small delay to not slow down the UI */
+	if (calwin->priv->client) {
+		g_timeout_add_once (100, refresh_once, calwin);
+	}
+
 	if (calwin->priv->appointments_filter && calwin->priv->appointment_list)
 		gtk_tree_model_filter_refilter (calwin->priv->appointments_filter);
 
@@ -1137,30 +1154,22 @@ calendar_window_pack_pim (CalendarWindow *calwin,
 		return;
 	}
 
-	/* Initialize calendar client if not already done */
-	if (!calwin->priv->client && calwin->priv->settings) {
-		calwin->priv->client = calendar_client_new (calwin->priv->settings);
-
-		if (calwin->priv->client) {
-			if (show_calendar_events) {
-				calwin->priv->client_appointments_changed_id = g_signal_connect_swapped (calwin->priv->client,
-													 "appointments-changed",
-													 G_CALLBACK (handle_appointments_changed),
-													 calwin);
-			}
-			if (show_tasks) {
-				calwin->priv->client_tasks_changed_id = g_signal_connect_swapped (calwin->priv->client,
-												  "tasks-changed",
-												  G_CALLBACK (handle_tasks_changed),
-												  calwin);
-			}
+	/* Connect signals if client is available */
+	if (calwin->priv->client) {
+		if (show_calendar_events && calwin->priv->client_appointments_changed_id == 0) {
+			calwin->priv->client_appointments_changed_id = g_signal_connect_swapped (calwin->priv->client,
+											 "appointments-changed",
+											 G_CALLBACK (handle_appointments_changed),
+											 calwin);
+		}
+		if (show_tasks && calwin->priv->client_tasks_changed_id == 0) {
+			calwin->priv->client_tasks_changed_id = g_signal_connect_swapped (calwin->priv->client,
+										  "tasks-changed",
+										  G_CALLBACK (handle_tasks_changed),
+										  calwin);
 		}
 	}
 
-	if (!calwin->priv->client) {
-		g_warning ("Failed to create calendar client in calendar_window_pack_pim");
-		return;
-	}
 
 	/* Create and pack appointments list if enabled */
 	if (show_calendar_events) {
@@ -1186,28 +1195,6 @@ calendar_window_pack_pim (CalendarWindow *calwin,
 		gtk_box_pack_start (GTK_BOX (vbox),
 				    calwin->priv->task_list,
 				    TRUE, TRUE, 0);
-	}
-
-	/* Initialize calendar client with current date now that client is ready */
-	if (calwin->priv->client && calwin->priv->calendar) {
-		guint year, month, day;
-		gtk_calendar_get_date (GTK_CALENDAR (calwin->priv->calendar), &year, &month, &day);
-		/* Set a flag to indicate we're initializing to prevent redundant calls */
-		g_object_set_data (G_OBJECT (calwin), "initializing", GINT_TO_POINTER (1));
-
-		calendar_client_select_month (calwin->priv->client, month, year);
-		calendar_client_select_day (calwin->priv->client, day);
-
-		/* Clear the initialization flag and trigger initial load */
-		g_object_set_data (G_OBJECT (calwin), "initializing", GINT_TO_POINTER (0));
-
-		/* Now trigger the initial appointments and tasks load */
-		if (show_calendar_events) {
-			handle_appointments_changed (calwin);
-		}
-		if (show_tasks) {
-			handle_tasks_changed (calwin);
-		}
 	}
 }
 
@@ -1740,6 +1727,30 @@ task_entry_activate_cb (GtkEntry       *entry,
                         }
                 }
         }
+}
+
+void
+calendar_window_set_client (CalendarWindow *calwin, CalendarClient *client)
+{
+	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
+	calwin->priv->client = client;
+
+	/* If we have a client, initialize the calendar data */
+	if (client && calwin->priv->calendar) {
+		guint year, month, day;
+		gtk_calendar_get_date (GTK_CALENDAR (calwin->priv->calendar), &year, &month, &day);
+
+		calendar_client_select_month (calwin->priv->client, month, year);
+		calendar_client_select_day (calwin->priv->client, day);
+
+		/* Trigger initial data load if widgets exist */
+		if (calwin->priv->appointment_list) {
+			handle_appointments_changed (calwin);
+		}
+		if (calwin->priv->task_list) {
+			handle_tasks_changed (calwin);
+		}
+	}
 }
 
 #endif /* HAVE_EDS */

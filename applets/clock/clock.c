@@ -211,6 +211,10 @@ struct _ClockData {
         const gchar *weather_icon_name;
 
         GDBusProxy *system_manager_proxy;
+
+#ifdef HAVE_EDS
+        CalendarClient *calendar_client;
+#endif
 };
 
 /* Used to count the number of clock instances. It's there to know when we
@@ -828,6 +832,13 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
                 cd->builder = NULL;
         }
 
+#ifdef HAVE_EDS
+        if (cd->calendar_client) {
+                g_object_unref (cd->calendar_client);
+                cd->calendar_client = NULL;
+        }
+#endif
+
         g_free (cd);
 }
 
@@ -886,6 +897,12 @@ create_calendar (ClockData *cd)
                                       cd->orient == MATE_PANEL_APPLET_ORIENT_UP,
                                       cd->settings);
         g_free (prefs_path);
+
+#ifdef HAVE_EDS
+        if (cd->calendar_client) {
+                calendar_window_set_client (CALENDAR_WINDOW (window), cd->calendar_client);
+        }
+#endif
 
         calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
                                         cd->showweek);
@@ -2762,6 +2779,11 @@ fill_clock_applet (MatePanelApplet *applet)
          * the clock if/when the system resumes from sleep (e.g. suspend/
          * hibernate). */
         setup_monitor_for_resume (cd);
+
+#ifdef HAVE_EDS
+        /* Initialize persistent calendar client */
+        cd->calendar_client = calendar_client_new (cd->settings);
+#endif
 
         return TRUE;
 }

@@ -116,11 +116,6 @@ static void calendar_client_start_query (CalendarClient       *client,
 static void calendar_client_source_finalize (CalendarClientSource *source);
 static void calendar_client_query_finalize  (CalendarClientQuery  *query);
 
-static void
-calendar_client_update_appointments (CalendarClient *client);
-static void
-calendar_client_update_tasks (CalendarClient *client);
-
 enum
 {
   PROP_O,
@@ -1420,7 +1415,7 @@ calendar_client_start_query (CalendarClient       *client,
   }
 }
 
-static void
+void
 calendar_client_update_appointments (CalendarClient *client)
 {
   GSList *l;
@@ -1458,7 +1453,7 @@ calendar_client_update_appointments (CalendarClient *client)
 /* FIXME:
  * perhaps we should use evo's "hide_completed_tasks" pref?
  */
-static void
+void
 calendar_client_update_tasks (CalendarClient *client)
 {
   GSList *l;

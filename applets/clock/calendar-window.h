@@ -31,6 +31,10 @@
 #include <gtk/gtk.h>
 #include "clock-utils.h"
 
+#ifdef HAVE_EDS
+#include "calendar-client.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -77,6 +81,10 @@ void       calendar_window_set_show_weeks   (CalendarWindow *calwin,
 ClockFormat calendar_window_get_time_format (CalendarWindow *calwin);
 void       calendar_window_set_time_format  (CalendarWindow *calwin,
 					     ClockFormat     time_format);
+
+#ifdef HAVE_EDS
+void       calendar_window_set_client (CalendarWindow *calwin, CalendarClient *client);
+#endif
 
 #ifdef __cplusplus
 }
