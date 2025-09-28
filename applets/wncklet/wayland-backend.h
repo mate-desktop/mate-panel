@@ -38,6 +38,8 @@ extern "C" {
 GtkWidget* wayland_tasklist_new (void);
 void wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation orient);
 
+GtkWidget* wayland_pager_new   (GtkWidget *box);
+
 #ifdef __cplusplus
 }
 #endif

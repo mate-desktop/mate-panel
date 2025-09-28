@@ -742,6 +742,88 @@ tasklist_widget_get_tasklist (GtkWidget* tasklist_widget)
 	return g_object_get_data (G_OBJECT (tasklist_widget), tasklist_manager_key);
 }
 
+GtkWidget *
+wayland_pager_new (GtkWidget *box)
+{
+  GtkWidget *pager, *button1, *button2, *button3, *button4, *label1, *label2,* label3, *label4;
+  int n_spaces;
+
+  GtkCssProvider *provider = gtk_css_provider_new ();
+  GtkStyleContext *context;
+
+  static const gchar css_custom[] =
+      ".wl-pager-button{"
+      "  border-width:1;"
+      "  border-style: solid;"
+      "  border-color: black;"
+      "  border-radius: 0;"
+      "}";
+
+  gtk_css_provider_load_from_data (provider, css_custom, -1, NULL);
+
+  pager = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+  button1 = gtk_toggle_button_new ();
+  context = gtk_widget_get_style_context (button1);
+  gtk_style_context_add_class (context, "wl-pager-button");
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (button1)),
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+
+  button2 = gtk_toggle_button_new ();
+  context = gtk_widget_get_style_context (button2);
+  gtk_style_context_add_class (context, "wl-pager-button");
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (button2)),
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  button3 = gtk_toggle_button_new ();
+  context = gtk_widget_get_style_context (button3);
+  gtk_style_context_add_class (context, "wl-pager-button");
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (button3)),
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  button4 = gtk_toggle_button_new ();
+  context = gtk_widget_get_style_context (button4);
+  gtk_style_context_add_class (context, "wl-pager-button");
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (button4)),
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  label1 = gtk_label_new("         ");
+  label2 = gtk_label_new("         ");
+  label3 = gtk_label_new("         ");
+  label4 = gtk_label_new("         ");
+
+  gtk_box_pack_start (GTK_BOX (pager), button1, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (pager), button2, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (pager), button3, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (pager), button4, TRUE, TRUE, 0);
+
+  gtk_container_add (GTK_CONTAINER(button1), label1);
+  gtk_container_add (GTK_CONTAINER(button2), label2);
+  gtk_container_add (GTK_CONTAINER(button3), label3);
+  gtk_container_add (GTK_CONTAINER(button4), label4);
+
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (pager)),
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  gtk_widget_show (button1);
+  gtk_widget_show (button2);
+  gtk_widget_show (button3);
+  gtk_widget_show (button4);
+  gtk_widget_show (label1);
+  gtk_widget_show (label2);
+  gtk_widget_show (label3);
+  gtk_widget_show (label4);
+  
+
+  return pager;
+}
+
+
 void
 wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation orient)
 {

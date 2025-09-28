@@ -31,6 +31,8 @@
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
+#include "wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h"
+#include "wayland-backend.h"
 #endif /* HAVE_WAYLAND */
 
 #include <libmate-desktop/mate-gsettings.h>
@@ -785,7 +787,8 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
 	{
-		pager->pager = gtk_label_new ("[Pager not supported on Wayland]");
+                GtkWidget *box;
+		pager->pager = wayland_pager_new(box);
 	}
 	else
 #endif /* HAVE_WAYLAND */
