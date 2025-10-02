@@ -260,6 +260,7 @@ static void panel_toplevel_update_monitor(PanelToplevel* toplevel);
 static void panel_toplevel_set_monitor_internal(PanelToplevel* toplevel, int monitor, gboolean force_resize);
 
 static void panel_toplevel_drag_threshold_changed (PanelToplevel *toplevel);
+static void panel_toplevel_on_monitors_changed (GdkScreen *screen, gpointer user_data);
 
 static void
 update_style_classes (PanelToplevel *toplevel)
@@ -3021,6 +3022,11 @@ panel_toplevel_realize (GtkWidget *widget)
 	if (visual == NULL)
 		visual = gdk_screen_get_system_visual (screen);
 
+	/* Connect to monitors-changed signal to handle dynamic HiDPI scale changes */
+	g_signal_connect (screen, "monitors-changed",
+	                  G_CALLBACK (panel_toplevel_on_monitors_changed),
+	                  toplevel);
+
 	gtk_widget_set_visual (widget, visual);
  	gtk_window_stick (GTK_WINDOW (widget));
 	gtk_window_set_decorated (GTK_WINDOW (widget), FALSE);
@@ -3066,7 +3072,15 @@ static void
 panel_toplevel_unrealize (GtkWidget *widget)
 {
 	PanelToplevel *toplevel;
+	GdkScreen *screen;
+
 	toplevel = PANEL_TOPLEVEL (widget);
+
+	screen = gtk_widget_get_screen (widget);
+	g_signal_handlers_disconnect_by_func (screen,
+	                                      G_CALLBACK (panel_toplevel_on_monitors_changed),
+	                                      toplevel);
+
 	panel_toplevel_disconnect_timeouts (toplevel);
 	panel_background_unrealized (&toplevel->background);
 	GTK_WIDGET_CLASS (panel_toplevel_parent_class)->unrealize (widget);
@@ -4052,6 +4066,63 @@ panel_toplevel_screen_changed (GtkWidget *widget,
 		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->screen_changed (widget, previous_screen);
 
 	gtk_widget_queue_resize (widget);
+}
+
+static gboolean
+panel_toplevel_restore_size (gpointer user_data)
+{
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (user_data);
+	int original_size;
+
+	/* Restore original size from GSettings */
+	if (toplevel->settings) {
+		original_size = g_settings_get_int (toplevel->settings, "size");
+		panel_toplevel_set_size (toplevel, original_size);
+	}
+
+	return G_SOURCE_REMOVE;
+}
+
+static gboolean
+panel_toplevel_update_applets_scale (gpointer user_data)
+{
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (user_data);
+
+	/* HACK: Trigger all applets to redraw at the new scale by forcing
+	 * a size change to 0 and then back to the configured size on the next
+	 * cycle. This simulates what happens when you manually adjust the
+	 * panel size via gsettings. Otherwise, every single applet would need
+	 * to listen to their own scale change signal. */
+	panel_toplevel_set_size (toplevel, 0);
+
+	/* Use timeout to restore size after the resize completes.
+	 * 100ms gives GTK enough time to complete the resize at the new scale. */
+	g_timeout_add (100, panel_toplevel_restore_size, toplevel);
+
+	return G_SOURCE_REMOVE;
+}
+
+static void
+panel_toplevel_on_monitors_changed (GdkScreen *screen,
+                                    gpointer   user_data)
+{
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (user_data);
+	gint new_scale;
+
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	/* Update scale factor */
+	new_scale = gtk_widget_get_scale_factor (GTK_WIDGET (toplevel));
+	if (new_scale != toplevel->priv->scale) {
+		toplevel->priv->scale = new_scale;
+
+		/* Queue resize to update panel size and layout at new scale first */
+		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+
+		/* Use timeout to update applets after panel resizes.
+		 * 100ms gives GTK enough time to complete the resize at the new scale. */
+		g_timeout_add (100, panel_toplevel_update_applets_scale, toplevel);
+	}
 }
 
 static void
