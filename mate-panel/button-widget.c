@@ -34,10 +34,13 @@ struct _ButtonWidgetPrivate {
     guint             arrow         : 1;
     guint             dnd_highlight : 1;
     gboolean          needs_move;
+
+    gulong            scale_changed_handler;
 };
 
 static void button_widget_icon_theme_changed (ButtonWidget *button);
 static void button_widget_reload_surface (ButtonWidget *button);
+static void button_widget_on_scale_changed (GtkWidget *widget, GParamSpec *pspec, gpointer user_data);
 
 enum {
     PROP_0,
@@ -118,28 +121,42 @@ make_hc_surface (cairo_surface_t *surface)
 static void
 button_widget_realize(GtkWidget *widget)
 {
+    ButtonWidget *button = BUTTON_WIDGET (widget);
+
     gtk_widget_add_events (widget, GDK_POINTER_MOTION_MASK |
                            GDK_POINTER_MOTION_HINT_MASK |
                            GDK_KEY_PRESS_MASK);
 
     GTK_WIDGET_CLASS (button_widget_parent_class)->realize (widget);
 
-    BUTTON_WIDGET (widget)->priv->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
-    g_signal_connect_object (BUTTON_WIDGET (widget)->priv->icon_theme,
+    button->priv->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
+    g_signal_connect_object (button->priv->icon_theme,
                              "changed",
                              G_CALLBACK (button_widget_icon_theme_changed),
                              widget,
                              G_CONNECT_SWAPPED);
 
-    button_widget_reload_surface (BUTTON_WIDGET (widget));
+    button->priv->scale_changed_handler = g_signal_connect (widget,
+                                                            "notify::scale-factor",
+                                                            G_CALLBACK (button_widget_on_scale_changed),
+                                                            NULL);
+
+    button_widget_reload_surface (button);
 }
 
 static void
 button_widget_unrealize (GtkWidget *widget)
 {
-    g_signal_handlers_disconnect_by_func (BUTTON_WIDGET (widget)->priv->icon_theme,
+    ButtonWidget *button = BUTTON_WIDGET (widget);
+
+    g_signal_handlers_disconnect_by_func (button->priv->icon_theme,
                                           G_CALLBACK (button_widget_icon_theme_changed),
                                           widget);
+
+    if (button->priv->scale_changed_handler) {
+        g_signal_handler_disconnect (widget, button->priv->scale_changed_handler);
+        button->priv->scale_changed_handler = 0;
+    }
 
     GTK_WIDGET_CLASS (button_widget_parent_class)->unrealize (widget);
 }
@@ -233,6 +250,17 @@ button_widget_icon_theme_changed (ButtonWidget *button)
 {
     if (button->priv->filename != NULL)
         button_widget_reload_surface (button);
+}
+
+static void
+button_widget_on_scale_changed (GtkWidget *widget,
+                                GParamSpec *pspec,
+                                gpointer user_data)
+{
+    ButtonWidget *button = BUTTON_WIDGET (widget);
+
+    /* Reload surfaces at the new scale factor */
+    button_widget_reload_surface (button);
 }
 
 static void
@@ -656,6 +684,8 @@ button_widget_init (ButtonWidget *button)
     button->priv->ignore_leave  = FALSE;
     button->priv->arrow         = FALSE;
     button->priv->dnd_highlight = FALSE;
+
+    button->priv->scale_changed_handler = 0;
 }
 
 static void
