@@ -84,6 +84,7 @@ struct _CalendarWindowPrivate {
         CalendarClient *client;
 
         GtkWidget *appointment_list;
+        GtkWidget *appointment_tree_view;
 
         GtkListStore *appointments_model;
         GtkListStore *tasks_model;
@@ -995,6 +996,94 @@ create_hig_calendar_frame (CalendarWindow *calwin,
         return create_hig_frame (calwin, title, button_label, key, callback);
 }
 
+/* Calculate relative luminance of a color to
+ * determine if the text should be light or dark */
+static gdouble
+calculate_luminance (GdkRGBA *color)
+{
+
+        /* Use the formula from https://en.wikipedia.org/wiki/Relative_luminance */
+        return 0.2126 * color->red + 0.7152 * color->green + 0.0722 * color->blue;
+}
+
+/* Get current time in the same format as stored event times.
+ * Event times are stored as local time but interpreted as UTC when displayed,
+ * so we need to create a UTC timestamp with local time components. */
+static time_t
+get_current_time_for_appointments (void)
+{
+        GDateTime *now_dt, *utc_dt;
+        time_t current_time;
+
+        now_dt = g_date_time_new_now_local();
+        utc_dt = g_date_time_new_utc(g_date_time_get_year(now_dt),
+                                     g_date_time_get_month(now_dt),
+                                     g_date_time_get_day_of_month(now_dt),
+                                     g_date_time_get_hour(now_dt),
+                                     g_date_time_get_minute(now_dt),
+                                     g_date_time_get_second(now_dt));
+        current_time = g_date_time_to_unix(utc_dt);
+        g_date_time_unref(now_dt);
+        g_date_time_unref(utc_dt);
+
+        return current_time;
+}
+
+static void
+appointment_cell_data_func (GtkTreeViewColumn *column,
+                            GtkCellRenderer   *cell,
+                            GtkTreeModel      *model,
+                            GtkTreeIter       *iter,
+                            gpointer           user_data)
+{
+        gchar *color_string = NULL;
+        time_t start_time = 0, end_time = 0;
+        time_t current_time;
+        gboolean is_all_day = FALSE;
+        GdkRGBA bg_color;
+        gchar *bg_color_str;
+        gdouble luminance;
+
+        gtk_tree_model_get(model, iter,
+                           APPOINTMENT_COLUMN_COLOR, &color_string,
+                           APPOINTMENT_COLUMN_START_TIME, &start_time,
+                           APPOINTMENT_COLUMN_END_TIME, &end_time,
+                           APPOINTMENT_COLUMN_ALL_DAY, &is_all_day,
+                           -1);
+
+        current_time = get_current_time_for_appointments();
+
+        /* Determine if this is the current event and make it bold */
+        if (start_time <= current_time && end_time > current_time && !is_all_day) {
+                g_object_set(cell, "weight", PANGO_WEIGHT_BOLD, NULL);
+        } else {
+                g_object_set(cell, "weight", PANGO_WEIGHT_NORMAL, NULL);
+        }
+
+        /* Set background color from Evolution data */
+        if (color_string && *color_string && gdk_rgba_parse(&bg_color, color_string)) {
+                bg_color_str = gdk_rgba_to_string(&bg_color);
+                g_object_set(cell, "cell-background", bg_color_str, NULL);
+                g_free(bg_color_str);
+
+                /* Calculate luminance to determine if we need light or dark text */
+                luminance = calculate_luminance(&bg_color);
+                if (luminance > 0.5) {
+                        /* Light background - use dark text */
+                        g_object_set(cell, "foreground", "#000000", NULL);
+                } else {
+                        /* Dark background - use light text */
+                        g_object_set(cell, "foreground", "#FFFFFF", NULL);
+                }
+        } else {
+                g_object_set(cell,
+                             "cell-background-set", FALSE,
+                             "foreground-set", FALSE,
+                             NULL);
+        }
+
+        g_free(color_string);
+}
 
 static GtkWidget *
 create_appointment_list (CalendarWindow *calwin,
@@ -1013,12 +1102,18 @@ create_appointment_list (CalendarWindow *calwin,
         gtk_tree_view_set_model (GTK_TREE_VIEW (list),
                                 GTK_TREE_MODEL (calwin->priv->appointments_filter));
 
+        /* Store tree view reference for cell data function */
+        calwin->priv->appointment_tree_view = list;
+
         column = gtk_tree_view_column_new ();
         cell = gtk_cell_renderer_text_new ();
         gtk_tree_view_column_pack_start (column, cell, FALSE);
         gtk_tree_view_column_set_attributes (column, cell,
                                             "text", APPOINTMENT_COLUMN_START_TEXT,
                                             NULL);
+        gtk_tree_view_column_set_cell_data_func (column, cell,
+                                                 appointment_cell_data_func,
+                                                 calwin, NULL);
 
         cell = gtk_cell_renderer_text_new ();
         g_object_set (cell,
@@ -1030,6 +1125,10 @@ create_appointment_list (CalendarWindow *calwin,
         gtk_tree_view_column_set_attributes (column, cell,
                                             "text", APPOINTMENT_COLUMN_SUMMARY,
                                             NULL);
+        gtk_tree_view_column_set_cell_data_func (column, cell,
+                                                 appointment_cell_data_func,
+                                                 calwin, NULL);
+
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
 
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
@@ -1328,6 +1427,42 @@ handle_appointments_changed (CalendarWindow *calwin)
 
         update_frame_visibility (calwin->priv->appointment_list,
                                  GTK_TREE_MODEL (calwin->priv->appointments_filter));
+
+        /* Auto-scroll to next upcoming event */
+        if (calwin->priv->appointment_tree_view) {
+                GtkTreeView *tree_view = GTK_TREE_VIEW(calwin->priv->appointment_tree_view);
+                GtkTreeModel *model = GTK_TREE_MODEL(calwin->priv->appointments_filter);
+                GtkTreeIter iter;
+                time_t now;
+                gboolean found = FALSE;
+
+                now = get_current_time_for_appointments();
+
+                /* Find first current or future event */
+                if (gtk_tree_model_get_iter_first(model, &iter)) {
+                        do {
+                                time_t event_start, event_end;
+                                gboolean is_all_day;
+                                gtk_tree_model_get(model, &iter,
+                                                   APPOINTMENT_COLUMN_START_TIME, &event_start,
+                                                   APPOINTMENT_COLUMN_END_TIME, &event_end,
+                                                   APPOINTMENT_COLUMN_ALL_DAY, &is_all_day,
+                                                   -1);
+                                /* Check if this is a current event (happening now) or future event */
+                                if ((event_start <= now && event_end > now && !is_all_day) || event_start >= now) {
+                                        found = TRUE;
+                                        break;
+                                }
+                        } while (gtk_tree_model_iter_next(model, &iter));
+                }
+
+                if (found) {
+                        GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
+                        /* Scroll to center (0.5 puts it in the middle) */
+                        gtk_tree_view_scroll_to_cell(tree_view, path, NULL, TRUE, 0.5, 0.0);
+                        gtk_tree_path_free(path);
+                }
+        }
 }
 
 static void
