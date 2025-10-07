@@ -47,6 +47,8 @@
 #ifdef HAVE_EDS
 #define KEY_SHOW_CALENDAR_EVENTS "show-calendar-events"
 #define KEY_SHOW_TASKS           "show-tasks"
+#define KEY_EXPAND_CALENDAR_EVENTS "expand-calendar-events"
+#define KEY_EXPAND_TASKS           "expand-tasks"
 #define SCHEMA_CALENDAR_APP      "org.mate.desktop.default-applications.office.calendar"
 #define SCHEMA_TASKS_APP         "org.mate.desktop.default-applications.office.tasks"
 #endif
@@ -1096,7 +1098,7 @@ create_appointment_list (CalendarWindow *calwin,
         GtkCellRenderer   *cell;
 
         frame = create_hig_calendar_frame (calwin, _("Appointments"), NULL,
-					   KEY_SHOW_CALENDAR_EVENTS, NULL);
+                                           KEY_EXPAND_CALENDAR_EVENTS, NULL);
 
         list = gtk_tree_view_new ();
         gtk_tree_view_set_model (GTK_TREE_VIEW (list),
@@ -1145,13 +1147,8 @@ create_appointment_list (CalendarWindow *calwin,
         gtk_widget_set_size_request (*scrolled_window, -1, 150);
         gtk_container_add (GTK_CONTAINER (*scrolled_window), list);
 
+        gtk_widget_show_all (*scrolled_window);
         gtk_container_add (GTK_CONTAINER (frame), *scrolled_window);
-
-        /* Ensure the scrolled window and tree view are visible */
-        gtk_widget_show (*scrolled_window);
-        gtk_widget_show (list);
-
-        /* Appointment list widgets created */
 
         *tree_view = list;
         return frame;
@@ -1168,7 +1165,7 @@ create_task_list (CalendarWindow *calwin,
 	GtkCellRenderer   *cell;
 
 	frame = create_hig_calendar_frame (calwin, _("Tasks"), _("Add"),
-					   KEY_SHOW_TASKS, G_CALLBACK (add_task));
+					   KEY_EXPAND_TASKS, G_CALLBACK (add_task));
 
 	list = gtk_tree_view_new ();
 	gtk_tree_view_set_model (GTK_TREE_VIEW (list),
@@ -1213,8 +1210,6 @@ create_task_list (CalendarWindow *calwin,
 	gtk_widget_set_size_request (*scrolled_window, -1, 150);
 	gtk_container_add (GTK_CONTAINER (*scrolled_window), list);
 
-	gtk_container_add (GTK_CONTAINER (frame), *scrolled_window);
-
 	/* Create task entry field */
 	calwin->priv->task_entry = gtk_entry_new ();
 	gtk_entry_set_placeholder_text (GTK_ENTRY (calwin->priv->task_entry), _("Enter task description..."));
@@ -1224,9 +1219,9 @@ create_task_list (CalendarWindow *calwin,
 	g_signal_connect (calwin->priv->task_entry, "activate", G_CALLBACK (task_entry_activate_cb), calwin);
 	gtk_container_add (GTK_CONTAINER (frame), calwin->priv->task_entry);
 
-	/* Ensure the scrolled window and tree view are visible */
 	gtk_widget_show (*scrolled_window);
 	gtk_widget_show (list);
+	gtk_container_add (GTK_CONTAINER (frame), *scrolled_window);
 
 	/* Hide task entry after all show operations are complete */
 	g_idle_add (hide_task_entry_idle, calwin);
