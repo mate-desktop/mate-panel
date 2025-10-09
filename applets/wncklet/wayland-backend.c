@@ -37,6 +37,7 @@
 /*In the future this could be changable from the panel-prefs dialog*/
 static const int max_button_width = 180;
 static const int icon_size = 16;
+int full_button_width;
 
 typedef struct
 {
@@ -384,6 +385,90 @@ foreign_toplevel_handle_done (void *data,
 }
 
 static void
+adjust_buttons (GtkContainer *outer_box, int button_space, int real_buttons, ToplevelTask *task)
+{
+	GtkWidget *widget, *button, *box;
+	/*catch the case of an added button that can be missed
+	 *Note that button space can come up zero on a first button
+	 */
+	if ((real_buttons < 2) || button_space == 0 || (real_buttons * full_button_width < tasklist_width * 0.75))
+	{
+		if(task)
+		{
+			gtk_widget_set_size_request (task->button, full_button_width, -1);
+		}
+	}
+
+	if ((task) && (button_space > 0) && (button_space < icon_size * 3))
+		gtk_widget_hide (task->icon);
+
+	if ((task) && (button_space > 0) && (button_space < icon_size * 1.5))
+		gtk_widget_hide (task->label);
+
+	GList* children = gtk_container_get_children (GTK_CONTAINER (outer_box));
+
+	while (children != NULL)
+	{
+		button = GTK_WIDGET (children->data);
+		box = gtk_bin_get_child (GTK_BIN (button));
+
+		if ((real_buttons < 2) || button_space == 0 || (real_buttons * full_button_width < tasklist_width * 0.75))
+		{
+			gtk_widget_set_size_request (button, full_button_width, -1);
+			return;
+		}
+		else
+		{
+			gtk_widget_set_size_request (button, MIN(button_space, full_button_width), -1);
+		}
+
+		/* if the number of buttons forces width to less than 3x the icon size, hide the icons
+		 * if the number of buttons forces width to less than 1.5x the icon size, hide the labels too.
+		 * This is roughy the same behavior as on x11
+		 * To find the icon and label we must iterate through the children of the box we packed
+		 * into the button, there are two of them
+		 */
+
+			GList* contents = gtk_container_get_children (GTK_CONTAINER (box));
+			while (contents != NULL)
+			{
+				widget = GTK_WIDGET (contents->data);
+				/*Show or hide the icon*/
+				if (GTK_IS_IMAGE (widget))
+				{
+					if (button_space < icon_size * 3)
+						gtk_widget_hide (widget);
+
+					else
+						gtk_widget_show (widget);
+
+				}
+
+				/*Show or hide the icon*/
+				if (GTK_IS_LABEL (widget))
+				{
+					if (button_space < icon_size * 1.5)
+					{
+						gtk_widget_hide (widget);
+						/*We can go a little wider for empty buttons*/
+						gtk_widget_set_size_request (button, tasklist_width / real_buttons * 0.9, -1);
+						if (task)
+							gtk_widget_hide (task->label);
+
+					}
+					else
+					{
+						gtk_widget_show (widget);
+					}
+				}
+				contents = contents->next;
+			}
+		children = children->next;
+	}
+	return;
+}
+
+static void
 foreign_toplevel_handle_closed (void *data,
 				struct zwlr_foreign_toplevel_handle_v1 *toplevel)
 {
@@ -392,13 +477,14 @@ foreign_toplevel_handle_closed (void *data,
 	if (task->button)
 	{
 		GtkOrientation orient;
-		GtkWidget *button;
-		GtkWidget  *box;
+		int real_buttons, button_space;
+
 		GtkWidget *outer_box = gtk_widget_get_parent (GTK_WIDGET (task->button));
 		gtk_widget_destroy (task->button);
 		buttons = buttons -1;
+		real_buttons = buttons / 2;
 
-		if (buttons == 0)
+		if (real_buttons == 0)
 			return;
 
 		/* We don't need to modify button size on a vertical panel*/
@@ -406,67 +492,9 @@ foreign_toplevel_handle_closed (void *data,
 		if (orient == GTK_ORIENTATION_VERTICAL)
 			return;
 
-		/* Horizontal panel: if buttons can now fit
-		 * with both labels and icons show them
-		 */
-		if (tasklist_width / buttons > icon_size * 3)
-		{
-			GList* children = gtk_container_get_children (GTK_CONTAINER (outer_box));
-			while (children != NULL)
-			{
-				button = GTK_WIDGET (children->data);
-
-				/* If maximum width buttons fix, expand to that dimension*/
-				if (buttons * max_button_width < tasklist_width)
-					gtk_widget_set_size_request (button, max_button_width, -1);
-
-				/* Otherwise expand remaining buttons to fill the tasklist*/
-				else
-					gtk_widget_set_size_request (button, tasklist_width / buttons, -1);
-
-				gtk_widget_show_all (button);
-				children = children->next;
-			}
-		}
-		/* If buttons with icons will fit, bring them back*/
-		else if (tasklist_width / buttons > icon_size * 2)
-		{
-			GtkWidget *widget;
-			GList* children = gtk_container_get_children (GTK_CONTAINER (outer_box));
-			while (children != NULL)
-			{
-				button = GTK_WIDGET (children->data);
-				box = gtk_bin_get_child (GTK_BIN (button));
-				GList* contents = gtk_container_get_children (GTK_CONTAINER (box));
-				while (contents != NULL)
-				{
-					widget = GTK_WIDGET (contents->data);
-					if (GTK_IS_LABEL (widget))
-						gtk_widget_hide (widget);
-
-					if (GTK_IS_IMAGE (widget))
-						gtk_widget_show (widget);
-
-					contents = contents->next;
-					gtk_widget_show (box);
-					gtk_widget_show (button);
-				}
-
-				children = children->next;
-				gtk_widget_set_size_request (button, tasklist_width / buttons, -1);
-			}
-		}
-		/* If we still cannot fit labels or icons, just fill the available space*/
-		else
-		{
-			GList* children = gtk_container_get_children (GTK_CONTAINER (outer_box));
-			while (children != NULL)
-			{
-				button = GTK_WIDGET (children->data);
-				gtk_widget_set_size_request (button, tasklist_width / buttons, -1);
-				children = children->next;
-			}
-		}
+		/*Leave a little space so the buttons don't push other applets off the panel*/
+		button_space = (tasklist_width / real_buttons) * 0.75;
+		adjust_buttons (GTK_CONTAINER(outer_box), button_space, real_buttons, NULL);
 	}
 }
 
@@ -574,8 +602,8 @@ static ToplevelTask *
 toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handle_v1 *toplevel)
 {
 	ToplevelTask *task = g_new0 (ToplevelTask, 1);
-	GtkWidget *button;
 	GtkOrientation orient;
+	int real_buttons, button_space;
 
 	buttons = buttons + 1;
 	orient = gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box));
@@ -598,149 +626,6 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	gtk_widget_set_name (task->button , "tasklist-button");
 	gtk_widget_show_all (task->button);
 
-	/* Buttons on a vertical panel are not affected by how many are needed
-	 * GTK handles compressing contents as needed as the window width tells
-	 * GTK how much space to allocate the label and icon. Buttons will use
-	 * the full width of a vertical panel without any special attention
-	 * so break out here instead of breaking the vertical panel case
-	 */
-
-	if (orient == GTK_ORIENTATION_VERTICAL)
-	{
-		gtk_widget_show_all (task->button);
-		task->toplevel = toplevel;
-		zwlr_foreign_toplevel_handle_v1_add_listener (toplevel,
-							      &foreign_toplevel_handle_listener,
-							      task);
-		g_object_set_data_full (G_OBJECT (task->button),
-					toplevel_task_key,
-					task,
-					(GDestroyNotify)toplevel_task_disconnected_from_widget);
-
-	g_signal_connect (task->button, "button-press-event",
-			  G_CALLBACK (on_toplevel_button_press),
-			  tasklist);
-
-	return task;
-	}
-
-	/* On horizontal panels, GTK does not by default limit the width of the tasklist
-	 * as it does not run out of space in the window until the entire panel is used,
-	 * leaving buttons at full width until then and overflowing all other applets
-	 *
-	 * Thus we must get the tasklist's allocated width when extra space remains,
-	 * which will be most of the distance between the handle and the next applet
-	 * From there, we can expand buttons and/or hide elements as needed
-	 */
-
-
-	tasklist_width = gtk_widget_get_allocated_width (GTK_WIDGET (tasklist->outer_box));
-
-	/* First button can be buggy with this so hardcode it to expand to the limit */
-	if (buttons == 1)
-		gtk_widget_set_size_request (task->button, max_button_width, -1);
-
-	/* if the number of buttons forces width to less than 3x the icon size, shrink them  */
-	if ((buttons != 0) && (tasklist_width > 1 )&& (tasklist_width / buttons < (icon_size * 3)))
-	{
-		/* adjust the current button first or it can be missed */
-		if (tasklist_width / buttons > icon_size * 2)
-		{
-			gtk_widget_hide (task->label);
-			gtk_widget_show (task->icon);
-		}
-		else
-		{
-			gtk_widget_show (task->label);
-			gtk_widget_hide (task->icon);
-		}
-		gtk_widget_show (box);
-		gtk_widget_show (task->button);
-
-		/* iterate over all the buttons, first hide labels
-		 * then hide icons and bring back labels
-		 */
-		GtkWidget *widget;
-
-		GList* children = gtk_container_get_children (GTK_CONTAINER (tasklist->list));
-		while (children != NULL)
-		{
-			button = GTK_WIDGET (children->data);
-			box = gtk_bin_get_child (GTK_BIN (button));
-
-			/* hide labels of all buttons but show icons if only icons will fit */
-			if (tasklist_width / buttons > icon_size * 2)
-			{
-				/* find the icon and the label, show just the icon */
-				GList* contents = gtk_container_get_children (GTK_CONTAINER (box));
-
-				while (contents != NULL)
-				{
-					widget = GTK_WIDGET (contents->data);
-					if (GTK_IS_LABEL (widget))
-						gtk_widget_hide (widget);
-
-					if (GTK_IS_IMAGE (widget))
-						gtk_widget_show (widget);
-
-					contents = contents->next;
-				}
-			}
-			else
-			{
-				/* find the icon and the label, show just the label as it is more
-				 * compressable than the icon. Though less meaningful at this size,
-				 * it is enough to keep the tasklist from disappearing on themes
-				 * that do not set borders around tasklist buttons.
-				 * This is same behavior as on x11 save that an extreme number of
-				 * buttons (50+ on 700px of space) can still overflow
-				 */
-
-				GList* contents = gtk_container_get_children (GTK_CONTAINER (box));
-				while (contents != NULL)
-				{
-					widget = GTK_WIDGET (contents->data);
-					if (GTK_IS_LABEL (widget))
-						gtk_widget_show (widget);
-
-					if (GTK_IS_IMAGE (widget))
-						gtk_widget_hide (widget);
-
-					contents = contents->next;
-				}
-			}
-			/*expand buttons with labels or everything hidden to fit remaining space*/
-			gtk_widget_set_size_request (button, tasklist_width / buttons, -1);
-			/*show the button and any contents that fit, then get the next button*/
-			gtk_widget_show (box);
-			gtk_widget_show (button);
-
-			children = children->next;
-		}
-	}
-	else
-	{
-		GList* children = gtk_container_get_children (GTK_CONTAINER(tasklist->list));
-		while (children != NULL)
-		{
-			button = GTK_WIDGET (children->data);
-			if (((buttons ) * max_button_width < tasklist_width) || (buttons == 1))
-
-				/*Don't let buttons expand over the maximum button size*/
-				gtk_widget_set_size_request (button, max_button_width, -1);
-
-			else
-				/*if full width buttons won't fit, size them to just fill the tasklist*/
-				gtk_widget_set_size_request (button, tasklist_width / buttons, -1);
-
-			children = children->next;
-		}
-	gtk_widget_show_all (task->button);
-	}
-
-	/*Reset the tasklist width after button adjustments*/
-	tasklist_width = gtk_widget_get_allocated_width (GTK_WIDGET (tasklist->outer_box));
-
 	task->toplevel = toplevel;
 	zwlr_foreign_toplevel_handle_v1_add_listener (toplevel,
 						      &foreign_toplevel_handle_listener,
@@ -754,6 +639,48 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 			  G_CALLBACK (on_toplevel_button_press),
 			  tasklist);
 
+	/* Buttons on a vertical panel are not affected by how many are needed
+	 * GTK handles compressing contents as needed as the window width tells
+	 * GTK how much space to allocate the label and icon. Buttons will use
+	 * the full width of a vertical panel without any special attention
+	 * so break out here instead of breaking the vertical panel case
+	 */
+
+	if (orient == GTK_ORIENTATION_VERTICAL)
+		return task;
+
+	/* On horizontal panels, GTK does not by default limit the width of the tasklist
+	 * as it does not run out of space in the window until the entire panel is used,
+	 * leaving buttons at full width until then and overflowing all other applets
+	 *
+	 * Thus we must get the tasklist's allocated width when extra space remains,
+	 * which will be most of the distance between the handle and the next applet
+	 * From there, we can expand buttons and/or hide elements as needed
+	 * For some reason this function always gets called twice, so use half the value of buttons
+	 * but do not attempt to adjust the global value as it would get adjusted twice
+	 * Since we are adding a button here the true value cannot be zero
+	 */
+	real_buttons = MAX ((buttons / 2), 1);
+	tasklist_width = MAX (gtk_widget_get_allocated_width (GTK_WIDGET (tasklist->outer_box)), tasklist_width);
+
+	/*always allow at least three buttons to fit without adjustment
+	 *so short window lists don't overflow
+	 */
+	if (tasklist_width > 0)
+	{
+		full_button_width = MIN(max_button_width, tasklist_width / 3);
+		gtk_widget_queue_draw(tasklist->outer_box);
+	}
+
+	/*Leave a little space so the buttons don't push other applets off the panel*/
+	button_space = (tasklist_width / real_buttons) * 0.75;
+	button_space = MIN(button_space, full_button_width);
+
+	/* iterate over all the buttons*/
+	adjust_buttons (GTK_CONTAINER (tasklist->list), button_space, real_buttons, task);
+
+	/*Reset the tasklist width after button adjustments*/
+	tasklist_width = MAX (gtk_widget_get_allocated_width (GTK_WIDGET (tasklist->outer_box)), tasklist_width);
 	return task;
 }
 
