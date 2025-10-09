@@ -37,6 +37,7 @@
 /*In the future this could be changable from the panel-prefs dialog*/
 static const int max_button_width = 180;
 static const int icon_size = 16;
+int full_button_width;
 
 typedef struct
 {
@@ -390,11 +391,11 @@ adjust_buttons (GtkContainer *outer_box, int button_space, int real_buttons, Top
 	/*catch the case of an added button that can be missed
 	 *Note that button space can come up zero on a first button
 	 */
-	if ((real_buttons < 2) || button_space == 0 || (real_buttons * max_button_width < tasklist_width * 0.75))
+	if ((real_buttons < 2) || button_space == 0 || (real_buttons * full_button_width < tasklist_width * 0.75))
 	{
 		if(task)
 		{
-			gtk_widget_set_size_request (task->button, max_button_width, -1);
+			gtk_widget_set_size_request (task->button, full_button_width, -1);
 		}
 	}
 
@@ -411,14 +412,14 @@ adjust_buttons (GtkContainer *outer_box, int button_space, int real_buttons, Top
 		button = GTK_WIDGET (children->data);
 		box = gtk_bin_get_child (GTK_BIN (button));
 
-		if ((real_buttons < 2) || button_space == 0 || (real_buttons * max_button_width < tasklist_width * 0.75))
+		if ((real_buttons < 2) || button_space == 0 || (real_buttons * full_button_width < tasklist_width * 0.75))
 		{
-			gtk_widget_set_size_request (button, max_button_width, -1);
+			gtk_widget_set_size_request (button, full_button_width, -1);
 			return;
 		}
 		else
 		{
-			gtk_widget_set_size_request (button, MIN(button_space, max_button_width), -1);
+			gtk_widget_set_size_request (button, MIN(button_space, full_button_width), -1);
 		}
 
 		/* if the number of buttons forces width to less than 3x the icon size, hide the icons
@@ -662,9 +663,18 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	real_buttons = MAX ((buttons / 2), 1);
 	tasklist_width = MAX (gtk_widget_get_allocated_width (GTK_WIDGET (tasklist->outer_box)), tasklist_width);
 
+	/*always allow at least three buttons to fit without adjustment
+	 *so short window lists don't overflow
+	 */
+	if (tasklist_width > 0)
+	{
+		full_button_width = MIN(max_button_width, tasklist_width / 3);
+		gtk_widget_queue_draw(tasklist->outer_box);
+	}
+
 	/*Leave a little space so the buttons don't push other applets off the panel*/
 	button_space = (tasklist_width / real_buttons) * 0.75;
-	button_space = MIN(button_space, max_button_width);
+	button_space = MIN(button_space, full_button_width);
 
 	/* iterate over all the buttons*/
 	adjust_buttons (GTK_CONTAINER (tasklist->list), button_space, real_buttons, task);
