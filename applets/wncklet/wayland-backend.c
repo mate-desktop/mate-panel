@@ -402,7 +402,7 @@ adjust_buttons (GtkContainer *outer_box, int button_space, int real_buttons, Top
 	if ((task) && (button_space > 0) && (button_space < icon_size * 3))
 		gtk_widget_hide (task->icon);
 
-	if ((task) && (button_space > 0) && (button_space < icon_size * 1.5))
+	if ((task) && (button_space > 0) && (button_space < icon_size))
 		gtk_widget_hide (task->label);
 
 	GList* children = gtk_container_get_children (GTK_CONTAINER (outer_box));
@@ -423,7 +423,7 @@ adjust_buttons (GtkContainer *outer_box, int button_space, int real_buttons, Top
 		}
 
 		/* if the number of buttons forces width to less than 3x the icon size, hide the icons
-		 * if the number of buttons forces width to less than 1.5x the icon size, hide the labels too.
+		 * if the number of buttons forces width to less than the icon size, hide the labels too.
 		 * This is roughy the same behavior as on x11
 		 * To find the icon and label we must iterate through the children of the box we packed
 		 * into the button, there are two of them
@@ -447,7 +447,7 @@ adjust_buttons (GtkContainer *outer_box, int button_space, int real_buttons, Top
 				/*Show or hide the label*/
 				if (GTK_IS_LABEL (widget))
 				{
-					if (button_space < icon_size * 1.5)
+					if (button_space < icon_size)
 					{
 						gtk_widget_hide (widget);
 						/*We can go a little wider for empty buttons*/
