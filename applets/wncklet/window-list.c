@@ -367,14 +367,14 @@ preview_window_reposition (WnckTasklist    *tl,
 			x_pos = monitor_geom.width + monitor_geom.x - width - tasklist->size - PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_RIGHT:
-			x_pos = tasklist->size + PREVIEW_PADDING;
+			x_pos = monitor_geom.x + tasklist->size + PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_UP:
 			y_pos = monitor_geom.height + monitor_geom.y - height - tasklist->size - PREVIEW_PADDING;
 			break;
 		case MATE_PANEL_APPLET_ORIENT_DOWN:
 		default:
-			y_pos = tasklist->size + PREVIEW_PADDING;
+			y_pos = monitor_geom.y + tasklist->size + PREVIEW_PADDING;
 			break;
 	}
 
