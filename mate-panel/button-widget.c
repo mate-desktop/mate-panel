@@ -443,6 +443,10 @@ button_widget_draw (GtkWidget *widget,
     x = off + (width - w) / 2;
     y = off + (height - h) / 2;
 
+    context = gtk_widget_get_style_context (widget);
+    gtk_render_background (context, cr, 0, 0, width, height);
+    gtk_render_frame (context, cr, 0, 0, width, height);
+
     cairo_save (cr);
 
     if (!button_widget->priv->activatable) {
@@ -461,8 +465,6 @@ button_widget_draw (GtkWidget *widget,
 
     cairo_paint (cr);
     cairo_restore (cr);
-
-    context = gtk_widget_get_style_context (widget);
 
     if (button_widget->priv->arrow) {
         gdouble angle, size;
@@ -689,6 +691,14 @@ button_widget_init (ButtonWidget *button)
 }
 
 static void
+button_widget_map (GtkWidget *widget)
+{
+    GtkStyleContext *context = gtk_widget_get_style_context (widget);
+    gtk_style_context_add_class (context, "mate-panel-button");
+    GTK_WIDGET_CLASS (button_widget_parent_class)->map (widget);
+}
+
+static void
 button_widget_class_init (ButtonWidgetClass *klass)
 {
     GObjectClass *gobject_class   = (GObjectClass   *) klass;
@@ -699,6 +709,7 @@ button_widget_class_init (ButtonWidgetClass *klass)
     gobject_class->get_property = button_widget_get_property;
     gobject_class->set_property = button_widget_set_property;
 
+    widget_class->map                  = button_widget_map;
     widget_class->realize              = button_widget_realize;
     widget_class->unrealize            = button_widget_unrealize;
     widget_class->size_allocate        = button_widget_size_allocate;
