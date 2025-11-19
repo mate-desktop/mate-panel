@@ -68,6 +68,8 @@ typedef struct
 	gboolean fullscreen;
 } ToplevelTask;
 
+static int tasklist_invocations = 0;
+
 static const char *tasklist_manager_key = "tasklist_manager";
 static const char *toplevel_task_key = "toplevel_task";
 
@@ -497,7 +499,12 @@ foreign_toplevel_handle_closed (void *data,
 		outer_box = gtk_widget_get_parent (GTK_WIDGET (task->button));
 		gtk_widget_destroy (task->button);
 		buttons = buttons -1;
-		real_buttons = buttons / 2;
+
+		if (tasklist_invocations > 1)
+			real_buttons = buttons / 2;
+
+		else
+			real_buttons = buttons;
 
 		if (real_buttons == 0)
 			return;
@@ -704,7 +711,11 @@ toplevel_task_new (TasklistManager *tasklist, struct zwlr_foreign_toplevel_handl
 	if (tasklist_width <= 2)
 		tasklist_width = panel_width / 3;
 
-	real_buttons = MAX ((buttons / 2), 1);
+	if (tasklist_invocations > 1)
+		real_buttons = MAX ((buttons / 2), 1);
+
+	else
+		real_buttons = MAX ((buttons), 1);
 
 	/*always allow at least three buttons to fit without adjustment
 	 *so short window lists don't overflow
@@ -738,6 +749,8 @@ wayland_tasklist_new ()
 {
 	wayland_tasklist_init_if_needed ();
 	TasklistManager *tasklist = tasklist_manager_new ();
+
+	tasklist_invocations = tasklist_invocations + 1;
 	if (!tasklist)
 		return gtk_label_new ("Shell does not support WLR Foreign Toplevel Control");
 	return tasklist->outer_box;
