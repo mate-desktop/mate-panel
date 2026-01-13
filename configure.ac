@@ -15,7 +15,7 @@ MATE_COMMON_INIT
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LIB_MATE_PANEL_APPLET_LT_VERSION=1:1:0
+LIB_MATE_PANEL_APPLET_LT_VERSION=2:0:0
 AC_SUBST(LIB_MATE_PANEL_APPLET_LT_VERSION)
 
 AM_MAINTAINER_MODE
