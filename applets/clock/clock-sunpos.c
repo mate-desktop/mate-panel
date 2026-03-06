@@ -52,7 +52,7 @@
 /* Calculate number of days since 4713BC.
  */
 static gdouble
-unix_time_to_julian_date (gint unix_time)
+unix_time_to_julian_date (gint64 unix_time)
 {
   return UNIX_EPOCH + (double) unix_time / (60 * 60 * 24);
 }
