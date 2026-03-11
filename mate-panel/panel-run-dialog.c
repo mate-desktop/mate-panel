@@ -493,6 +493,8 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 				    "cannot_convert_command_from_utf8", TRUE,
 				    primary, error->message);
 		g_free (primary);
+		g_free (command);
+		g_free (disk);
 
 		g_error_free (error);
 		return;
@@ -2120,8 +2122,11 @@ panel_run_dialog_present (GdkScreen *screen,
 	GtkBuilder *gui;
 	accelerator_keys_to_tree_iter_map = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, NULL);
 
-	if (panel_lockdown_get_disable_command_line ())
+	if (panel_lockdown_get_disable_command_line ()) {
+		g_hash_table_destroy (accelerator_keys_to_tree_iter_map);
+		accelerator_keys_to_tree_iter_map = NULL;
 		return;
+	}
 
 	if (static_dialog) {
 		gtk_window_set_screen (GTK_WINDOW (static_dialog->run_dialog), screen);
