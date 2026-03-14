@@ -52,6 +52,12 @@ typedef enum {
   TASKLIST_ALWAYS_GROUP
 } TasklistGroupingType;
 
+typedef enum {
+  PREVIEW_NONE,
+  PREVIEW_TOOLTIPS,
+  PREVIEW_THUMBNAILS
+} TasklistPreviewType;
+
 typedef struct {
 	GtkWidget* applet;
 	GtkWidget* tasklist;
@@ -61,7 +67,7 @@ typedef struct {
 	WnckHandle* wnck_handle;
 #endif
 
-	gboolean show_window_thumbnails;
+	TasklistPreviewType preview_type;
 	gint thumbnail_size;
 	gboolean include_all_workspaces;
 
@@ -82,7 +88,7 @@ typedef struct {
 	GtkWidget* show_current_radio;
 	GtkWidget* show_all_radio;
 	GtkWidget* window_thumbnail_box;
-	GtkWidget* show_thumbnails_check;
+	GtkWidget* preview_type_combo;
 	GtkWidget* thumbnail_size_label;
 	GtkWidget* thumbnail_size_spin;
 	GtkWidget* never_group_radio;
@@ -98,6 +104,8 @@ typedef struct {
 
 	GSettings* settings;
 	GSettings* preview_settings;
+
+	int size_hints[2]; /* fallback when wnck_tasklist_get_size_hint_list is unavailable */
 } TasklistData;
 
 static void call_system_monitor(GtkAction* action, TasklistData* tasklist);
@@ -140,6 +148,10 @@ static void tasklist_update(TasklistData* tasklist)
 		wnck_tasklist_set_switch_workspace_on_unminimize(WNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
 		wnck_tasklist_set_scroll_enabled (WNCK_TASKLIST(tasklist->tasklist), tasklist->scroll_enable);
 		wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), tasklist->middle_click_close);
+#if WNCK_CHECK_VERSION(43, 1, 0)
+		wnck_tasklist_set_tooltips_enabled (WNCK_TASKLIST (tasklist->tasklist),
+		                                    tasklist->preview_type == PREVIEW_TOOLTIPS);
+#endif
 	}
 #endif /* HAVE_X11 */
 
@@ -180,7 +192,19 @@ static const int* tasklist_get_size_hint_list(TasklistData* tasklist, int* n_ele
 #ifdef HAVE_X11
 	if (WNCK_IS_TASKLIST(tasklist->tasklist))
 	{
+#if !WNCK_CHECK_VERSION(43, 1, 0)
 		return wnck_tasklist_get_size_hint_list(WNCK_TASKLIST(tasklist->tasklist), n_elements);
+#else
+		int minimum, natural;
+		if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
+			gtk_widget_get_preferred_width(tasklist->tasklist, &minimum, &natural);
+		else
+			gtk_widget_get_preferred_height(tasklist->tasklist, &minimum, &natural);
+		tasklist->size_hints[0] = natural;
+		tasklist->size_hints[1] = minimum;
+		*n_elements = 2;
+		return tasklist->size_hints;
+#endif
 	}
 	else
 #endif /* HAVE_X11 */
@@ -456,7 +480,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 		tasklist->preview = NULL;
 	}
 
-	if (!tasklist->show_window_thumbnails || wnck_windows == NULL)
+	if (tasklist->preview_type != PREVIEW_THUMBNAILS || wnck_windows == NULL)
 		return FALSE;
 
 	n_windows = g_list_length (wnck_windows);
@@ -609,9 +633,10 @@ static void tasklist_update_thumbnail_size_spin(TasklistData* tasklist)
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(button), (gdouble)tasklist->thumbnail_size);
 }
 
-static void show_thumbnails_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
+static void preview_type_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
 {
-    tasklist->show_window_thumbnails = g_settings_get_boolean (settings, key);
+	tasklist->preview_type = g_settings_get_enum (settings, key);
+	tasklist_update (tasklist);
 }
 
 static void thumbnail_size_changed(GSettings *settings, gchar* key, TasklistData* tasklist)
@@ -711,8 +736,8 @@ static void setup_gsettings(TasklistData* tasklist)
 	tasklist->preview_settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (tasklist->applet), WINDOW_LIST_PREVIEW_SCHEMA);
 
 	g_signal_connect (tasklist->preview_settings,
-					  "changed::show-window-thumbnails",
-					  G_CALLBACK (show_thumbnails_changed),
+					  "changed::window-preview-type",
+					  G_CALLBACK (preview_type_changed),
 					  tasklist);
 
 	g_signal_connect (tasklist->preview_settings,
@@ -797,7 +822,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	tasklist->include_all_workspaces = g_settings_get_boolean (tasklist->settings, "display-all-workspaces");
 
-	tasklist->show_window_thumbnails = g_settings_get_boolean (tasklist->preview_settings, "show-window-thumbnails");
+	tasklist->preview_type = g_settings_get_enum (tasklist->preview_settings, "window-preview-type");
 
 	tasklist->thumbnail_size = g_settings_get_int (tasklist->preview_settings, "thumbnail-window-size");
 
@@ -994,6 +1019,18 @@ static void group_windows_toggled(GtkToggleButton* button, TasklistData* tasklis
 	}
 }
 
+static void preview_type_combo_changed(GtkComboBox* combo, TasklistData* tasklist)
+{
+	gint active = gtk_combo_box_get_active (combo);
+
+	if (active < 0)
+		return;
+
+	g_settings_set_enum (tasklist->preview_settings, "window-preview-type", active);
+	gtk_widget_set_sensitive (tasklist->thumbnail_size_label, active == PREVIEW_THUMBNAILS);
+	gtk_widget_set_sensitive (tasklist->thumbnail_size_spin, active == PREVIEW_THUMBNAILS);
+}
+
 static void thumbnail_size_spin_changed(GtkSpinButton* button, TasklistData* tasklist)
 {
 	g_settings_set_int(tasklist->preview_settings, "thumbnail-window-size", gtk_spin_button_get_value_as_int(button));
@@ -1069,20 +1106,16 @@ static void setup_dialog(GtkBuilder* builder, TasklistData* tasklist)
 	setup_sensitivity(tasklist, builder, "never_group_radio", "auto_group_radio", "always_group_radio", "group-windows" /* key */);
 
 	tasklist->window_thumbnail_box = WID("window_thumbnail_box");
-	tasklist->show_thumbnails_check = WID("show_thumbnails_check");
+	tasklist->preview_type_combo = WID("preview_type_combo");
 	tasklist->thumbnail_size_label = WID("thumbnail_size_label");
 	tasklist->thumbnail_size_spin = WID("thumbnail_size_spin");
 
-	g_settings_bind(tasklist->preview_settings, "show-window-thumbnails", tasklist->show_thumbnails_check, "active", G_SETTINGS_BIND_DEFAULT);
-	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(tasklist->show_thumbnails_check))) {
-		gtk_widget_set_sensitive (tasklist->thumbnail_size_label, TRUE);
-		gtk_widget_set_sensitive (tasklist->thumbnail_size_spin, TRUE);
-	} else {
-		gtk_widget_set_sensitive (tasklist->thumbnail_size_label, FALSE);
-		gtk_widget_set_sensitive (tasklist->thumbnail_size_spin, FALSE);
-	}
-	g_object_bind_property(tasklist->show_thumbnails_check, "active", tasklist->thumbnail_size_label, "sensitive", G_BINDING_DEFAULT);
-	g_object_bind_property(tasklist->show_thumbnails_check, "active", tasklist->thumbnail_size_spin, "sensitive", G_BINDING_DEFAULT);
+	gtk_combo_box_set_active (GTK_COMBO_BOX (tasklist->preview_type_combo), tasklist->preview_type);
+	gtk_widget_set_sensitive (tasklist->thumbnail_size_label, tasklist->preview_type == PREVIEW_THUMBNAILS);
+	gtk_widget_set_sensitive (tasklist->thumbnail_size_spin, tasklist->preview_type == PREVIEW_THUMBNAILS);
+	g_signal_connect (tasklist->preview_type_combo, "changed",
+	                  G_CALLBACK (preview_type_combo_changed),
+	                  tasklist);
 
 	tasklist->move_minimized_radio = WID("move_minimized_radio");
 	tasklist->change_workspace_radio = WID("change_workspace_radio");
