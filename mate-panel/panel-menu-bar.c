@@ -291,9 +291,14 @@ static void panel_menu_bar_finalize (GObject* object)
 
 	if (menubar->priv->settings != NULL)
 	{
+		g_signal_handlers_disconnect_by_func (menubar->priv->settings,
+		                                      panel_menu_bar_update_visibility,
+		                                      menubar);
 		g_object_unref (menubar->priv->settings);
 		menubar->priv->settings = NULL;
 	}
+
+	G_OBJECT_CLASS (panel_menu_bar_parent_class)->finalize (object);
 }
 
 static void panel_menu_bar_class_init(PanelMenuBarClass* klass)
