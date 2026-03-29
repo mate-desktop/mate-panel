@@ -822,6 +822,21 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
                 cd->systz = NULL;
         }
 
+        if (cd->clock_group) {
+                g_object_unref (cd->clock_group);
+                cd->clock_group = NULL;
+        }
+
+        if (cd->prefs_window) {
+                gtk_widget_destroy (cd->prefs_window);
+                cd->prefs_window = NULL;
+        }
+
+        if (cd->set_time_window) {
+                gtk_widget_destroy (cd->set_time_window);
+                cd->set_time_window = NULL;
+        }
+
         if (cd->cities_store) {
                 g_object_unref (cd->cities_store);
                 cd->cities_store = NULL;
