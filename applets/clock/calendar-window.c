@@ -1423,6 +1423,8 @@ handle_appointments_changed (CalendarWindow *calwin)
         update_frame_visibility (calwin->priv->appointment_list,
                                  GTK_TREE_MODEL (calwin->priv->appointments_filter));
 
+        g_slist_free_full (events, (GDestroyNotify) calendar_event_free);
+
         /* Auto-scroll to next upcoming event */
         if (calwin->priv->appointment_tree_view) {
                 GtkTreeView *tree_view = GTK_TREE_VIEW(calwin->priv->appointment_tree_view);
@@ -1543,6 +1545,8 @@ handle_tasks_changed (CalendarWindow *calwin)
                 g_free (due_text);
                 g_free (percent_complete_text);
         }
+
+        g_slist_free_full (events, (GDestroyNotify) calendar_event_free);
 
         /* Refresh filter before checking visibility */
         if (calwin->priv->tasks_filter)
