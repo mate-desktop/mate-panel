@@ -1181,7 +1181,7 @@ static void check_april_fools(FishApplet* fish)
 	} else if (tm->tm_mon  == fools_month    &&
 		 tm->tm_mday == fools_day        &&
 		 tm->tm_hour >= fools_hour_start &&
-		 tm->tm_hour <= fools_hour_end) {
+		 tm->tm_hour < fools_hour_end) {
 		fish->april_fools = TRUE;
 		update_pixmap (fish);
 	}
