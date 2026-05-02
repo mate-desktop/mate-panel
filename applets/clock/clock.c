@@ -1546,6 +1546,16 @@ create_main_clock_label (ClockData *cd)
         GtkWidget *label;
 
         label = gtk_label_new (NULL);
+
+        // Fix proportional font by font feature tabular numbers (tnum) (if supported by the font)
+        PangoAttribute *attr;
+        PangoAttrList *alist;
+        attr = pango_attr_font_features_new ("tnum=1");
+        alist = pango_attr_list_new ();
+        pango_attr_list_insert (alist, attr);
+        gtk_label_set_attributes (GTK_LABEL (label), alist);
+        pango_attr_list_unref (alist);
+
 /*Fixme-this is invalid for labels with any recent GTK3 version, maybe all of them*/
 /*
         g_signal_connect (label, "size-request",
