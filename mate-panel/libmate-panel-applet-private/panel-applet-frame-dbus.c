@@ -231,8 +231,14 @@ container_child_background_set (GObject      *source_object,
 {
 	MatePanelAppletContainer *container = MATE_PANEL_APPLET_CONTAINER (source_object);
 	MatePanelAppletFrameDBus *frame = MATE_PANEL_APPLET_FRAME_DBUS (user_data);
+	GError *error = NULL;
 
-	mate_panel_applet_container_child_set_finish (container, res, NULL);
+	mate_panel_applet_container_child_set_finish (container, res, &error);
+
+	if (error) {
+		g_error_free (error);
+		return;
+	}
 
 	frame->priv->bg_operation = NULL;
 }
@@ -327,6 +333,8 @@ mate_panel_applet_frame_dbus_finalize (GObject *object)
 {
 	MatePanelAppletFrameDBus *frame = MATE_PANEL_APPLET_FRAME_DBUS (object);
 
+	if (frame->priv->bg_operation)
+		mate_panel_applet_container_cancel_operation (frame->priv->container, frame->priv->bg_operation);
 	frame->priv->bg_operation = NULL;
 
 	G_OBJECT_CLASS (mate_panel_applet_frame_dbus_parent_class)->finalize (object);
