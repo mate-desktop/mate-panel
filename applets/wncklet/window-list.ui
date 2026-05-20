@@ -95,7 +95,7 @@
                       <object class="GtkLabel" id="thumbnails_label">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Window Thumbnails</property>
+                        <property name="label" translatable="yes">Window Preview</property>
                         <property name="xalign">0</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -115,13 +115,38 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkCheckButton" id="show_thumbnails_check">
-                            <property name="label" translatable="yes">Show _thumbnails on hover</property>
+                          <object class="GtkBox" id="preview_type_box">
                             <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
-                            <property name="use-underline">True</property>
-                            <property name="draw-indicator">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="spacing">6</property>
+                            <child>
+                              <object class="GtkLabel" id="preview_type_label">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">On hover:</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxText" id="preview_type_combo">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <items>
+                                  <item translatable="yes">None</item>
+                                  <item translatable="yes">Tooltips</item>
+                                  <item translatable="yes">Thumbnails</item>
+                                </items>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
