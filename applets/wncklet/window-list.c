@@ -21,6 +21,7 @@
 
 #ifdef HAVE_X11
 #include <gdk/gdkx.h>
+#include <X11/Xatom.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 #endif /* HAVE_X11 */
@@ -251,15 +252,32 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
                           int          *thumbnail_scale)
 {
 	GdkWindow *window;
-	Window win;
+	GdkDisplay *display;
+	Display *xdpy;
+	Window win, frame, parent, root;
+	Window *children;
+	unsigned int nchildren;
 	cairo_surface_t *thumbnail;
 	cairo_t *cr;
 	double ratio;
 	int width, height, scale;
+	int src_x = 0, src_y = 0;
 
 	win = wnck_window_get_xid (wnck_window);
+	display = gdk_display_get_default ();
+	xdpy = GDK_DISPLAY_XDISPLAY (display);
 
-	if ((window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), win)) == NULL)
+	/* Find the frame window (WM parent) which includes decorations */
+	frame = win;
+	if (XQueryTree (xdpy, win, &root, &parent, &children, &nchildren))
+	{
+		if (children)
+			XFree (children);
+		if (parent != root)
+			frame = parent;
+	}
+
+	if ((window = gdk_x11_window_foreign_new_for_display (display, frame)) == NULL)
 	{
 		return NULL;
 	}
@@ -267,6 +285,45 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	*thumbnail_scale = scale = gdk_window_get_scale_factor (window);
 	width = gdk_window_get_width (window) * scale;
 	height = gdk_window_get_height (window) * scale;
+
+	/* Strip invisible resize borders using _NET_FRAME_EXTENTS */
+	if (frame != win)
+	{
+		Atom frame_extents = XInternAtom (xdpy, "_NET_FRAME_EXTENTS", False);
+		Atom type;
+		int fmt;
+		unsigned long nitems, bytes;
+		unsigned char *data = NULL;
+
+		if (XGetWindowProperty (xdpy, win, frame_extents, 0, 4, False,
+		                        XA_CARDINAL, &type, &fmt, &nitems, &bytes,
+		                        &data) == Success && data && nitems >= 4)
+		{
+			unsigned long *ext = (unsigned long *) data;
+			XWindowAttributes wa;
+
+			if (XGetWindowAttributes (xdpy, win, &wa))
+			{
+				int vis_w = (wa.width  + ext[0] + ext[1]) * scale;
+				int vis_h = (wa.height + ext[2] + ext[3]) * scale;
+				int border_x = (wa.x - (int) ext[0]) * scale;
+				int border_y = (wa.y - (int) ext[2]) * scale;
+
+				if (border_x > 0 && vis_w < width)
+				{
+					src_x = border_x;
+					width = vis_w;
+				}
+				if (border_y > 0 && vis_h < height)
+				{
+					src_y = border_y;
+					height = vis_h;
+				}
+			}
+		}
+		if (data)
+			XFree (data);
+	}
 
 	/* Scale to configured size while maintaining aspect ratio */
 	if (width > height)
@@ -292,7 +349,7 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	cairo_surface_set_device_scale (thumbnail, scale, scale);
 	cr = cairo_create (thumbnail);
 	cairo_scale (cr, ratio, ratio);
-	gdk_cairo_set_source_window (cr, window, 0, 0);
+	gdk_cairo_set_source_window (cr, window, -src_x / scale, -src_y / scale);
 	cairo_paint (cr);
 	cairo_destroy (cr);
 
