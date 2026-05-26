@@ -283,8 +283,8 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	}
 
 	*thumbnail_scale = scale = gdk_window_get_scale_factor (window);
-	width = gdk_window_get_width (window) * scale;
-	height = gdk_window_get_height (window) * scale;
+	width = gdk_window_get_width (window);
+	height = gdk_window_get_height (window);
 
 	/* Strip invisible resize borders using _NET_FRAME_EXTENTS */
 	if (frame != win)
@@ -304,10 +304,10 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 
 			if (XGetWindowAttributes (xdpy, win, &wa))
 			{
-				int vis_w = (wa.width  + ext[0] + ext[1]) * scale;
-				int vis_h = (wa.height + ext[2] + ext[3]) * scale;
-				int border_x = (wa.x - (int) ext[0]) * scale;
-				int border_y = (wa.y - (int) ext[2]) * scale;
+				int vis_w = (wa.width  + ext[0] + ext[1]) / scale;
+				int vis_h = (wa.height + ext[2] + ext[3]) / scale;
+				int border_x = (wa.x - (int) ext[0]) / scale;
+				int border_y = (wa.y - (int) ext[2]) / scale;
 
 				if (border_x > 0 && vis_w < width)
 				{
@@ -328,24 +328,24 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	/* Scale to configured size while maintaining aspect ratio */
 	if (width > height)
 	{
-		int max_size = MIN (width, tasklist->thumbnail_size * scale);
+		int max_size = MIN (width, tasklist->thumbnail_size);
 		ratio = (double) max_size / (double) width;
-		*thumbnail_width = max_size;
-		*thumbnail_height = (int) ((double) height * ratio);
+		*thumbnail_width = max_size * scale;
+		*thumbnail_height = (int) ((double) height * ratio) * scale;
 	}
 	else
 	{
-		int max_size = MIN (height, tasklist->thumbnail_size * scale);
+		int max_size = MIN (height, tasklist->thumbnail_size);
 		ratio = (double) max_size / (double) height;
-		*thumbnail_height = max_size;
-		*thumbnail_width = (int) ((double) width * ratio);
+		*thumbnail_height = max_size * scale;
+		*thumbnail_width = (int) ((double) width * ratio) * scale;
 	}
 
 	gdk_x11_display_error_trap_push (gdk_window_get_display (window));
 
 	GdkPixbuf *pixbuf = gdk_pixbuf_get_from_window (window,
-	                                                src_x / scale, src_y / scale,
-	                                                width / scale, height / scale);
+	                                                src_x, src_y,
+	                                                width, height);
 
 	if (gdk_x11_display_error_trap_pop (gdk_window_get_display (window)) || pixbuf == NULL)
 	{
@@ -358,7 +358,9 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	                                        *thumbnail_height);
 	cairo_surface_set_device_scale (thumbnail, scale, scale);
 	cr = cairo_create (thumbnail);
-	cairo_scale (cr, ratio, ratio);
+	cairo_scale (cr,
+	             (double) *thumbnail_width / scale / gdk_pixbuf_get_width (pixbuf),
+	             (double) *thumbnail_height / scale / gdk_pixbuf_get_height (pixbuf));
 	gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
 	cairo_paint (cr);
 	cairo_destroy (cr);
