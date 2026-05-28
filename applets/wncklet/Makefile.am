@@ -36,6 +36,11 @@ WNCKLET_LDADD =						\
 	$(WNCKLET_LIBS)					\
 	$(LIBMATE_PANEL_APPLET_LIBS)
 
+if ENABLE_X11
+WNCKLET_LDADD += \
+	$(X_LIBS)
+endif
+
 if ENABLE_WAYLAND
 WNCKLET_SOURCES += \
 	wayland-backend.c \
