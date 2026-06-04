@@ -1,10 +1,10 @@
 AC_INIT([mate-panel], [1.29.0], [https://github.com/mate-desktop/mate-panel/issues],
     [mate-panel], [https://mate-desktop.org])
 AC_CONFIG_HEADERS(config.h)
+AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-xz tar-ustar -Wno-portability check-news])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-AC_CONFIG_MACRO_DIR([m4])
 MATE_COMMON_INIT
 
 # Before making a release, the LT_VERSION string should be modified.
