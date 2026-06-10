@@ -38,13 +38,13 @@
 #include "clock.h"
 #include "clock-utils.h"
 #include "clock-typebuiltins.h"
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 #include "calendar-client.h"
 #endif
 
 #define KEY_LOCATIONS_EXPANDED      "expand-locations"
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 #define KEY_SHOW_CALENDAR_EVENTS "show-calendar-events"
 #define KEY_SHOW_TASKS           "show-tasks"
 #define KEY_EXPAND_CALENDAR_EVENTS "expand-calendar-events"
@@ -55,7 +55,7 @@
 
 enum {
 	EDIT_LOCATIONS,
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	PERMISSION_READY,
 #endif
 	LAST_SIGNAL
@@ -80,7 +80,7 @@ struct _CalendarWindowPrivate {
         gulong calendar_month_changed_id;
         gulong calendar_day_selected_id;
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	ClockFormat  time_format;
 
         CalendarClient *client;
@@ -102,7 +102,7 @@ struct _CalendarWindowPrivate {
         /* EDS-specific signal handler IDs */
         gulong client_appointments_changed_id;
         gulong client_tasks_changed_id;
-#endif /* HAVE_EDS */
+#endif /* HAVE_EDS || HAVE_LIBICAL */
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
@@ -127,7 +127,7 @@ static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 		  				   const char *key,
                   				   GCallback   callback);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 enum {
         APPOINTMENT_COLUMN_UID,
         APPOINTMENT_COLUMN_TYPE,
@@ -182,7 +182,7 @@ static void task_row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, Gt
 static void task_completion_toggled_cb (GtkCellRendererToggle *cell, gchar *path_str, CalendarWindow *calwin);
 static gboolean task_entry_key_press_cb (GtkWidget *widget, GdkEventKey *event, CalendarWindow *calwin);
 static void task_entry_activate_cb (GtkEntry *entry, CalendarWindow *calwin);
-#endif /* HAVE_EDS */
+#endif /* HAVE_EDS || HAVE_LIBICAL */
 
 static void calendar_mark_today(GtkCalendar *calendar)
 {
@@ -212,7 +212,7 @@ static void calendar_month_changed_cb(GtkCalendar *calendar, gpointer user_data)
 	gtk_calendar_clear_marks(calendar);
 	g_idle_add_full (G_PRIORITY_DEFAULT_IDLE, calendar_update, calendar, NULL);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	/* Update calendar client when date changes */
 	CalendarWindow *calwin = CALENDAR_WINDOW (user_data);
 	if (calwin->priv->client) {
@@ -367,7 +367,7 @@ edit_locations (CalendarWindow *calwin)
 	g_signal_emit (calwin, signals[EDIT_LOCATIONS], 0);
 }
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 static gboolean
 hide_task_entry_idle (gpointer user_data)
 {
@@ -453,13 +453,13 @@ calendar_window_fill (CalendarWindow *calwin)
 	if (!calwin->priv->invert_order) {
                 gtk_box_pack_start (GTK_BOX (vbox),
 				    calwin->priv->calendar, TRUE, FALSE, 0);
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
                 calendar_window_pack_pim (calwin, vbox);
 #endif
 		calendar_window_pack_locations (calwin, vbox);
 	} else {
 		calendar_window_pack_locations (calwin, vbox);
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
                 calendar_window_pack_pim (calwin, vbox);
 #endif
                 gtk_box_pack_start (GTK_BOX (vbox),
@@ -584,7 +584,7 @@ calendar_window_dispose (GObject *object)
 		calwin->priv->calendar_day_selected_id = 0;
 	}
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	/* Disconnect client signals */
 	if (calwin->priv->client) {
 		if (calwin->priv->client_appointments_changed_id > 0) {
@@ -672,7 +672,7 @@ calendar_window_init (CalendarWindow *calwin)
 
 	calwin->priv = calendar_window_get_instance_private (calwin);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	/* Initialize signal handler IDs */
 	calwin->priv->calendar_month_changed_id = 0;
 	calwin->priv->calendar_day_selected_id = 0;
@@ -704,7 +704,7 @@ calendar_window_new (time_t     *static_current_time,
 			       "prefs-path", prefs_path,
 			       NULL);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	/* Store settings for calendar client initialization in init */
 	if (settings) {
 		calwin->priv->settings = g_object_ref (settings);
@@ -714,7 +714,7 @@ calendar_window_new (time_t     *static_current_time,
 	return GTK_WIDGET (calwin);
 }
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 static void
 refresh_once (gpointer user_data)
 {
@@ -734,7 +734,7 @@ calendar_window_refresh (CalendarWindow *calwin)
 {
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	/* Reload evolution calendar data after a small delay to not slow down the UI */
 	if (calwin->priv->client) {
 		g_timeout_add_once (100, refresh_once, calwin);
@@ -815,7 +815,7 @@ calendar_window_get_time_format (CalendarWindow *calwin)
 	g_return_val_if_fail (CALENDAR_IS_WINDOW (calwin),
 			      CLOCK_FORMAT_INVALID);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 	return calwin->priv->time_format;
 #else
 	return CLOCK_FORMAT_INVALID;
@@ -879,7 +879,7 @@ calendar_window_set_prefs_path (CalendarWindow *calwin,
 	}
 }
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 
 static char *
 format_time (ClockFormat format,
@@ -1887,4 +1887,4 @@ calendar_window_set_client (CalendarWindow *calwin, CalendarClient *client)
 	}
 }
 
-#endif /* HAVE_EDS */
+#endif /* HAVE_EDS || HAVE_LIBICAL */
