@@ -826,8 +826,7 @@ calendar_vdir_discover (const char *base_path)
   GDir *dir = g_dir_open (base_path, 0, &error);
   if (dir == NULL)
     {
-      g_debug ("CalendarVdirProvider: cannot scan '%s': %s",
-               base_path, error->message);
+      g_debug ("CalendarVdirProvider: cannot scan '%s': %s", base_path, error->message);
       g_error_free (error);
       return NULL;
     }
@@ -885,6 +884,13 @@ calendar_vdir_discover (const char *base_path)
           CalendarProvider *p = calendar_vdir_provider_new (subdir);
           if (p != NULL)
             providers = g_slist_prepend (providers, p);
+        }
+      else
+        {
+          /* Not a collection itself — recurse one level (vdirsyncer stores
+           * collections as <base>/<pair-name>/<collection-name>/) */
+          GSList *nested = calendar_vdir_discover (subdir);
+          providers = g_slist_concat (providers, nested);
         }
 
       g_free (subdir);
