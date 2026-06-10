@@ -35,13 +35,23 @@ CLOCK_SOURCES = 		\
 	set-timezone.h		\
 	$(BUILT_SOURCES)
 
-if HAVE_EDS
 CLOCK_SOURCES += \
 	calendar-client.c	\
 	calendar-client.h	\
-	calendar-sources.c	\
-	calendar-sources.h	\
+	calendar-provider.c	\
+	calendar-provider.h	\
 	calendar-debug.h
+
+if HAVE_LIBICAL
+CLOCK_SOURCES += \
+	calendar-vdir-provider.c	\
+	calendar-vdir-provider.h
+endif
+
+if HAVE_EDS
+CLOCK_SOURCES += \
+	calendar-eds-provider.c		\
+	calendar-eds-provider.h
 endif
 
 CLOCK_CPPFLAGS =						\
@@ -53,6 +63,10 @@ CLOCK_CPPFLAGS =						\
 	-DMATELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DMATEWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
+if HAVE_LIBICAL
+CLOCK_CPPFLAGS += $(LIBICAL_CFLAGS) -DLIBICAL_GLIB_UNSTABLE_API
+endif
+
 if HAVE_EDS
 CLOCK_CPPFLAGS += $(EDS_CFLAGS)
 endif
@@ -63,6 +77,10 @@ CLOCK_LDADD =						\
 	$(LIBMATE_PANEL_APPLET_LIBS)				\
 	libsystem-timezone.la				\
 	-lm
+
+if HAVE_LIBICAL
+CLOCK_LDADD += $(LIBICAL_LIBS)
+endif
 
 if HAVE_EDS
 CLOCK_LDADD += $(EDS_LIBS)

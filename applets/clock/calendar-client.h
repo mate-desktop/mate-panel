@@ -147,7 +147,9 @@ gboolean        calendar_client_create_task              (CalendarClient     *cl
 void            calendar_client_update_appointments      (CalendarClient *client);
 void            calendar_client_update_tasks             (CalendarClient *client);
 
-void calendar_event_free (CalendarEvent *event);
+void           calendar_event_free  (CalendarEvent *event);
+CalendarEvent *calendar_event_copy  (CalendarEvent *event);
+gboolean       calendar_event_equal (CalendarEvent *a, CalendarEvent *b);
 
 G_END_DECLS
 
