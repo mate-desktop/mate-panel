@@ -1662,7 +1662,9 @@ appointment_tooltip_query_cb (GtkWidget   *widget,
         }
 
         if (backend_name && strlen (backend_name) > 0) {
-                gchar *with_source = g_markup_printf_escaped ("%s\n<small>%s</small>", tooltip_text, backend_name);
+                gchar *escaped_name = g_markup_escape_text (backend_name, -1);
+                gchar *with_source = g_strdup_printf ("%s\n<small>%s</small>", tooltip_text, escaped_name);
+                g_free (escaped_name);
                 g_free (tooltip_text);
                 tooltip_text = with_source;
         }
