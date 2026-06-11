@@ -212,14 +212,9 @@ get_source_color (ECalClient *ecal)
 static char *
 get_source_backend_name (ECalClient *ecal)
 {
-  ESource           *source   = e_client_get_source (E_CLIENT (ecal));
-  ECalClientSourceType stype  = e_cal_client_get_source_type (ecal);
-  const char        *ext_name =
-    (stype == E_CAL_CLIENT_SOURCE_TYPE_EVENTS)
-      ? E_SOURCE_EXTENSION_CALENDAR
-      : E_SOURCE_EXTENSION_TASK_LIST;
-  ESourceBackend    *ext      = e_source_get_extension (source, ext_name);
-  return e_source_backend_dup_backend_name (ext);
+  ESource    *source = e_client_get_source (E_CLIENT (ecal));
+  const char *name   = e_source_get_display_name (source);
+  return g_strdup (name);
 }
 
 static gboolean
