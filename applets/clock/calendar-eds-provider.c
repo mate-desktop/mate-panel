@@ -39,6 +39,28 @@
 #define _(x) gettext(x)
 #endif
 
+/* i_cal_duration_as_int was removed in newer libical-glib; compute manually. */
+static time_t
+ical_duration_as_secs (ICalDuration *dur)
+{
+  if (!dur) return 0;
+  time_t secs = (time_t) i_cal_duration_get_weeks   (dur) * 7 * 86400
+              + (time_t) i_cal_duration_get_days    (dur)     * 86400
+              + (time_t) i_cal_duration_get_hours   (dur)     *  3600
+              + (time_t) i_cal_duration_get_minutes (dur)     *    60
+              + (time_t) i_cal_duration_get_seconds (dur);
+  return i_cal_duration_is_neg (dur) ? -secs : secs;
+}
+
+/* In newer libical-glib the property getter functions take 'const ICalProperty *'
+ * while older versions use 'ICalProperty *'.  These thin wrappers always accept
+ * a non-const pointer so they can be used as function-pointer arguments on both
+ * old and new versions without triggering -Wincompatible-function-pointer-types. */
+static ICalTime *prop_get_dtstart   (ICalProperty *p) { return i_cal_property_get_dtstart   (p); }
+static ICalTime *prop_get_dtend     (ICalProperty *p) { return i_cal_property_get_dtend     (p); }
+static ICalTime *prop_get_due       (ICalProperty *p) { return i_cal_property_get_due       (p); }
+static ICalTime *prop_get_completed (ICalProperty *p) { return i_cal_property_get_completed (p); }
+
 /* =========================================================================
  * Internal types
  * =========================================================================
@@ -236,7 +258,7 @@ get_component_is_all_day (ICalComponent *comp,
 
   time_t end_time =
     get_time_from_property (comp, I_CAL_DTEND_PROPERTY,
-                             i_cal_property_get_dtend, default_zone);
+                             prop_get_dtend, default_zone);
   if (end_time)
     return (end_time - start_time) % 86400 == 0;
 
@@ -245,7 +267,7 @@ get_component_is_all_day (ICalComponent *comp,
   if (!prop) return FALSE;
 
   ICalDuration *dur   = i_cal_property_get_duration (prop);
-  gboolean      all_d = i_cal_duration_as_int (dur) % 86400 == 0;
+  gboolean      all_d = ical_duration_as_secs (dur) % 86400 == 0;
   g_object_unref (dur);
   g_object_unref (prop);
   return all_d;
@@ -287,10 +309,10 @@ appointment_init (CalendarAppointment *appt,
 
   appt->start_time =
     get_time_from_property (comp, I_CAL_DTSTART_PROPERTY,
-                             i_cal_property_get_dtstart, zone);
+                             prop_get_dtstart, zone);
   appt->end_time =
     get_time_from_property (comp, I_CAL_DTEND_PROPERTY,
-                             i_cal_property_get_dtend, zone);
+                             prop_get_dtend, zone);
   appt->is_all_day = get_component_is_all_day (comp, appt->start_time, zone);
 }
 
@@ -321,13 +343,13 @@ task_init (CalendarTask      *task,
   task->color_string = get_source_color (src->client);
   task->start_time   =
     get_time_from_property (comp, I_CAL_DTSTART_PROPERTY,
-                             i_cal_property_get_dtstart, zone);
+                             prop_get_dtstart, zone);
   task->due_time =
     get_time_from_property (comp, I_CAL_DUE_PROPERTY,
-                             i_cal_property_get_due, zone);
+                             prop_get_due, zone);
   task->completed_time =
     get_time_from_property (comp, I_CAL_COMPLETED_PROPERTY,
-                             i_cal_property_get_completed, zone);
+                             prop_get_completed, zone);
 
   ICalPropertyStatus status = i_cal_component_get_status (comp);
   if (status == I_CAL_STATUS_COMPLETED)
