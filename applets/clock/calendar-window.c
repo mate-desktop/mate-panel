@@ -138,6 +138,7 @@ enum {
         APPOINTMENT_COLUMN_END_TIME,
         APPOINTMENT_COLUMN_ALL_DAY,
         APPOINTMENT_COLUMN_COLOR,
+        APPOINTMENT_COLUMN_BACKEND_NAME,
         N_APPOINTMENT_COLUMNS
 };
 
@@ -953,7 +954,8 @@ calendar_window_create_appointments_model (CalendarWindow *calwin)
                                                                G_TYPE_STRING,  /* APPOINTMENT_COLUMN_START_TEXT */
                                                                G_TYPE_ULONG,   /* APPOINTMENT_COLUMN_END_TIME */
                                                                G_TYPE_BOOLEAN, /* APPOINTMENT_COLUMN_ALL_DAY */
-                                                               G_TYPE_STRING); /* APPOINTMENT_COLUMN_COLOR */
+                                                               G_TYPE_STRING,  /* APPOINTMENT_COLUMN_COLOR */
+                                                               G_TYPE_STRING); /* APPOINTMENT_COLUMN_BACKEND_NAME */
 
         calwin->priv->appointments_filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (GTK_TREE_MODEL (calwin->priv->appointments_model), NULL));
         gtk_tree_model_filter_set_visible_func (calwin->priv->appointments_filter,
@@ -1402,15 +1404,16 @@ handle_appointments_changed (CalendarWindow *calwin)
                 gtk_list_store_append (calwin->priv->appointments_model, &iter);
                 /* Appointment added to model */
                 gtk_list_store_set (calwin->priv->appointments_model, &iter,
-                                    APPOINTMENT_COLUMN_UID,         appointment->uid,
-                                    APPOINTMENT_COLUMN_TYPE,        APPOINTMENT_TYPE_APPOINTMENT,
-                                    APPOINTMENT_COLUMN_SUMMARY,     appointment->summary,
-                                    APPOINTMENT_COLUMN_DESCRIPTION, appointment->description,
-                                    APPOINTMENT_COLUMN_START_TIME,  (gint64)appointment->start_time,
-                                    APPOINTMENT_COLUMN_START_TEXT,  start_text,
-                                    APPOINTMENT_COLUMN_END_TIME,    (gint64)appointment->end_time,
-                                    APPOINTMENT_COLUMN_ALL_DAY,     appointment->is_all_day,
-                                    APPOINTMENT_COLUMN_COLOR,       appointment->color_string,
+                                    APPOINTMENT_COLUMN_UID,          appointment->uid,
+                                    APPOINTMENT_COLUMN_TYPE,         APPOINTMENT_TYPE_APPOINTMENT,
+                                    APPOINTMENT_COLUMN_SUMMARY,      appointment->summary,
+                                    APPOINTMENT_COLUMN_DESCRIPTION,  appointment->description,
+                                    APPOINTMENT_COLUMN_START_TIME,   (gint64)appointment->start_time,
+                                    APPOINTMENT_COLUMN_START_TEXT,   start_text,
+                                    APPOINTMENT_COLUMN_END_TIME,     (gint64)appointment->end_time,
+                                    APPOINTMENT_COLUMN_ALL_DAY,      appointment->is_all_day,
+                                    APPOINTMENT_COLUMN_COLOR,        appointment->color_string,
+                                    APPOINTMENT_COLUMN_BACKEND_NAME, appointment->backend_name,
                                     -1);
 
                 g_free (start_text);
@@ -1602,7 +1605,7 @@ appointment_tooltip_query_cb (GtkWidget   *widget,
         GtkTreeModel *model;
         GtkTreePath *path;
         GtkTreeIter iter;
-        gchar *summary, *description, *start_text;
+        gchar *summary, *description, *start_text, *backend_name;
         gchar *tooltip_text, *end_text;
         gboolean all_day;
         gulong start_time, end_time;
@@ -1619,6 +1622,7 @@ appointment_tooltip_query_cb (GtkWidget   *widget,
                             APPOINTMENT_COLUMN_START_TIME, &start_time,
                             APPOINTMENT_COLUMN_END_TIME, &end_time,
                             APPOINTMENT_COLUMN_ALL_DAY, &all_day,
+                            APPOINTMENT_COLUMN_BACKEND_NAME, &backend_name,
                             -1);
 
         if (!summary) {
@@ -1657,6 +1661,12 @@ appointment_tooltip_query_cb (GtkWidget   *widget,
                 }
         }
 
+        if (backend_name && strlen (backend_name) > 0) {
+                gchar *with_source = g_markup_printf_escaped ("%s\n<small>%s</small>", tooltip_text, backend_name);
+                g_free (tooltip_text);
+                tooltip_text = with_source;
+        }
+
         gtk_tooltip_set_markup (tooltip, tooltip_text);
         gtk_tree_view_set_tooltip_row (tree_view, tooltip, path);
 
@@ -1664,6 +1674,7 @@ appointment_tooltip_query_cb (GtkWidget   *widget,
         g_free (description);
         g_free (start_text);
         g_free (end_text);
+        g_free (backend_name);
         g_free (tooltip_text);
         gtk_tree_path_free (path);
 
