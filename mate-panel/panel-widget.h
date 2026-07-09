@@ -138,8 +138,6 @@ struct _PanelWidgetClass
                             GtkDirectionType	 dir);
 	void (* switch_move) (PanelWidget	*panel,
                               GtkDirectionType	 dir);
-	void (* free_move) (PanelWidget		*panel,
-                            GtkDirectionType	 dir);
 	void (* tab_move) (PanelWidget	*panel,
                            gboolean	 next);
 	void (* end_move) (PanelWidget	*panel);
