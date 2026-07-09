@@ -339,7 +339,7 @@ static gboolean panel_menu_bar_on_draw (GtkWidget* widget, cairo_t* cr, gpointer
 	return FALSE;
 }
 
-static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
+static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int position, PanelObjectPackType pack_type, gboolean exactpos, const char* id)
 {
 	PanelMenuBar* menubar;
 	GtkSettings* settings;
@@ -348,7 +348,7 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 
 	menubar = g_object_new(PANEL_TYPE_MENU_BAR, NULL);
 
-	menubar->priv->info = mate_panel_applet_register(GTK_WIDGET(menubar), NULL, NULL, panel, locked, position, exactpos, PANEL_OBJECT_MENU_BAR, id);
+	menubar->priv->info = mate_panel_applet_register(GTK_WIDGET(menubar), NULL, NULL, panel, locked, position, pack_type, exactpos, PANEL_OBJECT_MENU_BAR, id);
 
 	if (!menubar->priv->info)
 	{
@@ -377,9 +377,9 @@ static void panel_menu_bar_load(PanelWidget* panel, gboolean locked, int positio
 	panel_menu_bar_update_visibility(menubar->priv->settings, NULL, menubar);
 }
 
-void panel_menu_bar_load_from_gsettings (PanelWidget* panel, gboolean locked, int position, gboolean exactpos, const char* id)
+void panel_menu_bar_load_from_gsettings (PanelWidget* panel, gboolean locked, int position, PanelObjectPackType pack_type, gboolean exactpos, const char* id)
 {
-	panel_menu_bar_load(panel, locked, position, exactpos, id);
+	panel_menu_bar_load(panel, locked, position, pack_type, exactpos, id);
 }
 
 void panel_menu_bar_create(PanelToplevel* toplevel, int position)

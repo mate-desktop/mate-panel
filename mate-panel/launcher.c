@@ -880,6 +880,7 @@ load_launcher_applet (const char       *location,
 		      PanelWidget      *panel,
 		      gboolean          locked,
 		      int               pos,
+		      PanelObjectPackType pack_type,
 		      gboolean          exactpos,
 		      const char       *id)
 {
@@ -892,7 +893,7 @@ load_launcher_applet (const char       *location,
 
 	launcher->info = mate_panel_applet_register (launcher->button, launcher,
 						free_launcher,
-						panel, locked, pos, exactpos,
+						panel, locked, pos, pack_type, exactpos,
 						PANEL_OBJECT_LAUNCHER, id);
 	if (!launcher->info) {
 		free_launcher (launcher);
@@ -917,6 +918,7 @@ void
 launcher_load_from_gsettings (PanelWidget *panel_widget,
 			      gboolean     locked,
 			      int          position,
+			      PanelObjectPackType pack_type,
 			      const char  *id)
 {
 	GSettings   *settings;
@@ -944,6 +946,7 @@ launcher_load_from_gsettings (PanelWidget *panel_widget,
 					 panel_widget,
 					 locked,
 					 position,
+					 pack_type,
 					 TRUE,
 					 id);
 

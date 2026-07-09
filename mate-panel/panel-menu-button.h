@@ -80,6 +80,7 @@ void       panel_menu_button_set_has_arrow       (PanelMenuButton *button,
 void       panel_menu_button_load_from_gsettings     (PanelWidget      *panel,
 						  gboolean          locked,
 						  int               position,
+						  PanelObjectPackType pack_type,
 						  gboolean          exactpos,
 						  const char       *id);
 

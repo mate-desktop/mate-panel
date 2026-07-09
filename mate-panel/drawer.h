@@ -36,6 +36,7 @@ char *panel_drawer_create_with_id               (const char       *toplevel_id,
 void  drawer_load_from_gsettings                (PanelWidget      *panel_widget,
                                                  gboolean          locked,
                                                  gint              position,
+                                                 PanelObjectPackType pack_type,
                                                  const char       *id);
 
 void  panel_drawer_set_dnd_enabled              (Drawer           *drawer,

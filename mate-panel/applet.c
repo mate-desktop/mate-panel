@@ -764,12 +764,12 @@ mate_panel_applet_destroy (GtkWidget  *widget,
 }
 
 typedef struct {
-	char            *id;
-	PanelObjectType  type;
-	char            *toplevel_id;
-	int              position;
-	guint            right_stick : 1;
-	guint            locked : 1;
+	char                *id;
+	PanelObjectType      type;
+	char                *toplevel_id;
+	int                  position;
+	PanelObjectPackType  pack_type;
+	guint                locked : 1;
 } MatePanelAppletToLoad;
 
 /* Each time those lists get both empty,
@@ -892,13 +892,6 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-	if (applet->right_stick) {
-		if (!panel_widget->packed)
-			applet->position = panel_widget->size - applet->position;
-		else
-			applet->position = -1;
-	}
-
 	/* We load applets asynchronously, so we specifically don't call
 	 * mate_panel_applet_stop_loading() for this type. However, in case of
 	 * failure during the load, we might call mate_panel_applet_stop_loading()
@@ -913,18 +906,21 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 					panel_widget,
 					applet->locked,
 					applet->position,
+					applet->pack_type,
 					applet->id);
 		break;
 	case PANEL_OBJECT_DRAWER:
 		drawer_load_from_gsettings (panel_widget,
 					applet->locked,
 					applet->position,
+					applet->pack_type,
 					applet->id);
 		break;
 	case PANEL_OBJECT_MENU:
 		panel_menu_button_load_from_gsettings (panel_widget,
 						   applet->locked,
 						   applet->position,
+						   applet->pack_type,
 						   TRUE,
 						   applet->id);
 		break;
@@ -932,6 +928,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 		launcher_load_from_gsettings (panel_widget,
 					  applet->locked,
 					  applet->position,
+					  applet->pack_type,
 					  applet->id);
 		break;
 	case PANEL_OBJECT_ACTION:
@@ -939,6 +936,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 				panel_widget,
 				applet->locked,
 				applet->position,
+				applet->pack_type,
 				TRUE,
 				applet->id);
 		break;
@@ -947,6 +945,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 				panel_widget,
 				applet->locked,
 				applet->position,
+				applet->pack_type,
 				TRUE,
 				applet->id);
 		break;
@@ -954,6 +953,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 		panel_separator_load_from_gsettings (panel_widget,
 						 applet->locked,
 						 applet->position,
+						 applet->pack_type,
 						 applet->id);
 		break;
 	default:
@@ -969,12 +969,12 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 }
 
 void
-mate_panel_applet_queue_applet_to_load (const char      *id,
-				   PanelObjectType  type,
-				   const char      *toplevel_id,
-				   int              position,
-				   gboolean         right_stick,
-				   gboolean         locked)
+mate_panel_applet_queue_applet_to_load (const char          *id,
+					PanelObjectType      type,
+					const char          *toplevel_id,
+					int                  position,
+					PanelObjectPackType  pack_type,
+					gboolean             locked)
 {
 	MatePanelAppletToLoad *applet;
 
@@ -989,7 +989,7 @@ mate_panel_applet_queue_applet_to_load (const char      *id,
 	applet->type        = type;
 	applet->toplevel_id = g_strdup (toplevel_id);
 	applet->position    = position;
-	applet->right_stick = right_stick != FALSE;
+	applet->pack_type   = pack_type;
 	applet->locked      = locked != FALSE;
 
 	mate_panel_applets_to_load = g_slist_prepend (mate_panel_applets_to_load, applet);
@@ -1003,8 +1003,8 @@ mate_panel_applet_compare (const MatePanelAppletToLoad *a,
 
 	if ((c = strcmp (a->toplevel_id, b->toplevel_id)))
 		return c;
-	else if (a->right_stick != b->right_stick)
-		return b->right_stick ? -1 : 1;
+	else if (a->pack_type != b->pack_type)
+		return a->pack_type - b->pack_type; /* start < center < end */
 	else
 		return a->position - b->position;
 }
@@ -1220,15 +1220,16 @@ mate_panel_applet_get_by_type (PanelObjectType object_type, GdkScreen *screen)
 }
 
 AppletInfo *
-mate_panel_applet_register (GtkWidget       *applet,
-		       gpointer         data,
-		       GDestroyNotify   data_destroy,
-		       PanelWidget     *panel,
-		       gboolean         locked,
-		       gint             pos,
-		       gboolean         exactpos,
-		       PanelObjectType  type,
-		       const char      *id)
+mate_panel_applet_register (GtkWidget           *applet,
+			    gpointer             data,
+			    GDestroyNotify       data_destroy,
+			    PanelWidget         *panel,
+			    gboolean             locked,
+			    gint                 pos,
+			    PanelObjectPackType  pack_type,
+			    gboolean             exactpos,
+			    PanelObjectType      type,
+			    const char          *id)
 {
 	AppletInfo *info;
 	gchar *path;
@@ -1287,14 +1288,14 @@ mate_panel_applet_register (GtkWidget       *applet,
 
 	registered_applets = g_slist_append (registered_applets, info);
 
-	if (panel_widget_add (panel, applet, locked, pos, exactpos) == -1 &&
-	    panel_widget_add (panel, applet, locked, 0, TRUE) == -1) {
+	if (panel_widget_add (panel, applet, locked, pos, pack_type, exactpos) == -1 &&
+	    panel_widget_add (panel, applet, locked, 0, PANEL_OBJECT_PACK_START, FALSE) == -1) {
 		GSList *l;
 
 		for (l = panels; l; l = l->next) {
 			panel = PANEL_WIDGET (l->data);
 
-			if (panel_widget_add (panel, applet, locked, 0, TRUE) != -1)
+			if (panel_widget_add (panel, applet, locked, 0, PANEL_OBJECT_PACK_START, FALSE) != -1)
 				break;
 		}
 

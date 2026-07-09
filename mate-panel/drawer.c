@@ -492,6 +492,7 @@ load_drawer_applet (char          *toplevel_id,
                     PanelToplevel *parent_toplevel,
                     gboolean       locked,
                     int            pos,
+                    PanelObjectPackType pack_type,
                     gboolean       exactpos,
                     const char    *id)
 {
@@ -526,7 +527,7 @@ load_drawer_applet (char          *toplevel_id,
     drawer->info = mate_panel_applet_register (drawer->button, drawer,
                                           (GDestroyNotify) g_free,
                                           panel_widget,
-                                          locked, pos, exactpos,
+                                          locked, pos, pack_type, exactpos,
                                           PANEL_OBJECT_DRAWER, id);
 
     if (!drawer->info) {
@@ -658,6 +659,7 @@ void
 drawer_load_from_gsettings (PanelWidget *panel_widget,
                             gboolean     locked,
                             gint         position,
+                            PanelObjectPackType pack_type,
                             const char  *id)
 {
     gboolean     use_custom_icon;
@@ -691,6 +693,7 @@ drawer_load_from_gsettings (PanelWidget *panel_widget,
                         panel_widget->toplevel,
                         locked,
                         position,
+                        pack_type,
                         TRUE,
                         id);
 

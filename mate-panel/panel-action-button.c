@@ -898,6 +898,7 @@ panel_action_button_load (PanelActionButtonType  type,
 			  PanelWidget           *panel,
 			  gboolean               locked,
 			  int                    position,
+			  PanelObjectPackType    pack_type,
 			  gboolean               exactpos,
 			  const char            *id)
 {
@@ -910,7 +911,7 @@ panel_action_button_load (PanelActionButtonType  type,
 	button->priv->info = mate_panel_applet_register (GTK_WIDGET (button),
 						    NULL, NULL,
 						    panel, locked, position,
-						    exactpos, PANEL_OBJECT_ACTION, id);
+						    pack_type, exactpos, PANEL_OBJECT_ACTION, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
@@ -964,6 +965,7 @@ void
 panel_action_button_load_from_gsettings (PanelWidget *panel,
 				     gboolean     locked,
 				     int          position,
+				     PanelObjectPackType pack_type,
 				     gboolean     exactpos,
 				     const char  *id)
 {
@@ -980,7 +982,7 @@ panel_action_button_load_from_gsettings (PanelWidget *panel,
 	g_object_unref (settings);
 
 	panel_action_button_load (type, panel, locked,
-					  position, exactpos, id);
+				  position, pack_type, exactpos, id);
 }
 
 void

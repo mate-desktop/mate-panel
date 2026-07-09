@@ -47,15 +47,16 @@ typedef struct {
 	GtkWidget           *submenu;
 } AppletUserMenu;
 
-AppletInfo *mate_panel_applet_register    (GtkWidget       *applet,
-				      gpointer         data,
-				      GDestroyNotify   data_destroy,
-				      PanelWidget     *panel,
-				      gboolean         locked,
-				      gint             pos,
-				      gboolean         exactpos,
-				      PanelObjectType  type,
-				      const char      *id);
+AppletInfo *mate_panel_applet_register (GtkWidget           *applet,
+					gpointer             data,
+					GDestroyNotify       data_destroy,
+					PanelWidget         *panel,
+					gboolean             locked,
+					gint                 pos,
+					PanelObjectPackType  pack_type,
+					gboolean             exactpos,
+					PanelObjectType      type,
+					const char          *id);
 void mate_panel_applet_stop_loading (const char *id);
 
 const char *mate_panel_applet_get_id           (AppletInfo      *info);
@@ -67,12 +68,12 @@ GSList     *mate_panel_applet_list_applets (void);
 
 void        mate_panel_applet_clean        (AppletInfo    *info);
 
-void mate_panel_applet_queue_applet_to_load (const char      *id,
-					PanelObjectType  type,
-					const char      *toplevel_id,
-					int              position,
-					gboolean         right_stick,
-					gboolean         locked);
+void mate_panel_applet_queue_applet_to_load (const char          *id,
+					     PanelObjectType      type,
+					     const char          *toplevel_id,
+					     int                  position,
+					     PanelObjectPackType  pack_type,
+					     gboolean             locked);
 void mate_panel_applet_load_queued_applets  (gboolean initial_load);
 gboolean mate_panel_applet_on_load_queue    (const char *id);
 

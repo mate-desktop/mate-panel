@@ -1308,13 +1308,14 @@ panel_profile_delete_object (AppletInfo *applet_info)
 static void
 panel_profile_load_object (char *id)
 {
-	PanelObjectType  object_type;
-	char            *object_path;
-	char            *toplevel_id;
-	int              position;
-	gboolean         right_stick;
-	gboolean         locked;
-	GSettings       *settings;
+	PanelObjectType      object_type;
+	char                *object_path;
+	char                *toplevel_id;
+	int                  position;
+	PanelObjectPackType  pack_type;
+	gboolean             right_stick;
+	gboolean             locked;
+	GSettings           *settings;
 
 	object_path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, object_path);
@@ -1322,14 +1323,21 @@ panel_profile_load_object (char *id)
 	object_type = g_settings_get_enum (settings, PANEL_OBJECT_TYPE_KEY);
 	position = g_settings_get_int (settings, PANEL_OBJECT_POSITION_KEY);
 	toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
+	pack_type = g_settings_get_enum (settings, PANEL_OBJECT_PACK_TYPE_KEY);
 	right_stick = g_settings_get_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
 	locked = g_settings_get_boolean (settings, PANEL_OBJECT_LOCKED_KEY);
+
+	/* If pack-type is still at the default value ('start') but right-stick
+	 * is set, then map right-stick to PACK_END so the comparator sorts
+	 * correctly. */
+	if (pack_type == PANEL_OBJECT_PACK_START && right_stick)
+		pack_type = PANEL_OBJECT_PACK_END;
 
 	mate_panel_applet_queue_applet_to_load (id,
 					   object_type,
 					   toplevel_id,
 					   position,
-					   right_stick,
+					   pack_type,
 					   locked);
 
 	g_free (toplevel_id);
