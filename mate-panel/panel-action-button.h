@@ -70,6 +70,7 @@ void       panel_action_button_load_from_gsettings  (PanelWidget            *pan
 						 gboolean                locked,
 						 int                     position,
 						 PanelObjectPackType     pack_type,
+						 int                     pack_index,
 						 gboolean                exactpos,
 						 const char             *id);
 

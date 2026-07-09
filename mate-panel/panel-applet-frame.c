@@ -65,6 +65,7 @@ static void mate_panel_applet_frame_load            (const gchar *iid,
 						gboolean     locked,
 						int          position,
 						PanelObjectPackType pack_type,
+						int          pack_index,
 						gboolean     exactpos,
 						const char  *id);
 
@@ -73,6 +74,7 @@ struct _MatePanelAppletFrameActivating {
 	PanelWidget *panel;
 	int          position;
 	PanelObjectPackType pack_type;
+	int          pack_index;
 	gboolean     exactpos;
 	char        *id;
 };
@@ -586,7 +588,8 @@ _mate_panel_applet_frame_activated (MatePanelAppletFrame           *frame,
 	info = mate_panel_applet_register (GTK_WIDGET (frame), GTK_WIDGET (frame),
 				      NULL, frame->priv->panel,
 				      frame_act->locked, frame_act->position,
-				      frame_act->pack_type, frame_act->exactpos,
+				      frame_act->pack_type, frame_act->pack_index,
+				      frame_act->exactpos,
 				      PANEL_OBJECT_APPLET, frame_act->id);
 	frame->priv->applet_info = info;
 
@@ -719,8 +722,20 @@ mate_panel_applet_frame_reload_response (GtkWidget        *dialog,
 			mate_panel_applet_clean (info);
 		}
 
+		AppletData *applet_data;
+		PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+		int pack_idx = 0;
+
+		if (info) {
+			applet_data = g_object_get_data (G_OBJECT (info->widget), MATE_PANEL_APPLET_DATA);
+			if (applet_data) {
+				pack_type = applet_data->pack_type;
+				pack_idx  = applet_data->pack_index;
+			}
+		}
+
 		mate_panel_applet_frame_load (iid, panel, locked,
-					 position, PANEL_OBJECT_PACK_START, TRUE, id);
+					 position, pack_type, pack_idx, TRUE, id);
 
 		g_free (iid);
 		g_free (id);
@@ -1002,6 +1017,7 @@ mate_panel_applet_frame_load (const gchar *iid,
 			 gboolean     locked,
 			 int          position,
 			 PanelObjectPackType pack_type,
+			 int          pack_index,
 			 gboolean     exactpos,
 			 const char  *id)
 {
@@ -1023,12 +1039,13 @@ mate_panel_applet_frame_load (const gchar *iid,
 	}
 
 	frame_act = g_slice_new0 (MatePanelAppletFrameActivating);
-	frame_act->locked    = locked;
-	frame_act->panel     = panel;
-	frame_act->position  = position;
-	frame_act->pack_type = pack_type;
-	frame_act->exactpos  = exactpos;
-	frame_act->id       = g_strdup (id);
+	frame_act->locked     = locked;
+	frame_act->panel      = panel;
+	frame_act->position   = position;
+	frame_act->pack_type  = pack_type;
+	frame_act->pack_index = pack_index;
+	frame_act->exactpos   = exactpos;
+	frame_act->id        = g_strdup (id);
 
 	if (!mate_panel_applets_manager_load_applet (iid, frame_act)) {
 		mate_panel_applet_frame_loading_failed (iid, panel, id);
@@ -1041,6 +1058,7 @@ mate_panel_applet_frame_load_from_gsettings (PanelWidget *panel_widget,
 				    gboolean     locked,
 				    int          position,
 				    PanelObjectPackType pack_type,
+				    int          pack_index,
 				    const char  *id)
 {
 	GSettings *settings;
@@ -1062,7 +1080,7 @@ mate_panel_applet_frame_load_from_gsettings (PanelWidget *panel_widget,
 	}
 
 	mate_panel_applet_frame_load (applet_iid, panel_widget,
-				 locked, position, pack_type, TRUE, id);
+				 locked, position, pack_type, pack_index, TRUE, id);
 
 	g_free (applet_iid);
 }
@@ -1079,7 +1097,7 @@ mate_panel_applet_frame_create (PanelToplevel *toplevel,
 	g_return_if_fail (iid != NULL);
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_APPLET, toplevel, position,
-					   PANEL_OBJECT_PACK_START);
+					   PANEL_OBJECT_PACK_START, 0);
 
 	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);

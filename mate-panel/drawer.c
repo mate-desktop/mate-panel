@@ -493,6 +493,7 @@ load_drawer_applet (char          *toplevel_id,
                     gboolean       locked,
                     int            pos,
                     PanelObjectPackType pack_type,
+                    int            pack_index,
                     gboolean       exactpos,
                     const char    *id)
 {
@@ -527,7 +528,7 @@ load_drawer_applet (char          *toplevel_id,
     drawer->info = mate_panel_applet_register (drawer->button, drawer,
                                           (GDestroyNotify) g_free,
                                           panel_widget,
-                                          locked, pos, pack_type, exactpos,
+                                          locked, pos, pack_type, pack_index, exactpos,
                                           PANEL_OBJECT_DRAWER, id);
 
     if (!drawer->info) {
@@ -624,7 +625,7 @@ panel_drawer_create (PanelToplevel *toplevel,
     char *id;
 
     id = panel_profile_prepare_object (PANEL_OBJECT_DRAWER, toplevel, position,
-                                       PANEL_OBJECT_PACK_START);
+                                       PANEL_OBJECT_PACK_START, 0);
 
     panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, NULL);
 
@@ -644,7 +645,7 @@ panel_drawer_create_with_id (const char    *toplevel_id,
     char *attached_toplevel_id = NULL;
 
     id = panel_profile_prepare_object_with_id (PANEL_OBJECT_DRAWER, toplevel_id, position,
-                                               PANEL_OBJECT_PACK_START);
+                                               PANEL_OBJECT_PACK_START, 0);
 
     panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, &attached_toplevel_id);
 
@@ -660,6 +661,7 @@ drawer_load_from_gsettings (PanelWidget *panel_widget,
                             gboolean     locked,
                             gint         position,
                             PanelObjectPackType pack_type,
+                            int          pack_index,
                             const char  *id)
 {
     gboolean     use_custom_icon;
@@ -694,6 +696,7 @@ drawer_load_from_gsettings (PanelWidget *panel_widget,
                         locked,
                         position,
                         pack_type,
+                        pack_index,
                         TRUE,
                         id);
 

@@ -81,6 +81,7 @@ static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
         { PANEL_OBJECT_TYPE_KEY,                 G_TYPE_STRING   },
         { PANEL_OBJECT_TOPLEVEL_ID_KEY,          G_TYPE_STRING   },
         { PANEL_OBJECT_PACK_TYPE_KEY,            G_TYPE_STRING   },
+        { PANEL_OBJECT_PACK_INDEX_KEY,           G_TYPE_INT      },
         { PANEL_OBJECT_POSITION_KEY,             G_TYPE_INT      },
         { PANEL_OBJECT_PANEL_RIGHT_STICK_KEY,    G_TYPE_BOOLEAN  },
         { PANEL_OBJECT_LOCKED_KEY,               G_TYPE_BOOLEAN  },

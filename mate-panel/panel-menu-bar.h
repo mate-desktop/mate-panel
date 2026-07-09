@@ -63,6 +63,7 @@ void       panel_menu_bar_load_from_gsettings  (PanelWidget  *panel,
 					    gboolean      locked,
 					    int           position,
 					    PanelObjectPackType pack_type,
+					    int           pack_index,
 					    gboolean      exactpos,
 					    const char   *id);
 
