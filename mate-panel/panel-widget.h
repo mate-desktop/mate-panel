@@ -210,6 +210,13 @@ void            panel_widget_focus              (PanelWidget *panel);
 
 PanelOrientation panel_widget_get_applet_orientation (PanelWidget *panel);
 
+void     panel_widget_get_insert_at_pos (PanelWidget         *panel,
+					 PanelObjectPackType *pack_type,
+					 int                 *pack_index,
+					 int                  pos);
+int      panel_widget_get_new_pack_index (PanelWidget        *panel,
+					  PanelObjectPackType pack_type);
+
 void     panel_widget_emit_background_changed (PanelWidget *panel);
 
 void     panel_widget_set_applet_size_constrained (PanelWidget *panel,

@@ -385,9 +385,14 @@ void panel_menu_bar_load_from_gsettings (PanelWidget* panel, gboolean locked, in
 void panel_menu_bar_create(PanelToplevel* toplevel, int position)
 {
 	char* id;
+	PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+	int pack_index = 0;
+
+	panel_widget_get_insert_at_pos(panel_toplevel_get_panel_widget(toplevel),
+				     &pack_type, &pack_index, position);
 
 	id = panel_profile_prepare_object(PANEL_OBJECT_MENU_BAR, toplevel, position,
-					  PANEL_OBJECT_PACK_START, 0);
+					  pack_type, pack_index);
 	panel_profile_add_to_list(PANEL_GSETTINGS_OBJECTS, id);
 	g_free(id);
 }

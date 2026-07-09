@@ -623,9 +623,14 @@ panel_drawer_create (PanelToplevel *toplevel,
                      const char    *tooltip)
 {
     char *id;
+    PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+    int pack_index = 0;
+
+    panel_widget_get_insert_at_pos (panel_toplevel_get_panel_widget (toplevel),
+                                    &pack_type, &pack_index, position);
 
     id = panel_profile_prepare_object (PANEL_OBJECT_DRAWER, toplevel, position,
-                                       PANEL_OBJECT_PACK_START, 0);
+                                       pack_type, pack_index);
 
     panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, NULL);
 
@@ -643,9 +648,17 @@ panel_drawer_create_with_id (const char    *toplevel_id,
 {
     char *id;
     char *attached_toplevel_id = NULL;
+    PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+    int pack_index = 0;
+    PanelToplevel *toplevel;
+
+    toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
+    if (toplevel)
+        panel_widget_get_insert_at_pos (panel_toplevel_get_panel_widget (toplevel),
+                                      &pack_type, &pack_index, position);
 
     id = panel_profile_prepare_object_with_id (PANEL_OBJECT_DRAWER, toplevel_id, position,
-                                               PANEL_OBJECT_PACK_START, 0);
+                                               pack_type, pack_index);
 
     panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, &attached_toplevel_id);
 

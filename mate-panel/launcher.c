@@ -1094,13 +1094,21 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 	char        *id;
 	char        *no_uri;
 	char        *new_location;
+	PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+	int pack_index = 0;
+	PanelToplevel *toplevel;
 
 	g_return_if_fail (location != NULL);
+
+	toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
+	if (toplevel)
+		panel_widget_get_insert_at_pos (panel_toplevel_get_panel_widget (toplevel),
+					      &pack_type, &pack_index, position);
 
 	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER,
 						   toplevel_id,
 						   position,
-						   PANEL_OBJECT_PACK_START, 0);
+						   pack_type, pack_index);
 
 	path = g_strdup_printf ("%s%s/", PANEL_OBJECT_PATH, id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);

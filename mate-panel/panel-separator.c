@@ -263,10 +263,15 @@ panel_separator_create (PanelToplevel *toplevel,
 			int            position)
 {
 	char *id;
+	PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+	int pack_index = 0;
+
+	panel_widget_get_insert_at_pos (panel_toplevel_get_panel_widget (toplevel),
+				      &pack_type, &pack_index, position);
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_SEPARATOR,
 					   toplevel,
-					   position, PANEL_OBJECT_PACK_START, 0);
+					   position, pack_type, pack_index);
 	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 	g_free (id);
 }
