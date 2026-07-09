@@ -769,6 +769,7 @@ typedef struct {
 	char                *toplevel_id;
 	int                  position;
 	PanelObjectPackType  pack_type;
+	int                  pack_index;
 	guint                locked : 1;
 } MatePanelAppletToLoad;
 
@@ -907,6 +908,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 					applet->locked,
 					applet->position,
 					applet->pack_type,
+					applet->pack_index,
 					applet->id);
 		break;
 	case PANEL_OBJECT_DRAWER:
@@ -914,6 +916,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 					applet->locked,
 					applet->position,
 					applet->pack_type,
+					applet->pack_index,
 					applet->id);
 		break;
 	case PANEL_OBJECT_MENU:
@@ -921,6 +924,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 						   applet->locked,
 						   applet->position,
 						   applet->pack_type,
+						   applet->pack_index,
 						   TRUE,
 						   applet->id);
 		break;
@@ -929,6 +933,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 					  applet->locked,
 					  applet->position,
 					  applet->pack_type,
+					  applet->pack_index,
 					  applet->id);
 		break;
 	case PANEL_OBJECT_ACTION:
@@ -937,6 +942,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 				applet->locked,
 				applet->position,
 				applet->pack_type,
+				applet->pack_index,
 				TRUE,
 				applet->id);
 		break;
@@ -946,6 +952,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 				applet->locked,
 				applet->position,
 				applet->pack_type,
+				applet->pack_index,
 				TRUE,
 				applet->id);
 		break;
@@ -954,6 +961,7 @@ mate_panel_applet_load_idle_handler (gpointer dummy)
 						 applet->locked,
 						 applet->position,
 						 applet->pack_type,
+						 applet->pack_index,
 						 applet->id);
 		break;
 	default:
@@ -974,6 +982,7 @@ mate_panel_applet_queue_applet_to_load (const char          *id,
 					const char          *toplevel_id,
 					int                  position,
 					PanelObjectPackType  pack_type,
+					int                  pack_index,
 					gboolean             locked)
 {
 	MatePanelAppletToLoad *applet;
@@ -990,6 +999,7 @@ mate_panel_applet_queue_applet_to_load (const char          *id,
 	applet->toplevel_id = g_strdup (toplevel_id);
 	applet->position    = position;
 	applet->pack_type   = pack_type;
+	applet->pack_index  = pack_index;
 	applet->locked      = locked != FALSE;
 
 	mate_panel_applets_to_load = g_slist_prepend (mate_panel_applets_to_load, applet);
@@ -1005,7 +1015,14 @@ mate_panel_applet_compare (const MatePanelAppletToLoad *a,
 		return c;
 	else if (a->pack_type != b->pack_type)
 		return a->pack_type - b->pack_type; /* start < center < end */
+	else if (a->pack_index != b->pack_index)
+		/* note: for packed-end, we explicitly want to start loading
+		 * from the right/bottom instead of left/top to avoid moving
+		 * applets that are on the inside; so the maths are good even
+		 * in this case */
+		return a->pack_index - b->pack_index;
 	else
+		/* Fallback to pixel position in case all pack_index are 0. */
 		return a->position - b->position;
 }
 
@@ -1086,11 +1103,10 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 			    gboolean    immediate)
 {
 	PanelWidget       *panel_widget;
+	AppletData        *applet_data;
 	const char        *toplevel_id;
 	char              *old_toplevel_id;
-	gboolean           right_stick;
 	gboolean           locked;
-	int                position;
 
 	g_return_if_fail (applet_info != NULL);
 
@@ -1112,9 +1128,8 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 		return;
 
 	panel_widget = mate_panel_applet_get_panel_widget (applet_info);
-
-	/* FIXME: Instead of getting keys, comparing and setting, there
-	   should be a dirty flag */
+	applet_data = g_object_get_data (G_OBJECT (applet_info->widget),
+					 MATE_PANEL_APPLET_DATA);
 
 	old_toplevel_id = g_settings_get_string (applet_info->settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
 	if (old_toplevel_id == NULL || strcmp (old_toplevel_id, toplevel_id) != 0)
@@ -1122,33 +1137,22 @@ mate_panel_applet_save_position (AppletInfo *applet_info,
 	g_free (old_toplevel_id);
 
 	/* Note: changing some properties of the panel that may not be locked down
-	   (e.g. background) can change the state of the "panel_right_stick" and
-	   "position" properties of an applet that may in fact be locked down.
+	   (e.g. background) can change the state of the "pack-type" and
+	   "pack-index" properties of an applet that may in fact be locked down.
 	   So check if these are writable before attempting to write them */
 
 	locked = panel_widget_get_applet_locked (panel_widget, applet_info->widget) ? 1 : 0;
 	if (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY) ? 1 : 0 != locked)
 		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_LOCKED_KEY, locked);
 
-	if (locked) {
-		/* Until position calculations are refactored to fix the issue of the panel applets
-		   getting reordered on resolution changes...
-		   .. don't save position/right-stick on locked applets */
-		return;
-	}
-
-	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
-	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) &&
-	    (g_settings_get_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY) ? 1 : 0) != right_stick)
-		g_settings_set_boolean (applet_info->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, right_stick);
-
-	position = mate_panel_applet_get_position (applet_info);
-	if (right_stick && !panel_widget->packed)
-		position = panel_widget->size - position;
-
-	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_POSITION_KEY) &&
-	    g_settings_get_int (applet_info->settings, PANEL_OBJECT_POSITION_KEY) != position)
-		g_settings_set_int (applet_info->settings, PANEL_OBJECT_POSITION_KEY, position);
+	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_PACK_TYPE_KEY))
+		g_settings_set_enum (applet_info->settings,
+				     PANEL_OBJECT_PACK_TYPE_KEY,
+				     applet_data->pack_type);
+	if (g_settings_is_writable (applet_info->settings, PANEL_OBJECT_PACK_INDEX_KEY))
+		g_settings_set_int (applet_info->settings,
+				    PANEL_OBJECT_PACK_INDEX_KEY,
+				    applet_data->pack_index);
 }
 
 const char *
@@ -1227,6 +1231,7 @@ mate_panel_applet_register (GtkWidget           *applet,
 			    gboolean             locked,
 			    gint                 pos,
 			    PanelObjectPackType  pack_type,
+			    int                  pack_index,
 			    gboolean             exactpos,
 			    PanelObjectType      type,
 			    const char          *id)
@@ -1288,14 +1293,14 @@ mate_panel_applet_register (GtkWidget           *applet,
 
 	registered_applets = g_slist_append (registered_applets, info);
 
-	if (panel_widget_add (panel, applet, locked, pos, pack_type, exactpos) == -1 &&
-	    panel_widget_add (panel, applet, locked, 0, PANEL_OBJECT_PACK_START, FALSE) == -1) {
+	if (panel_widget_add (panel, applet, locked, pos, pack_type, pack_index, exactpos) == -1 &&
+	    panel_widget_add (panel, applet, locked, 0, PANEL_OBJECT_PACK_START, 0, FALSE) == -1) {
 		GSList *l;
 
 		for (l = panels; l; l = l->next) {
 			panel = PANEL_WIDGET (l->data);
 
-			if (panel_widget_add (panel, applet, locked, 0, PANEL_OBJECT_PACK_START, FALSE) != -1)
+			if (panel_widget_add (panel, applet, locked, 0, PANEL_OBJECT_PACK_START, 0, FALSE) != -1)
 				break;
 		}
 
@@ -1356,13 +1361,13 @@ mate_panel_applet_can_freely_move (AppletInfo *applet)
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
 
-	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_POSITION_KEY))
+	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_PACK_TYPE_KEY))
+		return FALSE;
+
+	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_PACK_INDEX_KEY))
 		return FALSE;
 
 	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_TOPLEVEL_ID_KEY))
-		return FALSE;
-
-	if (!g_settings_is_writable (applet->settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY))
 		return FALSE;
 
 	return TRUE;

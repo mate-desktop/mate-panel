@@ -1251,7 +1251,8 @@ char *
 panel_profile_prepare_object_with_id (PanelObjectType     object_type,
 				      const char         *toplevel_id,
 				      int                 position,
-				      PanelObjectPackType pack_type)
+				      PanelObjectPackType pack_type,
+				      int                 pack_index)
 {
 	PanelGSettingsKeyType  key_type;
 	char              *id;
@@ -1269,6 +1270,7 @@ panel_profile_prepare_object_with_id (PanelObjectType     object_type,
 	g_settings_set_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY, toplevel_id);
 	g_settings_set_int (settings, PANEL_OBJECT_POSITION_KEY, position);
 	g_settings_set_enum (settings, PANEL_OBJECT_PACK_TYPE_KEY, pack_type);
+	g_settings_set_int (settings, PANEL_OBJECT_PACK_INDEX_KEY, pack_index);
 
 	/* Force writing the settings in order to reserve the object ID *now*,
 	 * so that a later call to panel_profile_find_new_id() won't find the same
@@ -1285,12 +1287,14 @@ char *
 panel_profile_prepare_object (PanelObjectType      object_type,
 			      PanelToplevel       *toplevel,
 			      int                  position,
-			      PanelObjectPackType  pack_type)
+			      PanelObjectPackType  pack_type,
+			      int                  pack_index)
 {
 	return panel_profile_prepare_object_with_id (object_type,
 						     panel_profile_get_toplevel_id (toplevel),
 						     position,
-						     pack_type);
+						     pack_type,
+						     pack_index);
 }
 
 void
@@ -1313,6 +1317,7 @@ panel_profile_load_object (char *id)
 	char                *toplevel_id;
 	int                  position;
 	PanelObjectPackType  pack_type;
+	int                  pack_index;
 	gboolean             right_stick;
 	gboolean             locked;
 	GSettings           *settings;
@@ -1324,6 +1329,7 @@ panel_profile_load_object (char *id)
 	position = g_settings_get_int (settings, PANEL_OBJECT_POSITION_KEY);
 	toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
 	pack_type = g_settings_get_enum (settings, PANEL_OBJECT_PACK_TYPE_KEY);
+	pack_index = g_settings_get_int (settings, PANEL_OBJECT_PACK_INDEX_KEY);
 	right_stick = g_settings_get_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
 	locked = g_settings_get_boolean (settings, PANEL_OBJECT_LOCKED_KEY);
 
@@ -1338,6 +1344,7 @@ panel_profile_load_object (char *id)
 					   toplevel_id,
 					   position,
 					   pack_type,
+					   pack_index,
 					   locked);
 
 	g_free (toplevel_id);

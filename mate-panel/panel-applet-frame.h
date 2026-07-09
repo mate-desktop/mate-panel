@@ -87,6 +87,7 @@ void  mate_panel_applet_frame_load_from_gsettings    (PanelWidget         *panel
 					     gboolean             locked,
 					     int                  position,
 					     PanelObjectPackType  pack_type,
+					     int                  pack_index,
 					     const char          *id);
 
 void  mate_panel_applet_frame_sync_menu_state    (MatePanelAppletFrame    *frame);

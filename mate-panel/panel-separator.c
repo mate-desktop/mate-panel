@@ -233,6 +233,7 @@ panel_separator_load_from_gsettings (PanelWidget *panel,
 				 gboolean     locked,
 				 int          position,
 				 PanelObjectPackType pack_type,
+				 int          pack_index,
 				 const char  *id)
 {
 	PanelSeparator *separator;
@@ -242,7 +243,7 @@ panel_separator_load_from_gsettings (PanelWidget *panel,
 	separator->priv->info = mate_panel_applet_register (GTK_WIDGET (separator),
 						       NULL, NULL,
 						       panel, locked, position,
-						       pack_type, TRUE,
+						       pack_type, pack_index, TRUE,
 						       PANEL_OBJECT_SEPARATOR,
 						       id);
 
@@ -265,7 +266,7 @@ panel_separator_create (PanelToplevel *toplevel,
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_SEPARATOR,
 					   toplevel,
-					   position, PANEL_OBJECT_PACK_START);
+					   position, PANEL_OBJECT_PACK_START, 0);
 	panel_profile_add_to_list (PANEL_GSETTINGS_OBJECTS, id);
 	g_free (id);
 }

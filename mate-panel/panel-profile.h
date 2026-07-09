@@ -62,11 +62,13 @@ void           panel_profile_delete_toplevel        (PanelToplevel     *toplevel
 char          *panel_profile_prepare_object         (PanelObjectType     object_type,
 						     PanelToplevel      *toplevel,
 						     int                 position,
-						     PanelObjectPackType pack_type);
+						     PanelObjectPackType pack_type,
+						     int                 pack_index);
 char          *panel_profile_prepare_object_with_id (PanelObjectType     object_type,
 						     const char         *toplevel_id,
 						     int                 position,
-						     PanelObjectPackType pack_type);
+						     PanelObjectPackType pack_type,
+						     int                 pack_index);
 void           panel_profile_delete_object          (AppletInfo        *applet_info);
 
 gboolean    panel_profile_key_is_writable            (PanelToplevel *toplevel,

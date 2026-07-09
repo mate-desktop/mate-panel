@@ -54,6 +54,7 @@ AppletInfo *mate_panel_applet_register (GtkWidget           *applet,
 					gboolean             locked,
 					gint                 pos,
 					PanelObjectPackType  pack_type,
+					int                  pack_index,
 					gboolean             exactpos,
 					PanelObjectType      type,
 					const char          *id);
@@ -73,6 +74,7 @@ void mate_panel_applet_queue_applet_to_load (const char          *id,
 					     const char          *toplevel_id,
 					     int                  position,
 					     PanelObjectPackType  pack_type,
+					     int                  pack_index,
 					     gboolean             locked);
 void mate_panel_applet_load_queued_applets  (gboolean initial_load);
 gboolean mate_panel_applet_on_load_queue    (const char *id);
@@ -95,7 +97,7 @@ void        mate_panel_applet_save_position           (AppletInfo *applet_info,
 int         mate_panel_applet_get_position    (AppletInfo *applet);
 
 /* True if all the keys relevant to moving are writable
-   (position, toplevel_id, panel_right_stick) */
+   (pack_type, pack_index, toplevel_id) */
 gboolean    mate_panel_applet_can_freely_move (AppletInfo *applet);
 
 /* True if the locked flag is writable */

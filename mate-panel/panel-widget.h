@@ -65,6 +65,8 @@ struct _AppletSizeHintsAlloc {
 struct _AppletData
 {
 	GtkWidget *	applet;
+	PanelObjectPackType pack_type;
+	int		pack_index;
 	int		pos;
 	int             constrained;
 	int		cells;
@@ -151,12 +153,13 @@ GtkWidget *	panel_widget_new		(PanelToplevel  *toplevel,
 						 int             sz);
 /*add an applet to the panel, preferably at position pos, if insert_at_pos
   is on, we REALLY want to insert at the pos given by pos*/
-int		panel_widget_add		(PanelWidget *panel,
-						 GtkWidget   *applet,
-						 gboolean     locked,
-						 int          pos,
+int		panel_widget_add		(PanelWidget        *panel,
+						 GtkWidget          *applet,
+						 gboolean            locked,
+						 int                 pos,
 						 PanelObjectPackType pack_type,
-						 gboolean     insert_at_pos);
+						 int                 pack_index,
+						 gboolean            insert_at_pos);
 
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);
