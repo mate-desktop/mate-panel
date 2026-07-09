@@ -35,7 +35,6 @@
 
 typedef enum {
 	PANEL_SWITCH_MOVE = 0,
-	PANEL_FREE_MOVE,
 	PANEL_PUSH_MOVE
 } PanelMovementType;
 
@@ -49,7 +48,6 @@ enum {
 	APPLET_REMOVED_SIGNAL,
 	PUSH_MOVE_SIGNAL,
 	SWITCH_MOVE_SIGNAL,
-	FREE_MOVE_SIGNAL,
 	TAB_MOVE_SIGNAL,
 	END_MOVE_SIGNAL,
 	POPUP_PANEL_MENU_SIGNAL,
@@ -85,8 +83,6 @@ static void panel_widget_finalize       (GObject          *obj);
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
 static void panel_widget_switch_move_applet (PanelWidget      *panel,
-                                             GtkDirectionType  dir);
-static void panel_widget_free_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
 static void panel_widget_update_positions   (PanelWidget      *panel);
 static void panel_widget_tab_move           (PanelWidget      *panel,
@@ -184,8 +180,6 @@ add_all_move_bindings (PanelWidget *panel)
 
 	add_move_bindings (binding_set, GDK_SHIFT_MASK, "push_move");
 	add_move_bindings (binding_set, GDK_CONTROL_MASK, "switch_move");
-	add_move_bindings (binding_set, GDK_MOD1_MASK, "free_move");
-	add_move_bindings (binding_set, 0, "free_move");
 
 	add_tab_bindings (binding_set, 0, TRUE);
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
@@ -384,18 +378,6 @@ panel_widget_class_init (PanelWidgetClass *class)
                               1,
                               GTK_TYPE_DIRECTION_TYPE);
 
-	panel_widget_signals[FREE_MOVE_SIGNAL] =
-                g_signal_new ("free_move",
-                              G_TYPE_FROM_CLASS (class),
-                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                              G_STRUCT_OFFSET (PanelWidgetClass, free_move),
-                              NULL,
-                              NULL,
-                              g_cclosure_marshal_VOID__ENUM,
-                              G_TYPE_NONE,
-                              1,
-                              GTK_TYPE_DIRECTION_TYPE);
-
 	panel_widget_signals[TAB_MOVE_SIGNAL] =
                 g_signal_new ("tab_move",
                               G_TYPE_FROM_CLASS (class),
@@ -426,7 +408,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->applet_removed = NULL;
 	class->push_move = panel_widget_push_move_applet;
 	class->switch_move = panel_widget_switch_move_applet;
-	class->free_move = panel_widget_free_move_applet;
 	class->tab_move = panel_widget_tab_move;
 	class->end_move = panel_widget_end_move;
 
@@ -2262,29 +2243,6 @@ panel_widget_get_free_spot (PanelWidget *panel,
 	}
 }
 
-static void
-panel_widget_nice_move (PanelWidget *panel,
-			AppletData  *ad,
-			int          pos)
-{
-	g_return_if_fail (PANEL_IS_WIDGET (panel));
-	g_return_if_fail (ad != NULL);
-
-	pos = panel_widget_get_free_spot (panel, ad, pos);
-	if (pos < 0 || pos == ad->pos)
-		return;
-
-	ad->pos = ad->constrained = pos;
-
-	panel->applet_list =
-		panel_g_list_resort_item (panel->applet_list, ad,
-					  (GCompareFunc)applet_data_compare);
-
-	gtk_widget_queue_resize (GTK_WIDGET (panel));
-
-	emit_applet_moved (panel, ad);
-}
-
 /* schedule to run the below function */
 static void schedule_try_move (PanelWidget *panel, gboolean repeater);
 
@@ -2364,17 +2322,12 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			movement = PANEL_SWITCH_MOVE;
 		else if (mods & GDK_SHIFT_MASK)
 			movement = PANEL_PUSH_MOVE;
-		else if (mods & GDK_MOD1_MASK)
-			movement = PANEL_FREE_MOVE;
 	}
 
 	switch (movement) {
 	case PANEL_SWITCH_MOVE:
 		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
 		panel_widget_switch_move (panel, ad, moveby);
-		break;
-	case PANEL_FREE_MOVE:
-		panel_widget_nice_move (panel, ad, panel_widget_get_cursorloc (panel));
 		break;
 	case PANEL_PUSH_MOVE:
 		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
@@ -2974,32 +2927,6 @@ panel_widget_switch_move_applet (PanelWidget      *panel,
 	default:
 		return;
 	}
-}
-
-static void
-panel_widget_free_move_applet (PanelWidget      *panel,
-                               GtkDirectionType  dir)
-{
-	AppletData *ad;
-	gint        increment = MOVE_INCREMENT;
-
-	ad = panel->currently_dragged_applet;
-
-	g_return_if_fail (ad);
-
-	switch (dir) {
-	case GTK_DIR_LEFT:
-	case GTK_DIR_UP:
-		increment = -increment;
-		break;
-	case GTK_DIR_RIGHT:
-	case GTK_DIR_DOWN:
-		break;
-	default:
-		return;
-	}
-
-	panel_widget_nice_move (panel, ad, increment + ad->constrained + ad->drag_off);
 }
 
 static void
