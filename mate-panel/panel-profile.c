@@ -1248,10 +1248,10 @@ panel_profile_destroy_toplevel (const char *id)
 }
 
 char *
-panel_profile_prepare_object_with_id (PanelObjectType  object_type,
-				      const char      *toplevel_id,
-				      int              position,
-				      gboolean         right_stick)
+panel_profile_prepare_object_with_id (PanelObjectType     object_type,
+				      const char         *toplevel_id,
+				      int                 position,
+				      PanelObjectPackType pack_type)
 {
 	PanelGSettingsKeyType  key_type;
 	char              *id;
@@ -1268,7 +1268,7 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 	g_settings_set_enum (settings, PANEL_OBJECT_TYPE_KEY, object_type);
 	g_settings_set_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY, toplevel_id);
 	g_settings_set_int (settings, PANEL_OBJECT_POSITION_KEY, position);
-	g_settings_set_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY, right_stick);
+	g_settings_set_enum (settings, PANEL_OBJECT_PACK_TYPE_KEY, pack_type);
 
 	/* Force writing the settings in order to reserve the object ID *now*,
 	 * so that a later call to panel_profile_find_new_id() won't find the same
@@ -1282,15 +1282,15 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 }
 
 char *
-panel_profile_prepare_object (PanelObjectType  object_type,
-			      PanelToplevel   *toplevel,
-			      int              position,
-			      gboolean         right_stick)
+panel_profile_prepare_object (PanelObjectType      object_type,
+			      PanelToplevel       *toplevel,
+			      int                  position,
+			      PanelObjectPackType  pack_type)
 {
 	return panel_profile_prepare_object_with_id (object_type,
 						     panel_profile_get_toplevel_id (toplevel),
 						     position,
-						     right_stick);
+						     pack_type);
 }
 
 void
