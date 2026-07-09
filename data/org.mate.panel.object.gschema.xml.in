@@ -10,15 +10,20 @@
       <summary>Toplevel panel containing object</summary>
       <description>The identifier of the toplevel panel which contains this object.</description>
     </key>
+    <key name="pack-type" enum="org.mate.panel.PanelObjectPackType">
+      <default>'start'</default>
+      <summary>Interpret position relative to bottom/right edge</summary>
+      <description>If set to 'end', the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel.</description>
+    </key>
     <key name="position" type="i">
       <default>0</default>
-      <summary>Object's position on the panel</summary>
-      <description>The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge.</description>
+      <summary>Object's position on the panel (deprecated)</summary>
+      <description>The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge. Deprecated in favor of pack-type and pack-index.</description>
     </key>
     <key name="panel-right-stick" type="b">
       <default>false</default>
-      <summary>Interpret position relative to bottom/right edge</summary>
-      <description>If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel.</description>
+      <summary>Interpret position relative to bottom/right edge (deprecated)</summary>
+      <description>If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel. Deprecated in favor of pack-type.</description>
     </key>
     <key name="locked" type="b">
       <default>false</default>

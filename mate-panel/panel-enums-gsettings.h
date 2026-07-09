@@ -31,6 +31,11 @@
 
 G_BEGIN_DECLS
 
+typedef enum {
+	PANEL_OBJECT_PACK_START = 0,
+	PANEL_OBJECT_PACK_END   = 1
+} PanelObjectPackType;
+
 typedef enum { /*< flags=0 >*/
 	PANEL_ORIENTATION_TOP    = 1 << 0,
 	PANEL_ORIENTATION_RIGHT  = 1 << 1,
