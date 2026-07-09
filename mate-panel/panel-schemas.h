@@ -45,6 +45,7 @@
 #define PANEL_OBJECT_SCHEMA                  "org.mate.panel.object"
 #define PANEL_OBJECT_TYPE_KEY                "object-type"
 #define PANEL_OBJECT_TOPLEVEL_ID_KEY         "toplevel-id"
+#define PANEL_OBJECT_PACK_TYPE_KEY           "pack-type"
 #define PANEL_OBJECT_POSITION_KEY            "position"
 #define PANEL_OBJECT_PANEL_RIGHT_STICK_KEY   "panel-right-stick"
 #define PANEL_OBJECT_LOCKED_KEY              "locked"
