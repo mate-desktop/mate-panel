@@ -1896,6 +1896,43 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 }
 
 static void
+panel_widget_compress_pack_indexes_list (PanelWidget *panel,
+					 GList       *list)
+{
+	GList *l;
+	AppletData *ad;
+	int index;
+
+	for (l = list, index = 0; l; l = l->next, index++) {
+		ad = l->data;
+		if (ad->pack_index != index) {
+			ad->pack_index = index;
+			emit_applet_moved (panel, ad);
+		}
+	}
+}
+
+/* make sure our lists always start at 0 */
+static void
+panel_widget_compress_pack_indexes (PanelWidget *panel)
+{
+	GList *list;
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_START);
+	panel_widget_compress_pack_indexes_list (panel, list);
+	g_list_free (list);
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_CENTER);
+	panel_widget_compress_pack_indexes_list (panel, list);
+	g_list_free (list);
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_END);
+	list = g_list_reverse (list);
+	panel_widget_compress_pack_indexes_list (panel, list);
+	g_list_free (list);
+}
+
+static void
 panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 {
 	g_return_if_fail (panel != NULL);
@@ -1913,6 +1950,15 @@ panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 		moving_timeout = 0;
 		been_moved = FALSE;
 	}
+
+	/* Make sure we keep our indexes in a 0:n range, instead of a x:x+n
+	 * range, with a growing x. Note that this is useful not only because
+	 * of moves, but also because of removal of objects (object 0 could be
+	 * removed, but if there is still object 1, we start growing the
+	 * range). But doing this compress only once in a while, after moving
+	 * objects is good enough, since this is nothing urgent and the user
+	 * will move objects before this becomes a real annoying issue. */
+	panel_widget_compress_pack_indexes (panel);
 }
 
 void
