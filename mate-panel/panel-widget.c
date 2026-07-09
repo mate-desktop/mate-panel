@@ -1284,6 +1284,46 @@ panel_widget_update_positions_packed_start (PanelWidget *panel)
 }
 
 /* Note: only use this function when you can; see comment above
+ * panel_widget_update_positions_packed_start()
+ * For center specifically, we require ad->cells to be set. Note that we don't
+ * care much about min_cells: if we need it, this means objects will have to be
+ * pushed to accomodate other objects, which will kill centering anyway.
+ * (FIXME: hrm, not that sure about it ;-)) */
+static void
+panel_widget_update_positions_packed_center (PanelWidget *panel)
+{
+	GList *list,*l;
+	AppletData *ad;
+	int size_all = 0;
+	int pos_next;
+
+	if (panel->packed)
+		return;
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_CENTER);
+
+	/* get size used by the objects */
+	for (l = list; l; l = l->next) {
+		ad = l->data;
+		size_all += ad->cells;
+	}
+
+	/* update absolute position of all applets based on this information,
+	 * starting with the first centered object */
+	pos_next = (panel->size - size_all) / 2;
+	l = list;
+
+	while (l) {
+		ad = l->data;
+		ad->constrained = pos_next;
+		pos_next += ad->cells;
+		l = l->next;
+	}
+
+	g_list_free (list);
+}
+
+/* Note: only use this function when you can; see comment above
  * panel_widget_update_positions_packed_start() */
 static void
 panel_widget_update_positions_packed_end (PanelWidget *panel)
@@ -1340,11 +1380,13 @@ panel_widget_update_positions (PanelWidget *panel)
 	} else {
 		/* Re-compute the ideal position of objects, based on their size */
 		panel_widget_update_positions_packed_start (panel);
+		panel_widget_update_positions_packed_center (panel);
 		panel_widget_update_positions_packed_end (panel);
 
 		/* Second pass: try to position from the start, to make sure
 		 * there's enough room. Also respect ad->pos for backward
-		 * compat with configs not yet migrated to pack-type/pack-index. */
+		 * compat with configs not yet migrated to pack-type/pack-index
+		 * (except for CENTER applets, which should stay centered). */
 		for (list = panel->applet_list;
 		     list != NULL;
 		     list = g_list_next (list)) {
@@ -1352,7 +1394,7 @@ panel_widget_update_positions (PanelWidget *panel)
 
 			/* Use the larger of zone position and old pixel
 			 * position, so pre-migration gaps are preserved. */
-			if (ad->pos > ad->constrained)
+			if (ad->pack_type != PANEL_OBJECT_PACK_CENTER && ad->pos > ad->constrained)
 				ad->constrained = ad->pos;
 			if (ad->constrained < i)
 				ad->constrained = i;
@@ -1665,15 +1707,19 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		/* Compute zone-based positions and resolve collisions */
 		panel_widget_update_positions (panel);
 
-		/* Now expand from the right, using size hints */
+		/* Now expand from the right, using size hints.
+		 * But don't push CENTER applets since they should stay centered
+		 * as computed by update_positions. */
 		i = panel->size;
 		for(list = g_list_last(panel->applet_list);
 		    list!=NULL;
 		    list = g_list_previous(list)) {
 			AppletData *ad = list->data;
 
-			if (ad->constrained + ad->min_cells > i)
-				ad->constrained = MAX (i - ad->min_cells, 0);
+			if (ad->pack_type != PANEL_OBJECT_PACK_CENTER) {
+				if (ad->constrained + ad->min_cells > i)
+					ad->constrained = MAX (i - ad->min_cells, 0);
+			}
 
 			if (ad->expand_major) {
 				int cells = (i - ad->constrained) - 1;
