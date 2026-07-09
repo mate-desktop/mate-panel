@@ -944,9 +944,14 @@ panel_action_button_create (PanelToplevel         *toplevel,
 	GSettings   *settings;
 	char        *id;
 	char        *path;
+	PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+	int pack_index = 0;
+
+	panel_widget_get_insert_at_pos (panel_toplevel_get_panel_widget (toplevel),
+				      &pack_type, &pack_index, position);
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_ACTION, toplevel, position,
-					   PANEL_OBJECT_PACK_START, 0);
+					   pack_type, pack_index);
 
 	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);

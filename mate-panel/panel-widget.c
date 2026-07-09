@@ -1246,6 +1246,59 @@ get_applet_list_pack (PanelWidget         *panel,
 	return ret;
 }
 
+/* get pack type & index for insertion at a given position in panel */
+void
+panel_widget_get_insert_at_pos (PanelWidget         *panel,
+				PanelObjectPackType *pack_type,
+				int                 *pack_index,
+				int                  pos)
+{
+	GList      *l;
+	AppletData *ad;
+
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+
+	/* check if pos is in an object; in this case, return the pack type
+	 * of the object */
+	for (l = panel->applet_list; l; l = l->next) {
+		ad = l->data;
+
+		if (ad->constrained <= pos) {
+			if (ad->constrained + ad->cells > pos) {
+				*pack_type = ad->pack_type;
+				*pack_index = ad->pack_index;
+				return;
+			}
+		} else
+			break;
+	}
+
+	if (pos <= panel->size / 2)
+		*pack_type = PANEL_OBJECT_PACK_START;
+	else
+		*pack_type = PANEL_OBJECT_PACK_END;
+
+	*pack_index = panel_widget_get_new_pack_index (panel, *pack_type);
+}
+
+/* get index for insertion with pack type */
+int
+panel_widget_get_new_pack_index (PanelWidget         *panel,
+				 PanelObjectPackType  pack_type)
+{
+	GList      *l;
+	AppletData *ad;
+	int         max_pack_index = -1;
+
+	for (l = panel->applet_list; l; l = l->next) {
+		ad = l->data;
+		if (ad->pack_type == pack_type)
+			max_pack_index = MAX (max_pack_index, ad->pack_index);
+	}
+
+	return max_pack_index + 1;
+}
+
 /* Note: this can only be called at the beginning of size_allocate, which means
  * that ad->constrained doesn't matter yet (it will be set to the correct
  * value in size_allocate). */
