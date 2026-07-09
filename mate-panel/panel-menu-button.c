@@ -969,7 +969,8 @@ panel_menu_button_create (PanelToplevel *toplevel,
 	const char  *scheme;
 	char        *id;
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position, FALSE);
+	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position,
+					   PANEL_OBJECT_PACK_START);
 
 	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);

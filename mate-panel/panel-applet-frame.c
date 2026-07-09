@@ -1073,7 +1073,8 @@ mate_panel_applet_frame_create (PanelToplevel *toplevel,
 
 	g_return_if_fail (iid != NULL);
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_APPLET, toplevel, position, FALSE);
+	id = panel_profile_prepare_object (PANEL_OBJECT_APPLET, toplevel, position,
+					   PANEL_OBJECT_PACK_START);
 
 	path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
 	settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
