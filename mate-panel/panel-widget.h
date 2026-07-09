@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "button-widget.h"
+#include "panel-enums-gsettings.h"
 #include "panel-types.h"
 #include "panel-background.h"
 #include "panel-toplevel.h"
@@ -154,6 +155,7 @@ int		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget   *applet,
 						 gboolean     locked,
 						 int          pos,
+						 PanelObjectPackType pack_type,
 						 gboolean     insert_at_pos);
 
 /*needs to be called for drawers after add*/

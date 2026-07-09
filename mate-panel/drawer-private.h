@@ -128,6 +128,7 @@ static void  load_drawer_applet                 (char             *toplevel_id,
                                                  PanelToplevel    *parent_toplevel,
                                                  gboolean          locked,
                                                  int               pos,
+                                                 PanelObjectPackType pack_type,
                                                  gboolean          exactpos,
                                                  const char       *id);
 

@@ -64,6 +64,7 @@ static void mate_panel_applet_frame_load            (const gchar *iid,
 						PanelWidget *panel,
 						gboolean     locked,
 						int          position,
+						PanelObjectPackType pack_type,
 						gboolean     exactpos,
 						const char  *id);
 
@@ -71,6 +72,7 @@ struct _MatePanelAppletFrameActivating {
 	gboolean     locked;
 	PanelWidget *panel;
 	int          position;
+	PanelObjectPackType pack_type;
 	gboolean     exactpos;
 	char        *id;
 };
@@ -584,8 +586,8 @@ _mate_panel_applet_frame_activated (MatePanelAppletFrame           *frame,
 	info = mate_panel_applet_register (GTK_WIDGET (frame), GTK_WIDGET (frame),
 				      NULL, frame->priv->panel,
 				      frame_act->locked, frame_act->position,
-				      frame_act->exactpos, PANEL_OBJECT_APPLET,
-				      frame_act->id);
+				      frame_act->pack_type, frame_act->exactpos,
+				      PANEL_OBJECT_APPLET, frame_act->id);
 	frame->priv->applet_info = info;
 
 	panel_widget_set_applet_size_constrained (frame->priv->panel,
@@ -718,7 +720,7 @@ mate_panel_applet_frame_reload_response (GtkWidget        *dialog,
 		}
 
 		mate_panel_applet_frame_load (iid, panel, locked,
-					 position, TRUE, id);
+					 position, PANEL_OBJECT_PACK_START, TRUE, id);
 
 		g_free (iid);
 		g_free (id);
@@ -999,6 +1001,7 @@ mate_panel_applet_frame_load (const gchar *iid,
 			 PanelWidget *panel,
 			 gboolean     locked,
 			 int          position,
+			 PanelObjectPackType pack_type,
 			 gboolean     exactpos,
 			 const char  *id)
 {
@@ -1020,10 +1023,11 @@ mate_panel_applet_frame_load (const gchar *iid,
 	}
 
 	frame_act = g_slice_new0 (MatePanelAppletFrameActivating);
-	frame_act->locked   = locked;
-	frame_act->panel    = panel;
-	frame_act->position = position;
-	frame_act->exactpos = exactpos;
+	frame_act->locked    = locked;
+	frame_act->panel     = panel;
+	frame_act->position  = position;
+	frame_act->pack_type = pack_type;
+	frame_act->exactpos  = exactpos;
 	frame_act->id       = g_strdup (id);
 
 	if (!mate_panel_applets_manager_load_applet (iid, frame_act)) {
@@ -1036,6 +1040,7 @@ void
 mate_panel_applet_frame_load_from_gsettings (PanelWidget *panel_widget,
 				    gboolean     locked,
 				    int          position,
+				    PanelObjectPackType pack_type,
 				    const char  *id)
 {
 	GSettings *settings;
@@ -1057,7 +1062,7 @@ mate_panel_applet_frame_load_from_gsettings (PanelWidget *panel_widget,
 	}
 
 	mate_panel_applet_frame_load (applet_iid, panel_widget,
-				 locked, position, TRUE, id);
+				 locked, position, pack_type, TRUE, id);
 
 	g_free (applet_iid);
 }

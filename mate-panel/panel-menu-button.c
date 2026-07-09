@@ -668,6 +668,7 @@ panel_menu_button_load (const char  *menu_path,
 			PanelWidget *panel,
 			gboolean     locked,
 			int          position,
+			PanelObjectPackType pack_type,
 			gboolean     exactpos,
 			gboolean     has_arrow,
 			const char  *id)
@@ -687,7 +688,7 @@ panel_menu_button_load (const char  *menu_path,
 			       NULL);
 
 	info = mate_panel_applet_register (GTK_WIDGET (button), NULL, NULL,
-				      panel, locked, position, exactpos,
+				      panel, locked, position, pack_type, exactpos,
 				      PANEL_OBJECT_MENU, id);
 	if (!info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
@@ -915,6 +916,7 @@ void
 panel_menu_button_load_from_gsettings (PanelWidget *panel,
 				   gboolean     locked,
 				   int          position,
+				   PanelObjectPackType pack_type,
 				   gboolean     exactpos,
 				   const char  *id)
 {
@@ -945,6 +947,7 @@ panel_menu_button_load_from_gsettings (PanelWidget *panel,
 				panel,
 				locked,
 				position,
+				pack_type,
 				exactpos,
 				has_arrow,
 				id);

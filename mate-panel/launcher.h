@@ -58,6 +58,7 @@ void		launcher_properties		(Launcher  *launcher);
 void            launcher_load_from_gsettings        (PanelWidget *panel_widget,
 													 gboolean     locked,
 													 gint         position,
+													 PanelObjectPackType pack_type,
 													 const char  *id);
 
 void            panel_launcher_delete           (Launcher *launcher);

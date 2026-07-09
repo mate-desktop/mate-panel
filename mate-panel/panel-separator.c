@@ -232,6 +232,7 @@ void
 panel_separator_load_from_gsettings (PanelWidget *panel,
 				 gboolean     locked,
 				 int          position,
+				 PanelObjectPackType pack_type,
 				 const char  *id)
 {
 	PanelSeparator *separator;
@@ -241,7 +242,7 @@ panel_separator_load_from_gsettings (PanelWidget *panel,
 	separator->priv->info = mate_panel_applet_register (GTK_WIDGET (separator),
 						       NULL, NULL,
 						       panel, locked, position,
-						       TRUE,
+						       pack_type, TRUE,
 						       PANEL_OBJECT_SEPARATOR,
 						       id);
 
