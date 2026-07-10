@@ -1401,26 +1401,6 @@ panel_screen_from_panel_widget (PanelWidget *panel)
 	return gtk_window_get_screen (GTK_WINDOW (panel->toplevel));
 }
 
-gboolean
-panel_is_applet_right_stick (GtkWidget *applet)
-{
-	GtkWidget   *parent;
-	PanelWidget *panel_widget;
-
-	g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
-
-	parent = gtk_widget_get_parent (applet);
-
-	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
-
-	panel_widget = PANEL_WIDGET (parent);
-
-	if (!panel_toplevel_get_expand (panel_widget->toplevel))
-		return FALSE;
-
-	return panel_widget_is_applet_stuck (panel_widget, applet);
-}
-
 static void
 panel_delete_without_query (PanelToplevel *toplevel)
 {
