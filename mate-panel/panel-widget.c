@@ -612,38 +612,6 @@ get_applet_list_pos (PanelWidget *panel,
 	return NULL;
 }
 
-/*tells us if an applet is "stuck" on the right side*/
-int
-panel_widget_is_applet_stuck (PanelWidget *panel_widget,
-			      GtkWidget   *widget)
-{
-	AppletData *applet;
-
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel_widget), FALSE);
-	g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
-
-	applet = g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA);
-	if (applet) {
-		GList *applet_list, *l;
-		int    end_pos = -1;
-
-		applet_list = g_list_find (panel_widget->applet_list, applet);
-
-		for (l = applet_list; l; l = l->next) {
-			applet = l->data;
-
-			if (end_pos != -1 && applet->pos != end_pos)
-				break;
-
-			end_pos = applet->pos + applet->cells;
-			if (end_pos >= panel_widget->size)
-				return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-
 static int
 get_size_from_hints (AppletData *ad, int cells)
 {
@@ -1073,46 +1041,6 @@ panel_widget_push_move (PanelWidget *panel,
 				break;
 		}
 	}
-}
-
-/*this is a special function and may fail if called improperly, it works
-only under special circumstance when we know there is nothing from
-old_size to panel->size*/
-static void
-panel_widget_right_stick(PanelWidget *panel,int old_size)
-{
-	int i,pos;
-	GList *list,*prev;
-	AppletData *ad;
-
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	g_return_if_fail(old_size>=0);
-
-	if(old_size>=panel->size ||
-	   panel->packed)
-	   	return;
-
-	list = get_applet_list_pos(panel,old_size-1);
-
-	if(!list)
-		return;
-
-	pos = panel->size-1;
-
-	ad = list->data;
-	do {
-		i = ad->pos;
-		ad->pos = ad->constrained = pos--;
-		ad->cells = 1;
-		prev = list;
-		list = g_list_previous(list);
-		if(!list)
-			break;
-		ad = list->data;
-	} while(ad->pos + ad->cells == i);
-
-	for (list = prev; list; list = list->next)
-		emit_applet_moved (panel, list->data);
 }
 
 /* data should be freed with g_list_free() */
