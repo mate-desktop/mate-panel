@@ -582,6 +582,8 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 	if (ad)
 		panel->applet_list = g_list_remove (panel->applet_list, ad);
 
+	panel_widget_update_positions (panel);
+
 	g_signal_emit (G_OBJECT (container),
 		       panel_widget_signals[APPLET_REMOVED_SIGNAL],
 		       0, widget);
