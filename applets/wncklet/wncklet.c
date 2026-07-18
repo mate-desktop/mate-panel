@@ -131,10 +131,8 @@ static gboolean wncklet_factory(MatePanelApplet* applet, const char* iid, gpoint
 
 	if (!strcmp(iid, "WindowMenuApplet"))
 		retval = window_menu_applet_fill(applet);
-#ifdef HAVE_X11
 	else if (!strcmp(iid, "WorkspaceSwitcherApplet") || !strcmp(iid, "PagerApplet"))
 		retval = workspace_switcher_applet_fill(applet);
-#endif
 	else if (!strcmp(iid, "WindowListApplet") || !strcmp(iid, "TasklistApplet"))
 		retval = window_list_applet_fill(applet);
 	else if (!strcmp(iid, "ShowDesktopApplet"))

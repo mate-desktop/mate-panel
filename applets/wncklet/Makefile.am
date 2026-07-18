@@ -21,13 +21,9 @@ WNCKLET_SOURCES = \
 	window-list.h \
 	showdesktop.c \
 	showdesktop.h \
-	$(BUILT_SOURCES)
-
-if ENABLE_X11
-WNCKLET_SOURCES += \
 	workspace-switcher.c \
-	workspace-switcher.h
-endif
+	workspace-switcher.h \
+	$(BUILT_SOURCES)
 
 
 
@@ -45,8 +41,12 @@ if ENABLE_WAYLAND
 WNCKLET_SOURCES += \
 	wayland-backend.c \
 	wayland-backend.h \
+	wayland-workspace.c \
+	wayland-workspace.h \
 	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-code.c \
-	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h
+	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h \
+	wayland-protocol/ext-workspace-v1-code.c \
+	wayland-protocol/ext-workspace-v1-client.h
 
 WNCKLET_LDADD += \
 	$(WAYLAND_LIBS)
@@ -104,14 +104,9 @@ ui_FILES = \
 	showdesktop-menu.xml \
 	window-list-menu.xml \
 	window-list.ui \
-	window-menu-menu.xml
-
-if ENABLE_X11
-ui_FILES += \
+	window-menu-menu.xml \
 	workspace-switcher-menu.xml \
 	workspace-switcher.ui
-
-endif
 
 
 

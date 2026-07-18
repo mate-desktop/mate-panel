@@ -31,6 +31,7 @@
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
+#include "wayland-workspace.h"
 #endif /* HAVE_WAYLAND */
 
 #include <libmate-desktop/mate-gsettings.h>
@@ -217,8 +218,11 @@ typedef struct {
 
 #ifdef HAVE_X11
 	WnckHandle* wnck_handle;
-#endif
 	WnckScreen* screen;
+#endif
+#ifdef HAVE_WAYLAND
+	gboolean is_wayland;
+#endif
 	PagerWM wm;
 
 	/* Properties: */
@@ -280,6 +284,16 @@ static void pager_update(PagerData* pager)
 		pager_update_wnck(pager, WNCK_PAGER(pager->pager));
 	}
 #endif /* HAVE_X11 */
+
+#ifdef HAVE_WAYLAND
+	if (pager->is_wayland)
+	{
+		wayland_workspace_set_orientation(pager->pager, pager->orientation);
+		wayland_workspace_set_rows(pager->pager, pager->n_rows);
+		wayland_workspace_set_show_all(pager->pager, pager->display_all);
+		wayland_workspace_set_show_names(pager->pager, pager->display_names);
+	}
+#endif /* HAVE_WAYLAND */
 }
 
 static void update_properties_for_wm(PagerData* pager)
@@ -365,9 +379,9 @@ static void update_properties_for_wm(PagerData* pager)
 	}
 }
 
+#ifdef HAVE_X11
 static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 {
-#ifdef HAVE_X11
 	const char *wm_name = NULL;
 
 	if (pager->screen)
@@ -389,13 +403,11 @@ static void window_manager_changed(WnckScreen* screen, PagerData* pager)
 		pager->wm = PAGER_WM_COMPIZ;
 	else
 		pager->wm = PAGER_WM_UNKNOWN;
-#else
-	pager->wm = PAGER_WM_UNKNOWN;
-#endif /* HAVE_X11 */
 
 	update_properties_for_wm(pager);
 	pager_update(pager);
 }
+#endif /* HAVE_X11 */
 
 static void applet_realized(MatePanelApplet* applet, PagerData* pager)
 {
@@ -404,10 +416,17 @@ static void applet_realized(MatePanelApplet* applet, PagerData* pager)
 	{
 		pager->screen = wncklet_get_screen(pager->wnck_handle, GTK_WIDGET(applet));
 		wncklet_connect_while_alive(pager->screen, "window_manager_changed", G_CALLBACK(window_manager_changed), pager, pager->applet);
+		window_manager_changed(pager->screen, pager);
+		return;
 	}
 #endif /* HAVE_X11 */
 
-	window_manager_changed(pager->screen, pager);
+#ifdef HAVE_WAYLAND
+	if (pager->is_wayland)
+	{
+		pager_update(pager);
+	}
+#endif /* HAVE_WAYLAND */
 }
 
 static void applet_unrealized(MatePanelApplet* applet, PagerData* pager)
@@ -507,6 +526,17 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 
 	if (event->direction == GDK_SCROLL_SMOOTH)
 		return FALSE;
+
+#ifdef HAVE_WAYLAND
+	if (pager->is_wayland)
+	{
+		/* The Wayland backend handles its own scroll internally via
+		 * the scroll event on the workspace widget. We don't need to
+		 * do anything here since the workspace widget connects its
+		 * own scroll handler. Just return TRUE to consume the event. */
+		return TRUE;
+	}
+#endif /* HAVE_WAYLAND */
 
 #ifdef HAVE_X11
 	if (pager->screen)
@@ -644,10 +674,21 @@ static const GtkActionEntry pager_menu_actions[] = {
 static void num_rows_changed(GSettings* settings, gchar* key, PagerData* pager)
 {
 	int n_rows;
+	int ws_count = MAX_REASONABLE_ROWS;
+
+#ifdef HAVE_X11
+	if (pager->screen)
+		ws_count = wnck_screen_get_workspace_count (pager->screen);
+#endif /* HAVE_X11 */
+
+#ifdef HAVE_WAYLAND
+	if (pager->is_wayland)
+		ws_count = wayland_workspace_get_count (pager->pager);
+#endif /* HAVE_WAYLAND */
 
 	n_rows = CLAMP (g_settings_get_int (settings, key),
 	                1,
-	                MIN (wnck_screen_get_workspace_count (pager->screen),
+	                MIN (ws_count,
 	                     MAX_REASONABLE_ROWS));
 
 	pager->n_rows = n_rows;
@@ -785,7 +826,8 @@ gboolean workspace_switcher_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
 	{
-		pager->pager = gtk_label_new ("[Pager not supported on Wayland]");
+		pager->is_wayland = TRUE;
+		pager->pager = wayland_workspace_new();
 	}
 	else
 #endif /* HAVE_WAYLAND */
@@ -922,6 +964,13 @@ static const char *get_workspace_name(PagerData* pager, int workspace_index)
 	}
 #endif /* HAVE_X11 */
 
+#ifdef HAVE_WAYLAND
+	if (pager->is_wayland)
+	{
+		return wayland_workspace_get_name(pager->pager, workspace_index);
+	}
+#endif /* HAVE_WAYLAND */
+
 	/* Fallback */
 	return "workspace";
 }
@@ -934,6 +983,14 @@ static void update_workspaces_model(PagerData* pager)
 	if (pager->screen)
 		nr_ws = wnck_screen_get_workspace_count (pager->screen);
 #endif /* HAVE_X11 */
+
+#ifdef HAVE_WAYLAND
+	if (pager->is_wayland)
+		nr_ws = wayland_workspace_get_count (pager->pager);
+#endif /* HAVE_WAYLAND */
+
+	if (nr_ws == 0)
+		nr_ws = 1;
 
 	if (pager->properties_dialog)
 	{
@@ -1295,6 +1352,11 @@ static void destroy_pager(GtkWidget* widget, PagerData* pager)
 
 #ifdef HAVE_X11
 	g_clear_object(&pager->wnck_handle);
+#endif
+
+#ifdef HAVE_WAYLAND
+	/* The Wayland pager widget cleanup is handled by the
+	 * destroy notify on the outer_box's g_object_set_data */
 #endif
 
 	g_free(pager);
