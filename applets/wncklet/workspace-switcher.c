@@ -492,7 +492,6 @@ static void applet_style_updated (MatePanelApplet *applet, GtkStyleContext *cont
 
 	provider = gtk_css_provider_new ();
 
-	/* Provide a fallback color for the highlighted workspace based on the current theme */
 	gtk_style_context_lookup_color (context, "theme_selected_bg_color", &color);
 	color_str = gdk_rgba_to_string (&color);
 	bg_css = g_strconcat (".wnck-pager:selected {\n"
@@ -504,7 +503,7 @@ static void applet_style_updated (MatePanelApplet *applet, GtkStyleContext *cont
 
 	gtk_style_context_add_provider (context,
 					GTK_STYLE_PROVIDER (provider),
-					GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	g_object_unref (provider);
 }
 
@@ -530,10 +529,84 @@ static gboolean applet_scroll(MatePanelApplet* applet, GdkEventScroll* event, Pa
 #ifdef HAVE_WAYLAND
 	if (pager->is_wayland)
 	{
-		/* The Wayland backend handles its own scroll internally via
-		 * the scroll event on the workspace widget. We don't need to
-		 * do anything here since the workspace widget connects its
-		 * own scroll handler. Just return TRUE to consume the event. */
+		GdkScrollDirection absolute_direction;
+		int index;
+		int n_workspaces;
+		int n_columns;
+		int in_last_row;
+
+		index = wayland_workspace_get_active_index (pager->pager);
+		n_workspaces = wayland_workspace_get_count (pager->pager);
+
+		if (n_workspaces <= 0)
+			return TRUE;
+
+		n_columns = n_workspaces / pager->n_rows;
+		if (n_workspaces % pager->n_rows != 0)
+			n_columns++;
+
+		in_last_row = n_workspaces % n_columns;
+
+		absolute_direction = event->direction;
+
+		if (gtk_widget_get_direction (GTK_WIDGET (applet)) == GTK_TEXT_DIR_RTL)
+		{
+			switch (event->direction)
+			{
+				case GDK_SCROLL_RIGHT:
+					absolute_direction = GDK_SCROLL_LEFT;
+					break;
+				case GDK_SCROLL_LEFT:
+					absolute_direction = GDK_SCROLL_RIGHT;
+					break;
+				default:
+					break;
+			}
+		}
+
+		switch (absolute_direction)
+		{
+			case GDK_SCROLL_DOWN:
+				if (index + n_columns < n_workspaces)
+					index += n_columns;
+				else if (pager->wrap_workspaces && index == n_workspaces - 1)
+					index = 0;
+				else if ((index < n_workspaces - 1 && index + in_last_row != n_workspaces - 1) ||
+				         (index == n_workspaces - 1 && in_last_row != 0))
+					index = (index % n_columns) + 1;
+				break;
+
+			case GDK_SCROLL_RIGHT:
+				if (index < n_workspaces - 1)
+					index++;
+				else if (pager->wrap_workspaces)
+					index = 0;
+				break;
+
+			case GDK_SCROLL_UP:
+				if (index - n_columns >= 0)
+					index -= n_columns;
+				else if (index > 0)
+					index = ((pager->n_rows - 1) * n_columns) + (index % n_columns) - 1;
+				else if (pager->wrap_workspaces)
+					index = n_workspaces - 1;
+
+				if (index >= n_workspaces)
+					index -= n_columns;
+				break;
+
+			case GDK_SCROLL_LEFT:
+				if (index > 0)
+					index--;
+				else if (pager->wrap_workspaces)
+					index = n_workspaces - 1;
+				break;
+
+			default:
+				return FALSE;
+		}
+
+		wayland_workspace_activate_nth (pager->pager, index);
 		return TRUE;
 	}
 #endif /* HAVE_WAYLAND */

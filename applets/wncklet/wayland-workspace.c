@@ -19,572 +19,375 @@
 
 #include <config.h>
 
-#include <gdk/gdkwayland.h>
 #include <gtk/gtk.h>
+#include <libxfce4windowing/libxfce4windowing.h>
 
 #include "wayland-workspace.h"
-#include "wayland-protocol/ext-workspace-v1-client.h"
+
+typedef struct _GroupSignal GroupSignal;
+
+struct _GroupSignal {
+	XfwWorkspaceGroup *group;
+	gulong             handlers[3]; /* active-changed, added, removed */
+};
 
 typedef struct _WaylandWorkspaceData WaylandWorkspaceData;
 
-typedef struct {
-	struct ext_workspace_handle_v1 *handle;
-	WaylandWorkspaceData *pager;
-	char *name;
-	gboolean active;
-	gboolean hidden;
-	gboolean urgent;
-} WaylandWorkspace;
-
-typedef struct {
-	struct ext_workspace_group_handle_v1 *handle;
-	WaylandWorkspaceData *pager;
-	GList *workspaces;
-} WaylandWorkspaceGroup;
-
 struct _WaylandWorkspaceData {
 	GtkWidget *grid;
-	GtkWidget *outer_box;
 
-	struct ext_workspace_manager_v1 *manager;
-	GList *workspace_groups;
-	GList *pending_workspaces;
+	XfwScreen *screen;
+	XfwWorkspaceManager *workspace_manager;
+	GList *group_signals; /* list of GroupSignal* */
 
 	GtkOrientation orientation;
 	int n_rows;
 	gboolean display_all;
 	gboolean display_names;
+	gboolean ignore_toggle;
 };
-
-static struct wl_registry *wl_registry_global = NULL;
-static uint32_t workspace_manager_global_id = 0;
-static uint32_t workspace_manager_global_version = 0;
-static gboolean has_initialized = FALSE;
 
 static void rebuild_ui (WaylandWorkspaceData *data);
 
-static void
-wl_registry_handle_global (void *_data,
-			   struct wl_registry *registry,
-			   uint32_t id,
-			   const char *interface,
-			   uint32_t version)
+/* ---- Helpers ---- */
+
+static int
+count_visible_workspaces (WaylandWorkspaceData *data)
 {
-	if (strcmp (interface, ext_workspace_manager_v1_interface.name) == 0)
+	GList *workspaces, *l;
+	int n = 0;
+
+	workspaces = xfw_workspace_manager_list_workspaces (data->workspace_manager);
+
+	for (l = workspaces; l != NULL; l = l->next)
 	{
-		workspace_manager_global_id = id;
-		workspace_manager_global_version =
-			MIN ((uint32_t) ext_workspace_manager_v1_interface.version, version);
+		XfwWorkspace *ws = l->data;
+		XfwWorkspaceState state = xfw_workspace_get_state (ws);
+
+		if (data->display_all || !(state & XFW_WORKSPACE_STATE_HIDDEN))
+			n++;
 	}
+
+	return MAX (n, 1);
 }
 
-static void
-wl_registry_handle_global_remove (void *_data,
-				  struct wl_registry *_registry,
-				  uint32_t id)
+static XfwWorkspace *
+get_nth_workspace (WaylandWorkspaceData *data, int index)
 {
-	if (id == workspace_manager_global_id)
+	GList *workspaces, *l;
+	int i = 0;
+
+	workspaces = xfw_workspace_manager_list_workspaces (data->workspace_manager);
+
+	for (l = workspaces; l != NULL; l = l->next)
 	{
-		workspace_manager_global_id = 0;
+		XfwWorkspace *ws = l->data;
+		XfwWorkspaceState state = xfw_workspace_get_state (ws);
+
+		if (data->display_all || !(state & XFW_WORKSPACE_STATE_HIDDEN))
+		{
+			if (i == index)
+				return ws;
+			i++;
+		}
 	}
+
+	return NULL;
 }
 
-static const struct wl_registry_listener wl_registry_listener = {
-	.global = wl_registry_handle_global,
-	.global_remove = wl_registry_handle_global_remove,
-};
+/* ---- Build / rebuild the button grid ---- */
 
 static void
-wayland_workspace_init_if_needed (void)
+on_button_toggled (GtkToggleButton *button, WaylandWorkspaceData *data)
 {
-	if (has_initialized)
+	int index;
+
+	if (data->ignore_toggle)
 		return;
 
-	GdkDisplay *gdk_display = gdk_display_get_default ();
-	g_return_if_fail (gdk_display);
-	g_return_if_fail (GDK_IS_WAYLAND_DISPLAY (gdk_display));
-
-	struct wl_display *wl_display = gdk_wayland_display_get_wl_display (gdk_display);
-	wl_registry_global = wl_display_get_registry (wl_display);
-	wl_registry_add_listener (wl_registry_global, &wl_registry_listener, NULL);
-	wl_display_roundtrip (wl_display);
-
-	if (!workspace_manager_global_id)
-		g_warning ("%s not supported by Wayland compositor",
-			   ext_workspace_manager_v1_interface.name);
-
-	has_initialized = TRUE;
-}
-
-static WaylandWorkspace *
-wayland_workspace_new_from_handle (struct ext_workspace_handle_v1 *handle,
-				   WaylandWorkspaceData *pager)
-{
-	WaylandWorkspace *ws = g_new0 (WaylandWorkspace, 1);
-	ws->handle = handle;
-	ws->pager = pager;
-	ws->name = g_strdup ("");
-	ws->active = FALSE;
-	ws->hidden = FALSE;
-	ws->urgent = FALSE;
-	return ws;
-}
-
-static void
-wayland_workspace_free (WaylandWorkspace *ws)
-{
-	if (ws)
+	if (gtk_toggle_button_get_active (button))
 	{
-		g_free (ws->name);
-		g_free (ws);
-	}
-}
-
-static WaylandWorkspaceGroup *
-wayland_workspace_group_new (struct ext_workspace_group_handle_v1 *handle,
-			     WaylandWorkspaceData *pager)
-{
-	WaylandWorkspaceGroup *group = g_new0 (WaylandWorkspaceGroup, 1);
-	group->handle = handle;
-	group->pager = pager;
-	group->workspaces = NULL;
-	return group;
-}
-
-static void
-wayland_workspace_group_free (WaylandWorkspaceGroup *group)
-{
-	if (group)
-	{
-		g_list_free_full (group->workspaces, (GDestroyNotify) wayland_workspace_free);
-		g_free (group);
-	}
-}
-
-static void
-workspace_handle_id (void *data,
-		     struct ext_workspace_handle_v1 *handle,
-		     const char *id)
-{
-}
-
-static void
-workspace_handle_name (void *data,
-		       struct ext_workspace_handle_v1 *handle,
-		       const char *name)
-{
-	WaylandWorkspace *ws = data;
-	g_free (ws->name);
-	ws->name = g_strdup (name ? name : "");
-}
-
-static void
-workspace_handle_coordinates (void *data,
-			      struct ext_workspace_handle_v1 *handle,
-			      struct wl_array *coordinates)
-{
-}
-
-static void
-workspace_handle_state (void *data,
-			struct ext_workspace_handle_v1 *handle,
-			uint32_t state)
-{
-	WaylandWorkspace *ws = data;
-	ws->active = (state & EXT_WORKSPACE_HANDLE_V1_STATE_ACTIVE) != 0;
-	ws->hidden = (state & EXT_WORKSPACE_HANDLE_V1_STATE_HIDDEN) != 0;
-	ws->urgent = (state & EXT_WORKSPACE_HANDLE_V1_STATE_URGENT) != 0;
-}
-
-static void
-workspace_handle_capabilities (void *data,
-			       struct ext_workspace_handle_v1 *handle,
-			       uint32_t capabilities)
-{
-}
-
-static void
-workspace_handle_removed (void *data,
-			  struct ext_workspace_handle_v1 *handle)
-{
-}
-
-static const struct ext_workspace_handle_v1_listener workspace_handle_listener = {
-	.id = workspace_handle_id,
-	.name = workspace_handle_name,
-	.coordinates = workspace_handle_coordinates,
-	.state = workspace_handle_state,
-	.capabilities = workspace_handle_capabilities,
-	.removed = workspace_handle_removed,
-};
-
-static void
-workspace_group_handle_capabilities (void *data,
-				     struct ext_workspace_group_handle_v1 *handle,
-				     uint32_t capabilities)
-{
-}
-
-static void
-workspace_group_handle_output_enter (void *data,
-				     struct ext_workspace_group_handle_v1 *handle,
-				     struct wl_output *output)
-{
-}
-
-static void
-workspace_group_handle_output_leave (void *data,
-				     struct ext_workspace_group_handle_v1 *handle,
-				     struct wl_output *output)
-{
-}
-
-static void
-workspace_group_handle_workspace_enter (void *data,
-					struct ext_workspace_group_handle_v1 *handle,
-					struct ext_workspace_handle_v1 *workspace_handle)
-{
-	WaylandWorkspaceGroup *group = data;
-	WaylandWorkspaceData *pager = group->pager;
-	GList *l;
-	WaylandWorkspace *ws = NULL;
-
-	for (l = pager->pending_workspaces; l != NULL; l = l->next)
-	{
-		WaylandWorkspace *ws_candidate = l->data;
-		if (ws_candidate->handle == workspace_handle)
+		index = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "ws-index"));
+		XfwWorkspace *ws = get_nth_workspace (data, index);
+		if (ws)
 		{
-			ws = ws_candidate;
-			pager->pending_workspaces = g_list_delete_link (pager->pending_workspaces, l);
-			break;
+			GError *error = NULL;
+			if (!xfw_workspace_activate (ws, &error))
+			{
+				g_warning ("Failed to activate workspace: %s",
+					   error ? error->message : "unknown error");
+				g_clear_error (&error);
+			}
 		}
 	}
-
-	if (!ws)
+	else
 	{
-		ws = wayland_workspace_new_from_handle (workspace_handle, pager);
-		ext_workspace_handle_v1_add_listener (workspace_handle,
-						      &workspace_handle_listener,
-						      ws);
-	}
-
-	group->workspaces = g_list_append (group->workspaces, ws);
-}
-
-static void
-workspace_group_handle_workspace_leave (void *data,
-					struct ext_workspace_group_handle_v1 *handle,
-					struct ext_workspace_handle_v1 *workspace_handle)
-{
-	WaylandWorkspaceGroup *group = data;
-	GList *l;
-
-	for (l = group->workspaces; l != NULL; l = l->next)
-	{
-		WaylandWorkspace *ws = l->data;
-		if (ws->handle == workspace_handle)
-		{
-			group->workspaces = g_list_delete_link (group->workspaces, l);
-			wayland_workspace_free (ws);
-			break;
-		}
-	}
-}
-
-static void
-workspace_group_handle_removed (void *data,
-				struct ext_workspace_group_handle_v1 *handle)
-{
-}
-
-static const struct ext_workspace_group_handle_v1_listener workspace_group_handle_listener = {
-	.capabilities = workspace_group_handle_capabilities,
-	.output_enter = workspace_group_handle_output_enter,
-	.output_leave = workspace_group_handle_output_leave,
-	.workspace_enter = workspace_group_handle_workspace_enter,
-	.workspace_leave = workspace_group_handle_workspace_leave,
-	.removed = workspace_group_handle_removed,
-};
-
-static void
-manager_handle_workspace_group (void *data,
-				struct ext_workspace_manager_v1 *manager,
-				struct ext_workspace_group_handle_v1 *group_handle)
-{
-	WaylandWorkspaceData *pager = data;
-
-	WaylandWorkspaceGroup *group = wayland_workspace_group_new (group_handle, pager);
-	ext_workspace_group_handle_v1_add_listener (group_handle,
-						    &workspace_group_handle_listener,
-						    group);
-	pager->workspace_groups = g_list_append (pager->workspace_groups, group);
-}
-
-static void
-manager_handle_workspace (void *data,
-			  struct ext_workspace_manager_v1 *manager,
-			  struct ext_workspace_handle_v1 *workspace_handle)
-{
-	WaylandWorkspaceData *pager = data;
-	WaylandWorkspace *ws = wayland_workspace_new_from_handle (workspace_handle, pager);
-
-	ext_workspace_handle_v1_add_listener (workspace_handle,
-					      &workspace_handle_listener,
-					      ws);
-
-	pager->pending_workspaces = g_list_append (pager->pending_workspaces, ws);
-}
-
-static void
-manager_handle_done (void *data,
-		     struct ext_workspace_manager_v1 *manager)
-{
-	WaylandWorkspaceData *pager = data;
-	GList *l;
-
-	/* Fallback: if workspaces are still pending (compositor didn't send
-	 * workspace_enter for them), assign them to the first group */
-	if (pager->pending_workspaces != NULL && pager->workspace_groups != NULL)
-	{
-		WaylandWorkspaceGroup *first_group = pager->workspace_groups->data;
-
-		for (l = pager->pending_workspaces; l != NULL; l = l->next)
-		{
-			WaylandWorkspace *ws = l->data;
-			first_group->workspaces = g_list_append (first_group->workspaces, ws);
-		}
-		g_list_free (pager->pending_workspaces);
-		pager->pending_workspaces = NULL;
-	}
-
-	rebuild_ui (pager);
-}
-
-static void
-manager_handle_finished (void *data,
-			 struct ext_workspace_manager_v1 *manager)
-{
-	WaylandWorkspaceData *pager = data;
-
-	pager->manager = NULL;
-	ext_workspace_manager_v1_destroy (manager);
-
-	if (pager->outer_box)
-		g_object_set_data (G_OBJECT (pager->outer_box),
-				   "wayland_pager_data",
-				   NULL);
-}
-
-static const struct ext_workspace_manager_v1_listener manager_listener = {
-	.workspace_group = manager_handle_workspace_group,
-	.workspace = manager_handle_workspace,
-	.done = manager_handle_done,
-	.finished = manager_handle_finished,
-};
-
-static void
-workspace_button_clicked (GtkButton *button, WaylandWorkspace *ws)
-{
-	if (ws->handle && ws->pager->manager)
-	{
-		ext_workspace_handle_v1_activate (ws->handle);
-		ext_workspace_manager_v1_commit (ws->pager->manager);
+		/* User clicked the already-active button — keep it toggled on */
+		data->ignore_toggle = TRUE;
+		gtk_toggle_button_set_active (button, TRUE);
+		data->ignore_toggle = FALSE;
 	}
 }
 
 static void
 rebuild_ui (WaylandWorkspaceData *data)
 {
-	GList *l;
-	int n_workspaces = 0;
-	int n_cols, n_visual_rows;
-	int row, col;
-	int i;
+	GList *children, *l;
+	int n_spaces, i, col, row;
+	int rows, cols;
 
-	/* Remove existing children */
-	if (data->grid)
-	{
-		gtk_widget_destroy (data->grid);
-		data->grid = NULL;
-	}
+	/* Destroy old buttons */
+	children = gtk_container_get_children (GTK_CONTAINER (data->grid));
+	for (l = children; l != NULL; l = l->next)
+		gtk_widget_destroy (GTK_WIDGET (l->data));
+	g_list_free (children);
 
-	/* Count visible workspaces */
-	for (l = data->workspace_groups; l != NULL; l = l->next)
-	{
-		WaylandWorkspaceGroup *group = l->data;
-		GList *wl;
-		for (wl = group->workspaces; wl != NULL; wl = wl->next)
-		{
-			WaylandWorkspace *ws = wl->data;
-			if (!ws->hidden || data->display_all)
-				n_workspaces++;
-		}
-	}
+	n_spaces = count_visible_workspaces (data);
 
-	if (n_workspaces == 0)
-	{
-		/* Show at least one empty slot */
-		n_workspaces = 1;
-	}
-
-	/* Calculate grid dimensions */
+	/* Determine grid dimensions */
 	if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
-		n_visual_rows = data->n_rows;
-		n_cols = n_workspaces / n_visual_rows;
-		if (n_workspaces % n_visual_rows != 0)
-			n_cols++;
+		rows = data->n_rows;
+		cols = (n_spaces + rows - 1) / rows;
 	}
 	else
 	{
-		n_cols = data->n_rows;
-		n_visual_rows = n_workspaces / n_cols;
-		if (n_workspaces % n_cols != 0)
-			n_visual_rows++;
+		cols = data->n_rows;
+		rows = (n_spaces + cols - 1) / cols;
 	}
 
-	data->grid = gtk_grid_new ();
 	gtk_grid_set_column_homogeneous (GTK_GRID (data->grid), TRUE);
 	gtk_grid_set_row_homogeneous (GTK_GRID (data->grid), TRUE);
-	gtk_container_add (GTK_CONTAINER (data->outer_box), data->grid);
 
-	/* Create buttons for each workspace */
-	i = 0;
-	for (l = data->workspace_groups; l != NULL; l = l->next)
+	/* Create buttons */
+	for (i = 0; i < n_spaces; i++)
 	{
-		WaylandWorkspaceGroup *group = l->data;
-		GList *wl;
-		for (wl = group->workspaces; wl != NULL; wl = wl->next)
+		XfwWorkspace *ws;
+		const char *name;
+		char *free_name = NULL;
+		GtkWidget *button;
+		XfwWorkspaceState ws_state;
+
+		ws = get_nth_workspace (data, i);
+
+		if (data->display_names && ws)
 		{
-			WaylandWorkspace *ws = wl->data;
-			GtkWidget *button;
-			GtkWidget *label;
-			char *text;
-
-			if (ws->hidden && !data->display_all)
-				continue;
-
-			button = gtk_button_new ();
-			gtk_widget_set_name (button, "wnck-pager-button");
-
-			if (data->display_names && ws->name && ws->name[0] != '\0')
-				text = g_strdup (ws->name);
-			else
-				text = g_strdup_printf ("%d", i + 1);
-
-			label = gtk_label_new (text);
-			g_free (text);
-
-			gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
-			gtk_label_set_max_width_chars (GTK_LABEL (label), 8);
-			gtk_container_add (GTK_CONTAINER (button), label);
-
-			g_signal_connect (button, "clicked",
-					  G_CALLBACK (workspace_button_clicked), ws);
-
-			g_object_set_data (G_OBJECT (button), "workspace_data", ws);
-
-			/* Add CSS class for active workspace styling */
-			GtkStyleContext *context = gtk_widget_get_style_context (button);
-			gtk_style_context_add_class (context, "wnck-pager");
-			if (ws->active)
-				gtk_style_context_add_class (context, "selected");
-
-			if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
-			{
-				row = i % n_visual_rows;
-				col = i / n_visual_rows;
-			}
-			else
-			{
-				col = i % n_cols;
-				row = i / n_cols;
-			}
-
-			gtk_grid_attach (GTK_GRID (data->grid), button, col, row, 1, 1);
-			gtk_widget_show_all (button);
-
-			i++;
+			name = xfw_workspace_get_name (ws);
+			if (!name || name[0] == '\0')
+				name = xfw_workspace_get_id (ws);
+			if (!name)
+				name = "";
 		}
-	}
+		else
+		{
+			free_name = g_strdup_printf ("%d", i + 1);
+			name = free_name;
+		}
 
-	/* If no workspaces were visible, show an empty placeholder */
-	if (i == 0)
-	{
-		GtkWidget *button = gtk_button_new ();
-		gtk_widget_set_sensitive (button, FALSE);
+		button = gtk_toggle_button_new_with_label (name);
+		g_free (free_name);
+
 		gtk_widget_set_name (button, "wnck-pager-button");
-		GtkWidget *label = gtk_label_new ("1");
-		gtk_container_add (GTK_CONTAINER (button), label);
-		gtk_grid_attach (GTK_GRID (data->grid), button, 0, 0, 1, 1);
-		gtk_widget_show_all (button);
+		g_object_set_data (G_OBJECT (button), "ws-index", GINT_TO_POINTER (i));
+
+		/* Set active state */
+		ws_state = ws ? xfw_workspace_get_state (ws) : XFW_WORKSPACE_STATE_NONE;
+		data->ignore_toggle = TRUE;
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+					      (ws_state & XFW_WORKSPACE_STATE_ACTIVE) != 0);
+		data->ignore_toggle = FALSE;
+
+		g_signal_connect (button, "toggled",
+				  G_CALLBACK (on_button_toggled), data);
+
+		/* Calculate grid position */
+		if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
+		{
+			col = i / rows;
+			row = i % rows;
+		}
+		else
+		{
+			col = i % cols;
+			row = i / cols;
+		}
+
+		gtk_grid_attach (GTK_GRID (data->grid), button, col, row, 1, 1);
 	}
 
-	gtk_widget_show (data->grid);
+	gtk_widget_show_all (data->grid);
+}
+
+/* ---- Signal handlers on workspace groups ---- */
+
+static void
+on_active_workspace_changed (XfwWorkspaceGroup *group,
+			     XfwWorkspace      *previous,
+			     WaylandWorkspaceData *data)
+{
+	rebuild_ui (data);
 }
 
 static void
-wayland_pager_disconnected (WaylandWorkspaceData *data)
+on_workspace_added (XfwWorkspaceGroup *group,
+		    XfwWorkspace      *workspace,
+		    WaylandWorkspaceData *data)
 {
-	if (data->grid)
+	rebuild_ui (data);
+}
+
+static void
+on_workspace_removed (XfwWorkspaceGroup *group,
+		      XfwWorkspace      *workspace,
+		      WaylandWorkspaceData *data)
+{
+	rebuild_ui (data);
+}
+
+/* ---- Group signal management ---- */
+
+static void
+disconnect_group_signals (WaylandWorkspaceData *data)
+{
+	for (GList *l = data->group_signals; l != NULL; l = l->next)
 	{
-		gtk_widget_destroy (data->grid);
-		data->grid = NULL;
+		GroupSignal *gs = l->data;
+		g_signal_handler_disconnect (gs->group, gs->handlers[0]);
+		g_signal_handler_disconnect (gs->group, gs->handlers[1]);
+		g_signal_handler_disconnect (gs->group, gs->handlers[2]);
+		g_free (gs);
 	}
 
-	if (data->manager)
-		ext_workspace_manager_v1_stop (data->manager);
-
-	g_list_free_full (data->workspace_groups, (GDestroyNotify) wayland_workspace_group_free);
-	data->workspace_groups = NULL;
-
-	g_list_free_full (data->pending_workspaces, (GDestroyNotify) wayland_workspace_free);
-	data->pending_workspaces = NULL;
+	g_list_free (data->group_signals);
+	data->group_signals = NULL;
 }
+
+static void
+connect_group_signals (WaylandWorkspaceData *data)
+{
+	GList *groups, *l;
+
+	disconnect_group_signals (data);
+
+	groups = xfw_workspace_manager_list_workspace_groups (data->workspace_manager);
+	if (!groups)
+		return;
+
+	for (l = groups; l != NULL; l = l->next)
+	{
+		XfwWorkspaceGroup *group = l->data;
+		GroupSignal *gs = g_new0 (GroupSignal, 1);
+
+		gs->group = group;
+		gs->handlers[0] = g_signal_connect (group, "active-workspace-changed",
+						    G_CALLBACK (on_active_workspace_changed), data);
+		gs->handlers[1] = g_signal_connect (group, "workspace-added",
+						    G_CALLBACK (on_workspace_added), data);
+		gs->handlers[2] = g_signal_connect (group, "workspace-removed",
+						    G_CALLBACK (on_workspace_removed), data);
+
+		data->group_signals = g_list_append (data->group_signals, gs);
+	}
+}
+
+static void
+on_workspace_group_created (XfwWorkspaceManager *manager,
+			    XfwWorkspaceGroup   *group,
+			    WaylandWorkspaceData *data)
+{
+	connect_group_signals (data);
+	rebuild_ui (data);
+}
+
+static void
+on_workspace_group_destroyed (XfwWorkspaceManager *manager,
+			      XfwWorkspaceGroup   *group,
+			      WaylandWorkspaceData *data)
+{
+	connect_group_signals (data);
+	rebuild_ui (data);
+}
+
+static void
+on_workspace_created (XfwWorkspaceManager *manager,
+		      XfwWorkspace        *workspace,
+		      WaylandWorkspaceData *data)
+{
+	rebuild_ui (data);
+}
+
+static void
+on_workspace_destroyed (XfwWorkspaceManager *manager,
+			XfwWorkspace        *workspace,
+			WaylandWorkspaceData *data)
+{
+	rebuild_ui (data);
+}
+
+/* ---- Cleanup ---- */
+
+static void
+wayland_pager_data_free (WaylandWorkspaceData *data)
+{
+	disconnect_group_signals (data);
+	g_free (data);
+}
+
+/* ---- Public API ---- */
 
 GtkWidget *
 wayland_workspace_new (void)
 {
-	wayland_workspace_init_if_needed ();
+	WaylandWorkspaceData *data;
 
-	WaylandWorkspaceData *data = g_new0 (WaylandWorkspaceData, 1);
+	xfw_set_client_type (XFW_CLIENT_TYPE_PAGER);
+
+	data = g_new0 (WaylandWorkspaceData, 1);
 	data->orientation = GTK_ORIENTATION_HORIZONTAL;
 	data->n_rows = 1;
 	data->display_all = TRUE;
 	data->display_names = FALSE;
+	data->ignore_toggle = FALSE;
 
-	data->outer_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_widget_show (data->outer_box);
+	data->grid = gtk_grid_new ();
+	gtk_widget_set_size_request (data->grid, 48, -1);
 
-	g_object_set_data_full (G_OBJECT (data->outer_box),
+	GtkStyleContext *context = gtk_widget_get_style_context (data->grid);
+	gtk_style_context_add_class (context, "wnck-pager");
+
+	g_object_set_data_full (G_OBJECT (data->grid),
 				"wayland_pager_data",
 				data,
-				(GDestroyNotify) wayland_pager_disconnected);
+				(GDestroyNotify) wayland_pager_data_free);
 
-	if (!workspace_manager_global_id)
+	data->screen = xfw_screen_get_default ();
+	if (!data->screen)
 	{
-		g_warning ("ext_workspace_manager_v1 not available");
-		return data->outer_box;
+		g_warning ("xfw_screen_get_default() failed");
+		return data->grid;
 	}
 
-	data->manager = wl_registry_bind (wl_registry_global,
-					   workspace_manager_global_id,
-					   &ext_workspace_manager_v1_interface,
-					   workspace_manager_global_version);
-
-	ext_workspace_manager_v1_add_listener (data->manager,
-					       &manager_listener,
-					       data);
-
-	/* Trigger initial roundtrip to get workspace state */
-	GdkDisplay *gdk_display = gdk_display_get_default ();
-	if (gdk_display)
+	data->workspace_manager = xfw_screen_get_workspace_manager (data->screen);
+	if (!data->workspace_manager)
 	{
-		struct wl_display *wl_display = gdk_wayland_display_get_wl_display (gdk_display);
-		wl_display_roundtrip (wl_display);
+		g_warning ("xfw_screen_get_workspace_manager() failed");
+		return data->grid;
 	}
 
-	return data->outer_box;
+	g_signal_connect (data->workspace_manager, "workspace-group-created",
+			  G_CALLBACK (on_workspace_group_created), data);
+	g_signal_connect (data->workspace_manager, "workspace-group-destroyed",
+			  G_CALLBACK (on_workspace_group_destroyed), data);
+
+	g_signal_connect (data->workspace_manager, "workspace-created",
+			  G_CALLBACK (on_workspace_created), data);
+	g_signal_connect (data->workspace_manager, "workspace-destroyed",
+			  G_CALLBACK (on_workspace_destroyed), data);
+
+	connect_group_signals (data);
+	rebuild_ui (data);
+
+	return data->grid;
 }
 
 static WaylandWorkspaceData *
@@ -603,9 +406,7 @@ wayland_workspace_set_orientation (GtkWidget *pager_widget, GtkOrientation orien
 		return;
 
 	data->orientation = orientation;
-
-	if (data->grid)
-		rebuild_ui (data);
+	rebuild_ui (data);
 }
 
 void
@@ -620,9 +421,7 @@ wayland_workspace_set_rows (GtkWidget *pager_widget, int n_rows)
 		return;
 
 	data->n_rows = n_rows;
-
-	if (data->grid)
-		rebuild_ui (data);
+	rebuild_ui (data);
 }
 
 void
@@ -635,9 +434,7 @@ wayland_workspace_set_show_all (GtkWidget *pager_widget, gboolean show_all)
 		return;
 
 	data->display_all = show_all;
-
-	if (data->grid)
-		rebuild_ui (data);
+	rebuild_ui (data);
 }
 
 void
@@ -650,49 +447,80 @@ wayland_workspace_set_show_names (GtkWidget *pager_widget, gboolean show_names)
 		return;
 
 	data->display_names = show_names;
-
-	if (data->grid)
-		rebuild_ui (data);
+	rebuild_ui (data);
 }
 
 int
 wayland_workspace_get_count (GtkWidget *pager_widget)
 {
 	WaylandWorkspaceData *data = pager_widget_get_data (pager_widget);
-	int count = 0;
-	GList *l;
 
 	g_return_val_if_fail (data, 0);
 
-	for (l = data->workspace_groups; l != NULL; l = l->next)
-	{
-		WaylandWorkspaceGroup *group = l->data;
-		count += g_list_length (group->workspaces);
-	}
-
-	return count;
+	return g_list_length (xfw_workspace_manager_list_workspaces (data->workspace_manager));
 }
 
 const char *
 wayland_workspace_get_name (GtkWidget *pager_widget, int index)
 {
 	WaylandWorkspaceData *data = pager_widget_get_data (pager_widget);
-	int i = 0;
-	GList *l, *wl;
+	XfwWorkspace *ws;
 
 	g_return_val_if_fail (data, "workspace");
 
-	for (l = data->workspace_groups; l != NULL; l = l->next)
+	ws = get_nth_workspace (data, index);
+	if (ws)
 	{
-		WaylandWorkspaceGroup *group = l->data;
-		for (wl = group->workspaces; wl != NULL; wl = wl->next)
-		{
-			WaylandWorkspace *ws = wl->data;
-			if (i == index)
-				return ws->name ? ws->name : "";
-			i++;
-		}
+		const char *name = xfw_workspace_get_name (ws);
+		if (name && name[0] != '\0')
+			return name;
+		return xfw_workspace_get_id (ws);
 	}
 
 	return "workspace";
+}
+
+int
+wayland_workspace_get_active_index (GtkWidget *pager_widget)
+{
+	WaylandWorkspaceData *data = pager_widget_get_data (pager_widget);
+	GList *workspaces, *l;
+	int i = 0;
+
+	g_return_val_if_fail (data, 0);
+
+	workspaces = xfw_workspace_manager_list_workspaces (data->workspace_manager);
+
+	for (l = workspaces; l != NULL; l = l->next)
+	{
+		XfwWorkspace *ws = l->data;
+		XfwWorkspaceState state = xfw_workspace_get_state (ws);
+
+		if (state & XFW_WORKSPACE_STATE_ACTIVE)
+			return i;
+		i++;
+	}
+
+	return 0;
+}
+
+void
+wayland_workspace_activate_nth (GtkWidget *pager_widget, int index)
+{
+	WaylandWorkspaceData *data = pager_widget_get_data (pager_widget);
+	XfwWorkspace *ws;
+
+	g_return_if_fail (data);
+
+	ws = get_nth_workspace (data, index);
+	if (ws)
+	{
+		GError *error = NULL;
+		if (!xfw_workspace_activate (ws, &error))
+		{
+			g_warning ("Failed to activate workspace: %s",
+				   error ? error->message : "unknown error");
+			g_clear_error (&error);
+		}
+	}
 }

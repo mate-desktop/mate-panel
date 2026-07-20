@@ -216,8 +216,13 @@ fi
 
 AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
 
+have_xfw=no
 if test "x$have_wayland" = "xyes"; then
   AC_DEFINE(HAVE_WAYLAND, 1, [Have the Wayland development library])
+
+  PKG_CHECK_MODULES(XFW, libxfce4windowing-0 >= 4.19.0, have_xfw=yes, [
+    AC_MSG_ERROR([Wayland support requires libxfce4windowing-0 >= 4.19.0])
+  ])
 fi
 
 AC_SUBST(WAYLAND_CFLAGS)

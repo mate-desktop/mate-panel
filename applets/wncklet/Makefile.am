@@ -44,15 +44,15 @@ WNCKLET_SOURCES += \
 	wayland-workspace.c \
 	wayland-workspace.h \
 	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-code.c \
-	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h \
-	wayland-protocol/ext-workspace-v1-code.c \
-	wayland-protocol/ext-workspace-v1-client.h
+	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h
 
 WNCKLET_LDADD += \
-	$(WAYLAND_LIBS)
+	$(WAYLAND_LIBS) \
+	$(XFW_LIBS)
 
 AM_CPPFLAGS += \
-	$(WAYLAND_CFLAGS)
+	$(WAYLAND_CFLAGS) \
+	$(XFW_CFLAGS)
 endif
 
 if WNCKLET_INPROCESS

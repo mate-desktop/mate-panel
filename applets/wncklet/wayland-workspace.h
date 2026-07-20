@@ -41,6 +41,9 @@ void        wayland_workspace_set_show_names (GtkWidget *pager_widget,
 int         wayland_workspace_get_count      (GtkWidget *pager_widget);
 const char* wayland_workspace_get_name       (GtkWidget *pager_widget,
                                               int index);
+int         wayland_workspace_get_active_index (GtkWidget *pager_widget);
+void        wayland_workspace_activate_nth     (GtkWidget *pager_widget,
+                                                int index);
 
 #ifdef __cplusplus
 }
