@@ -1,0 +1,1 @@
+subdir('mate-panel-applet')

@@ -1,0 +1,12 @@
+libstatus_notifier_watcher = static_library('status-notifier-watcher',
+  'gf-sn-watcher-v0.c',
+  'gf-sn-watcher-v0.h',
+  'gf-status-notifier-watcher.c',
+  'gf-status-notifier-watcher.h',
+  gnome.gdbus_codegen('gf-sn-watcher-v0-gen',
+    'org.kde.StatusNotifierWatcher.xml',
+    namespace: 'Gf',
+  ),
+  dependencies: notification_area_deps,
+  c_args: ['-DG_LOG_DOMAIN="status-notifier-watcher"'] + disable_deprecated_flags,
+)

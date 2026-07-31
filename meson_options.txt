@@ -1,0 +1,60 @@
+option('enable-deprecation-flags',
+  type: 'boolean',
+  value: false,
+  description: 'use *_DISABLE_DEPRECATED flags'
+)
+
+option('enable-eds',
+  type: 'feature',
+  value: 'auto',
+  description: 'Enable Evolution Data Server calendar integration'
+)
+
+option('enable-x11',
+  type: 'feature',
+  value: 'auto',
+  description: 'Explicitly enable or disable X11 support'
+)
+
+option('enable-wayland',
+  type: 'feature',
+  value: 'auto',
+  description: 'Explicitly enable or disable Wayland support'
+)
+
+option('in-process-applets',
+  type: 'array',
+  value: ['none'],
+  description: 'list of applets to compile in-process (none, clock, fish, notification-area, wncklet, all)'
+)
+
+option('introspection',
+  type: 'feature',
+  value: 'auto',
+  description: 'Enable introspection for this build'
+)
+
+option('gtk-doc',
+  type: 'feature',
+  value: 'auto',
+  description: 'use gtk-doc to build documentation'
+)
+
+option('help',
+  type: 'feature',
+  value: 'auto',
+  description: 'build the user help documentation'
+)
+
+option('enable-debug',
+  type: 'feature',
+  value: 'disabled',
+  description: 'turn on debugging'
+)
+
+option('compile-warnings',
+  type: 'combo',
+  value: 'yes',
+  choices: ['no', 'minimum', 'yes', 'maximum', 'error'],
+  description: 'Turn on compiler warnings'
+)
