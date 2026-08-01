@@ -3,8 +3,16 @@
 HELP_ID = mate-fish
 
 HELP_FILES = \
-	index.docbook \
+	fish-introduction.page \
+	fish-settings.page \
+	fish-usage.page \
+	index.page \
 	legal.xml
+
+DUCK_FILES = $(wildcard C/*.duck)
+PAGE_FILES = $(patsubst %.duck,%.page,$(DUCK_FILES))
+$(PAGE_FILES): %.page: %.duck
+	ducktype $^
 
 HELP_MEDIA = figures/fish_applet.png
 
