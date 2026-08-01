@@ -125,7 +125,29 @@ panel_test_applets_resources_h = custom_target('panel-test-applets-resources.h',
 
 # --- sub-libraries ---
 
-subdir('mate-submodules')
+# libegg is built from the mate-submodules git submodule, whose working tree
+# is not tracked by this repository.  Build it directly from here so that a
+# fresh checkout (with the submodule populated) needs no extra meson files.
+libegg_sources = files(
+  'mate-submodules/libegg/eggtreemultidnd.c',
+  'mate-submodules/libegg/eggtreemultidnd.h',
+  'mate-submodules/libegg/eggdesktopfile.c',
+  'mate-submodules/libegg/eggdesktopfile.h',
+  'mate-submodules/libegg/eggsmclient.c',
+  'mate-submodules/libegg/eggsmclient.h',
+  'mate-submodules/libegg/eggsmclient-private.h',
+  'mate-submodules/libegg/eggsmclient-xsmp.c',
+)
+
+libegg = static_library('egg',
+  libegg_sources,
+  dependencies: [ice_dep, sm_dep, gtk_dep, glib_dep],
+  c_args: [
+    '-DEGG_SM_CLIENT_BACKEND_XSMP',
+    '-DG_LOG_DOMAIN="EggSMClient"',
+  ] + disable_deprecated_flags,
+)
+
 subdir('libmate-panel-applet-private')
 subdir('libpanel-util')
 

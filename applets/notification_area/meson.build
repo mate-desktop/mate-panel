@@ -26,8 +26,8 @@ libtray_sources = [
 ]
 
 libtray = static_library('tray',
-  libtray_sources,
-  include_directories: include_directories('.'),
+  libtray_sources + status_notifier_codegen,
+  include_directories: [include_directories('.'), include_directories('status-notifier')],
   dependencies: notification_area_deps,
   link_with: [libstatus_notifier, libstatus_notifier_watcher],
   c_args: notification_area_c_args,
