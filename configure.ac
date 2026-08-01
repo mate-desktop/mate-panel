@@ -123,6 +123,35 @@ AM_CONDITIONAL(HAVE_EDS, test "x$have_eds" = "xyes")
 AC_SUBST(EDS_CFLAGS)
 AC_SUBST(EDS_LIBS)
 
+# Check for libical-glib for vdir calendar support (independent of EDS)
+AC_ARG_ENABLE([libical],
+  AS_HELP_STRING([--enable-libical], [Enable vdir calendar support via libical @<:@default=auto@:>@]),
+  [enable_libical=$enableval],
+  [enable_libical=auto])
+
+if test "x$enable_libical" != "xno"; then
+  PKG_CHECK_MODULES(LIBICAL, [libical-glib >= 3.0], have_libical=yes, have_libical=no)
+  if test "x$have_libical" = "xyes"; then
+    AC_DEFINE(HAVE_LIBICAL, 1, [Define if libical-glib is available])
+  elif test "x$enable_libical" = "xyes"; then
+    AC_MSG_ERROR([libical support requested but libical-glib development libraries not found])
+  fi
+else
+  have_libical=no
+fi
+
+# EDS implies libical (libecal depends on libical-glib)
+if test "x$have_eds" = "xyes" && test "x$have_libical" = "xno"; then
+  have_libical=yes
+  AC_DEFINE(HAVE_LIBICAL, 1, [Define if libical-glib is available])
+  LIBICAL_CFLAGS="$EDS_CFLAGS"
+  LIBICAL_LIBS=""
+fi
+
+AM_CONDITIONAL(HAVE_LIBICAL, test "x$have_libical" = "xyes")
+AC_SUBST(LIBICAL_CFLAGS)
+AC_SUBST(LIBICAL_LIBS)
+
 # Make it possible to compile the applets in-process
 PANEL_INPROCESS_NONE=
 PANEL_INPROCESS_ALL=
@@ -400,6 +429,7 @@ echo "
         X11 support:                   ${have_x11}
         XRandr support:                ${have_randr}
         Evolution Data Server support: ${have_eds}
+        vdir calendar (libical) support: ${have_libical}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}
 

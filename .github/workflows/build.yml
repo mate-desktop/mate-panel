@@ -26,10 +26,13 @@ env:
     libatk1.0-dev
     libcairo2-dev
     libdconf-dev
+    libecal2.0-dev
+    libedataserver1.2-dev
     libgirepository1.0-dev
     libglib2.0-dev
     libgtk-3-dev
     libgtk-layer-shell-dev
+    libical-dev
     libice-dev
     libmate-desktop-dev
     libmate-menu-dev
@@ -70,6 +73,7 @@ env:
     ccache
     autoconf-archive
     clang
+    evolution-data-server
     gcc
     git
     glib2-devel
@@ -77,6 +81,7 @@ env:
     gtk-layer-shell
     itstool
     libcanberra
+    libical
     libmateweather
     libsm
     libwnck3
@@ -260,6 +265,7 @@ jobs:
             -DHAVE_X11 -DHAVE_RANDR
             -DHAVE_WAYLAND
             -DCLOCK_INPROCESS -DFISH_INPROCESS -DNOTIFICATION_AREA_INPROCESS -DWNCKLET_INPROCESS
+            -DHAVE_EDS -DHAVE_LIBICAL -DLIBICAL_GLIB_UNSTABLE_API
             -DHAVE_LANGINFO_H -DHAVE_NL_LANGINFO
             -DGETTEXT_PACKAGE="mate-panel"
             -D__STDC_VERSION__=201112 -D_Noreturn=__attribute__((__noreturn__))
@@ -269,6 +275,8 @@ jobs:
             gmodule-2.0
             gtk+-3.0
             ice
+            libecal-2.0
+            libical-glib
             libwnck-3.0
             mate-desktop-2.0
             sm
