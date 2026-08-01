@@ -48,6 +48,17 @@ endforeach
 
 install_data(schemas, install_dir: mate_panel_schemadir)
 
-gnome = import('gnome')
+glib_compile_schemas = find_program('glib-compile-schemas')
 
-gnome.compile_schemas(build_by_default: true)
+gschemas_compiled = custom_target('gschemas.compiled',
+  output: 'gschemas.compiled',
+  input: schemas,
+  build_by_default: true,
+  command: [
+    glib_compile_schemas,
+    meson.current_build_dir(),
+  ],
+)
+
+gnome = import('gnome')
+gnome.post_install(glib_compile_schemas: true)
