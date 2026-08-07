@@ -23,6 +23,7 @@
 # Wolfgang Ulbrich <mate@raveit.de>, 2023
 # Andrei Stepanov, 2023
 # "Sergey A." <Ser82-png@yandex.ru>, 2026.
+# Andrei Stepanov <adem4ik@gmail.com>, 2026.
 #
 # Translators:
 # 3bc1d0981266ee56e134b97b4970de06_52e58dc <e9a3d6aaf4954f31618f7b086b2e0f03_238271>, 2018
@@ -33,7 +34,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mate-desktop/mate-panel/issues\n"
 "POT-Creation-Date: 2023-09-02 19:26+0200\n"
 "PO-Revision-Date: 2026-06-19 19:10+0000\n"
-"Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
+"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/mate-"
 "desktop/applications/mate-panel/ru/>\n"
 "Language: ru\n"
@@ -1793,6 +1794,9 @@ msgid ""
 "\"ClockAppletFactory::ClockApplet\". This key is only relevant if the "
 "object-type key is 'applet'."
 msgstr ""
+"Идентификатор реализации апплета, например «ClockAppletFactory::ClockApplet"
+"». Этот ключ актуален только в том случае, если ключ object-type имеет "
+"значение «applet»."
 
 #: data/org.mate.panel.object.gschema.xml.in:40
 msgid "Panel attached to drawer"
@@ -1803,6 +1807,8 @@ msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object-type key is 'drawer'."
 msgstr ""
+"Идентификатор панели, прикреплённой к этому ящику. Этот ключ актуален только "
+"в том случае, если ключ object-type имеет значение «drawer»."
 
 #: data/org.mate.panel.object.gschema.xml.in:45
 msgid "Tooltip displayed for drawer or menu"
@@ -1813,6 +1819,9 @@ msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object-type key is 'drawer' or 'menu'."
 msgstr ""
+"Текст, отображаемый во всплывающей подсказке для этого ящика или меню. Этот "
+"ключ актуален только в том случае, если ключ object-type имеет значение «"
+"drawer» или «menu»."
 
 #: data/org.mate.panel.object.gschema.xml.in:50
 msgid "Use custom icon for object's button"
@@ -1824,6 +1833,10 @@ msgid ""
 "false, the custom-icon key is ignored. This key is only relevant if the "
 "object-type key is 'menu' or 'drawer-object'."
 msgstr ""
+"Если истина (true), ключ custom_icon используется в качестве "
+"пользовательского значка для кнопки. Если ложь (false), ключ custom-icon "
+"игнорируется. Этот ключ актуален только в том случае, если ключ object-type "
+"имеет значение «menu» или «drawer-object»."
 
 #: data/org.mate.panel.object.gschema.xml.in:55
 msgid "Icon used for object's button"
@@ -1835,6 +1848,10 @@ msgid ""
 "This key is only relevant if the object-type key is 'drawer' or 'menu' and "
 "the use-custom-icon key is true."
 msgstr ""
+"Расположение файла изображения, используемого в качестве значка для кнопки "
+"объекта. Этот ключ актуален только в том случае, если ключ object-type имеет "
+"значение «drawer» или «menu», а ключ use-custom-icon имеет значение истина "
+"(true)."
 
 #: data/org.mate.panel.object.gschema.xml.in:60
 msgid "Use custom path for menu contents"
@@ -1846,6 +1863,10 @@ msgid ""
 "should be constructed. If false, the menu-path key is ignored. This key is "
 "only relevant if the object-type key is 'menu'."
 msgstr ""
+"Если истина (true), ключ menu_path используется как путь, из которого должно "
+"быть построено содержимое меню. Если ложь (false), ключ menu-path "
+"игнорируется. Этот ключ актуален только в том случае, если ключ object-type "
+"имеет значение «menu»."
 
 #: data/org.mate.panel.object.gschema.xml.in:65
 msgid "Menu content path"
@@ -1856,6 +1877,9 @@ msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use-menu-path key is true and the object-type key is 'menu'."
 msgstr ""
+"Путь, из которого строится содержимое меню. Этот ключ актуален только в том "
+"случае, если ключ use-menu-path имеет значение истина (true), а ключ object-"
+"type имеет значение «menu»."
 
 #: data/org.mate.panel.object.gschema.xml.in:70
 msgid "Draw arrow in menu button"
@@ -1879,6 +1903,9 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object-type key is 'launcher'."
 msgstr ""
+"Расположение .desktop-файла, описывающего программу запуска. Этот ключ "
+"актуален только в том случае, если ключ object-type имеет значение «launcher"
+"»."
 
 #: data/org.mate.panel.object.gschema.xml.in:80
 msgid "Action button type"
@@ -1890,6 +1917,10 @@ msgid ""
 "'logout', 'run', 'search', 'force-quit', 'connect-server' and 'shutdown'. "
 "This key is only relevant if the object-type key is 'action'."
 msgstr ""
+"Тип действия, которое представляет эта кнопка. Возможные значения: «none», «"
+"lock», «logout», «run», «search», «force-quit», «connect-server» и «shutdown"
+"». Этот ключ актуален только в том случае, если ключ object-type имеет "
+"значение «action»."
 
 #: data/org.mate.panel.toplevel.gschema.xml.in:5
 msgid "Name to identify panel"
