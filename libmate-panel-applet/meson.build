@@ -131,14 +131,13 @@ if enable_introspection.allowed()
     sources: introspection_sources + built_introspection_sources,
     nsversion: mate_panel_gir_version,
     namespace: mate_panel_gir_ns,
-    symbol_prefix: 'mate_panel_applet',
-    identifier_prefix: 'MatePanelApplet',
+    symbol_prefix: 'mate_panel',
+    identifier_prefix: 'MatePanel',
     export_packages: 'libmatepanelapplet-@0@'.format(mate_panel_api_version),
     includes: ['GObject-2.0', 'Gtk-3.0', 'Gio-2.0'],
     install: true,
     extra_args: [
       '--warn-all',
-      '--strip-prefix=MatePanel',
       '--add-include-path=@0@'.format(meson.current_source_dir()),
     ],
   )
