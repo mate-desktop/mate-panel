@@ -117,6 +117,16 @@ the keyring's own encrypted storage. See the
 [vdirsyncer documentation on password storage](https://vdirsyncer.readthedocs.io/en/stable/config.html#supplying-passwords)
 for other supported fetch backends.
 
+**Pick a plain identifier for the keyring service name — not the CalDAV
+URL.** vdirsyncer runs every argument in `password.fetch` through path
+normalization (to support `~`-expanding local script paths), which silently
+mangles URLs: `https://host/path/` becomes `https:/host/path` (collapsed
+double slash, dropped trailing slash), and `keyring get` will then look up a
+service name that was never stored, failing with a non-obvious "Command
+... returned non-zero exit status 1" error. Using `mycalendar.com` (as
+above) rather than `https://mycalendar.com/dav/` as the service name avoids
+this entirely.
+
 Using `password.fetch` this way brings the vdir backend's credential storage
 in line with the EDS backend: EDS-managed calendar accounts (via GNOME
 Online Accounts or Evolution's own account setup) already store their
