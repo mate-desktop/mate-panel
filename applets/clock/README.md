@@ -80,6 +80,50 @@ The applet will pick up the synced events automatically on next start. Live
 updates are detected via `GFileMonitor` — new or changed `.ics` files are
 reflected in the calendar window without restarting the applet.
 
+#### Protecting your config and credentials
+
+The `config` file above stores the CalDAV `password` in plain text. This is
+easy to overlook, but the file should not be left world-readable:
+
+```
+chmod 600 ~/.vdirsyncer/config
+```
+
+Alternatively, set a restrictive `umask` (e.g. `umask 077`) before creating
+the file so it is never created with looser permissions in the first place.
+
+Better still, avoid storing the password in the config file at all.
+vdirsyncer supports `password.fetch`, which runs a command to retrieve the
+password at sync time. On a MATE desktop with `gnome-keyring` running, you
+can store the password in the keyring instead:
+
+```
+$ keyring set mycalendar.com myuser
+Password for 'myuser' in 'mycalendar.com': ********
+```
+
+Then reference it from the config instead of writing the password inline:
+
+```ini
+[storage my_remote]
+type = "caldav"
+url = "https://your-caldav-server/path/"
+username = "user@example.com"
+password.fetch = ["command", "keyring", "get", "mycalendar.com", "myuser"]
+```
+
+This keeps the credential out of `~/.vdirsyncer/config` entirely, backed by
+the keyring's own encrypted storage. See the
+[vdirsyncer documentation on password storage](https://vdirsyncer.readthedocs.io/en/stable/config.html#supplying-passwords)
+for other supported fetch backends.
+
+Using `password.fetch` this way brings the vdir backend's credential storage
+in line with the EDS backend: EDS-managed calendar accounts (via GNOME
+Online Accounts or Evolution's own account setup) already store their
+passwords in the system keyring through libsecret rather than in a plaintext
+file. With `password.fetch` configured, both backends end up relying on the
+same keyring-backed secret storage instead of an on-disk password.
+
 #### Recurring events
 
 Recurring events (RRULE, RDATE, EXDATE) are fully expanded using libical-glib,
