@@ -140,12 +140,16 @@ else
   have_libical=no
 fi
 
-# EDS implies libical (libecal depends on libical-glib)
+# EDS depends on libical-glib itself (calendar-eds-provider.c uses its
+# ICalComponent API directly), so treat it as a hard dependency whenever
+# EDS is enabled rather than assuming EDS_CFLAGS happens to expose
+# libical-glib's headers transitively - that only holds if libecal-2.0.pc
+# lists libical-glib under a public Requires, not Requires.private, which
+# is a packaging detail we shouldn't rely on.
 if test "x$have_eds" = "xyes" && test "x$have_libical" = "xno"; then
-  have_libical=yes
+  PKG_CHECK_MODULES(LIBICAL, [libical-glib >= 3.0], have_libical=yes,
+    AC_MSG_ERROR([EDS support requires libical-glib development libraries]))
   AC_DEFINE(HAVE_LIBICAL, 1, [Define if libical-glib is available])
-  LIBICAL_CFLAGS="$EDS_CFLAGS"
-  LIBICAL_LIBS=""
 fi
 
 AM_CONDITIONAL(HAVE_LIBICAL, test "x$have_libical" = "xyes")
