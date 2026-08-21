@@ -34,6 +34,7 @@
 #include <libical-glib/libical-glib.h>
 
 #include "calendar-vdir-provider.h"
+#include "system-timezone.h"
 
 #undef CALENDAR_ENABLE_DEBUG
 #include "calendar-debug.h"
@@ -790,18 +791,18 @@ calendar_vdir_provider_new (const char *directory)
   priv->display_name = read_metadata_file (directory, "displayname");
   priv->color_string = read_metadata_file (directory, "color");
 
-  /* Resolve the local timezone via the system TZ name */
+  /* Resolve the local timezone the same way the EDS provider does:
+   * strftime("%Z") can yield ambiguous abbreviations (e.g. "CST" is used
+   * by multiple zones) that fail to match a builtin timezone, silently
+   * falling back to UTC. SystemTimezone resolves the unambiguous zone
+   * name (e.g. "Europe/Berlin") from system configuration instead. */
   {
-    time_t    now   = time (NULL);
-    struct tm local = { 0, };
-    localtime_r (&now, &local);
-    char tz_name[64];
-    if (strftime (tz_name, sizeof (tz_name), "%Z", &local) > 0)
-      {
-        ICalTimezone *tz = i_cal_timezone_get_builtin_timezone (tz_name);
-        if (tz != NULL)
-          priv->zone = tz;
-      }
+    SystemTimezone *systz   = system_timezone_new ();
+    const char     *tz_name = system_timezone_get (systz);
+    ICalTimezone   *tz      = i_cal_timezone_get_builtin_timezone (tz_name);
+    if (tz != NULL)
+      priv->zone = tz;
+    g_object_unref (systz);
   }
 
   /* Set up a directory monitor for live updates */
