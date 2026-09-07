@@ -73,7 +73,7 @@ PKG_CHECK_MODULES(PANEL, $GMODULE_ADD gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pan
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
 
-PKG_CHECK_MODULES(LIBPULSE, libpulse, have_libpulse=yes, have_libpulse=no)
+PKG_CHECK_MODULES(LIBPULSE, [libpulse libpulse-mainloop-glib], have_libpulse=yes, have_libpulse=no)
 AM_CONDITIONAL(HAVE_LIBPULSE, test "x$have_libpulse" = "xyes")
 if test "x$have_libpulse" = "xyes"; then
 	AC_DEFINE(HAVE_LIBPULSE, 1, [Define if libpulse is available])
