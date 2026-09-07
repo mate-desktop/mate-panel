@@ -16,6 +16,10 @@
 #define PANEL_LOCKED_DOWN_KEY         "locked-down"
 #define PANEL_DISABLE_FORCE_QUIT_KEY  "disable-force-quit"
 #define PANEL_DISABLED_APPLETS_KEY    "disabled-applets"
+#define PANEL_ENABLE_SCROLL_VOLUME_KEY "enable-scroll-volume"
+#define PANEL_VOLUME_SCROLL_STEP_KEY   "volume-scroll-step"
+#define PANEL_VOLUME_SCROLL_OSD_KEY     "volume-scroll-osd"
+#define PANEL_VOLUME_SCROLL_FEEDBACK_KEY "volume-scroll-feedback"
 
 #define PANEL_TOPLEVEL_SCHEMA                "org.mate.panel.toplevel"
 #define PANEL_TOPLEVEL_NAME_KEY              "name"
