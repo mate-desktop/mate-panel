@@ -1,4 +1,6 @@
 /*
+ * calendar-client.c: aggregator that merges events from multiple providers
+ *
  * Copyright (C) 2004 Free Software Foundation, Inc.
  *
  * This program is free software; you can redistribute it and/or
@@ -23,98 +25,50 @@
 
 #include <config.h>
 
-#include "calendar-client.h"
-
-#include <libintl.h>
 #include <string.h>
-#define HANDLE_LIBICAL_MEMORY
+#include <time.h>
+
+#include <glib.h>
+#include <gio/gio.h>
+
+#include "calendar-client.h"
+#include "calendar-provider.h"
+
+#ifdef HAVE_LIBICAL
+#  include "calendar-vdir-provider.h"
+#endif
 
 #ifdef HAVE_EDS
-
-#include <libecal/libecal.h>
-#include "calendar-sources.h"
-#include "system-timezone.h"
+#  include "calendar-eds-provider.h"
 #endif
 
 #undef CALENDAR_ENABLE_DEBUG
 #include "calendar-debug.h"
 
-#ifndef _
-#define _(x) gettext(x)
-#endif
+/* GSettings key for extra vdir calendar paths */
+#define KEY_VDIR_CALENDAR_PATHS "vdir-calendar-paths"
 
-#ifndef N_
-#define N_(x) x
-#endif
-
-#ifdef HAVE_EDS
-
-typedef struct _CalendarClientQuery  CalendarClientQuery;
-typedef struct _CalendarClientSource CalendarClientSource;
-
-struct _CalendarClientQuery
-{
-  ECalClientView *view;
-  GHashTable     *events;
-};
-
-struct _CalendarClientSource
-{
-  CalendarClient      *client;
-  ECalClient          *source;
-
-  CalendarClientQuery  completed_query;
-  CalendarClientQuery  in_progress_query;
-
-  guint                changed_signal_id;
-
-  guint                query_completed : 1;
-  guint                query_in_progress : 1;
-};
+/* Default vdirsyncer storage base directory (relative to XDG data home) */
+#define VDIRSYNCER_DEFAULT_SUBDIR "vdirsyncer"
 
 struct _CalendarClientPrivate
 {
-  CalendarSources     *calendar_sources;
+  GSList *providers;   /* list of CalendarProvider * (owned, refcounted) */
 
-  GSList              *appointment_sources;
-  GSList              *task_sources;
-
-  ICalTimezone        *zone;
-
-  guint                zone_listener;
-  GSettings           *calendar_settings;
-
-  guint                day;
-  guint                month;
-  guint                year;
+  guint   day;
+  guint   month;
+  guint   year;
 };
 
-static void calendar_client_finalize     (GObject             *object);
-static void calendar_client_set_property (GObject             *object,
-					  guint                prop_id,
-					  const GValue        *value,
-					  GParamSpec          *pspec);
-static void calendar_client_get_property (GObject             *object,
-					  guint                prop_id,
-					  GValue              *value,
-					  GParamSpec          *pspec);
-
-static GSList *calendar_client_update_sources_list         (CalendarClient       *client,
-							    GSList               *sources,
-							    GList                *esources,
-							    guint                 changed_signal_id);
-static void    calendar_client_appointment_sources_changed (CalendarClient       *client);
-static void    calendar_client_task_sources_changed        (CalendarClient       *client);
-
-static void calendar_client_stop_query  (CalendarClient       *client,
-					 CalendarClientSource *source,
-					 CalendarClientQuery  *query);
-static void calendar_client_start_query (CalendarClient       *client,
-					 CalendarClientSource *source,
-					 const char           *query);
-
-static void calendar_client_source_finalize (CalendarClientSource *source);
-static void calendar_client_query_finalize  (CalendarClientQuery  *query);
+static void calendar_client_finalize     (GObject      *object);
+static void calendar_client_set_property (GObject      *object,
+                                          guint         prop_id,
+                                          const GValue *value,
+                                          GParamSpec   *pspec);
+static void calendar_client_get_property (GObject      *object,
+                                          guint         prop_id,
+                                          GValue       *value,
+                                          GParamSpec   *pspec);
 
 enum
 {
@@ -131,860 +85,161 @@ enum
   LAST_SIGNAL
 };
 
-static guint         signals [LAST_SIGNAL] = { 0, };
+static guint signals[LAST_SIGNAL] = { 0, };
 
 G_DEFINE_TYPE_WITH_PRIVATE (CalendarClient, calendar_client, G_TYPE_OBJECT)
 
+/* =========================================================================
+ * CalendarEvent copy / free  (the structs live in calendar-client.h, but the
+ * copy/free helpers are here since they need access to the private type layout)
+ * ========================================================================= */
+
 static void
-calendar_client_class_init (CalendarClientClass *klass)
+calendar_appointment_copy (CalendarAppointment *src, CalendarAppointment *dst)
 {
-  GObjectClass *gobject_class = (GObjectClass *) klass;
-
-  gobject_class->finalize     = calendar_client_finalize;
-  gobject_class->set_property = calendar_client_set_property;
-  gobject_class->get_property = calendar_client_get_property;
-
-  g_object_class_install_property (gobject_class,
-				   PROP_DAY,
-				   g_param_spec_uint ("day",
-						      "Day",
-						      "The currently monitored day between 1 and 31 (0 denotes unset)",
-						      0, G_MAXUINT, 0,
-						      G_PARAM_READWRITE));
-
-  g_object_class_install_property (gobject_class,
-				   PROP_MONTH,
-				   g_param_spec_uint ("month",
-						      "Month",
-						      "The currently monitored month between 0 and 11",
-						      0, G_MAXUINT, 0,
-						      G_PARAM_READWRITE));
-
-  g_object_class_install_property (gobject_class,
-				   PROP_YEAR,
-				   g_param_spec_uint ("year",
-						      "Year",
-						      "The currently monitored year",
-						      0, G_MAXUINT, 0,
-						      G_PARAM_READWRITE));
-
-  signals [APPOINTMENTS_CHANGED] =
-    g_signal_new ("appointments-changed",
-		  G_TYPE_FROM_CLASS (gobject_class),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (CalendarClientClass, tasks_changed),
-		  NULL,
-		  NULL,
-		  NULL,
-		  G_TYPE_NONE,
-		  0);
-
-  signals [TASKS_CHANGED] =
-    g_signal_new ("tasks-changed",
-		  G_TYPE_FROM_CLASS (gobject_class),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (CalendarClientClass, tasks_changed),
-		  NULL,
-		  NULL,
-		  NULL,
-		  G_TYPE_NONE,
-		  0);
-}
-
-/* Timezone code adapted from evolution/calendar/gui/calendar-config.c */
-/* The current timezone, e.g. "Europe/London". It may be NULL, in which case
-   you should assume UTC. */
-static gchar *
-calendar_client_config_get_timezone (GSettings *calendar_settings)
-{
-  gchar *timezone = NULL;
-
-  if (calendar_settings == NULL)
-    return NULL;
-
-  /* Check if we can list the keys to see if timezone exists */
-  gchar **keys = g_settings_list_keys (calendar_settings);
-  gboolean has_timezone = FALSE;
-
-  for (gint i = 0; keys[i] != NULL; i++) {
-    if (g_strcmp0 (keys[i], "timezone") == 0) {
-      has_timezone = TRUE;
-      break;
+  dst->occurrences = g_slist_copy (src->occurrences);
+  for (GSList *l = dst->occurrences; l != NULL; l = l->next)
+    {
+      CalendarOccurrence *o     = l->data;
+      CalendarOccurrence *copy  = g_new0 (CalendarOccurrence, 1);
+      copy->start_time = o->start_time;
+      copy->end_time   = o->end_time;
+      l->data          = copy;
     }
-  }
-  g_strfreev (keys);
 
-  if (has_timezone) {
-    timezone = g_settings_get_string (calendar_settings, "timezone");
-  }
-
-  return timezone;
-}
-
-static ICalTimezone *
-calendar_client_config_get_icaltimezone (CalendarClient *client)
-{
-  gchar        *location = NULL;
-  ICalTimezone *zone = NULL;
-
-  if (client->priv->calendar_settings != NULL)
-    location = calendar_client_config_get_timezone (client->priv->calendar_settings);
-
-  if (!location) {
-    /* MATE panel doesn't store timezone in GSettings
-     * Since libical timezone lookup often fails, just use UTC
-     * The display code will handle local time conversion */
-    return i_cal_timezone_get_utc_timezone ();
-  }
-
-  zone = i_cal_timezone_get_builtin_timezone (location);
-  g_free (location);
-
-  return zone;
+  dst->uid          = g_strdup (src->uid);
+  dst->rid          = g_strdup (src->rid);
+  dst->backend_name = g_strdup (src->backend_name);
+  dst->summary      = g_strdup (src->summary);
+  dst->description  = g_strdup (src->description);
+  dst->color_string = g_strdup (src->color_string);
+  dst->start_time   = src->start_time;
+  dst->end_time     = src->end_time;
+  dst->is_all_day   = src->is_all_day;
 }
 
 static void
-calendar_client_set_timezone (CalendarClient *client)
+calendar_appointment_finalize (CalendarAppointment *appt)
 {
-  GList *list, *link;
-
-  client->priv->zone = calendar_client_config_get_icaltimezone (client);
-
-  list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
-  for (link = list; link != NULL; link = g_list_next (link))
-    {
-      ECalClient *cal = E_CAL_CLIENT (link->data);
-
-      e_cal_client_set_default_timezone (cal, client->priv->zone);
-    }
-  g_list_free (list);
-}
-
-static void
-calendar_client_timezone_changed_cb (GSettings      *calendar_settings,
-                                     const gchar    *key,
-                                     CalendarClient *client)
-{
-  calendar_client_set_timezone (client);
-}
-
-static void
-load_calendars (CalendarClient    *client,
-                CalendarEventType  type)
-{
-  GSList *l, *clients;
-
-  switch (type)
-    {
-      case CALENDAR_EVENT_APPOINTMENT:
-        clients = client->priv->appointment_sources;
-        break;
-      case CALENDAR_EVENT_TASK:
-        clients = client->priv->task_sources;
-        break;
-      case CALENDAR_EVENT_ALL:
-      default:
-        g_assert_not_reached ();
-    }
-
-  for (l = clients; l != NULL; l = l->next)
-    {
-      if (type == CALENDAR_EVENT_APPOINTMENT)
-        calendar_client_update_appointments (client);
-      else if (type == CALENDAR_EVENT_TASK)
-        calendar_client_update_tasks (client);
-    }
-}
-
-static void
-calendar_client_init (CalendarClient *client)
-{
-  GList *list;
-
-  client->priv = calendar_client_get_instance_private (client);
-
-  client->priv->calendar_sources = calendar_sources_get ();
-
-  list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
-  client->priv->appointment_sources =
-    calendar_client_update_sources_list (client, NULL, list, signals [APPOINTMENTS_CHANGED]);
-  g_list_free (list);
-
-  list = calendar_sources_get_task_clients (client->priv->calendar_sources);
-  client->priv->task_sources = calendar_client_update_sources_list (client, NULL, list, signals [TASKS_CHANGED]);
-  g_list_free (list);
-
-  /* set the timezone before loading the clients */
-  calendar_client_set_timezone (client);
-  load_calendars (client, CALENDAR_EVENT_APPOINTMENT);
-  load_calendars (client, CALENDAR_EVENT_TASK);
-
-  g_signal_connect_swapped (client->priv->calendar_sources,
-			    "appointment-sources-changed",
-			    G_CALLBACK (calendar_client_appointment_sources_changed),
-			    client);
-  g_signal_connect_swapped (client->priv->calendar_sources,
-			    "task-sources-changed",
-			    G_CALLBACK (calendar_client_task_sources_changed),
-			    client);
-
-  if (client->priv->calendar_settings != NULL)
-    client->priv->zone_listener = g_signal_connect (client->priv->calendar_settings,
-						    "changed::timezone",
-						    G_CALLBACK (calendar_client_timezone_changed_cb),
-						    client);
-
-  client->priv->day = G_MAXUINT;
-  client->priv->month = G_MAXUINT;
-  client->priv->year = G_MAXUINT;
-}
-
-static void
-calendar_client_finalize (GObject *object)
-{
-  CalendarClient *client = CALENDAR_CLIENT (object);
-  GSList         *l;
-
-  if (client->priv->zone_listener)
-    {
-      g_signal_handler_disconnect (client->priv->calendar_settings,
-				   client->priv->zone_listener);
-      client->priv->zone_listener = 0;
-    }
-
-  if (client->priv->calendar_settings)
-    g_object_unref (client->priv->calendar_settings);
-  client->priv->calendar_settings = NULL;
-
-  for (l = client->priv->appointment_sources; l; l = l->next)
-    {
-      calendar_client_source_finalize (l->data);
-      g_free (l->data);
-    }
-  g_slist_free (client->priv->appointment_sources);
-  client->priv->appointment_sources = NULL;
-
-  for (l = client->priv->task_sources; l; l = l->next)
-    {
-      calendar_client_source_finalize (l->data);
-      g_free (l->data);
-    }
-  g_slist_free (client->priv->task_sources);
-  client->priv->task_sources = NULL;
-
-  if (client->priv->calendar_sources)
-    g_object_unref (client->priv->calendar_sources);
-  client->priv->calendar_sources = NULL;
-
-  G_OBJECT_CLASS (calendar_client_parent_class)->finalize (object);
-}
-
-static void
-calendar_client_set_property (GObject      *object,
-			      guint         prop_id,
-			      const GValue *value,
-			      GParamSpec   *pspec)
-{
-  CalendarClient *client = CALENDAR_CLIENT (object);
-
-  switch (prop_id)
-    {
-    case PROP_DAY:
-      calendar_client_select_day (client, g_value_get_uint (value));
-      break;
-    case PROP_MONTH:
-      calendar_client_select_month (client,
-				    g_value_get_uint (value),
-				    client->priv->year);
-      break;
-    case PROP_YEAR:
-      calendar_client_select_month (client,
-				    client->priv->month,
-				    g_value_get_uint (value));
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-      break;
-    }
-}
-
-static void
-calendar_client_get_property (GObject    *object,
-			      guint       prop_id,
-			      GValue     *value,
-			      GParamSpec *pspec)
-{
-  CalendarClient *client = CALENDAR_CLIENT (object);
-
-  switch (prop_id)
-    {
-    case PROP_DAY:
-      g_value_set_uint (value, client->priv->day);
-      break;
-    case PROP_MONTH:
-      g_value_set_uint (value, client->priv->month);
-      break;
-    case PROP_YEAR:
-      g_value_set_uint (value, client->priv->year);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-      break;
-    }
-}
-
-CalendarClient *
-calendar_client_new (GSettings *settings)
-{
-  CalendarClient *client = g_object_new (CALENDAR_TYPE_CLIENT, NULL);
-
-  /* Use the provided MATE panel settings instead of Evolution settings */
-  if (settings) {
-    client->priv->calendar_settings = g_object_ref (settings);
-  } else {
-    /* Fallback to Evolution calendar settings if available */
-    GSettingsSchemaSource *schema_source = g_settings_schema_source_get_default();
-    const gchar *evolution_calendar_schema = "org.gnome.evolution.calendar";
-    GSettingsSchema *schema = g_settings_schema_source_lookup (schema_source, evolution_calendar_schema, FALSE);
-    if (schema) {
-      client->priv->calendar_settings = g_settings_new (evolution_calendar_schema);
-      g_settings_schema_unref (schema);
-    } else {
-      /* No Evolution settings available, calendar_settings will remain NULL */
-      client->priv->calendar_settings = NULL;
-    }
-  }
-
-  return client;
-}
-
-/* @day and @month can happily be out of range as
- * mktime() will normalize them correctly. From mktime(3):
- *
- * "If structure members are outside their legal interval,
- *  they will be normalized (so that, e.g., 40 October is
- *  changed into 9 November)."
- *
- * "What?", you say, "Something useful in libc?"
- */
-static inline time_t
-make_time_for_day_begin (int day,
-			 int month,
-			 int year)
-{
-  struct tm localtime_tm = { 0, };
-
-  localtime_tm.tm_mday  = day;
-  localtime_tm.tm_mon   = month;
-  localtime_tm.tm_year  = year - 1900;
-  localtime_tm.tm_isdst = -1;
-
-  return mktime (&localtime_tm);
-}
-
-static inline char *
-make_isodate_for_day_begin (int day,
-			    int month,
-			    int year)
-{
-  time_t utctime;
-
-  utctime = make_time_for_day_begin (day, month, year);
-
-  return utctime != -1 ? isodate_from_time_t (utctime) : NULL;
-}
-
-static time_t
-get_time_from_property (ICalComponent    *icomp,
-			ICalPropertyKind  prop_kind,
-			ICalTime         * (* get_prop_func) (ICalProperty *prop),
-			ICalTimezone     *default_zone)
-{
-  ICalProperty *prop;
-  ICalTime *ical_time;
-  ICalParameter *param;
-  ICalTimezone *timezone;
-  time_t retval;
-
-  prop = i_cal_component_get_first_property (icomp, prop_kind);
-  if (!prop)
-    return 0;
-
-  param = i_cal_property_get_first_parameter (prop, I_CAL_TZID_PARAMETER);
-  ical_time = get_prop_func (prop);
-  g_object_unref (prop);
-
-  if (param)
-    {
-      const char *tzid;
-
-      tzid = i_cal_parameter_get_tzid (param);
-      timezone = i_cal_timezone_get_builtin_timezone_from_tzid (tzid);
-      g_object_unref (param);
-
-      /* If timezone lookup failed, fall back to default zone */
-      if (!timezone) {
-        timezone = default_zone;
-      }
-    }
-  else if (i_cal_time_is_utc (ical_time))
-    {
-      timezone = i_cal_timezone_get_utc_timezone ();
-    }
-  else
-    {
-      timezone = default_zone;
-    }
-
-  retval = i_cal_time_as_timet_with_zone (ical_time, timezone);
-
-  g_object_unref (ical_time);
-
-  return retval;
-}
-
-static char *
-get_component_uid (ICalComponent *component)
-{
-  return g_strdup (i_cal_component_get_uid (component));
-}
-
-static char *
-get_component_rid (ICalComponent *component)
-{
-  ICalProperty *prop;
-  ICalTime *time;
-  char *rid;
-
-  prop = i_cal_component_get_first_property (component, I_CAL_RECURRENCEID_PROPERTY);
-  if (!prop)
-    return NULL;
-
-  time = i_cal_property_get_recurrenceid (prop);
-  g_object_unref (prop);
-
-  if (!i_cal_time_is_valid_time (time) || i_cal_time_is_null_time (time))
-    {
-      g_object_unref (time);
-      return NULL;
-    }
-
-  rid = g_strdup (i_cal_time_as_ical_string (time));
-  g_object_unref (time);
-
-  return rid;
-}
-
-static char *
-get_component_summary (ICalComponent *component)
-{
-  ICalProperty *prop;
-  char *summary;
-
-  prop = i_cal_component_get_first_property (component, I_CAL_SUMMARY_PROPERTY);
-  if (!prop)
-    return NULL;
-
-  summary = g_strdup (i_cal_property_get_summary (prop));
-  g_object_unref (prop);
-
-  return summary;
-}
-
-static char *
-get_component_description (ICalComponent *component)
-{
-  ICalProperty *prop;
-  char *description;
-
-  prop = i_cal_component_get_first_property (component, I_CAL_DESCRIPTION_PROPERTY);
-  if (!prop)
-    return NULL;
-
-  description = g_strdup (i_cal_property_get_description (prop));
-  g_object_unref (prop);
-
-  return description;
-}
-
-static inline time_t
-get_component_start_time (ICalComponent *component,
-                          ICalTimezone  *default_zone)
-{
-  return get_time_from_property (component,
-				 I_CAL_DTSTART_PROPERTY,
-				 i_cal_property_get_dtstart,
-				 default_zone);
-}
-
-static inline time_t
-get_component_end_time (ICalComponent *component,
-                        ICalTimezone  *default_zone)
-{
-  return get_time_from_property (component,
-                                 I_CAL_DTEND_PROPERTY,
-                                 i_cal_property_get_dtend,
-                                 default_zone);
-}
-
-static gboolean
-get_component_is_all_day (ICalComponent *component,
-                          time_t         start_time,
-                          ICalTimezone  *default_zone)
-{
-  ICalTime *dtstart;
-  struct tm *start_tm;
-  time_t end_time;
-  ICalProperty *prop;
-  ICalDuration *duration;
-  gboolean is_all_day;
-
-  dtstart = i_cal_component_get_dtstart (component);
-
-  if (dtstart && i_cal_time_is_date (dtstart))
-    {
-      g_object_unref (dtstart);
-      return TRUE;
-    }
-
-  g_object_unref (dtstart);
-
-  start_tm = gmtime (&start_time);
-  if (start_tm->tm_sec  != 0 ||
-      start_tm->tm_min  != 0 ||
-      start_tm->tm_hour != 0)
-    return FALSE;
-
-  if ((end_time = get_component_end_time (component, default_zone)))
-    return (end_time - start_time) % 86400 == 0;
-
-  prop = i_cal_component_get_first_property (component, I_CAL_DURATION_PROPERTY);
-  if (!prop)
-    return FALSE;
-
-  duration = i_cal_property_get_duration (prop);
-  g_object_unref (prop);
-
-  is_all_day = i_cal_duration_as_int (duration) % 86400 == 0;
-  g_object_unref (duration);
-
-  return is_all_day;
-}
-
-static inline time_t
-get_component_due_time (ICalComponent *component,
-                        ICalTimezone  *default_zone)
-{
-  return get_time_from_property (component,
-                                 I_CAL_DUE_PROPERTY,
-                                 i_cal_property_get_due,
-                                 default_zone);
-}
-
-static guint
-get_component_percent_complete (ICalComponent *component)
-{
-  ICalPropertyStatus status;
-  ICalProperty *prop;
-  int percent_complete;
-
-  status = i_cal_component_get_status (component);
-  if (status == I_CAL_STATUS_COMPLETED)
-    return 100;
-
-  prop = i_cal_component_get_first_property (component, I_CAL_COMPLETED_PROPERTY);
-
-  if (prop)
-    {
-      g_object_unref (prop);
-      return 100;
-    }
-
-  prop = i_cal_component_get_first_property (component, I_CAL_PERCENTCOMPLETE_PROPERTY);
-  if (!prop)
-    return 0;
-
-  percent_complete = i_cal_property_get_percentcomplete (prop);
-  g_object_unref (prop);
-
-  return CLAMP (percent_complete, 0, 100);
-}
-
-static inline time_t
-get_component_completed_time (ICalComponent *component,
-                              ICalTimezone  *default_zone)
-{
-  return get_time_from_property (component,
-                                 I_CAL_COMPLETED_PROPERTY,
-                                 i_cal_property_get_completed,
-                                 default_zone);
-}
-
-static int
-get_component_priority (ICalComponent *component)
-{
-  ICalProperty *prop;
-  int priority;
-
-  prop = i_cal_component_get_first_property (component, I_CAL_PRIORITY_PROPERTY);
-  if (!prop)
-    return -1;
-
-  priority = i_cal_property_get_priority (prop);
-  g_object_unref (prop);
-
-  return priority;
-}
-
-static char *
-get_source_color (ECalClient *esource)
-{
-  ESource *source;
-  ECalClientSourceType source_type;
-  ESourceSelectable *extension;
-  const gchar *extension_name;
-
-  g_return_val_if_fail (E_IS_CAL_CLIENT (esource), NULL);
-
-  source = e_client_get_source (E_CLIENT (esource));
-  source_type = e_cal_client_get_source_type (esource);
-
-  switch (source_type)
-    {
-      case E_CAL_CLIENT_SOURCE_TYPE_EVENTS:
-        extension_name = E_SOURCE_EXTENSION_CALENDAR;
-        break;
-      case E_CAL_CLIENT_SOURCE_TYPE_TASKS:
-        extension_name = E_SOURCE_EXTENSION_TASK_LIST;
-        break;
-      case E_CAL_CLIENT_SOURCE_TYPE_MEMOS:
-      case E_CAL_CLIENT_SOURCE_TYPE_LAST:
-      default:
-        g_return_val_if_reached (NULL);
-    }
-
-  extension = e_source_get_extension (source, extension_name);
-
-  return e_source_selectable_dup_color (extension);
-}
-
-static gchar *
-get_source_backend_name (ECalClient *esource)
-{
-  ESource *source;
-  ECalClientSourceType source_type;
-  ESourceBackend *extension;
-  const gchar *extension_name;
-
-  g_return_val_if_fail (E_IS_CAL_CLIENT (esource), NULL);
-
-  source = e_client_get_source (E_CLIENT (esource));
-  source_type = e_cal_client_get_source_type (esource);
-
-  switch (source_type)
-    {
-      case E_CAL_CLIENT_SOURCE_TYPE_EVENTS:
-        extension_name = E_SOURCE_EXTENSION_CALENDAR;
-        break;
-      case E_CAL_CLIENT_SOURCE_TYPE_TASKS:
-        extension_name = E_SOURCE_EXTENSION_TASK_LIST;
-        break;
-      case E_CAL_CLIENT_SOURCE_TYPE_MEMOS:
-      case E_CAL_CLIENT_SOURCE_TYPE_LAST:
-      default:
-        g_return_val_if_reached (NULL);
-    }
-
-  extension = e_source_get_extension (source, extension_name);
-
-  return e_source_backend_dup_backend_name (extension);
-}
-
-static inline gboolean
-calendar_appointment_equal (CalendarAppointment *a,
-			    CalendarAppointment *b)
-{
-  GSList *la, *lb;
-
-  if (g_slist_length (a->occurrences) != g_slist_length (b->occurrences))
-      return FALSE;
-
-  for (la = a->occurrences, lb = b->occurrences; la && lb; la = la->next, lb = lb->next)
-    {
-      CalendarOccurrence *oa = la->data;
-      CalendarOccurrence *ob = lb->data;
-
-      if (oa->start_time != ob->start_time ||
-	  oa->end_time   != ob->end_time)
-	return FALSE;
-    }
-
-  return
-    g_strcmp0 (a->uid, b->uid) == 0 &&
-    g_strcmp0 (a->backend_name, b->backend_name) == 0 &&
-    g_strcmp0 (a->summary, b->summary) == 0 &&
-    g_strcmp0 (a->description, b->description) == 0 &&
-    g_strcmp0 (a->color_string, b->color_string) == 0 &&
-    a->start_time == b->start_time &&
-    a->end_time == b->end_time &&
-    a->is_all_day == b->is_all_day;
-}
-
-static void
-calendar_appointment_copy (CalendarAppointment *appointment,
-			   CalendarAppointment *appointment_copy)
-{
-  GSList *l;
-
-  g_assert (appointment != NULL);
-  g_assert (appointment_copy != NULL);
-
-  appointment_copy->occurrences = g_slist_copy (appointment->occurrences);
-  for (l = appointment_copy->occurrences; l; l = l->next)
-    {
-      CalendarOccurrence *occurrence = l->data;
-      CalendarOccurrence *occurrence_copy;
-
-      occurrence_copy             = g_new0 (CalendarOccurrence, 1);
-      occurrence_copy->start_time = occurrence->start_time;
-      occurrence_copy->end_time   = occurrence->end_time;
-
-      l->data = occurrence_copy;
-    }
-
-  appointment_copy->uid          = g_strdup (appointment->uid);
-  appointment_copy->backend_name = g_strdup (appointment->backend_name);
-  appointment_copy->summary      = g_strdup (appointment->summary);
-  appointment_copy->description  = g_strdup (appointment->description);
-  appointment_copy->color_string = g_strdup (appointment->color_string);
-  appointment_copy->start_time   = appointment->start_time;
-  appointment_copy->end_time     = appointment->end_time;
-  appointment_copy->is_all_day   = appointment->is_all_day;
-}
-
-static void
-calendar_appointment_finalize (CalendarAppointment *appointment)
-{
-  GSList *l;
-
-  for (l = appointment->occurrences; l; l = l->next)
+  for (GSList *l = appt->occurrences; l != NULL; l = l->next)
     g_free (l->data);
-  g_slist_free (appointment->occurrences);
-  appointment->occurrences = NULL;
+  g_slist_free (appt->occurrences);
+  appt->occurrences = NULL;
 
-  g_free (appointment->uid);
-  appointment->uid = NULL;
-
-  g_free (appointment->rid);
-  appointment->rid = NULL;
-
-  g_free (appointment->backend_name);
-  appointment->backend_name = NULL;
-
-  g_free (appointment->summary);
-  appointment->summary = NULL;
-
-  g_free (appointment->description);
-  appointment->description = NULL;
-
-  g_free (appointment->color_string);
-  appointment->color_string = NULL;
-
-  appointment->start_time = 0;
-  appointment->is_all_day = FALSE;
+  g_free (appt->uid);
+  g_free (appt->rid);
+  g_free (appt->backend_name);
+  g_free (appt->summary);
+  g_free (appt->description);
+  g_free (appt->color_string);
 }
 
 static void
-calendar_appointment_init (CalendarAppointment  *appointment,
-                           ICalComponent        *component,
-                           CalendarClientSource *source,
-                           ICalTimezone         *default_zone)
+calendar_task_copy (CalendarTask *src, CalendarTask *dst)
 {
-  appointment->uid = get_component_uid (component);
-  appointment->rid = get_component_rid (component);
-  appointment->backend_name = get_source_backend_name (source->source);
-  appointment->summary = get_component_summary (component);
-  appointment->description = get_component_description (component);
-  appointment->color_string = get_source_color (source->source);
-  appointment->start_time = get_component_start_time (component, default_zone);
-  appointment->end_time = get_component_end_time (component, default_zone);
-  appointment->is_all_day = get_component_is_all_day (component,
-                                                      appointment->start_time,
-                                                      default_zone);
-}
-
-static inline gboolean
-calendar_task_equal (CalendarTask *a,
-		     CalendarTask *b)
-{
-  return
-    g_strcmp0 (a->uid, b->uid) == 0 &&
-    g_strcmp0 (a->summary, b->summary) == 0 &&
-    g_strcmp0 (a->description, b->description) == 0 &&
-    g_strcmp0 (a->color_string, b->color_string) == 0 &&
-    a->start_time == b->start_time &&
-    a->due_time == b->due_time &&
-    a->percent_complete == b->percent_complete &&
-    a->completed_time == b->completed_time &&
-    a->priority == b->priority;
-}
-
-static void
-calendar_task_copy (CalendarTask *task,
-		    CalendarTask *task_copy)
-{
-  g_assert (task != NULL);
-  g_assert (task_copy != NULL);
-
-  task_copy->uid              = g_strdup (task->uid);
-  task_copy->summary          = g_strdup (task->summary);
-  task_copy->description      = g_strdup (task->description);
-  task_copy->color_string     = g_strdup (task->color_string);
-  task_copy->start_time       = task->start_time;
-  task_copy->due_time         = task->due_time;
-  task_copy->percent_complete = task->percent_complete;
-  task_copy->completed_time   = task->completed_time;
-  task_copy->priority         = task->priority;
+  dst->uid              = g_strdup (src->uid);
+  dst->summary          = g_strdup (src->summary);
+  dst->description      = g_strdup (src->description);
+  dst->color_string     = g_strdup (src->color_string);
+  dst->url              = g_strdup (src->url);
+  dst->start_time       = src->start_time;
+  dst->due_time         = src->due_time;
+  dst->percent_complete = src->percent_complete;
+  dst->completed_time   = src->completed_time;
+  dst->priority         = src->priority;
 }
 
 static void
 calendar_task_finalize (CalendarTask *task)
 {
   g_free (task->uid);
-  task->uid = NULL;
-
   g_free (task->summary);
-  task->summary = NULL;
-
   g_free (task->description);
-  task->description = NULL;
-
   g_free (task->color_string);
-  task->color_string = NULL;
-
-  task->percent_complete = 0;
+  g_free (task->url);
 }
 
-static void
-calendar_task_init (CalendarTask         *task,
-                    ICalComponent        *component,
-                    CalendarClientSource *source,
-                    ICalTimezone         *default_zone)
+CalendarEvent *
+calendar_event_copy (CalendarEvent *event)
 {
-  task->uid = get_component_uid (component);
-  task->summary = get_component_summary (component);
-  task->description = get_component_description (component);
-  task->color_string = get_source_color (source->source);
-  task->start_time = get_component_start_time (component, default_zone);
-  task->due_time = get_component_due_time (component, default_zone);
-  task->percent_complete = get_component_percent_complete (component);
-  task->completed_time = get_component_completed_time (component, default_zone);
-  task->priority = get_component_priority (component);
+  if (!event)
+    return NULL;
+
+  CalendarEvent *copy = g_new0 (CalendarEvent, 1);
+  copy->type = event->type;
+
+  switch (event->type)
+    {
+    case CALENDAR_EVENT_APPOINTMENT:
+      calendar_appointment_copy (CALENDAR_APPOINTMENT (event),
+                                  CALENDAR_APPOINTMENT (copy));
+      break;
+    case CALENDAR_EVENT_TASK:
+      calendar_task_copy (CALENDAR_TASK (event), CALENDAR_TASK (copy));
+      break;
+    default:
+      g_assert_not_reached ();
+    }
+
+  return copy;
+}
+
+gboolean
+calendar_event_equal (CalendarEvent *a, CalendarEvent *b)
+{
+  if (!a && !b) return TRUE;
+  if (!a || !b) return FALSE;
+  if (a->type != b->type) return FALSE;
+
+  if (a->type == CALENDAR_EVENT_APPOINTMENT)
+    {
+      CalendarAppointment *aa = CALENDAR_APPOINTMENT (a);
+      CalendarAppointment *ab = CALENDAR_APPOINTMENT (b);
+
+      if (g_slist_length (aa->occurrences) != g_slist_length (ab->occurrences))
+        return FALSE;
+      for (GSList *la = aa->occurrences, *lb = ab->occurrences;
+           la && lb; la = la->next, lb = lb->next)
+        {
+          CalendarOccurrence *oa = la->data;
+          CalendarOccurrence *ob = lb->data;
+          if (oa->start_time != ob->start_time || oa->end_time != ob->end_time)
+            return FALSE;
+        }
+      return g_strcmp0 (aa->uid,          ab->uid)          == 0 &&
+             g_strcmp0 (aa->backend_name, ab->backend_name) == 0 &&
+             g_strcmp0 (aa->summary,      ab->summary)      == 0 &&
+             g_strcmp0 (aa->description,  ab->description)  == 0 &&
+             g_strcmp0 (aa->color_string, ab->color_string) == 0 &&
+             aa->start_time == ab->start_time                    &&
+             aa->end_time   == ab->end_time                      &&
+             aa->is_all_day == ab->is_all_day;
+    }
+
+  if (a->type == CALENDAR_EVENT_TASK)
+    {
+      CalendarTask *ta = CALENDAR_TASK (a);
+      CalendarTask *tb = CALENDAR_TASK (b);
+      return g_strcmp0 (ta->uid,          tb->uid)          == 0 &&
+             g_strcmp0 (ta->summary,      tb->summary)      == 0 &&
+             g_strcmp0 (ta->description,  tb->description)  == 0 &&
+             g_strcmp0 (ta->color_string, tb->color_string) == 0 &&
+             ta->start_time       == tb->start_time               &&
+             ta->due_time         == tb->due_time                 &&
+             ta->percent_complete == tb->percent_complete         &&
+             ta->completed_time   == tb->completed_time           &&
+             ta->priority         == tb->priority;
+    }
+
+  g_assert_not_reached ();
+  return FALSE;
 }
 
 void
 calendar_event_free (CalendarEvent *event)
 {
+  if (!event) return;
+
   switch (event->type)
     {
     case CALENDAR_EVENT_APPOINTMENT:
@@ -993,1098 +248,477 @@ calendar_event_free (CalendarEvent *event)
     case CALENDAR_EVENT_TASK:
       calendar_task_finalize (CALENDAR_TASK (event));
       break;
-    case CALENDAR_EVENT_ALL:
     default:
       g_assert_not_reached ();
-      break;
     }
 
   g_free (event);
 }
 
-static CalendarEvent *
-calendar_event_new (ICalComponent        *component,
-                    CalendarClientSource *source,
-                    ICalTimezone         *default_zone)
+/* =========================================================================
+ * GObject boilerplate
+ * ========================================================================= */
+
+static void
+calendar_client_class_init (CalendarClientClass *klass)
 {
-  CalendarEvent *event;
-  ICalComponentKind component_kind;
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  event = g_new0 (CalendarEvent, 1);
-  component_kind = i_cal_component_isa (component);
+  gobject_class->finalize     = calendar_client_finalize;
+  gobject_class->set_property = calendar_client_set_property;
+  gobject_class->get_property = calendar_client_get_property;
 
-  if (component_kind == I_CAL_VEVENT_COMPONENT)
-    {
-      event->type = CALENDAR_EVENT_APPOINTMENT;
-      calendar_appointment_init (CALENDAR_APPOINTMENT (event),
-                                 component, source, default_zone);
-    }
-  else if (component_kind == I_CAL_VTODO_COMPONENT)
-    {
-      event->type = CALENDAR_EVENT_TASK;
-      calendar_task_init (CALENDAR_TASK (event),
-                          component, source, default_zone);
-    }
-  else
-    {
-      g_warning ("Unknown calendar component type: %d\n", component_kind);
-      g_free (event);
+  g_object_class_install_property (gobject_class, PROP_DAY,
+    g_param_spec_uint ("day", "Day",
+                       "Currently monitored day (1–31; 0 = unset)",
+                       0, G_MAXUINT, 0, G_PARAM_READWRITE));
 
-      return NULL;
-    }
+  g_object_class_install_property (gobject_class, PROP_MONTH,
+    g_param_spec_uint ("month", "Month",
+                       "Currently monitored month (0–11)",
+                       0, G_MAXUINT, 0, G_PARAM_READWRITE));
 
-  return event;
+  g_object_class_install_property (gobject_class, PROP_YEAR,
+    g_param_spec_uint ("year", "Year",
+                       "Currently monitored year",
+                       0, G_MAXUINT, 0, G_PARAM_READWRITE));
+
+  signals[APPOINTMENTS_CHANGED] =
+    g_signal_new ("appointments-changed",
+                  G_TYPE_FROM_CLASS (gobject_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (CalendarClientClass, appointments_changed),
+                  NULL, NULL, NULL, G_TYPE_NONE, 0);
+
+  signals[TASKS_CHANGED] =
+    g_signal_new ("tasks-changed",
+                  G_TYPE_FROM_CLASS (gobject_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (CalendarClientClass, tasks_changed),
+                  NULL, NULL, NULL, G_TYPE_NONE, 0);
 }
 
-static CalendarEvent *
-calendar_event_copy (CalendarEvent *event)
+static void
+calendar_client_init (CalendarClient *client)
 {
-  CalendarEvent *retval;
+  client->priv = calendar_client_get_instance_private (client);
+  client->priv->day   = G_MAXUINT;
+  client->priv->month = G_MAXUINT;
+  client->priv->year  = G_MAXUINT;
+}
 
-  if (!event)
-    return NULL;
+static void
+calendar_client_finalize (GObject *object)
+{
+  CalendarClient *client = CALENDAR_CLIENT (object);
 
-  retval = g_new0 (CalendarEvent, 1);
+  for (GSList *l = client->priv->providers; l != NULL; l = l->next)
+    g_object_unref (l->data);
+  g_slist_free (client->priv->providers);
+  client->priv->providers = NULL;
 
-  retval->type = event->type;
+  G_OBJECT_CLASS (calendar_client_parent_class)->finalize (object);
+}
 
-  switch (event->type)
+static void
+calendar_client_set_property (GObject      *object,
+                               guint         prop_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  CalendarClient *client = CALENDAR_CLIENT (object);
+  switch (prop_id)
     {
-    case CALENDAR_EVENT_APPOINTMENT:
-      calendar_appointment_copy (CALENDAR_APPOINTMENT (event),
-				 CALENDAR_APPOINTMENT (retval));
+    case PROP_DAY:
+      calendar_client_select_day (client, g_value_get_uint (value));
       break;
-    case CALENDAR_EVENT_TASK:
-      calendar_task_copy (CALENDAR_TASK (event),
-			  CALENDAR_TASK (retval));
+    case PROP_MONTH:
+      calendar_client_select_month (client, g_value_get_uint (value),
+                                    client->priv->year);
       break;
-    case CALENDAR_EVENT_ALL:
+    case PROP_YEAR:
+      calendar_client_select_month (client, client->priv->month,
+                                    g_value_get_uint (value));
+      break;
     default:
-      g_assert_not_reached ();
-      break;
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
-
-  return retval;
 }
 
-static char *
-calendar_event_get_uid (CalendarEvent *event)
+static void
+calendar_client_get_property (GObject    *object,
+                               guint       prop_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
 {
-  switch (event->type)
+  CalendarClient *client = CALENDAR_CLIENT (object);
+  switch (prop_id)
     {
-    case CALENDAR_EVENT_APPOINTMENT:
-      return g_strdup_printf ("%s%s", CALENDAR_APPOINTMENT (event)->uid, CALENDAR_APPOINTMENT (event)->rid ? CALENDAR_APPOINTMENT (event)->rid : "");
-      break;
-    case CALENDAR_EVENT_TASK:
-      return g_strdup (CALENDAR_TASK (event)->uid);
-      break;
-    case CALENDAR_EVENT_ALL:
+    case PROP_DAY:   g_value_set_uint (value, client->priv->day);   break;
+    case PROP_MONTH: g_value_set_uint (value, client->priv->month); break;
+    case PROP_YEAR:  g_value_set_uint (value, client->priv->year);  break;
     default:
-      g_assert_not_reached ();
-      break;
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
-
-  return NULL;
 }
 
-static gboolean
-calendar_event_equal (CalendarEvent *a,
-		      CalendarEvent *b)
+/* =========================================================================
+ * Provider management (internal)
+ * ========================================================================= */
+
+static void
+on_provider_appointments_changed (CalendarProvider *provider,
+                                   CalendarClient   *client)
 {
-  if (!a && !b)
-    return TRUE;
-
-  if ((a && !b) || (!a && b))
-    return FALSE;
-
-  if (a->type != b->type)
-    return FALSE;
-
-  switch (a->type)
-    {
-    case CALENDAR_EVENT_APPOINTMENT:
-      return calendar_appointment_equal (CALENDAR_APPOINTMENT (a),
-					 CALENDAR_APPOINTMENT (b));
-    case CALENDAR_EVENT_TASK:
-      return calendar_task_equal (CALENDAR_TASK (a),
-				  CALENDAR_TASK (b));
-    case CALENDAR_EVENT_ALL:
-    default:
-      break;
-    }
-
-  g_assert_not_reached ();
-
-  return FALSE;
+  (void) provider;
+  g_signal_emit (client, signals[APPOINTMENTS_CHANGED], 0);
 }
 
-static inline void
-calendar_event_debug_dump (CalendarEvent *event)
+static void
+on_provider_tasks_changed (CalendarProvider *provider,
+                            CalendarClient   *client)
 {
-#ifdef CALENDAR_ENABLE_DEBUG
-  switch (event->type)
+  (void) provider;
+  g_signal_emit (client, signals[TASKS_CHANGED], 0);
+}
+
+static void
+calendar_client_add_provider (CalendarClient   *client,
+                               CalendarProvider *provider)
+{
+  g_return_if_fail (CALENDAR_IS_PROVIDER (provider));
+
+  client->priv->providers =
+    g_slist_prepend (client->priv->providers, g_object_ref (provider));
+
+  g_signal_connect (provider, "appointments-changed",
+                    G_CALLBACK (on_provider_appointments_changed), client);
+  g_signal_connect (provider, "tasks-changed",
+                    G_CALLBACK (on_provider_tasks_changed), client);
+}
+
+/* =========================================================================
+ * Auto-discovery helpers
+ * ========================================================================= */
+
+#ifdef HAVE_LIBICAL
+static void
+add_vdir_providers_from_path (CalendarClient *client, const char *path)
+{
+  GSList *providers = calendar_vdir_discover (path);
+  for (GSList *l = providers; l != NULL; l = l->next)
     {
-    case CALENDAR_EVENT_APPOINTMENT:
+      calendar_client_add_provider (client, CALENDAR_PROVIDER (l->data));
+      g_object_unref (l->data);
+    }
+  g_slist_free (providers);
+}
+#endif /* HAVE_LIBICAL */
+
+/* =========================================================================
+ * Public constructor
+ * ========================================================================= */
+
+CalendarClient *
+calendar_client_new (GSettings *settings)
+{
+  CalendarClient *client = g_object_new (CALENDAR_TYPE_CLIENT, NULL);
+
+#ifdef HAVE_EDS
+  {
+    CalendarProvider *eds = calendar_eds_provider_new (settings);
+    if (eds != NULL)
       {
-	char   *start_str;
-	char   *end_str;
-	GSList *l;
-
-	start_str = CALENDAR_APPOINTMENT (event)->start_time ?
-	                    isodate_from_time_t (CALENDAR_APPOINTMENT (event)->start_time) :
-	                    g_strdup ("(undefined)");
-	end_str = CALENDAR_APPOINTMENT (event)->end_time ?
-	                    isodate_from_time_t (CALENDAR_APPOINTMENT (event)->end_time) :
-	                    g_strdup ("(undefined)");
-
-	g_free (start_str);
-	g_free (end_str);
-
-	for (l = CALENDAR_APPOINTMENT (event)->occurrences; l; l = l->next)
-	  {
-	    CalendarOccurrence *occurrence = l->data;
-
-	    start_str = occurrence->start_time ?
-	      isodate_from_time_t (occurrence->start_time) :
-	      g_strdup ("(undefined)");
-
-	    end_str = occurrence->end_time ?
-	      isodate_from_time_t (occurrence->end_time) :
-	      g_strdup ("(undefined)");
-
-	    g_free (start_str);
-	    g_free (end_str);
-	  }
+        calendar_client_add_provider (client, eds);
+        g_object_unref (eds);
       }
-      break;
-    case CALENDAR_EVENT_TASK:
+  }
+#endif /* HAVE_EDS */
+
+#ifdef HAVE_LIBICAL
+  {
+    /* Auto-discover vdirsyncer's default storage path */
+    const char *data_home = g_get_user_data_dir ();
+    char *vdir_base = g_build_filename (data_home, VDIRSYNCER_DEFAULT_SUBDIR, NULL);
+    add_vdir_providers_from_path (client, vdir_base);
+    g_free (vdir_base);
+
+    /* Additional paths from GSettings (if the key exists in @settings) */
+    if (settings != NULL)
       {
-	char *start_str;
-	char *due_str;
-	char *completed_str;
+        /* Check whether this settings instance has the vdir key before
+         * calling get_strv (avoids a GLib critical if key is absent). */
+        gchar **all_keys  = g_settings_list_keys (settings);
+        gboolean has_key  = FALSE;
+        for (int ki = 0; all_keys[ki] != NULL; ki++)
+          if (g_strcmp0 (all_keys[ki], KEY_VDIR_CALENDAR_PATHS) == 0)
+            { has_key = TRUE; break; }
+        g_strfreev (all_keys);
 
-	start_str = CALENDAR_TASK (event)->start_time ?
-	                    isodate_from_time_t (CALENDAR_TASK (event)->start_time) :
-	                    g_strdup ("(undefined)");
-	due_str = CALENDAR_TASK (event)->due_time ?
-	                    isodate_from_time_t (CALENDAR_TASK (event)->due_time) :
-	                    g_strdup ("(undefined)");
-	completed_str = CALENDAR_TASK (event)->completed_time ?
-	                    isodate_from_time_t (CALENDAR_TASK (event)->completed_time) :
-	                    g_strdup ("(undefined)");
+        if (has_key)
+          {
+            gchar **paths = g_settings_get_strv (settings, KEY_VDIR_CALENDAR_PATHS);
+            for (gint i = 0; paths[i] != NULL; i++)
+              {
+                CalendarProvider *p = calendar_vdir_provider_new (paths[i]);
+                if (p != NULL)
+                  {
+                    calendar_client_add_provider (client, p);
+                    g_object_unref (p);
+                  }
+              }
+            g_strfreev (paths);
+          } /* if (has_key) */
+      } /* if (settings != NULL) */
+  } /* HAVE_LIBICAL block */
+#endif /* HAVE_LIBICAL */
 
-	g_free (completed_str);
-      }
-      break;
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-#endif
+  (void) settings; /* suppress warning when both EDS and libical are absent */
+  return client;
 }
 
-static inline CalendarClientQuery *
-goddamn_this_is_crack (CalendarClientSource *source,
-                       ECalClientView       *view,
-                       gboolean             *emit_signal)
-{
-  g_assert (view != NULL);
-
-  if (source->completed_query.view == view)
-    {
-      if (emit_signal)
-	*emit_signal = TRUE;
-      return &source->completed_query;
-    }
-  else if (source->in_progress_query.view == view)
-    {
-      if (emit_signal)
-	*emit_signal = FALSE;
-      return &source->in_progress_query;
-    }
-
-  g_assert_not_reached ();
-
-  return NULL;
-}
-
-static void
-calendar_client_query_finalize (CalendarClientQuery *query)
-{
-  if (query->view)
-    g_object_unref (query->view);
-  query->view = NULL;
-
-  if (query->events)
-    g_hash_table_destroy (query->events);
-  query->events = NULL;
-}
-
-static void
-calendar_client_stop_query (CalendarClient       *client,
-			    CalendarClientSource *source,
-			    CalendarClientQuery  *query)
-{
-  if (query == &source->in_progress_query)
-    {
-      g_assert (source->query_in_progress != FALSE);
-
-      source->query_in_progress = FALSE;
-    }
-  else if (query == &source->completed_query)
-    {
-      g_assert (source->query_completed != FALSE);
-
-      source->query_completed = FALSE;
-    }
-  else
-    g_assert_not_reached ();
-
-  calendar_client_query_finalize (query);
-}
-
-typedef struct {
-  CalendarClient *client;
-  CalendarClientSource *source;
-  time_t start_time;
-  time_t end_time;
-  gboolean events_changed;
-  ICalTimezone *system_timezone;
-} InstanceGenerationData;
-
-static gboolean
-calendar_client_instance_cb (ICalComponent *icomp,
-                             ICalTime *instance_start,
-                             ICalTime *instance_end,
-                             gpointer user_data,
-                             GCancellable *cancellable,
-                             GError **error)
-{
-  InstanceGenerationData *data = user_data;
-  CalendarEvent *event;
-  CalendarEvent *old_event;
-  char *uid;
-  time_t start_time_t, end_time_t;
-
-  /* Convert instance times from their timezone to local time */
-  ICalTimezone *event_tz = i_cal_time_get_timezone(instance_start);
-
-  ICalTime *local_start = i_cal_time_clone(instance_start);
-  ICalTime *local_end = i_cal_time_clone(instance_end);
-
-  /* Convert to local timezone */
-  if (event_tz && data->system_timezone && event_tz != data->system_timezone) {
-    i_cal_time_convert_timezone(local_start, event_tz, data->system_timezone);
-    i_cal_time_convert_timezone(local_end, event_tz, data->system_timezone);
-  }
-
-  start_time_t = i_cal_time_as_timet (local_start);
-  end_time_t = i_cal_time_as_timet (local_end);
-
-  g_object_unref(local_start);
-  g_object_unref(local_end);
-
-  /* Create event from the component */
-  event = calendar_event_new (icomp, data->source, data->client->priv->zone);
-  if (!event)
-    return TRUE;
-
-  /* Override the times with the instance times (already converted to local timezone) */
-  if (event->type == CALENDAR_EVENT_APPOINTMENT) {
-    CALENDAR_APPOINTMENT (event)->start_time = start_time_t;
-    CALENDAR_APPOINTMENT (event)->end_time = end_time_t;
-
-    /* Create a single occurrence for this instance */
-    CalendarOccurrence *occurrence = g_new0 (CalendarOccurrence, 1);
-    occurrence->start_time = start_time_t;
-    occurrence->end_time = end_time_t;
-    CALENDAR_APPOINTMENT (event)->occurrences = g_slist_prepend (NULL, occurrence);
-  }
-
-  uid = calendar_event_get_uid (event);
-  old_event = g_hash_table_lookup (data->source->in_progress_query.events, uid);
-
-  if (!calendar_event_equal (event, old_event)) {
-    calendar_event_debug_dump (event);
-    g_hash_table_replace (data->source->in_progress_query.events, uid, event);
-    data->events_changed = TRUE;
-  } else {
-    calendar_event_free (event);
-    g_free (uid);
-  }
-
-  return TRUE;
-}
-
-static void
-calendar_client_start_query (CalendarClient       *client,
-			     CalendarClientSource *source,
-			     const char           *query)
-{
-  time_t month_begin, month_end;
-  GSList *objects = NULL;
-  GError *error = NULL;
-  InstanceGenerationData instance_data;
-
-  /* Validate that client is properly initialized */
-  if (client->priv->month == G_MAXUINT || client->priv->year == G_MAXUINT) {
-    return;
-  }
-
-  /* Calculate time range */
-  month_begin = make_time_for_day_begin (1, client->priv->month, client->priv->year);
-
-  /* Handle year rollover when month is December (11) */
-  if (client->priv->month == 11) {  /* December */
-    month_end = make_time_for_day_begin (1, 0, client->priv->year + 1);  /* January next year */
-  } else {
-    month_end = make_time_for_day_begin (1, client->priv->month + 1, client->priv->year);
-  }
-
-  /* Validate time range */
-  if (month_begin == -1 || month_end == -1) {
-    g_warning ("Invalid time range: month_begin=%ld, month_end=%ld", (long)month_begin, (long)month_end);
-    calendar_client_stop_query (client, source, &source->in_progress_query);
-    return;
-  }
-
-  if (source->query_in_progress)
-    calendar_client_stop_query (client, source, &source->in_progress_query);
-
-  source->query_in_progress        = TRUE;
-  source->in_progress_query.view = NULL; /* No view needed for instance generation */
-  source->in_progress_query.events = g_hash_table_new_full (g_str_hash,
-							    g_str_equal,
-							    g_free,
-							    (GDestroyNotify) calendar_event_free);
-
-  /* Get all objects for the month using query */
-  if (!e_cal_client_get_object_list_sync (source->source, query, &objects, NULL, &error)) {
-    g_warning ("Error getting calendar objects: %s", error->message);
-    g_error_free (error);
-    calendar_client_stop_query (client, source, &source->in_progress_query);
-    return;
-  }
-
-  /* Get system timezone once for all instances */
-  SystemTimezone *systz = system_timezone_new();
-  const char *system_tz_name = system_timezone_get(systz);
-  ICalTimezone *system_timezone = i_cal_timezone_get_builtin_timezone(system_tz_name);
-  g_object_unref(systz);
-
-  /* Set up instance generation data */
-  instance_data.client = client;
-  instance_data.source = source;
-  instance_data.start_time = month_begin;
-  instance_data.end_time = month_end;
-  instance_data.events_changed = FALSE;
-  instance_data.system_timezone = system_timezone;
-
-  /* Generate instances for each object with automatic timezone conversion */
-  for (GSList *l = objects; l; l = l->next) {
-    ICalComponent *component = l->data;
-
-    /* Some instances of recurring events may yield negative months - I think these are safe to skip */
-    if (month_begin < 0 || month_end < 0) {
-      continue;
-    }
-
-    e_cal_client_generate_instances_for_object_sync (source->source,
-                                                     component,
-                                                     month_begin,
-                                                     month_end,
-                                                     NULL, /* cancellable */
-                                                     calendar_client_instance_cb,
-                                                     &instance_data);
-  }
-
-  g_slist_free_full (objects, g_object_unref);
-
-  /* Query is now completed */
-  calendar_client_query_finalize (&source->completed_query);
-  source->completed_query = source->in_progress_query;
-  source->query_completed = TRUE;
-
-  source->query_in_progress = FALSE;
-  source->in_progress_query.view = NULL;
-  source->in_progress_query.events = NULL;
-
-  /* Emit signal to capture changed events */
-  if (instance_data.events_changed) {
-    g_signal_emit (source->client, source->changed_signal_id, 0);
-  }
-}
-
-void
-calendar_client_update_appointments (CalendarClient *client)
-{
-  GSList *l;
-  char   *query;
-  char   *month_begin;
-  char   *month_end;
-
-  if (client->priv->month == G_MAXUINT || client->priv->year == G_MAXUINT)
-    return;
-
-  month_begin = make_isodate_for_day_begin (1,
-					    client->priv->month,
-					    client->priv->year);
-
-  month_end = make_isodate_for_day_begin (1,
-					  client->priv->month + 1,
-					  client->priv->year);
-
-  query = g_strdup_printf ("occur-in-time-range? (make-time \"%s\") "
-			                        "(make-time \"%s\")",
-			   month_begin, month_end);
-
-  for (l = client->priv->appointment_sources; l; l = l->next)
-    {
-      CalendarClientSource *cs = l->data;
-
-      calendar_client_start_query (client, cs, query);
-    }
-
-  g_free (month_begin);
-  g_free (month_end);
-  g_free (query);
-}
-
-/* FIXME:
- * perhaps we should use evo's "hide_completed_tasks" pref?
- */
-void
-calendar_client_update_tasks (CalendarClient *client)
-{
-  GSList *l;
-  char   *query;
-
-#ifdef FIX_BROKEN_TASKS_QUERY
-  /* FIXME: this doesn't work for tasks without a start or
-   *        due date
-   *        Look at filter_task() to see the behaviour we
-   *        want.
-   */
-
-  char   *day_begin;
-  char   *day_end;
-
-  if (client->priv->day == G_MAXUINT ||
-      client->priv->month == G_MAXUINT ||
-      client->priv->year == G_MAXUINT)
-    return;
-
-  day_begin = make_isodate_for_day_begin (client->priv->day,
-					  client->priv->month,
-					  client->priv->year);
-
-  day_end = make_isodate_for_day_begin (client->priv->day + 1,
-					client->priv->month,
-					client->priv->year);
-  if (!day_begin || !day_end)
-    {
-      g_warning ("Cannot run query with invalid date: %dd %dy %dm\n",
-		 client->priv->day,
-		 client->priv->month,
-		 client->priv->year);
-      g_free (day_begin);
-      g_free (day_end);
-      return;
-    }
-
-  query = g_strdup_printf ("(and (occur-in-time-range? (make-time \"%s\") "
-                                                      "(make-time \"%s\")) "
-                             "(or (not is-completed?) "
-                               "(and (is-completed?) "
-                                    "(not (completed-before? (make-time \"%s\"))))))",
-			   day_begin, day_end, day_begin);
-#else
-  query = g_strdup ("#t");
-#endif /* FIX_BROKEN_TASKS_QUERY */
-
-  for (l = client->priv->task_sources; l; l = l->next)
-    {
-      CalendarClientSource *cs = l->data;
-
-      calendar_client_start_query (client, cs, query);
-    }
-
-#ifdef FIX_BROKEN_TASKS_QUERY
-  g_free (day_begin);
-  g_free (day_end);
-#endif
-  g_free (query);
-}
-
-static void
-calendar_client_source_finalize (CalendarClientSource *source)
-{
-  source->client = NULL;
-
-  if (source->source) {
-    g_object_unref (source->source);
-  }
-  source->source = NULL;
-
-  calendar_client_query_finalize (&source->completed_query);
-  calendar_client_query_finalize (&source->in_progress_query);
-
-  source->query_completed   = FALSE;
-  source->query_in_progress = FALSE;
-}
-
-static int
-compare_calendar_sources (CalendarClientSource *s1,
-			  CalendarClientSource *s2)
-{
-  return (s1->source == s2->source) ? 0 : 1;
-}
-
-static GSList *
-calendar_client_update_sources_list (CalendarClient *client,
-				     GSList         *sources,
-				     GList          *esources,
-				     guint           changed_signal_id)
-{
-  GList *link;
-  GSList *retval, *l;
-
-  retval = NULL;
-
-  for (link = esources; link != NULL; link = g_list_next (link))
-    {
-      CalendarClientSource  dummy_source;
-      CalendarClientSource *new_source;
-      GSList               *s;
-      ECalClient           *esource = link->data;
-
-      dummy_source.source = esource;
-
-      if ((s = g_slist_find_custom (sources,
-				    &dummy_source,
-				    (GCompareFunc) compare_calendar_sources)))
-	{
-	  new_source = s->data;
-	  sources = g_slist_delete_link (sources, s);
-	}
-      else
-	{
-	  new_source                    = g_new0 (CalendarClientSource, 1);
-	  new_source->client            = client;
-	  new_source->source            = g_object_ref (esource);
-	  new_source->changed_signal_id = changed_signal_id;
-	}
-
-      retval = g_slist_prepend (retval, new_source);
-    }
-
-  for (l = sources; l; l = l->next)
-    {
-      CalendarClientSource *source = l->data;
-
-      calendar_client_source_finalize (source);
-      g_free (source);
-    }
-  g_slist_free (sources);
-
-  return retval;
-}
-
-static void
-calendar_client_appointment_sources_changed (CalendarClient  *client)
-{
-  GList *list;
-
-  list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
-
-  client->priv->appointment_sources = calendar_client_update_sources_list (client,
-									   client->priv->appointment_sources,
-									   list,
-									   signals [APPOINTMENTS_CHANGED]);
-
-  load_calendars (client, CALENDAR_EVENT_APPOINTMENT);
-  calendar_client_update_appointments (client);
-
-  g_list_free (list);
-}
-
-static void
-calendar_client_task_sources_changed (CalendarClient  *client)
-{
-  GList *list;
-
-  list = calendar_sources_get_task_clients (client->priv->calendar_sources);
-
-  client->priv->task_sources = calendar_client_update_sources_list (client,
-								    client->priv->task_sources,
-								    list,
-								    signals [TASKS_CHANGED]);
-
-  load_calendars (client, CALENDAR_EVENT_TASK);
-  calendar_client_update_tasks (client);
-
-  g_list_free (list);
-}
+/* =========================================================================
+ * Date selection
+ * ========================================================================= */
 
 void
 calendar_client_get_date (CalendarClient *client,
-                          guint          *year,
-                          guint          *month,
-                          guint          *day)
+                           guint          *year,
+                           guint          *month,
+                           guint          *day)
 {
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
 
-  if (year)
-    *year = client->priv->year;
-
-  if (month)
-    *month = client->priv->month;
-
-  if (day)
-    *day = client->priv->day;
+  if (year)  *year  = client->priv->year;
+  if (month) *month = client->priv->month;
+  if (day)   *day   = client->priv->day;
 }
 
 void
 calendar_client_select_month (CalendarClient *client,
-			      guint           month,
-			      guint           year)
+                               guint           month,
+                               guint           year)
 {
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
   g_return_if_fail (month <= 11);
 
-  if (client->priv->year != year || client->priv->month != month)
-    {
-      client->priv->month = month;
-      client->priv->year  = year;
+  if (client->priv->month == month && client->priv->year == year)
+    return;
 
-      calendar_client_update_appointments (client);
-      calendar_client_update_tasks (client);
+  client->priv->month = month;
+  client->priv->year  = year;
 
-      g_object_freeze_notify (G_OBJECT (client));
-      g_object_notify (G_OBJECT (client), "month");
-      g_object_notify (G_OBJECT (client), "year");
-      g_object_thaw_notify (G_OBJECT (client));
-    }
+  for (GSList *l = client->priv->providers; l != NULL; l = l->next)
+    calendar_provider_select_month (CALENDAR_PROVIDER (l->data), month, year);
+
+  g_object_freeze_notify (G_OBJECT (client));
+  g_object_notify (G_OBJECT (client), "month");
+  g_object_notify (G_OBJECT (client), "year");
+  g_object_thaw_notify (G_OBJECT (client));
 }
 
 void
-calendar_client_select_day (CalendarClient *client,
-			    guint           day)
+calendar_client_select_day (CalendarClient *client, guint day)
 {
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
   g_return_if_fail (day <= 31);
 
-  if (client->priv->day != day)
-    {
-      client->priv->day = day;
+  if (client->priv->day == day)
+    return;
 
-      /* don't need to update appointments unless
-       * the selected month changes
-       */
-#ifdef FIX_BROKEN_TASKS_QUERY
-      calendar_client_update_tasks (client);
-#endif
+  client->priv->day = day;
 
-      g_object_notify (G_OBJECT (client), "day");
-    }
+  for (GSList *l = client->priv->providers; l != NULL; l = l->next)
+    calendar_provider_select_day (CALENDAR_PROVIDER (l->data), day);
+
+  g_object_notify (G_OBJECT (client), "day");
 }
 
-typedef struct
+/* =========================================================================
+ * Time range helpers
+ * ========================================================================= */
+
+static inline time_t
+make_time_for_day_begin (int day, int month, int year)
 {
-  CalendarClient *client;
-  GSList         *events;
-  time_t          start_time;
-  time_t          end_time;
-} FilterData;
-
-typedef void (* CalendarEventFilterFunc) (const char    *uid,
-					  CalendarEvent *event,
-					  FilterData    *filter_data);
-
-static void
-filter_appointment (const char    *uid,
-		    CalendarEvent *event,
-		    FilterData    *filter_data)
-{
-  GSList *occurrences, *l;
-
-  if (event->type != CALENDAR_EVENT_APPOINTMENT)
-    return;
-
-  occurrences = CALENDAR_APPOINTMENT (event)->occurrences;
-  CALENDAR_APPOINTMENT (event)->occurrences = NULL;
-
-  for (l = occurrences; l; l = l->next)
-    {
-      CalendarOccurrence *occurrence = l->data;
-      time_t start_time = occurrence->start_time;
-      time_t end_time   = occurrence->end_time;
-
-      if ((start_time >= filter_data->start_time &&
-           start_time < filter_data->end_time) ||
-          (start_time <= filter_data->start_time &&
-           (end_time - 1) > filter_data->start_time))
-	{
-	  CalendarEvent *new_event;
-
-	  new_event = calendar_event_copy (event);
-
-	  CALENDAR_APPOINTMENT (new_event)->start_time = occurrence->start_time;
-	  CALENDAR_APPOINTMENT (new_event)->end_time   = occurrence->end_time;
-
-	  filter_data->events = g_slist_prepend (filter_data->events, new_event);
-	}
-    }
-
-  CALENDAR_APPOINTMENT (event)->occurrences = occurrences;
+  struct tm tm = { 0, };
+  tm.tm_mday  = day;
+  tm.tm_mon   = month;
+  tm.tm_year  = year - 1900;
+  tm.tm_isdst = -1;
+  return mktime (&tm);
 }
 
-static void
-filter_task (const char    *uid,
-	     CalendarEvent *event,
-	     FilterData    *filter_data)
+/* =========================================================================
+ * Event retrieval
+ * ========================================================================= */
+
+/* Explicit update triggers (kept for backward compatibility with
+ * calendar-window.c which calls them after certain state changes) */
+void
+calendar_client_update_appointments (CalendarClient *client)
 {
-#ifdef FIX_BROKEN_TASKS_QUERY
-  CalendarTask *task;
-#endif
+  g_return_if_fail (CALENDAR_IS_CLIENT (client));
 
-  if (event->type != CALENDAR_EVENT_TASK)
+  if (client->priv->month == G_MAXUINT || client->priv->year == G_MAXUINT)
     return;
 
-#ifdef FIX_BROKEN_TASKS_QUERY
-  task = CALENDAR_TASK (event);
-
-  if (task->start_time && task->start_time > filter_data->start_time)
-    return;
-
-  if (task->completed_time &&
-      (task->completed_time < filter_data->start_time ||
-       task->completed_time > filter_data->end_time))
-    return;
-#endif /* FIX_BROKEN_TASKS_QUERY */
-
-  filter_data->events = g_slist_prepend (filter_data->events,
-					 calendar_event_copy (event));
+  /* Re-issue select_month so providers re-run their queries */
+  guint month = client->priv->month;
+  guint year  = client->priv->year;
+  client->priv->month = G_MAXUINT; /* force change detection */
+  calendar_client_select_month (client, month, year);
 }
 
-static GSList *
-calendar_client_filter_events (CalendarClient          *client,
-			       GSList                  *sources,
-			       CalendarEventFilterFunc  filter_func,
-			       time_t                   start_time,
-			       time_t                   end_time)
+void
+calendar_client_update_tasks (CalendarClient *client)
 {
-  FilterData  filter_data;
-  GSList     *l;
-  GSList     *retval;
-
-  if (!sources)
-    return NULL;
-
-  filter_data.client     = client;
-  filter_data.events     = NULL;
-  filter_data.start_time = start_time;
-  filter_data.end_time   = end_time;
-
-  retval = NULL;
-  for (l = sources; l; l = l->next)
-    {
-      CalendarClientSource *source = l->data;
-
-      if (source->query_completed)
-	{
-	  filter_data.events = NULL;
-	  g_hash_table_foreach (source->completed_query.events,
-				(GHFunc) filter_func,
-				&filter_data);
-
-	  filter_data.events = g_slist_reverse (filter_data.events);
-
-	  retval = g_slist_concat (retval, filter_data.events);
-	}
-    }
-
-  return retval;
+  calendar_client_update_appointments (client); /* providers refresh both */
 }
 
 GSList *
 calendar_client_get_events (CalendarClient    *client,
-			    CalendarEventType  event_mask)
+                             CalendarEventType  event_mask)
 {
-  GSList *appointments;
-  GSList *tasks;
-  time_t  day_begin;
-  time_t  day_end;
-
   g_return_val_if_fail (CALENDAR_IS_CLIENT (client), NULL);
-  g_return_val_if_fail (client->priv->day != G_MAXUINT, NULL);
+  g_return_val_if_fail (client->priv->day   != G_MAXUINT, NULL);
   g_return_val_if_fail (client->priv->month != G_MAXUINT, NULL);
-  g_return_val_if_fail (client->priv->year != G_MAXUINT, NULL);
+  g_return_val_if_fail (client->priv->year  != G_MAXUINT, NULL);
 
-  day_begin = make_time_for_day_begin (client->priv->day,
-				       client->priv->month,
-				       client->priv->year);
-  day_end   = make_time_for_day_begin (client->priv->day + 1,
-				       client->priv->month,
-				       client->priv->year);
+  time_t day_begin = make_time_for_day_begin ((int) client->priv->day,
+                                               (int) client->priv->month,
+                                               (int) client->priv->year);
+  time_t day_end   = make_time_for_day_begin ((int) client->priv->day + 1,
+                                               (int) client->priv->month,
+                                               (int) client->priv->year);
 
-  appointments = NULL;
-  if (event_mask & CALENDAR_EVENT_APPOINTMENT)
+  GSList *result = NULL;
+  for (GSList *l = client->priv->providers; l != NULL; l = l->next)
     {
-      appointments = calendar_client_filter_events (client,
-						    client->priv->appointment_sources,
-						    filter_appointment,
-						    day_begin,
-						    day_end);
+      GSList *events =
+        calendar_provider_get_events (CALENDAR_PROVIDER (l->data),
+                                       event_mask, day_begin, day_end);
+      result = g_slist_concat (result, events);
     }
 
-  tasks = NULL;
-  if (event_mask & CALENDAR_EVENT_TASK)
-    {
-      tasks = calendar_client_filter_events (client,
-					     client->priv->task_sources,
-					     filter_task,
-					     day_begin,
-					     day_end);
-    }
-
-  return g_slist_concat (appointments, tasks);
+  return result;
 }
 
 static inline int
 day_from_time_t (time_t t)
 {
   struct tm *tm = localtime (&t);
-
-  g_assert (tm == NULL || (tm->tm_mday >=1 && tm->tm_mday <= 31));
-
-  return tm ? tm->tm_mday : 0;
+  return (tm && tm->tm_mday >= 1 && tm->tm_mday <= 31) ? tm->tm_mday : 0;
 }
 
 void
 calendar_client_foreach_appointment_day (CalendarClient  *client,
-					 CalendarDayIter  iter_func,
-					 gpointer         user_data)
+                                          CalendarDayIter  iter_func,
+                                          gpointer         user_data)
 {
-  GSList   *appointments, *l;
-  gboolean  marked_days [32] = { FALSE, };
-  time_t    month_begin;
-  time_t    month_end;
-  int       i;
-
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
   g_return_if_fail (iter_func != NULL);
   g_return_if_fail (client->priv->month != G_MAXUINT);
-  g_return_if_fail (client->priv->year != G_MAXUINT);
+  g_return_if_fail (client->priv->year  != G_MAXUINT);
 
-  month_begin = make_time_for_day_begin (1,
-					 client->priv->month,
-					 client->priv->year);
-  month_end   = make_time_for_day_begin (1,
-					 client->priv->month + 1,
-					 client->priv->year);
+  time_t month_begin = make_time_for_day_begin (1,
+                                                 (int) client->priv->month,
+                                                 (int) client->priv->year);
+  time_t month_end   = make_time_for_day_begin (1,
+                                                 (int) client->priv->month + 1,
+                                                 (int) client->priv->year);
 
-  appointments = calendar_client_filter_events (client,
-						client->priv->appointment_sources,
-						filter_appointment,
-						month_begin,
-						month_end);
-  for (l = appointments; l; l = l->next)
+  /* Collect appointments for the entire month from all providers */
+  GSList *all_appts = NULL;
+  for (GSList *l = client->priv->providers; l != NULL; l = l->next)
     {
-      CalendarAppointment *appointment = l->data;
+      GSList *events =
+        calendar_provider_get_events (CALENDAR_PROVIDER (l->data),
+                                       CALENDAR_EVENT_APPOINTMENT,
+                                       month_begin, month_end);
+      all_appts = g_slist_concat (all_appts, events);
+    }
 
-      if (appointment->start_time)
+  /* Mark days */
+  gboolean marked_days[32] = { FALSE, };
+
+  for (GSList *l = all_appts; l != NULL; l = l->next)
+    {
+      CalendarAppointment *appt = CALENDAR_APPOINTMENT (l->data);
+
+      if (!appt->start_time)
+        continue;
+
+      time_t day_time = appt->start_time;
+      if (day_time >= month_begin)
+        marked_days[day_from_time_t (day_time)] = TRUE;
+
+      if (appt->end_time)
         {
-          time_t day_time = appointment->start_time;
-
-          if (day_time >= month_begin)
-            marked_days [day_from_time_t (day_time)] = TRUE;
-
-          if (appointment->end_time)
+          int duration = (int)(appt->end_time - appt->start_time);
+          for (int offset = 1;
+               offset <= duration / 86400 && duration != offset * 86400;
+               offset++)
             {
-              int day_offset;
-              int duration = appointment->end_time - appointment->start_time;
-	      /* mark the days for the appointment, no need to add an extra one when duration is a multiple of 86400 */
-              for (day_offset = 1; day_offset <= duration / 86400 && duration != day_offset * 86400; day_offset++)
-                {
-                  time_t day_tm = appointment->start_time + day_offset * 86400;
-
-                  if (day_tm > month_end)
-                    break;
-                  if (day_tm >= month_begin)
-                    marked_days [day_from_time_t (day_tm)] = TRUE;
-                }
+              time_t day_tm = appt->start_time + offset * 86400;
+              if (day_tm > month_end)
+                break;
+              if (day_tm >= month_begin)
+                marked_days[day_from_time_t (day_tm)] = TRUE;
             }
         }
-      calendar_event_free (CALENDAR_EVENT (appointment));
-    }
 
-  g_slist_free (appointments);
-
-  for (i = 1; i < 32; i++)
-    {
-      if (marked_days [i])
-	iter_func (client, i, user_data);
+      calendar_event_free (CALENDAR_EVENT (l->data));
     }
+  g_slist_free (all_appts);
+
+  for (int i = 1; i < 32; i++)
+    if (marked_days[i])
+      iter_func (client, (guint) i, user_data);
 }
+
+/* =========================================================================
+ * Task mutation (delegated to the first provider that supports it)
+ * ========================================================================= */
 
 void
 calendar_client_set_task_completed (CalendarClient *client,
-				    char           *task_uid,
-				    gboolean        task_completed,
-				    guint           percent_complete)
+                                     char           *task_uid,
+                                     gboolean        task_completed,
+                                     guint           percent_complete)
 {
-  GSList *l;
-  ECalClient *esource;
-  ICalComponent *component;
-  ICalProperty *prop;
-  ICalPropertyStatus status;
-
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
   g_return_if_fail (task_uid != NULL);
-  g_return_if_fail (task_completed == FALSE || percent_complete == 100);
 
-  component = NULL;
-  esource = NULL;
-  for (l = client->priv->task_sources; l; l = l->next)
+  for (GSList *l = client->priv->providers; l != NULL; l = l->next)
     {
-      CalendarClientSource *source = l->data;
-
-      esource = source->source;
-      e_cal_client_get_object_sync (esource, task_uid, NULL, &component, NULL, NULL);
-      if (component)
-        break;
-    }
-
-  if (!component)
-    {
-      g_warning ("Cannot locate task with uid = '%s'\n", task_uid);
-      return;
-    }
-
-  g_assert (esource != NULL);
-
-  /* Completed time */
-  prop = i_cal_component_get_first_property (component, I_CAL_COMPLETED_PROPERTY);
-  if (task_completed)
-    {
-      ICalTime *completed_time;
-
-      completed_time = i_cal_time_new_current_with_zone (client->priv->zone);
-      if (!prop)
+      CalendarProviderClass *klass =
+        CALENDAR_PROVIDER_GET_CLASS (CALENDAR_PROVIDER (l->data));
+      if (klass->set_task_completed != NULL)
         {
-          i_cal_component_take_property (component,
-                                         i_cal_property_new_completed (completed_time));
-        }
-      else
-        {
-          i_cal_property_set_completed (prop, completed_time);
+          calendar_provider_set_task_completed (CALENDAR_PROVIDER (l->data),
+                                                 task_uid,
+                                                 task_completed,
+                                                 percent_complete);
+          return;
         }
     }
-  else if (prop)
-    {
-      i_cal_component_remove_property (component, prop);
-    }
-  g_clear_object (&prop);
-
-  /* Percent complete */
-  prop = i_cal_component_get_first_property (component, I_CAL_PERCENTCOMPLETE_PROPERTY);
-  if (!prop)
-    {
-      i_cal_component_take_property (component,
-                                    i_cal_property_new_percentcomplete (percent_complete));
-    }
-  else
-    {
-      i_cal_property_set_percentcomplete (prop, percent_complete);
-    }
-  g_clear_object (&prop);
-
-  /* Status */
-  status = task_completed ? I_CAL_STATUS_COMPLETED : I_CAL_STATUS_NEEDSACTION;
-  prop = i_cal_component_get_first_property (component, I_CAL_STATUS_PROPERTY);
-  if (prop)
-    {
-      i_cal_property_set_status (prop, status);
-    }
-  else
-    {
-      i_cal_component_take_property (component, i_cal_property_new_status (status));
-    }
-  g_clear_object (&prop);
-
-  e_cal_client_modify_object_sync (esource,
-                                   component,
-                                   E_CAL_OBJ_MOD_ALL,
-                                   0,
-                                   NULL,
-                                   NULL);
 }
 
 gboolean
 calendar_client_create_task (CalendarClient *client,
-                            const char     *summary)
+                              const char     *summary)
 {
-  GSList *l;
-  ECalClient *task_client = NULL;
-  ICalComponent *vtodo_component;
-  gchar *uid;
-  GError *error = NULL;
-  gboolean success = FALSE;
-
   g_return_val_if_fail (CALENDAR_IS_CLIENT (client), FALSE);
   g_return_val_if_fail (summary != NULL && *summary != '\0', FALSE);
 
-  /* Use the first available task source (like the existing code does) */
-  for (l = client->priv->task_sources; l; l = l->next)
+  for (GSList *l = client->priv->providers; l != NULL; l = l->next)
     {
-      CalendarClientSource *source = l->data;
-      task_client = source->source;
-      if (task_client)
-        break;
+      CalendarProviderClass *klass =
+        CALENDAR_PROVIDER_GET_CLASS (CALENDAR_PROVIDER (l->data));
+      if (klass->create_task != NULL)
+        return calendar_provider_create_task (CALENDAR_PROVIDER (l->data), summary);
     }
 
-  if (!task_client)
-    {
-      g_warning ("No task client available for task creation");
-      return FALSE;
-    }
-
-  /* Create a simple VTODO component */
-  vtodo_component = i_cal_component_new (I_CAL_VTODO_COMPONENT);
-
-  /* Generate UID */
-  uid = e_util_generate_uid ();
-  i_cal_component_set_uid (vtodo_component, uid);
-  g_free (uid);
-
-  /* Set summary */
-  i_cal_component_set_summary (vtodo_component, summary);
-
-  /* Set created time */
-  ICalTime *now = i_cal_time_new_current_with_zone (client->priv->zone);
-  i_cal_component_set_dtstamp (vtodo_component, now);
-  g_object_unref (now);
-
-  /* Create the task */
-  success = e_cal_client_create_object_sync (task_client,
-                                            vtodo_component,
-                                            E_CAL_OPERATION_FLAG_NONE,
-                                            NULL, /* out uid */
-                                            NULL, /* cancellable */
-                                            &error);
-
-  if (error)
-    {
-      g_warning ("Failed to create task: %s", error->message);
-      g_error_free (error);
-      success = FALSE;
-    }
-
-  /* Cleanup */
-  g_object_unref (vtodo_component);
-
-  return success;
+  return FALSE;
 }
-
-#endif /* HAVE_EDS */

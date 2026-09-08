@@ -31,7 +31,7 @@
 #include <gtk/gtk.h>
 #include "clock-utils.h"
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 #include "calendar-client.h"
 #endif
 
@@ -82,7 +82,7 @@ ClockFormat calendar_window_get_time_format (CalendarWindow *calwin);
 void       calendar_window_set_time_format  (CalendarWindow *calwin,
 					     ClockFormat     time_format);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
 void       calendar_window_set_client (CalendarWindow *calwin, CalendarClient *client);
 #endif
 

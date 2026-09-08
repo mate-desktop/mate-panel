@@ -212,7 +212,7 @@ struct _ClockData {
 
         GDBusProxy *system_manager_proxy;
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
         CalendarClient *calendar_client;
 #endif
 };
@@ -847,7 +847,7 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
                 cd->builder = NULL;
         }
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
         if (cd->calendar_client) {
                 g_object_unref (cd->calendar_client);
                 cd->calendar_client = NULL;
@@ -913,7 +913,7 @@ create_calendar (ClockData *cd)
                                       cd->settings);
         g_free (prefs_path);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
         if (cd->calendar_client) {
                 calendar_window_set_client (CALENDAR_WINDOW (window), cd->calendar_client);
         }
@@ -2824,7 +2824,7 @@ fill_clock_applet (MatePanelApplet *applet)
          * hibernate). */
         setup_monitor_for_resume (cd);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
         /* Initialize persistent calendar client */
         cd->calendar_client = calendar_client_new (cd->settings);
 #endif
@@ -3378,7 +3378,7 @@ fill_prefs_window (ClockData *cd)
         g_settings_bind (cd->settings, KEY_SHOW_TEMPERATURE, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
-#ifdef HAVE_EDS
+#if defined(HAVE_EDS) || defined(HAVE_LIBICAL)
         /* Set the EDS calendar event checkboxes */
         widget = _clock_get_widget (cd, "show_calendar_events_check");
         if (widget) {
