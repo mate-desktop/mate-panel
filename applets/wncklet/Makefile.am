@@ -42,16 +42,12 @@ WNCKLET_SOURCES += \
 	wayland-backend.c \
 	wayland-backend.h \
 	wayland-workspace.c \
-	wayland-workspace.h \
-	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-code.c \
-	wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h
+	wayland-workspace.h
 
 WNCKLET_LDADD += \
-	$(WAYLAND_LIBS) \
 	$(XFW_LIBS)
 
 AM_CPPFLAGS += \
-	$(WAYLAND_CFLAGS) \
 	$(XFW_CFLAGS)
 endif
 

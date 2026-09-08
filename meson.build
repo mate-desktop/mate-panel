@@ -205,10 +205,10 @@ wayland_deps = [
 ]
 have_wayland = wayland_deps[0].found() and wayland_deps[1].found()
 if have_wayland
-  xfw_dep = dependency('libxfce4windowing-0', version: '>= 4.19.4', required: false)
+  xfw_dep = dependency('libxfce4windowing-0', version: '>= 4.20.6', required: false)
   if not xfw_dep.found()
     if wayland_opt.enabled()
-      error('Wayland support requires libxfce4windowing-0 >= 4.19.4')
+      error('Wayland support requires libxfce4windowing-0 >= 4.20.6')
     else
       have_wayland = false
     endif

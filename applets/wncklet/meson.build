@@ -60,8 +60,6 @@ if have_wayland
     'wayland-backend.h',
     'wayland-workspace.c',
     'wayland-workspace.h',
-    'wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-code.c',
-    'wayland-protocol/wlr-foreign-toplevel-management-unstable-v1-client.h',
   ]
 endif
 
@@ -76,7 +74,7 @@ if have_x11
 endif
 
 if have_wayland
-  wncklet_deps += wayland_deps + [xfw_dep]
+  wncklet_deps += [xfw_dep]
 endif
 
 wncklet_inc_dirs = [
