@@ -711,27 +711,29 @@ mate_panel_applet_frame_reload_response (GtkWidget        *dialog,
 		char        *id = NULL;
 		int          position = -1;
 		gboolean     locked = FALSE;
+		PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+		int          pack_idx = 0;
 
 		panel = frame->priv->panel;
 		iid   = g_strdup (frame->priv->iid);
 
+		/* note: mate_panel_applet_clean() destroys the widget, which
+		 * frees the AppletInfo, so everything needs to be read from
+		 * info before calling it */
 		if (info) {
+			AppletData *applet_data;
+
 			id = g_strdup (info->id);
 			position  = mate_panel_applet_get_position (info);
 			locked = panel_widget_get_applet_locked (panel, info->widget);
-			mate_panel_applet_clean (info);
-		}
 
-		AppletData *applet_data;
-		PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
-		int pack_idx = 0;
-
-		if (info) {
 			applet_data = g_object_get_data (G_OBJECT (info->widget), MATE_PANEL_APPLET_DATA);
 			if (applet_data) {
 				pack_type = applet_data->pack_type;
 				pack_idx  = applet_data->pack_index;
 			}
+
+			mate_panel_applet_clean (info);
 		}
 
 		mate_panel_applet_frame_load (iid, panel, locked,
