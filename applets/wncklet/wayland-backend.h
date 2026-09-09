@@ -37,6 +37,8 @@ extern "C" {
 
 GtkWidget* wayland_tasklist_new (void);
 void wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation orient);
+void wayland_tasklist_set_middle_click_close (GtkWidget* tasklist_widget, gboolean enabled);
+void wayland_tasklist_set_scroll_enabled (GtkWidget* tasklist_widget, gboolean enabled);
 
 #ifdef __cplusplus
 }

@@ -59,6 +59,8 @@ typedef struct
 	ContextMenu *context_menu;
 	XfwScreen *screen;
 	GList *tasks;
+	gboolean scroll_enabled;
+	gboolean middle_click_close;
 } TasklistManager;
 
 typedef struct
@@ -74,6 +76,7 @@ typedef struct
 	gboolean maximized;
 	gboolean minimized;
 	gboolean fullscreen;
+	gboolean urgent;
 } ToplevelTask;
 
 static int tasklist_invocations = 0;
@@ -89,6 +92,7 @@ static GtkTargetEntry source_targets[] =
 static gboolean has_initialized = FALSE;
 
 static ToplevelTask *toplevel_task_new (TasklistManager *tasklist, XfwWindow *window);
+static gboolean tasklist_scroll_event (GtkWidget *widget, GdkEventScroll *event, TasklistManager *tasklist);
 
 static guint buttons, tasklist_width;
 
@@ -105,10 +109,18 @@ update_task_state (ToplevelTask *task)
 	task->maximized = (state & XFW_WINDOW_STATE_MAXIMIZED) != 0;
 	task->minimized = (state & XFW_WINDOW_STATE_MINIMIZED) != 0;
 	task->fullscreen = (state & XFW_WINDOW_STATE_FULLSCREEN) != 0;
+	task->urgent = (state & XFW_WINDOW_STATE_URGENT) != 0;
 
 	if (task->button)
+	{
+		if (task->urgent)
+			gtk_style_context_add_class (gtk_widget_get_style_context (task->button), "urgent");
+		else
+			gtk_style_context_remove_class (gtk_widget_get_style_context (task->button), "urgent");
+
 		gtk_button_set_relief (GTK_BUTTON (task->button),
 				       task->active ? GTK_RELIEF_NORMAL : GTK_RELIEF_NONE);
+	}
 }
 
 static void
@@ -323,6 +335,11 @@ tasklist_manager_new (void)
 				tasklist,
 				(GDestroyNotify)tasklist_manager_disconnected_from_widget);
 	tasklist->context_menu = context_menu_new ();
+
+	/* mouse scroll to switch windows */
+	gtk_widget_add_events (tasklist->list, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
+	g_signal_connect (tasklist->list, "scroll-event",
+			  G_CALLBACK (tasklist_scroll_event), tasklist);
 
 	/* add all existing windows on this screen */
 	windows = xfw_screen_get_windows (screen);
@@ -589,6 +606,16 @@ toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 static gboolean on_toplevel_button_press (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist)
 {
 	/* Assume event is a button press */
+
+	if (((GdkEventButton*)event)->button == GDK_BUTTON_MIDDLE &&
+	    tasklist->middle_click_close)
+	{
+		ToplevelTask *task = g_object_get_data (G_OBJECT (button), toplevel_task_key);
+		if (task && task->window)
+			xfw_window_close (task->window, ((GdkEventButton*)event)->time, NULL);
+		return TRUE;
+	}
+
 	if (((GdkEventButton*)event)->button == GDK_BUTTON_SECONDARY)
 	{
 		ContextMenu *menu = tasklist->context_menu;
@@ -611,6 +638,104 @@ static gboolean on_toplevel_button_press (GtkWidget *button, GdkEvent *event, Ta
 	{
 		return FALSE;
 	}
+}
+
+static gboolean
+tasklist_scroll_event (GtkWidget *widget, GdkEventScroll *event, TasklistManager *tasklist)
+{
+	ToplevelTask *child;
+	GList *li, *lnew = NULL;
+	GdkScrollDirection direction;
+	gboolean wrap_windows = TRUE;
+
+	if (!tasklist->scroll_enabled)
+		return TRUE;
+
+	/* get the current active window button */
+	for (li = tasklist->tasks; li != NULL; li = li->next)
+	{
+		child = li->data;
+		if (child->window && xfw_window_is_active (child->window))
+			break;
+	}
+
+	if (li == NULL)
+		return TRUE;
+
+	if (event->direction != GDK_SCROLL_SMOOTH)
+		direction = event->direction;
+	else if (event->delta_y < 0)
+		direction = GDK_SCROLL_UP;
+	else if (event->delta_y > 0)
+		direction = GDK_SCROLL_DOWN;
+	else if (event->delta_x < 0)
+		direction = GDK_SCROLL_LEFT;
+	else if (event->delta_x > 0)
+		direction = GDK_SCROLL_RIGHT;
+	else
+		return TRUE;
+
+	switch (direction)
+	{
+		case GDK_SCROLL_UP:
+			/* find the previous button on the tasklist */
+			for (lnew = g_list_previous (li);; lnew = lnew->prev)
+			{
+				if (lnew == NULL)
+				{
+					if (wrap_windows)
+					{
+						lnew = g_list_last (li);
+						wrap_windows = FALSE;
+						if (lnew == NULL)
+							break;
+					}
+					else
+						break;
+				}
+
+				child = lnew->data;
+				if (child->window != NULL)
+					break;
+			}
+			break;
+
+		case GDK_SCROLL_DOWN:
+			/* find the next button on the tasklist */
+			for (lnew = g_list_next (li);; lnew = lnew->next)
+			{
+				if (lnew == NULL)
+				{
+					if (wrap_windows)
+					{
+						lnew = g_list_first (li);
+						wrap_windows = FALSE;
+						if (lnew == NULL)
+							break;
+					}
+					else
+						break;
+				}
+
+				child = lnew->data;
+				if (child->window != NULL)
+					break;
+			}
+			break;
+
+		case GDK_SCROLL_LEFT:
+		case GDK_SCROLL_RIGHT:
+		default:
+			return TRUE;
+	}
+
+	if (lnew != NULL)
+	{
+		child = lnew->data;
+		xfw_window_activate (child->window, NULL, event->time, NULL);
+	}
+
+	return TRUE;
 }
 
 static ToplevelTask *
@@ -656,6 +781,11 @@ toplevel_task_new (TasklistManager *tasklist, XfwWindow *window)
 	g_signal_connect (task->button, "button-press-event",
 			  G_CALLBACK (on_toplevel_button_press),
 			  tasklist);
+
+	/* mouse scroll to switch windows */
+	gtk_widget_add_events (task->button, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
+	g_signal_connect (task->button, "scroll-event",
+			  G_CALLBACK (tasklist_scroll_event), tasklist);
 
 	/* drag-and-drop to reorder task buttons */
 	gtk_drag_source_set (task->button, GDK_BUTTON1_MASK,
@@ -809,4 +939,20 @@ wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation ori
 	g_return_if_fail(tasklist);
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (tasklist->list), orient);
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (tasklist->outer_box), orient);
+}
+
+void
+wayland_tasklist_set_middle_click_close (GtkWidget *tasklist_widget, gboolean enabled)
+{
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+	g_return_if_fail (tasklist);
+	tasklist->middle_click_close = enabled;
+}
+
+void
+wayland_tasklist_set_scroll_enabled (GtkWidget *tasklist_widget, gboolean enabled)
+{
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+	g_return_if_fail (tasklist);
+	tasklist->scroll_enabled = enabled;
 }

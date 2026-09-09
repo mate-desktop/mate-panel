@@ -144,7 +144,13 @@ static void tasklist_update(TasklistData* tasklist)
 	}
 #endif /* HAVE_X11 */
 
-	/* Not implemented for Wayland */
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
+	{
+		wayland_tasklist_set_scroll_enabled (tasklist->tasklist, tasklist->scroll_enable);
+		wayland_tasklist_set_middle_click_close (tasklist->tasklist, tasklist->middle_click_close);
+	}
+#endif /* HAVE_WAYLAND */
 }
 
 static void tasklist_apply_orientation(TasklistData* tasklist)
@@ -848,7 +854,9 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 										".mate-panel-menu-bar button,\n"
 										" #tasklist-button {\n"
 										" padding: 0px;\n"
-										" margin: 0px;\n }",
+										" margin: 0px;\n }\n"
+										" #tasklist-button.urgent {\n"
+										" font-weight: bold;\n }",
 										-1, NULL);
 	gtk_style_context_add_provider_for_screen (gtk_widget_get_screen (tasklist->applet),
 						   GTK_STYLE_PROVIDER (provider),
