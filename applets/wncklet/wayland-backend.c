@@ -34,6 +34,10 @@
 /*shorter than wnck-tasklist due to common use of larger fonts*/
 #define TASKLIST_TEXT_MAX_WIDTH 16
 
+/* On Wayland there is no window XID, the XfwWindow pointer is used to
+ * identify a window in the drag-and-drop payload */
+#define wayland_task_window_get_wid(window) ((gulong) (window))
+
 /*In the future this could be changable from the panel-prefs dialog*/
 static const int max_button_width = 180;
 static const int icon_size = 16;
@@ -76,6 +80,11 @@ static int tasklist_invocations = 0;
 
 static const char *tasklist_manager_key = "tasklist_manager";
 static const char *toplevel_task_key = "toplevel_task";
+
+static GtkTargetEntry source_targets[] =
+{
+	{ "application/x-wnck-window-id", 0, 0 }
+};
 
 static gboolean has_initialized = FALSE;
 
@@ -456,6 +465,111 @@ toplevel_task_disconnected_from_widget (ToplevelTask *task)
 	g_free (task);
 }
 
+static gboolean
+tasklist_horizontal (TasklistManager *tasklist)
+{
+	return gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->list)) == GTK_ORIENTATION_HORIZONTAL;
+}
+
+static void
+tasklist_button_drag_data_get (GtkWidget *widget,
+			       GdkDragContext *context,
+			       GtkSelectionData *selection_data,
+			       guint info,
+			       guint time,
+			       ToplevelTask *task)
+{
+	gulong wid = wayland_task_window_get_wid (task->window);
+	gtk_selection_data_set (selection_data, gtk_selection_data_get_target (selection_data),
+				8, (guchar *) &wid, sizeof (wid));
+}
+
+static void
+tasklist_button_drag_begin (GtkWidget *widget,
+			    GdkDragContext *context,
+			    ToplevelTask *task)
+{
+	GdkPixbuf *icon;
+	gint scale;
+
+	if (task->window)
+	{
+		scale = gtk_widget_get_scale_factor (widget);
+		icon = xfw_window_get_icon (task->window, icon_size, scale);
+		if (icon != NULL)
+			gtk_drag_set_icon_pixbuf (context, icon, 0, 0);
+	}
+}
+
+static gboolean
+tasklist_button_drag_motion (GtkWidget *widget,
+			     GdkDragContext *context,
+			     gint x, gint y, guint time,
+			     TasklistManager *tasklist)
+{
+	GtkWidget *source_widget;
+	ToplevelTask *source, *target;
+	GList *source_node, *target_node;
+	GtkAllocation allocation;
+	gboolean second_half;
+
+	source_widget = gtk_drag_get_source_widget (context);
+	if (source_widget == NULL)
+		return FALSE;
+
+	/* only reorder among our own tasklist buttons */
+	if (gtk_widget_get_parent (source_widget) != GTK_WIDGET (tasklist->list))
+		return FALSE;
+
+	source = g_object_get_data (G_OBJECT (source_widget), toplevel_task_key);
+	target = g_object_get_data (G_OBJECT (widget), toplevel_task_key);
+	if (source == NULL || target == NULL || source == target)
+		return FALSE;
+
+	/* drop on the right/bottom half -> insert after the target button */
+	gtk_widget_get_allocation (widget, &allocation);
+	second_half = tasklist_horizontal (tasklist)
+		? x >= allocation.width / 2
+		: y >= allocation.height / 2;
+
+	source_node = g_list_find (tasklist->tasks, source);
+	target_node = g_list_find (tasklist->tasks, target);
+	if (source_node == NULL || target_node == NULL)
+		return FALSE;
+	if (second_half)
+		target_node = g_list_next (target_node);
+
+	/* no change needed if already at the insertion point */
+	if (source_node == target_node || g_list_next (source_node) == target_node)
+	{
+		gdk_drag_status (context, GDK_ACTION_MOVE, time);
+		return TRUE;
+	}
+
+	/* live-reorder the list and the widgets */
+	tasklist->tasks = g_list_remove (tasklist->tasks, source);
+	tasklist->tasks = g_list_insert_before (tasklist->tasks, target_node, source);
+	gtk_box_reorder_child (GTK_BOX (tasklist->list), source->button,
+			       g_list_index (tasklist->tasks, source));
+	gtk_widget_queue_resize (tasklist->list);
+
+	gdk_drag_status (context, GDK_ACTION_MOVE, time);
+	return TRUE;
+}
+
+static void
+tasklist_button_drag_data_received (GtkWidget *widget,
+				    GdkDragContext *context,
+				    gint x, gint y,
+				    GtkSelectionData *selection_data,
+				    guint info,
+				    guint time,
+				    TasklistManager *tasklist)
+{
+	/* the list has already been reordered live by drag-motion, so
+	 * nothing left to do here */
+}
+
 static void
 toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 {
@@ -542,6 +656,22 @@ toplevel_task_new (TasklistManager *tasklist, XfwWindow *window)
 	g_signal_connect (task->button, "button-press-event",
 			  G_CALLBACK (on_toplevel_button_press),
 			  tasklist);
+
+	/* drag-and-drop to reorder task buttons */
+	gtk_drag_source_set (task->button, GDK_BUTTON1_MASK,
+			     source_targets, G_N_ELEMENTS (source_targets),
+			     GDK_ACTION_MOVE);
+	gtk_drag_dest_set (task->button, GTK_DEST_DEFAULT_DROP,
+			   source_targets, G_N_ELEMENTS (source_targets),
+			   GDK_ACTION_MOVE);
+	g_signal_connect (task->button, "drag-data-get",
+			  G_CALLBACK (tasklist_button_drag_data_get), task);
+	g_signal_connect (task->button, "drag-data-received",
+			  G_CALLBACK (tasklist_button_drag_data_received), tasklist);
+	g_signal_connect (task->button, "drag-motion",
+			  G_CALLBACK (tasklist_button_drag_motion), tasklist);
+	g_signal_connect (task->button, "drag-begin",
+			  G_CALLBACK (tasklist_button_drag_begin), task);
 
 	/* monitor window changes */
 	task->state_changed_id = g_signal_connect (window, "state-changed",
