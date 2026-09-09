@@ -230,6 +230,7 @@ screen_window_closed (XfwScreen *screen, XfwWindow *window, TasklistManager *tas
 		if (task->window == window)
 		{
 			/* removes the task from tasklist->tasks and destroys the button */
+			tasklist->tasks = g_list_remove (tasklist->tasks, task);
 			gtk_widget_destroy (task->button);
 			return;
 		}
@@ -256,6 +257,19 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 			gtk_widget_destroy (GTK_WIDGET (iter->data));
 		g_list_free (children);
 		tasklist->list = NULL;
+	}
+
+	/* free any remaining tasks not removed by window-closed */
+	while (tasklist->tasks != NULL)
+	{
+		ToplevelTask *task = tasklist->tasks->data;
+		tasklist->tasks = g_list_delete_link (tasklist->tasks, tasklist->tasks);
+		if (task->window)
+		{
+			g_signal_handlers_disconnect_by_data (task->window, task);
+			g_object_unref (task->window);
+		}
+		g_free (task);
 	}
 
 	if (tasklist->outer_box)
@@ -431,6 +445,7 @@ toplevel_task_disconnected_from_widget (ToplevelTask *task)
 			g_signal_handler_disconnect (task->window, task->name_changed_id);
 		if (task->icon_changed_id)
 			g_signal_handler_disconnect (task->window, task->icon_changed_id);
+		g_object_unref (task->window);
 	}
 
 	task->button = NULL;
@@ -500,7 +515,7 @@ toplevel_task_new (TasklistManager *tasklist, XfwWindow *window)
 
 	buttons = buttons + 1;
 	orient = gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box));
-	task->window = window;
+	task->window = g_object_ref (window);
 	task->button = gtk_button_new ();
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
 
