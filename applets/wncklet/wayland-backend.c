@@ -103,8 +103,9 @@ update_task_state (ToplevelTask *task)
 }
 
 static void
-window_state_changed (XfwWindow *window, ToplevelTask *task)
+window_state_changed (XfwWindow *window, XfwWindowState changed_mask, XfwWindowState new_state, gpointer user_data)
 {
+	ToplevelTask *task = user_data;
 	update_task_state (task);
 }
 
@@ -236,8 +237,9 @@ screen_window_closed (XfwScreen *screen, XfwWindow *window, TasklistManager *tas
 }
 
 static void
-screen_active_window_changed (XfwScreen *screen, TasklistManager *tasklist)
+screen_active_window_changed (XfwScreen *screen, XfwWindow *previous_window, gpointer user_data)
 {
+	TasklistManager *tasklist = user_data;
 	GList *l;
 
 	for (l = tasklist->tasks; l != NULL; l = l->next)
