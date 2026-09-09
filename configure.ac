@@ -216,9 +216,9 @@ fi
 
 have_xfw=no
 if test "x$have_wayland" = "xyes"; then
-  PKG_CHECK_MODULES(XFW, libxfce4windowing-0 >= 4.20.6, have_xfw=yes, [
+  PKG_CHECK_MODULES(XFW, libxfce4windowing-0 >= 4.20.2, have_xfw=yes, [
     if test "x$enable_wayland" = "xyes"; then
-      AC_MSG_ERROR([Wayland support requires libxfce4windowing-0 >= 4.20.6])
+      AC_MSG_ERROR([Wayland support requires libxfce4windowing-0 >= 4.20.2])
     else
       have_wayland=no
     fi
