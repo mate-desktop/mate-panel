@@ -3485,13 +3485,44 @@ panel_toplevel_button_release_event (GtkWidget      *widget,
 }
 
 static gboolean
+panel_toplevel_scroll_is_on_empty_space (PanelToplevel  *toplevel,
+                                         GdkEventScroll *event)
+{
+	GtkWidget *event_widget = NULL;
+	GtkWidget *widget;
+
+	/* Scroll events that are not handled by an applet bubble up to the
+	 * toplevel.  Keep the original event window so that we can distinguish
+	 * that case from a scroll which started on an applet. */
+	gdk_window_get_user_data (event->window, (gpointer) &event_widget);
+	if (!GTK_IS_WIDGET (event_widget))
+		return FALSE;
+
+	widget = event_widget;
+	while (widget != NULL &&
+	       widget != GTK_WIDGET (toplevel->priv->panel_widget)) {
+		if (g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA) != NULL)
+			return FALSE;
+
+		widget = gtk_widget_get_parent (widget);
+	}
+
+	/* The panel widget is the container whose unoccupied area is the
+	 * intended target.  Hide buttons and other toplevel children are not. */
+	return widget == GTK_WIDGET (toplevel->priv->panel_widget);
+}
+
+static gboolean
 panel_toplevel_scroll_event (GtkWidget      *widget,
 				      GdkEventScroll *event)
 {
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
+
 	if (event->direction == GDK_SCROLL_UP ||
 	    event->direction == GDK_SCROLL_DOWN ||
 	    event->direction == GDK_SCROLL_SMOOTH) {
-		if (panel_volume_handle_scroll (event))
+		if (panel_toplevel_scroll_is_on_empty_space (toplevel, event) &&
+		    panel_volume_handle_scroll (event))
 			return TRUE;
 	}
 

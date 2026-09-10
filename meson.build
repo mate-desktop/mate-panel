@@ -187,7 +187,8 @@ dconf_dep = dependency('dconf', version: '>= 0.13.4')
 wnck_dep = dependency('libwnck-3.0', version: '>= 43.0')
 mateweather_dep = dependency('mateweather', version: '>= 1.17.0')
 libpulse_dep = dependency('libpulse', required: false)
-if libpulse_dep.found()
+libpulse_glib_dep = dependency('libpulse-mainloop-glib', required: false)
+if libpulse_dep.found() and libpulse_glib_dep.found()
   config_h.set('HAVE_LIBPULSE', 1)
 endif
 gmodule_dep = dependency('gmodule-2.0', required: false)
@@ -283,8 +284,8 @@ panel_deps = [
   gio_dep,
   mate_menu_dep,
 ]
-if libpulse_dep.found()
-  panel_deps += libpulse_dep
+if libpulse_dep.found() and libpulse_glib_dep.found()
+  panel_deps += [libpulse_dep, libpulse_glib_dep]
 endif
 
 libmate_panel_applet_deps = [

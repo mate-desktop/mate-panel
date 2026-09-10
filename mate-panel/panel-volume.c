@@ -143,10 +143,12 @@ panel_volume_sink_info (pa_context *context, const pa_sink_info *info,
     gint64 change = (gint64) PA_VOLUME_NORM * request->step / 100;
     gint64 target;
 
-    if (eol != 0 || info == NULL) {
-        g_free (request);
-        return;
-    }
+    if (eol != 0) {
+		g_free (request);
+		return;
+	}
+	if (info == NULL)
+		return;
 
     volume = info->volume;
     current = pa_cvolume_avg (&volume);
@@ -157,9 +159,8 @@ panel_volume_sink_info (pa_context *context, const pa_sink_info *info,
     if (operation != NULL)
         pa_operation_unref (operation);
     panel_volume_show_osd ((guint) ((100.0 * next) / PA_VOLUME_NORM + 0.5));
-    if (g_settings_get_boolean (panel_volume_settings (), PANEL_VOLUME_SCROLL_FEEDBACK_KEY))
-        gdk_display_beep (gdk_display_get_default ());
-    g_free (request);
+	if (g_settings_get_boolean (panel_volume_settings (), PANEL_VOLUME_SCROLL_FEEDBACK_KEY))
+		gdk_display_beep (gdk_display_get_default ());
 }
 
 static void
