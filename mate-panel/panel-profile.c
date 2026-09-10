@@ -1317,9 +1317,11 @@ panel_profile_load_object (char *id)
 	char                *toplevel_id;
 	int                  position;
 	PanelObjectPackType  pack_type;
+	PanelObjectEdgeRelativity relative_to_edge;
 	int                  pack_index;
 	gboolean             right_stick;
 	gboolean             locked;
+	GVariant            *relative_to_edge_value;
 	GSettings           *settings;
 
 	object_path = g_strdup_printf (PANEL_OBJECT_PATH "%s/", id);
@@ -1329,14 +1331,36 @@ panel_profile_load_object (char *id)
 	position = g_settings_get_int (settings, PANEL_OBJECT_POSITION_KEY);
 	toplevel_id = g_settings_get_string (settings, PANEL_OBJECT_TOPLEVEL_ID_KEY);
 	pack_type = g_settings_get_enum (settings, PANEL_OBJECT_PACK_TYPE_KEY);
+	relative_to_edge_value = g_settings_get_user_value (settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY);
+	relative_to_edge = relative_to_edge_value != NULL ?
+		g_settings_get_enum (settings, PANEL_OBJECT_RELATIVE_TO_EDGE_KEY) :
+		PANEL_OBJECT_EDGE_START;
 	pack_index = g_settings_get_int (settings, PANEL_OBJECT_PACK_INDEX_KEY);
 	right_stick = g_settings_get_boolean (settings, PANEL_OBJECT_PANEL_RIGHT_STICK_KEY);
 	locked = g_settings_get_boolean (settings, PANEL_OBJECT_LOCKED_KEY);
 
-	/* If pack-type is still at the default value ('start') but right-stick
-	 * is set, then map right-stick to PACK_END so the comparator sorts
-	 * correctly. */
-	if (pack_type == PANEL_OBJECT_PACK_START && right_stick)
+	/* Newer MATE panel layouts store the zone in relative-to-edge, while
+	 * older layouts use pack-type (or the deprecated panel-right-stick).
+	 * Only override pack-type when relative-to-edge has an explicit user
+	 * value, so old layouts keep their pack-type setting. */
+	if (relative_to_edge_value != NULL) {
+		switch (relative_to_edge) {
+			case PANEL_OBJECT_EDGE_CENTER:
+				pack_type = PANEL_OBJECT_PACK_CENTER;
+				break;
+			case PANEL_OBJECT_EDGE_END:
+				pack_type = PANEL_OBJECT_PACK_END;
+				break;
+			case PANEL_OBJECT_EDGE_START:
+			default:
+				pack_type = PANEL_OBJECT_PACK_START;
+				break;
+		}
+	}
+
+	/* If relative-to-edge is at its default ('start') but right-stick is
+	 * set, map right-stick to PACK_END for old configurations. */
+	if (relative_to_edge_value == NULL && right_stick)
 		pack_type = PANEL_OBJECT_PACK_END;
 
 	mate_panel_applet_queue_applet_to_load (id,
@@ -1349,6 +1373,8 @@ panel_profile_load_object (char *id)
 
 	g_free (toplevel_id);
 	g_free (object_path);
+	if (relative_to_edge_value != NULL)
+		g_variant_unref (relative_to_edge_value);
 	g_object_unref (settings);
 }
 

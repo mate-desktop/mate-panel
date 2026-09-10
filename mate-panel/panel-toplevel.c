@@ -3489,27 +3489,46 @@ panel_toplevel_scroll_is_on_empty_space (PanelToplevel  *toplevel,
                                          GdkEventScroll *event)
 {
 	GtkWidget *event_widget = NULL;
-	GtkWidget *widget;
+	GtkAllocation panel_allocation;
+	GtkAllocation applet_allocation;
+	GList *list;
+	gint x;
+	gint y;
 
-	/* Scroll events that are not handled by an applet bubble up to the
-	 * toplevel.  Keep the original event window so that we can distinguish
-	 * that case from a scroll which started on an applet. */
+	/* The panel widget has its own GDK window, so the event can arrive at the
+	 * toplevel even when the pointer is over the panel widget.  Translate the
+	 * event coordinates to the panel widget and hit-test its applets. */
 	gdk_window_get_user_data (event->window, (gpointer) &event_widget);
 	if (!GTK_IS_WIDGET (event_widget))
 		return FALSE;
 
-	widget = event_widget;
-	while (widget != NULL &&
-	       widget != GTK_WIDGET (toplevel->priv->panel_widget)) {
-		if (g_object_get_data (G_OBJECT (widget), MATE_PANEL_APPLET_DATA) != NULL)
-			return FALSE;
+	if (!gtk_widget_translate_coordinates (event_widget,
+	                                       GTK_WIDGET (toplevel->priv->panel_widget),
+	                                       event->x, event->y, &x, &y))
+		return FALSE;
 
-		widget = gtk_widget_get_parent (widget);
+	panel_allocation = (GtkAllocation) { 0, 0,
+		gtk_widget_get_allocated_width (GTK_WIDGET (toplevel->priv->panel_widget)),
+		gtk_widget_get_allocated_height (GTK_WIDGET (toplevel->priv->panel_widget)) };
+	if (x < panel_allocation.x || y < panel_allocation.y ||
+	    x >= panel_allocation.x + panel_allocation.width ||
+	    y >= panel_allocation.y + panel_allocation.height)
+		return FALSE;
+
+	for (list = toplevel->priv->panel_widget->applet_list;
+	     list != NULL;
+	     list = list->next) {
+		AppletData *applet_data = list->data;
+
+		gtk_widget_get_allocation (applet_data->applet, &applet_allocation);
+		if (x >= applet_allocation.x &&
+		    x < applet_allocation.x + applet_allocation.width &&
+		    y >= applet_allocation.y &&
+		    y < applet_allocation.y + applet_allocation.height)
+			return FALSE;
 	}
 
-	/* The panel widget is the container whose unoccupied area is the
-	 * intended target.  Hide buttons and other toplevel children are not. */
-	return widget == GTK_WIDGET (toplevel->priv->panel_widget);
+	return TRUE;
 }
 
 static gboolean
@@ -4914,6 +4933,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	gtk_widget_add_events (widget,
 			       GDK_BUTTON_PRESS_MASK |
 			       GDK_BUTTON_RELEASE_MASK |
+			       GDK_SCROLL_MASK |
 			       GDK_POINTER_MOTION_MASK |
 			       GDK_ENTER_NOTIFY_MASK |
 			       GDK_LEAVE_NOTIFY_MASK);
