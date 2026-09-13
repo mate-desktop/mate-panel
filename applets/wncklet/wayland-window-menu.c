@@ -405,9 +405,11 @@ rebuild_menu (WaylandWindowMenu *data)
 				continue;
 
 			ws = xfw_window_get_workspace (w);
+			/* Windows whose workspace is not known yet report NULL; keep
+			 * them in the current-workspace group so they aren't dropped */
 			if (xfw_window_is_pinned (w) ||
-			    ws == active_ws ||
-			    (active_ws == NULL && ws == NULL))
+			    ws == NULL ||
+			    ws == active_ws)
 			{
 				append_window_item (data, w);
 			}
@@ -495,7 +497,13 @@ static void
 on_window_opened (XfwScreen *screen, XfwWindow *window,
                   WaylandWindowMenu *data)
 {
+	/* refresh the button icon for the initially-enumerated windows too */
+	update_root_icon (data);
+
 	if (!gtk_widget_get_mapped (data->submenu))
+		return;
+
+	if (g_hash_table_contains (data->window_hash, window))
 		return;
 
 	if (xfw_window_is_skip_tasklist (window))
@@ -744,8 +752,13 @@ wayland_window_menu_new (void)
 	                        data,
 	                        (GDestroyNotify) wayland_window_menu_free);
 
-	/* Rebuild menu content each time it is shown */
-	g_signal_connect (data->submenu, "show",
+	/* Rebuild menu content each time it is about to be opened. Use the
+	 * root item's "select" rather than the submenu's "show": show_all()
+	 * already pre-shows the submenu, firing "show" once during
+	 * construction, before the asynchronous Wayland window list has been
+	 * populated. "select" fires on every popup and before the submenu is
+	 * mapped, so the window list is always fresh when the menu appears. */
+	g_signal_connect (data->root_item, "select",
 	                  G_CALLBACK (on_menu_show), data);
 
 	/* Screen signals for live updates while menu is visible */
