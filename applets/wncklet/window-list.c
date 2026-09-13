@@ -147,6 +147,22 @@ static void tasklist_update(TasklistData* tasklist)
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
 	{
+		WaylandTasklistGroupingType grouping;
+		switch (tasklist->grouping)
+		{
+			case TASKLIST_NEVER_GROUP:
+				grouping = WAYLAND_TASKLIST_NEVER_GROUP;
+				break;
+			case TASKLIST_AUTO_GROUP:
+				grouping = WAYLAND_TASKLIST_AUTO_GROUP;
+				break;
+			case TASKLIST_ALWAYS_GROUP:
+				grouping = WAYLAND_TASKLIST_ALWAYS_GROUP;
+				break;
+			default:
+				grouping = WAYLAND_TASKLIST_NEVER_GROUP;
+		}
+		wayland_tasklist_set_grouping (tasklist->tasklist, grouping);
 		wayland_tasklist_set_scroll_enabled (tasklist->tasklist, tasklist->scroll_enable);
 		wayland_tasklist_set_middle_click_close (tasklist->tasklist, tasklist->middle_click_close);
 	}
@@ -1114,10 +1130,13 @@ static void setup_sensitivity(TasklistData* tasklist, GtkBuilder* builder, const
 #ifdef HAVE_WAYLAND
 static void setup_dialog_wayland(TasklistData* tasklist)
 {
-	gtk_widget_show(tasklist->wayland_info_label);
+	/* the info label is not present in the current ui file; only show it
+	 * when the builder actually created it (avoids a gtk_widget_show
+	 * critical on NULL) */
+	if (tasklist->wayland_info_label != NULL)
+		gtk_widget_show(tasklist->wayland_info_label);
 
 	gtk_widget_set_sensitive(tasklist->window_list_content_box, FALSE);
-	gtk_widget_set_sensitive(tasklist->window_grouping_box, FALSE);
 	gtk_widget_set_sensitive(tasklist->minimized_windows_box, FALSE);
 
 	gtk_widget_set_sensitive(tasklist->window_thumbnail_box, FALSE);
