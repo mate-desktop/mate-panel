@@ -60,6 +60,8 @@ if have_wayland
     'wayland-backend.h',
     'wayland-workspace.c',
     'wayland-workspace.h',
+    'wayland-window-menu.c',
+    'wayland-window-menu.h',
   ]
 endif
 

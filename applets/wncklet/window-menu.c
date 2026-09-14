@@ -43,6 +43,7 @@
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
+#include "wayland-window-menu.h"
 #endif /* HAVE_WAYLAND */
 
 #ifndef HAVE_X11
@@ -86,7 +87,11 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		NULL
 	};
 
-	gtk_show_about_dialog(GTK_WINDOW(window_menu->applet),
+	GtkWidget* toplevel = gtk_widget_get_toplevel (window_menu->applet);
+	if (!GTK_IS_WINDOW (toplevel))
+		toplevel = NULL;
+
+	gtk_show_about_dialog(toplevel ? GTK_WINDOW(toplevel) : NULL,
 		"program-name", _("Window Selector"),
 		"title", _("About Window Selector"),
 		"authors", authors,
@@ -271,7 +276,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 #ifdef HAVE_WAYLAND
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
 	{
-		window_menu->selector = gtk_label_new ("[Window menu not supported on Wayland]");
+		window_menu->selector = wayland_window_menu_new ();
 	}
 	else
 #endif /* HAVE_WAYLAND */

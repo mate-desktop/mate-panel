@@ -990,7 +990,11 @@ static void display_about_dialog(GtkAction* action, PagerData* pager)
 		NULL
 	};
 
-	gtk_show_about_dialog(GTK_WINDOW(pager->applet),
+	GtkWidget* toplevel = gtk_widget_get_toplevel (pager->applet);
+	if (!GTK_IS_WINDOW (toplevel))
+		toplevel = NULL;
+
+	gtk_show_about_dialog(toplevel ? GTK_WINDOW(toplevel) : NULL,
 		"program-name", _("Workspace Switcher"),
 		"title", _("About Workspace Switcher"),
 		"authors", authors,

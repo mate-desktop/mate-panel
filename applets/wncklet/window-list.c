@@ -1055,7 +1055,11 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		NULL
 	};
 
-	gtk_show_about_dialog(GTK_WINDOW(tasklist->applet),
+	GtkWidget* toplevel = gtk_widget_get_toplevel (tasklist->applet);
+	if (!GTK_IS_WINDOW (toplevel))
+		toplevel = NULL;
+
+	gtk_show_about_dialog(toplevel ? GTK_WINDOW(toplevel) : NULL,
 		"program-name", _("Window List"),
 		"title", _("About Window List"),
 		"authors", authors,

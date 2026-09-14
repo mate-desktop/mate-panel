@@ -574,7 +574,11 @@ static void display_about_dialog(GtkAction* action, ShowDesktopData* sdd)
 		NULL
 	};
 
-	gtk_show_about_dialog(GTK_WINDOW(sdd->applet),
+	GtkWidget* toplevel = gtk_widget_get_toplevel (sdd->applet);
+	if (!GTK_IS_WINDOW (toplevel))
+		toplevel = NULL;
+
+	gtk_show_about_dialog(toplevel ? GTK_WINDOW(toplevel) : NULL,
 		"program-name", _("Show Desktop Button"),
 		"title", _("About Show Desktop Button"),
 		"authors", authors,
