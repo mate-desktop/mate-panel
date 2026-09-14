@@ -752,13 +752,7 @@ wayland_window_menu_new (void)
 	                        data,
 	                        (GDestroyNotify) wayland_window_menu_free);
 
-	/* Rebuild menu content each time it is about to be opened. Use the
-	 * root item's "select" rather than the submenu's "show": show_all()
-	 * already pre-shows the submenu, firing "show" once during
-	 * construction, before the asynchronous Wayland window list has been
-	 * populated. "select" fires on every popup and before the submenu is
-	 * mapped, so the window list is always fresh when the menu appears. */
-	g_signal_connect (data->root_item, "select",
+	g_signal_connect (data->submenu, "show",
 	                  G_CALLBACK (on_menu_show), data);
 
 	/* Screen signals for live updates while menu is visible */
@@ -788,6 +782,8 @@ wayland_window_menu_new (void)
 	g_signal_connect (data->menu, "scroll-event",
 	                  G_CALLBACK (on_scroll_event), data);
 
-	gtk_widget_show_all (data->menu);
+	gtk_widget_show (data->root_item);
+	gtk_widget_show (data->image);
+	gtk_widget_show (data->menu);
 	return data->menu;
 }
