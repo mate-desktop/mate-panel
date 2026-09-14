@@ -2,6 +2,7 @@
 
 /*
  * Copyright (C) 2019 William Wold
+ * Copyright (C) 2026 Aleksey Samoilov
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -31,6 +32,12 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
+typedef enum {
+	WAYLAND_TASKLIST_NEVER_GROUP,
+	WAYLAND_TASKLIST_AUTO_GROUP,
+	WAYLAND_TASKLIST_ALWAYS_GROUP
+} WaylandTasklistGroupingType;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -39,6 +46,7 @@ GtkWidget* wayland_tasklist_new (void);
 void wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation orient);
 void wayland_tasklist_set_middle_click_close (GtkWidget* tasklist_widget, gboolean enabled);
 void wayland_tasklist_set_scroll_enabled (GtkWidget* tasklist_widget, gboolean enabled);
+void wayland_tasklist_set_grouping (GtkWidget* tasklist_widget, WaylandTasklistGroupingType grouping);
 
 #ifdef __cplusplus
 }
