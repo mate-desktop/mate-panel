@@ -52,6 +52,7 @@
 #include "panel-config-global.h"
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
+#include "panel-volume.h"
 
 #ifdef HAVE_X11
 #include "xstuff.h"
@@ -3484,6 +3485,73 @@ panel_toplevel_button_release_event (GtkWidget      *widget,
 }
 
 static gboolean
+panel_toplevel_scroll_is_on_empty_space (PanelToplevel  *toplevel,
+                                         GdkEventScroll *event)
+{
+	GtkWidget *event_widget = NULL;
+	GtkAllocation panel_allocation;
+	GtkAllocation applet_allocation;
+	GList *list;
+	gint x;
+	gint y;
+
+	/* The panel widget has its own GDK window, so the event can arrive at the
+	 * toplevel even when the pointer is over the panel widget.  Translate the
+	 * event coordinates to the panel widget and hit-test its applets. */
+	gdk_window_get_user_data (event->window, (gpointer) &event_widget);
+	if (!GTK_IS_WIDGET (event_widget))
+		return FALSE;
+
+	if (!gtk_widget_translate_coordinates (event_widget,
+	                                       GTK_WIDGET (toplevel->priv->panel_widget),
+	                                       event->x, event->y, &x, &y))
+		return FALSE;
+
+	panel_allocation = (GtkAllocation) { 0, 0,
+		gtk_widget_get_allocated_width (GTK_WIDGET (toplevel->priv->panel_widget)),
+		gtk_widget_get_allocated_height (GTK_WIDGET (toplevel->priv->panel_widget)) };
+	if (x < panel_allocation.x || y < panel_allocation.y ||
+	    x >= panel_allocation.x + panel_allocation.width ||
+	    y >= panel_allocation.y + panel_allocation.height)
+		return FALSE;
+
+	for (list = toplevel->priv->panel_widget->applet_list;
+	     list != NULL;
+	     list = list->next) {
+		AppletData *applet_data = list->data;
+
+		gtk_widget_get_allocation (applet_data->applet, &applet_allocation);
+		if (x >= applet_allocation.x &&
+		    x < applet_allocation.x + applet_allocation.width &&
+		    y >= applet_allocation.y &&
+		    y < applet_allocation.y + applet_allocation.height)
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
+static gboolean
+panel_toplevel_scroll_event (GtkWidget      *widget,
+				      GdkEventScroll *event)
+{
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
+
+	if (event->direction == GDK_SCROLL_UP ||
+	    event->direction == GDK_SCROLL_DOWN ||
+	    event->direction == GDK_SCROLL_SMOOTH) {
+		if (panel_toplevel_scroll_is_on_empty_space (toplevel, event) &&
+		    panel_volume_handle_scroll (event))
+			return TRUE;
+	}
+
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->scroll_event)
+		return GTK_WIDGET_CLASS (panel_toplevel_parent_class)->scroll_event (widget, event);
+
+	return FALSE;
+}
+
+static gboolean
 panel_toplevel_configure_event (GtkWidget	  *widget,
 				GdkEventConfigure *event)
 {
@@ -4364,6 +4432,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->configure_event      = panel_toplevel_configure_event;
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
 	widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
+	widget_class->scroll_event        = panel_toplevel_scroll_event;
 	widget_class->enter_notify_event   = panel_toplevel_enter_notify_event;
 	widget_class->leave_notify_event   = panel_toplevel_leave_notify_event;
 	widget_class->screen_changed       = panel_toplevel_screen_changed;
@@ -4864,6 +4933,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	gtk_widget_add_events (widget,
 			       GDK_BUTTON_PRESS_MASK |
 			       GDK_BUTTON_RELEASE_MASK |
+			       GDK_SCROLL_MASK |
 			       GDK_POINTER_MOTION_MASK |
 			       GDK_ENTER_NOTIFY_MASK |
 			       GDK_LEAVE_NOTIFY_MASK);
