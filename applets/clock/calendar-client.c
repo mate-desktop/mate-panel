@@ -33,6 +33,7 @@
 
 #include "calendar-client.h"
 #include "calendar-provider.h"
+#include "clock.h"
 
 #ifdef HAVE_LIBICAL
 #  include "calendar-vdir-provider.h"
@@ -446,14 +447,17 @@ calendar_client_new (GSettings *settings)
     /* Additional paths from GSettings (if the key exists in @settings) */
     if (settings != NULL)
       {
-        /* Check whether this settings instance has the vdir key before
-         * calling get_strv (avoids a GLib critical if key is absent). */
-        gchar **all_keys  = g_settings_list_keys (settings);
-        gboolean has_key  = FALSE;
-        for (int ki = 0; all_keys[ki] != NULL; ki++)
-          if (g_strcmp0 (all_keys[ki], KEY_VDIR_CALENDAR_PATHS) == 0)
-            { has_key = TRUE; break; }
-        g_strfreev (all_keys);
+        /* Check whether the applet's schema has the vdir key before
+         * calling get_strv (avoids a GLib critical if the key is
+         * absent, e.g. with a stale installed schema). */
+        GSettingsSchemaSource *source = g_settings_schema_source_get_default ();
+        GSettingsSchema       *schema = (source != NULL)
+          ? g_settings_schema_source_lookup (source, CLOCK_SCHEMA, FALSE)
+          : NULL;
+        gboolean has_key = (schema != NULL &&
+                            g_settings_schema_has_key (schema, KEY_VDIR_CALENDAR_PATHS));
+        if (schema != NULL)
+          g_settings_schema_unref (schema);
 
         if (has_key)
           {
@@ -468,7 +472,7 @@ calendar_client_new (GSettings *settings)
                   }
               }
             g_strfreev (paths);
-          } /* if (has_key) */
+          } /* if (schema has key) */
       } /* if (settings != NULL) */
   } /* HAVE_LIBICAL block */
 #endif /* HAVE_LIBICAL */
