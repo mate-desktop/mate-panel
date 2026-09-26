@@ -229,31 +229,45 @@ expand_recurrences (ICalComponent *comp,
   prop = i_cal_component_get_first_property (comp, I_CAL_RRULE_PROPERTY);
   if (prop != NULL)
     {
-      ICalRecurrence   *rrule = i_cal_property_get_rrule (prop);
-      ICalRecurIterator *iter  = i_cal_recur_iterator_new (rrule, dtstart);
+      ICalRecurrence    *rrule = i_cal_property_get_rrule (prop);
+      ICalRecurIterator *iter  = (rrule != NULL)
+                                    ? i_cal_recur_iterator_new (rrule, dtstart)
+                                    : NULL;
 
-      ICalTime *next;
-      while (TRUE)
+      if (iter != NULL)
         {
-          next = i_cal_recur_iterator_next (iter);
-          if (next == NULL || i_cal_time_is_null_time (next))
+          ICalTime *next;
+          while (TRUE)
             {
-              if (next) g_object_unref (next);
-              break;
+              next = i_cal_recur_iterator_next (iter);
+              if (next == NULL || i_cal_time_is_null_time (next))
+                {
+                  if (next) g_object_unref (next);
+                  break;
+                }
+
+              time_t occ_start = i_cal_time_as_timet_with_zone (next, zone);
+              g_object_unref (next);
+
+              /* RRULE iterates in ascending order; stop once past range */
+              if (occ_start >= range_end)
+                break;
+
+              MAYBE_ADD_OCC (occ_start);
             }
 
-          time_t occ_start = i_cal_time_as_timet_with_zone (next, zone);
-          g_object_unref (next);
-
-          /* RRULE iterates in ascending order; stop once past range */
-          if (occ_start >= range_end)
-            break;
-
+          g_object_unref (iter);
+        }
+      else
+        {
+          /* Empty or malformed RRULE: fall back to a single occurrence
+           * at DTSTART so the event does not disappear entirely. */
+          time_t occ_start = i_cal_time_as_timet_with_zone (dtstart, zone);
           MAYBE_ADD_OCC (occ_start);
         }
 
-      g_object_unref (iter);
-      g_object_unref (rrule);
+      if (rrule != NULL)
+        g_object_unref (rrule);
       g_object_unref (prop);
       prop = NULL;
     }
