@@ -908,8 +908,10 @@ calendar_vdir_discover (const char *base_path)
         }
       else
         {
-          /* Not a collection itself — recurse one level (vdirsyncer stores
-           * collections as <base>/<pair-name>/<collection-name>/) */
+          /* Not a collection itself — recurse into it to look for nested
+           * collections (vdirsyncer stores them as
+           * <base>/<pair-name>/<collection-name>/, but any deeper
+           * hierarchy is handled the same way). */
           GSList *nested = calendar_vdir_discover (subdir);
           providers = g_slist_concat (providers, nested);
         }
