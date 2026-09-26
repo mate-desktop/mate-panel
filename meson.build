@@ -238,6 +238,18 @@ eds_deps = [
 have_eds = eds_deps[0].found() and eds_deps[1].found()
 config_h.set('HAVE_EDS', have_eds)
 
+# libical-glib for vdir calendar support (independent of EDS)
+libical_opt = get_option('enable-libical')
+libical_dep = dependency('libical-glib', version: '>= 3.0', required: libical_opt)
+have_libical = libical_dep.found()
+
+# EDS depends on libical-glib (calendar-eds-provider.c uses its ICalComponent
+# API directly), so treat it as a hard requirement whenever EDS is enabled.
+if have_eds and not have_libical
+  error('EDS support requires libical-glib development libraries')
+endif
+config_h.set('HAVE_LIBICAL', have_libical)
+
 # applets to compile in-process
 in_process_applets = get_option('in-process-applets')
 clock_inprocess = false
@@ -320,6 +332,7 @@ summary({
   'X11 support': have_x11,
   'XRandr support': have_randr,
   'Evolution Data Server support': have_eds,
+  'vdir calendar support (libical)': have_libical,
   'Build introspection support': enable_introspection,
   'Build gtk-doc documentation': enable_gtk_doc,
 }, section: 'mate-panel')

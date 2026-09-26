@@ -53,6 +53,19 @@ libmateweather-dev
 For work-in-progress Wayland support
 gtk-layer-shell (https://github.com/wmww/gtk-layer-shell)
 
+Optional dependencies
+=====================
+
+Evolution Data Server (EDS) — calendar and task integration in the Clock applet:
+libecal-2.0 >= 3.33.2
+libedataserver-1.2 >= 3.5.3
+Enable with: --enable-eds (default: auto-detect)
+
+libical-glib — vdir calendar support in the Clock applet (independent of EDS):
+libical-glib >= 3.0
+Enable with: --enable-libical (default: auto-detect)
+See applets/clock/README.md for details on the vdir calendar feature.
+
 How to report bugs
 ==================
 
