@@ -59,6 +59,11 @@ struct _CalendarClientPrivate
   guint   day;
   guint   month;
   guint   year;
+
+  /* vdir providers created from the "vdir-calendar-paths" GSettings key;
+   * kept separately so they can be torn down and re-created when the key
+   * changes at runtime */
+  GSList *vdir_settings_providers;
 };
 
 static void calendar_client_finalize     (GObject      *object);
@@ -318,6 +323,9 @@ calendar_client_finalize (GObject *object)
   g_slist_free (client->priv->providers);
   client->priv->providers = NULL;
 
+  g_slist_free (client->priv->vdir_settings_providers);
+  client->priv->vdir_settings_providers = NULL;
+
   G_OBJECT_CLASS (calendar_client_parent_class)->finalize (object);
 }
 
@@ -398,6 +406,19 @@ calendar_client_add_provider (CalendarClient   *client,
                     G_CALLBACK (on_provider_tasks_changed), client);
 }
 
+static void
+calendar_client_remove_provider (CalendarClient   *client,
+                                  CalendarProvider *provider)
+{
+  g_return_if_fail (CALENDAR_IS_CLIENT (client));
+  g_return_if_fail (CALENDAR_IS_PROVIDER (provider));
+
+  client->priv->providers =
+    g_slist_remove (client->priv->providers, provider);
+
+  g_object_unref (provider);
+}
+
 /* =========================================================================
  * Auto-discovery helpers
  * ========================================================================= */
@@ -413,6 +434,72 @@ add_vdir_providers_from_path (CalendarClient *client, const char *path)
       g_object_unref (l->data);
     }
   g_slist_free (providers);
+}
+
+/* True if the applet's schema defines the vdir paths key (avoids a GLib
+ * critical from g_settings_get_strv if the key is absent, e.g. with a
+ * stale installed schema). */
+static gboolean
+clock_applet_schema_has_vdir_key (void)
+{
+  GSettingsSchemaSource *source = g_settings_schema_source_get_default ();
+  GSettingsSchema       *schema = (source != NULL)
+    ? g_settings_schema_source_lookup (source, CLOCK_SCHEMA, FALSE)
+    : NULL;
+  gboolean has_key = (schema != NULL &&
+                      g_settings_schema_has_key (schema, KEY_VDIR_CALENDAR_PATHS));
+  if (schema != NULL)
+    g_settings_schema_unref (schema);
+  return has_key;
+}
+
+/* (Re)apply the "vdir-calendar-paths" setting: drop the vdir providers
+ * created from a previous value of the key and create one provider per
+ * currently configured path. */
+static void
+apply_vdir_paths_from_settings (CalendarClient *client,
+                                 GSettings      *settings)
+{
+  CalendarClientPrivate *priv = client->priv;
+
+  g_return_if_fail (CALENDAR_IS_CLIENT (client));
+  g_return_if_fail (settings != NULL);
+
+  for (GSList *l = priv->vdir_settings_providers; l != NULL; l = l->next)
+    calendar_client_remove_provider (client, CALENDAR_PROVIDER (l->data));
+  g_slist_free (priv->vdir_settings_providers);
+  priv->vdir_settings_providers = NULL;
+
+  if (!clock_applet_schema_has_vdir_key ())
+    return;
+
+  gchar **paths = g_settings_get_strv (settings, KEY_VDIR_CALENDAR_PATHS);
+  for (gint i = 0; paths[i] != NULL; i++)
+    {
+      CalendarProvider *p = calendar_vdir_provider_new (paths[i]);
+      if (p != NULL)
+        {
+          priv->vdir_settings_providers =
+            g_slist_prepend (priv->vdir_settings_providers, p);
+          calendar_client_add_provider (client, p);
+          g_object_unref (p);
+        }
+    }
+  g_strfreev (paths);
+
+  /* If a month is already selected, re-issue the selection so the new
+   * providers populate their caches immediately. */
+  if (priv->month != G_MAXUINT && priv->year != G_MAXUINT)
+    calendar_client_update_appointments (client);
+}
+
+static void
+on_vdir_paths_changed (GSettings      *settings,
+                       gchar          *key,
+                       CalendarClient *client)
+{
+  (void) key;
+  apply_vdir_paths_from_settings (client, settings);
 }
 #endif /* HAVE_LIBICAL */
 
@@ -443,38 +530,17 @@ calendar_client_new (GSettings *settings)
     char *vdir_base = g_build_filename (data_home, VDIRSYNCER_DEFAULT_SUBDIR, NULL);
     add_vdir_providers_from_path (client, vdir_base);
     g_free (vdir_base);
+  }
 
-    /* Additional paths from GSettings (if the key exists in @settings) */
-    if (settings != NULL)
-      {
-        /* Check whether the applet's schema has the vdir key before
-         * calling get_strv (avoids a GLib critical if the key is
-         * absent, e.g. with a stale installed schema). */
-        GSettingsSchemaSource *source = g_settings_schema_source_get_default ();
-        GSettingsSchema       *schema = (source != NULL)
-          ? g_settings_schema_source_lookup (source, CLOCK_SCHEMA, FALSE)
-          : NULL;
-        gboolean has_key = (schema != NULL &&
-                            g_settings_schema_has_key (schema, KEY_VDIR_CALENDAR_PATHS));
-        if (schema != NULL)
-          g_settings_schema_unref (schema);
+  /* Additional paths from GSettings (if the key exists in @settings).
+   * The key is watched so that changes take effect without a restart. */
+  if (settings != NULL && clock_applet_schema_has_vdir_key ())
+    {
+      apply_vdir_paths_from_settings (client, settings);
 
-        if (has_key)
-          {
-            gchar **paths = g_settings_get_strv (settings, KEY_VDIR_CALENDAR_PATHS);
-            for (gint i = 0; paths[i] != NULL; i++)
-              {
-                CalendarProvider *p = calendar_vdir_provider_new (paths[i]);
-                if (p != NULL)
-                  {
-                    calendar_client_add_provider (client, p);
-                    g_object_unref (p);
-                  }
-              }
-            g_strfreev (paths);
-          } /* if (schema has key) */
-      } /* if (settings != NULL) */
-  } /* HAVE_LIBICAL block */
+      g_signal_connect_object (G_OBJECT (settings), "changed::" KEY_VDIR_CALENDAR_PATHS,
+                               G_CALLBACK (on_vdir_paths_changed), client, 0);
+    }
 #endif /* HAVE_LIBICAL */
 
   (void) settings; /* suppress warning when both EDS and libical are absent */
