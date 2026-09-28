@@ -52,6 +52,7 @@ panel_sources = \
 	panel-multimonitor.c \
 	panel-a11y.c \
 	panel-bindings.c \
+	panel-volume.c \
 	panel-layout.c \
 	panel-profile.c \
 	panel-lockdown.c \
@@ -108,6 +109,7 @@ panel_headers = \
 	panel-multimonitor.h \
 	panel-a11y.h \
 	panel-bindings.h \
+	panel-volume.h \
 	panel-layout.h \
 	panel-profile.h \
 	panel-enums-gsettings.h \

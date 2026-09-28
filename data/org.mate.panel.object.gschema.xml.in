@@ -20,6 +20,11 @@
       <summary>Object's position on the panel</summary>
       <description>The index of this panel object within the other objects with the same pack-type, from the left (or top if vertical) panel edge.</description>
     </key>
+    <key name="relative-to-edge" enum="org.mate.panel.PanelObjectEdgeRelativity">
+      <default>'start'</default>
+      <summary>Whether to interpret the position relative to the start, center or end of the panel</summary>
+      <description>The position of the object is interpreted relative to one edge of the panel. This key is compatible with newer MATE panel layouts.</description>
+    </key>
     <key name="position" type="i">
       <default>0</default>
       <summary>Object's position on the panel (deprecated)</summary>

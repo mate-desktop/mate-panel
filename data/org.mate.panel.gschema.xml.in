@@ -89,5 +89,26 @@
       <summary>Enable SNI support</summary>
       <description>If true, the panel provides support for SNI.</description>
     </key>
+    <key name="enable-scroll-volume" type="b">
+      <default>false</default>
+      <summary>Change volume by scrolling on empty panel space</summary>
+      <description>If true, scrolling on an unoccupied area of a panel changes the default audio output volume. Scrolling over an applet is left unchanged.</description>
+    </key>
+    <key name="volume-scroll-step" type="u">
+      <default>5</default>
+      <range min="1" max="20"/>
+      <summary>Volume scroll step</summary>
+      <description>Percentage points changed for each mouse wheel step.</description>
+    </key>
+    <key name="volume-scroll-osd" type="b">
+      <default>true</default>
+      <summary>Show volume on-screen display</summary>
+      <description>Show a single transient volume indicator when scrolling changes the volume.</description>
+    </key>
+    <key name="volume-scroll-feedback" type="b">
+      <default>true</default>
+      <summary>Play volume feedback</summary>
+      <description>Use the desktop bell as optional feedback when scrolling changes the volume.</description>
+    </key>
   </schema>
 </schemalist>

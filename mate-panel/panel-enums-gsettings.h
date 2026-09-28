@@ -37,6 +37,15 @@ typedef enum {
 	PANEL_OBJECT_PACK_END    = 2
 } PanelObjectPackType;
 
+/* Position relative to an edge of the panel.  This is the schema key used
+ * by newer MATE panel layouts; keep it separate from pack-type so older
+ * layouts remain compatible. */
+typedef enum {
+	PANEL_OBJECT_EDGE_START  = 0,
+	PANEL_OBJECT_EDGE_CENTER = 1,
+	PANEL_OBJECT_EDGE_END    = 2
+} PanelObjectEdgeRelativity;
+
 typedef enum { /*< flags=0 >*/
 	PANEL_ORIENTATION_TOP    = 1 << 0,
 	PANEL_ORIENTATION_RIGHT  = 1 << 1,
