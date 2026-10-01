@@ -15,6 +15,8 @@ AM_CFLAGS = $(WARN_CFLAGS)
 WNCKLET_SOURCES = \
 	wncklet.c \
 	wncklet.h \
+	tasklist-backend.h \
+	tasklist-core.c \
 	window-menu.c \
 	window-menu.h \
 	window-list.c \
