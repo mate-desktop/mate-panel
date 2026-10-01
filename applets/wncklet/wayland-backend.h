@@ -30,27 +30,15 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
 
-typedef enum {
-	WAYLAND_TASKLIST_NEVER_GROUP,
-	WAYLAND_TASKLIST_AUTO_GROUP,
-	WAYLAND_TASKLIST_ALWAYS_GROUP
-} WaylandTasklistGroupingType;
+#include "tasklist-backend.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+G_BEGIN_DECLS
 
-GtkWidget* wayland_tasklist_new (void);
-void wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientation orient);
-void wayland_tasklist_set_middle_click_close (GtkWidget* tasklist_widget, gboolean enabled);
-void wayland_tasklist_set_scroll_enabled (GtkWidget* tasklist_widget, gboolean enabled);
-void wayland_tasklist_set_grouping (GtkWidget* tasklist_widget, WaylandTasklistGroupingType grouping);
+/* The Wayland implementation of the tasklist backend, or NULL when not
+ * running on a Wayland display. */
+const TasklistBackend *wayland_tasklist_backend (void);
 
-#ifdef __cplusplus
-}
-#endif
+G_END_DECLS
 
 #endif /* _WNCKLET_APPLET_WAYLAND_BACKEND_H_ */
-
