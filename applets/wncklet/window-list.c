@@ -33,30 +33,32 @@
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
-#include "wayland-backend.h"
 #endif /* HAVE_WAYLAND */
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
 
+#include "tasklist-backend.h"
 #include "wncklet.h"
 #include "window-list.h"
+
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif /* HAVE_WAYLAND */
 
 #define WINDOW_LIST_ICON "mate-panel-window-list"
 #define WINDOW_LIST_SCHEMA "org.mate.panel.applet.window-list"
 
 #define WINDOW_LIST_PREVIEW_SCHEMA "org.mate.panel.applet.window-list-previews"
 
-typedef enum {
-  TASKLIST_NEVER_GROUP,
-  TASKLIST_AUTO_GROUP,
-  TASKLIST_ALWAYS_GROUP
-} TasklistGroupingType;
-
 typedef struct {
 	GtkWidget* applet;
 	GtkWidget* tasklist;
 	GtkWidget* preview;
+
+	/* NULL when the tasklist is a libwnck widget rather than the shared
+	 * tasklist core, see tasklist_uses_core(). */
+	const TasklistBackend* backend;
 
 #ifdef HAVE_X11
 	WnckHandle* wnck_handle;
@@ -118,7 +120,16 @@ static void tasklist_update(TasklistData* tasklist)
 		gtk_widget_set_size_request(GTK_WIDGET(tasklist->tasklist), tasklist->size, -1);
 	}
 
+	if (tasklist->backend == NULL)
+		return;
+
+	tasklist_core_set_grouping (tasklist->tasklist, tasklist->grouping);
+	tasklist_core_set_scroll_enabled (tasklist->tasklist, tasklist->scroll_enable);
+	tasklist_core_set_middle_click_close (tasklist->tasklist, tasklist->middle_click_close);
+
 #ifdef HAVE_X11
+	/* Both of these are libwnck features with no counterpart in the
+	 * shared core, so they only apply to a libwnck tasklist. */
 	if (WNCK_IS_TASKLIST(tasklist->tasklist))
 	{
 		WnckTasklistGroupingType grouping;
@@ -143,47 +154,20 @@ static void tasklist_update(TasklistData* tasklist)
 		wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), tasklist->middle_click_close);
 	}
 #endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
-	{
-		WaylandTasklistGroupingType grouping;
-		switch (tasklist->grouping)
-		{
-			case TASKLIST_NEVER_GROUP:
-				grouping = WAYLAND_TASKLIST_NEVER_GROUP;
-				break;
-			case TASKLIST_AUTO_GROUP:
-				grouping = WAYLAND_TASKLIST_AUTO_GROUP;
-				break;
-			case TASKLIST_ALWAYS_GROUP:
-				grouping = WAYLAND_TASKLIST_ALWAYS_GROUP;
-				break;
-			default:
-				grouping = WAYLAND_TASKLIST_NEVER_GROUP;
-		}
-		wayland_tasklist_set_grouping (tasklist->tasklist, grouping);
-		wayland_tasklist_set_scroll_enabled (tasklist->tasklist, tasklist->scroll_enable);
-		wayland_tasklist_set_middle_click_close (tasklist->tasklist, tasklist->middle_click_close);
-	}
-#endif /* HAVE_WAYLAND */
 }
 
 static void tasklist_apply_orientation(TasklistData* tasklist)
 {
+	if (tasklist->backend != NULL)
+	{
+		tasklist_core_set_orientation (tasklist->tasklist, tasklist->orientation);
+	}
 #ifdef HAVE_X11
-	if (WNCK_IS_TASKLIST(tasklist->tasklist))
+	else if (WNCK_IS_TASKLIST(tasklist->tasklist))
 	{
 		wnck_tasklist_set_orientation(WNCK_TASKLIST(tasklist->tasklist), tasklist->orientation);
 	}
 #endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
-	{
-		wayland_tasklist_set_orientation(tasklist->tasklist, tasklist->orientation);
-	}
-#endif
 }
 
 static void tasklist_set_button_relief(TasklistData* tasklist, GtkReliefStyle relief)
@@ -916,6 +900,22 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+		tasklist->backend = wayland_tasklist_backend ();
+#endif /* HAVE_WAYLAND */
+
+	if (tasklist->backend != NULL)
+	{
+		tasklist->tasklist = tasklist_core_new (tasklist->backend);
+
+		if (tasklist->tasklist == NULL)
+		{
+			tasklist->backend = NULL;
+			tasklist->tasklist = gtk_label_new ("[Tasklist not supported on this platform]");
+		}
+	}
+	else
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
 	{
@@ -931,15 +931,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	}
 	else
 #endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-	{
-		tasklist->tasklist = wayland_tasklist_new();
-	}
-	else
-#endif /* HAVE_WAYLAND */
-
 	{
 		tasklist->tasklist = gtk_label_new ("[Tasklist not supported on this platform]");
 	}

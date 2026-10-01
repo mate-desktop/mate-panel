@@ -43,6 +43,8 @@ wncklet_built_sources = [
 wncklet_sources = [
   'wncklet.c',
   'wncklet.h',
+  'tasklist-backend.h',
+  'tasklist-core.c',
   'window-menu.c',
   'window-menu.h',
   'window-list.c',
