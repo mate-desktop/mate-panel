@@ -33,6 +33,11 @@
 static const int max_button_width = 180;
 static const int icon_size = 16;
 
+/* The width a button shrinks to before it drops to just its icon. This
+ * matches libwnck's DEFAULT_GROUPING_LIMIT so that size hints computed by
+ * the core line up with the ones a WnckTasklist used to produce. */
+static const int default_grouping_limit = 80;
+
 typedef struct
 {
 	GtkWidget *menu;
@@ -56,6 +61,8 @@ typedef struct
 	gboolean scroll_enabled;
 	gboolean middle_click_close;
 	TasklistGroupingType grouping;
+	gboolean include_all_workspaces;
+	gboolean switch_workspace_on_unminimize;
 	gboolean auto_grouping;
 	gboolean auto_grouping_applied;
 	guint auto_grouping_idle;
@@ -68,6 +75,12 @@ typedef struct
 	guint buttons;
 	gint tasklist_width;
 	gint full_button_width;
+	gint grouping_limit;
+
+	/* Descending (max, min) width staircase handed to the panel, which walks
+	 * it to decide how wide the tasklist may be as space runs short. */
+	gint *size_hints;
+	guint size_hints_len;
 } TasklistManager;
 
 typedef struct
@@ -106,6 +119,52 @@ static const char *tasklist_manager_key = "tasklist_manager";
 static const char *toplevel_task_key = "toplevel_task";
 static const char *group_task_key = "group_task";
 
+/* The outer box carries the hover notifications, so it needs a type of its
+ * own to hang signals on. It adds no state of its own: the manager is still
+ * reached through the tasklist_manager_key object data. */
+typedef struct
+{
+	GtkBox parent_instance;
+} TasklistBox;
+
+typedef struct
+{
+	GtkBoxClass parent_class;
+} TasklistBoxClass;
+
+#define TASKLIST_TYPE_BOX (tasklist_box_get_type ())
+GType tasklist_box_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_TYPE (TasklistBox, tasklist_box, GTK_TYPE_BOX)
+
+enum
+{
+	TASK_ENTER_NOTIFY,
+	TASK_LEAVE_NOTIFY,
+	TASKLIST_BOX_LAST_SIGNAL
+};
+
+static guint tasklist_box_signals[TASKLIST_BOX_LAST_SIGNAL];
+
+static void
+tasklist_box_class_init (TasklistBoxClass *klass)
+{
+	tasklist_box_signals[TASK_ENTER_NOTIFY] =
+		g_signal_new ("task-enter-notify", TASKLIST_TYPE_BOX,
+			      G_SIGNAL_RUN_LAST, 0, NULL, NULL, NULL,
+			      G_TYPE_NONE, 1, G_TYPE_POINTER);
+
+	tasklist_box_signals[TASK_LEAVE_NOTIFY] =
+		g_signal_new ("task-leave-notify", TASKLIST_TYPE_BOX,
+			      G_SIGNAL_RUN_LAST, 0, NULL, NULL, NULL,
+			      G_TYPE_NONE, 1, G_TYPE_POINTER);
+}
+
+static void
+tasklist_box_init (TasklistBox *box)
+{
+}
+
 static GtkTargetEntry source_targets[] =
 {
 	{ "application/x-wnck-window-id", 0, 0 }
@@ -122,6 +181,11 @@ static void tasklist_assign_to_group (TasklistManager *tasklist, ToplevelTask *t
 static void group_task_child_state_changed (GroupTask *group);
 static void tasklist_rebuild (TasklistManager *tasklist);
 static void adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, ToplevelTask *task);
+static void tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width);
+static void tasklist_refresh_visibility (TasklistManager *tasklist);
+static void tasklist_unminimize (TasklistManager *tasklist, gpointer window);
+static gboolean on_toplevel_button_enter_notify (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist);
+static gboolean on_toplevel_button_leave_notify (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist);
 
 static gboolean
 window_is_active (TasklistManager *tasklist, gpointer window)
@@ -130,6 +194,29 @@ window_is_active (TasklistManager *tasklist, gpointer window)
 		return FALSE;
 
 	return (tasklist->backend->get_window_state (window) & TASKLIST_STATE_ACTIVE) != 0;
+}
+
+/* A window only gets a visible task button when the tasklist shows every
+ * workspace, or when the window is on the one that is active. */
+static gboolean
+task_should_be_shown (TasklistManager *tasklist, gpointer window)
+{
+	const TasklistBackend *backend = tasklist->backend;
+
+	if (tasklist->include_all_workspaces)
+		return TRUE;
+
+	return backend->window_is_on_active_workspace (window);
+}
+
+static void
+update_task_visibility (ToplevelTask *task)
+{
+	if (task == NULL || task->button == NULL)
+		return;
+
+	gtk_widget_set_visible (task->button,
+				task_should_be_shown (task->tasklist, task->window));
 }
 
 static void
@@ -157,6 +244,8 @@ update_task_state (ToplevelTask *task)
 		gtk_button_set_relief (GTK_BUTTON (task->button),
 				       task->active ? GTK_RELIEF_NORMAL : GTK_RELIEF_NONE);
 	}
+
+	update_task_visibility (task);
 
 	if (task->group)
 		group_task_child_state_changed (task->group);
@@ -440,7 +529,55 @@ tasklist_buttons_crowded (TasklistManager *tasklist, gint available_width)
 		needed += task->natural_width;
 	}
 
+	tasklist_update_size_hints (tasklist, needed);
+
 	return needed > available_width;
+}
+
+/* Build the width staircase the panel walks when it has to squeeze the
+ * tasklist. The array is a descending series of (max, min) pixel pairs: give
+ * me this much room and the buttons fit at their natural width, and at least
+ * this much room or they collapse. The last entry is always 0 so the tasklist
+ * can be squeezed down to nothing rather than pushed off the panel.
+ *
+ * We only describe the ungrouped layout. Collapsing windows into groups frees
+ * space too, but that happens on its own via the auto-grouping check above, so
+ * omitting those steps only makes the hint list slightly less precise.
+ */
+static void
+tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
+{
+	const gboolean horizontal =
+		gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box)) ==
+		GTK_ORIENTATION_HORIZONTAL;
+	const guint n_buttons = tasklist->buttons;
+	gint squeezed;
+	GArray *hints;
+
+	if (n_buttons == 0)
+	{
+		g_clear_pointer (&tasklist->size_hints, g_free);
+		tasklist->size_hints_len = 0;
+		return;
+	}
+
+	/* A vertical panel is sized by height, and the core does not compress
+	 * vertical buttons at all, so there is nothing to describe. */
+	if (!horizontal)
+		return;
+
+	squeezed = MIN (tasklist->grouping_limit, max_button_width) * (gint)n_buttons;
+
+	hints = g_array_new (FALSE, FALSE, sizeof (gint));
+	g_array_append_val (hints, natural_width);
+	g_array_append_val (hints, squeezed);
+
+	/* Always allow going down to a zero size. */
+	((gint *)hints->data)[hints->len - 1] = 0;
+
+	g_free (tasklist->size_hints);
+	tasklist->size_hints_len = hints->len;
+	tasklist->size_hints = (gint *)g_array_free (hints, FALSE);
 }
 
 static gboolean
@@ -735,6 +872,10 @@ group_task_new (TasklistManager *tasklist, gpointer app)
 			  G_CALLBACK (on_group_button_press), group);
 	g_signal_connect (group->button, "scroll-event",
 			  G_CALLBACK (tasklist_scroll_event), tasklist);
+	g_signal_connect (group->button, "enter-notify-event",
+			  G_CALLBACK (on_toplevel_button_enter_notify), tasklist);
+	g_signal_connect (group->button, "leave-notify-event",
+			  G_CALLBACK (on_toplevel_button_leave_notify), tasklist);
 
 	tasklist->backend->set_app_tracking (GTK_WIDGET (tasklist->outer_box),
 					     app, TRUE);
@@ -861,7 +1002,12 @@ menu_on_minimize (GtkMenuItem *item, gpointer user_data)
 {
 	ToplevelTask *task = g_object_get_data (G_OBJECT (item), toplevel_task_key);
 	if (task && task->window)
-		task->tasklist->backend->set_window_minimized (task->window, !task->minimized);
+	{
+		if (task->minimized)
+			tasklist_unminimize (task->tasklist, task->window);
+		else
+			task->tasklist->backend->set_window_minimized (task->window, TRUE);
+	}
 }
 
 static void
@@ -999,6 +1145,9 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 		tasklist->auto_grouping_idle = 0;
 	}
 
+	g_clear_pointer (&tasklist->size_hints, g_free);
+	tasklist->size_hints_len = 0;
+
 	if (tasklist->list)
 	{
 		GList *children = gtk_container_get_children (GTK_CONTAINER (tasklist->list));
@@ -1067,9 +1216,10 @@ tasklist_manager_new (const TasklistBackend *backend)
 	tasklist = g_new0 (TasklistManager, 1);
 	tasklist->backend = backend;
 	tasklist->screen = screen;
+	tasklist->grouping_limit = default_grouping_limit;
 	tasklist->list = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_set_homogeneous (GTK_BOX (tasklist->list), TRUE);
-	tasklist->outer_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	tasklist->outer_box = g_object_new (TASKLIST_TYPE_BOX, NULL);
 	gtk_box_pack_start (GTK_BOX (tasklist->outer_box), tasklist->list, FALSE, FALSE, 0);
 	gtk_widget_show (tasklist->list);
 	g_object_set_data_full (G_OBJECT (tasklist->outer_box),
@@ -1242,9 +1392,71 @@ toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 		}
 		else
 		{
-			task->tasklist->backend->activate_window (task->window, 0);
+			/* A minimized window is normally activated in place, but
+			 * that is invisible to the user if it lives on another
+			 * workspace, so follow it there first. */
+			if (task->minimized)
+				tasklist_unminimize (task->tasklist, task->window);
+			else
+				task->tasklist->backend->activate_window (task->window, 0);
 		}
 	}
+}
+
+/* Hover notifications. The windows are gathered the way libwnck's
+ * wnck_task_extract_windows() did: a plain task reports its own window, a
+ * group reports every window it holds. The list is only valid for the
+ * duration of the emission. */
+static void
+tasklist_emit_hover_notify (GtkWidget *button, TasklistManager *tasklist, guint signal_id)
+{
+	GroupTask *group;
+	ToplevelTask *task;
+	GList *windows = NULL;
+
+	group = g_object_get_data (G_OBJECT (button), group_task_key);
+	task = g_object_get_data (G_OBJECT (button), toplevel_task_key);
+
+	if (group != NULL)
+	{
+		GList *l;
+
+		for (l = group->members; l != NULL; l = l->next)
+		{
+			ToplevelTask *member = l->data;
+
+			if (member != NULL && member->window != NULL)
+				windows = g_list_prepend (windows, member->window);
+		}
+	}
+	else if (task != NULL && task->window != NULL)
+	{
+		windows = g_list_prepend (windows, task->window);
+	}
+
+	windows = g_list_reverse (windows);
+
+	/* The signals belong to the outer box, which is the widget the applet
+	 * shell holds on to. */
+	g_signal_emit (tasklist->outer_box, signal_id, 0, windows);
+
+	g_list_free (windows);
+}
+
+static gboolean
+on_toplevel_button_enter_notify (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist)
+{
+	tasklist_emit_hover_notify (button, tasklist, tasklist_box_signals[TASK_ENTER_NOTIFY]);
+
+	return FALSE;
+}
+
+static gboolean
+on_toplevel_button_leave_notify (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist)
+{
+	tasklist_emit_hover_notify (button, tasklist, tasklist_box_signals[TASK_LEAVE_NOTIFY]);
+
+	return FALSE;
 }
 
 static gboolean on_toplevel_button_press (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist)
@@ -1435,6 +1647,13 @@ toplevel_task_new (TasklistManager *tasklist, gpointer window)
 			  G_CALLBACK (on_toplevel_button_press),
 			  tasklist);
 
+	g_signal_connect (task->button, "enter-notify-event",
+			  G_CALLBACK (on_toplevel_button_enter_notify),
+			  tasklist);
+	g_signal_connect (task->button, "leave-notify-event",
+			  G_CALLBACK (on_toplevel_button_leave_notify),
+			  tasklist);
+
 	/* mouse scroll to switch windows */
 	gtk_widget_add_events (task->button, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
 	g_signal_connect (task->button, "scroll-event",
@@ -1588,6 +1807,65 @@ tasklist_core_set_scroll_enabled (GtkWidget *tasklist_widget, gboolean enabled)
 	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
 	g_return_if_fail (tasklist);
 	tasklist->scroll_enabled = enabled;
+}
+
+void
+tasklist_core_set_include_all_workspaces (GtkWidget *tasklist_widget, gboolean include)
+{
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+	g_return_if_fail (tasklist);
+
+	if (tasklist->include_all_workspaces == include)
+		return;
+
+	tasklist->include_all_workspaces = include;
+	tasklist_refresh_visibility (tasklist);
+}
+
+void
+tasklist_core_set_switch_workspace_on_unminimize (GtkWidget *tasklist_widget, gboolean switch_ws)
+{
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+	g_return_if_fail (tasklist);
+	tasklist->switch_workspace_on_unminimize = switch_ws;
+}
+
+static void
+tasklist_refresh_visibility (TasklistManager *tasklist)
+{
+	GList *l;
+
+	for (l = tasklist->tasks; l != NULL; l = l->next)
+		update_task_visibility (l->data);
+}
+
+/* Bring the user to the window's workspace before unminimizing it, so that
+ * the window does not appear to vanish off-screen. */
+static void
+tasklist_unminimize (TasklistManager *tasklist, gpointer window)
+{
+	if (tasklist->switch_workspace_on_unminimize &&
+	    !tasklist->backend->window_is_on_active_workspace (window))
+		tasklist->backend->window_move_to_workspace (window);
+
+	tasklist->backend->set_window_minimized (window, FALSE);
+}
+
+/* Returns a borrowed (max, min) staircase of widths, terminated by a 0 so
+ * that the tasklist may always be squeezed down to nothing. The caller must
+ * not modify or free it. *n_elements receives the number of integers, which
+ * is always even while there is anything to show. */
+const int *
+tasklist_core_get_size_hint_list (GtkWidget *tasklist_widget, int *n_elements)
+{
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+
+	g_return_val_if_fail (tasklist, NULL);
+	g_return_val_if_fail (n_elements != NULL, NULL);
+
+	*n_elements = tasklist->size_hints_len;
+
+	return tasklist->size_hints;
 }
 
 static void

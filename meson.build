@@ -204,17 +204,24 @@ wayland_deps = [
   dependency('wayland-client', required: wayland_opt),
 ]
 have_wayland = wayland_deps[0].found() and wayland_deps[1].found()
-if have_wayland
+config_h.set('HAVE_WAYLAND', have_wayland)
+
+# Both backends talk to the window manager through libxfce4windowing, so it is
+# needed as soon as either one is enabled.
+xfw_dep = dependency('', required: false)
+if have_x11 or have_wayland
   xfw_dep = dependency('libxfce4windowing-0', version: '>= 4.20.2', required: false)
   if not xfw_dep.found()
     if wayland_opt.enabled()
       error('Wayland support requires libxfce4windowing-0 >= 4.20.2')
+    elif x11_opt.enabled()
+      error('X11 support requires libxfce4windowing-0 >= 4.20.2')
     else
       have_wayland = false
+      have_x11 = false
     endif
   endif
 endif
-config_h.set('HAVE_WAYLAND', have_wayland)
 
 if not have_x11 and not have_wayland
   if wayland_opt.disabled() and x11_opt.disabled()

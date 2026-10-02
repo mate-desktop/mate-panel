@@ -56,6 +56,13 @@ wncklet_sources = [
   wncklet_built_sources,
 ]
 
+if have_x11
+  wncklet_sources += [
+    'x11-backend.c',
+    'x11-backend.h',
+  ]
+endif
+
 if have_wayland
   wncklet_sources += [
     'wayland-backend.c',
@@ -77,7 +84,7 @@ if have_x11
   wncklet_deps += x11_dep
 endif
 
-if have_wayland
+if have_x11 or have_wayland
   wncklet_deps += [xfw_dep]
 endif
 
