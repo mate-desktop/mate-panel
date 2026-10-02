@@ -214,17 +214,6 @@ if test "x$enable_wayland" != "xno"; then
     ])
 fi
 
-have_xfw=no
-if test "x$have_wayland" = "xyes"; then
-  PKG_CHECK_MODULES(XFW, libxfce4windowing-0 >= 4.20.2, have_xfw=yes, [
-    if test "x$enable_wayland" = "xyes"; then
-      AC_MSG_ERROR([Wayland support requires libxfce4windowing-0 >= 4.20.2])
-    else
-      have_wayland=no
-    fi
-  ])
-fi
-
 AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
 
 if test "x$have_wayland" = "xyes"; then
@@ -248,6 +237,23 @@ AM_CONDITIONAL(ENABLE_X11, [test "x$have_x11" = "xyes"])
 
 if test "x$have_x11" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1, [Have the X11 development library])
+fi
+
+# Both backends talk to the window manager through libxfce4windowing, so it is
+# needed as soon as either one is enabled.
+have_xfw=no
+if test "x$have_wayland" = "xyes" -o "x$have_x11" = "xyes"; then
+  PKG_CHECK_MODULES(XFW, libxfce4windowing-0 >= 4.20.2, have_xfw=yes, [
+    if test "x$enable_wayland" = "xyes"; then
+      AC_MSG_ERROR([Wayland support requires libxfce4windowing-0 >= 4.20.2])
+    elif test "x$enable_x11" = "xyes"; then
+      AC_MSG_ERROR([X11 support requires libxfce4windowing-0 >= 4.20.2])
+    elif test "x$have_wayland" = "xyes"; then
+      have_wayland=no
+    else
+      have_x11=no
+    fi
+  ])
 fi
 
 if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then
