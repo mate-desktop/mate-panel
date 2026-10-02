@@ -92,6 +92,12 @@ struct _TasklistBackend {
 	/* Icon shown while no icon is known yet. */
 	const gchar *(*get_fallback_icon_name) (void);
 
+	/* workspaces, for the settings that decide which windows get a task
+	 * button and whether unminimizing pulls the user to another workspace */
+
+	gboolean  (*window_is_on_active_workspace) (gpointer window);
+	void      (*window_move_to_workspace)       (gpointer window);
+
 	/* actions */
 
 	void      (*activate_window)           (gpointer window, guint32 user_time);
@@ -114,6 +120,13 @@ void       tasklist_core_set_orientation        (GtkWidget *core, GtkOrientation
 void       tasklist_core_set_middle_click_close (GtkWidget *core, gboolean enabled);
 void       tasklist_core_set_scroll_enabled     (GtkWidget *core, gboolean enabled);
 void       tasklist_core_set_grouping           (GtkWidget *core, TasklistGroupingType grouping);
+void       tasklist_core_set_include_all_workspaces (GtkWidget *core, gboolean include);
+void       tasklist_core_set_switch_workspace_on_unminimize (GtkWidget *core, gboolean switch_ws);
+
+/* The (max, min) width staircase the panel uses to decide how much room the
+ * tasklist may take. Derived from widget measurements, so it is not backend
+ * state. Borrowed, must not be freed. */
+const int *tasklist_core_get_size_hint_list     (GtkWidget *core, int *n_elements);
 
 /* Callbacks a backend makes when its own signals fire. */
 void tasklist_core_window_added               (GtkWidget *core, gpointer window);
