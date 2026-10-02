@@ -1,4 +1,4 @@
-/* Wncklet applet Wayland workspace backend */
+/* Wncklet applet workspace pager backed by libxfce4windowing */
 
 /*
  * Copyright (C) 2026 MATE Desktop Team
@@ -19,8 +19,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef _WNCKLET_APPLET_WAYLAND_WORKSPACE_H_
-#define _WNCKLET_APPLET_WAYLAND_WORKSPACE_H_
+#ifndef _WNCKLET_APPLET_XFW_PAGER_H_
+#define _WNCKLET_APPLET_XFW_PAGER_H_
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -29,24 +29,24 @@
 extern "C" {
 #endif
 
-GtkWidget*  wayland_workspace_new            (void);
-void        wayland_workspace_set_orientation(GtkWidget *pager_widget,
-                                              GtkOrientation orientation);
-void        wayland_workspace_set_rows       (GtkWidget *pager_widget,
-                                              int n_rows);
-void        wayland_workspace_set_show_all   (GtkWidget *pager_widget,
-                                              gboolean show_all);
-void        wayland_workspace_set_show_names (GtkWidget *pager_widget,
-                                              gboolean show_names);
-int         wayland_workspace_get_count      (GtkWidget *pager_widget);
-const char* wayland_workspace_get_name       (GtkWidget *pager_widget,
-                                              int index);
-int         wayland_workspace_get_active_index (GtkWidget *pager_widget);
-void        wayland_workspace_activate_nth     (GtkWidget *pager_widget,
-                                                int index);
+GtkWidget*  xfw_pager_new            (void);
+void        xfw_pager_set_orientation(GtkWidget *pager_widget,
+                                      GtkOrientation orientation);
+void        xfw_pager_set_rows       (GtkWidget *pager_widget,
+                                      int n_rows);
+void        xfw_pager_set_show_all   (GtkWidget *pager_widget,
+                                      gboolean show_all);
+void        xfw_pager_set_show_names (GtkWidget *pager_widget,
+                                      gboolean show_names);
+int         xfw_pager_get_count      (GtkWidget *pager_widget);
+const char* xfw_pager_get_name       (GtkWidget *pager_widget,
+                                      int index);
+int         xfw_pager_get_active_index (GtkWidget *pager_widget);
+void        xfw_pager_activate_nth     (GtkWidget *pager_widget,
+                                        int index);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _WNCKLET_APPLET_WAYLAND_WORKSPACE_H_ */
+#endif /* _WNCKLET_APPLET_XFW_PAGER_H_ */
