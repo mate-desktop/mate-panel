@@ -35,8 +35,16 @@ WNCKLET_LDADD =						\
 	$(LIBMATE_PANEL_APPLET_LIBS)
 
 if ENABLE_X11
+WNCKLET_SOURCES += \
+	x11-backend.c \
+	x11-backend.h
+
 WNCKLET_LDADD += \
-	$(X_LIBS)
+	$(X_LIBS) \
+	$(XFW_LIBS)
+
+AM_CPPFLAGS += \
+	$(XFW_CFLAGS)
 endif
 
 if ENABLE_WAYLAND
