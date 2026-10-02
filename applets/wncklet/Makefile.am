@@ -25,6 +25,8 @@ WNCKLET_SOURCES = \
 	showdesktop.h \
 	workspace-switcher.c \
 	workspace-switcher.h \
+	xfw-window-menu.c \
+	xfw-window-menu.h \
 	$(BUILT_SOURCES)
 
 
@@ -52,9 +54,7 @@ WNCKLET_SOURCES += \
 	wayland-backend.c \
 	wayland-backend.h \
 	wayland-workspace.c \
-	wayland-workspace.h \
-	wayland-window-menu.c \
-	wayland-window-menu.h
+	wayland-workspace.h
 
 WNCKLET_LDADD += \
 	$(XFW_LIBS)

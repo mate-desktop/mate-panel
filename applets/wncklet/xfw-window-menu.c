@@ -1,4 +1,4 @@
-/* Wayland backend for the Window Selector applet */
+/* libxfce4windowing backend for the Window Selector applet */
 
 /*
  * Copyright (C) 2026 MATE Desktop Team
@@ -21,16 +21,11 @@
 
 #include <config.h>
 
-#ifndef HAVE_WAYLAND
-#error file should only be compiled when HAVE_WAYLAND is enabled
-#endif
-
 #include <gtk/gtk.h>
-#include <gdk/gdkwayland.h>
 #include <glib/gi18n.h>
 #include <libxfce4windowing/libxfce4windowing.h>
 
-#include "wayland-window-menu.h"
+#include "xfw-window-menu.h"
 
 #define SELECTOR_MAX_WIDTH 50
 
@@ -49,14 +44,14 @@ typedef struct {
 	GHashTable *window_hash;
 	XfwScreen *screen;
 	XfwWorkspaceManager *workspace_manager;
-} WaylandWindowMenu;
+} XfwWindowMenu;
 
-static void rebuild_menu (WaylandWindowMenu *data);
+static void rebuild_menu (XfwWindowMenu *data);
 
 /* ---- Helpers ---- */
 
 static XfwWorkspace *
-get_active_workspace (WaylandWindowMenu *data)
+get_active_workspace (XfwWindowMenu *data)
 {
 	GList *workspaces, *l;
 
@@ -76,7 +71,7 @@ get_active_workspace (WaylandWindowMenu *data)
 }
 
 static void
-update_root_icon (WaylandWindowMenu *data)
+update_root_icon (XfwWindowMenu *data)
 {
 	XfwWindow *window;
 	GIcon *icon = NULL;
@@ -227,7 +222,7 @@ on_window_state_changed (XfwWindow *window, XfwWindowState changed_mask,
 /* ---- Menu item creation ---- */
 
 static GtkWidget *
-create_window_item (WaylandWindowMenu *data, XfwWindow *window)
+create_window_item (XfwWindowMenu *data, XfwWindow *window)
 {
 	GtkWidget *item, *box, *image, *label;
 	const char *name;
@@ -315,14 +310,14 @@ create_window_item (WaylandWindowMenu *data, XfwWindow *window)
 }
 
 static void
-append_window_item (WaylandWindowMenu *data, XfwWindow *window)
+append_window_item (XfwWindowMenu *data, XfwWindow *window)
 {
 	GtkWidget *item = create_window_item (data, window);
 	gtk_menu_shell_append (GTK_MENU_SHELL (data->submenu), item);
 }
 
 static void
-add_workspace_label (WaylandWindowMenu *data, XfwWorkspace *ws)
+add_workspace_label (XfwWindowMenu *data, XfwWorkspace *ws)
 {
 	GtkWidget *item, *label;
 	const char *ws_name;
@@ -349,7 +344,7 @@ add_workspace_label (WaylandWindowMenu *data, XfwWorkspace *ws)
 /* ---- Disconnect / rebuild ---- */
 
 static void
-disconnect_window_signals (WaylandWindowMenu *data)
+disconnect_window_signals (XfwWindowMenu *data)
 {
 	GHashTableIter iter;
 	gpointer key, value;
@@ -362,7 +357,7 @@ disconnect_window_signals (WaylandWindowMenu *data)
 }
 
 static void
-rebuild_menu (WaylandWindowMenu *data)
+rebuild_menu (XfwWindowMenu *data)
 {
 	GList *children, *l, *wins, *workspaces, *wl;
 	XfwWorkspace *active_ws;
@@ -495,7 +490,7 @@ rebuild_menu (WaylandWindowMenu *data)
 
 static void
 on_window_opened (XfwScreen *screen, XfwWindow *window,
-                  WaylandWindowMenu *data)
+                  XfwWindowMenu *data)
 {
 	/* refresh the button icon for the initially-enumerated windows too */
 	update_root_icon (data);
@@ -518,7 +513,7 @@ on_window_opened (XfwScreen *screen, XfwWindow *window,
 
 static void
 on_window_closed (XfwScreen *screen, XfwWindow *window,
-                  WaylandWindowMenu *data)
+                  XfwWindowMenu *data)
 {
 	GtkWidget *item;
 
@@ -543,7 +538,7 @@ on_window_closed (XfwScreen *screen, XfwWindow *window,
 
 static void
 on_active_window_changed (XfwScreen *screen, XfwWindow *previous_window,
-                          WaylandWindowMenu *data)
+                          XfwWindowMenu *data)
 {
 	update_root_icon (data);
 }
@@ -552,14 +547,14 @@ on_active_window_changed (XfwScreen *screen, XfwWindow *previous_window,
 
 static void
 on_workspace_created (XfwWorkspaceManager *manager, XfwWorkspace *workspace,
-                      WaylandWindowMenu *data)
+                      XfwWindowMenu *data)
 {
 	/* Defer to next rebuild; the menu groups by workspace. */
 }
 
 static void
 on_workspace_destroyed (XfwWorkspaceManager *manager, XfwWorkspace *workspace,
-                        WaylandWindowMenu *data)
+                        XfwWindowMenu *data)
 {
 	/* Defer to next rebuild. */
 }
@@ -568,7 +563,7 @@ on_workspace_destroyed (XfwWorkspaceManager *manager, XfwWorkspace *workspace,
 
 static gboolean
 on_scroll_event (GtkWidget *widget, GdkEventScroll *event,
-                 WaylandWindowMenu *data)
+                 XfwWindowMenu *data)
 {
 	XfwWorkspace *active_ws;
 	GList *windows, *l;
@@ -647,7 +642,7 @@ on_scroll_event (GtkWidget *widget, GdkEventScroll *event,
 /* ---- Menu show handler ---- */
 
 static void
-on_menu_show (GtkWidget *menu, WaylandWindowMenu *data)
+on_menu_show (GtkWidget *menu, XfwWindowMenu *data)
 {
 	rebuild_menu (data);
 }
@@ -655,7 +650,7 @@ on_menu_show (GtkWidget *menu, WaylandWindowMenu *data)
 /* ---- Cleanup ---- */
 
 static void
-wayland_window_menu_free (WaylandWindowMenu *data)
+xfw_window_menu_free (XfwWindowMenu *data)
 {
 	if (data->window_hash != NULL)
 	{
@@ -685,25 +680,19 @@ wayland_window_menu_free (WaylandWindowMenu *data)
 /* ---- Public API ---- */
 
 GtkWidget *
-wayland_window_menu_new (void)
+xfw_window_menu_new (void)
 {
-	WaylandWindowMenu *data;
+	XfwWindowMenu *data;
 	XfwScreen *screen;
-	GdkDisplay *display;
 	GtkCssProvider *provider;
-
-	display = gdk_display_get_default ();
-	if (display == NULL || !GDK_IS_WAYLAND_DISPLAY (display))
-		return gtk_label_new (_ ("[Window menu not supported on this platform]"));
 
 	xfw_set_client_type (XFW_CLIENT_TYPE_PAGER);
 
 	screen = xfw_screen_get_default ();
 	if (screen == NULL)
-		return gtk_label_new (_ ("[Shell does not support "
-		                         "WLR Foreign Toplevel Control]"));
+		return gtk_label_new (_ ("[Window menu not supported on this platform]"));
 
-	data = g_new0 (WaylandWindowMenu, 1);
+	data = g_new0 (XfwWindowMenu, 1);
 	/* xfw_screen_get_default() returns a referenced screen */
 	data->screen = screen;
 	data->window_hash = g_hash_table_new_full (g_direct_hash,
@@ -748,9 +737,9 @@ wayland_window_menu_new (void)
 	g_object_unref (provider);
 
 	g_object_set_data_full (G_OBJECT (data->menu),
-	                        "wayland_window_menu_data",
+	                        "xfw_window_menu_data",
 	                        data,
-	                        (GDestroyNotify) wayland_window_menu_free);
+	                        (GDestroyNotify) xfw_window_menu_free);
 
 	g_signal_connect (data->submenu, "show",
 	                  G_CALLBACK (on_menu_show), data);
