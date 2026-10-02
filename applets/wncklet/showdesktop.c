@@ -29,26 +29,13 @@
 
 #include <gtk/gtk.h>
 
-#ifdef HAVE_X11
-#include <gdk/gdkx.h>
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-#endif
-
-#ifndef HAVE_X11
-#include <gdk/gdkwayland.h>
-#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
-#endif
+#include <libxfce4windowing/libxfce4windowing.h>
 
 #include "wncklet.h"
 #include "showdesktop.h"
 
 #include <string.h>
 
-#ifdef HAVE_WAYLAND
-#include <gdk/gdkwayland.h>
-#include <libxfce4windowing/libxfce4windowing.h>
-#endif
 #define TIMEOUT_ACTIVATE_SECONDS 1
 #define SHOW_DESKTOP_ICON "user-desktop"
 
@@ -61,13 +48,7 @@ typedef struct {
 	GtkOrientation orient;
 	int size;
 
-#ifdef HAVE_X11
-	WnckHandle* wnck_handle;
-#endif
-	WnckScreen* wnck_screen;
-#ifdef HAVE_WAYLAND
 	XfwScreen* xfw_screen;
-#endif
 
 	guint showing_desktop: 1;
 	guint button_activate;
@@ -86,12 +67,7 @@ static void theme_changed_callback(GtkIconTheme* icon_theme, ShowDesktopData* sd
 
 static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd);
 static void show_desktop_state_changed (ShowDesktopData* sdd);
-#ifdef HAVE_X11
-static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* sdd);
-#endif
-#ifdef HAVE_WAYLAND
-static void wayland_show_desktop_changed(XfwScreen* screen, GParamSpec* pspec, ShowDesktopData* sdd);
-#endif
+static void show_desktop_changed_callback(XfwScreen* screen, GParamSpec* pspec, ShowDesktopData* sdd);
 
 /* this is when the panel orientation changes */
 
@@ -317,32 +293,18 @@ static void applet_destroyed(GtkWidget* applet, ShowDesktopData* sdd)
 		sdd->button_activate = 0;
 	}
 
-	#ifdef HAVE_X11
-	if (sdd->wnck_screen != NULL)
-	{
-		g_signal_handlers_disconnect_by_func(sdd->wnck_screen, show_desktop_changed_callback, sdd);
-		sdd->wnck_screen = NULL;
-	}
-#endif
-
-#ifdef HAVE_WAYLAND
 	if (sdd->xfw_screen != NULL)
 	{
-		g_signal_handlers_disconnect_by_func(sdd->xfw_screen, wayland_show_desktop_changed, sdd);
+		g_signal_handlers_disconnect_by_func(sdd->xfw_screen, show_desktop_changed_callback, sdd);
 		g_object_unref (sdd->xfw_screen);
 		sdd->xfw_screen = NULL;
 	}
-#endif
 
 	if (sdd->icon_theme != NULL)
 	{
 		g_signal_handlers_disconnect_by_func(sdd->icon_theme, theme_changed_callback, sdd);
 		sdd->icon_theme = NULL;
 	}
-
-#ifdef HAVE_X11
-	g_clear_object(&sdd->wnck_handle);
-#endif
 
 	g_free (sdd);
 }
@@ -399,40 +361,23 @@ static void show_desktop_applet_realized(MatePanelApplet* applet, gpointer data)
 
 	screen = gtk_widget_get_screen(sdd->applet);
 
-	if (sdd->wnck_screen != NULL)
-		g_signal_handlers_disconnect_by_func(sdd->wnck_screen, show_desktop_changed_callback, sdd);
-
-	sdd->wnck_screen = NULL;
-
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+	if (sdd->xfw_screen != NULL)
 	{
-		sdd->wnck_screen = wncklet_get_screen (sdd->wnck_handle, sdd->applet);
-		if (sdd->wnck_screen != NULL)
-			wncklet_connect_while_alive (sdd->wnck_screen,
-			                             "showing_desktop_changed",
-			                             G_CALLBACK (show_desktop_changed_callback),
-			                             sdd,
-			                             sdd->applet);
-		else
-			g_warning ("Could not get WnckScreen!");
+		g_signal_handlers_disconnect_by_func(sdd->xfw_screen, show_desktop_changed_callback, sdd);
+		g_object_unref (sdd->xfw_screen);
+		sdd->xfw_screen = NULL;
 	}
-#endif /* HAVE_X11 */
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+
+	sdd->xfw_screen = xfw_screen_get_default ();
+	if (sdd->xfw_screen != NULL)
 	{
-		XfwScreen* xfw_screen = xfw_screen_get_default ();
-		if (xfw_screen != NULL)
-		{
-			g_signal_connect (G_OBJECT (xfw_screen), "notify::show-desktop",
-			                  G_CALLBACK (wayland_show_desktop_changed),
-			                  sdd);
-			sdd->xfw_screen = xfw_screen;
-		}
-		else
-			g_warning ("Could not get XfwScreen!");
+		g_signal_connect (G_OBJECT (sdd->xfw_screen), "notify::show-desktop",
+		                  G_CALLBACK (show_desktop_changed_callback),
+		                  sdd);
 	}
-#endif
+	else
+		g_warning ("Could not get XfwScreen!");
+
 	show_desktop_state_changed (sdd);
 
 	sdd->icon_theme = gtk_icon_theme_get_for_screen (screen);
@@ -475,13 +420,6 @@ gboolean show_desktop_applet_fill(MatePanelApplet* applet)
 	}
 
 	sdd->size = mate_panel_applet_get_size(MATE_PANEL_APPLET(sdd->applet));
-
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-	{
-		sdd->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
-	}
-#endif
 
 	g_signal_connect (sdd->applet, "realize",
 	                  G_CALLBACK (show_desktop_applet_realized),
@@ -599,34 +537,10 @@ static void button_toggled_callback(GtkWidget* button, ShowDesktopData* sdd)
 {
 	gboolean can_show_desktop;
 
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-	{
-		can_show_desktop = gdk_x11_screen_supports_net_wm_hint(gtk_widget_get_screen(button),
-								       gdk_atom_intern("_NET_SHOWING_DESKTOP",
-								       FALSE));
-	}
-#ifdef HAVE_WAYLAND
-	else if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-#endif
-#endif
-#ifdef HAVE_WAYLAND
-#ifndef HAVE_X11
-	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-#endif
-	{
-		can_show_desktop = sdd->xfw_screen != NULL;
-		if (can_show_desktop)
-			xfw_screen_set_show_desktop (sdd->xfw_screen,
-			                             gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
-	}
-#endif
-
-else
-
-	{ /* not using X11 or wayland */
-		can_show_desktop = FALSE;
-	}
+	can_show_desktop = sdd->xfw_screen != NULL;
+	if (can_show_desktop)
+		xfw_screen_set_show_desktop (sdd->xfw_screen,
+		                             gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
 
 	if (!can_show_desktop)
 	{
@@ -660,12 +574,6 @@ else
 		return;
 	}
 
-#ifdef HAVE_X11
-	if (sdd->wnck_screen != NULL)
-		wnck_screen_toggle_showing_desktop(sdd->wnck_screen, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)));
-#endif /* HAVE_X11 */
-
-
 	update_button_display (sdd);
 }
 
@@ -674,29 +582,13 @@ show_desktop_state_changed (ShowDesktopData* sdd)
 {
 	sdd->showing_desktop = FALSE;
 
-#ifdef HAVE_X11
-	if (sdd->wnck_screen != NULL)
-		sdd->showing_desktop = (wnck_screen_get_showing_desktop(sdd->wnck_screen) != FALSE);
-#endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
 	if (sdd->xfw_screen != NULL)
 		sdd->showing_desktop = xfw_screen_get_show_desktop (sdd->xfw_screen);
-#endif /* HAVE_WAYLAND */
 
 	update_button_state (sdd);
 }
 
-#ifdef HAVE_X11
-static void show_desktop_changed_callback(WnckScreen* screen, ShowDesktopData* sdd)
+static void show_desktop_changed_callback(XfwScreen* screen, GParamSpec* pspec, ShowDesktopData* sdd)
 {
 	show_desktop_state_changed (sdd);
 }
-#endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
-static void wayland_show_desktop_changed(XfwScreen* screen, GParamSpec* pspec, ShowDesktopData* sdd)
-{
-	show_desktop_state_changed (sdd);
-}
-#endif /* HAVE_WAYLAND */
