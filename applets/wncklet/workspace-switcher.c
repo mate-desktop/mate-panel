@@ -396,7 +396,10 @@ static void applet_style_updated (MatePanelApplet *applet, GtkStyleContext *cont
 
 	gtk_style_context_lookup_color (context, "theme_selected_bg_color", &color);
 	color_str = gdk_rgba_to_string (&color);
-	bg_css = g_strconcat (".wnck-pager:selected {\n"
+	bg_css = g_strconcat (".wnck-pager:selected,\n"
+		              ".wnck-pager button:checked,\n"
+		              ".wnck-pager button:checked:hover,\n"
+		              ".wnck-pager button:checked:active {\n"
 		              "	background-color:", color_str, ";\n"
 		              "}", NULL);
 	gtk_css_provider_load_from_data (provider, bg_css, -1, NULL);
