@@ -35,7 +35,6 @@
 #include <gdk/gdkx.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
-#include "workspace-switcher.h"
 #endif
 #ifndef HAVE_X11
 #include <gdk/gdkwayland.h>
@@ -43,6 +42,7 @@
 #endif
 
 #include "wncklet.h"
+#include "workspace-switcher.h"
 #include "window-menu.h"
 #include "window-list.h"
 #include "showdesktop.h"
