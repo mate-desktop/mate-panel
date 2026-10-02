@@ -53,6 +53,8 @@ wncklet_sources = [
   'showdesktop.h',
   'workspace-switcher.c',
   'workspace-switcher.h',
+  'xfw-window-menu.c',
+  'xfw-window-menu.h',
   wncklet_built_sources,
 ]
 
@@ -69,8 +71,6 @@ if have_wayland
     'wayland-backend.h',
     'wayland-workspace.c',
     'wayland-workspace.h',
-    'wayland-window-menu.c',
-    'wayland-window-menu.h',
   ]
 endif
 
