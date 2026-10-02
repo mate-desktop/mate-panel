@@ -53,6 +53,8 @@ wncklet_sources = [
   'showdesktop.h',
   'workspace-switcher.c',
   'workspace-switcher.h',
+  'xfw-pager.c',
+  'xfw-pager.h',
   'xfw-window-menu.c',
   'xfw-window-menu.h',
   wncklet_built_sources,
@@ -69,14 +71,11 @@ if have_wayland
   wncklet_sources += [
     'wayland-backend.c',
     'wayland-backend.h',
-    'wayland-workspace.c',
-    'wayland-workspace.h',
   ]
 endif
 
 wncklet_deps = [
   gtk_dep,
-  wnck_dep,
   mate_desktop_dep,
 ] + libmate_panel_applet_deps
 
