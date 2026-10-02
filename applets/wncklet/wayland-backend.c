@@ -128,6 +128,45 @@ wayland_get_fallback_icon_name (void)
 	return "unknown";
 }
 
+/* xfw reports a single workspace per window, so the active one is the active
+ * workspace of the group that window's workspace belongs to. */
+static gboolean
+wayland_window_is_on_active_workspace (gpointer window)
+{
+	XfwWorkspace *workspace, *active;
+	XfwWorkspaceGroup *group;
+
+	workspace = xfw_window_get_workspace (window);
+	if (workspace == NULL)
+		return TRUE;
+
+	group = xfw_workspace_get_workspace_group (workspace);
+	if (group == NULL)
+		return TRUE;
+
+	active = xfw_workspace_group_get_active_workspace (group);
+	if (active == NULL)
+		return TRUE;
+
+	return xfw_window_is_on_workspace (window, active);
+}
+
+static void
+wayland_window_move_to_workspace (gpointer window)
+{
+	XfwWorkspace *workspace;
+	GError *error = NULL;
+
+	workspace = xfw_window_get_workspace (window);
+	if (workspace == NULL)
+		return;
+
+	if (!xfw_workspace_activate (workspace, &error))
+	{
+		g_clear_error (&error);
+	}
+}
+
 static void
 wayland_activate_window (gpointer window, guint32 user_time)
 {
@@ -284,6 +323,8 @@ static const TasklistBackend wayland_backend = {
 	.get_app_name             = wayland_get_app_name,
 	.get_app_gicon            = wayland_get_app_gicon,
 	.get_fallback_icon_name   = wayland_get_fallback_icon_name,
+	.window_is_on_active_workspace = wayland_window_is_on_active_workspace,
+	.window_move_to_workspace = wayland_window_move_to_workspace,
 	.activate_window          = wayland_activate_window,
 	.close_window             = wayland_close_window,
 	.set_window_maximized     = wayland_set_window_maximized,
