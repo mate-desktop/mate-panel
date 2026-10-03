@@ -600,19 +600,30 @@ static void
 tasklist_list_size_allocate (GtkWidget *widget, GdkRectangle *allocation, TasklistManager *tasklist)
 {
 	gboolean crowded;
+	gboolean auto_group = (tasklist->grouping == TASKLIST_AUTO_GROUP);
 
-	if (tasklist->grouping != TASKLIST_AUTO_GROUP)
-	{
+	if (!auto_group)
 		tasklist->auto_grouping = FALSE;
-		return;
-	}
 
 	/* don't evaluate crowd state while we are rebuilding, the buttons are
 	 * half-hidden and the measurement would suggest the wrong thing */
 	if (tasklist->rebuilding)
 		return;
 
+	/* The panel allocates the tasklist's width out of these hints, so they
+	 * have to be refreshed in every grouping mode. With the measurement
+	 * behind the auto-grouping check, 'never group' (the default) and
+	 * 'always group' kept advertising the widths measured while the
+	 * tasklist was first built, and the panel went on allocating that stale
+	 * size as windows came and went. Because adjust_buttons() puts hard
+	 * minimums on the buttons, a stale-too-small allocation is what made the
+	 * window list spill over its neighbours.
+	 */
 	crowded = tasklist_buttons_crowded (tasklist, allocation->width);
+
+	if (!auto_group)
+		return;
+
 	tasklist->auto_grouping = crowded;
 
 	if (crowded != tasklist->auto_grouping_applied && tasklist->auto_grouping_idle == 0)
