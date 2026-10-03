@@ -57,6 +57,10 @@ typedef struct {
 	/* NULL when no backend matches the display in use. */
 	const TasklistBackend* backend;
 
+	/* TRUE when backend is the X11 one. Window previews are X11-only, so
+	 * the hover handlers must not be hooked up for any other backend. */
+	gboolean backend_is_x11;
+
 	gboolean show_window_thumbnails;
 	gint thumbnail_size;
 	gboolean include_all_workspaces;
@@ -212,8 +216,16 @@ preview_window_thumbnail (gpointer      window_handle,
 	int width, height, scale;
 	int src_x = 0, src_y = 0;
 
-	win = (Window) xfw_window_x11_get_xid (window_handle);
 	display = gdk_display_get_default ();
+
+	if (display == NULL || !GDK_IS_X11_DISPLAY (display))
+		return NULL;
+
+	win = (Window) xfw_window_x11_get_xid (window_handle);
+
+	if (win == 0)
+		return NULL;
+
 	xdpy = GDK_DISPLAY_XDISPLAY (display);
 
 	/* Find the frame window (WM parent) which includes decorations */
@@ -867,6 +879,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	 * a build with both backends still works whichever one is in use. */
 #ifdef HAVE_X11
 	tasklist->backend = x11_tasklist_backend ();
+	tasklist->backend_is_x11 = (tasklist->backend != NULL);
 #endif /* HAVE_X11 */
 #ifdef HAVE_WAYLAND
 	if (tasklist->backend == NULL)
@@ -884,13 +897,20 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 		{
 #ifdef HAVE_X11
 			/* Previews grab window pixels with Xlib, which xfw has no
-			 * equivalent for, so they stay X11-only. */
-			g_signal_connect (tasklist->tasklist, "task-enter-notify",
-			                  G_CALLBACK (applet_enter_notify_event),
-			                  tasklist);
-			g_signal_connect (tasklist->tasklist, "task-leave-notify",
-			                  G_CALLBACK (applet_leave_notify_event),
-			                  tasklist);
+			 * equivalent for, so they stay X11-only. Both the build
+			 * guard and the backend test are needed: a dual-backend
+			 * build on Wayland compiles these in but must not
+			 * connect them, or hovering would hand a Wayland
+			 * handle to preview_window_thumbnail(). */
+			if (tasklist->backend_is_x11)
+			{
+				g_signal_connect (tasklist->tasklist, "task-enter-notify",
+				                  G_CALLBACK (applet_enter_notify_event),
+				                  tasklist);
+				g_signal_connect (tasklist->tasklist, "task-leave-notify",
+				                  G_CALLBACK (applet_leave_notify_event),
+				                  tasklist);
+			}
 #endif /* HAVE_X11 */
 
 			tasklist_update (tasklist);
