@@ -76,6 +76,7 @@ typedef struct
 	gint tasklist_width;
 	gint full_button_width;
 	gint grouping_limit;
+	gint last_button_space;
 
 	/* Descending (max, min) width staircase handed to the panel, which walks
 	 * it to decide how wide the tasklist may be as space runs short. */
@@ -182,6 +183,7 @@ static void group_task_child_state_changed (GroupTask *group);
 static void tasklist_rebuild (TasklistManager *tasklist);
 static void adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, ToplevelTask *task);
 static void tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width);
+static gint tasklist_count_visible_buttons (TasklistManager *tasklist);
 static void tasklist_refresh_visibility (TasklistManager *tasklist);
 static void tasklist_unminimize (TasklistManager *tasklist, gpointer window);
 static gboolean on_toplevel_button_enter_notify (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist);
@@ -317,7 +319,8 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 		{
 			gtk_widget_set_size_request (button, tasklist->full_button_width, -1);
 			gtk_widget_show_all (button);
-			return;
+			children = children->next;
+			continue;
 		}
 		else
 		{
@@ -503,6 +506,25 @@ tasklist_should_group (TasklistManager *tasklist, guint n_windows)
 	return tasklist->auto_grouping_applied && n_windows >= 2;
 }
 
+static gint
+tasklist_count_visible_buttons (TasklistManager *tasklist)
+{
+	GList *children, *l;
+	gint visible = 0;
+
+	children = gtk_container_get_children (GTK_CONTAINER (tasklist->list));
+
+	for (l = children; l != NULL; l = l->next)
+	{
+		if (gtk_widget_get_visible (GTK_WIDGET (l->data)))
+			visible++;
+	}
+
+	g_list_free (children);
+
+	return visible;
+}
+
 static gboolean
 tasklist_buttons_crowded (TasklistManager *tasklist, gint available_width)
 {
@@ -601,6 +623,7 @@ tasklist_list_size_allocate (GtkWidget *widget, GdkRectangle *allocation, Taskli
 {
 	gboolean crowded;
 	gboolean auto_group = (tasklist->grouping == TASKLIST_AUTO_GROUP);
+	gint visible, button_space;
 
 	if (!auto_group)
 		tasklist->auto_grouping = FALSE;
@@ -610,15 +633,26 @@ tasklist_list_size_allocate (GtkWidget *widget, GdkRectangle *allocation, Taskli
 	if (tasklist->rebuilding)
 		return;
 
-	/* The panel allocates the tasklist's width out of these hints, so they
-	 * have to be refreshed in every grouping mode. With the measurement
-	 * behind the auto-grouping check, 'never group' (the default) and
-	 * 'always group' kept advertising the widths measured while the
-	 * tasklist was first built, and the panel went on allocating that stale
-	 * size as windows came and went. Because adjust_buttons() puts hard
-	 * minimums on the buttons, a stale-too-small allocation is what made the
-	 * window list spill over its neighbours.
-	 */
+	if (gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box)) == GTK_ORIENTATION_HORIZONTAL
+	    && allocation->width > 1)
+	{
+		visible = tasklist_count_visible_buttons (tasklist);
+
+		if (visible > 0)
+		{
+			tasklist->tasklist_width = allocation->width;
+			tasklist->full_button_width = MIN (max_button_width, allocation->width / 3);
+			button_space = MIN ((allocation->width / visible) * 0.75,
+					    tasklist->full_button_width);
+
+			if (button_space != tasklist->last_button_space)
+			{
+				tasklist->last_button_space = button_space;
+				adjust_buttons (tasklist, button_space, visible, NULL);
+			}
+		}
+	}
+
 	crowded = tasklist_buttons_crowded (tasklist, allocation->width);
 
 	if (!auto_group)
@@ -1228,6 +1262,7 @@ tasklist_manager_new (const TasklistBackend *backend)
 	tasklist->backend = backend;
 	tasklist->screen = screen;
 	tasklist->grouping_limit = default_grouping_limit;
+	tasklist->last_button_space = -1;
 	tasklist->list = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_set_homogeneous (GTK_BOX (tasklist->list), TRUE);
 	tasklist->outer_box = g_object_new (TASKLIST_TYPE_BOX, NULL);
