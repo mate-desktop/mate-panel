@@ -583,6 +583,11 @@ static void applet_change_pixel_size(MatePanelApplet* applet, gint size, Tasklis
 
 	tasklist->size = size;
 
+	/* The core widget is a plain label when there is no backend, and the
+	 * core getter would object to being handed that. */
+	if (tasklist->backend != NULL)
+		tasklist_core_set_panel_size (tasklist->tasklist, size);
+
 	tasklist_update(tasklist);
 }
 
@@ -912,6 +917,12 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 				                  tasklist);
 			}
 #endif /* HAVE_X11 */
+
+			/* Choose the icon size before the first update builds
+			 * buttons, so they are never laid out at the default
+			 * and then torn down and laid out again. tasklist->size
+			 * is already the applet's real thickness here. */
+			tasklist_core_set_panel_size (tasklist->tasklist, tasklist->size);
 
 			tasklist_update (tasklist);
 		}

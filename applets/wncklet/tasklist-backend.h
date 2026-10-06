@@ -122,6 +122,10 @@ void       tasklist_core_set_scroll_enabled     (GtkWidget *core, gboolean enabl
 void       tasklist_core_set_grouping           (GtkWidget *core, TasklistGroupingType grouping);
 void       tasklist_core_set_include_all_workspaces (GtkWidget *core, gboolean include);
 void       tasklist_core_set_switch_workspace_on_unminimize (GtkWidget *core, gboolean switch_ws);
+/* The panel's cross-axis thickness (height on a horizontal panel, width on a
+ * vertical one), which is what the icon size is chosen from. size <= 0 means
+ * unknown; the call is then ignored. */
+void       tasklist_core_set_panel_size         (GtkWidget *core, gint size);
 
 /* The (max, min) width staircase the panel uses to decide how much room the
  * tasklist may take. Derived from widget measurements, so it is not backend
