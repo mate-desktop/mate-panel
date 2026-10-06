@@ -374,65 +374,12 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 }
 
 static void
-tasklist_set_image_icon (GtkImage *image, GIcon *icon, const gchar *fallback_name)
-{
-	GtkIconTheme *theme;
-	GtkIconInfo *info;
-	GdkPixbuf *pixbuf;
-	gint scale, want;
-
-	if (image == NULL)
-		return;
-
-	scale = gtk_widget_get_scale_factor (GTK_WIDGET (image));
-	if (scale < 1)
-		scale = 1;
-
-	want = icon_size * scale;
-	pixbuf = NULL;
-
-	if (icon != NULL)
-	{
-		theme = gtk_icon_theme_get_default ();
-		info = gtk_icon_theme_lookup_by_gicon_for_scale (theme, icon, icon_size,
-								scale,
-								GTK_ICON_LOOKUP_FORCE_SIZE);
-		if (info != NULL)
-		{
-			pixbuf = gtk_icon_info_load_icon (info, NULL);
-			g_object_unref (info);
-		}
-	}
-
-	/* Only shrink. Enlarging would just blur the icon, and it cannot make
-	 * the button any wider than the bounded size we hand over below. */
-	if (pixbuf != NULL
-	    && (gdk_pixbuf_get_width (pixbuf) > want || gdk_pixbuf_get_height (pixbuf) > want))
-	{
-		GdkPixbuf *scaled;
-
-		scaled = gdk_pixbuf_scale_simple (pixbuf, want, want, GDK_INTERP_BILINEAR);
-		if (scaled != NULL)
-		{
-			g_object_unref (pixbuf);
-			pixbuf = scaled;
-		}
-	}
-
-	if (pixbuf != NULL)
-		gtk_image_set_from_pixbuf (image, pixbuf);
-	else
-		gtk_image_set_from_icon_name (image, fallback_name, GTK_ICON_SIZE_MENU);
-
-	g_clear_object (&pixbuf);
-}
-
-static void
 update_task_icon (ToplevelTask *task)
 {
 	const TasklistBackend *backend;
 	GIcon *icon = NULL;
 	gpointer app;
+	gint width;
 
 	if (!task || !task->window || !task->icon)
 		return;
@@ -445,8 +392,15 @@ update_task_icon (ToplevelTask *task)
 	if (icon == NULL)
 		icon = backend->get_window_gicon (task->window);
 
-	tasklist_set_image_icon (GTK_IMAGE (task->icon), icon,
-				 backend->get_fallback_icon_name ());
+	if (icon != NULL)
+		gtk_image_set_from_gicon (GTK_IMAGE (task->icon), icon, GTK_ICON_SIZE_MENU);
+	else
+		gtk_image_set_from_icon_name (GTK_IMAGE (task->icon),
+					      backend->get_fallback_icon_name (),
+					      GTK_ICON_SIZE_MENU);
+
+	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+	gtk_image_set_pixel_size (GTK_IMAGE (task->icon), width);
 }
 
 static GIcon *
@@ -532,14 +486,24 @@ static void
 group_task_update_icon (GroupTask *group)
 {
 	GIcon *icon;
+	gint width;
 
 	if (!group || !group->icon)
 		return;
 
 	icon = group->tasklist->backend->get_app_gicon (group->app);
 
-	tasklist_set_image_icon (GTK_IMAGE (group->icon), icon,
-				 group->tasklist->backend->get_fallback_icon_name ());
+	if (icon != NULL)
+		gtk_image_set_from_gicon (GTK_IMAGE (group->icon), icon, GTK_ICON_SIZE_MENU);
+	else
+		gtk_image_set_from_icon_name (GTK_IMAGE (group->icon),
+					      group->tasklist->backend->get_fallback_icon_name (),
+					      GTK_ICON_SIZE_MENU);
+
+	/* Same reason as update_task_icon(): the group button must not inherit
+	 * the minimum width of whatever the icon theme decides to hand back. */
+	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+	gtk_image_set_pixel_size (GTK_IMAGE (group->icon), width);
 }
 
 static gboolean
@@ -844,6 +808,7 @@ group_task_menu_show (GroupTask *group, GdkEventButton *event, gboolean right_cl
 		const TasklistBackend *backend = group->tasklist->backend;
 		GtkWidget *item, *box, *icon, *label;
 		GIcon *gicon;
+		gint width;
 
 		if (!task || !task->window)
 			continue;
@@ -851,10 +816,19 @@ group_task_menu_show (GroupTask *group, GdkEventButton *event, gboolean right_cl
 		item = gtk_menu_item_new ();
 		box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 		icon = gtk_image_new ();
-		gtk_widget_set_size_request (icon, icon_size, icon_size);
 		gicon = window_gicon (group->tasklist, task->window);
-		tasklist_set_image_icon (GTK_IMAGE (icon), gicon,
-					 backend->get_fallback_icon_name ());
+
+		if (gicon != NULL)
+			gtk_image_set_from_gicon (GTK_IMAGE (icon), gicon, GTK_ICON_SIZE_MENU);
+		else
+			gtk_image_set_from_icon_name (GTK_IMAGE (icon),
+						      backend->get_fallback_icon_name (),
+						      GTK_ICON_SIZE_MENU);
+
+		/* A menu row would otherwise be stretched to the icon's own
+		 * pixel size, which is not fixed at GTK_ICON_SIZE_MENU. */
+		gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+		gtk_image_set_pixel_size (GTK_IMAGE (icon), width);
 
 		label = gtk_label_new (backend->get_window_name (task->window));
 		gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -935,8 +909,8 @@ group_task_new (TasklistManager *tasklist, gpointer app)
 
 	group->button = gtk_button_new ();
 	group->box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	group->icon = gtk_image_new ();
-	gtk_widget_set_size_request (group->icon, icon_size, icon_size);
+	group->icon = gtk_image_new_from_icon_name (tasklist->backend->get_fallback_icon_name (),
+						    GTK_ICON_SIZE_MENU);
 	group->label = gtk_label_new ("");
 	group->counter_label = gtk_label_new ("");
 
@@ -1712,8 +1686,8 @@ toplevel_task_new (TasklistManager *tasklist, gpointer window)
 	task->button = gtk_button_new ();
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
 
-	task->icon = gtk_image_new ();
-	gtk_widget_set_size_request (task->icon, icon_size, icon_size);
+	task->icon = gtk_image_new_from_icon_name (backend->get_fallback_icon_name (),
+						   GTK_ICON_SIZE_MENU);
 
 	task->label = gtk_label_new ("");
 	gtk_label_set_max_width_chars (GTK_LABEL (task->label), TASKLIST_TEXT_MAX_WIDTH);
