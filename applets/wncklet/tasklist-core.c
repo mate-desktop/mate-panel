@@ -31,6 +31,9 @@
 
 /*In the future this could be changable from the panel-prefs dialog*/
 static const int max_button_width = 180;
+
+/* Fallback icon size, used until the panel tells us how much room it has.
+ * After that TasklistManager.icon_size_enum/icon_px take over. */
 static const int icon_size = 16;
 
 /* The width a button shrinks to before it drops to just its icon. This
@@ -77,6 +80,16 @@ typedef struct
 	gint full_button_width;
 	gint grouping_limit;
 	gint last_button_space;
+
+	/* Standard icon size the buttons are rendering at, picked to fit the
+	 * panel the applet was given. icon_px is its resolved size in logical
+	 * pixels, cached because the show/hide thresholds need it on every
+	 * pass. panel_thickness is the panel size itself, height on a
+	 * horizontal panel and width on a vertical one, 0 until the applet
+	 * reports it. */
+	GtkIconSize icon_size_enum;
+	gint icon_px;
+	gint panel_thickness;
 
 	/* Descending (max, min) width staircase handed to the panel, which walks
 	 * it to decide how wide the tasklist may be as space runs short. */
@@ -269,7 +282,7 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 		}
 	}
 
-	if ((task) && (button_space > 0) && (button_space < icon_size * 3))
+	if ((task) && (button_space > 0) && (button_space < tasklist->icon_px * 3))
 	{
 		gtk_widget_hide (task->icon);
 	}
@@ -278,7 +291,7 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 		gtk_widget_show (task->icon);
 	}
 
-	if ((task) && (button_space > 0) && (button_space < icon_size))
+	if ((task) && (button_space > 0) && (button_space < tasklist->icon_px))
 	{
 		gtk_widget_hide (task->label);
 	}
@@ -341,7 +354,7 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 				/*Show or hide the icon*/
 				if (GTK_IS_IMAGE (widget))
 				{
-					if ((button_space < icon_size * 3) && (button_space > 1))
+					if ((button_space < tasklist->icon_px * 3) && (button_space > 1))
 						gtk_widget_hide (widget);
 
 					else
@@ -352,7 +365,7 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 				/*Show or hide the label*/
 				if (GTK_IS_LABEL (widget))
 				{
-					if ((button_space < icon_size) && (button_space > 1))
+					if ((button_space < tasklist->icon_px) && (button_space > 1))
 					{
 						gtk_widget_hide (widget);
 						/*We can go a little wider for empty buttons*/
@@ -379,7 +392,7 @@ update_task_icon (ToplevelTask *task)
 	const TasklistBackend *backend;
 	GIcon *icon = NULL;
 	gpointer app;
-	gint width;
+	gint width = 0;
 
 	if (!task || !task->window || !task->icon)
 		return;
@@ -393,13 +406,20 @@ update_task_icon (ToplevelTask *task)
 		icon = backend->get_window_gicon (task->window);
 
 	if (icon != NULL)
-		gtk_image_set_from_gicon (GTK_IMAGE (task->icon), icon, GTK_ICON_SIZE_MENU);
+		gtk_image_set_from_gicon (GTK_IMAGE (task->icon), icon,
+					  task->tasklist->icon_size_enum);
 	else
 		gtk_image_set_from_icon_name (GTK_IMAGE (task->icon),
 					      backend->get_fallback_icon_name (),
-					      GTK_ICON_SIZE_MENU);
+					      task->tasklist->icon_size_enum);
 
-	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+	/* Force the rendered size, not just the size asked for above. The icon
+	 * theme is free to hand back whatever pixel size it likes, so an
+	 * application that only ships a 128x128 icon would otherwise drag the
+	 * button's minimum width up with it and push the tasklist off the
+	 * panel. With a pixel size set, GTK asks the theme for exactly this
+	 * size and scales there, which also keeps the result sharp. */
+	gtk_icon_size_lookup (task->tasklist->icon_size_enum, &width, NULL);
 	gtk_image_set_pixel_size (GTK_IMAGE (task->icon), width);
 }
 
@@ -486,7 +506,7 @@ static void
 group_task_update_icon (GroupTask *group)
 {
 	GIcon *icon;
-	gint width;
+	gint width = 0;
 
 	if (!group || !group->icon)
 		return;
@@ -494,15 +514,16 @@ group_task_update_icon (GroupTask *group)
 	icon = group->tasklist->backend->get_app_gicon (group->app);
 
 	if (icon != NULL)
-		gtk_image_set_from_gicon (GTK_IMAGE (group->icon), icon, GTK_ICON_SIZE_MENU);
+		gtk_image_set_from_gicon (GTK_IMAGE (group->icon), icon,
+					  group->tasklist->icon_size_enum);
 	else
 		gtk_image_set_from_icon_name (GTK_IMAGE (group->icon),
 					      group->tasklist->backend->get_fallback_icon_name (),
-					      GTK_ICON_SIZE_MENU);
+					      group->tasklist->icon_size_enum);
 
 	/* Same reason as update_task_icon(): the group button must not inherit
 	 * the minimum width of whatever the icon theme decides to hand back. */
-	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+	gtk_icon_size_lookup (group->tasklist->icon_size_enum, &width, NULL);
 	gtk_image_set_pixel_size (GTK_IMAGE (group->icon), width);
 }
 
@@ -556,7 +577,7 @@ tasklist_buttons_crowded (TasklistManager *tasklist, gint available_width)
 		}
 
 		if (task->natural_width <= 0)
-			task->natural_width = icon_size + 32;
+			task->natural_width = tasklist->icon_px + 32;
 
 		needed += task->natural_width;
 	}
@@ -564,6 +585,122 @@ tasklist_buttons_crowded (TasklistManager *tasklist, gint available_width)
 	tasklist_update_size_hints (tasklist, needed);
 
 	return needed > available_width;
+}
+
+/* The standard icon sizes the tasklist may render at, largest first. Only
+ * these are offered because GtkImage wants a GtkIconSize to look the icon up
+ * with and a pixel size to pin the result to; both have to be set, or the
+ * icon theme is free to hand back whatever size it likes. */
+static const GtkIconSize tasklist_icon_sizes[] = {
+	GTK_ICON_SIZE_DIALOG,
+	GTK_ICON_SIZE_DND,
+	GTK_ICON_SIZE_LARGE_TOOLBAR,
+	GTK_ICON_SIZE_MENU,
+};
+
+/* What the panel has left over for an icon once the button's own style padding
+ * is taken off, matching what showdesktop.c does. The panel size the applet
+ * reports and the sizes gtk_icon_size_lookup() returns are both logical
+ * pixels, so unlike showdesktop there is no scale factor to apply here: it
+ * loads the surface itself, we only tell GTK what to load. */
+static gint
+tasklist_icon_available_space (TasklistManager *tasklist)
+{
+	GtkWidget *probe = NULL;
+	GtkStyleContext *context;
+	GtkStateFlags state;
+	GtkBorder padding;
+	const gboolean horizontal =
+		gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box)) ==
+		GTK_ORIENTATION_HORIZONTAL;
+
+	if (tasklist->panel_thickness <= 0)
+		return 0;
+
+	/* Probing a real button is the accurate case: set_panel_size() runs
+	 * after tasklist_manager_new() has already added the existing
+	 * windows. Fall back to the box so a tasklist with no windows still
+	 * gets a sane answer. */
+	if (tasklist->tasks != NULL && tasklist->tasks->data != NULL)
+		probe = ((ToplevelTask *) tasklist->tasks->data)->button;
+
+	if (probe == NULL)
+		probe = tasklist->list;
+
+	context = gtk_widget_get_style_context (probe);
+	state = gtk_widget_get_state_flags (probe);
+	gtk_style_context_get_padding (context, state, &padding);
+
+	if (horizontal)
+		return tasklist->panel_thickness - padding.top - padding.bottom;
+
+	return tasklist->panel_thickness - padding.left - padding.right;
+}
+
+/* Largest standard icon size that still fits the space available. */
+static GtkIconSize
+tasklist_choose_icon_size (gint available_px)
+{
+	guint i;
+	gint width = 0, height = 0;
+
+	for (i = 0; i < G_N_ELEMENTS (tasklist_icon_sizes); i++)
+	{
+		if (!gtk_icon_size_lookup (tasklist_icon_sizes[i], &width, &height))
+			continue;
+
+		if (MAX (width, height) <= available_px)
+			return tasklist_icon_sizes[i];
+	}
+
+	/* Nothing fits, so keep the smallest, which is what the tasklist has
+	 * always used. It is the one size that is never worse than before. */
+	return GTK_ICON_SIZE_MENU;
+}
+
+/* Push the current icon size at every button. The buttons' minimum widths
+ * follow the icon, so the hints the panel is holding go stale with it: clear
+ * the button_space cache, ask for a relayout, and re-measure now rather than
+ * waiting for the next size-allocate, which may not come if only the panel's
+ * thickness changed. */
+static void
+tasklist_apply_icon_size (TasklistManager *tasklist)
+{
+	GHashTableIter iter;
+	gpointer key, value;
+	gint width = 0, height = 0;
+	GList *l;
+
+	for (l = tasklist->tasks; l != NULL; l = l->next)
+		update_task_icon (l->data);
+
+	if (tasklist->apps)
+	{
+		g_hash_table_iter_init (&iter, tasklist->apps);
+		while (g_hash_table_iter_next (&iter, &key, &value))
+		{
+			GroupTask *group = value;
+
+			if (group == NULL)
+				continue;
+
+			group_task_update_icon (group);
+		}
+	}
+
+	/* Keep a usable floor even if the theme refuses to answer for this
+	 * size: icon_px drives the show/hide thresholds, and 0 would make
+	 * every button drop its icon. */
+	if (gtk_icon_size_lookup (tasklist->icon_size_enum, &width, &height))
+		tasklist->icon_px = MAX (width, height);
+	else
+		tasklist->icon_px = icon_size;
+
+	tasklist->last_button_space = -1;
+	gtk_widget_queue_resize (tasklist->outer_box);
+
+	if (tasklist->tasklist_width > 0)
+		tasklist_buttons_crowded (tasklist, tasklist->tasklist_width);
 }
 
 /* Build the width staircase the panel walks when it has to squeeze the
@@ -808,7 +945,7 @@ group_task_menu_show (GroupTask *group, GdkEventButton *event, gboolean right_cl
 		const TasklistBackend *backend = group->tasklist->backend;
 		GtkWidget *item, *box, *icon, *label;
 		GIcon *gicon;
-		gint width;
+		gint width = 0;
 
 		if (!task || !task->window)
 			continue;
@@ -819,15 +956,16 @@ group_task_menu_show (GroupTask *group, GdkEventButton *event, gboolean right_cl
 		gicon = window_gicon (group->tasklist, task->window);
 
 		if (gicon != NULL)
-			gtk_image_set_from_gicon (GTK_IMAGE (icon), gicon, GTK_ICON_SIZE_MENU);
+			gtk_image_set_from_gicon (GTK_IMAGE (icon), gicon,
+						  group->tasklist->icon_size_enum);
 		else
 			gtk_image_set_from_icon_name (GTK_IMAGE (icon),
 						      backend->get_fallback_icon_name (),
-						      GTK_ICON_SIZE_MENU);
+						      group->tasklist->icon_size_enum);
 
 		/* A menu row would otherwise be stretched to the icon's own
 		 * pixel size, which is not fixed at GTK_ICON_SIZE_MENU. */
-		gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+		gtk_icon_size_lookup (group->tasklist->icon_size_enum, &width, NULL);
 		gtk_image_set_pixel_size (GTK_IMAGE (icon), width);
 
 		label = gtk_label_new (backend->get_window_name (task->window));
@@ -1280,6 +1418,8 @@ tasklist_manager_new (const TasklistBackend *backend)
 	tasklist->screen = screen;
 	tasklist->grouping_limit = default_grouping_limit;
 	tasklist->last_button_space = -1;
+	tasklist->icon_size_enum = GTK_ICON_SIZE_MENU;
+	tasklist->icon_px = icon_size;
 	tasklist->list = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_set_homogeneous (GTK_BOX (tasklist->list), TRUE);
 	tasklist->outer_box = g_object_new (TASKLIST_TYPE_BOX, NULL);
@@ -1369,7 +1509,9 @@ tasklist_button_drag_begin (GtkWidget *widget,
 	if (task->window)
 	{
 		scale = gtk_widget_get_scale_factor (widget);
-		icon = task->tasklist->backend->get_window_pixbuf (task->window, icon_size, scale);
+		icon = task->tasklist->backend->get_window_pixbuf (task->window,
+								  task->tasklist->icon_px,
+								  scale);
 		if (icon != NULL)
 			gtk_drag_set_icon_pixbuf (context, icon, 0, 0);
 	}
@@ -2041,6 +2183,37 @@ tasklist_rebuild (TasklistManager *tasklist)
 	}
 
 	gtk_widget_queue_resize (tasklist->list);
+}
+
+void
+tasklist_core_set_panel_size (GtkWidget *tasklist_widget, gint size)
+{
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+	GtkIconSize chosen;
+	gint available;
+
+	g_return_if_fail (tasklist);
+
+	/* size is the panel's cross-axis thickness: height on a horizontal
+	 * panel, width on a vertical one. 0 means the applet has no toplevel
+	 * to take it from yet, so keep whatever default is already in use. */
+	if (size <= 0 || size == tasklist->panel_thickness)
+		return;
+
+	tasklist->panel_thickness = size;
+
+	/* Deliberately no early return on a non-positive available: the
+	 * chooser treats that as "nothing fits" and drops to the smallest
+	 * size, which is the right answer for a very thin panel. */
+	available = tasklist_icon_available_space (tasklist);
+
+	chosen = tasklist_choose_icon_size (available);
+
+	if (chosen == tasklist->icon_size_enum)
+		return;
+
+	tasklist->icon_size_enum = chosen;
+	tasklist_apply_icon_size (tasklist);
 }
 
 void
