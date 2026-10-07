@@ -32,6 +32,11 @@
 /*In the future this could be changable from the panel-prefs dialog*/
 static const int max_button_width = 180;
 
+/* GTK hands most panel button themes back a zero button padding, which makes
+ * the icon size picker choose one size too large for the panel. Enforce a
+ * floor so the icons keep a little breathing room at the panel edges. */
+static const int min_button_padding = 2;
+
 /* Fallback icon size, used until the panel tells us how much room it has.
  * After that TasklistManager.icon_size_enum/icon_px take over. */
 static const int icon_size = 16;
@@ -72,6 +77,11 @@ typedef struct
 	gboolean rebuilding;
 	GHashTable *apps;
 	GHashTable *window_to_group;
+
+	/* Icon-size refresh scheduled on a theme change, so the fit can be
+	 * recalculated off the new button padding. */
+	guint icon_refresh_idle;
+	gulong theme_changed_signal;
 
 	/* Button sizing, kept per tasklist rather than in file statics so that
 	 * several tasklists cannot interfere with each other. */
@@ -196,6 +206,8 @@ static void group_task_child_state_changed (GroupTask *group);
 static void tasklist_rebuild (TasklistManager *tasklist);
 static void adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, ToplevelTask *task);
 static void tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width);
+static void tasklist_refresh_icon_size (TasklistManager *tasklist);
+static void tasklist_theme_changed (GtkSettings *settings, GParamSpec *pspec, TasklistManager *tasklist);
 static gint tasklist_count_visible_buttons (TasklistManager *tasklist);
 static void tasklist_refresh_visibility (TasklistManager *tasklist);
 static void tasklist_unminimize (TasklistManager *tasklist, gpointer window);
@@ -630,6 +642,11 @@ tasklist_icon_available_space (TasklistManager *tasklist)
 	context = gtk_widget_get_style_context (probe);
 	state = gtk_widget_get_state_flags (probe);
 	gtk_style_context_get_padding (context, state, &padding);
+
+	padding.top = MAX (padding.top, min_button_padding);
+	padding.bottom = MAX (padding.bottom, min_button_padding);
+	padding.left = MAX (padding.left, min_button_padding);
+	padding.right = MAX (padding.right, min_button_padding);
 
 	if (horizontal)
 		return tasklist->panel_thickness - padding.top - padding.bottom;
@@ -1345,6 +1362,19 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 		tasklist->auto_grouping_idle = 0;
 	}
 
+	if (tasklist->icon_refresh_idle != 0)
+	{
+		g_source_remove (tasklist->icon_refresh_idle);
+		tasklist->icon_refresh_idle = 0;
+	}
+
+	if (tasklist->theme_changed_signal != 0)
+	{
+		g_signal_handler_disconnect (gtk_settings_get_default (),
+					     tasklist->theme_changed_signal);
+		tasklist->theme_changed_signal = 0;
+	}
+
 	g_clear_pointer (&tasklist->size_hints, g_free);
 	tasklist->size_hints_len = 0;
 
@@ -1442,6 +1472,10 @@ tasklist_manager_new (const TasklistBackend *backend)
 	/* space-based auto-grouping */
 	g_signal_connect (tasklist->list, "size-allocate",
 			  G_CALLBACK (tasklist_list_size_allocate), tasklist);
+
+	tasklist->theme_changed_signal = g_signal_connect (gtk_settings_get_default (),
+							  "notify::gtk-theme-name",
+							  G_CALLBACK (tasklist_theme_changed), tasklist);
 
 	/* add all existing windows on this screen */
 	windows = backend->list_windows (screen);
@@ -2185,28 +2219,19 @@ tasklist_rebuild (TasklistManager *tasklist)
 	gtk_widget_queue_resize (tasklist->list);
 }
 
-void
-tasklist_core_set_panel_size (GtkWidget *tasklist_widget, gint size)
+static void
+tasklist_refresh_icon_size (TasklistManager *tasklist)
 {
-	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
 	GtkIconSize chosen;
 	gint available;
 
-	g_return_if_fail (tasklist);
-
-	/* size is the panel's cross-axis thickness: height on a horizontal
-	 * panel, width on a vertical one. 0 means the applet has no toplevel
-	 * to take it from yet, so keep whatever default is already in use. */
-	if (size <= 0 || size == tasklist->panel_thickness)
+	if (!tasklist)
 		return;
-
-	tasklist->panel_thickness = size;
 
 	/* Deliberately no early return on a non-positive available: the
 	 * chooser treats that as "nothing fits" and drops to the smallest
 	 * size, which is the right answer for a very thin panel. */
 	available = tasklist_icon_available_space (tasklist);
-
 	chosen = tasklist_choose_icon_size (available);
 
 	if (chosen == tasklist->icon_size_enum)
@@ -2214,6 +2239,41 @@ tasklist_core_set_panel_size (GtkWidget *tasklist_widget, gint size)
 
 	tasklist->icon_size_enum = chosen;
 	tasklist_apply_icon_size (tasklist);
+}
+
+static gboolean
+tasklist_theme_change_idle (gpointer data)
+{
+	TasklistManager *tasklist = data;
+
+	tasklist->icon_refresh_idle = 0;
+	tasklist_refresh_icon_size (tasklist);
+
+	return G_SOURCE_REMOVE;
+}
+
+static void
+tasklist_theme_changed (GtkSettings *settings, GParamSpec *pspec, TasklistManager *tasklist)
+{
+	if (!tasklist || tasklist->icon_refresh_idle != 0)
+		return;
+
+	tasklist->icon_refresh_idle = g_idle_add (tasklist_theme_change_idle, tasklist);
+}
+
+void
+tasklist_core_set_panel_size (GtkWidget *tasklist_widget, gint size)
+{
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+
+	g_return_if_fail (tasklist);
+
+	if (size <= 0 || size == tasklist->panel_thickness)
+		return;
+
+	tasklist->panel_thickness = size;
+
+	tasklist_refresh_icon_size (tasklist);
 }
 
 void
