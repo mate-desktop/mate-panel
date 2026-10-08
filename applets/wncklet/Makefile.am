@@ -15,6 +15,8 @@ AM_CFLAGS = $(WARN_CFLAGS)
 WNCKLET_SOURCES = \
 	wncklet.c \
 	wncklet.h \
+	tasklist-backend.h \
+	tasklist-core.c \
 	window-menu.c \
 	window-menu.h \
 	window-list.c \
@@ -23,6 +25,10 @@ WNCKLET_SOURCES = \
 	showdesktop.h \
 	workspace-switcher.c \
 	workspace-switcher.h \
+	xfw-pager.c \
+	xfw-pager.h \
+	xfw-window-menu.c \
+	xfw-window-menu.h \
 	$(BUILT_SOURCES)
 
 
@@ -33,18 +39,22 @@ WNCKLET_LDADD =						\
 	$(LIBMATE_PANEL_APPLET_LIBS)
 
 if ENABLE_X11
+WNCKLET_SOURCES += \
+	x11-backend.c \
+	x11-backend.h
+
 WNCKLET_LDADD += \
-	$(X_LIBS)
+	$(X_LIBS) \
+	$(XFW_LIBS)
+
+AM_CPPFLAGS += \
+	$(XFW_CFLAGS)
 endif
 
 if ENABLE_WAYLAND
 WNCKLET_SOURCES += \
 	wayland-backend.c \
-	wayland-backend.h \
-	wayland-workspace.c \
-	wayland-workspace.h \
-	wayland-window-menu.c \
-	wayland-window-menu.h
+	wayland-backend.h
 
 WNCKLET_LDADD += \
 	$(XFW_LIBS)

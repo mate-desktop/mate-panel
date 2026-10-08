@@ -1,4 +1,4 @@
-/* Wncklet applet Wayland backend */
+/* Wncklet applet X11 backend */
 
 /*
  * Copyright (C) 2019 William Wold
@@ -20,62 +20,72 @@
  * 02110-1301, USA.
  */
 
-/* This file only implements the windowing-system half of the tasklist. All of
- * the widget logic lives in tasklist-core.c and is shared with the other
- * backends.
+/* Like wayland-backend.c, this file only implements the windowing-system
+ * half of the tasklist. All of the widget logic lives in tasklist-core.c and
+ * is shared with the other backends.
+ *
+ * X11 goes through libxfce4windowing as well, which implements its X11
+ * support on top of libwnck. Going through xfw rather than talking to libwnck
+ * directly is what lets the two backends share the same core: window state,
+ * workspaces, icons and actions all have a common vocabulary.
+ *
+ * One thing xfw has no API for is grabbing a window's pixels, so window
+ * previews stay in window-list.c and reach the XID through
+ * xfw_window_x11_get_xid().
  */
 
 #include <config.h>
 
-#ifndef HAVE_WAYLAND
-#error file should only be compiled when HAVE_WAYLAND is enabled
+#ifndef HAVE_X11
+#error file should only be compiled when HAVE_X11 is enabled
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdkwayland.h>
+#include <gdk/gdkx.h>
 #include <libxfce4windowing/libxfce4windowing.h>
+#include <libxfce4windowing/xfw-x11.h>
 
 #include "tasklist-backend.h"
-#include "wayland-backend.h"
+#include "x11-backend.h"
 
 static gpointer
-wayland_get_screen (void)
+x11_get_screen (void)
 {
 	return xfw_screen_get_default ();
 }
 
 static GList *
-wayland_list_windows (gpointer screen)
+x11_list_windows (gpointer screen)
 {
 	return xfw_screen_get_windows (screen);
 }
 
 static gpointer
-wayland_get_active_window (gpointer screen)
+x11_get_active_window (gpointer screen)
 {
 	return xfw_screen_get_active_window (screen);
 }
 
 static const gchar *
-wayland_get_window_name (gpointer window)
+x11_get_window_name (gpointer window)
 {
 	return xfw_window_get_name (window);
 }
 
 static GIcon *
-wayland_get_window_gicon (gpointer window)
+x11_get_window_gicon (gpointer window)
 {
 	return xfw_window_get_gicon (window);
 }
 
 static GdkPixbuf *
-wayland_get_window_pixbuf (gpointer window, gint size, gint scale)
+x11_get_window_pixbuf (gpointer window, gint size, gint scale)
 {
 	return xfw_window_get_icon (window, size, scale);
 }
 
 static TasklistWindowState
-wayland_get_window_state (gpointer window)
+x11_get_window_state (gpointer window)
 {
 	XfwWindowState state;
 	TasklistWindowState result = 0;
@@ -97,33 +107,33 @@ wayland_get_window_state (gpointer window)
 }
 
 static gpointer
-wayland_get_window_application (gpointer window)
+x11_get_window_application (gpointer window)
 {
 	return xfw_window_get_application (window);
 }
 
 static gulong
-wayland_get_window_id (gpointer window)
+x11_get_window_id (gpointer window)
 {
-	/* On Wayland there is no window XID, so the handle is used to identify
-	 * a window in the drag-and-drop payload */
-	return (gulong) window;
+	/* X11 really does have a window id, and the drag-and-drop payload and
+	 * the window previews both want it */
+	return (gulong) xfw_window_x11_get_xid (window);
 }
 
 static const gchar *
-wayland_get_app_name (gpointer app)
+x11_get_app_name (gpointer app)
 {
 	return xfw_application_get_name (app);
 }
 
 static GIcon *
-wayland_get_app_gicon (gpointer app)
+x11_get_app_gicon (gpointer app)
 {
 	return xfw_application_get_gicon (app);
 }
 
 static const gchar *
-wayland_get_fallback_icon_name (void)
+x11_get_fallback_icon_name (void)
 {
 	return "unknown";
 }
@@ -131,7 +141,7 @@ wayland_get_fallback_icon_name (void)
 /* xfw reports a single workspace per window, so the active one is the active
  * workspace of the group that window's workspace belongs to. */
 static gboolean
-wayland_window_is_on_active_workspace (gpointer window)
+x11_window_is_on_active_workspace (gpointer window)
 {
 	XfwWorkspace *workspace, *active;
 	XfwWorkspaceGroup *group;
@@ -152,7 +162,7 @@ wayland_window_is_on_active_workspace (gpointer window)
 }
 
 static void
-wayland_window_move_to_workspace (gpointer window)
+x11_window_move_to_workspace (gpointer window)
 {
 	XfwWorkspace *workspace;
 	GError *error = NULL;
@@ -162,31 +172,29 @@ wayland_window_move_to_workspace (gpointer window)
 		return;
 
 	if (!xfw_workspace_activate (workspace, &error))
-	{
 		g_clear_error (&error);
-	}
 }
 
 static void
-wayland_activate_window (gpointer window, guint32 user_time)
+x11_activate_window (gpointer window, guint32 user_time)
 {
 	xfw_window_activate (window, NULL, user_time, NULL);
 }
 
 static void
-wayland_close_window (gpointer window, guint32 timestamp)
+x11_close_window (gpointer window, guint32 timestamp)
 {
 	xfw_window_close (window, timestamp, NULL);
 }
 
 static void
-wayland_set_window_maximized (gpointer window, gboolean maximized)
+x11_set_window_maximized (gpointer window, gboolean maximized)
 {
 	xfw_window_set_maximized (window, maximized, NULL);
 }
 
 static void
-wayland_set_window_minimized (gpointer window, gboolean minimized)
+x11_set_window_minimized (gpointer window, gboolean minimized)
 {
 	xfw_window_set_minimized (window, minimized, NULL);
 }
@@ -196,77 +204,77 @@ wayland_set_window_minimized (gpointer window, gboolean minimized)
  * g_signal_handlers_disconnect_by_data() on itself. */
 
 static void
-wayland_screen_window_opened (XfwScreen *screen, XfwWindow *window, gpointer core)
+x11_screen_window_opened (XfwScreen *screen, XfwWindow *window, gpointer core)
 {
 	tasklist_core_window_added (GTK_WIDGET (core), window);
 }
 
 static void
-wayland_screen_window_closed (XfwScreen *screen, XfwWindow *window, gpointer core)
+x11_screen_window_closed (XfwScreen *screen, XfwWindow *window, gpointer core)
 {
 	tasklist_core_window_removed (GTK_WIDGET (core), window);
 }
 
 static void
-wayland_screen_active_window_changed (XfwScreen *screen,
-				      XfwWindow *previous_window,
-				      gpointer core)
+x11_screen_active_window_changed (XfwScreen *screen,
+				  XfwWindow *previous_window,
+				  gpointer core)
 {
 	tasklist_core_active_window_changed (GTK_WIDGET (core));
 }
 
 static void
-wayland_window_state_changed (XfwWindow *window,
-			      XfwWindowState changed_mask,
-			      XfwWindowState new_state,
-			      gpointer core)
+x11_window_state_changed (XfwWindow *window,
+			  XfwWindowState changed_mask,
+			  XfwWindowState new_state,
+			  gpointer core)
 {
 	tasklist_core_window_state_changed (GTK_WIDGET (core), window);
 }
 
 static void
-wayland_window_name_changed (XfwWindow *window, gpointer core)
+x11_window_name_changed (XfwWindow *window, gpointer core)
 {
 	tasklist_core_window_name_changed (GTK_WIDGET (core), window);
 }
 
 static void
-wayland_window_icon_changed (XfwWindow *window, gpointer core)
+x11_window_icon_changed (XfwWindow *window, gpointer core)
 {
 	tasklist_core_window_icon_changed (GTK_WIDGET (core), window);
 }
 
 static void
-wayland_window_application_changed (XfwWindow *window,
-				   GParamSpec *pspec,
-				   gpointer core)
+x11_window_application_changed (XfwWindow *window,
+			       GParamSpec *pspec,
+			       gpointer core)
 {
 	tasklist_core_window_application_changed (GTK_WIDGET (core), window);
 }
 
 static void
-wayland_app_icon_changed (XfwApplication *app, gpointer core)
+x11_app_icon_changed (XfwApplication *app, gpointer core)
 {
 	tasklist_core_app_icon_changed (GTK_WIDGET (core), app);
 }
 
 static void
-wayland_app_name_changed (XfwApplication *app, GParamSpec *pspec, gpointer core)
+x11_app_name_changed (XfwApplication *app, GParamSpec *pspec, gpointer core)
 {
 	tasklist_core_app_name_changed (GTK_WIDGET (core), app);
 }
 
 static void
-wayland_set_screen_tracking (GtkWidget *core, gpointer screen, gboolean track)
+x11_set_screen_tracking (GtkWidget *core, gpointer screen, gboolean track)
 {
 	if (track)
 	{
 		g_signal_connect (screen, "window-opened",
-				  G_CALLBACK (wayland_screen_window_opened), core);
+				  G_CALLBACK (x11_screen_window_opened), core);
 		g_signal_connect (screen, "window-closed",
-				  G_CALLBACK (wayland_screen_window_closed), core);
+				  G_CALLBACK (x11_screen_window_closed), core);
 		g_signal_connect (screen, "active-window-changed",
-				  G_CALLBACK (wayland_screen_active_window_changed), core);
+				  G_CALLBACK (x11_screen_active_window_changed), core);
 	}
 	else
 	{
@@ -275,18 +283,18 @@ wayland_set_screen_tracking (GtkWidget *core, gpointer screen, gboolean track)
 }
 
 static void
-wayland_set_window_tracking (GtkWidget *core, gpointer window, gboolean track)
+x11_set_window_tracking (GtkWidget *core, gpointer window, gboolean track)
 {
 	if (track)
 	{
 		g_signal_connect (window, "state-changed",
-				  G_CALLBACK (wayland_window_state_changed), core);
+				  G_CALLBACK (x11_window_state_changed), core);
 		g_signal_connect (window, "name-changed",
-				  G_CALLBACK (wayland_window_name_changed), core);
+				  G_CALLBACK (x11_window_name_changed), core);
 		g_signal_connect (window, "icon-changed",
-				  G_CALLBACK (wayland_window_icon_changed), core);
+				  G_CALLBACK (x11_window_icon_changed), core);
 		g_signal_connect (window, "notify::application",
-				  G_CALLBACK (wayland_window_application_changed), core);
+				  G_CALLBACK (x11_window_application_changed), core);
 	}
 	else
 	{
@@ -295,14 +303,14 @@ wayland_set_window_tracking (GtkWidget *core, gpointer window, gboolean track)
 }
 
 static void
-wayland_set_app_tracking (GtkWidget *core, gpointer app, gboolean track)
+x11_set_app_tracking (GtkWidget *core, gpointer app, gboolean track)
 {
 	if (track)
 	{
 		g_signal_connect (app, "icon-changed",
-				  G_CALLBACK (wayland_app_icon_changed), core);
+				  G_CALLBACK (x11_app_icon_changed), core);
 		g_signal_connect (app, "notify::name",
-				  G_CALLBACK (wayland_app_name_changed), core);
+				  G_CALLBACK (x11_app_name_changed), core);
 	}
 	else
 	{
@@ -310,40 +318,40 @@ wayland_set_app_tracking (GtkWidget *core, gpointer app, gboolean track)
 	}
 }
 
-static const TasklistBackend wayland_backend = {
-	.get_screen               = wayland_get_screen,
-	.list_windows             = wayland_list_windows,
-	.get_active_window        = wayland_get_active_window,
-	.get_window_name          = wayland_get_window_name,
-	.get_window_gicon         = wayland_get_window_gicon,
-	.get_window_pixbuf        = wayland_get_window_pixbuf,
-	.get_window_state         = wayland_get_window_state,
-	.get_window_application   = wayland_get_window_application,
-	.get_window_id            = wayland_get_window_id,
-	.get_app_name             = wayland_get_app_name,
-	.get_app_gicon            = wayland_get_app_gicon,
-	.get_fallback_icon_name   = wayland_get_fallback_icon_name,
-	.window_is_on_active_workspace = wayland_window_is_on_active_workspace,
-	.window_move_to_workspace = wayland_window_move_to_workspace,
-	.activate_window          = wayland_activate_window,
-	.close_window             = wayland_close_window,
-	.set_window_maximized     = wayland_set_window_maximized,
-	.set_window_minimized     = wayland_set_window_minimized,
-	.set_screen_tracking      = wayland_set_screen_tracking,
-	.set_window_tracking      = wayland_set_window_tracking,
-	.set_app_tracking         = wayland_set_app_tracking,
+static const TasklistBackend x11_backend = {
+	.get_screen               = x11_get_screen,
+	.list_windows             = x11_list_windows,
+	.get_active_window        = x11_get_active_window,
+	.get_window_name          = x11_get_window_name,
+	.get_window_gicon         = x11_get_window_gicon,
+	.get_window_pixbuf        = x11_get_window_pixbuf,
+	.get_window_state         = x11_get_window_state,
+	.get_window_application   = x11_get_window_application,
+	.get_window_id            = x11_get_window_id,
+	.get_app_name             = x11_get_app_name,
+	.get_app_gicon            = x11_get_app_gicon,
+	.get_fallback_icon_name   = x11_get_fallback_icon_name,
+	.window_is_on_active_workspace = x11_window_is_on_active_workspace,
+	.window_move_to_workspace = x11_window_move_to_workspace,
+	.activate_window          = x11_activate_window,
+	.close_window             = x11_close_window,
+	.set_window_maximized     = x11_set_window_maximized,
+	.set_window_minimized     = x11_set_window_minimized,
+	.set_screen_tracking      = x11_set_screen_tracking,
+	.set_window_tracking      = x11_set_window_tracking,
+	.set_app_tracking         = x11_set_app_tracking,
 };
 
 const TasklistBackend *
-wayland_tasklist_backend (void)
+x11_tasklist_backend (void)
 {
 	GdkDisplay *display;
 
 	display = gdk_display_get_default ();
-	if (display == NULL || !GDK_IS_WAYLAND_DISPLAY (display))
+	if (display == NULL || !GDK_IS_X11_DISPLAY (display))
 		return NULL;
 
 	xfw_set_client_type (XFW_CLIENT_TYPE_PAGER);
 
-	return &wayland_backend;
+	return &x11_backend;
 }
