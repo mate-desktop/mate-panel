@@ -278,41 +278,52 @@ update_task_state (ToplevelTask *task)
 		group_task_child_state_changed (task->group);
 }
 
+static gint
+tasklist_button_space (TasklistManager *tasklist, gint buttons)
+{
+	if (buttons <= 0)
+		return 0;
+
+	return MIN ((tasklist->tasklist_width / buttons) * 0.75,
+		    tasklist->full_button_width);
+}
+
 static void
 adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, ToplevelTask *task)
 {
 	GtkWidget *widget, *button, *box;
+	GList *children, *contents;
+	GroupTask *group;
+	gboolean crowded;
+	gint width;
 
 	/*catch the case of an added button that can be missed
 	 *Note that button space can come up zero on a first button
 	 */
 	if (buttons < 2)
 	{
-		if(task)
-		{
+		if (task)
 			gtk_widget_set_size_request (task->button, tasklist->full_button_width, -1);
-		}
 	}
 
-	if ((task) && (button_space > 0) && (button_space < tasklist->icon_px * 3))
+	crowded = (buttons >= 2) &&
+		(buttons * tasklist->full_button_width >= tasklist->tasklist_width * 0.75);
+
+	/* the button that just appeared gets the same treatment as the rest */
+	if (task)
 	{
-		gtk_widget_hide (task->icon);
-	}
-	else if (task)
-	{
-		gtk_widget_show (task->icon);
+		if (crowded && button_space < tasklist->icon_px * 3)
+			gtk_widget_hide (task->icon);
+		else
+			gtk_widget_show (task->icon);
+
+		if (crowded && button_space < tasklist->icon_px)
+			gtk_widget_hide (task->label);
+		else
+			gtk_widget_show (task->label);
 	}
 
-	if ((task) && (button_space > 0) && (button_space < tasklist->icon_px))
-	{
-		gtk_widget_hide (task->label);
-	}
-	else if (task)
-	{
-		gtk_widget_show (task->label);
-	}
-
-	GList* children = gtk_container_get_children (GTK_CONTAINER (tasklist->list));
+	children = gtk_container_get_children (GTK_CONTAINER (tasklist->list));
 
 	while (children != NULL)
 	{
@@ -331,71 +342,68 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 			}
 		}
 
-		/* group buttons are shown/hidden solely by the grouping code,
-		 * never by adjust_buttons (otherwise a hidden group button for a
-		 * single-window application would be force-shown again) */
-		if (g_object_get_data (G_OBJECT (button), group_task_key) != NULL)
+		group = g_object_get_data (G_OBJECT (button), group_task_key);
+
+		if (group != NULL && !crowded)
 		{
 			children = children->next;
 			continue;
 		}
 
-		if ((buttons < 2) || (buttons * tasklist->full_button_width < tasklist->tasklist_width * 0.75))
+		if (!crowded)
 		{
 			gtk_widget_set_size_request (button, tasklist->full_button_width, -1);
 			gtk_widget_show_all (button);
 			children = children->next;
 			continue;
 		}
+
+		width = MIN (button_space, tasklist->full_button_width);
+		gtk_widget_set_size_request (button, width, -1);
+
+		if (group != NULL)
+		{
+			if (width < tasklist->icon_px * 3)
+				gtk_widget_hide (group->icon);
+			else
+				gtk_widget_show (group->icon);
+
+			if (width < tasklist->icon_px)
+				gtk_widget_hide (group->label);
+			else
+				gtk_widget_show (group->label);
+		}
 		else
 		{
-			gtk_widget_set_size_request (button, MIN(button_space, tasklist->full_button_width), -1);
-		}
-
-		/* if the number of buttons forces width to less than 3x the icon size, hide the icons
-		 * if the number of buttons forces width to less than the icon size, hide the labels too.
-		 * This is roughy the same behavior as on x11
-		 * To find the icon and label we must iterate through the children of the box we packed
-		 * into the button, there are two of them
-		 */
-
-			GList* contents = gtk_container_get_children (GTK_CONTAINER (box));
+			contents = gtk_container_get_children (GTK_CONTAINER (box));
 			while (contents != NULL)
 			{
 				widget = GTK_WIDGET (contents->data);
-				/*Show or hide the icon*/
+
 				if (GTK_IS_IMAGE (widget))
 				{
-					if ((button_space < tasklist->icon_px * 3) && (button_space > 1))
+					if (width < tasklist->icon_px * 3)
 						gtk_widget_hide (widget);
-
 					else
 						gtk_widget_show (widget);
-
 				}
-
-				/*Show or hide the label*/
-				if (GTK_IS_LABEL (widget))
+				else if (GTK_IS_LABEL (widget))
 				{
-					if ((button_space < tasklist->icon_px) && (button_space > 1))
-					{
+					if (width < tasklist->icon_px)
 						gtk_widget_hide (widget);
-						/*We can go a little wider for empty buttons*/
-						gtk_widget_set_size_request (button, tasklist->tasklist_width / buttons * 0.9, -1);
-						if (task)
-							gtk_widget_hide (task->label);
-
-					}
 					else
-					{
 						gtk_widget_show (widget);
-					}
 				}
+
 				contents = contents->next;
 			}
+			g_list_free (contents);
+		}
+
 		children = children->next;
 	}
-	return;
+
+	g_list_free (children);
 }
 
 static void
@@ -582,11 +590,11 @@ tasklist_buttons_crowded (TasklistManager *tasklist, gint available_width)
 		if (task == NULL || task->button == NULL)
 			continue;
 
-		if (gtk_widget_get_visible (task->button))
-		{
-			gtk_widget_get_preferred_width (task->button, NULL, &req.width);
-			task->natural_width = req.width;
-		}
+		if (!gtk_widget_get_visible (task->button))
+			continue;
+
+		gtk_widget_get_preferred_width (task->button, NULL, &req.width);
+		task->natural_width = req.width;
 
 		if (task->natural_width <= 0)
 			task->natural_width = tasklist->icon_px + 32;
@@ -737,7 +745,7 @@ tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
 		gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box)) ==
 		GTK_ORIENTATION_HORIZONTAL;
 	const guint n_buttons = tasklist->buttons;
-	gint squeezed;
+	gint floor;
 	GArray *hints;
 
 	if (n_buttons == 0)
@@ -752,14 +760,11 @@ tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
 	if (!horizontal)
 		return;
 
-	squeezed = MIN (tasklist->grouping_limit, max_button_width) * (gint)n_buttons;
+	floor = MIN (tasklist->icon_px + 2 * min_button_padding, natural_width);
 
 	hints = g_array_new (FALSE, FALSE, sizeof (gint));
 	g_array_append_val (hints, natural_width);
-	g_array_append_val (hints, squeezed);
-
-	/* Always allow going down to a zero size. */
-	((gint *)hints->data)[hints->len - 1] = 0;
+	g_array_append_val (hints, floor);
 
 	g_free (tasklist->size_hints);
 	tasklist->size_hints_len = hints->len;
@@ -806,8 +811,7 @@ tasklist_list_size_allocate (GtkWidget *widget, GdkRectangle *allocation, Taskli
 		{
 			tasklist->tasklist_width = allocation->width;
 			tasklist->full_button_width = MIN (max_button_width, allocation->width / 3);
-			button_space = MIN ((allocation->width / visible) * 0.75,
-					    tasklist->full_button_width);
+			button_space = tasklist_button_space (tasklist, visible);
 
 			if (button_space != tasklist->last_button_space)
 			{
@@ -1344,8 +1348,7 @@ tasklist_remove_window (TasklistManager *tasklist, gpointer window)
 			parent_box = gtk_widget_get_ancestor ((outer_box), GTK_TYPE_BOX);
 			tasklist->tasklist_width = MAX (gtk_widget_get_allocated_width (parent_box),
 							tasklist->tasklist_width);
-			button_space = (tasklist->tasklist_width / tasklist->buttons) * 0.75;
-			button_space = MIN (button_space, tasklist->full_button_width);
+			button_space = tasklist_button_space (tasklist, tasklist->buttons);
 			adjust_buttons (tasklist, button_space, tasklist->buttons, NULL);
 
 			return;
@@ -1984,8 +1987,7 @@ toplevel_task_new (TasklistManager *tasklist, gpointer window)
 	}
 
 	/*Leave a little space so the buttons don't push other applets off the panel*/
-	button_space = (tasklist->tasklist_width / tasklist->buttons) * 0.75;
-	button_space = MIN (button_space, tasklist->full_button_width);
+	button_space = tasklist_button_space (tasklist, tasklist->buttons);
 
 	/* iterate over all the buttons*/
 	adjust_buttons (tasklist, button_space, tasklist->buttons, task);
@@ -2210,8 +2212,7 @@ tasklist_rebuild (TasklistManager *tasklist)
 			parent_box = gtk_widget_get_ancestor (tasklist->outer_box, GTK_TYPE_BOX);
 			tasklist->tasklist_width = MAX (gtk_widget_get_allocated_width (parent_box),
 							tasklist->tasklist_width);
-			button_space = (tasklist->tasklist_width / visible) * 0.75;
-			button_space = MIN (button_space, tasklist->full_button_width);
+			button_space = tasklist_button_space (tasklist, visible);
 			adjust_buttons (tasklist, button_space, visible, NULL);
 		}
 	}
