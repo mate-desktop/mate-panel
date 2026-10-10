@@ -101,10 +101,13 @@ panel_background_prepare (PanelBackground *background)
 			* backing region is cleared
 			* (gdk_window_clear_backing_region), the correctly
 			* scaled pattern is used */
-			cairo_surface_t *surface;
+			cairo_surface_t *surface = NULL;
 
-			cairo_pattern_get_surface(background->default_pattern, &surface);
-			/* catch invalid images (e.g. -gtk-gradient) before scaling and rendering */
+			/* catch invalid images (e.g. -gtk-gradient) before scaling and rendering:
+			 * for a pattern that is not a surface pattern, such as a gradient,
+			 * cairo_pattern_get_surface() fails and leaves surface unset */
+			if (cairo_pattern_get_surface (background->default_pattern, &surface) != CAIRO_STATUS_SUCCESS)
+				surface = NULL;
 			if (surface != NULL ){
 				double width, height;
 				cairo_matrix_t m;
