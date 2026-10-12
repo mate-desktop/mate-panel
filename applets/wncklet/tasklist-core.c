@@ -306,18 +306,19 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 			gtk_widget_set_size_request (task->button, tasklist->full_button_width, -1);
 	}
 
-	crowded = (buttons >= 2) &&
+	crowded = (tasklist->tasklist_width > 0) &&
+		(buttons >= 2) &&
 		(buttons * tasklist->full_button_width >= tasklist->tasklist_width * 0.75);
 
 	/* the button that just appeared gets the same treatment as the rest */
 	if (task)
 	{
-		if (crowded && button_space < tasklist->icon_px * 3)
+		if (crowded && button_space > 0 && button_space < tasklist->icon_px * 3)
 			gtk_widget_hide (task->icon);
 		else
 			gtk_widget_show (task->icon);
 
-		if (crowded && button_space < tasklist->icon_px)
+		if (crowded && button_space > 0 && button_space < tasklist->icon_px)
 			gtk_widget_hide (task->label);
 		else
 			gtk_widget_show (task->label);
@@ -363,12 +364,12 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 
 		if (group != NULL)
 		{
-			if (width < tasklist->icon_px * 3)
+			if (button_space > 0 && width < tasklist->icon_px * 3)
 				gtk_widget_hide (group->icon);
 			else
 				gtk_widget_show (group->icon);
 
-			if (width < tasklist->icon_px)
+			if (button_space > 0 && width < tasklist->icon_px)
 				gtk_widget_hide (group->label);
 			else
 				gtk_widget_show (group->label);
@@ -382,14 +383,14 @@ adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, Toplev
 
 				if (GTK_IS_IMAGE (widget))
 				{
-					if (width < tasklist->icon_px * 3)
+					if (button_space > 0 && width < tasklist->icon_px * 3)
 						gtk_widget_hide (widget);
 					else
 						gtk_widget_show (widget);
 				}
 				else if (GTK_IS_LABEL (widget))
 				{
-					if (width < tasklist->icon_px)
+					if (button_space > 0 && width < tasklist->icon_px)
 						gtk_widget_hide (widget);
 					else
 						gtk_widget_show (widget);
