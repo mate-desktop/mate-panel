@@ -1457,7 +1457,7 @@ tasklist_manager_new (const TasklistBackend *backend)
 	tasklist->list = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_set_homogeneous (GTK_BOX (tasklist->list), TRUE);
 	tasklist->outer_box = g_object_new (TASKLIST_TYPE_BOX, NULL);
-	gtk_box_pack_start (GTK_BOX (tasklist->outer_box), tasklist->list, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (tasklist->outer_box), tasklist->list, TRUE, TRUE, 0);
 	gtk_widget_show (tasklist->list);
 	g_object_set_data_full (G_OBJECT (tasklist->outer_box),
 				tasklist_manager_key,
@@ -1641,7 +1641,7 @@ toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 			if (task->minimized)
 				tasklist_unminimize (task->tasklist, task->window);
 			else
-				task->tasklist->backend->activate_window (task->window, 0);
+				task->tasklist->backend->activate_window (task->window, gtk_get_current_event_time ());
 		}
 	}
 }
