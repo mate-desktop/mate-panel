@@ -729,16 +729,6 @@ tasklist_apply_icon_size (TasklistManager *tasklist)
 		tasklist_buttons_crowded (tasklist, tasklist->tasklist_width);
 }
 
-/* Build the width staircase the panel walks when it has to squeeze the
- * tasklist. The array is a descending series of (max, min) pixel pairs: give
- * me this much room and the buttons fit at their natural width, and at least
- * this much room or they collapse. The last entry is always 0 so the tasklist
- * can be squeezed down to nothing rather than pushed off the panel.
- *
- * We only describe the ungrouped layout. Collapsing windows into groups frees
- * space too, but that happens on its own via the auto-grouping check above, so
- * omitting those steps only makes the hint list slightly less precise.
- */
 static void
 tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
 {
@@ -747,6 +737,7 @@ tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
 		GTK_ORIENTATION_HORIZONTAL;
 	const guint n_buttons = tasklist->buttons;
 	gint floor;
+	gint top;
 	GArray *hints;
 
 	if (n_buttons == 0)
@@ -763,8 +754,10 @@ tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
 
 	floor = MIN (tasklist->icon_px + 2 * min_button_padding, natural_width);
 
+	top = G_MAXINT / 2;
+
 	hints = g_array_new (FALSE, FALSE, sizeof (gint));
-	g_array_append_val (hints, natural_width);
+	g_array_append_val (hints, top);
 	g_array_append_val (hints, floor);
 
 	g_free (tasklist->size_hints);
@@ -2094,10 +2087,6 @@ tasklist_unminimize (TasklistManager *tasklist, gpointer window)
 	tasklist->backend->set_window_minimized (window, FALSE);
 }
 
-/* Returns a borrowed (max, min) staircase of widths, terminated by a 0 so
- * that the tasklist may always be squeezed down to nothing. The caller must
- * not modify or free it. *n_elements receives the number of integers, which
- * is always even while there is anything to show. */
 const int *
 tasklist_core_get_size_hint_list (GtkWidget *tasklist_widget, int *n_elements)
 {
