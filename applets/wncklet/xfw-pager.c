@@ -24,6 +24,9 @@
 
 #include "xfw-pager.h"
 
+#define PAGER_WORKSPACE_SIZE 16
+#define PAGER_MIN_WINDOW_SIZE 3
+
 typedef struct _GroupSignal GroupSignal;
 
 struct _GroupSignal {
@@ -35,10 +38,12 @@ typedef struct _XfwPagerData XfwPagerData;
 
 struct _XfwPagerData {
 	GtkWidget *grid;
+	GList *cells; /* list of XfwPagerCell* backing the workspace buttons */
 
 	XfwScreen *screen;
 	XfwWorkspaceManager *workspace_manager;
 	GList *group_signals; /* list of GroupSignal* */
+	GList *window_signals; /* list of tracked XfwWindow* */
 
 	GtkOrientation orientation;
 	int n_rows;
@@ -47,7 +52,36 @@ struct _XfwPagerData {
 	gboolean ignore_toggle;
 };
 
+typedef struct _XfwPagerCell XfwPagerCell;
+typedef struct _XfwPagerCellClass XfwPagerCellClass;
+
+struct _XfwPagerCell {
+	GtkDrawingArea parent;
+	XfwWorkspace *ws;
+	XfwPagerData *data;
+};
+
+struct _XfwPagerCellClass {
+	GtkDrawingAreaClass parent_class;
+};
+
+typedef struct _XfwPagerGrid XfwPagerGrid;
+typedef struct _XfwPagerGridClass XfwPagerGridClass;
+
+struct _XfwPagerGrid {
+	GtkGrid parent;
+};
+
+struct _XfwPagerGridClass {
+	GtkGridClass parent_class;
+};
+
 static void rebuild_ui (XfwPagerData *data);
+
+static XfwPagerData *pager_widget_get_data (GtkWidget *pager_widget);
+
+GType xfw_pager_cell_get_type (void);
+GType xfw_pager_grid_get_type (void);
 
 /* ---- Helpers ---- */
 
@@ -93,6 +127,382 @@ get_nth_workspace (XfwPagerData *data, int index)
 	}
 
 	return NULL;
+}
+
+static XfwWorkspace *
+pager_get_active_workspace (XfwPagerData *data)
+{
+	GList *workspaces, *l;
+
+	workspaces = xfw_workspace_manager_list_workspaces (data->workspace_manager);
+
+	for (l = workspaces; l != NULL; l = l->next)
+	{
+		XfwWorkspace *ws = l->data;
+		if (xfw_workspace_get_state (ws) & XFW_WORKSPACE_STATE_ACTIVE)
+			return ws;
+	}
+
+	return NULL;
+}
+
+/* libwnck only ever drew normal, non-minimized, non-pager-skipping windows
+ * on its pager buttons.  Desktop and dock windows are filter themselves out
+ * via the skip-pager state, so no explicit type check is needed. */
+static gboolean
+pager_window_relevant (XfwWindow *window)
+{
+	XfwWindowState state = xfw_window_get_state (window);
+
+	return (state & (XFW_WINDOW_STATE_MINIMIZED |
+			 XFW_WINDOW_STATE_SKIP_PAGER)) == 0;
+}
+
+/* Resolve the workspace a window should be drawn on.  Pinned windows with no
+ * workspace of their own are shown on the active workspace, matching libwnck. */
+static XfwWorkspace *
+window_get_pager_workspace (XfwPagerData *data, XfwWindow *window)
+{
+	XfwWorkspace *ws = xfw_window_get_workspace (window);
+
+	if (ws == NULL && xfw_window_is_pinned (window))
+		ws = pager_get_active_workspace (data);
+
+	return ws;
+}
+
+static double
+pager_workspace_aspect (XfwPagerData *data)
+{
+	XfwWorkspace *ws = get_nth_workspace (data, 0);
+
+	if (ws != NULL)
+	{
+		GdkRectangle *geo = xfw_workspace_get_geometry (ws);
+
+		if (geo->width > 0 && geo->height > 0)
+			return (double) geo->width / (double) geo->height;
+	}
+
+	return 1.0;
+}
+
+static void
+pager_get_layout (XfwPagerData *data, int *rows, int *cols)
+{
+	int n_spaces = count_visible_workspaces (data);
+
+	if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
+	{
+		*rows = data->n_rows;
+		*cols = (n_spaces + *rows - 1) / *rows;
+	}
+	else
+	{
+		*cols = data->n_rows;
+		*rows = (n_spaces + *cols - 1) / *cols;
+	}
+}
+
+/* ---- Mini-window drawing ---- */
+
+static void
+pager_draw_window_icon (cairo_t *cr, XfwWindow *window, const GdkRectangle *winrect)
+{
+	GIcon *gicon;
+	GtkIconTheme *theme;
+	GtkIconInfo *info;
+	GdkPixbuf *pixbuf;
+	int max_size, icon_w, icon_h, icon_x, icon_y;
+
+	gicon = xfw_window_get_gicon (window);
+	if (gicon == NULL)
+		return;
+
+	max_size = MIN (winrect->width - 2, winrect->height - 2);
+	if (max_size <= 0)
+		return;
+
+	theme = gtk_icon_theme_get_default ();
+	info = gtk_icon_theme_lookup_by_gicon (theme, gicon, max_size,
+					       GTK_ICON_LOOKUP_FORCE_SIZE);
+	if (info == NULL)
+		return;
+
+	pixbuf = gtk_icon_info_load_icon (info, NULL);
+	g_object_unref (info);
+	if (pixbuf == NULL)
+		return;
+
+	icon_w = gdk_pixbuf_get_width (pixbuf);
+	icon_h = gdk_pixbuf_get_height (pixbuf);
+
+	if (icon_w > winrect->width - 2 || icon_h > winrect->height - 2)
+	{
+		g_object_unref (pixbuf);
+		return;
+	}
+
+	icon_x = winrect->x + (winrect->width - icon_w) / 2;
+	icon_y = winrect->y + (winrect->height - icon_h) / 2;
+
+	gdk_cairo_set_source_pixbuf (cr, pixbuf, icon_x, icon_y);
+	cairo_paint (cr);
+
+	g_object_unref (pixbuf);
+}
+
+static void
+pager_draw_window (cairo_t *cr, GtkStyleContext *context, XfwWindow *window,
+		   const GdkRectangle *winrect, gboolean workspace_active)
+{
+	GtkStateFlags state = workspace_active ? GTK_STATE_FLAG_SELECTED
+					       : GTK_STATE_FLAG_NORMAL;
+	GdkRGBA fg;
+	int x = winrect->x, y = winrect->y;
+	int w = MAX (0, winrect->width - 2);
+	int h = MAX (0, winrect->height - 2);
+
+	gtk_style_context_save (context);
+	gtk_style_context_set_state (context, state);
+
+	gtk_render_background (context, cr, x + 1, y + 1, w, h);
+
+	if (xfw_window_get_state (window) & XFW_WINDOW_STATE_ACTIVE)
+	{
+		cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.3);
+		cairo_rectangle (cr, x + 1, y + 1, w, h);
+		cairo_fill (cr);
+	}
+
+	pager_draw_window_icon (cr, window, winrect);
+
+	gtk_render_frame (context, cr, x + 0.5, y + 0.5,
+			  MAX (0, winrect->width - 1),
+			  MAX (0, winrect->height - 1));
+
+	gtk_style_context_get_color (context, state, &fg);
+	gdk_cairo_set_source_rgba (cr, &fg);
+	cairo_set_line_width (cr, 1.0);
+	cairo_rectangle (cr, x + 0.5, y + 0.5,
+			 MAX (0, winrect->width - 1),
+			 MAX (0, winrect->height - 1));
+	cairo_stroke (cr);
+
+	gtk_style_context_restore (context);
+}
+
+static gboolean
+xfw_pager_cell_draw (GtkWidget *widget, cairo_t *cr)
+{
+	XfwPagerCell *cell = (XfwPagerCell *) widget;
+	XfwPagerData *data = cell->data;
+	GtkStyleContext *context;
+	GdkRectangle bounds, clipped;
+	GdkRectangle *ws_geo;
+	double wratio, hratio;
+	gboolean is_active;
+	GList *windows, *l;
+	int width, height;
+
+	if (data == NULL || cell->ws == NULL)
+		return FALSE;
+
+	width = gtk_widget_get_allocated_width (widget);
+	height = gtk_widget_get_allocated_height (widget);
+	if (width <= 0 || height <= 0)
+		return FALSE;
+
+	ws_geo = xfw_workspace_get_geometry (cell->ws);
+	if (ws_geo->width <= 0 || ws_geo->height <= 0)
+		return FALSE;
+
+	wratio = (double) width / (double) ws_geo->width;
+	hratio = (double) height / (double) ws_geo->height;
+
+	is_active = (xfw_workspace_get_state (cell->ws) &
+		     XFW_WORKSPACE_STATE_ACTIVE) != 0;
+	context = gtk_widget_get_style_context (widget);
+
+	bounds.x = 0;
+	bounds.y = 0;
+	bounds.width = width;
+	bounds.height = height;
+
+	/* Bottom to top, matching the stacked window order. */
+	windows = xfw_screen_get_windows_stacked (data->screen);
+	for (l = windows; l != NULL; l = l->next)
+	{
+		XfwWindow *window = l->data;
+		GdkRectangle *win_geo;
+		GdkRectangle winrect;
+
+		if (!pager_window_relevant (window))
+			continue;
+
+		if (window_get_pager_workspace (data, window) != cell->ws)
+			continue;
+
+		win_geo = xfw_window_get_geometry (window);
+		if (win_geo->width <= 0 || win_geo->height <= 0)
+			continue;
+
+		winrect.x = (int) ((win_geo->x - ws_geo->x) * wratio + 0.5);
+		winrect.y = (int) ((win_geo->y - ws_geo->y) * hratio + 0.5);
+		winrect.width = (int) (win_geo->width * wratio + 0.5);
+		winrect.height = (int) (win_geo->height * hratio + 0.5);
+
+		if (winrect.width < PAGER_MIN_WINDOW_SIZE)
+			winrect.width = PAGER_MIN_WINDOW_SIZE;
+		if (winrect.height < PAGER_MIN_WINDOW_SIZE)
+			winrect.height = PAGER_MIN_WINDOW_SIZE;
+
+		if (!gdk_rectangle_intersect (&bounds, &winrect, &clipped))
+			continue;
+
+		pager_draw_window (cr, context, window, &clipped, is_active);
+	}
+
+	return FALSE;
+}
+
+G_DEFINE_TYPE (XfwPagerCell, xfw_pager_cell, GTK_TYPE_DRAWING_AREA)
+
+static void
+xfw_pager_cell_class_init (XfwPagerCellClass *klass)
+{
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+	widget_class->draw = xfw_pager_cell_draw;
+}
+
+static void
+xfw_pager_cell_init (XfwPagerCell *cell)
+{
+	cell->ws = NULL;
+	cell->data = NULL;
+}
+
+static GtkWidget *
+xfw_pager_cell_new (XfwWorkspace *ws, XfwPagerData *data)
+{
+	XfwPagerCell *cell = g_object_new (xfw_pager_cell_get_type (), NULL);
+
+	cell->ws = ws;
+	cell->data = data;
+
+	gtk_widget_set_hexpand (GTK_WIDGET (cell), TRUE);
+	gtk_widget_set_vexpand (GTK_WIDGET (cell), TRUE);
+
+	return GTK_WIDGET (cell);
+}
+
+/* ---- Aspect-correct pager grid ---- */
+
+G_DEFINE_TYPE (XfwPagerGrid, xfw_pager_grid, GTK_TYPE_GRID)
+
+/* The grid keeps each workspace button at the aspect ratio of the workspace
+ * itself, following libwnck's WnckPager.  The grid's preferred size is
+ * derived from the workspace geometry rather than the buttons, so the panel
+ * can give the pager a size that preserves the aspect ratio. */
+static void
+xfw_pager_grid_get_preferred_width (GtkWidget *widget, int *minimum, int *natural)
+{
+	XfwPagerData *data = pager_widget_get_data (widget);
+	int rows, cols, cell_w;
+
+	if (data == NULL || data->display_names)
+	{
+		GTK_WIDGET_CLASS (xfw_pager_grid_parent_class)->get_preferred_width (widget, minimum, natural);
+		return;
+	}
+
+	pager_get_layout (data, &rows, &cols);
+	(void) rows;
+	cell_w = MAX (1, (int) (pager_workspace_aspect (data) * PAGER_WORKSPACE_SIZE + 0.5));
+	*minimum = *natural = cell_w * cols;
+}
+
+static void
+xfw_pager_grid_get_preferred_height (GtkWidget *widget, int *minimum, int *natural)
+{
+	XfwPagerData *data = pager_widget_get_data (widget);
+	int rows, cols, cell_h;
+	double aspect;
+
+	if (data == NULL || data->display_names)
+	{
+		GTK_WIDGET_CLASS (xfw_pager_grid_parent_class)->get_preferred_height (widget, minimum, natural);
+		return;
+	}
+
+	pager_get_layout (data, &rows, &cols);
+	(void) cols;
+	aspect = pager_workspace_aspect (data);
+	cell_h = MAX (1, (int) (PAGER_WORKSPACE_SIZE / aspect + 0.5));
+	*minimum = *natural = cell_h * rows;
+}
+
+static void
+xfw_pager_grid_get_preferred_width_for_height (GtkWidget *widget, int height,
+					       int *minimum, int *natural)
+{
+	XfwPagerData *data = pager_widget_get_data (widget);
+	int rows, cols, cell_h, cell_w;
+
+	if (data == NULL || data->display_names)
+	{
+		GTK_WIDGET_CLASS (xfw_pager_grid_parent_class)->get_preferred_width_for_height (widget, height, minimum, natural);
+		return;
+	}
+
+	pager_get_layout (data, &rows, &cols);
+	cell_h = MAX (1, height / rows);
+	cell_w = MAX (1, (int) (pager_workspace_aspect (data) * cell_h + 0.5));
+	*minimum = *natural = cell_w * cols;
+}
+
+static void
+xfw_pager_grid_get_preferred_height_for_width (GtkWidget *widget, int width,
+					       int *minimum, int *natural)
+{
+	XfwPagerData *data = pager_widget_get_data (widget);
+	int rows, cols, cell_w, cell_h;
+	double aspect;
+
+	if (data == NULL || data->display_names)
+	{
+		GTK_WIDGET_CLASS (xfw_pager_grid_parent_class)->get_preferred_height_for_width (widget, width, minimum, natural);
+		return;
+	}
+
+	pager_get_layout (data, &rows, &cols);
+	aspect = pager_workspace_aspect (data);
+	cell_w = MAX (1, width / cols);
+	cell_h = MAX (1, (int) (cell_w / aspect + 0.5));
+	*minimum = *natural = cell_h * rows;
+}
+
+static void
+xfw_pager_grid_class_init (XfwPagerGridClass *klass)
+{
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+	widget_class->get_preferred_width = xfw_pager_grid_get_preferred_width;
+	widget_class->get_preferred_height = xfw_pager_grid_get_preferred_height;
+	widget_class->get_preferred_width_for_height = xfw_pager_grid_get_preferred_width_for_height;
+	widget_class->get_preferred_height_for_width = xfw_pager_grid_get_preferred_height_for_width;
+}
+
+static void
+xfw_pager_grid_init (XfwPagerGrid *grid)
+{
+}
+
+static GtkWidget *
+xfw_pager_grid_new (void)
+{
+	return g_object_new (xfw_pager_grid_get_type (), NULL);
 }
 
 /* ---- Build / rebuild the button grid ---- */
@@ -142,6 +552,9 @@ rebuild_ui (XfwPagerData *data)
 		gtk_widget_destroy (GTK_WIDGET (l->data));
 	g_list_free (children);
 
+	g_list_free (data->cells);
+	data->cells = NULL;
+
 	n_spaces = count_visible_workspaces (data);
 
 	/* Determine grid dimensions */
@@ -163,30 +576,42 @@ rebuild_ui (XfwPagerData *data)
 	for (i = 0; i < n_spaces; i++)
 	{
 		XfwWorkspace *ws;
-		const char *name;
-		char *free_name = NULL;
 		GtkWidget *button;
 		XfwWorkspaceState ws_state;
 
 		ws = get_nth_workspace (data, i);
 
-		if (data->display_names && ws)
+		button = gtk_toggle_button_new ();
+
+		if (data->display_names)
 		{
-			name = xfw_workspace_get_name (ws);
-			if (!name || name[0] == '\0')
-				name = xfw_workspace_get_id (ws);
-			if (!name)
+			const char *name;
+
+			if (ws)
+			{
+				name = xfw_workspace_get_name (ws);
+				if (!name || name[0] == '\0')
+					name = xfw_workspace_get_id (ws);
+				if (!name)
+					name = "";
+			}
+			else
+			{
 				name = "";
+			}
+
+			gtk_container_add (GTK_CONTAINER (button), gtk_label_new (name));
 		}
 		else
 		{
-			free_name = g_strdup_printf ("%d", i + 1);
-			name = free_name;
+			GtkWidget *cell = xfw_pager_cell_new (ws, data);
+
+			gtk_container_add (GTK_CONTAINER (button), cell);
+			data->cells = g_list_append (data->cells, cell);
 		}
 
-		button = gtk_toggle_button_new_with_label (name);
-		g_free (free_name);
-
+		gtk_widget_set_hexpand (button, TRUE);
+		gtk_widget_set_vexpand (button, TRUE);
 		gtk_widget_set_name (button, "wnck-pager-button");
 		g_object_set_data (G_OBJECT (button), "ws-index", GINT_TO_POINTER (i));
 
@@ -324,12 +749,86 @@ on_workspace_destroyed (XfwWorkspaceManager *manager,
 	rebuild_ui (data);
 }
 
+/* ---- Window signal management ---- */
+
+static void
+pager_queue_redraw (XfwPagerData *data)
+{
+	for (GList *l = data->cells; l != NULL; l = l->next)
+		gtk_widget_queue_draw (GTK_WIDGET (l->data));
+}
+
+static void
+window_refresh (XfwWindow *window, XfwPagerData *data)
+{
+	pager_queue_redraw (data);
+}
+
+static void
+connect_window_signals (XfwPagerData *data, XfwWindow *window)
+{
+	g_signal_connect (window, "state-changed",
+			  G_CALLBACK (window_refresh), data);
+	g_signal_connect (window, "geometry-changed",
+			  G_CALLBACK (window_refresh), data);
+	g_signal_connect (window, "icon-changed",
+			  G_CALLBACK (window_refresh), data);
+
+	data->window_signals = g_list_prepend (data->window_signals, window);
+}
+
+static void
+disconnect_window_signals (XfwPagerData *data)
+{
+	for (GList *l = data->window_signals; l != NULL; l = l->next)
+	{
+		XfwWindow *window = l->data;
+
+		g_signal_handlers_disconnect_by_func (window,
+						       G_CALLBACK (window_refresh),
+						       data);
+	}
+
+	g_list_free (data->window_signals);
+	data->window_signals = NULL;
+}
+
+static void
+on_screen_window_opened (XfwScreen *screen,
+			 XfwWindow  *window,
+			 XfwPagerData *data)
+{
+	if (pager_window_relevant (window))
+		connect_window_signals (data, window);
+
+	pager_queue_redraw (data);
+}
+
+static void
+on_screen_window_closed (XfwScreen *screen,
+			 XfwWindow  *window,
+			 XfwPagerData *data)
+{
+	data->window_signals = g_list_remove (data->window_signals, window);
+	pager_queue_redraw (data);
+}
+
+static void
+on_screen_active_window_changed (XfwScreen *screen,
+				 XfwWindow *previous,
+				 XfwPagerData *data)
+{
+	pager_queue_redraw (data);
+}
+
 /* ---- Cleanup ---- */
 
 static void
 xfw_pager_data_free (XfwPagerData *data)
 {
 	disconnect_group_signals (data);
+	disconnect_window_signals (data);
+	g_list_free (data->cells);
 	g_free (data);
 }
 
@@ -349,8 +848,7 @@ xfw_pager_new (void)
 	data->display_names = FALSE;
 	data->ignore_toggle = FALSE;
 
-	data->grid = gtk_grid_new ();
-	gtk_widget_set_size_request (data->grid, 48, -1);
+	data->grid = xfw_pager_grid_new ();
 
 	GtkStyleContext *context = gtk_widget_get_style_context (data->grid);
 	gtk_style_context_add_class (context, "wnck-pager");
@@ -383,6 +881,20 @@ xfw_pager_new (void)
 			  G_CALLBACK (on_workspace_created), data);
 	g_signal_connect (data->workspace_manager, "workspace-destroyed",
 			  G_CALLBACK (on_workspace_destroyed), data);
+
+	g_signal_connect (data->screen, "window-opened",
+			  G_CALLBACK (on_screen_window_opened), data);
+	g_signal_connect (data->screen, "window-closed",
+			  G_CALLBACK (on_screen_window_closed), data);
+	g_signal_connect (data->screen, "active-window-changed",
+			  G_CALLBACK (on_screen_active_window_changed), data);
+
+	for (GList *l = xfw_screen_get_windows (data->screen);
+	     l != NULL; l = l->next)
+	{
+		if (pager_window_relevant (l->data))
+			connect_window_signals (data, l->data);
+	}
 
 	connect_group_signals (data);
 	rebuild_ui (data);
