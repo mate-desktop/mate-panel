@@ -1379,25 +1379,19 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 	g_clear_pointer (&tasklist->size_hints, g_free);
 	tasklist->size_hints_len = 0;
 
-	if (tasklist->list)
+	/* The widget tree (the inner list and its buttons) has already been
+	 * disposed by the time this destroy notify runs, so its children must
+	 * not be touched here.  Each button's own destroy notify has taken care
+	 * of freeing its task and stopping per-window tracking. */
 	{
-		GList *children = gtk_container_get_children (GTK_CONTAINER (tasklist->list));
-		for (GList *iter = children; iter != NULL; iter = g_list_next (iter))
-			gtk_widget_destroy (GTK_WIDGET (iter->data));
-		g_list_free (children);
-		tasklist->list = NULL;
-	}
-
-	/* free any remaining tasks not removed by window-closed;
-	 * toplevel_task_disconnected_from_widget (GDestroyNotify) handles freeing
-	 * as buttons finalize, so just stop tracking the windows here. */
-	{
+		GtkWidget *core = GTK_WIDGET (tasklist->outer_box);
 		GList *t;
+
 		for (t = tasklist->tasks; t != NULL; t = t->next)
 		{
 			ToplevelTask *task = t->data;
 			if (task->window)
-				tasklist->backend->set_window_tracking (GTK_WIDGET (tasklist->outer_box),
+				tasklist->backend->set_window_tracking (core,
 									task->window, FALSE);
 		}
 	}
@@ -1414,15 +1408,17 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 		tasklist->window_to_group = NULL;
 	}
 
-	if (tasklist->outer_box)
-		tasklist->outer_box = NULL;
-
+	/* The core widget is the signal user data every backend handler was
+	 * connected with, so it must still be valid when the handlers are
+	 * disconnected here.  Only forget it once that is done. */
 	if (tasklist->screen)
 	{
 		tasklist->backend->set_screen_tracking (GTK_WIDGET (tasklist->outer_box),
 							tasklist->screen, FALSE);
 		tasklist->screen = NULL;
 	}
+
+	tasklist->outer_box = NULL;
 
 	if (tasklist->context_menu)
 	{
