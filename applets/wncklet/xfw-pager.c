@@ -765,10 +765,19 @@ window_refresh (XfwWindow *window, XfwPagerData *data)
 }
 
 static void
+window_state_changed (XfwWindow     *window,
+		      XfwWindowState changed_mask,
+		      XfwWindowState new_state,
+		      XfwPagerData  *data)
+{
+	pager_queue_redraw (data);
+}
+
+static void
 connect_window_signals (XfwPagerData *data, XfwWindow *window)
 {
 	g_signal_connect (window, "state-changed",
-			  G_CALLBACK (window_refresh), data);
+			  G_CALLBACK (window_state_changed), data);
 	g_signal_connect (window, "geometry-changed",
 			  G_CALLBACK (window_refresh), data);
 	g_signal_connect (window, "icon-changed",
@@ -784,6 +793,9 @@ disconnect_window_signals (XfwPagerData *data)
 	{
 		XfwWindow *window = l->data;
 
+		g_signal_handlers_disconnect_by_func (window,
+						       G_CALLBACK (window_state_changed),
+						       data);
 		g_signal_handlers_disconnect_by_func (window,
 						       G_CALLBACK (window_refresh),
 						       data);
