@@ -735,12 +735,14 @@ tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
 	const gboolean horizontal =
 		gtk_orientable_get_orientation (GTK_ORIENTABLE (tasklist->outer_box)) ==
 		GTK_ORIENTATION_HORIZONTAL;
-	const guint n_buttons = tasklist->buttons;
+	gint n_visible;
 	gint floor;
 	gint top;
 	GArray *hints;
 
-	if (n_buttons == 0)
+	n_visible = tasklist_count_visible_buttons (tasklist);
+
+	if (n_visible == 0)
 	{
 		g_clear_pointer (&tasklist->size_hints, g_free);
 		tasklist->size_hints_len = 0;
@@ -754,7 +756,9 @@ tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width)
 
 	floor = MIN (tasklist->icon_px + 2 * min_button_padding, natural_width);
 
-	top = G_MAXINT / 2;
+	/* One max_button_width per visible button, but never below the measured
+	 * button sum. */
+	top = MAX (n_visible * max_button_width, natural_width);
 
 	hints = g_array_new (FALSE, FALSE, sizeof (gint));
 	g_array_append_val (hints, top);
