@@ -30,7 +30,7 @@
 #define TASKLIST_TEXT_MAX_WIDTH 16
 
 /*In the future this could be changable from the panel-prefs dialog*/
-static const int max_button_width = 180;
+static const int max_button_width = 260;
 
 /* GTK hands most panel button themes back a zero button padding, which makes
  * the icon size picker choose one size too large for the panel. Enforce a
@@ -1480,7 +1480,8 @@ tasklist_manager_new (const TasklistBackend *backend)
 
 	/* add all existing windows on this screen */
 	windows = backend->list_windows (screen);
-	for (l = windows; l != NULL; l = l->next)
+
+	for (l = g_list_last (windows); l != NULL; l = g_list_previous (l))
 	{
 		gpointer window = l->data;
 		ToplevelTask *task = toplevel_task_new (tasklist, window);
@@ -2312,8 +2313,10 @@ tasklist_core_window_added (GtkWidget *tasklist_widget, gpointer window)
 		return;
 
 	task = toplevel_task_new (tasklist, window);
+	/* New windows join on the right, like libwnck, matching the opening
+	 * order used to fill the tasklist initially. */
 	if (task != NULL)
-		gtk_box_pack_start (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
+		gtk_box_pack_end (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
 }
 
 void
