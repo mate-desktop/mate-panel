@@ -483,11 +483,26 @@ xfw_pager_grid_get_preferred_height_for_width (GtkWidget *widget, int width,
 	*minimum = *natural = cell_h * rows;
 }
 
+static GtkSizeRequestMode
+xfw_pager_grid_get_request_mode (GtkWidget *widget)
+{
+	XfwPagerData *data = pager_widget_get_data (widget);
+
+	if (data == NULL || data->display_names)
+		return GTK_WIDGET_CLASS (xfw_pager_grid_parent_class)->get_request_mode (widget);
+
+	if (data->orientation == GTK_ORIENTATION_VERTICAL)
+		return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
+	else
+		return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
+}
+
 static void
 xfw_pager_grid_class_init (XfwPagerGridClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+	widget_class->get_request_mode = xfw_pager_grid_get_request_mode;
 	widget_class->get_preferred_width = xfw_pager_grid_get_preferred_width;
 	widget_class->get_preferred_height = xfw_pager_grid_get_preferred_height;
 	widget_class->get_preferred_width_for_height = xfw_pager_grid_get_preferred_width_for_height;
