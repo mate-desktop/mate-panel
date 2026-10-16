@@ -120,6 +120,12 @@ x11_get_window_id (gpointer window)
 	return (gulong) xfw_window_x11_get_xid (window);
 }
 
+static gboolean
+x11_window_is_skip_tasklist (gpointer window)
+{
+	return xfw_window_is_skip_tasklist (window);
+}
+
 static const gchar *
 x11_get_app_name (gpointer app)
 {
@@ -328,6 +334,7 @@ static const TasklistBackend x11_backend = {
 	.get_window_state         = x11_get_window_state,
 	.get_window_application   = x11_get_window_application,
 	.get_window_id            = x11_get_window_id,
+	.window_is_skip_tasklist  = x11_window_is_skip_tasklist,
 	.get_app_name             = x11_get_app_name,
 	.get_app_gicon            = x11_get_app_gicon,
 	.get_fallback_icon_name   = x11_get_fallback_icon_name,

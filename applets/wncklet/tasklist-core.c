@@ -66,6 +66,10 @@ typedef struct
 	const TasklistBackend *backend;
 	gpointer screen;
 	GList *tasks;
+	/* Window handles that asked not to be listed (skip-tasklist): they get
+	 * no task button but stay tracked, like libwnck's skipped list, so a
+	 * window that later drops the request gets its button back. */
+	GList *skipped;
 	gboolean scroll_enabled;
 	gboolean middle_click_close;
 	TasklistGroupingType grouping;
@@ -1307,6 +1311,14 @@ tasklist_has_window (TasklistManager *tasklist, gpointer window)
 	return FALSE;
 }
 
+/* Whether the window is one of the skip-tasklist windows the core keeps out
+ * of the tasklist while still tracking. */
+static gboolean
+tasklist_is_skipped (TasklistManager *tasklist, gpointer window)
+{
+	return g_list_find (tasklist->skipped, window) != NULL;
+}
+
 static void
 tasklist_remove_window (TasklistManager *tasklist, gpointer window)
 {
@@ -1354,6 +1366,21 @@ tasklist_remove_window (TasklistManager *tasklist, gpointer window)
 	}
 }
 
+/* Give a window its task button, on the right like libwnck.  Used both when
+ * a window opens and when one stops being skip-tasklist. */
+static void
+tasklist_add_task (TasklistManager *tasklist, gpointer window)
+{
+	ToplevelTask *task;
+
+	if (tasklist_has_window (tasklist, window))
+		return;
+
+	task = toplevel_task_new (tasklist, window);
+	if (task != NULL)
+		gtk_box_pack_end (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
+}
+
 static void
 tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 {
@@ -1382,7 +1409,8 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 	/* The widget tree (the inner list and its buttons) has already been
 	 * disposed by the time this destroy notify runs, so its children must
 	 * not be touched here.  Each button's own destroy notify has taken care
-	 * of freeing its task and stopping per-window tracking. */
+	 * of freeing its task and stopping per-window tracking.  Skip-tasklist
+	 * windows never got a button, so their tracking is stopped here. */
 	{
 		GtkWidget *core = GTK_WIDGET (tasklist->outer_box);
 		GList *t;
@@ -1394,6 +1422,12 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 				tasklist->backend->set_window_tracking (core,
 									task->window, FALSE);
 		}
+
+		for (t = tasklist->skipped; t != NULL; t = t->next)
+			tasklist->backend->set_window_tracking (core, t->data, FALSE);
+
+		g_list_free (tasklist->skipped);
+		tasklist->skipped = NULL;
 	}
 
 	if (tasklist->apps)
@@ -1480,7 +1514,19 @@ tasklist_manager_new (const TasklistBackend *backend)
 	for (l = g_list_last (windows); l != NULL; l = g_list_previous (l))
 	{
 		gpointer window = l->data;
-		ToplevelTask *task = toplevel_task_new (tasklist, window);
+		ToplevelTask *task;
+
+		/* A window that asked not to be listed gets no button, but is
+		 * still tracked so that dropping the request is noticed. */
+		if (backend->window_is_skip_tasklist (window))
+		{
+			tasklist->skipped = g_list_prepend (tasklist->skipped, window);
+			backend->set_window_tracking (GTK_WIDGET (tasklist->outer_box),
+						      window, TRUE);
+			continue;
+		}
+
+		task = toplevel_task_new (tasklist, window);
 		if (task != NULL)
 			gtk_box_pack_start (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
 	}
@@ -2301,18 +2347,25 @@ void
 tasklist_core_window_added (GtkWidget *tasklist_widget, gpointer window)
 {
 	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
-	ToplevelTask *task;
 
 	g_return_if_fail (tasklist);
 
-	if (!window || tasklist_has_window (tasklist, window))
+	if (!window || tasklist_has_window (tasklist, window) || tasklist_is_skipped (tasklist, window))
 		return;
 
-	task = toplevel_task_new (tasklist, window);
+	/* A window that asked not to be listed gets no button, but is still
+	 * tracked so that dropping the request is noticed. */
+	if (tasklist->backend->window_is_skip_tasklist (window))
+	{
+		tasklist->skipped = g_list_prepend (tasklist->skipped, window);
+		tasklist->backend->set_window_tracking (GTK_WIDGET (tasklist->outer_box),
+						      window, TRUE);
+		return;
+	}
+
 	/* New windows join on the right, like libwnck, matching the opening
 	 * order used to fill the tasklist initially. */
-	if (task != NULL)
-		gtk_box_pack_end (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
+	tasklist_add_task (tasklist, window);
 }
 
 void
@@ -2322,8 +2375,18 @@ tasklist_core_window_removed (GtkWidget *tasklist_widget, gpointer window)
 
 	g_return_if_fail (tasklist);
 
-	if (window)
-		tasklist_remove_window (tasklist, window);
+	if (!window)
+		return;
+
+	if (tasklist_is_skipped (tasklist, window))
+	{
+		tasklist->skipped = g_list_remove (tasklist->skipped, window);
+		tasklist->backend->set_window_tracking (GTK_WIDGET (tasklist->outer_box),
+						      window, FALSE);
+		return;
+	}
+
+	tasklist_remove_window (tasklist, window);
 }
 
 void
@@ -2333,6 +2396,36 @@ tasklist_core_window_state_changed (GtkWidget *tasklist_widget, gpointer window)
 	GList *l;
 
 	g_return_if_fail (tasklist);
+
+	if (!window)
+		return;
+
+	/* Like WnckTasklist, a window that starts or stops asking not to be
+	 * listed loses or regains its task button.  Tracking stays at exactly
+	 * one connection per window throughout: removing the task runs the
+	 * button's own destroy notify, which stops the task's tracking, and
+	 * dropping the window from the skipped list stops its tracking before
+	 * the new task starts its own. */
+	if (tasklist->backend->window_is_skip_tasklist (window))
+	{
+		if (tasklist_has_window (tasklist, window))
+		{
+			tasklist_remove_window (tasklist, window);
+			tasklist->skipped = g_list_prepend (tasklist->skipped, window);
+			tasklist->backend->set_window_tracking (GTK_WIDGET (tasklist->outer_box),
+							      window, TRUE);
+		}
+		return;
+	}
+
+	if (tasklist_is_skipped (tasklist, window))
+	{
+		tasklist->skipped = g_list_remove (tasklist->skipped, window);
+		tasklist->backend->set_window_tracking (GTK_WIDGET (tasklist->outer_box),
+						      window, FALSE);
+		tasklist_add_task (tasklist, window);
+		return;
+	}
 
 	for (l = tasklist->tasks; l != NULL; l = l->next)
 	{

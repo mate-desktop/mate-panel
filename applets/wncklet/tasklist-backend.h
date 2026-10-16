@@ -69,7 +69,9 @@ struct _TasklistBackend {
 	/* The default screen, or NULL if there is none. */
 	gpointer  (*get_screen)                (void);
 	/* The windows of a screen, as a GList of window handles owned by the
-	 * backend. Only windows that should get a task button are reported. */
+	 * backend. These are candidates for a task button: the core drops
+	 * windows that ask not to be listed (window_is_skip_tasklist) and
+	 * applies the workspace settings itself. */
 	GList    *(*list_windows)              (gpointer screen);
 	gpointer  (*get_active_window)         (gpointer screen);
 
@@ -83,6 +85,11 @@ struct _TasklistBackend {
 	/* The identifier used in the drag-and-drop payload. On X11 this is the
 	 * window XID; on Wayland there is no XID and the handle is used. */
 	gulong      (*get_window_id)          (gpointer window);
+	/* Whether the window asked not to appear in task lists (libwnck:
+	 * WNCK_WINDOW_STATE_SKIP_TASKLIST).  The core keeps such windows out of
+	 * the tasklist and tracks them so it can re-add a button if the request
+	 * is later dropped. */
+	gboolean    (*window_is_skip_tasklist) (gpointer window);
 
 	/* applications, used as the grouping key */
 
