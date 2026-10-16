@@ -110,6 +110,12 @@ wayland_get_window_id (gpointer window)
 	return (gulong) window;
 }
 
+static gboolean
+wayland_window_is_skip_tasklist (gpointer window)
+{
+	return xfw_window_is_skip_tasklist (window);
+}
+
 static const gchar *
 wayland_get_app_name (gpointer app)
 {
@@ -320,6 +326,7 @@ static const TasklistBackend wayland_backend = {
 	.get_window_state         = wayland_get_window_state,
 	.get_window_application   = wayland_get_window_application,
 	.get_window_id            = wayland_get_window_id,
+	.window_is_skip_tasklist  = wayland_window_is_skip_tasklist,
 	.get_app_name             = wayland_get_app_name,
 	.get_app_gicon            = wayland_get_app_gicon,
 	.get_fallback_icon_name   = wayland_get_fallback_icon_name,
