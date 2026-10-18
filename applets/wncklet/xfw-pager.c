@@ -851,8 +851,18 @@ on_screen_active_window_changed (XfwScreen *screen,
 /* ---- Cleanup ---- */
 
 static void
+disconnect_screen_signals (XfwPagerData *data)
+{
+	if (data->workspace_manager)
+		g_signal_handlers_disconnect_by_data (data->workspace_manager, data);
+	if (data->screen)
+		g_signal_handlers_disconnect_by_data (data->screen, data);
+}
+
+static void
 xfw_pager_data_free (XfwPagerData *data)
 {
+	disconnect_screen_signals (data);
 	disconnect_group_signals (data);
 	disconnect_window_signals (data);
 	g_list_free (data->cells);
