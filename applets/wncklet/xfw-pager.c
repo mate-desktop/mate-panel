@@ -26,6 +26,9 @@
 
 #define PAGER_WORKSPACE_SIZE 16
 #define PAGER_MIN_WINDOW_SIZE 3
+/* libwnck laid the buttons edge to edge; its 1px "gap" was covered by each
+ * button's frame, so leaving real space here just shows the panel behind. */
+#define PAGER_CELL_GAP 0
 
 typedef struct _GroupSignal GroupSignal;
 
@@ -171,18 +174,59 @@ window_get_pager_workspace (XfwPagerData *data, XfwWindow *window)
 	return ws;
 }
 
-static double
-pager_workspace_aspect (XfwPagerData *data)
+static gboolean
+pager_workspace_size (XfwPagerData  *data,
+		      XfwWorkspace  *ws,
+		      int           *x,
+		      int           *y,
+		      int           *width,
+		      int           *height)
 {
-	XfwWorkspace *ws = get_nth_workspace (data, 0);
-
 	if (ws != NULL)
 	{
 		GdkRectangle *geo = xfw_workspace_get_geometry (ws);
 
-		if (geo->width > 0 && geo->height > 0)
-			return (double) geo->width / (double) geo->height;
+		if (geo->width > 0 && geo->height > 0 && geo->width != geo->height)
+		{
+			*x = geo->x;
+			*y = geo->y;
+			*width = geo->width;
+			*height = geo->height;
+			return TRUE;
+		}
 	}
+
+	if (data->screen != NULL)
+	{
+		XfwMonitor *monitor = xfw_screen_get_primary_monitor (data->screen);
+
+		if (monitor != NULL)
+		{
+			GdkRectangle geo;
+
+			xfw_monitor_get_physical_geometry (monitor, &geo);
+			if (geo.width > 0 && geo.height > 0)
+			{
+				*x = 0;
+				*y = 0;
+				*width = geo.width;
+				*height = geo.height;
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+static double
+pager_workspace_aspect (XfwPagerData *data)
+{
+	int x, y, width, height;
+
+	if (pager_workspace_size (data, get_nth_workspace (data, 0),
+				  &x, &y, &width, &height))
+		return (double) width / (double) height;
 
 	return 1.0;
 }
@@ -299,11 +343,11 @@ xfw_pager_cell_draw (GtkWidget *widget, cairo_t *cr)
 	XfwPagerData *data = cell->data;
 	GtkStyleContext *context;
 	GdkRectangle bounds, clipped;
-	GdkRectangle *ws_geo;
 	double wratio, hratio;
 	gboolean is_active;
 	GList *windows, *l;
 	int width, height;
+	int ws_x, ws_y, ws_w, ws_h;
 
 	if (data == NULL || cell->ws == NULL)
 		return FALSE;
@@ -313,12 +357,11 @@ xfw_pager_cell_draw (GtkWidget *widget, cairo_t *cr)
 	if (width <= 0 || height <= 0)
 		return FALSE;
 
-	ws_geo = xfw_workspace_get_geometry (cell->ws);
-	if (ws_geo->width <= 0 || ws_geo->height <= 0)
+	if (!pager_workspace_size (data, cell->ws, &ws_x, &ws_y, &ws_w, &ws_h))
 		return FALSE;
 
-	wratio = (double) width / (double) ws_geo->width;
-	hratio = (double) height / (double) ws_geo->height;
+	wratio = (double) width / (double) ws_w;
+	hratio = (double) height / (double) ws_h;
 
 	is_active = (xfw_workspace_get_state (cell->ws) &
 		     XFW_WORKSPACE_STATE_ACTIVE) != 0;
@@ -347,8 +390,8 @@ xfw_pager_cell_draw (GtkWidget *widget, cairo_t *cr)
 		if (win_geo->width <= 0 || win_geo->height <= 0)
 			continue;
 
-		winrect.x = (int) ((win_geo->x - ws_geo->x) * wratio + 0.5);
-		winrect.y = (int) ((win_geo->y - ws_geo->y) * hratio + 0.5);
+		winrect.x = (int) ((win_geo->x - ws_x) * wratio + 0.5);
+		winrect.y = (int) ((win_geo->y - ws_y) * hratio + 0.5);
 		winrect.width = (int) (win_geo->width * wratio + 0.5);
 		winrect.height = (int) (win_geo->height * hratio + 0.5);
 
@@ -420,7 +463,7 @@ xfw_pager_grid_get_preferred_width (GtkWidget *widget, int *minimum, int *natura
 	pager_get_layout (data, &rows, &cols);
 	(void) rows;
 	cell_w = MAX (1, (int) (pager_workspace_aspect (data) * PAGER_WORKSPACE_SIZE + 0.5));
-	*minimum = *natural = cell_w * cols;
+	*minimum = *natural = cell_w * cols + (cols - 1) * PAGER_CELL_GAP;
 }
 
 static void
@@ -440,7 +483,7 @@ xfw_pager_grid_get_preferred_height (GtkWidget *widget, int *minimum, int *natur
 	(void) cols;
 	aspect = pager_workspace_aspect (data);
 	cell_h = MAX (1, (int) (PAGER_WORKSPACE_SIZE / aspect + 0.5));
-	*minimum = *natural = cell_h * rows;
+	*minimum = *natural = cell_h * rows + (rows - 1) * PAGER_CELL_GAP;
 }
 
 static void
@@ -457,9 +500,9 @@ xfw_pager_grid_get_preferred_width_for_height (GtkWidget *widget, int height,
 	}
 
 	pager_get_layout (data, &rows, &cols);
-	cell_h = MAX (1, height / rows);
+	cell_h = MAX (1, (height - (rows - 1) * PAGER_CELL_GAP) / rows);
 	cell_w = MAX (1, (int) (pager_workspace_aspect (data) * cell_h + 0.5));
-	*minimum = *natural = cell_w * cols;
+	*minimum = *natural = cell_w * cols + (cols - 1) * PAGER_CELL_GAP;
 }
 
 static void
@@ -478,9 +521,9 @@ xfw_pager_grid_get_preferred_height_for_width (GtkWidget *widget, int width,
 
 	pager_get_layout (data, &rows, &cols);
 	aspect = pager_workspace_aspect (data);
-	cell_w = MAX (1, width / cols);
+	cell_w = MAX (1, (width - (cols - 1) * PAGER_CELL_GAP) / cols);
 	cell_h = MAX (1, (int) (cell_w / aspect + 0.5));
-	*minimum = *natural = cell_h * rows;
+	*minimum = *natural = cell_h * rows + (rows - 1) * PAGER_CELL_GAP;
 }
 
 static GtkSizeRequestMode
@@ -498,6 +541,82 @@ xfw_pager_grid_get_request_mode (GtkWidget *widget)
 }
 
 static void
+xfw_pager_grid_size_allocate (GtkWidget     *widget,
+			      GtkAllocation *allocation)
+{
+	XfwPagerData *data = pager_widget_get_data (widget);
+	GList *children, *l;
+	int rows, cols, cell_w, cell_h, avail_w, avail_h, used_w, used_h;
+	int x0, y0;
+	int gap = PAGER_CELL_GAP;
+	double aspect;
+
+	GTK_WIDGET_CLASS (xfw_pager_grid_parent_class)->size_allocate (widget,
+								       allocation);
+
+	if (data == NULL || data->display_names)
+		return;
+
+	pager_get_layout (data, &rows, &cols);
+	rows = MAX (rows, 1);
+	cols = MAX (cols, 1);
+
+	/* Space one button may use, before preserving its shape. */
+	avail_w = MAX (1, (allocation->width - (cols - 1) * gap) / cols);
+	avail_h = MAX (1, (allocation->height - (rows - 1) * gap) / rows);
+	aspect = pager_workspace_aspect (data);
+
+	/* Keep the workspace shape and shrink whichever dimension runs out
+	 * first, so a button is never squashed into a square. */
+	if (avail_w < aspect * avail_h)
+	{
+		cell_w = avail_w;
+		cell_h = MAX (1, (int) (cell_w / aspect + 0.5));
+	}
+	else
+	{
+		cell_h = avail_h;
+		cell_w = MAX (1, (int) (aspect * cell_h + 0.5));
+	}
+
+	/* Centre the grid in the space we were given. */
+	used_w = cols * cell_w + (cols - 1) * gap;
+	used_h = rows * cell_h + (rows - 1) * gap;
+	x0 = allocation->x + (allocation->width - used_w) / 2;
+	y0 = allocation->y + (allocation->height - used_h) / 2;
+
+	children = gtk_container_get_children (GTK_CONTAINER (widget));
+	for (l = children; l != NULL; l = l->next)
+	{
+		GtkWidget *button = GTK_WIDGET (l->data);
+		GtkAllocation child_alloc;
+		int index, col, row;
+
+		index = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
+							    "ws-index"));
+
+		if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
+		{
+			col = index / rows;
+			row = index % rows;
+		}
+		else
+		{
+			col = index % cols;
+			row = index / cols;
+		}
+
+		child_alloc.x = x0 + col * (cell_w + gap);
+		child_alloc.y = y0 + row * (cell_h + gap);
+		child_alloc.width = cell_w;
+		child_alloc.height = cell_h;
+
+		gtk_widget_size_allocate (button, &child_alloc);
+	}
+	g_list_free (children);
+}
+
+static void
 xfw_pager_grid_class_init (XfwPagerGridClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -507,6 +626,7 @@ xfw_pager_grid_class_init (XfwPagerGridClass *klass)
 	widget_class->get_preferred_height = xfw_pager_grid_get_preferred_height;
 	widget_class->get_preferred_width_for_height = xfw_pager_grid_get_preferred_width_for_height;
 	widget_class->get_preferred_height_for_width = xfw_pager_grid_get_preferred_height_for_width;
+	widget_class->size_allocate = xfw_pager_grid_size_allocate;
 }
 
 static void
