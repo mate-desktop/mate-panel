@@ -1,4 +1,4 @@
-/* Wayland backend for the Window Selector applet */
+/* libxfce4windowing backend for the Window Selector applet */
 
 /*
  * Copyright (C) 2026 MATE Desktop Team
@@ -19,14 +19,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef _WNCKLET_APPLET_WAYLAND_WINDOW_MENU_H_
-#define _WNCKLET_APPLET_WAYLAND_WINDOW_MENU_H_
-
-#ifdef PACKAGE_NAME
-#ifndef HAVE_WAYLAND
-#error file should only be included when HAVE_WAYLAND is enabled
-#endif
-#endif
+#ifndef _WNCKLET_APPLET_XFW_WINDOW_MENU_H_
+#define _WNCKLET_APPLET_XFW_WINDOW_MENU_H_
 
 #include <gtk/gtk.h>
 
@@ -34,10 +28,10 @@
 extern "C" {
 #endif
 
-GtkWidget *wayland_window_menu_new (void);
+GtkWidget *xfw_window_menu_new (void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _WNCKLET_APPLET_WAYLAND_WINDOW_MENU_H_ */
+#endif /* _WNCKLET_APPLET_XFW_WINDOW_MENU_H_ */

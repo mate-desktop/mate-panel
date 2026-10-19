@@ -22,45 +22,44 @@
 #ifdef HAVE_X11
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
+#include <libxfce4windowing/xfw-x11.h>
 #endif /* HAVE_X11 */
-
-#ifndef HAVE_X11
-#include <gdk/gdkwayland.h>
-#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
-#endif
 
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
-#include "wayland-backend.h"
 #endif /* HAVE_WAYLAND */
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
 
+#include "tasklist-backend.h"
 #include "wncklet.h"
 #include "window-list.h"
+
+#ifdef HAVE_X11
+#include "x11-backend.h"
+#endif /* HAVE_X11 */
+
+#ifdef HAVE_WAYLAND
+#include "wayland-backend.h"
+#endif /* HAVE_WAYLAND */
 
 #define WINDOW_LIST_ICON "mate-panel-window-list"
 #define WINDOW_LIST_SCHEMA "org.mate.panel.applet.window-list"
 
 #define WINDOW_LIST_PREVIEW_SCHEMA "org.mate.panel.applet.window-list-previews"
 
-typedef enum {
-  TASKLIST_NEVER_GROUP,
-  TASKLIST_AUTO_GROUP,
-  TASKLIST_ALWAYS_GROUP
-} TasklistGroupingType;
-
 typedef struct {
 	GtkWidget* applet;
 	GtkWidget* tasklist;
 	GtkWidget* preview;
 
-#ifdef HAVE_X11
-	WnckHandle* wnck_handle;
-#endif
+	/* NULL when no backend matches the display in use. */
+	const TasklistBackend* backend;
+
+	/* TRUE when backend is the X11 one. Window previews are X11-only, so
+	 * the hover handlers must not be hooked up for any other backend. */
+	gboolean backend_is_x11;
 
 	gboolean show_window_thumbnails;
 	gint thumbnail_size;
@@ -73,9 +72,6 @@ typedef struct {
 
 	GtkOrientation orientation;
 	int size;
-#if !defined(WNCKLET_INPROCESS) && !GTK_CHECK_VERSION (3, 23, 0)
-	gboolean needs_hints;
-#endif
 
 	/* Properties: */
 	GtkWidget* properties_dialog;
@@ -118,101 +114,36 @@ static void tasklist_update(TasklistData* tasklist)
 		gtk_widget_set_size_request(GTK_WIDGET(tasklist->tasklist), tasklist->size, -1);
 	}
 
-#ifdef HAVE_X11
-	if (WNCK_IS_TASKLIST(tasklist->tasklist))
-	{
-		WnckTasklistGroupingType grouping;
-		switch (tasklist->grouping)
-		{
-			case TASKLIST_NEVER_GROUP:
-				grouping = WNCK_TASKLIST_NEVER_GROUP;
-				break;
-			case TASKLIST_AUTO_GROUP:
-				grouping = WNCK_TASKLIST_AUTO_GROUP;
-				break;
-			case TASKLIST_ALWAYS_GROUP:
-				grouping = WNCK_TASKLIST_ALWAYS_GROUP;
-				break;
-			default:
-				grouping = WNCK_TASKLIST_NEVER_GROUP;
-		}
-		wnck_tasklist_set_grouping(WNCK_TASKLIST(tasklist->tasklist), grouping);
-		wnck_tasklist_set_include_all_workspaces(WNCK_TASKLIST(tasklist->tasklist), tasklist->include_all_workspaces);
-		wnck_tasklist_set_switch_workspace_on_unminimize(WNCK_TASKLIST(tasklist->tasklist), tasklist->move_unminimized_windows);
-		wnck_tasklist_set_scroll_enabled (WNCK_TASKLIST(tasklist->tasklist), tasklist->scroll_enable);
-		wnck_tasklist_set_middle_click_close (WNCK_TASKLIST (tasklist->tasklist), tasklist->middle_click_close);
-	}
-#endif /* HAVE_X11 */
+	if (tasklist->backend == NULL)
+		return;
 
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
-	{
-		WaylandTasklistGroupingType grouping;
-		switch (tasklist->grouping)
-		{
-			case TASKLIST_NEVER_GROUP:
-				grouping = WAYLAND_TASKLIST_NEVER_GROUP;
-				break;
-			case TASKLIST_AUTO_GROUP:
-				grouping = WAYLAND_TASKLIST_AUTO_GROUP;
-				break;
-			case TASKLIST_ALWAYS_GROUP:
-				grouping = WAYLAND_TASKLIST_ALWAYS_GROUP;
-				break;
-			default:
-				grouping = WAYLAND_TASKLIST_NEVER_GROUP;
-		}
-		wayland_tasklist_set_grouping (tasklist->tasklist, grouping);
-		wayland_tasklist_set_scroll_enabled (tasklist->tasklist, tasklist->scroll_enable);
-		wayland_tasklist_set_middle_click_close (tasklist->tasklist, tasklist->middle_click_close);
-	}
-#endif /* HAVE_WAYLAND */
+	tasklist_core_set_grouping (tasklist->tasklist, tasklist->grouping);
+	tasklist_core_set_scroll_enabled (tasklist->tasklist, tasklist->scroll_enable);
+	tasklist_core_set_middle_click_close (tasklist->tasklist, tasklist->middle_click_close);
+	tasklist_core_set_include_all_workspaces (tasklist->tasklist, tasklist->include_all_workspaces);
+	tasklist_core_set_switch_workspace_on_unminimize (tasklist->tasklist, tasklist->move_unminimized_windows);
 }
 
 static void tasklist_apply_orientation(TasklistData* tasklist)
 {
-#ifdef HAVE_X11
-	if (WNCK_IS_TASKLIST(tasklist->tasklist))
-	{
-		wnck_tasklist_set_orientation(WNCK_TASKLIST(tasklist->tasklist), tasklist->orientation);
-	}
-#endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
-	{
-		wayland_tasklist_set_orientation(tasklist->tasklist, tasklist->orientation);
-	}
-#endif
+	if (tasklist->backend != NULL)
+		tasklist_core_set_orientation (tasklist->tasklist, tasklist->orientation);
 }
 
 static void tasklist_set_button_relief(TasklistData* tasklist, GtkReliefStyle relief)
 {
-#ifdef HAVE_X11
-	if (WNCK_IS_TASKLIST(tasklist->tasklist))
-	{
-		wnck_tasklist_set_button_relief(WNCK_TASKLIST(tasklist->tasklist), relief);
-	}
-#endif /* HAVE_X11 */
-
-	/* Not implemented for Wayland */
+	/* Not implemented for the shared core */
 }
 
 static const int* tasklist_get_size_hint_list(TasklistData* tasklist, int* n_elements)
 {
-#ifdef HAVE_X11
-	if (WNCK_IS_TASKLIST(tasklist->tasklist))
+	if (tasklist->backend == NULL)
 	{
-		return wnck_tasklist_get_size_hint_list(WNCK_TASKLIST(tasklist->tasklist), n_elements);
-	}
-	else
-#endif /* HAVE_X11 */
-
-	{
-		/* Not implemented for Wayland */
 		*n_elements = 0;
 		return NULL;
 	}
+
+	return tasklist_core_get_size_hint_list (tasklist->tasklist, n_elements);
 }
 
 static void response_cb(GtkWidget* widget, int id, TasklistData* tasklist)
@@ -267,7 +198,7 @@ static void applet_change_background(MatePanelApplet* applet, MatePanelAppletBac
 
 #ifdef HAVE_X11
 static cairo_surface_t*
-preview_window_thumbnail (WnckWindow   *wnck_window,
+preview_window_thumbnail (gpointer      window_handle,
                           TasklistData *tasklist,
                           int          *thumbnail_width,
                           int          *thumbnail_height,
@@ -285,8 +216,16 @@ preview_window_thumbnail (WnckWindow   *wnck_window,
 	int width, height, scale;
 	int src_x = 0, src_y = 0;
 
-	win = wnck_window_get_xid (wnck_window);
 	display = gdk_display_get_default ();
+
+	if (display == NULL || !GDK_IS_X11_DISPLAY (display))
+		return NULL;
+
+	win = (Window) xfw_window_x11_get_xid (window_handle);
+
+	if (win == 0)
+		return NULL;
+
 	xdpy = GDK_DISPLAY_XDISPLAY (display);
 
 	/* Find the frame window (WM parent) which includes decorations */
@@ -415,8 +354,61 @@ static int find_offset(GList *list, gdouble target)
 }
 
 #define PREVIEW_PADDING 5
+/* Gather the offsets of every task button below @widget. Buttons are nested
+ * inside an inner box, so the search recurses. The offsets are kept in sorted
+ * lists because grouped buttons are appended last even though they are drawn
+ * first. */
 static void
-preview_window_reposition (WnckTasklist    *tl,
+collect_button_allocations (GtkWidget      *widget,
+                            GList         **alloc_x_list,
+                            GList         **alloc_y_list,
+                            GtkAllocation  *last_alloc,
+                            gboolean       *have_allocation)
+{
+	GList *children = gtk_container_get_children (GTK_CONTAINER (widget));
+	GList *l;
+
+	for (l = children; l != NULL; l = l->next)
+	{
+		GtkWidget *child = l->data;
+
+		if (g_strcmp0 (gtk_widget_get_name (child), "tasklist-button") == 0)
+		{
+			GtkAllocation alloc;
+
+			gtk_widget_get_allocation (child, &alloc);
+
+			/* Skip grouped buttons: these usually have alloc width/height=1,
+			 * except right after grouping is toggled. Then simply open or
+			 * close a new window to get the correct offset. */
+			if (alloc.width < 2 || alloc.height < 2)
+				continue;
+
+			*alloc_x_list = g_list_insert_sorted (*alloc_x_list,
+			                                      GINT_TO_POINTER (alloc.x),
+			                                      g_int_compare);
+			*alloc_y_list = g_list_insert_sorted (*alloc_y_list,
+			                                      GINT_TO_POINTER (alloc.y),
+			                                      g_int_compare);
+
+			/* The width/height from the last allocation is used for centering
+			 * the preview. It might be off by a pixel because not all buttons
+			 * have the exact same width/height but this isn't critical. */
+			*last_alloc = alloc;
+			*have_allocation = TRUE;
+		}
+		else if (GTK_IS_CONTAINER (child))
+		{
+			collect_button_allocations (child, alloc_x_list, alloc_y_list,
+			                            last_alloc, have_allocation);
+		}
+	}
+
+	g_list_free (children);
+}
+
+static void
+preview_window_reposition (GtkWidget       *tl,
                            TasklistData    *tasklist,
                            int              width,
                            int              height,
@@ -470,31 +462,19 @@ preview_window_reposition (WnckTasklist    *tl,
 	 * This allows us to avoid off-by-one errors that would cause the preview to be positioned over the adjacent button. */
 	GList *alloc_x_list = NULL;
 	GList *alloc_y_list = NULL;
-	GtkAllocation last_alloc;
-	GList* children = gtk_container_get_children (GTK_CONTAINER(tl));
-	while (children != NULL)
+	GtkAllocation last_alloc = { 0, 0, 0, 0 };
+	gboolean have_allocation = FALSE;
+
+	/* The task buttons live inside an inner box rather than directly on the
+	 * outer box, so walk the whole subtree. */
+	collect_button_allocations (tl, &alloc_x_list, &alloc_y_list, &last_alloc, &have_allocation);
+
+	/* Nothing to center against yet (the tasklist may still be laying out). */
+	if (!have_allocation)
 	{
-		if (g_strcmp0 (gtk_widget_get_name (children->data), "tasklist-button") == 0) {
-			GtkAllocation alloc;
-			gtk_widget_get_allocation (children->data, &alloc);
-
-			/* Skip grouped buttons: these usually have alloc width/heigh=1, except right after grouping is toggled.
-			 * Then simply open or close a new window to get the correct offset. */
-			if (alloc.width < 2 || alloc.height < 2)
-			{
-				children = children->next;
-				continue;
-			}
-
-			/* Keep x and y offsets in sorted lists */
-			alloc_x_list = g_list_insert_sorted (alloc_x_list, GINT_TO_POINTER(alloc.x), g_int_compare);
-			alloc_y_list = g_list_insert_sorted (alloc_y_list, GINT_TO_POINTER(alloc.y), g_int_compare);
-
-			/* The width/height from the last allocation will be used for centering the preview.
-			 * It might be off by a pixel because not all buttons have the exact same width/height but this isn't critical. */
-			last_alloc = alloc;
-		}
-		children = children->next;
+		g_list_free (alloc_x_list);
+		g_list_free (alloc_y_list);
+		return;
 	}
 
 	/* Center preview at the midpoint of the tasklist button */
@@ -527,10 +507,10 @@ static gboolean preview_window_draw (GtkWidget *widget, cairo_t *cr, cairo_surfa
 	return FALSE;
 }
 
-static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows, TasklistData *tasklist)
+static gboolean applet_enter_notify_event (GtkWidget *tl, GList *windows, TasklistData *tasklist)
 {
 	cairo_surface_t *thumbnail;
-	WnckWindow *wnck_window = NULL;
+	gpointer window = NULL;
 	int n_windows;
 	int thumbnail_width;
 	int thumbnail_height;
@@ -542,27 +522,26 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 		tasklist->preview = NULL;
 	}
 
-	if (!tasklist->show_window_thumbnails || wnck_windows == NULL)
+	if (!tasklist->show_window_thumbnails || windows == NULL)
 		return FALSE;
 
-	n_windows = g_list_length (wnck_windows);
+	n_windows = g_list_length (windows);
 	/* TODO: Display a list of stacked thumbnails for grouped windows. */
 	if (n_windows == 1)
 	{
-		GList* l = wnck_windows;
+		GList* l = windows;
 		if (l != NULL)
-			wnck_window = (WnckWindow*)l->data;
+			window = l->data;
 	}
 
-	if (wnck_window == NULL)
+	if (window == NULL)
 		return FALSE;
 
 	/* Do not show preview if window is not visible nor in current workspace */
-	if (!wnck_window_is_visible_on_workspace (wnck_window,
-						  wnck_screen_get_active_workspace (wncklet_get_screen (tasklist->wnck_handle, tasklist->applet))))
+	if (!tasklist->backend->window_is_on_active_workspace (window))
 		return FALSE;
 
-	thumbnail = preview_window_thumbnail (wnck_window, tasklist, &thumbnail_width, &thumbnail_height, &thumbnail_scale);
+	thumbnail = preview_window_thumbnail (window, tasklist, &thumbnail_width, &thumbnail_height, &thumbnail_scale);
 
 	if (thumbnail == NULL)
 		return FALSE;
@@ -585,7 +564,7 @@ static gboolean applet_enter_notify_event (WnckTasklist *tl, GList *wnck_windows
 	return FALSE;
 }
 
-static gboolean applet_leave_notify_event (WnckTasklist *tl, GList *wnck_windows, TasklistData *tasklist)
+static gboolean applet_leave_notify_event (GtkWidget *tl, GList *windows, TasklistData *tasklist)
 {
 	if (tasklist->preview != NULL)
 	{
@@ -603,6 +582,11 @@ static void applet_change_pixel_size(MatePanelApplet* applet, gint size, Tasklis
 		return;
 
 	tasklist->size = size;
+
+	/* The core widget is a plain label when there is no backend, and the
+	 * core getter would object to being handed that. */
+	if (tasklist->backend != NULL)
+		tasklist_core_set_panel_size (tasklist->tasklist, size);
 
 	tasklist_update(tasklist);
 }
@@ -832,27 +816,11 @@ static void applet_size_allocate(GtkWidget *widget, GtkAllocation *allocation, T
 
 	g_assert(len % 2 == 0);
 
-#if !defined(WNCKLET_INPROCESS) && !GTK_CHECK_VERSION (3, 23, 0)
-	/* HACK: When loading the WnckTasklist initially, it reports size hints as though there were
-	 * no elements in the Tasklist. This causes a rendering issue when built out-of-process in
-	 * HiDPI displays. We keep a flag to skip size hinting until WnckTasklist has something to
-	 * show. */
-	if (!tasklist->needs_hints)
-	{
-		int i;
-		for (i = 0; i < len; i++)
-		{
-			if (size_hints[i])
-			{
-				tasklist->needs_hints = TRUE;
-				break;
-			}
-		}
-	}
-
-	if (tasklist->needs_hints)
-#endif
-		mate_panel_applet_set_size_hints(MATE_PANEL_APPLET(tasklist->applet), size_hints, len, 0);
+	/* The core reports no hints at all until it has a window to show, and
+	 * only reports real widths afterwards, so there is nothing to guard
+	 * against the way an empty WnckTasklist used to report a list of
+	 * zeroes. */
+	mate_panel_applet_set_size_hints(MATE_PANEL_APPLET(tasklist->applet), size_hints, len, 0);
 }
 
 gboolean window_list_applet_fill(MatePanelApplet* applet)
@@ -899,10 +867,6 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 
 	tasklist->size = mate_panel_applet_get_size(applet);
 
-#if !defined(WNCKLET_INPROCESS) && !GTK_CHECK_VERSION (3, 23, 0)
-	tasklist->needs_hints = FALSE;
-#endif
-
 	switch (mate_panel_applet_get_orient(applet))
 	{
 		case MATE_PANEL_APPLET_ORIENT_LEFT:
@@ -916,30 +880,55 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 			break;
 	}
 
+	/* The backend is chosen by display type rather than at compile time, so
+	 * a build with both backends still works whichever one is in use. */
 #ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-	{
-		tasklist->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
-		tasklist->tasklist = wnck_tasklist_new_with_handle(tasklist->wnck_handle);
-
-		g_signal_connect (tasklist->tasklist, "task-enter-notify",
-		                  G_CALLBACK (applet_enter_notify_event),
-		                  tasklist);
-		g_signal_connect (tasklist->tasklist, "task-leave-notify",
-		                  G_CALLBACK (applet_leave_notify_event),
-		                  tasklist);
-	}
-	else
+	tasklist->backend = x11_tasklist_backend ();
+	tasklist->backend_is_x11 = (tasklist->backend != NULL);
 #endif /* HAVE_X11 */
-
 #ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-	{
-		tasklist->tasklist = wayland_tasklist_new();
-	}
-	else
+	if (tasklist->backend == NULL)
+		tasklist->backend = wayland_tasklist_backend ();
 #endif /* HAVE_WAYLAND */
 
+	if (tasklist->backend != NULL)
+	{
+		tasklist->tasklist = tasklist_core_new (tasklist->backend);
+
+		if (tasklist->tasklist == NULL)
+			tasklist->backend = NULL;
+
+		if (tasklist->backend != NULL)
+		{
+#ifdef HAVE_X11
+			/* Previews grab window pixels with Xlib, which xfw has no
+			 * equivalent for, so they stay X11-only. Both the build
+			 * guard and the backend test are needed: a dual-backend
+			 * build on Wayland compiles these in but must not
+			 * connect them, or hovering would hand a Wayland
+			 * handle to preview_window_thumbnail(). */
+			if (tasklist->backend_is_x11)
+			{
+				g_signal_connect (tasklist->tasklist, "task-enter-notify",
+				                  G_CALLBACK (applet_enter_notify_event),
+				                  tasklist);
+				g_signal_connect (tasklist->tasklist, "task-leave-notify",
+				                  G_CALLBACK (applet_leave_notify_event),
+				                  tasklist);
+			}
+#endif /* HAVE_X11 */
+
+			/* Choose the icon size before the first update builds
+			 * buttons, so they are never laid out at the default
+			 * and then torn down and laid out again. tasklist->size
+			 * is already the applet's real thickness here. */
+			tasklist_core_set_panel_size (tasklist->tasklist, tasklist->size);
+
+			tasklist_update (tasklist);
+		}
+	}
+
+	if (tasklist->backend == NULL)
 	{
 		tasklist->tasklist = gtk_label_new ("[Tasklist not supported on this platform]");
 	}
@@ -1295,10 +1284,6 @@ static void destroy_tasklist(GtkWidget* widget, TasklistData* tasklist)
 
 	if (tasklist->preview)
 		gtk_widget_destroy(tasklist->preview);
-
-#ifdef HAVE_X11
-	g_clear_object(&tasklist->wnck_handle);
-#endif
 
 	g_free(tasklist);
 }
