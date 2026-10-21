@@ -30,7 +30,9 @@ libtray_la_SOURCES =				\
 	na-host.c				\
 	na-host.h				\
 	na-item.c				\
-	na-item.h
+	na-item.h				\
+	na-overflow.c				\
+	na-overflow.h
 
 libtray_la_LIBADD =							\
 	libstatus-notifier-watcher/libstatus-notifier-watcher.la	\
@@ -44,7 +46,32 @@ testtray_SOURCES = testtray.c
 testtray_LDADD =			\
 	libtray.la \
 	$(NOTIFICATION_AREA_LIBS)
-endif 
+endif
+
+# Click watcher: a separate process with its own Xlib connection. It needs both
+# X11 and libXtst (XRecord); HAVE_XTST is only set when X11 is present, so one
+# condition is enough.
+#
+# It must be INSTALLED next to the applet: noinst would leave the helper out of
+# the installation, and dismissal on an outside click would then silently fall
+# back to the pointer poll.
+#
+# A dedicated primary, not libexec_PROGRAMS: automake merges repeated
+# assignments to one primary into mutually exclusive lines, so assigning
+# clickwatch here would drop notification-area-applet from the installation
+# whenever HAVE_XTST is yes.
+if HAVE_XTST
+clickwatchdir = $(libexecdir)
+clickwatch_PROGRAMS = clickwatch
+clickwatch_SOURCES = clickwatch.c
+clickwatch_CFLAGS = $(XTST_CFLAGS)
+clickwatch_LDADD = $(XTST_LIBS) -lX11
+
+# The applet (na-overflow.c) is the one that needs the path, in both build
+# shapes (separate process and in-panel module), hence AM_CPPFLAGS rather than
+# per-target flags.
+AM_CPPFLAGS += -DNA_CLICKWATCHDIR=\""$(libexecdir)\""
+endif
 
 NOTIFICATION_AREA_SOURCES = \
 	main.c \

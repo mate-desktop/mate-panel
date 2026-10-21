@@ -5,5 +5,21 @@
       <summary>Minimum icon size</summary>
       <description>The minimum size an icon can have.</description>
     </key>
+    <key name="overflow-icons" type="as">
+      <default>[]</default>
+      <summary>Icons in the overflow menu</summary>
+      <description>Identifiers of the application icons that are kept in the overflow popup instead of the panel.</description>
+    </key>
+    <key name="hidden-icons" type="as">
+      <default>[]</default>
+      <summary>Hidden icons</summary>
+      <description>Identifiers of the application icons that are not shown in the notification area.</description>
+    </key>
+    <key name="overflow-autohide-ms" type="i">
+      <default>800</default>
+      <range min="0" max="60000"/>
+      <summary>Hide the overflow popup after</summary>
+      <description>How long the pointer has to stay outside the overflow popup before it closes, in milliseconds (0 to 60000). 0 keeps the popup open until the arrow or a click inside it closes it.</description>
+    </key>
   </schema>
 </schemalist>
