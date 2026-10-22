@@ -45,6 +45,8 @@ typedef struct
 {
   GtkWidget *preferences_dialog;
   GtkWidget *min_icon_size_spin;
+  GtkWidget *autohide_spin;
+  GtkWidget *icons_grid;
 } NAPreferencesDialog;
 
 struct _NaTrayAppletPrivate
@@ -56,6 +58,7 @@ struct _NaTrayAppletPrivate
 
   GSettings               *settings;
   gint                     min_icon_size;
+  guint                    overflow_autohide_ms;
 
 #ifdef PROVIDE_WATCHER_SERVICE
   GfStatusNotifierWatcher *sn_watcher;
@@ -63,6 +66,10 @@ struct _NaTrayAppletPrivate
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (NaTrayApplet, na_tray_applet, PANEL_TYPE_APPLET)
+
+static void rebuild_icons_list                     (NaTrayApplet *applet);
+static void na_preferences_dialog_icon_state_changed (GtkComboBox  *combo,
+                                                      gpointer      applet);
 
 static void (*parent_class_realize) (GtkWidget *widget);
 static void (*parent_class_style_updated) (GtkWidget *widget);
@@ -132,10 +139,64 @@ gsettings_changed_min_icon_size (GSettings    *settings,
 }
 
 static void
+gsettings_changed_overflow_autohide (GSettings    *settings,
+                                     gchar        *key,
+                                     NaTrayApplet *applet)
+{
+  applet->priv->overflow_autohide_ms = g_settings_get_int (settings, key);
+
+  if (applet->priv->dialog != NULL && applet->priv->dialog->autohide_spin != NULL)
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->autohide_spin),
+                               applet->priv->overflow_autohide_ms);
+
+  na_grid_set_overflow_autohide_ms (NA_GRID (applet->priv->grid),
+                                    applet->priv->overflow_autohide_ms);
+}
+
+static void
+gsettings_changed_icon_lists (GSettings    *settings,
+                              gchar        *key,
+                              NaTrayApplet *applet)
+{
+  g_auto(GStrv) ids = g_settings_get_strv (settings, key);
+
+  if (g_strcmp0 (key, KEY_HIDDEN_ICONS) == 0)
+    na_grid_set_hidden_icons (NA_GRID (applet->priv->grid), (const gchar *const *) ids);
+  else
+    na_grid_set_overflow_icons (NA_GRID (applet->priv->grid), (const gchar *const *) ids);
+}
+
+static void
 setup_gsettings (NaTrayApplet *applet)
 {
   applet->priv->settings = mate_panel_applet_settings_new (MATE_PANEL_APPLET (applet), NA_TRAY_SCHEMA);
   g_signal_connect_object (G_OBJECT(applet->priv->settings), "changed::" KEY_MIN_ICON_SIZE, G_CALLBACK (gsettings_changed_min_icon_size), applet, 0);
+  g_signal_connect_object (G_OBJECT(applet->priv->settings), "changed::" KEY_HIDDEN_ICONS, G_CALLBACK (gsettings_changed_icon_lists), applet, 0);
+  g_signal_connect_object (G_OBJECT(applet->priv->settings), "changed::" KEY_OVERFLOW_ICONS, G_CALLBACK (gsettings_changed_icon_lists), applet, 0);
+  g_signal_connect_object (G_OBJECT(applet->priv->settings), "changed::" KEY_OVERFLOW_AUTOHIDE_MS, G_CALLBACK (gsettings_changed_overflow_autohide), applet, 0);
+}
+
+/* Push the current values of the overflow keys into the grid.  The "changed"
+ * signals only fire on a change, so the initial state has to be applied by
+ * hand, exactly like min-icon-size is in na_tray_applet_realize(). */
+static void
+apply_overflow_settings (NaTrayApplet *applet)
+{
+  g_auto(GStrv) hidden;
+  g_auto(GStrv) overflow;
+
+  hidden = g_settings_get_strv (applet->priv->settings, KEY_HIDDEN_ICONS);
+  na_grid_set_hidden_icons (NA_GRID (applet->priv->grid),
+                            (const gchar *const *) hidden);
+
+  overflow = g_settings_get_strv (applet->priv->settings, KEY_OVERFLOW_ICONS);
+  na_grid_set_overflow_icons (NA_GRID (applet->priv->grid),
+                              (const gchar *const *) overflow);
+
+  applet->priv->overflow_autohide_ms =
+    g_settings_get_int (applet->priv->settings, KEY_OVERFLOW_AUTOHIDE_MS);
+  na_grid_set_overflow_autohide_ms (NA_GRID (applet->priv->grid),
+                                    applet->priv->overflow_autohide_ms);
 }
 
 static void
@@ -144,6 +205,146 @@ na_preferences_dialog_min_icon_size_changed (NaTrayApplet  *applet,
 {
   applet->priv->min_icon_size = gtk_spin_button_get_value_as_int (spin_button);
   g_settings_set_int (applet->priv->settings, KEY_MIN_ICON_SIZE, applet->priv->min_icon_size);
+}
+
+static void
+na_preferences_dialog_autohide_changed (NaTrayApplet  *applet,
+                                        GtkSpinButton *spin_button)
+{
+  applet->priv->overflow_autohide_ms =
+    (guint) gtk_spin_button_get_value_as_int (spin_button);
+  g_settings_set_int (applet->priv->settings, KEY_OVERFLOW_AUTOHIDE_MS,
+                      applet->priv->overflow_autohide_ms);
+}
+
+/* The id lists are the storage; a combo change rewrites whichever list the
+ * icon belongs to.  States are: 0 = always visible, 1 = overflow, 2 = hidden.
+ *
+ * Connected with g_signal_connect(), NOT g_signal_connect_swapped(): the
+ * "changed" signal carries no arguments, so a swapped connection would invoke
+ * this two-parameter handler with the combo coming from an uninitialized
+ * register.  That is undefined behaviour, and it segfaulted in
+ * g_type_check_instance() on a live session (dmesg 2026-10-19 23:25:41). */
+static void
+na_preferences_dialog_icon_state_changed (GtkComboBox  *combo,
+                                          gpointer      user_data)
+{
+  NaTrayApplet *applet = user_data;
+  const gchar *id = g_object_get_data (G_OBJECT (combo), "na-icon-id");
+  gint state = gtk_combo_box_get_active (combo);
+  g_autofree gchar **hidden = NULL;
+  g_autofree gchar **overflow = NULL;
+  g_autoptr(GPtrArray) new_hidden = NULL;
+  g_autoptr(GPtrArray) new_overflow = NULL;
+
+  if (id == NULL)
+    return;
+
+  hidden = g_settings_get_strv (applet->priv->settings, KEY_HIDDEN_ICONS);
+  overflow = g_settings_get_strv (applet->priv->settings, KEY_OVERFLOW_ICONS);
+
+  new_hidden = g_ptr_array_new_with_free_func (g_free);
+  new_overflow = g_ptr_array_new_with_free_func (g_free);
+
+  for (guint i = 0; hidden[i] != NULL; i++)
+    if (g_strcmp0 (hidden[i], id) != 0)
+      g_ptr_array_add (new_hidden, g_strdup (hidden[i]));
+
+  for (guint i = 0; overflow[i] != NULL; i++)
+    if (g_strcmp0 (overflow[i], id) != 0)
+      g_ptr_array_add (new_overflow, g_strdup (overflow[i]));
+
+  if (state == 1)
+    g_ptr_array_add (new_overflow, g_strdup (id));
+  else if (state == 2)
+    g_ptr_array_add (new_hidden, g_strdup (id));
+
+  g_ptr_array_add (new_hidden, NULL);
+  g_ptr_array_add (new_overflow, NULL);
+
+  /* One write per key, and the grid reacts via the "changed" signal. */
+  g_settings_set_strv (applet->priv->settings, KEY_HIDDEN_ICONS,
+                       (const gchar *const *) new_hidden->pdata);
+  g_settings_set_strv (applet->priv->settings, KEY_OVERFLOW_ICONS,
+                       (const gchar *const *) new_overflow->pdata);
+}
+
+static void
+append_icon_row (NaTrayApplet *applet,
+                 NaItem       *item,
+                 gint          row)
+{
+  GtkWidget *grid = applet->priv->dialog->icons_grid;
+  const gchar *id = na_item_get_id (item);
+  NaItemState state = na_grid_get_item_state (NA_GRID (applet->priv->grid), item);
+  GtkWidget *label;
+  GtkWidget *combo;
+  g_autofree gchar *display = NULL;
+
+  /* Items without any identifier cannot be addressed by a setting at all. */
+  if (id == NULL)
+    return;
+
+  /* Mark the legacy half so the row is recognisable: its icon leaves the
+   * panel as a WINDOW, not as a widget, which is invisible to the user but
+   * matters when something goes wrong. */
+  if (na_grid_item_is_sni (NA_GRID (applet->priv->grid), item))
+    display = g_strdup (id);
+  else
+    display = g_strdup_printf (_("%s (system tray)"), id);
+
+  label = gtk_label_new (display);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
+  gtk_widget_show (label);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
+
+  combo = gtk_combo_box_text_new ();
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), _("Shown on the panel"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), _("In the overflow popup"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), _("Hidden completely"));
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo),
+                            state == NA_ITEM_STATE_OVERFLOW ? 1 :
+                            state == NA_ITEM_STATE_HIDDEN   ? 2 : 0);
+  g_object_set_data_full (G_OBJECT (combo), "na-icon-id",
+                          g_strdup (id), g_free);
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (na_preferences_dialog_icon_state_changed),
+                    applet);
+
+  gtk_widget_show (combo);
+  gtk_grid_attach (GTK_GRID (grid), combo, 1, row, 1, 1);
+}
+
+static void
+destroy_row_cb (GtkWidget *widget,
+                gpointer   user_data)
+{
+  (void) user_data;
+  gtk_widget_destroy (widget);
+}
+
+static void
+rebuild_icons_list (NaTrayApplet *applet)
+{
+  GtkWidget *grid;
+  const GSList *items;
+  gint row = 0;
+
+  if (applet->priv->dialog == NULL || applet->priv->dialog->icons_grid == NULL)
+    return;
+
+  grid = applet->priv->dialog->icons_grid;
+
+  /* Destroy the rows, not the grid itself. */
+  gtk_container_foreach (GTK_CONTAINER (grid), destroy_row_cb, NULL);
+
+  items = na_grid_get_items (NA_GRID (applet->priv->grid));
+  for (const GSList *l = items; l != NULL; l = l->next)
+    append_icon_row (applet, l->data, row++);
+
+  gtk_widget_show_all (grid);
 }
 
 static gboolean
@@ -185,12 +386,32 @@ ensure_prefs_window_is_created (NaTrayApplet *applet)
   applet->priv->dialog->min_icon_size_spin = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "min_icon_size_spin"));
   g_return_if_fail (applet->priv->dialog->min_icon_size_spin != NULL);
 
+  applet->priv->dialog->icons_grid = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "icons_grid"));
+  g_return_if_fail (applet->priv->dialog->icons_grid != NULL);
+
   gtk_spin_button_set_range (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), 7, 130);
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->min_icon_size_spin), applet->priv->min_icon_size);
 
   g_signal_connect_swapped (applet->priv->dialog->min_icon_size_spin, "value-changed",
                             G_CALLBACK (na_preferences_dialog_min_icon_size_changed),
                             applet);
+
+  applet->priv->dialog->autohide_spin = GTK_WIDGET (gtk_builder_get_object (applet->priv->builder, "autohide_spin"));
+  g_return_if_fail (applet->priv->dialog->autohide_spin != NULL);
+
+  /* 0 = never hide automatically; the upper bound of 60 s is generous enough to
+   * debug a stuck drawer; 100 ms steps, because finer control is pointless. */
+  gtk_spin_button_set_range (GTK_SPIN_BUTTON (applet->priv->dialog->autohide_spin), 0, 60000);
+  gtk_spin_button_set_increments (GTK_SPIN_BUTTON (applet->priv->dialog->autohide_spin), 100, 500);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (applet->priv->dialog->autohide_spin),
+                             applet->priv->overflow_autohide_ms);
+
+  g_signal_connect_swapped (applet->priv->dialog->autohide_spin, "value-changed",
+                            G_CALLBACK (na_preferences_dialog_autohide_changed),
+                            applet);
+
+  /* The list is only meaningful while the dialog is up; it is rebuilt in
+   * properties_dialog() every time the dialog is opened. */
 
   g_signal_connect_swapped (applet->priv->dialog->preferences_dialog, "response",
                             G_CALLBACK (na_preferences_dialog_response), applet);
@@ -204,6 +425,16 @@ properties_dialog (GtkAction    *action,
                    NaTrayApplet *applet)
 {
   ensure_prefs_window_is_created (applet);
+
+  /* Dismiss the drawer right away: the user came to change icon states, not to
+   * look at the drawer, and moving an icon with the drawer visible is exactly
+   * the case where the panel layout diverged from the grid layout. With the
+   * default auto-hide the drawer would close by itself, but at
+   * overflow-autohide-ms = 0 it would stay up. */
+  na_grid_popdown_overflow (NA_GRID (applet->priv->grid));
+
+  /* Icons come and go, so the list is rebuilt on every opening. */
+  rebuild_icons_list (applet);
 
   gtk_window_set_screen (GTK_WINDOW (applet->priv->dialog->preferences_dialog),
                          gtk_widget_get_screen (GTK_WIDGET (applet)));
@@ -315,6 +546,9 @@ na_tray_applet_realize (GtkWidget *widget)
   /* load min icon size */
   gsettings_changed_min_icon_size (applet->priv->settings, KEY_MIN_ICON_SIZE, applet);
 
+  /* load the overflow state: the "changed" handlers only fire on change */
+  apply_overflow_settings (applet);
+
   applet->priv->builder = gtk_builder_new ();
   gtk_builder_set_translation_domain (applet->priv->builder, GETTEXT_PACKAGE);
   gtk_builder_add_from_resource (applet->priv->builder, NA_RESOURCE_PATH "notification-area-preferences-dialog.ui", NULL);
@@ -392,8 +626,24 @@ na_tray_applet_button_press_event (GtkWidget      *widget,
   /* Prevent the panel from poping up the applet's popup on the the items,
    * which may also popup a menu which then conflicts.
    * This doesn't prevent the menu from poping up on the applet handle. */
+
+  /* Swallowing here is safe: X propagates an event up the window chain only
+   * when the owning window did not select it, so a press that reached this
+   * handler was not delivered to the tray client. If the client took it, this
+   * handler is not called at all. */
   if (event->button == 3)
-    return TRUE;
+    {
+      /* Pass a right click on the ARROW on: the panel then shows the applet
+       * menu (Properties, Move, Remove). Before this the menu was reachable
+       * only by clicking to the left of the arrow, because every right click
+       * was swallowed here. Tray icons are still swallowed, or the panel menu
+       * would cover the application's own menu. */
+      if (na_grid_is_chevron_at (NA_GRID (NA_TRAY_APPLET (widget)->priv->grid),
+                                 (gint) event->x_root, (gint) event->y_root))
+        return GTK_WIDGET_CLASS (na_tray_applet_parent_class)->button_press_event (widget, event);
+
+      return TRUE;
+    }
 
   return GTK_WIDGET_CLASS (na_tray_applet_parent_class)->button_press_event (widget, event);
 }

@@ -28,6 +28,13 @@ Author: Wolfgang Ulbrich
   <!-- interface-description panel-properties-dialog -->
   <!-- interface-copyright Mate Developer -->
   <!-- interface-authors Wolfgang Ulbrich -->
+  <object class="GtkAdjustment" id="autohide_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">60000</property>
+    <property name="value">800</property>
+    <property name="step_increment">100</property>
+    <property name="page_increment">500</property>
+  </object>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">7</property>
     <property name="upper">100</property>
@@ -90,8 +97,8 @@ Author: Wolfgang Ulbrich
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="border_width">5</property>
-            <property name="show_tabs">False</property>
-            <property name="show_border">False</property>
+            <property name="show_tabs">True</property>
+            <property name="show_border">True</property>
             <child>
               <object class="GtkGrid" id="general_grid">
                 <property name="visible">True</property>
@@ -143,16 +150,119 @@ Author: Wolfgang Ulbrich
                     <property name="top_attach">0</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkLabel" id="autohide_label">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="label" translatable="yes">Hide the popup after the pointer leaves:</property>
+                    <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">autohide_spin</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="autohide_spin">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="adjustment">autohide_adjustment</property>
+                    <property name="climb_rate">1</property>
+                    <property name="numeric">True</property>
+                    <property name="value">800</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="autohide_label_ms">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">ms (0 = never)</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="top_attach">1</property>
+                  </packing>
+                </child>
               </object>
             </child>
             <child type="tab">
-              <placeholder/>
+              <object class="GtkLabel" id="general_tab_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">General</property>
+              </object>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkBox" id="icons_page">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="border_width">6</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkLabel" id="icons_note_label">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="wrap">True</property>
+                    <property name="max_width_chars">72</property>
+                    <property name="width_chars">72</property>
+                    <property name="xalign">0</property>
+                    <property name="yalign">0</property>
+                    <property name="label" translatable="yes">Choices apply immediately.
+
+The arrow button on the panel appears only while at least one icon is set to &quot;In the overflow popup&quot;, and it opens with those icons inside. An icon set to &quot;Hidden completely&quot; is not shown anywhere; it stays listed here so you can move it back.</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="icons_scrolledwindow">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="shadow_type">in</property>
+                    <property name="min_content_height">180</property>
+                    <child>
+                      <object class="GtkViewport" id="icons_viewport">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkGrid" id="icons_grid">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="border_width">6</property>
+                            <property name="row_spacing">4</property>
+                            <property name="column_spacing">12</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
             </child>
             <child type="tab">
-              <placeholder/>
+              <object class="GtkLabel" id="icons_tab_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Icons</property>
+              </object>
             </child>
           </object>
           <packing>

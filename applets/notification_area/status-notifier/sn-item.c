@@ -164,8 +164,11 @@ sn_item_get_action_coordinates (SnItem *item,
   SnItemPrivate *priv;
   GdkWindow *window;
   GtkWidget *toplevel;
+  GdkWindow *toplevel_window;
   gint width;
   gint height;
+  gint root_x;
+  gint root_y;
 
   priv = SN_ITEM (item)->priv;
   widget = GTK_WIDGET (item);
@@ -179,6 +182,23 @@ sn_item_get_action_coordinates (SnItem *item,
     *y += height;
   else
     *x += width;
+
+  /* The StatusNotifierItem spec asks for root (screen) coordinates in
+   * ContextMenu() and SecondaryActivate().  Everything computed above is
+   * relative to the widget's toplevel, so translate the rest of the way.
+   * Without this, applications that place their own menu at the given
+   * coordinates draw it at the wrong place; it becomes plainly visible once
+   * an item does not live in the panel toplevel anymore, i.e. in the
+   * notification area overflow popup.
+   */
+  toplevel_window = gtk_widget_get_window (toplevel);
+  root_x = 0;
+  root_y = 0;
+  if (toplevel_window != NULL)
+    gdk_window_get_origin (toplevel_window, &root_x, &root_y);
+
+  *x += root_x;
+  *y += root_y;
 }
 
 static gboolean
