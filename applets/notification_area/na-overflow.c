@@ -22,7 +22,7 @@
 #include <signal.h>      /* SIGTERM to the clickwatch helper */
 
 #ifdef HAVE_WAYLAND
-#include <gtk-layer-shell/gtk-layer-shell.h>
+#include <gdk/gdkwayland.h>
 #endif
 
 #include "na-overflow.h"
@@ -59,12 +59,19 @@ struct _NaOverflow
   gint          nominal_w;
   gint          nominal_h;
 
+  /* Wayland: the drawer is shown as a GtkMenu (xdg_popup) anchored to the
+   * chevron button, and this window is never mapped - see na_overflow_new().
+   * menu_up tracks the popup state so "deactivate" and popdown() cannot
+   * recurse into each other. */
+  GtkWidget    *menu;
+  gboolean      use_menu;
+  gboolean      menu_up;
+
   /* Auto-hide. We deliberately take no seat grab, so neither Escape nor a
    * click outside reaches us: without a grab X hands
    * the event to the window under the pointer, not to us. Polling the pointer
    * position replaces both dismissal paths and blocks nothing - it only reads. */
   guint         hide_timer;      /* poll source, 0 = not running */
-  guint         probe_idle;      /* placement probe, 0 = not armed */
   gint64        shown_at;        /* when shown: no polling before the grace */
   gint64        outside_since;   /* when the pointer left the rect, 0 = inside */
   guint         autohide_ms;     /* how long to hold after it leaves, 0 = never */
@@ -95,6 +102,17 @@ G_DEFINE_TYPE (NaOverflow, na_overflow, GTK_TYPE_WINDOW)
 static void
 na_overflow_emit_closed (NaOverflow *self)
 {
+  if (self->use_menu)
+    {
+      /* The menu path has its own up/down tracking: "deactivate" arrives while
+       * the menu is already tearing down, and popdown() must not re-emit. */
+      if (!self->menu_up)
+        return;
+      self->menu_up = FALSE;
+      g_signal_emit (self, overflow_signals[CLOSED], 0);
+      return;
+    }
+
   if (gtk_widget_get_visible (GTK_WIDGET (self)))
     g_signal_emit (self, overflow_signals[CLOSED], 0);
 }
@@ -563,6 +581,8 @@ na_overflow_dispose (GObject *object)
   na_overflow_cancel_autohide (NA_OVERFLOW (object));
   na_overflow_disarm_click_watch (NA_OVERFLOW (object));
 
+  g_clear_object (&self->menu);
+
   G_OBJECT_CLASS (na_overflow_parent_class)->dispose (object);
 }
 
@@ -616,40 +636,43 @@ na_overflow_init (NaOverflow *self)
 NaOverflow *
 na_overflow_new (void)
 {
+  NaOverflow *self = g_object_new (NA_TYPE_OVERFLOW,
+                                   "type", GTK_WINDOW_POPUP,
+                                   NULL);
+
 #ifdef HAVE_WAYLAND
-  /* Wayland has no override-redirect: GDK silently turns a GTK_WINDOW_POPUP
-   * into a plain top-level surface, which the compositor then decorates and
-   * places itself, and gtk_window_move() is ignored for it (measured: the
-   * drawer landed in the middle of the screen with window buttons).
-   *
-   * The panel's own answer to this, used by the clock applet's calendar
-   * (clock.c), is an undecorated top-level driven by wlr-layer-shell.  Do the
-   * same here: init the surface ONCE, before it is ever realized - calling
-   * gtk_layer_init_for_window() again on a realized window is what crashed the
-   * panel on the second opening. */
-  if (gtk_layer_is_supported ())
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
     {
-      NaOverflow *self = g_object_new (NA_TYPE_OVERFLOW,
-                                       "type", GTK_WINDOW_TOPLEVEL,
-                                       NULL);
+      /* Wayland has no override-redirect, and every top-level placement route
+       * failed here (measured on wayfire): gtk_window_move() is ignored,
+       * gdk_window_get_origin() always reads back (0,0), and layer-shell
+       * margins did not move the surface to where we asked.
+       *
+       * The one popup that positions itself correctly in this environment is
+       * the classic menu (panel-menu-button.c): a GtkMenu is an xdg_popup, so
+       * the COMPOSITOR places it against the parent surface using the two
+       * anchors of gtk_menu_popup_at_widget(). Do exactly that here - move the
+       * grid into a menu item and never map this window.
+       *
+       * XEmbed sockets cannot live in the popup, but on Wayland there are
+       * none: every overflow item is an SNI button. */
+      GtkWidget *item;
 
-      gtk_window_set_decorated (GTK_WINDOW (self), FALSE);
-      gtk_window_set_skip_taskbar_hint (GTK_WINDOW (self), TRUE);
-      gtk_window_set_skip_pager_hint (GTK_WINDOW (self), TRUE);
-      gtk_window_set_type_hint (GTK_WINDOW (self), GDK_WINDOW_TYPE_HINT_UTILITY);
+      self->use_menu = TRUE;
 
-      gtk_layer_init_for_window (GTK_WINDOW (self));
-      gtk_layer_set_layer (GTK_WINDOW (self), GTK_LAYER_SHELL_LAYER_TOP);
+      self->menu = g_object_ref_sink (gtk_menu_new ());
+      gtk_menu_set_reserve_toggle_size (GTK_MENU (self->menu), FALSE);
 
-      /* One anchor per axis, never two: two anchors on an axis stretches the
-       * surface across the whole output instead of letting it take the size of
-       * its contents.  The margins are written by na_overflow_position(). */
-      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
-      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
-      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
-      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
+      item = gtk_menu_item_new ();
+      gtk_container_remove (GTK_CONTAINER (self), self->grid);
+      gtk_widget_set_halign (self->grid, GTK_ALIGN_START);
+      gtk_widget_set_valign (self->grid, GTK_ALIGN_START);
+      gtk_container_add (GTK_CONTAINER (item), self->grid);
+      gtk_menu_shell_append (GTK_MENU_SHELL (self->menu), item);
+      gtk_widget_show_all (item);
 
-      return self;
+      g_signal_connect_swapped (self->menu, "deactivate",
+                                G_CALLBACK (na_overflow_emit_closed), self);
     }
 #endif
 
@@ -659,9 +682,7 @@ na_overflow_new (void)
    * placement after the map and reports it via configure-notify, which lands
    * later than any move we issue, so the popup flashes in the top-left corner
    * before it can be corrected (measured). */
-  return g_object_new (NA_TYPE_OVERFLOW,
-                       "type", GTK_WINDOW_POPUP,
-                       NULL);
+  return self;
 }
 
 GtkWidget *
@@ -670,32 +691,6 @@ na_overflow_get_grid (NaOverflow *self)
   g_return_val_if_fail (NA_IS_OVERFLOW (self), NULL);
 
   return self->grid;
-}
-
-/* Temporary probe: where the compositor actually put us.
- *
- * gdk_window_get_origin() on Wayland reports the surface's position in
- * compositor space, i.e. the outcome of the layer-shell margins rather than our
- * request for them. Without this the two failure modes look identical: a wrong
- * margin we computed, versus a margin the compositor ignored. */
-static gboolean
-na_overflow_probe_idle (gpointer data)
-{
-  NaOverflow *self = data;
-  GdkWindow  *dw;
-  gint        ox = 0, oy = 0;
-
-  self->probe_idle = 0;
-
-  dw = gtk_widget_get_window (GTK_WIDGET (self));
-  if (dw == NULL)
-    return FALSE;
-
-  gdk_window_get_origin (dw, &ox, &oy);
-  g_message ("na-overflow: PROBE actual=(%d,%d) size=%dx%d asked=(%d,%d)",
-             ox, oy, gdk_window_get_width (dw), gdk_window_get_height (dw),
-             self->moved_x, self->moved_y);
-  return FALSE;
 }
 
 /* Position the popup next to `relative_to`, on the free side of the panel,
@@ -717,6 +712,11 @@ na_overflow_position (NaOverflow *self)
   gint            root_x = 0;
   gint            root_y = 0;
   gint            x, y;
+
+  /* The Wayland drawer is an xdg_popup: the compositor places it from the
+   * anchors passed to gtk_menu_popup_at_widget(), there is nothing to move. */
+  if (self->use_menu)
+    return;
 
   if (self->relative_to == NULL || !gtk_widget_get_realized (self->relative_to))
     return;
@@ -771,17 +771,6 @@ na_overflow_position (NaOverflow *self)
       req.height += 2 * border;
     }
 
-  g_message ("na-overflow: pos: root=(%d,%d) rel_alloc=%dx%d "
-             "req=%dx%d geom=(%d,%d %dx%d) layer=%d mapped=%d",
-             root_x, root_y, rel_alloc.width, rel_alloc.height,
-             req.width, req.height, geom.x, geom.y, geom.width, geom.height,
-#ifdef HAVE_WAYLAND
-             gtk_layer_is_supported (),
-#else
-             0,
-#endif
-             gtk_widget_get_mapped (GTK_WIDGET (self)));
-
   if (self->panel_orientation == GTK_ORIENTATION_HORIZONTAL)
     {
       /* Horizontal panel: the popup opens towards the middle of the screen. */
@@ -810,23 +799,6 @@ na_overflow_position (NaOverflow *self)
 
   self->moved_x = x;
   self->moved_y = y;
-
-  g_message ("na-overflow: final pos=(%d,%d)", x, y);
-
-#ifdef HAVE_WAYLAND
-  /* layer-shell margins are counted from the anchored edge of the OUTPUT, and
-   * the output's origin is geom.x/geom.y in compositor space. Anchored TOP+LEFT
-   * (set once in na_overflow_new()), so the margin is the coordinate relative
-   * to that origin. */
-  if (gtk_layer_is_supported ())
-    {
-      gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT,
-                            x - geom.x);
-      gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP,
-                            y - geom.y);
-      return;
-    }
-#endif
 
   gtk_window_move (GTK_WINDOW (self), x, y);
 }
@@ -857,9 +829,69 @@ na_overflow_popup (NaOverflow   *self,
   self->moved_x = G_MININT;
   self->moved_y = G_MININT;
 
-  /* Place before mapping: on Wayland the margins are layer-shell state, and
-   * setting them after the map would show one frame at the previous spot.
-   * The request is computed from the children, which are all attached by now. */
+#ifdef HAVE_WAYLAND
+  if (self->use_menu)
+    {
+      /* The classic-menu recipe (panel-menu-button.c): anchor the popup
+       * against the button and let the compositor place the xdg_popup.
+       * Panel on top: the menu hangs below the button; panel at the bottom:
+       * it grows upwards; vertical panels open towards the screen middle,
+       * exactly the four cases of panel_menu_button_popup_menu(). */
+      GdkGravity widget_anchor = GDK_GRAVITY_NORTH_WEST;
+      GdkGravity menu_anchor   = GDK_GRAVITY_NORTH_WEST;
+      GdkWindow *rw = gtk_widget_get_window (relative_to);
+
+      if (rw != NULL)
+        {
+          GdkMonitor  *mon = gdk_display_get_monitor_at_window (
+                                 gdk_window_get_display (rw), rw);
+          GdkRectangle g  = { 0, 0, 1, 1 };
+          gint rx = 0, ry = 0;
+
+          if (mon != NULL)
+            gdk_monitor_get_geometry (mon, &g);
+          gdk_window_get_origin (rw, &rx, &ry);
+
+          if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
+            {
+              if (ry <= g.y + g.height / 2)
+                widget_anchor = GDK_GRAVITY_SOUTH_WEST;  /* top: hang below */
+              else
+                {
+                  widget_anchor = GDK_GRAVITY_NORTH_WEST;
+                  menu_anchor   = GDK_GRAVITY_SOUTH_WEST; /* bottom: grow up */
+                }
+            }
+          else
+            {
+              if (rx <= g.x + g.width / 2)
+                widget_anchor = GDK_GRAVITY_NORTH_EAST;   /* left: open right */
+              else
+                {
+                  widget_anchor = GDK_GRAVITY_NORTH_WEST;
+                  menu_anchor   = GDK_GRAVITY_NORTH_EAST; /* right: open left */
+                }
+            }
+        }
+
+      /* Same association the classic menu makes, so the popup inherits the
+       * button's toplevel surface. */
+      gtk_window_set_attached_to (
+          GTK_WINDOW (gtk_widget_get_toplevel (self->menu)), relative_to);
+
+      self->menu_up = TRUE;
+      gtk_menu_popup_at_widget (GTK_MENU (self->menu), relative_to,
+                                widget_anchor, menu_anchor, NULL);
+
+      gtk_widget_queue_draw (GTK_WIDGET (self->grid));
+
+      /* No clickwatch and no auto-hide poll here: the menu grab delivers
+       * Escape and outside clicks to the menu itself, which ends in
+       * "deactivate" -> na_overflow_emit_closed(). */
+      return TRUE;
+    }
+#endif
+
   na_overflow_position (self);
 
   gtk_widget_realize (GTK_WIDGET (self));
@@ -868,10 +900,6 @@ na_overflow_popup (NaOverflow   *self,
   /* And again once mapped: the requisition can still change when the icons get
    * their allocation, which moves the clamped position. */
   na_overflow_position (self);
-
-  /* Where the compositor really put us, read back on the next idle. */
-  if (self->probe_idle == 0)
-    self->probe_idle = g_idle_add (na_overflow_probe_idle, self);
 
   /* Items were placed while the window was still unmapped; force a repaint so
    * a missed expose cannot leave the popup blank. */
@@ -896,14 +924,20 @@ na_overflow_popdown (NaOverflow *self)
 {
   g_return_if_fail (NA_IS_OVERFLOW (self));
 
+  if (self->use_menu)
+    {
+      /* menu_up=FALSE first: the resulting "deactivate" must not re-emit
+       * "closed" (the caller here IS the closed path in that direction). */
+      if (self->menu_up)
+        {
+          self->menu_up = FALSE;
+          gtk_menu_popdown (GTK_MENU (self->menu));
+        }
+      return;
+    }
+
   na_overflow_cancel_autohide (self);
   na_overflow_disarm_click_watch (self);
-
-  if (self->probe_idle != 0)
-    {
-      g_source_remove (self->probe_idle);
-      self->probe_idle = 0;
-    }
 
   if (gtk_widget_get_visible (GTK_WIDGET (self)))
     gtk_widget_hide (GTK_WIDGET (self));
