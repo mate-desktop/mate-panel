@@ -153,58 +153,30 @@ na_overflow_pointer_inside (NaOverflow *self)
   gint         ox = 0, oy = 0;   /* our window's origin, root coords */
   gint         w, h;
 
-  /* The Wayland drawer lives in a menu popup whose own surface cannot be
-   * located (gdk_window_get_origin answers (0,0) there), so compare against
-   * the rect computed from the chevron when it was opened. */
+  /* The Wayland drawer lives in a menu popup. Its surface position cannot be
+   * asked (gdk_window_get_origin answers (0,0)), and the pointer cannot be
+   * compared against a root rect either: measured on wayfire,
+   * gdk_device_get_position() answers SURFACE-relative coordinates under a
+   * menu grab (y went negative while the cursor was inside). Compare against
+   * the popup's own window instead - gdk_window_get_device_position() gives
+   * window-relative coordinates and they agree with reality (measured). */
   if (self->use_menu)
     {
-      if (!self->menu_up || self->menu_rect.width <= 0 || self->menu_rect.height <= 0)
+      GdkWindow *mw;
+      gint       mx = 0, my = 0;
+
+      if (!self->menu_up)
         return FALSE;
 
-      window = gtk_widget_get_window (self->relative_to ? GTK_WIDGET (self->relative_to)
-                                                        : GTK_WIDGET (self));
-      if (window == NULL)
-        return FALSE;
+      mw = gtk_widget_get_window (self->menu);
+      if (mw == NULL)
+        return TRUE;   /* not realized yet: never hide on a blind reading */
 
-      display = gdk_window_get_display (window);
-      seat = gdk_display_get_default_seat (display);
-      if (seat == NULL)
-        return FALSE;
+      if (gdk_window_get_device_position (mw, pointer, &mx, &my, NULL) == NULL)
+        return TRUE;   /* the window is unknown to GDK right now */
 
-      pointer = gdk_seat_get_pointer (seat);
-      if (pointer == NULL)
-        return FALSE;
-
-      gdk_device_get_position (pointer, NULL, &px, &py);
-
-      /* TEMPORARY PROBE: on Wayland gdk_device_get_position may answer in
-       * surface-relative coordinates, which would make every root-rect
-       * comparison meaningless. Log both readings for one run. */
-      {
-        GdkWindow *mw = gtk_widget_get_window (self->menu);
-        gint       wx = 0, wy = 0;
-        GdkModifierType st = 0;
-        GdkWindow *under = NULL;
-
-        if (mw != NULL)
-          {
-            under = gdk_window_get_device_position (mw, pointer, &wx, &wy, &st);
-            g_message ("na-overflow: PROBE dev_pos=(%d,%d) menu_rel=(%d,%d) "
-                       "under=%p menu_win=%p rect=(%d,%d %dx%d) inside=%d",
-                       px, py, wx, wy, (void *) under, (void *) mw,
-                       self->menu_rect.x, self->menu_rect.y,
-                       self->menu_rect.width, self->menu_rect.height,
-                       (px >= self->menu_rect.x &&
-                        px <  self->menu_rect.x + self->menu_rect.width  &&
-                        py >= self->menu_rect.y &&
-                        py <  self->menu_rect.y + self->menu_rect.height));
-          }
-      }
-
-      return px >= self->menu_rect.x &&
-             px <  self->menu_rect.x + self->menu_rect.width  &&
-             py >= self->menu_rect.y &&
-             py <  self->menu_rect.y + self->menu_rect.height;
+      return mx >= 0 && mx < gdk_window_get_width (mw) &&
+             my >= 0 && my < gdk_window_get_height (mw);
     }
 
   window = gtk_widget_get_window (GTK_WIDGET (self));
