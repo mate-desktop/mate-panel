@@ -1,0 +1,142 @@
+<schemalist gettext-domain="mate-panel">
+  <schema id="org.mate.panel.toplevel">
+    <key name="name" type="s">
+      <default>''</default>
+      <summary>Name to identify panel</summary>
+      <description>This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels.</description>
+    </key>
+    <key name="screen" type="i">
+      <default>0</default>
+      <summary>X screen where the panel is displayed</summary>
+      <description>With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on.</description>
+    </key>
+    <key name="monitor" type="i">
+      <default>0</default>
+      <summary>Xinerama monitor where the panel is displayed</summary>
+      <description>In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on.</description>
+    </key>
+    <key name="expand" type="b">
+      <default>true</default>
+      <summary>Expand to occupy entire screen width</summary>
+      <description>If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel.</description>
+    </key>
+    <key name="orientation" enum="org.mate.panel.PanelOrientation">
+      <default>'top'</default>
+      <summary>Panel orientation</summary>
+      <description>The orientation of the panel. Possible values are "top", "bottom", "left", "right". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between "top" and "bottom" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a "top" panel a menu button will pop up its menu below the panel, whereas on a "bottom" panel the menu will be popped up above the panel.</description>
+    </key>
+    <key name="size" type="i">
+      <default>24</default>
+      <summary>Panel size</summary>
+      <description>The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width).</description>
+    </key>
+    <key name="x" type="i">
+      <default>0</default>
+      <summary>X co-ordinate of panel</summary>
+      <description>The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key.</description>
+    </key>
+    <key name="y" type="i">
+      <default>0</default>
+      <summary>Y co-ordinate of panel</summary>
+      <description>The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key.</description>
+    </key>
+    <key name="x-right" type="i">
+      <default>-1</default>
+      <summary>X co-ordinate of panel, starting from the right of the screen</summary>
+      <description>The location of the panel along the x-axis, starting from the right of  the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key.</description>
+    </key>
+    <key name="y-bottom" type="i">
+      <default>-1</default>
+      <summary>Y co-ordinate of panel, starting from the bottom of the screen</summary>
+      <description>The location of the panel along the y-axis, starting from the bottom of  the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key.</description>
+    </key>
+    <key name="x-centered" type="b">
+      <default>false</default>
+      <summary>Center panel on x-axis</summary>
+      <description>If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel.</description>
+    </key>
+    <key name="y-centered" type="b">
+      <default>false</default>
+      <summary>Center panel on y-axis</summary>
+      <description>If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel.</description>
+    </key>
+    <key name="auto-hide" type="b">
+      <default>false</default>
+      <summary>Automatically hide panel into corner</summary>
+      <description>If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear.</description>
+    </key>
+    <key name="enable-animations" type="b">
+      <default>true</default>
+      <summary>Enable animations</summary>
+      <description>If true, hiding and un-hiding of this panel will be animated rather than happening instantly.</description>
+    </key>
+    <key name="enable-buttons" type="b">
+      <default>false</default>
+      <summary>Enable hide buttons</summary>
+      <description>If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing.</description>
+    </key>
+    <key name="enable-arrows" type="b">
+      <default>true</default>
+      <summary>Enable arrows on hide buttons</summary>
+      <description>If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true.</description>
+    </key>
+    <key name="hide-delay" type="i">
+      <default>300</default>
+      <summary>Panel autohide delay</summary>
+      <description>Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true.</description>
+    </key>
+    <key name="unhide-delay" type="i">
+      <default>100</default>
+      <summary>Panel autounhide delay</summary>
+      <description>Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true.</description>
+    </key>
+    <key name="auto-hide-size" type="i">
+      <default>1</default>
+      <summary>Visible pixels when hidden</summary>
+      <description>Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true.</description>
+    </key>
+    <key name="animation-speed" enum="org.mate.panel.PanelAnimationSpeed">
+      <default>'fast'</default>
+      <summary>Animation speed</summary>
+      <description>The speed in which panel animations should occur. Possible values are "slow", "medium" and "fast". This key is only relevant if the enable_animations key is true.</description>
+    </key>
+    <child name="background" schema="org.mate.panel.toplevel.background"/>
+  </schema>
+  <schema id="org.mate.panel.toplevel.background">
+    <key name="type" enum="org.mate.panel.PanelBackgroundType">
+      <default>'none'</default>
+      <summary>Background type</summary>
+      <description>Which type of background should be used for this panel. Possible values are "none" - the default GTK+ widget background will be used, "color" - the color key will be used as background color or "image" - the image specified by the image key will be used as background.</description>
+    </key>
+    <key name="color" type="s">
+      <default>'#ffffff'</default>
+      <summary>Background color</summary>
+      <description>Specifies the background color for the panel in #RGB format.</description>
+    </key>
+    <key name="opacity" type="i">
+      <default>6000</default>
+      <summary>Background color opacity</summary>
+      <description>Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image.</description>
+    </key>
+    <key name="image" type="s">
+      <default>''</default>
+      <summary>Background image</summary>
+      <description>Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image.</description>
+    </key>
+    <key name="fit" type="b">
+      <default>false</default>
+      <summary>Fit image to panel</summary>
+      <description>If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal).</description>
+    </key>
+    <key name="stretch" type="b">
+      <default>false</default>
+      <summary>Stretch image to panel</summary>
+      <description>If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained.</description>
+    </key>
+    <key name="rotate" type="b">
+      <default>false</default>
+      <summary>Rotate image on vertical panels</summary>
+      <description>If true, the background image will be rotated when the panel is oriented vertically.</description>
+    </key>
+  </schema>
+</schemalist>

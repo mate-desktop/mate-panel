@@ -1,0 +1,93 @@
+<schemalist gettext-domain="mate-panel">
+  <schema id="org.mate.panel" path="/org/mate/panel/general/">
+    <key name="default-layout" type="s">
+      <default>'default'</default>
+      <summary>Default panel layout</summary>
+      <description>The default panels layout to use when panels are created or resetted.</description>
+    </key>
+    <key name="enable-program-list" type="b">
+      <default>true</default>
+      <summary>Enable program list in "Run Application" dialog</summary>
+      <description>If true, the "Known Applications" listing in the "Run Application" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key.</description>
+    </key>
+    <key name="show-program-list" type="b">
+      <default>false</default>
+      <summary>Expand program list in "Run Application" dialog</summary>
+      <description>If true, the "Known Applications" listing in the "Run Application" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true.</description>
+    </key>
+    <key name="enable-autocompletion" type="b">
+      <default>true</default>
+      <summary>Enable autocompletion in "Run Application" dialog</summary>
+      <description>If true, autocompletion in the "Run Application" dialog is made available.</description>
+    </key>
+    <key name="history-mate-run" type="as">
+      <default>[]</default>
+      <summary>History for "Run Application" dialog</summary>
+      <description>This is the list of commands used in "Run Application" dialog. The commands are sorted descendingly by recency (e.g., most recent command comes first).</description>
+    </key>
+    <key name="history-max-size-mate-run" type="u">
+      <default>10</default>
+      <summary>Maximum history size for "Run Application" dialog</summary>
+      <description>Controls the maximum size of the history of the "Run Application" dialog. A value of 0 will disable the history.</description>
+    </key>
+    <key name="history-reverse-mate-run" type="b">
+      <default>false</default>
+      <summary>Reverse the history of the "Run Application" dialog</summary>
+      <description>Displays the history in reverse. Provides a consistent view for terminal users as the up key will select the most recent entry.</description>
+    </key>
+    <key name="toplevel-id-list" type="as">
+      <default>[]</default>
+      <summary>Panel ID list</summary>
+      <description>A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id).</description>
+    </key>
+    <key name="object-id-list" type="as">
+      <default>[]</default>
+      <summary>Panel object ID list</summary>
+      <description>A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id).</description>
+    </key>
+    <key name="tooltips-enabled" type="b">
+      <default>true</default>
+      <summary>Enable tooltips</summary>
+      <description>If true, tooltips are shown for objects in panels.</description>
+    </key>
+    <key name="enable-animations" type="b">
+      <default>true</default>
+      <summary>Enable animations</summary>
+    </key>
+    <key name="drawer-autoclose" type="b">
+      <default>true</default>
+      <summary>Autoclose drawer</summary>
+      <description>If true, a drawer will automatically be closed when the user clicks a launcher in it.</description>
+    </key>
+    <key name="confirm-panel-remove" type="b">
+      <default>true</default>
+      <summary>Confirm panel removal</summary>
+      <description>If true, a dialog is shown asking for confirmation if the user wants to remove a panel.</description>
+    </key>
+    <key name="highlight-launchers-on-mouseover" type="b">
+      <default>true</default>
+      <summary>Highlight launchers on mouseover</summary>
+      <description>If true, a launcher is highlighted when the user moves the pointer over it.</description>
+    </key>
+    <key name="locked-down" type="b">
+      <default>false</default>
+      <summary>Complete panel lockdown</summary>
+      <description>If true, the panel will not allow any changes to the configuration of the panel.  Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect.</description>
+    </key>
+    <key name="disabled-applets" type="as">
+      <default>[]</default>
+      <summary>Applet IIDs to disable from loading</summary>
+      <description>A list of applet IIDs that the panel will ignore.  This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:MATE_MiniCommanderApplet' to this list.  The panel must be restarted for this to take effect.</description>
+    </key>
+    <key name="disable-force-quit" type="b">
+      <default>false</default>
+      <summary>Disable Force Quit</summary>
+      <description>If true, the panel will not allow a user to force an application to quit by removing access to the force quit button.</description>
+    </key>
+    <key name="enable-sni-support" type="b">
+      <default>true</default>
+      <summary>Enable SNI support</summary>
+      <description>If true, the panel provides support for SNI.</description>
+    </key>
+  </schema>
+</schemalist>

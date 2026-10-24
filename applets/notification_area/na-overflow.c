@@ -21,6 +21,10 @@
 #include <gtk/gtk.h>
 #include <signal.h>      /* SIGTERM to the clickwatch helper */
 
+#ifdef HAVE_WAYLAND
+#include <gtk-layer-shell.h>
+#endif
+
 #include "na-overflow.h"
 
 enum
@@ -691,6 +695,10 @@ na_overflow_popup (NaOverflow   *self,
                    GtkWidget    *relative_to,
                    GtkOrientation panel_orientation)
 {
+  GdkScreen *screen;
+  GtkAllocation rel_alloc;
+  gint root_x, root_y;
+
   g_return_val_if_fail (NA_IS_OVERFLOW (self), FALSE);
   g_return_val_if_fail (GTK_IS_WIDGET (relative_to), FALSE);
 
@@ -712,11 +720,95 @@ na_overflow_popup (NaOverflow   *self,
   self->moved_x = G_MININT;
   self->moved_y = G_MININT;
 
-  /* Realize first, so the position below is applied to a window that exists
-   * and the map already happens at the right place - that is what removes the
-   * flash a managed window cannot avoid. */
-  gtk_widget_realize (GTK_WIDGET (self));
-  na_overflow_position (self);
+  screen = gtk_widget_get_screen (relative_to);
+
+  /* On Wayland, use gtk_layer_shell for proper popup positioning */
+#ifdef HAVE_WAYLAND
+  if (gtk_layer_shell_is_supported ())
+    {
+      gtk_layer_init_for_window (GTK_WINDOW (self));
+      gtk_layer_set_layer (GTK_WINDOW (self), GTK_LAYER_SHELL_LAYER_TOP);
+
+      /* Get arrow button position */
+      gtk_widget_get_allocation (relative_to, &rel_alloc);
+      if (gtk_widget_get_realized (relative_to))
+        {
+          GdkWindow *rel_window = gtk_widget_get_window (relative_to);
+          if (rel_window)
+            {
+              gdk_window_get_origin (rel_window, &root_x, &root_y);
+              root_x += rel_alloc.x;
+              root_y += rel_alloc.y;
+            }
+          else
+            {
+              root_x = rel_alloc.x;
+              root_y = rel_alloc.y;
+            }
+        }
+      else
+        {
+          root_x = rel_alloc.x;
+          root_y = rel_alloc.y;
+        }
+
+      /* Anchor to the edge of the panel nearest the arrow button */
+      if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
+        {
+          /* Horizontal panel: drawer opens towards middle of screen */
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
+
+          if (root_y <= gdk_screen_get_height (screen) / 2)
+            {
+              /* Panel at top: drawer opens downwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y + rel_alloc.height);
+            }
+          else
+            {
+              /* Panel at bottom: drawer opens upwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM,
+                                    gdk_screen_get_height (screen) - root_y);
+            }
+
+          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x);
+        }
+      else
+        {
+          /* Vertical panel: drawer opens towards middle of screen */
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
+
+          if (root_x <= gdk_screen_get_width (screen) / 2)
+            {
+              /* Panel on left: drawer opens rightwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x + rel_alloc.width);
+            }
+          else
+            {
+              /* Panel on right: drawer opens leftwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT,
+                                    gdk_screen_get_width (screen) - root_x);
+            }
+
+          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y);
+        }
+    }
+  else
+#endif
+    {
+      /* X11: use traditional gtk_window_move positioning */
+      gtk_widget_realize (GTK_WIDGET (self));
+      na_overflow_position (self);
+    }
 
   gtk_widget_show_all (GTK_WIDGET (self));
 
@@ -735,9 +827,11 @@ na_overflow_popup (NaOverflow   *self,
     self->hide_timer = g_timeout_add (AUTOHIDE_POLL_MS,
                                       na_overflow_autohide_cb, self);
 
+#ifndef HAVE_WAYLAND
   /* The requisition can change once the window is on screen and the icons got
    * their allocation, so place once more after the show. */
   na_overflow_position (self);
+#endif
 
   return TRUE;
 }

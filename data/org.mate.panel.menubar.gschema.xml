@@ -1,0 +1,60 @@
+<schemalist gettext-domain="mate-panel">
+
+  <enum id="org.mate.panel.menubar.icon-size">
+    <value nick="default" value="-1"/>
+    <value nick="16px" value="16"/>
+    <value nick="22px" value="22"/>
+    <value nick="24px" value="24"/>
+    <value nick="32px" value="32"/>
+    <value nick="48px" value="48"/>
+  </enum>
+
+  <schema id="org.mate.panel.menubar" path="/org/mate/panel/menubar/">
+    <key name="show-applications" type="b">
+      <default>true</default>
+      <summary>Show applications menu</summary>
+      <description>If true, show applications item in menu bar.</description>
+    </key>
+    <key name="show-places" type="b">
+      <default>true</default>
+      <summary>Show places menu</summary>
+      <description>If true, show places item in menu bar.</description>
+    </key>
+    <key name="show-desktop" type="b">
+      <default>true</default>
+      <summary>Show desktop menu</summary>
+      <description>If true, show desktop item in menu bar.</description>
+    </key>
+    <key name="show-icon" type="b">
+      <default>true</default>
+      <summary>Show icon</summary>
+      <description>If true, show icon in menu bar.</description>
+    </key>
+    <key name="icon-name" type="s">
+      <default>'start-here'</default>
+      <summary>Icon to show in menu bar</summary>
+      <description>Set the theme icon name to use in menu bar.</description>
+    </key>
+    <key name="icon-size" enum="org.mate.panel.menubar.icon-size">
+      <default>'default'</default>
+      <summary>Menu bar icon size</summary>
+      <description>Set the size of an icon used in menu bar. The panel must be restarted for this to take effect.</description>
+    </key>
+    <key name="item-icon-size" enum="org.mate.panel.menubar.icon-size">
+      <default>'default'</default>
+      <summary>Menu items icon size</summary>
+      <description>Set the size of icons used in the menu. The panel must be restarted for this to take effect.</description>
+    </key>
+    <key name="max-items-or-submenu" type="u">
+      <default>8</default>
+      <summary>Threshold of menu items before submenu is created</summary>
+      <description>Maximum number of menu items (i.e. bookmarks) that are displayed without being put in a submenu.</description>
+    </key>
+    <key name="max-recent-items" type="i">
+      <range min="-1"/>
+      <default>10</default>
+      <summary>Maximum number of recent documents displayed in the Places menu</summary>
+      <description>Maximum number of recent documents that are displayed in the Places menu at a time. If this is set to -1, all known recent documents will be displayed.</description>
+    </key>
+  </schema>
+</schemalist>
