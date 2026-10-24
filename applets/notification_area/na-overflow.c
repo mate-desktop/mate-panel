@@ -720,37 +720,10 @@ na_overflow_popup (NaOverflow   *self,
   self->moved_x = G_MININT;
   self->moved_y = G_MININT;
 
-  /* On Wayland, use gtk_window_set_attached_to() for proper popup positioning.
-   * This provides the transient parent needed for xdg_popup positioning. */
-#ifdef HAVE_WAYLAND
-  /* On Wayland, use gtk_layer_shell for proper popup layering.
-   * gtk_layer_init_for_window() must be called only ONCE per window lifetime,
-   * not on every popup show — calling it repeatedly crashes on wlroots.
-   * For positioning, we use gtk_window_move() since override-redirect windows
-   * ignore compositor positioning protocols. */
-  if (gtk_layer_is_supported ())
-    {
-      if (!self->layer_shell_initialized)
-        {
-          gtk_layer_init_for_window (GTK_WINDOW (self));
-          gtk_layer_set_layer (GTK_WINDOW (self), GTK_LAYER_SHELL_LAYER_TOP);
-          self->layer_shell_initialized = TRUE;
-        }
-
-      /* Layer shell only for z-order; use gtk_window_move for positioning */
-      gtk_widget_realize (GTK_WIDGET (self));
-    }
-  else
-#endif
-    {
-      gtk_widget_realize (GTK_WIDGET (self));
-    }
-
+  /* GTK_WINDOW_POPUP (override-redirect) works on both X11 and Wayland.
+   * On X11: gtk_window_move() positions it. On Wayland: the same. */
+  gtk_widget_realize (GTK_WIDGET (self));
   gtk_widget_show_all (GTK_WIDGET (self));
-
-  /* Position after show so compositor acknowledges the window on Wayland.
-   * na_overflow_position() uses gtk_window_move() which works for
-   * override-redirect windows when called on a mapped window. */
   na_overflow_position (self);
 
   /* Items were placed while the window was still unmapped; force a repaint so
