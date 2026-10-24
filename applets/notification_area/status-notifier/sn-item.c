@@ -227,6 +227,9 @@ sn_item_button_press_event (GtkWidget      *widget,
     {
       if (priv->menu != NULL)
         {
+          /* Ensure the menu window is realized so GTK creates xdg_popup on Wayland,
+           * not xdg_toplevel (which centers itself). */
+          gtk_widget_realize (GTK_WIDGET (priv->menu));
           gtk_menu_popup_at_pointer (priv->menu, (GdkEvent *) event);
         }
       else
@@ -254,6 +257,7 @@ sn_item_popup_menu (GtkWidget *widget)
 
   if (priv->menu != NULL)
     {
+      gtk_widget_realize (GTK_WIDGET (priv->menu));
       gtk_menu_popup_at_pointer (priv->menu, NULL);
     }
   else
