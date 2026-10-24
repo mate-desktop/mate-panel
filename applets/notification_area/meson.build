@@ -1,6 +1,7 @@
 notification_area_deps = [
   gtk_dep,
   mate_desktop_dep,
+  dependency('gtk-layer-shell-0', required: false),
 ]
 
 notification_area_c_args = [
