@@ -969,9 +969,7 @@ position_calendar_popup (ClockData *cd)
                                        &x, &y);
 
                 gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
-                gtk_widget_get_preferred_size (cd->calendar_popup, &req, NULL);
-                w = req.width;
-                h = req.height;
+                gtk_widget_get_preferred_size (cd->calendar_popup, NULL, &req);
 
                 gtk_widget_get_allocation (cd->panel_button, &allocation);
                 button_w = allocation.width;
@@ -1007,8 +1005,8 @@ position_calendar_popup (ClockData *cd)
                 switch (cd->orient) {
                 case MATE_PANEL_APPLET_ORIENT_RIGHT:
                         x += button_w;
-                        if ((y + h) > monitor.y + monitor.height)
-                                y -= (y + h) - (monitor.y + monitor.height);
+                        if ((y + req.height) > monitor.y + monitor.height)
+                                y = MAX (monitor.y, y - ((y + req.height) - (monitor.y + monitor.height)));
 
                         if ((y + h) > (monitor.height / 2))
                                 gravity = GDK_GRAVITY_SOUTH_WEST;
@@ -1018,8 +1016,8 @@ position_calendar_popup (ClockData *cd)
                         break;
                 case MATE_PANEL_APPLET_ORIENT_LEFT:
                         x -= w;
-                        if ((y + h) > monitor.y + monitor.height)
-                                y -= (y + h) - (monitor.y + monitor.height);
+                        if ((y + req.height) > monitor.y + monitor.height)
+                                y = MAX (monitor.y, y - ((y + req.height) - (monitor.y + monitor.height)));
 
                         if ((y + h) > (monitor.height / 2))
                         gravity = GDK_GRAVITY_SOUTH_EAST;
@@ -1029,16 +1027,16 @@ position_calendar_popup (ClockData *cd)
                         break;
                 case MATE_PANEL_APPLET_ORIENT_DOWN:
                         y += button_h;
-                        if ((x + w) > monitor.x + monitor.width)
-                                x -= (x + w) - (monitor.x + monitor.width);
+                        if ((x + req.width) > monitor.x + monitor.width)
+                                x = MAX (monitor.x, x - ((x + req.width) - (monitor.x + monitor.width)));
 
                         gravity = GDK_GRAVITY_NORTH_WEST;
 
                         break;
                 case MATE_PANEL_APPLET_ORIENT_UP:
                         y -= h;
-                        if ((x + w) > monitor.x + monitor.width)
-                                x -= (x + w) - (monitor.x + monitor.width);
+                        if ((x + req.width) > monitor.x + monitor.width)
+                                x = MAX (monitor.x, x - ((x + req.width) - (monitor.x + monitor.width)));
 
                         gravity = GDK_GRAVITY_SOUTH_WEST;
 
