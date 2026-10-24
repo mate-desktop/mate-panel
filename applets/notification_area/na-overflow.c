@@ -760,50 +760,56 @@ na_overflow_popup (NaOverflow   *self,
           root_y = rel_alloc.y;
         }
 
-      /* Anchor to the edge of the panel nearest the arrow button.
-       * For a horizontal panel the drawer opens towards the middle of the screen. */
+      /* Position the overflow drawer near the arrow button using gtk_layer_shell.
+       * Match clock.c approach: anchor the panel-edge and set margin on the
+       * orthogonal dimension only. */
       if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
         {
-          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
-          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
-
-          if (root_y <= workarea.y + workarea.height / 2)
-            {
-              /* Panel at top: drawer opens downwards */
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
-              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y + rel_alloc.height);
-            }
-          else
-            {
-              /* Panel at bottom: drawer opens upwards */
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, FALSE);
-              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM,
-                                    workarea.y + workarea.height - root_y);
-            }
-          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x);
-        }
-      else
-        {
-          /* Vertical panel: drawer opens towards middle of screen */
+          /* Horizontal panel: anchor TOP edge, position vertically by margin.
+           * Horizontal position: if button in left half anchor RIGHT, else anchor LEFT. */
           gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, 0);
           gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
 
           if (root_x <= workarea.x + workarea.width / 2)
             {
+              /* Button in left half: drawer extends rightwards */
               gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
               gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
-              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x + rel_alloc.width);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x);
             }
           else
             {
+              /* Button in right half: drawer extends leftwards */
               gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
               gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, FALSE);
               gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT,
                                     workarea.x + workarea.width - root_x);
             }
-          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y);
+        }
+      else
+        {
+          /* Vertical panel: anchor LEFT edge, position horizontally by margin.
+           * Vertical position: if button in top half anchor BOTTOM, else anchor TOP. */
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, 0);
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
+
+          if (root_y <= workarea.y + workarea.height / 2)
+            {
+              /* Button in top half: drawer extends downwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y);
+            }
+          else
+            {
+              /* Button in bottom half: drawer extends upwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM,
+                                    workarea.y + workarea.height - root_y);
+            }
         }
 
       gtk_widget_realize (GTK_WIDGET (self));
