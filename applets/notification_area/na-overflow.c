@@ -80,6 +80,7 @@ struct _NaOverflow
   GDataInputStream *cw_in;
   GCancellable  *cw_cancel;
   gboolean       cw_reading;
+  gboolean       layer_shell_initialized;
 };
 
 G_DEFINE_TYPE (NaOverflow, na_overflow, GTK_TYPE_WINDOW)
@@ -724,16 +725,97 @@ na_overflow_popup (NaOverflow   *self,
   /* On Wayland, use gtk_window_set_attached_to() for proper popup positioning.
    * This provides the transient parent needed for xdg_popup positioning. */
 #ifdef HAVE_WAYLAND
+  /* On Wayland, use gtk_layer_shell for proper popup positioning.
+   * gtk_layer_init_for_window() must be called only ONCE per window lifetime,
+   * not on every popup show — calling it repeatedly crashes on wlroots. */
   if (gtk_layer_is_supported ())
     {
-      GtkWidget *toplevel = gtk_widget_get_toplevel (relative_to);
-      if (GTK_IS_WINDOW (toplevel))
-        gtk_window_set_attached_to (GTK_WINDOW (self), toplevel);
-    }
-#endif
+      GtkAllocation rel_alloc;
+      gint root_x, root_y;
+      GdkRectangle workarea;
+      GdkDisplay *display = gdk_display_get_default ();
+      GdkMonitor *monitor;
+      GdkWindow *rel_window;
 
-  gtk_widget_realize (GTK_WIDGET (self));
-  na_overflow_position (self);
+      if (!self->layer_shell_initialized)
+        {
+          gtk_layer_init_for_window (GTK_WINDOW (self));
+          gtk_layer_set_layer (GTK_WINDOW (self), GTK_LAYER_SHELL_LAYER_TOP);
+          self->layer_shell_initialized = TRUE;
+        }
+
+      /* Get arrow button position */
+      gtk_widget_get_allocation (relative_to, &rel_alloc);
+      rel_window = gtk_widget_get_window (relative_to);
+      monitor = gdk_display_get_monitor_at_window (display, rel_window);
+      gdk_monitor_get_workarea (monitor, &workarea);
+
+      if (gtk_widget_get_realized (relative_to) && rel_window)
+        {
+          gdk_window_get_origin (rel_window, &root_x, &root_y);
+          root_x += rel_alloc.x;
+          root_y += rel_alloc.y;
+        }
+      else
+        {
+          root_x = rel_alloc.x;
+          root_y = rel_alloc.y;
+        }
+
+      /* Anchor to the edge of the panel nearest the arrow button.
+       * For a horizontal panel the drawer opens towards the middle of the screen. */
+      if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
+        {
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
+
+          if (root_y <= workarea.y + workarea.height / 2)
+            {
+              /* Panel at top: drawer opens downwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y + rel_alloc.height);
+            }
+          else
+            {
+              /* Panel at bottom: drawer opens upwards */
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM,
+                                    workarea.y + workarea.height - root_y);
+            }
+          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x);
+        }
+      else
+        {
+          /* Vertical panel: drawer opens towards middle of screen */
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
+
+          if (root_x <= workarea.x + workarea.width / 2)
+            {
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x + rel_alloc.width);
+            }
+          else
+            {
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, FALSE);
+              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT,
+                                    workarea.x + workarea.width - root_x);
+            }
+          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y);
+        }
+
+      gtk_widget_realize (GTK_WIDGET (self));
+    }
+  else
+#endif
+    {
+      gtk_widget_realize (GTK_WIDGET (self));
+      na_overflow_position (self);
+    }
 
   gtk_widget_show_all (GTK_WIDGET (self));
 
