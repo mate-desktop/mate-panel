@@ -726,7 +726,7 @@ na_overflow_popup (NaOverflow   *self,
 
   /* On Wayland, use gtk_layer_shell for proper popup positioning */
 #ifdef HAVE_WAYLAND
-  if (gtk_layer_shell_is_supported ())
+  if (gtk_layer_is_supported ())
     {
       gtk_layer_init_for_window (GTK_WINDOW (self));
       gtk_layer_set_layer (GTK_WINDOW (self), GTK_LAYER_SHELL_LAYER_TOP);
