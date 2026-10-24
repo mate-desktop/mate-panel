@@ -227,12 +227,7 @@ sn_item_button_press_event (GtkWidget      *widget,
     {
       if (priv->menu != NULL)
         {
-          gtk_menu_popup_at_widget (priv->menu, widget,
-                                    GDK_GRAVITY_SOUTH_WEST,
-                                    GDK_GRAVITY_NORTH_WEST,
-                                    (GdkEvent *) event);
-          /*Fix positioning if size changed since last shown*/
-          gtk_menu_reposition(priv->menu);
+          gtk_menu_popup_at_pointer (priv->menu, (GdkEvent *) event);
         }
       else
         {
@@ -259,12 +254,7 @@ sn_item_popup_menu (GtkWidget *widget)
 
   if (priv->menu != NULL)
     {
-      gtk_menu_popup_at_widget (priv->menu, widget,
-                                GDK_GRAVITY_SOUTH_WEST,
-                                GDK_GRAVITY_NORTH_WEST,
-                                NULL);
-      /*Fix positioning if size changed since last shown*/
-      gtk_menu_reposition(priv->menu);
+      gtk_menu_popup_at_pointer (priv->menu, NULL);
     }
   else
     {
