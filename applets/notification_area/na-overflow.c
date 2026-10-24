@@ -599,14 +599,13 @@ na_overflow_init (NaOverflow *self)
 NaOverflow *
 na_overflow_new (void)
 {
-  /* GTK_WINDOW_POPUP, exactly like system-tray/fixedtip.c: the window is
-   * override-redirect, so no window manager participates in its placement or
-   * stacking.  A managed window cannot be used here - compiz applies its own
-   * placement after the map and reports it via configure-notify, which lands
-   * later than any move we issue, so the popup flashes in the top-left corner
-   * before it can be corrected (measured). */
+  /* GTK_WINDOW_TOPLEVEL: required on Wayland for gtk_window_move() to work.
+   * On X11, the window manager may apply its own placement (compiz flash),
+   * but this is a pre-existing issue. On Wayland, override-redirect windows
+   * (GTK_WINDOW_POPUP) have no positioning mechanism at all. */
   return g_object_new (NA_TYPE_OVERFLOW,
-                       "type", GTK_WINDOW_POPUP,
+                       "type", GTK_WINDOW_TOPLEVEL,
+                       "decorated", FALSE,
                        NULL);
 }
 
