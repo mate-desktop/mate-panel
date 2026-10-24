@@ -87,11 +87,7 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		NULL
 	};
 
-	GtkWidget* toplevel = gtk_widget_get_toplevel (window_menu->applet);
-	if (!GTK_IS_WINDOW (toplevel))
-		toplevel = NULL;
-
-	gtk_show_about_dialog(toplevel ? GTK_WINDOW(toplevel) : NULL,
+	GtkWidget *about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 		"program-name", _("Window Selector"),
 		"title", _("About Window Selector"),
 		"authors", authors,
@@ -108,6 +104,10 @@ static void window_menu_about(GtkAction* action, WindowMenu* window_menu)
 		"version", VERSION,
 		"website", PACKAGE_URL,
 		NULL);
+
+	g_signal_connect_swapped (about, "response",
+	                          G_CALLBACK (gtk_widget_destroy), about);
+	gtk_widget_show (about);
 }
 
 static const GtkActionEntry window_menu_actions[] = {
