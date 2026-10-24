@@ -724,7 +724,10 @@ na_overflow_menu_leave_cb (GtkWidget        *widget,
     return FALSE;
 
   if (self->leave_at == 0)
-    self->leave_at = g_get_monotonic_time ();
+    {
+      g_message ("na-overflow: PROBE shell leave real (detail %d)", event->detail);
+      self->leave_at = g_get_monotonic_time ();
+    }
 
   return FALSE;   /* the shell still runs its own handler */
 }
@@ -737,8 +740,22 @@ na_overflow_menu_enter_cb (GtkWidget        *widget,
   NaOverflow *self = user_data;
 
   (void) widget;
-  (void) event;
 
+  /* Synthetic crossings are not the pointer entering. One arrives right after
+   * the popup grabs (GDK_CROSSING_GTK_GRAB), and it silently overwrote the
+   * open-time seed "pointer outside" with "inside" - measured: seed at 02:50:58
+   * then 27s of silence with the drawer pinned open, while the pointer sat on
+   * the chevron and no real crossing ever came. Only a real pointer move may
+   * clear leave_at. */
+  if (event->mode == GDK_CROSSING_GTK_GRAB ||
+      event->mode == GDK_CROSSING_GTK_UNGRAB ||
+      event->mode == GDK_CROSSING_STATE_CHANGED)
+    {
+      g_message ("na-overflow: PROBE shell enter ignored (mode %d)", event->mode);
+      return FALSE;
+    }
+
+  g_message ("na-overflow: PROBE shell enter real");
   self->leave_at = 0;
   return FALSE;
 }
