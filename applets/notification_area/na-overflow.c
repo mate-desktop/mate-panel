@@ -163,14 +163,30 @@ na_overflow_pointer_inside (NaOverflow *self)
   if (self->use_menu)
     {
       GdkWindow *mw;
-      gint       mx = 0, my = 0;
+      GdkDisplay *display;
+      GdkSeat    *seat;
+      GdkDevice  *pointer;
+      gint        mx = 0, my = 0;
 
       if (!self->menu_up)
         return FALSE;
 
+      /* NOTE: the seat/pointer below are NOT the ones further down - this
+       * branch returns before they are assigned there, so it must fetch them
+       * itself (passing the uninitialized pointer to
+       * gdk_window_get_device_position() segfaulted the panel, measured). */
       mw = gtk_widget_get_window (self->menu);
       if (mw == NULL)
         return TRUE;   /* not realized yet: never hide on a blind reading */
+
+      display = gdk_window_get_display (mw);
+      seat = gdk_display_get_default_seat (display);
+      if (seat == NULL)
+        return TRUE;
+
+      pointer = gdk_seat_get_pointer (seat);
+      if (pointer == NULL)
+        return TRUE;
 
       if (gdk_window_get_device_position (mw, pointer, &mx, &my, NULL) == NULL)
         return TRUE;   /* the window is unknown to GDK right now */
