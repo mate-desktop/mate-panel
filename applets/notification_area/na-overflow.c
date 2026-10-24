@@ -721,9 +721,6 @@ na_overflow_popup (NaOverflow   *self,
   self->moved_x = G_MININT;
   self->moved_y = G_MININT;
 
-  screen = gtk_widget_get_screen (relative_to);
-  display = gdk_screen_get_display (screen);
-
   /* On Wayland, use gtk_window_set_attached_to() for proper popup positioning.
    * This provides the transient parent needed for xdg_popup positioning. */
 #ifdef HAVE_WAYLAND
@@ -735,8 +732,6 @@ na_overflow_popup (NaOverflow   *self,
     }
 #endif
 
-  /* Realize first, so the position below is applied to a window that exists
-   * and the map already happens at the right place. */
   gtk_widget_realize (GTK_WIDGET (self));
   na_overflow_position (self);
 
