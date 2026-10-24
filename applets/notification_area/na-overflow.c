@@ -1146,7 +1146,36 @@ na_overflow_popup (NaOverflow   *self,
       }
 
       self->menu_up = TRUE;
-      self->leave_at = 0;   /* fresh open: pointer state starts inside */
+
+      /* Seed leave_at based on where the pointer actually is at open time.
+       *
+       * The chevron is OUTSIDE the popup, so if the user clicks it and does not
+       * move onto the drawer, no enter/leave crossing ever arrives and leave_at
+       * would stay 0 ("inside") forever - the drawer never auto-hides. Check the
+       * pointer against the rect we just computed, and seed leave_at = now when
+       * it is outside, so the auto-hide timer starts ticking. */
+      {
+        GdkDisplay *dpy = gdk_screen_get_display (gtk_widget_get_screen (relative_to));
+        GdkSeat    *st  = gdk_display_get_default_seat (dpy);
+        GdkDevice  *ptr = st ? gdk_seat_get_pointer (st) : NULL;
+        gint        px = 0, py = 0;
+
+        if (ptr != NULL)
+          gdk_device_get_position (ptr, NULL, &px, &py);
+
+        gboolean inside = (ptr != NULL &&
+                           px >= self->menu_rect.x &&
+                           px <  self->menu_rect.x + self->menu_rect.width  &&
+                           py >= self->menu_rect.y &&
+                           py <  self->menu_rect.y + self->menu_rect.height);
+
+        self->leave_at = inside ? 0 : g_get_monotonic_time ();
+
+        g_message ("na-overflow: open seed: ptr=(%d,%d) rect=(%d,%d %dx%d) inside=%d leave_at=%s",
+                   px, py, self->menu_rect.x, self->menu_rect.y,
+                   self->menu_rect.width, self->menu_rect.height,
+                   inside, inside ? "0" : "now");
+      }
 
       /* Pass the triggering event: the chevron's own button-release is still
        * being dispatched when "toggled" opens us. Without the trigger event
