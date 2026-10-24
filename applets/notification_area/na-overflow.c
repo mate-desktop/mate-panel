@@ -188,8 +188,12 @@ na_overflow_pointer_inside (NaOverflow *self)
       if (pointer == NULL)
         return TRUE;
 
-      if (gdk_window_get_device_position (mw, pointer, &mx, &my, NULL) == NULL)
-        return TRUE;   /* the window is unknown to GDK right now */
+      /* The return value must NOT be used as a success flag: the documented
+       * contract is "or %NULL if the window is not known to the device", while
+       * the coordinates ARE filled in (measured again here: under=(nil) on
+       * every tick, coords sane). Treating NULL as "cannot tell" pinned the
+       * drawer open forever. The bounds check decides, as it does on X11. */
+      gdk_window_get_device_position (mw, pointer, &mx, &my, NULL);
 
       return mx >= 0 && mx < gdk_window_get_width (mw) &&
              my >= 0 && my < gdk_window_get_height (mw);
@@ -744,8 +748,12 @@ na_overflow_menu_event_shield (GtkWidget *widget,
                                gpointer   user_data)
 {
   (void) widget;
-  (void) event;
   (void) user_data;
+
+  g_message ("na-overflow: PROBE shield %s",
+             event->type == GDK_BUTTON_PRESS ? "press" :
+             event->type == GDK_BUTTON_RELEASE ? "release" :
+             event->type == GDK_ENTER_NOTIFY ? "enter" : "leave");
 
   return TRUE;
 }
@@ -815,6 +823,10 @@ na_overflow_new (void)
       g_signal_connect (self->grid, "button-press-event",
                         G_CALLBACK (na_overflow_probe_grid_button), self);
       g_signal_connect (self->grid, "button-release-event",
+                        G_CALLBACK (na_overflow_probe_grid_button), self);
+      g_signal_connect (self->menu, "button-press-event",
+                        G_CALLBACK (na_overflow_probe_grid_button), self);
+      g_signal_connect (self->menu, "button-release-event",
                         G_CALLBACK (na_overflow_probe_grid_button), self);
       g_signal_connect_swapped (self->menu, "deactivate",
                                 G_CALLBACK (na_overflow_probe_menu_deactivate),
@@ -1100,8 +1112,22 @@ na_overflow_popup (NaOverflow   *self,
       }
 
       self->menu_up = TRUE;
-      gtk_menu_popup_at_widget (GTK_MENU (self->menu), relative_to,
-                                widget_anchor, menu_anchor, NULL);
+
+      /* Pass the triggering event: the chevron's own button-release is still
+       * being dispatched when "toggled" opens us. Without the trigger event
+       * GTK hands that same release to the menu shell, which reads it as a
+       * click outside and deactivates the popup 110-320ms after opening
+       * (measured: every open died before the auto-hide grace of 400ms, and
+       * no click ever reached an icon). With it, the shell ignores the event
+       * that opened the menu. */
+      {
+        GdkEvent *trigger = gtk_get_current_event ();
+
+        gtk_menu_popup_at_widget (GTK_MENU (self->menu), relative_to,
+                                  widget_anchor, menu_anchor, trigger);
+        if (trigger != NULL)
+          gdk_event_free (trigger);
+      }
 
       gtk_widget_queue_draw (GTK_WIDGET (self->grid));
 

@@ -294,6 +294,7 @@ sn_item_popup_menu (GtkWidget *widget)
 static void
 sn_item_clicked (GtkButton *button)
 {
+  g_message ("na-overflow: PROBE sn_item_clicked FIRED");
   SnItem *item;
   gint x;
   gint y;
