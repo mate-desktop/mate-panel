@@ -723,18 +723,13 @@ na_overflow_popup (NaOverflow   *self,
   /* On Wayland, use gtk_window_set_attached_to() for proper popup positioning.
    * This provides the transient parent needed for xdg_popup positioning. */
 #ifdef HAVE_WAYLAND
-  /* On Wayland, use gtk_layer_shell for proper popup positioning.
+  /* On Wayland, use gtk_layer_shell for proper popup layering.
    * gtk_layer_init_for_window() must be called only ONCE per window lifetime,
-   * not on every popup show — calling it repeatedly crashes on wlroots. */
+   * not on every popup show — calling it repeatedly crashes on wlroots.
+   * For positioning, we use gtk_window_move() since override-redirect windows
+   * ignore compositor positioning protocols. */
   if (gtk_layer_is_supported ())
     {
-      GtkAllocation rel_alloc;
-      gint root_x, root_y;
-      GdkRectangle workarea;
-      GdkDisplay *display = gdk_display_get_default ();
-      GdkMonitor *monitor;
-      GdkWindow *rel_window;
-
       if (!self->layer_shell_initialized)
         {
           gtk_layer_init_for_window (GTK_WINDOW (self));
@@ -742,86 +737,21 @@ na_overflow_popup (NaOverflow   *self,
           self->layer_shell_initialized = TRUE;
         }
 
-      /* Get arrow button position */
-      gtk_widget_get_allocation (relative_to, &rel_alloc);
-      rel_window = gtk_widget_get_window (relative_to);
-      monitor = gdk_display_get_monitor_at_window (display, rel_window);
-      gdk_monitor_get_workarea (monitor, &workarea);
-
-      if (gtk_widget_get_realized (relative_to) && rel_window)
-        {
-          gdk_window_get_origin (rel_window, &root_x, &root_y);
-          root_x += rel_alloc.x;
-          root_y += rel_alloc.y;
-        }
-      else
-        {
-          root_x = rel_alloc.x;
-          root_y = rel_alloc.y;
-        }
-
-      /* Position the overflow drawer near the arrow button using gtk_layer_shell.
-       * Match clock.c approach: anchor the panel-edge and set margin on the
-       * orthogonal dimension only. */
-      if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
-        {
-          /* Horizontal panel: anchor TOP edge, position vertically by margin.
-           * Horizontal position: if button in left half anchor RIGHT, else anchor LEFT. */
-          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
-          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, 0);
-          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
-
-          if (root_x <= workarea.x + workarea.width / 2)
-            {
-              /* Button in left half: drawer extends rightwards */
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
-              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, root_x);
-            }
-          else
-            {
-              /* Button in right half: drawer extends leftwards */
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, FALSE);
-              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT,
-                                    workarea.x + workarea.width - root_x);
-            }
-        }
-      else
-        {
-          /* Vertical panel: anchor LEFT edge, position horizontally by margin.
-           * Vertical position: if button in top half anchor BOTTOM, else anchor TOP. */
-          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
-          gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, 0);
-          gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
-
-          if (root_y <= workarea.y + workarea.height / 2)
-            {
-              /* Button in top half: drawer extends downwards */
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
-              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, root_y);
-            }
-          else
-            {
-              /* Button in bottom half: drawer extends upwards */
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
-              gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, FALSE);
-              gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM,
-                                    workarea.y + workarea.height - root_y);
-            }
-        }
-
+      /* Layer shell only for z-order; use gtk_window_move for positioning */
       gtk_widget_realize (GTK_WIDGET (self));
     }
   else
 #endif
     {
       gtk_widget_realize (GTK_WIDGET (self));
-      na_overflow_position (self);
     }
 
   gtk_widget_show_all (GTK_WIDGET (self));
+
+  /* Position after show so compositor acknowledges the window on Wayland.
+   * na_overflow_position() uses gtk_window_move() which works for
+   * override-redirect windows when called on a mapped window. */
+  na_overflow_position (self);
 
   /* Items were placed while the window was still unmapped; force a repaint so
    * a missed expose cannot leave the popup blank. */
