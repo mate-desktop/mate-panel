@@ -177,6 +177,30 @@ na_overflow_pointer_inside (NaOverflow *self)
 
       gdk_device_get_position (pointer, NULL, &px, &py);
 
+      /* TEMPORARY PROBE: on Wayland gdk_device_get_position may answer in
+       * surface-relative coordinates, which would make every root-rect
+       * comparison meaningless. Log both readings for one run. */
+      {
+        GdkWindow *mw = gtk_widget_get_window (self->menu);
+        gint       wx = 0, wy = 0;
+        GdkModifierType st = 0;
+        GdkWindow *under = NULL;
+
+        if (mw != NULL)
+          {
+            under = gdk_window_get_device_position (mw, pointer, &wx, &wy, &st);
+            g_message ("na-overflow: PROBE dev_pos=(%d,%d) menu_rel=(%d,%d) "
+                       "under=%p menu_win=%p rect=(%d,%d %dx%d) inside=%d",
+                       px, py, wx, wy, (void *) under, (void *) mw,
+                       self->menu_rect.x, self->menu_rect.y,
+                       self->menu_rect.width, self->menu_rect.height,
+                       (px >= self->menu_rect.x &&
+                        px <  self->menu_rect.x + self->menu_rect.width  &&
+                        py >= self->menu_rect.y &&
+                        py <  self->menu_rect.y + self->menu_rect.height));
+          }
+      }
+
       return px >= self->menu_rect.x &&
              px <  self->menu_rect.x + self->menu_rect.width  &&
              py >= self->menu_rect.y &&
@@ -518,6 +542,8 @@ na_overflow_autohide_cb (gpointer data)
   if (hide)
     {
       self->outside_since = 0;
+      g_message ("na-overflow: PROBE autohide fired (autohide_ms=%u)",
+                 self->autohide_ms);
       na_overflow_emit_closed (self);
       return FALSE;   /* popdown already removed the source */
     }
@@ -674,6 +700,37 @@ na_overflow_init (NaOverflow *self)
 
 }
 
+#ifdef HAVE_WAYLAND
+/* TEMPORARY PROBE: log every button event that reaches the grid, and which
+ * widget GTK decided owns it. Tells us whether the press/release ever arrives
+ * at the icon, or stops at the menu shell. */
+static gboolean
+na_overflow_probe_grid_button (GtkWidget *widget,
+                               GdkEvent  *event,
+                               gpointer   user_data)
+{
+  GdkEventButton *b = (GdkEventButton *) event;
+  GtkWidget      *ew = gtk_get_event_widget (event);
+
+  (void) user_data;
+  g_message ("na-overflow: PROBE grid %s btn=%d root=(%.0f,%.0f) "
+             "widget=(%.0f,%.0f) event_widget=%s on=%s",
+             event->type == GDK_BUTTON_PRESS ? "PRESS" :
+             event->type == GDK_BUTTON_RELEASE ? "RELEASE" : "OTHER",
+             b->button, b->x_root, b->y_root, b->x, b->y,
+             ew ? (const char *) G_OBJECT_TYPE_NAME (ew) : "(none)",
+             (const char *) G_OBJECT_TYPE_NAME (widget));
+
+  return FALSE;
+}
+
+static void
+na_overflow_probe_menu_deactivate (NaOverflow *self)
+{
+  g_message ("na-overflow: PROBE menu deactivate -> closing");
+}
+#endif
+
 /* Shield: swallow events that reach the wrapper menu item, so the menu shell
  * never sees them.
  *
@@ -765,6 +822,15 @@ na_overflow_new (void)
 
       g_signal_connect_swapped (self->menu, "deactivate",
                                 G_CALLBACK (na_overflow_emit_closed), self);
+
+      /* TEMPORARY PROBES */
+      g_signal_connect (self->grid, "button-press-event",
+                        G_CALLBACK (na_overflow_probe_grid_button), self);
+      g_signal_connect (self->grid, "button-release-event",
+                        G_CALLBACK (na_overflow_probe_grid_button), self);
+      g_signal_connect_swapped (self->menu, "deactivate",
+                                G_CALLBACK (na_overflow_probe_menu_deactivate),
+                                self);
     }
 #endif
 
