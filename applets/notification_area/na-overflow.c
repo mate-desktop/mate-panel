@@ -709,11 +709,11 @@ na_overflow_menu_leave_cb (GtkWidget        *widget,
 
   (void) widget;
 
-  /* Moving onto a child of the popup window is still inside, and so is a move
-   * to an ancestor within the same popup (button -> grid). Only a crossing
-   * that leaves the surface for good counts. */
-  if (event->detail != GDK_NOTIFY_NONINFERIOR &&
-      event->detail != GDK_NOTIFY_VIRTUAL)
+  /* The popup has exactly one GdkWindow (the buttons and the grid are
+   * windowless), so a crossing with detail INFERIOR - moving onto a child
+   * window - cannot mean "left the popup". Every other detail (ANCESTOR to the
+   * panel, VIRTUAL, NONLINEAR) is the pointer leaving the surface for good. */
+  if (event->detail == GDK_NOTIFY_INFERIOR)
     return FALSE;
 
   /* Synthetic crossings (grab handoffs, state changes) are not the pointer
