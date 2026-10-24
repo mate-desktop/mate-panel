@@ -43,6 +43,17 @@ typedef gboolean (*NaOverflowButtonClick) (GdkEventButton *event,
 
 void        na_overflow_set_autohide_ms  (NaOverflow           *self,
                                           guint                 ms);
+/* The drawer's size as the grid layout computes it, without the border.
+ *
+ * The pre-map size REQUEST cannot be trusted here: an SNI button derives its
+ * icon size from the allocation it receives, so before the first allocation the
+ * whole grid collapses to a single cell, and clamping the position with that
+ * underestimated width pushed the drawer off the right edge of the screen
+ * (measured: request 34x34 for a drawer that maps far wider). The grid knows
+ * the cell count and the cell size it just assigned, so it states the size. */
+void        na_overflow_set_nominal_size (NaOverflow *self,
+                                          gint        width,
+                                          gint        height);
 void        na_overflow_set_button_click (NaOverflow           *self,
                                           NaOverflowButtonClick func,
                                           gpointer              user_data,

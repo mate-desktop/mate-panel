@@ -903,6 +903,7 @@ layout_overflow_grid (NaGrid  *self,
   gint      cols = NA_OVERFLOW_COLUMNS;
   gint      extent;
   gint      n    = 0;
+  gint      cell_w, max_cell_w = 0, max_cell_h = 0;
 
   /* Homogeneous again now that every overflow item owns a real cell in this
    * grid (SNI buttons directly, parked sockets through a placeholder box):
@@ -963,14 +964,25 @@ layout_overflow_grid (NaGrid  *self,
        * 28px window in a 26px cell and spill 1px onto each neighbour, which is
        * exactly the overlap being fixed here. */
       if (SN_IS_ITEM (widget))
-        gtk_widget_set_size_request (cell, extent, extent);
+        {
+          gtk_widget_set_size_request (cell, extent, extent);
+          cell_w = extent;
+        }
       else
         {
           GdkWindow *sw = gtk_widget_get_window (widget);
           gint       sw_w = (sw != NULL) ? gdk_window_get_width (sw) : extent;
 
-          gtk_widget_set_size_request (cell, MAX (sw_w, extent), extent);
+          cell_w = MAX (sw_w, extent);
+          gtk_widget_set_size_request (cell, cell_w, extent);
         }
+
+      /* The grid is homogeneous, so every cell ends up the size of the largest
+       * one requested; track it to state the drawer's size up front. */
+      if (cell_w > max_cell_w)
+        max_cell_w = cell_w;
+      if (extent > max_cell_h)
+        max_cell_h = extent;
 
       /* Expansion must go: place_item() set it for every item (upstream
        * behaviour, needed on the panel), and here it lets the SNI buttons
@@ -997,6 +1009,18 @@ layout_overflow_grid (NaGrid  *self,
   /* No explicit size reservation any more: with placeholders in the grid its
    * own natural size already covers every overflow item. */
   gtk_widget_set_size_request (GTK_WIDGET (grid), -1, -1);
+
+  /* State the drawer's size for the placement math. Its own size request is
+   * worthless before the first allocation (see na_overflow_set_nominal_size),
+   * but the layout above knows exactly how many cells of what size it placed:
+   * the grid is homogeneous, so it is the largest cell times the filled rows
+   * and columns. */
+  if (n > 0 && max_cell_w > 0)
+    na_overflow_set_nominal_size (self->overflow,
+                                  MIN (n, cols) * max_cell_w,
+                                  ((n + cols - 1) / cols) * max_cell_h);
+  else
+    na_overflow_set_nominal_size (self->overflow, 0, 0);
 }
 
 static void

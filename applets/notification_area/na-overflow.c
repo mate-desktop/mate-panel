@@ -53,11 +53,18 @@ struct _NaOverflow
   gpointer              click_data;
   GDestroyNotify        click_destroy;
 
+  /* The drawer's size as stated by the grid layout (see
+   * na_overflow_set_nominal_size), without the container border. 0 until the
+   * grid has laid out its cells at least once. */
+  gint          nominal_w;
+  gint          nominal_h;
+
   /* Auto-hide. We deliberately take no seat grab, so neither Escape nor a
    * click outside reaches us: without a grab X hands
    * the event to the window under the pointer, not to us. Polling the pointer
    * position replaces both dismissal paths and blocks nothing - it only reads. */
   guint         hide_timer;      /* poll source, 0 = not running */
+  guint         probe_idle;      /* placement probe, 0 = not armed */
   gint64        shown_at;        /* when shown: no polling before the grace */
   gint64        outside_since;   /* when the pointer left the rect, 0 = inside */
   guint         autohide_ms;     /* how long to hold after it leaves, 0 = never */
@@ -482,6 +489,17 @@ na_overflow_set_autohide_ms (NaOverflow *self,
                                       na_overflow_autohide_cb, self);
 }
 
+void
+na_overflow_set_nominal_size (NaOverflow *self,
+                              gint        width,
+                              gint        height)
+{
+  g_return_if_fail (NA_IS_OVERFLOW (self));
+
+  self->nominal_w = MAX (width, 0);
+  self->nominal_h = MAX (height, 0);
+}
+
 static gboolean
 na_overflow_button_press (GtkWidget      *widget,
                           GdkEventButton *event)
@@ -654,6 +672,32 @@ na_overflow_get_grid (NaOverflow *self)
   return self->grid;
 }
 
+/* Temporary probe: where the compositor actually put us.
+ *
+ * gdk_window_get_origin() on Wayland reports the surface's position in
+ * compositor space, i.e. the outcome of the layer-shell margins rather than our
+ * request for them. Without this the two failure modes look identical: a wrong
+ * margin we computed, versus a margin the compositor ignored. */
+static gboolean
+na_overflow_probe_idle (gpointer data)
+{
+  NaOverflow *self = data;
+  GdkWindow  *dw;
+  gint        ox = 0, oy = 0;
+
+  self->probe_idle = 0;
+
+  dw = gtk_widget_get_window (GTK_WIDGET (self));
+  if (dw == NULL)
+    return FALSE;
+
+  gdk_window_get_origin (dw, &ox, &oy);
+  g_message ("na-overflow: PROBE actual=(%d,%d) size=%dx%d asked=(%d,%d)",
+             ox, oy, gdk_window_get_width (dw), gdk_window_get_height (dw),
+             self->moved_x, self->moved_y);
+  return FALSE;
+}
+
 /* Position the popup next to `relative_to`, on the free side of the panel,
  * clamped to the monitor the panel actually lives on.  Uses the monitor API
  * rather than fixedtip's WidthOfScreen() so a panel on a secondary monitor
@@ -666,8 +710,10 @@ na_overflow_position (NaOverflow *self)
   GdkMonitor     *monitor;
   GdkRectangle    geom;
   GdkWindow      *rel_window;
+  GdkWindow      *dw;
   GtkAllocation   rel_alloc;
   GtkRequisition  req;
+  guint           border;
   gint            root_x = 0;
   gint            root_y = 0;
   gint            x, y;
@@ -693,29 +739,48 @@ na_overflow_position (NaOverflow *self)
   root_x += rel_alloc.x;
   root_y += rel_alloc.y;
 
-  /* Size of the drawer. Take it from the GRID, not the window: an invisible
-   * widget measures 0x0 in GTK (gtk_widget_measure bails on !visible), and the
-   * window is still hidden on the pre-map placement pass below. Zero here
-   * disabled the clamp (drawer glued to the screen edge under the arrow) and
-   * the height subtraction (drawer sank by its own height). The grid is shown
-   * from na_overflow_init() and its cells are laid out before every popup. */
-  gtk_widget_get_preferred_size (self->grid, NULL, &req);
-  {
-    guint border = gtk_container_get_border_width (GTK_CONTAINER (self));
-    req.width  += 2 * border;
-    req.height += 2 * border;
-  }
+  /* The drawer's size, best source first.
+   *
+   * 1. The real GdkWindow, once mapped - authoritative.
+   * 2. The size the grid layout stated for the cells it just assigned.
+   * 3. The children's size request - only as a last resort, because it cannot
+   *    be trusted pre-map: an SNI button derives its icon size from the
+   *    allocation it receives, so before the first allocation the whole grid
+   *    collapses to a single cell (measured: request 34x34 = one 26x26 cell +
+   *    border, for a drawer that maps far wider). Clamping with an
+   *    underestimated width leaves no room against the screen edge, and the
+   *    drawer is pushed off the right of the screen - which is what "glued to
+   *    the right edge" looked like. */
+  border = gtk_container_get_border_width (GTK_CONTAINER (self));
+
+  dw = gtk_widget_get_window (GTK_WIDGET (self));
+  if (dw != NULL && gdk_window_get_width (dw) > 1)
+    {
+      req.width  = gdk_window_get_width (dw);
+      req.height = gdk_window_get_height (dw);
+    }
+  else if (self->nominal_w > 1)
+    {
+      req.width  = self->nominal_w + 2 * border;
+      req.height = self->nominal_h + 2 * border;
+    }
+  else
+    {
+      gtk_widget_get_preferred_size (self->grid, NULL, &req);
+      req.width  += 2 * border;
+      req.height += 2 * border;
+    }
 
   g_message ("na-overflow: pos: root=(%d,%d) rel_alloc=%dx%d "
-             "req=%dx%d geom=(%d,%d %dx%d) layer=%d",
+             "req=%dx%d geom=(%d,%d %dx%d) layer=%d mapped=%d",
              root_x, root_y, rel_alloc.width, rel_alloc.height,
              req.width, req.height, geom.x, geom.y, geom.width, geom.height,
 #ifdef HAVE_WAYLAND
-             gtk_layer_is_supported ()
+             gtk_layer_is_supported (),
 #else
-             0
+             0,
 #endif
-             );
+             gtk_widget_get_mapped (GTK_WIDGET (self)));
 
   if (self->panel_orientation == GTK_ORIENTATION_HORIZONTAL)
     {
@@ -804,6 +869,10 @@ na_overflow_popup (NaOverflow   *self,
    * their allocation, which moves the clamped position. */
   na_overflow_position (self);
 
+  /* Where the compositor really put us, read back on the next idle. */
+  if (self->probe_idle == 0)
+    self->probe_idle = g_idle_add (na_overflow_probe_idle, self);
+
   /* Items were placed while the window was still unmapped; force a repaint so
    * a missed expose cannot leave the popup blank. */
   gtk_widget_queue_draw (GTK_WIDGET (self->grid));
@@ -829,6 +898,12 @@ na_overflow_popdown (NaOverflow *self)
 
   na_overflow_cancel_autohide (self);
   na_overflow_disarm_click_watch (self);
+
+  if (self->probe_idle != 0)
+    {
+      g_source_remove (self->probe_idle);
+      self->probe_idle = 0;
+    }
 
   if (gtk_widget_get_visible (GTK_WIDGET (self)))
     gtk_widget_hide (GTK_WIDGET (self));
