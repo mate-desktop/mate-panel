@@ -67,6 +67,13 @@ struct _NaOverflow
   gboolean      use_menu;
   gboolean      menu_up;
 
+  /* Where the popup is expected to land, in root coordinates. The popup's own
+   * GdkWindow cannot be asked: gdk_window_get_origin() on Wayland answers
+   * (0,0) for surfaces (measured), so the auto-hide poll compares against this
+   * rect instead, built from the chevron's origin - which IS readable - and
+   * the anchors handed to gtk_menu_popup_at_widget(). */
+  GdkRectangle  menu_rect;
+
   /* Auto-hide. We deliberately take no seat grab, so neither Escape nor a
    * click outside reaches us: without a grab X hands
    * the event to the window under the pointer, not to us. Polling the pointer
@@ -145,6 +152,36 @@ na_overflow_pointer_inside (NaOverflow *self)
   gint         px = 0, py = 0;   /* pointer, root coords */
   gint         ox = 0, oy = 0;   /* our window's origin, root coords */
   gint         w, h;
+
+  /* The Wayland drawer lives in a menu popup whose own surface cannot be
+   * located (gdk_window_get_origin answers (0,0) there), so compare against
+   * the rect computed from the chevron when it was opened. */
+  if (self->use_menu)
+    {
+      if (!self->menu_up || self->menu_rect.width <= 0 || self->menu_rect.height <= 0)
+        return FALSE;
+
+      window = gtk_widget_get_window (self->relative_to ? GTK_WIDGET (self->relative_to)
+                                                        : GTK_WIDGET (self));
+      if (window == NULL)
+        return FALSE;
+
+      display = gdk_window_get_display (window);
+      seat = gdk_display_get_default_seat (display);
+      if (seat == NULL)
+        return FALSE;
+
+      pointer = gdk_seat_get_pointer (seat);
+      if (pointer == NULL)
+        return FALSE;
+
+      gdk_device_get_position (pointer, NULL, &px, &py);
+
+      return px >= self->menu_rect.x &&
+             px <  self->menu_rect.x + self->menu_rect.width  &&
+             py >= self->menu_rect.y &&
+             py <  self->menu_rect.y + self->menu_rect.height;
+    }
 
   window = gtk_widget_get_window (GTK_WIDGET (self));
   if (window == NULL)
@@ -457,7 +494,9 @@ na_overflow_autohide_cb (gpointer data)
 
   self->hide_timer = 0;
 
-  if (!gtk_widget_get_visible (GTK_WIDGET (self)))
+  /* On the Wayland menu path the drawer window is never mapped - the popup is
+   * what is on screen - so "visible" has to be read from the menu state. */
+  if (self->use_menu ? !self->menu_up : !gtk_widget_get_visible (GTK_WIDGET (self)))
     return FALSE;
 
   /* The grace period is mandatory: the drawer is shown while the pointer is
@@ -502,7 +541,9 @@ na_overflow_set_autohide_ms (NaOverflow *self,
 
   if (ms == 0)
     na_overflow_cancel_autohide (self);
-  else if (gtk_widget_get_visible (GTK_WIDGET (self)) && self->hide_timer == 0)
+  else if ((self->use_menu ? self->menu_up
+                           : gtk_widget_get_visible (GTK_WIDGET (self)))
+           && self->hide_timer == 0)
     self->hide_timer = g_timeout_add (AUTOHIDE_POLL_MS,
                                       na_overflow_autohide_cb, self);
 }
@@ -633,6 +674,38 @@ na_overflow_init (NaOverflow *self)
 
 }
 
+/* Shield: swallow events that reach the wrapper menu item, so the menu shell
+ * never sees them.
+ *
+ * Two reasons, both measured as regressions:
+ *
+ *  - GtkMenuShell's release handler deactivates the menu when the release lands
+ *    on the selected item (gtkmenushell.c: "menu_item == active_menu_item &&
+ *    is_selectable" -> gtk_menu_shell_activate_item -> deactivate). Our item
+ *    only carries the icon grid, so that path closed the drawer on every click
+ *    and the icon never acted.
+ *  - Its enter_notify selects the item under the pointer, and a selected
+ *    GtkMenuItem is prelit: the theme then paints one giant highlight row
+ *    behind the whole grid.
+ *
+ * GTK3 GtkMenuItem has no "selectable" property (that is GTK4), so blocking the
+ * events is the way to keep the shell out of it. Events start at the deepest
+ * widget and walk UP, so the SNI buttons have already had their turn when this
+ * runs - blocking here costs them nothing. */
+#ifdef HAVE_WAYLAND
+static gboolean
+na_overflow_menu_event_shield (GtkWidget *widget,
+                               GdkEvent  *event,
+                               gpointer   user_data)
+{
+  (void) widget;
+  (void) event;
+  (void) user_data;
+
+  return TRUE;
+}
+#endif
+
 NaOverflow *
 na_overflow_new (void)
 {
@@ -664,6 +737,15 @@ na_overflow_new (void)
       gtk_menu_set_reserve_toggle_size (GTK_MENU (self->menu), FALSE);
 
       item = gtk_menu_item_new ();
+
+      g_signal_connect (item, "button-press-event",
+                        G_CALLBACK (na_overflow_menu_event_shield), self);
+      g_signal_connect (item, "button-release-event",
+                        G_CALLBACK (na_overflow_menu_event_shield), self);
+      g_signal_connect (item, "enter-notify-event",
+                        G_CALLBACK (na_overflow_menu_event_shield), self);
+      g_signal_connect (item, "leave-notify-event",
+                        G_CALLBACK (na_overflow_menu_event_shield), self);
 
       /* The grid is owned by this window. gtk_container_remove() would drop
        * the last reference and DESTROY it, leaving self->grid dangling into
@@ -850,6 +932,8 @@ na_overflow_popup (NaOverflow   *self,
       GdkGravity widget_anchor = GDK_GRAVITY_NORTH_WEST;
       GdkGravity menu_anchor   = GDK_GRAVITY_NORTH_WEST;
       GdkWindow *rw = gtk_widget_get_window (relative_to);
+      GtkAllocation rel_alloc = { 0, 0, 0, 0 };
+      gint root_x = 0, root_y = 0;
 
       if (rw != NULL)
         {
@@ -861,6 +945,9 @@ na_overflow_popup (NaOverflow   *self,
           if (mon != NULL)
             gdk_monitor_get_geometry (mon, &g);
           gdk_window_get_origin (rw, &rx, &ry);
+          gtk_widget_get_allocation (relative_to, &rel_alloc);
+          root_x = rx + rel_alloc.x;
+          root_y = ry + rel_alloc.y;
 
           if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
             {
@@ -889,15 +976,77 @@ na_overflow_popup (NaOverflow   *self,
       gtk_window_set_attached_to (
           GTK_WINDOW (gtk_widget_get_toplevel (self->menu)), relative_to);
 
+      /* Where the popup will land: the anchors put the named corner of the
+       * popup at the named corner of the button, so the top-left follows from
+       * the button's root origin and the two sizes. The auto-hide poll needs
+       * this because the popup's own surface cannot be located on Wayland. */
+      {
+        GtkRequisition req;
+        guint border = gtk_container_get_border_width (GTK_CONTAINER (self));
+
+        if (self->nominal_w > 1)
+          {
+            req.width  = self->nominal_w + 2 * border;
+            req.height = self->nominal_h + 2 * border;
+          }
+        else
+          {
+            gtk_widget_get_preferred_size (self->grid, NULL, &req);
+            req.width  += 2 * border;
+            req.height += 2 * border;
+          }
+
+        /* The anchors pair one corner of the button with one corner of the
+         * popup. Reading the four combinations of the block above:
+         *   SOUTH_WEST widget / NORTH_WEST menu  -> popup top-left at the
+         *                                           button's bottom-left
+         *   NORTH_WEST / SOUTH_WEST              -> popup bottom-left at the
+         *                                           button's top-left
+         *   NORTH_EAST / NORTH_WEST              -> popup top-left at the
+         *                                           button's top-right
+         *   NORTH_WEST / NORTH_EAST              -> popup top-right at the
+         *                                           button's top-left */
+        self->menu_rect.width  = req.width;
+        self->menu_rect.height = req.height;
+
+        if (widget_anchor == GDK_GRAVITY_SOUTH_WEST)        /* panel on top */
+          {
+            self->menu_rect.x = root_x;
+            self->menu_rect.y = root_y + rel_alloc.height;
+          }
+        else if (menu_anchor == GDK_GRAVITY_SOUTH_WEST)     /* panel at bottom */
+          {
+            self->menu_rect.x = root_x;
+            self->menu_rect.y = root_y - req.height;
+          }
+        else if (widget_anchor == GDK_GRAVITY_NORTH_EAST)   /* panel on the left */
+          {
+            self->menu_rect.x = root_x + rel_alloc.width;
+            self->menu_rect.y = root_y;
+          }
+        else                                                /* panel on the right */
+          {
+            self->menu_rect.x = root_x - req.width;
+            self->menu_rect.y = root_y;
+          }
+      }
+
       self->menu_up = TRUE;
       gtk_menu_popup_at_widget (GTK_MENU (self->menu), relative_to,
                                 widget_anchor, menu_anchor, NULL);
 
       gtk_widget_queue_draw (GTK_WIDGET (self->grid));
 
-      /* No clickwatch and no auto-hide poll here: the menu grab delivers
-       * Escape and outside clicks to the menu itself, which ends in
-       * "deactivate" -> na_overflow_emit_closed(). */
+      /* Auto-hide runs on this path too. The menu grab normally dismisses the
+       * popup on Escape or an outside click ("deactivate"), but the drawer
+       * must also fold away when the pointer simply leaves it, exactly as on
+       * X11 - and the poll is the only mechanism that can see that. */
+      self->shown_at = g_get_monotonic_time ();
+      self->outside_since = 0;
+      if (self->autohide_ms > 0 && self->hide_timer == 0)
+        self->hide_timer = g_timeout_add (AUTOHIDE_POLL_MS,
+                                          na_overflow_autohide_cb, self);
+
       return TRUE;
     }
 #endif
@@ -936,13 +1085,14 @@ na_overflow_popdown (NaOverflow *self)
 
   if (self->use_menu)
     {
-      /* menu_up=FALSE first: the resulting "deactivate" must not re-emit
-       * "closed" (the caller here IS the closed path in that direction). */
-      if (self->menu_up)
-        {
-          self->menu_up = FALSE;
-          gtk_menu_popdown (GTK_MENU (self->menu));
-        }
+      /* menu_up=FALSE first, so the "deactivate" that follows cannot re-emit
+       * "closed". gtk_menu_popdown() is idempotent (it only deactivates an
+       * active shell), and it has to run even when the auto-hide poll already
+       * cleared the flag - that path emits "closed" and the grid answers by
+       * calling here, so skipping the popdown would leave the popup on screen. */
+      self->menu_up = FALSE;
+      na_overflow_cancel_autohide (self);
+      gtk_menu_popdown (GTK_MENU (self->menu));
       return;
     }
 
