@@ -80,7 +80,6 @@ struct _NaOverflow
   GDataInputStream *cw_in;
   GCancellable  *cw_cancel;
   gboolean       cw_reading;
-  gboolean       layer_shell_initialized;
 };
 
 G_DEFINE_TYPE (NaOverflow, na_overflow, GTK_TYPE_WINDOW)
@@ -599,13 +598,51 @@ na_overflow_init (NaOverflow *self)
 NaOverflow *
 na_overflow_new (void)
 {
-  /* GTK_WINDOW_TOPLEVEL: required on Wayland for gtk_window_move() to work.
-   * On X11, the window manager may apply its own placement (compiz flash),
-   * but this is a pre-existing issue. On Wayland, override-redirect windows
-   * (GTK_WINDOW_POPUP) have no positioning mechanism at all. */
+#ifdef HAVE_WAYLAND
+  /* Wayland has no override-redirect: GDK silently turns a GTK_WINDOW_POPUP
+   * into a plain top-level surface, which the compositor then decorates and
+   * places itself, and gtk_window_move() is ignored for it (measured: the
+   * drawer landed in the middle of the screen with window buttons).
+   *
+   * The panel's own answer to this, used by the clock applet's calendar
+   * (clock.c), is an undecorated top-level driven by wlr-layer-shell.  Do the
+   * same here: init the surface ONCE, before it is ever realized - calling
+   * gtk_layer_init_for_window() again on a realized window is what crashed the
+   * panel on the second opening. */
+  if (gtk_layer_is_supported ())
+    {
+      NaOverflow *self = g_object_new (NA_TYPE_OVERFLOW,
+                                       "type", GTK_WINDOW_TOPLEVEL,
+                                       NULL);
+
+      gtk_window_set_decorated (GTK_WINDOW (self), FALSE);
+      gtk_window_set_skip_taskbar_hint (GTK_WINDOW (self), TRUE);
+      gtk_window_set_skip_pager_hint (GTK_WINDOW (self), TRUE);
+      gtk_window_set_type_hint (GTK_WINDOW (self), GDK_WINDOW_TYPE_HINT_UTILITY);
+
+      gtk_layer_init_for_window (GTK_WINDOW (self));
+      gtk_layer_set_layer (GTK_WINDOW (self), GTK_LAYER_SHELL_LAYER_TOP);
+
+      /* One anchor per axis, never two: two anchors on an axis stretches the
+       * surface across the whole output instead of letting it take the size of
+       * its contents.  The margins are written by na_overflow_position(). */
+      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_BOTTOM, FALSE);
+      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+      gtk_layer_set_anchor (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_RIGHT, FALSE);
+
+      return self;
+    }
+#endif
+
+  /* X11: GTK_WINDOW_POPUP, exactly like system-tray/fixedtip.c - the window is
+   * override-redirect, so no window manager participates in its placement or
+   * stacking.  A managed window cannot be used here: compiz applies its own
+   * placement after the map and reports it via configure-notify, which lands
+   * later than any move we issue, so the popup flashes in the top-left corner
+   * before it can be corrected (measured). */
   return g_object_new (NA_TYPE_OVERFLOW,
-                       "type", GTK_WINDOW_TOPLEVEL,
-                       "decorated", FALSE,
+                       "type", GTK_WINDOW_POPUP,
                        NULL);
 }
 
@@ -687,6 +724,21 @@ na_overflow_position (NaOverflow *self)
   self->moved_x = x;
   self->moved_y = y;
 
+#ifdef HAVE_WAYLAND
+  /* layer-shell margins are counted from the anchored edge of the OUTPUT, and
+   * the output's origin is geom.x/geom.y in compositor space. Anchored TOP+LEFT
+   * (set once in na_overflow_new()), so the margin is the coordinate relative
+   * to that origin. */
+  if (gtk_layer_is_supported ())
+    {
+      gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_LEFT,
+                            x - geom.x);
+      gtk_layer_set_margin (GTK_WINDOW (self), GTK_LAYER_SHELL_EDGE_TOP,
+                            y - geom.y);
+      return;
+    }
+#endif
+
   gtk_window_move (GTK_WINDOW (self), x, y);
 }
 
@@ -719,10 +771,16 @@ na_overflow_popup (NaOverflow   *self,
   self->moved_x = G_MININT;
   self->moved_y = G_MININT;
 
-  /* GTK_WINDOW_POPUP (override-redirect) works on both X11 and Wayland.
-   * On X11: gtk_window_move() positions it. On Wayland: the same. */
+  /* Place before mapping: on Wayland the margins are layer-shell state, and
+   * setting them after the map would show one frame at the previous spot.
+   * The request is computed from the children, which are all attached by now. */
+  na_overflow_position (self);
+
   gtk_widget_realize (GTK_WIDGET (self));
   gtk_widget_show_all (GTK_WIDGET (self));
+
+  /* And again once mapped: the requisition can still change when the icons get
+   * their allocation, which moves the clamped position. */
   na_overflow_position (self);
 
   /* Items were placed while the window was still unmapped; force a repaint so
@@ -739,12 +797,6 @@ na_overflow_popup (NaOverflow   *self,
   if (self->autohide_ms > 0 && self->hide_timer == 0)
     self->hide_timer = g_timeout_add (AUTOHIDE_POLL_MS,
                                       na_overflow_autohide_cb, self);
-
-#ifndef HAVE_WAYLAND
-  /* The requisition can change once the window is on screen and the icons got
-   * their allocation, so place once more after the show. */
-  na_overflow_position (self);
-#endif
 
   return TRUE;
 }
