@@ -747,9 +747,6 @@ na_overflow_popup (NaOverflow   *self,
                    GtkWidget    *relative_to,
                    GtkOrientation panel_orientation)
 {
-  GtkAllocation rel_alloc;
-  gint root_x, root_y;
-
   g_return_val_if_fail (NA_IS_OVERFLOW (self), FALSE);
   g_return_val_if_fail (GTK_IS_WIDGET (relative_to), FALSE);
 
