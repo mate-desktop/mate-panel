@@ -976,13 +976,19 @@ na_overflow_popup (NaOverflow   *self,
       gtk_window_set_attached_to (
           GTK_WINDOW (gtk_widget_get_toplevel (self->menu)), relative_to);
 
-      /* Where the popup will land: the anchors put the named corner of the
-       * popup at the named corner of the button, so the top-left follows from
-       * the button's root origin and the two sizes. The auto-hide poll needs
-       * this because the popup's own surface cannot be located on Wayland. */
+      /* Where the popup will land: the anchors pair one corner of the button
+       * with one corner of the popup, so the top-left follows from the
+       * button's root origin and the two sizes. GTK then clamps the popup into
+       * the work area of the monitor - the arrow sits 26px from the right
+       * screen edge, so an unclamped rect pointed at memory the pointer never
+       * visits, and the auto-hide read "pointer outside" while it was inside.
+       * The popup's own surface cannot be asked (gdk_window_get_origin answers
+       * (0,0) on Wayland), so this computed+clamped rect is the truth. */
       {
         GtkRequisition req;
-        guint border = gtk_container_get_border_width (GTK_CONTAINER (self));
+        guint        border = gtk_container_get_border_width (GTK_CONTAINER (self));
+        GdkRectangle wa     = { 0, 0, 1, 1 };
+        gint         px, py;
 
         if (self->nominal_w > 1)
           {
@@ -996,39 +1002,47 @@ na_overflow_popup (NaOverflow   *self,
             req.height += 2 * border;
           }
 
-        /* The anchors pair one corner of the button with one corner of the
-         * popup. Reading the four combinations of the block above:
-         *   SOUTH_WEST widget / NORTH_WEST menu  -> popup top-left at the
-         *                                           button's bottom-left
-         *   NORTH_WEST / SOUTH_WEST              -> popup bottom-left at the
-         *                                           button's top-left
-         *   NORTH_EAST / NORTH_WEST              -> popup top-left at the
-         *                                           button's top-right
-         *   NORTH_WEST / NORTH_EAST              -> popup top-right at the
-         *                                           button's top-left */
-        self->menu_rect.width  = req.width;
-        self->menu_rect.height = req.height;
-
         if (widget_anchor == GDK_GRAVITY_SOUTH_WEST)        /* panel on top */
           {
-            self->menu_rect.x = root_x;
-            self->menu_rect.y = root_y + rel_alloc.height;
+            px = root_x;
+            py = root_y + rel_alloc.height;
           }
         else if (menu_anchor == GDK_GRAVITY_SOUTH_WEST)     /* panel at bottom */
           {
-            self->menu_rect.x = root_x;
-            self->menu_rect.y = root_y - req.height;
+            px = root_x;
+            py = root_y - req.height;
           }
         else if (widget_anchor == GDK_GRAVITY_NORTH_EAST)   /* panel on the left */
           {
-            self->menu_rect.x = root_x + rel_alloc.width;
-            self->menu_rect.y = root_y;
+            px = root_x + rel_alloc.width;
+            py = root_y;
           }
         else                                                /* panel on the right */
           {
-            self->menu_rect.x = root_x - req.width;
-            self->menu_rect.y = root_y;
+            px = root_x - req.width;
+            py = root_y;
           }
+
+        if (rw != NULL)
+          {
+            GdkMonitor *mon2 = gdk_display_get_monitor_at_window (
+                                   gdk_window_get_display (rw), rw);
+            if (mon2 != NULL)
+              gdk_monitor_get_workarea (mon2, &wa);
+          }
+
+        px = CLAMP (px, wa.x, wa.x + wa.width  - req.width);
+        py = CLAMP (py, wa.y, wa.y + wa.height - req.height);
+
+        self->menu_rect.x      = px;
+        self->menu_rect.y      = py;
+        self->menu_rect.width  = req.width;
+        self->menu_rect.height = req.height;
+
+        g_message ("na-overflow: rect=(%d,%d %dx%d) anchors w=%d m=%d root=(%d,%d) wa=(%d,%d %dx%d)",
+                   px, py, req.width, req.height,
+                   widget_anchor, menu_anchor, root_x, root_y,
+                   wa.x, wa.y, wa.width, wa.height);
       }
 
       self->menu_up = TRUE;
