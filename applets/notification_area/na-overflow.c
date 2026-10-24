@@ -664,10 +664,20 @@ na_overflow_new (void)
       gtk_menu_set_reserve_toggle_size (GTK_MENU (self->menu), FALSE);
 
       item = gtk_menu_item_new ();
+
+      /* The grid is owned by this window. gtk_container_remove() would drop
+       * the last reference and DESTROY it, leaving self->grid dangling into
+       * recycled memory (measured: every later GTK_GRID(self->grid) cast hit a
+       * GtkImage that had taken the freed block). Hold a ref across the move so
+       * it survives the gap between remove and add; the menu item owns it
+       * afterwards. */
+      g_object_ref (self->grid);
       gtk_container_remove (GTK_CONTAINER (self), self->grid);
       gtk_widget_set_halign (self->grid, GTK_ALIGN_START);
       gtk_widget_set_valign (self->grid, GTK_ALIGN_START);
       gtk_container_add (GTK_CONTAINER (item), self->grid);
+      g_object_unref (self->grid);
+
       gtk_menu_shell_append (GTK_MENU_SHELL (self->menu), item);
       gtk_widget_show_all (item);
 
