@@ -22,7 +22,7 @@
 #include <signal.h>      /* SIGTERM to the clickwatch helper */
 
 #ifdef HAVE_WAYLAND
-#include <gtk-layer-shell.h>
+#include <gtk-layer-shell/gtk-layer-shell.h>
 #endif
 
 #include "na-overflow.h"
