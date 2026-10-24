@@ -1055,11 +1055,7 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		NULL
 	};
 
-	GtkWidget* toplevel = gtk_widget_get_toplevel (tasklist->applet);
-	if (!GTK_IS_WINDOW (toplevel))
-		toplevel = NULL;
-
-	gtk_show_about_dialog(toplevel ? GTK_WINDOW(toplevel) : NULL,
+	GtkWidget *about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 		"program-name", _("Window List"),
 		"title", _("About Window List"),
 		"authors", authors,
@@ -1074,6 +1070,10 @@ static void display_about_dialog(GtkAction* action, TasklistData* tasklist)
 		"version", VERSION,
 		"website", PACKAGE_URL,
 		NULL);
+
+	g_signal_connect_swapped (about, "response",
+	                          G_CALLBACK (gtk_widget_destroy), about);
+	gtk_widget_show (about);
 }
 
 static void group_windows_toggled(GtkToggleButton* button, TasklistData* tasklist)

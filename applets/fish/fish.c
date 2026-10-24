@@ -549,7 +549,7 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 
 	descr = g_strdup_printf(about_format, fish->name);
 
-	gtk_show_about_dialog(NULL,
+	GtkWidget *about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 		"program-name", _("Fish"),
 		"title", _("About Fish"),
 		"authors", authors,
@@ -564,6 +564,9 @@ static void display_about_dialog(GtkAction* action, FishApplet* fish)
 		"website", PACKAGE_URL,
 		NULL);
 
+	g_signal_connect_swapped (about, "response",
+	                          G_CALLBACK (gtk_widget_destroy), about);
+	gtk_widget_show (about);
 	g_free(descr);
 	g_free(authors[0]);
 }

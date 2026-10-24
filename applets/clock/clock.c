@@ -3687,7 +3687,7 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
                 NULL
         };
 
-        gtk_show_about_dialog(NULL,
+	GtkWidget *about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
                 "program-name", _("Clock"),
                 "title", _("About Clock"),
                 "authors", authors,
@@ -3700,6 +3700,10 @@ static void display_about_dialog(GtkAction* action, ClockData* cd)
                 "version", VERSION,
                 "website", PACKAGE_URL,
                 NULL);
+
+	g_signal_connect_swapped (about, "response",
+	                          G_CALLBACK (gtk_widget_destroy), about);
+	gtk_widget_show (about);
 }
 
 static gboolean
