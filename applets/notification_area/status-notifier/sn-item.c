@@ -227,9 +227,18 @@ sn_item_button_press_event (GtkWidget      *widget,
     {
       if (priv->menu != NULL)
         {
-          /* Ensure the menu window is realized so GTK creates xdg_popup on Wayland,
-           * not xdg_toplevel (which centers itself). */
+          GtkWidget *menu_win;
+          GtkWidget *item_toplevel;
+
+          /* Realize so GTK creates the Wayland surface */
           gtk_widget_realize (GTK_WIDGET (priv->menu));
+
+          /* Set attached_to so GTK uses transient parent for xdg_popup */
+          menu_win = gtk_widget_get_toplevel (GTK_WIDGET (priv->menu));
+          item_toplevel = gtk_widget_get_toplevel (widget);
+          if (GTK_IS_WINDOW (menu_win))
+            gtk_window_set_attached_to (GTK_WINDOW (menu_win), item_toplevel);
+
           gtk_menu_popup_at_pointer (priv->menu, (GdkEvent *) event);
         }
       else
@@ -257,7 +266,16 @@ sn_item_popup_menu (GtkWidget *widget)
 
   if (priv->menu != NULL)
     {
+      GtkWidget *menu_win;
+      GtkWidget *item_toplevel;
+
       gtk_widget_realize (GTK_WIDGET (priv->menu));
+
+      menu_win = gtk_widget_get_toplevel (GTK_WIDGET (priv->menu));
+      item_toplevel = gtk_widget_get_toplevel (widget);
+      if (GTK_IS_WINDOW (menu_win))
+        gtk_window_set_attached_to (GTK_WINDOW (menu_win), item_toplevel);
+
       gtk_menu_popup_at_pointer (priv->menu, NULL);
     }
   else
