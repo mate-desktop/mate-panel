@@ -693,7 +693,29 @@ na_overflow_position (NaOverflow *self)
   root_x += rel_alloc.x;
   root_y += rel_alloc.y;
 
-  gtk_widget_get_preferred_size (GTK_WIDGET (self), NULL, &req);
+  /* Size of the drawer. Take it from the GRID, not the window: an invisible
+   * widget measures 0x0 in GTK (gtk_widget_measure bails on !visible), and the
+   * window is still hidden on the pre-map placement pass below. Zero here
+   * disabled the clamp (drawer glued to the screen edge under the arrow) and
+   * the height subtraction (drawer sank by its own height). The grid is shown
+   * from na_overflow_init() and its cells are laid out before every popup. */
+  gtk_widget_get_preferred_size (self->grid, NULL, &req);
+  {
+    guint border = gtk_container_get_border_width (GTK_CONTAINER (self));
+    req.width  += 2 * border;
+    req.height += 2 * border;
+  }
+
+  g_message ("na-overflow: pos: root=(%d,%d) rel_alloc=%dx%d "
+             "req=%dx%d geom=(%d,%d %dx%d) layer=%d",
+             root_x, root_y, rel_alloc.width, rel_alloc.height,
+             req.width, req.height, geom.x, geom.y, geom.width, geom.height,
+#ifdef HAVE_WAYLAND
+             gtk_layer_is_supported ()
+#else
+             0
+#endif
+             );
 
   if (self->panel_orientation == GTK_ORIENTATION_HORIZONTAL)
     {
@@ -723,6 +745,8 @@ na_overflow_position (NaOverflow *self)
 
   self->moved_x = x;
   self->moved_y = y;
+
+  g_message ("na-overflow: final pos=(%d,%d)", x, y);
 
 #ifdef HAVE_WAYLAND
   /* layer-shell margins are counted from the anchored edge of the OUTPUT, and
