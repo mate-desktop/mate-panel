@@ -696,8 +696,6 @@ na_overflow_popup (NaOverflow   *self,
                    GtkWidget    *relative_to,
                    GtkOrientation panel_orientation)
 {
-  GdkScreen *screen;
-  GdkDisplay *display;
   GtkAllocation rel_alloc;
   gint root_x, root_y;
 
