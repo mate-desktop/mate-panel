@@ -1074,6 +1074,20 @@ update_chevron_icon (NaGrid *self)
   gtk_image_set_pixel_size (GTK_IMAGE (gtk_button_get_image (GTK_BUTTON (self->chevron))),
                             self->icon_size > 0 ? self->icon_size
                                                 : CLAMP (self->min_icon_size, 16, 24));
+
+  /* TEMPORARY: where does the chevron actually land? */
+  {
+    GtkWidget *img = gtk_button_get_image (GTK_BUTTON (self->chevron));
+    GtkAllocation ca, ia;
+    gtk_widget_get_allocation (self->chevron, &ca);
+    gtk_widget_get_allocation (img, &ia);
+    g_message ("na-overflow: chevron alloc=(%d,%d %dx%d) image alloc=(%d,%d %dx%d) "
+               "icon=%s pixel=%d icon_size=%d min=%d",
+               ca.x, ca.y, ca.width, ca.height, ia.x, ia.y, ia.width, ia.height,
+               self->chevron_icon,
+               gtk_image_get_pixel_size (GTK_IMAGE (img)),
+               self->icon_size, self->min_icon_size);
+  }
 }
 
 /* The panel drives the applet's toplevel size through the plug negotiation, and
@@ -1477,6 +1491,29 @@ na_grid_init (NaGrid *self)
 
   self->chevron = gtk_toggle_button_new ();
   gtk_button_set_relief (GTK_BUTTON (self->chevron), GTK_RELIEF_NONE);
+  /* The theme gives a relief-none button ~6px of vertical padding, so in a
+   * 24px panel the image keeps only ~12px of content: the symbolic arrow is
+   * clipped to its bottom rows and rides ~4px above center (measured on the
+   * Q6600 X11 run: 24px icon -> 3 visible rows, offset -4.5). Zero the chrome
+   * so the image gets the full cell and centers itself - measured with an
+   * offscreen probe under Menta: offset +0.5 for both 16px and 24px. */
+  {
+    GtkCssProvider *prov = gtk_css_provider_new ();
+    gtk_css_provider_load_from_data (prov,
+        "#na-tray-chevron {"
+        "  padding: 0;"
+        "  border-width: 0;"
+        "  margin: 0;"
+        "  min-height: 0;"
+        "  min-width: 0;"
+        "}", -1, NULL);
+    gtk_widget_set_name (self->chevron, "na-tray-chevron");
+    gtk_style_context_add_provider (
+        gtk_widget_get_style_context (self->chevron),
+        GTK_STYLE_PROVIDER (prov),
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref (prov);
+  }
   gtk_button_set_image (GTK_BUTTON (self->chevron),
                         gtk_image_new_from_icon_name ("pan-down-symbolic", GTK_ICON_SIZE_MENU));
   gtk_image_set_pixel_size (GTK_IMAGE (gtk_button_get_image (GTK_BUTTON (self->chevron))), 16);
