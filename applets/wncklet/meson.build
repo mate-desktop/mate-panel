@@ -43,6 +43,8 @@ wncklet_built_sources = [
 wncklet_sources = [
   'wncklet.c',
   'wncklet.h',
+  'tasklist-backend.h',
+  'tasklist-core.c',
   'window-menu.c',
   'window-menu.h',
   'window-list.c',
@@ -51,23 +53,29 @@ wncklet_sources = [
   'showdesktop.h',
   'workspace-switcher.c',
   'workspace-switcher.h',
+  'xfw-pager.c',
+  'xfw-pager.h',
+  'xfw-window-menu.c',
+  'xfw-window-menu.h',
   wncklet_built_sources,
 ]
+
+if have_x11
+  wncklet_sources += [
+    'x11-backend.c',
+    'x11-backend.h',
+  ]
+endif
 
 if have_wayland
   wncklet_sources += [
     'wayland-backend.c',
     'wayland-backend.h',
-    'wayland-workspace.c',
-    'wayland-workspace.h',
-    'wayland-window-menu.c',
-    'wayland-window-menu.h',
   ]
 endif
 
 wncklet_deps = [
   gtk_dep,
-  wnck_dep,
   mate_desktop_dep,
 ] + libmate_panel_applet_deps
 
@@ -75,7 +83,7 @@ if have_x11
   wncklet_deps += x11_dep
 endif
 
-if have_wayland
+if have_x11 or have_wayland
   wncklet_deps += [xfw_dep]
 endif
 
