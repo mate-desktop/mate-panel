@@ -770,6 +770,64 @@ na_overflow_menu_item_enter_cb (GtkWidget        *widget,
 }
 #endif
 
+#ifdef HAVE_WAYLAND
+/* TEMPORARY PROBES for the click path. Question they answer: when a button
+ * press lands on an icon inside the drawer, which widget sees it first -
+ * the SnItem, the grid, the wrapper item, or only the menu shell? Every
+ * handler below returns FALSE so it only observes. */
+static void
+na_overflow_probe_dump_cells (NaOverflow *self, gdouble x, gdouble y)
+{
+  GList *children, *l;
+
+  children = gtk_container_get_children (GTK_CONTAINER (self->grid));
+  for (l = children; l != NULL; l = l->next)
+    {
+      GtkAllocation a;
+      gtk_widget_get_allocation (GTK_WIDGET (l->data), &a);
+      g_message ("na-overflow: PROBE cell %s alloc=(%d,%d %dx%d) hit=%d",
+                 G_OBJECT_TYPE_NAME (l->data), a.x, a.y, a.width, a.height,
+                 (x >= a.x && x < a.x + a.width &&
+                  y >= a.y && y < a.y + a.height));
+    }
+  g_list_free (children);
+}
+
+static gboolean
+na_overflow_probe_click_cb (GtkWidget      *widget,
+                            GdkEventButton *event,
+                            gpointer        user_data)
+{
+  NaOverflow *self = user_data;
+  GdkWindow  *sw   = gtk_widget_get_window (self->menu);
+  GtkWidget  *ew   = gtk_get_event_widget ((GdkEvent *) event);
+
+  g_message ("na-overflow: PROBE %s on=%s btn=%u xy=(%.0f,%.0f) "
+             "win_is_shell=%d event_widget=%s",
+             event->type == GDK_BUTTON_PRESS ? "PRESS" : "RELEASE",
+             G_OBJECT_TYPE_NAME (widget), event->button, event->x, event->y,
+             (sw != NULL && event->window == sw),
+             ew ? G_OBJECT_TYPE_NAME (ew) : "(none)");
+
+  if (event->type == GDK_BUTTON_PRESS && sw != NULL && event->window == sw)
+    na_overflow_probe_dump_cells (self, event->x, event->y);
+
+  return FALSE;
+}
+
+static void
+na_overflow_probe_connect_once (GtkWidget *widget, NaOverflow *self)
+{
+  if (g_object_get_data (G_OBJECT (widget), "na-click-probe"))
+    return;
+  g_object_set_data (G_OBJECT (widget), "na-click-probe", GINT_TO_POINTER (1));
+  g_signal_connect (widget, "button-press-event",
+                    G_CALLBACK (na_overflow_probe_click_cb), self);
+  g_signal_connect (widget, "button-release-event",
+                    G_CALLBACK (na_overflow_probe_click_cb), self);
+}
+#endif
+
 /* Shield: swallow events that reach the wrapper menu item, so the menu shell
  * never sees them.
  *
@@ -833,6 +891,12 @@ na_overflow_new (void)
       gtk_menu_set_reserve_toggle_size (GTK_MENU (self->menu), FALSE);
 
       item = gtk_menu_item_new ();
+
+      /* TEMPORARY PROBES: shell and grid observe the click path. On the item
+       * the probe must be connected BEFORE the shield (which returns TRUE). */
+      na_overflow_probe_connect_once (self->menu, self);
+      na_overflow_probe_connect_once (self->grid, self);
+      na_overflow_probe_connect_once (item, self);
 
       /* Connected BEFORE the shield: the shield returns TRUE and stops the
        * propagation, so the crossings must be recorded first. */
@@ -1151,6 +1215,17 @@ na_overflow_popup (NaOverflow   *self,
       }
 
       self->menu_up = TRUE;
+
+      /* TEMPORARY PROBE: every cell of the grid watches the click path too -
+       * the SnItem's own handler is deeper than any of the above. The cells
+       * exist here (laid out by refresh_grid before this call), not in the
+       * constructor. */
+      {
+        GList *ch = gtk_container_get_children (GTK_CONTAINER (self->grid));
+        for (GList *l = ch; l != NULL; l = l->next)
+          na_overflow_probe_connect_once (GTK_WIDGET (l->data), self);
+        g_list_free (ch);
+      }
 
       /* Seed leave_at based on where the pointer actually is at open time.
        *
