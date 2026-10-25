@@ -36,6 +36,8 @@ enum
 static guint overflow_signals[LAST_SIGNAL] = { 0 };
 
 static void na_overflow_position (NaOverflow *self);
+static void na_overflow_arm_grab_poll (NaOverflow *self);
+static void na_overflow_cancel_grab_poll (NaOverflow *self);
 
 struct _NaOverflow
 {
@@ -71,6 +73,9 @@ struct _NaOverflow
    * button event to the icon under the cursor propagates it back up through
    * this same item handler, which must not redispatch it a second time. */
   gboolean      forwarding;
+
+  /* Watch of the process grab, see na_overflow_grab_poll_cb. */
+  guint         grab_poll;
 
   /* Where the popup is expected to land, in root coordinates. The popup's own
    * GdkWindow cannot be asked: gdk_window_get_origin() on Wayland answers
@@ -609,6 +614,7 @@ na_overflow_dispose (GObject *object)
   self->click_func = NULL;
 
   na_overflow_cancel_autohide (NA_OVERFLOW (object));
+  na_overflow_cancel_grab_poll (NA_OVERFLOW (object));
   na_overflow_disarm_click_watch (NA_OVERFLOW (object));
 
   g_clear_object (&self->menu);
@@ -775,63 +781,68 @@ na_overflow_menu_item_enter_cb (GtkWidget        *widget,
 }
 #endif
 
-#ifdef HAVE_WAYLAND
-/* TEMPORARY PROBES for the click path. Question they answer: when a button
- * press lands on an icon inside the drawer, which widget sees it first -
- * the SnItem, the grid, the wrapper item, or only the menu shell? Every
- * handler below returns FALSE so it only observes. */
-static void
-na_overflow_probe_dump_cells (NaOverflow *self, gdouble x, gdouble y)
-{
-  GList *children, *l;
-
-  children = gtk_container_get_children (GTK_CONTAINER (self->grid));
-  for (l = children; l != NULL; l = l->next)
-    {
-      GtkAllocation a;
-      gtk_widget_get_allocation (GTK_WIDGET (l->data), &a);
-      g_message ("na-overflow: PROBE cell %s alloc=(%d,%d %dx%d) hit=%d",
-                 G_OBJECT_TYPE_NAME (l->data), a.x, a.y, a.width, a.height,
-                 (x >= a.x && x < a.x + a.width &&
-                  y >= a.y && y < a.y + a.height));
-    }
-  g_list_free (children);
-}
+/* The drawer can lose its grab to a sibling popup of this very client, and
+ * then it hangs open forever. Measured flow: right-click an icon inside the
+ * drawer -> the SNI context menu pops as another xdg_popup and takes the
+ * pointer grab. Our shell goes inactive but stays mapped, and from then on it
+ * receives nothing at all: no motion (so the crossing/motion-driven auto-hide
+ * state freezes wherever it was) and no outside click (without a grab there
+ * is nothing to report it). GTK's own grab-broken handler only deactivates the
+ * shell when it holds an X11 grab (priv->have_xgrab), so on Wayland it does
+ * nothing about this.
+ *
+ * Recover by watching the process grab instead of waiting for events that will
+ * never arrive. While ANY menu in this client holds the grab the user is still
+ * working inside a popup - the app's context menu, or our own drawer - and the
+ * drawer must stay. The moment nobody holds it, every menu in the process is
+ * gone, so the drawer's moment has passed too: dismiss it, the way a click
+ * outside would on X11 through the clickwatch helper.
+ *
+ * The grace window covers the popup itself: gtk_menu_popup_at_widget() grabs
+ * on map, which lands after the current event is dispatched, so a check run
+ * too early would see "nobody grabs" and kill the drawer it just opened.
+ *
+ * Polls only; it never blocks and never grabs anything itself. */
+#define GRAB_POLL_MS 200
 
 static gboolean
-na_overflow_probe_click_cb (GtkWidget      *widget,
-                            GdkEventButton *event,
-                            gpointer        user_data)
+na_overflow_grab_poll_cb (gpointer data)
 {
-  NaOverflow *self = user_data;
-  GdkWindow  *sw   = gtk_widget_get_window (self->menu);
-  GtkWidget  *ew   = gtk_get_event_widget ((GdkEvent *) event);
+  NaOverflow *self = data;
 
-  g_message ("na-overflow: PROBE %s on=%s btn=%u xy=(%.0f,%.0f) "
-             "win_is_shell=%d event_widget=%s",
-             event->type == GDK_BUTTON_PRESS ? "PRESS" : "RELEASE",
-             G_OBJECT_TYPE_NAME (widget), event->button, event->x, event->y,
-             (sw != NULL && event->window == sw),
-             ew ? G_OBJECT_TYPE_NAME (ew) : "(none)");
+  self->grab_poll = 0;
 
-  if (event->type == GDK_BUTTON_PRESS && sw != NULL && event->window == sw)
-    na_overflow_probe_dump_cells (self, event->x, event->y);
+  if (!self->menu_up)
+    return FALSE;
 
+  if (g_get_monotonic_time () - self->shown_at < (gint64) AUTOHIDE_GRACE_MS * 1000 ||
+      gtk_grab_get_current () != NULL)
+    {
+      self->grab_poll = g_timeout_add (GRAB_POLL_MS, na_overflow_grab_poll_cb, self);
+      return FALSE;
+    }
+
+  g_message ("na-overflow: no menu in this client holds the grab anymore -> closing");
+  na_overflow_emit_closed (self);
   return FALSE;
 }
 
 static void
-na_overflow_probe_connect_once (GtkWidget *widget, NaOverflow *self)
+na_overflow_arm_grab_poll (NaOverflow *self)
 {
-  if (g_object_get_data (G_OBJECT (widget), "na-click-probe"))
-    return;
-  g_object_set_data (G_OBJECT (widget), "na-click-probe", GINT_TO_POINTER (1));
-  g_signal_connect (widget, "button-press-event",
-                    G_CALLBACK (na_overflow_probe_click_cb), self);
-  g_signal_connect (widget, "button-release-event",
-                    G_CALLBACK (na_overflow_probe_click_cb), self);
+  if (self->grab_poll == 0)
+    self->grab_poll = g_timeout_add (GRAB_POLL_MS, na_overflow_grab_poll_cb, self);
 }
-#endif
+
+static void
+na_overflow_cancel_grab_poll (NaOverflow *self)
+{
+  if (self->grab_poll != 0)
+    {
+      g_source_remove (self->grab_poll);
+      self->grab_poll = 0;
+    }
+}
 
 /* Wrapper item handler on the menu path: keeps the shell out of it AND
  * delivers clicks to the icon under the cursor.
@@ -921,11 +932,6 @@ na_overflow_menu_event_shield (GtkWidget *widget,
          * the GTK dispatch from here on uses the widget's own window, and
          * swapping the pointer would need a ref/unref pair for nothing. */
 
-        g_message ("na-overflow: PROBE forward %s -> %s (item %.0f,%.0f => local %.0f,%.0f)",
-                   event->type == GDK_BUTTON_PRESS ? "press" : "release",
-                   G_OBJECT_TYPE_NAME (target), b->x, b->y,
-                   ((GdkEventButton *) copy)->x, ((GdkEventButton *) copy)->y);
-
         self->forwarding = TRUE;
         gtk_widget_event (target, copy);
         self->forwarding = FALSE;
@@ -970,12 +976,6 @@ na_overflow_new (void)
       gtk_menu_set_reserve_toggle_size (GTK_MENU (self->menu), FALSE);
 
       item = gtk_menu_item_new ();
-
-      /* TEMPORARY PROBES: shell and grid observe the click path. On the item
-       * the probe must be connected BEFORE the shield (which returns TRUE). */
-      na_overflow_probe_connect_once (self->menu, self);
-      na_overflow_probe_connect_once (self->grid, self);
-      na_overflow_probe_connect_once (item, self);
 
       /* Connected BEFORE the shield: the shield returns TRUE and stops the
        * propagation, so the crossings must be recorded first. */
@@ -1295,16 +1295,10 @@ na_overflow_popup (NaOverflow   *self,
 
       self->menu_up = TRUE;
 
-      /* TEMPORARY PROBE: every cell of the grid watches the click path too -
-       * the SnItem's own handler is deeper than any of the above. The cells
-       * exist here (laid out by refresh_grid before this call), not in the
-       * constructor. */
-      {
-        GList *ch = gtk_container_get_children (GTK_CONTAINER (self->grid));
-        for (GList *l = ch; l != NULL; l = l->next)
-          na_overflow_probe_connect_once (GTK_WIDGET (l->data), self);
-        g_list_free (ch);
-      }
+      /* Watch the process grab for the sibling-popup case, see
+       * na_overflow_grab_poll_cb. Armed here, not in the constructor: the poll
+       * stops itself while the drawer is down. */
+      na_overflow_arm_grab_poll (self);
 
       /* Seed leave_at based on where the pointer actually is at open time.
        *
@@ -1408,6 +1402,7 @@ na_overflow_popdown (NaOverflow *self)
        * calling here, so skipping the popdown would leave the popup on screen. */
       self->menu_up = FALSE;
       na_overflow_cancel_autohide (self);
+      na_overflow_cancel_grab_poll (self);
       gtk_menu_popdown (GTK_MENU (self->menu));
       return;
     }
