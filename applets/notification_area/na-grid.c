@@ -1629,16 +1629,18 @@ static void
 na_grid_realize (GtkWidget *widget)
 {
   NaGrid *self = NA_GRID (widget);
-  GdkScreen *screen;
+#ifdef HAVE_X11
+  GdkScreen  *screen;
   GdkDisplay *display;
+#endif
   GSettings *settings;
 
   GTK_WIDGET_CLASS (na_grid_parent_class)->realize (widget);
 
+#ifdef HAVE_X11
   display = gdk_display_get_default ();
   /* Instantiate the hosts now we have a screen */
   screen = gtk_widget_get_screen (GTK_WIDGET (self));
-#ifdef HAVE_X11
   if  (GDK_IS_X11_DISPLAY (display))
   {
     GtkOrientation orientation;
