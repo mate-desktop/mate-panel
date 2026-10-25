@@ -2253,15 +2253,23 @@ location_weather_updated_cb (ClockLocation *location,
         cairo_surface_t *surface;
         gint icon_size, icon_scale;
 
-        if (!info || !weather_info_is_valid (info))
-                return;
-
         if (!clock_location_is_current (location))
                 return;
 
-        cd->weather_icon_name = weather_info_get_icon_name (info);
-        if (cd->weather_icon_name == NULL)
+        if (!info || !weather_info_is_valid (info)) {
+                gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), NULL);
+                gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), "");
+                gtk_widget_queue_resize (cd->applet);
                 return;
+        }
+
+        cd->weather_icon_name = weather_info_get_icon_name (info);
+        if (cd->weather_icon_name == NULL) {
+                gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), NULL);
+                gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), "");
+                gtk_widget_queue_resize (cd->applet);
+                return;
+        }
 
         theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (cd->applet)));
 
@@ -2289,6 +2297,7 @@ location_weather_updated_cb (ClockLocation *location,
 
         gtk_image_set_from_surface (GTK_IMAGE (cd->panel_weather_icon), surface);
         gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temp);
+        gtk_widget_queue_resize (cd->applet);
 
         cairo_surface_destroy (surface);
 }
@@ -3154,6 +3163,13 @@ remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
         cd->locations = g_slist_remove (cd->locations, loc);
+
+        if (clock_location_is_current (loc)) {
+                gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), NULL);
+                gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), "");
+                gtk_widget_queue_resize (cd->applet);
+        }
+
         g_object_unref (loc);
 
         /* This will update everything related to locations to take into
