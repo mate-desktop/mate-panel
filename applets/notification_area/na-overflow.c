@@ -692,72 +692,58 @@ na_overflow_probe_menu_deactivate (NaOverflow *self)
 #endif
 
 #ifdef HAVE_WAYLAND
-/* The popup's own crossings drive the auto-hide on the menu path. They come
- * from the compositor through the menu grab, so unlike any coordinate query
- * they cannot lie about where the pointer is relative to this surface.
+/* The auto-hide on the menu path is driven by MOTION events, not crossings
+ * and not coordinate queries.
  *
- * Connected on BOTH the shell and the wrapper item: the item shield returns
- * TRUE (to keep the shell from prelighting the grid), which stops the
- * propagation, so whichever of the two sees the crossing first must record
- * it. Updating twice is harmless - both handlers are idempotent. */
+ * Both alternatives were measured to lie here:
+ *
+ *  - gdk_device_get_position()/gdk_window_get_device_position(): the frame of
+ *    reference flips between root and surface coordinates depending on whether
+ *    GDK happens to know the surface position at the moment (same 34x34 popup
+ *    logged (1911,13) and (27,34)); gdk_window_get_origin() answers (0,0).
+ *  - Crossing events: an xdg_popup grab CONFINES the pointer to the popup
+ *    surface, so the compositor keeps sending enter/leave as if the pointer
+ *    were always on it - any jiggle produced a phantom "entered" (drawer
+ *    pinned open forever), and grazing an icon a phantom "left" (drawer
+ *    closed while the cursor was inside). Both measured, five scenarios.
+ *
+ * What the grab does give us: every motion event carries coordinates
+ * RELATIVE TO THE POPUP SURFACE, negative or oversized when the pointer is
+ * physically outside. That is event-carried truth - no query, no race.
+ * Inside the allocation -> leave_at = 0; outside -> stamp leave_at. The
+ * auto-hide poll then folds the drawer after autohide_ms of continuous
+ * outside readings. */
 static gboolean
-na_overflow_menu_leave_cb (GtkWidget        *widget,
-                           GdkEventCrossing *event,
-                           gpointer          user_data)
+na_overflow_menu_motion_cb (GtkWidget      *widget,
+                            GdkEventMotion *event,
+                            gpointer        user_data)
 {
   NaOverflow *self = user_data;
+  gint        w, h;
+  gboolean    inside;
 
-  (void) widget;
-
-  /* The popup has exactly one GdkWindow (the buttons and the grid are
-   * windowless), so a crossing with detail INFERIOR - moving onto a child
-   * window - cannot mean "left the popup". Every other detail (ANCESTOR to the
-   * panel, VIRTUAL, NONLINEAR) is the pointer leaving the surface for good. */
-  if (event->detail == GDK_NOTIFY_INFERIOR)
+  w = gtk_widget_get_allocated_width (widget);
+  h = gtk_widget_get_allocated_height (widget);
+  if (w <= 0 || h <= 0)
     return FALSE;
 
-  /* Synthetic crossings (grab handoffs, state changes) are not the pointer
-   * moving - gtk_menu_shell_leave_notify() ignores them, and so do we. */
-  if (event->mode == GDK_CROSSING_GTK_GRAB ||
-      event->mode == GDK_CROSSING_GTK_UNGRAB ||
-      event->mode == GDK_CROSSING_STATE_CHANGED)
-    return FALSE;
+  inside = event->x >= 0 && event->x < w &&
+           event->y >= 0 && event->y < h;
 
-  if (self->leave_at == 0)
+  if (inside)
     {
-      g_message ("na-overflow: PROBE shell leave real (detail %d)", event->detail);
+      if (self->leave_at != 0)
+        g_message ("na-overflow: motion -> inside");
+      self->leave_at = 0;
+    }
+  else if (self->leave_at == 0)
+    {
+      g_message ("na-overflow: motion -> outside (%.0f,%.0f of %dx%d)",
+                 event->x, event->y, w, h);
       self->leave_at = g_get_monotonic_time ();
     }
 
-  return FALSE;   /* the shell still runs its own handler */
-}
-
-static gboolean
-na_overflow_menu_enter_cb (GtkWidget        *widget,
-                           GdkEventCrossing *event,
-                           gpointer          user_data)
-{
-  NaOverflow *self = user_data;
-
-  (void) widget;
-
-  /* Synthetic crossings are not the pointer entering. One arrives right after
-   * the popup grabs (GDK_CROSSING_GTK_GRAB), and it silently overwrote the
-   * open-time seed "pointer outside" with "inside" - measured: seed at 02:50:58
-   * then 27s of silence with the drawer pinned open, while the pointer sat on
-   * the chevron and no real crossing ever came. Only a real pointer move may
-   * clear leave_at. */
-  if (event->mode == GDK_CROSSING_GTK_GRAB ||
-      event->mode == GDK_CROSSING_GTK_UNGRAB ||
-      event->mode == GDK_CROSSING_STATE_CHANGED)
-    {
-      g_message ("na-overflow: PROBE shell enter ignored (mode %d)", event->mode);
-      return FALSE;
-    }
-
-  g_message ("na-overflow: PROBE shell enter real");
-  self->leave_at = 0;
-  return FALSE;
+  return FALSE;   /* normal propagation continues */
 }
 #endif
 
@@ -785,14 +771,7 @@ na_overflow_menu_event_shield (GtkWidget *widget,
                                GdkEvent  *event,
                                gpointer   user_data)
 {
-  NaOverflow *self = user_data;
-
-  /* Crossings must still be recorded: this shield stops their propagation,
-   * so the shell-side handler would never run for them. */
-  if (event->type == GDK_ENTER_NOTIFY)
-    na_overflow_menu_enter_cb (widget, (GdkEventCrossing *) event, self);
-  else if (event->type == GDK_LEAVE_NOTIFY)
-    na_overflow_menu_leave_cb (widget, (GdkEventCrossing *) event, self);
+  (void) user_data;
 
   g_message ("na-overflow: PROBE shield %s",
              event->type == GDK_BUTTON_PRESS ? "press" :
@@ -863,12 +842,12 @@ na_overflow_new (void)
       g_signal_connect_swapped (self->menu, "deactivate",
                                 G_CALLBACK (na_overflow_emit_closed), self);
 
-      /* Auto-hide state, see leave_at. Both layers: the item shield records
-       * crossings it swallows; the shell sees the window-level ones. */
-      g_signal_connect (self->menu, "enter-notify-event",
-                        G_CALLBACK (na_overflow_menu_enter_cb), self);
-      g_signal_connect (self->menu, "leave-notify-event",
-                        G_CALLBACK (na_overflow_menu_leave_cb), self);
+      /* Auto-hide state, see leave_at. Motion on the shell: under the popup
+       * grab the compositor confines the pointer to this surface and every
+       * motion event carries surface-relative coordinates - the only channel
+       * here that tells the truth about where the pointer is. */
+      g_signal_connect (self->menu, "motion-notify-event",
+                        G_CALLBACK (na_overflow_menu_motion_cb), self);
 
       /* TEMPORARY PROBES */
       g_signal_connect (self->grid, "button-press-event",
