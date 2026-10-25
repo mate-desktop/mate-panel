@@ -67,6 +67,11 @@ struct _NaOverflow
   gboolean      use_menu;
   gboolean      menu_up;
 
+  /* Re-entrancy guard for the click redispatch of the menu path: feeding a
+   * button event to the icon under the cursor propagates it back up through
+   * this same item handler, which must not redispatch it a second time. */
+  gboolean      forwarding;
+
   /* Where the popup is expected to land, in root coordinates. The popup's own
    * GdkWindow cannot be asked: gdk_window_get_origin() on Wayland answers
    * (0,0) for surfaces (measured), so the auto-hide poll compares against this
@@ -828,35 +833,109 @@ na_overflow_probe_connect_once (GtkWidget *widget, NaOverflow *self)
 }
 #endif
 
-/* Shield: swallow events that reach the wrapper menu item, so the menu shell
- * never sees them.
+/* Wrapper item handler on the menu path: keeps the shell out of it AND
+ * delivers clicks to the icon under the cursor.
  *
- * Two reasons, both measured as regressions:
- *
+ * Why the shield is needed at all:
  *  - GtkMenuShell's release handler deactivates the menu when the release lands
  *    on the selected item (gtkmenushell.c: "menu_item == active_menu_item &&
  *    is_selectable" -> gtk_menu_shell_activate_item -> deactivate). Our item
- *    only carries the icon grid, so that path closed the drawer on every click
- *    and the icon never acted.
+ *    only carries the icon grid, so that path closed the drawer on every click.
  *  - Its enter_notify selects the item under the pointer, and a selected
- *    GtkMenuItem is prelit: the theme then paints one giant highlight row
- *    behind the whole grid.
+ *    GtkMenuItem is prelit: the theme paints one giant highlight row behind the
+ *    whole grid.
+ * GTK3 GtkMenuItem has no "selectable" property (that is GTK4), so the events
+ * are blocked here instead.
  *
- * GTK3 GtkMenuItem has no "selectable" property (that is GTK4), so blocking the
- * events is the way to keep the shell out of it. Events start at the deepest
- * widget and walk UP, so the SNI buttons have already had their turn when this
- * runs - blocking here costs them nothing. */
+ * Why a button event must be REDISPATCHED here rather than left to propagate:
+ * the shell grabs the pointer when it pops up (gtk_menu_shell_activate ->
+ * gtk_grab_add), so GDK routes BUTTON events to the grab and not to the deepest
+ * window - measured: every press and release inside the drawer reports
+ * event_widget=GtkMenuItem and the SnItem buttons never see them. Crossings are
+ * geometric and do reach the buttons, which is exactly why hover/prelight
+ * worked while clicking did nothing. The earlier assumption that "events start
+ * at the deepest widget and walk up, so the buttons have already had their
+ * turn" is false under a menu grab.
+ *
+ * So: hit-test the grid, translate the coordinates into the target's space, and
+ * feed the event to that widget. `forwarding` stops the re-propagation of the
+ * fed event from reaching this handler a second time. */
 #ifdef HAVE_WAYLAND
+static GtkWidget *
+na_overflow_grid_child_at (NaOverflow *self, gdouble x, gdouble y)
+{
+  GList     *children, *l;
+  GtkWidget *found = NULL;
+
+  /* The grid is a windowless child of this item, so its children's allocations
+   * share the item's window coordinate space - the same space event->x/y are in
+   * when the grab attributes the event to this item. */
+  children = gtk_container_get_children (GTK_CONTAINER (self->grid));
+  for (l = children; l != NULL; l = l->next)
+    {
+      GtkWidget    *w = l->data;
+      GtkAllocation a;
+
+      if (!gtk_widget_get_visible (w))
+        continue;
+
+      gtk_widget_get_allocation (w, &a);
+      if (x >= a.x && x < a.x + a.width && y >= a.y && y < a.y + a.height)
+        {
+          found = g_object_ref (w);
+          break;
+        }
+    }
+  g_list_free (children);
+
+  return found;
+}
+
 static gboolean
 na_overflow_menu_event_shield (GtkWidget *widget,
                                GdkEvent  *event,
                                gpointer   user_data)
 {
-  (void) widget;
-  (void) event;
-  (void) user_data;
+  NaOverflow *self = user_data;
 
-  return TRUE;
+  if (event->type != GDK_BUTTON_PRESS && event->type != GDK_BUTTON_RELEASE)
+    return TRUE;   /* crossings: recorded by the handlers below this one */
+
+  if (self->forwarding)
+    return TRUE;   /* our own redispatch coming back up - swallow it */
+
+  {
+    GdkEventButton *b      = (GdkEventButton *) event;
+    GtkWidget      *target = na_overflow_grid_child_at (self, b->x, b->y);
+
+    if (target != NULL)
+      {
+        GtkAllocation a;
+        GdkEvent     *copy = gdk_event_copy (event);
+
+        gtk_widget_get_allocation (target, &a);
+        ((GdkEventButton *) copy)->x = b->x - a.x;
+        ((GdkEventButton *) copy)->y = b->y - a.y;
+
+        /* event->window is deliberately left pointing at the item's window:
+         * the GTK dispatch from here on uses the widget's own window, and
+         * swapping the pointer would need a ref/unref pair for nothing. */
+
+        g_message ("na-overflow: PROBE forward %s -> %s (item %.0f,%.0f => local %.0f,%.0f)",
+                   event->type == GDK_BUTTON_PRESS ? "press" : "release",
+                   G_OBJECT_TYPE_NAME (target), b->x, b->y,
+                   ((GdkEventButton *) copy)->x, ((GdkEventButton *) copy)->y);
+
+        self->forwarding = TRUE;
+        gtk_widget_event (target, copy);
+        self->forwarding = FALSE;
+
+        gdk_event_free (copy);
+        g_object_unref (target);
+      }
+  }
+
+  return TRUE;   /* the shell never sees it: no deactivate, no prelight */
 }
 #endif
 
