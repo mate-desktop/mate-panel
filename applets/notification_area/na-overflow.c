@@ -36,7 +36,9 @@ enum
 static guint overflow_signals[LAST_SIGNAL] = { 0 };
 
 static void na_overflow_position (NaOverflow *self);
+#ifdef HAVE_WAYLAND
 static void na_overflow_arm_grab_poll (NaOverflow *self);
+#endif
 static void na_overflow_cancel_grab_poll (NaOverflow *self);
 
 struct _NaOverflow
@@ -796,7 +798,13 @@ na_overflow_menu_item_enter_cb (GtkWidget        *widget,
 }
 #endif
 
-/* The drawer can lose its grab to a sibling popup of this very client, and
+#ifdef HAVE_WAYLAND
+/* The grab watch is only reachable from the Wayland menu path, so it is
+ * compiled with it: an X11-only build would otherwise carry dead statics
+ * (measured: -Wunused-function from GCC 16 on na_overflow_arm_grab_poll,
+ * whose sole caller lives inside #ifdef HAVE_WAYLAND).
+ *
+ * The drawer can lose its grab to a sibling popup of this very client, and
  * then it hangs open forever. Measured flow: right-click an icon inside the
  * drawer -> the SNI context menu pops as another xdg_popup and takes the
  * pointer grab. When that menu closes, the drawer is mapped but event-blind:
@@ -864,7 +872,10 @@ na_overflow_arm_grab_poll (NaOverflow *self)
   if (self->grab_poll == 0)
     self->grab_poll = g_timeout_add (GRAB_POLL_MS, na_overflow_grab_poll_cb, self);
 }
+#endif
 
+/* Cancelling is needed from dispose on every backend, so it stays compiled
+ * even when the watch above is not. */
 static void
 na_overflow_cancel_grab_poll (NaOverflow *self)
 {
