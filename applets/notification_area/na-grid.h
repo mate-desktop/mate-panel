@@ -39,6 +39,7 @@
 #include <gtk/gtk.h>
 
 #include "na-item.h"
+#include "na-overflow.h"
 
 G_BEGIN_DECLS
 
@@ -69,6 +70,13 @@ void            na_grid_set_overflow_icons      (NaGrid             *grid,
                                                  const gchar *const *ids);
 void            na_grid_set_overflow_autohide_ms (NaGrid             *grid,
                                                   guint               ms);
+/* Which edge the panel sits on, as the panel itself reports it.  The grid uses
+ * it for the chevron arrow and passes it on to the drawer, which needs it for
+ * the popup anchors: on Wayland the screen geometry cannot tell the edge
+ * (gdk_window_get_origin() answers surface-relative for the panel's
+ * layer-shell surface). */
+void            na_grid_set_open_direction    (NaGrid           *grid,
+                                               NaOpenDirection   dir);
 void            na_grid_popdown_overflow        (NaGrid             *grid);
 
 /* TRUE if a root-coordinate point falls inside the arrow button. This lets a

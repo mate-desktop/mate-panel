@@ -124,6 +124,31 @@ get_gtk_orientation_from_applet_orient (MatePanelAppletOrient orient)
   return GTK_ORIENTATION_HORIZONTAL;
 }
 
+/* Which way the overflow drawer opens.
+ *
+ * The applet's orient already names it: the panel maps its own edge through
+ * get_mate_panel_applet_orient() (PANEL_ORIENTATION_BOTTOM -> ORIENT_UP), and
+ * libmate-panel-applet anchors its own popup menu the same way (ORIENT_UP
+ * hangs the menu above the widget). So the value is the direction the drawer
+ * grows in, on both backends - unlike any guess from the screen geometry,
+ * which cannot work on Wayland where the panel surface origin answers
+ * surface-relative. */
+static NaOpenDirection
+get_open_direction_from_applet_orient (MatePanelAppletOrient orient)
+{
+  switch (orient)
+    {
+    case MATE_PANEL_APPLET_ORIENT_UP:    return NA_OPEN_UP;
+    case MATE_PANEL_APPLET_ORIENT_DOWN:  return NA_OPEN_DOWN;
+    case MATE_PANEL_APPLET_ORIENT_LEFT:  return NA_OPEN_LEFT;
+    case MATE_PANEL_APPLET_ORIENT_RIGHT: return NA_OPEN_RIGHT;
+    }
+
+  g_assert_not_reached ();
+
+  return NA_OPEN_UP;
+}
+
 static void
 gsettings_changed_min_icon_size (GSettings    *settings,
                                  gchar        *key,
@@ -617,6 +642,8 @@ na_tray_applet_change_orient (MatePanelApplet       *panel_applet,
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (applet->priv->grid),
                                   get_gtk_orientation_from_applet_orient (orient));
+  na_grid_set_open_direction (NA_GRID (applet->priv->grid),
+                              get_open_direction_from_applet_orient (orient));
 }
 
 static gboolean
@@ -719,6 +746,8 @@ na_tray_applet_init (NaTrayApplet *applet)
 
   orient = mate_panel_applet_get_orient (MATE_PANEL_APPLET (applet));
   applet->priv->grid = na_grid_new (get_gtk_orientation_from_applet_orient (orient));
+  na_grid_set_open_direction (NA_GRID (applet->priv->grid),
+                              get_open_direction_from_applet_orient (orient));
 
   gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (applet->priv->grid));
   gtk_widget_show (GTK_WIDGET (applet->priv->grid));

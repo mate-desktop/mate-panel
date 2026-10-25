@@ -80,6 +80,7 @@ struct _NaGrid
   GHashTable *overflow_ids;
   GtkWidget  *chevron;
   NaOverflow *overflow;
+  NaOpenDirection open_direction;
   GSList     *parked;      /* HIDDEN items, referenced by us while detached */
   gchar      *chevron_icon;/* currently set icon name, to avoid churn */
 
@@ -1035,29 +1036,55 @@ update_chevron_icon (NaGrid *self)
   gchar           *next;
   gint             root_x = 0, root_y = 0;
 
-  if (self->chevron == NULL || !gtk_widget_get_realized (self->chevron))
+  if (self->chevron == NULL)
     return;
 
-  window = gtk_widget_get_window (self->chevron);
-  if (window == NULL)
-    return;
-
-  display = gdk_window_get_display (window);
-  monitor = gdk_display_get_monitor_at_window (display, window);
-  if (monitor == NULL)
-    return;
-
-  gdk_monitor_get_geometry (monitor, &geom);
-  gdk_window_get_origin (window, &root_x, &root_y);
-  gtk_widget_get_allocation (self->chevron, &alloc);
-  root_x += alloc.x;
-  root_y += alloc.y;
-
-  if (gtk_orientable_get_orientation (GTK_ORIENTABLE (self)) == GTK_ORIENTATION_HORIZONTAL)
-    /* Panel at the bottom of the screen opens upwards, and vice versa. */
-    icon = (root_y > geom.y + geom.height / 2) ? "pan-up-symbolic" : "pan-down-symbolic";
+  if (self->open_direction != NA_OPEN_UNKNOWN)
+    {
+      /* The panel states which edge it sits on. Authoritative on both
+       * backends, and the only correct answer on Wayland: the arrow must
+       * point the way the drawer opens, and gdk_window_get_origin() answers
+       * surface-relative for the panel's layer-shell surface (measured:
+       * root_y=1 on a 1080p screen whose bottom panel sits at y=1053), so a
+       * geometry guess reads a bottom panel as a top one there and the arrow
+       * points into the panel instead of away from it. */
+      switch (self->open_direction)
+        {
+        case NA_OPEN_UP:    icon = "pan-up-symbolic";    break; /* bottom panel */
+        case NA_OPEN_DOWN:  icon = "pan-down-symbolic";  break; /* top panel */
+        case NA_OPEN_LEFT:  icon = "pan-start-symbolic"; break; /* right panel */
+        default:            icon = "pan-end-symbolic";   break; /* left panel */
+        }
+    }
   else
-    icon = (root_x > geom.x + geom.width / 2) ? "pan-start-symbolic" : "pan-end-symbolic";
+    {
+      /* No panel told us the edge (a standalone testtray): fall back to the
+       * screen geometry, which is only trustworthy where window origins are
+       * root-relative, i.e. on X11. */
+      if (!gtk_widget_get_realized (self->chevron))
+        return;
+
+      window = gtk_widget_get_window (self->chevron);
+      if (window == NULL)
+        return;
+
+      display = gdk_window_get_display (window);
+      monitor = gdk_display_get_monitor_at_window (display, window);
+      if (monitor == NULL)
+        return;
+
+      gdk_monitor_get_geometry (monitor, &geom);
+      gdk_window_get_origin (window, &root_x, &root_y);
+      gtk_widget_get_allocation (self->chevron, &alloc);
+      root_x += alloc.x;
+      root_y += alloc.y;
+
+      if (gtk_orientable_get_orientation (GTK_ORIENTABLE (self)) == GTK_ORIENTATION_HORIZONTAL)
+        /* Panel at the bottom of the screen opens upwards, and vice versa. */
+        icon = (root_y > geom.y + geom.height / 2) ? "pan-up-symbolic" : "pan-down-symbolic";
+      else
+        icon = (root_x > geom.x + geom.width / 2) ? "pan-start-symbolic" : "pan-end-symbolic";
+    }
 
   next = g_strdup (icon);
   if (g_strcmp0 (self->chevron_icon, next) == 0)
@@ -1074,20 +1101,6 @@ update_chevron_icon (NaGrid *self)
   gtk_image_set_pixel_size (GTK_IMAGE (gtk_button_get_image (GTK_BUTTON (self->chevron))),
                             self->icon_size > 0 ? self->icon_size
                                                 : CLAMP (self->min_icon_size, 16, 24));
-
-  /* TEMPORARY: where does the chevron actually land? */
-  {
-    GtkWidget *img = gtk_button_get_image (GTK_BUTTON (self->chevron));
-    GtkAllocation ca, ia;
-    gtk_widget_get_allocation (self->chevron, &ca);
-    gtk_widget_get_allocation (img, &ia);
-    g_message ("na-overflow: chevron alloc=(%d,%d %dx%d) image alloc=(%d,%d %dx%d) "
-               "icon=%s pixel=%d icon_size=%d min=%d",
-               ca.x, ca.y, ca.width, ca.height, ia.x, ia.y, ia.width, ia.height,
-               self->chevron_icon,
-               gtk_image_get_pixel_size (GTK_IMAGE (img)),
-               self->icon_size, self->min_icon_size);
-  }
 }
 
 /* The panel drives the applet's toplevel size through the plug negotiation, and
@@ -1953,6 +1966,24 @@ na_grid_set_overflow_autohide_ms (NaGrid *grid,
 
   if (grid->overflow != NULL)
     na_overflow_set_autohide_ms (grid->overflow, ms);
+}
+
+void
+na_grid_set_open_direction (NaGrid           *grid,
+                            NaOpenDirection   dir)
+{
+  g_return_if_fail (NA_IS_GRID (grid));
+
+  if (grid->open_direction == dir)
+    return;
+
+  grid->open_direction = dir;
+
+  /* The drawer anchors itself the same way the arrow points. */
+  if (grid->overflow != NULL)
+    na_overflow_set_open_direction (grid->overflow, dir);
+
+  update_chevron_icon (grid);
 }
 
 /* Dismiss the drawer from the outside, without waiting for auto-hide.

@@ -22,6 +22,24 @@
 
 G_BEGIN_DECLS
 
+/* Which way the overflow drawer opens, i.e. away from whichever screen edge
+ * the panel sits on.
+ *
+ * This is NOT derivable from the widget's position: gdk_window_get_origin()
+ * answers surface-relative coordinates for the panel's layer-shell surface on
+ * Wayland (measured: y=1 for a panel at y=1053 on a 1080p screen), so a
+ * "which half of the monitor am I in" guess picks the wrong edge there.
+ * The panel states the edge over the applet protocol, which is the only
+ * truthful source on both backends. */
+typedef enum
+{
+  NA_OPEN_UNKNOWN = 0, /* no panel told us yet (a standalone testtray) */
+  NA_OPEN_UP,          /* panel at the bottom edge: drawer grows upwards */
+  NA_OPEN_DOWN,        /* panel at the top edge: drawer hangs below */
+  NA_OPEN_LEFT,        /* panel on the right edge: drawer opens left */
+  NA_OPEN_RIGHT        /* panel on the left edge: drawer opens right */
+} NaOpenDirection;
+
 #define NA_TYPE_OVERFLOW (na_overflow_get_type ())
 G_DECLARE_FINAL_TYPE (NaOverflow, na_overflow, NA, OVERFLOW, GtkWindow)
 
@@ -43,6 +61,10 @@ typedef gboolean (*NaOverflowButtonClick) (GdkEventButton *event,
 
 void        na_overflow_set_autohide_ms  (NaOverflow           *self,
                                           guint                 ms);
+/* The edge the panel sits on, as the panel itself reports it.  Set before the
+ * drawer is popped up; drives both the chevron arrow and the popup anchors. */
+void        na_overflow_set_open_direction (NaOverflow      *self,
+                                            NaOpenDirection  dir);
 /* The drawer's size as the grid layout computes it, without the border.
  *
  * The pre-map size REQUEST cannot be trusted here: an SNI button derives its

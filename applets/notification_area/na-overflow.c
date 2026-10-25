@@ -46,6 +46,7 @@ struct _NaOverflow
   GtkWidget    *grid;
   GtkWidget    *relative_to;
   GtkOrientation panel_orientation;
+  NaOpenDirection open_direction;
 
   /* Last position we asked for, so that a size-allocate caused by our own
    * gtk_window_move() does not bounce forever. */
@@ -80,9 +81,6 @@ struct _NaOverflow
   /* Set once some OTHER widget in this process held the pointer grab while the
    * drawer was up - the SNI context menu of an icon. See the poll. */
   gboolean      foreign_grab_seen;
-
-  /* TEMPORARY: last observed grab owner, for the transition log. */
-  gpointer      last_holder;
 
   /* Where the popup is expected to land, in root coordinates. The popup's own
    * GdkWindow cannot be asked: gdk_window_get_origin() on Wayland answers
@@ -560,6 +558,15 @@ na_overflow_set_nominal_size (NaOverflow *self,
   self->nominal_h = MAX (height, 0);
 }
 
+void
+na_overflow_set_open_direction (NaOverflow      *self,
+                                NaOpenDirection  dir)
+{
+  g_return_if_fail (NA_IS_OVERFLOW (self));
+
+  self->open_direction = dir;
+}
+
 static gboolean
 na_overflow_button_press (GtkWidget      *widget,
                           GdkEventButton *event)
@@ -670,6 +677,7 @@ na_overflow_init (NaOverflow *self)
   gtk_container_add (GTK_CONTAINER (self), self->grid);
 
   self->panel_orientation = GTK_ORIENTATION_HORIZONTAL;
+  self->open_direction = NA_OPEN_UNKNOWN;
   self->autohide_ms = AUTOHIDE_DEFAULT_MS;
   self->moved_x = G_MININT;
   self->moved_y = G_MININT;
@@ -827,23 +835,13 @@ na_overflow_grab_poll_cb (gpointer data)
 
   holder = gtk_grab_get_current ();
 
-  /* TEMPORARY: log every change of the grab owner while the drawer is up, so
-   * one run shows whether an icon's context menu is seen at all. */
-  if (holder != self->last_holder)
-    {
-      g_message ("na-overflow: grab %s -> %s",
-                 self->last_holder ? G_OBJECT_TYPE_NAME (self->last_holder) : "(none)",
-                 holder ? G_OBJECT_TYPE_NAME (holder) : "(none)");
-      self->last_holder = holder;
-    }
-
   if (holder != NULL && holder != GTK_WIDGET (self->menu))
     {
       /* Somebody else in this process owns the pointer: an icon's context
        * menu. Remember it and wait for it to go away. */
       self->foreign_grab_seen = TRUE;
-      g_message ("na-overflow: grab held by %s -> watching for its release",
-                 G_OBJECT_TYPE_NAME (holder));
+      g_debug ("na-overflow: grab held by %s -> watching for its release",
+               G_OBJECT_TYPE_NAME (holder));
     }
   else if (self->foreign_grab_seen &&
            g_get_monotonic_time () - self->shown_at
@@ -851,7 +849,7 @@ na_overflow_grab_poll_cb (gpointer data)
     {
       /* The sibling menu is gone and the grab is ours (or nobody's): the
        * drawer can no longer receive events, so it is finished. */
-      g_message ("na-overflow: sibling menu released the grab -> closing");
+      g_debug ("na-overflow: sibling menu released the grab -> closing");
       na_overflow_emit_closed (self);
       return FALSE;
     }
@@ -1149,9 +1147,35 @@ na_overflow_position (NaOverflow *self)
       req.height += 2 * border;
     }
 
-  if (self->panel_orientation == GTK_ORIENTATION_HORIZONTAL)
+  if (self->open_direction != NA_OPEN_UNKNOWN)
     {
-      /* Horizontal panel: the popup opens towards the middle of the screen. */
+      /* The panel states which edge it sits on; that is the direction the
+       * drawer opens in, on both backends. */
+      switch (self->open_direction)
+        {
+        case NA_OPEN_DOWN:
+          y = root_y + rel_alloc.height;    /* panel on top: downwards */
+          x = root_x;
+          break;
+        case NA_OPEN_UP:
+          y = root_y - req.height;          /* panel at bottom: upwards */
+          x = root_x;
+          break;
+        case NA_OPEN_RIGHT:
+          x = root_x + rel_alloc.width;     /* panel on the left: rightwards */
+          y = root_y;
+          break;
+        default: /* NA_OPEN_LEFT */
+          x = root_x - req.width;           /* panel on the right: leftwards */
+          y = root_y;
+          break;
+        }
+    }
+  else if (self->panel_orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      /* No panel told us the edge (a standalone testtray): fall back to the
+       * screen geometry, which is only trustworthy where window origins are
+       * root-relative, i.e. on X11. */
       if (root_y <= geom.y + geom.height / 2)
         y = root_y + rel_alloc.height;      /* panel at the top: downwards */
       else
@@ -1235,7 +1259,33 @@ na_overflow_popup (NaOverflow   *self,
           root_x = rx + rel_alloc.x;
           root_y = ry + rel_alloc.y;
 
-          if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
+          if (self->open_direction != NA_OPEN_UNKNOWN)
+            {
+              /* The panel told us which edge it sits on. Authoritative on
+               * both backends, and the only correct answer on Wayland:
+               * gdk_window_get_origin() answers surface-relative for the
+               * panel's layer-shell surface, so the geometry guess below
+               * reads a bottom panel as a top one there (measured: ry=1 on a
+               * 1080p screen whose panel sits at y=1053). */
+              switch (self->open_direction)
+                {
+                case NA_OPEN_DOWN:
+                  widget_anchor = GDK_GRAVITY_SOUTH_WEST;  /* top: hang below */
+                  break;
+                case NA_OPEN_UP:
+                  widget_anchor = GDK_GRAVITY_NORTH_WEST;
+                  menu_anchor   = GDK_GRAVITY_SOUTH_WEST;  /* bottom: grow up */
+                  break;
+                case NA_OPEN_RIGHT:
+                  widget_anchor = GDK_GRAVITY_NORTH_EAST;  /* left: open right */
+                  break;
+                default: /* NA_OPEN_LEFT */
+                  widget_anchor = GDK_GRAVITY_NORTH_WEST;
+                  menu_anchor   = GDK_GRAVITY_NORTH_EAST;  /* right: open left */
+                  break;
+                }
+            }
+          else if (panel_orientation == GTK_ORIENTATION_HORIZONTAL)
             {
               if (ry <= g.y + g.height / 2)
                 widget_anchor = GDK_GRAVITY_SOUTH_WEST;  /* top: hang below */
@@ -1332,7 +1382,6 @@ na_overflow_popup (NaOverflow   *self,
        * measured from shown_at. foreign_grab_seen starts fresh for this open. */
       self->shown_at          = g_get_monotonic_time ();
       self->foreign_grab_seen = FALSE;
-      self->last_holder       = NULL;
 
       /* Watch the process grab for the sibling-popup case, see
        * na_overflow_grab_poll_cb. Armed here, not in the constructor: the poll
