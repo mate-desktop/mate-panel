@@ -77,6 +77,13 @@ struct _NaOverflow
   /* Watch of the process grab, see na_overflow_grab_poll_cb. */
   guint         grab_poll;
 
+  /* Set once some OTHER widget in this process held the pointer grab while the
+   * drawer was up - the SNI context menu of an icon. See the poll. */
+  gboolean      foreign_grab_seen;
+
+  /* TEMPORARY: last observed grab owner, for the transition log. */
+  gpointer      last_holder;
+
   /* Where the popup is expected to land, in root coordinates. The popup's own
    * GdkWindow cannot be asked: gdk_window_get_origin() on Wayland answers
    * (0,0) for surfaces (measured), so the auto-hide poll compares against this
@@ -784,23 +791,25 @@ na_overflow_menu_item_enter_cb (GtkWidget        *widget,
 /* The drawer can lose its grab to a sibling popup of this very client, and
  * then it hangs open forever. Measured flow: right-click an icon inside the
  * drawer -> the SNI context menu pops as another xdg_popup and takes the
- * pointer grab. Our shell goes inactive but stays mapped, and from then on it
- * receives nothing at all: no motion (so the crossing/motion-driven auto-hide
- * state freezes wherever it was) and no outside click (without a grab there
- * is nothing to report it). GTK's own grab-broken handler only deactivates the
- * shell when it holds an X11 grab (priv->have_xgrab), so on Wayland it does
- * nothing about this.
+ * pointer grab. When that menu closes, the drawer is mapped but event-blind:
+ * no motion (so the crossing/motion-driven auto-hide freezes wherever it
+ * stood) and no outside click. GTK's own grab-broken handler only deactivates
+ * a shell that holds an X11 grab (priv->have_xgrab), so on Wayland it does
+ * nothing.
  *
- * Recover by watching the process grab instead of waiting for events that will
- * never arrive. While ANY menu in this client holds the grab the user is still
- * working inside a popup - the app's context menu, or our own drawer - and the
- * drawer must stay. The moment nobody holds it, every menu in the process is
- * gone, so the drawer's moment has passed too: dismiss it, the way a click
- * outside would on X11 through the clickwatch helper.
+ * The first attempt watched for the process grab becoming EMPTY, which never
+ * happens: our own shell stays in the GTK grab list the whole time, so
+ * gtk_grab_get_current() keeps returning it (measured - the drawer still hung
+ * open). The usable signal is the TRANSITION: the context menu is a second
+ * grab in this same process, so while it is up the holder is somebody else,
+ * and the instant it closes the holder becomes our shell again. That moment
+ * is exactly when the compositor will not give us back its grab, so the
+ * drawer is orphaned and must fold - the way a click outside does on X11
+ * through the clickwatch helper.
  *
  * The grace window covers the popup itself: gtk_menu_popup_at_widget() grabs
- * on map, which lands after the current event is dispatched, so a check run
- * too early would see "nobody grabs" and kill the drawer it just opened.
+ * on map, which lands after the current event is dispatched, so an early tick
+ * could see a momentary "nobody grabs" during our own opening.
  *
  * Polls only; it never blocks and never grabs anything itself. */
 #define GRAB_POLL_MS 200
@@ -809,21 +818,45 @@ static gboolean
 na_overflow_grab_poll_cb (gpointer data)
 {
   NaOverflow *self = data;
+  GtkWidget  *holder;
 
   self->grab_poll = 0;
 
   if (!self->menu_up)
     return FALSE;
 
-  if (g_get_monotonic_time () - self->shown_at < (gint64) AUTOHIDE_GRACE_MS * 1000 ||
-      gtk_grab_get_current () != NULL)
+  holder = gtk_grab_get_current ();
+
+  /* TEMPORARY: log every change of the grab owner while the drawer is up, so
+   * one run shows whether an icon's context menu is seen at all. */
+  if (holder != self->last_holder)
     {
-      self->grab_poll = g_timeout_add (GRAB_POLL_MS, na_overflow_grab_poll_cb, self);
+      g_message ("na-overflow: grab %s -> %s",
+                 self->last_holder ? G_OBJECT_TYPE_NAME (self->last_holder) : "(none)",
+                 holder ? G_OBJECT_TYPE_NAME (holder) : "(none)");
+      self->last_holder = holder;
+    }
+
+  if (holder != NULL && holder != GTK_WIDGET (self->menu))
+    {
+      /* Somebody else in this process owns the pointer: an icon's context
+       * menu. Remember it and wait for it to go away. */
+      self->foreign_grab_seen = TRUE;
+      g_message ("na-overflow: grab held by %s -> watching for its release",
+                 G_OBJECT_TYPE_NAME (holder));
+    }
+  else if (self->foreign_grab_seen &&
+           g_get_monotonic_time () - self->shown_at
+           >= (gint64) AUTOHIDE_GRACE_MS * 1000)
+    {
+      /* The sibling menu is gone and the grab is ours (or nobody's): the
+       * drawer can no longer receive events, so it is finished. */
+      g_message ("na-overflow: sibling menu released the grab -> closing");
+      na_overflow_emit_closed (self);
       return FALSE;
     }
 
-  g_message ("na-overflow: no menu in this client holds the grab anymore -> closing");
-  na_overflow_emit_closed (self);
+  self->grab_poll = g_timeout_add (GRAB_POLL_MS, na_overflow_grab_poll_cb, self);
   return FALSE;
 }
 
@@ -1295,6 +1328,12 @@ na_overflow_popup (NaOverflow   *self,
 
       self->menu_up = TRUE;
 
+      /* Timestamp the open BEFORE arming the grab watch: the poll's grace is
+       * measured from shown_at. foreign_grab_seen starts fresh for this open. */
+      self->shown_at          = g_get_monotonic_time ();
+      self->foreign_grab_seen = FALSE;
+      self->last_holder       = NULL;
+
       /* Watch the process grab for the sibling-popup case, see
        * na_overflow_grab_poll_cb. Armed here, not in the constructor: the poll
        * stops itself while the drawer is down. */
@@ -1350,8 +1389,8 @@ na_overflow_popup (NaOverflow   *self,
       /* Auto-hide runs on this path too. The menu grab normally dismisses the
        * popup on Escape or an outside click ("deactivate"), but the drawer
        * must also fold away when the pointer simply leaves it, exactly as on
-       * X11 - and the poll is the only mechanism that can see that. */
-      self->shown_at = g_get_monotonic_time ();
+       * X11 - and the poll is the only mechanism that can see that.
+       * (shown_at was stamped above, before the grab watch was armed.) */
       self->outside_since = 0;
       if (self->autohide_ms > 0 && self->hide_timer == 0)
         self->hide_timer = g_timeout_add (AUTOHIDE_POLL_MS,
