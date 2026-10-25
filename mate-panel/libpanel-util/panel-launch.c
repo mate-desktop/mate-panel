@@ -30,6 +30,9 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
+#define MATE_DESKTOP_USE_UNSTABLE_API
+#include <libmate-desktop/mate-systemd.h>
+
 #include "panel-error.h"
 #include "panel-glib.h"
 
@@ -92,7 +95,22 @@ gather_pid_callback (GDesktopAppInfo   *gapp,
 		     GPid               pid,
 		     gpointer           data)
 {
+	const gchar *app_name;
+
 	g_child_watch_add (pid, dummy_child_watch, NULL);
+
+	app_name = g_app_info_get_id (G_APP_INFO (gapp));
+	if (app_name == NULL)
+		app_name = g_app_info_get_executable (G_APP_INFO (gapp));
+
+	/* Start async request; we don't care about the result */
+	mate_start_systemd_scope (app_name,
+				  pid,
+				  NULL,
+				  NULL,
+				  NULL,
+				  NULL,
+				  NULL);
 }
 
 gboolean
@@ -275,12 +293,20 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 				&display_name,
 				&pid,
 				&local_error);
-				g_free (display_name);
+	g_free (display_name);
 
-        if (local_error == NULL && retval == TRUE) {
+	if (local_error == NULL && retval == TRUE) {
 		g_child_watch_add (pid, dummy_child_watch, NULL);
-		}
+
+		mate_start_systemd_scope (fallback_exec,
+					  pid,
+					  NULL,
+					  NULL,
+					  NULL,
+					  NULL,
+					  NULL);
 		return TRUE;
+	}
 
 	return _panel_launch_handle_error (fallback_exec,
 					   screen, local_error, error);

@@ -46,6 +46,7 @@
 
 #define MATE_DESKTOP_USE_UNSTABLE_API
 #include <libmate-desktop/mate-desktop-utils.h>
+#include <libmate-desktop/mate-systemd.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -457,6 +458,14 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 		g_error_free (error);
 	} else {
 		g_child_watch_add (pid, dummy_child_watch, NULL);
+
+		mate_start_systemd_scope (locale_command,
+					  pid,
+					  NULL,
+					  NULL,
+					  NULL,
+					  NULL,
+					  NULL);
 	}
 
 	g_strfreev (argv);
