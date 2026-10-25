@@ -719,8 +719,24 @@ na_overflow_menu_motion_cb (GtkWidget      *widget,
                             gpointer        user_data)
 {
   NaOverflow *self = user_data;
+  GdkWindow  *sw   = gtk_widget_get_window (self->menu);
   gint        w, h;
   gboolean    inside;
+
+  /* Motion that arrived on a DESCENDANT's own window (an SNI button is a
+   * GtkButton, which has its own GdkWindow) means the pointer is over that
+   * button - inside the popup. Its event->x/y are relative to the BUTTON, and
+   * GTK does not re-translate them as the event propagates up to this handler,
+   * so judging them against the shell allocation is meaningless. Trust the
+   * window identity, not the numbers. (x_root is no help either: measured on
+   * wayfire it reports surface-relative values under this grab.) */
+  if (sw != NULL && event->window != sw)
+    {
+      g_message ("na-overflow: motion on descendant (%s) -> inside",
+                 (const char *) G_OBJECT_TYPE_NAME (widget));
+      self->leave_at = 0;
+      return FALSE;
+    }
 
   w = gtk_widget_get_allocated_width (widget);
   h = gtk_widget_get_allocated_height (widget);
@@ -730,18 +746,13 @@ na_overflow_menu_motion_cb (GtkWidget      *widget,
   inside = event->x >= 0 && event->x < w &&
            event->y >= 0 && event->y < h;
 
+  g_message ("na-overflow: motion shell (%.0f,%.0f of %dx%d) -> %s",
+             event->x, event->y, w, h, inside ? "inside" : "outside");
+
   if (inside)
-    {
-      if (self->leave_at != 0)
-        g_message ("na-overflow: motion -> inside");
-      self->leave_at = 0;
-    }
+    self->leave_at = 0;
   else if (self->leave_at == 0)
-    {
-      g_message ("na-overflow: motion -> outside (%.0f,%.0f of %dx%d)",
-                 event->x, event->y, w, h);
-      self->leave_at = g_get_monotonic_time ();
-    }
+    self->leave_at = g_get_monotonic_time ();
 
   return FALSE;   /* normal propagation continues */
 }
