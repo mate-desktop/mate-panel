@@ -720,34 +720,31 @@ na_overflow_menu_motion_cb (GtkWidget      *widget,
 {
   NaOverflow *self = user_data;
   GdkWindow  *sw   = gtk_widget_get_window (self->menu);
-  gint        w, h;
   gboolean    inside;
 
-  /* Motion that arrived on a DESCENDANT's own window (an SNI button is a
-   * GtkButton, which has its own GdkWindow) means the pointer is over that
-   * button - inside the popup. Its event->x/y are relative to the BUTTON, and
-   * GTK does not re-translate them as the event propagates up to this handler,
-   * so judging them against the shell allocation is meaningless. Trust the
-   * window identity, not the numbers. (x_root is no help either: measured on
-   * wayfire it reports surface-relative values under this grab.) */
+  /* Motion that arrived on a DESCENDANT's window (an SNI button is a
+   * GtkButton, which owns one) means the pointer is over that button.
+   * event->x/y there are button-relative and GTK does not re-translate them as
+   * the event propagates, so only the window identity is usable. */
   if (sw != NULL && event->window != sw)
     {
-      g_message ("na-overflow: motion on descendant (%s) -> inside",
-                 (const char *) G_OBJECT_TYPE_NAME (widget));
       self->leave_at = 0;
       return FALSE;
     }
 
-  w = gtk_widget_get_allocated_width (widget);
-  h = gtk_widget_get_allocated_height (widget);
-  if (w <= 0 || h <= 0)
-    return FALSE;
+  /* On the shell's own window the coordinates are ROOT-relative (measured:
+   * (1907,15) for a popup recorded at (1886,27)), so they compare against the
+   * rect computed at open time. */
+  inside = event->x >= self->menu_rect.x &&
+           event->x <  self->menu_rect.x + self->menu_rect.width  &&
+           event->y >= self->menu_rect.y &&
+           event->y <  self->menu_rect.y + self->menu_rect.height;
 
-  inside = event->x >= 0 && event->x < w &&
-           event->y >= 0 && event->y < h;
-
-  g_message ("na-overflow: motion shell (%.0f,%.0f of %dx%d) -> %s",
-             event->x, event->y, w, h, inside ? "inside" : "outside");
+  g_message ("na-overflow: motion shell (%.0f,%.0f) rect=(%d,%d %dx%d) -> %s",
+             event->x, event->y,
+             self->menu_rect.x, self->menu_rect.y,
+             self->menu_rect.width, self->menu_rect.height,
+             inside ? "inside" : "outside");
 
   if (inside)
     self->leave_at = 0;
@@ -755,6 +752,62 @@ na_overflow_menu_motion_cb (GtkWidget      *widget,
     self->leave_at = g_get_monotonic_time ();
 
   return FALSE;   /* normal propagation continues */
+}
+
+/* Crossings on the wrapper item.
+ *
+ * The motion channel stops delivering once the pointer leaves an icon (measured:
+ * after the item's leave crossing, no motion event reached us at all, so the
+ * drawer hung "inside" forever). The item's own crossings DO fire on the real
+ * move - enter when the pointer comes onto the drawer, leave when it goes off -
+ * so they complete what motion cannot: the transition to "outside".
+ *
+ * Synthetic crossings (grab activation) are ignored, as in gtk_menu_shell:
+ * they are the pointer being re-parented by the grab, not the pointer moving.
+ * Both handlers return FALSE so the shell and the shield still see the event. */
+static gboolean
+na_overflow_menu_item_leave_cb (GtkWidget        *widget,
+                                GdkEventCrossing *event,
+                                gpointer          user_data)
+{
+  NaOverflow *self = user_data;
+
+  (void) widget;
+
+  if (event->mode == GDK_CROSSING_GTK_GRAB ||
+      event->mode == GDK_CROSSING_GTK_UNGRAB ||
+      event->mode == GDK_CROSSING_STATE_CHANGED)
+    return FALSE;
+
+  /* INFERIOR = onto a child window, still inside the drawer. */
+  if (event->detail == GDK_NOTIFY_INFERIOR)
+    return FALSE;
+
+  g_message ("na-overflow: item leave (detail %d) -> outside", event->detail);
+  if (self->leave_at == 0)
+    self->leave_at = g_get_monotonic_time ();
+
+  return FALSE;
+}
+
+static gboolean
+na_overflow_menu_item_enter_cb (GtkWidget        *widget,
+                                GdkEventCrossing *event,
+                                gpointer          user_data)
+{
+  NaOverflow *self = user_data;
+
+  (void) widget;
+
+  if (event->mode == GDK_CROSSING_GTK_GRAB ||
+      event->mode == GDK_CROSSING_GTK_UNGRAB ||
+      event->mode == GDK_CROSSING_STATE_CHANGED)
+    return FALSE;
+
+  g_message ("na-overflow: item enter -> inside");
+  self->leave_at = 0;
+
+  return FALSE;
 }
 #endif
 
@@ -824,6 +877,13 @@ na_overflow_new (void)
       gtk_menu_set_reserve_toggle_size (GTK_MENU (self->menu), FALSE);
 
       item = gtk_menu_item_new ();
+
+      /* Connected BEFORE the shield: the shield returns TRUE and stops the
+       * propagation, so the crossings must be recorded first. */
+      g_signal_connect (item, "enter-notify-event",
+                        G_CALLBACK (na_overflow_menu_item_enter_cb), self);
+      g_signal_connect (item, "leave-notify-event",
+                        G_CALLBACK (na_overflow_menu_item_leave_cb), self);
 
       g_signal_connect (item, "button-press-event",
                         G_CALLBACK (na_overflow_menu_event_shield), self);
