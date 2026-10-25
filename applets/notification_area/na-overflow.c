@@ -502,8 +502,6 @@ na_overflow_autohide_cb (gpointer data)
   if (hide)
     {
       self->outside_since = 0;
-      g_message ("na-overflow: PROBE autohide fired (autohide_ms=%u)",
-                 self->autohide_ms);
       na_overflow_emit_closed (self);
       return FALSE;   /* popdown already removed the source */
     }
@@ -661,37 +659,6 @@ na_overflow_init (NaOverflow *self)
 }
 
 #ifdef HAVE_WAYLAND
-/* TEMPORARY PROBE: log every button event that reaches the grid, and which
- * widget GTK decided owns it. Tells us whether the press/release ever arrives
- * at the icon, or stops at the menu shell. */
-static gboolean
-na_overflow_probe_grid_button (GtkWidget *widget,
-                               GdkEvent  *event,
-                               gpointer   user_data)
-{
-  GdkEventButton *b = (GdkEventButton *) event;
-  GtkWidget      *ew = gtk_get_event_widget (event);
-
-  (void) user_data;
-  g_message ("na-overflow: PROBE grid %s btn=%d root=(%.0f,%.0f) "
-             "widget=(%.0f,%.0f) event_widget=%s on=%s",
-             event->type == GDK_BUTTON_PRESS ? "PRESS" :
-             event->type == GDK_BUTTON_RELEASE ? "RELEASE" : "OTHER",
-             b->button, b->x_root, b->y_root, b->x, b->y,
-             ew ? (const char *) G_OBJECT_TYPE_NAME (ew) : "(none)",
-             (const char *) G_OBJECT_TYPE_NAME (widget));
-
-  return FALSE;
-}
-
-static void
-na_overflow_probe_menu_deactivate (NaOverflow *self)
-{
-  g_message ("na-overflow: PROBE menu deactivate -> closing");
-}
-#endif
-
-#ifdef HAVE_WAYLAND
 /* The auto-hide on the menu path is driven by MOTION events, not crossings
  * and not coordinate queries.
  *
@@ -740,12 +707,6 @@ na_overflow_menu_motion_cb (GtkWidget      *widget,
            event->y >= self->menu_rect.y &&
            event->y <  self->menu_rect.y + self->menu_rect.height;
 
-  g_message ("na-overflow: motion shell (%.0f,%.0f) rect=(%d,%d %dx%d) -> %s",
-             event->x, event->y,
-             self->menu_rect.x, self->menu_rect.y,
-             self->menu_rect.width, self->menu_rect.height,
-             inside ? "inside" : "outside");
-
   if (inside)
     self->leave_at = 0;
   else if (self->leave_at == 0)
@@ -783,7 +744,6 @@ na_overflow_menu_item_leave_cb (GtkWidget        *widget,
   if (event->detail == GDK_NOTIFY_INFERIOR)
     return FALSE;
 
-  g_message ("na-overflow: item leave (detail %d) -> outside", event->detail);
   if (self->leave_at == 0)
     self->leave_at = g_get_monotonic_time ();
 
@@ -804,7 +764,6 @@ na_overflow_menu_item_enter_cb (GtkWidget        *widget,
       event->mode == GDK_CROSSING_STATE_CHANGED)
     return FALSE;
 
-  g_message ("na-overflow: item enter -> inside");
   self->leave_at = 0;
 
   return FALSE;
@@ -835,12 +794,9 @@ na_overflow_menu_event_shield (GtkWidget *widget,
                                GdkEvent  *event,
                                gpointer   user_data)
 {
+  (void) widget;
+  (void) event;
   (void) user_data;
-
-  g_message ("na-overflow: PROBE shield %s",
-             event->type == GDK_BUTTON_PRESS ? "press" :
-             event->type == GDK_BUTTON_RELEASE ? "release" :
-             event->type == GDK_ENTER_NOTIFY ? "enter" : "leave");
 
   return TRUE;
 }
@@ -919,19 +875,6 @@ na_overflow_new (void)
        * here that tells the truth about where the pointer is. */
       g_signal_connect (self->menu, "motion-notify-event",
                         G_CALLBACK (na_overflow_menu_motion_cb), self);
-
-      /* TEMPORARY PROBES */
-      g_signal_connect (self->grid, "button-press-event",
-                        G_CALLBACK (na_overflow_probe_grid_button), self);
-      g_signal_connect (self->grid, "button-release-event",
-                        G_CALLBACK (na_overflow_probe_grid_button), self);
-      g_signal_connect (self->menu, "button-press-event",
-                        G_CALLBACK (na_overflow_probe_grid_button), self);
-      g_signal_connect (self->menu, "button-release-event",
-                        G_CALLBACK (na_overflow_probe_grid_button), self);
-      g_signal_connect_swapped (self->menu, "deactivate",
-                                G_CALLBACK (na_overflow_probe_menu_deactivate),
-                                self);
     }
 #endif
 
@@ -1205,11 +1148,6 @@ na_overflow_popup (NaOverflow   *self,
         self->menu_rect.y      = py;
         self->menu_rect.width  = req.width;
         self->menu_rect.height = req.height;
-
-        g_message ("na-overflow: rect=(%d,%d %dx%d) anchors w=%d m=%d root=(%d,%d) wa=(%d,%d %dx%d)",
-                   px, py, req.width, req.height,
-                   widget_anchor, menu_anchor, root_x, root_y,
-                   wa.x, wa.y, wa.width, wa.height);
       }
 
       self->menu_up = TRUE;
@@ -1217,31 +1155,30 @@ na_overflow_popup (NaOverflow   *self,
       /* Seed leave_at based on where the pointer actually is at open time.
        *
        * The chevron is OUTSIDE the popup, so if the user clicks it and does not
-       * move onto the drawer, no enter/leave crossing ever arrives and leave_at
-       * would stay 0 ("inside") forever - the drawer never auto-hides. Check the
-       * pointer against the rect we just computed, and seed leave_at = now when
-       * it is outside, so the auto-hide timer starts ticking. */
+       * move onto the drawer, no crossing ever arrives and leave_at would stay
+       * 0 ("inside") forever - the drawer never auto-hides. Check the pointer
+       * against the rect computed above and seed leave_at = now when it is
+       * outside, so the auto-hide timer starts ticking.
+       *
+       * Trustworthy exactly here: no menu grab exists yet (the popup opens
+       * below), so gdk_device_get_position() answers root coordinates. */
       {
-        GdkDisplay *dpy = gdk_screen_get_display (gtk_widget_get_screen (relative_to));
-        GdkSeat    *st  = gdk_display_get_default_seat (dpy);
-        GdkDevice  *ptr = st ? gdk_seat_get_pointer (st) : NULL;
-        gint        px = 0, py = 0;
+        GdkDisplay *dpy    = gdk_screen_get_display (gtk_widget_get_screen (relative_to));
+        GdkSeat    *st     = gdk_display_get_default_seat (dpy);
+        GdkDevice  *ptr    = st ? gdk_seat_get_pointer (st) : NULL;
+        gint        px     = 0, py = 0;
+        gboolean    inside;
 
         if (ptr != NULL)
           gdk_device_get_position (ptr, NULL, &px, &py);
 
-        gboolean inside = (ptr != NULL &&
-                           px >= self->menu_rect.x &&
-                           px <  self->menu_rect.x + self->menu_rect.width  &&
-                           py >= self->menu_rect.y &&
-                           py <  self->menu_rect.y + self->menu_rect.height);
+        inside = (ptr != NULL &&
+                  px >= self->menu_rect.x &&
+                  px <  self->menu_rect.x + self->menu_rect.width  &&
+                  py >= self->menu_rect.y &&
+                  py <  self->menu_rect.y + self->menu_rect.height);
 
         self->leave_at = inside ? 0 : g_get_monotonic_time ();
-
-        g_message ("na-overflow: open seed: ptr=(%d,%d) rect=(%d,%d %dx%d) inside=%d leave_at=%s",
-                   px, py, self->menu_rect.x, self->menu_rect.y,
-                   self->menu_rect.width, self->menu_rect.height,
-                   inside, inside ? "0" : "now");
       }
 
       /* Pass the triggering event: the chevron's own button-release is still
