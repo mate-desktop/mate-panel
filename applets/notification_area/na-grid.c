@@ -152,6 +152,7 @@ overflow_grid_map_cb (GtkWidget *grid,
 }
 
 static void refresh_grid (NaGrid *self);
+static gboolean drawer_second_pass_cb (gpointer data);
 
 /* GTK never maps the SNI children that entered the drawer grid while the menu
  * was still hidden: measured on the live Wayland tray the drawer and its grid
@@ -161,6 +162,13 @@ static void refresh_grid (NaGrid *self);
  * appends the child, so the child order no longer matches the drawer's order
  * and the next layout pass would shuffle the icons - refresh_grid() rebuilds
  * the cells from self->items, which is the canonical order. */
+static gboolean
+drawer_second_pass_cb (gpointer data)
+{
+  refresh_grid ((NaGrid *) data);
+  return G_SOURCE_REMOVE;
+}
+
 static gboolean
 drawer_remap_cb (gpointer data)
 {
@@ -179,12 +187,26 @@ drawer_remap_cb (gpointer data)
       gtk_container_remove (GTK_CONTAINER (grid), item);
       gtk_container_add (GTK_CONTAINER (grid), item);
       gtk_widget_show (item);
+      gtk_style_context_add_class (gtk_widget_get_style_context (item),
+                                   "na-overflow-icon");
+      /* Windowless widgets only get synthesised crossings when they ask for
+       * them; without this mask the icon never enters the :hover state and the
+       * drawer shows no hover feedback at all (the item's own prelight is
+       * suppressed by CSS). */
+      gtk_widget_add_events (item,
+                             GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
       g_object_unref (item);
     }
 
   g_list_free (children);
 
   refresh_grid (self);
+
+  /* The cells are computed from the icons' requisitions, and right after the
+   * re-parenting those are still the pre-map ones - measured on the live tray:
+   * the first open packed the icons tight and only the next open spaced them
+   * properly.  One more pass once mapping has settled fixes the first open. */
+  g_timeout_add (120, drawer_second_pass_cb, self);
   return G_SOURCE_REMOVE;
 }
 

@@ -62,6 +62,7 @@ struct _NaOverflow
   /* The drawer's size as stated by the grid layout (see
    * na_overflow_set_nominal_size), without the container border. 0 until the
    * grid has laid out its cells at least once. */
+  GtkWidget    *hover_item;   /* icon under the pointer, owns a ref */
   gint          nominal_w;
   gint          nominal_h;
 
@@ -924,6 +925,14 @@ na_overflow_grid_child_at (NaOverflow *self, gdouble x, gdouble y)
   /* The grid is a windowless child of this item, so its children's allocations
    * share the item's window coordinate space - the same space event->x/y are in
    * when the grab attributes the event to this item. */
+  /* A click can arrive before the pending layout has been processed - then
+   * every child still reports its pre-map allocation and the hit test picks
+   * the first icon whatever the pointer is over (measured: the first
+   * right-click after opening opened the leftmost icon's menu, the second one
+   * the correct menu).  Force the resize before comparing coordinates. */
+  if (gtk_widget_get_realized (self->grid))
+    gtk_container_check_resize (GTK_CONTAINER (self->grid));
+
   children = gtk_container_get_children (GTK_CONTAINER (self->grid));
   for (l = children; l != NULL; l = l->next)
     {
@@ -953,37 +962,60 @@ na_overflow_menu_event_shield (GtkWidget *widget,
   NaOverflow *self = user_data;
 
   if (event->type != GDK_BUTTON_PRESS && event->type != GDK_BUTTON_RELEASE)
-    return TRUE;   /* crossings: recorded by the handlers below this one */
+    {
+      /* Crossings are recorded by the handlers below this one, and the icon
+       * under the pointer has to see them too: without this the only widget
+       * that ever gets :hover is the item itself, which spans the whole drawer
+       * (measured: the prelight covered every icon). */
+      if (event->type == GDK_ENTER_NOTIFY || event->type == GDK_LEAVE_NOTIFY ||
+          event->type == GDK_MOTION_NOTIFY)
+        {
+          GdkEventCrossing *c = (GdkEventCrossing *) event;
+          GtkWidget *under = na_overflow_grid_child_at (self, c->x, c->y);
+          GtkWidget *prev  = self->hover_item;
 
-  if (self->forwarding)
-    return TRUE;   /* our own redispatch coming back up - swallow it */
+          if (under != prev)
+            {
+              GdkEvent *copy;
 
-  {
-    GdkEventButton *b      = (GdkEventButton *) event;
-    GtkWidget      *target = na_overflow_grid_child_at (self, b->x, b->y);
+              if (prev != NULL)
+                {
+                  copy = gdk_event_copy (event);
+                  gtk_widget_event (prev, copy);
+                  gdk_event_free (copy);
+                  g_object_unref (prev);
+                }
 
-    if (target != NULL)
-      {
-        GtkAllocation a;
-        GdkEvent     *copy = gdk_event_copy (event);
+              if (under != NULL)
+                {
+                  GtkAllocation a;
 
-        gtk_widget_get_allocation (target, &a);
-        ((GdkEventButton *) copy)->x = b->x - a.x;
-        ((GdkEventButton *) copy)->y = b->y - a.y;
+                  gtk_widget_get_allocation (under, &a);
+                  copy = gdk_event_copy (event);
+                  ((GdkEventCrossing *) copy)->x = c->x - a.x;
+                  ((GdkEventCrossing *) copy)->y = c->y - a.y;
+                  gtk_widget_event (under, copy);
+                  gdk_event_free (copy);
+                  self->hover_item = under;   /* owns the ref */
+                }
+              else
+                self->hover_item = NULL;
+            }
+          else if (under != NULL)
+            {
+              g_object_unref (under);
+            }
+        }
+      return TRUE;
+    }
 
-        /* event->window is deliberately left pointing at the item's window:
-         * the GTK dispatch from here on uses the widget's own window, and
-         * swapping the pointer would need a ref/unref pair for nothing. */
-
-        self->forwarding = TRUE;
-        gtk_widget_event (target, copy);
-        self->forwarding = FALSE;
-
-        gdk_event_free (copy);
-        g_object_unref (target);
-      }
-  }
-
+  /* The icons receive button events natively - the widget under the pointer
+   * gets them before this item does.  The manual redispatch that used to be
+   * here delivered every click a second time, and because it compared the
+   * event's coordinates against allocations in another coordinate space it
+   * usually landed on the leftmost icon: measured on the live tray, one
+   * right-click opened two menus, the correct one and the first icon's.  All
+   * this handler has to do is stop the shell from seeing the event. */
   return TRUE;   /* the shell never sees it: no deactivate, no prelight */
 }
 #endif
@@ -1051,6 +1083,35 @@ na_overflow_new (void)
 
       gtk_menu_shell_append (GTK_MENU_SHELL (self->menu), item);
       gtk_widget_show_all (item);
+
+      /* The drawer is a single menu item, so the theme paints that item's
+       * prelight across the whole drawer.  The item is only a container here -
+       * drop its background so the hover feedback comes from the icon under
+       * the pointer (crossings are forwarded to it by the shield below).
+       * Padding is deliberately left alone: zeroing it shrinks the cells. */
+      {
+        GtkStyleContext *ctx = gtk_widget_get_style_context (item);
+        GtkCssProvider  *prov = gtk_css_provider_new ();
+
+        gtk_css_provider_load_from_data (prov,
+            "menuitem.na-overflow-host,"
+            "menuitem.na-overflow-host:hover,"
+            "menuitem.na-overflow-host:selected {"
+            "  background: none;"
+            "  background-image: none;"
+            "  box-shadow: none; }"
+            ".na-overflow-icon:hover {"
+            "  background-color: alpha(currentColor, 0.12);"
+            "  border-radius: 4px; }", -1, NULL);
+        /* For the screen, not for the item's context: a provider added to one
+         * widget's context applies to that widget only, so the
+         * .na-overflow-icon:hover rule never reached the icons. */
+        gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+                                                   GTK_STYLE_PROVIDER (prov),
+                                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        gtk_style_context_add_class (ctx, "na-overflow-host");
+        g_object_unref (prov);
+      }
 
       g_signal_connect_swapped (self->menu, "deactivate",
                                 G_CALLBACK (na_overflow_emit_closed), self);
@@ -1281,6 +1342,16 @@ dbg_later_cb (gpointer data)
     {
       GtkAllocation a;
       gtk_widget_get_allocation (c->data, &a);
+      {
+        gint la=-1, ta=-1, w=-1, h=-1;
+        gtk_container_child_get (GTK_CONTAINER (g), c->data,
+                                 "left-attach", &la, "top-attach", &ta,
+                                 "width", &w, "height", &h, NULL);
+        g_printerr ("NADBG   attach %s left=%d top=%d w=%d h=%d hexpand=%d vexpand=%d\n",
+                    G_OBJECT_TYPE_NAME (c->data), la, ta, w, h,
+                    gtk_widget_get_hexpand (c->data),
+                    gtk_widget_get_vexpand (c->data));
+      }
       g_printerr ("NADBG   later child %s mapped=%d realized=%d child_vis=%d no_show_all=%d window=%p alloc=%dx%d\n",
                   G_OBJECT_TYPE_NAME (c->data),
                   gtk_widget_get_mapped (c->data),
