@@ -109,7 +109,85 @@ enum
 
 G_DEFINE_TYPE (NaGrid, na_grid, GTK_TYPE_GRID)
 
+/* GTK leaves children that entered the drawer grid BEFORE the menu was ever
+ * shown unmapped: measured on the live Wayland tray, menu 62x38 and grid 52x26
+ * were fine while both SNI items sat at alloc 26x26 with mapped=FALSE, so the
+ * drawer painted as an empty box (and a second open collapsed it, because the
+ * unmapped cells stop contributing to the requisition).  Items added after the
+ * menu was mapped draw normally.  Toggling visibility once the grid itself is
+ * mapped puts them back into the mapped state; only SNI items are touched -
+ * an XEmbed socket must never be hidden, that unmaps the plug's window. */
+static gboolean
+overflow_grid_remap_idle (gpointer data)
+{
+  GtkWidget *grid = data;
+  GList *children = gtk_container_get_children (GTK_CONTAINER (grid));
+
+  for (GList *c = children; c != NULL; c = c->next)
+    {
+      GtkWidget *item = c->data;
+
+      if (!SN_IS_ITEM (item) || !gtk_widget_get_visible (item))
+        continue;
+
+      gtk_widget_set_visible (item, FALSE);
+      gtk_widget_set_visible (item, TRUE);
+
+      if (g_getenv ("NA_DEBUG") != NULL)
+        g_printerr ("NADBG remap-idle %s mapped=%d\n",
+                    G_OBJECT_TYPE_NAME (item), gtk_widget_get_mapped (item));
+    }
+
+  g_list_free (children);
+  g_object_unref (grid);
+  return G_SOURCE_REMOVE;
+}
+
+static void
+overflow_grid_map_cb (GtkWidget *grid,
+                      gpointer   data)
+{
+  g_object_ref (grid);
+  g_idle_add (overflow_grid_remap_idle, grid);
+}
+
 static void refresh_grid (NaGrid *self);
+
+/* GTK never maps the SNI children that entered the drawer grid while the menu
+ * was still hidden: measured on the live Wayland tray the drawer and its grid
+ * were sized correctly while both items sat at alloc 26x26 with mapped=FALSE,
+ * so the drawer painted as an empty box and the following open collapsed it.
+ * Re-parenting them once the popup is on screen maps them.  A container change
+ * appends the child, so the child order no longer matches the drawer's order
+ * and the next layout pass would shuffle the icons - refresh_grid() rebuilds
+ * the cells from self->items, which is the canonical order. */
+static gboolean
+drawer_remap_cb (gpointer data)
+{
+  NaGrid    *self = data;
+  GtkWidget *grid = na_overflow_get_grid (self->overflow);
+  GList     *children = gtk_container_get_children (GTK_CONTAINER (grid));
+
+  for (GList *c = children; c != NULL; c = c->next)
+    {
+      GtkWidget *item = c->data;
+
+      if (!SN_IS_ITEM (item) || !gtk_widget_get_visible (item))
+        continue;
+
+      g_object_ref (item);
+      gtk_container_remove (GTK_CONTAINER (grid), item);
+      gtk_container_add (GTK_CONTAINER (grid), item);
+      gtk_widget_show (item);
+      g_object_unref (item);
+    }
+
+  g_list_free (children);
+
+  refresh_grid (self);
+  return G_SOURCE_REMOVE;
+}
+
 static NaHost *find_sni_host (NaGrid *self);
 static gint   compute_icon_extent (NaGrid *self);
 static void unpark_xembed (NaGrid *self, GtkWidget *item);
@@ -735,6 +813,13 @@ place_item (NaGrid     *self,
 
   parent = gtk_widget_get_parent (item);
 
+  if (g_getenv ("NA_DEBUG") != NULL)
+    g_printerr ("NADBG place_item id=%s sni=%d state=%d parent=%s target=%s\n",
+                na_item_get_id (NA_ITEM (item)) ? na_item_get_id (NA_ITEM (item)) : "(null)",
+                SN_IS_ITEM (item) ? 1 : 0, (int) state,
+                parent ? G_OBJECT_TYPE_NAME (parent) : "NULL",
+                target ? G_OBJECT_TYPE_NAME (target) : "NULL");
+
   /* An XEmbed socket already living in the drawer stays there while its state
    * is still OVERFLOW: there is nothing to redo, and re-marking it here would
    * only leave a stale entry in xembed_pending. */
@@ -1022,6 +1107,38 @@ layout_overflow_grid (NaGrid  *self,
                                   ((n + cols - 1) / cols) * max_cell_h);
   else
     na_overflow_set_nominal_size (self->overflow, 0, 0);
+
+  if (g_getenv ("NA_DEBUG") != NULL)
+    {
+      GtkRequisition req;
+      GtkWidget *g = na_overflow_get_grid (self->overflow);
+      GList *ch = gtk_container_get_children (GTK_CONTAINER (g));
+      gint vis = 0, total = 0;
+      for (GList *c = ch; c; c = c->next, total++)
+        if (gtk_widget_get_visible (c->data)) vis++;
+      g_list_free (ch);
+      gtk_widget_get_preferred_size (g, NULL, &req);
+      {
+        GList *cc = gtk_container_get_children (GTK_CONTAINER (g));
+        for (GList *c = cc; c; c = c->next)
+          {
+            GtkAllocation a;
+            gtk_widget_get_allocation (c->data, &a);
+            g_printerr ("NADBG   child %s vis=%d mapped=%d drawable=%d alloc=%dx%d+%d+%d\n",
+                        G_OBJECT_TYPE_NAME (c->data),
+                        gtk_widget_get_visible (c->data),
+                        gtk_widget_get_mapped (c->data),
+                        gtk_widget_is_drawable (c->data),
+                        a.width, a.height, a.x, a.y);
+          }
+        g_list_free (cc);
+      }
+      g_printerr ("NADBG layout n=%d cols=%d extent=%d cell=%dx%d children=%d visible=%d req=%dx%d parent=%s child_visible=%d\n",
+                  n, cols, extent, max_cell_w, max_cell_h, total, vis,
+                  req.width, req.height,
+                  gtk_widget_get_parent (g) ? G_OBJECT_TYPE_NAME (gtk_widget_get_parent (g)) : "NULL",
+                  gtk_widget_get_child_visible (g));
+    }
 }
 
 static void
@@ -1358,6 +1475,9 @@ static void
 chevron_toggled_cb (GtkToggleButton *button,
                     NaGrid          *self)
 {
+  if (g_getenv ("NA_DEBUG") != NULL)
+    g_printerr ("NADBG chevron active=%d\n", gtk_toggle_button_get_active (button));
+
   if (!gtk_toggle_button_get_active (button))
     {
       na_overflow_popdown (self->overflow);
@@ -1383,6 +1503,9 @@ chevron_toggled_cb (GtkToggleButton *button,
   if (!park_xembed_now (self))
     schedule_park (self);   /* not everything fitted yet: finish from the queue */
   reposition_parked (self);
+
+  g_timeout_add (150, drawer_remap_cb, self);
+
 }
 
 static void
@@ -1501,6 +1624,9 @@ na_grid_init (NaGrid *self)
    * the drawer's own background and SNI icons are drawn first. */
   g_signal_connect_after (self->overflow, "draw",
                           G_CALLBACK (parked_draw_cb), self);
+
+  g_signal_connect (na_overflow_get_grid (self->overflow), "map",
+                    G_CALLBACK (overflow_grid_map_cb), self);
 
   self->chevron = gtk_toggle_button_new ();
   gtk_button_set_relief (GTK_BUTTON (self->chevron), GTK_RELIEF_NONE);

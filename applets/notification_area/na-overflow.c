@@ -26,6 +26,7 @@
 #endif
 
 #include "na-overflow.h"
+#include "na-item.h"
 
 enum
 {
@@ -1216,6 +1217,83 @@ na_overflow_position (NaOverflow *self)
   gtk_window_move (GTK_WINDOW (self), x, y);
 }
 
+static void
+dbg_unmap_cb (GtkWidget *w, gpointer data)
+{
+  g_printerr ("NADBG UNMAP %s at %" G_GINT64_FORMAT " us\n",
+              G_OBJECT_TYPE_NAME (w), g_get_monotonic_time ());
+}
+
+static gboolean
+dbg_remap_later_cb (gpointer data)
+{
+  NaOverflow *self = data;
+  GList *ch = gtk_container_get_children (GTK_CONTAINER (self->grid));
+
+  for (GList *c = ch; c != NULL; c = c->next)
+    {
+      GtkWidget *it = c->data;
+      if (!g_str_has_prefix (G_OBJECT_TYPE_NAME (it), "SnItem"))
+        continue;
+      gtk_widget_set_visible (it, FALSE);
+      gtk_widget_set_visible (it, TRUE);
+      g_printerr ("NADBG remap150 %s mapped=%d at %" G_GINT64_FORMAT "\n",
+                  G_OBJECT_TYPE_NAME (it), gtk_widget_get_mapped (it),
+                  g_get_monotonic_time ());
+    }
+  g_list_free (ch);
+  return FALSE;
+}
+
+/* See the call site in na_overflow_popup(): children placed into the drawer
+ * grid before the menu was ever shown stay unmapped, and nothing in the GTK
+ * map path lifts them out of that state.  Toggling visibility on the SNI items
+ * once the popup is on screen does.  XEmbed sockets are excluded by the NaItem
+ * check - hiding a socket unmaps the plug's window, which kills the icon. */
+static gboolean
+dbg_later_cb (gpointer data)
+{
+  NaOverflow *self = data;
+  GtkWidget  *g = self->grid;
+  GList      *ch = gtk_container_get_children (GTK_CONTAINER (g));
+
+  {
+    GtkWidget *it = gtk_widget_get_parent (self->grid);
+    GtkAllocation ma, ia;
+    gtk_widget_get_allocation (self->menu, &ma);
+    if (it) gtk_widget_get_allocation (it, &ia);
+    else memset (&ia, 0, sizeof ia);
+    g_printerr ("NADBG popup-later-detail: menu alloc=%dx%d+%d+%d items_in_menu=%d item alloc=%dx%d+%d+%d item_mapped=%d item_vis=%d item_parent=%s\n",
+                ma.width, ma.height, ma.x, ma.y,
+                g_list_length (gtk_container_get_children (GTK_CONTAINER (self->menu))),
+                ia.width, ia.height, ia.x, ia.y,
+                it ? gtk_widget_get_mapped (it) : -1,
+                it ? gtk_widget_get_visible (it) : -1,
+                it && gtk_widget_get_parent (it) ? G_OBJECT_TYPE_NAME (gtk_widget_get_parent (it)) : "NULL");
+  }
+  g_printerr ("NADBG popup-later: menu mapped=%d grid mapped=%d alloc=%dx%d children=%d\n",
+              gtk_widget_get_mapped (self->menu),
+              gtk_widget_get_mapped (g),
+              gtk_widget_get_allocated_width (g),
+              gtk_widget_get_allocated_height (g),
+              g_list_length (ch));
+  for (GList *c = ch; c != NULL; c = c->next)
+    {
+      GtkAllocation a;
+      gtk_widget_get_allocation (c->data, &a);
+      g_printerr ("NADBG   later child %s mapped=%d realized=%d child_vis=%d no_show_all=%d window=%p alloc=%dx%d\n",
+                  G_OBJECT_TYPE_NAME (c->data),
+                  gtk_widget_get_mapped (c->data),
+                  gtk_widget_get_realized (c->data),
+                  gtk_widget_get_child_visible (c->data),
+                  gtk_widget_get_no_show_all (c->data),
+                  (void *) gtk_widget_get_window (c->data),
+                  a.width, a.height);
+    }
+  g_list_free (ch);
+  return FALSE;
+}
+
 gboolean
 na_overflow_popup (NaOverflow   *self,
                    GtkWidget    *relative_to,
@@ -1391,6 +1469,21 @@ na_overflow_popup (NaOverflow   *self,
 
       /* Timestamp the open BEFORE arming the grab watch: the poll's grace is
        * measured from shown_at. foreign_grab_seen starts fresh for this open. */
+      if (g_getenv ("NA_DEBUG") != NULL)
+        {
+          GtkWidget *g = self->grid;
+          GtkWidget *it = gtk_widget_get_parent (g);
+          g_printerr ("NADBG popup: menu mapped=%d item=%s mapped=%d grid mapped=%d vis=%d alloc=%dx%d children=%d\n",
+                      gtk_widget_get_mapped (self->menu),
+                      it ? G_OBJECT_TYPE_NAME (it) : "NULL",
+                      it ? gtk_widget_get_mapped (it) : -1,
+                      gtk_widget_get_mapped (g),
+                      gtk_widget_get_visible (g),
+                      gtk_widget_get_allocated_width (g),
+                      gtk_widget_get_allocated_height (g),
+                      g_list_length (gtk_container_get_children (GTK_CONTAINER (g))));
+        }
+
       self->shown_at          = g_get_monotonic_time ();
       self->foreign_grab_seen = FALSE;
 
@@ -1445,6 +1538,20 @@ na_overflow_popup (NaOverflow   *self,
       }
 
       gtk_widget_queue_draw (GTK_WIDGET (self->grid));
+
+      /* GTK leaves the children that entered the drawer grid while the menu
+       * was still hidden unmapped: measured on the live Wayland tray the menu
+       * and the grid were sized correctly (62x38 / 60x26) while both SNI items
+       * sat at alloc 26x26 with mapped=FALSE - the drawer painted as an empty
+       * box, and the following open collapsed it to 10x30 because unmapped
+       * cells stop contributing to the requisition.  Items added after the
+       * menu was mapped draw normally, so re-showing them once the popup is on
+       * screen is what fixes it.  A zero-delay attempt from the grid's "map"
+       * handler is too early - GTK has not finished mapping by then. */
+      if (g_getenv ("NA_DEBUG") != NULL)
+        g_timeout_add (400, dbg_later_cb, self);
+      if (g_getenv ("NA_REMAP") != NULL)
+        g_timeout_add (150, dbg_remap_later_cb, self);
 
       /* Auto-hide runs on this path too. The menu grab normally dismisses the
        * popup on Escape or an outside click ("deactivate"), but the drawer
