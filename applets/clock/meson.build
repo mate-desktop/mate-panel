@@ -134,13 +134,25 @@ clock_sources = [
   clock_built_sources,
 ]
 
+clock_sources += [
+  'calendar-client.c',
+  'calendar-client.h',
+  'calendar-provider.c',
+  'calendar-provider.h',
+  'calendar-debug.h',
+]
+
+if have_libical
+  clock_sources += [
+    'calendar-vdir-provider.c',
+    'calendar-vdir-provider.h',
+  ]
+endif
+
 if have_eds
   clock_sources += [
-    'calendar-client.c',
-    'calendar-client.h',
-    'calendar-sources.c',
-    'calendar-sources.h',
-    'calendar-debug.h',
+    'calendar-eds-provider.c',
+    'calendar-eds-provider.h',
   ]
 endif
 
@@ -153,6 +165,10 @@ clock_deps = [
   mate_desktop_dep,
   m_dep,
 ] + libmate_panel_applet_deps
+
+if have_libical
+  clock_deps += libical_dep
+endif
 
 if have_eds
   clock_deps += eds_deps
@@ -171,6 +187,10 @@ clock_c_args = [
   '-DMATELOCALEDIR="@0@"'.format(mate_panel_localedir),
   '-DMATEWEATHER_I_KNOW_THIS_IS_UNSTABLE',
 ] + disable_deprecated_flags
+
+if have_libical
+  clock_c_args += '-DLIBICAL_GLIB_UNSTABLE_API'
+endif
 
 if clock_inprocess
   clock_applet = shared_library('clock-applet',
