@@ -108,6 +108,7 @@ _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	char            **supported_platforms;
 	gboolean          x11_supported;
 	gboolean          wayland_supported;
+	gboolean          in_process;
 
 	iid = g_strdup_printf ("%s::%s", factory_id, group);
 	name = g_key_file_get_locale_string (applet_file, group,
@@ -143,6 +144,12 @@ _mate_panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 			}
 		}
 	}
+
+	/* Out-of-process applets require GtkPlug, which is not supported on Wayland */
+	in_process = g_key_file_get_boolean (applet_file, "Applet Factory",
+					     "InProcess", NULL);
+	if (!in_process)
+		wayland_supported = FALSE;
 
 	info = mate_panel_applet_info_new (iid, name, comment, icon, (const char **) old_ids,
 					   x11_supported, wayland_supported);
