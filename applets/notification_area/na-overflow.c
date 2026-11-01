@@ -723,13 +723,17 @@ na_overflow_init (NaOverflow *self)
     GtkCssProvider *css = gtk_css_provider_new ();
 
     gtk_css_provider_load_from_data (css,
-                                     "button { padding: 0; margin: 0;"
+                                     "button, .background button {"
+                                     " padding: 0; margin: 0;"
                                      " border-width: 0; min-width: 0;"
-                                     " min-height: 0; }",
+                                     " min-height: 0; outline-width: 0; }",
                                      -1, NULL);
+    /* USER priority: at APPLICATION the theme's button padding still won and
+     * a cell requested extent+1..3 px (measured: pref 50..53 for a 49 px
+     * extent), which made the cells unequal and hid an icon. */
     gtk_style_context_add_provider (gtk_widget_get_style_context (self->grid),
                                     GTK_STYLE_PROVIDER (css),
-                                    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+                                    GTK_STYLE_PROVIDER_PRIORITY_USER);
     g_object_unref (css);
   }
 

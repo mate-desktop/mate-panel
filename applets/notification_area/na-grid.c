@@ -97,6 +97,7 @@ struct _NaGrid
   guint       relaying;
   guint       relayout_dirty;
   guint       repaint_pending;
+  guint       reopen_pending;
   guint       relayout_pass;   /* depth of the retry loop below */
   guint       destroying;
 };
@@ -771,6 +772,25 @@ parked_place_and_paint (NaGrid *self,
 /* Delayed repaint after a size change: the embedded clients need a moment to
  * produce the frame for their new window size, and painting right away left
  * one of them blank until the drawer was reopened. */
+/* Reopen the drawer after a size change the way the hand does it: the popup is
+ * fully popped down first, then opened again from scratch.  Doing both in one
+ * handler (toggle off/on) left the drawer's state half-torn-down. */
+static gboolean
+reopen_chevron_cb (gpointer data)
+{
+  NaGrid *self = data;
+
+  self->reopen_pending = 0;
+
+  if (self->destroying || self->chevron == NULL || self->overflow == NULL)
+    return G_SOURCE_REMOVE;
+
+  if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->chevron)))
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->chevron), TRUE);
+
+  return G_SOURCE_REMOVE;
+}
+
 static gboolean
 repaint_later_cb (gpointer data)
 {
@@ -2270,6 +2290,18 @@ na_grid_set_property (GObject      *object,
          * on its own, but its width stayed at the old value until the panel
          * was resized or restarted. */
         refresh_grid (self);
+
+        /* A reopened drawer always shows every icon, so rebuild it: pop it
+         * down now and open it again shortly after (see reopen_chevron_cb). */
+        if (self->chevron != NULL &&
+            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->chevron)))
+          {
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->chevron),
+                                          FALSE);
+            if (self->reopen_pending == 0)
+              self->reopen_pending = g_timeout_add (80, reopen_chevron_cb,
+                                                    self);
+          }
 
         break;
 
