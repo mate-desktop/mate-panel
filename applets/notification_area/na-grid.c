@@ -1666,6 +1666,38 @@ refresh_grid (NaGrid *self)
             for (cl = cells; cl != NULL; cl = cl->next)
               gtk_widget_show (GTK_WIDGET (cl->data));
 
+            if (g_getenv ("NA_DEBUG") != NULL)
+              {
+                for (cl = cells; cl != NULL; cl = cl->next)
+                  {
+                    GtkWidget     *cell = GTK_WIDGET (cl->data);
+                    GtkAllocation  a;
+                    GdkWindow     *cw = gtk_widget_get_window (cell);
+                    GList         *kids, *kl;
+                    GtkWidget     *item = NULL;
+
+                    gtk_widget_get_allocation (cell, &a);
+                    kids = gtk_container_get_children (GTK_CONTAINER (cell));
+                    for (kl = kids; kl != NULL; kl = kl->next)
+                      {
+                        item = GTK_WIDGET (kl->data);
+                        break;
+                      }
+                    if (kids != NULL)
+                      g_list_free (kids);
+
+                    g_printerr ("NADBG CELL id=%s vis=%d mapped=%d "
+                                "alloc=%d,%d %dx%d win=%dx%d\n",
+                                item != NULL
+                                  ? G_OBJECT_TYPE_NAME (item) : "?",
+                                gtk_widget_get_visible (cell),
+                                gtk_widget_get_mapped (cell),
+                                a.x, a.y, a.width, a.height,
+                                cw != NULL ? gdk_window_get_width (cw) : -1,
+                                cw != NULL ? gdk_window_get_height (cw) : -1);
+                  }
+              }
+
             if (cells != NULL)
               g_list_free (cells);
           }

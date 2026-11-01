@@ -715,6 +715,24 @@ na_overflow_init (NaOverflow *self)
 
   gtk_container_add (GTK_CONTAINER (self), self->grid);
 
+  /* The theme's button padding made an icon cell request extent+2..4 px
+   * (measured: pref 30 for a 27 px extent), so the homogeneous grid stretched
+   * every cell to that value and the cells stopped matching the icon size -
+   * which is also when icons started to go missing on a live resize. */
+  {
+    GtkCssProvider *css = gtk_css_provider_new ();
+
+    gtk_css_provider_load_from_data (css,
+                                     "button { padding: 0; margin: 0;"
+                                     " border-width: 0; min-width: 0;"
+                                     " min-height: 0; }",
+                                     -1, NULL);
+    gtk_style_context_add_provider (gtk_widget_get_style_context (self->grid),
+                                    GTK_STYLE_PROVIDER (css),
+                                    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref (css);
+  }
+
   self->panel_orientation = GTK_ORIENTATION_HORIZONTAL;
   self->open_direction = NA_OPEN_UNKNOWN;
   self->autohide_ms = AUTOHIDE_DEFAULT_MS;
