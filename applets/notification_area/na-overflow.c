@@ -2160,7 +2160,10 @@ na_overflow_reposition (NaOverflow *self)
   g_return_if_fail (NA_IS_OVERFLOW (self));
 
   if (gtk_widget_get_mapped (GTK_WIDGET (self)))
-    na_overflow_position (self);
+    {
+      na_overflow_fit_popup (self);
+      na_overflow_position (self);
+    }
 }
 
 /* Make a popped-up drawer follow its children's true size.
@@ -2206,8 +2209,10 @@ na_overflow_fit_popup (NaOverflow *self)
   gtk_widget_get_preferred_size (toplevel, NULL, &req);
   gtk_widget_get_allocation (toplevel, &alloc);
 
-  w = MAX (req.width,  alloc.width);
-  h = MAX (req.height, alloc.height);
+  /* Exact requisition, in BOTH directions: MAX() only ever grew the popup,
+   * so lowering the icon size left the drawer at its old width. */
+  w = MAX (req.width,  1);
+  h = MAX (req.height, 1);
   if (w == alloc.width && h == alloc.height)
     return;
 

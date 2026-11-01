@@ -96,6 +96,7 @@ struct _NaGrid
 
   guint       relaying;
   guint       relayout_dirty;
+  guint       repaint_pending;
   guint       relayout_pass;   /* depth of the retry loop below */
   guint       destroying;
 };
@@ -767,6 +768,31 @@ parked_place_and_paint (NaGrid *self,
  * Positions come from the placeholders' allocations, never from arithmetic -
  * see parked_placeholder().  connect_after on the drawer, so its background
  * and the SNI buttons are drawn first. */
+/* Delayed repaint after a size change: the embedded clients need a moment to
+ * produce the frame for their new window size, and painting right away left
+ * one of them blank until the drawer was reopened. */
+static gboolean
+repaint_later_cb (gpointer data)
+{
+  NaGrid *self = data;
+
+  self->repaint_pending = 0;
+
+  if (self->overflow != NULL && !self->destroying)
+    gtk_widget_queue_draw (GTK_WIDGET (self->overflow));
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+repaint_soon (NaGrid *self)
+{
+  if (self->repaint_pending != 0)
+    return;
+
+  self->repaint_pending = g_timeout_add (60, repaint_later_cb, self);
+}
+
 static gboolean
 parked_draw_cb (GtkWidget *overflow_window,
                 cairo_t   *cr,
@@ -1174,7 +1200,13 @@ layout_overflow_grid (NaGrid  *self,
             }
 
           gtk_widget_get_preferred_width (widget, &mn, &nt);
-          cell_w = MAX (extent, nt);
+
+          /* The SNI button caches the requisition of the surface it was last
+           * given, so its preferred width stayed at the OLD icon size (66-68
+           * px for a 26 px request) and pinned the drawer's width.  State the
+           * size instead of trusting the cache. */
+          gtk_widget_set_size_request (widget, extent, extent);
+          cell_w = extent;
           gtk_widget_set_size_request (cell, cell_w, extent);
 
           if (g_getenv ("NA_DEBUG") != NULL)
@@ -1186,7 +1218,33 @@ layout_overflow_grid (NaGrid  *self,
           GdkWindow *sw = gtk_widget_get_window (widget);
           gint       sw_w = (sw != NULL) ? gdk_window_get_width (sw) : extent;
 
-          cell_w = MAX (sw_w, extent);
+          /* Shrink an embedded window that is larger than the cell, never
+           * grow it: growing made the client keep its artwork in a corner
+           * ("holes"), while shrinking is safe and is what lets the drawer
+           * get its width back after the icon size is lowered again. */
+          /* An XEmbed child owns its window outright - there is no nested
+           * window to resize, the widget's own window IS the client's.  It
+           * keeps whatever size it was last given, so lowering the icon size
+           * left the cell (and the drawer's width) at the old value. */
+          if (sw != NULL &&
+              (gdk_window_get_width (sw) > extent ||
+               gdk_window_get_height (sw) > extent))
+            {
+              gint w = gdk_window_get_width (sw);
+              gint h = gdk_window_get_height (sw);
+
+              if (g_getenv ("NA_DEBUG") != NULL)
+                g_printerr ("NADBG xshrink %dx%d -> %d\n", w, h, extent);
+              gdk_window_resize (sw, extent, extent);
+              /* An embedded client repaints on Expose only; without forcing it
+               * here one icon stayed blank (the old frame) until the drawer
+               * was closed and opened again. */
+              gdk_window_invalidate_rect (sw, NULL, TRUE);
+              gdk_window_process_updates (sw, TRUE);
+              sw_w = extent;
+            }
+
+          cell_w = MAX (MIN (sw_w, extent), extent);
           gtk_widget_set_size_request (cell, cell_w, extent);
         }
 
@@ -1588,6 +1646,44 @@ refresh_grid (NaGrid *self)
   g_slist_free (overflow_items);
 
   self->relaying = FALSE;
+
+  /* The drawer's own window has to follow the new cell sizes: a mapped popup
+   * keeps the requisition it latched at open, so a size change grew the
+   * drawer but never shrank it. */
+  if (self->overflow != NULL)
+    {
+      /* One cell regularly stayed invisible after a size change (it came back
+       * only when the drawer was reopened).  Show every cell and item again
+       * instead of trusting the state the relayout left behind. */
+      {
+        GtkWidget *dg = na_overflow_get_grid (self->overflow);
+
+        if (dg != NULL && GTK_IS_CONTAINER (dg))
+          {
+            GList *cells = gtk_container_get_children (GTK_CONTAINER (dg));
+            GList *cl;
+
+            for (cl = cells; cl != NULL; cl = cl->next)
+              gtk_widget_show (GTK_WIDGET (cl->data));
+
+            if (cells != NULL)
+              g_list_free (cells);
+          }
+      }
+
+      na_overflow_reposition (self->overflow);
+
+      /* After a size change one cell sometimes kept showing its previous
+       * frame until the drawer was reopened; repaint the whole drawer. */
+      {
+        GtkWidget *dg = na_overflow_get_grid (self->overflow);
+
+        if (dg != NULL)
+          gtk_widget_queue_draw (dg);
+        repaint_soon (self);
+      }
+    }
+
 
   if (self->relayout_dirty)
     {
@@ -2138,6 +2234,11 @@ na_grid_set_property (GObject      *object,
 
       case PROP_ICON_SIZE:
         self->icon_size = g_value_get_int (value);
+        /* Re-measure right away: the drawer's height followed the new extent
+         * on its own, but its width stayed at the old value until the panel
+         * was resized or restarted. */
+        refresh_grid (self);
+
         break;
 
       default:
