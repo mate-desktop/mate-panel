@@ -1124,6 +1124,10 @@ layout_overflow_grid (NaGrid  *self,
 {
   GtkGrid  *grid = GTK_GRID (na_overflow_get_grid (self->overflow));
   gint      cols = NA_OVERFLOW_COLUMNS;
+
+  /* Equal cells, so the drawer's width is a plain multiple of the icon size. */
+  gtk_grid_set_column_homogeneous (grid, TRUE);
+  gtk_grid_set_row_homogeneous (grid, TRUE);
   gint      extent;
   gint      n    = 0;
   gint      cell_w, max_cell_w = 0, max_cell_h = 0;
@@ -1225,7 +1229,10 @@ layout_overflow_grid (NaGrid  *self,
            * given, so its preferred width stayed at the OLD icon size (66-68
            * px for a 26 px request) and pinned the drawer's width.  State the
            * size instead of trusting the cache. */
-          gtk_widget_set_size_request (widget, extent, extent);
+          /* Only the CELL states the size.  Pinning the button itself froze
+           * the requisition of its old surface and stopped it from growing
+           * when the surface did. */
+          gtk_widget_set_size_request (widget, -1, -1);
           cell_w = extent;
           gtk_widget_set_size_request (cell, cell_w, extent);
 
@@ -1281,6 +1288,11 @@ layout_overflow_grid (NaGrid  *self,
        * pitch - that is the overlap. */
       gtk_widget_set_hexpand (cell, FALSE);
       gtk_widget_set_vexpand (cell, FALSE);
+
+      /* One size for every cell, no exceptions: mixing MAX(window, extent)
+       * for embedded icons with `extent` for SNI icons produced unequal cells
+       * (measured 51/52/66/67 px at extent 49) and icons went missing. */
+      gtk_widget_set_size_request (cell, extent, extent);
 
       gtk_container_child_get (GTK_CONTAINER (grid), cell,
                                "left-attach", &left_attach,

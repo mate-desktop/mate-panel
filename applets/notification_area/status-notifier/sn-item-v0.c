@@ -1552,7 +1552,18 @@ sn_item_v0_set_icon_size (SnItemV0 *v0,
       g_object_notify_by_pspec (G_OBJECT (v0), obj_properties[PROP_ICON_SIZE]);
 
       if (v0->id != NULL)
-        queue_update (v0);
+        {
+          /* Synchronously, not through queue_update(): the relayout that
+           * follows this property change measures the surface, and a deferred
+           * update made it measure the OLD one - the icon that then went
+           * missing until the drawer was reopened. */
+          if (v0->update_id != 0)
+            {
+              g_source_remove (v0->update_id);
+              v0->update_id = 0;
+            }
+          update (v0);
+        }
 
       /* The button keeps the requisition it computed for the OLD surface, so
        * lowering the icon size left the cell (and the drawer's width) at the
