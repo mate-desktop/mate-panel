@@ -30,6 +30,7 @@
 #include "na-item.h"
 
 static gboolean na_overflow_hover_motion_cb (GtkWidget *widget, GdkEventMotion *event, gpointer user_data);
+static gboolean na_overflow_point_in_widget (GtkWidget *widget, gint px, gint py);
 static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
 static gboolean na_overflow_cell_enter_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
 static gboolean na_overflow_cell_leave_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
@@ -215,7 +216,17 @@ na_overflow_pointer_inside (NaOverflow *self)
   if (w <= 0 || h <= 0)
     return FALSE;
 
-  return px >= ox && px < ox + w && py >= oy && py < oy + h;
+  if (px >= ox && px < ox + w && py >= oy && py < oy + h)
+    return TRUE;
+
+  /* The chevron lives in the panel, outside this window: without this the
+   * drawer folded 800 ms after opening while the pointer was still on the
+   * button that opened it. */
+  if (self->relative_to != NULL &&
+      na_overflow_point_in_widget (self->relative_to, px, py))
+    return TRUE;
+
+  return FALSE;
 }
 
 void
@@ -682,13 +693,23 @@ na_overflow_init (NaOverflow *self)
   gtk_window_set_resizable (GTK_WINDOW (self), FALSE);
   gtk_window_set_gravity (GTK_WINDOW (self), GDK_GRAVITY_STATIC);
 
-  gtk_container_set_border_width (GTK_CONTAINER (self), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (self), 0);
   gtk_widget_set_name (GTK_WIDGET (self), "na-overflow");
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (self)),
                                "background");
 
   self->grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (self->grid), 0);
+
+  /* The border used to give the drawer its 4 px breathing room, but it also
+   * clipped the hover fill.  A margin on the grid keeps the same visual size
+   * without a border (X11 only - the Wayland menu has its own padding). */
+#if !defined(HAVE_WAYLAND)
+  gtk_widget_set_margin_start (self->grid, 4);
+  gtk_widget_set_margin_end (self->grid, 4);
+  gtk_widget_set_margin_top (self->grid, 4);
+  gtk_widget_set_margin_bottom (self->grid, 4);
+#endif
   gtk_grid_set_column_spacing (GTK_GRID (self->grid), 0);
   gtk_widget_show (self->grid);
 
@@ -1850,9 +1871,41 @@ na_overflow_popup (NaOverflow   *self,
         gint   fw = 0, fh = 0;
 
         for (c = ch; c != NULL; c = c->next)
-          if (gtk_widget_get_visible (c->data))
-            nvis++;
+          {
+            GtkWidget *w = c->data;
+
+            /* sn-item-v0.update() hides Status="Passive" items, and it runs
+             * 10 ms after ANY property change - including the icon-size
+             * pre-heat above.  When the first click lands in that window
+             * every drawer child is invisible, the grid requests nothing
+             * (the size filter reads get_visible only), and the menu
+             * latches a 10x30 microstrip with scroll arrows (measured).
+             * Inside the drawer the passivity policy is superseded by the
+             * layout anyway (layout_overflow_grid shows every cell), so
+             * state it here too, before measuring.  XEmbed placeholders
+             * keep their invisibility on purpose - only SNI buttons are
+             * forced. */
+            if (g_str_has_prefix (G_OBJECT_TYPE_NAME (w), "SnItem") &&
+                !gtk_widget_get_visible (w))
+              gtk_widget_show (w);
+
+            if (gtk_widget_get_visible (w))
+              nvis++;
+          }
         g_list_free (ch);
+
+        /* Unconditional probe: the first open of a session skipped the freeze
+         * silently (latch 10x30, microstrip with scroll arrows) while every
+         * later open froze correctly - one of the two terms must have been 0
+         * at that exact moment; print them instead of guessing which. */
+        if (g_getenv ("NA_DEBUG") != NULL)
+          {
+            GtkRequisition gr;
+            gtk_widget_get_preferred_size (self->grid, NULL, &gr);
+            g_printerr ("NADBG freeze-check: nvis=%d nominal=%dx%d cache=%dx%d\n",
+                        nvis, self->nominal_w, self->nominal_h,
+                        gr.width, gr.height);
+          }
 
         if (nvis > 0 && self->nominal_w > 1)
           {

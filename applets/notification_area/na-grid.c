@@ -128,7 +128,11 @@ overflow_grid_remap_idle (gpointer data)
     {
       GtkWidget *item = c->data;
 
-      if (!SN_IS_ITEM (item) || !gtk_widget_get_visible (item))
+      /* No get_visible() skip: a Passive SNI item hides itself from
+       * update() (sn-item-v0.c) and would then never be re-shown by this
+       * pass, staying invisible inside an open drawer.  Inside the drawer
+       * every SNI child belongs, by the layout's own policy. */
+      if (!SN_IS_ITEM (item))
         continue;
 
       gtk_widget_set_visible (item, FALSE);
@@ -208,7 +212,10 @@ drawer_remap_cb (gpointer data)
     {
       GtkWidget *item = c->data;
 
-      if (!SN_IS_ITEM (item) || !gtk_widget_get_visible (item))
+      /* get_visible() NOT consulted: see overflow_grid_remap_idle - a
+       * self-hidden Passive item must be re-shown here too, this pass owns
+       * the drawer's mapping. */
+      if (!SN_IS_ITEM (item))
         continue;
 
       g_object_ref (item);

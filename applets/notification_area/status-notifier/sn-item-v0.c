@@ -130,6 +130,7 @@ scale_surface (SnIconPixmap   *pixmap,
 
   cairo_scale (cr, scale_x, scale_y);
   cairo_set_source_surface (cr, pixmap->surface, 0, 0);
+  cairo_pattern_set_filter (cairo_get_source (cr), CAIRO_FILTER_BEST);
   cairo_paint (cr);
 
   cairo_destroy (cr);
@@ -189,7 +190,7 @@ get_surface (SnIconPixmap  **icon_pixmap,
 
   if (pixmap == NULL || pixmap->surface == NULL)
     return NULL;
-  else if (pixmap->height > size || pixmap->width > size)
+  else if (pixmap->height != size || pixmap->width != size)
     return scale_surface (pixmap, orientation, size);
   else
     return cairo_surface_reference (pixmap->surface);
@@ -211,27 +212,57 @@ get_icon_by_name (const gchar *icon_name,
   icon_theme = gtk_icon_theme_get_default ();
   gtk_icon_theme_rescan_if_needed (icon_theme);
 
-  sizes = gtk_icon_theme_get_icon_sizes (icon_theme, icon_name);
-  for (i = 0; sizes[i] != 0; i++)
+  /* Ask for exactly the requested size and let GTK_ICON_LOOKUP_FORCE_SIZE do
+   * the scaling.  The old "largest available size that is <= requested" pick
+   * returned e.g. 48 px for a 64 px request, so tray icons stopped growing
+   * when the tray (or min-icon-size) was enlarged - only scalable icons like
+   * the power applet followed along. */
+  chosen_size = requested_size;
+
+  {
+    cairo_surface_t *surface;
+
+    surface = gtk_icon_theme_load_surface (icon_theme, icon_name,
+                                           chosen_size, scale,
+                                           NULL, GTK_ICON_LOOKUP_FORCE_SIZE,
+                                           NULL);
+    if (surface == NULL)
+      return NULL;
+
+    /* Themes rarely ship large tray sizes, and FORCE_SIZE does not upscale:
+     * a 64 px request came back as 48 px and the icons looked tiny next to a
+     * scalable one.  Upscale explicitly with the best filter available. */
     {
-      if (sizes[i] == requested_size ||
-          sizes[i] == -1) /* scalable */
+      gint w = cairo_image_surface_get_width (surface) / MAX (scale, 1);
+      gint h = cairo_image_surface_get_height (surface) / MAX (scale, 1);
+
+      if (w < chosen_size || h < chosen_size)
         {
-          /* perfect match, stop here */
-          chosen_size = requested_size;
-          break;
+          gint          tw = MAX (chosen_size, w) * MAX (scale, 1);
+          gint          th = MAX (chosen_size, h) * MAX (scale, 1);
+          GdkPixbuf    *pb, *sc;
+          cairo_surface_t *up;
+
+          pb = gdk_pixbuf_get_from_surface (surface, 0, 0,
+                                            cairo_image_surface_get_width (surface),
+                                            cairo_image_surface_get_height (surface));
+          if (pb != NULL)
+            {
+              sc = gdk_pixbuf_scale_simple (pb, tw, th, GDK_INTERP_HYPER);
+              g_object_unref (pb);
+              if (sc != NULL)
+                {
+                  up = gdk_cairo_surface_create_from_pixbuf (sc, scale, NULL);
+                  g_object_unref (sc);
+                  cairo_surface_destroy (surface);
+                  surface = up;
+                }
+            }
         }
-      else if (sizes[i] < requested_size && sizes[i] > chosen_size)
-        chosen_size = sizes[i];
     }
-  g_free (sizes);
 
-  if (chosen_size == 0)
-    chosen_size = requested_size;
-
-  return gtk_icon_theme_load_surface (icon_theme, icon_name,
-                                      chosen_size, scale,
-                                      NULL, GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+    return surface;
+  }
 }
 
 #define ICON_NAME_VALID(icon_name) (icon_name && icon_name[0] != '\0')
