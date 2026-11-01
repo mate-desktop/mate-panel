@@ -219,12 +219,16 @@ na_overflow_pointer_inside (NaOverflow *self)
   if (px >= ox && px < ox + w && py >= oy && py < oy + h)
     return TRUE;
 
+#if !defined(HAVE_WAYLAND)
   /* The chevron lives in the panel, outside this window: without this the
    * drawer folded 800 ms after opening while the pointer was still on the
-   * button that opened it. */
+   * button that opened it.  X11 only - the Wayland menu path owns its own
+   * dismissal and this check made it fold while the pointer sat on the
+   * chevron. */
   if (self->relative_to != NULL &&
       na_overflow_point_in_widget (self->relative_to, px, py))
     return TRUE;
+#endif
 
   return FALSE;
 }

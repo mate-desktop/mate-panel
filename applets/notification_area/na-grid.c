@@ -49,6 +49,7 @@
 
 /* How many columns the overflow popup uses before wrapping.  Windows-like:
  * a small grid rather than one long row. */
+#define NA_ICON_MIN_EXTENT 16
 #define NA_OVERFLOW_COLUMNS 5
 
 typedef struct
@@ -97,6 +98,7 @@ struct _NaGrid
   guint       relaying;
   guint       relayout_dirty;
   guint       repaint_pending;
+  guint       reopen_pending;
   guint       relayout_pass;   /* depth of the retry loop below */
   guint       destroying;
 };
@@ -771,6 +773,24 @@ parked_place_and_paint (NaGrid *self,
 /* Delayed repaint after a size change: the embedded clients need a moment to
  * produce the frame for their new window size, and painting right away left
  * one of them blank until the drawer was reopened. */
+/* Wayland: reopen the drawer after a size change - an xdg_popup cannot be
+ * resized once it is shown. */
+static gboolean
+reopen_chevron_cb (gpointer data)
+{
+  NaGrid *self = data;
+
+  self->reopen_pending = 0;
+
+  if (self->destroying || self->chevron == NULL || self->overflow == NULL)
+    return G_SOURCE_REMOVE;
+
+  if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->chevron)))
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->chevron), TRUE);
+
+  return G_SOURCE_REMOVE;
+}
+
 static gboolean
 repaint_later_cb (gpointer data)
 {
@@ -1094,6 +1114,12 @@ compute_icon_extent (NaGrid *self)
 
   if (extent < self->min_icon_size)
     extent = self->min_icon_size;
+
+  /* Hard floor: while the drawer is being rebuilt the grid can report a tiny
+   * allocation (measured: 8 px), and the icons were laid out at that size for
+   * a frame or two.  No tray icon is ever meant to be smaller than this. */
+  if (extent < NA_ICON_MIN_EXTENT)
+    extent = NA_ICON_MIN_EXTENT;
 
   return extent;
 }
@@ -2282,6 +2308,20 @@ na_grid_set_property (GObject      *object,
          * on its own, but its width stayed at the old value until the panel
          * was resized or restarted. */
         refresh_grid (self);
+
+#if defined(HAVE_WAYLAND)
+        /* An xdg_popup latches its size at popup time and cannot be resized
+         * afterwards, so a size change has to rebuild the drawer. */
+        if (self->chevron != NULL &&
+            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->chevron)))
+          {
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->chevron),
+                                          FALSE);
+            if (self->reopen_pending == 0)
+              self->reopen_pending = g_timeout_add (80, reopen_chevron_cb,
+                                                    self);
+          }
+#endif
 
         break;
 
