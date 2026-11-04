@@ -28,12 +28,14 @@
 
 #include "na-overflow.h"
 #include "na-item.h"
+#include "status-notifier/sn-item.h"
 
 static gboolean na_overflow_hover_motion_cb (GtkWidget *widget, GdkEventMotion *event, gpointer user_data);
 static gboolean na_overflow_point_in_widget (GtkWidget *widget, gint px, gint py);
 static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
 static gboolean na_overflow_cell_enter_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
 static gboolean na_overflow_cell_draw_cb (GtkWidget *child, cairo_t *cr, gpointer user_data);
+static void     na_overflow_set_hover (NaOverflow *self, GtkWidget *owned);
 static gboolean na_overflow_cell_leave_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
 static void     na_overflow_grid_child_added_cb (GtkContainer *grid, GtkWidget *child, gpointer user_data);
 
@@ -73,6 +75,7 @@ struct _NaOverflow
    * na_overflow_set_nominal_size), without the container border. 0 until the
    * grid has laid out its cells at least once. */
   GtkWidget    *hover_item;   /* icon under the pointer, owns a ref */
+  guint         hover_poll;   /* X11: QueryPointer poll while the drawer is up */
   gint          nominal_w;
   gint          nominal_h;
 
@@ -702,6 +705,8 @@ na_overflow_init (NaOverflow *self)
   gtk_widget_set_name (GTK_WIDGET (self), "na-overflow");
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (self)),
                                "background");
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (self)),
+                               "na-overflow");
 
   self->grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (self->grid), 0);
@@ -719,6 +724,37 @@ na_overflow_init (NaOverflow *self)
   gtk_widget_show (self->grid);
 
   gtk_container_add (GTK_CONTAINER (self), self->grid);
+
+  /* SNI hover: let GTK paint the button's own background instead of cairo.
+   * Five independent reviews converged on this after the cairo variants in the
+   * container callback failed (fill painted over by the button's repaint). */
+  {
+    GtkCssProvider *css = gtk_css_provider_new ();
+
+    /* Suppress the theme's own hover background for the drawer's buttons: the
+     * theme repaints it on every PRELIGHT change (and animates it over 400 ms
+     * in this theme), which is what wiped the cairo fill and left only a flash
+     * while the pointer moved. */
+    gtk_css_provider_load_from_data (css,
+                                     "window.na-overflow button,"
+                                     " window.na-overflow button:hover,"
+                                     " window.na-overflow button:prelight,"
+                                     " window.na-overflow button:active {"
+                                     " background-image: none;"
+                                     " background-color: transparent;"
+                                     " transition: none;"
+                                     " box-shadow: none; }"
+                                     "button.na-tray-hovered {"
+                                     " background-color: rgba(70,70,80,0.45)"
+                                     " !important;"
+                                     " background-image: none !important; }",
+                                     -1, NULL);
+    gtk_style_context_add_provider_for_screen (
+        gdk_screen_get_default (),
+        GTK_STYLE_PROVIDER (css),
+        GTK_STYLE_PROVIDER_PRIORITY_USER);
+    g_object_unref (css);
+  }
 
   /* The theme's button padding made an icon cell request extent+2..4 px
    * (measured: pref 30 for a 27 px extent), so the homogeneous grid stretched
@@ -748,12 +784,11 @@ na_overflow_init (NaOverflow *self)
    * Motion on the drawer resolves the cell under the pointer (the resolver
    * walks up from whatever window sent the event), and every cell is wired
    * for crossings and the cell painter as it is added. */
-  g_signal_connect (self, "motion-notify-event",
-                    G_CALLBACK (na_overflow_hover_motion_cb), self);
-  /* Motion only: enter/leave on the drawer window itself delivered the drawer
-   * widget to the resolver, which set hover = NaOverflow and made the
-   * highlight flicker on the last icon. */
-  gtk_widget_add_events (GTK_WIDGET (self), GDK_POINTER_MOTION_MASK);
+  /* NO motion handler on X11: the query poll below is the single source of
+   * truth.  Both channels ran before and fought each other - motion set the
+   * icon, the poll a tick later resolved "none" in its own coordinates, so the
+   * highlight only survived while the pointer was moving (measured: hover
+   * alternated SnItemV0/none every 40 ms). */
   g_signal_connect (self->grid, "add",
                     G_CALLBACK (na_overflow_grid_child_added_cb), self);
 #endif
@@ -1028,7 +1063,7 @@ na_overflow_hover_resolve (NaOverflow *self,
 {
   GList         *children, *l;
   GtkWidget     *found = NULL;
-  GtkWidget     *owner = gtk_get_event_widget (event);
+  GtkWidget     *owner = (event != NULL) ? gtk_get_event_widget (event) : NULL;
   GtkAllocation  ga;
   gint           ncols = 0, nrows = 0, col, row;
   gdouble        cw, ch;
@@ -1146,6 +1181,123 @@ na_overflow_hover_resolve (NaOverflow *self,
   return found;
 }
 
+/* X11 hover poll.
+ *
+ * The drawer's window is almost entirely covered by the icons' own windows
+ * (SNI buttons, XEmbed clients), so X addresses the pointer's motion to THEM
+ * and the drawer sees it only in the few uncovered pixels.  Every reviewer of
+ * this problem converged on the same answer: ask the server instead of waiting
+ * for an event.  gdk_window_get_device_position() does a QueryPointer on X11
+ * and answers the position in the drawer's own coordinates plus the deepest
+ * window under the cursor, whoever GTK delivered the event to. */
+static gboolean
+na_overflow_hover_poll_cb (gpointer data)
+{
+  NaOverflow     *self = data;
+  GdkWindow      *win;
+  GdkDisplay     *display;
+  GdkDevice      *pointer;
+  GdkWindow      *under = NULL;
+  gint            x = 0, y = 0;
+
+  if (!gtk_widget_get_mapped (GTK_WIDGET (self)))
+    {
+      self->hover_poll = 0;
+      return G_SOURCE_REMOVE;
+    }
+
+  win = gtk_widget_get_window (GTK_WIDGET (self));
+  if (win == NULL)
+    return G_SOURCE_CONTINUE;
+
+  display = gdk_window_get_display (win);
+  pointer = gdk_seat_get_pointer (gdk_display_get_default_seat (display));
+  if (pointer == NULL)
+    return G_SOURCE_CONTINUE;
+
+  under = gdk_window_get_device_position (win, pointer, &x, &y, NULL);
+
+  {
+    GtkWidget *cell;
+    gint       w = gdk_window_get_width (win);
+    gint       h = gdk_window_get_height (win);
+
+    /* `under` is the deepest CHILD window of the drawer, and the icons are not
+     * its children (they are separate X windows), so under==NULL while the
+     * pointer sits right in the middle of the drawer (measured: x=72 y=12 with
+     * a 128x34 window).  Judge by the coordinates instead. */
+    (void) under;
+    cell = (x >= 0 && y >= 0 && x < w && y < h)
+             ? na_overflow_hover_resolve (self, NULL, x, y)
+             : NULL;
+
+    na_overflow_set_hover (self, cell);
+  }
+
+  return G_SOURCE_CONTINUE;
+}
+
+static void
+na_overflow_hover_poll_start (NaOverflow *self)
+{
+#if defined(HAVE_WAYLAND)
+  if (gdk_display_get_default () != NULL &&
+      GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    return;   /* no truthful pointer position there */
+#endif
+
+  if (self->hover_poll != 0)
+    return;
+
+  self->hover_poll = g_timeout_add (40, na_overflow_hover_poll_cb, self);
+}
+
+/* The SNI button under `w` (w itself, or a descendant): that is the widget
+ * whose own background GTK paints. */
+static GtkWidget *
+na_overflow_find_sni (GtkWidget *w)
+{
+  if (w == NULL)
+    return NULL;
+
+  if (SN_IS_ITEM (w))
+    return w;
+
+  if (GTK_IS_CONTAINER (w))
+    {
+      GList *kids = gtk_container_get_children (GTK_CONTAINER (w));
+      GList *l;
+      GtkWidget *found = NULL;
+
+      for (l = kids; l != NULL && found == NULL; l = l->next)
+        found = na_overflow_find_sni (l->data);
+
+      g_list_free (kids);
+      return found;
+    }
+
+  return NULL;
+}
+
+static void
+na_overflow_set_sni_hover (GtkWidget *w,
+                           gboolean   on)
+{
+  GtkWidget       *sni = na_overflow_find_sni (w);
+  GtkStyleContext *ctx;
+
+  if (sni == NULL)
+    return;
+
+  ctx = gtk_widget_get_style_context (sni);
+  if (on)
+    gtk_style_context_add_class (ctx, "na-tray-hovered");
+  else
+    gtk_style_context_remove_class (ctx, "na-tray-hovered");
+
+  gtk_widget_queue_draw (sni);
+}
+
 /* Install the hovered cell's occupant. Takes the reference the resolver
  * handed out (or NULL). Both affected children repaint: the painter lives on
  * the children, so queueing the grid alone would redraw nothing. */
@@ -1179,14 +1331,16 @@ na_overflow_set_hover (NaOverflow *self,
   }
   if (prev != NULL)
     {
+      na_overflow_set_sni_hover (prev, FALSE);
       gtk_widget_queue_draw (prev);
       g_object_unref (prev);
     }
   if (owned != NULL)
-    gtk_widget_queue_draw (owned);
+    {
+      na_overflow_set_sni_hover (owned, TRUE);
+      gtk_widget_queue_draw (owned);
+    }
 
-  g_printerr ("NADBG hover -> %s\n",
-              owned ? G_OBJECT_TYPE_NAME (owned) : "none");
 }
 
 static gboolean
@@ -1672,11 +1826,6 @@ na_overflow_cell_leave_cb (GtkWidget        *child,
     na_overflow_set_hover (self, NULL);
   return FALSE;
 }
-
-/* X11: an SNI icon owns an opaque window above the drawer's, so a fill painted
- * on the drawer survives only in the 4 px gaps between icons.  Paint the cell
- * in the icon's own window, connect() (not connect_after) so it lands under
- * the glyph whose chrome the flat CSS has already removed. */
 static gboolean
 na_overflow_cell_draw_cb (GtkWidget *child,
                           cairo_t   *cr,
@@ -1697,8 +1846,12 @@ na_overflow_cell_draw_cb (GtkWidget *child,
    * direct child of the grid (measured: hover alternated between GtkBox and
    * SnItemV0), so accept either the cell or a descendant of it. */
   if (self->hover_item != child &&
-      !gtk_widget_is_ancestor (self->hover_item, child))
+      !gtk_widget_is_ancestor (child, self->hover_item))
     return FALSE;
+
+  /* Measured: SnItemV0 has NO window of its own (has_window=0), so this cell
+   * painter on the drawer surface is the right layer for SNI as well - the
+   * earlier "it has its own window" premise was wrong. */
 
   grid = gtk_widget_get_parent (child);
   if (grid == NULL)
@@ -1756,6 +1909,9 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
                          (gpointer) "na-cell-hover");
 
 #if !defined(HAVE_WAYLAND)
+      /* One painter for every cell: an SNI button has no window of its own
+       * (measured has_window=0), so it is painted on this surface and the cell
+       * rectangle is the correct geometry for it too. */
       g_signal_connect (child, "draw",
                         G_CALLBACK (na_overflow_cell_draw_cb), user_data);
 #endif
@@ -2130,6 +2286,7 @@ na_overflow_popup (NaOverflow   *self,
        * na_overflow_grab_poll_cb. Armed here, not in the constructor: the poll
        * stops itself while the drawer is down. */
       na_overflow_arm_grab_poll (self);
+      na_overflow_hover_poll_start (self);
 
       /* Seed leave_at based on where the pointer actually is at open time.
        *
@@ -2224,6 +2381,10 @@ na_overflow_popup (NaOverflow   *self,
    * started below still dismisses the popup. */
   na_overflow_arm_click_watch (self);
 
+  /* X11: poll for the pointer instead of waiting for events (the drawer's
+   * window is covered by the icons' windows). */
+  na_overflow_hover_poll_start (self);
+
   self->shown_at = g_get_monotonic_time ();
   self->outside_since = 0;
   if (self->autohide_ms > 0 && self->hide_timer == 0)
@@ -2236,6 +2397,12 @@ na_overflow_popup (NaOverflow   *self,
 void
 na_overflow_popdown (NaOverflow *self)
 {
+  if (self->hover_poll != 0)
+    {
+      g_source_remove (self->hover_poll);
+      self->hover_poll = 0;
+    }
+
   g_return_if_fail (NA_IS_OVERFLOW (self));
 
   /* The painted hover highlight references a child of the drawer: drop it on
