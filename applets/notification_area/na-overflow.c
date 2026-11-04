@@ -30,12 +30,18 @@
 #include "na-item.h"
 #include "status-notifier/sn-item.h"
 
-static gboolean na_overflow_hover_motion_cb (GtkWidget *widget, GdkEventMotion *event, gpointer user_data);
 static gboolean na_overflow_point_in_widget (GtkWidget *widget, gint px, gint py);
-static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
 static gboolean na_overflow_cell_enter_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
+#if !defined(HAVE_WAYLAND)
 static gboolean na_overflow_cell_draw_cb (GtkWidget *child, cairo_t *cr, gpointer user_data);
+#endif
+#if defined(HAVE_WAYLAND)
+static gboolean na_overflow_hover_motion_cb (GtkWidget *widget, GdkEventMotion *event, gpointer user_data);
+static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
+#endif
+#if !defined(HAVE_WAYLAND)
 static gboolean na_overflow_band_draw_cb (GtkWidget *widget, cairo_t *cr, gpointer user_data);
+#endif
 static void     na_overflow_set_hover (NaOverflow *self, GtkWidget *owned);
 static gboolean na_overflow_cell_leave_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
 static void     na_overflow_grid_child_added_cb (GtkContainer *grid, GtkWidget *child, gpointer user_data);
@@ -742,16 +748,11 @@ na_overflow_init (NaOverflow *self)
     gtk_css_provider_load_from_data (css,
                                      "window.na-overflow button,"
                                      " window.na-overflow button:hover,"
-                                     " window.na-overflow button:prelight,"
                                      " window.na-overflow button:active {"
                                      " background-image: none;"
                                      " background-color: transparent;"
                                      " transition: none;"
-                                     " box-shadow: none; }"
-                                     "button.na-tray-hovered {"
-                                     " background-color: rgba(70,70,80,0.45)"
-                                     " !important;"
-                                     " background-image: none !important; }",
+                                     " box-shadow: none; }",
                                      -1, NULL);
     gtk_style_context_add_provider_for_screen (
         gdk_screen_get_default (),
@@ -1111,9 +1112,6 @@ na_overflow_hover_resolve (NaOverflow *self,
   if (found != NULL)
     {
       g_list_free (children);
-      g_printerr ("NADBG RESOLVE owner=%s -> %s\n",
-                    owner ? G_OBJECT_TYPE_NAME (owner) : "NULL",
-                    G_OBJECT_TYPE_NAME (found));
       return found;
     }
 
@@ -1125,8 +1123,6 @@ na_overflow_hover_resolve (NaOverflow *self,
   if (ga.width <= 0 || ga.height <= 0)
     {
       g_list_free (children);
-      g_printerr ("NADBG RESOLVE cell-path: grid %dx%d -> none\n",
-                    ga.width, ga.height);
       return NULL;
     }
 
@@ -1149,7 +1145,7 @@ na_overflow_hover_resolve (NaOverflow *self,
   if (ncols <= 0 || nrows <= 0)
     return NULL;
 
-  cw = (gdouble) ga.width  / ncols;
+  cw = (gdouble) ga.width / ncols;
   ch = (gdouble) ga.height / nrows;
 
   col = (gint) floor ((x - ga.x) / cw);
@@ -1179,11 +1175,6 @@ na_overflow_hover_resolve (NaOverflow *self,
     }
   g_list_free (children);
 
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG RESOLVE cell-path grid=%dx%d+%d+%d %dx%d at (%.0f,%.0f)"
-                " -> %s\n", ga.width, ga.height, ga.x, ga.y, ncols, nrows,
-                (double) col, (double) row,
-                found ? G_OBJECT_TYPE_NAME (found) : "none");
 
   return found;
 }
@@ -1350,6 +1341,7 @@ na_overflow_set_hover (NaOverflow *self,
 
 }
 
+#if defined(HAVE_WAYLAND)
 static gboolean
 na_overflow_menu_event_shield (GtkWidget *widget,
                                GdkEvent  *event,
@@ -1385,6 +1377,7 @@ na_overflow_menu_event_shield (GtkWidget *widget,
    * this handler has to do is stop the shell from seeing the event. */
   return TRUE;   /* the shell never sees it: no deactivate, no prelight */
 }
+#endif
 
 NaOverflow *
 na_overflow_new (void)
@@ -1680,34 +1673,6 @@ na_overflow_position (NaOverflow *self)
   gtk_window_move (GTK_WINDOW (self), x, y);
 }
 
-static void
-dbg_unmap_cb (GtkWidget *w, gpointer data)
-{
-  g_printerr ("NADBG UNMAP %s at %" G_GINT64_FORMAT " us\n",
-              G_OBJECT_TYPE_NAME (w), g_get_monotonic_time ());
-}
-
-static gboolean
-dbg_remap_later_cb (gpointer data)
-{
-  NaOverflow *self = data;
-  GList *ch = gtk_container_get_children (GTK_CONTAINER (self->grid));
-
-  for (GList *c = ch; c != NULL; c = c->next)
-    {
-      GtkWidget *it = c->data;
-      if (!g_str_has_prefix (G_OBJECT_TYPE_NAME (it), "SnItem"))
-        continue;
-      gtk_widget_set_visible (it, FALSE);
-      gtk_widget_set_visible (it, TRUE);
-      g_printerr ("NADBG remap150 %s mapped=%d at %" G_GINT64_FORMAT "\n",
-                  G_OBJECT_TYPE_NAME (it), gtk_widget_get_mapped (it),
-                  g_get_monotonic_time ());
-    }
-  g_list_free (ch);
-  return FALSE;
-}
-
 /* See the call site in na_overflow_popup(): children placed into the drawer
  * grid before the menu was ever shown stay unmapped, and nothing in the GTK
  * map path lifts them out of that state.  Toggling visibility on the SNI items
@@ -1730,6 +1695,7 @@ dbg_remap_later_cb (gpointer data)
  * The column comes from the layout, not from allocations: the grid is
  * homogeneous with zero spacing (refresh_overflow_grid), so cell geometry is
  * grid_size / filled columns and the hovered child's left-attach. */
+#if defined(HAVE_WAYLAND)
 static gboolean
 na_overflow_stripe_draw_cb (GtkWidget *item,
                             cairo_t   *cr,
@@ -1788,12 +1754,10 @@ na_overflow_stripe_draw_cb (GtkWidget *item,
   cairo_rectangle (cr, x0, 0, x1 - x0, ia.height);
   cairo_fill (cr);
 
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG STRIPE-DRAW cell col %d+%d of %d -> x %.0f..%.0f h %d\n",
-                left, wid, ncols, x0, x1, ia.height);
 
   return FALSE;
 }
+#endif
 
 /* The icons report their own crossings: motion over an icon's surface never
  * reaches the item handler (measured), but enter/leave on the icon's window
@@ -1809,7 +1773,6 @@ na_overflow_cell_enter_cb (GtkWidget        *child,
       event->mode == GDK_CROSSING_STATE_CHANGED)
     return FALSE;
 
-  g_printerr ("NADBG ENTER child=%s\n", G_OBJECT_TYPE_NAME (child));
   g_object_ref (child);
   na_overflow_set_hover (user_data, child);
   return FALSE;
@@ -1838,6 +1801,7 @@ na_overflow_cell_leave_cb (GtkWidget        *child,
  * The grid's draw runs before its children, so the band sits UNDER the icons
  * (whatever kind they are), and a cell is the full grid height - the icons keep
  * a 2 px inset inside it, which this fill covers. */
+#if !defined(HAVE_WAYLAND)
 static gboolean
 na_overflow_band_draw_cb (GtkWidget *widget,
                           cairo_t   *cr,
@@ -1897,7 +1861,9 @@ na_overflow_band_draw_cb (GtkWidget *widget,
 
   return FALSE;
 }
+#endif
 
+#if !defined(HAVE_WAYLAND)
 static gboolean
 na_overflow_cell_draw_cb (GtkWidget *child,
                           cairo_t   *cr,
@@ -1909,7 +1875,6 @@ na_overflow_cell_draw_cb (GtkWidget *child,
   GList         *kids, *l;
   gint           left = 0, top = 0, wid = 1, hei = 1;
   gint           ncols = 1, nrows = 1;
-  gdouble        cw, ch;
 
   if (g_getenv ("NA_PLAIN") != NULL)
     return FALSE;
@@ -1954,9 +1919,6 @@ na_overflow_cell_draw_cb (GtkWidget *child,
     }
   g_list_free (kids);
 
-  cw = (gdouble) ga.width  / ncols;
-  ch = (gdouble) ga.height / nrows;
-
   /* The cell's draw context is already relative to the cell, so the fill is the
    * cell's own rectangle: adding ga.x/ga.y shifted it by the grid's margin and
    * left a bare strip at the left and right edges. */
@@ -1968,6 +1930,7 @@ na_overflow_cell_draw_cb (GtkWidget *child,
 
   return FALSE;
 }
+#endif
 
 /* Every child of the drawer grid gets the crossing wiring once, at the moment
  * it is attached: placeholders are created lazily by refresh_grid(), so a
@@ -2013,6 +1976,7 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
     }
 }
 
+#if defined(HAVE_WAYLAND)
 static gboolean
 na_overflow_hover_motion_cb (GtkWidget      *widget,
                              GdkEventMotion *event,
@@ -2021,10 +1985,6 @@ na_overflow_hover_motion_cb (GtkWidget      *widget,
   NaOverflow *self = user_data;
   GtkWidget  *under;
 
-  g_printerr ("NADBG HOVER-MOTION owner=%s x=%.0f y=%.0f\n",
-                gtk_get_event_widget ((GdkEvent *) event) ?
-                    G_OBJECT_TYPE_NAME (gtk_get_event_widget ((GdkEvent *) event)) : "NULL",
-                event->x, event->y);
 
   /* No coordinate translation here on purpose: an event that bubbled up from
    * an icon carries ICON-relative coordinates, which would read as garbage in
@@ -2033,61 +1993,8 @@ na_overflow_hover_motion_cb (GtkWidget      *widget,
   na_overflow_set_hover (self, under);
   return FALSE;
 }
+#endif
 
-
-static gboolean
-dbg_later_cb (gpointer data)
-{
-  NaOverflow *self = data;
-  GtkWidget  *g = self->grid;
-  GList      *ch = gtk_container_get_children (GTK_CONTAINER (g));
-
-  {
-    GtkWidget *it = gtk_widget_get_parent (self->grid);
-    GtkAllocation ma, ia;
-    gtk_widget_get_allocation (self->menu, &ma);
-    if (it) gtk_widget_get_allocation (it, &ia);
-    else memset (&ia, 0, sizeof ia);
-    g_printerr ("NADBG popup-later-detail: menu alloc=%dx%d+%d+%d items_in_menu=%d item alloc=%dx%d+%d+%d item_mapped=%d item_vis=%d item_parent=%s\n",
-                ma.width, ma.height, ma.x, ma.y,
-                g_list_length (gtk_container_get_children (GTK_CONTAINER (self->menu))),
-                ia.width, ia.height, ia.x, ia.y,
-                it ? gtk_widget_get_mapped (it) : -1,
-                it ? gtk_widget_get_visible (it) : -1,
-                it && gtk_widget_get_parent (it) ? G_OBJECT_TYPE_NAME (gtk_widget_get_parent (it)) : "NULL");
-  }
-  g_printerr ("NADBG popup-later: menu mapped=%d grid mapped=%d alloc=%dx%d children=%d\n",
-              gtk_widget_get_mapped (self->menu),
-              gtk_widget_get_mapped (g),
-              gtk_widget_get_allocated_width (g),
-              gtk_widget_get_allocated_height (g),
-              g_list_length (ch));
-  for (GList *c = ch; c != NULL; c = c->next)
-    {
-      GtkAllocation a;
-      gtk_widget_get_allocation (c->data, &a);
-      {
-        gint la=-1, ta=-1, w=-1, h=-1;
-        gtk_container_child_get (GTK_CONTAINER (g), c->data,
-                                 "left-attach", &la, "top-attach", &ta,
-                                 "width", &w, "height", &h, NULL);
-        g_printerr ("NADBG   attach %s left=%d top=%d w=%d h=%d hexpand=%d vexpand=%d\n",
-                    G_OBJECT_TYPE_NAME (c->data), la, ta, w, h,
-                    gtk_widget_get_hexpand (c->data),
-                    gtk_widget_get_vexpand (c->data));
-      }
-      g_printerr ("NADBG   later child %s mapped=%d realized=%d child_vis=%d no_show_all=%d window=%p alloc=%dx%d\n",
-                  G_OBJECT_TYPE_NAME (c->data),
-                  gtk_widget_get_mapped (c->data),
-                  gtk_widget_get_realized (c->data),
-                  gtk_widget_get_child_visible (c->data),
-                  gtk_widget_get_no_show_all (c->data),
-                  (void *) gtk_widget_get_window (c->data),
-                  a.width, a.height);
-    }
-  g_list_free (ch);
-  return FALSE;
-}
 
 gboolean
 na_overflow_popup (NaOverflow   *self,
@@ -2251,19 +2158,6 @@ na_overflow_popup (NaOverflow   *self,
           }
         g_list_free (ch);
 
-        /* Unconditional probe: the first open of a session skipped the freeze
-         * silently (latch 10x30, microstrip with scroll arrows) while every
-         * later open froze correctly - one of the two terms must have been 0
-         * at that exact moment; print them instead of guessing which. */
-        if (g_getenv ("NA_DEBUG") != NULL)
-          {
-            GtkRequisition gr;
-            gtk_widget_get_preferred_size (self->grid, NULL, &gr);
-            g_printerr ("NADBG freeze-check: nvis=%d nominal=%dx%d cache=%dx%d\n",
-                        nvis, self->nominal_w, self->nominal_h,
-                        gr.width, gr.height);
-          }
-
         if (nvis > 0 && self->nominal_w > 1)
           {
             GtkRequisition grec;
@@ -2278,10 +2172,6 @@ na_overflow_popup (NaOverflow   *self,
               gtk_widget_queue_resize (gtk_widget_get_parent (self->grid));
             gtk_widget_queue_resize (self->menu);
 
-            if (g_getenv ("NA_DEBUG") != NULL)
-              g_printerr ("NADBG freeze: layout says %dx%d, cache said %d, "
-                          "pinned %dx%d\n",
-                          self->nominal_w, self->nominal_h, grec.width, fw, fh);
           }
       }
 
@@ -2343,23 +2233,6 @@ na_overflow_popup (NaOverflow   *self,
       }
 
       self->menu_up = TRUE;
-
-      /* Timestamp the open BEFORE arming the grab watch: the poll's grace is
-       * measured from shown_at. foreign_grab_seen starts fresh for this open. */
-      if (g_getenv ("NA_DEBUG") != NULL)
-        {
-          GtkWidget *g = self->grid;
-          GtkWidget *it = gtk_widget_get_parent (g);
-          g_printerr ("NADBG popup: menu mapped=%d item=%s mapped=%d grid mapped=%d vis=%d alloc=%dx%d children=%d\n",
-                      gtk_widget_get_mapped (self->menu),
-                      it ? G_OBJECT_TYPE_NAME (it) : "NULL",
-                      it ? gtk_widget_get_mapped (it) : -1,
-                      gtk_widget_get_mapped (g),
-                      gtk_widget_get_visible (g),
-                      gtk_widget_get_allocated_width (g),
-                      gtk_widget_get_allocated_height (g),
-                      g_list_length (gtk_container_get_children (GTK_CONTAINER (g))));
-        }
 
       gtk_widget_add_events (GTK_WIDGET (self), GDK_POINTER_MOTION_MASK);
 
@@ -2428,10 +2301,6 @@ na_overflow_popup (NaOverflow   *self,
        * menu was mapped draw normally, so re-showing them once the popup is on
        * screen is what fixes it.  A zero-delay attempt from the grid's "map"
        * handler is too early - GTK has not finished mapping by then. */
-      if (g_getenv ("NA_DEBUG") != NULL)
-        g_timeout_add (400, dbg_later_cb, self);
-      if (g_getenv ("NA_REMAP") != NULL)
-        g_timeout_add (150, dbg_remap_later_cb, self);
 
       /* Auto-hide runs on this path too. The menu grab normally dismisses the
        * popup on Escape or an outside click ("deactivate"), but the drawer
@@ -2588,7 +2457,4 @@ na_overflow_fit_popup (NaOverflow *self)
 
   gtk_window_resize (GTK_WINDOW (toplevel), w, h);
 
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG fit-popup: %dx%d -> %dx%d (req %dx%d)\n",
-                alloc.width, alloc.height, w, h, req.width, req.height);
 }

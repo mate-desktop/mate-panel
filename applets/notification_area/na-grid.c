@@ -141,9 +141,6 @@ overflow_grid_remap_idle (gpointer data)
       gtk_widget_set_visible (item, FALSE);
       gtk_widget_set_visible (item, TRUE);
 
-      if (g_getenv ("NA_DEBUG") != NULL)
-        g_printerr ("NADBG remap-idle %s mapped=%d\n",
-                    G_OBJECT_TYPE_NAME (item), gtk_widget_get_mapped (item));
     }
 
   g_list_free (children);
@@ -173,9 +170,6 @@ overflow_grid_map_cb (GtkWidget *grid,
 static gboolean
 dbg_enter_cb (GtkWidget *w, GdkEvent *e, gpointer d)
 {
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG ENTER %s flags=0x%x\n", G_OBJECT_TYPE_NAME (w),
-                gtk_widget_get_state_flags (w));
   return FALSE;
 }
 
@@ -241,34 +235,6 @@ drawer_remap_cb (gpointer data)
   g_list_free (children);
 
   refresh_grid (self);
-  if (g_getenv ("NA_DEBUG") != NULL)
-    {
-      GList *ch2 = gtk_container_get_children (GTK_CONTAINER (grid));
-      for (GList *x = ch2; x != NULL; x = x->next)
-        {
-          GtkWidget *it = x->data;
-          gint mn = 0, nt = 0, mh = 0, nh = 0, imn = 0, inat = 0;
-          GtkAllocation al;
-
-          if (!SN_IS_ITEM (it))
-            continue;
-
-          gtk_widget_get_preferred_width (it, &mn, &nt);
-          gtk_widget_get_preferred_height (it, &mh, &nh);
-          gtk_widget_get_allocation (it, &al);
-
-          GtkWidget *img = gtk_bin_get_child (GTK_BIN (it));
-          if (img != NULL && GTK_IS_IMAGE (img))
-            gtk_widget_get_preferred_width (img, &imn, &inat);
-
-          g_printerr ("NADBG measure %s pref=%d/%d x %d/%d alloc=%dx%d "
-                      "child=%s(%d/%d)\n",
-                      G_OBJECT_TYPE_NAME (it), mn, nt, mh, nh,
-                      al.width, al.height,
-                      img ? G_OBJECT_TYPE_NAME (img) : "none", imn, inat);
-        }
-      g_list_free (ch2);
-    }
   /* The cells are computed from the icons' requisitions, and right after the
    * re-parenting those are still the pre-map ones - measured on the live tray:
    * the first open packed the icons tight and only the next open spaced them
@@ -775,6 +741,7 @@ parked_place_and_paint (NaGrid *self,
  * one of them blank until the drawer was reopened. */
 /* Wayland: reopen the drawer after a size change - an xdg_popup cannot be
  * resized once it is shown. */
+#if defined(HAVE_WAYLAND)
 static gboolean
 reopen_chevron_cb (gpointer data)
 {
@@ -790,6 +757,7 @@ reopen_chevron_cb (gpointer data)
 
   return G_SOURCE_REMOVE;
 }
+#endif
 
 static gboolean
 repaint_later_cb (gpointer data)
@@ -950,12 +918,6 @@ place_item (NaGrid     *self,
 
   parent = gtk_widget_get_parent (item);
 
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG place_item id=%s sni=%d state=%d parent=%s target=%s\n",
-                na_item_get_id (NA_ITEM (item)) ? na_item_get_id (NA_ITEM (item)) : "(null)",
-                SN_IS_ITEM (item) ? 1 : 0, (int) state,
-                parent ? G_OBJECT_TYPE_NAME (parent) : "NULL",
-                target ? G_OBJECT_TYPE_NAME (target) : "NULL");
 
   /* An XEmbed socket already living in the drawer stays there while its state
    * is still OVERFLOW: there is nothing to redo, and re-marking it here would
@@ -1242,9 +1204,6 @@ layout_overflow_grid (NaGrid  *self,
           cell_w = extent;
           gtk_widget_set_size_request (cell, cell_w, extent);
 
-          if (g_getenv ("NA_DEBUG") != NULL)
-            g_printerr ("NADBG   sni-cell extent=%d cur_is=%d pref=%d/%d"
-                        " -> cell %d\n", extent, cur, mn, nt, cell_w);
         }
       else
         {
@@ -1263,11 +1222,6 @@ layout_overflow_grid (NaGrid  *self,
               (gdk_window_get_width (sw) > extent ||
                gdk_window_get_height (sw) > extent))
             {
-              gint w = gdk_window_get_width (sw);
-              gint h = gdk_window_get_height (sw);
-
-              if (g_getenv ("NA_DEBUG") != NULL)
-                g_printerr ("NADBG xshrink %dx%d -> %d\n", w, h, extent);
               gdk_window_resize (sw, extent, extent);
               /* An embedded client repaints on Expose only; without forcing it
                * here one icon stayed blank (the old frame) until the drawer
@@ -1331,37 +1285,6 @@ layout_overflow_grid (NaGrid  *self,
   else
     na_overflow_set_nominal_size (self->overflow, 0, 0);
 
-  if (g_getenv ("NA_DEBUG") != NULL)
-    {
-      GtkRequisition req;
-      GtkWidget *g = na_overflow_get_grid (self->overflow);
-      GList *ch = gtk_container_get_children (GTK_CONTAINER (g));
-      gint vis = 0, total = 0;
-      for (GList *c = ch; c; c = c->next, total++)
-        if (gtk_widget_get_visible (c->data)) vis++;
-      g_list_free (ch);
-      gtk_widget_get_preferred_size (g, NULL, &req);
-      {
-        GList *cc = gtk_container_get_children (GTK_CONTAINER (g));
-        for (GList *c = cc; c; c = c->next)
-          {
-            GtkAllocation a;
-            gtk_widget_get_allocation (c->data, &a);
-            g_printerr ("NADBG   child %s vis=%d mapped=%d drawable=%d alloc=%dx%d+%d+%d\n",
-                        G_OBJECT_TYPE_NAME (c->data),
-                        gtk_widget_get_visible (c->data),
-                        gtk_widget_get_mapped (c->data),
-                        gtk_widget_is_drawable (c->data),
-                        a.width, a.height, a.x, a.y);
-          }
-        g_list_free (cc);
-      }
-      g_printerr ("NADBG layout n=%d cols=%d extent=%d cell=%dx%d children=%d visible=%d req=%dx%d parent=%s child_visible=%d\n",
-                  n, cols, extent, max_cell_w, max_cell_h, total, vis,
-                  req.width, req.height,
-                  gtk_widget_get_parent (g) ? G_OBJECT_TYPE_NAME (gtk_widget_get_parent (g)) : "NULL",
-                  gtk_widget_get_child_visible (g));
-    }
 }
 
 static void
@@ -1704,37 +1627,6 @@ refresh_grid (NaGrid *self)
             for (cl = cells; cl != NULL; cl = cl->next)
               gtk_widget_show (GTK_WIDGET (cl->data));
 
-            if (g_getenv ("NA_DEBUG") != NULL)
-              {
-                for (cl = cells; cl != NULL; cl = cl->next)
-                  {
-                    GtkWidget     *cell = GTK_WIDGET (cl->data);
-                    GtkAllocation  a;
-                    GdkWindow     *cw = gtk_widget_get_window (cell);
-                    GList         *kids, *kl;
-                    GtkWidget     *item = NULL;
-
-                    gtk_widget_get_allocation (cell, &a);
-                    kids = gtk_container_get_children (GTK_CONTAINER (cell));
-                    for (kl = kids; kl != NULL; kl = kl->next)
-                      {
-                        item = GTK_WIDGET (kl->data);
-                        break;
-                      }
-                    if (kids != NULL)
-                      g_list_free (kids);
-
-                    g_printerr ("NADBG CELL id=%s vis=%d mapped=%d "
-                                "alloc=%d,%d %dx%d win=%dx%d\n",
-                                item != NULL
-                                  ? G_OBJECT_TYPE_NAME (item) : "?",
-                                gtk_widget_get_visible (cell),
-                                gtk_widget_get_mapped (cell),
-                                a.x, a.y, a.width, a.height,
-                                cw != NULL ? gdk_window_get_width (cw) : -1,
-                                cw != NULL ? gdk_window_get_height (cw) : -1);
-                  }
-              }
 
             if (cells != NULL)
               g_list_free (cells);
@@ -1787,8 +1679,6 @@ static void
 chevron_toggled_cb (GtkToggleButton *button,
                     NaGrid          *self)
 {
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG chevron active=%d\n", gtk_toggle_button_get_active (button));
 
   if (!gtk_toggle_button_get_active (button))
     {
