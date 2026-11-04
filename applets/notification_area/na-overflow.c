@@ -35,6 +35,7 @@ static gboolean na_overflow_point_in_widget (GtkWidget *widget, gint px, gint py
 static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
 static gboolean na_overflow_cell_enter_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
 static gboolean na_overflow_cell_draw_cb (GtkWidget *child, cairo_t *cr, gpointer user_data);
+static gboolean na_overflow_band_draw_cb (GtkWidget *widget, cairo_t *cr, gpointer user_data);
 static void     na_overflow_set_hover (NaOverflow *self, GtkWidget *owned);
 static gboolean na_overflow_cell_leave_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
 static void     na_overflow_grid_child_added_cb (GtkContainer *grid, GtkWidget *child, gpointer user_data);
@@ -787,6 +788,9 @@ na_overflow_init (NaOverflow *self)
    * Motion on the drawer resolves the cell under the pointer (the resolver
    * walks up from whatever window sent the event), and every cell is wired
    * for crossings and the cell painter as it is added. */
+  g_signal_connect (self->grid, "draw",
+                    G_CALLBACK (na_overflow_band_draw_cb), self);
+
   /* NO motion handler on X11: the query poll below is the single source of
    * truth.  Both channels ran before and fought each other - motion set the
    * icon, the poll a tick later resolved "none" in its own coordinates, so the
@@ -1829,6 +1833,71 @@ na_overflow_cell_leave_cb (GtkWidget        *child,
     na_overflow_set_hover (self, NULL);
   return FALSE;
 }
+/* The highlight: one band per hovered COLUMN, painted in the grid's own draw.
+ *
+ * The grid's draw runs before its children, so the band sits UNDER the icons
+ * (whatever kind they are), and a cell is the full grid height - the icons keep
+ * a 2 px inset inside it, which this fill covers. */
+static gboolean
+na_overflow_band_draw_cb (GtkWidget *widget,
+                          cairo_t   *cr,
+                          gpointer   user_data)
+{
+  NaOverflow    *self = user_data;
+  GtkAllocation  ga;
+  GList         *kids, *l;
+  GtkWidget     *cell;
+  gint           left = 0, top = 0, wid = 1, hei = 1;
+  gint           ncols = 1, nrows = 1;
+  gdouble        cw, x0, x1;
+
+  if (g_getenv ("NA_PLAIN") != NULL || self->hover_item == NULL)
+    return FALSE;
+
+  if (!gtk_widget_get_realized (self->grid))
+    return FALSE;
+
+  gtk_widget_get_allocation (self->grid, &ga);
+  if (ga.width <= 0 || ga.height <= 0)
+    return FALSE;
+
+  cell = self->hover_item;
+  while (cell != NULL && gtk_widget_get_parent (cell) != self->grid)
+    cell = gtk_widget_get_parent (cell);
+  if (cell == NULL)
+    return FALSE;
+
+  gtk_container_child_get (GTK_CONTAINER (self->grid), cell,
+                           "left-attach", &left, "top-attach", &top,
+                           "width", &wid, "height", &hei, NULL);
+
+  kids = gtk_container_get_children (GTK_CONTAINER (self->grid));
+  for (l = kids; l != NULL; l = l->next)
+    {
+      gint l2 = 0, t2 = 0, w2 = 1, h2 = 1;
+
+      if (!gtk_widget_get_visible (l->data))
+        continue;
+
+      gtk_container_child_get (GTK_CONTAINER (self->grid), l->data,
+                               "left-attach", &l2, "top-attach", &t2,
+                               "width", &w2, "height", &h2, NULL);
+      ncols = MAX (ncols, l2 + w2);
+      nrows = MAX (nrows, t2 + h2);
+    }
+  g_list_free (kids);
+
+  cw = (gdouble) ga.width / ncols;
+  x0 = (gdouble) left * cw;
+  x1 = (gdouble) (left + wid) * cw;
+
+  cairo_set_source_rgba (cr, 70 / 255.0, 70 / 255.0, 80 / 255.0, 0.45);
+  cairo_rectangle (cr, x0, 0.0, x1 - x0, (gdouble) ga.height);
+  cairo_fill (cr);
+
+  return FALSE;
+}
+
 static gboolean
 na_overflow_cell_draw_cb (GtkWidget *child,
                           cairo_t   *cr,
@@ -1914,11 +1983,13 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
                          (gpointer) "na-cell-hover");
 
 #if !defined(HAVE_WAYLAND)
-      /* No margin on the children either: their allocation IS the cell, and the
-       * highlight is painted over that allocation - a margin here left a bare
-       * 4 px strip at both ends of the drawer (measured 212 vs the fill's 150). */
-      gtk_widget_set_margin_start (child, 0);
-      gtk_widget_set_margin_end (child, 0);
+      /* A small inset around the icon: the cell is then a few pixels larger than
+       * the artwork, and the highlight (painted per CELL, not per icon) covers
+       * that inset too - the drawer gets a little air without a bare strip. */
+      gtk_widget_set_margin_start (child, 4);
+      gtk_widget_set_margin_end (child, 4);
+      gtk_widget_set_margin_top (child, 4);
+      gtk_widget_set_margin_bottom (child, 4);
 #endif
 
 #if !defined(HAVE_WAYLAND)
