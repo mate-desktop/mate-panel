@@ -33,6 +33,7 @@ static gboolean na_overflow_hover_motion_cb (GtkWidget *widget, GdkEventMotion *
 static gboolean na_overflow_point_in_widget (GtkWidget *widget, gint px, gint py);
 static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
 static gboolean na_overflow_cell_enter_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
+static gboolean na_overflow_cell_draw_cb (GtkWidget *child, cairo_t *cr, gpointer user_data);
 static gboolean na_overflow_cell_leave_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
 static void     na_overflow_grid_child_added_cb (GtkContainer *grid, GtkWidget *child, gpointer user_data);
 
@@ -741,6 +742,22 @@ na_overflow_init (NaOverflow *self)
     g_object_unref (css);
   }
 
+#if !defined(HAVE_WAYLAND)
+  /* X11: the drawer is a plain POPUP window, so the hover machinery the menu
+   * path wires up never ran here and the drawer shipped with no highlight.
+   * Motion on the drawer resolves the cell under the pointer (the resolver
+   * walks up from whatever window sent the event), and every cell is wired
+   * for crossings and the cell painter as it is added. */
+  g_signal_connect (self, "motion-notify-event",
+                    G_CALLBACK (na_overflow_hover_motion_cb), self);
+  /* Motion only: enter/leave on the drawer window itself delivered the drawer
+   * widget to the resolver, which set hover = NaOverflow and made the
+   * highlight flicker on the last icon. */
+  gtk_widget_add_events (GTK_WIDGET (self), GDK_POINTER_MOTION_MASK);
+  g_signal_connect (self->grid, "add",
+                    G_CALLBACK (na_overflow_grid_child_added_cb), self);
+#endif
+
   self->panel_orientation = GTK_ORIENTATION_HORIZONTAL;
   self->open_direction = NA_OPEN_UNKNOWN;
   self->autohide_ms = AUTOHIDE_DEFAULT_MS;
@@ -975,7 +992,6 @@ na_overflow_cancel_grab_poll (NaOverflow *self)
  *
  * So the manual button redispatch is gone; what remains of the shield is the
  * crossing bookkeeping and stopping the shell from seeing presses at all. */
-#ifdef HAVE_WAYLAND
 /* Which grid child is under the pointer, resolved from an event WITHOUT
  * trusting a single coordinate space.
  *
@@ -1053,8 +1069,7 @@ na_overflow_hover_resolve (NaOverflow *self,
   if (found != NULL)
     {
       g_list_free (children);
-      if (g_getenv ("NA_DEBUG") != NULL)
-        g_printerr ("NADBG RESOLVE owner=%s -> %s\n",
+      g_printerr ("NADBG RESOLVE owner=%s -> %s\n",
                     owner ? G_OBJECT_TYPE_NAME (owner) : "NULL",
                     G_OBJECT_TYPE_NAME (found));
       return found;
@@ -1068,8 +1083,7 @@ na_overflow_hover_resolve (NaOverflow *self,
   if (ga.width <= 0 || ga.height <= 0)
     {
       g_list_free (children);
-      if (g_getenv ("NA_DEBUG") != NULL)
-        g_printerr ("NADBG RESOLVE cell-path: grid %dx%d -> none\n",
+      g_printerr ("NADBG RESOLVE cell-path: grid %dx%d -> none\n",
                     ga.width, ga.height);
       return NULL;
     }
@@ -1143,8 +1157,14 @@ na_overflow_set_hover (NaOverflow *self,
 
   if (prev == owned)
     {
+      /* Not an early return: the cell may have been repainted without the
+       * fill in the meantime (the drawer repaints on every crossing), and
+       * skipping the queue_draw left the second hover invisible. */
       if (owned != NULL)
-        g_object_unref (owned);
+        {
+          gtk_widget_queue_draw (owned);
+          g_object_unref (owned);
+        }
       return;
     }
 
@@ -1165,9 +1185,8 @@ na_overflow_set_hover (NaOverflow *self,
   if (owned != NULL)
     gtk_widget_queue_draw (owned);
 
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG hover -> %s\n",
-                owned ? G_OBJECT_TYPE_NAME (owned) : "none");
+  g_printerr ("NADBG hover -> %s\n",
+              owned ? G_OBJECT_TYPE_NAME (owned) : "none");
 }
 
 static gboolean
@@ -1205,7 +1224,6 @@ na_overflow_menu_event_shield (GtkWidget *widget,
    * this handler has to do is stop the shell from seeing the event. */
   return TRUE;   /* the shell never sees it: no deactivate, no prelight */
 }
-#endif
 
 NaOverflow *
 na_overflow_new (void)
@@ -1538,7 +1556,6 @@ dbg_remap_later_cb (gpointer data)
  *
  * Only the Wayland menu path connects these handlers, and they lean on
  * na_overflow_hover_resolve(), which is Wayland-only. */
-#ifdef HAVE_WAYLAND
 /* The highlight: one full-height band over the hovered cell's column.
  *
  * Painted on the wrapper menu item - it is windowless, so this lands on the
@@ -1631,6 +1648,7 @@ na_overflow_cell_enter_cb (GtkWidget        *child,
       event->mode == GDK_CROSSING_STATE_CHANGED)
     return FALSE;
 
+  g_printerr ("NADBG ENTER child=%s\n", G_OBJECT_TYPE_NAME (child));
   g_object_ref (child);
   na_overflow_set_hover (user_data, child);
   return FALSE;
@@ -1655,6 +1673,75 @@ na_overflow_cell_leave_cb (GtkWidget        *child,
   return FALSE;
 }
 
+/* X11: an SNI icon owns an opaque window above the drawer's, so a fill painted
+ * on the drawer survives only in the 4 px gaps between icons.  Paint the cell
+ * in the icon's own window, connect() (not connect_after) so it lands under
+ * the glyph whose chrome the flat CSS has already removed. */
+static gboolean
+na_overflow_cell_draw_cb (GtkWidget *child,
+                          cairo_t   *cr,
+                          gpointer   user_data)
+{
+  NaOverflow    *self = user_data;
+  GtkWidget     *grid;
+  GtkAllocation  ga, ca;
+  GList         *kids, *l;
+  gint           left = 0, top = 0, wid = 1, hei = 1;
+  gint           ncols = 1, nrows = 1;
+  gdouble        cw, ch;
+
+  if (g_getenv ("NA_PLAIN") != NULL)
+    return FALSE;
+
+  /* The hovered occupant is usually the cell, but an SNI item can itself be a
+   * direct child of the grid (measured: hover alternated between GtkBox and
+   * SnItemV0), so accept either the cell or a descendant of it. */
+  if (self->hover_item != child &&
+      !gtk_widget_is_ancestor (self->hover_item, child))
+    return FALSE;
+
+  grid = gtk_widget_get_parent (child);
+  if (grid == NULL)
+    return FALSE;
+
+  gtk_widget_get_allocation (grid, &ga);
+  gtk_widget_get_allocation (child, &ca);
+  if (ga.width <= 0 || ga.height <= 0)
+    return FALSE;
+
+  gtk_container_child_get (GTK_CONTAINER (grid), child,
+                           "left-attach", &left, "top-attach", &top,
+                           "width", &wid, "height", &hei, NULL);
+
+  kids = gtk_container_get_children (GTK_CONTAINER (grid));
+  for (l = kids; l != NULL; l = l->next)
+    {
+      gint l2 = 0, t2 = 0, w2 = 1, h2 = 1;
+
+      if (!gtk_widget_get_visible (l->data))
+        continue;
+
+      gtk_container_child_get (GTK_CONTAINER (grid), l->data,
+                               "left-attach", &l2, "top-attach", &t2,
+                               "width", &w2, "height", &h2, NULL);
+      ncols = MAX (ncols, l2 + w2);
+      nrows = MAX (nrows, t2 + h2);
+    }
+  g_list_free (kids);
+
+  cw = (gdouble) ga.width  / ncols;
+  ch = (gdouble) ga.height / nrows;
+
+  cairo_set_source_rgba (cr, 70 / 255.0, 70 / 255.0, 80 / 255.0, 0.45);
+  cairo_rectangle (cr,
+                   (gdouble) ga.x + (gdouble) left * cw - ca.x,
+                   (gdouble) ga.y + (gdouble) top  * ch - ca.y,
+                   cw * wid, ch * hei);
+  cairo_fill (cr);
+
+  return FALSE;
+}
+
 /* Every child of the drawer grid gets the crossing wiring once, at the moment
  * it is attached: placeholders are created lazily by refresh_grid(), so a
  * single pass over the children at startup would miss them. */
@@ -1667,6 +1754,11 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
     {
       g_object_set_data (G_OBJECT (child), "na-cell-hover",
                          (gpointer) "na-cell-hover");
+
+#if !defined(HAVE_WAYLAND)
+      g_signal_connect (child, "draw",
+                        G_CALLBACK (na_overflow_cell_draw_cb), user_data);
+#endif
       /* Motion over an icon's own surface never reaches the item handler
        * (measured: only owner=GtkMenuItem events from the padding areas
        * arrived, so the highlight froze while the pointer was ON an icon).
@@ -1689,8 +1781,7 @@ na_overflow_hover_motion_cb (GtkWidget      *widget,
   NaOverflow *self = user_data;
   GtkWidget  *under;
 
-  if (g_getenv ("NA_DEBUG") != NULL)
-    g_printerr ("NADBG HOVER-MOTION owner=%s x=%.0f y=%.0f\n",
+  g_printerr ("NADBG HOVER-MOTION owner=%s x=%.0f y=%.0f\n",
                 gtk_get_event_widget ((GdkEvent *) event) ?
                     G_OBJECT_TYPE_NAME (gtk_get_event_widget ((GdkEvent *) event)) : "NULL",
                 event->x, event->y);
@@ -1702,7 +1793,7 @@ na_overflow_hover_motion_cb (GtkWidget      *widget,
   na_overflow_set_hover (self, under);
   return FALSE;
 }
-#endif /* HAVE_WAYLAND (hover highlight handlers) */
+
 
 static gboolean
 dbg_later_cb (gpointer data)
@@ -2029,6 +2120,8 @@ na_overflow_popup (NaOverflow   *self,
                       gtk_widget_get_allocated_height (g),
                       g_list_length (gtk_container_get_children (GTK_CONTAINER (g))));
         }
+
+      gtk_widget_add_events (GTK_WIDGET (self), GDK_POINTER_MOTION_MASK);
 
       self->shown_at          = g_get_monotonic_time ();
       self->foreign_grab_seen = FALSE;
