@@ -715,10 +715,13 @@ na_overflow_init (NaOverflow *self)
    * clipped the hover fill.  A margin on the grid keeps the same visual size
    * without a border (X11 only - the Wayland menu has its own padding). */
 #if !defined(HAVE_WAYLAND)
-  gtk_widget_set_margin_start (self->grid, 4);
-  gtk_widget_set_margin_end (self->grid, 4);
-  gtk_widget_set_margin_top (self->grid, 4);
-  gtk_widget_set_margin_bottom (self->grid, 4);
+  /* The grid spans the WHOLE drawer.  A margin here put the cells 4 px inside
+   * the window, so the highlight (clipped to a cell) left a bare strip at the
+   * drawer's left and right edges.  The breathing room moves to the icons. */
+  gtk_widget_set_margin_start (self->grid, 0);
+  gtk_widget_set_margin_end (self->grid, 0);
+  gtk_widget_set_margin_top (self->grid, 0);
+  gtk_widget_set_margin_bottom (self->grid, 0);
 #endif
   gtk_grid_set_column_spacing (GTK_GRID (self->grid), 0);
   gtk_widget_show (self->grid);
@@ -1885,11 +1888,13 @@ na_overflow_cell_draw_cb (GtkWidget *child,
   cw = (gdouble) ga.width  / ncols;
   ch = (gdouble) ga.height / nrows;
 
+  /* The cell's draw context is already relative to the cell, so the fill is the
+   * cell's own rectangle: adding ga.x/ga.y shifted it by the grid's margin and
+   * left a bare strip at the left and right edges. */
+  (void) left;
+  (void) top;
   cairo_set_source_rgba (cr, 70 / 255.0, 70 / 255.0, 80 / 255.0, 0.45);
-  cairo_rectangle (cr,
-                   (gdouble) ga.x + (gdouble) left * cw - ca.x,
-                   (gdouble) ga.y + (gdouble) top  * ch - ca.y,
-                   cw * wid, ch * hei);
+  cairo_rectangle (cr, 0.0, 0.0, (gdouble) ca.width, (gdouble) ca.height);
   cairo_fill (cr);
 
   return FALSE;
@@ -1907,6 +1912,14 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
     {
       g_object_set_data (G_OBJECT (child), "na-cell-hover",
                          (gpointer) "na-cell-hover");
+
+#if !defined(HAVE_WAYLAND)
+      /* No margin on the children either: their allocation IS the cell, and the
+       * highlight is painted over that allocation - a margin here left a bare
+       * 4 px strip at both ends of the drawer (measured 212 vs the fill's 150). */
+      gtk_widget_set_margin_start (child, 0);
+      gtk_widget_set_margin_end (child, 0);
+#endif
 
 #if !defined(HAVE_WAYLAND)
       /* One painter for every cell: an SNI button has no window of its own
