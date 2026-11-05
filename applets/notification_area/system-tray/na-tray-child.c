@@ -346,7 +346,9 @@ pixbuf_from_net_wm_icon (GdkDisplay *display,
       gulong w = icons[i], h = icons[i + 1];
       gulong diff;
 
-      if (w == 0 || h == 0 || i + 2 + w * h > nitems)
+      /* A client controls this property; bound both factors before multiplying,
+       * or w*h wraps and the bounds check passes on nonsense. */
+      if (w == 0 || h == 0 || w > 4096 || h > 4096 || w * h > nitems - i - 2)
         break;
 
       diff = (w >= (gulong) size) ? w - (gulong) size : (gulong) size - w;

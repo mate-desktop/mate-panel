@@ -152,6 +152,21 @@ struct _NaOverflow
 G_DEFINE_TYPE (NaOverflow, na_overflow, GTK_TYPE_WINDOW)
 
 
+static void na_overflow_emit_closed (NaOverflow *self);
+
+#if defined(HAVE_WAYLAND)
+/* GtkMenuShell::deactivate is (GtkMenuShell*, target), so it cannot be wired
+ * with g_signal_connect_swapped to a one-argument function.  The menu path is
+ * the Wayland one, hence the guard. */
+static void
+na_overflow_deactivate_cb (GtkMenuShell *menu,
+                           gpointer      user_data)
+{
+  (void) menu;
+  na_overflow_emit_closed (user_data);
+}
+#endif
+
 static void
 na_overflow_emit_closed (NaOverflow *self)
 {
@@ -402,6 +417,7 @@ na_overflow_click_line_cb (GObject      *source,
       /* The helper closed stdout, or we cancelled the read: a normal end,
        * not an error. */
       self->cw_reading = FALSE;
+      g_object_unref (self);
       return;
     }
 
@@ -433,6 +449,9 @@ na_overflow_read_click_line (NaOverflow *self)
     return;
 
   self->cw_reading = TRUE;
+  /* The callback carries a raw self: hold a reference for as long as a read is
+   * in flight, or a popdown during that window leaves it a use-after-free. */
+  g_object_ref (self);
   g_data_input_stream_read_line_async (self->cw_in, G_PRIORITY_DEFAULT,
                                        self->cw_cancel,
                                        na_overflow_click_line_cb, self);
@@ -1505,8 +1524,8 @@ na_overflow_new (void)
   
           }
 
-      g_signal_connect_swapped (self->menu, "deactivate",
-                                G_CALLBACK (na_overflow_emit_closed), self);
+      g_signal_connect (self->menu, "deactivate",
+                        G_CALLBACK (na_overflow_deactivate_cb), self);
 
       /* Auto-hide state, see leave_at. Motion on the shell: under the popup
        * grab the compositor confines the pointer to this surface and every

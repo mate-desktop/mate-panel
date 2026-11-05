@@ -42,6 +42,7 @@
 #include <X11/extensions/record.h>
 #include <errno.h>
 #include <signal.h>
+#include <poll.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/select.h>
@@ -162,9 +163,15 @@ int main (void)
       if (select (fd + 1, &rfd, NULL, NULL, &tv) > 0 && FD_ISSET (fd, &rfd))
         XRecordProcessReplies (dpy);
 
-      /* stdout closed: the parent is gone */
-      if (errno == 0 && write (STDOUT_FILENO, "", 0) < 0 && errno == EPIPE)
-        break;
+      /* stdout closed: the parent is gone.  A zero-length write() SUCCEEDS on
+       * a broken pipe (it only touches the buffer), so ask poll() for the hangup
+       * instead - otherwise a helper whose parent died stays here forever. */
+      {
+        struct pollfd pfd = { STDOUT_FILENO, 0, 0 };
+
+        if (poll (&pfd, 1, 0) > 0 && (pfd.revents & (POLLERR | POLLHUP)) != 0)
+          break;
+      }
     }
 
   XRecordDisableContext (dpy, ctx);

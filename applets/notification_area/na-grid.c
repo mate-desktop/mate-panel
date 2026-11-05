@@ -94,6 +94,8 @@ struct _NaGrid
   guint       size_idle;       /* idle re-asking the panel for our width, 0 = none */
   gint        size_pending;    /* width that idle should request */
   guint       park_idle;       /* idle source id, 0 when none pending */
+  guint       remap_timeout;   /* delayed remap of the drawer, 0 = none */
+  guint       second_pass_timeout; /* delayed second layout pass, 0 = none */
 
   guint       relaying;
   guint       relayout_dirty;
@@ -124,7 +126,17 @@ static gboolean
 overflow_grid_remap_idle (gpointer data)
 {
   NaGrid    *self = data;
-  GtkWidget *grid = na_overflow_get_grid (self->overflow);
+  GtkWidget *grid;
+
+  /* The idle holds a reference to self, but the drawer itself may already be
+   * gone (popdown before the idle ran), and get_grid() would then answer NULL. */
+  grid = (self->overflow != NULL) ? na_overflow_get_grid (self->overflow) : NULL;
+  if (grid == NULL)
+    {
+      g_object_unref (self);
+      return G_SOURCE_REMOVE;
+    }
+
   GList *children = gtk_container_get_children (GTK_CONTAINER (grid));
 
   for (GList *c = children; c != NULL; c = c->next)
@@ -167,12 +179,6 @@ overflow_grid_map_cb (GtkWidget *grid,
   g_idle_add (overflow_grid_remap_idle, self);
 }
 
-static gboolean
-dbg_enter_cb (GtkWidget *w, GdkEvent *e, gpointer d)
-{
-  return FALSE;
-}
-
 static void refresh_grid (NaGrid *self);
 static gboolean drawer_second_pass_cb (gpointer data);
 
@@ -189,6 +195,7 @@ drawer_second_pass_cb (gpointer data)
 {
   NaGrid *self = data;
 
+  self->second_pass_timeout = 0;
   refresh_grid (self);
 
   /* The request is now the post-map one (measured: 78 -> 90 once the SNI
@@ -202,6 +209,8 @@ static gboolean
 drawer_remap_cb (gpointer data)
 {
   NaGrid    *self = data;
+
+  self->remap_timeout = 0;
   GtkWidget *grid = na_overflow_get_grid (self->overflow);
   GList     *children = gtk_container_get_children (GTK_CONTAINER (grid));
 
@@ -227,8 +236,6 @@ drawer_remap_cb (gpointer data)
        * suppressed by CSS). */
       gtk_widget_add_events (item,
                              GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-      g_signal_connect (item, "enter-notify-event",
-                        G_CALLBACK (dbg_enter_cb), NULL);
       g_object_unref (item);
     }
 
@@ -239,7 +246,7 @@ drawer_remap_cb (gpointer data)
    * re-parenting those are still the pre-map ones - measured on the live tray:
    * the first open packed the icons tight and only the next open spaced them
    * properly.  One more pass once mapping has settled fixes the first open. */
-  g_timeout_add (120, drawer_second_pass_cb, self);
+  self->second_pass_timeout = g_timeout_add (120, drawer_second_pass_cb, self);
 
   /* And re-fit the latched popup allocation to the new request (a mapped
    * GtkMenu does not follow its children - see na_overflow_fit_popup). */
@@ -1706,7 +1713,7 @@ chevron_toggled_cb (GtkToggleButton *button,
     schedule_park (self);   /* not everything fitted yet: finish from the queue */
   reposition_parked (self);
 
-  g_timeout_add (150, drawer_remap_cb, self);
+  self->remap_timeout = g_timeout_add (150, drawer_remap_cb, self);
 
 }
 
@@ -2114,6 +2121,21 @@ na_grid_dispose (GObject *object)
     {
       g_source_remove (self->size_idle);
       self->size_idle = 0;
+    }
+
+  /* Both take a raw NaGrid*: leaving them armed across dispose dereferences a
+   * freed object, which is what killing the panel right after a chevron click
+   * used to do. */
+  if (self->remap_timeout != 0)
+    {
+      g_source_remove (self->remap_timeout);
+      self->remap_timeout = 0;
+    }
+
+  if (self->second_pass_timeout != 0)
+    {
+      g_source_remove (self->second_pass_timeout);
+      self->second_pass_timeout = 0;
     }
 
   if (self->fwd_item != NULL)
