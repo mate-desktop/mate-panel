@@ -32,9 +32,6 @@
 
 static gboolean na_overflow_point_in_widget (GtkWidget *widget, gint px, gint py);
 static gboolean na_overflow_cell_enter_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
-#if !defined(HAVE_WAYLAND)
-static gboolean na_overflow_cell_draw_cb (GtkWidget *child, cairo_t *cr, gpointer user_data);
-#endif
 #if defined(HAVE_WAYLAND)
 static gboolean na_overflow_hover_motion_cb (GtkWidget *widget, GdkEventMotion *event, gpointer user_data);
 static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
@@ -1863,75 +1860,6 @@ na_overflow_band_draw_cb (GtkWidget *widget,
 }
 #endif
 
-#if !defined(HAVE_WAYLAND)
-static gboolean
-na_overflow_cell_draw_cb (GtkWidget *child,
-                          cairo_t   *cr,
-                          gpointer   user_data)
-{
-  NaOverflow    *self = user_data;
-  GtkWidget     *grid;
-  GtkAllocation  ga, ca;
-  GList         *kids, *l;
-  gint           left = 0, top = 0, wid = 1, hei = 1;
-  gint           ncols = 1, nrows = 1;
-
-  if (g_getenv ("NA_PLAIN") != NULL)
-    return FALSE;
-
-  /* The hovered occupant is usually the cell, but an SNI item can itself be a
-   * direct child of the grid (measured: hover alternated between GtkBox and
-   * SnItemV0), so accept either the cell or a descendant of it. */
-  if (self->hover_item != child &&
-      !gtk_widget_is_ancestor (child, self->hover_item))
-    return FALSE;
-
-  /* Measured: SnItemV0 has NO window of its own (has_window=0), so this cell
-   * painter on the drawer surface is the right layer for SNI as well - the
-   * earlier "it has its own window" premise was wrong. */
-
-  grid = gtk_widget_get_parent (child);
-  if (grid == NULL)
-    return FALSE;
-
-  gtk_widget_get_allocation (grid, &ga);
-  gtk_widget_get_allocation (child, &ca);
-  if (ga.width <= 0 || ga.height <= 0)
-    return FALSE;
-
-  gtk_container_child_get (GTK_CONTAINER (grid), child,
-                           "left-attach", &left, "top-attach", &top,
-                           "width", &wid, "height", &hei, NULL);
-
-  kids = gtk_container_get_children (GTK_CONTAINER (grid));
-  for (l = kids; l != NULL; l = l->next)
-    {
-      gint l2 = 0, t2 = 0, w2 = 1, h2 = 1;
-
-      if (!gtk_widget_get_visible (l->data))
-        continue;
-
-      gtk_container_child_get (GTK_CONTAINER (grid), l->data,
-                               "left-attach", &l2, "top-attach", &t2,
-                               "width", &w2, "height", &h2, NULL);
-      ncols = MAX (ncols, l2 + w2);
-      nrows = MAX (nrows, t2 + h2);
-    }
-  g_list_free (kids);
-
-  /* The cell's draw context is already relative to the cell, so the fill is the
-   * cell's own rectangle: adding ga.x/ga.y shifted it by the grid's margin and
-   * left a bare strip at the left and right edges. */
-  (void) left;
-  (void) top;
-  cairo_set_source_rgba (cr, 70 / 255.0, 70 / 255.0, 80 / 255.0, 0.45);
-  cairo_rectangle (cr, 0.0, 0.0, (gdouble) ca.width, (gdouble) ca.height);
-  cairo_fill (cr);
-
-  return FALSE;
-}
-#endif
-
 /* Every child of the drawer grid gets the crossing wiring once, at the moment
  * it is attached: placeholders are created lazily by refresh_grid(), so a
  * single pass over the children at startup would miss them. */
@@ -1955,13 +1883,6 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
       gtk_widget_set_margin_bottom (child, 4);
 #endif
 
-#if !defined(HAVE_WAYLAND)
-      /* One painter for every cell: an SNI button has no window of its own
-       * (measured has_window=0), so it is painted on this surface and the cell
-       * rectangle is the correct geometry for it too. */
-      g_signal_connect (child, "draw",
-                        G_CALLBACK (na_overflow_cell_draw_cb), user_data);
-#endif
       /* Motion over an icon's own surface never reaches the item handler
        * (measured: only owner=GtkMenuItem events from the padding areas
        * arrived, so the highlight froze while the pointer was ON an icon).
