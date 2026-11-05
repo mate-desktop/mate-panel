@@ -390,20 +390,123 @@ pixbuf_from_net_wm_icon (GdkDisplay *display,
 }
 
 /* A tray client usually keeps its icon in its .desktop file rather than in the
- * window, and the class name is not the icon name ("AnyDesk" -> anydesk,
- * "transmission-gtk" -> the theme has "transmission").  Resolve through the
- * .desktop entry, then let the icon theme try the names it gives us. */
+ * window, and neither the class nor the .desktop name is the icon name
+ * ("AnyDesk" -> anydesk, "mate-volume-control-status-icon" ->
+ * mate-volume-control.desktop -> multimedia-volume-control).  Resolve through
+ * several spellings, and remember that Icon= may be an absolute path. */
+static GdkPixbuf *
+load_icon_by_name (GtkIconTheme *theme,
+                   const gchar  *name,
+                   gint          size)
+{
+  GdkPixbuf *pixbuf;
+  gchar     *path;
+
+  if (name == NULL || name[0] == '\0')
+    return NULL;
+
+  if (g_path_is_absolute (name))
+    return gdk_pixbuf_new_from_file_at_scale (name, size, size, TRUE, NULL);
+
+  pixbuf = gtk_icon_theme_load_icon (theme, name, size,
+                                     GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+  if (pixbuf != NULL)
+    return pixbuf;
+
+  /* A few applets of our own install artwork straight under /usr/share/icons,
+   * either as a file or as a one-icon theme directory. */
+  path = g_strdup_printf ("/usr/share/icons/%s.svg", name);
+  if (g_file_test (path, G_FILE_TEST_EXISTS))
+    pixbuf = gdk_pixbuf_new_from_file_at_scale (path, size, size, TRUE, NULL);
+  g_free (path);
+
+  if (pixbuf == NULL)
+    {
+      path = g_strdup_printf ("/usr/share/icons/%s.png", name);
+      if (g_file_test (path, G_FILE_TEST_EXISTS))
+        pixbuf = gdk_pixbuf_new_from_file_at_scale (path, size, size, TRUE, NULL);
+      g_free (path);
+    }
+
+  if (pixbuf == NULL)
+    {
+      GDir        *dir;
+      const gchar *entry;
+
+      path = g_strdup_printf ("/usr/share/icons/%s", name);
+      dir = g_dir_open (path, 0, NULL);
+      if (dir != NULL)
+        {
+          while ((entry = g_dir_read_name (dir)) != NULL)
+            {
+              if (g_str_has_suffix (entry, ".svg") ||
+                  g_str_has_suffix (entry, ".png"))
+                {
+                  gchar *file = g_build_filename (path, entry, NULL);
+
+                  pixbuf = gdk_pixbuf_new_from_file_at_scale (file, size, size,
+                                                              TRUE, NULL);
+                  g_free (file);
+                  if (pixbuf != NULL)
+                    break;
+                }
+            }
+          g_dir_close (dir);
+        }
+      g_free (path);
+    }
+
+  return pixbuf;
+}
+
+static GdkPixbuf *
+icon_from_desktop (const gchar *cls,
+                   gint         size)
+{
+  gchar       *lower, *path, *icon = NULL;
+  GKeyFile    *key_file;
+  GdkPixbuf   *pixbuf = NULL;
+  GtkIconTheme *theme;
+
+  lower = g_ascii_strdown (cls, -1);
+  path = g_strdup_printf ("/usr/share/applications/%s.desktop", lower);
+  g_free (lower);
+
+  if (!g_file_test (path, G_FILE_TEST_EXISTS))
+    {
+      g_free (path);
+      return NULL;
+    }
+
+  key_file = g_key_file_new ();
+  if (g_key_file_load_from_file (key_file, path, G_KEY_FILE_NONE, NULL))
+    icon = g_key_file_get_string (key_file, "Desktop Entry", "Icon", NULL);
+  g_key_file_free (key_file);
+  g_free (path);
+
+  if (icon != NULL)
+    {
+      theme = gtk_icon_theme_get_default ();
+      pixbuf = load_icon_by_name (theme, icon, size);
+    }
+
+  g_free (icon);
+  return pixbuf;
+}
+
 static GdkPixbuf *
 pixbuf_from_wm_class (GdkDisplay *display,
                       Window      window,
                       gint        size)
 {
-  XClassHint   hint = { NULL, NULL };
+  static const gchar *suffixes[] = {
+    "-status-icon", "-applet", "-daemon", "-gtk", "-service", ".py", NULL
+  };
+  XClassHint    hint = { NULL, NULL };
   GtkIconTheme *theme;
-  GdkPixbuf   *pixbuf = NULL;
-  const gchar *classes[2];
-  gchar       *paths[4] = { NULL, NULL, NULL, NULL };
-  gint         npaths = 0;
+  GdkPixbuf    *pixbuf = NULL;
+  gchar        *names[8] = { NULL };
+  gint          nnames = 0;
 
   gdk_x11_display_error_trap_push (display);
   if (XGetClassHint (GDK_DISPLAY_XDISPLAY (display), window, &hint) == 0)
@@ -413,71 +516,85 @@ pixbuf_from_wm_class (GdkDisplay *display,
     }
   gdk_x11_display_error_trap_pop_ignored (display);
 
-  classes[0] = hint.res_name;
-  classes[1] = hint.res_class;
-
-  for (gint i = 0; i < 2 && npaths < 4; i++)
-    {
-      gchar *lower;
-
-      if (classes[i] == NULL || classes[i][0] == '\0')
-        continue;
-
-      lower = g_ascii_strdown (classes[i], -1);
-      paths[npaths++] = g_strdup_printf ("/usr/share/applications/%s.desktop", lower);
-      g_free (lower);
-    }
-
   theme = gtk_icon_theme_get_default ();
 
-  for (gint i = 0; i < npaths && pixbuf == NULL; i++)
+  for (gint i = 0; i < 2; i++)
     {
-      GKeyFile *key_file;
-      gchar    *icon = NULL;
+      const gchar *cls = (i == 0) ? hint.res_name : hint.res_class;
+      gchar       *name;
+      gboolean     changed;
 
-      if (!g_file_test (paths[i], G_FILE_TEST_EXISTS))
+      if (cls == NULL || cls[0] == '\0')
         continue;
 
-      key_file = g_key_file_new ();
-      if (g_key_file_load_from_file (key_file, paths[i], G_KEY_FILE_NONE, NULL))
-        icon = g_key_file_get_string (key_file, "Desktop Entry", "Icon", NULL);
-      g_key_file_free (key_file);
+      names[nnames++] = g_ascii_strdown (cls, -1);
 
-      if (icon == NULL || icon[0] == '\0')
+      /* The same class with its role suffixes peeled off, which is what the
+       * .desktop file and the theme are usually named after. */
+      name = g_ascii_strdown (cls, -1);
+      changed = TRUE;
+      while (changed && nnames < 6)
         {
-          g_free (icon);
-          continue;
+          changed = FALSE;
+          for (gint k = 0; suffixes[k] != NULL; k++)
+            {
+              gsize len = strlen (suffixes[k]);
+
+              if (g_str_has_suffix (name, suffixes[k]))
+                {
+                  gchar *cut = g_strndup (name, strlen (name) - len);
+
+                  g_free (name);
+                  name = cut;
+                  names[nnames++] = g_strdup (name);
+                  changed = TRUE;
+                  break;
+                }
+            }
         }
 
-      pixbuf = gtk_icon_theme_load_icon (theme, icon, size,
-                                         GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+      /* Daemons drop a trailing 'd': "xscreenletsd" -> "xscreenlets", which is
+       * the directory its own artwork lives in. */
+      if (nnames < 7 && strlen (name) > 3 &&
+          name[strlen (name) - 1] == 'd')
+        names[nnames++] = g_strndup (name, strlen (name) - 1);
 
-      /* "transmission-gtk" ships no icon under that exact name in most themes,
-       * but its bare name is what the theme carries. */
-      if (pixbuf == NULL && g_str_has_suffix (icon, "-gtk"))
-        {
-          gchar *bare = g_strndup (icon, strlen (icon) - 4);
+      /* First token: "screenlets-daemon.py" -> "screenlets". */
+      {
+        gchar *cut = g_strdup (name);
+        gchar *sep = strpbrk (cut, "-._");
 
-          pixbuf = gtk_icon_theme_load_icon (theme, bare, size,
-                                             GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
-          g_free (bare);
-        }
+        if (sep != NULL)
+          {
+            *sep = '\0';
+            names[nnames++] = g_strdup (cut);
+          }
+        g_free (cut);
+      }
 
-      g_free (icon);
+      g_free (name);
     }
 
-  /* Last resort: the class name itself, which some clients do match. */
-  for (gint i = 0; i < 2 && pixbuf == NULL; i++)
+  for (gint i = 0; i < nnames && pixbuf == NULL; i++)
+    pixbuf = icon_from_desktop (names[i], size);
+
+  for (gint i = 0; i < nnames && pixbuf == NULL; i++)
+    pixbuf = load_icon_by_name (theme, names[i], size);
+
+  /* Two roles the theme has a clear generic name for. */
+  for (gint i = 0; i < nnames && pixbuf == NULL; i++)
     {
-      if (classes[i] == NULL || classes[i][0] == '\0')
-        continue;
-
-      pixbuf = gtk_icon_theme_load_icon (theme, classes[i], size,
-                                         GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+      if (g_strstr_len (names[i], -1, "volume") != NULL)
+        pixbuf = load_icon_by_name (theme, "audio-volume-high", size);
+      else if (g_strstr_len (names[i], -1, "settings-daemon") != NULL)
+        pixbuf = load_icon_by_name (theme, "preferences-desktop", size);
     }
 
-  for (gint i = 0; i < npaths; i++)
-    g_free (paths[i]);
+  if (pixbuf == NULL)
+    pixbuf = load_icon_by_name (theme, "application-x-executable", size);
+
+  for (gint i = 0; i < nnames; i++)
+    g_free (names[i]);
 
   if (hint.res_name != NULL)
     XFree (hint.res_name);
