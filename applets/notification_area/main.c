@@ -34,6 +34,8 @@
 
 #include "main.h"
 #include "na-grid.h"
+#include "status-notifier/sn-item.h"
+#include "status-notifier/sn-item-v0.h"
 
 #ifdef PROVIDE_WATCHER_SERVICE
 # include "libstatus-notifier-watcher/gf-status-notifier-watcher.h"
@@ -294,6 +296,70 @@ na_preferences_dialog_icon_state_changed (GtkComboBox  *combo,
                        (const gchar *const *) new_overflow->pdata);
 }
 
+/* An identifier such as "StatusNotifierItem-1234-1" says nothing about which
+ * icon it is, so each row also shows the item's own artwork.  An SNI item is our
+ * own widget tree, so its GtkImage is reachable; an XEmbed client paints itself
+ * into a foreign X window and keeps no pixmap on our side, hence the fallback. */
+static GtkWidget *
+find_item_image (GtkWidget *widget)
+{
+  GList     *children, *l;
+  GtkWidget *found = NULL;
+
+  if (GTK_IS_IMAGE (widget))
+    return widget;
+
+  if (!GTK_IS_CONTAINER (widget))
+    return NULL;
+
+  children = gtk_container_get_children (GTK_CONTAINER (widget));
+  for (l = children; l != NULL && found == NULL; l = l->next)
+    found = find_item_image (l->data);
+  g_list_free (children);
+
+  return found;
+}
+
+static GdkPixbuf *
+item_pixbuf (NaItem *item,
+             gint    size)
+{
+  GtkWidget      *image;
+  GdkPixbuf      *pixbuf;
+
+  if (!GTK_IS_WIDGET (item))
+    return NULL;
+
+  image = find_item_image (GTK_WIDGET (item));
+  if (image == NULL)
+    return NULL;
+
+  pixbuf = gtk_image_get_pixbuf (GTK_IMAGE (image));
+  if (pixbuf != NULL)
+    g_object_ref (pixbuf);
+  else if (SN_IS_ITEM_V0 (item))
+    {
+      /* GTK 3.24 has no gtk_image_get_surface(), and an SNI icon is usually
+       * surface-backed, so ask the item for its artwork instead. */
+      return sn_item_v0_get_icon_pixbuf (SN_ITEM_V0 (item), size);
+    }
+
+  if (pixbuf == NULL)
+    return NULL;
+
+  if (gdk_pixbuf_get_width (pixbuf) != size ||
+      gdk_pixbuf_get_height (pixbuf) != size)
+    {
+      GdkPixbuf *scaled = gdk_pixbuf_scale_simple (pixbuf, size, size,
+                                                   GDK_INTERP_BILINEAR);
+
+      g_object_unref (pixbuf);
+      pixbuf = scaled;
+    }
+
+  return pixbuf;
+}
+
 static void
 append_icon_row (NaTrayApplet *applet,
                  NaItem       *item,
@@ -302,6 +368,7 @@ append_icon_row (NaTrayApplet *applet,
   GtkWidget *grid = applet->priv->dialog->icons_grid;
   const gchar *id = na_item_get_id (item);
   NaItemState state = na_grid_get_item_state (NA_GRID (applet->priv->grid), item);
+  GtkWidget *image;
   GtkWidget *label;
   GtkWidget *combo;
   g_autofree gchar *display = NULL;
@@ -318,11 +385,28 @@ append_icon_row (NaTrayApplet *applet,
   else
     display = g_strdup_printf (_("%s (system tray)"), id);
 
+  image = gtk_image_new ();
+  {
+    GdkPixbuf *pixbuf = item_pixbuf (item, 22);
+
+    if (pixbuf != NULL)
+      {
+        gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
+        g_object_unref (pixbuf);
+      }
+    else
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), "image-missing",
+                                    GTK_ICON_SIZE_MENU);
+  }
+  gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
+  gtk_widget_show (image);
+  gtk_grid_attach (GTK_GRID (grid), image, 0, row, 1, 1);
+
   label = gtk_label_new (display);
   gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
   gtk_widget_show (label);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, row, 1, 1);
 
   combo = gtk_combo_box_text_new ();
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), _("Shown on the panel"));
@@ -339,7 +423,7 @@ append_icon_row (NaTrayApplet *applet,
                     applet);
 
   gtk_widget_show (combo);
-  gtk_grid_attach (GTK_GRID (grid), combo, 1, row, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), combo, 2, row, 1, 1);
 }
 
 static void

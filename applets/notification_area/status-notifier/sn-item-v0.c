@@ -202,8 +202,6 @@ get_icon_by_name (const gchar *icon_name,
                   gint         scale)
 {
   GtkIconTheme *icon_theme;
-  gint *sizes;
-  gint i;
   gint chosen_size = 0;
 
   g_return_val_if_fail (icon_name != NULL && icon_name[0] != '\0', NULL);
@@ -1481,6 +1479,51 @@ sn_item_v0_init (SnItemV0 *v0)
   v0->image = gtk_image_new ();
   gtk_button_set_image (GTK_BUTTON (v0), v0->image);
   gtk_widget_show (v0->image);
+}
+
+GdkPixbuf *
+sn_item_v0_get_icon_pixbuf (SnItemV0 *item,
+                            gint      size)
+{
+  cairo_surface_t *surface = NULL;
+  GdkPixbuf       *pixbuf = NULL;
+
+  g_return_val_if_fail (SN_IS_ITEM_V0 (item), NULL);
+  g_return_val_if_fail (size > 0, NULL);
+
+  if (item->icon_pixmap != NULL &&
+      item->icon_pixmap[0] != NULL &&
+      item->icon_pixmap[0]->surface != NULL)
+    surface = item->icon_pixmap[0]->surface;
+  else if (item->icon_name != NULL && item->icon_name[0] != '\0')
+    {
+      GtkIconTheme *theme;
+
+      theme = gtk_icon_theme_get_default ();
+      surface = gtk_icon_theme_load_surface (theme, item->icon_name, size,
+                                             1, NULL, 0, NULL);
+    }
+
+  if (surface == NULL ||
+      cairo_surface_get_type (surface) != CAIRO_SURFACE_TYPE_IMAGE)
+    return NULL;
+
+  pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0,
+                                        cairo_image_surface_get_width (surface),
+                                        cairo_image_surface_get_height (surface));
+
+  if (pixbuf != NULL &&
+      (gdk_pixbuf_get_width (pixbuf) != size ||
+       gdk_pixbuf_get_height (pixbuf) != size))
+    {
+      GdkPixbuf *scaled;
+
+      scaled = gdk_pixbuf_scale_simple (pixbuf, size, size, GDK_INTERP_BILINEAR);
+      g_object_unref (pixbuf);
+      pixbuf = scaled;
+    }
+
+  return pixbuf;
 }
 
 SnItem *
