@@ -1701,8 +1701,8 @@ na_overflow_stripe_draw_cb (GtkWidget *item,
   NaOverflow    *self = user_data;
   GtkAllocation  ga, ia;
   GList         *children, *l;
-  gint           left = 0, wid = 1, ncols = 0;
-  gdouble        cw, x0, x1;
+  gint           left = 0, wid = 1, top = 0, hei = 1, ncols = 0, nrows = 1;
+  gdouble        cw, ch, x0, x1, y0, y1;
 
   if (g_getenv ("NA_PLAIN") != NULL)
     return FALSE;
@@ -1728,11 +1728,14 @@ na_overflow_stripe_draw_cb (GtkWidget *item,
                                "left-attach", &cl, "top-attach", &ct,
                                "width", &cwid, "height", &chei, NULL);
       ncols = MAX (ncols, cl + cwid);
+      nrows = MAX (nrows, ct + chei);
 
       if (w_child == self->hover_item)
         {
           left = cl;
           wid  = cwid;
+          top  = ct;
+          hei  = chei;
         }
     }
   g_list_free (children);
@@ -1748,7 +1751,10 @@ na_overflow_stripe_draw_cb (GtkWidget *item,
   x1 = (left + wid == ncols) ? ia.width : ga.x + (left + wid) * cw;
 
   cairo_set_source_rgba (cr, 120 / 255.0, 120 / 255.0, 130 / 255.0, 0.38);
-  cairo_rectangle (cr, x0, 0, x1 - x0, ia.height);
+  ch = (gdouble) ga.height / nrows;
+  y0 = (gdouble) top * ch;
+  y1 = (gdouble) (top + hei) * ch;
+  cairo_rectangle (cr, x0, y0, x1 - x0, y1 - y0);
   cairo_fill (cr);
 
 
@@ -1810,7 +1816,7 @@ na_overflow_band_draw_cb (GtkWidget *widget,
   GtkWidget     *cell;
   gint           left = 0, top = 0, wid = 1, hei = 1;
   gint           ncols = 1, nrows = 1;
-  gdouble        cw, x0, x1;
+  gdouble        cw, ch, x0, x1, y0, y1;
 
   if (g_getenv ("NA_PLAIN") != NULL || self->hover_item == NULL)
     return FALSE;
@@ -1848,12 +1854,18 @@ na_overflow_band_draw_cb (GtkWidget *widget,
     }
   g_list_free (kids);
 
+  /* A cell, not a column: with two rows of icons the drawer is two cells high,
+   * so filling 0..ga.height painted the whole column whatever the cursor was
+   * over.  Both axes come from the child's attach, as the grid allocates them. */
   cw = (gdouble) ga.width / ncols;
+  ch = (gdouble) ga.height / nrows;
   x0 = (gdouble) left * cw;
   x1 = (gdouble) (left + wid) * cw;
+  y0 = (gdouble) top * ch;
+  y1 = (gdouble) (top + hei) * ch;
 
   cairo_set_source_rgba (cr, 70 / 255.0, 70 / 255.0, 80 / 255.0, 0.45);
-  cairo_rectangle (cr, x0, 0.0, x1 - x0, (gdouble) ga.height);
+  cairo_rectangle (cr, x0, y0, x1 - x0, y1 - y0);
   cairo_fill (cr);
 
   return FALSE;
