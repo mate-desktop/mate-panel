@@ -299,6 +299,169 @@ static const struct
   { "Mate-power-manager",         "~05-battery",   NA_ITEM_CATEGORY_HARDWARE },
 };
 
+/* An XEmbed client paints into its own window, so there is no pixmap on our
+ * side to show in the preferences list.  Two sources do work:
+ *   - _NET_WM_ICON, which nearly every tray client sets precisely for this;
+ *   - a themed icon named after its WM_CLASS, for clients that set none.
+ * A window grab is deliberately NOT used: without a compositor the foreign
+ * window usually has no readable contents, and with one it may be redirected. */
+static GdkPixbuf *
+pixbuf_from_net_wm_icon (GdkDisplay *display,
+                         Window      window,
+                         gint        size)
+{
+  Atom      atom;
+  Atom      type = None;
+  gint      format = 0;
+  gulong    nitems = 0, bytes_after = 0;
+  guchar   *data = NULL;
+  gulong   *icons;
+  gulong    i, best = 0, best_diff = G_MAXULONG;
+  GdkPixbuf *pixbuf = NULL;
+
+  atom = gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_ICON");
+
+  gdk_x11_display_error_trap_push (display);
+  if (XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display), window, atom, 0,
+                          G_MAXLONG, False, AnyPropertyType, &type, &format,
+                          &nitems, &bytes_after, &data) != Success)
+    {
+      gdk_x11_display_error_trap_pop_ignored (display);
+      return NULL;
+    }
+  gdk_x11_display_error_trap_pop_ignored (display);
+
+  if (data == NULL || format != 32 || type != XA_CARDINAL)
+    {
+      if (data != NULL)
+        XFree (data);
+      return NULL;
+    }
+
+  /* ARGB icons are stored as a list of (width, height, pixels...) blocks; pick
+   * the one closest to the requested size, preferring one that is not smaller. */
+  icons = (gulong *) data;
+  for (i = 0; i + 1 < nitems; )
+    {
+      gulong w = icons[i], h = icons[i + 1];
+      gulong diff;
+
+      if (w == 0 || h == 0 || i + 2 + w * h > nitems)
+        break;
+
+      diff = (w >= (gulong) size) ? w - (gulong) size : (gulong) size - w;
+      if (best_diff == G_MAXULONG || diff < best_diff)
+        {
+          best_diff = diff;
+          best = i;
+        }
+
+      i += 2 + w * h;
+    }
+
+  if (best_diff != G_MAXULONG)
+    {
+      gint   w = (gint) icons[best];
+      gint   h = (gint) icons[best + 1];
+      gint   x, y;
+      guchar *pixels;
+      gint   rowstride;
+
+      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, w, h);
+      pixels = gdk_pixbuf_get_pixels (pixbuf);
+      rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+
+      for (y = 0; y < h; y++)
+        for (x = 0; x < w; x++)
+          {
+            gulong pixel = icons[best + 2 + y * w + x];
+            guchar *p = pixels + y * rowstride + x * 4;
+
+            p[0] = (pixel >> 16) & 0xff;
+            p[1] = (pixel >> 8) & 0xff;
+            p[2] = pixel & 0xff;
+            p[3] = (pixel >> 24) & 0xff;
+          }
+    }
+
+  XFree (data);
+
+  return pixbuf;
+}
+
+static GdkPixbuf *
+pixbuf_from_wm_class (GdkDisplay *display,
+                      Window      window,
+                      gint        size)
+{
+  XClassHint  hint = { NULL, NULL };
+  GdkPixbuf  *pixbuf = NULL;
+  const gchar *candidates[3] = { NULL, NULL, NULL };
+
+  gdk_x11_display_error_trap_push (display);
+  if (XGetClassHint (GDK_DISPLAY_XDISPLAY (display), window, &hint) == 0)
+    {
+      gdk_x11_display_error_trap_pop_ignored (display);
+      return NULL;
+    }
+  gdk_x11_display_error_trap_pop_ignored (display);
+
+  candidates[0] = hint.res_name;
+  candidates[1] = hint.res_class;
+
+  for (gint i = 0; i < 2 && pixbuf == NULL; i++)
+    {
+      if (candidates[i] == NULL || candidates[i][0] == '\0')
+        continue;
+
+      pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                         candidates[i], size,
+                                         GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+    }
+
+  if (hint.res_name != NULL)
+    XFree (hint.res_name);
+  if (hint.res_class != NULL)
+    XFree (hint.res_class);
+
+  return pixbuf;
+}
+
+GdkPixbuf *
+na_tray_child_get_icon_pixbuf (NaTrayChild *child,
+                               gint         size)
+{
+  GdkDisplay *display;
+  GdkPixbuf  *pixbuf;
+  Window      window;
+
+  g_return_val_if_fail (NA_IS_TRAY_CHILD (child), NULL);
+  g_return_val_if_fail (size > 0, NULL);
+
+  window = child->icon_window;
+  if (window == None)
+    return NULL;
+
+  display = gtk_widget_get_display (GTK_WIDGET (child));
+
+  pixbuf = pixbuf_from_net_wm_icon (display, window, size);
+  if (pixbuf == NULL)
+    pixbuf = pixbuf_from_wm_class (display, window, size);
+
+  if (pixbuf != NULL &&
+      (gdk_pixbuf_get_width (pixbuf) != size ||
+       gdk_pixbuf_get_height (pixbuf) != size))
+    {
+      GdkPixbuf *scaled;
+
+      scaled = gdk_pixbuf_scale_simple (pixbuf, size, size, GDK_INTERP_BILINEAR);
+      g_object_unref (pixbuf);
+      pixbuf = scaled;
+    }
+
+  return pixbuf;
+}
+
 static const gchar *
 na_tray_child_get_id (NaItem *item)
 {

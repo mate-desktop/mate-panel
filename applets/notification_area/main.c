@@ -36,6 +36,9 @@
 #include "na-grid.h"
 #include "status-notifier/sn-item.h"
 #include "status-notifier/sn-item-v0.h"
+#ifdef HAVE_X11
+#include "system-tray/na-tray-child.h"
+#endif
 
 #ifdef PROVIDE_WATCHER_SERVICE
 # include "libstatus-notifier-watcher/gf-status-notifier-watcher.h"
@@ -343,6 +346,13 @@ item_pixbuf (NaItem *item,
        * surface-backed, so ask the item for its artwork instead. */
       return sn_item_v0_get_icon_pixbuf (SN_ITEM_V0 (item), size);
     }
+#ifdef HAVE_X11
+  else if (NA_IS_TRAY_CHILD (item))
+    {
+      /* XEmbed: the artwork lives in the client's own X window. */
+      return na_tray_child_get_icon_pixbuf (NA_TRAY_CHILD (item), size);
+    }
+#endif
 
   if (pixbuf == NULL)
     return NULL;
