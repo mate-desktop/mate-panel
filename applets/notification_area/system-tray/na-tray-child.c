@@ -389,14 +389,21 @@ pixbuf_from_net_wm_icon (GdkDisplay *display,
   return pixbuf;
 }
 
+/* A tray client usually keeps its icon in its .desktop file rather than in the
+ * window, and the class name is not the icon name ("AnyDesk" -> anydesk,
+ * "transmission-gtk" -> the theme has "transmission").  Resolve through the
+ * .desktop entry, then let the icon theme try the names it gives us. */
 static GdkPixbuf *
 pixbuf_from_wm_class (GdkDisplay *display,
                       Window      window,
                       gint        size)
 {
-  XClassHint  hint = { NULL, NULL };
-  GdkPixbuf  *pixbuf = NULL;
-  const gchar *candidates[3] = { NULL, NULL, NULL };
+  XClassHint   hint = { NULL, NULL };
+  GtkIconTheme *theme;
+  GdkPixbuf   *pixbuf = NULL;
+  const gchar *classes[2];
+  gchar       *paths[4] = { NULL, NULL, NULL, NULL };
+  gint         npaths = 0;
 
   gdk_x11_display_error_trap_push (display);
   if (XGetClassHint (GDK_DISPLAY_XDISPLAY (display), window, &hint) == 0)
@@ -406,18 +413,71 @@ pixbuf_from_wm_class (GdkDisplay *display,
     }
   gdk_x11_display_error_trap_pop_ignored (display);
 
-  candidates[0] = hint.res_name;
-  candidates[1] = hint.res_class;
+  classes[0] = hint.res_name;
+  classes[1] = hint.res_class;
 
-  for (gint i = 0; i < 2 && pixbuf == NULL; i++)
+  for (gint i = 0; i < 2 && npaths < 4; i++)
     {
-      if (candidates[i] == NULL || candidates[i][0] == '\0')
+      gchar *lower;
+
+      if (classes[i] == NULL || classes[i][0] == '\0')
         continue;
 
-      pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                         candidates[i], size,
+      lower = g_ascii_strdown (classes[i], -1);
+      paths[npaths++] = g_strdup_printf ("/usr/share/applications/%s.desktop", lower);
+      g_free (lower);
+    }
+
+  theme = gtk_icon_theme_get_default ();
+
+  for (gint i = 0; i < npaths && pixbuf == NULL; i++)
+    {
+      GKeyFile *key_file;
+      gchar    *icon = NULL;
+
+      if (!g_file_test (paths[i], G_FILE_TEST_EXISTS))
+        continue;
+
+      key_file = g_key_file_new ();
+      if (g_key_file_load_from_file (key_file, paths[i], G_KEY_FILE_NONE, NULL))
+        icon = g_key_file_get_string (key_file, "Desktop Entry", "Icon", NULL);
+      g_key_file_free (key_file);
+
+      if (icon == NULL || icon[0] == '\0')
+        {
+          g_free (icon);
+          continue;
+        }
+
+      pixbuf = gtk_icon_theme_load_icon (theme, icon, size,
+                                         GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+
+      /* "transmission-gtk" ships no icon under that exact name in most themes,
+       * but its bare name is what the theme carries. */
+      if (pixbuf == NULL && g_str_has_suffix (icon, "-gtk"))
+        {
+          gchar *bare = g_strndup (icon, strlen (icon) - 4);
+
+          pixbuf = gtk_icon_theme_load_icon (theme, bare, size,
+                                             GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+          g_free (bare);
+        }
+
+      g_free (icon);
+    }
+
+  /* Last resort: the class name itself, which some clients do match. */
+  for (gint i = 0; i < 2 && pixbuf == NULL; i++)
+    {
+      if (classes[i] == NULL || classes[i][0] == '\0')
+        continue;
+
+      pixbuf = gtk_icon_theme_load_icon (theme, classes[i], size,
                                          GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
     }
+
+  for (gint i = 0; i < npaths; i++)
+    g_free (paths[i]);
 
   if (hint.res_name != NULL)
     XFree (hint.res_name);

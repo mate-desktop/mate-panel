@@ -333,9 +333,17 @@ item_pixbuf (NaItem *item,
   if (!GTK_IS_WIDGET (item))
     return NULL;
 
+  /* Ask the item FIRST: an XEmbed child is a GtkSocket with no GtkImage at all,
+   * so looking for one first would return before reaching the client's window. */
+#ifdef HAVE_X11
+  if (NA_IS_TRAY_CHILD (item))
+    return na_tray_child_get_icon_pixbuf (NA_TRAY_CHILD (item), size);
+#endif
+
   image = find_item_image (GTK_WIDGET (item));
   if (image == NULL)
-    return NULL;
+    return SN_IS_ITEM_V0 (item) ? sn_item_v0_get_icon_pixbuf (SN_ITEM_V0 (item), size)
+                                : NULL;
 
   pixbuf = gtk_image_get_pixbuf (GTK_IMAGE (image));
   if (pixbuf != NULL)
@@ -346,13 +354,6 @@ item_pixbuf (NaItem *item,
        * surface-backed, so ask the item for its artwork instead. */
       return sn_item_v0_get_icon_pixbuf (SN_ITEM_V0 (item), size);
     }
-#ifdef HAVE_X11
-  else if (NA_IS_TRAY_CHILD (item))
-    {
-      /* XEmbed: the artwork lives in the client's own X window. */
-      return na_tray_child_get_icon_pixbuf (NA_TRAY_CHILD (item), size);
-    }
-#endif
 
   if (pixbuf == NULL)
     return NULL;
