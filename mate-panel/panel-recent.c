@@ -157,7 +157,7 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 				 GTK_RESPONSE_CANCEL);
 
 	panel_dialog_add_button (GTK_DIALOG (clear_recent_dialog),
-				 _("_Clear"), "edit-clear",
+				 _("_Clear"), "edit-clear-all",
 				 GTK_RESPONSE_ACCEPT);
 
 	gtk_container_set_border_width (GTK_CONTAINER (clear_recent_dialog), 6);
@@ -240,7 +240,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	setup_menuitem_with_icon (menu_item,
 				   panel_menu_icon_get_size (),
 				   NULL,
-				   "edit-clear",
+				   "edit-clear-all",
 				   _("Clear Recent Documents..."));
 	panel_util_set_tooltip_text (menu_item,
 				     _("Clear all items from the recent documents list"));
