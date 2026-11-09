@@ -978,19 +978,20 @@ tasklist_has_window (TasklistManager *tasklist, XfwWindow *window)
 }
 
 static void
-screen_window_opened (XfwScreen *screen, XfwWindow *window, TasklistManager *tasklist)
+tasklist_add_window (TasklistManager *tasklist, XfwWindow *window)
 {
 	ToplevelTask *task;
 
-	if (!window || tasklist_has_window (tasklist, window))
+	if (!window || tasklist_has_window (tasklist, window) || xfw_window_is_skip_tasklist (window))
 		return;
 
 	task = toplevel_task_new (tasklist, window);
-	gtk_box_pack_start (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
+	if (task != NULL)
+		gtk_box_pack_start (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
 }
 
 static void
-screen_window_closed (XfwScreen *screen, XfwWindow *window, TasklistManager *tasklist)
+tasklist_remove_window (TasklistManager *tasklist, XfwWindow *window)
 {
 	GList *l;
 
@@ -1034,6 +1035,43 @@ screen_window_closed (XfwScreen *screen, XfwWindow *window, TasklistManager *tas
 			return;
 		}
 	}
+}
+
+static void
+window_skip_tasklist_changed (XfwWindow *window, XfwWindowState changed_mask, XfwWindowState new_state, TasklistManager *tasklist)
+{
+	if (!(changed_mask & XFW_WINDOW_STATE_SKIP_TASKLIST))
+		return;
+
+	if (new_state & XFW_WINDOW_STATE_SKIP_TASKLIST)
+		tasklist_remove_window (tasklist, window);
+	else
+		tasklist_add_window (tasklist, window);
+}
+
+static void
+tasklist_watch_window (TasklistManager *tasklist, XfwWindow *window)
+{
+	if (g_signal_handler_find (window, G_SIGNAL_MATCH_FUNC | G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+				   window_skip_tasklist_changed, tasklist) == 0)
+		g_signal_connect (window, "state-changed", G_CALLBACK (window_skip_tasklist_changed), tasklist);
+}
+
+static void
+screen_window_opened (XfwScreen *screen, XfwWindow *window, TasklistManager *tasklist)
+{
+	if (!window)
+		return;
+
+	tasklist_watch_window (tasklist, window);
+	tasklist_add_window (tasklist, window);
+}
+
+static void
+screen_window_closed (XfwScreen *screen, XfwWindow *window, TasklistManager *tasklist)
+{
+	g_signal_handlers_disconnect_by_func (window, window_skip_tasklist_changed, tasklist);
+	tasklist_remove_window (tasklist, window);
 }
 
 static void
@@ -1108,6 +1146,10 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 
 	if (tasklist->screen)
 	{
+		GList *w;
+
+		for (w = xfw_screen_get_windows (tasklist->screen); w != NULL; w = w->next)
+			g_signal_handlers_disconnect_by_data (w->data, tasklist);
 		g_signal_handlers_disconnect_by_data (tasklist->screen, tasklist);
 		g_object_unref (tasklist->screen);
 		tasklist->screen = NULL;
@@ -1163,9 +1205,8 @@ tasklist_manager_new (void)
 	for (l = windows; l != NULL; l = l->next)
 	{
 		XfwWindow *window = l->data;
-		ToplevelTask *task = toplevel_task_new (tasklist, window);
-		if (task != NULL)
-			gtk_box_pack_start (GTK_BOX (tasklist->list), task->button, TRUE, TRUE, 0);
+		tasklist_watch_window (tasklist, window);
+		tasklist_add_window (tasklist, window);
 	}
 
 	/* monitor window changes */
