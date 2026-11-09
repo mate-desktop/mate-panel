@@ -1469,6 +1469,29 @@ tasklist_scroll_event (GtkWidget *widget, GdkEventScroll *event, TasklistManager
 	return TRUE;
 }
 
+static void
+toplevel_task_send_rectangle (GtkWidget *button, GdkRectangle *allocation, ToplevelTask *task)
+{
+	GtkWidget *toplevel_widget;
+	GdkWindow *window;
+	GdkRectangle rect;
+	int x, y;
+
+	if (!task->window || !gtk_widget_get_realized (button))
+		return;
+
+	toplevel_widget = gtk_widget_get_toplevel (button);
+	window = gtk_widget_get_window (toplevel_widget);
+	if (!window || !gtk_widget_translate_coordinates (button, toplevel_widget, 0, 0, &x, &y))
+		return;
+
+	rect.x = x;
+	rect.y = y;
+	rect.width = allocation->width;
+	rect.height = allocation->height;
+	xfw_window_set_button_geometry (task->window, window, &rect, NULL);
+}
+
 static ToplevelTask *
 toplevel_task_new (TasklistManager *tasklist, XfwWindow *window)
 {
@@ -1489,6 +1512,7 @@ toplevel_task_new (TasklistManager *tasklist, XfwWindow *window)
 	task->tasklist = tasklist;
 	task->button = gtk_button_new ();
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
+	g_signal_connect (task->button, "size-allocate", G_CALLBACK (toplevel_task_send_rectangle), task);
 
 	task->icon = gtk_image_new_from_icon_name ("unknown", icon_size);
 
