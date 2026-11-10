@@ -197,6 +197,17 @@ wayland_set_window_minimized (gpointer window, gboolean minimized)
 	xfw_window_set_minimized (window, minimized, NULL);
 }
 
+static void
+wayland_set_window_button_geometry (gpointer window,
+					GdkWindow *relative_to,
+					const GdkRectangle *rect)
+{
+	GError *error = NULL;
+
+	if (!xfw_window_set_button_geometry (window, relative_to, rect, &error))
+		g_clear_error (&error);
+}
+
 /* The core widget is passed in as the signal user data, so that the core can
  * stop every handler it owns with a single
  * g_signal_handlers_disconnect_by_data() on itself. */
@@ -336,6 +347,7 @@ static const TasklistBackend wayland_backend = {
 	.close_window             = wayland_close_window,
 	.set_window_maximized     = wayland_set_window_maximized,
 	.set_window_minimized     = wayland_set_window_minimized,
+	.set_window_button_geometry = wayland_set_window_button_geometry,
 	.set_screen_tracking      = wayland_set_screen_tracking,
 	.set_window_tracking      = wayland_set_window_tracking,
 	.set_app_tracking         = wayland_set_app_tracking,
