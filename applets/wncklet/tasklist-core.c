@@ -209,6 +209,9 @@ static void tasklist_assign_to_group (TasklistManager *tasklist, ToplevelTask *t
 static void group_task_child_state_changed (GroupTask *group);
 static void tasklist_rebuild (TasklistManager *tasklist);
 static void adjust_buttons (TasklistManager *tasklist, int button_space, int buttons, ToplevelTask *task);
+static void toplevel_task_send_rectangle (GtkWidget *button,
+					  GdkRectangle *allocation,
+					  ToplevelTask *task);
 static void tasklist_update_size_hints (TasklistManager *tasklist, gint natural_width);
 static void tasklist_refresh_icon_size (TasklistManager *tasklist);
 static void tasklist_theme_changed (GtkSettings *settings, GParamSpec *pspec, TasklistManager *tasklist);
@@ -280,6 +283,35 @@ update_task_state (ToplevelTask *task)
 
 	if (task->group)
 		group_task_child_state_changed (task->group);
+}
+
+static void
+toplevel_task_send_rectangle (GtkWidget *button,
+				       GdkRectangle *allocation,
+				       ToplevelTask *task)
+{
+	GtkWidget *toplevel_widget;
+	GdkWindow *window;
+	GdkRectangle rect;
+	int x, y;
+
+	if (!task->window || !gtk_widget_get_realized (button) ||
+	    task->tasklist->backend->set_window_button_geometry == NULL)
+		return;
+
+	toplevel_widget = gtk_widget_get_toplevel (button);
+	window = gtk_widget_get_window (toplevel_widget);
+	if (!window ||
+	    !gtk_widget_translate_coordinates (button, toplevel_widget, 0, 0, &x, &y))
+		return;
+
+	rect.x = x;
+	rect.y = y;
+	rect.width = allocation->width;
+	rect.height = allocation->height;
+	task->tasklist->backend->set_window_button_geometry (task->window,
+								 window,
+								 &rect);
 }
 
 static gint
@@ -1905,6 +1937,8 @@ toplevel_task_new (TasklistManager *tasklist, gpointer window)
 	task->tasklist = tasklist;
 	task->button = gtk_button_new ();
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
+	g_signal_connect (task->button, "size-allocate",
+			  G_CALLBACK (toplevel_task_send_rectangle), task);
 
 	task->icon = gtk_image_new_from_icon_name (backend->get_fallback_icon_name (),
 						   GTK_ICON_SIZE_MENU);

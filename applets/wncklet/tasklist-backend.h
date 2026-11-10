@@ -111,6 +111,11 @@ struct _TasklistBackend {
 	void      (*close_window)              (gpointer window, guint32 timestamp);
 	void      (*set_window_maximized)      (gpointer window, gboolean maximized);
 	void      (*set_window_minimized)      (gpointer window, gboolean minimized);
+	/* Report the task button's geometry relative to its toplevel window, when
+	 * the windowing system supports compositor task button animations. */
+	void      (*set_window_button_geometry) (gpointer window,
+	                                         GdkWindow *relative_to,
+	                                         const GdkRectangle *rect);
 
 	/* signal tracking. Both tracking calls must use the core widget as the
 	 * signal user data, so that stopping is a single
