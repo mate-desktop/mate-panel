@@ -1771,8 +1771,13 @@ na_overflow_stripe_draw_cb (GtkWidget *item,
 
   cairo_set_source_rgba (cr, 120 / 255.0, 120 / 255.0, 130 / 255.0, 0.38);
   ch = (gdouble) ga.height / nrows;
-  y0 = (gdouble) top * ch;
-  y1 = (gdouble) (top + hei) * ch;
+  /* Same reasoning as the horizontal extent above: the cell starts at the
+   * grid's own origin, not at 0, and the first/last row is extended to the
+   * item's edges.  Without ga.y the band sat short by the grid offset and the
+   * highlight was clipped vertically (visible on Wayland, where the drawer
+   * carries a border the X11 path did not). */
+  y0 = (top == 0) ? 0 : ga.y + top * ch;
+  y1 = (top + hei == nrows) ? ia.height : ga.y + (top + hei) * ch;
   cairo_rectangle (cr, x0, y0, x1 - x0, y1 - y0);
   cairo_fill (cr);
 
