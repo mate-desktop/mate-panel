@@ -27,10 +27,6 @@
 #endif
 
 #include "na-overflow.h"
-
-#ifdef HAVE_X11
-#include <gdk/gdkx.h>
-#endif
 #include "na-item.h"
 #include "status-notifier/sn-item.h"
 
@@ -1083,21 +1079,6 @@ na_overflow_cancel_grab_poll (NaOverflow *self)
  * gtk_get_event_widget() answers the widget the event was ADDRESSED to, which
  * is the deepest one under the pointer, and its ancestry decides which
  * coordinate space event->x/y are in. */
-
-/* The hover highlight below is painted from X11 coordinates; on Wayland the
- * crossings arrive differently and the paint never lines up with the cell.
- * Leave the theme's own prelight alone there instead of stripping it. */
-static gboolean
-na_overflow_on_x11 (void)
-{
-#ifdef HAVE_X11
-  GdkDisplay *d = gdk_display_get_default ();
-  return d != NULL && GDK_IS_X11_DISPLAY (d);
-#else
-  return FALSE;
-#endif
-}
-
 static GtkWidget *
 na_overflow_hover_resolve (NaOverflow *self,
                            GdkEvent   *event,
@@ -1478,7 +1459,7 @@ na_overflow_new (void)
       gtk_menu_shell_append (GTK_MENU_SHELL (self->menu), item);
       gtk_widget_show_all (item);
 
-      if (g_getenv ("NA_PLAIN") == NULL && na_overflow_on_x11 ())
+      if (g_getenv ("NA_PLAIN") == NULL)
         {
       /* The drawer is a single menu item, so the theme paints that item's
          * prelight across the whole drawer.  The item is only a container here -
