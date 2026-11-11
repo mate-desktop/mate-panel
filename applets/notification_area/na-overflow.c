@@ -22,6 +22,10 @@
 #include <signal.h>      /* SIGTERM to the clickwatch helper */
 #include <math.h>        /* floor() for the cell hit test */
 
+#ifdef HAVE_X11
+#include <gdk/gdkx.h>
+#endif
+
 #ifdef HAVE_WAYLAND
 #include <gdk/gdkwayland.h>
 #endif
@@ -32,11 +36,11 @@
 
 static gboolean na_overflow_point_in_widget (GtkWidget *widget, gint px, gint py);
 static gboolean na_overflow_cell_enter_cb (GtkWidget *child, GdkEventCrossing *event, gpointer user_data);
-#if defined(HAVE_WAYLAND)
+#ifdef HAVE_WAYLAND
 static gboolean na_overflow_hover_motion_cb (GtkWidget *widget, GdkEventMotion *event, gpointer user_data);
 static gboolean na_overflow_stripe_draw_cb (GtkWidget *item, cairo_t *cr, gpointer user_data);
 #endif
-#if !defined(HAVE_WAYLAND)
+#ifdef HAVE_X11
 static gboolean na_overflow_band_draw_cb (GtkWidget *widget, cairo_t *cr, gpointer user_data);
 #endif
 static void     na_overflow_set_hover (NaOverflow *self, GtkWidget *owned);
@@ -154,7 +158,7 @@ G_DEFINE_TYPE (NaOverflow, na_overflow, GTK_TYPE_WINDOW)
 
 static void na_overflow_emit_closed (NaOverflow *self);
 
-#if defined(HAVE_WAYLAND)
+#ifdef HAVE_WAYLAND
 /* GtkMenuShell::deactivate is (GtkMenuShell*, target), so it cannot be wired
  * with g_signal_connect_swapped to a one-argument function.  The menu path is
  * the Wayland one, hence the guard. */
@@ -242,7 +246,7 @@ na_overflow_pointer_inside (NaOverflow *self)
   if (px >= ox && px < ox + w && py >= oy && py < oy + h)
     return TRUE;
 
-#if !defined(HAVE_WAYLAND)
+#ifdef HAVE_X11
   /* The chevron lives in the panel, outside this window: without this the
    * drawer folded 800 ms after opening while the pointer was still on the
    * button that opened it.  X11 only - the Wayland menu path owns its own
@@ -737,7 +741,7 @@ na_overflow_init (NaOverflow *self)
   /* The border used to give the drawer its 4 px breathing room, but it also
    * clipped the hover fill.  A margin on the grid keeps the same visual size
    * without a border (X11 only - the Wayland menu has its own padding). */
-#if !defined(HAVE_WAYLAND)
+#ifdef HAVE_X11
   /* The grid spans the WHOLE drawer.  A margin here put the cells 4 px inside
    * the window, so the highlight (clipped to a cell) left a bare strip at the
    * drawer's left and right edges.  The breathing room moves to the icons. */
@@ -799,7 +803,12 @@ na_overflow_init (NaOverflow *self)
     g_object_unref (css);
   }
 
-#if !defined(HAVE_WAYLAND)
+#ifdef HAVE_X11
+  /* Runtime, not compile-time: a +wayland build must still drive an X11
+   * session.  On Wayland the menu path below takes over and this hookup must
+   * stay out of its way. */
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
   /* X11: the drawer is a plain POPUP window, so the hover machinery the menu
    * path wires up never ran here and the drawer shipped with no highlight.
    * Motion on the drawer resolves the cell under the pointer (the resolver
@@ -815,6 +824,7 @@ na_overflow_init (NaOverflow *self)
    * alternated SnItemV0/none every 40 ms). */
   g_signal_connect (self->grid, "add",
                     G_CALLBACK (na_overflow_grid_child_added_cb), self);
+    }
 #endif
 
   self->panel_orientation = GTK_ORIENTATION_HORIZONTAL;
@@ -1254,7 +1264,7 @@ na_overflow_hover_poll_cb (gpointer data)
 static void
 na_overflow_hover_poll_start (NaOverflow *self)
 {
-#if defined(HAVE_WAYLAND)
+#ifdef HAVE_WAYLAND
   if (gdk_display_get_default () != NULL &&
       GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
     return;   /* no truthful pointer position there */
@@ -1357,7 +1367,7 @@ na_overflow_set_hover (NaOverflow *self,
 
 }
 
-#if defined(HAVE_WAYLAND)
+#ifdef HAVE_WAYLAND
 static gboolean
 na_overflow_menu_event_shield (GtkWidget *widget,
                                GdkEvent  *event,
@@ -1711,7 +1721,7 @@ na_overflow_position (NaOverflow *self)
  * The column comes from the layout, not from allocations: the grid is
  * homogeneous with zero spacing (refresh_overflow_grid), so cell geometry is
  * grid_size / filled columns and the hovered child's left-attach. */
-#if defined(HAVE_WAYLAND)
+#ifdef HAVE_WAYLAND
 static gboolean
 na_overflow_stripe_draw_cb (GtkWidget *item,
                             cairo_t   *cr,
@@ -1828,7 +1838,7 @@ na_overflow_cell_leave_cb (GtkWidget        *child,
  * The grid's draw runs before its children, so the band sits UNDER the icons
  * (whatever kind they are), and a cell is the full grid height - the icons keep
  * a 2 px inset inside it, which this fill covers. */
-#if !defined(HAVE_WAYLAND)
+#ifdef HAVE_X11
 static gboolean
 na_overflow_band_draw_cb (GtkWidget *widget,
                           cairo_t   *cr,
@@ -1909,7 +1919,7 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
       g_object_set_data (G_OBJECT (child), "na-cell-hover",
                          (gpointer) "na-cell-hover");
 
-#if !defined(HAVE_WAYLAND)
+#ifdef HAVE_X11
       /* A small inset around the icon: the cell is then a few pixels larger than
        * the artwork, and the highlight (painted per CELL, not per icon) covers
        * that inset too - the drawer gets a little air without a bare strip. */
@@ -1933,7 +1943,7 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
     }
 }
 
-#if defined(HAVE_WAYLAND)
+#ifdef HAVE_WAYLAND
 static gboolean
 na_overflow_hover_motion_cb (GtkWidget      *widget,
                              GdkEventMotion *event,
