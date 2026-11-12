@@ -917,9 +917,20 @@ na_overflow_menu_item_leave_cb (GtkWidget        *widget,
       event->mode == GDK_CROSSING_STATE_CHANGED)
     return FALSE;
 
-  /* INFERIOR = onto a child window, still inside the drawer. */
-  if (event->detail == GDK_NOTIFY_INFERIOR)
-    return FALSE;
+  /* Only the drawer's OWN surface transition is a real "pointer left".
+   * A crossing that arrived on an icon's window (an SNI button owns one)
+   * propagates up to this windowless item, and GTK synthesizes the item's
+   * counterpart with detail=NONLINEAR (3) - not the INFERIOR (2) that a
+   * "still inside, it just moved onto a child" filter tests for. Filtering
+   * by detail therefore never matched, so every icon-leave stamped leave_at
+   * and the phantom enter cleared it again: leave_at stayed 0 and the
+   * auto-hide timer never fired (measured: drawer hangs open after the
+   * pointer has been over an icon). Judge by window identity instead. */
+  {
+    GdkWindow *sw = gtk_widget_get_window (self->menu);
+    if (sw == NULL || event->window != sw)
+      return FALSE;
+  }
 
   if (self->leave_at == 0)
     self->leave_at = g_get_monotonic_time ();
@@ -940,6 +951,14 @@ na_overflow_menu_item_enter_cb (GtkWidget        *widget,
       event->mode == GDK_CROSSING_GTK_UNGRAB ||
       event->mode == GDK_CROSSING_STATE_CHANGED)
     return FALSE;
+
+  /* Same window-identity rule as the leave handler: an icon's crossing must
+   * not clear the outside stamp, or a phantom enter re-arms "inside" forever. */
+  {
+    GdkWindow *sw = gtk_widget_get_window (self->menu);
+    if (sw == NULL || event->window != sw)
+      return FALSE;
+  }
 
   self->leave_at = 0;
 
