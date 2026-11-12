@@ -222,6 +222,13 @@ na_overflow_pointer_inside (NaOverflow *self)
   if (self->use_menu)
     return self->leave_at == 0;
 
+  /* X11 popup, but possibly under XWayland: QueryPointer there reports the
+   * pointer frozen at the last position inside an X11 window, so it answers
+   * "inside" forever once the pointer is over Wayland surfaces.  A crossing
+   * that stamped leave_at is the more truthful channel - trust it. */
+  if (self->leave_at != 0)
+    return FALSE;
+
   window = gtk_widget_get_window (GTK_WIDGET (self));
   if (window == NULL)
     return FALSE;
@@ -955,10 +962,11 @@ na_overflow_menu_item_leave_cb (GtkWidget        *widget,
                 event->detail, event->mode, self->hover_item != NULL);
     if (sw == NULL || event->window != sw)
       {
-        /* A crossing on an icon's window: still inside while a hover is live,
-         * outside (tentatively) once the hover is gone.  The next enter on a
-         * neighbour icon or the drawer background repairs it within the dwell. */
-        if (self->hover_item == NULL && self->leave_at == 0)
+        /* A crossing on an icon's window: stamp TENTATIVELY.  The next enter on
+         * a neighbour icon or on the drawer background repairs it within the
+         * dwell (see the enter handler).  This is the only channel that reports
+         * the pointer leaving on Wayland, where motion stops being delivered. */
+        if (self->leave_at == 0)
           self->leave_at = g_get_monotonic_time ();
         return FALSE;
       }
@@ -984,12 +992,17 @@ na_overflow_menu_item_enter_cb (GtkWidget        *widget,
       event->mode == GDK_CROSSING_STATE_CHANGED)
     return FALSE;
 
-  /* Same window-identity rule as the leave handler: an icon's crossing must
-   * not clear the outside stamp, or a phantom enter re-arms "inside" forever. */
+  /* An enter on an ICON's window means the pointer came onto that icon: that
+   * repairs a tentative stamp from the previous icon's leave.  With no hover
+   * live this is a synthesized counterpart, not real motion - ignore it. */
   {
     GdkWindow *sw = gtk_widget_get_window (self->menu);
     if (sw == NULL || event->window != sw)
-      return FALSE;
+      {
+        if (self->hover_item != NULL)
+          self->leave_at = 0;
+        return FALSE;
+      }
   }
 
   self->leave_at = 0;
@@ -1851,6 +1864,27 @@ na_overflow_stripe_draw_cb (GtkWidget *item,
  * reaches the item handler (measured), but enter/leave on the icon's window
  * are reliable. Synthetic crossings (grab activation) are ignored, as
  * everywhere else in this file. */
+/* The drawer's "the pointer is inside / has left" stamps, written by the
+ * icons' own crossings.  On Wayland these are the only truthful channel: motion
+ * delivery stops once the pointer leaves the popup surface and QueryPointer in
+ * XWayland keeps answering the last position inside an X11 window. */
+static void
+na_overflow_note_inside (NaOverflow *self)
+{
+  if (self->leave_at != 0)
+    {
+      self->leave_at = 0;
+      self->outside_since = 0;
+    }
+}
+
+static void
+na_overflow_note_outside (NaOverflow *self)
+{
+  if (self->leave_at == 0)
+    self->leave_at = g_get_monotonic_time ();
+}
+
 static gboolean
 na_overflow_cell_enter_cb (GtkWidget        *child,
                            GdkEventCrossing *event,
@@ -1860,6 +1894,11 @@ na_overflow_cell_enter_cb (GtkWidget        *child,
       event->mode == GDK_CROSSING_GTK_UNGRAB ||
       event->mode == GDK_CROSSING_STATE_CHANGED)
     return FALSE;
+
+  /* The pointer is over this icon: it is inside the drawer.  Clearing the
+   * outside stamp here is what repairs the TENTATIVE stamp that the previous
+   * icon's leave wrote a few milliseconds ago. */
+  na_overflow_note_inside (NA_OVERFLOW (user_data));
 
   g_object_ref (child);
   na_overflow_set_hover (user_data, child);
@@ -1881,7 +1920,13 @@ na_overflow_cell_leave_cb (GtkWidget        *child,
   /* Guard against the leave of a cell we already left (enter of the next
    * icon may arrive first under a grab): only clear if WE are lit. */
   if (self->hover_item == child)
-    na_overflow_set_hover (self, NULL);
+    {
+      na_overflow_set_hover (self, NULL);
+      /* Leaving the lit icon is the only reliable "the pointer went away"
+       * signal on Wayland (motion stops, QueryPointer freezes): stamp it
+       * tentatively - an enter on a neighbour icon repairs it immediately. */
+      na_overflow_note_outside (self);
+    }
   return FALSE;
 }
 /* The highlight: one band per hovered COLUMN, painted in the grid's own draw.
