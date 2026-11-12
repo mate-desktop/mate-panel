@@ -568,6 +568,10 @@ na_overflow_autohide_cb (gpointer data)
         self->outside_since = 0;
       else if (self->outside_since == 0)
         self->outside_since = now;
+      g_printerr ("NADBG poll inside=%d leave_at=%" G_GINT64_FORMAT
+                  " outside_since=%" G_GINT64_FORMAT " autohide=%u\n",
+                  (int) na_overflow_pointer_inside (self), self->leave_at,
+                  self->outside_since, self->autohide_ms);
       else if (now - self->outside_since >= (gint64) self->autohide_ms * 1000)
         hide = TRUE;
     }
@@ -889,6 +893,10 @@ na_overflow_menu_motion_cb (GtkWidget      *widget,
   else if (self->leave_at == 0)
     self->leave_at = g_get_monotonic_time ();
 
+  g_printerr ("NADBG motion win=%s x=%.0f y=%.0f inside=%d leave_at=%" G_GINT64_FORMAT "\n",
+              (event->window == sw) ? "menu" : "other", event->x, event->y,
+              (int) inside, self->leave_at);
+
   return FALSE;   /* normal propagation continues */
 }
 
@@ -928,6 +936,9 @@ na_overflow_menu_item_leave_cb (GtkWidget        *widget,
    * pointer has been over an icon). Judge by window identity instead. */
   {
     GdkWindow *sw = gtk_widget_get_window (self->menu);
+    g_printerr ("NADBG leave win=%s detail=%d mode=%d\n",
+                (sw != NULL && event->window == sw) ? "menu" : "other",
+                event->detail, event->mode);
     if (sw == NULL || event->window != sw)
       return FALSE;
   }
