@@ -248,11 +248,14 @@ na_overflow_pointer_inside (NaOverflow *self)
   if (self->use_menu)
     return self->leave_at == 0;
 
-  /* X11 popup, but possibly under XWayland: QueryPointer there reports the
-   * pointer frozen at the last position inside an X11 window, so it answers
-   * "inside" forever once the pointer is over Wayland surfaces.  A crossing
-   * that stamped leave_at is the more truthful channel - trust it. */
-  if (self->leave_at != 0)
+  /* X11 popup under XWayland: QueryPointer reports the pointer frozen at the
+   * last position inside an X11 window, so it answers "inside" forever once
+   * the pointer is over Wayland surfaces.  A crossing that stamped leave_at is
+   * the more truthful channel - trust it there.  On a real Xorg session the
+   * query works and MUST win: an icon's own tooltip popup produces a leave
+   * crossing while the pointer is still on the icon, and trusting the stamp
+   * folded the drawer under the user's pointer. */
+  if (g_getenv ("WAYLAND_DISPLAY") != NULL && self->leave_at != 0)
     return FALSE;
 
   window = gtk_widget_get_window (GTK_WIDGET (self));
