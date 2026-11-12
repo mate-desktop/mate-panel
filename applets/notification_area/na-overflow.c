@@ -789,15 +789,13 @@ na_overflow_init (NaOverflow *self)
   /* The border used to give the drawer its 4 px breathing room, but it also
    * clipped the hover fill.  A margin on the grid keeps the same visual size
    * without a border (X11 only - the Wayland menu has its own padding). */
-#ifdef HAVE_X11
-  /* The grid spans the WHOLE drawer.  A margin here put the cells 4 px inside
-   * the window, so the highlight (clipped to a cell) left a bare strip at the
-   * drawer's left and right edges.  The breathing room moves to the icons. */
+  /* The grid spans the WHOLE drawer: a margin here put the cells inside the
+   * window, so the highlight (clipped to a cell) left a bare strip at the
+   * drawer's edges.  The breathing room moves to the icons. */
   gtk_widget_set_margin_start (self->grid, 0);
   gtk_widget_set_margin_end (self->grid, 0);
   gtk_widget_set_margin_top (self->grid, 0);
   gtk_widget_set_margin_bottom (self->grid, 0);
-#endif
   gtk_grid_set_column_spacing (GTK_GRID (self->grid), 0);
   gtk_widget_show (self->grid);
 
@@ -1594,7 +1592,12 @@ na_overflow_new (void)
               "menuitem.na-overflow-host:selected {"
               "  background: none;"
               "  background-image: none;"
-              "  box-shadow: none; }"
+              "  box-shadow: none;"
+              /* The theme's item padding is the whole extra size of the drawer
+               * on this path: with it the menu came out noticeably larger than
+               * the X11 popup.  Zero it and put the same 4 px back on the grid
+               * below, so both backends measure the same. */
+              "  padding: 0; }"
               ".na-overflow-icon {"
               "  background: none;"
               "  background-image: none;"
@@ -2080,15 +2083,14 @@ na_overflow_grid_child_added_cb (GtkContainer *grid,
       g_object_set_data (G_OBJECT (child), "na-cell-hover",
                          (gpointer) "na-cell-hover");
 
-#ifdef HAVE_X11
       /* A small inset around the icon: the cell is then a few pixels larger than
-       * the artwork, and the highlight (painted per CELL, not per icon) covers
-       * that inset too - the drawer gets a little air without a bare strip. */
+       * the artwork, and the highlight covers that inset too - the drawer gets
+       * a little air without a bare strip.  Both backends, so the drawer has the
+       * same size on the menu path as on the X11 popup. */
       gtk_widget_set_margin_start (child, 4);
       gtk_widget_set_margin_end (child, 4);
       gtk_widget_set_margin_top (child, 4);
       gtk_widget_set_margin_bottom (child, 4);
-#endif
 
       /* Motion over an icon's own surface never reaches the item handler
        * (measured: only owner=GtkMenuItem events from the padding areas
