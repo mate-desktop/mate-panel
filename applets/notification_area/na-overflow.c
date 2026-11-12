@@ -568,12 +568,13 @@ na_overflow_autohide_cb (gpointer data)
         self->outside_since = 0;
       else if (self->outside_since == 0)
         self->outside_since = now;
-      g_printerr ("NADBG poll inside=%d leave_at=%" G_GINT64_FORMAT
-                  " outside_since=%" G_GINT64_FORMAT " autohide=%u\n",
-                  (int) na_overflow_pointer_inside (self), self->leave_at,
-                  self->outside_since, self->autohide_ms);
       else if (now - self->outside_since >= (gint64) self->autohide_ms * 1000)
         hide = TRUE;
+
+      g_printerr ("NADBG poll inside=%d leave_at=%" G_GINT64_FORMAT
+                  " outside_since=%" G_GINT64_FORMAT " autohide=%u hide=%d\n",
+                  (int) na_overflow_pointer_inside (self), self->leave_at,
+                  self->outside_since, self->autohide_ms, (int) hide);
     }
 
   if (hide)
