@@ -95,6 +95,7 @@ struct _NaGrid
   gint        size_pending;    /* width that idle should request */
   guint       park_idle;       /* idle source id, 0 when none pending */
   guint       remap_timeout;   /* delayed remap of the drawer, 0 = none */
+  guint       tooltip_rearm_id; /* delayed chevron tooltip re-arm, 0 = none */
   guint       second_pass_timeout; /* delayed second layout pass, 0 = none */
 
   guint       relaying;
@@ -1682,6 +1683,56 @@ na_grid_set_min_icon_size (NaGrid *grid,
   refresh_grid (grid);
 }
 
+/* The chevron's tooltip must not survive the drawer opening: it covers the
+ * drawer (it is anchored to the panel's free side) and GTK3 has no public
+ * force-hide.  The working lever differs per backend - on X11 the flag plus a
+ * re-query, on Wayland clearing the text, because the trigger is a no-op there
+ * (it resolves the pointer with gdk_device_get_window_at_position).  The re-arm
+ * is deferred past GTK's BROWSE_DISABLE_TIMEOUT (500 ms), otherwise the label
+ * pops back up 60 ms after the hide. */
+#define CHEVRON_TOOLTIP_REARM_MS 600
+
+static void
+chevron_tooltip_off (NaGrid *self)
+{
+  if (self->tooltip_rearm_id != 0)
+    {
+      g_source_remove (self->tooltip_rearm_id);
+      self->tooltip_rearm_id = 0;
+    }
+
+  gtk_widget_set_tooltip_text (self->chevron, NULL);
+
+#ifdef HAVE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      gtk_widget_set_has_tooltip (self->chevron, FALSE);
+      gtk_widget_trigger_tooltip_query (self->chevron);
+    }
+#endif
+}
+
+static gboolean
+chevron_tooltip_rearm_cb (gpointer data)
+{
+  NaGrid *self = data;
+
+  self->tooltip_rearm_id = 0;
+  gtk_widget_set_has_tooltip (self->chevron, TRUE);
+  gtk_widget_set_tooltip_text (self->chevron, _("Show hidden tray icons"));
+  return G_SOURCE_REMOVE;
+}
+
+static void
+chevron_tooltip_rearm_later (NaGrid *self)
+{
+  if (self->tooltip_rearm_id != 0)
+    g_source_remove (self->tooltip_rearm_id);
+
+  self->tooltip_rearm_id = g_timeout_add (CHEVRON_TOOLTIP_REARM_MS,
+                                          chevron_tooltip_rearm_cb, self);
+}
+
 static void
 chevron_toggled_cb (GtkToggleButton *button,
                     NaGrid          *self)
@@ -1715,6 +1766,7 @@ chevron_toggled_cb (GtkToggleButton *button,
 
   self->remap_timeout = g_timeout_add (150, drawer_remap_cb, self);
 
+  chevron_tooltip_off (self);
 }
 
 static void
@@ -1727,6 +1779,8 @@ overflow_closed_cb (NaOverflow *overflow,
   g_signal_handlers_block_by_func (self->chevron, chevron_toggled_cb, self);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->chevron), FALSE);
   g_signal_handlers_unblock_by_func (self->chevron, chevron_toggled_cb, self);
+
+  chevron_tooltip_rearm_later (self);
 
   /* Hiding the popup is the whole point of this handler.  The managed-window
    * revision used to hide it from focus-out_event(); switching to an
@@ -2100,6 +2154,12 @@ na_grid_dispose (GObject *object)
   NaGrid *self = NA_GRID (object);
 
   self->destroying = TRUE;
+
+  if (self->tooltip_rearm_id != 0)
+    {
+      g_source_remove (self->tooltip_rearm_id);
+      self->tooltip_rearm_id = 0;
+    }
 
   /* unrealize deliberately keeps the SNI host alive, so this is the only place
    * that can drop it.  Do it before the rest of the bookkeeping goes away:
