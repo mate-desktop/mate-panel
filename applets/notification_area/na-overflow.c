@@ -219,6 +219,31 @@ na_overflow_pointer_inside (NaOverflow *self)
   gint         ox = 0, oy = 0;   /* our window's origin, root coords */
   gint         w, h;
 
+  /* The chevron lives in the panel, outside the drawer: without this the
+   * drawer folds 800 ms after opening while the pointer still rests on the
+   * button that opened it.  Checked before the per-backend channels, because
+   * it is true on every backend. */
+  if (self->relative_to != NULL)
+    {
+      GdkWindow   *rw = gtk_widget_get_window (self->relative_to);
+      GdkDevice   *ptr;
+      gint         px = 0, py = 0, rx = 0, ry = 0;
+
+      if (rw != NULL)
+        {
+          ptr = gdk_seat_get_pointer (
+                  gdk_display_get_default_seat (gdk_window_get_display (rw)));
+          if (ptr != NULL)
+            {
+              gdk_device_get_position (ptr, NULL, &px, &py);
+              gdk_window_get_origin (rw, &rx, &ry);
+              if (px >= rx && px < rx + gdk_window_get_width (rw) &&
+                  py >= ry && py < ry + gdk_window_get_height (rw))
+                return TRUE;
+            }
+        }
+    }
+
   /* Wayland menu path: the crossings on the popup decide, see leave_at. */
   if (self->use_menu)
     return self->leave_at == 0;
@@ -1340,6 +1365,14 @@ na_overflow_hover_poll_start (NaOverflow *self)
       GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
     return;   /* no truthful pointer position there */
 #endif
+
+  /* An X11 popup under XWayland: QueryPointer answers the last position inside
+   * an X11 window (measured: frozen at 1808,1020 while the pointer was moved
+   * away), so the poll keeps re-lighting the icon the crossings just cleared -
+   * that was the one-frame blink on every crossing.  The icons' own crossings
+   * drive the highlight there. */
+  if (g_getenv ("WAYLAND_DISPLAY") != NULL)
+    return;
 
   if (self->hover_poll != 0)
     return;
