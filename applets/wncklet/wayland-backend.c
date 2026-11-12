@@ -26,6 +26,7 @@
 #error file should only be compiled when HAVE_WAYLAND is enabled
 #endif
 
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkwayland.h>
 #include <libxfce4windowing/libxfce4windowing.h>
@@ -48,9 +49,19 @@ static guint buttons, tasklist_width;
 typedef struct
 {
 	GtkWidget *menu;
-	GtkWidget *maximize;
 	GtkWidget *minimize;
+	GtkWidget *maximize;
+	GtkWidget *shade;
+	GtkWidget *move;
+	GtkWidget *resize;
 	GtkWidget *on_top;
+	GtkWidget *stick;
+	GtkWidget *unstick;
+	GtkWidget *move_left;
+	GtkWidget *move_right;
+	GtkWidget *move_up;
+	GtkWidget *move_down;
+	GtkWidget *move_other;
 	GtkWidget *close;
 	GtkWidget *close_all;
 } ContextMenu;
@@ -883,20 +894,78 @@ window_application_changed (XfwWindow *window, GParamSpec *pspec, ToplevelTask *
 		tasklist_assign_to_group (tasklist, task);
 }
 
+static ToplevelTask *
+menu_item_get_task (GtkMenuItem *item)
+{
+	ToplevelTask *task = g_object_get_data (G_OBJECT (item), toplevel_task_key);
+
+	return (task && task->window) ? task : NULL;
+}
+
 static void
 menu_on_maximize (GtkMenuItem *item, gpointer user_data)
 {
-	ToplevelTask *task = g_object_get_data (G_OBJECT (item), toplevel_task_key);
-	if (task && task->window)
+	ToplevelTask *task = menu_item_get_task (item);
+	if (task)
 		xfw_window_set_maximized (task->window, !task->maximized, NULL);
 }
 
 static void
 menu_on_minimize (GtkMenuItem *item, gpointer user_data)
 {
-	ToplevelTask *task = g_object_get_data (G_OBJECT (item), toplevel_task_key);
-	if (task && task->window)
+	ToplevelTask *task = menu_item_get_task (item);
+	if (task)
 		xfw_window_set_minimized (task->window, !task->minimized, NULL);
+}
+
+static void
+menu_on_shade (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = menu_item_get_task (item);
+	if (task)
+		xfw_window_set_shaded (task->window, !xfw_window_is_shaded (task->window), NULL);
+}
+
+static void
+menu_on_move (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = menu_item_get_task (item);
+	if (task)
+		xfw_window_start_move (task->window, NULL);
+}
+
+static void
+menu_on_resize (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = menu_item_get_task (item);
+	if (task)
+		xfw_window_start_resize (task->window, NULL);
+}
+
+static void
+menu_on_above (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = menu_item_get_task (item);
+	if (task)
+		xfw_window_set_above (task->window, !xfw_window_is_above (task->window), NULL);
+}
+
+static void
+menu_on_stick (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = menu_item_get_task (item);
+	if (task)
+		xfw_window_set_pinned (task->window, GPOINTER_TO_INT (user_data), NULL);
+}
+
+static void
+menu_on_move_to_workspace (GtkMenuItem *item, gpointer user_data)
+{
+	ToplevelTask *task = menu_item_get_task (item);
+	XfwWorkspace *ws = g_object_get_data (G_OBJECT (item), "target_workspace");
+
+	if (task && ws)
+		xfw_window_move_to_workspace (task->window, ws, NULL);
 }
 
 static void
@@ -934,33 +1003,177 @@ menu_on_close_all (GtkMenuItem *item, gpointer user_data)
 	}
 }
 
+static GtkWidget *
+context_menu_append (GtkWidget *shell, GtkWidget *item, GCallback cb, gpointer data)
+{
+	gtk_menu_shell_append (GTK_MENU_SHELL (shell), item);
+	if (cb)
+		g_signal_connect (item, "activate", cb, data);
+	return item;
+}
+
+/* Wording follows Marco's window menu, so the same msgids apply */
 static ContextMenu *
 context_menu_new ()
 {
 	ContextMenu *menu = g_new0 (ContextMenu, 1);
-	menu->menu = gtk_menu_new ();
-	menu->maximize = gtk_menu_item_new ();
-	menu->minimize = gtk_menu_item_new ();
-	menu->on_top = gtk_check_menu_item_new_with_label ("Always On Top");
-	menu->close = gtk_menu_item_new_with_label ("Close");
-	menu->close_all = gtk_menu_item_new_with_label ("Close All Windows");
+	GtkWidget *shell;
+	GSList *group = NULL;
 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->maximize);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->minimize);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), gtk_separator_menu_item_new ());
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->on_top);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), gtk_separator_menu_item_new ());
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->close);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu->menu), menu->close_all);
+	menu->menu = shell = gtk_menu_new ();
+
+	menu->minimize = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Mi_nimize")),
+					      G_CALLBACK (menu_on_minimize), NULL);
+	menu->maximize = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Ma_ximize")),
+					      G_CALLBACK (menu_on_maximize), NULL);
+	menu->shade = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Roll _Up")),
+					   G_CALLBACK (menu_on_shade), NULL);
+	menu->move = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("_Move")),
+					  G_CALLBACK (menu_on_move), NULL);
+	menu->resize = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("_Resize")),
+					    G_CALLBACK (menu_on_resize), NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (shell), gtk_separator_menu_item_new ());
+
+	menu->on_top = context_menu_append (shell, gtk_check_menu_item_new_with_mnemonic (_("Always on _Top")),
+					    G_CALLBACK (menu_on_above), NULL);
+
+	menu->stick = gtk_radio_menu_item_new_with_mnemonic (group, _("_Always on Visible Workspace"));
+	group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (menu->stick));
+	context_menu_append (shell, menu->stick, G_CALLBACK (menu_on_stick), GINT_TO_POINTER (TRUE));
+
+	menu->unstick = gtk_radio_menu_item_new_with_mnemonic (group, _("_Only on This Workspace"));
+	context_menu_append (shell, menu->unstick, G_CALLBACK (menu_on_stick), GINT_TO_POINTER (FALSE));
+
+	menu->move_left = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace _Left")),
+					       G_CALLBACK (menu_on_move_to_workspace), NULL);
+	menu->move_right = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace R_ight")),
+						G_CALLBACK (menu_on_move_to_workspace), NULL);
+	menu->move_up = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace _Up")),
+					     G_CALLBACK (menu_on_move_to_workspace), NULL);
+	menu->move_down = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace _Down")),
+					       G_CALLBACK (menu_on_move_to_workspace), NULL);
+	menu->move_other = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Another _Workspace")),
+						NULL, NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (shell), gtk_separator_menu_item_new ());
+
+	menu->close = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("_Close")),
+					   G_CALLBACK (menu_on_close), NULL);
+	menu->close_all = context_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Close All Windows")),
+					       G_CALLBACK (menu_on_close_all), NULL);
 
 	gtk_widget_show_all (menu->menu);
-
-	g_signal_connect (menu->maximize, "activate", G_CALLBACK (menu_on_maximize), NULL);
-	g_signal_connect (menu->minimize, "activate", G_CALLBACK (menu_on_minimize), NULL);
-	g_signal_connect (menu->close, "activate", G_CALLBACK (menu_on_close), NULL);
-	g_signal_connect (menu->close_all, "activate", G_CALLBACK (menu_on_close_all), NULL);
-	gtk_widget_set_sensitive (menu->on_top, FALSE);
 	return menu;
+}
+
+static XfwWorkspace *
+context_menu_current_workspace (XfwScreen *screen, XfwWindow *window)
+{
+	XfwWorkspaceManager *manager;
+	GList *l;
+	XfwWorkspace *ws = xfw_window_get_workspace (window);
+
+	if (ws)
+		return ws;
+
+	/* pinned windows have no workspace: use the active one */
+	manager = screen ? xfw_screen_get_workspace_manager (screen) : NULL;
+	if (!manager)
+		return NULL;
+	for (l = xfw_workspace_manager_list_workspaces (manager); l != NULL; l = l->next)
+		if (xfw_workspace_get_state (l->data) & XFW_WORKSPACE_STATE_ACTIVE)
+			return l->data;
+	return NULL;
+}
+
+static void
+context_menu_update (ContextMenu *menu, TasklistManager *tasklist, ToplevelTask *task)
+{
+	XfwWindow *window = task->window;
+	XfwWindowCapabilities caps = xfw_window_get_capabilities (window);
+	XfwWorkspaceManager *manager = tasklist->screen ?
+		xfw_screen_get_workspace_manager (tasklist->screen) : NULL;
+	XfwWorkspace *current = context_menu_current_workspace (tasklist->screen, window);
+	gboolean pinned = xfw_window_is_pinned (window);
+	gboolean shaded = xfw_window_is_shaded (window);
+	gboolean above = xfw_window_is_above (window);
+	gboolean can_change_ws = (caps & XFW_WINDOW_CAPABILITIES_CAN_CHANGE_WORKSPACE) != 0;
+	GtkWidget *items[] = {
+		menu->minimize, menu->maximize, menu->shade, menu->move, menu->resize,
+		menu->on_top, menu->stick, menu->unstick, menu->move_left, menu->move_right,
+		menu->move_up, menu->move_down, menu->close, menu->close_all
+	};
+	struct { GtkWidget *item; XfwDirection dir; } dirs[] = {
+		{ menu->move_left, XFW_DIRECTION_LEFT }, { menu->move_right, XFW_DIRECTION_RIGHT },
+		{ menu->move_up, XFW_DIRECTION_UP }, { menu->move_down, XFW_DIRECTION_DOWN }
+	};
+	GtkWidget *submenu;
+	GList *l;
+	guint i;
+
+	for (i = 0; i < G_N_ELEMENTS (items); i++)
+		g_object_set_data (G_OBJECT (items[i]), toplevel_task_key, task);
+
+	gtk_menu_item_set_label (GTK_MENU_ITEM (menu->minimize),
+				 task->minimized ? _("Unminimize") : _("Mi_nimize"));
+	gtk_menu_item_set_label (GTK_MENU_ITEM (menu->maximize),
+				 task->maximized ? _("Unma_ximize") : _("Ma_ximize"));
+	gtk_menu_item_set_label (GTK_MENU_ITEM (menu->shade),
+				 shaded ? _("_Unroll") : _("Roll _Up"));
+
+	gtk_widget_set_sensitive (menu->minimize, (caps & (task->minimized ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNMINIMIZE : XFW_WINDOW_CAPABILITIES_CAN_MINIMIZE)) != 0);
+	gtk_widget_set_sensitive (menu->maximize, (caps & (task->maximized ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNMAXIMIZE : XFW_WINDOW_CAPABILITIES_CAN_MAXIMIZE)) != 0);
+	gtk_widget_set_sensitive (menu->shade, (caps & (shaded ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNSHADE : XFW_WINDOW_CAPABILITIES_CAN_SHADE)) != 0);
+	gtk_widget_set_sensitive (menu->move, (caps & XFW_WINDOW_CAPABILITIES_CAN_MOVE) != 0);
+	gtk_widget_set_sensitive (menu->resize, (caps & XFW_WINDOW_CAPABILITIES_CAN_RESIZE) != 0);
+
+	/* set_active emits "toggled" only, not "activate", so no handler runs */
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menu->on_top), above);
+	gtk_widget_set_sensitive (menu->on_top, (caps & (above ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNPLACE_ABOVE : XFW_WINDOW_CAPABILITIES_CAN_PLACE_ABOVE)) != 0);
+
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (pinned ? menu->stick : menu->unstick), TRUE);
+	gtk_widget_set_sensitive (menu->stick, can_change_ws);
+	gtk_widget_set_sensitive (menu->unstick, can_change_ws);
+
+	for (i = 0; i < G_N_ELEMENTS (dirs); i++)
+	{
+		XfwWorkspace *target = current ? xfw_workspace_get_neighbor (current, dirs[i].dir) : NULL;
+
+		g_object_set_data (G_OBJECT (dirs[i].item), "target_workspace", target);
+		gtk_widget_set_sensitive (dirs[i].item, can_change_ws && target != NULL);
+	}
+
+	/* rebuild the "Move to Another Workspace" submenu */
+	submenu = gtk_menu_new ();
+	for (l = manager ? xfw_workspace_manager_list_workspaces (manager) : NULL; l != NULL; l = l->next)
+	{
+		XfwWorkspace *ws = l->data;
+		const char *name;
+		GtkWidget *item;
+
+		if (xfw_workspace_get_state (ws) & XFW_WORKSPACE_STATE_HIDDEN)
+			continue;
+
+		name = xfw_workspace_get_name (ws);
+		if (!name)
+			name = xfw_workspace_get_id (ws);
+		item = gtk_menu_item_new_with_label (name ? name : "");
+		g_object_set_data (G_OBJECT (item), toplevel_task_key, task);
+		g_object_set_data (G_OBJECT (item), "target_workspace", ws);
+		gtk_widget_set_sensitive (item, can_change_ws && ws != current);
+		g_signal_connect (item, "activate", G_CALLBACK (menu_on_move_to_workspace), NULL);
+		gtk_menu_shell_append (GTK_MENU_SHELL (submenu), item);
+	}
+	gtk_widget_show_all (submenu);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu->move_other), submenu);
+	gtk_widget_set_sensitive (menu->move_other, can_change_ws &&
+				  gtk_container_get_children (GTK_CONTAINER (submenu)) != NULL);
+
+	/* offer "Close All Windows" whenever grouping is enabled */
+	gtk_widget_set_visible (menu->close_all, tasklist->grouping != WAYLAND_TASKLIST_NEVER_GROUP);
 }
 
 static gboolean
@@ -1345,21 +1558,10 @@ static gboolean on_toplevel_button_press (GtkWidget *button, GdkEvent *event, Ta
 		ContextMenu *menu = tasklist->context_menu;
 		ToplevelTask *task = g_object_get_data (G_OBJECT (button), toplevel_task_key);
 
-		g_object_set_data (G_OBJECT (menu->maximize), toplevel_task_key, task);
-		g_object_set_data (G_OBJECT (menu->minimize), toplevel_task_key, task);
-		g_object_set_data (G_OBJECT (menu->close), toplevel_task_key, task);
-		g_object_set_data (G_OBJECT (menu->close_all), toplevel_task_key, task);
+		if (!task)
+			return TRUE;
 
-		/* offer "Close All Windows" whenever grouping is enabled, so the
-		 * option exists in Auto mode even while the windows are shown as
-		 * individual buttons (and not just on the group button) */
-		gtk_widget_set_visible (menu->close_all,
-					tasklist->grouping != WAYLAND_TASKLIST_NEVER_GROUP);
-
-		gtk_menu_item_set_label (GTK_MENU_ITEM (menu->minimize),
-				task->minimized ? "Unminimize" : "Minimize");
-		gtk_menu_item_set_label (GTK_MENU_ITEM (menu->maximize),
-				task->maximized ? "Unmaximize" : "Maximize");
+		context_menu_update (menu, tasklist, task);
 
 		gtk_menu_popup_at_widget (GTK_MENU (menu->menu), button,
 				GDK_GRAVITY_NORTH_WEST, GDK_GRAVITY_SOUTH_WEST, event);
