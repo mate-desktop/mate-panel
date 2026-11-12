@@ -83,6 +83,7 @@ struct _NaOverflow
    * na_overflow_set_nominal_size), without the container border. 0 until the
    * grid has laid out its cells at least once. */
   GtkWidget    *hover_item;   /* icon under the pointer, owns a ref */
+  guint         hover_clear_id; /* deferred hover clear, see cell_leave_cb */
   guint         hover_poll;   /* X11: QueryPointer poll while the drawer is up */
   gint          nominal_w;
   gint          nominal_h;
@@ -704,6 +705,12 @@ na_overflow_dispose (GObject *object)
   na_overflow_cancel_autohide (NA_OVERFLOW (object));
   na_overflow_cancel_grab_poll (NA_OVERFLOW (object));
   na_overflow_disarm_click_watch (NA_OVERFLOW (object));
+
+  if (self->hover_clear_id != 0)
+    {
+      g_source_remove (self->hover_clear_id);
+      self->hover_clear_id = 0;
+    }
 
   if (self->hover_item != NULL)
     {
@@ -1864,6 +1871,18 @@ na_overflow_stripe_draw_cb (GtkWidget *item,
  * reaches the item handler (measured), but enter/leave on the icon's window
  * are reliable. Synthetic crossings (grab activation) are ignored, as
  * everywhere else in this file. */
+#define HOVER_CLEAR_DELAY_MS 120
+
+static gboolean
+na_overflow_hover_clear_cb (gpointer data)
+{
+  NaOverflow *self = data;
+
+  self->hover_clear_id = 0;
+  na_overflow_set_hover (self, NULL);
+  return G_SOURCE_REMOVE;
+}
+
 /* The drawer's "the pointer is inside / has left" stamps, written by the
  * icons' own crossings.  On Wayland these are the only truthful channel: motion
  * delivery stops once the pointer leaves the popup surface and QueryPointer in
@@ -1900,6 +1919,12 @@ na_overflow_cell_enter_cb (GtkWidget        *child,
    * icon's leave wrote a few milliseconds ago. */
   na_overflow_note_inside (NA_OVERFLOW (user_data));
 
+  if (NA_OVERFLOW (user_data)->hover_clear_id != 0)
+    {
+      g_source_remove (NA_OVERFLOW (user_data)->hover_clear_id);
+      NA_OVERFLOW (user_data)->hover_clear_id = 0;
+    }
+
   g_object_ref (child);
   na_overflow_set_hover (user_data, child);
   return FALSE;
@@ -1921,11 +1946,18 @@ na_overflow_cell_leave_cb (GtkWidget        *child,
    * icon may arrive first under a grab): only clear if WE are lit. */
   if (self->hover_item == child)
     {
-      na_overflow_set_hover (self, NULL);
       /* Leaving the lit icon is the only reliable "the pointer went away"
        * signal on Wayland (motion stops, QueryPointer freezes): stamp it
        * tentatively - an enter on a neighbour icon repairs it immediately. */
       na_overflow_note_outside (self);
+
+      /* Defer the visual clear: crossing the border between two icons (or
+       * between an icon and the drawer's padding) produces leave+enter a few
+       * milliseconds apart, and clearing synchronously made the highlight
+       * blink once per crossing. */
+      if (self->hover_clear_id == 0)
+        self->hover_clear_id = g_timeout_add (HOVER_CLEAR_DELAY_MS,
+                                              na_overflow_hover_clear_cb, self);
     }
   return FALSE;
 }
