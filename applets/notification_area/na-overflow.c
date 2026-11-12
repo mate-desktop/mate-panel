@@ -243,6 +243,10 @@ na_overflow_pointer_inside (NaOverflow *self)
   if (w <= 0 || h <= 0)
     return FALSE;
 
+  g_printerr ("NADBG geom ptr=%d,%d win=%d,%d+%dx%d inside=%d\n",
+              px, py, ox, oy, w, h,
+              (int) (px >= ox && px < ox + w && py >= oy && py < oy + h));
+
   if (px >= ox && px < ox + w && py >= oy && py < oy + h)
     return TRUE;
 
@@ -877,7 +881,16 @@ na_overflow_menu_motion_cb (GtkWidget      *widget,
    * the event propagates, so only the window identity is usable. */
   if (sw != NULL && event->window != sw)
     {
-      self->leave_at = 0;
+      /* Arrived on a descendant (an SNI button owns a window).  While a hover
+       * is live the pointer is over an icon, i.e. inside.  With no live hover
+       * this is the pointer's final motion carrying the icon's window AFTER
+       * the leave crossing - wayfire delivers no motion once the pointer is
+       * off the surface, so this is the only channel that reports "gone". */
+      if (self->hover_item != NULL)
+        self->leave_at = 0;
+      else if (self->leave_at == 0)
+        self->leave_at = g_get_monotonic_time ();
+
       return FALSE;
     }
 
@@ -937,11 +950,18 @@ na_overflow_menu_item_leave_cb (GtkWidget        *widget,
    * pointer has been over an icon). Judge by window identity instead. */
   {
     GdkWindow *sw = gtk_widget_get_window (self->menu);
-    g_printerr ("NADBG leave win=%s detail=%d mode=%d\n",
+    g_printerr ("NADBG leave win=%s detail=%d mode=%d hover=%d\n",
                 (sw != NULL && event->window == sw) ? "menu" : "other",
-                event->detail, event->mode);
+                event->detail, event->mode, self->hover_item != NULL);
     if (sw == NULL || event->window != sw)
-      return FALSE;
+      {
+        /* A crossing on an icon's window: still inside while a hover is live,
+         * outside (tentatively) once the hover is gone.  The next enter on a
+         * neighbour icon or the drawer background repairs it within the dwell. */
+        if (self->hover_item == NULL && self->leave_at == 0)
+          self->leave_at = g_get_monotonic_time ();
+        return FALSE;
+      }
   }
 
   if (self->leave_at == 0)
