@@ -130,6 +130,7 @@ scale_surface (SnIconPixmap   *pixmap,
 
   cairo_scale (cr, scale_x, scale_y);
   cairo_set_source_surface (cr, pixmap->surface, 0, 0);
+  cairo_pattern_set_filter (cairo_get_source (cr), CAIRO_FILTER_BEST);
   cairo_paint (cr);
 
   cairo_destroy (cr);
@@ -189,7 +190,7 @@ get_surface (SnIconPixmap  **icon_pixmap,
 
   if (pixmap == NULL || pixmap->surface == NULL)
     return NULL;
-  else if (pixmap->height > size || pixmap->width > size)
+  else if (pixmap->height != size || pixmap->width != size)
     return scale_surface (pixmap, orientation, size);
   else
     return cairo_surface_reference (pixmap->surface);
@@ -201,8 +202,6 @@ get_icon_by_name (const gchar *icon_name,
                   gint         scale)
 {
   GtkIconTheme *icon_theme;
-  gint *sizes;
-  gint i;
   gint chosen_size = 0;
 
   g_return_val_if_fail (icon_name != NULL && icon_name[0] != '\0', NULL);
@@ -211,27 +210,57 @@ get_icon_by_name (const gchar *icon_name,
   icon_theme = gtk_icon_theme_get_default ();
   gtk_icon_theme_rescan_if_needed (icon_theme);
 
-  sizes = gtk_icon_theme_get_icon_sizes (icon_theme, icon_name);
-  for (i = 0; sizes[i] != 0; i++)
+  /* Ask for exactly the requested size and let GTK_ICON_LOOKUP_FORCE_SIZE do
+   * the scaling.  The old "largest available size that is <= requested" pick
+   * returned e.g. 48 px for a 64 px request, so tray icons stopped growing
+   * when the tray (or min-icon-size) was enlarged - only scalable icons like
+   * the power applet followed along. */
+  chosen_size = requested_size;
+
+  {
+    cairo_surface_t *surface;
+
+    surface = gtk_icon_theme_load_surface (icon_theme, icon_name,
+                                           chosen_size, scale,
+                                           NULL, GTK_ICON_LOOKUP_FORCE_SIZE,
+                                           NULL);
+    if (surface == NULL)
+      return NULL;
+
+    /* Themes rarely ship large tray sizes, and FORCE_SIZE does not upscale:
+     * a 64 px request came back as 48 px and the icons looked tiny next to a
+     * scalable one.  Upscale explicitly with the best filter available. */
     {
-      if (sizes[i] == requested_size ||
-          sizes[i] == -1) /* scalable */
+      gint w = cairo_image_surface_get_width (surface) / MAX (scale, 1);
+      gint h = cairo_image_surface_get_height (surface) / MAX (scale, 1);
+
+      if (w < chosen_size || h < chosen_size)
         {
-          /* perfect match, stop here */
-          chosen_size = requested_size;
-          break;
+          gint          tw = MAX (chosen_size, w) * MAX (scale, 1);
+          gint          th = MAX (chosen_size, h) * MAX (scale, 1);
+          GdkPixbuf    *pb, *sc;
+          cairo_surface_t *up;
+
+          pb = gdk_pixbuf_get_from_surface (surface, 0, 0,
+                                            cairo_image_surface_get_width (surface),
+                                            cairo_image_surface_get_height (surface));
+          if (pb != NULL)
+            {
+              sc = gdk_pixbuf_scale_simple (pb, tw, th, GDK_INTERP_HYPER);
+              g_object_unref (pb);
+              if (sc != NULL)
+                {
+                  up = gdk_cairo_surface_create_from_pixbuf (sc, scale, NULL);
+                  g_object_unref (sc);
+                  cairo_surface_destroy (surface);
+                  surface = up;
+                }
+            }
         }
-      else if (sizes[i] < requested_size && sizes[i] > chosen_size)
-        chosen_size = sizes[i];
     }
-  g_free (sizes);
 
-  if (chosen_size == 0)
-    chosen_size = requested_size;
-
-  return gtk_icon_theme_load_surface (icon_theme, icon_name,
-                                      chosen_size, scale,
-                                      NULL, GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+    return surface;
+  }
 }
 
 #define ICON_NAME_VALID(icon_name) (icon_name && icon_name[0] != '\0')
@@ -1350,7 +1379,13 @@ sn_item_v0_get_property (GObject    *object,
   switch (property_id)
     {
       case PROP_ICON_SIZE:
-        g_value_set_uint (value, v0->icon_size);
+        /* The interface spec declares icon-size as INT (na-host.c); the
+         * upstream g_value_set_uint here failed its type assertion, so every
+         * read through the host<->item binding emitted a GLib-CRITICAL and
+         * handed back an unset value - the binding then pushed 0 back into
+         * the item, silently reverting any icon-size we had just set
+         * (measured: pre-heat set 26, immediate read-back returned 0). */
+        g_value_set_int (value, v0->icon_size);
         break;
 
       case PROP_ICON_PADDING:
@@ -1446,6 +1481,51 @@ sn_item_v0_init (SnItemV0 *v0)
   gtk_widget_show (v0->image);
 }
 
+GdkPixbuf *
+sn_item_v0_get_icon_pixbuf (SnItemV0 *item,
+                            gint      size)
+{
+  cairo_surface_t *surface = NULL;
+  GdkPixbuf       *pixbuf = NULL;
+
+  g_return_val_if_fail (SN_IS_ITEM_V0 (item), NULL);
+  g_return_val_if_fail (size > 0, NULL);
+
+  if (item->icon_pixmap != NULL &&
+      item->icon_pixmap[0] != NULL &&
+      item->icon_pixmap[0]->surface != NULL)
+    surface = item->icon_pixmap[0]->surface;
+  else if (item->icon_name != NULL && item->icon_name[0] != '\0')
+    {
+      GtkIconTheme *theme;
+
+      theme = gtk_icon_theme_get_default ();
+      surface = gtk_icon_theme_load_surface (theme, item->icon_name, size,
+                                             1, NULL, 0, NULL);
+    }
+
+  if (surface == NULL ||
+      cairo_surface_get_type (surface) != CAIRO_SURFACE_TYPE_IMAGE)
+    return NULL;
+
+  pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0,
+                                        cairo_image_surface_get_width (surface),
+                                        cairo_image_surface_get_height (surface));
+
+  if (pixbuf != NULL &&
+      (gdk_pixbuf_get_width (pixbuf) != size ||
+       gdk_pixbuf_get_height (pixbuf) != size))
+    {
+      GdkPixbuf *scaled;
+
+      scaled = gdk_pixbuf_scale_simple (pixbuf, size, size, GDK_INTERP_BILINEAR);
+      g_object_unref (pixbuf);
+      pixbuf = scaled;
+    }
+
+  return pixbuf;
+}
+
 SnItem *
 sn_item_v0_new (const gchar *bus_name,
                 const gchar *object_path)
@@ -1515,6 +1595,31 @@ sn_item_v0_set_icon_size (SnItemV0 *v0,
       g_object_notify_by_pspec (G_OBJECT (v0), obj_properties[PROP_ICON_SIZE]);
 
       if (v0->id != NULL)
-        queue_update (v0);
+        {
+          /* Synchronously, not through queue_update(): the relayout that
+           * follows this property change measures the surface, and a deferred
+           * update made it measure the OLD one - the icon that then went
+           * missing until the drawer was reopened. */
+          if (v0->update_id != 0)
+            {
+              g_source_remove (v0->update_id);
+              v0->update_id = 0;
+            }
+          update (v0);
+        }
+
+      /* The button keeps the requisition it computed for the OLD surface, so
+       * lowering the icon size left the cell (and the drawer's width) at the
+       * old value until a restart. */
+      if (v0->image != NULL)
+        {
+          gtk_widget_queue_resize (GTK_WIDGET (v0->image));
+          /* Redraw as well: with the drawer already open the new surface was
+           * laid out but one icon kept showing the previous frame until the
+           * drawer was closed and opened again. */
+          gtk_widget_queue_draw (GTK_WIDGET (v0->image));
+        }
+      gtk_widget_queue_resize (GTK_WIDGET (v0));
+      gtk_widget_queue_draw (GTK_WIDGET (v0));
     }
 }

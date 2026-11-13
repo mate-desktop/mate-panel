@@ -26,6 +26,9 @@
 
 #define NA_TRAY_SCHEMA                  "org.mate.panel.applet.notification-area"
 #define KEY_MIN_ICON_SIZE               "min-icon-size"
+#define KEY_HIDDEN_ICONS                "hidden-icons"
+#define KEY_OVERFLOW_ICONS              "overflow-icons"
+#define KEY_OVERFLOW_AUTOHIDE_MS        "overflow-autohide-ms"
 
 G_BEGIN_DECLS
 

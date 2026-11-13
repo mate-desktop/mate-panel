@@ -67,6 +67,11 @@ struct _NaTrayChildClass
 
 GType           na_tray_child_get_type        (void);
 
+/* The client's own artwork, for the preferences list (NULL when it publishes
+ * neither _NET_WM_ICON nor a WM_CLASS we can resolve through the theme). */
+GdkPixbuf      *na_tray_child_get_icon_pixbuf (NaTrayChild *child,
+                                               gint         size);
+
 GtkWidget      *na_tray_child_new            (GdkScreen    *screen,
                                               Window        icon_window);
 char           *na_tray_child_get_title      (NaTrayChild  *child);
