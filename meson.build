@@ -1,7 +1,7 @@
 project(
   'mate-panel',
   'c',
-  version: '1.29.0',
+  version: '1.29.1',
   meson_version: '>= 0.56.0',
   license: ['GPL-2', 'LGPL-2', 'FDL-1.1'],
 )
@@ -181,7 +181,7 @@ gdk_pixbuf_dep = dependency('gdk-pixbuf-2.0', version: '>= 2.26.0')
 pango_dep = dependency('pango', version: '>= 1.15.4')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.24.0')
 cairo_dep = dependency('cairo', version: '>= 1.0.0')
-mate_desktop_dep = dependency('mate-desktop-2.0', version: '>= 1.28.2')
+mate_desktop_dep = dependency('mate-desktop-2.0', version: '>= 1.29.1')
 mate_menu_dep = dependency('libmate-menu', version: '>= 1.21.0')
 dconf_dep = dependency('dconf', version: '>= 0.13.4')
 wnck_dep = dependency('libwnck-3.0', version: '>= 43.0')

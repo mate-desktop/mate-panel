@@ -1,4 +1,126 @@
+### mate-panel 1.29.1
+
+  * Build: Depend on mate-desktop 1.29.1
+  * wayland/tasklist: report task button geometry to the compositor
+  * wncklet: Rebuild Wayland tasklist context menu to match Marco's
+  * wayland/tasklist: hide skip-tasklist windows
+  * Place launched applications into a systemd scope
+  * Mark out-of-process applets as unsupported on Wayland
+  * Don't use gtk_show_about_dialog
+  * [Wayland] Add support for autohide (#1584)
+  * panel-applet-frame: Fix crash when reloading a crashed applet
+  * build: Fix Python applet bindings under Meson
+  * applets/window-selector: port to Wayland 
+  * wayland/tasklist: support task buttons grouping (#1583)
+  * wayland: make large numbers of buttons in the window list work again
+  * wayland: implement scroll, middle-click close and urgent highlights
+  * wayland/tasklist: implement window reordering
+  * Fix use-after-free in Wayland tasklist backend
+  * Fix signatures mismatch
+  * Relax libxfce4windowing version
+  * wayland: port to libxfce4windowing
+  * build: Distribute meson build files when using autotools
+  * build: Fix Wayland auto-detection breaking X11-only builds
+  * Add Meson support (#1571)
+  * ci: add libxfce4windowing
+  * cleanup
+  * Use libxfce4windowing for handle panel-related procotols, applet fixes
+  * [Wayland] Add support for ext-workspace-v1 in pager
+  * panel: Remove functions that are no longer used with the pack model
+  * panel: Update default layout files to use pack-type and pack-index
+  * data: update pack-index description
+  * panel: Update positions of objects after removal of an object
+  * panel: Implement push move for panel objects
+  * panel: "Compress" indexes on end of drag
+  * panel: Implement switch move for panel objects
+  * panel: Remove free-move mode for moving objects
+  * panel: Fix addition of objects with the new packed model
+  * panel: Add a center pack type for objects
+  * panel: Move to a model where panel objects are all packed
+  * panel: Pass the pack style of objects when adding applet to PanelWidget
+  * panel: When creating an object, explicitly specify how it's packed
+  * panel: Change panel-right-stick (boolean) key to pack-type (enum) in object schema
+  * panel-applet-frame-dbus: fix crash when applet is removed during background update
+  * wncklet: link against libX11 for window preview thumbnails
+  * window-list: fix HiDPI scaling for preview thumbnails
+  * window-list: always capture fresh pixels for preview thumbnails
+  * window-list: show window decorations in preview thumbnails
+  * applet clock: fix proportional fonts by font-feature tabular numbers
+  * clock: fix memory leaks in EDS event list handling
+  * remove empty po file
+  * add translation coverage badge
+  * update pot files
+  * fish: Fix alternating animation during April Fools
+  * fix memory leaks
+  * fix memleaks
+  * Use gint64 to track UNIX timestamps
+  * clock: Add DBus 'activate' callback
+  * libmate-panel-applet: Bump library version to 2:0:0
+  * libmate-panel-applet: Register 'Activate' DBus method
+  * wl-window-list: ensure same behavior with and without show desktop applet in panel
+  * wncklet: fix preview window positioning for right & down
+  * wayland-window-list: prevent overflow on panel restart and user changes of available space
+  * wayland-window-list: keep the labels showing a little longer
+  * wayland-window-list: handle the case of a very short tasklist
+  * wayland-window-list: refactor button adjustment into separate function
+  * wayland window list: improve space management
+  * clock: Separate expander state from section visibility preferences
+  * clock: Follow EDS calendar colors and highlight current event
+  * button-widget: Add dynamic HiDPI scale change support
+  * panel-toplevel: Add dynamic HiDPI scale change support
+  * ci: Upgrade libsoup dependency from 2.4 to 3.0
+  * Show desktop: support wayland use
+  * clock: Store calendar client in ClockData (#1516)
+  * clock: Fix calendar data refresh when opening popup
+  * Wayland-only-build attempt 3 - changes from other branch removed
+  * Fix uninitialized and unused screen vars
+  * wncklet: Bump libwnck to 43.0
+  * wayland: stop panel "dodging" mouse and moving to top
+  * wncklet: Remove window preview conditionals
+  * clock: Provide fallback preferences path
+  * clock: Fix timezone handlin
+  * clock: Backport Evolution calendar integration from gnome-panel
+  * panel-stock-icons: Remove deprecated GtkIconFactory and GtkIconSource
+  * Remove deprecated gdk_screen_get_* functions
+  * remove deprecated GtkStockItem
+  * Update window layout
+  * Fix dragging panel color
+  * fix
+  * panel-menu-button.c: apply a name to the main menu button
+  * Clock Applet: Add scrollbar to Locations lists when the lists get too long
+  * github-actions: Add missing dependency on Arch
+  * github-actions: Update mate-desktop dependency
+  * github-actions: Cache ccache per-job
+  * vgithub-actions: Use better grouping
+  * github-actions: Further improve cppcheck accuracy
+  * github-actions: Improve cppcheck accuracy
+  * github-actions: Add clang build
+  * github-actions: Tentatively re-enable ArchLinux upgrade
+  * github-actions: Split mate-desktop deps for clarity
+  * github-actions: Add some comments
+  * github actions: Cache mate-desktop build
+  * github actions: Add an ArchLinux container build
+  * github actions: Only run distcheck on Debian
+  * travis-ci: Disable Debian Testing
+  * github actions: Build on ubuntu:rolling
+  * github actions: Enable --enable-compile-warnings=maximum
+  * github actions: Build in process and out of process on Debian Testing
+  * github actions: Add Debian Testing build
+  * Enable a github actions build
+  * ci: fix Faraday issue on deploy
+  * ci: fix start of builds
+  * applets/clock: Fix compatibility with musl libc
+  * ci: Bump dpl branches for Ruby 3 support
+  * Attempt to fix 2nd Travis deployment issue
+  * Check the existence of dconf-editor's schema (#1447)
+  * status-notifier: Plug large leak with icons from paths
+  * Fix travis deploy
+  * wncklet: Remove unused attributes
+  * wncklet: Remove icon loader function from window list applet
+
 ### mate-panel 1.29.0
+
+  * Bump version to 1.29.0
 
 ### mate-panel 1.28.1
 
