@@ -1,7 +1,7 @@
 project(
   'mate-panel',
   'c',
-  version: '1.29.1',
+  version: '1.29.2',
   meson_version: '>= 0.56.0',
   license: ['GPL-2', 'LGPL-2', 'FDL-1.1'],
 )
