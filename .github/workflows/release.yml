@@ -1,0 +1,47 @@
+name: Release Version
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+env:
+  MATE_DESKTOP_VERSION: 1.29.1
+  CACHE_PATH: /tmp/.cache
+
+jobs:
+  release:
+    name: Release New Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: "true"
+
+      - name: Install dependency packages
+        run: sudo .github/workflows/ubuntu.sh
+
+      - name: Install higher version Mate component packages
+        run: sudo .github/workflows/mate-desktop.sh ${{env.MATE_DESKTOP_VERSION}} ${{ env.CACHE_PATH }}
+
+      - name: Build the source code
+        run: .github/workflows/builds.sh autotools
+
+      - name: Generate release tarball and checksums
+        run: |
+          make distcheck
+          TARBALL=$(ls mate-panel-*.tar.xz | head -1)
+          sha256sum "$TARBALL" > "$TARBALL.sha256"
+          md5sum "$TARBALL" > "$TARBALL.md5"
+
+      - name: Create github release
+        run: |
+          gh release create ${{ github.ref_name }} --title "MATE Panel ${{ github.ref_name }}" --generate-notes mate-panel-*.tar.xz mate-panel-*.tar.xz.sha256 mate-panel-*.tar.xz.md5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify MATE release server
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+            -d "{\"tag\": \"${{ github.ref_name }}\", \"repository\": \"${{ github.repository }}\", \"release_url\": \"https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}\"}" \
+            https://release.mate-desktop.org/release || echo "::warning::Release notification failed"
