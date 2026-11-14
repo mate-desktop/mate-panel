@@ -32,6 +32,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkwayland.h>
 #include <libxfce4windowing/libxfce4windowing.h>
 
@@ -197,6 +198,257 @@ wayland_set_window_minimized (gpointer window, gboolean minimized)
 	xfw_window_set_minimized (window, minimized, NULL);
 }
 
+typedef struct
+{
+	GtkWidget *menu, *minimize, *maximize, *shade, *move, *resize;
+	GtkWidget *on_top, *stick, *unstick;
+	GtkWidget *move_left, *move_right, *move_up, *move_down, *move_other;
+	GtkWidget *close, *close_all;
+	GList *windows;
+} WaylandContextMenu;
+
+static void
+wayland_context_menu_free (WaylandContextMenu *menu)
+{
+	g_list_free (menu->windows);
+	g_free (menu);
+}
+
+static XfwWindow *
+wayland_menu_window (GtkMenuItem *item)
+{
+	return g_object_get_data (G_OBJECT (item), "wayland-menu-window");
+}
+
+static gboolean
+wayland_window_has_state (XfwWindow *window, XfwWindowState state)
+{
+	return (xfw_window_get_state (window) & state) != 0;
+}
+
+static void
+wayland_menu_maximize (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_set_maximized (window, !wayland_window_has_state (window, XFW_WINDOW_STATE_MAXIMIZED), NULL);
+}
+
+static void
+wayland_menu_minimize (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_set_minimized (window, !wayland_window_has_state (window, XFW_WINDOW_STATE_MINIMIZED), NULL);
+}
+
+static void
+wayland_menu_shade (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_set_shaded (window, !xfw_window_is_shaded (window), NULL);
+}
+
+static void
+wayland_menu_move (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_start_move (window, NULL);
+}
+
+static void
+wayland_menu_resize (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_start_resize (window, NULL);
+}
+
+static void
+wayland_menu_above (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_set_above (window, !xfw_window_is_above (window), NULL);
+}
+
+static void
+wayland_menu_pin (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_set_pinned (window, GPOINTER_TO_INT (user_data), NULL);
+}
+
+static void
+wayland_menu_workspace (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	XfwWorkspace *workspace = g_object_get_data (G_OBJECT (item), "target-workspace");
+	if (window && workspace)
+		xfw_window_move_to_workspace (window, workspace, NULL);
+}
+
+static void
+wayland_menu_close (GtkMenuItem *item, gpointer user_data)
+{
+	XfwWindow *window = wayland_menu_window (item);
+	if (window)
+		xfw_window_close (window, 0, NULL);
+}
+
+static void
+wayland_menu_close_all (GtkMenuItem *item, gpointer user_data)
+{
+	WaylandContextMenu *menu = user_data;
+	GList *l;
+	for (l = menu->windows; l != NULL; l = l->next)
+		xfw_window_close (l->data, 0, NULL);
+}
+
+static GtkWidget *
+wayland_menu_append (GtkWidget *shell, GtkWidget *item, GCallback callback, gpointer data)
+{
+	gtk_menu_shell_append (GTK_MENU_SHELL (shell), item);
+	if (callback)
+		g_signal_connect (item, "activate", callback, data);
+	return item;
+}
+
+static XfwWorkspace *
+wayland_menu_current_workspace (XfwWindow *window)
+{
+	XfwWorkspace *workspace = xfw_window_get_workspace (window);
+	XfwWorkspaceManager *manager;
+	GList *l;
+
+	if (workspace)
+		return workspace;
+	manager = xfw_screen_get_workspace_manager (xfw_screen_get_default ());
+	if (!manager)
+		return NULL;
+	for (l = xfw_workspace_manager_list_workspaces (manager); l != NULL; l = l->next)
+		if (xfw_workspace_get_state (l->data) & XFW_WORKSPACE_STATE_ACTIVE)
+			return l->data;
+	return NULL;
+}
+
+static void
+wayland_menu_update (WaylandContextMenu *menu, XfwWindow *window, gboolean grouping)
+{
+	XfwWindowCapabilities capabilities = xfw_window_get_capabilities (window);
+	XfwWorkspaceManager *manager = xfw_screen_get_workspace_manager (xfw_screen_get_default ());
+	XfwWorkspace *current = wayland_menu_current_workspace (window);
+	GtkWidget *submenu;
+	GList *l, *children;
+	gboolean minimized = wayland_window_has_state (window, XFW_WINDOW_STATE_MINIMIZED);
+	gboolean maximized = wayland_window_has_state (window, XFW_WINDOW_STATE_MAXIMIZED);
+	gboolean shaded = xfw_window_is_shaded (window);
+	gboolean above = xfw_window_is_above (window);
+	gboolean can_change_workspace = capabilities & XFW_WINDOW_CAPABILITIES_CAN_CHANGE_WORKSPACE;
+	struct { GtkWidget *item; XfwDirection direction; } directions[] = {
+		{ menu->move_left, XFW_DIRECTION_LEFT }, { menu->move_right, XFW_DIRECTION_RIGHT },
+		{ menu->move_up, XFW_DIRECTION_UP }, { menu->move_down, XFW_DIRECTION_DOWN }
+	};
+	guint i;
+
+	for (i = 0; i < G_N_ELEMENTS (directions); i++)
+	{
+		XfwWorkspace *target = current ? xfw_workspace_get_neighbor (current, directions[i].direction) : NULL;
+		g_object_set_data (G_OBJECT (directions[i].item), "target-workspace", target);
+		gtk_widget_set_sensitive (directions[i].item, can_change_workspace && target != NULL);
+	}
+
+	gtk_menu_item_set_label (GTK_MENU_ITEM (menu->minimize), minimized ? _("Unminimize") : _("Mi_nimize"));
+	gtk_menu_item_set_label (GTK_MENU_ITEM (menu->maximize), maximized ? _("Unma_ximize") : _("Ma_ximize"));
+	gtk_menu_item_set_label (GTK_MENU_ITEM (menu->shade), shaded ? _("_Unroll") : _("Roll _Up"));
+	gtk_widget_set_sensitive (menu->minimize, capabilities & (minimized ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNMINIMIZE : XFW_WINDOW_CAPABILITIES_CAN_MINIMIZE));
+	gtk_widget_set_sensitive (menu->maximize, capabilities & (maximized ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNMAXIMIZE : XFW_WINDOW_CAPABILITIES_CAN_MAXIMIZE));
+	gtk_widget_set_sensitive (menu->shade, capabilities & (shaded ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNSHADE : XFW_WINDOW_CAPABILITIES_CAN_SHADE));
+	gtk_widget_set_sensitive (menu->move, capabilities & XFW_WINDOW_CAPABILITIES_CAN_MOVE);
+	gtk_widget_set_sensitive (menu->resize, capabilities & XFW_WINDOW_CAPABILITIES_CAN_RESIZE);
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menu->on_top), above);
+	gtk_widget_set_sensitive (menu->on_top, capabilities & (above ?
+		XFW_WINDOW_CAPABILITIES_CAN_UNPLACE_ABOVE : XFW_WINDOW_CAPABILITIES_CAN_PLACE_ABOVE));
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (xfw_window_is_pinned (window) ? menu->stick : menu->unstick), TRUE);
+	gtk_widget_set_sensitive (menu->stick, can_change_workspace);
+	gtk_widget_set_sensitive (menu->unstick, can_change_workspace);
+
+	submenu = gtk_menu_new ();
+	for (l = manager ? xfw_workspace_manager_list_workspaces (manager) : NULL; l != NULL; l = l->next)
+	{
+		XfwWorkspace *workspace = l->data;
+		GtkWidget *item;
+		const gchar *name;
+		if (xfw_workspace_get_state (workspace) & XFW_WORKSPACE_STATE_HIDDEN)
+			continue;
+		name = xfw_workspace_get_name (workspace);
+		if (!name)
+			name = xfw_workspace_get_id (workspace);
+		item = gtk_menu_item_new_with_label (name ? name : "");
+		g_object_set_data (G_OBJECT (item), "wayland-menu-window", window);
+		g_object_set_data (G_OBJECT (item), "target-workspace", workspace);
+		gtk_widget_set_sensitive (item, can_change_workspace && workspace != current);
+		wayland_menu_append (submenu, item, G_CALLBACK (wayland_menu_workspace), NULL);
+	}
+	gtk_widget_show_all (submenu);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu->move_other), submenu);
+	children = gtk_container_get_children (GTK_CONTAINER (submenu));
+	gtk_widget_set_sensitive (menu->move_other, can_change_workspace && children != NULL);
+	g_list_free (children);
+	gtk_widget_set_visible (menu->close_all, grouping);
+}
+
+static void
+wayland_show_window_menu (GtkWidget *button, GdkEvent *event, gpointer window,
+				  GList *group_windows, gboolean grouping)
+{
+	WaylandContextMenu *menu = g_new0 (WaylandContextMenu, 1);
+	GtkWidget *shell;
+	GSList *radio_group = NULL;
+	GList *items, *l;
+
+	menu->windows = g_list_copy (group_windows);
+	menu->menu = shell = gtk_menu_new ();
+	menu->minimize = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Mi_nimize")), G_CALLBACK (wayland_menu_minimize), NULL);
+	menu->maximize = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Ma_ximize")), G_CALLBACK (wayland_menu_maximize), NULL);
+	menu->shade = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Roll _Up")), G_CALLBACK (wayland_menu_shade), NULL);
+	menu->move = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("_Move")), G_CALLBACK (wayland_menu_move), NULL);
+	menu->resize = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("_Resize")), G_CALLBACK (wayland_menu_resize), NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (shell), gtk_separator_menu_item_new ());
+	menu->on_top = wayland_menu_append (shell, gtk_check_menu_item_new_with_mnemonic (_("Always on _Top")), G_CALLBACK (wayland_menu_above), NULL);
+	menu->stick = gtk_radio_menu_item_new_with_mnemonic (radio_group, _("_Always on Visible Workspace"));
+	radio_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (menu->stick));
+	wayland_menu_append (shell, menu->stick, G_CALLBACK (wayland_menu_pin), GINT_TO_POINTER (TRUE));
+	menu->unstick = gtk_radio_menu_item_new_with_mnemonic (radio_group, _("_Only on This Workspace"));
+	wayland_menu_append (shell, menu->unstick, G_CALLBACK (wayland_menu_pin), GINT_TO_POINTER (FALSE));
+	menu->move_left = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace _Left")), G_CALLBACK (wayland_menu_workspace), NULL);
+	menu->move_right = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace R_ight")), G_CALLBACK (wayland_menu_workspace), NULL);
+	menu->move_up = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace _Up")), G_CALLBACK (wayland_menu_workspace), NULL);
+	menu->move_down = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Workspace _Down")), G_CALLBACK (wayland_menu_workspace), NULL);
+	menu->move_other = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Move to Another _Workspace")), NULL, NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (shell), gtk_separator_menu_item_new ());
+	menu->close = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("_Close")), G_CALLBACK (wayland_menu_close), NULL);
+	menu->close_all = wayland_menu_append (shell, gtk_menu_item_new_with_mnemonic (_("Close All Windows")), G_CALLBACK (wayland_menu_close_all), menu);
+
+	items = gtk_container_get_children (GTK_CONTAINER (shell));
+	for (l = items; l != NULL; l = l->next)
+		g_object_set_data (G_OBJECT (l->data), "wayland-menu-window", window);
+	g_list_free (items);
+	g_object_set_data_full (G_OBJECT (shell), "wayland-context-menu", menu,
+			(GDestroyNotify) wayland_context_menu_free);
+	gtk_widget_show_all (shell);
+	wayland_menu_update (menu, window, grouping);
+	g_signal_connect_swapped (shell, "deactivate", G_CALLBACK (gtk_widget_destroy), shell);
+	gtk_menu_popup_at_widget (GTK_MENU (shell), button, GDK_GRAVITY_NORTH_WEST,
+			GDK_GRAVITY_SOUTH_WEST, event);
+}
+
 static void
 wayland_set_window_button_geometry (gpointer window,
 					GdkWindow *relative_to,
@@ -347,6 +599,7 @@ static const TasklistBackend wayland_backend = {
 	.close_window             = wayland_close_window,
 	.set_window_maximized     = wayland_set_window_maximized,
 	.set_window_minimized     = wayland_set_window_minimized,
+	.show_window_menu         = wayland_show_window_menu,
 	.set_window_button_geometry = wayland_set_window_button_geometry,
 	.set_screen_tracking      = wayland_set_screen_tracking,
 	.set_window_tracking      = wayland_set_window_tracking,
