@@ -1791,6 +1791,30 @@ static gboolean on_toplevel_button_press (GtkWidget *button, GdkEvent *event, Ta
 	{
 		ContextMenu *menu = tasklist->context_menu;
 		ToplevelTask *task = g_object_get_data (G_OBJECT (button), toplevel_task_key);
+		GList *group_windows = NULL;
+
+		if (task && task->group)
+		{
+			GList *l;
+			for (l = task->group->members; l != NULL; l = l->next)
+			{
+				ToplevelTask *member = l->data;
+				if (member && member->window)
+					group_windows = g_list_append (group_windows, member->window);
+			}
+		}
+		else if (task && task->window)
+			group_windows = g_list_append (group_windows, task->window);
+
+		if (task && task->window && tasklist->backend->show_window_menu)
+		{
+			tasklist->backend->show_window_menu (button, event, task->window,
+								 group_windows,
+								 tasklist->grouping != TASKLIST_NEVER_GROUP);
+			g_list_free (group_windows);
+			return TRUE;
+		}
+		g_list_free (group_windows);
 
 		g_object_set_data (G_OBJECT (menu->maximize), toplevel_task_key, task);
 		g_object_set_data (G_OBJECT (menu->minimize), toplevel_task_key, task);
