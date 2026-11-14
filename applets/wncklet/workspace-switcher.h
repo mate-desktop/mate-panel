@@ -1,5 +1,5 @@
 /*
- * libwnck based pager Apple.
+ * libxfce4windowing based pager Applet.
  * (C) 2001 Alexander Larsson
  *
  * Authors: Alexander Larsson

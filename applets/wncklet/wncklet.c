@@ -31,18 +31,8 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#ifdef HAVE_X11
-#include <gdk/gdkx.h>
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-#include "workspace-switcher.h"
-#endif
-#ifndef HAVE_X11
-#include <gdk/gdkwayland.h>
-#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
-#endif
-
 #include "wncklet.h"
+#include "workspace-switcher.h"
 #include "window-menu.h"
 #include "window-list.h"
 #include "showdesktop.h"
@@ -98,23 +88,6 @@ void wncklet_display_help(GtkWidget* widget, const char* doc_id, const char* lin
 		gtk_widget_show(dialog);
 	}
 }
-
-#ifdef HAVE_X11
-WnckScreen* wncklet_get_screen(WnckHandle* handle, GtkWidget* applet)
-{
-	g_return_val_if_fail (WNCK_IS_HANDLE (handle), NULL);
-	g_return_val_if_fail (GDK_IS_X11_DISPLAY (gdk_display_get_default ()), NULL);
-
-	int screen_num;
-
-	if (!gtk_widget_has_screen(applet))
-		return wnck_handle_get_default_screen(handle);
-
-	screen_num = gdk_x11_screen_get_screen_number(gtk_widget_get_screen(applet));
-
-	return wnck_handle_get_screen(handle, screen_num);
-}
-#endif /* HAVE_X11 */
 
 void wncklet_connect_while_alive(gpointer object, const char* signal, GCallback func, gpointer func_data, gpointer alive_object)
 {

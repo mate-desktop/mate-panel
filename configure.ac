@@ -61,7 +61,6 @@ LIBMATE_MENU_REQUIRED=1.21.0
 CAIRO_REQUIRED=1.0.0
 DCONF_REQUIRED=0.13.4
 GTK_REQUIRED=3.24.0
-LIBWNCK_REQUIRED=43.0
 WEATHER_REQUIRED=1.17.0
 
 dnl pkg-config dependency checks
@@ -87,7 +86,7 @@ PKG_CHECK_MODULES(NOTIFICATION_AREA, gtk+-3.0 >= $GTK_REQUIRED mate-desktop-2.0 
 AC_SUBST(NOTIFICATION_AREA_CFLAGS)
 AC_SUBST(NOTIFICATION_AREA_LIBS)
 
-PKG_CHECK_MODULES(WNCKLET, gtk+-3.0 >= $GTK_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED)
+PKG_CHECK_MODULES(WNCKLET, gtk+-3.0 >= $GTK_REQUIRED mate-desktop-2.0 >= $LIBMATE_DESKTOP_REQUIRED)
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
 
@@ -214,17 +213,6 @@ if test "x$enable_wayland" != "xno"; then
     ])
 fi
 
-have_xfw=no
-if test "x$have_wayland" = "xyes"; then
-  PKG_CHECK_MODULES(XFW, libxfce4windowing-0 >= 4.20.2, have_xfw=yes, [
-    if test "x$enable_wayland" = "xyes"; then
-      AC_MSG_ERROR([Wayland support requires libxfce4windowing-0 >= 4.20.2])
-    else
-      have_wayland=no
-    fi
-  ])
-fi
-
 AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
 
 if test "x$have_wayland" = "xyes"; then
@@ -248,6 +236,23 @@ AM_CONDITIONAL(ENABLE_X11, [test "x$have_x11" = "xyes"])
 
 if test "x$have_x11" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1, [Have the X11 development library])
+fi
+
+# Both backends talk to the window manager through libxfce4windowing, so it is
+# needed as soon as either one is enabled.
+have_xfw=no
+if test "x$have_wayland" = "xyes" -o "x$have_x11" = "xyes"; then
+  PKG_CHECK_MODULES(XFW, libxfce4windowing-0 >= 4.20.2, have_xfw=yes, [
+    if test "x$enable_wayland" = "xyes"; then
+      AC_MSG_ERROR([Wayland support requires libxfce4windowing-0 >= 4.20.2])
+    elif test "x$enable_x11" = "xyes"; then
+      AC_MSG_ERROR([X11 support requires libxfce4windowing-0 >= 4.20.2])
+    elif test "x$have_wayland" = "xyes"; then
+      have_wayland=no
+    else
+      have_x11=no
+    fi
+  ])
 fi
 
 if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then

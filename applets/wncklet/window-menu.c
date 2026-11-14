@@ -35,32 +35,15 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
-#ifdef HAVE_X11
-#include <gdk/gdkx.h>
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-#endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
-#include <gdk/gdkwayland.h>
-#include "wayland-window-menu.h"
-#endif /* HAVE_WAYLAND */
-
-#ifndef HAVE_X11
-#define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
-#endif
-
 #include "wncklet.h"
 #include "window-menu.h"
+#include "xfw-window-menu.h"
 
 #define WINDOW_MENU_ICON "mate-panel-window-menu"
 
 typedef struct {
 	GtkWidget* applet;
 	GtkWidget* selector;
-#ifdef HAVE_X11
-	WnckHandle* wnck_handle;
-#endif
 	int size;
 	MatePanelAppletOrient orient;
 } WindowMenu;
@@ -131,9 +114,6 @@ static const GtkActionEntry window_menu_actions[] = {
 
 static void window_menu_destroy(GtkWidget* widget, WindowMenu* window_menu)
 {
-#ifdef HAVE_X11
-	g_clear_object(&window_menu->wnck_handle);
-#endif
 	g_free(window_menu);
 }
 
@@ -264,26 +244,7 @@ gboolean window_menu_applet_fill(MatePanelApplet* applet)
 	                                            action_group);
 	g_object_unref(action_group);
 
-#ifdef HAVE_X11
-	if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-	{
-		window_menu->wnck_handle = wnck_handle_new(WNCK_CLIENT_TYPE_PAGER);
-		window_menu->selector = wnck_selector_new_with_handle(window_menu->wnck_handle);
-	}
-	else
-#endif /* HAVE_X11 */
-
-#ifdef HAVE_WAYLAND
-	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-	{
-		window_menu->selector = wayland_window_menu_new ();
-	}
-	else
-#endif /* HAVE_WAYLAND */
-
-	{
-		window_menu->selector = gtk_label_new ("[Window menu not supported on this platform]");
-	}
+	window_menu->selector = xfw_window_menu_new ();
 
 	gtk_container_add(GTK_CONTAINER(window_menu->applet), window_menu->selector);
 
