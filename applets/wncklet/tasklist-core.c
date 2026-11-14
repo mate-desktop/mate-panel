@@ -1707,13 +1707,9 @@ toplevel_task_handle_clicked (GtkButton *button, ToplevelTask *task)
 		}
 		else
 		{
-			/* A minimized window is normally activated in place, but
-			 * that is invisible to the user if it lives on another
-			 * workspace, so follow it there first. */
-			if (task->minimized)
-				tasklist_unminimize (task->tasklist, task->window);
-			else
-				task->tasklist->backend->activate_window (task->window, gtk_get_current_event_time ());
+			/* Activating a minimized window both restores and raises it.  Merely
+			 * clearing its minimized state does not reliably raise it on Wayland. */
+			task->tasklist->backend->activate_window (task->window, gtk_get_current_event_time ());
 		}
 	}
 }
