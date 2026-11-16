@@ -1496,12 +1496,17 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 {
 	PanelOrientation  orientation;
 	gboolean          geometry_changed = FALSE;
+	gboolean          keep_orientation = FALSE;
 	int               strut, strut_start, strut_end;
 	int               x, y, width, height;
 	GdkRectangle	  monitor_geom;
 
 	if (!toplevel->priv->updated_geometry_initial)
 		return FALSE;
+
+#ifdef HAVE_WAYLAND
+	keep_orientation = GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)));
+#endif
 
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))) && toplevel->priv->attached) {
@@ -1526,6 +1531,11 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	}
 
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
+
+	/* GTK announces a Wayland monitor before its size: a panel measured
+	 * against 0x0 would take the top edge for good. */
+	if (monitor_geom.width <= 0 || monitor_geom.height <= 0)
+		return FALSE;
 
 	if (end_of_animation) {
 		x = toplevel->priv->animation_end_x;
@@ -1552,10 +1562,12 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	strut = strut_start = strut_end = 0;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
-		if (y <= monitor_geom.y) {
+		if (y <= monitor_geom.y &&
+		    (!keep_orientation || orientation == PANEL_ORIENTATION_TOP)) {
 			orientation = PANEL_ORIENTATION_TOP;
 			strut = y + height - monitor_geom.y;
-		} else if (y >= monitor_geom.y + monitor_geom.height - height) {
+		} else if (y >= monitor_geom.y + monitor_geom.height - height &&
+		           (!keep_orientation || orientation == PANEL_ORIENTATION_BOTTOM)) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
 			strut = monitor_geom.y + monitor_geom.height - y;
 		}
@@ -1565,10 +1577,12 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 			strut_end = MIN (x + width, monitor_geom.x + monitor_geom.width) - 1;
 		}
 	} else {
-		if (x <= monitor_geom.x) {
+		if (x <= monitor_geom.x &&
+		    (!keep_orientation || orientation == PANEL_ORIENTATION_LEFT)) {
 			orientation = PANEL_ORIENTATION_LEFT;
 			strut = x + width - monitor_geom.x;
-		} else if (x >= monitor_geom.x + monitor_geom.width - width) {
+		} else if (x >= monitor_geom.x + monitor_geom.width - width &&
+		           (!keep_orientation || orientation == PANEL_ORIENTATION_RIGHT)) {
 			orientation = PANEL_ORIENTATION_RIGHT;
 			strut = monitor_geom.x + monitor_geom.width - x;
 		}
