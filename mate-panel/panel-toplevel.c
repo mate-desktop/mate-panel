@@ -109,6 +109,7 @@ struct _PanelToplevelPrivate {
 	 * we can move the toplevel to the right monitor when it becomes
 	 * available */
 	int                     configured_monitor;
+	char                   *configured_monitor_id;
 
 	int                     hide_delay;
 	int                     unhide_delay;
@@ -250,6 +251,7 @@ enum {
 	PROP_Y_BOTTOM,
 	PROP_Y_CENTERED,
 	PROP_MONITOR,
+	PROP_MONITOR_ID,
 	PROP_AUTOHIDE,
 	PROP_HIDE_DELAY,
 	PROP_UNHIDE_DELAY,
@@ -3239,6 +3241,7 @@ panel_toplevel_dispose (GObject *widget)
 
 	g_clear_pointer (&toplevel->priv->description, g_free);
 	g_clear_pointer (&toplevel->priv->name, g_free);
+	g_clear_pointer (&toplevel->priv->configured_monitor_id, g_free);
 
 	panel_toplevel_disconnect_timeouts (toplevel);
 
@@ -4354,6 +4357,9 @@ panel_toplevel_set_property (GObject      *object,
 	case PROP_MONITOR:
 		panel_toplevel_set_monitor (toplevel, g_value_get_int (value));
 		break;
+	case PROP_MONITOR_ID:
+		panel_toplevel_set_monitor_id (toplevel, g_value_get_string (value));
+		break;
 	case PROP_AUTOHIDE:
 		panel_toplevel_set_auto_hide (toplevel, g_value_get_boolean (value));
 		break;
@@ -4432,6 +4438,9 @@ panel_toplevel_get_property (GObject    *object,
 		break;
 	case PROP_MONITOR:
 		g_value_set_int (value, toplevel->priv->monitor);
+		break;
+	case PROP_MONITOR_ID:
+		g_value_set_string (value, toplevel->priv->configured_monitor_id);
 		break;
 	case PROP_AUTOHIDE:
 		g_value_set_boolean (value, toplevel->priv->auto_hide);
@@ -4678,6 +4687,16 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			G_MAXINT,
 			0,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_MONITOR_ID,
+		g_param_spec_string (
+			"monitor-id",
+			"Monitor id",
+			"The id of the monitor the panel belongs on",
+			NULL,
+			G_PARAM_READWRITE));
 
 	g_object_class_install_property (
 		gobject_class,
@@ -5655,6 +5674,24 @@ panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_monitor (PanelToplevel *toplevel)
 {
+	if (panel_multimonitor_has_monitor_ids ()) {
+		PanelMonitorEntry *entries;
+		int                n_entries;
+		int                monitor;
+
+		entries = panel_multimonitor_get_entries (&n_entries);
+		monitor = panel_monitor_lookup (entries, n_entries,
+		                                panel_multimonitor_monitors (),
+		                                panel_multimonitor_get_primary (),
+		                                toplevel->priv->configured_monitor_id,
+		                                toplevel->priv->configured_monitor);
+		panel_monitor_entries_free (entries, n_entries);
+
+		if (monitor >= 0)
+			panel_toplevel_set_monitor_internal (toplevel, monitor, FALSE);
+		return;
+	}
+
 	/* If we were not using the configured monitor, can we use it now? */
 	if ((toplevel->priv->configured_monitor != -1) &&
 	    (toplevel->priv->configured_monitor != toplevel->priv->monitor) &&
@@ -5671,11 +5708,29 @@ panel_toplevel_update_monitor (PanelToplevel *toplevel)
 	}
 }
 
+static void
+panel_toplevel_take_monitor_id (PanelToplevel *toplevel,
+				int            monitor)
+{
+	PanelMonitorEntry *entries;
+	int                n_entries;
+	const char        *id;
+
+	entries = panel_multimonitor_get_entries (&n_entries);
+	id = panel_monitor_id_for_index (entries, n_entries, monitor);
+	if (id != NULL)
+		panel_toplevel_set_monitor_id (toplevel, id);
+	panel_monitor_entries_free (entries, n_entries);
+}
+
 void
 panel_toplevel_set_monitor (PanelToplevel *toplevel,
 			    int            monitor)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (panel_multimonitor_has_monitor_ids ())
+		panel_toplevel_take_monitor_id (toplevel, monitor);
 
 	if (toplevel->priv->configured_monitor == monitor)
 		return;
@@ -5699,6 +5754,30 @@ panel_toplevel_get_monitor (PanelToplevel *toplevel)
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), -1);
 
 	return toplevel->priv->monitor;
+}
+
+void
+panel_toplevel_set_monitor_id (PanelToplevel *toplevel,
+			       const char    *id)
+{
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (g_strcmp0 (toplevel->priv->configured_monitor_id, id) == 0)
+		return;
+
+	g_free (toplevel->priv->configured_monitor_id);
+	toplevel->priv->configured_monitor_id = g_strdup (id);
+
+	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	g_object_notify (G_OBJECT (toplevel), "monitor-id");
+}
+
+const char *
+panel_toplevel_get_monitor_id (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
+
+	return toplevel->priv->configured_monitor_id;
 }
 
 void

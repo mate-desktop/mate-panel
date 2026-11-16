@@ -201,6 +201,7 @@ panel_sources = [
   'panel-toplevel.c',
   'panel-frame.c',
   'panel-multimonitor.c',
+  'panel-monitor-lookup.c',
   'panel-a11y.c',
   'panel-bindings.c',
   'panel-layout.c',
@@ -241,6 +242,7 @@ panel_sources = [
   'panel-toplevel.h',
   'panel-frame.h',
   'panel-multimonitor.h',
+  'panel-monitor-lookup.h',
   'panel-a11y.h',
   'panel-bindings.h',
   'panel-layout.h',
@@ -293,6 +295,11 @@ executable('mate-panel',
   export_dynamic: true,
   install: true,
 )
+
+test('panel-monitor-lookup', executable('test-panel-monitor-lookup',
+  ['test-panel-monitor-lookup.c', 'panel-monitor-lookup.c'],
+  dependencies: glib_dep,
+))
 
 mate_desktop_item_edit_sources = [
   'mate-desktop-item-edit.c',

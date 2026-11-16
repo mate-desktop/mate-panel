@@ -38,6 +38,11 @@
 #define GDK_IS_X11_DISPLAY(object)        !(G_TYPE_CHECK_INSTANCE_TYPE ((object), GDK_TYPE_WAYLAND_DISPLAY))
 #endif
 
+#ifdef HAVE_MATE_MONITOR_INFO
+#define MATE_DESKTOP_USE_UNSTABLE_API
+#include <libmate-desktop/mate-monitor-info.h>
+#endif
+
 #include "panel-multimonitor.h"
 
 #include <string.h>
@@ -755,4 +760,66 @@ panel_multimonitor_get_gdk_monitor (int monitor)
 	}
 
 	return NULL;
+}
+
+gboolean
+panel_multimonitor_has_monitor_ids (void)
+{
+#if defined (HAVE_WAYLAND) && defined (HAVE_MATE_MONITOR_INFO)
+	return !GDK_IS_X11_DISPLAY (gdk_display_get_default ());
+#else
+	return FALSE;
+#endif
+}
+
+
+PanelMonitorEntry *
+panel_multimonitor_get_entries (int *n_entries)
+{
+	*n_entries = 0;
+
+#ifdef HAVE_MATE_MONITOR_INFO
+	if (panel_multimonitor_has_monitor_ids ()) {
+		GdkDisplay        *display = gdk_display_get_default ();
+		MateMonitorInfo   *info = mate_monitor_info_get_for_display (display);
+		int                n = gdk_display_get_n_monitors (display);
+		PanelMonitorEntry *entries = g_new0 (PanelMonitorEntry, MAX (n, 1));
+		int                i;
+
+		for (i = 0; i < n; i++) {
+			GdkMonitor *gdk_monitor = gdk_display_get_monitor (display, i);
+
+			entries[i].id = mate_monitor_info_get_id (info, gdk_monitor);
+			entries[i].monitor = panel_multimonitor_monitor_of (gdk_monitor);
+		}
+
+		*n_entries = n;
+		return entries;
+	}
+#endif
+
+	return NULL;
+}
+
+int
+panel_multimonitor_get_primary (void)
+{
+	GdkDisplay *display = gdk_display_get_default ();
+	int         n = gdk_display_get_n_monitors (display);
+	int         i;
+
+	for (i = 0; i < n; i++) {
+		GdkMonitor *gdk_monitor = gdk_display_get_monitor (display, i);
+		gboolean    primary;
+
+#ifdef HAVE_MATE_MONITOR_INFO
+		primary = mate_monitor_info_is_primary (mate_monitor_info_get_for_display (display), gdk_monitor);
+#else
+		primary = gdk_monitor_is_primary (gdk_monitor);
+#endif
+		if (primary)
+			return panel_multimonitor_monitor_of (gdk_monitor);
+	}
+
+	return -1;
 }

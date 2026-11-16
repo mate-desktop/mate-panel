@@ -15,6 +15,11 @@
       <summary>Xinerama monitor where the panel is displayed</summary>
       <description>In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on.</description>
     </key>
+    <key name="monitor-id" type="s">
+      <default>''</default>
+      <summary>Monitor id where the panel is displayed</summary>
+      <description>The id of the monitor the panel belongs on, as MateMonitorInfo names it. While that monitor is not connected the panel shows on the primary monitor, and it goes back when the monitor returns. Used on Wayland; when empty, the "monitor" key is used and this key is filled in from it.</description>
+    </key>
     <key name="expand" type="b">
       <default>true</default>
       <summary>Expand to occupy entire screen width</summary>

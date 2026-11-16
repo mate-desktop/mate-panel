@@ -101,6 +101,9 @@ int                  panel_toplevel_get_size               (PanelToplevel       
 void                 panel_toplevel_set_monitor            (PanelToplevel       *toplevel,
                                                             int                  monitor);
 int                  panel_toplevel_get_monitor            (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_monitor_id         (PanelToplevel       *toplevel,
+                                                            const char          *id);
+const char          *panel_toplevel_get_monitor_id         (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_auto_hide_size     (PanelToplevel       *toplevel,
                                                             int                  autohide_size);
 int                  panel_toplevel_get_auto_hide_size     (PanelToplevel       *toplevel);
