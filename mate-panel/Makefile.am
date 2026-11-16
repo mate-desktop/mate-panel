@@ -5,6 +5,11 @@ bin_PROGRAMS = \
 	mate-desktop-item-edit \
 	mate-panel-test-applets
 
+check_PROGRAMS = test-panel-monitor-lookup
+TESTS = $(check_PROGRAMS)
+test_panel_monitor_lookup_SOURCES = test-panel-monitor-lookup.c panel-monitor-lookup.c panel-monitor-lookup.h
+test_panel_monitor_lookup_LDADD = $(PANEL_LIBS)
+
 AM_CPPFLAGS = \
 	$(PANEL_CFLAGS) \
 	$(DCONF_CFLAGS) \
@@ -50,6 +55,7 @@ panel_sources = \
 	panel-toplevel.c \
 	panel-frame.c \
 	panel-multimonitor.c \
+	panel-monitor-lookup.c \
 	panel-a11y.c \
 	panel-bindings.c \
 	panel-layout.c \
@@ -106,6 +112,7 @@ panel_headers = \
 	panel-toplevel.h \
 	panel-frame.h \
 	panel-multimonitor.h \
+	panel-monitor-lookup.h \
 	panel-a11y.h \
 	panel-bindings.h \
 	panel-layout.h \

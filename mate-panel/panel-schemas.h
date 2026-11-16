@@ -21,6 +21,7 @@
 #define PANEL_TOPLEVEL_NAME_KEY              "name"
 #define PANEL_TOPLEVEL_SCREEN_KEY            "screen"
 #define PANEL_TOPLEVEL_MONITOR_KEY           "monitor"
+#define PANEL_TOPLEVEL_MONITOR_ID_KEY        "monitor-id"
 #define PANEL_TOPLEVEL_EXPAND_KEY            "expand"
 #define PANEL_TOPLEVEL_ORIENTATION_KEY       "orientation"
 #define PANEL_TOPLEVEL_SIZE_KEY              "size"
