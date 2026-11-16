@@ -33,6 +33,7 @@
 #include <gtk-layer-shell.h>
 
 #include "wayland-backend.h"
+#include "panel-multimonitor.h"
 
 static void
 wayland_panel_toplevel_apply_anchors (PanelToplevel*   toplevel,
@@ -159,6 +160,11 @@ wayland_panel_toplevel_update_placement (PanelToplevel* toplevel)
 {
 	gboolean expand;
 	PanelOrientation orientation;
+	GdkMonitor *monitor;
+
+	monitor = panel_multimonitor_get_gdk_monitor (panel_toplevel_get_monitor (toplevel));
+	if (monitor != gtk_layer_get_monitor (GTK_WINDOW (toplevel)))
+		gtk_layer_set_monitor (GTK_WINDOW (toplevel), monitor);
 
 	orientation = panel_toplevel_get_orientation (toplevel);
 	expand = panel_toplevel_get_expand (toplevel);
@@ -181,6 +187,18 @@ wayland_panel_toplevel_update_placement (PanelToplevel* toplevel)
 	wayland_panel_toplevel_apply_anchors (toplevel, orientation, expand);
 }
 
+static void
+wayland_panel_toplevel_monitor_removed (GdkDisplay    *display,
+					GdkMonitor    *monitor,
+					PanelToplevel *toplevel)
+{
+	/* The compositor closes a layer surface whose output goes away, and
+	 * a closed surface gets no frame callbacks, so GTK would never lay
+	 * the panel out again: remap it at once. */
+	if (gtk_layer_get_monitor (GTK_WINDOW (toplevel)) == monitor)
+		gtk_layer_set_monitor (GTK_WINDOW (toplevel), NULL);
+}
+
 void
 wayland_panel_toplevel_init (PanelToplevel* toplevel)
 {
@@ -190,6 +208,8 @@ wayland_panel_toplevel_init (PanelToplevel* toplevel)
 	gtk_layer_init_for_window (window);
 	gtk_layer_set_layer (window, GTK_LAYER_SHELL_LAYER_TOP);
 	gtk_layer_set_namespace (window, "panel");
+	g_signal_connect_object (gdk_display_get_default (), "monitor-removed",
+				 G_CALLBACK (wayland_panel_toplevel_monitor_removed), toplevel, 0);
 	wayland_panel_toplevel_update_placement (toplevel);
 }
 

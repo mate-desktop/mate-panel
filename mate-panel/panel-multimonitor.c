@@ -410,6 +410,17 @@ panel_multimonitor_handle_monitor_invalidate (GdkMonitor *monitor,
 	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
 }
 
+static void
+panel_multimonitor_handle_monitor_geometry (GdkMonitor *monitor,
+					    GParamSpec *pspec,
+					    gpointer    user_data)
+{
+	if (reinit_id)
+		return;
+
+	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
+}
+
 #ifdef HAVE_X11
 #ifdef HAVE_RANDR
 static void
@@ -488,6 +499,9 @@ panel_multimonitor_init (void)
 		g_signal_handlers_disconnect_by_func (display, panel_multimonitor_handle_monitor_invalidate, NULL);
 		g_signal_connect (monitor, "invalidate",
 			  G_CALLBACK (panel_multimonitor_handle_monitor_invalidate), NULL);
+		g_signal_handlers_disconnect_by_func (monitor, panel_multimonitor_handle_monitor_geometry, NULL);
+		g_signal_connect (monitor, "notify::geometry",
+			  G_CALLBACK (panel_multimonitor_handle_monitor_geometry), NULL);
 	}
 
 	panel_multimonitor_get_raw_monitors (&monitor_count, &geometries);
@@ -697,4 +711,48 @@ panel_multimonitor_get_bounds (GdkPoint *min,
 		max->x = MAX (max->x, geometries[i].x + geometries[i].width);
 		max->y = MAX (max->y, geometries[i].y + geometries[i].height);
 	}
+}
+
+static int
+panel_multimonitor_monitor_of (GdkMonitor *gdk_monitor)
+{
+	GdkRectangle geometry;
+	int          best = -1;
+	long         best_pixels = 0;
+	int          i;
+
+	gdk_monitor_get_geometry (gdk_monitor, &geometry);
+	if (geometry.width <= 0 || geometry.height <= 0)
+		return -1;
+
+	for (i = 0; i < monitor_count; i++) {
+		GdkRectangle overlap;
+
+		if (gdk_rectangle_equal (&geometry, &geometries[i]))
+			return i;
+		if (gdk_rectangle_intersect (&geometry, &geometries[i], &overlap) &&
+		    pixels_in_rectangle (&overlap) > best_pixels) {
+			best = i;
+			best_pixels = pixels_in_rectangle (&overlap);
+		}
+	}
+
+	return best;
+}
+
+GdkMonitor *
+panel_multimonitor_get_gdk_monitor (int monitor)
+{
+	GdkDisplay *display = gdk_display_get_default ();
+	int         n = gdk_display_get_n_monitors (display);
+	int         i;
+
+	for (i = 0; i < n; i++) {
+		GdkMonitor *gdk_monitor = gdk_display_get_monitor (display, i);
+
+		if (panel_multimonitor_monitor_of (gdk_monitor) == monitor)
+			return gdk_monitor;
+	}
+
+	return NULL;
 }
