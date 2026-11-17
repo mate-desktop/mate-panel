@@ -5724,6 +5724,34 @@ panel_toplevel_take_monitor_id (PanelToplevel *toplevel,
 }
 
 void
+panel_toplevel_adopt_monitor_index (PanelToplevel *toplevel)
+{
+	PanelMonitorEntry *entries;
+	int                n_entries;
+	int                monitor;
+
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (!panel_multimonitor_has_monitor_ids ())
+		return;
+
+	if (toplevel->priv->configured_monitor <= 0) {
+		panel_toplevel_set_monitor_id (toplevel, NULL);
+		return;
+	}
+
+	entries = panel_multimonitor_get_entries (&n_entries);
+	monitor = panel_monitor_lookup (entries, n_entries,
+	                                panel_multimonitor_monitors (),
+	                                panel_multimonitor_get_primary (),
+	                                NULL,
+	                                toplevel->priv->configured_monitor);
+	panel_toplevel_set_monitor_id (toplevel,
+	                               panel_monitor_id_for_index (entries, n_entries, monitor));
+	panel_monitor_entries_free (entries, n_entries);
+}
+
+void
 panel_toplevel_set_monitor (PanelToplevel *toplevel,
 			    int            monitor)
 {

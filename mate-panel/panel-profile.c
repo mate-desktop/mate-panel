@@ -1181,6 +1181,8 @@ panel_profile_load_toplevel (const char *toplevel_id)
 		monitor_id = g_settings_get_string (toplevel->settings, PANEL_TOPLEVEL_MONITOR_ID_KEY);
 		if (monitor_id[0] != '\0')
 			panel_toplevel_set_monitor_id (toplevel, monitor_id);
+		else
+			panel_toplevel_adopt_monitor_index (toplevel);
 		g_free (monitor_id);
 	}
 	GET_BOOL ("expand", expand);

@@ -68,6 +68,24 @@ test_index_when_id_empty (void)
 }
 
 static void
+test_index_counts_from_the_primary (void)
+{
+	static const PanelMonitorEntry three[] = {
+		{ "A-1", 0 },
+		{ "B-2", 1 },
+		{ "C-3", 2 },
+	};
+
+	g_assert_cmpint (panel_monitor_lookup (laptop_and_hdmi, 2, 2, 1, "", 0), ==, 1);
+	g_assert_cmpint (panel_monitor_lookup (laptop_and_hdmi, 2, 2, 1, NULL, 1), ==, 0);
+	g_assert_cmpint (panel_monitor_lookup (three, 3, 3, 2, "", 0), ==, 2);
+	g_assert_cmpint (panel_monitor_lookup (three, 3, 3, 2, "", 1), ==, 0);
+	g_assert_cmpint (panel_monitor_lookup (three, 3, 3, 2, "", 2), ==, 1);
+	g_assert_cmpint (panel_monitor_lookup (three, 3, 3, 1, "", 2), ==, 2);
+	g_assert_cmpint (panel_monitor_lookup (three, 3, 3, -1, "", 1), ==, 1);
+}
+
+static void
 test_mirrors_share_a_monitor (void)
 {
 	static const PanelMonitorEntry mirrored[] = {
@@ -107,6 +125,7 @@ main (int argc, char **argv)
 	g_test_add_func ("/monitor-lookup/id-wins-over-index", test_id_wins_over_index);
 	g_test_add_func ("/monitor-lookup/missing-id-gives-primary", test_missing_id_gives_primary);
 	g_test_add_func ("/monitor-lookup/index-when-id-empty", test_index_when_id_empty);
+	g_test_add_func ("/monitor-lookup/index-counts-from-the-primary", test_index_counts_from_the_primary);
 	g_test_add_func ("/monitor-lookup/mirrors-share-a-monitor", test_mirrors_share_a_monitor);
 	g_test_add_func ("/monitor-lookup/no-monitors", test_no_monitors);
 	g_test_add_func ("/monitor-lookup/id-to-save", test_id_to_save);
