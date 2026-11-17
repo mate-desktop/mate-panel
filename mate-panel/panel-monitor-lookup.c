@@ -52,7 +52,11 @@ panel_monitor_lookup (const PanelMonitorEntry *entries,
 				return entries[i].monitor;
 		}
 	} else if (configured_index >= 0 && configured_index < n_monitors) {
-		return configured_index;
+		if (primary < 0 || primary >= n_monitors)
+			return configured_index;
+		if (configured_index == 0)
+			return primary;
+		return configured_index <= primary ? configured_index - 1 : configured_index;
 	}
 
 	return primary >= 0 && primary < n_monitors ? primary : 0;
