@@ -426,6 +426,19 @@ panel_multimonitor_handle_monitor_geometry (GdkMonitor *monitor,
 	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
 }
 
+#ifdef HAVE_MATE_MONITOR_INFO
+static void
+panel_multimonitor_handle_info_changed (MateMonitorInfo *info,
+					GdkMonitor      *monitor,
+					gpointer         user_data)
+{
+	if (reinit_id)
+		return;
+
+	reinit_id = g_idle_add (panel_multimonitor_reinit_idle, NULL);
+}
+#endif
+
 #ifdef HAVE_X11
 #ifdef HAVE_RANDR
 static void
@@ -508,6 +521,16 @@ panel_multimonitor_init (void)
 		g_signal_connect (monitor, "notify::geometry",
 			  G_CALLBACK (panel_multimonitor_handle_monitor_geometry), NULL);
 	}
+
+#ifdef HAVE_MATE_MONITOR_INFO
+	if (panel_multimonitor_has_monitor_ids ()) {
+		MateMonitorInfo *info = mate_monitor_info_get_for_display (display);
+
+		g_signal_handlers_disconnect_by_func (info, panel_multimonitor_handle_info_changed, NULL);
+		g_signal_connect (info, "changed",
+				  G_CALLBACK (panel_multimonitor_handle_info_changed), NULL);
+	}
+#endif
 
 	panel_multimonitor_get_raw_monitors (&monitor_count, &geometries);
 	panel_multimonitor_compress_overlapping_monitors (&monitor_count, &geometries);
