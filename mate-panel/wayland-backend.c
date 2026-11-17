@@ -187,16 +187,64 @@ wayland_panel_toplevel_update_placement (PanelToplevel* toplevel)
 	wayland_panel_toplevel_apply_anchors (toplevel, orientation, expand);
 }
 
+static gboolean
+wayland_panel_toplevel_hide_while_no_monitors (gpointer data)
+{
+	PanelToplevel *toplevel = data;
+
+	if (gdk_display_get_n_monitors (gdk_display_get_default ()) == 0) {
+		g_object_set_data (G_OBJECT (toplevel), "wayland-no-monitors",
+				   GINT_TO_POINTER (1));
+		gtk_widget_hide (GTK_WIDGET (toplevel));
+	}
+	g_object_unref (toplevel);
+
+	return G_SOURCE_REMOVE;
+}
+
 static void
 wayland_panel_toplevel_monitor_removed (GdkDisplay    *display,
 					GdkMonitor    *monitor,
 					PanelToplevel *toplevel)
 {
+	if (gdk_display_get_n_monitors (display) == 0) {
+		/* With no monitor left the panel waits hidden: gtk-layer-shell
+		 * would otherwise remap it from inside GDK's monitor-added, before
+		 * GDK listens to the new wl_output, and GDK would never learn
+		 * that monitor's geometry. */
+		g_idle_add (wayland_panel_toplevel_hide_while_no_monitors,
+			    g_object_ref (toplevel));
+		return;
+	}
 	/* The compositor closes a layer surface whose output goes away, and
 	 * a closed surface gets no frame callbacks, so GTK would never lay
 	 * the panel out again: remap it at once. */
 	if (gtk_layer_get_monitor (GTK_WINDOW (toplevel)) == monitor)
 		gtk_layer_set_monitor (GTK_WINDOW (toplevel), NULL);
+}
+
+static gboolean
+wayland_panel_toplevel_show_again (gpointer data)
+{
+	PanelToplevel *toplevel = data;
+
+	if (g_object_get_data (G_OBJECT (toplevel), "wayland-no-monitors") != NULL &&
+	    gdk_display_get_n_monitors (gdk_display_get_default ()) > 0) {
+		g_object_set_data (G_OBJECT (toplevel), "wayland-no-monitors", NULL);
+		gtk_widget_show (GTK_WIDGET (toplevel));
+	}
+	g_object_unref (toplevel);
+
+	return G_SOURCE_REMOVE;
+}
+
+static void
+wayland_panel_toplevel_monitor_added (GdkDisplay    *display,
+				      GdkMonitor    *monitor,
+				      PanelToplevel *toplevel)
+{
+	if (g_object_get_data (G_OBJECT (toplevel), "wayland-no-monitors") != NULL)
+		g_idle_add (wayland_panel_toplevel_show_again, g_object_ref (toplevel));
 }
 
 void
@@ -210,6 +258,8 @@ wayland_panel_toplevel_init (PanelToplevel* toplevel)
 	gtk_layer_set_namespace (window, "panel");
 	g_signal_connect_object (gdk_display_get_default (), "monitor-removed",
 				 G_CALLBACK (wayland_panel_toplevel_monitor_removed), toplevel, 0);
+	g_signal_connect_object (gdk_display_get_default (), "monitor-added",
+				 G_CALLBACK (wayland_panel_toplevel_monitor_added), toplevel, 0);
 	wayland_panel_toplevel_update_placement (toplevel);
 }
 
