@@ -197,6 +197,17 @@ x11_dep = dependency('x11', required: x11_opt)
 have_x11 = x11_dep.found()
 config_h.set('HAVE_X11', have_x11)
 
+# XRecord, needed by the notification area's click watcher. Optional: without
+# it the overflow popup is dismissed by polling the pointer instead of on the
+# click itself. Only meaningful on X11 - and it must not merely be marked
+# required: have_x11, because when x11 is disabled the dep is skipped while
+# xtst is still found on the system, so have_xtst would be true and the helper
+# would be built without -lX11 (measured: wayland-only build dies with
+# "undefined reference to XOpenDisplay").
+xtst_dep = dependency('xtst', required: have_x11)
+have_xtst = have_x11 and xtst_dep.found()
+config_h.set('HAVE_XTST', have_xtst)
+
 # Wayland support
 wayland_opt = get_option('enable-wayland')
 wayland_deps = [

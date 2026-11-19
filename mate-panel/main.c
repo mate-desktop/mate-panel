@@ -106,7 +106,16 @@ main (int argc, char **argv)
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
 	#if defined(HAVE_X11) && defined(HAVE_WAYLAND)
-		gdk_set_allowed_backends ("wayland,x11");
+		/* A build that carries both backends must not let GTK pick: with
+		 * "wayland,x11" it takes wayland whenever WAYLAND_DISPLAY happens to
+		 * be exported, so an X11 session that inherited that variable from an
+		 * earlier Wayland login started the panel on the wayland backend -
+		 * layer_shell then failed (CRITICAL) and every X call died with
+		 * "Fatal IO error 25".  Follow the session type instead. */
+		if (g_strcmp0 (g_getenv ("XDG_SESSION_TYPE"), "wayland") == 0)
+			gdk_set_allowed_backends ("wayland,x11");
+		else
+			gdk_set_allowed_backends ("x11");
 	#elif defined(HAVE_WAYLAND)
 		gdk_set_allowed_backends ("wayland");
 	#else

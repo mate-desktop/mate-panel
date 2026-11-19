@@ -9,6 +9,14 @@ notification_area_c_args = [
   '-DPROVIDE_WATCHER_SERVICE=1',
 ] + disable_deprecated_flags
 
+# Directory of the clickwatch helper (see below). It is compiled into the
+# applet because it cannot be derived from /proc/self/exe: in the
+# notification_area_inprocess build the applet is a module inside the panel, so
+# /proc/self/exe points at mate-panel itself.
+if have_xtst
+  notification_area_c_args += ['-DNA_CLICKWATCHDIR="@0@"'.format(mate_panel_libexecdir)]
+endif
+
 subdir('libstatus-notifier-watcher')
 subdir('status-notifier')
 
@@ -23,6 +31,8 @@ libtray_sources = [
   'na-host.h',
   'na-item.c',
   'na-item.h',
+  'na-overflow.c',
+  'na-overflow.h',
 ]
 
 libtray = static_library('tray',
@@ -32,6 +42,17 @@ libtray = static_library('tray',
   link_with: [libstatus_notifier, libstatus_notifier_watcher],
   c_args: notification_area_c_args,
 )
+
+# Click watcher: a separate process with its own Xlib connection.
+# Installed into $(libexecdir), next to the applet.
+if have_xtst
+  executable('clickwatch',
+    'clickwatch.c',
+    dependencies: [xtst_dep, x11_dep],
+    install: true,
+    install_dir: mate_panel_libexecdir,
+  )
+endif
 
 if have_x11
   libtray_extra_link = libsystem_tray

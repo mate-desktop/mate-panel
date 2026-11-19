@@ -248,7 +248,18 @@ AM_CONDITIONAL(ENABLE_X11, [test "x$have_x11" = "xyes"])
 
 if test "x$have_x11" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1, [Have the X11 development library])
+
+  # Xtst -> XRecord. Needed only by the clickwatch helper, which runs as its own
+  # process: the applet itself never links it. Optional; without it the drawer
+  # closes on the pointer-position timer alone.
+  PKG_CHECK_MODULES(XTST, xtst, have_xtst=yes, have_xtst=no)
+  if test "x$have_xtst" = "xyes"; then
+    AC_DEFINE(HAVE_XTST, 1, [Have libXtst for XRecord])
+  fi
 fi
+AM_CONDITIONAL(HAVE_XTST, [test "x$have_xtst" = "xyes"])
+AC_SUBST(XTST_CFLAGS)
+AC_SUBST(XTST_LIBS)
 
 if test "x$have_x11" != "xyes" -a "x$have_wayland" != "xyes"; then
   if test "x$enable_wayland" = "xno" -a "x$enable_x11" = "xno"; then
