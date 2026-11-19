@@ -623,6 +623,27 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 	}
 
 TOPLEVEL_LOCATION_CHANGED_HANDLER(monitor)
+
+static void
+panel_profile_save_monitor_id (PanelToplevel *toplevel)
+{
+	const char *id = panel_toplevel_get_monitor_id (toplevel);
+	char       *saved;
+
+	if (id == NULL)
+		return;
+
+	saved = g_settings_get_string (toplevel->settings, PANEL_TOPLEVEL_MONITOR_ID_KEY);
+	if (strcmp (saved, id) != 0)
+		g_settings_set_string (toplevel->settings, PANEL_TOPLEVEL_MONITOR_ID_KEY, id);
+	g_free (saved);
+}
+
+static void
+panel_profile_toplevel_monitor_id_changed (PanelToplevel *toplevel)
+{
+	panel_profile_save_monitor_id (toplevel);
+}
 TOPLEVEL_LOCATION_CHANGED_HANDLER(size)
 TOPLEVEL_LOCATION_CHANGED_HANDLER(orientation)
 TOPLEVEL_LOCATION_CHANGED_HANDLER(x_centered)
@@ -665,6 +686,8 @@ panel_profile_connect_to_toplevel (PanelToplevel *toplevel)
 			  G_CALLBACK (panel_profile_toplevel_screen_changed), NULL);
 	g_signal_connect (toplevel, "notify::monitor",
 			  G_CALLBACK (panel_profile_toplevel_monitor_changed), NULL);
+	g_signal_connect (toplevel, "notify::monitor-id",
+			  G_CALLBACK (panel_profile_toplevel_monitor_id_changed), NULL);
 	g_signal_connect (toplevel, "notify::size",
 			  G_CALLBACK (panel_profile_toplevel_size_changed), NULL);
 	g_signal_connect (toplevel, "notify::x",
@@ -764,6 +787,13 @@ panel_profile_toplevel_change_notify (GSettings *settings,
 			panel_profile_toplevel_screen_changed (toplevel);
 	}
 	else UPDATE_INT ("monitor", monitor)
+	else if (!strcmp (key, "monitor-id")) {
+		char *id = g_settings_get_string (settings, key);
+
+		if (id[0] != '\0')
+			panel_toplevel_set_monitor_id (toplevel, id);
+		g_free (id);
+	}
 	else UPDATE_STRING ("name", name)
 	else UPDATE_BOOL ("expand", expand)
 	else UPDATE_ENUM ("orientation", orientation)
@@ -1145,6 +1175,16 @@ panel_profile_load_toplevel (const char *toplevel_id)
 
 	GET_STRING ("name", name);
 	GET_INT ("monitor", monitor);
+	{
+		char *monitor_id;
+
+		monitor_id = g_settings_get_string (toplevel->settings, PANEL_TOPLEVEL_MONITOR_ID_KEY);
+		if (monitor_id[0] != '\0')
+			panel_toplevel_set_monitor_id (toplevel, monitor_id);
+		else
+			panel_toplevel_adopt_monitor_index (toplevel);
+		g_free (monitor_id);
+	}
 	GET_BOOL ("expand", expand);
 	GET_ENUM ("orientation", orientation);
 	GET_INT ("size", size);
@@ -1176,6 +1216,7 @@ panel_profile_load_toplevel (const char *toplevel_id)
 	panel_profile_set_toplevel_id (toplevel, toplevel_id);
 
 	panel_profile_connect_to_toplevel (toplevel);
+	panel_profile_save_monitor_id (toplevel);
 
 	g_signal_connect (toplevel->settings,
 					  "changed",

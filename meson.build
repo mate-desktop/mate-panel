@@ -182,6 +182,9 @@ pango_dep = dependency('pango', version: '>= 1.15.4')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.24.0')
 cairo_dep = dependency('cairo', version: '>= 1.0.0')
 mate_desktop_dep = dependency('mate-desktop-2.0', version: '>= 1.29.1')
+config_h.set('HAVE_MATE_MONITOR_INFO',
+  cc.has_header('libmate-desktop/mate-monitor-info.h', dependencies: mate_desktop_dep,
+                args: '-DMATE_DESKTOP_USE_UNSTABLE_API'))
 mate_menu_dep = dependency('libmate-menu', version: '>= 1.21.0')
 dconf_dep = dependency('dconf', version: '>= 0.13.4')
 wnck_dep = dependency('libwnck-3.0', version: '>= 43.0')

@@ -29,6 +29,8 @@
 
 #include <gtk/gtk.h>
 
+#include "panel-monitor-lookup.h"
+
 void	panel_multimonitor_init                  (void);
 void	panel_multimonitor_reinit                (void);
 
@@ -48,5 +50,10 @@ void	panel_multimonitor_is_at_visible_extreme (int        monitor_id,
 						  gboolean  *bottommost);
 void	panel_multimonitor_get_bounds            (GdkPoint *min,
 						  GdkPoint *max);
+
+gboolean           panel_multimonitor_has_monitor_ids (void);
+PanelMonitorEntry *panel_multimonitor_get_entries     (int *n_entries);
+int                panel_multimonitor_get_primary     (void);
+GdkMonitor        *panel_multimonitor_get_gdk_monitor (int monitor);
 
 #endif /* __PANEL_MULTIMONITOR_H__ */

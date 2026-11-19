@@ -109,6 +109,7 @@ struct _PanelToplevelPrivate {
 	 * we can move the toplevel to the right monitor when it becomes
 	 * available */
 	int                     configured_monitor;
+	char                   *configured_monitor_id;
 
 	int                     hide_delay;
 	int                     unhide_delay;
@@ -250,6 +251,7 @@ enum {
 	PROP_Y_BOTTOM,
 	PROP_Y_CENTERED,
 	PROP_MONITOR,
+	PROP_MONITOR_ID,
 	PROP_AUTOHIDE,
 	PROP_HIDE_DELAY,
 	PROP_UNHIDE_DELAY,
@@ -1496,12 +1498,17 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 {
 	PanelOrientation  orientation;
 	gboolean          geometry_changed = FALSE;
+	gboolean          keep_orientation = FALSE;
 	int               strut, strut_start, strut_end;
 	int               x, y, width, height;
 	GdkRectangle	  monitor_geom;
 
 	if (!toplevel->priv->updated_geometry_initial)
 		return FALSE;
+
+#ifdef HAVE_WAYLAND
+	keep_orientation = GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel)));
+#endif
 
 #ifdef HAVE_X11
 	if (GDK_IS_X11_DISPLAY (gtk_widget_get_display (GTK_WIDGET (toplevel))) && toplevel->priv->attached) {
@@ -1526,6 +1533,11 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	}
 
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_geom);
+
+	/* GTK announces a Wayland monitor before its size: a panel measured
+	 * against 0x0 would take the top edge for good. */
+	if (monitor_geom.width <= 0 || monitor_geom.height <= 0)
+		return FALSE;
 
 	if (end_of_animation) {
 		x = toplevel->priv->animation_end_x;
@@ -1552,10 +1564,12 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 	strut = strut_start = strut_end = 0;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
-		if (y <= monitor_geom.y) {
+		if (y <= monitor_geom.y &&
+		    (!keep_orientation || orientation == PANEL_ORIENTATION_TOP)) {
 			orientation = PANEL_ORIENTATION_TOP;
 			strut = y + height - monitor_geom.y;
-		} else if (y >= monitor_geom.y + monitor_geom.height - height) {
+		} else if (y >= monitor_geom.y + monitor_geom.height - height &&
+		           (!keep_orientation || orientation == PANEL_ORIENTATION_BOTTOM)) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
 			strut = monitor_geom.y + monitor_geom.height - y;
 		}
@@ -1565,10 +1579,12 @@ static gboolean panel_toplevel_update_struts(PanelToplevel* toplevel, gboolean e
 			strut_end = MIN (x + width, monitor_geom.x + monitor_geom.width) - 1;
 		}
 	} else {
-		if (x <= monitor_geom.x) {
+		if (x <= monitor_geom.x &&
+		    (!keep_orientation || orientation == PANEL_ORIENTATION_LEFT)) {
 			orientation = PANEL_ORIENTATION_LEFT;
 			strut = x + width - monitor_geom.x;
-		} else if (x >= monitor_geom.x + monitor_geom.width - width) {
+		} else if (x >= monitor_geom.x + monitor_geom.width - width &&
+		           (!keep_orientation || orientation == PANEL_ORIENTATION_RIGHT)) {
 			orientation = PANEL_ORIENTATION_RIGHT;
 			strut = monitor_geom.x + monitor_geom.width - x;
 		}
@@ -3225,6 +3241,7 @@ panel_toplevel_dispose (GObject *widget)
 
 	g_clear_pointer (&toplevel->priv->description, g_free);
 	g_clear_pointer (&toplevel->priv->name, g_free);
+	g_clear_pointer (&toplevel->priv->configured_monitor_id, g_free);
 
 	panel_toplevel_disconnect_timeouts (toplevel);
 
@@ -4339,6 +4356,9 @@ panel_toplevel_set_property (GObject      *object,
 	case PROP_MONITOR:
 		panel_toplevel_set_monitor (toplevel, g_value_get_int (value));
 		break;
+	case PROP_MONITOR_ID:
+		panel_toplevel_set_monitor_id (toplevel, g_value_get_string (value));
+		break;
 	case PROP_AUTOHIDE:
 		panel_toplevel_set_auto_hide (toplevel, g_value_get_boolean (value));
 		break;
@@ -4417,6 +4437,9 @@ panel_toplevel_get_property (GObject    *object,
 		break;
 	case PROP_MONITOR:
 		g_value_set_int (value, toplevel->priv->monitor);
+		break;
+	case PROP_MONITOR_ID:
+		g_value_set_string (value, toplevel->priv->configured_monitor_id);
 		break;
 	case PROP_AUTOHIDE:
 		g_value_set_boolean (value, toplevel->priv->auto_hide);
@@ -4663,6 +4686,16 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			G_MAXINT,
 			0,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_MONITOR_ID,
+		g_param_spec_string (
+			"monitor-id",
+			"Monitor id",
+			"The id of the monitor the panel belongs on",
+			NULL,
+			G_PARAM_READWRITE));
 
 	g_object_class_install_property (
 		gobject_class,
@@ -5640,6 +5673,24 @@ panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_monitor (PanelToplevel *toplevel)
 {
+	if (panel_multimonitor_has_monitor_ids ()) {
+		PanelMonitorEntry *entries;
+		int                n_entries;
+		int                monitor;
+
+		entries = panel_multimonitor_get_entries (&n_entries);
+		monitor = panel_monitor_lookup (entries, n_entries,
+		                                panel_multimonitor_monitors (),
+		                                panel_multimonitor_get_primary (),
+		                                toplevel->priv->configured_monitor_id,
+		                                toplevel->priv->configured_monitor);
+		panel_monitor_entries_free (entries, n_entries);
+
+		if (monitor >= 0)
+			panel_toplevel_set_monitor_internal (toplevel, monitor, FALSE);
+		return;
+	}
+
 	/* If we were not using the configured monitor, can we use it now? */
 	if ((toplevel->priv->configured_monitor != -1) &&
 	    (toplevel->priv->configured_monitor != toplevel->priv->monitor) &&
@@ -5656,11 +5707,57 @@ panel_toplevel_update_monitor (PanelToplevel *toplevel)
 	}
 }
 
+static void
+panel_toplevel_take_monitor_id (PanelToplevel *toplevel,
+				int            monitor)
+{
+	PanelMonitorEntry *entries;
+	int                n_entries;
+	const char        *id;
+
+	entries = panel_multimonitor_get_entries (&n_entries);
+	id = panel_monitor_id_for_index (entries, n_entries, monitor);
+	if (id != NULL)
+		panel_toplevel_set_monitor_id (toplevel, id);
+	panel_monitor_entries_free (entries, n_entries);
+}
+
+void
+panel_toplevel_adopt_monitor_index (PanelToplevel *toplevel)
+{
+	PanelMonitorEntry *entries;
+	int                n_entries;
+	int                monitor;
+
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (!panel_multimonitor_has_monitor_ids ())
+		return;
+
+	if (toplevel->priv->configured_monitor <= 0) {
+		panel_toplevel_set_monitor_id (toplevel, NULL);
+		return;
+	}
+
+	entries = panel_multimonitor_get_entries (&n_entries);
+	monitor = panel_monitor_lookup (entries, n_entries,
+	                                panel_multimonitor_monitors (),
+	                                panel_multimonitor_get_primary (),
+	                                NULL,
+	                                toplevel->priv->configured_monitor);
+	panel_toplevel_set_monitor_id (toplevel,
+	                               panel_monitor_id_for_index (entries, n_entries, monitor));
+	panel_monitor_entries_free (entries, n_entries);
+}
+
 void
 panel_toplevel_set_monitor (PanelToplevel *toplevel,
 			    int            monitor)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (panel_multimonitor_has_monitor_ids ())
+		panel_toplevel_take_monitor_id (toplevel, monitor);
 
 	if (toplevel->priv->configured_monitor == monitor)
 		return;
@@ -5684,6 +5781,30 @@ panel_toplevel_get_monitor (PanelToplevel *toplevel)
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), -1);
 
 	return toplevel->priv->monitor;
+}
+
+void
+panel_toplevel_set_monitor_id (PanelToplevel *toplevel,
+			       const char    *id)
+{
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (g_strcmp0 (toplevel->priv->configured_monitor_id, id) == 0)
+		return;
+
+	g_free (toplevel->priv->configured_monitor_id);
+	toplevel->priv->configured_monitor_id = g_strdup (id);
+
+	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	g_object_notify (G_OBJECT (toplevel), "monitor-id");
+}
+
+const char *
+panel_toplevel_get_monitor_id (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
+
+	return toplevel->priv->configured_monitor_id;
 }
 
 void
