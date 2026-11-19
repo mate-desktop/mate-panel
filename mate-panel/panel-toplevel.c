@@ -3247,8 +3247,9 @@ panel_toplevel_check_resize (GtkContainer *container)
 	requisition.height = -1;
 
 	gtk_widget_get_preferred_size (widget, &requisition, NULL);
-	gtk_widget_get_allocation (widget, &allocation);
 
+	allocation.x = 0;
+	allocation.y = 0;
 	allocation.width = requisition.width;
 	allocation.height = requisition.height;
 
