@@ -36,6 +36,10 @@
 /*shorter than wnck-tasklist due to common use of larger fonts*/
 #define TASKLIST_TEXT_MAX_WIDTH 16
 
+/* hovering a foreign drag over a button activates its window after this
+ * delay, same as libwnck */
+#define TASKLIST_DRAG_ACTIVATE_TIMEOUT 1000
+
 /* On Wayland there is no window XID, the XfwWindow pointer is used to
  * identify a window in the drag-and-drop payload */
 #define wayland_task_window_get_wid(window) ((gulong) (window))
@@ -104,6 +108,8 @@ typedef struct
 	GroupTask *group;
 	gulong application_changed_id;
 	gint natural_width;
+	guint drag_activate_timeout;
+	guint32 drag_activate_time;
 } ToplevelTask;
 
 struct _GroupTask
@@ -1449,6 +1455,9 @@ toplevel_task_disconnected_from_widget (ToplevelTask *task)
 		g_object_unref (task->window);
 	}
 
+	if (task->drag_activate_timeout)
+		g_source_remove (task->drag_activate_timeout);
+
 	if (task->tasklist)
 		task->tasklist->tasks = g_list_remove (task->tasklist->tasks, task);
 
@@ -1497,28 +1506,64 @@ tasklist_button_drag_begin (GtkWidget *widget,
 }
 
 static gboolean
+tasklist_button_drag_activate_timeout (gpointer user_data)
+{
+	ToplevelTask *task = user_data;
+
+	task->drag_activate_timeout = 0;
+
+	if (task->window)
+		xfw_window_activate (task->window, NULL, task->drag_activate_time, NULL);
+
+	return G_SOURCE_REMOVE;
+}
+
+/* returns the dragged task if the drag comes from one of our own buttons */
+static ToplevelTask *
+tasklist_drag_get_own_source (GdkDragContext *context,
+			      TasklistManager *tasklist)
+{
+	GtkWidget *source_widget;
+
+	source_widget = gtk_drag_get_source_widget (context);
+	if (source_widget == NULL ||
+	    gtk_widget_get_parent (source_widget) != GTK_WIDGET (tasklist->list))
+		return NULL;
+
+	return g_object_get_data (G_OBJECT (source_widget), toplevel_task_key);
+}
+
+static gboolean
 tasklist_button_drag_motion (GtkWidget *widget,
 			     GdkDragContext *context,
 			     gint x, gint y, guint time,
 			     TasklistManager *tasklist)
 {
-	GtkWidget *source_widget;
 	ToplevelTask *source, *target;
 	GList *source_node, *target_node;
 	GtkAllocation allocation;
 	gboolean second_half;
 
-	source_widget = gtk_drag_get_source_widget (context);
-	if (source_widget == NULL)
-		return FALSE;
-
-	/* only reorder among our own tasklist buttons */
-	if (gtk_widget_get_parent (source_widget) != GTK_WIDGET (tasklist->list))
-		return FALSE;
-
-	source = g_object_get_data (G_OBJECT (source_widget), toplevel_task_key);
 	target = g_object_get_data (G_OBJECT (widget), toplevel_task_key);
-	if (source == NULL || target == NULL || source == target)
+	if (target == NULL)
+		return FALSE;
+
+	source = tasklist_drag_get_own_source (context, tasklist);
+	if (source == NULL)
+	{
+		/* activate the window under the pointer after a short hover so
+		 * the user can drop into it */
+		target->drag_activate_time = time;
+		if (target->drag_activate_timeout == 0)
+			target->drag_activate_timeout =
+				g_timeout_add (TASKLIST_DRAG_ACTIVATE_TIMEOUT,
+					       tasklist_button_drag_activate_timeout,
+					       target);
+		gdk_drag_status (context, 0, time);
+		return TRUE;
+	}
+
+	if (source == target)
 		return FALSE;
 
 	/* drop on the right/bottom half -> insert after the target button */
@@ -1553,16 +1598,35 @@ tasklist_button_drag_motion (GtkWidget *widget,
 }
 
 static void
-tasklist_button_drag_data_received (GtkWidget *widget,
-				    GdkDragContext *context,
-				    gint x, gint y,
-				    GtkSelectionData *selection_data,
-				    guint info,
-				    guint time,
-				    TasklistManager *tasklist)
+tasklist_button_drag_leave (GtkWidget *widget,
+			    GdkDragContext *context,
+			    guint time,
+			    TasklistManager *tasklist)
 {
+	ToplevelTask *task = g_object_get_data (G_OBJECT (widget), toplevel_task_key);
+
+	if (task && task->drag_activate_timeout)
+	{
+		g_source_remove (task->drag_activate_timeout);
+		task->drag_activate_timeout = 0;
+	}
+}
+
+static gboolean
+tasklist_button_drag_drop (GtkWidget *widget,
+			   GdkDragContext *context,
+			   gint x, gint y,
+			   guint time,
+			   TasklistManager *tasklist)
+{
+	/* foreign drags are not accepted on task buttons */
+	if (tasklist_drag_get_own_source (context, tasklist) == NULL)
+		return FALSE;
+
 	/* the list has already been reordered live by drag-motion, so
-	 * nothing left to do here */
+	 * there is no data to transfer */
+	gtk_drag_finish (context, TRUE, FALSE, time);
+	return TRUE;
 }
 
 static void
@@ -1790,15 +1854,19 @@ toplevel_task_new (TasklistManager *tasklist, XfwWindow *window)
 	gtk_drag_source_set (task->button, GDK_BUTTON1_MASK,
 			     source_targets, G_N_ELEMENTS (source_targets),
 			     GDK_ACTION_MOVE);
-	gtk_drag_dest_set (task->button, GTK_DEST_DEFAULT_DROP,
+	/* drag-motion must also see foreign drags (files, text, ...) so hovering them 
+	 * over a button can activate its window */
+	gtk_drag_dest_set (task->button, 0,
 			   source_targets, G_N_ELEMENTS (source_targets),
 			   GDK_ACTION_MOVE);
 	g_signal_connect (task->button, "drag-data-get",
 			  G_CALLBACK (tasklist_button_drag_data_get), task);
-	g_signal_connect (task->button, "drag-data-received",
-			  G_CALLBACK (tasklist_button_drag_data_received), tasklist);
 	g_signal_connect (task->button, "drag-motion",
 			  G_CALLBACK (tasklist_button_drag_motion), tasklist);
+	g_signal_connect (task->button, "drag-leave",
+			  G_CALLBACK (tasklist_button_drag_leave), tasklist);
+	g_signal_connect (task->button, "drag-drop",
+			  G_CALLBACK (tasklist_button_drag_drop), tasklist);
 	g_signal_connect (task->button, "drag-begin",
 			  G_CALLBACK (tasklist_button_drag_begin), task);
 
