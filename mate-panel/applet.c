@@ -1098,6 +1098,17 @@ mate_panel_applet_position_save_timeout (gpointer dummy)
 }
 
 void
+mate_panel_applet_save_queued_positions (void)
+{
+	if (queued_position_source) {
+		g_source_remove (queued_position_source);
+		queued_position_source = 0;
+	}
+
+	mate_panel_applet_position_save_timeout (NULL);
+}
+
+void
 mate_panel_applet_save_position (AppletInfo *applet_info,
 			    const char *id,
 			    gboolean    immediate)
