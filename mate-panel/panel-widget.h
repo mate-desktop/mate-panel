@@ -229,6 +229,9 @@ void     panel_widget_set_applet_size_hints       (PanelWidget *panel,
 void     panel_widget_set_applet_locked           (PanelWidget *panel,
 						   GtkWidget   *applet,
 						   gboolean     locked);
+gboolean panel_widget_move_applet                 (PanelWidget *panel,
+						   GtkWidget   *applet,
+						   int          direction);
 gboolean panel_widget_get_applet_locked           (PanelWidget *panel,
 						   GtkWidget   *applet);
 gboolean panel_widget_toggle_applet_locked        (PanelWidget *panel,

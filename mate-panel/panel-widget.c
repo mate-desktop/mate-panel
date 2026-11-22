@@ -2991,6 +2991,38 @@ panel_widget_set_applet_locked (PanelWidget *panel,
 }
 
 gboolean
+panel_widget_move_applet (PanelWidget *panel,
+			  GtkWidget   *applet,
+			  int          direction)
+{
+	GList      *l;
+	AppletData *ad;
+	AppletData *neighbor;
+
+	if (panel->currently_dragged_applet != NULL || direction == 0)
+		return FALSE;
+
+	for (l = panel->applet_list; l; l = l->next) {
+		ad = l->data;
+		if (ad->applet == applet)
+			break;
+	}
+
+	if (l == NULL || ad->locked)
+		return FALSE;
+
+	neighbor = direction > 0 ? (l->next ? l->next->data : NULL)
+				 : (l->prev ? l->prev->data : NULL);
+	if (neighbor != NULL && neighbor->locked && neighbor->pack_type == ad->pack_type)
+		return FALSE;
+
+	if (direction > 0)
+		return panel_widget_switch_applet_right (panel, l, 0, TRUE);
+
+	return panel_widget_switch_applet_left (panel, l, 0, TRUE);
+}
+
+gboolean
 panel_widget_get_applet_locked (PanelWidget *panel,
 				GtkWidget   *applet)
 {
