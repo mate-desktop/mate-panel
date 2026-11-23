@@ -38,6 +38,7 @@
 #include "launcher.h"
 #include "panel-addto.h"
 #include "panel-lockdown.h"
+#include "panel-multimonitor.h"
 #include "panel-profile.h"
 #include "panel-properties-dialog.h"
 #include "panel-session.h"
@@ -74,6 +75,10 @@ static const gchar panel_shell_introspection_xml[] =
 	"      <arg type='s' name='object_id' direction='in'/>"
 	"      <arg type='b' name='shown' direction='out'/>"
 	"    </method>"
+	"    <method name='GetMonitors'>"
+	"      <arg type='a(isss(iiii)b)' name='monitors' direction='out'/>"
+	"    </method>"
+	"    <signal name='MonitorsChanged'/>"
 	"  </interface>"
 	"</node>";
 
@@ -242,7 +247,46 @@ panel_shell_method_call (GDBusConnection       *connection,
 
 		g_dbus_method_invocation_return_value (invocation,
 						       g_variant_new ("(b)", shown));
+	} else if (g_strcmp0 (method_name, "GetMonitors") == 0) {
+		GVariantBuilder builder;
+		int             primary = panel_multimonitor_get_primary ();
+		int             n = panel_multimonitor_monitors ();
+		int             i;
+
+		g_variant_builder_init (&builder, G_VARIANT_TYPE ("a(isss(iiii)b)"));
+		for (i = 0; i < n; i++) {
+			char *id = panel_multimonitor_get_monitor_id (i);
+			char *connector = panel_multimonitor_get_connector (i);
+			char *name = panel_multimonitor_get_display_name (i);
+
+			g_variant_builder_add (&builder, "(isss(iiii)b)", i,
+					       id ? id : "",
+					       connector ? connector : "",
+					       name ? name : "",
+					       panel_multimonitor_x (i),
+					       panel_multimonitor_y (i),
+					       panel_multimonitor_width (i),
+					       panel_multimonitor_height (i),
+					       primary >= 0 ? i == primary : i == 0);
+			g_free (id);
+			g_free (connector);
+			g_free (name);
+		}
+
+		g_dbus_method_invocation_return_value (invocation,
+						       g_variant_new ("(a(isss(iiii)b))", &builder));
 	}
+}
+
+void
+panel_shell_monitors_changed (void)
+{
+	if (dbus_connection == NULL || shell_object_id == 0)
+		return;
+
+	g_dbus_connection_emit_signal (dbus_connection, NULL,
+				       PANEL_DBUS_SHELL_PATH, PANEL_DBUS_SHELL_IFACE,
+				       "MonitorsChanged", NULL, NULL);
 }
 
 static const GDBusInterfaceVTable panel_shell_vtable = {

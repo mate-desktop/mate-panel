@@ -35,4 +35,6 @@
 gboolean panel_shell_register (gboolean replace);
 void     panel_shell_quit     (void);
 
+void     panel_shell_monitors_changed (void);
+
 #endif /* __PANEL_SHELL_H__ */

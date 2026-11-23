@@ -258,7 +258,20 @@ panel_sources = [
 ]
 
 if have_wayland
-  panel_sources += ['wayland-backend.c', 'wayland-backend.h']
+  xdg_output_xml = wayland_protocols_dep.get_variable(pkgconfig: 'pkgdatadir') / 'unstable' / 'xdg-output' / 'xdg-output-unstable-v1.xml'
+  xdg_output_client_h = custom_target('xdg-output-client-header',
+    input: xdg_output_xml,
+    output: 'xdg-output-unstable-v1-client-protocol.h',
+    command: [wayland_scanner, 'client-header', '@INPUT@', '@OUTPUT@'],
+  )
+  xdg_output_code = custom_target('xdg-output-code',
+    input: xdg_output_xml,
+    output: 'xdg-output-unstable-v1-protocol.c',
+    command: [wayland_scanner, 'private-code', '@INPUT@', '@OUTPUT@'],
+  )
+  panel_sources += ['wayland-backend.c', 'wayland-backend.h',
+                    'panel-xdg-output.c', 'panel-xdg-output.h',
+                    xdg_output_client_h, xdg_output_code]
 endif
 
 if have_x11
