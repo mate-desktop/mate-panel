@@ -1101,8 +1101,20 @@ panel_widget_get_insert_at_pos (PanelWidget         *panel,
 
 		if (ad->constrained <= pos) {
 			if (ad->constrained + ad->cells > pos) {
+				GList *m;
+
 				*pack_type = ad->pack_type;
 				*pack_index = ad->pack_index;
+
+				for (m = panel->applet_list; m; m = m->next) {
+					AppletData *other = m->data;
+
+					if (other->pack_type == *pack_type &&
+					    other->pack_index >= *pack_index) {
+						other->pack_index++;
+						emit_applet_moved (panel, other);
+					}
+				}
 				return;
 			}
 		} else
@@ -3015,6 +3027,8 @@ panel_widget_move_applet (PanelWidget *panel,
 				 : (l->prev ? l->prev->data : NULL);
 	if (neighbor != NULL && neighbor->locked && neighbor->pack_type == ad->pack_type)
 		return FALSE;
+
+	panel_widget_compress_pack_indexes (panel);
 
 	if (direction > 0)
 		return panel_widget_switch_applet_right (panel, l, 0, TRUE);
