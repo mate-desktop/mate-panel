@@ -67,7 +67,7 @@ struct _SnItemV0
   SnIconPixmap **attention_icon_pixmap;
   gchar         *attention_movie_name;
   SnTooltip     *tooltip;
-  gchar         *icon_theme_path;
+  GtkIconTheme  *icon_theme;
   gchar         *menu;
   gboolean       item_is_menu;
 
@@ -195,12 +195,37 @@ get_surface (SnIconPixmap  **icon_pixmap,
     return cairo_surface_reference (pixmap->surface);
 }
 
-static cairo_surface_t *
-get_icon_by_name (const gchar *icon_name,
-                  gint         requested_size,
-                  gint         scale)
+static void
+set_icon_theme_path (SnItemV0    *v0,
+                     const gchar *path)
 {
-  GtkIconTheme *icon_theme;
+  GdkScreen *screen;
+  gchar **search_path;
+  gint n_paths;
+
+  g_clear_object (&v0->icon_theme);
+
+  if (path == NULL || path[0] == '\0')
+    return;
+
+  /* Different items can export the same icon name in different directories. */
+  screen = gtk_widget_get_screen (GTK_WIDGET (v0));
+  v0->icon_theme = gtk_icon_theme_new ();
+  gtk_icon_theme_set_screen (v0->icon_theme, screen);
+  gtk_icon_theme_get_search_path (gtk_icon_theme_get_for_screen (screen),
+                                  &search_path, &n_paths);
+  gtk_icon_theme_set_search_path (v0->icon_theme, (const gchar **) search_path,
+                                  n_paths);
+  g_strfreev (search_path);
+  gtk_icon_theme_append_search_path (v0->icon_theme, path);
+}
+
+static cairo_surface_t *
+get_icon_by_name (GtkIconTheme  *icon_theme,
+                  const gchar  *icon_name,
+                  gint          requested_size,
+                  gint          scale)
+{
   gint *sizes;
   gint i;
   gint chosen_size = 0;
@@ -208,7 +233,6 @@ get_icon_by_name (const gchar *icon_name,
   g_return_val_if_fail (icon_name != NULL && icon_name[0] != '\0', NULL);
   g_return_val_if_fail (requested_size > 0, NULL);
 
-  icon_theme = gtk_icon_theme_get_default ();
   gtk_icon_theme_rescan_if_needed (icon_theme);
 
   sizes = gtk_icon_theme_get_icon_sizes (icon_theme, icon_name);
@@ -277,7 +301,12 @@ update (SnItemV0 *v0)
       gint scale;
 
       scale = gtk_widget_get_scale_factor (GTK_WIDGET (image));
-      surface = get_icon_by_name (icon_name, icon_size, scale);
+      surface = NULL;
+      if (v0->icon_theme != NULL)
+        surface = get_icon_by_name (v0->icon_theme, icon_name, icon_size, scale);
+      if (surface == NULL)
+        surface = get_icon_by_name (gtk_icon_theme_get_default (),
+                                    icon_name, icon_size, scale);
 
       if (!surface)
         {
@@ -301,7 +330,8 @@ update (SnItemV0 *v0)
       if (!surface)
         {
           /*deal with missing icon or failure to load icon*/
-          surface = get_icon_by_name ("image-missing", icon_size, scale);
+          surface = get_icon_by_name (gtk_icon_theme_get_default (),
+                                      "image-missing", icon_size, scale);
         }
       gtk_image_set_from_surface (image, surface);
       cairo_surface_destroy (surface);
@@ -897,18 +927,8 @@ new_icon_theme_path_cb (SnItemV0 *v0,
 
   variant = g_variant_get_child_value (parameters, 0);
 
-  g_free (v0->icon_theme_path);
-  v0->icon_theme_path = g_variant_dup_string (variant, NULL);
+  set_icon_theme_path (v0, g_variant_get_string (variant, NULL));
   g_variant_unref (variant);
-
-  if (v0->icon_theme_path != NULL)
-    {
-      GtkIconTheme *icon_theme;
-
-      icon_theme = gtk_icon_theme_get_default ();
-
-      gtk_icon_theme_append_search_path (icon_theme, v0->icon_theme_path);
-    }
 
   queue_update (v0);
 }
@@ -1014,7 +1034,7 @@ get_all_cb (GObject      *source_object,
       else if (g_strcmp0 (key, "ToolTip") == 0)
         v0->tooltip = sn_tooltip_new (value);
       else if (g_strcmp0 (key, "IconThemePath") == 0)
-        v0->icon_theme_path = g_variant_dup_string (value, NULL);
+        set_icon_theme_path (v0, g_variant_get_string (value, NULL));
       else if (g_strcmp0 (key, "Menu") == 0)
         v0->menu = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (key, "ItemIsMenu") == 0)
@@ -1045,15 +1065,6 @@ get_all_cb (GObject      *source_object,
                  bus_name, object_path);
 
       return;
-    }
-
-  if (v0->icon_theme_path != NULL)
-    {
-      GtkIconTheme *icon_theme;
-
-      icon_theme = gtk_icon_theme_get_default ();
-
-      gtk_icon_theme_append_search_path (icon_theme, v0->icon_theme_path);
     }
 
   g_signal_connect (v0->proxy, "g-properties-changed",
@@ -1165,7 +1176,7 @@ sn_item_v0_finalize (GObject *object)
   g_clear_pointer (&v0->attention_icon_pixmap, icon_pixmap_free);
   g_clear_pointer (&v0->attention_movie_name, g_free);
   g_clear_pointer (&v0->tooltip, sn_tooltip_free);
-  g_clear_pointer (&v0->icon_theme_path, g_free);
+  g_clear_object (&v0->icon_theme);
   g_clear_pointer (&v0->menu, g_free);
 
   G_OBJECT_CLASS (sn_item_v0_parent_class)->finalize (object);
