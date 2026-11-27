@@ -53,6 +53,18 @@ AM_CPPFLAGS += \
 	$(XFW_CFLAGS)
 endif
 
+if ENABLE_WAYLAND_PREVIEWS
+WNCKLET_SOURCES += \
+	wayland-preview.c \
+	wayland-preview.h
+
+WNCKLET_LDADD += \
+	$(WAYLAND_LIBS)
+
+AM_CPPFLAGS += \
+	$(WAYLAND_CFLAGS)
+endif
+
 if WNCKLET_INPROCESS
 APPLET_IN_PROCESS = true
 APPLET_LOCATION   = $(pkglibdir)/libwnck-applet.so
@@ -118,6 +130,34 @@ wncklet-resources.h: wncklet.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --s
 BUILT_SOURCES = 		\
 	wncklet-resources.c	\
 	wncklet-resources.h
+
+if ENABLE_WAYLAND_PREVIEWS
+BUILT_SOURCES += \
+	ext-foreign-toplevel-list-v1-protocol.c \
+	ext-foreign-toplevel-list-v1-client-protocol.h \
+	ext-image-capture-source-v1-protocol.c \
+	ext-image-capture-source-v1-client-protocol.h \
+	ext-image-copy-capture-v1-protocol.c \
+	ext-image-copy-capture-v1-client-protocol.h
+
+ext-foreign-toplevel-list-v1-protocol.c: $(WAYLAND_PROTOCOLS_DATADIR)/staging/ext-foreign-toplevel-list/ext-foreign-toplevel-list-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) private-code $< $@
+
+ext-foreign-toplevel-list-v1-client-protocol.h: $(WAYLAND_PROTOCOLS_DATADIR)/staging/ext-foreign-toplevel-list/ext-foreign-toplevel-list-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) client-header $< $@
+
+ext-image-capture-source-v1-protocol.c: $(WAYLAND_PROTOCOLS_DATADIR)/staging/ext-image-capture-source/ext-image-capture-source-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) private-code $< $@
+
+ext-image-capture-source-v1-client-protocol.h: $(WAYLAND_PROTOCOLS_DATADIR)/staging/ext-image-capture-source/ext-image-capture-source-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) client-header $< $@
+
+ext-image-copy-capture-v1-protocol.c: $(WAYLAND_PROTOCOLS_DATADIR)/staging/ext-image-copy-capture/ext-image-copy-capture-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) private-code $< $@
+
+ext-image-copy-capture-v1-client-protocol.h: $(WAYLAND_PROTOCOLS_DATADIR)/staging/ext-image-copy-capture/ext-image-copy-capture-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) client-header $< $@
+endif
 
 wncklet_gschemas_in = \
 	org.mate.panel.applet.window-list.gschema.xml.in \

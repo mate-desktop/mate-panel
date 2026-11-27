@@ -240,6 +240,21 @@ fi
 AC_SUBST(WAYLAND_CFLAGS)
 AC_SUBST(WAYLAND_LIBS)
 
+have_wayland_previews=no
+if test "x$have_wayland" = "xyes"; then
+  PKG_CHECK_MODULES(WAYLAND_PREVIEWS, wayland-protocols >= 1.37 wayland-scanner, have_wayland_previews=yes, have_wayland_previews=no)
+fi
+
+if test "x$have_wayland_previews" = "xyes"; then
+  AC_DEFINE(HAVE_WAYLAND_PREVIEWS, 1, [Show window previews in the Wayland window list])
+  WAYLAND_PROTOCOLS_DATADIR=`$PKG_CONFIG --variable=pkgdatadir wayland-protocols`
+  WAYLAND_SCANNER=`$PKG_CONFIG --variable=wayland_scanner wayland-scanner`
+fi
+
+AC_SUBST(WAYLAND_PROTOCOLS_DATADIR)
+AC_SUBST(WAYLAND_SCANNER)
+AM_CONDITIONAL(ENABLE_WAYLAND_PREVIEWS, [test "x$have_wayland_previews" = "xyes"])
+
 # Check if we have the X development libraries
 have_x11=no
 if test "x$enable_x11" != "xno"; then
@@ -409,6 +424,7 @@ echo "
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         Wayland support:               ${have_wayland}
+        Wayland window previews:       ${have_wayland_previews}
         X11 support:                   ${have_x11}
         XRandr support:                ${have_randr}
         Evolution Data Server support: ${have_eds}

@@ -165,6 +165,7 @@ static void tasklist_update(TasklistData* tasklist)
 		wayland_tasklist_set_grouping (tasklist->tasklist, grouping);
 		wayland_tasklist_set_scroll_enabled (tasklist->tasklist, tasklist->scroll_enable);
 		wayland_tasklist_set_middle_click_close (tasklist->tasklist, tasklist->middle_click_close);
+		wayland_tasklist_set_previews (tasklist->tasklist, tasklist->show_window_thumbnails, tasklist->thumbnail_size);
 	}
 #endif /* HAVE_WAYLAND */
 }
@@ -698,12 +699,20 @@ static void tasklist_update_thumbnail_size_spin(TasklistData* tasklist)
 static void show_thumbnails_changed(GSettings* settings, gchar* key, TasklistData* tasklist)
 {
     tasklist->show_window_thumbnails = g_settings_get_boolean (settings, key);
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+		wayland_tasklist_set_previews (tasklist->tasklist, tasklist->show_window_thumbnails, tasklist->thumbnail_size);
+#endif /* HAVE_WAYLAND */
 }
 
 static void thumbnail_size_changed(GSettings *settings, gchar* key, TasklistData* tasklist)
 {
 	tasklist->thumbnail_size = g_settings_get_int(settings, key);
 	tasklist_update_thumbnail_size_spin(tasklist);
+#ifdef HAVE_WAYLAND
+	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+		wayland_tasklist_set_previews (tasklist->tasklist, tasklist->show_window_thumbnails, tasklist->thumbnail_size);
+#endif /* HAVE_WAYLAND */
 }
 
 static GtkWidget* get_grouping_button(TasklistData* tasklist, TasklistGroupingType type)
@@ -936,6 +945,7 @@ gboolean window_list_applet_fill(MatePanelApplet* applet)
 	if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
 	{
 		tasklist->tasklist = wayland_tasklist_new();
+		wayland_tasklist_set_previews (tasklist->tasklist, tasklist->show_window_thumbnails, tasklist->thumbnail_size);
 	}
 	else
 #endif /* HAVE_WAYLAND */
@@ -1143,7 +1153,9 @@ static void setup_dialog_wayland(TasklistData* tasklist)
 	gtk_widget_set_sensitive(tasklist->window_list_content_box, FALSE);
 	gtk_widget_set_sensitive(tasklist->minimized_windows_box, FALSE);
 
+#ifndef HAVE_WAYLAND_PREVIEWS
 	gtk_widget_set_sensitive(tasklist->window_thumbnail_box, FALSE);
+#endif /* HAVE_WAYLAND_PREVIEWS */
 }
 #endif /* HAVE_WAYLAND */
 

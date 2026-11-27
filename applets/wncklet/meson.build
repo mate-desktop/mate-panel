@@ -79,6 +79,32 @@ if have_wayland
   wncklet_deps += [xfw_dep]
 endif
 
+if have_wayland_previews
+  foreach protocol : [
+    'ext-foreign-toplevel-list/ext-foreign-toplevel-list-v1.xml',
+    'ext-image-capture-source/ext-image-capture-source-v1.xml',
+    'ext-image-copy-capture/ext-image-copy-capture-v1.xml',
+  ]
+    xml = join_paths(wayland_protocols_dir, 'staging', protocol)
+    name = protocol.split('/')[0]
+    wncklet_sources += custom_target(name + '-client-header',
+      input: xml,
+      output: '@BASENAME@-client-protocol.h',
+      command: [wayland_scanner, 'client-header', '@INPUT@', '@OUTPUT@'],
+    )
+    wncklet_sources += custom_target(name + '-code',
+      input: xml,
+      output: '@BASENAME@-protocol.c',
+      command: [wayland_scanner, 'private-code', '@INPUT@', '@OUTPUT@'],
+    )
+  endforeach
+  wncklet_sources += [
+    'wayland-preview.c',
+    'wayland-preview.h',
+  ]
+  wncklet_deps += wayland_deps
+endif
+
 wncklet_inc_dirs = [
   include_directories('.'),
   libmate_panel_applet_inc,
