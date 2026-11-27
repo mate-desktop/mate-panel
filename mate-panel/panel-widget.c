@@ -1281,14 +1281,15 @@ panel_widget_update_positions (PanelWidget *panel)
 		     list = g_list_next (list)) {
 			ad = list->data;
 
-			/* Use the larger of zone position and old pixel
-			 * position, so pre-migration gaps are preserved. */
+		/*Do not attempt to preserve pre-migration gaps
+		 *as they are impossible to remove later
 			if (ad->pack_type != PANEL_OBJECT_PACK_CENTER && ad->pos > ad->constrained)
 				ad->constrained = ad->pos;
+		*/
+
 			if (ad->constrained < i)
 				ad->constrained = i;
-
-			i = ad->constrained + ad->cells;
+			i = ad->constrained + ad->cells + 2; /*minimum space between objects*/
 		}
 
 		/* Third pass: try to push applets to the left to see if
