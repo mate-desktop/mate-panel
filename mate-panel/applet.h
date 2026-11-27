@@ -90,6 +90,7 @@ void mate_panel_applet_clear_user_menu (AppletInfo *info);
 AppletUserMenu *mate_panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
 
+void        mate_panel_applet_save_queued_positions   (void);
 void        mate_panel_applet_save_position           (AppletInfo *applet_info,
 						  const char *id,
 						  gboolean    immediate);

@@ -231,6 +231,29 @@ if test "x$have_wayland" = "xyes"; then
   ])
 fi
 
+if test "x$have_wayland" = "xyes"; then
+  PKG_CHECK_MODULES(WAYLAND_PROTOCOLS, wayland-protocols >= 1.14,
+    [WAYLAND_PROTOCOLS_DATADIR=`$PKG_CONFIG --variable=pkgdatadir wayland-protocols`], [
+    if test "x$enable_wayland" = "xyes"; then
+      AC_MSG_ERROR([Wayland support requires wayland-protocols >= 1.14])
+    else
+      have_wayland=no
+    fi
+  ])
+  AC_SUBST(WAYLAND_PROTOCOLS_DATADIR)
+fi
+
+if test "x$have_wayland" = "xyes"; then
+  AC_PATH_PROG(WAYLAND_SCANNER, wayland-scanner)
+  if test "x$WAYLAND_SCANNER" = "x"; then
+    if test "x$enable_wayland" = "xyes"; then
+      AC_MSG_ERROR([Wayland support requires wayland-scanner])
+    else
+      have_wayland=no
+    fi
+  fi
+fi
+
 AM_CONDITIONAL(ENABLE_WAYLAND, [test "x$have_wayland" = "xyes"])
 
 if test "x$have_wayland" = "xyes"; then

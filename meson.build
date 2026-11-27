@@ -206,7 +206,10 @@ wayland_deps = [
   dependency('gtk-layer-shell-0', required: wayland_opt),
   dependency('wayland-client', required: wayland_opt),
 ]
-have_wayland = wayland_deps[0].found() and wayland_deps[1].found()
+wayland_protocols_dep = dependency('wayland-protocols', version: '>= 1.14', required: wayland_opt)
+wayland_scanner = find_program('wayland-scanner', required: wayland_opt)
+have_wayland = wayland_deps[0].found() and wayland_deps[1].found() and \
+  wayland_protocols_dep.found() and wayland_scanner.found()
 if have_wayland
   xfw_dep = dependency('libxfce4windowing-0', version: '>= 4.20.2', required: false)
   if not xfw_dep.found()

@@ -44,6 +44,11 @@
 #endif
 
 #include "panel-multimonitor.h"
+#include "panel-shell.h"
+
+#ifdef HAVE_WAYLAND
+#include "panel-xdg-output.h"
+#endif
 
 #include <string.h>
 
@@ -555,6 +560,8 @@ panel_multimonitor_reinit (void)
 		gtk_widget_queue_resize (l->data);
 
 	g_list_free (toplevels);
+
+	panel_shell_monitors_changed ();
 }
 
 int
@@ -589,6 +596,111 @@ panel_multimonitor_height (int monitor)
 {
 	g_return_val_if_fail (monitor >= 0 && monitor < monitor_count, 0);
 	return geometries [monitor].height;
+}
+
+char *
+panel_multimonitor_get_monitor_id (int monitor)
+{
+#ifdef HAVE_MATE_MONITOR_INFO
+	GdkMonitor *gdk_monitor = panel_multimonitor_get_gdk_monitor (monitor);
+
+	if (gdk_monitor != NULL && panel_multimonitor_has_monitor_ids ())
+		return mate_monitor_info_get_id (mate_monitor_info_get_for_display (gdk_monitor_get_display (gdk_monitor)),
+						 gdk_monitor);
+#endif
+	return NULL;
+}
+
+#if defined (HAVE_X11) && defined (HAVE_RANDR)
+static char *
+x11_connector (GdkDisplay *display, int monitor)
+{
+	Display            *xdisplay = GDK_DISPLAY_XDISPLAY (display);
+	XRRScreenResources *resources;
+	GString            *names = g_string_new (NULL);
+	int                 i;
+
+	gdk_x11_display_error_trap_push (display);
+	resources = XRRGetScreenResourcesCurrent (xdisplay, DefaultRootWindow (xdisplay));
+	for (i = 0; resources != NULL && i < resources->noutput; i++) {
+		XRROutputInfo *output = XRRGetOutputInfo (xdisplay, resources, resources->outputs[i]);
+		XRRCrtcInfo   *crtc = NULL;
+
+		if (output != NULL && output->connection == RR_Connected && output->crtc != None)
+			crtc = XRRGetCrtcInfo (xdisplay, resources, output->crtc);
+		if (crtc != NULL &&
+		    crtc->x == panel_multimonitor_x (monitor) && crtc->y == panel_multimonitor_y (monitor) &&
+		    (int) crtc->width == panel_multimonitor_width (monitor) &&
+		    (int) crtc->height == panel_multimonitor_height (monitor)) {
+			if (names->len > 0)
+				g_string_append (names, ", ");
+			g_string_append_len (names, output->name, output->nameLen);
+		}
+		if (crtc != NULL)
+			XRRFreeCrtcInfo (crtc);
+		if (output != NULL)
+			XRRFreeOutputInfo (output);
+	}
+	if (resources != NULL)
+		XRRFreeScreenResources (resources);
+	gdk_x11_display_error_trap_pop_ignored (display);
+
+	return g_string_free (names, names->len == 0);
+}
+#endif
+
+char *
+panel_multimonitor_get_connector (int monitor)
+{
+	GdkMonitor *gdk_monitor = panel_multimonitor_get_gdk_monitor (monitor);
+
+	if (gdk_monitor == NULL)
+		return NULL;
+
+#if defined (HAVE_X11) && defined (HAVE_RANDR)
+	if (GDK_IS_X11_DISPLAY (gdk_monitor_get_display (gdk_monitor)))
+		return have_randr ? x11_connector (gdk_monitor_get_display (gdk_monitor), monitor) : NULL;
+#endif
+#ifdef HAVE_WAYLAND
+	return panel_xdg_output_get_name (gdk_monitor);
+#else
+	return NULL;
+#endif
+}
+
+char *
+panel_multimonitor_get_display_name (int monitor)
+{
+	GdkMonitor *gdk_monitor = panel_multimonitor_get_gdk_monitor (monitor);
+	const char *manufacturer;
+	const char *model;
+
+	if (gdk_monitor == NULL || GDK_IS_X11_DISPLAY (gdk_monitor_get_display (gdk_monitor)))
+		return NULL;
+
+#ifdef HAVE_MATE_MONITOR_INFO
+	{
+		MateMonitorInfo *info = mate_monitor_info_get_for_display (gdk_monitor_get_display (gdk_monitor));
+
+		if (mate_monitor_info_has_protocol (info))
+			return mate_monitor_info_get_display_name (info, gdk_monitor);
+	}
+#endif
+
+	manufacturer = gdk_monitor_get_manufacturer (gdk_monitor);
+	model = gdk_monitor_get_model (gdk_monitor);
+	if (model != NULL && *model != '\0') {
+		if (manufacturer != NULL && *manufacturer != '\0' &&
+		    g_ascii_strncasecmp (model, manufacturer, strlen (manufacturer)) != 0)
+			return g_strdup_printf ("%s %s", manufacturer, model);
+		return g_strdup (model);
+	}
+
+#ifdef HAVE_WAYLAND
+	return panel_xdg_output_get_description (gdk_monitor);
+#else
+	return NULL;
+#endif
 }
 
 int

@@ -69,7 +69,8 @@ panel_sources = \
 
 if ENABLE_WAYLAND
 panel_sources += \
-	wayland-backend.c
+	wayland-backend.c \
+	panel-xdg-output.c
 endif
 
 if ENABLE_X11
@@ -130,7 +131,8 @@ panel_headers = \
 
 if ENABLE_WAYLAND
 panel_headers += \
-	wayland-backend.h
+	wayland-backend.h \
+	panel-xdg-output.h
 endif
 
 if ENABLE_X11
@@ -272,6 +274,18 @@ panel_test_applets_BUILT_SOURCES = 	\
 	panel-test-applets-resources.h	\
 	panel-marshal.c			\
 	panel-marshal.h
+
+if ENABLE_WAYLAND
+mate_panel_BUILT_SOURCES += \
+	xdg-output-unstable-v1-client-protocol.h \
+	xdg-output-unstable-v1-protocol.c
+
+xdg-output-unstable-v1-client-protocol.h: $(WAYLAND_PROTOCOLS_DATADIR)/unstable/xdg-output/xdg-output-unstable-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) client-header $< $@
+
+xdg-output-unstable-v1-protocol.c: $(WAYLAND_PROTOCOLS_DATADIR)/unstable/xdg-output/xdg-output-unstable-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) private-code $< $@
+endif
 
 BUILT_SOURCES = 				\
 	$(mate_panel_BUILT_SOURCES)		\
