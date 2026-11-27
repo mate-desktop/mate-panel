@@ -32,6 +32,9 @@
 #include <libxfce4windowing/libxfce4windowing.h>
 
 #include "wayland-backend.h"
+#ifdef HAVE_WAYLAND_PREVIEWS
+#include "wayland-preview.h"
+#endif
 
 /*shorter than wnck-tasklist due to common use of larger fonts*/
 #define TASKLIST_TEXT_MAX_WIDTH 16
@@ -84,6 +87,9 @@ typedef struct
 	gboolean rebuilding;
 	GHashTable *apps;
 	GHashTable *window_to_group;
+#ifdef HAVE_WAYLAND_PREVIEWS
+	WaylandPreview *preview;
+#endif
 } TasklistManager;
 
 typedef struct
@@ -132,6 +138,7 @@ static GtkTargetEntry source_targets[] =
 };
 
 static ToplevelTask *toplevel_task_new (TasklistManager *tasklist, XfwWindow *window);
+static void tasklist_watch_button (TasklistManager *tasklist, GtkWidget *button);
 static gboolean tasklist_scroll_event (GtkWidget *widget, GdkEventScroll *event, TasklistManager *tasklist);
 static void group_task_update (GroupTask *group);
 static void group_task_update_name (GroupTask *group);
@@ -739,6 +746,7 @@ group_task_new (TasklistManager *tasklist, XfwApplication *app)
 	group->app = g_object_ref (app);
 
 	group->button = gtk_button_new ();
+	tasklist_watch_button (tasklist, group->button);
 	group->box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	group->icon = gtk_image_new_from_icon_name ("unknown", icon_size);
 	group->label = gtk_label_new ("");
@@ -1300,6 +1308,11 @@ screen_active_window_changed (XfwScreen *screen, XfwWindow *previous_window, gpo
 static void
 tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 {
+#ifdef HAVE_WAYLAND_PREVIEWS
+	wayland_preview_free (tasklist->preview);
+	tasklist->preview = NULL;
+#endif
+
 	if (tasklist->auto_grouping_idle != 0)
 	{
 		g_source_remove (tasklist->auto_grouping_idle);
@@ -1378,6 +1391,75 @@ tasklist_manager_disconnected_from_widget (TasklistManager *tasklist)
 	g_free (tasklist);
 }
 
+#ifdef HAVE_WAYLAND_PREVIEWS
+static gboolean
+task_button_enter (GtkWidget *button, GdkEventCrossing *event, TasklistManager *tasklist)
+{
+	ToplevelTask *task = g_object_get_data (G_OBJECT (button), toplevel_task_key);
+	GroupTask *group = g_object_get_data (G_OBJECT (button), group_task_key);
+	GList *windows = NULL;
+	GList *l;
+
+	if (!tasklist->preview)
+		return FALSE;
+
+	if (group)
+	{
+		for (l = group->members; l != NULL; l = l->next)
+		{
+			ToplevelTask *member = l->data;
+
+			if (member && member->window)
+				windows = g_list_append (windows, member->window);
+		}
+	}
+	else if (task && task->window)
+	{
+		windows = g_list_append (windows, task->window);
+	}
+
+	wayland_preview_hover (tasklist->preview, button, windows);
+	g_list_free (windows);
+	return FALSE;
+}
+
+static gboolean
+task_button_leave (GtkWidget *button, GdkEventCrossing *event, TasklistManager *tasklist)
+{
+	if (tasklist->preview)
+		wayland_preview_leave (tasklist->preview);
+	return FALSE;
+}
+
+static gboolean
+task_button_hide_preview (GtkWidget *button, GdkEvent *event, TasklistManager *tasklist)
+{
+	if (tasklist->preview)
+		wayland_preview_hide (tasklist->preview);
+	return FALSE;
+}
+
+static void
+task_button_drag_begin (GtkWidget *button, GdkDragContext *context, TasklistManager *tasklist)
+{
+	if (tasklist->preview)
+		wayland_preview_hide (tasklist->preview);
+}
+#endif
+
+static void
+tasklist_watch_button (TasklistManager *tasklist, GtkWidget *button)
+{
+#ifdef HAVE_WAYLAND_PREVIEWS
+	gtk_widget_add_events (button, GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+	g_signal_connect (button, "enter-notify-event", G_CALLBACK (task_button_enter), tasklist);
+	g_signal_connect (button, "leave-notify-event", G_CALLBACK (task_button_leave), tasklist);
+	g_signal_connect (button, "button-press-event", G_CALLBACK (task_button_hide_preview), tasklist);
+	g_signal_connect (button, "scroll-event", G_CALLBACK (task_button_hide_preview), tasklist);
+	g_signal_connect (button, "drag-begin", G_CALLBACK (task_button_drag_begin), tasklist);
+#endif
+}
+
 static TasklistManager *
 tasklist_manager_new (void)
 {
@@ -1390,6 +1472,9 @@ tasklist_manager_new (void)
 
 	tasklist = g_new0 (TasklistManager, 1);
 	tasklist->screen = screen;
+#ifdef HAVE_WAYLAND_PREVIEWS
+	tasklist->preview = wayland_preview_new ();
+#endif
 	tasklist->list = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_set_homogeneous (GTK_BOX (tasklist->list), TRUE);
 	tasklist->outer_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -1754,6 +1839,7 @@ toplevel_task_new (TasklistManager *tasklist, XfwWindow *window)
 	task->window = g_object_ref (window);
 	task->tasklist = tasklist;
 	task->button = gtk_button_new ();
+	tasklist_watch_button (tasklist, task->button);
 	g_signal_connect (task->button, "clicked", G_CALLBACK (toplevel_task_handle_clicked), task);
 	g_signal_connect (task->button, "size-allocate", G_CALLBACK (toplevel_task_send_rectangle), task);
 
@@ -1943,6 +2029,17 @@ wayland_tasklist_set_middle_click_close (GtkWidget *tasklist_widget, gboolean en
 	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
 	g_return_if_fail (tasklist);
 	tasklist->middle_click_close = enabled;
+}
+
+void
+wayland_tasklist_set_previews (GtkWidget *tasklist_widget, gboolean enabled, gint size)
+{
+#ifdef HAVE_WAYLAND_PREVIEWS
+	TasklistManager *tasklist = tasklist_widget_get_tasklist (tasklist_widget);
+	g_return_if_fail (tasklist);
+	wayland_preview_set_size (tasklist->preview, size);
+	wayland_preview_set_enabled (tasklist->preview, enabled);
+#endif
 }
 
 void

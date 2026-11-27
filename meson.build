@@ -219,6 +219,18 @@ if have_wayland
 endif
 config_h.set('HAVE_WAYLAND', have_wayland)
 
+have_wayland_previews = false
+if have_wayland
+  wayland_protocols_dep = dependency('wayland-protocols', version: '>= 1.37', required: false)
+  wayland_scanner_dep = dependency('wayland-scanner', native: true, required: false)
+  if wayland_protocols_dep.found() and wayland_scanner_dep.found()
+    have_wayland_previews = true
+    wayland_scanner = find_program(wayland_scanner_dep.get_variable(pkgconfig: 'wayland_scanner'))
+    wayland_protocols_dir = wayland_protocols_dep.get_variable(pkgconfig: 'pkgdatadir')
+  endif
+endif
+config_h.set('HAVE_WAYLAND_PREVIEWS', have_wayland_previews)
+
 if not have_x11 and not have_wayland
   if wayland_opt.disabled() and x11_opt.disabled()
     error('At least one backend must be enabled')
@@ -320,6 +332,7 @@ summary({
   'Use *_DISABLE_DEPRECATED': enable_deprecation_flags,
   'Applets to build in-process': in_process_applets.length() > 0 ? in_process_applets : ['(none)'],
   'Wayland support': have_wayland,
+  'Wayland window previews': have_wayland_previews,
   'X11 support': have_x11,
   'XRandr support': have_randr,
   'Evolution Data Server support': have_eds,

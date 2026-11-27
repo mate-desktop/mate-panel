@@ -47,6 +47,7 @@ void wayland_tasklist_set_orientation (GtkWidget* tasklist_widget, GtkOrientatio
 void wayland_tasklist_set_middle_click_close (GtkWidget* tasklist_widget, gboolean enabled);
 void wayland_tasklist_set_scroll_enabled (GtkWidget* tasklist_widget, gboolean enabled);
 void wayland_tasklist_set_grouping (GtkWidget* tasklist_widget, WaylandTasklistGroupingType grouping);
+void wayland_tasklist_set_previews (GtkWidget* tasklist_widget, gboolean enabled, gint size);
 
 #ifdef __cplusplus
 }
