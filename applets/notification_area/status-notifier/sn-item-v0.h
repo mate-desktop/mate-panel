@@ -18,6 +18,8 @@
 #ifndef SN_ITEM_V0_H
 #define SN_ITEM_V0_H
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "sn-item.h"
 
 G_BEGIN_DECLS
@@ -38,6 +40,12 @@ GType sn_item_v0_get_type (void);
 
 SnItem *sn_item_v0_new (const gchar *bus_name,
                         const gchar *object_path);
+
+/* The item's own artwork as a pixbuf, scaled to `size`; NULL when the item has
+ * neither a pixmap nor an icon name.  The preferences list uses it because an
+ * identifier alone does not tell the user which icon it belongs to. */
+GdkPixbuf *sn_item_v0_get_icon_pixbuf (SnItemV0 *item,
+                                       gint      size);
 
 gint sn_item_v0_get_icon_padding (SnItemV0 *v0);
 void sn_item_v0_set_icon_padding (SnItemV0 *v0,
