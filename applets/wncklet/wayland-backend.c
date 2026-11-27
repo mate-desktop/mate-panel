@@ -314,6 +314,7 @@ update_task_icon (ToplevelTask *task)
 {
 	GIcon *icon = NULL;
 	XfwApplication *app;
+	gint width;
 
 	if (!task || !task->window || !task->icon)
 		return;
@@ -328,6 +329,9 @@ update_task_icon (ToplevelTask *task)
 		gtk_image_set_from_gicon (GTK_IMAGE (task->icon), icon, GTK_ICON_SIZE_MENU);
 	else
 		gtk_image_set_from_icon_name (GTK_IMAGE (task->icon), "unknown", GTK_ICON_SIZE_MENU);
+
+	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+	gtk_image_set_pixel_size (GTK_IMAGE (task->icon), width);
 }
 
 static void
@@ -415,6 +419,7 @@ static void
 group_task_update_icon (GroupTask *group)
 {
 	GIcon *icon;
+	gint width;
 
 	if (!group || !group->icon)
 		return;
@@ -424,6 +429,11 @@ group_task_update_icon (GroupTask *group)
 		gtk_image_set_from_gicon (GTK_IMAGE (group->icon), icon, GTK_ICON_SIZE_MENU);
 	else
 		gtk_image_set_from_icon_name (GTK_IMAGE (group->icon), "unknown", GTK_ICON_SIZE_MENU);
+
+	/* Same reason as update_task_icon(): the group button must not inherit
+	 * the minimum width of whatever the icon theme decides to hand back. */
+	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, NULL);
+	gtk_image_set_pixel_size (GTK_IMAGE (group->icon), width);
 }
 
 static gboolean
